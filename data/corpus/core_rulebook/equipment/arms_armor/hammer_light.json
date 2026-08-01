@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Hammer (Light)",
     "category": "arms_armor",
-    "name": "Light Hammer (Base)",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Hammer (Light)",
+    "name": "Light Hammer (Base)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hammer (Light)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Hammer, Light"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Light Hammer"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Light Hammer (Base)"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Steel"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
-    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
     "line": 213,
-    "record_key": "Hammer (Light)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "record_key": "Hammer (Light)",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
   }
 }

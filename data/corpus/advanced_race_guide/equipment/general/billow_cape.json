@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 100.0,
+    "description": "When falling, a creature wearing a billow cape is treated as if he had deliberately jumped from the height. In areas of strong wind, the wearer treats all terrain as difficult terrain and takes a -4 penalty on Fly checks.",
+    "key": "Billow Cape",
+    "name": "Billow Cape",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Clothing.Racial.Halfling"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "SIZE",
+        "value": "S"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.65"
+      },
+      {
+        "key": "SPROP",
+        "value": "When falling, a creature wearing a billow cape is treated as if he had deliberately jumped from the height. In areas of strong wind, the wearer treats all terrain as difficult terrain and takes a -4 penalty on Fly checks."
+      }
+    ],
+    "weight_lbs": 4.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 19,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Billow Cape",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
+}

@@ -1,20 +1,103 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Quality ~ Composite Bow Strength Rating",
     "category": "equipmods",
-    "name": "Composite Bow Strength Rating",
     "cost_gp": 0.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Quality ~ Composite Bow Strength Rating",
+    "name": "Composite Bow Strength Rating",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.SHORTBOW",
+          "75*%CHOICE",
+          "PREVARGT:%CHOICE,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "ITEMCOST",
+          "TYPE.LONGBOW",
+          "100*%CHOICE",
+          "PREVARGT:%CHOICE,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "-2",
+          "PREVARGT:%CHOICE,STR"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGE",
+          "MIN(%CHOICE,STR)",
+          "TYPE=Strength"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Composite Bow Strength Rating"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NONAME"
+      },
+      {
+        "key": "TYPE",
+        "value": "Bow.Composite"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "StrengthRating"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.147"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Composite,Bow"
+      },
+      {
+        "key": "SPROP",
+        "value": "Strength bonus to damage"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NUMBER|MIN=1|MAX=100|TITLE=Strength rating"
+      },
+      {
+        "key": "ASSIGNTOALL",
+        "value": "YES"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 34,
-    "record_key": "Special Quality ~ Composite Bow Strength Rating"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Quality ~ Composite Bow Strength Rating",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

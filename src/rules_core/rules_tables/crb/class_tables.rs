@@ -114,7 +114,7 @@ const CLASS_META: &[ClassMeta] = &[
     // `monk_max_hp_follows_the_published_d8_not_the_corpus_d10_at_levels_1_10_and_20`,
     // which also asserts the d10 values are NOT produced.
     //
-    // Note the corpus is NOT edited to match: `/home/ubuntu/workspace/repos/pcgen`
+    // Note the corpus is NOT edited to match: `$HOME/workspace/repos/pcgen`
     // is this project's independent parity oracle (`src/oracle_validation/`),
     // and making the oracle agree with us by construction would destroy the
     // independence that makes parity testing meaningful -- the precise blind

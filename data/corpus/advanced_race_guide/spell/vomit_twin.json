@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T21:43:42Z",
+  "data": {
+    "key": "Vomit Twin",
+    "school": "Conjuration",
+    "level": 3,
+    "description": "Upon casting this spell, you vomit forth a disgusting ooze copy of yourself into a single adjacent square. As long as the twin exists, whenever you take a move action to move, the twin can move as well, although it does not need to follow you and cannot take any other actions. On subsequent rounds, at the start of your turn, you can instantaneously exchange places with your twin, as if using teleport. This is not an action and does not provoke an attack of opportunity. The twin has a speed of 30 feet and provokes attacks of opportunity from movement as normal. It has an AC equal to and hit points. If the twin is reduced to 0 hit points, it is destroyed, although you can create a new one on your turn as a standard action as long as the duration persists. You cannot have more than one vomit twin at a time."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 96,
+    "record_key": "Vomit Twin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

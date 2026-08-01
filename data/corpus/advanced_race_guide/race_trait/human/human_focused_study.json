@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Human ~ Focused Study",
+    "name": "Focused Study",
+    "race_key": "Human",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Human Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Human_ReplaceBonusFeat"
+    ],
+    "description": "All humans are skillful, but some focus on a specialized set of skills even more closely. At 1st, 8th, and 16th level, such humans gain Skill Focus in a skill of their choice as a bonus feat. This racial trait replaces the bonus feat trait.",
+    "source_page": "p.72",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Focused Study"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Focused Study],[!PREFACT:1,ABILITIES,Human_ReplaceBonusFeat=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "All humans are skillful, but some focus on a specialized set of skills even more closely. At 1st, 8th, and 16th level, such humans gain Skill Focus in a skill of their choice as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the bonus feat trait.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Focused Study"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceBonusFeat|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Focused Study Choice",
+          "1+floor(TL/8)"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 260,
+    "record_key": "Human ~ Focused Study"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

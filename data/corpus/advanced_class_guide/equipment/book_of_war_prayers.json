@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Book of War Prayers",
     "category": "General",
-    "name": "Book of War Prayers",
     "cost_gp": 50.0,
-    "weight": 0.5,
-    "description": "With Charisma 13 or 1 rank in Perform (Oratory), read for 10 minutes to give +2 morale bonus on next save against fear in 24 hours"
+    "description": "With Charisma 13 or 1 rank in Perform (Oratory), read for 10 minutes to give +2 morale bonus on next save against fear in 24 hours",
+    "key": "Book of War Prayers",
+    "name": "Book of War Prayers",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Book"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.202"
+      },
+      {
+        "key": "SPROP",
+        "value": "With Charisma 13 or 1 rank in Perform (Oratory), read for 10 minutes to give +2 morale bonus on next save against fear in 24 hours"
+      }
+    ],
+    "weight": 0.5
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 164,
-    "record_key": "Book of War Prayers"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Book of War Prayers",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

@@ -1,20 +1,119 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Bracers of Archery (Lesser)",
     "category": "magic_items",
-    "name": "Lesser Bracers of Archery",
     "cost_gp": 5000.0,
-    "weight_lbs": 1.0,
-    "description": "These wristbands function as greater bracers of archery, except that they grant a +1 competence bonus on attack rolls and no bonus on damage rolls."
+    "description": "These wristbands function as greater bracers of archery, except that they grant a +1 competence bonus on attack rolls and no bonus on damage rolls.",
+    "key": "Bracers of Archery (Lesser)",
+    "name": "Lesser Bracers of Archery",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPONPROF=Longbow",
+          "TOHIT",
+          "4",
+          "!PREWEAPONPROF:1,Longbow",
+          "TYPE=Proficiency"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPONPROF=Shortbow",
+          "TOHIT",
+          "4",
+          "!PREWEAPONPROF:1,Shortbow",
+          "TYPE=Proficiency"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPONPROF=Longbow",
+          "TOHIT",
+          "1",
+          "PREWEAPONPROF:1,Longbow",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "WEAPONPROF=Shortbow",
+          "TOHIT",
+          "1",
+          "PREWEAPONPROF:1,Shortbow",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bracers of Archery (Lesser)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bracers of Archery, Lesser"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Wrist.Bracer"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.505"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|4th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|wrists"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, Craft Magic Arms and Armor, crafter must be proficient with a longbow or shortbow"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "These wristbands function as greater bracers of archery, except that they grant a +1 competence bonus on attack rolls and no bonus on damage rolls."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 71,
-    "record_key": "Bracers of Archery (Lesser)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Bracers of Archery (Lesser)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

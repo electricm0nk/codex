@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Incense (250 gp)",
     "category": "general",
-    "name": "Incense (worth 250 gp)",
     "cost_gp": 250.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Incense (250 gp)",
+    "name": "Incense (worth 250 gp)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Incense (250 gp)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Incense (worth 250 gp)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Component.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Material Component for Legend Lore"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 446,
-    "record_key": "Incense (250 gp)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Incense (250 gp)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

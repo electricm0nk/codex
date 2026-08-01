@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Quality ~ Double",
     "category": "equipmods",
-    "name": "Double",
     "cost_gp": 0.0,
-    "weight_lbs": null,
-    "description": "May use the weapon as if fighting with teo weapons (pg. 144)"
+    "description": "May use the weapon as if fighting with teo weapons (pg. 144)",
+    "key": "Special Quality ~ Double",
+    "name": "Double",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Double"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "SpecailWeaponQualities"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.144"
+      },
+      {
+        "key": "SPROP",
+        "value": "double"
+      },
+      {
+        "key": "DESC",
+        "value": "May use the weapon as if fighting with teo weapons (pg. 144)"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 40,
-    "record_key": "Special Quality ~ Double"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Quality ~ Double",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

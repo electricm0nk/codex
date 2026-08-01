@@ -1,0 +1,189 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Improvisation",
+    "category": "general",
+    "name": "Improvisation",
+    "description": "You can figure out how to do almost anything.",
+    "effect": [
+      [
+        "SKILL",
+        "Acrobatics",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Acrobatics=1"
+      ],
+      [
+        "SKILL",
+        "Appraise",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Appraise=1"
+      ],
+      [
+        "SKILL",
+        "Bluff",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Bluff=1"
+      ],
+      [
+        "SKILL",
+        "Climb",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Climb=1"
+      ],
+      [
+        "SKILL",
+        "Craft (Untrained)",
+        "ImprovisationBonus",
+        "!PRESKILL:1,TYPE.Craft=1"
+      ],
+      [
+        "SKILL",
+        "Diplomacy",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Diplomacy=1"
+      ],
+      [
+        "SKILL",
+        "Disguise",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Disguise=1"
+      ],
+      [
+        "SKILL",
+        "Untrained ~ Disable Device",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Disable Device=1"
+      ],
+      [
+        "SKILL",
+        "Escape Artist",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Escape Artist=1"
+      ],
+      [
+        "SKILL",
+        "Fly",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Fly=1"
+      ],
+      [
+        "SKILL",
+        "Untrained ~ Handle Animal",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Handle Animal=1"
+      ],
+      [
+        "SKILL",
+        "Heal",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Heal=1"
+      ],
+      [
+        "SKILL",
+        "Intimidate",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Intimidate=1"
+      ],
+      [
+        "SKILL",
+        "Untrained ~ Linguistics",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Linguistics=1"
+      ],
+      [
+        "SKILL",
+        "Knowledge (Untrained)",
+        "ImprovisationBonus",
+        "!PRESKILL:1,TYPE.Knowledge=1"
+      ],
+      [
+        "SKILL",
+        "Perception",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Perception=1"
+      ],
+      [
+        "SKILL",
+        "Perform (Untrained)",
+        "ImprovisationBonus",
+        "!PRESKILL:1,TYPE.Perform=1"
+      ],
+      [
+        "SKILL",
+        "Profession (Untrained)",
+        "ImprovisationBonus",
+        "!PRESKILL:1,TYPE.Profession=1"
+      ],
+      [
+        "SKILL",
+        "Ride",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Ride=1"
+      ],
+      [
+        "SKILL",
+        "Sense Motive",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Sense Motive=1"
+      ],
+      [
+        "SKILL",
+        "Untrained ~ Sleight of Hand",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Sleight of Hand=1"
+      ],
+      [
+        "SKILL",
+        "Untrained ~ Spellcraft",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Spellcraft=1"
+      ],
+      [
+        "SKILL",
+        "Stealth",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Stealth=1"
+      ],
+      [
+        "SKILL",
+        "Survival",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Survival=1"
+      ],
+      [
+        "SKILL",
+        "Swim",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Swim=1"
+      ],
+      [
+        "SKILL",
+        "Untrained ~ Use Magic Device",
+        "ImprovisationBonus",
+        "!PRESKILL:1,Use Magic Device=1"
+      ],
+      [
+        "VAR",
+        "ImprovisationBonus",
+        "2"
+      ],
+      [
+        "VAR",
+        "UseUntrainedSkills",
+        "1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 111,
+    "record_key": "Improvisation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

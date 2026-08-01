@@ -1,20 +1,155 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Power",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 235000.0,
-    "weight_lbs": 5.0,
-    "description": "The staff of power is a very potent magic item with offensive and defensive abilities. It is usually topped with a glistening gem that often burns from within with a flickering red light. The staff allows the use of the following spells:\n* Continual flame (1 charge)\n* Fireball (heightened to 5th level) (1 charge)\n* Levitate (1 charge)\n* Lightning bolt (heightened to 5th level) (1 charge)\n* Magic missile (1 charge)\n* Ray of enfeeblement (heightened to 5th level) (1 charge)\n* Cone of cold (2 charges)\n* Globe of invulnerability (2 charges)\n* Hold monster (2 charges)\n* Wall of force (in a 10-ft.-diameter hemisphere around the caster only) (2 charges)\nThe wielder of a staff of power gains a +2 luck bonus to AC and on saving throws. The staff is also a +2 quarterstaff, and its wielder may use it to smite opponents. If 1 charge is expended (as a free action), the staff causes double damage (x3 on a critical hit) for 1 round.\nA staff of power can be used for a retributive strike, requiring it to be broken by its wielder. (If this breaking of the staff is purposeful and declared by the wielder, it can be performed as a standard action that does not require the wielder to make a Strength check.) All charges currently in the staff are instantly released in a 30-foot spread. All within 2 squares of the broken staff take points of damage equal to 20 x the number of charges in the staff, those 3 or 4 squares away take 15 xthe number of charges in damage, and those 5 or 6 squares distant take 10 x the number of charges in damage. All those affected can make DC 17 Reflex saves to reduce the damage by half.\nThe character breaking the staff has a 50%% chance of traveling to another plane of existence, but if he does not, the explosive release of spell energy destroys him. Only certain items, including the staff of the magi and the staff of power, are capable of being used for a retributive strike."
+    "description": "The staff of power is a very potent magic item with offensive and defensive abilities. It is usually topped with a glistening gem that often burns from within with a flickering red light. The staff allows the use of the following spells:\n* Continual flame (1 charge)\n* Fireball (heightened to 5th level) (1 charge)\n* Levitate (1 charge)\n* Lightning bolt (heightened to 5th level) (1 charge)\n* Magic missile (1 charge)\n* Ray of enfeeblement (heightened to 5th level) (1 charge)\n* Cone of cold (2 charges)\n* Globe of invulnerability (2 charges)\n* Hold monster (2 charges)\n* Wall of force (in a 10-ft.-diameter hemisphere around the caster only) (2 charges)\nThe wielder of a staff of power gains a +2 luck bonus to AC and on saving throws. The staff is also a +2 quarterstaff, and its wielder may use it to smite opponents. If 1 charge is expended (as a free action), the staff causes double damage (x3 on a critical hit) for 1 round.\nA staff of power can be used for a retributive strike, requiring it to be broken by its wielder. (If this breaking of the staff is purposeful and declared by the wielder, it can be performed as a standard action that does not require the wielder to make a Strength check.) All charges currently in the staff are instantly released in a 30-foot spread. All within 2 squares of the broken staff take points of damage equal to 20 x the number of charges in the staff, those 3 or 4 squares away take 15 xthe number of charges in damage, and those 5 or 6 squares distant take 10 x the number of charges in damage. All those affected can make DC 17 Reflex saves to reduce the damage by half.\nThe character breaking the staff has a 50%% chance of traveling to another plane of existence, but if he does not, the explosive release of spell energy destroys him. Only certain items, including the staff of the magi and the staff of power, are capable of being used for a retributive strike.",
+    "key": "Staff of Power",
+    "name": "Staff",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2+Global_LuckBonus",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FortitudeSave_LuckBonus",
+          "2",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ReflexSave_LuckBonus",
+          "2",
+          "TYPE=Luck"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "WillSave_LuckBonus",
+          "2",
+          "TYPE=Luck"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Power"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Power"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Quarterstaff"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Weapon.Resizable.Melee.Simple.OneHanded.Double.Bludgeoning.Quarterstaff.Polearm.Weapon Group Double.Weapon Group Monk"
+      },
+      {
+        "key": "ALTTYPE",
+        "value": "Weapon.Resizable.Melee.Bludgeoning"
+      },
+      {
+        "key": "COST",
+        "value": "235000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "ALTCRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "ALTCRITRANGE",
+        "value": "1"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "ALTDAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +2 ~ Weapon.Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "ALTEQMOD",
+        "value": "Special Ability ~ +2 ~ Weapon"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.495"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong varied"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|117,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, Craft Magic Arms and Armor, cone of cold, continual flame, heightened fireball, globe of invulnerability, hold monster, levitate, heightened lightning bolt, magic missile, heightened ray of enfeeblement, wall of force"
+      },
+      {
+        "key": "DESC",
+        "value": "The staff of power is a very potent magic item with offensive and defensive abilities. It is usually topped with a glistening gem that often burns from within with a flickering red light. The staff allows the use of the following spells:&nl;* Continual flame (1 charge)&nl;* Fireball (heightened to 5th level) (1 charge)&nl;* Levitate (1 charge)&nl;* Lightning bolt (heightened to 5th level) (1 charge)&nl;* Magic missile (1 charge)&nl;* Ray of enfeeblement (heightened to 5th level) (1 charge)&nl;* Cone of cold (2 charges)&nl;* Globe of invulnerability (2 charges)&nl;* Hold monster (2 charges)&nl;* Wall of force (in a 10-ft.-diameter hemisphere around the caster only) (2 charges)&nl;The wielder of a staff of power gains a +2 luck bonus to AC and on saving throws. The staff is also a +2 quarterstaff, and its wielder may use it to smite opponents. If 1 charge is expended (as a free action), the staff causes double damage (x3 on a critical hit) for 1 round.&nl;A staff of power can be used for a retributive strike, requiring it to be broken by its wielder. (If this breaking of the staff is purposeful and declared by the wielder, it can be performed as a standard action that does not require the wielder to make a Strength check.) All charges currently in the staff are instantly released in a 30-foot spread. All within 2 squares of the broken staff take points of damage equal to 20 x the number of charges in the staff, those 3 or 4 squares away take 15 xthe number of charges in damage, and those 5 or 6 squares distant take 10 x the number of charges in damage. All those affected can make DC 17 Reflex saves to reduce the damage by half.&nl;The character breaking the staff has a 50%% chance of traveling to another plane of existence, but if he does not, the explosive release of spell energy destroys him. Only certain items, including the staff of the magi and the staff of power, are capable of being used for a retributive strike."
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 439,
-    "record_key": "Staff of Power"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Power",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

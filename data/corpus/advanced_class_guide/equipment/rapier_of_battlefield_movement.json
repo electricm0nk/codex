@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Rapier of Battlefield Movement",
     "category": "ArmsArmor",
-    "name": "Rapier of Battlefield Movement",
     "cost_gp": 20.0,
-    "weight": 2.0,
-    "description": "+5 to Acrobatics checks made to move through an enemy's threatened area or through its space; after hitting with a melee attack with this weapon, spend 1 panache point to move 10 feet without provoking attacks of opportunity"
+    "description": "+5 to Acrobatics checks made to move through an enemy's threatened area or through its space; after hitting with a melee attack with this weapon, spend 1 panache point to move 10 feet without provoking attacks of opportunity",
+    "key": "Rapier of Battlefield Movement",
+    "name": "Rapier of Battlefield Movement",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "DAMAGEMULT:2",
+          "-0.5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Rapier"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.OneHanded.Martial.Finesseable.Piercing.Sword.BladeLight.MeleePiercing.Specific.Weapon Group Blades Light.InspiredOK.Weapon Group Melee OneHanded Piercing"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "3"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Enhancement Cost|22000.Special Ability ~ +2 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "OneHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 to Acrobatics checks made to move through an enemy's threatened area or through its space; after hitting with a melee attack with this weapon, spend 1 panache point to move 10 feet without provoking attacks of opportunity"
+      }
+    ],
+    "weight": 2.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 263,
-    "record_key": "Rapier of Battlefield Movement"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Rapier of Battlefield Movement",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

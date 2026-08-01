@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "SCROLL_MEDIUM",
     "category": "equipmods",
-    "name": "Medium",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "SCROLL_MEDIUM",
+    "name": "Medium",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "SCROLL_MEDIUM"
+      },
+      {
+        "key": "TYPE",
+        "value": "Scroll"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Medium"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Arcane,Divine"
+      },
+      {
+        "key": "!PRETYPE",
+        "value": "1,Minor,Medium,Major"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 643,
-    "record_key": "SCROLL_MEDIUM"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "SCROLL_MEDIUM",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 6000.0,
+    "description": "Can be used up to 10 times per day. When struck in combat, the wearer may spend one use as an immediate action to create a longsword-shaped spiritual weapon that then attacks her attacker. On the wearer's next turn, she may spend one additional use each round to continue attacking that target with the spiritual weapon; the spiritual weapon cannot be redirected and disappears if the target is killed or moves out of range. Multiple spiritual weapons may be created (even attacking the same target) if the wearer is attacked in subsequent rounds.",
+    "key": "Crown of Swords",
+    "name": "Crown of Swords",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "6000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.78"
+      },
+      {
+        "key": "SPROP",
+        "value": "Can be used up to 10 times per day. When struck in combat, the wearer may spend one use as an immediate action to create a longsword-shaped spiritual weapon that then attacks her attacker. On the wearer's next turn, she may spend one additional use each round to continue attacking that target with the spiritual weapon; the spiritual weapon cannot be redirected and disappears if the target is killed or moves out of range. Multiple spiritual weapons may be created (even attacking the same target) if the wearer is attacked in subsequent rounds."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Crown of Swords",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

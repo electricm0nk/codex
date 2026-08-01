@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Gnome ~ Illusion Resistance",
+    "name": "Illusion Resistance",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "Gnome Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Gnome_ReplaceIllusionResistance",
+    "sets_replace_flags": [],
+    "description": "Gnomes get a +2 racial saving throw bonus against illusion spells and effects.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Illusion Resistance"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.Gnome Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Gnome_ReplaceIllusionResistance=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes get a +2 racial saving throw bonus against illusion spells and effects."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial saving throw bonus against illusion spells and effects."
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_Illusions",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gnome/gnome_abilities_race.lst",
+    "sha256": "aa95c706e39ae8a191f89c092152b6a5a25ab27540dc35f0a8796aa8e67db38f",
+    "line": 25,
+    "record_key": "Gnome ~ Illusion Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Summoner ~ Aspect",
+    "name": "Aspect",
+    "class_key": "Summoner ~ Unchained Class",
+    "base_class_key": "Summoner",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Summoner Class Feature",
+      "SpecialQuality",
+      "Supernatural",
+      "Aspect"
+    ],
+    "min_level": 10,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "At 10th level, a summoner can divert up to 2 points from his eidolon's evolution pool to add evolutions to himself. He cannot select any evolution that the eidolon could not possess, and he must be able to meet the requirements as well (except for subtype requirements, so long as his eidolon meets the subtype requirement). He cannot select the ability increase evolution through this ability. Any points spent in this way are taken from the eidolon's evolution pool (reducing the total number available to the eidolon). The summoner can change the evolutions granted by these points anytime he can change the eidolon's evolutions.",
+    "source_page": "p.27",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Summoner ~ Aspect"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Summoner Class Feature.SpecialQuality.Supernatural.Aspect"
+      },
+      {
+        "key": "DESC",
+        "value": "At 10th level, a summoner can divert up to 2 points from his eidolon's evolution pool to add evolutions to himself. He cannot select any evolution that the eidolon could not possess, and he must be able to meet the requirements as well (except for subtype requirements, so long as his eidolon meets the subtype requirement). He cannot select the ability increase evolution through this ability. Any points spent in this way are taken from the eidolon's evolution pool (reducing the total number available to the eidolon). The summoner can change the evolutions granted by these points anytime he can change the eidolon's evolutions."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 738,
+    "record_key": "Unchained Summoner ~ Aspect"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

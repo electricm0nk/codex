@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Duergar ~ Daysighted",
+    "name": "Daysighted",
+    "race_key": "Duergar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Duergar Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Duergar_ReplaceLightSensitivity",
+      "Duergar_ReplaceVision"
+    ],
+    "description": "The cruel light of the sun harms some duergar less than others. Such duergar lack the light sensitivity racial trait, but have darkvision of only 60 feet.",
+    "source_page": "p.186",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duergar ~ Daysighted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Duergar Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Duergar ~ Daysighted],[!PREFACT:1,ABILITIES,Duergar_ReplaceLightSensitivity=True,Duergar_ReplaceVision=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The cruel light of the sun harms some duergar less than others. Such duergar lack the light sensitivity racial trait, but have darkvision of only 60 feet."
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      },
+      {
+        "key": "FACT",
+        "value": "Duergar_ReplaceLightSensitivity|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Duergar_ReplaceVision|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 848,
+    "record_key": "Duergar ~ Daysighted"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

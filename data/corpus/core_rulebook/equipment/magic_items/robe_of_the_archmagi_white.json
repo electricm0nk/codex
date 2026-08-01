@@ -1,20 +1,99 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Robe of the Archmagi (White)",
     "category": "magic_items",
-    "name": "White Robe of the Archmagi",
     "cost_gp": 75000.0,
-    "weight_lbs": 1.0,
-    "description": "This normal-appearing garment can be white (01-45 on d%%, good alignment), gray (46-75, neither good nor evil alignment), or black (76-100, evil alignment). To most wearers, the robe offers no powers or has no effects unless the wearer's alignment doesn't match that of the robe (see below). Only an arcane spellcaster can fully realize this potent magic item's powers once the robe is donned. These powers are as follows.\n* +5 armor bonus to AC.\n* Spell resistance 18.\n* +4 resistance bonus on all saving throws.\n* +2 enhancement bonus on caster level checks made to overcome spell resistance.\nAs mentioned above, all robes of the archmagi are attuned to a specific alignment. If a white robe is donned by an evil character, she immediately gains three permanent negative levels. The same is true with respect to a black robe donned by a good character. An evil or good character who puts on a gray robe, or a neutral character who dons either a white or black robe, gains two permanent negative levels. While these negative levels remain as long as the garment is worn and cannot be overcome in any way (including restoration spells), they are immediately removed if the robe is removed."
+    "description": "This normal-appearing garment can be white (01-45 on d%%, good alignment), gray (46-75, neither good nor evil alignment), or black (76-100, evil alignment). To most wearers, the robe offers no powers or has no effects unless the wearer's alignment doesn't match that of the robe (see below). Only an arcane spellcaster can fully realize this potent magic item's powers once the robe is donned. These powers are as follows.\n* +5 armor bonus to AC.\n* Spell resistance 18.\n* +4 resistance bonus on all saving throws.\n* +2 enhancement bonus on caster level checks made to overcome spell resistance.\nAs mentioned above, all robes of the archmagi are attuned to a specific alignment. If a white robe is donned by an evil character, she immediately gains three permanent negative levels. The same is true with respect to a black robe donned by a good character. An evil or good character who puts on a gray robe, or a neutral character who dons either a white or black robe, gains two permanent negative levels. While these negative levels remain as long as the garment is worn and cannot be overcome in any way (including restoration spells), they are immediately removed if the robe is removed.",
+    "key": "Robe of the Archmagi (White)",
+    "name": "White Robe of the Archmagi",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "2",
+          "!PREALIGN:LG,NG,CG"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "NegLevels",
+          "1",
+          "PREALIGN:LE,NE,CE"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Robe of the Archmagi (White)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Robe of the Archmagi, White"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "75000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.527"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Robe of the Archmagi|PREMULT:1,[PRECLASS:1,SPELLCASTER.Arcane=1],[PREVARGTEQ:Caster_Level_Highest__Arcane,1]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong varied"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|14th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|body"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|37,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, antimagic field, mage armor or shield of faith, creator must be of same alignment as robe"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 enhancement bonus to overcome spell resistance.|PREMULT:1,[PRECLASS:1,SPELLCASTER.Arcane=1],[PREVARGTEQ:Caster_Level_Highest__Arcane,1]"
+      },
+      {
+        "key": "DESC",
+        "value": "This normal-appearing garment can be white (01-45 on d%%, good alignment), gray (46-75, neither good nor evil alignment), or black (76-100, evil alignment). To most wearers, the robe offers no powers or has no effects unless the wearer's alignment doesn't match that of the robe (see below). Only an arcane spellcaster can fully realize this potent magic item's powers once the robe is donned. These powers are as follows.&nl;* +5 armor bonus to AC.&nl;* Spell resistance 18.&nl;* +4 resistance bonus on all saving throws.&nl;* +2 enhancement bonus on caster level checks made to overcome spell resistance.&nl;As mentioned above, all robes of the archmagi are attuned to a specific alignment. If a white robe is donned by an evil character, she immediately gains three permanent negative levels. The same is true with respect to a black robe donned by a good character. An evil or good character who puts on a gray robe, or a neutral character who dons either a white or black robe, gains two permanent negative levels. While these negative levels remain as long as the garment is worn and cannot be overcome in any way (including restoration spells), they are immediately removed if the robe is removed."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 306,
-    "record_key": "Robe of the Archmagi (White)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Robe of the Archmagi (White)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

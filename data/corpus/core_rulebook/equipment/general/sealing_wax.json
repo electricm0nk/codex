@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Sealing Wax",
     "category": "general",
-    "name": "Sealing Wax",
     "cost_gp": 1.0,
-    "weight_lbs": 1.0,
-    "description": null
+    "description": null,
+    "key": "Sealing Wax",
+    "name": "Sealing Wax",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Sealing Wax"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Sealing Wax"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Writing"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 170,
-    "record_key": "Sealing Wax"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Sealing Wax",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

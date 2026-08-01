@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Ability ~ Spell Effect / Staff / Primary Power",
     "category": "equipmods",
-    "name": "|Spell Effect (Staff/Primary Power)",
     "cost_gp": null,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Ability ~ Spell Effect / Staff / Primary Power",
+    "name": "|Spell Effect (Staff/Primary Power)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Spell Effect / Staff / Primary Power"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "SPELL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Staff"
+      },
+      {
+        "key": "COST",
+        "value": "((400*(max(%SPELLLEVEL,(1/2)))*(max(%CASTERLEVEL,8))+%SPELLCOST+(5*%SPELLXPCOST)))/%CHARGES"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Enhancement.Magic"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "EQBUILDER.SPELL"
+      },
+      {
+        "key": "CHARGES",
+        "value": "1|5"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 198,
-    "record_key": "Special Ability ~ Spell Effect / Staff / Primary Power"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Spell Effect / Staff / Primary Power",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

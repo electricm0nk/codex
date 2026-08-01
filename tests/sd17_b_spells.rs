@@ -269,7 +269,7 @@ fn parse_lst_spell_file_handles_canonical_pf1_corpus_when_available() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping canonical corpus test (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };
@@ -306,7 +306,7 @@ fn parse_lst_spell_file_runs_in_linear_time_on_canonical_corpus() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping perf test (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };

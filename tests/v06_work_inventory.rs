@@ -26,9 +26,14 @@ use std::process::Command;
 /// The corpus books directory, or `None` when this machine has no PCGen
 /// checkout to read.
 fn corpus_books_dir() -> Option<PathBuf> {
-    let root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let dir = PathBuf::from(root).join("pathfinder/paizo/roleplaying_game");
+    let root = match std::env::var_os("PCGEN_CORPUS_ROOT") {
+        Some(configured) => PathBuf::from(configured),
+        // HOME-relative default: the operator keeps `workspace/` in the home
+        // directory and syncs it between machines. Rust does not expand `~`.
+        None => PathBuf::from(std::env::var_os("HOME").filter(|home| !home.is_empty())?)
+            .join("workspace/repos/pcgen/data"),
+    };
+    let dir = root.join("pathfinder/paizo/roleplaying_game");
     dir.is_dir().then_some(dir)
 }
 

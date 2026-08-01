@@ -1,0 +1,59 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 7500.0,
+    "description": "Grant a +5 competence bonus on Spellcraft checks and concentration checks made to cast a spell defensively.",
+    "key": "Gloves of Elvenkind",
+    "name": "Gloves of Elvenkind",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Spellcraft=Cast Defensively",
+          "5",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "SKILL=Concentrate,Concentrate (Cast Defensively)",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Glove"
+      },
+      {
+        "key": "COST",
+        "value": "7500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.29"
+      },
+      {
+        "key": "SPROP",
+        "value": "Grant a +5 competence bonus on Spellcraft checks and concentration checks made to cast a spell defensively."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Gloves of Elvenkind",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

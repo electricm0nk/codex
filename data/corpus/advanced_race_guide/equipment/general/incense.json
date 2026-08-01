@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 10.0,
+    "description": "Burns for 1 hour",
+    "key": "Incense",
+    "name": "Incense",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Racial.Aasimar"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.87"
+      },
+      {
+        "key": "SPROP",
+        "value": "Burns for 1 hour"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 51,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Incense",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
+}

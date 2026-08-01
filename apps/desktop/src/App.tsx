@@ -41,6 +41,7 @@ import { AppearancePanel } from './settings/AppearancePanel';
 import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
 import { applyThemeMode, getStoredThemeMode, type ThemeMode } from './settings/themeMode';
 import { applyActiveTheme, applyObsidianModeClass, seedBuiltinThemes } from './settings/communityTheme';
+import { SOURCEBOOK_STATUS_ROWS } from './testerWorkbench/sourcebookSupportStatus';
 
 function derivePlatformLabel(): string {
   if (typeof navigator === 'undefined') {
@@ -846,17 +847,6 @@ function humanizeSubjectId(subjectId: string): string {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-// Other Pathfinder 1e sourcebooks with no support data at all yet — listed
-// honestly as not started rather than fabricating a per-item breakdown for
-// content that doesn't exist in the app.
-const NOT_STARTED_SOURCEBOOKS = [
-  "Advanced Player's Guide",
-  'Advanced Class Guide',
-  'Ultimate Combat',
-  'Ultimate Magic',
-  'Ultimate Equipment',
-];
-
 function SupportDebtPanel(props: { surface: TesterWorkbenchSurface }) {
   const debt = props.surface.supportDebt;
 
@@ -943,23 +933,36 @@ function SupportDebtPanel(props: { surface: TesterWorkbenchSurface }) {
 
           <div style={{ marginTop: '1.75rem' }}>
             <h3 style={{ marginBottom: '0.5rem' }}>Other sourcebooks</h3>
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', lineHeight: 1.6, margin: '0 0 0.75rem' }}>
+              &ldquo;Ingested&rdquo; means the book&rsquo;s records ship in the app and are browsable
+              in the catalogs. It is not a support-state claim: the audited rows above are Core
+              Rulebook subjects, so these books have no support-debt rows yet.
+            </p>
             <div style={{ display: 'grid', gap: '0.5rem' }}>
-              {NOT_STARTED_SOURCEBOOKS.map((book) => (
+              {SOURCEBOOK_STATUS_ROWS.map((row) => (
                 <div
-                  key={book}
+                  key={row.name}
                   style={{
                     alignItems: 'center',
                     backgroundColor: 'var(--color-surface)',
                     border: '1px solid var(--color-border)',
                     borderRadius: 10,
                     display: 'flex',
+                    gap: '0.75rem',
                     justifyContent: 'space-between',
                     padding: '0.6rem 0.9rem',
                   }}
                 >
-                  <span>{book}</span>
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase' }}>
-                    Not started
+                  <span>
+                    {row.name}
+                    {row.detail ? (
+                      <span style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.8rem' }}>
+                        {row.detail}
+                      </span>
+                    ) : null}
+                  </span>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.04em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>
+                    {row.status}
                   </span>
                 </div>
               ))}

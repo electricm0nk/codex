@@ -17,5 +17,8 @@
     "line": 59,
     "record_key": "Banded Mail",
     "inherited_from_record_key": "Banded Mail (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

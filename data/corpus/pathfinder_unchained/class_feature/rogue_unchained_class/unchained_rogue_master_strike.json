@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Rogue ~ Master Strike",
+    "name": "Master Strike",
+    "class_key": "Rogue ~ Unchained Class",
+    "base_class_key": "Rogue",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Rogue Class Feature",
+      "SpecialAttack",
+      "Extraordinary",
+      "AttackOption"
+    ],
+    "min_level": 20,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is . Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.",
+    "source_page": "p.24",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue ~ Master Strike"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rogue Class Feature.SpecialAttack.Extraordinary.AttackOption"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue ~ Master Strike"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterStrikeDC|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MasterStrikeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is %1. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.|MasterStrikeDC"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.24"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "MasterStrikeDC",
+          "10+(MasterStrikeLVL/2)+INT"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MasterStrikeLVL",
+          "RogueLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "MasterStrikeLVL",
+          "RogueLVL"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 586,
+    "record_key": "Unchained Rogue ~ Master Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

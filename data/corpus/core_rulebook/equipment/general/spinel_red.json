@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Spinel (Red)",
     "category": "general",
-    "name": "Red Spinel",
     "cost_gp": 100.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Spinel (Red)",
+    "name": "Red Spinel",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spinel (Red)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Spinel, Red"
+      },
+      {
+        "key": "TYPE",
+        "value": "Gem"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.400"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 379,
-    "record_key": "Spinel (Red)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Spinel (Red)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

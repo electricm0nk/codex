@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Tengu ~ Gifted Linguist",
+    "name": "Gifted Linguist",
+    "race_key": "Tengu",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tengu Racial Trait",
+      "Tengu Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability",
+      "Extraordinary"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Tengu_ReplaceGiftedLinguist",
+    "sets_replace_flags": [],
+    "description": "Tengus gain a +4 racial bonus on Linguistics checks, and learn two languages each time they gain a rank in Linguistics rather than one language.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tengu ~ Gifted Linguist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tengu Racial Trait.Tengu Racial Default.SpecialQuality.Special Quality.Special Ability.Extraordinary"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Tengu_ReplaceGiftedLinguist=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Tengus gain a +4 racial bonus on Linguistics checks, and learn two languages each time they gain a rank in Linguistics rather than one language."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+4 Linguistics"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Linguistics",
+          "4",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "Linguisitcs_NumLanguages",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_abilities_race.lst",
+    "sha256": "96ecac0ad8fd92fc4bc2b89e0cb1e4bee96de0f78b6ebf8ce4d7464d34f92dfd",
+    "line": 20,
+    "record_key": "Tengu ~ Gifted Linguist"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

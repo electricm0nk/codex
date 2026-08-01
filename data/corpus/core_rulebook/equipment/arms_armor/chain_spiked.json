@@ -17,5 +17,8 @@
     "line": 249,
     "record_key": "Chain (Spiked)",
     "inherited_from_record_key": "Spiked Chain (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

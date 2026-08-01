@@ -249,6 +249,7 @@ export function LandingScreen(props: {
   onBrowseSpells: () => void;
   onBrowseClasses: () => void;
   onBrowseRaces: () => void;
+  onBrowseMonsters: () => void;
   onCorpusIngestDiagnostic: () => void;
   onCampaignManager: () => void;
   campaignManagerGate: CampaignManagerAccessGate;
@@ -336,6 +337,20 @@ export function LandingScreen(props: {
           }}
         >
           Browse Race Traits
+        </button>
+        <button
+          type="button"
+          onClick={props.onBrowseMonsters}
+          style={{
+            background: 'none',
+            border: 'none',
+            color: 'var(--color-text-muted)',
+            cursor: 'pointer',
+            fontSize: '0.85rem',
+            textDecoration: 'underline',
+          }}
+        >
+          Browse Monster Catalog
         </button>
         <button
           type="button"

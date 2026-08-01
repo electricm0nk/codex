@@ -23,7 +23,7 @@
 //! Builds a corpus from real, verbatim tokens copied from
 //! `core_rulebook/cr_equip_arms_armor.lst` (confirmed directly against
 //! the live corpus at
-//! `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst`):
+//! `$HOME/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst`):
 //! `KEY:Longsword (Base)` carries `CRITMULT:x2` (line 165), `KEY:Longspear
 //! (Base)` carries `CRITMULT:x3` (line 151), `KEY:Scythe (Base)` carries
 //! `CRITMULT:x4` (line 181). Same parser (`parse_equipment_entries`) and

@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Pole (10 ft)",
     "category": "general",
-    "name": "Pole (10 ft.)",
     "cost_gp": 0.05,
-    "weight_lbs": 8.0,
-    "description": null
+    "description": null,
+    "key": "Pole (10 ft)",
+    "name": "Pole (10 ft.)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pole (10 ft)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Pole (10 ft.)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Pole"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "0.05"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.158"
+      }
+    ],
+    "weight_lbs": 8.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 162,
-    "record_key": "Pole (10 ft)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Pole (10 ft)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

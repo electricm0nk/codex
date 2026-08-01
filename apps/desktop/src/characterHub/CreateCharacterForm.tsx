@@ -1,4 +1,4 @@
-import { useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
+import { useEffect, useState, type CSSProperties, type FormEvent, type ReactNode } from 'react';
 import {
   ABILITY_ABBREVIATIONS,
   ABILITY_KEYS,
@@ -6,7 +6,6 @@ import {
   AGE_OPTIONS,
   CLASS_OPTIONS,
   DEFAULT_ABILITY_SCORES,
-  RACE_OPTIONS,
   abilityModifier,
   ageEffectForAbility,
   clampLevelForClass,
@@ -21,8 +20,27 @@ import {
   type RaceOption,
   type Sex,
 } from './characterHubModel';
-import { applyRacialAbilityAdjustments, composeCreateCharacterRequest } from './composeCreateCharacterRequest';
+import {
+  applyFloatingAbilityAllocation,
+  applyRacialAbilityAdjustments,
+  composeCreateCharacterRequest,
+} from './composeCreateCharacterRequest';
+import { loadRaceRosterSurface, type RaceRosterSurface } from './raceRoster';
 import { createCharacterRuntime } from './characterHubRuntime';
+import {
+  buildAlternateTraitRows,
+  creationSelectionWarnings,
+  describeCreationSelection,
+  retainSelectionsValidForRace,
+} from './alternateTraitSelection';
+import {
+  loadAlternateRacialTraitsRuntime,
+  resolveRaceAlternateSelectionRuntime,
+} from '../raceCatalog/alternateTraitPickerRuntime';
+import type {
+  AlternateRacialTraitsResponse,
+  RaceSelectionResponse,
+} from '../boundary/loadAlternateRacialTraits';
 import type { CreateCharacterOutcomeSurface } from './buildCreateCharacterOutcomeSurface';
 import {
   ABILITY_SCORE_METHOD_OPTIONS,
@@ -153,18 +171,97 @@ const POINT_BUY_BASE_SCORES: Record<AbilityKey, number> = {
   charisma: POINT_BUY_DEFAULT_SCORE,
 };
 
-function rollHeight(body: BodyProfile): number {
-  return body.baseHeightInches + rollDice(body.heightModDice.count, body.heightModDice.sides);
+/**
+ * `null` for a race this repo carries no height/weight profile for. The
+ * corpus carries one for no race at all (PCGen keeps them in
+ * `<race>_biosettings.lst`, which no book's ingest reads), and the seven
+ * hand-entered profiles that ship are not extended by guesswork — see
+ * `RACE_BODY_PROFILES`. The form prints the absence instead of a number.
+ */
+function rollHeight(body: BodyProfile | null): number | null {
+  return body === null ? null : body.baseHeightInches + rollDice(body.heightModDice.count, body.heightModDice.sides);
 }
 
-function rollWeight(body: BodyProfile): number {
-  return body.baseWeightLb + rollDice(body.heightModDice.count, body.heightModDice.sides) * body.weightMultiplierLb;
+function rollWeight(body: BodyProfile | null): number | null {
+  return body === null
+    ? null
+    : body.baseWeightLb + rollDice(body.heightModDice.count, body.heightModDice.sides) * body.weightMultiplierLb;
 }
 
+/** What a read-only physical field shows when this repo has no profile behind it. */
+const NO_BODY_PROFILE = 'No height/weight profile';
+
+/**
+ * Loads the corpus-derived race roster, then renders the real form.
+ *
+ * The roster is served by the `list_race_creation_roster` command out of
+ * `data/corpus/<book>/race` and `race_trait` — 18 races across the Core Rulebook and
+ * Bestiary 1, where this form previously offered a hardcoded 7. It is
+ * fetched rather than compiled in for the reason spelled out in
+ * `raceRoster.ts`: the identical hand-maintained table one layer down
+ * silently drifted from the corpus on four races' ability modifiers.
+ *
+ * There is no sample-data fallback. Creation already requires the desktop
+ * backend (`loadCreateCharacter` throws without it), so a preview roster
+ * would be a picker whose every choice fails at submit.
+ */
 export function CreateCharacterForm(props: { onCreated: () => void }) {
+  const [roster, setRoster] = useState<RaceRosterSurface | null>(null);
+  const [rosterError, setRosterError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let live = true;
+    loadRaceRosterSurface()
+      .then((surface) => {
+        if (!live) {
+          return;
+        }
+        if (surface.options.length === 0) {
+          setRosterError(
+            surface.diagnostics.length > 0
+              ? `No race could be read from the corpus: ${surface.diagnostics.join('; ')}`
+              : 'No race could be read from the corpus.'
+          );
+          return;
+        }
+        setRoster(surface);
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setRosterError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  if (rosterError !== null) {
+    return (
+      <div style={{ border: '1px solid var(--color-border)', borderRadius: 12, padding: '1.25rem' }}>
+        <p style={{ color: 'var(--color-danger, #c0392b)', margin: 0 }}>{rosterError}</p>
+      </div>
+    );
+  }
+  if (roster === null) {
+    return (
+      <div style={{ border: '1px solid var(--color-border)', borderRadius: 12, padding: '1.25rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', margin: 0 }}>Loading races from the corpus…</p>
+      </div>
+    );
+  }
+  return <CreateCharacterFields races={roster.options} rosterDiagnostics={roster.diagnostics} onCreated={props.onCreated} />;
+}
+
+function CreateCharacterFields(props: {
+  races: RaceOption[];
+  rosterDiagnostics: string[];
+  onCreated: () => void;
+}) {
+  const races = props.races;
   const [displayLabel, setDisplayLabel] = useState('');
   const [playerName, setPlayerName] = useState('');
-  const [raceId, setRaceId] = useState(RACE_OPTIONS[0].id);
+  const [raceId, setRaceId] = useState(races[0].id);
   const [classId, setClassId] = useState(CLASS_OPTIONS[0].id);
   const [level, setLevel] = useState(STARTING_LEVEL);
   const [abilityScores, setAbilityScores] = useState({ ...DEFAULT_ABILITY_SCORES });
@@ -179,15 +276,23 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
   const [age, setAge] = useState<AgeCategory>('Adult');
   const [eyes, setEyes] = useState('');
   const [hair, setHair] = useState('');
-  const [heightInches, setHeightInches] = useState(() => rollHeight(RACE_OPTIONS[0].body.male));
-  const [weightLb, setWeightLb] = useState(() => rollWeight(RACE_OPTIONS[0].body.male));
+  const [heightInches, setHeightInches] = useState(() => rollHeight(races[0].body?.male ?? null));
+  const [weightLb, setWeightLb] = useState(() => rollWeight(races[0].body?.male ?? null));
   const [submitting, setSubmitting] = useState(false);
   const [outcome, setOutcome] = useState<CreateCharacterOutcomeSurface | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // SD-27: ARG's alternate racial traits, taken at creation. The menu is the
+  // same `race_trait_picker` payload the Race Traits screen browses; the live
+  // resolution is the same `RaceCorpus::resolve` call. Nothing about which
+  // trait replaces what, or which pairs are illegal, is decided here.
+  const [alternateMenu, setAlternateMenu] = useState<AlternateRacialTraitsResponse | null>(null);
+  const [alternateMenuError, setAlternateMenuError] = useState<string | null>(null);
+  const [selectedAlternateTraitKeys, setSelectedAlternateTraitKeys] = useState<string[]>([]);
+  const [alternateResolution, setAlternateResolution] = useState<RaceSelectionResponse | null>(null);
 
   const selectedClass = CLASS_OPTIONS.find((option) => option.id === classId) ?? CLASS_OPTIONS[0];
-  const selectedRace = RACE_OPTIONS.find((option) => option.id === raceId) ?? RACE_OPTIONS[0];
-  const body = selectedRace.body[sex];
+  const selectedRace = races.find((option) => option.id === raceId) ?? races[0];
+  const body = selectedRace.body?.[sex] ?? null;
 
   const allocatedPoints = ABILITY_KEYS.reduce((sum, key) => sum + allocation[key], 0);
   const remainingPoints = selectedRace.floatingBonusPoints - allocatedPoints;
@@ -274,14 +379,78 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
   }
 
   function reroll(nextRace: RaceOption, nextSex: Sex) {
-    setHeightInches(rollHeight(nextRace.body[nextSex]));
-    setWeightLb(rollWeight(nextRace.body[nextSex]));
+    const nextBody = nextRace.body?.[nextSex] ?? null;
+    setHeightInches(rollHeight(nextBody));
+    setWeightLb(rollWeight(nextBody));
+  }
+
+  // The alternate-racial-trait menu, loaded once. A failure is shown rather
+  // than swallowed: the rest of the form still works, and the player is told
+  // why the trait list is absent instead of concluding this race has none.
+  useEffect(() => {
+    let live = true;
+    loadAlternateRacialTraitsRuntime()
+      .then((menu) => {
+        if (live) {
+          setAlternateMenu(menu);
+        }
+      })
+      .catch((cause: unknown) => {
+        if (live) {
+          setAlternateMenuError(cause instanceof Error ? cause.message : String(cause));
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, []);
+
+  // Every change of race or selection is re-resolved by the engine, so the
+  // "replaces X" line and the mutual lock-out the player sees are the
+  // resolver's own answers for this exact selection — never a frontend guess.
+  useEffect(() => {
+    let live = true;
+    const raceKey = raceId.replace(/^race:/, '');
+    resolveRaceAlternateSelectionRuntime(raceKey, selectedAlternateTraitKeys)
+      .then((resolved) => {
+        if (live) {
+          setAlternateResolution(resolved);
+        }
+      })
+      .catch(() => {
+        if (live) {
+          setAlternateResolution(null);
+        }
+      });
+    return () => {
+      live = false;
+    };
+  }, [raceId, selectedAlternateTraitKeys]);
+
+  const alternateTraitRows = buildAlternateTraitRows(
+    alternateMenu,
+    raceId,
+    selectedAlternateTraitKeys,
+    alternateResolution
+  );
+  const alternateTraitWarnings = creationSelectionWarnings(alternateResolution);
+
+  function toggleAlternateTrait(key: string) {
+    setSelectedAlternateTraitKeys((current) =>
+      current.includes(key) ? current.filter((existing) => existing !== key) : [...current, key]
+    );
   }
 
   function handleRaceChange(nextRaceId: string) {
-    const nextRace = RACE_OPTIONS.find((option) => option.id === nextRaceId) ?? RACE_OPTIONS[0];
+    const nextRace = races.find((option) => option.id === nextRaceId) ?? races[0];
     setRaceId(nextRaceId);
     setAllocation({ ...ZERO_ALLOCATION });
+    // A Dwarf's trait cannot be carried onto an Elf: the backend would refuse
+    // the save, and refusing is a worse answer than clearing the choice at the
+    // moment it stops applying.
+    setSelectedAlternateTraitKeys((current) =>
+      retainSelectionsValidForRace(alternateMenu, nextRaceId, current)
+    );
     reroll(nextRace, sex);
   }
 
@@ -339,9 +508,22 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
       // applies them for the on-screen preview only. The compute engine
       // expects them baked into the submitted score for every race except
       // Human (see `applyRacialAbilityAdjustments`'s own doc comment).
-      const finalAbilityScores = applyRacialAbilityAdjustments(rawAbilityScores, selectedRace.abilityAdjustments);
+      const adjustedAbilityScores = applyRacialAbilityAdjustments(rawAbilityScores, selectedRace.abilityAdjustments);
+      // The freely-distributed "+2 to one ability score" points, for the
+      // races the backend does not apply them for. See
+      // `applyFloatingAbilityAllocation` — this is the seam that was missing
+      // entirely, which cost Half-Elf and Half-Orc their +2.
+      const finalAbilityScores = applyFloatingAbilityAllocation(adjustedAbilityScores, allocation, raceId);
       const request = composeCreateCharacterRequest(
-        { displayLabel, raceId, classId, level, abilityScores: finalAbilityScores, abilityBonusTarget: deriveAbilityBonusTarget() },
+        {
+          displayLabel,
+          raceId,
+          classId,
+          level,
+          abilityScores: finalAbilityScores,
+          abilityBonusTarget: deriveAbilityBonusTarget(),
+          selectedAlternateTraitKeys,
+        },
         { generateId: () => crypto.randomUUID(), now: () => new Date().toISOString() }
       );
       const result = await createCharacterRuntime(request);
@@ -395,9 +577,9 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
                 Race
               </label>
               <select id="character-race" style={INPUT_STYLE} value={raceId} onChange={(event) => handleRaceChange(event.target.value)}>
-                {RACE_OPTIONS.map((option) => (
+                {races.map((option) => (
                   <option key={option.id} value={option.id}>
-                    {option.label}
+                    {option.label} ({option.book})
                   </option>
                 ))}
               </select>
@@ -475,16 +657,28 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
               <ReadOnlyBox value={selectedRace.vision} />
             </LabeledField>
 
+            {/* Height and weight are the one field the corpus carries for no
+                race at all; only the seven hand-entered profiles exist. A
+                race without one shows the absence and offers no reroll
+                button, rather than a button that would roll nothing. */}
             <LabeledField label="Height">
               <ReadOnlyBox
-                value={formatHeight(heightInches)}
-                action={<DiceButton label="Reroll height" onClick={() => setHeightInches(rollHeight(body))} />}
+                value={heightInches === null ? NO_BODY_PROFILE : formatHeight(heightInches)}
+                action={
+                  body === null ? undefined : (
+                    <DiceButton label="Reroll height" onClick={() => setHeightInches(rollHeight(body))} />
+                  )
+                }
               />
             </LabeledField>
             <LabeledField label="Weight">
               <ReadOnlyBox
-                value={`${weightLb} lb`}
-                action={<DiceButton label="Reroll weight" onClick={() => setWeightLb(rollWeight(body))} />}
+                value={weightLb === null ? NO_BODY_PROFILE : `${weightLb} lb`}
+                action={
+                  body === null ? undefined : (
+                    <DiceButton label="Reroll weight" onClick={() => setWeightLb(rollWeight(body))} />
+                  )
+                }
               />
             </LabeledField>
             <LabeledField label="Age" htmlFor="character-age">
@@ -504,6 +698,134 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
               <input id="character-hair" style={INPUT_STYLE} value={hair} onChange={(event) => setHair(event.target.value)} />
             </LabeledField>
           </div>
+
+          {/* Alternate racial traits (Advanced Race Guide).
+
+              Every fact rendered here comes from the backend: which traits
+              exist, what each replaces, and which are locked out by the
+              current selection. `create_character` re-validates the submitted
+              keys against the corpus and returns `Blocked` rather than
+              persisting a swap that did not happen. */}
+          <p
+            style={{
+              ...LABEL_STYLE,
+              borderTop: '1px solid var(--color-border)',
+              color: 'var(--color-text)',
+              fontSize: '0.95rem',
+              marginTop: '0.5rem',
+              paddingTop: '1rem',
+            }}
+          >
+            Alternate Racial Traits
+          </p>
+          {alternateMenuError !== null ? (
+            <p style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.78rem', margin: 0 }}>
+              Alternate racial traits are unavailable: {alternateMenuError}
+            </p>
+          ) : alternateMenu === null ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
+              Loading alternate racial traits…
+            </p>
+          ) : alternateTraitRows.length === 0 ? (
+            <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
+              The Advanced Race Guide offers no alternate racial traits for {selectedRace.label}.
+            </p>
+          ) : (
+            <>
+              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: '0 0 0.5rem' }}>
+                {describeCreationSelection(selectedAlternateTraitKeys, alternateResolution)}
+              </p>
+              <div
+                style={{
+                  border: '1px solid var(--color-border)',
+                  borderRadius: 8,
+                  // Each row now carries its rendered description, so the old
+                  // 220px showed barely two of them.
+                  maxHeight: 320,
+                  overflowY: 'auto',
+                  padding: '0.35rem 0.5rem',
+                }}
+              >
+                {alternateTraitRows.map((row) => (
+                  <label
+                    key={row.alternate.key}
+                    style={{
+                      alignItems: 'flex-start',
+                      cursor: row.disabledReason === null ? 'pointer' : 'not-allowed',
+                      display: 'flex',
+                      gap: '0.5rem',
+                      opacity: row.disabledReason === null ? 1 : 0.55,
+                      padding: '0.3rem 0',
+                    }}
+                    title={row.disabledReason ?? row.description}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={row.selected}
+                      disabled={row.disabledReason !== null}
+                      onChange={() => toggleAlternateTrait(row.alternate.key)}
+                      style={{ marginTop: '0.2rem' }}
+                    />
+                    <span style={{ minWidth: 0 }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 600 }}>{row.alternate.name}</span>
+                      <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>
+                        {' '}
+                        · {row.alternate.book}
+                        {row.alternate.sourcePage === null ? '' : ` ${row.alternate.sourcePage}`}
+                      </span>
+                      {/* What the trait actually does, with its numbers.
+
+                          This row used to show a name, a page and "Replaces X"
+                          — three facts, none of them a magnitude — while the
+                          rendered sentence stating the number sat in the same
+                          payload, reaching only a hover tooltip. A player
+                          choosing between two alternates could not compare
+                          them. `description` is rendered verbatim: it is
+                          corpus prose with the engine's own numbers resolved
+                          into it (`decisions.md §29.1`). */}
+                      <span
+                        style={{
+                          color: 'var(--color-text-secondary)',
+                          display: 'block',
+                          fontSize: '0.72rem',
+                        }}
+                      >
+                        {row.description}
+                      </span>
+                      {row.droppedArgs.length > 0 ? (
+                        <span
+                          style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.7rem' }}
+                        >
+                          The engine could not resolve {row.droppedArgs.join(', ')}, so this description is
+                          incomplete.
+                        </span>
+                      ) : null}
+                      <span
+                        style={{
+                          color: 'var(--color-text-muted)',
+                          display: 'block',
+                          fontSize: '0.72rem',
+                        }}
+                      >
+                        {row.disabledReason ??
+                          (row.alternate.replaces.length > 0
+                            ? `Replaces ${row.alternate.replaces.map((link) => link.name).join(', ')}`
+                            : `Replaces nothing in the loaded books (${row.alternate.setsFlags.join(', ')})`)}
+                      </span>
+                    </span>
+                  </label>
+                ))}
+              </div>
+              {alternateTraitWarnings.map((warning) => (
+                <p
+                  key={warning}
+                  style={{ color: 'var(--color-danger, #c0392b)', fontSize: '0.75rem', margin: '0.4rem 0 0' }}
+                >
+                  {warning}
+                </p>
+              ))}
+            </>
+          )}
         </div>
 
         {/* Right column: ability scores panel */}
@@ -786,6 +1108,21 @@ export function CreateCharacterForm(props: { onCreated: () => void }) {
       </button>
 
       {error ? <p style={{ color: 'var(--color-error)', marginTop: '0.75rem' }}>{error}</p> : null}
+
+      {/* A race the backend could not read completely is withheld from the
+          picker rather than offered with a guessed size or speed. Naming it
+          here is the difference between a roster that is short and a roster
+          that is short and says nothing. */}
+      {props.rosterDiagnostics.length > 0 ? (
+        <div style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', marginTop: '0.75rem' }}>
+          <p style={{ margin: '0 0 0.25rem' }}>Races not offered:</p>
+          <ul style={{ margin: 0, paddingLeft: '1.1rem' }}>
+            {props.rosterDiagnostics.map((diagnostic) => (
+              <li key={diagnostic}>{diagnostic}</li>
+            ))}
+          </ul>
+        </div>
+      ) : null}
 
       {outcome ? (
         <div style={{ borderTop: '1px solid var(--color-border)', marginTop: '1.25rem', paddingTop: '1rem' }}>

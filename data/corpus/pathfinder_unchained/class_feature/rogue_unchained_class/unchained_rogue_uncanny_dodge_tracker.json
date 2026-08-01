@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Rogue ~ Uncanny Dodge Tracker",
+    "name": "Unchained Rogue ~ Uncanny Dodge Tracker",
+    "class_key": "Rogue ~ Unchained Class",
+    "base_class_key": "Rogue",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Rogue Class Feature"
+    ],
+    "min_level": 4,
+    "is_granted": true,
+    "visible": "NO",
+    "class_skills": [],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rogue Class Feature"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "UncannyDodgeLVL",
+          "1",
+          "PREVARGTEQ:RogueLVL,4",
+          "PREVAREQ:Rogue_CF_UncannyDodge,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "UncannyDodgeLVL",
+          "1",
+          "PREVARGTEQ:RogueLVL,8",
+          "PREVAREQ:Rogue_CF_ImprovedUncannyDodge,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "UncannyDodgeFlankingLevel",
+          "RogueLVL",
+          "TYPE=EachClass.REPLACE",
+          "PREVARGTEQ:RogueLVL,4",
+          "PREVAREQ:Rogue_CF_UncannyDodge,0"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 594,
+    "record_key": "Unchained Rogue ~ Uncanny Dodge Tracker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

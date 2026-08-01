@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:37:02Z",
   "data": {
-    "key": "Arrow (Sizzling)",
     "category": "ArmsArmor",
-    "name": "Arrow, Sizzling",
     "cost_gp": 1350.0,
-    "weight": 0.15,
-    "description": null
+    "description": null,
+    "key": "Arrow (Sizzling)",
+    "name": "Arrow, Sizzling",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Arrow, Sizzling"
+      },
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Specific.Arrow.Individual"
+      },
+      {
+        "key": "COST",
+        "value": "1350"
+      },
+      {
+        "key": "WT",
+        "value": "0.15"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ +1 ~ Ammunition.Material ~ Steel.Material ~ Wood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.291"
+      },
+      {
+        "key": "SPROP",
+        "value": "A successful attack deals 1d6 acid damage for 3 rounds."
+      }
+    ],
+    "weight": 0.15
   },
+  "ingested_at": "2026-07-22T23:37:02Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
-    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468",
     "line": 15,
-    "record_key": "Arrow (Sizzling)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
+    "record_key": "Arrow (Sizzling)",
+    "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
   }
 }

@@ -17,5 +17,8 @@
     "line": 98,
     "record_key": "Barding (Scale Mail)",
     "inherited_from_record_key": "Scale Mail Barding (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

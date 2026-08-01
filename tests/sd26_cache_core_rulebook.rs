@@ -32,7 +32,13 @@ fn json_files_under(dir: &Path) -> Vec<PathBuf> {
         return out;
     }
     for entry in walk(dir) {
-        if entry.extension().and_then(|e| e.to_str()) == Some("json") {
+        if entry.extension().and_then(|e| e.to_str()) == Some("json")
+            && entry.file_name().and_then(|n| n.to_str()) != Some("LICENSE.json")
+        {
+            // LICENSE.json (SD-27 cycle E2.0.6, decisions.md §17) is
+            // book-level license-declaration metadata, not a per-record
+            // Shape B cache entry -- it does not conform to this shape and
+            // is deliberately excluded from the cache walk.
             out.push(entry);
         }
     }

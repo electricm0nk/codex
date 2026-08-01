@@ -17,5 +17,8 @@
     "line": 56,
     "record_key": "Chainmail",
     "inherited_from_record_key": "Chainmail (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

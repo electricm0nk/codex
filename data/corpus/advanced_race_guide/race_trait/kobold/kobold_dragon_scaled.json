@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Kobold ~ Dragon-Scaled",
+    "name": "Dragon-Scaled",
+    "race_key": "Kobold",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Kobold Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Kobold_ReplaceArmor"
+    ],
+    "description": "Some kobolds are hatched with scales of such vivid color that their connection to a particular sort of chromatic dragon seems undeniable. Whether this coloration is just a quirk of a stray egg or a trait shared by all the members of a tribe, these kobolds gain a resistance that makes them especially suited to work alongside dragons matching the color of the kobold's scales. Black-scaled and green-scaled kobolds with this racial trait gain acid resistance 5. Blue-scaled kobolds with this racial trait gain electricity resistance 5. Red-scaled kobolds with this racial trait gain fire resistance 5. White-scaled kobolds with this racial trait gain cold resistance 5. This racial trait replaces the armor racial trait.",
+    "source_page": "p.132",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kobold ~ Dragon-Scaled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kobold Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Kobold ~ Dragon-Scaled],[!PREFACT:1,ABILITIES,Kobold_ReplaceArmor=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some kobolds are hatched with scales of such vivid color that their connection to a particular sort of chromatic dragon seems undeniable. Whether this coloration is just a quirk of a stray egg or a trait shared by all the members of a tribe, these kobolds gain a resistance that makes them especially suited to work alongside dragons matching the color of the kobold's scales. Black-scaled and green-scaled kobolds with this racial trait gain acid resistance 5. Blue-scaled kobolds with this racial trait gain electricity resistance 5. Red-scaled kobolds with this racial trait gain fire resistance 5. White-scaled kobolds with this racial trait gain cold resistance 5."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the armor racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Kobold ~ Dragon-Scaled"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "ABILITYSELECTION|Kobold Scale Color|QUALIFIED"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Kobold Scale Color|AUTOMATIC|%LIST"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.132"
+      },
+      {
+        "key": "FACT",
+        "value": "Kobold_ReplaceArmor|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 574,
+    "record_key": "Kobold ~ Dragon-Scaled"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

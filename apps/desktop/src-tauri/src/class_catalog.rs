@@ -12,7 +12,11 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::crb::class_tables::class_tables;
+use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::{
+    self as pu_class_chassis, PuClassId,
+};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -48,10 +52,47 @@ fn map_catalog_entry(
 /// Build the full catalog response. A thin, testable wrapper behind the
 /// Tauri command below (mirroring `equipment_catalog`'s and
 /// `spell_catalog`'s own command/pure-fn split).
+///
+/// **SD-27 (2026-07-31) widened this past the CRB table** to include
+/// Pathfinder Unchained's four classes, which a player can now select at
+/// creation. They appear under their own display names ("Unchained
+/// Barbarian", …) alongside — never instead of — the eleven CRB rows, which
+/// is what the browser needs to show for a REPLACEMENT pair: a campaign
+/// picks one of the two, and the catalog's job is to let a reader compare
+/// them.
+///
+/// **The 16 APG/ACG classes are still absent from this catalog.** That is a
+/// pre-existing gap, not one this change introduced, and it was deliberately
+/// left alone: those books have their own `class_chassis_resolve` seams and
+/// widening the catalog to them is a separate piece of work with its own
+/// row-count expectations. The screen's caption is derived from the data
+/// rather than hardcoded, so it states the true class count either way.
 pub fn build_class_catalog() -> ClassCatalogResponse {
-    ClassCatalogResponse {
-        entries: class_tables().iter().map(map_catalog_entry).collect(),
+    let mut entries: Vec<ClassCatalogEntryDto> =
+        class_tables().iter().map(map_catalog_entry).collect();
+
+    for class_id in PuClassId::ALL {
+        for level in 1..=class_id.max_supported_level() {
+            let Some(row) = pu_class_chassis::class_chassis_resolve(class_id, level, RuleSetId::Pu)
+            else {
+                // Unreachable for `1..=max_supported_level()`, and pinned by
+                // `pathfinder_unchained::class_chassis`'s own level-sweep
+                // test. Skipping rather than unwrapping keeps a catalog
+                // browser from being the thing that panics the app.
+                continue;
+            };
+            entries.push(ClassCatalogEntryDto {
+                class_id: class_id.display_name().to_owned(),
+                level: row.level,
+                base_attack_bonus: row.base_attack_bonus,
+                fort_save: row.fort_save,
+                ref_save: row.ref_save,
+                will_save: row.will_save,
+            });
+        }
     }
+
+    ClassCatalogResponse { entries }
 }
 
 #[tauri::command]
@@ -76,7 +117,12 @@ mod tests {
         // computing", 2026-07-29) then widened Druid's CLASS_META row from
         // 15 to 20 but did not update this test, leaving it red on
         // tranche/6. Corrected here: 215 - 15 + 20 = 220.
-        assert_eq!(response.entries.len(), 220);
+        //
+        // SD-27 (2026-07-31) added Pathfinder Unchained's four classes at
+        // 20 levels each: 220 + 80 = 300. The eleven CRB counts below are
+        // asserted unchanged in the same test, so a PU row landing on a CRB
+        // class instead of beside it fails here rather than passing quietly.
+        assert_eq!(response.entries.len(), 300);
 
         let counts = |class_id: &str| {
             response
@@ -96,6 +142,74 @@ mod tests {
         assert_eq!(counts("Rogue"), 20);
         assert_eq!(counts("Sorcerer"), 20);
         assert_eq!(counts("Wizard"), 20);
+
+        assert_eq!(counts("Unchained Barbarian"), 20);
+        assert_eq!(counts("Unchained Monk"), 20);
+        assert_eq!(counts("Unchained Rogue"), 20);
+        assert_eq!(counts("Unchained Summoner"), 20);
+    }
+
+    /// A replacement pair must be two visibly distinct rows, never one
+    /// overwriting the other. Checked on the axis a browser actually shows:
+    /// the Unchained Monk's full base attack bonus and poor Will save
+    /// against the CRB Monk's three-quarter progression and good Will.
+    #[test]
+    fn the_unchained_monk_is_a_separate_row_from_the_crb_monk_and_the_numbers_differ() {
+        let response = build_class_catalog();
+        let row = |class_id: &str, level: u8| {
+            response
+                .entries
+                .iter()
+                .find(|e| e.class_id == class_id && e.level == level)
+                .unwrap_or_else(|| panic!("{class_id} level {level} must be in the catalog"))
+                .clone()
+        };
+        for level in [1u8, 10, 20] {
+            let crb = row("Monk", level);
+            let pu = row("Unchained Monk", level);
+            assert_eq!(pu.base_attack_bonus, i16::from(level));
+            assert!(pu.base_attack_bonus > crb.base_attack_bonus);
+            assert!(pu.will_save < crb.will_save);
+        }
+    }
+
+    /// The other three pairs deliberately carry identical numbers -- their
+    /// corpus records override no chassis field -- so they must still be
+    /// two rows, distinguished by class name alone. Asserted so "identical
+    /// numbers" is never mistaken for "one row got dropped".
+    #[test]
+    fn the_other_three_pairs_are_still_two_rows_each_with_matching_numbers() {
+        let response = build_class_catalog();
+        for (unchained, base) in [
+            ("Unchained Barbarian", "Barbarian"),
+            ("Unchained Rogue", "Rogue"),
+            ("Unchained Summoner", "Summoner"),
+        ] {
+            let unchained_rows: Vec<_> =
+                response.entries.iter().filter(|e| e.class_id == unchained).collect();
+            assert_eq!(unchained_rows.len(), 20, "{unchained}");
+
+            let base_rows: Vec<_> =
+                response.entries.iter().filter(|e| e.class_id == base).collect();
+            if base == "Summoner" {
+                // The APG Summoner is not in this catalog at all yet (see
+                // `build_class_catalog`'s note on the 16 absent APG/ACG
+                // classes), so there is no base row to compare against --
+                // recorded explicitly rather than letting the loop skip it
+                // silently.
+                assert_eq!(base_rows.len(), 0, "APG Summoner is not in this catalog yet");
+                continue;
+            }
+            assert_eq!(base_rows.len(), 20, "{base}");
+            for level in 1..=20u8 {
+                let u = unchained_rows.iter().find(|e| e.level == level).expect("level");
+                let b = base_rows.iter().find(|e| e.level == level).expect("level");
+                assert_eq!(u.base_attack_bonus, b.base_attack_bonus, "{unchained} level {level}");
+                assert_eq!(u.fort_save, b.fort_save, "{unchained} level {level}");
+                assert_eq!(u.ref_save, b.ref_save, "{unchained} level {level}");
+                assert_eq!(u.will_save, b.will_save, "{unchained} level {level}");
+            }
+        }
     }
 
     #[test]

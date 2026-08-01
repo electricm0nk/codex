@@ -42,9 +42,13 @@ use codex::pcgen_import::corpus_traps::{
 /// Same default the cache-generator binaries (`gen_cache_acg` and
 /// siblings) already use, with the same `PCGEN_CORPUS_ROOT` override.
 fn corpus_root() -> Option<PathBuf> {
-    let root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let path = PathBuf::from(root);
+    let path = match std::env::var_os("PCGEN_CORPUS_ROOT") {
+        Some(configured) => PathBuf::from(configured),
+        // HOME-relative default: the operator keeps `workspace/` in the home
+        // directory and syncs it between machines. Rust does not expand `~`.
+        None => PathBuf::from(std::env::var_os("HOME").filter(|home| !home.is_empty())?)
+            .join("workspace/repos/pcgen/data"),
+    };
     if path.is_dir() { Some(path) } else { None }
 }
 

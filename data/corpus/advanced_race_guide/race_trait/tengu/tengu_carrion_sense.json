@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Tengu ~ Carrion Sense",
+    "name": "Carrion Sense",
+    "race_key": "Tengu",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tengu Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Sense"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Tengu_ReplaceGiftedLinguist"
+    ],
+    "description": "Many tengus have a natural ability to sniff out carrion. While their sense of smell isn't as keen as that of other species, it is particularly attuned to the scent of injuries or death. Tengus with this racial trait have a limited scent ability, which only functions for corpses and badly wounded creatures (50% or fewer hit points). This racial trait replaces gifted linguist.",
+    "source_page": "p.163",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tengu ~ Carrion Sense"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tengu Racial Trait.SpecialQuality.Special Quality.Sense"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Carrion Sense],[!PREFACT:1,ABILITIES,Tengu_ReplaceGiftedLinguist=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many tengus have a natural ability to sniff out carrion. While their sense of smell isn't as keen as that of other species, it is particularly attuned to the scent of injuries or death. Tengus with this racial trait have a limited scent ability, which only functions for corpses and badly wounded creatures (50%% or fewer hit points)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces gifted linguist.|!PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Carrion Sense"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.163"
+      },
+      {
+        "key": "FACT",
+        "value": "Tengu_ReplaceGiftedLinguist|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 716,
+    "record_key": "Tengu ~ Carrion Sense"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

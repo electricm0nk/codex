@@ -25,6 +25,20 @@ const SIX_METADATA_KIND_NAMES: &[&str] = &[
     "COMPANIONMOD",
 ];
 
+/// The PCGen corpus root this test reads. `PCGEN_CORPUS_ROOT` wins when set;
+/// otherwise `$HOME/workspace/repos/pcgen/data` — HOME-relative because the
+/// operator keeps `workspace/` in the home directory and syncs it between
+/// machines, so the default is correct on any box. Rust does not expand `~`,
+/// so `$HOME` is read via `std::env::var`. `None` when `HOME` itself is
+/// unset, which leaves the caller's existing skip path intact.
+fn corpus_root() -> Option<std::path::PathBuf> {
+    if let Some(configured) = std::env::var_os("PCGEN_CORPUS_ROOT") {
+        return Some(std::path::PathBuf::from(configured));
+    }
+    let home = std::env::var_os("HOME").filter(|home| !home.is_empty())?;
+    Some(std::path::PathBuf::from(home).join("workspace/repos/pcgen/data"))
+}
+
 #[test]
 fn recognizes_every_metadata_kind_declared_in_the_slice() {
     for kind_name in SIX_METADATA_KIND_NAMES {
@@ -242,10 +256,11 @@ fn real_corpus_kits_file_parses_with_line_numbers_preserved() {
     // The real core_rulebook LST files contain `TEMPLATE:` lines as
     // record-starts. This is the most common metadata-kind occurrence in the
     // corpus; the parser must round-trip line numbers and record-start flags.
-    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let path = std::path::PathBuf::from(corpus_root)
-        .join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_kits.lst");
+    let Some(corpus_root) = corpus_root() else {
+        eprintln!("skipping: no PCGEN_CORPUS_ROOT and no $HOME to derive one for cr_kits.lst");
+        return;
+    };
+    let path = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_kits.lst");
     if !path.is_file() {
         // Skip gracefully if the corpus is unavailable in this sandbox; the
         // synthetic-fixture tests above are still authoritative.

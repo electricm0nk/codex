@@ -3,7 +3,7 @@
 > **Status:** planning-ready. Loader action: read this register first, then `scope-draft.md`. The `scope-draft.md` is the bundle's committed scope; this register is the disagreement surface that the operator signs off on before authoring tightens.
 >
 > **Authored:** 2026-07-25 (god-emporer, operator directive 2026-07-25).
-> **Predecessor:** SD-26 (closure-ready per `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/`, PR #338 awaiting operator merge).
+> **Predecessor:** SD-26 — **landed on `develop`** as **PR #338** (`62e7b617`, confirmed ancestor of `origin/develop`, verified 2026-07-27). An earlier draft of this note said PR #339; that was a misread of commit `803ee60e`, which is a later, unrelated CG-03 bugfix. SD-26's own `progress.md` on develop still shows the merge as pending in its `6.5` row — stale paper-trail, not evidence against the merge.
 > **Sidecar:** v0.6-alpha release-swarm (active on `tranche/6`, not yet closed).
 
 This register separates predecessor-deferred work into three classes. The class determines whether SD-27 owns it (class 1), sequences it (class 2), or stays clear of it (class 3). Per `spec-domain-bundle-authoring` v1.2.0 §"Forward-scope extraction from predecessor bundle/lane docs" — the three-class separation is load-bearing; do not collapse it into a flat backlog.
@@ -18,29 +18,31 @@ These are the predecessor's explicit, by-name successor bindings. The strongest 
 
 **Source:** SD-26 Epic 4 (criteria 4.1-4.20), `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/release-notes.md:29-31`, `docs/governance/wired-integration-stubs-registry.md` entries #0003-#0021, `data/stubs/*.json` (19 files).
 
-**What is committed.** SD-26 registered 19 PF1 sourcebooks as `book_stub` entries in the Stubs Registry and wrote `data/stubs/<book>.json` manifests for each, with `content_kind_counts: null` (honest gap) and a `planned_resolution_bundle` field pointing at SD-27. **Per operator directive 2026-07-27, Beginner Box and Core Essentials have been removed from scope** (redundant to other tomes; will not be brought in); their registry slots (#0005 and #0012) and stub manifests, if they exist on disk, are out-of-scope and may be deleted by the closure epilogue with operator authorization. The 19 remaining books are:
+**What is committed.** SD-26 registered **21** PF1 sourcebooks as `book_stub` entries in the Stubs Registry (`#0003`–`#0023`) and wrote `data/stubs/<book>.json` manifests for each, with `content_kind_counts: null` (honest gap) and a `planned_resolution_bundle` field pointing at SD-27. **Per operator directive 2026-07-27, Beginner Box and Core Essentials have been removed from scope** (redundant to other tomes; will not be brought in); their registry slots `#0005` and `#0012` and stub manifests **are still on disk** (verified 2026-07-27) — out-of-scope rather than deleted, removable by the closure epilogue with operator authorization. The 19 remaining books are:
+
+> **Registry IDs corrected 2026-07-27.** This table previously renumbered sequentially after dropping the two descoped books, so every row from `bestiary_2` down carried an ID 1–2 lower than the registry's real one (e.g. `pathfinder_unchained` was listed as `#0015`; it is `#0017`). IDs below are verified against `docs/governance/wired-integration-stubs-registry.md`.
 
 | # | Book | Stub manifest | Registry entry |
 |---|------|---------------|----------------|
-| 1 | advanced_race_guide | `data/stubs/advanced_race_guide.json` | #0003 |
-| 2 | adventurers_guide | `data/stubs/adventurers_guide.json` | #0004 |
-| 3 | bestiary_2 | `data/stubs/bestiary_2.json` | #0005 |
-| 4 | bestiary_3 | `data/stubs/bestiary_3.json` | #0006 |
-| 5 | bestiary_4 | `data/stubs/bestiary_4.json` | #0007 |
-| 6 | bestiary_5 | `data/stubs/bestiary_5.json` | #0008 |
-| 7 | bestiary_6 | `data/stubs/bestiary_6.json` | #0009 |
-| 8 | bonus_bestiary | `data/stubs/bonus_bestiary.json` | #0010 |
-| 9 | horror_adventures | `data/stubs/horror_adventures.json` | #0011 |
-| 10 | monster_codex | `data/stubs/monster_codex.json` | #0012 |
-| 11 | mythic_adventures | `data/stubs/mythic_adventures.json` | #0013 |
-| 12 | occult_adventures | `data/stubs/occult_adventures.json` | #0014 |
-| 13 | pathfinder_unchained | `data/stubs/pathfinder_unchained.json` | #0015 |
-| 14 | ultimate_campaign | `data/stubs/ultimate_campaign.json` | #0016 |
-| 15 | ultimate_combat | `data/stubs/ultimate_combat.json` | #0017 |
-| 16 | ultimate_equipment | `data/stubs/ultimate_equipment.json` | #0018 |
-| 17 | ultimate_intrigue | `data/stubs/ultimate_intrigue.json` | #0019 |
-| 18 | ultimate_magic | `data/stubs/ultimate_magic.json` | #0020 |
-| 19 | ultimate_wilderness | `data/stubs/ultimate_wilderness.json` | #0021 |
+| 1 | advanced_race_guide | `data/stubs/advanced_race_guide.json` | #0003 | **SD-27 in-scope.**
+| 2 | adventurers_guide | `data/stubs/adventurers_guide.json` | #0004 | Deferred to SD-30.
+| 3 | bestiary_2 | `data/stubs/bestiary_2.json` | #0006 |
+| 4 | bestiary_3 | `data/stubs/bestiary_3.json` | #0007 |
+| 5 | bestiary_4 | `data/stubs/bestiary_4.json` | #0008 |
+| 6 | bestiary_5 | `data/stubs/bestiary_5.json` | #0009 |
+| 7 | bestiary_6 | `data/stubs/bestiary_6.json` | #0010 |
+| 8 | bonus_bestiary | `data/stubs/bonus_bestiary.json` | #0011 |
+| 9 | horror_adventures | `data/stubs/horror_adventures.json` | #0013 |
+| 10 | monster_codex | `data/stubs/monster_codex.json` | #0014 |
+| 11 | mythic_adventures | `data/stubs/mythic_adventures.json` | #0015 |
+| 12 | occult_adventures | `data/stubs/occult_adventures.json` | #0016 |
+| 13 | pathfinder_unchained | `data/stubs/pathfinder_unchained.json` | #0017 | **SD-27 in-scope.**
+| 14 | ultimate_campaign | `data/stubs/ultimate_campaign.json` | #0018 |
+| 15 | ultimate_combat | `data/stubs/ultimate_combat.json` | #0019 |
+| 16 | ultimate_equipment | `data/stubs/ultimate_equipment.json` | #0020 |
+| 17 | ultimate_intrigue | `data/stubs/ultimate_intrigue.json` | #0021 |
+| 18 | ultimate_magic | `data/stubs/ultimate_magic.json` | #0022 |
+| 19 | ultimate_wilderness | `data/stubs/ultimate_wilderness.json` | #0023 |
 
 **Each `book_stub` entry carries the documentary pointer**: `planned_resolution_bundle: "SD-27+ (unscheduled)"` (with the discrepancy against `decisions.md:102`'s `"SD-27"` — see §1.2 below).
 
@@ -56,7 +58,7 @@ These are the predecessor's explicit, by-name successor bindings. The strongest 
 
 **SD-27's obligation.** Resolve the discrepancy as the bundle's first cycle. Two acceptable resolutions:
 
-- **(a)** Rename all 19 `data/stubs/*.json` files + the 19 `wired-integration-stubs-registry.md` entries to `"SD-27"`. Update `risks-and-open-questions.md Q2` to record the rename. Update `decisions.md:102` to reflect the choice.
+- **(a)** Rename all 19 `data/stubs/*.json` files + the 19 `wired-integration-stubs-registry.md` entries to `"SD-27"`. Update `docs/release/v0.6/risks-and-open-questions.md` §"Open questions" item 2 (line 102) to record the rename. Update `decisions.md:102` to reflect the choice.
 - **(b)** Keep all 19 entries at `"SD-27+ (unscheduled)"` and rename `decisions.md:102` to `"SD-27+ (unscheduled)"` to match.
 
 **Per-cycle blocking decision.** Whichever way the operator pulls, the bundle's first cycle (1.1) lands the resolved label across all 20 surfaces (19 stubs + 1 `decisions.md`) before any further cycle dispatches. The lead does not pick a side; both are internally consistent.

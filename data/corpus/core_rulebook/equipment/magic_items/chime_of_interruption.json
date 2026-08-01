@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Chime of Interruption",
     "category": "magic_items",
-    "name": "Chime of Interruption",
     "cost_gp": 16800.0,
-    "weight_lbs": 1.0,
-    "description": "This instrument can be struck once every 10 minutes, and its resonant tone lasts for 3 full minutes. While the chime is resonating, no spell requiring a verbal component can be cast within a 30-foot radius of it unless the caster can make a concentration check (DC 15 + the spell's level)."
+    "description": "This instrument can be struck once every 10 minutes, and its resonant tone lasts for 3 full minutes. While the chime is resonating, no spell requiring a verbal component can be cast within a 30-foot radius of it unless the caster can make a concentration check (DC 15 + the spell's level).",
+    "key": "Chime of Interruption",
+    "name": "Chime of Interruption",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Chime of Interruption"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Chime of Interruption"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "16800"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.506"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|7th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|8,400 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, shout"
+      },
+      {
+        "key": "DESC",
+        "value": "This instrument can be struck once every 10 minutes, and its resonant tone lasts for 3 full minutes. While the chime is resonating, no spell requiring a verbal component can be cast within a 30-foot radius of it unless the caster can make a concentration check (DC 15 + the spell's level)."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 99,
-    "record_key": "Chime of Interruption"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Chime of Interruption",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

@@ -1,0 +1,121 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Tiefling ~ Scaled Skin",
+    "name": "Scaled Skin",
+    "race_key": "Tiefling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tiefling Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Tiefling_ReplaceFiendishResistance"
+    ],
+    "description": "The skin of these tieflings provides some energy resistance, but is also as hard as armor. Choose one of the following energy types: cold, electricity, or fire. A tiefling with this trait gains resistance 5 in the chosen energy type and also gains a +1 natural armor bonus to AC. This racial trait replaces fiendish resistance.",
+    "source_page": "p.169",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Scaled Skin"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Tiefling ~ Pass for Human"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Scaled Skin],[!PREFACT:1,ABILITIES,Tiefling_ReplaceFiendishResistance=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "The skin of these tieflings provides some energy resistance, but is also as hard as armor. Choose one of the following energy types: cold, electricity, or fire. A tiefling with this trait gains resistance 5 in the chosen energy type and also gains a +1 natural armor bonus to AC."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces fiendish resistance.|!PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Scaled Skin"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "STRING|Cold|Electricity|Fire"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.169"
+      },
+      {
+        "key": "FACT",
+        "value": "Tiefling_ReplaceFiendishResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "AC_Natural_Armor",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ColdResistanceBonus",
+          "5",
+          "TYPE=Resistance",
+          "PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Scaled Skin (Cold)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ElectricityResistanceBonus",
+          "5",
+          "TYPE=Resistance",
+          "PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Scaled Skin (Electricity)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "FireResistanceBonus",
+          "5",
+          "TYPE=Resistance",
+          "PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Scaled Skin (Fire)"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 751,
+    "record_key": "Tiefling ~ Scaled Skin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

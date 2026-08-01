@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Tail Terror",
+    "category": "combat",
+    "name": "Tail Terror",
+    "description": "You have strengthened your tail enough to make slap attacks with it.",
+    "effect": [
+      [
+        "SLOTS",
+        "WEAPON",
+        "1",
+        "PREEQUIP:1,TYPE=KoboldTailAttachment"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 336,
+    "record_key": "Tail Terror"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

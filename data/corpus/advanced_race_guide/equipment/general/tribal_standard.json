@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 50.0,
+    "description": "The standard must be carried in one hand by a member of the tribe to have any effect.  It provides a +1 morale bonus on saving throws against fear affects to all members of the tribe who are within 60 ft and can see the standard. If the standard is brought low, defiled, destroyed, or captured, the tribe's members take a -1 penalty on attack rolls and saving throws versus fear effects for the next hour. If the orcs reclaim a captured standard, the penalties end and the bonus is restored.",
+    "key": "Tribal Standard",
+    "name": "Tribal Standard",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Racial.Orc"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "20"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.141"
+      },
+      {
+        "key": "SPROP",
+        "value": "The standard must be carried in one hand by a member of the tribe to have any effect.  It provides a +1 morale bonus on saving throws against fear affects to all members of the tribe who are within 60 ft and can see the standard. If the standard is brought low, defiled, destroyed, or captured, the tribe's members take a -1 penalty on attack rolls and saving throws versus fear effects for the next hour. If the orcs reclaim a captured standard, the penalties end and the bonus is restored."
+      }
+    ],
+    "weight_lbs": 20.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 79,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Tribal Standard",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
+}

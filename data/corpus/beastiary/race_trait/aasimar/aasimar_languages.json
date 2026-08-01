@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Aasimar ~ Languages",
+    "name": "Languages",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Aasimar Racial Trait",
+      "Aasimar Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Aasimar_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Aasimars begin play speaking Common and Celestial. Aasimars with high Intelligence scores can choose from the following languages: Draconic, Dwarven, Elven, Gnome, Halfling, and Sylvan.",
+    "source_page": "p.7",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.Aasimar Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "DESC",
+        "value": "Aasimars begin play speaking Common and Celestial. Aasimars with high Intelligence scores can choose from the following languages: Draconic, Dwarven, Elven, Gnome, Halfling, and Sylvan."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Draconic|Bonus Language ~ Dwarven|Bonus Language ~ Elven|Bonus Language ~ Gnome|Bonus Language ~ Halfling|Bonus Language ~ Sylvan"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Celestial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.7"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Languages|PREVAREQ:Aasimar_ReplaceLanguages,0"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race.lst",
+    "sha256": "81f71066c67433e4b6734fc591aaa6b8df7eb833af1a08a2e86117432e778ae0",
+    "line": 25,
+    "record_key": "Aasimar ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

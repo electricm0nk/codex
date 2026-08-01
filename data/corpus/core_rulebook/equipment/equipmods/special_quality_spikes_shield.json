@@ -1,20 +1,80 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Special Quality ~ Spikes ~ Shield",
     "category": "equipmods",
-    "name": "Shield Spikes",
     "cost_gp": 10.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Special Quality ~ Spikes ~ Shield",
+    "name": "Shield Spikes",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SHIELDBASHINGDIESIZESTEP",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQM",
+          "WEIGHTADD",
+          "5*(((SIZE<=3)*.5)+(SIZE==4)+(SIZE==5)+((SIZE>=6)*(2^(SIZE-5))))"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMWEAPON",
+          "DAMAGESIZE",
+          "1"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Quality ~ Spikes ~ Shield"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Spiked.Piercing"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.153"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Shield,Armor"
+      },
+      {
+        "key": "SPROP",
+        "value": "Spiked"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 51,
-    "record_key": "Special Quality ~ Spikes ~ Shield"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Quality ~ Spikes ~ Shield",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

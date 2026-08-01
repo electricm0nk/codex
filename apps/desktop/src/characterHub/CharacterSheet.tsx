@@ -9,6 +9,12 @@ import {
 } from '../boundary/loadSavedCharacterDetail';
 import { previewLevelUp as previewLevelUpGrants } from '../boundary/previewLevelUp';
 import { buildClassFeatureSurface } from './classFeaturesModel';
+import {
+  buildRacialTraitsSurface,
+  type RacialTraitRow,
+  type RacialTraitsSurface,
+} from './racialTraitsModel';
+import type { RaceSelectionResponse } from '../boundary/loadAlternateRacialTraits';
 import { buildWeaponsTabSurface, ABSENT as ABSENT_FACET } from './weaponsTabModel';
 import { buildSpellsPerDaySurface } from './spellsPerDayModel';
 import type {
@@ -25,18 +31,29 @@ import { attachEquipmentModifier } from '../boundary/attachEquipmentModifier';
 import { addSpellSelection } from '../boundary/addSpellSelection';
 import { recordAndPrepareSpellSelection } from '../boundary/recordAndPrepareSpellSelection';
 import { addFeatSelection } from '../boundary/addFeatSelection';
+import {
+  removeEquipmentSelection,
+  removeFeatSelection,
+  removeSpellSelection,
+} from '../boundary/removeSelection';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
-import { listFeats } from '../boundary/listFeats';
+import { listFeats, listFeatsForCharacter } from '../boundary/listFeats';
 import { cloneCharacter } from '../boundary/cloneCharacter';
 import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
 import { buildRecomputeCharacterRequest } from './characterHubRuntime';
 import type { RuleSetId } from './LandingScreen';
 import { blockedMessageFromDiagnostics, toCharacterMutationRefresh } from './characterSheetRefresh';
 import { resolveSpellRouting } from './spellRoutingModel';
-import { mapEquipmentCatalogEntries, mapFeatCatalogEntries, mapSpellCatalogEntries } from './itemPickerFilter';
+import {
+  describeFeatCatalogCoverage,
+  mapEquipmentCatalogEntries,
+  mapFeatCatalogEntries,
+  mapSpellCatalogEntries,
+} from './itemPickerFilter';
 import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
 import {
+  buildSpellPickerOffering,
   describeSpellAcquisition,
   describeSpellSchoolAndLevel,
   resolveSelectedSpellEntries,
@@ -71,7 +88,8 @@ import {
   type LevelEntry,
   type WeaponProficiency,
 } from './characterProgression';
-import { AGE_OPTIONS, ALIGNMENT_OPTIONS, RACE_OPTIONS } from './characterHubModel';
+import { AGE_OPTIONS, ALIGNMENT_OPTIONS, deriveRaceTraits, type RaceOption } from './characterHubModel';
+import { loadRaceRosterSurface } from './raceRoster';
 import { PortraitUpload } from './PortraitUpload';
 import { LevelUpDialog } from './LevelUpDialog';
 import { SkillAllocationDialog } from './SkillAllocationDialog';
@@ -98,6 +116,36 @@ function fmt(value: number): string {
   return value >= 0 ? `+${value}` : `${value}`;
 }
 
+/**
+ * Renders a cell the engine did not compute as an honest em dash rather than a
+ * fabricated number — the convention `deriveRaceTraits` already established for
+ * an unknown race's size and vision.
+ *
+ * SD-27 `decisions.md §28`: touch AC, flat-footed AC, CMB and CMD used to be
+ * computed *here*, in the view, so there was no such thing as "the engine did
+ * not compute it" — this file always produced a number, and for every Small
+ * character (touch/CMB/CMD) or every character holding a dodge bonus
+ * (flat-footed) it produced the wrong one. They are engine values now, so
+ * their absence is a real state and must read as absent.
+ */
+function fmtOrAbsent(value: number | null, signed: boolean): string {
+  if (value === null) {
+    return '—';
+  }
+  return signed ? fmt(value) : `${value}`;
+}
+
+/**
+ * Reads one `ComputationExplanation` magnitude by its stable engine id.
+ *
+ * `null` — never a defaulted 0 — when the engine emitted no such record: a
+ * blocked build has no computed value, and 0 is a real, different answer.
+ */
+function engineValue(explanations: readonly ExplanationDto[], id: string): number | null {
+  const record = explanations.find((explanation) => explanation.id === id);
+  return record ? record.value : null;
+}
+
 
 const ZERO_ABILITIES: AbilityScoresDto = {
   strength: 0,
@@ -122,6 +170,24 @@ const addItemButtonStyle: CSSProperties = {
   color: 'var(--color-text)',
   cursor: 'pointer',
   padding: '0.5rem 1.5rem',
+};
+
+/**
+ * The per-row undo control on a feat / spell / equipment selection.
+ *
+ * Deliberately quiet (muted, small, no fill) rather than a destructive red:
+ * every one of these removals is reversible by re-adding the selection, and
+ * each is refused with a stated reason when it is not safe — a shouting
+ * button would imply a danger the guard already handles.
+ */
+const removeItemButtonStyle: CSSProperties = {
+  backgroundColor: 'transparent',
+  border: '1px solid var(--color-border)',
+  borderRadius: 6,
+  color: 'var(--color-text-muted)',
+  cursor: 'pointer',
+  fontSize: '0.7rem',
+  padding: '0.15rem 0.55rem',
 };
 
 /**
@@ -230,6 +296,50 @@ function NavCard(props: { label: string; value: string }) {
   );
 }
 
+/**
+ * One racial trait, with the prose the engine rendered for *this* character.
+ *
+ * Replaces the name-only `NavCard` this section used to show for each chosen
+ * alternate: a card reading "Adaptable Luck" told a player which choice they
+ * made and nothing about what it does, while the sentence stating the number —
+ * already computed, already carrying their feats — reached no screen at all
+ * (`decisions.md §29.1`, the producer-with-no-consumer trap).
+ *
+ * `row.text` is rendered verbatim. It is corpus prose with the engine's own
+ * magnitudes resolved into it, and rewriting any of it here would create a
+ * second, unverified source of rules text.
+ */
+function RacialTraitCard(props: { row: RacialTraitRow }) {
+  const { row } = props;
+  return (
+    <div style={{ ...panel, padding: '0.55rem 0.75rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', letterSpacing: '0.04em', margin: 0, textTransform: 'uppercase' }}>
+        {row.roleLabel}
+        <span style={{ letterSpacing: 0, textTransform: 'none' }}> · {row.book}</span>
+      </p>
+      <p style={{ color: 'var(--color-text)', fontWeight: 700, margin: '0.1rem 0 0' }}>{row.name}</p>
+      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.25rem 0 0' }}>{row.text}</p>
+      {row.replaces.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', margin: '0.25rem 0 0' }}>
+          Replaces {row.replaces.join(', ')}.
+        </p>
+      ) : null}
+      {/* The engine's own claim, derived by rendering the record twice — never
+          this component inferring a move from the feat list. */}
+      {row.movedByFeats ? (
+        <p style={{ color: 'var(--color-accent)', fontSize: '0.68rem', margin: '0.2rem 0 0' }}>
+          A feat this character holds changed the numbers above.
+        </p>
+      ) : null}
+      {row.droppedArgs.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', margin: '0.2rem 0 0' }}>
+          The engine could not resolve {row.droppedArgs.join(', ')}, so this description is incomplete.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 function LevelBenefitCard(props: { benefit: LevelEntry; skillPoints: number; variant: 'current' | 'next' }) {
   const { benefit, variant } = props;
   return (
@@ -331,13 +441,22 @@ function AbilitiesPanel(props: { abilities: AbilityScoresDto }) {
   );
 }
 
-function ArmorClassPanel(props: { ac: number; touch: number; flatFooted: number }) {
+/**
+ * `touch` is the engine's `defense.touch_armor_class` and `flatFooted` is its
+ * `defense.flat_footed_armor_class` — neither is derived here. This panel used
+ * to compute both: touch as `10 + dexMod`, which is why it could display
+ * `AC 19` beside `TOUCH 14` with a 4-point armor bonus, and flat-footed as
+ * `ac - Math.max(0, dexMod)`, which ignored PF1's rule that a flat-footed
+ * character loses dodge bonuses along with the Dexterity bonus. See SD-27
+ * `decisions.md §28`.
+ */
+function ArmorClassPanel(props: { ac: number; touch: number | null; flatFooted: number | null }) {
   return (
     <StatBox title="Armor Class">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <StatTile label="AC" value={props.ac} emphasize />
-        <StatTile label="Touch" value={props.touch} />
-        <StatTile label="Flat-Footed" value={props.flatFooted} />
+        <StatTile label="Touch" value={fmtOrAbsent(props.touch, false)} />
+        <StatTile label="Flat-Footed" value={fmtOrAbsent(props.flatFooted, false)} />
       </div>
     </StatBox>
   );
@@ -366,11 +485,22 @@ function InitiativeHpPanel(props: { initiative: number; hp: number }) {
   );
 }
 
-function SpeedPanel() {
+/**
+ * `land` is the race's real base land speed, read off the same
+ * corpus-derived roster the creation picker is built from.
+ *
+ * It used to be the literal string `"30 ft."` for every character, which was
+ * already wrong for Dwarf, Gnome and Halfling (20 ft.) among the races that
+ * shipped, and is wrong for Duergar and Svirfneblin (20 ft.) and Merfolk
+ * (5 ft.) among the Bestiary 1 races creation now offers. The other three
+ * movement modes stay `—`: no ingested race declares a fly, swim or climb
+ * speed, and this panel will not invent one.
+ */
+function SpeedPanel(props: { land: string }) {
   return (
     <StatBox title="Speed">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
-        <StatTile label="Land" value="30 ft." />
+        <StatTile label="Land" value={props.land} />
         <StatTile label="Fly" value="—" />
         <StatTile label="Swim" value="—" />
         <StatTile label="Climb" value="—" />
@@ -379,14 +509,21 @@ function SpeedPanel() {
   );
 }
 
-function AttackPanel(props: { baseAttackBonus: number; cmb: number; cmd: number }) {
+/**
+ * `cmb`/`cmd` are the engine's `combat.combat_maneuver_bonus` /
+ * `defense.combat_maneuver_defense`. They used to be computed here as
+ * `bab + str` and `10 + bab + str + dexMod` — two PF1 formulas living in a
+ * React component, neither aware of creature size, so every Small character's
+ * CMB and CMD were a point too high. See SD-27 `decisions.md §28`.
+ */
+function AttackPanel(props: { baseAttackBonus: number; cmb: number | null; cmd: number | null }) {
   return (
     <StatBox title="Attack">
       <div style={{ display: 'flex', gap: '0.5rem' }}>
         <StatTile label="BAB" value={fmt(props.baseAttackBonus)} />
         <StatTile label="Spell Res." value="—" />
-        <StatTile label="CMB" value={fmt(props.cmb)} />
-        <StatTile label="CMD" value={props.cmd} />
+        <StatTile label="CMB" value={fmtOrAbsent(props.cmb, true)} />
+        <StatTile label="CMD" value={fmtOrAbsent(props.cmd, false)} />
       </div>
     </StatBox>
   );
@@ -615,8 +752,9 @@ function DetailsPanel(props: {
         <CalculatedBioField label="Size" value={props.size} />
       </div>
       <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.6rem 0 0' }}>
-        Vision and Size are calculated from race and aren't editable. The other fields save automatically
-        when you leave the field.
+        Vision and Size are calculated from race and aren't editable — a race this build has no profile for
+        reads "Unknown" rather than a guessed value. The other fields save automatically when you leave the
+        field.
       </p>
     </div>
   );
@@ -649,6 +787,14 @@ function WeaponsTab(props: {
   weaponDamage: readonly WeaponDamageDto[];
   corpusDerived: CorpusDerivedDto | null;
   onAddWeapon: () => void;
+  /**
+   * Drops one carried copy of the item, with any equipmods attached to it.
+   * Does **not** refund the purchase — see
+   * `apply_remove_equipment_selection` in `character_hub.rs` for why
+   * sell-back is not modelled; the caption below states it so the player
+   * does not discover it by losing gold.
+   */
+  onRemoveWeapon: (itemId: string) => void;
 }) {
   const categories: ReadonlyArray<{ label: string; proficient: boolean }> = [
     { label: 'Simple', proficient: props.proficiency.simple },
@@ -729,9 +875,24 @@ function WeaponsTab(props: {
                 Feat damage: {row.featEffects.join(', ')}
               </p>
             ) : null}
+            <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '0.25rem' }}>
+              <button
+                type="button"
+                aria-label={`Drop ${row.name}`}
+                onClick={() => props.onRemoveWeapon(row.itemId)}
+                style={removeItemButtonStyle}
+              >
+                Drop
+              </button>
+            </div>
           </div>
         ))
       )}
+      <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.5rem 0 0', textAlign: 'center' }}>
+        Dropping an item removes it from the loadout but does not refund what it cost — selling
+        equipment back is a real Pathfinder rule (usually half price) that this build does not model,
+        and crediting a made-up amount would be worse than crediting none.
+      </p>
 
       {/*
         The one thing this table deliberately does not show. Stating it is
@@ -805,6 +966,13 @@ function SpellsTab(props: {
   /** Drives the spells-per-day block — see `spellsPerDayModel.ts`. */
   explanations: readonly ExplanationDto[];
   onAddSpell: () => void;
+  /**
+   * Forgets the spell for that row's own source class, in every
+   * acquisition mode it was recorded in — a spell known and prepared is
+   * one spell, and leaving the prepared half behind would prepare a spell
+   * the character no longer knows.
+   */
+  onRemoveSpell: (spellId: string, sourceClassId: string) => void;
 }) {
   const [catalog, setCatalog] = useState<SpellCatalogEntryDto[] | null>(null);
   useEffect(() => {
@@ -935,12 +1103,24 @@ function SpellsTab(props: {
       ) : (
         rows.map((row, index) => (
           <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <span style={{ fontWeight: 700 }}>{row.name}</span>
-            {describeSpellSchoolAndLevel(row) === null ? null : (
-              <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
-                {describeSpellSchoolAndLevel(row)}
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+              <span>
+                <span style={{ fontWeight: 700 }}>{row.name}</span>
+                {describeSpellSchoolAndLevel(row) === null ? null : (
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
+                    {describeSpellSchoolAndLevel(row)}
+                  </span>
+                )}
               </span>
-            )}
+              <button
+                type="button"
+                aria-label={`Forget ${row.name}`}
+                onClick={() => props.onRemoveSpell(row.raw, row.sourceClassId)}
+                style={removeItemButtonStyle}
+              >
+                Forget
+              </button>
+            </div>
             <p style={{ color: 'var(--color-text-faint)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
               {describeSpellAcquisition(row)}
             </p>
@@ -1362,6 +1542,8 @@ function GearTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
   onAddArmor: () => void;
   onAttachModifier: (item: ResolvedEquipmentDto) => void;
+  /** See `WeaponsTab.onRemoveWeapon` — the same command, no refund. */
+  onRemoveItem: (itemId: string) => void;
   money: CharacterMoneyDto;
   moneyBusy: boolean;
   moneyError: string | null;
@@ -1415,13 +1597,23 @@ function GearTab(props: {
                   </span>
                 ) : null}
               </div>
-              <button
-                type="button"
-                onClick={() => props.onAttachModifier(item)}
-                style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
-              >
-                Attach Modifier
-              </button>
+              <span style={{ display: 'flex', gap: '0.4rem' }}>
+                <button
+                  type="button"
+                  onClick={() => props.onAttachModifier(item)}
+                  style={{ ...addItemButtonStyle, fontSize: '0.7rem', padding: '0.3rem 0.6rem' }}
+                >
+                  Attach Modifier
+                </button>
+                <button
+                  type="button"
+                  aria-label={`Drop ${item.equipmentRecordName}`}
+                  onClick={() => props.onRemoveItem(item.itemId)}
+                  style={removeItemButtonStyle}
+                >
+                  Drop
+                </button>
+              </span>
             </div>
             {item.appliedModifiers.length > 0 ? (
               <ul style={{ margin: '0.35rem 0 0', paddingLeft: '1.25rem' }}>
@@ -1465,17 +1657,148 @@ function GearTab(props: {
  * PF1 general rules keyed to character level, not entries from any class
  * table.
  */
+/**
+ * Width of the class-attribution gutter on every Class Features row, and the
+ * indent its derivation paragraph hangs from. One constant because the two must
+ * agree — they were separate literals, and widening one to fit a real class
+ * label ("Unchained Summoner", not "rogue") would otherwise leave the paragraph
+ * indented to the old column.
+ */
+const CLASS_FEATURE_GUTTER = '9.5rem';
+
+/**
+ * The character's racial traits, in the engine's own words.
+ *
+ * The sibling of the class-feature list above it, and deliberately the same
+ * shape: a label gutter, the trait, and the engine's own text beneath. Where
+ * a class-feature row shows `ComputationExplanation.detail`, a racial-trait row
+ * shows `race_trait_picker::render_trait_description`'s output — corpus `DESC:`
+ * prose re-rendered against this character's display values, so the magnitudes
+ * in it are this character's and not the book's printed defaults.
+ *
+ * Before this section existed the sheet carried the chosen trait *keys* and
+ * nothing else, and the standard traits a race keeps appeared nowhere at all.
+ */
+function RacialTraitsSection(props: { surface: RacialTraitsSurface; raceLabel: string }) {
+  const { surface } = props;
+
+  if (surface.unavailableReason !== null) {
+    return (
+      <div style={{ marginTop: '1.25rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+          Racial traits
+        </p>
+        <p style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem', margin: 0 }}>
+          {surface.unavailableReason}
+        </p>
+      </div>
+    );
+  }
+
+  if (surface.rows.length === 0) {
+    return null;
+  }
+
+  return (
+    <div style={{ marginTop: '1.25rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+        Racial traits — {props.raceLabel}
+      </p>
+      {/* Stated only when the engine reported at least one feat that really
+          moved a display value, derived feat by feat rather than assumed from
+          the character's feat list. */}
+      {surface.displayValueFeats.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
+          Numbers below include {surface.displayValueFeats.join(', ')}.
+        </p>
+      ) : null}
+      {surface.rows.map((row) => (
+        <div key={row.key} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+          <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
+            <span
+              style={{
+                color: 'var(--color-text-muted)',
+                flexShrink: 0,
+                fontSize: '0.72rem',
+                width: CLASS_FEATURE_GUTTER,
+              }}
+            >
+              {row.roleLabel}
+            </span>
+            <span style={{ color: 'var(--color-text)', fontSize: '0.85rem', fontWeight: 700 }}>{row.name}</span>
+            <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>{row.book}</span>
+            {row.movedByFeats ? (
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.72rem', fontWeight: 700 }}>
+                raised by a feat
+              </span>
+            ) : null}
+          </div>
+          {/* Rendered verbatim: corpus prose with this character's numbers
+              resolved into it, never paraphrased here. */}
+          <p
+            style={{
+              color: 'var(--color-text-secondary)',
+              fontSize: '0.72rem',
+              margin: `0.2rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+            }}
+          >
+            {row.text}
+          </p>
+          {row.replaces.length > 0 ? (
+            <p
+              style={{
+                color: 'var(--color-text-muted)',
+                fontSize: '0.7rem',
+                margin: `0.15rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+              }}
+            >
+              Replaces {row.replaces.join(', ')}.
+            </p>
+          ) : null}
+          {row.droppedArgs.length > 0 ? (
+            <p
+              style={{
+                color: 'var(--color-text-muted)',
+                fontSize: '0.7rem',
+                margin: `0.15rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+              }}
+            >
+              Incomplete: the engine could not resolve {row.droppedArgs.join(', ')}.
+            </p>
+          ) : null}
+        </div>
+      ))}
+      {/* What the chosen alternates took away. Shown so a swap reads as a
+          swap rather than as a trait that quietly stopped existing. */}
+      {surface.replaced.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.6rem 0 0' }}>
+          No longer applies:{' '}
+          {surface.replaced.map((entry) => `${entry.name} (replaced by ${entry.byName})`).join(', ')}.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 function ActionsTab(props: {
   levelEntries: LevelEntry[];
   explanations: readonly ExplanationDto[];
   heldClasses: HeldClass[];
+  racialTraits: RacialTraitsSurface;
+  raceLabel: string;
 }) {
   const surface = buildClassFeatureSurface(props.explanations, props.heldClasses);
   const generalBenefits = props.levelEntries.flatMap((entry) =>
     entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
   );
 
-  if (surface.features.length === 0 && surface.notComputed.length === 0 && generalBenefits.length === 0) {
+  if (
+    surface.features.length === 0 &&
+    surface.notComputed.length === 0 &&
+    generalBenefits.length === 0 &&
+    props.racialTraits.rows.length === 0 &&
+    props.racialTraits.unavailableReason === null
+  ) {
     return (
       <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
         No class features granted yet.
@@ -1485,6 +1808,7 @@ function ActionsTab(props: {
 
   return (
     <div>
+      <RacialTraitsSection surface={props.racialTraits} raceLabel={props.raceLabel} />
       {surface.features.length > 0 ? (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
@@ -1493,13 +1817,23 @@ function ActionsTab(props: {
           {surface.features.map((row) => (
             <div key={row.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
               <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
-                {row.classToken ? (
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 80, textTransform: 'capitalize' }}>
-                    {row.classToken}
-                  </span>
-                ) : (
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', minWidth: 80 }}>Chassis</span>
-                )}
+                {/*
+                  The held class's own label, never the raw id token: an
+                  Unchained Summoner's rows read "Unchained Summoner", not
+                  "unchained_summoner". `Chassis` stays the honest fallback for
+                  the pre-namespacing `class_chassis.base_attack_bonus` family,
+                  which names no class at all.
+                */}
+                <span
+                  style={{
+                    color: 'var(--color-text-muted)',
+                    flexShrink: 0,
+                    fontSize: '0.72rem',
+                    width: CLASS_FEATURE_GUTTER,
+                  }}
+                >
+                  {row.classLabel ?? 'Chassis'}
+                </span>
                 <span style={{ color: 'var(--color-text)', fontSize: '0.85rem', fontWeight: 700 }}>{row.label}</span>
                 <span style={{ color: 'var(--color-accent)', fontSize: '0.85rem', fontWeight: 800 }}>{row.value}</span>
               </div>
@@ -1510,7 +1844,13 @@ function ActionsTab(props: {
                 *count* of 6 means 6d6) it is the only place the full
                 expression appears.
               */}
-              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.2rem 0 0 calc(80px + 0.6rem)' }}>
+              <p
+                style={{
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.72rem',
+                  margin: `0.2rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+                }}
+              >
                 {row.detail}
               </p>
             </div>
@@ -1529,8 +1869,26 @@ function ActionsTab(props: {
           </p>
           {surface.notComputed.map((notice) => (
             <div key={notice.id} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.4rem 0' }}>
-              <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{notice.label}</span>
-              <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
+              <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
+                <span
+                  style={{
+                    color: 'var(--color-text-muted)',
+                    flexShrink: 0,
+                    fontSize: '0.72rem',
+                    width: CLASS_FEATURE_GUTTER,
+                  }}
+                >
+                  {notice.classLabel ?? 'Chassis'}
+                </span>
+                <span style={{ color: 'var(--color-text)', fontSize: '0.82rem', fontWeight: 700 }}>{notice.label}</span>
+              </div>
+              <p
+                style={{
+                  color: 'var(--color-text-secondary)',
+                  fontSize: '0.72rem',
+                  margin: `0.15rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+                }}
+              >
                 {notice.detail}
               </p>
             </div>
@@ -1578,23 +1936,38 @@ function ActionsTab(props: {
  * Deflect Arrows — see `pilot_compute.rs` around line 24487) carry no
  * numeric magnitude anywhere in the rules engine at all; the description
  * text rendered here is their complete, correct mechanical representation.
- * A selected feat that resolves to no catalog entry (a non-CRB feat, since
- * today's catalog is CRB-only — see `feat_catalog.rs`'s own doc comment —
- * or any other genuine mismatch) falls back to the raw string rather than
- * being hidden or shown blank.
+ * A selected feat that resolves to no catalog entry falls back to the raw
+ * string rather than being hidden or shown blank.
+ *
+ * The catalog is **not** CRB-only, and this doc comment used to say it was.
+ * `feat_catalog.rs` serves 690 feats across 5 books (CRB 185, APG 172, ACG
+ * 129, ARG 187, PU 17); the tab's own caption now derives that sentence from
+ * the response via `describeFeatCatalogCoverage` rather than asserting a book
+ * list that goes stale the next time a book lands.
  */
 function FeatsTab(props: {
   selectedFeats: string[];
   chosenFeatTargets: ChosenFeatTargetsDto[];
   onAddFeat: () => void;
+  /**
+   * Removes one held copy of the feat, optionally taking the one recorded
+   * target named. `featId` is the row's `raw` string verbatim — the backend
+   * matches by feat identity, so whichever of the two id shapes this
+   * character recorded is the one that unmatches.
+   */
+  onRemoveFeat: (featId: string, target: string | null) => void;
 }) {
   const [catalog, setCatalog] = useState<ItemPickerEntry[] | null>(null);
+  // Derived from the same response the picker rows come from, so the caption
+  // and the rows can never disagree about which books are in the catalog.
+  const [catalogCoverage, setCatalogCoverage] = useState<string | null>(null);
   useEffect(() => {
     let cancelled = false;
     listFeats({ nameContains: null, category: null })
       .then((response) => {
         if (!cancelled) {
           setCatalog(mapFeatCatalogEntries(response.entries));
+          setCatalogCoverage(describeFeatCatalogCoverage(response.entries));
         }
       })
       .catch(() => {
@@ -1619,7 +1992,7 @@ function FeatsTab(props: {
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
-        Add feats from the real CRB feat catalog.
+        {catalogCoverage ?? 'Add feats from the real feat catalog.'}
       </p>
       <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.25rem' }}>
         <button type="button" onClick={props.onAddFeat} style={addItemButtonStyle}>
@@ -1633,8 +2006,50 @@ function FeatsTab(props: {
       ) : (
         resolvedFeats.map((row, index) => (
           <div key={`${row.raw}-${index}`} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
-            <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
-            {describeFeatTarget(row) === null ? null : (
+            <div style={{ alignItems: 'center', display: 'flex', gap: '0.6rem', justifyContent: 'space-between' }}>
+              <span style={{ fontWeight: 700 }}>{row.entry ? row.entry.name : row.raw}</span>
+              {/*
+                A chooser feat's targets are removed one at a time (below,
+                beside each target), because one row can stand for two
+                separate picks — Weapon Focus in a longsword and in a
+                dagger. Everything else removes as a whole.
+              */}
+              {row.targets.length > 0 ? null : (
+                <button
+                  type="button"
+                  aria-label={`Remove ${row.entry ? row.entry.name : row.raw}`}
+                  onClick={() => props.onRemoveFeat(row.raw, null)}
+                  style={removeItemButtonStyle}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+            {row.targets.length === 0
+              ? null
+              : row.targets.map((target) => (
+                  <div
+                    key={target}
+                    style={{
+                      alignItems: 'center',
+                      display: 'flex',
+                      gap: '0.6rem',
+                      justifyContent: 'space-between',
+                      padding: '0.15rem 0',
+                    }}
+                  >
+                    <span style={{ color: 'var(--color-text)', fontSize: '0.78rem' }}>{target}</span>
+                    <button
+                      type="button"
+                      aria-label={`Remove ${row.entry ? row.entry.name : row.raw} (${target})`}
+                      onClick={() => props.onRemoveFeat(row.raw, target)}
+                      style={removeItemButtonStyle}
+                    >
+                      Remove
+                    </button>
+                  </div>
+                ))}
+            {describeFeatTarget(row) === null || row.targets.length > 0 ? null : (
               <p
                 style={{
                   color: row.targets.length === 0 ? 'var(--color-text-faint)' : 'var(--color-text)',
@@ -1799,6 +2214,34 @@ export function CharacterSheet(props: {
   // that has never saved one) whenever the sheet opens on a different
   // character. A load failure just leaves the blank default up rather than
   // breaking the sheet — bio is pure flavor text, not load-bearing.
+  /**
+   * The corpus-derived race roster, for the Details panel's Size/Vision and
+   * the Speed panel's Land.
+   *
+   * The panel captions those as "calculated from race", so they must be the
+   * race's real values or an honest `Unknown` — never a default. Before the
+   * roster arrives (and if the backend cannot serve it) this stays empty and
+   * `deriveRaceTraits` reports `Unknown`, which is true at that moment.
+   */
+  const [raceRoster, setRaceRoster] = useState<RaceOption[]>([]);
+  useEffect(() => {
+    let cancelled = false;
+    loadRaceRosterSurface()
+      .then((surface) => {
+        if (!cancelled) {
+          setRaceRoster(surface.options);
+        }
+      })
+      .catch(() => {
+        // Leaving the roster empty makes every race-derived field read
+        // `Unknown`, which is the honest reading when the roster could not
+        // be loaded. Nothing here is worth blocking the sheet over.
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     loadCharacterBio(props.row.characterId)
@@ -1841,11 +2284,17 @@ export function CharacterSheet(props: {
   }, [props.row.characterId]);
   /**
    * The engine's computed records for this build: every
-   * `ComputationExplanation` it emitted, and the per-weapon damage
-   * breakdown. Both arrive on `load_saved_character` and on nothing else,
-   * so they are held here and re-read after mutations
-   * (`refreshEngineRecords`) rather than threaded through the mutation
-   * responses, which do not carry them.
+   * `ComputationExplanation` it emitted, the per-weapon damage breakdown, and
+   * this character's racial traits resolved and rendered against its own
+   * feats. All three arrive on `load_saved_character` and on nothing else, so
+   * they are held here and re-read after mutations (`refreshEngineRecords`)
+   * rather than threaded through the mutation responses, which do not carry
+   * them.
+   *
+   * `resolvedRacialTraits` belongs here for the sharpest version of that
+   * reason: adding ARG's `Fortunate One` changes what the halfling luck row
+   * *says* ("three times per day" → "4 times per day"), so a stale copy of it
+   * is a wrong number on a player's sheet, not merely an out-of-date one.
    *
    * Seeded from `props.detail` so the browser preview (no Tauri runtime)
    * still renders its sample records.
@@ -1853,20 +2302,27 @@ export function CharacterSheet(props: {
   const [engineRecords, setEngineRecords] = useState<{
     explanations: ExplanationDto[];
     weaponDamage: WeaponDamageDto[];
+    resolvedRacialTraits: RaceSelectionResponse | null;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
+    resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
   });
   useEffect(() => {
     let cancelled = false;
     setEngineRecords({
       explanations: props.detail?.explanations ?? [],
       weaponDamage: props.detail?.weaponDamage ?? [],
+      resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
         if (!cancelled) {
-          setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+          setEngineRecords({
+            explanations: loaded.explanations,
+            weaponDamage: loaded.weaponDamage,
+            resolvedRacialTraits: loaded.resolvedRacialTraits,
+          });
         }
       })
       .catch(() => {
@@ -2093,6 +2549,9 @@ export function CharacterSheet(props: {
         snapshot: outcome.snapshot,
         diagnostics: [],
         corpusDerived: outcome.corpusDerived,
+        // The mutation did not touch racial traits, so the character's
+        // existing choices carry through unchanged rather than being reset.
+        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
@@ -2100,6 +2559,8 @@ export function CharacterSheet(props: {
         // reads them from `engineRecords`, re-read immediately below.
         explanations: [],
         weaponDamage: [],
+        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
+        resolvedRacialTraits: null,
       });
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
@@ -2145,12 +2606,17 @@ export function CharacterSheet(props: {
         snapshot: outcome.snapshot,
         diagnostics: [],
         corpusDerived: outcome.corpusDerived,
+        // The mutation did not touch racial traits, so the character's
+        // existing choices carry through unchanged rather than being reset.
+        selectedAlternateTraitKeys: props.detail?.selectedAlternateTraitKeys ?? [],
         selectedFeats: props.detail?.selectedFeats ?? [],
         spellsSelected: props.detail?.spellsSelected ?? [],
         chosenFeatTargets: props.detail?.chosenFeatTargets ?? [],
         // See `handleAddEquipment` — no engine records on this response.
         explanations: [],
         weaponDamage: [],
+        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
+        resolvedRacialTraits: null,
       });
       setMoney(outcome.money);
       // Attaching a +1 enhancement changes that weapon's Enh. columns.
@@ -2158,6 +2624,42 @@ export function CharacterSheet(props: {
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
     }
+  }
+
+  /**
+   * The Add Spell picker's rows, narrowed to the spell list of the exact
+   * class `handleAddSpell` will attribute the pick to.
+   *
+   * Before this, the picker called `listSpells` unfiltered and offered all
+   * 1185 catalog records to every character. 543 of them are on no wizard
+   * list in any ingested book, and the Known path had no membership check,
+   * so a Wizard 1 could pick a Druid-only spell and it persisted. The
+   * engine now refuses that (`class_spell_membership_refusal` in
+   * `pilot_compute.rs`); this stops the picker offering the pick in the
+   * first place, so the player meets the rule as a shorter list rather
+   * than as an error after the fact.
+   *
+   * The routing decision is deliberately the same call `handleAddSpell`
+   * makes — one function decides which class both the browse and the
+   * mutation answer to, so the two cannot drift into offering from one
+   * class's list and saving against another's. Spell LEVEL is not
+   * filtered; see `buildSpellPickerOffering` for the PF1 reasoning.
+   */
+  async function loadSpellPickerEntries(): Promise<ItemPickerEntry[]> {
+    const routing = resolveSpellRouting(
+      heldClasses,
+      props.detail?.spellsSelected ?? [],
+      WIZARD_CLASS_ID
+    );
+    const catalog = await listSpells({ nameContains: null, school: null });
+    if (!routing) {
+      // No held class to attribute a pick to. `handleAddSpell` refuses the
+      // pick anyway with its own message; narrowing against a class that
+      // does not exist would be inventing one.
+      return mapSpellCatalogEntries(catalog.entries);
+    }
+    const levels = await loadClassSpellLevels([routing.primaryClassId]);
+    return buildSpellPickerOffering(catalog.entries, levels.classes, routing.primaryClassId);
   }
 
   async function handleAddSpell(entry: ItemPickerEntry) {
@@ -2307,6 +2809,111 @@ export function CharacterSheet(props: {
   }
 
   /**
+   * The shared tail of all three removals: re-read the character straight
+   * off disk and publish that.
+   *
+   * Deliberately NOT the optimistic list-patching the add paths use. An add
+   * knows exactly what it appended, so mirroring it locally is faithful; a
+   * removal's consequences are not local — dropping a weapon changes the
+   * Weapons table, the encumbrance totals and the AC-by-source rows, and
+   * removing a feat can move max HP, weapon damage and class-feature
+   * records at once. Re-reading is the only way to be sure the sheet shows
+   * what was actually persisted rather than a hand-maintained guess at it,
+   * and it is the same read a reload of the app would do — which is exactly
+   * the property a removal has to survive.
+   */
+  async function republishFromDisk() {
+    const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
+    props.onDetailRefreshed(loaded);
+    setEngineRecords({
+      explanations: loaded.explanations,
+      weaponDamage: loaded.weaponDamage,
+      // Removing a feat can move a racial trait's stated magnitude just as
+      // surely as adding one — dropping `Fortunate One` takes halfling luck
+      // back from "4 times per day" to "Three".
+      resolvedRacialTraits: loaded.resolvedRacialTraits,
+    });
+    await refreshDurability();
+  }
+
+  /**
+   * Removes one held copy of a feat.
+   *
+   * A refusal — the character does not hold the feat, or another held feat
+   * still depends on it (`feat_removal_dependency_refusal` in
+   * `character_hub.rs`, which reuses `rules_core::feat_prereqs` rather than
+   * restating any rule) — arrives as a thrown error carrying the backend's
+   * own reason, and is shown verbatim. A `Blocked` outcome means the
+   * removal computed to an invalid build, so nothing was written; that
+   * message is the engine's own diagnostics.
+   */
+  async function handleRemoveFeat(featId: string, target: string | null) {
+    setMutationError(null);
+    try {
+      const outcome = await removeFeatSelection({
+        characterId: props.row.characterId,
+        featId,
+        target,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /** Forgets a spell for its own source class, in every acquisition mode. */
+  async function handleRemoveSpell(spellId: string, sourceClassId: string) {
+    setMutationError(null);
+    try {
+      const outcome = await removeSpellSelection({
+        characterId: props.row.characterId,
+        spellId,
+        sourceClassId,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
+   * Drops one carried copy of an item, with its equipmods. The money
+   * balance is deliberately left alone (see
+   * `apply_remove_equipment_selection`), so unlike `handleAddEquipment`
+   * this does not call `setMoney` — there is no new balance to show.
+   */
+  async function handleRemoveEquipment(itemId: string) {
+    setMutationError(null);
+    try {
+      const outcome = await removeEquipmentSelection({
+        characterId: props.row.characterId,
+        itemId,
+        savedAt: new Date().toISOString(),
+      });
+      if (outcome.kind === 'Blocked') {
+        setMutationError(blockedMessageFromDiagnostics(outcome.diagnostics));
+        return;
+      }
+      await republishFromDisk();
+      await refreshEngineRecords();
+    } catch (cause: unknown) {
+      setMutationError(cause instanceof Error ? cause.message : String(cause));
+    }
+  }
+
+  /**
    * SD-25 Criterion 3.5 register A3: the real UI affordance wired to one of
    * `append_to_character` / `recompute_character` / `re_save_character`
    * (matching SD-24 Criterion 7.4's Add-Weapon/Add-Armor/Add-Spell
@@ -2331,6 +2938,13 @@ export function CharacterSheet(props: {
         return;
       }
       setRecomputed(response.character);
+      // `recompute_character` returns AC and the melee attack bonus but no
+      // explanation records, and since SD-27 (`decisions.md §28`) touch AC, CMB
+      // and CMD are read off explanations. Without this, Recompute would move
+      // the AC tile while the Touch tile beside it kept the pre-recompute
+      // number — reintroducing, on one panel, exactly the self-contradiction
+      // this cycle removed.
+      await refreshEngineRecords();
       setStatusMessage('Recomputed derived stats from the current on-disk build.');
     } catch (cause: unknown) {
       setMutationError(cause instanceof Error ? cause.message : String(cause));
@@ -2445,7 +3059,11 @@ export function CharacterSheet(props: {
   async function refreshEngineRecords() {
     try {
       const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
-      setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+      setEngineRecords({
+        explanations: loaded.explanations,
+        weaponDamage: loaded.weaponDamage,
+        resolvedRacialTraits: loaded.resolvedRacialTraits,
+      });
     } catch {
       // Intentionally keeps the current records.
     }
@@ -2518,8 +3136,25 @@ export function CharacterSheet(props: {
   const ac = recomputed?.baselineArmorClass ?? snapshot?.baselineArmorClass ?? 10;
   const saves = recomputed?.totalSaves ?? snapshot?.totalSaves ?? { fortitude: 0, reflex: 0, will: 0 };
   const dexMod = abilities.dexterity;
-  const touch = 10 + dexMod;
-  const flatFooted = ac - Math.max(0, dexMod);
+  // SD-27 `decisions.md §28` defect 1: touch AC comes from the engine
+  // (`defense.touch_armor_class`), which derives it by removing the
+  // contributors a touch attack ignores from the very Armor Class shown beside
+  // it. It used to be `10 + dexMod` right here — size-blind, and free to
+  // contradict `ac` on the same panel.
+  const touch = engineValue(engineRecords.explanations, 'defense.touch_armor_class');
+  // SD-27 `decisions.md §28`, flat-footed defect: this was the last defense
+  // cell still computed here, and the one that was also *wrong*. It read
+  // `ac - Math.max(0, dexMod)` — the Dexterity half of PF1's rule and nothing
+  // else — so every character holding a dodge-typed bonus displayed a
+  // flat-footed AC too high by that bonus. Measured on screen: a Tiefling took
+  // Dodge and went AC 19 → 20, touch 13 → 14 (both correct) and flat-footed
+  // 16 → 17, which PF1 forbids: "any situation that denies you your Dexterity
+  // bonus to Armor Class also denies you dodge bonuses."
+  //
+  // It is `defense.flat_footed_armor_class` now — derived by both compute
+  // paths from the very Armor Class shown beside it, with the real inventory
+  // of dodge-typed terms subtracted. See `pilot_compute::flat_footed_armor_class`.
+  const flatFooted = engineValue(engineRecords.explanations, 'defense.flat_footed_armor_class');
 
   const heldClasses = parseHeldClasses(props.row.classSummary);
   const classLabel = formatHeldClasses(props.row.classSummary); // e.g. "Fighter 3 / Wizard 1"
@@ -2533,13 +3168,50 @@ export function CharacterSheet(props: {
   const currentBenefits = buildLevelEntries(heldClasses);
   const nextBenefits = buildNextEntries(heldClasses);
 
-  const race = RACE_OPTIONS.find((entry) => entry.id === props.detail?.summary.raceId);
-  const size = race?.size ?? 'Medium';
-  const vision = race?.vision ?? 'Normal';
+  // A race this build carries no profile for reports `Unknown` for both,
+  // rather than the old `?? 'Medium'` / `?? 'Normal'` defaults — the panel
+  // captions these as calculated from race, so a guess reads as a rules
+  // fact. See `deriveRaceTraits`.
+  const { size, vision: standardVision, landSpeed } = deriveRaceTraits(props.detail?.summary.raceId, raceRoster);
+  // SD-27: `deriveRaceTraits` reads the race *roster*, which describes the
+  // unmodified race and knows nothing about a chosen alternate racial trait. A
+  // Dwarf who took ARG's Minesight has 90 ft darkvision, and this cell used to
+  // keep saying 60 while the engine's own record said 90 — the sheet
+  // contradicting itself on the same page. The engine's record wins where it
+  // has one, exactly as touch AC / CMB / CMD already do; `??` falls through to
+  // the roster for every character who replaced no vision trait.
+  const alternateVisionFt = engineValue(
+    engineRecords.explanations,
+    'race.dwarf.alternate_trait.minesight.senses'
+  );
+  const vision = alternateVisionFt === null ? standardVision : `Darkvision ${alternateVisionFt} ft.`;
   const baseAttackBonus = recomputed?.baseAttackBonus ?? snapshot?.baseAttackBonus ?? 0;
   const hp = maxHitPoints(heldClasses, abilities.constitution);
-  const cmb = baseAttackBonus + abilities.strength;
-  const cmd = 10 + baseAttackBonus + abilities.strength + dexMod;
+  // SD-27 `decisions.md §28` defect 1: CMB/CMD are engine values now
+  // (`pilot_compute::combat_maneuver_bonus` / `combat_maneuver_defense`, called
+  // by both compute paths). They were `baseAttackBonus + abilities.strength`
+  // and `10 + baseAttackBonus + abilities.strength + dexMod` here, with no
+  // special size modifier, so every Small character read a point high on both.
+  const cmb = engineValue(engineRecords.explanations, 'combat.combat_maneuver_bonus');
+  const cmd = engineValue(engineRecords.explanations, 'defense.combat_maneuver_defense');
+
+  /**
+   * This character's racial traits, resolved by `RaceCorpus::resolve` and
+   * rendered by `race_trait_picker::render_trait_description` against the feats
+   * it actually holds. Nothing on this screen decides which traits apply or
+   * what any of them says.
+   */
+  const racialTraits = buildRacialTraitsSurface(engineRecords.resolvedRacialTraits);
+  /** The chosen swaps, for the left rail's digest. */
+  const alternateTraitCards = racialTraits.rows.filter((row) => row.role === 'alternate');
+  /**
+   * Chosen keys with no resolved row — a resolution that has not arrived yet,
+   * or one the engine could not produce. Named rather than dropped: a player's
+   * own selection disappearing from the sheet is worse than showing it bare.
+   */
+  const unresolvedAlternateTraitKeys = (props.detail?.selectedAlternateTraitKeys ?? []).filter(
+    (traitKey) => !alternateTraitCards.some((row) => row.key === traitKey)
+  );
 
   // Weapon proficiency is the union across all held classes.
   const weaponProficiency = heldClasses.reduce<WeaponProficiency>(
@@ -2583,8 +3255,16 @@ export function CharacterSheet(props: {
   const itemPickerConfig = buildItemPickerConfig(itemPickerOpen, {
     loadEquipment: (category) =>
       listEquipment({ nameContains: null, category }).then((response) => mapEquipmentCatalogEntries(response.entries)),
-    loadSpells: () => listSpells({ nameContains: null, school: null }).then((response) => mapSpellCatalogEntries(response.entries)),
-    loadFeats: () => listFeats({ nameContains: null, category: null }).then((response) => mapFeatCatalogEntries(response.entries)),
+    loadSpells: loadSpellPickerEntries,
+    // SD-27: the Add Feat picker reads the catalog *for this character*, so
+    // every row carries its real prerequisite verdict and the ones this
+    // build cannot take render greyed with the reason. All 690 records are
+    // still returned -- an unavailable feat is shown and explained, never
+    // hidden and never offered-then-refused.
+    loadFeats: () =>
+      listFeatsForCharacter(props.row.characterId, { nameContains: null, category: null }).then((response) =>
+        mapFeatCatalogEntries(response.entries)
+      ),
     loadFeatTargets: () => {
       const kind = pendingFeatTarget?.targetKind ?? null;
       if (kind === 'Weapon') {
@@ -2808,6 +3488,35 @@ export function CharacterSheet(props: {
 
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <NavCard label="Race" value={props.row.raceLabel} />
+                {/* SD-27: the ARG alternate racial traits this character
+                    actually holds — now with the prose the engine rendered for
+                    *this* character, not the bare name the key happens to
+                    contain.
+
+                    The card used to read "Adaptable Luck" and stop there, so
+                    the sentence stating the number (already computed, already
+                    carrying this character's feats) reached no screen at all.
+                    Everything else about the section is unchanged: nothing at
+                    all when no alternate was taken, because an empty
+                    "Alternate Racial Traits" heading would imply the race has
+                    none to offer, which is a different claim.
+
+                    The full racial-trait list, standard rows included, is in
+                    the Actions tab; this column stays the chosen-swaps digest
+                    the left rail has always been. */}
+                {alternateTraitCards.map((row) => (
+                  <RacialTraitCard key={row.key} row={row} />
+                ))}
+                {/* A chosen key whose resolution has not arrived (or could not
+                    be produced) still names the choice, rather than vanishing
+                    and leaving the player's own selection invisible. */}
+                {unresolvedAlternateTraitKeys.map((traitKey) => (
+                  <NavCard
+                    key={traitKey}
+                    label="Alternate Racial Trait"
+                    value={traitKey.split(' ~ ').slice(1).join(' ~ ') || traitKey}
+                  />
+                ))}
                 <NavCard label="Class" value={classLabel} />
               </div>
 
@@ -2858,7 +3567,7 @@ export function CharacterSheet(props: {
             </div>
             <div style={{ display: 'flex', flex: 1, flexDirection: 'column', gap: '0.6rem', minWidth: 0 }}>
               <SavingThrowsPanel saves={saves} />
-              <SpeedPanel />
+              <SpeedPanel land={landSpeed} />
             </div>
           </div>
 
@@ -2896,6 +3605,7 @@ export function CharacterSheet(props: {
                   weaponDamage={engineRecords.weaponDamage}
                   corpusDerived={props.detail?.corpusDerived ?? null}
                   onAddWeapon={() => setItemPickerOpen('weapon')}
+                  onRemoveWeapon={(itemId) => void handleRemoveEquipment(itemId)}
                 />
               ) : tab === 'Defense' ? (
                 <DefenseTab
@@ -2913,12 +3623,16 @@ export function CharacterSheet(props: {
                   corpusDerived={props.detail?.corpusDerived}
                   explanations={engineRecords.explanations}
                   onAddSpell={() => setItemPickerOpen('spell')}
+                  onRemoveSpell={(spellId, sourceClassId) =>
+                    void handleRemoveSpell(spellId, sourceClassId)
+                  }
                 />
               ) : tab === 'Gear' ? (
                 <GearTab
                   corpusDerived={props.detail?.corpusDerived}
                   onAddArmor={() => setItemPickerOpen('armor')}
                   onAttachModifier={handleAttachModifier}
+                  onRemoveItem={(itemId) => void handleRemoveEquipment(itemId)}
                   money={money}
                   moneyBusy={moneyBusy}
                   moneyError={moneyError}
@@ -2929,6 +3643,7 @@ export function CharacterSheet(props: {
             selectedFeats={props.detail?.selectedFeats ?? []}
             chosenFeatTargets={props.detail?.chosenFeatTargets ?? []}
             onAddFeat={() => setItemPickerOpen('feat')}
+            onRemoveFeat={(featId, target) => void handleRemoveFeat(featId, target)}
           />
               ) : tab === 'Pets' ? (
                 <PetsTab snapshot={snapshot} />
@@ -2937,6 +3652,8 @@ export function CharacterSheet(props: {
                   levelEntries={currentBenefits}
                   explanations={engineRecords.explanations}
                   heldClasses={heldClasses}
+                  racialTraits={racialTraits}
+                  raceLabel={props.row.raceLabel}
                 />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>

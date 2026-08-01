@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Woad Painting Kit",
     "category": "General",
-    "name": "Woad Painting Kit",
     "cost_gp": 300.0,
-    "weight": 1.0,
-    "description": "Includes pallet and 5 small blocks of paint"
+    "description": "Includes pallet and 5 small blocks of paint",
+    "key": "Woad Painting Kit",
+    "name": "Woad Painting Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical"
+      },
+      {
+        "key": "COST",
+        "value": "300"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.208"
+      },
+      {
+        "key": "SPROP",
+        "value": "Includes pallet and 5 small blocks of paint"
+      }
+    ],
+    "weight": 1.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 226,
-    "record_key": "Woad Painting Kit"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Woad Painting Kit",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

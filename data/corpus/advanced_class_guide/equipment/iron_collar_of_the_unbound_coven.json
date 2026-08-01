@@ -1,20 +1,50 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Iron Collar of the Unbound Coven",
     "category": "MagicItems",
-    "name": "Iron Collar of the Unbound Coven",
     "cost_gp": 46000.0,
-    "weight": 2.0,
-    "description": "gain powers if wearer is a witch with the coven hex"
+    "description": "gain powers if wearer is a witch with the coven hex",
+    "key": "Iron Collar of the Unbound Coven",
+    "name": "Iron Collar of the Unbound Coven",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "46000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.231"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Iron Collar of the Unbound Coven ~ Champion of the Unbound Coven|Iron Collar of the Unbound Coven ~ Dreadful Gaze|Iron Collar of the Unbound Coven ~ Hag Form|PREMULT:2,[PRECLASS:1,Witch=1],[PREABILITY:1,CATEGORY=Special Ability,Witch Hex ~ Coven]"
+      },
+      {
+        "key": "SPROP",
+        "value": "gain powers if wearer is a witch with the coven hex"
+      }
+    ],
+    "weight": 2.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 383,
-    "record_key": "Iron Collar of the Unbound Coven"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Iron Collar of the Unbound Coven",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

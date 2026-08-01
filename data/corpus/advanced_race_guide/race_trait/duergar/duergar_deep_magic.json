@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Duergar ~ Deep Magic",
+    "name": "Deep Magic",
+    "race_key": "Duergar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Duergar Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Duergar_ReplaceSpellLikeAbilities"
+    ],
+    "description": "Duergar spellcasters labor long to overcome the inborn spell resistance held by so many of their underground foes. Duergar with this racial trait receive a +2 racial bonus on caster level checks made to overcome spell resistance and a +2 racial bonus on dispel checks. This racial trait replaces the enlarge person and invisibility spell-like abilities.",
+    "source_page": "p.186",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duergar ~ Deep Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Duergar Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Duergar ~ Deep Magic],[!PREFACT:1,ABILITIES,Duergar_ReplaceSpellLikeAbilities=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Duergar spellcasters labor long to overcome the inborn spell resistance held by so many of their underground foes. Duergar with this racial trait receive a +2 racial bonus on caster level checks made to overcome spell resistance and a +2 racial bonus on dispel checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the enlarge person and invisibility spell-like abilities.|!PREABILITY:1,CATEGORY=Special Ability,Duergar ~ Deep Magic"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 racial bonus on caster level checks made to overcome spell resistance and +2 racial bonus on dispel checks."
+      },
+      {
+        "key": "FACT",
+        "value": "Duergar_ReplaceSpellLikeAbilities|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 849,
+    "record_key": "Duergar ~ Deep Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

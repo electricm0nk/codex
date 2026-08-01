@@ -17,5 +17,8 @@
     "line": 120,
     "record_key": "Shield (Heavy/Steel)",
     "inherited_from_record_key": "Heavy Steel Shield (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

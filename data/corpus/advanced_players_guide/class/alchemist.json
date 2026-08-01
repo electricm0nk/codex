@@ -154,5 +154,8 @@
     "sha256": "fc0f627d301eca409b7441c5b54fdb452404ea8924163ec1abdad13308fd83db",
     "line": 11,
     "record_key": "CLASS:Alchemist"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

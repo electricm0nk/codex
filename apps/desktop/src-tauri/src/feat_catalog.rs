@@ -1,25 +1,72 @@
 //! v0.6 alpha swarm feat catalog browser — Tauri command adapter over the
 //! full feat table store across every ingested rule book
-//! (`rules_tables::feats_all::all_feat_tables`): 486 real corpus records,
-//! 185 CRB + 172 APG + 129 ACG.
+//! (`rules_tables::feats_all::all_feat_tables`): 690 real corpus records,
+//! 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU.
 //!
 //! Mirrors `equipment_catalog.rs`'s own command/pure-fn split and
 //! unfiltered/filtered command pair exactly — this is a standalone catalog
 //! view of every real feat record the engine knows about, for the
 //! frontend's Feat picker.
 //!
-//! **This was CRB-only until the APG/ACG ingest.** The two other books'
+//! **This was CRB-only until the APG/ACG ingest.** The other books'
 //! feat tables did not exist anywhere in the engine, so a player building
 //! an APG or ACG class could not take a single feat from that class's own
 //! book. Reading the aggregate rather than `crb::feats::feat_tables()`
-//! directly is what puts those 301 feats in front of a player; every DTO
+//! directly is what puts those 505 feats in front of a player; every DTO
 //! now names its `source` book, the same way the spell catalog already
-//! does.
+//! does. Advanced Race Guide and Pathfinder Unchained joined the aggregate
+//! after that widening and reach the picker through the same path, with no
+//! change needed here beyond the record type the aggregate now hands out
+//! (`feats_all::FeatCatalogRecord` — see that module's own doc comment for
+//! why ARG's and PU's tables could not honestly be folded into
+//! `crb::feats::FeatTableEntry`).
 
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::feat_effects;
+use codex::rules_core::feat_prereqs::pre_tokens::CharacterPrereqFacts;
+use codex::rules_core::feat_prereqs::{evaluate_catalog_feat_prerequisites, FeatPrerequisiteReport};
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+
+/// One feat's prerequisite verdict for the character the picker is open
+/// for. Absent (`None`) when the catalog is served with no character
+/// context at all -- `list_feats` / `list_feat_catalog`, which the Tester
+/// Workbench and the release-checks surfaces read.
+///
+/// The frontend greys a row out when `eligible` is false and shows
+/// `unavailableReason` on it. `unverified` is shown as a note on rows that
+/// stay selectable, so a player is told what could not be checked instead
+/// of being quietly allowed or quietly denied.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FeatEligibilityDto {
+    pub eligible: bool,
+    /// One line, already joined, for the greyed-out row. `None` exactly
+    /// when `eligible` is true.
+    pub unavailable_reason: Option<String>,
+    /// The prerequisites this character satisfies.
+    pub met: Vec<String>,
+    /// The prerequisites this character does not satisfy. Empty when
+    /// `eligible`.
+    pub unmet: Vec<String>,
+    /// Prerequisites the engine could not evaluate. These never block --
+    /// see `feat_prereqs::pre_tokens`' three-outcome design.
+    pub unverified: Vec<String>,
+    /// How many `PRE`-family tokens the corpus record carries. `0` means
+    /// the feat genuinely has no prerequisites.
+    pub prerequisite_count: usize,
+}
+
+fn map_eligibility_dto(report: &FeatPrerequisiteReport) -> FeatEligibilityDto {
+    FeatEligibilityDto {
+        eligible: report.is_eligible,
+        unavailable_reason: report.unavailable_reason(),
+        met: report.met.clone(),
+        unmet: report.unmet.iter().map(|failed| failed.reason.clone()).collect(),
+        unverified: report.unverified.iter().map(|warning| warning.message.clone()).collect(),
+        prerequisite_count: report.prerequisite_token_count,
+    }
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -30,8 +77,15 @@ pub struct FeatCatalogEntryDto {
     pub name: String,
     pub description: Option<String>,
     /// Which rule book this record came from — the `RuleSetId` variant
-    /// name verbatim, i.e. `"Crb"`, `"Apg"` or `"Acg"`. Read off the
-    /// `BookFeatTable` the entry belongs to, never inferred from the key.
+    /// name verbatim, i.e. `"Crb"`, `"Apg"`, `"Acg"`, `"Arg"` or `"Pu"`.
+    /// Read off the `BookFeatTable` the entry belongs to, never inferred
+    /// from the key.
+    ///
+    /// It is also what distinguishes the catalog's one cross-book
+    /// duplicate key: `Endurance` is served twice, once from CRB and once
+    /// from PU, which re-lists that feat under its Wound Threshold rules
+    /// (pinned by `feats_all`'s
+    /// `cross_book_key_collisions_are_exactly_the_known_set`).
     ///
     /// A player picking a feat needs to know which book it is from, the
     /// same reason `SpellCatalogEntryDto` carries `book`.
@@ -45,6 +99,15 @@ pub struct FeatCatalogEntryDto {
     /// the feats in `feat_effects::CHOOSER_FEAT_CONTRACTS` are marked, so a
     /// prompt shown to a player always leads to real arithmetic.
     pub chooser_target_kind: Option<String>,
+    /// This feat's prerequisite verdict for the character the picker is
+    /// open for, or `None` when the catalog was requested with no
+    /// character (`list_feats` / `list_feat_catalog`).
+    ///
+    /// `#[serde(skip_serializing_if)]` so the character-less callers send
+    /// no key at all rather than a literal `null` a frontend `!== undefined`
+    /// check would wave through as "checked, and fine".
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub eligibility: Option<FeatEligibilityDto>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -54,14 +117,38 @@ pub struct FeatCatalogResponse {
 }
 
 fn map_catalog_entry(
-    entry: &codex::rules_core::rules_tables::crb::feats::FeatTableEntry,
+    entry: &codex::rules_core::rules_tables::feats_all::FeatCatalogRecord,
     source: &str,
+    eligibility: Option<FeatEligibilityDto>,
 ) -> FeatCatalogEntryDto {
     FeatCatalogEntryDto {
+        eligibility,
         key: entry.key.to_string(),
-        category: format!("{:?}", entry.category),
+        // Already the source book's own `FeatCategory` variant name
+        // verbatim — the aggregate projects it there, over an exhaustive
+        // per-book match, because the five books do not share one category
+        // enum. Same wire strings as the previous `format!("{:?}", ..)`,
+        // pinned by `feats_all`'s
+        // `category_names_match_the_debug_form_of_every_variant`.
+        category: entry.category.to_string(),
         name: entry.name.to_string(),
-        description: entry.description.map(|d| d.to_string()),
+        // Rendered, not copied. The Add Feat picker folds this straight
+        // into its `detail` line (`itemPickerFilter::mapFeatCatalogEntries`),
+        // so the raw corpus `DESC:` token reached the player verbatim.
+        //
+        // 17 of the 681 served descriptions carried PCGen syntax; partitioned
+        // by their first-detected leak that is 13 an unsubstituted `%N`
+        // ("%1 times per day"), 3 an undecoded `&nl;`, and ACG's
+        // `Twinned Feint` a trailing
+        // `|!PREABILITY:1,CATEGORY=FEAT,Improved Feint`. The remaining 664 are
+        // returned byte-identical — `render_pcgen_desc` rewrites nothing in
+        // prose that carries no PCGen syntax, which
+        // `feat_descriptions_are_rendered_and_otherwise_byte_identical` pins.
+        // `render_pcgen_desc` owns the treatment; this module does not
+        // re-decide it.
+        description: entry
+            .description
+            .map(|d| codex::rules_core::pcgen_desc::render_pcgen_desc(d).text),
         source: source.to_string(),
         chooser_target_kind: feat_effects::chooser_contract_for_feat(entry.key)
             .map(|contract| format!("{:?}", contract.target_kind)),
@@ -69,13 +156,27 @@ fn map_catalog_entry(
 }
 
 /// Build the full catalog response across every ingested book, in book
-/// order (CRB, APG, ACG). A thin, testable wrapper behind the Tauri
-/// command below — mirrors `equipment_catalog::build_equipment_catalog`.
+/// order (CRB, APG, ACG, ARG, PU). A thin, testable wrapper behind the
+/// Tauri command below — mirrors
+/// `equipment_catalog::build_equipment_catalog`.
 pub fn build_feat_catalog() -> FeatCatalogResponse {
+    build_feat_catalog_for(None)
+}
+
+fn build_feat_catalog_for(facts: Option<&CharacterPrereqFacts>) -> FeatCatalogResponse {
     let mut entries = Vec::new();
     for book in all_feat_tables() {
         let source = format!("{:?}", book.rule_set);
-        entries.extend(book.entries.iter().map(|entry| map_catalog_entry(entry, &source)));
+        entries.extend(book.entries.iter().map(|entry| {
+            let eligibility = facts.map(|facts| {
+                map_eligibility_dto(&evaluate_catalog_feat_prerequisites(
+                    entry,
+                    book.rule_set,
+                    facts,
+                ))
+            });
+            map_catalog_entry(entry, &source, eligibility)
+        }));
     }
     FeatCatalogResponse { entries }
 }
@@ -93,12 +194,16 @@ pub fn list_feat_catalog() -> FeatCatalogResponse {
 pub struct FeatCatalogFilter {
     /// Case-insensitive substring match against `name`.
     pub name_contains: Option<String>,
-    /// Exact match against the `FeatCategory` variant name verbatim (e.g.
-    /// "Combat"), as projected onto `FeatCatalogEntryDto::category`.
+    /// Exact match against the source book's `FeatCategory` variant name
+    /// verbatim (e.g. "Combat"), as projected onto
+    /// `FeatCatalogEntryDto::category`. PU contributes three category
+    /// names no other book has — "Alignment", "CombatStamina",
+    /// "WoundThreshold" — because its corpus groups feats by `###Block:`
+    /// marker rather than by `TYPE:` facet.
     pub category: Option<String>,
     /// Exact match against the `RuleSetId` variant name verbatim (`"Crb"`,
-    /// `"Apg"`, `"Acg"`), as projected onto `FeatCatalogEntryDto::source`.
-    /// `None` spans every book.
+    /// `"Apg"`, `"Acg"`, `"Arg"`, `"Pu"`), as projected onto
+    /// `FeatCatalogEntryDto::source`. `None` spans every book.
     ///
     /// `#[serde(default)]` because callers that predate the APG/ACG ingest
     /// send a filter payload with no `source` key at all; that must mean
@@ -111,13 +216,38 @@ pub struct FeatCatalogFilter {
 /// testable wrapper behind the `list_feats` Tauri command below — mirrors
 /// `equipment_catalog::filter_equipment_catalog`.
 pub fn filter_feat_catalog(filter: &FeatCatalogFilter) -> FeatCatalogResponse {
+    filter_feat_catalog_for(filter, None)
+}
+
+/// `filter_feat_catalog`, with each surviving record's real prerequisite
+/// verdict for `facts` attached. Backs the `list_feats_for_character`
+/// command.
+///
+/// **This is what closes the "no feat prerequisite enforcement anywhere"
+/// defect at the UI boundary.** A Fighter 1 asking for the catalog gets
+/// Improved Two-Weapon Fighting back with `eligible: false` and the reason,
+/// so the picker can grey the row *and say why* -- rather than offering it,
+/// accepting it, and silently producing an illegal character. Every record
+/// surviving `filter` is still returned: an unavailable feat must be
+/// visible and explained, never removed from the list.
+pub fn filter_feat_catalog_with_eligibility(
+    filter: &FeatCatalogFilter,
+    facts: &CharacterPrereqFacts,
+) -> FeatCatalogResponse {
+    filter_feat_catalog_for(filter, Some(facts))
+}
+
+fn filter_feat_catalog_for(
+    filter: &FeatCatalogFilter,
+    facts: Option<&CharacterPrereqFacts>,
+) -> FeatCatalogResponse {
     let name_needle = filter
         .name_contains
         .as_ref()
         .filter(|needle| !needle.is_empty())
         .map(|needle| needle.to_lowercase());
 
-    let entries = build_feat_catalog()
+    let entries = build_feat_catalog_for(facts)
         .entries
         .into_iter()
         .filter(|entry| match &name_needle {
@@ -137,7 +267,7 @@ pub fn filter_feat_catalog(filter: &FeatCatalogFilter) -> FeatCatalogResponse {
     FeatCatalogResponse { entries }
 }
 
-/// Returns the CRB feat catalog narrowed by `filter` — see
+/// Returns the all-book feat catalog narrowed by `filter` — see
 /// `FeatCatalogFilter`'s own doc comment for the supported fields.
 #[tauri::command]
 pub fn list_feats(filter: FeatCatalogFilter) -> FeatCatalogResponse {
@@ -148,27 +278,201 @@ pub fn list_feats(filter: FeatCatalogFilter) -> FeatCatalogResponse {
 mod tests {
     use super::*;
 
+    /// The rendering `map_catalog_entry` now applies, pinned on both sides.
+    ///
+    /// The Add Feat picker was showing raw PCGen `DESC:` tokens. This asserts
+    /// two things at once: the leaking records really are rewritten, and the
+    /// rewrite touches **nothing else** — a renderer that reflowed all 681
+    /// descriptions would pass a leak check while quietly changing every feat
+    /// a player reads.
     #[test]
-    fn catalog_spans_all_three_books_with_their_real_counts() {
+    fn feat_descriptions_are_rendered_and_otherwise_byte_identical() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+        use std::collections::BTreeMap;
+
+        let raw_by_key: BTreeMap<(String, &str), &str> = all_feat_tables()
+            .iter()
+            .flat_map(|table| {
+                table.entries.iter().filter_map(move |entry| {
+                    entry
+                        .description
+                        .map(|d| ((format!("{:?}", table.rule_set), entry.key), d))
+                })
+            })
+            .collect();
+
+        let mut with_description = 0usize;
+        let mut changed: Vec<&str> = Vec::new();
+        let mut raw_leaks = 0usize;
+        let catalog = build_feat_catalog();
+        for entry in &catalog.entries {
+            let Some(served) = entry.description.as_deref() else { continue };
+            with_description += 1;
+            let raw = raw_by_key[&(entry.source.clone(), entry.key.as_str())];
+            if leaked_pcgen_syntax(raw).is_some() {
+                raw_leaks += 1;
+            }
+            if served != raw {
+                changed.push(entry.key.as_str());
+            }
+            assert_eq!(
+                leaked_pcgen_syntax(served),
+                None,
+                "served feat {:?} still leaks",
+                entry.key
+            );
+        }
+
+        assert_eq!(with_description, 681, "9 of the 690 records carry no DESC: token");
+        assert_eq!(raw_leaks, 17, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 17, "exactly the leaking records are rewritten");
+        assert_eq!(
+            changed,
+            vec![
+                "Arcane Strike",
+                "Stunning Fist",
+                "Unfettered Familiar",
+                "Battle Cry",
+                "Befuddling Strike",
+                "Dazing Fist",
+                "Draining Strike",
+                "Faerie's Strike",
+                "Grasping Strike",
+                "Gruesome Slaughter",
+                "Paralyzing Strike",
+                "Raging Concentration",
+                "Recovered Rage",
+                "Staggering Fist",
+                "Twinned Feint",
+                "Winter's Strike",
+                "Wounded Paw Gambit",
+            ]
+        );
+    }
+
+    #[test]
+    fn catalog_spans_every_ingested_book_with_their_real_counts() {
         let response = build_feat_catalog();
-        assert_eq!(response.entries.len(), 486, "185 CRB + 172 APG + 129 ACG");
+        assert_eq!(
+            response.entries.len(),
+            690,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU"
+        );
 
         let by_source =
             |source: &str| response.entries.iter().filter(|e| e.source == source).count();
         assert_eq!(by_source("Crb"), 185);
         assert_eq!(by_source("Apg"), 172);
         assert_eq!(by_source("Acg"), 129);
+        assert_eq!(by_source("Arg"), 187);
+        assert_eq!(by_source("Pu"), 17);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
-        // CRB 50 + APG 69 + ACG 62, and so on per category.
-        assert_eq!(counts("General"), 181);
-        assert_eq!(counts("Combat"), 250);
+        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2, and so on per category.
+        assert_eq!(counts("General"), 315);
+        assert_eq!(counts("Combat"), 302);
         assert_eq!(counts("ItemCreation"), 8);
         assert_eq!(counts("Metamagic"), 36);
-        assert_eq!(counts("Teamwork"), 7);
+        assert_eq!(counts("Teamwork"), 10);
         assert_eq!(counts("Panache"), 4);
+        // PU's three `###Block:`-derived categories; no other book has them.
+        assert_eq!(counts("Alignment"), 9);
+        assert_eq!(counts("CombatStamina"), 3);
+        assert_eq!(counts("WoundThreshold"), 3);
+
+        let categorised: usize = [
+            "General",
+            "Combat",
+            "ItemCreation",
+            "Metamagic",
+            "Teamwork",
+            "Panache",
+            "Alignment",
+            "CombatStamina",
+            "WoundThreshold",
+        ]
+        .iter()
+        .map(|category| counts(category))
+        .sum();
+        assert_eq!(
+            categorised,
+            response.entries.len(),
+            "every served record must carry one of the categories asserted above"
+        );
+    }
+
+    /// The point of widening the aggregate to ARG and PU: a player opening
+    /// the Feat picker can now see and select those books' real feats,
+    /// with their real corpus descriptions.
+    #[test]
+    fn real_arg_and_pu_feats_reach_the_picker_with_their_descriptions() {
+        let response = build_feat_catalog();
+        let find = |key: &str, source: &str| {
+            response
+                .entries
+                .iter()
+                .find(|e| e.key == key && e.source == source)
+                .unwrap_or_else(|| panic!("'{key}' ({source}) must be offered by the picker"))
+        };
+
+        let wings = find("Angel Wings", "Arg");
+        assert_eq!(wings.category, "General");
+        assert_eq!(
+            wings.description.as_deref(),
+            Some("Feathered wings sprout from your back.")
+        );
+
+        let champion = find("Champion of Tyranny", "Pu");
+        assert_eq!(champion.category, "Alignment");
+        assert_eq!(
+            champion.description.as_deref(),
+            Some("You must beat down the masses to have true order.")
+        );
+    }
+
+    /// The catalog's one cross-book duplicate key. Both rows are served,
+    /// because dropping PU's would make this response disagree with that
+    /// book's own table about how many feats it has, and `source` plus
+    /// `category` are what tell a player which listing they are looking
+    /// at. The description is deliberately asserted *equal*: PU re-lists
+    /// the Core Rulebook feat rather than defining a new one, so identical
+    /// text here is the corpus being reported faithfully, not one record
+    /// shadowing the other.
+    #[test]
+    fn both_endurance_listings_are_served_and_are_distinguishable() {
+        let response = build_feat_catalog();
+        let endurance: Vec<_> = response.entries.iter().filter(|e| e.key == "Endurance").collect();
+        assert_eq!(endurance.len(), 2, "CRB lists Endurance and PU re-lists it");
+
+        let sources: Vec<&str> = endurance.iter().map(|e| e.source.as_str()).collect();
+        assert_eq!(sources, vec!["Crb", "Pu"]);
+        assert_eq!(endurance[0].category, "General");
+        assert_eq!(endurance[1].category, "WoundThreshold");
+        assert_eq!(
+            endurance[0].description, endurance[1].description,
+            "both corpus rows carry the same DESC: text"
+        );
+        assert!(endurance[0].description.is_some(), "and it is real text, not a shared absence");
+    }
+
+    /// PU's block-derived categories are real filter values, not labels
+    /// that render and select nothing.
+    #[test]
+    fn filter_feat_catalog_narrows_to_a_pu_only_category() {
+        let response = filter_feat_catalog(&FeatCatalogFilter {
+            name_contains: None,
+            category: Some("Alignment".to_owned()),
+            source: None,
+        });
+
+        assert_eq!(response.entries.len(), 9, "the 9 'Champion of ...' feats");
+        for entry in &response.entries {
+            assert_eq!(entry.source, "Pu");
+            assert!(entry.name.starts_with("Champion of "), "{:?}", entry.name);
+        }
     }
 
     /// The point of the whole ingest: a player opening the Feat picker can
@@ -260,7 +564,7 @@ mod tests {
             source: None,
         });
 
-        // 17 CRB + 19 APG; the ACG has no Metamagic feat records.
+        // 17 CRB + 19 APG; ACG, ARG and PU have no Metamagic feat records.
         assert_eq!(response.entries.len(), 36);
         for entry in &response.entries {
             assert_eq!(entry.category, "Metamagic");

@@ -8,28 +8,39 @@ const panel: CSSProperties = {
   borderRadius: 10,
 };
 
-/** Classes in the same "corpus-natural order" the SD-19 loop uses. */
-const CLASS_ORDER = [
-  'Barbarian',
-  'Bard',
-  'Cleric',
-  'Druid',
-  'Fighter',
-  'Monk',
-  'Paladin',
-  'Ranger',
-  'Rogue',
-  'Sorcerer',
-  'Wizard',
-] as const;
+/**
+ * The class filter buttons are derived from the catalog the engine actually
+ * returned, not from a list typed here.
+ *
+ * A hardcoded eleven-name array used to live at this spot. SD-27
+ * (2026-07-31) added Pathfinder Unchained's four classes to the engine's
+ * catalog, and a hardcoded list would have rendered them in the row area
+ * while offering no button to filter to them — the exact silent-drift shape
+ * this repo keeps getting burned by. Order is the engine's own emission
+ * order, de-duplicated, which keeps the eleven CRB classes in the
+ * "corpus-natural order" the SD-19 loop established and appends anything
+ * later books add after them.
+ */
+function classOrderFrom(entries: ClassCatalogEntryDto[]): string[] {
+  const seen: string[] = [];
+  for (const entry of entries) {
+    if (!seen.includes(entry.classId)) seen.push(entry.classId);
+  }
+  return seen;
+}
 
 const MAX_RENDERED_ROWS = 200;
 
 /**
- * Full class progression catalog browser — every real corpus-grounded row
- * across all 11 CRB classes (207 level rows: BAB and the three base saves),
- * not a per-character sample. Distinct from the Character Sheet, which only
- * shows one character's own class and level.
+ * Full class progression catalog browser — every real corpus-grounded level
+ * row the engine exposes (BAB and the three base saves), not a per-character
+ * sample. Distinct from the Character Sheet, which only shows one
+ * character's own class and level.
+ *
+ * The class count and row count are both read off the response rather than
+ * written down here, so this screen cannot go stale when the engine's
+ * catalog widens (as it did on 2026-07-31, from the 11 CRB classes to those
+ * 11 plus Pathfinder Unchained's 4).
  */
 export function ClassCatalogScreen(props: { onClose: () => void }) {
   const [entries, setEntries] = useState<ClassCatalogEntryDto[] | null>(null);
@@ -52,6 +63,8 @@ export function ClassCatalogScreen(props: { onClose: () => void }) {
     }
     return counts;
   }, [entries]);
+
+  const classOrder = useMemo(() => classOrderFrom(entries ?? []), [entries]);
 
   const filtered = useMemo(() => {
     if (!entries) return [];
@@ -88,8 +101,8 @@ export function ClassCatalogScreen(props: { onClose: () => void }) {
       ) : (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            Every real corpus-grounded level row the engine knows about — {totalCount} rows across all 11
-            CRB classes. Not what any one character has selected.
+            Every real corpus-grounded level row the engine knows about — {totalCount} rows across{' '}
+            {classOrder.length} classes. Not what any one character has selected.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
@@ -100,7 +113,7 @@ export function ClassCatalogScreen(props: { onClose: () => void }) {
             >
               All ({totalCount})
             </button>
-            {CLASS_ORDER.map((cls) => (
+            {classOrder.map((cls) => (
               <button
                 key={cls}
                 type="button"

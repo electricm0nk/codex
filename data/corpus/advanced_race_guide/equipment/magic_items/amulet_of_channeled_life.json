@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 12000.0,
+    "description": "When targeted by positive energy that heals living creatures, the wearer instead gains half the hit points the positive energy heals as temporary hit points. These temporary hit points go away after 10 minutes. This effect does not stack with life channel (see below) or other effects that convert healing positive energy to temporary hit points. Only a living creature can benefit from this amulet; it provides no benefit to undead.",
+    "key": "Amulet of Channeled Life",
+    "name": "Amulet of Channeled Life",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.100"
+      },
+      {
+        "key": "SPROP",
+        "value": "When targeted by positive energy that heals living creatures, the wearer instead gains half the hit points the positive energy heals as temporary hit points. These temporary hit points go away after 10 minutes. This effect does not stack with life channel (see below) or other effects that convert healing positive energy to temporary hit points. Only a living creature can benefit from this amulet; it provides no benefit to undead.|PREABILITY:1,CATEGORY=Special Ability,Negative Energy Affinity ~ Dhampir"
+      }
+    ],
+    "weight_lbs": 0.5
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 13,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Amulet of Channeled Life",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

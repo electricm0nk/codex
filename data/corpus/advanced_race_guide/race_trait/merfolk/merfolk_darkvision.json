@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Merfolk ~ Darkvision",
+    "name": "Darkvision",
+    "race_key": "Merfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Merfolk Racial Trait",
+      "SpecialQuality",
+      "Racial Vision"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Merfolk_ReplaceVision"
+    ],
+    "description": "Some merfolk favor the lightless depths over shallower waters. Merfolk with this racial trait gain darkvision with a range of 60 feet and light sensitivity. This racial trait replaces low-light vision.",
+    "source_page": "p.194",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Merfolk ~ Darkvision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Merfolk Racial Trait.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Merfolk ~ Darkvision],[!PREFACT:1,ABILITIES,Merfolk_ReplaceVision=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some merfolk favor the lightless depths over shallower waters. Merfolk with this racial trait gain darkvision with a range of 60 feet and light sensitivity."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces low-light vision.|!PREABILITY:1,CATEGORY=Special Ability,Merfolk ~ Darkvision"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Light Sensitivity"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.194"
+      },
+      {
+        "key": "FACT",
+        "value": "Merfolk_ReplaceVision|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 960,
+    "record_key": "Merfolk ~ Darkvision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

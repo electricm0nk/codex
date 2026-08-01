@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Defense",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 62000.0,
-    "weight_lbs": 5.0,
-    "description": "The staff of defense is a simple-looking polished wooden staff that throbs with power when held defensively. It allows use of the following spells:\n* Shield (1 charge)\n* Shield of Faith (1 charge)\n* Shield other (1 charge)\n* Shield of law (3 charges)"
+    "description": "The staff of defense is a simple-looking polished wooden staff that throbs with power when held defensively. It allows use of the following spells:\n* Shield (1 charge)\n* Shield of Faith (1 charge)\n* Shield other (1 charge)\n* Shield of law (3 charges)",
+    "key": "Staff of Defense",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Defense"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Defense"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "62000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.492"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong abjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|31,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, shield, shield of faith, shield of law, shield other, creator must be lawful"
+      },
+      {
+        "key": "DESC",
+        "value": "The staff of defense is a simple-looking polished wooden staff that throbs with power when held defensively. It allows use of the following spells:&nl;* Shield (1 charge)&nl;* Shield of Faith (1 charge)&nl;* Shield other (1 charge)&nl;* Shield of law (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 426,
-    "record_key": "Staff of Defense"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Defense",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

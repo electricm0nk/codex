@@ -684,6 +684,13 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Apg => "advanced_players_guide",
         RuleSetId::Acg => "advanced_class_guide",
         RuleSetId::Bestiary1 => "bestiary_1",
+        // SD-27. Unlike `bestiary` -> `bestiary_1`, these two engine ids are
+        // spelled exactly like their corpus directories, so `engine_book_for`
+        // joins them without a rename. They are listed here because
+        // `all_feat_tables()` now yields their tables — without these arms the
+        // whole root-crate bin set, this generator included, fails to compile.
+        RuleSetId::Arg => "advanced_race_guide",
+        RuleSetId::Pu => "pathfinder_unchained",
     }
 }
 
@@ -1649,9 +1656,17 @@ fn main() {
     // overwriting the full inventory with one would be a silent data loss.
     let stdout_only = summary_only || args.iter().any(|a| a == "--stdout-only");
 
-    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let books_dir = PathBuf::from(&corpus_root).join(BOOKS_RELATIVE);
+    // HOME-relative default: `workspace/` lives in the operator's home
+    // directory and is synced across machines. `PCGEN_CORPUS_ROOT` still wins.
+    let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
+        Ok(configured) => PathBuf::from(configured),
+        Err(_) => {
+            let home = std::env::var("HOME")
+                .expect("HOME must be set to locate the default PCGen corpus checkout");
+            PathBuf::from(home).join("workspace/repos/pcgen/data")
+        }
+    };
+    let books_dir = corpus_root.join(BOOKS_RELATIVE);
     if !books_dir.is_dir() {
         eprintln!(
             "corpus not found at {} -- set PCGEN_CORPUS_ROOT to a PCGen data/ checkout",

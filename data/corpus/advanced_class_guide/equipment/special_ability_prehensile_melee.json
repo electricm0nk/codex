@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Special Ability ~ Prehensile ~ Melee",
     "category": "Equipmods",
-    "name": "Prehensile",
     "cost_gp": 2500.0,
-    "weight": null,
-    "description": "as swift action, whip can be used as grappling hook; spend 1 panache to increase reach to 20 ft. for 1 attack, and can use the whip with precise strike"
+    "description": "as swift action, whip can be used as grappling hook; spend 1 panache to increase reach to 20 ft. for 1 attack, and can use the whip with precise strike",
+    "key": "Special Ability ~ Prehensile ~ Melee",
+    "name": "Prehensile",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Prehensile ~ Melee"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee"
+      },
+      {
+        "key": "COST",
+        "value": "2500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,PrehensileOK"
+      },
+      {
+        "key": "SPROP",
+        "value": "as swift action, whip can be used as grappling hook; spend 1 panache to increase reach to 20 ft. for 1 attack, and can use the whip with precise strike"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
-    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
     "line": 45,
-    "record_key": "Special Ability ~ Prehensile ~ Melee"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Prehensile ~ Melee",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
   }
 }

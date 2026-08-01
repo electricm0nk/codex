@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of Illusion",
     "category": "magic_items",
-    "name": "Staff",
     "cost_gp": 82000.0,
-    "weight_lbs": 5.0,
-    "description": "This staff is made from ebony or other dark wood and carved into an intricately twisted, fluted, or spiral shape. It allows use of the following spells:\n* Disguise self (1 charge)\n* Major image (1 charge)\n* Mirror image (1 charge)\n* Persistent image (2 charges)\n* Rainbow pattern (2 charges)\n* Mislead (3 charges)"
+    "description": "This staff is made from ebony or other dark wood and carved into an intricately twisted, fluted, or spiral shape. It allows use of the following spells:\n* Disguise self (1 charge)\n* Major image (1 charge)\n* Mirror image (1 charge)\n* Persistent image (2 charges)\n* Rainbow pattern (2 charges)\n* Mislead (3 charges)",
+    "key": "Staff of Illusion",
+    "name": "Staff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of Illusion"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of Illusion"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "82000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.494"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong illusion"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|13th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|41,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Staff, disguise self, major image, mirror image, persistent image, mislead, rainbow pattern"
+      },
+      {
+        "key": "DESC",
+        "value": "This staff is made from ebony or other dark wood and carved into an intricately twisted, fluted, or spiral shape. It allows use of the following spells:&nl;* Disguise self (1 charge)&nl;* Major image (1 charge)&nl;* Mirror image (1 charge)&nl;* Persistent image (2 charges)&nl;* Rainbow pattern (2 charges)&nl;* Mislead (3 charges)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 435,
-    "record_key": "Staff of Illusion"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of Illusion",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

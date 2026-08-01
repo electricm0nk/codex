@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Cloak of Displacement (Minor)",
     "category": "magic_items",
-    "name": "Minor Cloak of Displacement",
     "cost_gp": 24000.0,
-    "weight_lbs": 1.0,
-    "description": "This item appears to be a normal cloak, but when worn by a character, its magical properties distort and warp light waves. This displacement works similar to the blur spell, granting a 20%% miss chance on attacks against the wearer. It functions continually."
+    "description": "This item appears to be a normal cloak, but when worn by a character, its magical properties distort and warp light waves. This displacement works similar to the blur spell, granting a 20%% miss chance on attacks against the wearer. It functions continually.",
+    "key": "Cloak of Displacement (Minor)",
+    "name": "Minor Cloak of Displacement",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Cloak of Displacement (Minor)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Cloak of Displacement, Minor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Shoulders.Cloak"
+      },
+      {
+        "key": "COST",
+        "value": "24000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Material ~ Cloth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.507"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Equipment|AUTOMATIC|Cloak of Displacement (Minor) ~ Miss Chance"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint illusion"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|shoulders"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|12,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, blur"
+      },
+      {
+        "key": "DESC",
+        "value": "This item appears to be a normal cloak, but when worn by a character, its magical properties distort and warp light waves. This displacement works similar to the blur spell, granting a 20%% miss chance on attacks against the wearer. It functions continually."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 106,
-    "record_key": "Cloak of Displacement (Minor)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Cloak of Displacement (Minor)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

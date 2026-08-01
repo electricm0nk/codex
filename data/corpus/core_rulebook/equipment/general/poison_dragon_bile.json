@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Poison (Dragon Bile)",
     "category": "general",
-    "name": "Poison, Dragon Bile",
     "cost_gp": 1500.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Poison (Dragon Bile)",
+    "name": "Poison, Dragon Bile",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Dragon Bile)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Dragon Bile"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Dragon Bile"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1500"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.558"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Contact; Fort DC 26; Freq 1 rnd (6); Effect 1d3 Str dmg; no cure"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, contact"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 26"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/round for 6 rounds"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1d3 Str damage"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 502,
-    "record_key": "Poison (Dragon Bile)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Dragon Bile)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

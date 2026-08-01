@@ -54,13 +54,13 @@ use codex::rules_core::feat_effects;
 use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan};
 use codex::rules_core::pilot_compute::{
     build_pilot_headless_receipt, compute_pilot_base_chassis, ComputationDiagnostic,
-    PilotBaseChassisComputation, SelectedSkillModifiers,
+    ComputationExplanation, PilotBaseChassisComputation, SelectedSkillModifiers,
 };
 #[cfg(test)]
 use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
 use codex::rules_core::pilot_compute_corpus::{
     compute_combat_baseline_from_corpus, compute_pilot_with_corpus,
-    compute_selected_skill_modifiers_from_corpus, CorpusPilotReceipt,
+    compute_selected_skill_modifiers_from_corpus, CorpusAwareCombatBaseline, CorpusPilotReceipt,
 };
 use codex::rules_core::pilot_view_model::{
     PilotCombatViewModel, PilotCompanionViewModel, PilotDefenseViewModel, PilotSkillViewModel,
@@ -1074,7 +1074,7 @@ pub(crate) fn resolve_unified_pilot_snapshot(
     corpus: &SourcePackageContent,
 ) -> Result<(PilotSnapshot, CorpusPilotReceipt), Vec<ComputationDiagnostic>> {
     let receipt = build_pilot_headless_receipt(character_input);
-    let corpus_receipt = compute_pilot_with_corpus(character_input, corpus);
+    let mut corpus_receipt = compute_pilot_with_corpus(character_input, corpus);
 
     let other_diagnostics_present = receipt.computation.diagnostics.iter().any(|diagnostic| {
         diagnostic.claim_blocking
@@ -1127,6 +1127,25 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 // just above ended up duplicated.
                 companion: PilotCompanionViewModel::from_receipt(&receipt),
             };
+            // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC, CMB and
+            // CMD travel to the sheet on the explanation channel
+            // (`character_hub::load_saved_character_at_root` maps
+            // `corpus_receipt.base.explanations` straight onto the wire), so
+            // the corpus-aware values must be substituted into it here --
+            // exactly the substitution this function already performs one field
+            // up, where `combat.melee_attack_bonus`/`combat.armor_class`
+            // replace the receipt's own hardcoded pair.
+            //
+            // Without it the sheet would render the hardcoded path's numbers
+            // beside the corpus path's Armor Class. The two agree for every
+            // build the app creates today (both paths are pinned equal by
+            // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`),
+            // but the hardcoded path requires an exact Chain-Shirt/no-shield
+            // loadout and produces NO explanation at all once a player equips
+            // something else -- while this corpus path still computes. Reading
+            // the widened path is what keeps a real equipped shield from
+            // silently blanking three cells.
+            upsert_corpus_aware_combat_explanations(&mut corpus_receipt, &combat);
             Ok((snapshot, corpus_receipt))
         }
         (combat_result, skills_result) => {
@@ -1166,6 +1185,76 @@ pub(crate) fn resolve_unified_pilot_snapshot(
             }
             Err(diagnostics)
         }
+    }
+}
+
+/// The four explanation ids `resolve_unified_pilot_snapshot` re-points at the
+/// corpus-aware combat baseline, paired with the value to substitute.
+///
+/// They are ids, not a struct field, because that is the channel that actually
+/// reaches the sheet: `PilotSnapshot` (owned by `rules_core::pilot_view_model`)
+/// has no touch/flat-footed/CMB/CMD field, while
+/// `LoadSavedCharacterResponse.explanations` already carries every
+/// `ComputationExplanation` the engine emits and `CharacterSheet.tsx` already
+/// reads it.
+///
+/// SD-27 `decisions.md §28` (flat-footed defect, 2026-07-31) added the fourth,
+/// `defense.flat_footed_armor_class`. Adding it here is not optional plumbing:
+/// the engine could compute a flawless flat-footed AC and the sheet would still
+/// render React's own wrong one unless the record travels on this channel.
+fn upsert_corpus_aware_combat_explanations(
+    corpus_receipt: &mut CorpusPilotReceipt,
+    combat: &CorpusAwareCombatBaseline,
+) {
+    let substitutions: [(&str, i16); 4] = [
+        ("defense.touch_armor_class", combat.touch_armor_class),
+        (
+            "defense.flat_footed_armor_class",
+            combat.flat_footed_armor_class,
+        ),
+        ("combat.combat_maneuver_bonus", combat.combat_maneuver_bonus),
+        (
+            "defense.combat_maneuver_defense",
+            combat.combat_maneuver_defense,
+        ),
+    ];
+
+    for (id, value) in substitutions {
+        // Update in place when the hardcoded path emitted the record, so the
+        // engine's own corpus-cited derivation prose survives and only the
+        // number is re-pointed. `CharacterSheet.tsx` renders `detail` verbatim
+        // as a rules citation, so replacing it with adapter-authored prose
+        // would manufacture a second, unverified source of rules text -- the
+        // hand-authored-rules-data debt `no-stub-mvp-doctrine.md` forbids.
+        if let Some(existing) = corpus_receipt
+            .base
+            .explanations
+            .iter_mut()
+            .find(|explanation| explanation.id == id)
+        {
+            existing.value = value;
+            continue;
+        }
+        // The hardcoded path is blocked (a loadout it does not recognize) but
+        // this widened one computed. Emitting the record here is the only way
+        // the cell reaches the sheet at all; the detail says plainly which path
+        // produced it and which terms it contains, rather than borrowing prose
+        // that describes a different formula.
+        corpus_receipt
+            .base
+            .explanations
+            .push(ComputationExplanation {
+                id: id.to_owned(),
+                value,
+                detail: format!(
+                    "{id} = {value}, computed by the corpus-aware combat baseline \
+                     (pilot_compute_corpus::compute_combat_baseline_from_corpus) for this \
+                     character's actual resolved equipment loadout. The fixed-posture path \
+                     (pilot_compute::compute_combat_baseline) did not recognize this loadout and \
+                     emitted no record of its own, so its derivation prose is deliberately not \
+                     reused here -- it describes a different formula"
+                ),
+            });
     }
 }
 
@@ -1664,12 +1753,226 @@ mod tests {
                 charisma: 8,
             },
             ability_bonus_target: "strength".to_owned(),
+            selected_alternate_trait_keys: Vec::new(),
             saved_at: TEST_SAVED_AT.to_owned(),
         }
     }
 
     fn wizard_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
         CreateCharacterRequest { class_id: WIZARD_CLASS_ID.to_owned(), ..request_for(character_id, level) }
+    }
+
+    /// SD-27 `decisions.md §28` defect 1, reproduced exactly as it was measured
+    /// on screen: a Fighter 1 with STR 14, DEX 18, wearing the Chain Shirt and
+    /// carrying Weapon Focus. Only `race_id` varies between the Small and
+    /// Medium cases below, so creature size is the single independent variable.
+    fn measured_screen_build(character_id: &str, race_id: &str) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            race_id: race_id.to_owned(),
+            ability_scores: AbilityScoresDto {
+                strength: 14,
+                dexterity: 18,
+                constitution: 14,
+                intelligence: 10,
+                wisdom: 12,
+                charisma: 8,
+            },
+            ..request_for(character_id, 1)
+        }
+    }
+
+    /// The six cells, read the way the desktop sheet reads them: Armor Class
+    /// and the melee attack bonus off the `PilotSnapshot`, and touch AC /
+    /// flat-footed AC / CMB / CMD off the explanation records that travel to
+    /// the UI on `LoadSavedCharacterResponse.explanations`.
+    ///
+    /// `extra_feats` are pushed onto the composed input's `selected_feats`
+    /// exactly as a feat-picker grant would land there. `create_character`
+    /// seeds no dodge-typed feat (the creation-seed honesty fix removed the
+    /// Dodge it used to claim), so a dodge bonus can only be observed here by
+    /// adding one — and the flat-footed defect is invisible without one.
+    fn measured_cells_with_feats(
+        request: &CreateCharacterRequest,
+        extra_feats: &[&str],
+    ) -> (i16, i16, i16, i16, i16, i16) {
+        let mut input = compose_character_input(request);
+        for feat in extra_feats {
+            input.chosen.selected_feats.push((*feat).to_owned());
+        }
+        let (snapshot, corpus_receipt) =
+            resolve_unified_pilot_snapshot(&input, corpus_fixture_bundle())
+                .unwrap_or_else(|diagnostics| {
+                    panic!("{} must reach Computed: {diagnostics:?}", request.race_id)
+                });
+        let explanation = |id: &str| -> i16 {
+            corpus_receipt
+                .base
+                .explanations
+                .iter()
+                .find(|e| e.id == id)
+                .unwrap_or_else(|| {
+                    panic!("{} must carry a {id} explanation to the sheet", request.race_id)
+                })
+                .value
+        };
+        (
+            snapshot.defense.baseline_armor_class,
+            explanation("defense.touch_armor_class"),
+            explanation("defense.flat_footed_armor_class"),
+            explanation("combat.combat_maneuver_bonus"),
+            explanation("defense.combat_maneuver_defense"),
+            snapshot.combat.baseline_melee_attack_bonus,
+        )
+    }
+
+    /// The no-extra-feats case, which is what `create_character` actually
+    /// produces.
+    fn measured_cells(request: &CreateCharacterRequest) -> (i16, i16, i16, i16, i16, i16) {
+        measured_cells_with_feats(request, &[])
+    }
+
+    /// The defect, closed end to end. Measured on screen for a Goblin Fighter 1
+    /// (STR 14, DEX 18, BAB +1, Chain Shirt, Weapon Focus):
+    ///
+    /// ```text
+    /// cell     was    PF1 correct
+    /// AC       19     19   <- already fixed; must not regress
+    /// TOUCH    14     15
+    /// CMB      +3     +2
+    /// CMD      17     16
+    /// MELEE    +4     +5
+    /// ```
+    ///
+    /// Asserted through `resolve_unified_pilot_snapshot` rather than against
+    /// the engine directly, because the adapter is where the corpus-aware
+    /// numbers are substituted onto the channel the sheet actually reads -- a
+    /// fix that stopped at the engine would leave every one of these tests
+    /// green and the shipped sheet unchanged.
+    #[test]
+    fn the_measured_small_goblin_fighter_reaches_the_sheet_with_pf1s_own_numbers() {
+        let (armor_class, touch, flat_footed, cmb, cmd, melee) =
+            measured_cells(&measured_screen_build("goblin-size-cells", "race:goblin"));
+
+        assert_eq!(armor_class, 19, "AC was already correct and must not regress");
+        assert_eq!(touch, 15, "touch AC: 19 - the Chain Shirt's 4, not an independent 10 + DEX");
+        assert_eq!(
+            flat_footed, 15,
+            "flat-footed AC: 19 - the denied DEX +4. This build holds no dodge-typed bonus, so \
+             the engine must reproduce the view's old `ac - Math.max(0, dexMod)` exactly"
+        );
+        assert_eq!(cmb, 2, "CMB: BAB +1 + STR +2 + special size -1");
+        assert_eq!(cmd, 16, "CMD: 10 + BAB +1 + STR +2 + DEX +4 + special size -1");
+        assert_eq!(melee, 5, "melee: BAB +1 + STR +2 + Weapon Focus +1 + size +1");
+    }
+
+    /// The regression half. The identical build at Medium size must produce the
+    /// pre-fix arithmetic on all five cells -- Medium is PF1's +0 baseline on
+    /// both size columns, so no Medium character's sheet may move by a point.
+    /// Hobgoblin rather than Human: Human's `choice:human_ability_bonus` would
+    /// change Strength and stop size from being the only variable.
+    #[test]
+    fn the_same_build_at_medium_size_is_byte_identical_to_the_pre_fix_values() {
+        let (armor_class, touch, flat_footed, cmb, cmd, melee) =
+            measured_cells(&measured_screen_build("hobgoblin-size-cells", "race:hobgoblin"));
+
+        assert_eq!(armor_class, 18);
+        assert_eq!(touch, 14);
+        assert_eq!(flat_footed, 14);
+        assert_eq!(cmb, 3);
+        assert_eq!(cmd, 17);
+        assert_eq!(melee, 4);
+    }
+
+    /// SD-27 `decisions.md §28`, the flat-footed defect, closed end to end on
+    /// the channel the sheet actually reads.
+    ///
+    /// The defect was measured on screen on a Tiefling whose sheet went
+    /// `AC 19 → 20`, `TOUCH 13 → 14` (both correct) and
+    /// `FLAT-FOOTED 16 → 17` (PF1's answer is 16) when Dodge was added. That
+    /// character's ability spread is not this fixture's, so the numbers pinned
+    /// below are **this** build's own, measured the same way:
+    ///
+    /// ```text
+    /// Tiefling Fighter 1, STR 14 / DEX 18, Chain Shirt, Weapon Focus
+    /// cell          without Dodge   with Dodge   pre-fix sheet, with Dodge
+    /// AC                 18             19               19   <- correct already
+    /// TOUCH              14             15               15   <- correct already
+    /// FLAT-FOOTED        14             14               15   <- the defect
+    /// ```
+    ///
+    /// The sheet computed flat-footed as `ac - Math.max(0, dexMod)`, which
+    /// tracked the +1 Dodge added to `ac` and never subtracted it back out.
+    /// PF1: "any situation that denies you your Dexterity bonus to Armor Class
+    /// also denies you dodge bonuses", so the correct answer does not move at
+    /// all.
+    ///
+    /// Asserted through `resolve_unified_pilot_snapshot` rather than against
+    /// the engine, because the adapter is where the corpus-aware numbers are
+    /// substituted onto `LoadSavedCharacterResponse.explanations` — a fix that
+    /// stopped at the engine would leave the shipped sheet unchanged.
+    #[test]
+    fn a_dodge_bonus_moves_armor_class_and_touch_ac_on_the_sheet_and_never_flat_footed_ac() {
+        let build = measured_screen_build("tiefling-flat-footed", "race:tiefling");
+        let (ac_without, touch_without, ff_without, _, _, _) = measured_cells(&build);
+        let (ac_with, touch_with, ff_with, _, _, _) =
+            measured_cells_with_feats(&build, &["feat:dodge"]);
+
+        assert_eq!((ac_without, touch_without, ff_without), (18, 14, 14));
+        assert_eq!(
+            (ac_with, touch_with, ff_with),
+            (19, 15, 14),
+            "Dodge raises AC and touch AC by 1 each and must leave flat-footed AC alone; the \
+             shipped sheet raised it to 15"
+        );
+    }
+
+    /// Touch AC must never contradict the Armor Class shown beside it. The
+    /// shipped sheet displayed `AC 19` and `TOUCH 14` on one panel with a
+    /// 4-point armor bonus; that is arithmetically impossible and is exactly
+    /// what an independently-computed touch formula lets through.
+    #[test]
+    fn touch_armor_class_never_contradicts_the_armor_class_on_the_same_panel() {
+        const CHAIN_SHIRT_ARMOR_BONUS: i16 = 4;
+        for race in ["race:goblin", "race:hobgoblin", "race:halfling", "race:dwarf"] {
+            let (armor_class, touch, _, _, _, _) =
+                measured_cells(&measured_screen_build("touch-consistency", race));
+            assert_eq!(
+                touch,
+                armor_class - CHAIN_SHIRT_ARMOR_BONUS,
+                "{race}: touch AC is the same Armor Class with the armor bonus removed"
+            );
+        }
+    }
+
+    /// The same non-contradiction guard for flat-footed AC, which the shipped
+    /// sheet broke in the other direction: it displayed a flat-footed value one
+    /// point HIGHER than PF1's, by tracking a dodge bonus into the total and
+    /// never removing it. Stated as a difference against the Armor Class on the
+    /// same panel, with and without a dodge bonus, so neither number can drift
+    /// away from the other.
+    #[test]
+    fn flat_footed_armor_class_never_contradicts_the_armor_class_on_the_same_panel() {
+        const DEXTERITY_BONUS: i16 = 4; // DEX 18 in `measured_screen_build`
+        const DODGE_BONUS: i16 = 1;
+        for race in ["race:goblin", "race:hobgoblin", "race:halfling", "race:dwarf"] {
+            let build = measured_screen_build("flat-footed-consistency", race);
+
+            let (armor_class, _, flat_footed, _, _, _) = measured_cells(&build);
+            assert_eq!(
+                flat_footed,
+                armor_class - DEXTERITY_BONUS,
+                "{race}: with no dodge-typed bonus, only the Dexterity bonus is denied"
+            );
+
+            let (armor_class, _, flat_footed, _, _, _) =
+                measured_cells_with_feats(&build, &["feat:dodge"]);
+            assert_eq!(
+                flat_footed,
+                armor_class - DEXTERITY_BONUS - DODGE_BONUS,
+                "{race}: holding Dodge, the dodge bonus is denied too -- so flat-footed AC is \
+                 the same number it was without the feat"
+            );
+        }
     }
 
     fn arcanist_request_for(character_id: &str, level: u8) -> CreateCharacterRequest {
@@ -2143,6 +2446,141 @@ mod tests {
              recorded+prepared within budget must reach Computed, got diagnostics: {:?}",
             receipt.computation.diagnostics
         );
+    }
+
+    // ----- Pathfinder Unchained classes (SD-27, 2026-07-31) -----
+
+    /// The real app creation path, for all four Unchained classes.
+    ///
+    /// `v06_class_state_dump` already sweeps these through the same engine,
+    /// but it builds its input from a fixture. This test builds it the way
+    /// the running app does — `compose_character_input` over a real
+    /// `CreateCharacterRequest`, exactly what the Create Character form
+    /// sends — so "a player can select this and get output" is proved at
+    /// the boundary the player actually crosses, not one adjacent to it.
+    ///
+    /// No per-class seeding is needed and that is a finding, not an
+    /// oversight: unlike Wizard's school, Cleric's domain or Oracle's
+    /// mystery, none of the four Unchained classes has a choice-gated
+    /// feature that blocks its chassis, so `compose_character_input`'s
+    /// fixed loadout is sufficient on its own.
+    #[test]
+    fn every_unchained_class_reaches_computed_through_the_real_creation_path() {
+        for class_id in [
+            "class:unchained_barbarian",
+            "class:unchained_monk",
+            "class:unchained_rogue",
+            "class:unchained_summoner",
+        ] {
+            for level in [1u8, 10, 20] {
+                let request = CreateCharacterRequest {
+                    class_id: class_id.to_owned(),
+                    ..request_for(&format!("{class_id}-{level}"), level)
+                };
+                let character_input = compose_character_input(&request);
+                let receipt = build_pilot_headless_receipt(&character_input);
+                assert_eq!(
+                    receipt.status,
+                    HeadlessReceiptStatus::Computed,
+                    "{class_id} level {level} must compute through the real creation path; \
+                     diagnostics: {:?}",
+                    receipt.computation.diagnostics
+                );
+
+                // A class that computes but grounds nothing of its own would
+                // pass the status check while being an empty shell, so the
+                // receipt must also carry that class's own feature records.
+                let own_records = receipt
+                    .computation
+                    .explanations
+                    .iter()
+                    .filter(|e| {
+                        e.id.starts_with(&format!(
+                            "class_feature.pu.{}.",
+                            class_id.trim_start_matches("class:")
+                        ))
+                    })
+                    .count();
+                assert!(
+                    own_records > 0,
+                    "{class_id} level {level} must ground its own Pathfinder Unchained \
+                     class features, not merely a chassis"
+                );
+
+                // And the replacement relationship must be on the receipt.
+                assert!(
+                    receipt.computation.explanations.iter().any(|e| e.id
+                        == format!(
+                            "class_chassis.pu.{}.replaces",
+                            class_id.trim_start_matches("class:")
+                        )),
+                    "{class_id} level {level} must record which class it replaces"
+                );
+            }
+        }
+    }
+
+    /// The pair must not collide: creating an Unchained Rogue must not
+    /// produce a CRB Rogue's records, and vice versa. Checked on the one
+    /// pair where the numbers are identical (so only the ids and the feature
+    /// records can tell them apart) and on the one pair where they are not.
+    #[test]
+    fn an_unchained_class_never_resolves_its_namesakes_records() {
+        let unchained = compose_character_input(&CreateCharacterRequest {
+            class_id: "class:unchained_rogue".to_owned(),
+            ..request_for("pu-rogue-collision", 10)
+        });
+        let crb = compose_character_input(&CreateCharacterRequest {
+            class_id: "class:rogue".to_owned(),
+            ..request_for("crb-rogue-collision", 10)
+        });
+
+        let pu_receipt = build_pilot_headless_receipt(&unchained);
+        let crb_receipt = build_pilot_headless_receipt(&crb);
+
+        let has = |receipt: &codex::rules_core::pilot_compute::PilotHeadlessReceipt,
+                   prefix: &str| {
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .any(|e| e.id.starts_with(prefix))
+        };
+
+        assert!(has(&pu_receipt, "class_feature.pu.unchained_rogue."));
+        assert!(
+            !has(&crb_receipt, "class_feature.pu.unchained_rogue."),
+            "a Core Rulebook Rogue must never pick up Unchained Rogue records"
+        );
+        assert!(
+            !has(&pu_receipt, "class_chassis.pu.unchained_monk."),
+            "one Unchained class must never pick up another's records"
+        );
+
+        // The Monk pair, where the chassis itself differs.
+        let pu_monk = build_pilot_headless_receipt(&compose_character_input(
+            &CreateCharacterRequest {
+                class_id: "class:unchained_monk".to_owned(),
+                ..request_for("pu-monk-collision", 10)
+            },
+        ));
+        let crb_monk = build_pilot_headless_receipt(&compose_character_input(
+            &CreateCharacterRequest {
+                class_id: "class:monk".to_owned(),
+                ..request_for("crb-monk-collision", 10)
+            },
+        ));
+        let bab = |receipt: &codex::rules_core::pilot_compute::PilotHeadlessReceipt| {
+            receipt
+                .computation
+                .explanations
+                .iter()
+                .find(|e| e.id == "class_chassis.base_attack_bonus")
+                .expect("chassis explanation")
+                .value
+        };
+        assert_eq!(bab(&pu_monk), 10, "Unchained Monk 10 has full base attack bonus");
+        assert_eq!(bab(&crb_monk), 7, "CRB Monk 10 has three-quarter base attack bonus");
     }
 
     // ----- Wizard bootstrap-deadlock fix (v0.6 alpha swarm, item 10) -----
@@ -3257,6 +3695,143 @@ mod tests {
         assert!(
             matches!(second, CreateCharacterResponse::Saved { .. }),
             "once bootstrapped, plain add_spell_selection must work normally: {second:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- The Known path's own correctness rule reaches the UI command -----
+    //
+    // `unmet_wizard_spellbook_conditions` validated the prepared set three
+    // ways and the recorded (`Known`) set exactly once: that it was
+    // non-empty. Nothing checked a recorded spell was a wizard spell at
+    // all, and `CharacterSheet.tsx`'s Add Spell picker writes
+    // `acquisitionMode: 'Known'` for every non-bootstrap add against the
+    // unfiltered 1185-record catalog -- so a Wizard 1 could pick any of the
+    // 543 records on no wizard list and it persisted to disk. These two
+    // tests drive the exact command the picker calls
+    // (`add_spell_selection_at_root`, `AcquisitionMode::Known`) and pin the
+    // two halves of the rule apart, because they are different rules.
+
+    /// A composed Wizard 1, saved exactly as `create_character` saves it,
+    /// then asked to record a Cleric/Druid/Bard spell. The command must
+    /// refuse and persist nothing.
+    fn seeded_wizard_root(character_id: &str, dir_label: &str) -> std::path::PathBuf {
+        let root = tempdir(dir_label);
+        let character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Wizard Known-Spell Rule Test".to_owned(),
+            character_input,
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        root
+    }
+
+    #[test]
+    fn add_spell_selection_refuses_a_known_spell_that_is_not_on_the_wizard_list() {
+        let root = seeded_wizard_root("pf1-adapter-wizard-offlist", "wizard-known-offlist");
+
+        let response = add_spell_selection_at_root(
+            &root,
+            "Cure Light Wounds",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Known,
+            "2026-07-31T01:00:00Z",
+        )
+        .expect("the command itself should not error -- it reports a refusal, not a crash");
+
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!(
+                "recording a Cleric/Druid/Bard spell under class:wizard must be refused: \
+                 {response:?}"
+            );
+        };
+        let joined = diagnostics
+            .iter()
+            .map(|d| d.message.as_str())
+            .collect::<Vec<_>>()
+            .join(" ");
+        assert!(
+            joined.contains("Cure Light Wounds") && joined.contains("wizard spell list"),
+            "the refusal the player sees must name the spell and the rule it broke, got: \
+             {joined}"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            !reloaded
+                .character_input
+                .chosen
+                .spells_selected
+                .iter()
+                .any(|s| s.spell_id == "Cure Light Wounds"),
+            "a Blocked mutation must persist nothing: {:?}",
+            reloaded.character_input.chosen.spells_selected
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The other half, and the reason this is not the Prepared rule: PF1
+    /// CRB *Spellbooks* caps the two free spells gained at each new level
+    /// ("of spell levels he can cast"), but *Spells Copied from Another's
+    /// Spellbook or a Scroll* places no character-level restriction at all.
+    /// A Wizard 1 recording a 9th-level **wizard** spell is a legal PF1
+    /// character who simply cannot prepare it, so the command accepts it.
+    #[test]
+    fn add_spell_selection_accepts_a_known_wizard_spell_above_the_castable_level() {
+        let root = seeded_wizard_root("pf1-adapter-wizard-scribe", "wizard-known-scribe");
+
+        let response = add_spell_selection_at_root(
+            &root,
+            "Tsunami",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Known,
+            "2026-07-31T01:00:00Z",
+        )
+        .expect("record call should not error");
+
+        assert!(
+            matches!(response, CreateCharacterResponse::Saved { .. }),
+            "scribing a 9th-level wizard spell into a Wizard 1's spellbook is legal PF1 and \
+             must not be refused: {response:?}"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            reloaded
+                .character_input
+                .chosen
+                .spells_selected
+                .iter()
+                .any(|s| s.spell_id == "Tsunami"
+                    && s.acquisition_mode == AcquisitionMode::Known),
+            "and it must actually persist: {:?}",
+            reloaded.character_input.chosen.spells_selected
+        );
+
+        // The half that IS gated: preparing it stays refused, so accepting
+        // the record above did not quietly open the casting path.
+        let prepared = add_spell_selection_at_root(
+            &root,
+            "Tsunami",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Prepared,
+            "2026-07-31T02:00:00Z",
+        )
+        .expect("prepare call should not error");
+        assert!(
+            matches!(prepared, CreateCharacterResponse::Blocked { .. }),
+            "preparing a 9th-level spell at wizard level 1 must stay refused: {prepared:?}"
         );
 
         std::fs::remove_dir_all(&root).ok();

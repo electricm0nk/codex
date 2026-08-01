@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Carrion Feeder",
+    "category": "general",
+    "name": "Carrion Feeder",
+    "description": "Like many scavengers, you can stomach foods that would make weaker creatures ill.",
+    "effect": [
+      [
+        "SITUATION",
+        "Survival=Find Food",
+        "2"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 405,
+    "record_key": "Carrion Feeder"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

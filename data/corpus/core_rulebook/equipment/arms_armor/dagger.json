@@ -17,5 +17,8 @@
     "line": 200,
     "record_key": "Dagger",
     "inherited_from_record_key": "Dagger (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

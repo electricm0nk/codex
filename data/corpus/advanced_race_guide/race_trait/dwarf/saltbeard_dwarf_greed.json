@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Saltbeard ~ Dwarf ~ Greed",
+    "name": "Greed",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialQuality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Saltbeard dwarves gain a +2 racial bonus on Appraise checks made to determine the price of treasure found in or under the water.",
+    "source_page": "p.12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saltbeard ~ Dwarf ~ Greed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Dwarf ~ Saltbeard"
+      },
+      {
+        "key": "PREFACT",
+        "value": "1,ABILITIES,Dwarf_ReplaceGreed=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Saltbeard dwarves gain a +2 racial bonus on Appraise checks made to determine the price of treasure found in or under the water."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Appraise=to assess treasure found in or under the water",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 53,
+    "record_key": "Saltbeard ~ Dwarf ~ Greed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

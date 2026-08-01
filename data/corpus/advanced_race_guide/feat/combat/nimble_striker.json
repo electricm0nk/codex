@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Nimble Striker",
+    "category": "combat",
+    "name": "Nimble Striker",
+    "description": "You were born to charge your enemies and nobody does it better.",
+    "effect": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 234,
+    "record_key": "Nimble Striker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Decanter of Endless Water",
     "category": "magic_items",
-    "name": "Decanter of Endless Water",
     "cost_gp": 9000.0,
-    "weight_lbs": 2.0,
-    "description": "If the stopper is removed from this ordinary-looking flask and a command word spoken, an amount of fresh or salt water pours out. Separate command words determine the type of water as well as the volume and velocity.\n* \"Stream\" pours out 1 gallon per round.\n* \"Fountain\" produces a 5-foot-long stream at 5 gallons per round.\n* \"Geyser\" produces a 20-foot-long, 1-foot-wide stream at 30 gallons per round.\nThe geyser effect exerts considerable pressure, requiring the holder to make a DC 12 Strength check to avoid being knocked down each round the effect is maintained. In addition, the powerful force of the geyser deals 1d4 points of damage per round to a creature that is subjected to it. The geyser can only affect one target per round, but the user can direct the beam of water without needing to make an attack role to strike the target since the geyser's constant flow allows for ample opportunity to aim. Creatures with the fire subtype take 2d4 points of damage per round from the geyser rather than 1d4. The command word must be spoken to stop it."
+    "description": "If the stopper is removed from this ordinary-looking flask and a command word spoken, an amount of fresh or salt water pours out. Separate command words determine the type of water as well as the volume and velocity.\n* \"Stream\" pours out 1 gallon per round.\n* \"Fountain\" produces a 5-foot-long stream at 5 gallons per round.\n* \"Geyser\" produces a 20-foot-long, 1-foot-wide stream at 30 gallons per round.\nThe geyser effect exerts considerable pressure, requiring the holder to make a DC 12 Strength check to avoid being knocked down each round the effect is maintained. In addition, the powerful force of the geyser deals 1d4 points of damage per round to a creature that is subjected to it. The geyser can only affect one target per round, but the user can direct the beam of water without needing to make an attack role to strike the target since the geyser's constant flow allows for ample opportunity to aim. Creatures with the fire subtype take 2d4 points of damage per round from the geyser rather than 1d4. The command word must be spoken to stop it.",
+    "key": "Decanter of Endless Water",
+    "name": "Decanter of Endless Water",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Decanter of Endless Water"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Decanter of Endless Water"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "9000"
+      },
+      {
+        "key": "WT",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.509"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|4,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, control water"
+      },
+      {
+        "key": "DESC",
+        "value": "If the stopper is removed from this ordinary-looking flask and a command word spoken, an amount of fresh or salt water pours out. Separate command words determine the type of water as well as the volume and velocity.&nl;* \"Stream\" pours out 1 gallon per round.&nl;* \"Fountain\" produces a 5-foot-long stream at 5 gallons per round.&nl;* \"Geyser\" produces a 20-foot-long, 1-foot-wide stream at 30 gallons per round.&nl;The geyser effect exerts considerable pressure, requiring the holder to make a DC 12 Strength check to avoid being knocked down each round the effect is maintained. In addition, the powerful force of the geyser deals 1d4 points of damage per round to a creature that is subjected to it. The geyser can only affect one target per round, but the user can direct the beam of water without needing to make an attack role to strike the target since the geyser's constant flow allows for ample opportunity to aim. Creatures with the fire subtype take 2d4 points of damage per round from the geyser rather than 1d4. The command word must be spoken to stop it."
+      }
+    ],
+    "weight_lbs": 2.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 128,
-    "record_key": "Decanter of Endless Water"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Decanter of Endless Water",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

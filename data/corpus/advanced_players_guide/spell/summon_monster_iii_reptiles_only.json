@@ -1,19 +1,23 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-01T03:17:20Z",
   "data": {
     "key": "Summon Monster III (Reptiles Only)",
     "school": "Conjuration",
-    "level": null,
+    "level": 3,
     "description": "This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list.",
     "full_text": true
   },
   "source": {
-    "kind": "lst_token",
+    "kind": "lst_inherited_copy",
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1073,
-    "record_key": "Summon Monster III (Reptiles Only)"
-  }
+    "record_key": "Summon Monster III (Reptiles Only)",
+    "inherited_from_record_key": "Summon Monster III"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

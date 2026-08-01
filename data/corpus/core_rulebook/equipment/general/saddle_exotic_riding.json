@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Saddle (Exotic/Riding)",
     "category": "general",
-    "name": "Saddle, Exotic Riding",
     "cost_gp": 30.0,
-    "weight_lbs": 30.0,
-    "description": "If you are knocked unconscious while in a riding saddle, you have a 50%% chance to stay in the saddle. An exotic saddle is designed for an unusual mount."
+    "description": "If you are knocked unconscious while in a riding saddle, you have a 50%% chance to stay in the saddle. An exotic saddle is designed for an unusual mount.",
+    "key": "Saddle (Exotic/Riding)",
+    "name": "Saddle, Exotic Riding",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Saddle (Exotic/Riding)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Saddle, Exotic Riding"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Exotic Riding Saddle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Mount.Saddle.Resizable"
+      },
+      {
+        "key": "COST",
+        "value": "30"
+      },
+      {
+        "key": "WT",
+        "value": "30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "DESC",
+        "value": "If you are knocked unconscious while in a riding saddle, you have a 50%% chance to stay in the saddle. An exotic saddle is designed for an unusual mount."
+      }
+    ],
+    "weight_lbs": 30.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 302,
-    "record_key": "Saddle (Exotic/Riding)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Saddle (Exotic/Riding)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

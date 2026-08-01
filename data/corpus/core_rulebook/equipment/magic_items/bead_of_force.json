@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Bead of Force",
     "category": "magic_items",
-    "name": "Bead of Force",
     "cost_gp": 3000.0,
-    "weight_lbs": 0.0,
-    "description": "This small black sphere appears to be a lusterless pearl. A bead of force can be thrown up to 60 feet with no range penalties. Upon sharp impact, the bead explodes, sending forth a burst that deals 5d6 points of force damage to all creatures within a 10-foot radius.\nOnce thrown, a bead of force functions like a resilient sphere spell (Reflex DC 16 negates) with a radius of 10 feet and a duration of 10 minutes. A globe of shimmering force encloses a creature, provided the latter is small enough to fit within the diameter of the sphere. The sphere contains its subject for the spell's duration. The sphere is not subject to damage of any sort except from a rod of cancellation, a rod of negation, disintegrate, or a targeted dispel magic spell. These effects destroy the sphere without harm to the subject. Nothing can pass through the sphere, inside or out, though the subject can breathe normally. The subject may struggle, but the globe cannot be physically moved either by people outside it or by the struggles of those within. The explosion completely consumes the bead, making this a one-use item."
+    "description": "This small black sphere appears to be a lusterless pearl. A bead of force can be thrown up to 60 feet with no range penalties. Upon sharp impact, the bead explodes, sending forth a burst that deals 5d6 points of force damage to all creatures within a 10-foot radius.\nOnce thrown, a bead of force functions like a resilient sphere spell (Reflex DC 16 negates) with a radius of 10 feet and a duration of 10 minutes. A globe of shimmering force encloses a creature, provided the latter is small enough to fit within the diameter of the sphere. The sphere contains its subject for the spell's duration. The sphere is not subject to damage of any sort except from a rod of cancellation, a rod of negation, disintegrate, or a targeted dispel magic spell. These effects destroy the sphere without harm to the subject. Nothing can pass through the sphere, inside or out, though the subject can breathe normally. The subject may struggle, but the globe cannot be physically moved either by people outside it or by the struggles of those within. The explosion completely consumes the bead, making this a one-use item.",
+    "key": "Bead of Force",
+    "name": "Bead of Force",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bead of Force"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bead of Force"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "3000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.501"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|3,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, resilient sphere"
+      },
+      {
+        "key": "SPROP",
+        "value": "Upon sharp impact, the bead explodes, sending forth a burst that deals 5d6 points of force damage to all creatures within a 10-foot radius."
+      },
+      {
+        "key": "DESC",
+        "value": "This small black sphere appears to be a lusterless pearl. A bead of force can be thrown up to 60 feet with no range penalties. Upon sharp impact, the bead explodes, sending forth a burst that deals 5d6 points of force damage to all creatures within a 10-foot radius.&nl;Once thrown, a bead of force functions like a resilient sphere spell (Reflex DC 16 negates) with a radius of 10 feet and a duration of 10 minutes. A globe of shimmering force encloses a creature, provided the latter is small enough to fit within the diameter of the sphere. The sphere contains its subject for the spell's duration. The sphere is not subject to damage of any sort except from a rod of cancellation, a rod of negation, disintegrate, or a targeted dispel magic spell. These effects destroy the sphere without harm to the subject. Nothing can pass through the sphere, inside or out, though the subject can breathe normally. The subject may struggle, but the globe cannot be physically moved either by people outside it or by the struggles of those within. The explosion completely consumes the bead, making this a one-use item."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 36,
-    "record_key": "Bead of Force"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Bead of Force",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

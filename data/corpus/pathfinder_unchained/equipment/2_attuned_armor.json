@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": null,
+    "description": "Adds enhancement bonus to attuned equipment.",
+    "equip_type": "Armor.Clothing",
+    "key": "ABP ~ +2 Attunement ~ Armor",
+    "name": "+2 Attuned Armor",
+    "plus": 2,
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "2",
+          "TYPE=ArmorEnhancement",
+          "PREVAREQ:DisableArmorBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "2",
+          "TYPE=Enhancement",
+          "!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP ~ +2 Attunement ~ Armor"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=[Attuned +2]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Clothing"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "ArmorEnhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,ABP_Armor"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Armor,Clothing"
+      },
+      {
+        "key": "DESC",
+        "value": "Adds enhancement bonus to attuned equipment."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-07-27T21:12:38Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 37,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
+    "record_key": "ABP ~ +2 Attunement ~ Armor",
+    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
+  }
+}

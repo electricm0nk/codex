@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Wand of Animal Trance",
     "category": "magic_items",
-    "name": "Wand",
     "cost_gp": null,
-    "weight_lbs": 0.0625,
-    "description": "Your swaying motions and music (or singing, or chanting) compel animals and magical beasts to do nothing but watch you."
+    "description": "Your swaying motions and music (or singing, or chanting) compel animals and magical beasts to do nothing but watch you.",
+    "key": "Wand of Animal Trance",
+    "name": "Wand",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Wand of Animal Trance"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Wand of Animal Trance"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wand.Combat Gear"
+      },
+      {
+        "key": "WT",
+        "value": "0.0625"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Spell Trigger|SPELLNAME[Animal Trance]SPELLLEVEL[2]CASTERLEVEL[3]CHARGES[50]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.496"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint enchantment (compulsion) [mind-affecting, sonic]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wand, animal trance"
+      },
+      {
+        "key": "SPROP",
+        "value": "Your swaying motions and music (or singing, or chanting) compel animals and magical beasts to do nothing but watch you."
+      },
+      {
+        "key": "DESC",
+        "value": "Your swaying motions and music (or singing, or chanting) compel animals and magical beasts to do nothing but watch you."
+      }
+    ],
+    "weight_lbs": 0.0625
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 714,
-    "record_key": "Wand of Animal Trance"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Wand of Animal Trance",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

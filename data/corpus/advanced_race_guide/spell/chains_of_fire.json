@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Chains of Fire",
+    "school": "Evocation",
+    "level": 6,
+    "description": "This spell functions like chain lightning, except as noted above, and the spell deals fire damage instead of electricity damage."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 107,
+    "record_key": "Chains of Fire"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

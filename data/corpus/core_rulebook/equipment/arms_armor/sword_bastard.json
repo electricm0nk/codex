@@ -17,5 +17,8 @@
     "line": 245,
     "record_key": "Sword (Bastard)",
     "inherited_from_record_key": "Bastard Sword (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

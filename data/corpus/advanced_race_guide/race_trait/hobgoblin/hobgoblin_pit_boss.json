@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Hobgoblin ~ Pit Boss",
+    "name": "Pit Boss",
+    "race_key": "Hobgoblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Hobgoblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Hobgoblin_ReplaceSneaky"
+    ],
+    "description": "Slave blood fuels the hobgoblin war machine. Pit bosses extract the last breath of labor from their charges with a liberal touch of the lash. Hobgoblins with this racial trait gain proficiency with whips and a +1 racial bonus on combat maneuver checks made to disarm or trip with a whip. This racial trait replaces sneaky.",
+    "source_page": "p.121",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hobgoblin ~ Pit Boss"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hobgoblin Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Pit Boss],[!PREFACT:1,ABILITIES,Hobgoblin_ReplaceSneaky=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Slave blood fuels the hobgoblin war machine. Pit bosses extract the last breath of labor from their charges with a liberal touch of the lash. Hobgoblins with this racial trait gain proficiency with whips and a +1 racial bonus on combat maneuver checks made to disarm or trip with a whip."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sneaky.|!PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Pit Boss"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Whip"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on combat maneuver checks made to disarm or trip with a whip."
+      },
+      {
+        "key": "ASPECT",
+        "value": "CMBCircumstance|+1 to disarm with whip, +1 to trip with whip"
+      },
+      {
+        "key": "FACT",
+        "value": "Hobgoblin_ReplaceSneaky|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 517,
+    "record_key": "Hobgoblin ~ Pit Boss"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

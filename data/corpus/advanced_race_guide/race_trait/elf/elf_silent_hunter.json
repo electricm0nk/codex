@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Elf ~ Silent Hunter",
+    "name": "Silent Hunter",
+    "race_key": "Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Elven Magic"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Elf_ReplaceElvenMagic"
+    ],
+    "description": "Elves are renowned for their subtlety and skill. Elves with this racial trait reduce the penalty for using Stealth while moving by 5 and can make Stealth checks while running at a -20 penalty (this number includes the penalty reduction from this racial trait). This racial trait replaces elven magic.",
+    "source_page": "p.22",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Silent Hunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Elven Magic"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Silent Hunter],[!PREFACT:1,ABILITIES,Elf_ReplaceElvenMagic=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Elves are renowned for their subtlety and skill. Elves with this racial trait reduce the penalty for using Stealth while moving by 5 and can make Stealth checks while running at a -20 penalty (this number includes the penalty reduction from this racial trait)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces elven magic.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Silent Hunter"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|Reduce the penalty for using Stealth while moving by 5 and make Stealth checks while running at a -20 penalty (this number includes the penalty reduction)."
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceElvenMagic|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 83,
+    "record_key": "Elf ~ Silent Hunter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,20 +1,87 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Robe of Eyes",
     "category": "magic_items",
-    "name": "Robe of Eyes",
     "cost_gp": 120000.0,
-    "weight_lbs": 1.0,
-    "description": "This valuable garment appears to be a normal robe until it is put on. Its wearer is able to see in all directions at the same moment due to scores of visible, magical eye-like patterns that adorn the robe. She also gains 120-foot darkvision.\nThe robe of eyes sees all forms of invisible or ethereal creatures or objects within 120 feet.\nThe wearer of a robe of eyes gains a +10 competence bonus on Perception checks. She retains her Dexterity bonus to AC even when flat-footed, and can't be flanked. She is not able to avert or close her eyes when confronted by a creature with a gaze attack. A light or continual flame spell cast directly on a robe of eyes causes it to be blinded for 1d3 minutes. A daylight spell blinds it for 2d4 minutes."
+    "description": "This valuable garment appears to be a normal robe until it is put on. Its wearer is able to see in all directions at the same moment due to scores of visible, magical eye-like patterns that adorn the robe. She also gains 120-foot darkvision.\nThe robe of eyes sees all forms of invisible or ethereal creatures or objects within 120 feet.\nThe wearer of a robe of eyes gains a +10 competence bonus on Perception checks. She retains her Dexterity bonus to AC even when flat-footed, and can't be flanked. She is not able to avert or close her eyes when confronted by a creature with a gaze attack. A light or continual flame spell cast directly on a robe of eyes causes it to be blinded for 1d3 minutes. A daylight spell blinds it for 2d4 minutes.",
+    "key": "Robe of Eyes",
+    "name": "Robe of Eyes",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perception",
+          "10",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Robe of Eyes"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Robe of Eyes"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Body.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "120000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.527"
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (120')"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate divination"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|11th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|body"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|60,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, true seeing"
+      },
+      {
+        "key": "DESC",
+        "value": "This valuable garment appears to be a normal robe until it is put on. Its wearer is able to see in all directions at the same moment due to scores of visible, magical eye-like patterns that adorn the robe. She also gains 120-foot darkvision.&nl;The robe of eyes sees all forms of invisible or ethereal creatures or objects within 120 feet.&nl;The wearer of a robe of eyes gains a +10 competence bonus on Perception checks. She retains her Dexterity bonus to AC even when flat-footed, and can't be flanked. She is not able to avert or close her eyes when confronted by a creature with a gaze attack. A light or continual flame spell cast directly on a robe of eyes causes it to be blinded for 1d3 minutes. A daylight spell blinds it for 2d4 minutes."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 313,
-    "record_key": "Robe of Eyes"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Robe of Eyes",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

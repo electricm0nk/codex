@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Unguent of Timelessness",
     "category": "magic_items",
-    "name": "Unguent of Timelessness",
     "cost_gp": 150.0,
-    "weight_lbs": 0.0,
-    "description": "When applied to any matter that was once alive, such as wood, paper, or a dead body, this ointment allows that substance to resist the passage of time. Each year of actual time affects the substance as if only a day had passed. The coated object gains a +1 resistance bonus on all saving throws. The unguent never wears off, although it can be magically removed (by dispelling the effect, for instance). One flask contains enough material to coat eight Medium or smaller objects. A Large object counts as two Medium objects, and a Huge object counts as four Medium objects."
+    "description": "When applied to any matter that was once alive, such as wood, paper, or a dead body, this ointment allows that substance to resist the passage of time. Each year of actual time affects the substance as if only a day had passed. The coated object gains a +1 resistance bonus on all saving throws. The unguent never wears off, although it can be magically removed (by dispelling the effect, for instance). One flask contains enough material to coat eight Medium or smaller objects. A Large object counts as two Medium objects, and a Huge object counts as four Medium objects.",
+    "key": "Unguent of Timelessness",
+    "name": "Unguent of Timelessness",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unguent of Timelessness"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Unguent of Timelessness"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "150"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 8 Maximum|CHARGES[8]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.531"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|75 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, gentle repose"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "When applied to any matter that was once alive, such as wood, paper, or a dead body, this ointment allows that substance to resist the passage of time. Each year of actual time affects the substance as if only a day had passed. The coated object gains a +1 resistance bonus on all saving throws. The unguent never wears off, although it can be magically removed (by dispelling the effect, for instance). One flask contains enough material to coat eight Medium or smaller objects. A Large object counts as two Medium objects, and a Huge object counts as four Medium objects."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 350,
-    "record_key": "Unguent of Timelessness"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Unguent of Timelessness",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

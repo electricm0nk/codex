@@ -17,5 +17,8 @@
     "line": 52,
     "record_key": "Studded Leather",
     "inherited_from_record_key": "Studded Leather (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

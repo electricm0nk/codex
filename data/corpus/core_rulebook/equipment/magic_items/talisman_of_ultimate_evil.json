@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Talisman of Ultimate Evil",
     "category": "magic_items",
-    "name": "Talisman of Ultimate Evil",
     "cost_gp": 0.0,
-    "weight_lbs": 0.0,
-    "description": "An evil divine spellcaster who possesses this item can cause a flaming crack to open at the feet of a good divine spellcaster who is up to 100 feet away. The intended victim is swallowed up forever and sent hurtling to the center of the earth. The wielder of the talisman must be evil, and if she is not exceptionally foul and perverse in the sights of her evil deity, the good character gains a DC 19 Reflex save to leap away from the crack. Obviously, the target must be standing on solid ground for this item to function.\nA talisman of ultimate evil has 6 charges. If a neutral (LN, N, CN) divine spellcaster touches one of these stones, she takes 6d6 points of damage per round of contact. If a good divine spellcaster touches one, she takes 8d6 points of damage per round of contact. All other characters are unaffected by the device."
+    "description": "An evil divine spellcaster who possesses this item can cause a flaming crack to open at the feet of a good divine spellcaster who is up to 100 feet away. The intended victim is swallowed up forever and sent hurtling to the center of the earth. The wielder of the talisman must be evil, and if she is not exceptionally foul and perverse in the sights of her evil deity, the good character gains a DC 19 Reflex save to leap away from the crack. Obviously, the target must be standing on solid ground for this item to function.\nA talisman of ultimate evil has 6 charges. If a neutral (LN, N, CN) divine spellcaster touches one of these stones, she takes 6d6 points of damage per round of contact. If a good divine spellcaster touches one, she takes 8d6 points of damage per round of contact. All other characters are unaffected by the device.",
+    "key": "Talisman of Ultimate Evil",
+    "name": "Talisman of Ultimate Evil",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Talisman of Ultimate Evil"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Talisman of Ultimate Evil"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 6 Maximum|CHARGES[6]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p1547"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong evocation [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|18th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Destruction|If a talisman of ultimate evil is given to the newborn child of a redeemed villain, it instantly crumbles to dust."
+      },
+      {
+        "key": "DESC",
+        "value": "An evil divine spellcaster who possesses this item can cause a flaming crack to open at the feet of a good divine spellcaster who is up to 100 feet away. The intended victim is swallowed up forever and sent hurtling to the center of the earth. The wielder of the talisman must be evil, and if she is not exceptionally foul and perverse in the sights of her evil deity, the good character gains a DC 19 Reflex save to leap away from the crack. Obviously, the target must be standing on solid ground for this item to function.&nl;A talisman of ultimate evil has 6 charges. If a neutral (LN, N, CN) divine spellcaster touches one of these stones, she takes 6d6 points of damage per round of contact. If a good divine spellcaster touches one, she takes 8d6 points of damage per round of contact. All other characters are unaffected by the device."
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 1605,
-    "record_key": "Talisman of Ultimate Evil"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Talisman of Ultimate Evil",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

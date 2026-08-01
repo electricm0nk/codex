@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Holy Weapon Balm",
     "category": "General",
-    "name": "Holy Weapon Balm",
     "cost_gp": 30.0,
-    "weight": 0.5,
-    "description": "Coated weapon does +2d4 damage to undead, 1d4 damage next round (DC 10 Reflex negates); more easily affects incorporeal undead or evil outsiders"
+    "description": "Coated weapon does +2d4 damage to undead, 1d4 damage next round (DC 10 Reflex negates); more easily affects incorporeal undead or evil outsiders",
+    "key": "Holy Weapon Balm",
+    "name": "Holy Weapon Balm",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Alchemical.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "30"
+      },
+      {
+        "key": "WT",
+        "value": "0.5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.209"
+      },
+      {
+        "key": "SPROP",
+        "value": "Coated weapon does +2d4 damage to undead, 1d4 damage next round (DC 10 Reflex negates); more easily affects incorporeal undead or evil outsiders"
+      }
+    ],
+    "weight": 0.5
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 234,
-    "record_key": "Holy Weapon Balm"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Holy Weapon Balm",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

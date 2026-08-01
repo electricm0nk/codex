@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Ring of Summoning Affinity (Asura)",
     "category": "MagicItems",
-    "name": "Ring of Summoning Affinity (Asura)",
     "cost_gp": 7600.0,
-    "weight": null,
-    "description": "add to summon monster list: tripurasura (3rd), adhukait (6th), upasunda (7th), aghasura (8th); 1/day summon tripurasura"
+    "description": "add to summon monster list: tripurasura (3rd), adhukait (6th), upasunda (7th), aghasura (8th); 1/day summon tripurasura",
+    "key": "Ring of Summoning Affinity (Asura)",
+    "name": "Ring of Summoning Affinity (Asura)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "7600"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.218"
+      },
+      {
+        "key": "SPROP",
+        "value": "add to summon monster list: tripurasura (3rd), adhukait (6th), upasunda (7th), aghasura (8th); 1/day summon tripurasura"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 283,
-    "record_key": "Ring of Summoning Affinity (Asura)"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Ring of Summoning Affinity (Asura)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

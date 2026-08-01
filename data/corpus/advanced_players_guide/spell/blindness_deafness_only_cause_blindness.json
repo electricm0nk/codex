@@ -1,19 +1,23 @@
 {
   "population": "in_scope",
-  "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "completeness": "full",
+  "ingested_at": "2026-08-01T03:17:20Z",
   "data": {
     "key": "Blindness/Deafness (Only Cause Blindness)",
-    "school": null,
-    "level": null,
-    "description": null,
-    "full_text": false
+    "school": "Necromancy",
+    "level": 2,
+    "description": "You call upon the powers of unlife to render the subject blinded or deafened, as you choose.",
+    "full_text": true
   },
   "source": {
-    "kind": "lst_token",
+    "kind": "lst_inherited_copy",
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1037,
-    "record_key": "Blindness/Deafness (Only Cause Blindness)"
-  }
+    "record_key": "Blindness/Deafness (Only Cause Blindness)",
+    "inherited_from_record_key": "Blindness/Deafness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

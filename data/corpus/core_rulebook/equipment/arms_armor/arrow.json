@@ -17,5 +17,8 @@
     "line": 17,
     "record_key": "Arrow",
     "inherited_from_record_key": "Arrow (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

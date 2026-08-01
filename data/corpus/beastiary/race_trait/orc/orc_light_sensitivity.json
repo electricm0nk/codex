@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Orc ~ Light Sensitivity",
+    "name": "Light Sensitivity",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "Orc Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Orc_ReplaceLightSensitivity",
+    "sets_replace_flags": [],
+    "description": "Orcs are dazzled in areas of bright sunlight or within the radius of a daylight spell.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Light Sensitivity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.Orc Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Orc_ReplaceLightSensitivity=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Orcs are dazzled in areas of bright sunlight or within the radius of a daylight spell."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Light Sensitivity"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_abilities_race.lst",
+    "sha256": "9dc0958a94afe60d800eda483674be0837856c6f62556e53291454d690863ab5",
+    "line": 19,
+    "record_key": "Orc ~ Light Sensitivity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Fearless Curiosity",
+    "category": "general",
+    "name": "Fearless Curiosity",
+    "description": "Your desire to see and experience the world overrides healthy caution.",
+    "effect": [
+      [
+        "VAR",
+        "FearlessCuriosityBonus",
+        "1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 106,
+    "record_key": "Fearless Curiosity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

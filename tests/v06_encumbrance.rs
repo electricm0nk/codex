@@ -11,7 +11,7 @@
 //! (transcribed from this repo's own `data/corpus/core_rulebook/equipment/`
 //! shape), independently authored assertions, and PCGen cross-check values
 //! pulled from the real PCGen checkout during QA's original formula-spec
-//! pass (`/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`),
+//! pass (`$HOME/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`),
 //! not from `encumbrance.rs`'s own inline test module.
 
 use codex::rules_core::character_input::{ActiveState, EquipmentSelection};
@@ -112,7 +112,7 @@ fn carrying_capacity_thresholds_extrapolate_two_tiers_beyond_strength_29() {
 
 /// The full `LOAD:<Strength>|<value>` column of the real PCGen Pathfinder
 /// game mode's `load.lst`, transcribed verbatim (Strength 1-29):
-/// `/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
+/// `$HOME/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
 /// lines 10-38. This is the *heavy* tier (`ENCUMBRANCE:Heavy|1`, i.e. a 1x
 /// multiplier on the load score); light is `1/3` and medium is `2/3` of the
 /// same value per that file's `ENCUMBRANCE:Light|1/3` / `Medium|2/3`.
@@ -158,7 +158,7 @@ fn carrying_capacity_thresholds_match_every_row_of_the_real_pcgen_load_lst_table
 
 /// Every `SIZEMULT:` row of the real PCGen Pathfinder game mode's
 /// `load.lst`, transcribed verbatim
-/// (`/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
+/// (`$HOME/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
 /// lines 1-8), as an exact `(numerator, denominator)` rational rather than
 /// a float:
 ///

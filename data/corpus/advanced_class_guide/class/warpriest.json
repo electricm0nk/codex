@@ -154,5 +154,8 @@
     "sha256": "4814442741c9c834656b5bcd00932185ea1394cc099164b5e9e98e2d38da0dd2",
     "line": 364,
     "record_key": "CLASS:Warpriest"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

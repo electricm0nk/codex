@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Staff of the Magi",
     "category": "magic_items",
-    "name": "Staff of the Magi",
     "cost_gp": 0.0,
-    "weight_lbs": 5.0,
-    "description": "A long wooden staff, shod in iron and inscribed with sigils and runes of all types, this potent artifact contains many spell powers and other functions. Unlike a normal staff, a staff of the magi holds 50 charges and cannot be recharged normally. Some of its powers use charges, while others don't. A staff of the magi does not lose its powers if it runs out of charges. The following powers do not use charges:\n* Detect magic\n* Enlarge person (Fortitude DC 15 negates)\n* Hold portal\n* Light\n* Mage armor\n* Mage hand\nThe following powers drain 1 charge per usage:\n* Dispel magic\n* Fireball (10d6 damage, Reflex DC 17 half )\n* Ice storm\n* Invisibility\n* Knock\n* Lightning bolt (10d6 damage, Reflex DC 17 half )\n* Passwall\n* Pyrotechnics (Will or Fortitude DC 16 negates)\n* Wall of fire\n* Web\nThese powers drain 2 charges per usage:\n* Monster summoning IX\n* Plane shift (Will DC 21 negates)\n* Telekinesis (400 lbs. maximum weight; Will DC 19 negates)\nA staff of the magi gives the wielder spell resistance 23. If this is willingly lowered, however, the staff can also be used to absorb arcane spell energy directed at its wielder, as a rod of absorption does. Unlike the rod, this staff converts spell levels into charges rather than retaining them as spell energy usable by a spellcaster. If the staff absorbs enough spell levels to exceed its limit of 50 charges, it explodes as if a retributive strike had been performed (see below). The wielder has no idea how many spell levels are cast at her, for the staff does not communicate this knowledge as a rod of absorption does. (Thus, absorbing spells can be risky.)"
+    "description": "A long wooden staff, shod in iron and inscribed with sigils and runes of all types, this potent artifact contains many spell powers and other functions. Unlike a normal staff, a staff of the magi holds 50 charges and cannot be recharged normally. Some of its powers use charges, while others don't. A staff of the magi does not lose its powers if it runs out of charges. The following powers do not use charges:\n* Detect magic\n* Enlarge person (Fortitude DC 15 negates)\n* Hold portal\n* Light\n* Mage armor\n* Mage hand\nThe following powers drain 1 charge per usage:\n* Dispel magic\n* Fireball (10d6 damage, Reflex DC 17 half )\n* Ice storm\n* Invisibility\n* Knock\n* Lightning bolt (10d6 damage, Reflex DC 17 half )\n* Passwall\n* Pyrotechnics (Will or Fortitude DC 16 negates)\n* Wall of fire\n* Web\nThese powers drain 2 charges per usage:\n* Monster summoning IX\n* Plane shift (Will DC 21 negates)\n* Telekinesis (400 lbs. maximum weight; Will DC 19 negates)\nA staff of the magi gives the wielder spell resistance 23. If this is willingly lowered, however, the staff can also be used to absorb arcane spell energy directed at its wielder, as a rod of absorption does. Unlike the rod, this staff converts spell levels into charges rather than retaining them as spell energy usable by a spellcaster. If the staff absorbs enough spell levels to exceed its limit of 50 charges, it explodes as if a retributive strike had been performed (see below). The wielder has no idea how many spell levels are cast at her, for the staff does not communicate this knowledge as a rod of absorption does. (Thus, absorbing spells can be risky.)",
+    "key": "Staff of the Magi",
+    "name": "Staff of the Magi",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MISC",
+          "SR",
+          "23"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Staff of the Magi"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Staff of the Magi"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Minor.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Charged Item / 50 Maximum|CHARGES[50]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.546"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong (all schools)"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|20th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Destruction|A staff of the magi can be broken for a retributive strike. Such an act must be purposeful and declared by the wielder. All charges in the staff are released in a 30-foot spread. All within 10 feet of the broken staff take hit points of damage equal to 8 times the number of charges in the staff, those between 11 feet and 20 feet away take points equal to 6 times the number of charges, and those 21 feet to 30 feet distant take 4 times the number of charges. A DC 23 Reflex save reduces damage by half.&nl;The character breaking the staff has a 50%% chance (01-50 on d%%) of traveling to another plane of existence, but if she does not (51-100), the explosive release of spell energy destroys her (no saving throw)."
+      },
+      {
+        "key": "DESC",
+        "value": "A long wooden staff, shod in iron and inscribed with sigils and runes of all types, this potent artifact contains many spell powers and other functions. Unlike a normal staff, a staff of the magi holds 50 charges and cannot be recharged normally. Some of its powers use charges, while others don't. A staff of the magi does not lose its powers if it runs out of charges. The following powers do not use charges:&nl;* Detect magic&nl;* Enlarge person (Fortitude DC 15 negates)&nl;* Hold portal&nl;* Light&nl;* Mage armor&nl;* Mage hand&nl;The following powers drain 1 charge per usage:&nl;* Dispel magic&nl;* Fireball (10d6 damage, Reflex DC 17 half )&nl;* Ice storm&nl;* Invisibility&nl;* Knock&nl;* Lightning bolt (10d6 damage, Reflex DC 17 half )&nl;* Passwall&nl;* Pyrotechnics (Will or Fortitude DC 16 negates)&nl;* Wall of fire&nl;* Web&nl;These powers drain 2 charges per usage:&nl;* Monster summoning IX&nl;* Plane shift (Will DC 21 negates)&nl;* Telekinesis (400 lbs. maximum weight; Will DC 19 negates)&nl;A staff of the magi gives the wielder spell resistance 23. If this is willingly lowered, however, the staff can also be used to absorb arcane spell energy directed at its wielder, as a rod of absorption does. Unlike the rod, this staff converts spell levels into charges rather than retaining them as spell energy usable by a spellcaster. If the staff absorbs enough spell levels to exceed its limit of 50 charges, it explodes as if a retributive strike had been performed (see below). The wielder has no idea how many spell levels are cast at her, for the staff does not communicate this knowledge as a rod of absorption does. (Thus, absorbing spells can be risky.)"
+      }
+    ],
+    "weight_lbs": 5.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 1602,
-    "record_key": "Staff of the Magi"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Staff of the Magi",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

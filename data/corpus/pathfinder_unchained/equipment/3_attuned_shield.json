@@ -1,0 +1,87 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": null,
+    "description": "Adds enhancement bonus to attuned equipment.",
+    "equip_type": "Shield",
+    "key": "ABP ~ +3 Attunement ~ Shield",
+    "name": "+3 Attuned Shield",
+    "plus": 3,
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "3",
+          "TYPE=ShieldEnhancement",
+          "PREVAREQ:DisableShieldBonus,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "EQMARMOR",
+          "ACCHECK",
+          "3",
+          "TYPE=Enhancement",
+          "!PRETYPE:1,EQMODTYPE=MASTERWORKQUALITY"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP ~ +3 Attunement ~ Shield"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=[Attuned +3]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Shield"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "ShieldEnhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,ABP_Armor"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Shield"
+      },
+      {
+        "key": "DESC",
+        "value": "Adds enhancement bonus to attuned equipment."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-07-27T21:12:38Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 44,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
+    "record_key": "ABP ~ +3 Attunement ~ Shield",
+    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
+  }
+}

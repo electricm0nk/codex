@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 300.0,
+    "description": "This lab allows the artificer to spend 4 hours crafting each night while out adventuring, and net 3 hours' worth of work.  However,the skill check to complete a magic item that had any of its work done using a portable lab takes a -5 penalty.",
+    "key": "Artificer's Lab (Portable)",
+    "name": "Artificer's Lab (Portable)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Artificer's Lab, Portable"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Elven.Racial.Artisan"
+      },
+      {
+        "key": "COST",
+        "value": "300"
+      },
+      {
+        "key": "WT",
+        "value": "40"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "SPROP",
+        "value": "This lab allows the artificer to spend 4 hours crafting each night while out adventuring, and net 3 hours' worth of work.  However,the skill check to complete a magic item that had any of its work done using a portable lab takes a -5 penalty."
+      }
+    ],
+    "weight_lbs": 40.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 14,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Artificer's Lab (Portable)",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
+}

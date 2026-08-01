@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Set of Minature Items (15 gp)",
     "category": "general",
-    "name": "Set of Minature Items (worth 15 gp)",
     "cost_gp": 15.0,
-    "weight_lbs": 0.0,
-    "description": null
+    "description": null,
+    "key": "Set of Minature Items (15 gp)",
+    "name": "Set of Minature Items (worth 15 gp)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Set of Minature Items (15 gp)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Set of Minature Items (worth 15 gp)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Spell Component.Spell Focus"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Focus for Mage's Magnificent Mansion"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 481,
-    "record_key": "Set of Minature Items (15 gp)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Set of Minature Items (15 gp)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

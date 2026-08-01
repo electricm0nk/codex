@@ -1,20 +1,73 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Intelligent Item ~ Ability Score / Intelligence 19",
     "category": "equipmods",
-    "name": "Int Item / Stat Intelligence 19",
     "cost_gp": 5200.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Intelligent Item ~ Ability Score / Intelligence 19",
+    "name": "Int Item / Stat Intelligence 19",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "4"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatINT",
+          "9"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Ability Score / Intelligence 19"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "5200"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Ability Score / Intelligence 11,Intelligent Item ~ Ability Score / Intelligence 12,Intelligent Item ~ Ability Score / Intelligence 13,Intelligent Item ~ Ability Score / Intelligence 14,Intelligent Item ~ Ability Score / Intelligence 15,Intelligent Item ~ Ability Score / Intelligence 16,Intelligent Item ~ Ability Score / Intelligence 17,Intelligent Item ~ Ability Score / Intelligence 18,Intelligent Item ~ Ability Score / Intelligence 20"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item Stat INT ~ 19"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 369,
-    "record_key": "Intelligent Item ~ Ability Score / Intelligence 19"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Intelligent Item ~ Ability Score / Intelligence 19",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

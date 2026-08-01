@@ -17,5 +17,8 @@
     "line": 251,
     "record_key": "Flail (Dire)",
     "inherited_from_record_key": "Dire Flail (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

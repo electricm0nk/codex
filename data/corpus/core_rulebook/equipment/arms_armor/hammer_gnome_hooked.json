@@ -17,5 +17,8 @@
     "line": 252,
     "record_key": "Hammer (Gnome Hooked)",
     "inherited_from_record_key": "Gnome Hooked Hammer (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

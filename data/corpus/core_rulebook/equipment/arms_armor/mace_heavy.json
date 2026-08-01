@@ -17,5 +17,8 @@
     "line": 206,
     "record_key": "Mace (Heavy)",
     "inherited_from_record_key": "Heavy Mace (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

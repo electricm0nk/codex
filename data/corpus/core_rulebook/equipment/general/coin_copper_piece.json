@@ -1,20 +1,58 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Coin (Copper Piece)",
     "category": "general",
-    "name": "Copper Piece",
     "cost_gp": 0.01,
-    "weight_lbs": 0.02,
-    "description": "The standard coin weighs about a third of an ounce (50 to the pound)."
+    "description": "The standard coin weighs about a third of an ounce (50 to the pound).",
+    "key": "Coin (Copper Piece)",
+    "name": "Copper Piece",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Coin (Copper Piece)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Coin, Copper Piece"
+      },
+      {
+        "key": "TYPE",
+        "value": "Coin"
+      },
+      {
+        "key": "COST",
+        "value": "0.01"
+      },
+      {
+        "key": "WT",
+        "value": "0.02"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.140"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Abbreviation|cp"
+      },
+      {
+        "key": "DESC",
+        "value": "The standard coin weighs about a third of an ounce (50 to the pound)."
+      }
+    ],
+    "weight_lbs": 0.02
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 332,
-    "record_key": "Coin (Copper Piece)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Coin (Copper Piece)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

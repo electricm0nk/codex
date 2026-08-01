@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Orc ~ Weapon Familiarity",
+    "name": "Weapon Familiarity",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "Orc Racial Default",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Orc_ReplaceWeaponFamiliarity",
+    "sets_replace_flags": [],
+    "description": "Orcs are always proficient with greataxes and falchions, and treat any weapon with the word \"orc\" in its name as a martial weapon.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Weapon Familiarity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.Orc Racial Default.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Orc_ReplaceWeaponFamiliarity=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Orcs are always proficient with greataxes and falchions, and treat any weapon with the word \"orc\" in its name as a martial weapon."
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Greataxe|Falchion"
+      },
+      {
+        "key": "CHANGEPROF",
+        "value": "TYPE.Orc=Martial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/orc/orc_abilities_race.lst",
+    "sha256": "9dc0958a94afe60d800eda483674be0837856c6f62556e53291454d690863ab5",
+    "line": 21,
+    "record_key": "Orc ~ Weapon Familiarity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

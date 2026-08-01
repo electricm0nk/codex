@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Hobgoblin ~ Magehunter",
+    "name": "Magehunter",
+    "race_key": "Hobgoblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Hobgoblin Racial Trait",
+      "SpecialAttack",
+      "Special Attack"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Hobgoblin_ReplaceSneaky"
+    ],
+    "description": "Hobgoblins hate and fear arcane casters. A magehunter gains a +2 racial bonus on Spellcraft checks made to identify a spell being cast and a +1 racial bonus on attack rolls against arcane spellcasters. He only gains this bonus against creatures that use spells, and not against those that only use spell-like abilities. This racial trait replaces sneaky.",
+    "source_page": "p.121",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hobgoblin ~ Magehunter"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hobgoblin Racial Trait.SpecialAttack.Special Attack"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Magehunter],[!PREFACT:1,ABILITIES,Hobgoblin_ReplaceSneaky=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Hobgoblins hate and fear arcane casters. A magehunter gains a +2 racial bonus on Spellcraft checks made to identify a spell being cast and a +1 racial bonus on attack rolls against arcane spellcasters. He only gains this bonus against creatures that use spells, and not against those that only use spell-like abilities."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sneaky.|!PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Magehunter"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on attack rolls against arcane spellcasters."
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against arcane spellcasters"
+      },
+      {
+        "key": "FACT",
+        "value": "Hobgoblin_ReplaceSneaky|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Spellcraft=identify a spell being cast",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 516,
+    "record_key": "Hobgoblin ~ Magehunter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

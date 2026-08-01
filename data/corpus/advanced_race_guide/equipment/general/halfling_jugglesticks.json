@@ -1,0 +1,55 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 25.0,
+    "description": "Halflings can use these four colored sticks to gain +2 circumstance bonus on Perform (Comedy) checks",
+    "key": "Halfling Jugglesticks",
+    "name": "Halfling Jugglesticks",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Perform (Comedy)",
+          "2",
+          "TYPE=Circumstance"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Racial.Halfing"
+      },
+      {
+        "key": "COST",
+        "value": "25"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.66"
+      },
+      {
+        "key": "SPROP",
+        "value": "Halflings can use these four colored sticks to gain +2 circumstance bonus on Perform (Comedy) checks"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 47,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Halfling Jugglesticks",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
+}

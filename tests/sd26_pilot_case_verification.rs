@@ -22,9 +22,10 @@
 //! this file's git history and
 //! `docs/release/SD-26-ingest-strategy-and-rule-system-plumbing/artifacts/epic_2/pilot_case_oracle_checked-cycle_receipt.md`).
 //!
-//! A real, near-complete precursor `.pcg` was subsequently located at
-//! `programs/codex/requirements/GE-05-oracle-validation-and-parity-harness/artifacts/pf1-crb-human-fighter-level1-provisional-ge05-e1-f2.pcg`
-//! (outside this repo) — proven to load in the real PCGen engine by GE-05's
+//! A real, near-complete precursor `.pcg` was subsequently located in the
+//! GE-05 artifact tree and is now vendored into this repository at
+//! `docs/release/GE-05-oracle-validation-and-parity-harness/artifacts/pf1-crb-human-fighter-level1-provisional-ge05-e1-f2.pcg`
+//! — proven to load in the real PCGen engine by GE-05's
 //! own runtime-output receipt. This follow-up cycle completed that file (added
 //! the Dodge and Weapon Focus (Longsword) feats, Climb/Intimidate/Swim rank-1
 //! skill allocations, and the Chain Shirt + Longsword equipped/active
@@ -170,13 +171,28 @@ const PILOT_SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
 const PILOT_LEGACY_ROUTE: &str =
     "headless Gradle run batch export via code/testsuite/base-xml.ftl";
 
-/// Absolute path to the completed, genuinely same-character pilot `.pcg`
-/// fixture. Lives outside this repo (in the `programs/codex/requirements/`
-/// GE-05 artifact tree, alongside its own runtime-evidence receipt), the
-/// same way `PcgenRunOptions::pcgen_repo_dir` already points at an
-/// out-of-repo PCGen checkout — `pcgen_runner.rs::run_pcgen_character` takes
-/// any real absolute `.pcg` path, so no in-repo copy or move is required.
-const PILOT_PCG_FIXTURE_PATH: &str = "/home/ubuntu/workspace/programs/codex/requirements/GE-05-oracle-validation-and-parity-harness/artifacts/pf1-crb-human-fighter-level1-provisional-ge05-e1-f2.pcg";
+/// Repo-relative path to the completed, genuinely same-character pilot
+/// `.pcg` fixture, vendored into the GE-05 build's own artifact folder
+/// alongside its runtime-evidence receipts.
+///
+/// This was previously a hardcoded absolute path into another machine's
+/// `programs/codex/requirements/` *planning* tree, with no environment
+/// override, which made this suite unrunnable anywhere but that one box.
+/// Build artifacts belong in the build's own artifact folder rather than
+/// behind a reference to an external source — see
+/// `tests/ge05_vendored_pcg_fixtures.rs` for the provenance and integrity
+/// proof, and `docs/release/GE-05-oracle-validation-and-parity-harness/artifacts/README.md`
+/// for the recorded provenance.
+const PILOT_PCG_FIXTURE_PATH: &str =
+    "docs/release/GE-05-oracle-validation-and-parity-harness/artifacts/\
+     pf1-crb-human-fighter-level1-provisional-ge05-e1-f2.pcg";
+
+/// sha256 of the vendored fixture as committed. Pinned so a silently
+/// swapped or regenerated `.pcg` fails loudly here instead of quietly
+/// shifting the parity numbers this suite publishes as evidence. Kept in
+/// sync with `tests/ge05_vendored_pcg_fixtures.rs`.
+const PILOT_PCG_FIXTURE_SHA256: &str =
+    "d0c6b2a2e9c190d0be97c20caf247b96108299340331d044547d9a57bdb64f4f";
 
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
@@ -184,8 +200,30 @@ fn repo_root() -> PathBuf {
 
 /// The real, completed, genuinely same-character PCGen `.pcg` fixture for
 /// this pilot case (see this module's doc comment for provenance).
+///
+/// Resolution follows `ge08_workbench::resolve_package_path`'s contract —
+/// repo-relative paths anchor at the codex repo root. That helper lives in
+/// the separate `codex-desktop` crate and is not reachable from a `codex`
+/// root-crate integration test, so this uses the identical anchor its
+/// fallback uses (`CARGO_MANIFEST_DIR`), which is also the in-crate pattern
+/// `sd27_advanced_race_guide_parity.rs` already established for its own
+/// vendored `.pcg` fixture.
 fn pilot_case_pcg_fixture() -> PathBuf {
-    PathBuf::from(PILOT_PCG_FIXTURE_PATH)
+    repo_root().join(PILOT_PCG_FIXTURE_PATH)
+}
+
+/// Fail loudly on a swapped fixture rather than reporting parity numbers
+/// computed from content nobody verified.
+fn assert_pilot_pcg_fixture_is_pinned(path: &std::path::Path) {
+    let actual = codex::rules_core::cache_gen::apg::sha256_file(path)
+        .unwrap_or_else(|err| panic!("cannot hash {}: {err}", path.display()));
+    assert_eq!(
+        actual,
+        PILOT_PCG_FIXTURE_SHA256,
+        "{} was swapped, regenerated, or truncated -- re-verify the fixture and re-record the \
+         digest before this suite's parity results can be trusted",
+        path.display()
+    );
 }
 
 fn load_golden_fixture_or_panic() -> codex::oracle_validation::golden_fixture::GoldenCaseFixture {
@@ -254,6 +292,7 @@ fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
         "expected the real completed pilot PCGen .pcg fixture at {}",
         pcg.display()
     );
+    assert_pilot_pcg_fixture_is_pinned(&pcg);
 
     let options = PcgenRunOptions::new(PILOT_CASE_ID, PILOT_SOURCE_PACKAGE_ID, PILOT_LEGACY_ROUTE);
     let pcgen_output = run_pcgen_character(&pcg, &options)

@@ -15,5 +15,8 @@
     "fetched_at": "2026-07-22T08:37:22-04:00",
     "identity_match_basis": "name+school+level",
     "citation_precision": "exact_item_page"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

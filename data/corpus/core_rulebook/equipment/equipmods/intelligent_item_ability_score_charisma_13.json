@@ -1,20 +1,73 @@
 {
-  "population": "in_scope",
   "completeness": "chassis_plus_extract",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Intelligent Item ~ Ability Score / Charisma 13",
     "category": "equipmods",
-    "name": "Int Item / Stat Charisma 13",
     "cost_gp": 700.0,
-    "weight_lbs": null,
-    "description": null
+    "description": null,
+    "key": "Intelligent Item ~ Ability Score / Charisma 13",
+    "name": "Int Item / Stat Charisma 13",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatCHA",
+          "3"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Ability Score / Charisma 13"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "700"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Ability Score / Charisma 11,Intelligent Item ~ Ability Score / Charisma 12,Intelligent Item ~ Ability Score / Charisma 14,Intelligent Item ~ Ability Score / Charisma 15,Intelligent Item ~ Ability Score / Charisma 16,Intelligent Item ~ Ability Score / Charisma 17,Intelligent Item ~ Ability Score / Charisma 18,Intelligent Item ~ Ability Score / Charisma 19,Intelligent Item ~ Ability Score / Charisma 20"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item Stat CHA ~ 13"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
-    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df",
     "line": 387,
-    "record_key": "Intelligent Item ~ Ability Score / Charisma 13"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Intelligent Item ~ Ability Score / Charisma 13",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
   }
 }

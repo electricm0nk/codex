@@ -1,20 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Shooting Stars",
     "category": "magic_items",
-    "name": "Ring of Shooting Stars",
     "cost_gp": 50000.0,
-    "weight_lbs": null,
-    "description": "This ring has two modes of operation: one for being in dim light or outdoors at night, and a second one when the wearer is underground or indoors at night.\nDuring the night, under the open sky or in areas of shadow or darkness, the ring of shooting stars can perform the following functions on command.\n* Dancing lights (once per hour)\n* Light (twice per night)\n* Ball lightning (special, once per night)\n* Shooting stars (special, three per week)\nThe first special function, ball lightning, releases one to four balls of lightning (ring wearer's choice). These glowing globes resemble dancing lights, and the ring wearer controls them similarly (see the dancing lights spell description). The spheres have a 120-foot range and a duration of 4 rounds. They can be moved at 120 feet per round. Each sphere is about 3 feet in diameter, and any creature who comes within 5 feet of one causes its charge to dissipate, taking electricity damage in the process according to the number of balls created.\nNumber of Balls / Damage per Ball\n1 lightning ball / 4d6 points of electricity damage\n2 lightning balls / 3d6 points of electricity damage each\n3 lightning balls / 2d6 points of electricity damage each\n4 lightning balls / 1d6 points of electricity damage each\nOnce the ball lightning function is activated, the balls can be released at any time before the sun rises. Multiple balls can be released in the same round.\nThe second special function produces three shooting stars that can be released from the ring each week, simultaneously or one at a time. They impact for 12 points of damage and spread (as a fireball) in a 5-foot-radius sphere for 24 points of fire damage.\nAny creature struck by a shooting star takes full damage from impact plus full fire damage from the spread unless it makes a DC 13 Reflex save. Creatures not struck but within the spread ignore the impact damage and take only half damage from the fire spread on a successful DC 13 Reflex save. Range is 70 feet, at the end of which the shooting star explodes unless it strikes a creature or object before that. A shooting star always follows a straight line, and any creature in its path must make a save or be hit by the projectile.\nIndoors at night, or underground, the ring of shooting stars has the following properties.\n* Faerie fire (twice per day)\n* Spark shower (special, once per day)\nThe spark shower is a flying cloud of sizzling purple sparks that fan out from the ring for a distance of 20 feet in an arc 10 feet wide. Creatures within this area take 2d8 points of damage each if not wearing metal armor or carrying a metal weapon. Those wearing metal armor and/or carrying a metal weapon take 4d8 points of damage."
+    "description": "This ring has two modes of operation: one for being in dim light or outdoors at night, and a second one when the wearer is underground or indoors at night.\nDuring the night, under the open sky or in areas of shadow or darkness, the ring of shooting stars can perform the following functions on command.\n* Dancing lights (once per hour)\n* Light (twice per night)\n* Ball lightning (special, once per night)\n* Shooting stars (special, three per week)\nThe first special function, ball lightning, releases one to four balls of lightning (ring wearer's choice). These glowing globes resemble dancing lights, and the ring wearer controls them similarly (see the dancing lights spell description). The spheres have a 120-foot range and a duration of 4 rounds. They can be moved at 120 feet per round. Each sphere is about 3 feet in diameter, and any creature who comes within 5 feet of one causes its charge to dissipate, taking electricity damage in the process according to the number of balls created.\nNumber of Balls / Damage per Ball\n1 lightning ball / 4d6 points of electricity damage\n2 lightning balls / 3d6 points of electricity damage each\n3 lightning balls / 2d6 points of electricity damage each\n4 lightning balls / 1d6 points of electricity damage each\nOnce the ball lightning function is activated, the balls can be released at any time before the sun rises. Multiple balls can be released in the same round.\nThe second special function produces three shooting stars that can be released from the ring each week, simultaneously or one at a time. They impact for 12 points of damage and spread (as a fireball) in a 5-foot-radius sphere for 24 points of fire damage.\nAny creature struck by a shooting star takes full damage from impact plus full fire damage from the spread unless it makes a DC 13 Reflex save. Creatures not struck but within the spread ignore the impact damage and take only half damage from the fire spread on a successful DC 13 Reflex save. Range is 70 feet, at the end of which the shooting star explodes unless it strikes a creature or object before that. A shooting star always follows a straight line, and any creature in its path must make a save or be hit by the projectile.\nIndoors at night, or underground, the ring of shooting stars has the following properties.\n* Faerie fire (twice per day)\n* Spark shower (special, once per day)\nThe spark shower is a flying cloud of sizzling purple sparks that fan out from the ring for a distance of 20 feet in an arc 10 feet wide. Creatures within this area take 2d8 points of damage each if not wearing metal armor or carrying a metal weapon. Those wearing metal armor and/or carrying a metal weapon take 4d8 points of damage.",
+    "key": "Ring of Shooting Stars",
+    "name": "Ring of Shooting Stars",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Shooting Stars"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Shooting Stars"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "50000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.482"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong evocation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|25,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, faerie fire, fireball, light, lightning bolt"
+      },
+      {
+        "key": "DESC",
+        "value": "This ring has two modes of operation: one for being in dim light or outdoors at night, and a second one when the wearer is underground or indoors at night.&nl;During the night, under the open sky or in areas of shadow or darkness, the ring of shooting stars can perform the following functions on command.&nl;* Dancing lights (once per hour)&nl;* Light (twice per night)&nl;* Ball lightning (special, once per night)&nl;* Shooting stars (special, three per week)&nl;The first special function, ball lightning, releases one to four balls of lightning (ring wearer's choice). These glowing globes resemble dancing lights, and the ring wearer controls them similarly (see the dancing lights spell description). The spheres have a 120-foot range and a duration of 4 rounds. They can be moved at 120 feet per round. Each sphere is about 3 feet in diameter, and any creature who comes within 5 feet of one causes its charge to dissipate, taking electricity damage in the process according to the number of balls created.&nl;Number of Balls / Damage per Ball&nl;1 lightning ball / 4d6 points of electricity damage&nl;2 lightning balls / 3d6 points of electricity damage each&nl;3 lightning balls / 2d6 points of electricity damage each&nl;4 lightning balls / 1d6 points of electricity damage each&nl;Once the ball lightning function is activated, the balls can be released at any time before the sun rises. Multiple balls can be released in the same round.&nl;The second special function produces three shooting stars that can be released from the ring each week, simultaneously or one at a time. They impact for 12 points of damage and spread (as a fireball) in a 5-foot-radius sphere for 24 points of fire damage.&nl;Any creature struck by a shooting star takes full damage from impact plus full fire damage from the spread unless it makes a DC 13 Reflex save. Creatures not struck but within the spread ignore the impact damage and take only half damage from the fire spread on a successful DC 13 Reflex save. Range is 70 feet, at the end of which the shooting star explodes unless it strikes a creature or object before that. A shooting star always follows a straight line, and any creature in its path must make a save or be hit by the projectile.&nl;Indoors at night, or underground, the ring of shooting stars has the following properties.&nl;* Faerie fire (twice per day)&nl;* Spark shower (special, once per day)&nl;The spark shower is a flying cloud of sizzling purple sparks that fan out from the ring for a distance of 20 feet in an arc 10 feet wide. Creatures within this area take 2d8 points of damage each if not wearing metal armor or carrying a metal weapon. Those wearing metal armor and/or carrying a metal weapon take 4d8 points of damage."
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 403,
-    "record_key": "Ring of Shooting Stars"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Shooting Stars",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

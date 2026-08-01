@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Orc ~ Dayrunner",
+    "name": "Dayrunner",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Orc_ReplaceLightSensitivity"
+    ],
+    "description": "Orcs refuse to yield to any foe, including the sun. Some spend hour upon hour glaring at the sun until their ruined eyes acclimatize to bright light. Orcs with this racial trait take a -2 penalty on all ranged attack rolls. This racial trait replaces light sensitivity.",
+    "source_page": "p.138",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Dayrunner"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Orc ~ Dayrunner],[!PREFACT:1,ABILITIES,Orc_ReplaceLightSensitivity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Orcs refuse to yield to any foe, including the sun. Some spend hour upon hour glaring at the sun until their ruined eyes acclimatize to bright light. Orcs with this racial trait take a -2 penalty on all ranged attack rolls."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces light sensitivity.|!PREABILITY:1,CATEGORY=Special Ability,Orc ~ Dayrunner"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.138"
+      },
+      {
+        "key": "FACT",
+        "value": "Orc_ReplaceLightSensitivity|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "TOHIT.RANGED",
+          "-2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 599,
+    "record_key": "Orc ~ Dayrunner"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

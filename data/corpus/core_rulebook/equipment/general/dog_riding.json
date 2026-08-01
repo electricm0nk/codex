@@ -1,20 +1,62 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Dog (Riding)",
     "category": "general",
-    "name": "Dog, Riding",
     "cost_gp": 150.0,
-    "weight_lbs": null,
-    "description": "This Medium dog is specially trained to carry a Small humanoid rider. It is brave in combat like a combat-trained horse. Due to its smaller stature, you take no damage when you fall from a riding dog."
+    "description": "This Medium dog is specially trained to carry a Small humanoid rider. It is brave in combat like a combat-trained horse. Due to its smaller stature, you take no damage when you fall from a riding dog.",
+    "key": "Dog (Riding)",
+    "name": "Dog, Riding",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dog (Riding)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Dog, Riding"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Riding Dog"
+      },
+      {
+        "key": "TYPE",
+        "value": "Mount.Goods.Transportation.Container"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "*300|Any"
+      },
+      {
+        "key": "COST",
+        "value": "150"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.162"
+      },
+      {
+        "key": "DESC",
+        "value": "This Medium dog is specially trained to carry a Small humanoid rider. It is brave in combat like a combat-trained horse. Due to its smaller stature, you take no damage when you fall from a riding dog."
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
-    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d",
     "line": 287,
-    "record_key": "Dog (Riding)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Dog (Riding)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
   }
 }

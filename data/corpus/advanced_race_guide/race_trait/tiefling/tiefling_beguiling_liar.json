@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Tiefling ~ Beguiling Liar",
+    "name": "Beguiling Liar",
+    "race_key": "Tiefling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tiefling Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Tiefling_ReplaceSkilled"
+    ],
+    "description": "Many tieflings find that the best way to get along in the world is to tell others what they want to hear. These tieflings' practice of telling habitual falsehoods grants them a +4 racial bonus on Bluff checks to convince an opponent that what they are saying is true when they tell a lie. This racial trait replaces skilled.",
+    "source_page": "p.168",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Beguiling Liar"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Beguiling Liar],[!PREFACT:1,ABILITIES,Tiefling_ReplaceSkilled=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many tieflings find that the best way to get along in the world is to tell others what they want to hear. These tieflings' practice of telling habitual falsehoods grants them a +4 racial bonus on Bluff checks to convince an opponent that what they are saying is true when they tell a lie."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces skilled.|!PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Beguiling Liar"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.168"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+4 Bluff to fool an opponent"
+      },
+      {
+        "key": "FACT",
+        "value": "Tiefling_ReplaceSkilled|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=to fool an opponent",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 747,
+    "record_key": "Tiefling ~ Beguiling Liar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

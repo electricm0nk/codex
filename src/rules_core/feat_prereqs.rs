@@ -48,13 +48,41 @@
 //! `rules_tables::crb::feats::FeatCategory` enum rather than re-deriving
 //! a duplicate category taxonomy.
 
+//! # SD-27: real prerequisite evaluation across all five books
+//!
+//! Everything above describes the SD-20 engine, which answers exactly one
+//! question -- "is this feat id in the CRB catalog under this category?" --
+//! and was the only prerequisite code in the product. The consequence was
+//! player-visible and total: **a Fighter 1 with a +1 base attack bonus
+//! could take Improved Two-Weapon Fighting**, which requires BAB +6, Dex 17
+//! and the Two-Weapon Fighting feat. All 690 offered feats were accepted by
+//! every character regardless of prerequisites.
+//!
+//! [`evaluate_catalog_feat_prerequisites`] below is the real check. It
+//! reads the `PRE`-family tokens off the book-spanning catalog
+//! (`rules_tables::feats_all`, which now carries them for all five books --
+//! ARG's 187 rows and PU's 17 had never been gathered at all) and evaluates
+//! them against the character through [`pre_tokens`], which is hand-modelled
+//! per token kind per `decisions.md` §24.
+//!
+//! ## Why the SD-20 functions are still here
+//!
+//! They are a different, narrower question with their own callers and their
+//! own tests, and deleting them is not this cycle's job. Nothing new calls
+//! them; `evaluate_catalog_feat_prerequisites` does not route through them.
+
 pub mod combat;
 pub mod general;
 pub mod item_creation;
 pub mod metamagic;
+pub mod pre_tokens;
 
+use crate::rules_core::character_input::CharacterInput;
 use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::feats::FeatCategory;
+use crate::rules_core::rules_tables::feats_all::{all_feat_tables, FeatCatalogRecord};
+use crate::rules_core::rules_tables::RuleSetId;
+use pre_tokens::{evaluate_prerequisite_token, CharacterPrereqFacts, ClauseOutcome};
 
 /// Identifies one catalog feat: its id (matches `FeatTableEntry.key` /
 /// `.name`, and `CharacterInput.chosen.selected_feats` entries) plus the
@@ -247,5 +275,310 @@ pub fn compute_feat_effects(feat: &FeatKey) -> FeatEffects {
             description: None,
             table_cell: None,
         },
+    }
+}
+
+// ---------------------------------------------------------------------------
+// SD-27: real, book-spanning prerequisite evaluation
+// ---------------------------------------------------------------------------
+
+/// One catalog feat's prerequisite verdict for one character.
+///
+/// The three lists are kept apart deliberately, because collapsing them is
+/// how a checker starts lying. `unmet` is the only one that makes a feat
+/// unavailable; `unverified` is the honest record of clauses this engine
+/// could not evaluate (the feat stays offered, and the player is told what
+/// was not checked); `met` is what the character does satisfy, so a picker
+/// can show why a feat is available rather than only why it is not.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct FeatPrerequisiteReport {
+    pub feat_key: String,
+    pub rule_set: RuleSetId,
+    /// True when **no** prerequisite clause is definitively unmet. A feat
+    /// with only unverifiable clauses is eligible-with-a-note, never a
+    /// silent denial.
+    pub is_eligible: bool,
+    /// How many top-level `PRE`-family tokens the corpus record carries.
+    /// `0` means the record genuinely has no prerequisites.
+    pub prerequisite_token_count: usize,
+    pub met: Vec<String>,
+    pub unmet: Vec<FailedPrerequisite>,
+    pub unverified: Vec<PrerequisiteWarning>,
+}
+
+impl FeatPrerequisiteReport {
+    /// A single player-facing line for why this feat is unavailable, or
+    /// `None` when it is available. This is what a greyed-out picker row
+    /// shows -- an unavailable affordance with no stated reason is the
+    /// dead-affordance shape `no-stub-mvp-doctrine.md` forbids.
+    pub fn unavailable_reason(&self) -> Option<String> {
+        if self.is_eligible {
+            return None;
+        }
+        Some(
+            self.unmet
+                .iter()
+                .map(|failed| failed.reason.as_str())
+                .collect::<Vec<_>>()
+                .join("; "),
+        )
+    }
+}
+
+/// Evaluates one catalog record's real corpus prerequisites against
+/// `facts`.
+///
+/// A record with `prerequisites: None` is eligible with an empty report --
+/// that is the corpus saying the feat has no prerequisites, and 91 of the
+/// catalog's 690 records really are like that.
+pub fn evaluate_catalog_feat_prerequisites(
+    record: &FeatCatalogRecord,
+    rule_set: RuleSetId,
+    facts: &CharacterPrereqFacts,
+) -> FeatPrerequisiteReport {
+    let tokens = record.prerequisites.unwrap_or(&[]);
+    let mut met = Vec::new();
+    let mut unmet = Vec::new();
+    let mut unverified = Vec::new();
+
+    for token in tokens {
+        match evaluate_prerequisite_token(token, facts) {
+            ClauseOutcome::Met { requirement } => met.push(requirement),
+            ClauseOutcome::Unmet { reason, .. } => unmet.push(FailedPrerequisite { reason }),
+            ClauseOutcome::Unmodelled { token, note } => unverified.push(PrerequisiteWarning {
+                message: format!("not verified: {note} ({token})"),
+            }),
+            ClauseOutcome::Informational { .. } => {}
+        }
+    }
+
+    FeatPrerequisiteReport {
+        feat_key: record.key.to_owned(),
+        rule_set,
+        is_eligible: unmet.is_empty(),
+        prerequisite_token_count: tokens.len(),
+        met,
+        unmet,
+        unverified,
+    }
+}
+
+/// Every catalog record's verdict for one character, in book order --
+/// what a feat picker needs to render 690 rows with the unavailable ones
+/// greyed and reasoned.
+pub fn evaluate_every_catalog_feat(
+    facts: &CharacterPrereqFacts,
+) -> Vec<FeatPrerequisiteReport> {
+    all_feat_tables()
+        .iter()
+        .flat_map(|book| {
+            book.entries
+                .iter()
+                .map(move |entry| evaluate_catalog_feat_prerequisites(entry, book.rule_set, facts))
+        })
+        .collect()
+}
+
+/// The verdict for the catalog record identified by `feat_key`, in any of
+/// the id shapes `chosen.selected_feats` really carries (`"Power Attack"`
+/// or `"feat:power_attack"`), or `None` when no catalog record matches.
+///
+/// `None` is not "allowed": a caller enforcing prerequisites must decide
+/// what an unknown feat id means at its own call site, so the decision
+/// stays visible.
+pub fn evaluate_feat_key_prerequisites(
+    feat_key: &str,
+    facts: &CharacterPrereqFacts,
+) -> Option<FeatPrerequisiteReport> {
+    use crate::rules_core::feat_identity;
+
+    all_feat_tables().iter().find_map(|book| {
+        book.entries
+            .iter()
+            .find(|entry| feat_identity::same(entry.key, feat_key))
+            .map(|entry| evaluate_catalog_feat_prerequisites(entry, book.rule_set, facts))
+    })
+}
+
+/// Builds the fact snapshot from chosen input plus the caller's already
+/// computed base attack bonus. A thin re-export so callers need only this
+/// module.
+pub fn character_prereq_facts(
+    input: &CharacterInput,
+    base_attack_bonus: i16,
+) -> CharacterPrereqFacts {
+    CharacterPrereqFacts::from_character(input, base_attack_bonus)
+}
+
+#[cfg(test)]
+mod sd27_prerequisite_tests {
+    use super::*;
+    use crate::rules_core::character_input::{
+        AbilityScores, CharacterClassLevel, ChosenCharacterState,
+    };
+
+    fn character(level: u8, dexterity: i16, feats: &[&str]) -> CharacterInput {
+        CharacterInput {
+            case_id: None,
+            source_package_id: "test".to_owned(),
+            chosen: ChosenCharacterState {
+                race_id: "race:human".to_owned(),
+                class_levels: vec![CharacterClassLevel {
+                    class_id: "class:fighter".to_owned(),
+                    level,
+                }],
+                ability_scores: AbilityScores {
+                    strength: 14,
+                    dexterity,
+                    constitution: 12,
+                    intelligence: 10,
+                    wisdom: 10,
+                    charisma: 8,
+                },
+                selected_feats: feats.iter().map(|f| (*f).to_owned()).collect(),
+                skill_allocations: Vec::new(),
+                equipment_selections: Vec::new(),
+                selected_choices: Vec::new(),
+                spells_selected: Vec::new(),
+                class_ability_activations: Vec::new(),
+            },
+            selection_provenance: Vec::new(),
+        }
+    }
+
+    /// The defect, stated as the operator stated it.
+    #[test]
+    fn a_fighter_1_cannot_take_improved_two_weapon_fighting_and_is_told_why() {
+        let input = character(1, 13, &[]);
+        let facts = character_prereq_facts(&input, 1);
+        let report = evaluate_feat_key_prerequisites("Improved Two-Weapon Fighting", &facts)
+            .expect("the feat is in the catalog");
+
+        assert!(!report.is_eligible);
+        let reason = report.unavailable_reason().expect("an ineligible feat must state a reason");
+        assert!(reason.contains("base attack bonus +6"), "{reason}");
+        assert!(reason.contains("+1"), "{reason}");
+        assert!(reason.contains("Two-Weapon Fighting"), "{reason}");
+        assert!(reason.contains("DEX 17"), "{reason}");
+    }
+
+    /// ...and the build that legitimately qualifies is not blocked.
+    #[test]
+    fn a_fighter_6_with_dex_17_and_two_weapon_fighting_can_take_it() {
+        let input = character(6, 17, &["Two-Weapon Fighting"]);
+        let facts = character_prereq_facts(&input, 6);
+        let report = evaluate_feat_key_prerequisites("Improved Two-Weapon Fighting", &facts)
+            .expect("the feat is in the catalog");
+
+        assert!(report.is_eligible, "unmet: {:?}", report.unmet);
+        assert_eq!(report.unavailable_reason(), None);
+        assert_eq!(report.prerequisite_token_count, 3);
+        assert_eq!(report.met.len(), 3, "all three clauses satisfied: {:?}", report.met);
+    }
+
+    /// The catalog must not go dead, and every denial must carry a reason.
+    ///
+    /// The pinned number is the real one, derived by running this: a Human
+    /// Fighter 1 with Str 14 / Dex 13 / Int 10, no feats and no allocated
+    /// skill ranks qualifies for **211 of 690**. That is not over-blocking,
+    /// it is PF1: the two dominant blockers are 284 clauses requiring
+    /// another feat the character has not taken (`Cleave` needs `Power
+    /// Attack`, `Mobility` needs `Dodge`) and 196 race gates, 183 of which
+    /// are ARG feats belonging to races other than Human. Spot-checked
+    /// against the published rulebook for 25 well-known feats in
+    /// `tests/sd27_feat_prerequisite_enforcement.rs`.
+    #[test]
+    fn a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why() {
+        let input = character(1, 13, &[]);
+        let facts = character_prereq_facts(&input, 1);
+        let reports = evaluate_every_catalog_feat(&facts);
+
+        assert_eq!(reports.len(), 690);
+        let eligible = reports.iter().filter(|report| report.is_eligible).count();
+        assert_eq!(eligible, 211, "a starting Fighter's real eligible-feat count");
+
+        for report in reports.iter().filter(|report| !report.is_eligible) {
+            let reason = report.unavailable_reason().unwrap_or_default();
+            assert!(
+                !reason.trim().is_empty(),
+                "'{}' is unavailable with no stated reason -- an unavailable affordance \
+                 with no reason is the dead-affordance shape the doctrine forbids",
+                report.feat_key
+            );
+        }
+    }
+
+    /// Meeting more prerequisites must open more feats, never fewer. Guards
+    /// against an arm whose polarity is inverted: a sign error in any
+    /// threshold comparison would show up as a build that qualifies for
+    /// *less* as it grows.
+    #[test]
+    fn a_stronger_build_is_eligible_for_a_superset_of_a_weaker_ones_feats() {
+        let weak = character(1, 13, &[]);
+        let strong = character(6, 17, &["Power Attack", "Dodge", "Two-Weapon Fighting"]);
+
+        let weak_facts = character_prereq_facts(&weak, 1);
+        let strong_facts = character_prereq_facts(&strong, 6);
+
+        let eligible_keys = |facts: &_| -> std::collections::BTreeSet<String> {
+            evaluate_every_catalog_feat(facts)
+                .into_iter()
+                .filter(|report| report.is_eligible)
+                .map(|report| report.feat_key)
+                .collect()
+        };
+
+        let weak_keys = eligible_keys(&weak_facts);
+        let strong_keys = eligible_keys(&strong_facts);
+        let lost: Vec<&String> = weak_keys.difference(&strong_keys).collect();
+        assert!(
+            lost.is_empty(),
+            "a stronger build lost access to feats the weaker one had: {lost:?}"
+        );
+        assert!(
+            strong_keys.len() > weak_keys.len(),
+            "the stronger build must open feats the weaker one could not take"
+        );
+    }
+
+    /// Every record with no corpus prerequisite is unconditionally
+    /// available -- the engine must not invent a gate where the corpus has
+    /// none.
+    #[test]
+    fn records_with_no_corpus_prerequisite_are_always_eligible() {
+        let input = character(1, 13, &[]);
+        let facts = character_prereq_facts(&input, 1);
+        for report in evaluate_every_catalog_feat(&facts) {
+            if report.prerequisite_token_count == 0 {
+                assert!(report.is_eligible, "'{}' has no prerequisites", report.feat_key);
+                assert!(report.unmet.is_empty());
+                assert!(report.unverified.is_empty());
+            }
+        }
+    }
+
+    /// ARG's feats are race-gated and that gate now bites: a Human cannot
+    /// take Armor of the Pit, a Tiefling can.
+    #[test]
+    fn an_arg_race_gate_is_enforced_in_both_directions() {
+        let mut human = character(1, 13, &[]);
+        let facts = character_prereq_facts(&human, 1);
+        let report = evaluate_feat_key_prerequisites("Armor of the Pit", &facts).unwrap();
+        assert!(!report.is_eligible);
+        assert!(report.unavailable_reason().unwrap().contains("Tiefling"));
+
+        human.chosen.race_id = "race:tiefling".to_owned();
+        let facts = character_prereq_facts(&human, 1);
+        let report = evaluate_feat_key_prerequisites("Armor of the Pit", &facts).unwrap();
+        assert!(report.is_eligible, "unmet: {:?}", report.unmet);
+    }
+
+    /// An unknown feat id resolves to `None` rather than to a fabricated
+    /// pass or fail.
+    #[test]
+    fn an_unknown_feat_id_resolves_to_nothing() {
+        let input = character(1, 13, &[]);
+        let facts = character_prereq_facts(&input, 1);
+        assert_eq!(evaluate_feat_key_prerequisites("Not A Real Feat", &facts), None);
     }
 }

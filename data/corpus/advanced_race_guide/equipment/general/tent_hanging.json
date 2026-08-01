@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 20.0,
+    "description": "A small tent with a teardrop shape which hangs from a sturdy anchor rope.  Climbing in or out of a hanging tent is a full-round action that requires a DC 10 Climb check. Failure by 5 or more indicates the camper has fallen from the tent.",
+    "key": "Tent (Hanging)",
+    "name": "Tent (Hanging)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "OUTPUTNAME",
+        "value": "Tent, Hanging"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Resizable.Racial.Elven"
+      },
+      {
+        "key": "COST",
+        "value": "20"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.27"
+      },
+      {
+        "key": "SPROP",
+        "value": "A small tent with a teardrop shape which hangs from a sturdy anchor rope.  Climbing in or out of a hanging tent is a full-round action that requires a DC 10 Climb check. Failure by 5 or more indicates the camper has fallen from the tent."
+      }
+    ],
+    "weight_lbs": 15.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 76,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_general.lst",
+    "record_key": "Tent (Hanging)",
+    "sha256": "2f2868746ea173e470c2334df18d24c07133cdda0467a613d7146eeb1ba465d0"
+  }
+}

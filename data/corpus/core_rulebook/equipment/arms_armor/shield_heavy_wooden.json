@@ -17,5 +17,8 @@
     "line": 119,
     "record_key": "Shield (Heavy/Wooden)",
     "inherited_from_record_key": "Heavy Wooden Shield (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

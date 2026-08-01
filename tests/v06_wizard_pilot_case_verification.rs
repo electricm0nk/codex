@@ -76,14 +76,57 @@ const PILOT_SOURCE_PACKAGE_ID: &str = "pf1.core_rulebook";
 const PILOT_LEGACY_ROUTE: &str =
     "headless Gradle run batch export via code/testsuite/base-xml.ftl";
 
-/// Absolute path to backend's real, PCGen-verified Wizard pilot-case `.pcg`
-/// fixture (BUILD SUCCESSFUL against the real headless Gradle pipeline,
-/// twice). Lives outside this repo in the GE-05 artifact tree, the same
-/// convention `sd26_pilot_case_verification.rs`'s Fighter fixture uses.
-const PILOT_PCG_FIXTURE_PATH: &str = "/home/ubuntu/workspace/programs/codex/requirements/GE-05-oracle-validation-and-parity-harness/artifacts/pf1-crb-human-wizard-level1-v06-alpha-swarm.pcg";
+/// Repo-relative path to backend's real, PCGen-verified Wizard pilot-case
+/// `.pcg` fixture (BUILD SUCCESSFUL against the real headless Gradle
+/// pipeline, twice), vendored into the GE-05 build's own artifact folder —
+/// the same convention `sd26_pilot_case_verification.rs`'s Fighter fixture
+/// now uses.
+///
+/// This was previously a hardcoded absolute path into another machine's
+/// `programs/codex/requirements/` *planning* tree, with no environment
+/// override, which made this suite unrunnable anywhere but that one box.
+/// Build artifacts belong in the build's own artifact folder rather than
+/// behind a reference to an external source — see
+/// `tests/ge05_vendored_pcg_fixtures.rs` for the provenance and integrity
+/// proof.
+const PILOT_PCG_FIXTURE_PATH: &str =
+    "docs/release/GE-05-oracle-validation-and-parity-harness/artifacts/\
+     pf1-crb-human-wizard-level1-v06-alpha-swarm.pcg";
 
+/// sha256 of the vendored fixture as committed. Pinned so a silently
+/// swapped or regenerated `.pcg` fails loudly here instead of quietly
+/// shifting the parity numbers this suite publishes as evidence. Kept in
+/// sync with `tests/ge05_vendored_pcg_fixtures.rs`.
+const PILOT_PCG_FIXTURE_SHA256: &str =
+    "e2bcdae8cfccecbf871f7c587d4af577a86b5466747e41b329d0e36ee777330b";
+
+fn repo_root() -> PathBuf {
+    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+}
+
+/// Resolution follows `ge08_workbench::resolve_package_path`'s contract —
+/// repo-relative paths anchor at the codex repo root. That helper lives in
+/// the separate `codex-desktop` crate and is not reachable from a `codex`
+/// root-crate integration test, so this uses the identical anchor its
+/// fallback uses (`CARGO_MANIFEST_DIR`), which is also the in-crate pattern
+/// `sd27_advanced_race_guide_parity.rs` already established for its own
+/// vendored `.pcg` fixture.
 fn pilot_case_pcg_fixture() -> PathBuf {
-    PathBuf::from(PILOT_PCG_FIXTURE_PATH)
+    repo_root().join(PILOT_PCG_FIXTURE_PATH)
+}
+
+/// Fail loudly on a swapped fixture rather than reporting parity numbers
+/// computed from content nobody verified.
+fn assert_pilot_pcg_fixture_is_pinned(path: &std::path::Path) {
+    let actual = codex::rules_core::cache_gen::apg::sha256_file(path)
+        .unwrap_or_else(|err| panic!("cannot hash {}: {err}", path.display()));
+    assert_eq!(
+        actual,
+        PILOT_PCG_FIXTURE_SHA256,
+        "{} was swapped, regenerated, or truncated -- re-verify the fixture and re-record the \
+         digest before this suite's parity results can be trusted",
+        path.display()
+    );
 }
 
 /// The Codex-side fixture reaches `Computed`, not `Blocked` -- proving the
@@ -151,6 +194,7 @@ fn full_pipeline_runs_end_to_end_for_the_wizard_pilot_case() {
         "expected the real PCGen-verified wizard pilot .pcg fixture at {}",
         pcg.display()
     );
+    assert_pilot_pcg_fixture_is_pinned(&pcg);
 
     let options = PcgenRunOptions::new(PILOT_CASE_ID, PILOT_SOURCE_PACKAGE_ID, PILOT_LEGACY_ROUTE);
     let pcgen_output = run_pcgen_character(&pcg, &options)

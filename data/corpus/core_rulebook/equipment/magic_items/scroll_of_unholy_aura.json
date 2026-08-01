@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Scroll of Unholy Aura",
     "category": "magic_items",
-    "name": "Scroll",
     "cost_gp": 500.0,
-    "weight_lbs": 0.01,
-    "description": "+4 to AC, +4 resistance, and SR 25 against good spells."
+    "description": "+4 to AC, +4 resistance, and SR 25 against good spells.",
+    "key": "Scroll of Unholy Aura",
+    "name": "Scroll",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Scroll of Unholy Aura"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Scroll of Unholy Aura"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Scroll.Divine.Consumable.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "WT",
+        "value": "0.01"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Spell Effect / Completion / Scroll / Arcane|SPELLNAME[Unholy Aura]SPELLLEVEL[8]CASTERLEVEL[15]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.490"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong abjuration [evil]"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|15th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Scribe Scroll, unholy aura"
+      },
+      {
+        "key": "SPROP",
+        "value": "+4 to AC, +4 resistance, and SR 25 against good spells."
+      },
+      {
+        "key": "DESC",
+        "value": "+4 to AC, +4 resistance, and SR 25 against good spells."
+      }
+    ],
+    "weight_lbs": 0.01
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 1583,
-    "record_key": "Scroll of Unholy Aura"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Scroll of Unholy Aura",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

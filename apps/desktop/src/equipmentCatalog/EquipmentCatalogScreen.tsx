@@ -16,20 +16,71 @@ const CATEGORY_LABELS: Record<string, string> = {
 };
 
 /** Categories in the same "corpus-natural order" the SD-19 loop uses. */
-const CATEGORY_ORDER = ['ArmsArmor', 'General', 'MagicItems', 'Equipmods'] as const;
+export const CATEGORY_ORDER = ['ArmsArmor', 'General', 'MagicItems', 'Equipmods'] as const;
 
 const MAX_RENDERED_ROWS = 200;
 
+/** Display labels for the wire's short book codes. */
+export const BOOK_LABELS: Record<string, string> = {
+  CRB: 'Core Rulebook',
+  APG: "Advanced Player's Guide",
+  ACG: 'Advanced Class Guide',
+  B1: 'Bestiary 1',
+  ARG: 'Advanced Race Guide',
+  PU: 'Pathfinder Unchained',
+};
+
 /**
- * Full equipment catalog browser — every real corpus record across all 4
- * core-rulebook categories (~2,977 items), not a per-character sample.
+ * The book codes `equipment_catalog.rs` exports as
+ * `EQUIPMENT_CATALOG_BOOKS`, in the order `build_equipment_catalog` chains
+ * them.
+ */
+export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'B1', 'ARG', 'PU'] as const;
+
+const KNOWN_BOOK_CODES: ReadonlySet<string> = new Set<string>(BOOK_ORDER);
+
+/**
+ * Renders book codes as a prose list of their real names. A code with no
+ * label falls back to the raw code rather than being dropped or given an
+ * invented name — a book the adapter starts serving must still be visible
+ * here, plainly, until it gets a label.
+ */
+export function formatBookList(codes: readonly string[]): string {
+  const labels = codes.map((code) => BOOK_LABELS[code] ?? code);
+  if (labels.length === 0) return '';
+  if (labels.length === 1) return labels[0];
+  return `${labels.slice(0, -1).join(', ')} and ${labels[labels.length - 1]}`;
+}
+
+/**
+ * True when a record carries real corpus description prose worth rendering.
+ *
+ * `null` is the corpus's honest "this row has no `DESC:` token" — 974 of the
+ * 3830 served records are in that state — and a whitespace-only string is the
+ * same absence wearing a different shape. Both render as no description line
+ * at all, never as an empty box or an invented sentence.
+ */
+export function hasDescription(description: string | null | undefined): description is string {
+  return typeof description === 'string' && description.trim().length > 0;
+}
+
+/**
+ * Full equipment catalog browser — every real corpus record across every
+ * ingested book, not a per-character sample. The Rust adapter chains CRB,
+ * APG, ACG, Bestiary 1, ARG and Pathfinder Unchained into one catalog
+ * (3830 records, per `equipment_catalog.rs`'s pinned per-book counts).
  * Distinct from a character sheet's Gear tab, which only shows what one
  * character has equipped.
+ *
+ * The book and category summaries below are derived from the records that
+ * actually loaded rather than hardcoded, so the screen cannot claim a book
+ * or a count the data does not back.
  */
 export function EquipmentCatalogScreen(props: { onClose: () => void }) {
   const [entries, setEntries] = useState<EquipmentCatalogEntryDto[] | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [category, setCategory] = useState<string | 'All'>('All');
+  const [book, setBook] = useState<string | 'All'>('All');
   const [query, setQuery] = useState('');
 
   useEffect(() => {
@@ -48,18 +99,64 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
     return counts;
   }, [entries]);
 
+  const bookCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    for (const entry of entries ?? []) {
+      counts[entry.book] = (counts[entry.book] ?? 0) + 1;
+    }
+    return counts;
+  }, [entries]);
+
+  /**
+   * Books actually present in the loaded records: the known codes in chain
+   * order, then any code the adapter served that this screen has no label
+   * for. Driving the filter buttons off this list — not off `BOOK_ORDER`
+   * alone — is what guarantees no served book is reachable only by
+   * scrolling the whole catalog.
+   */
+  const booksPresent = useMemo(() => {
+    const seen = new Set((entries ?? []).map((entry) => entry.book));
+    const known = BOOK_ORDER.filter((code) => seen.has(code));
+    const unlabelled = [...seen].filter((code) => !KNOWN_BOOK_CODES.has(code)).sort();
+    return [...known, ...unlabelled];
+  }, [entries]);
+
+  /** Records the corpus gives no flat gp cost for — they render as "—". */
+  const costlessCount = useMemo(
+    () => (entries ?? []).filter((entry) => entry.costGp === null).length,
+    [entries]
+  );
+
+  /**
+   * Records carrying real corpus `DESC:` prose. Derived from what loaded,
+   * like every other number on this screen, so the caption cannot claim
+   * description coverage the data does not back.
+   */
+  const describedCount = useMemo(
+    () => (entries ?? []).filter((entry) => hasDescription(entry.description)).length,
+    [entries]
+  );
+
   const filtered = useMemo(() => {
     if (!entries) return [];
     const needle = query.trim().toLowerCase();
     return entries.filter((entry) => {
       if (category !== 'All' && entry.category !== category) return false;
+      if (book !== 'All' && entry.book !== book) return false;
       if (needle && !entry.name.toLowerCase().includes(needle)) return false;
       return true;
     });
-  }, [entries, category, query]);
+  }, [entries, category, book, query]);
 
   const visible = filtered.slice(0, MAX_RENDERED_ROWS);
   const totalCount = entries?.length ?? 0;
+
+  const summary =
+    booksPresent.length === 0
+      ? `Every real corpus record the engine knows about — ${totalCount} items. Not what any one character has equipped.`
+      : `Every real corpus record the engine knows about — ${totalCount} items across ` +
+        `${booksPresent.length} ingested book${booksPresent.length === 1 ? '' : 's'}: ` +
+        `${formatBookList(booksPresent)}. Not what any one character has equipped.`;
 
   return (
     <section style={{ marginTop: '1rem' }}>
@@ -81,9 +178,40 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
       ) : (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            Every real corpus record the engine knows about — {totalCount} items across all 4 core-rulebook
-            equipment categories. Not what any one character has equipped.
+            {summary}
+            {costlessCount > 0 ? (
+              <>
+                {' '}
+                {costlessCount} carry no flat gp cost in the corpus and show a dash rather than a
+                made-up price.
+              </>
+            ) : null}
+            {totalCount > 0 && describedCount < totalCount ? (
+              <>
+                {' '}
+                {describedCount} carry the book's own description text; the other{' '}
+                {totalCount - describedCount} have none in the corpus and show no description line
+                rather than an invented one.
+              </>
+            ) : null}
           </p>
+
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
+            <button type="button" onClick={() => setBook('All')} style={categoryButtonStyle(book === 'All')}>
+              All books ({totalCount})
+            </button>
+            {booksPresent.map((code) => (
+              <button
+                key={code}
+                type="button"
+                onClick={() => setBook(code)}
+                style={categoryButtonStyle(book === code)}
+                title={BOOK_LABELS[code] ?? code}
+              >
+                {code} ({bookCounts[code] ?? 0})
+              </button>
+            ))}
+          </div>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
             <button
@@ -130,27 +258,65 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
           </p>
 
           <div style={{ ...panel, maxHeight: 480, overflowY: 'auto', padding: visible.length ? '0.25rem 1rem' : '1rem' }}>
-            {visible.map((entry) => (
+            {visible.map((entry, index) => (
+              // 316 keys genuinely repeat within CRB (e.g. `Holy Symbol
+              // (Silver)`), so book + category + key is still not unique;
+              // the row's position disambiguates the real duplicates rather
+              // than hiding them behind a colliding React key.
               <div
-                key={`${entry.category}:${entry.key}`}
+                key={`${entry.book}:${entry.category}:${entry.key}:${index}`}
                 style={{
-                  alignItems: 'baseline',
                   borderBottom: '1px solid var(--color-border)',
-                  display: 'flex',
-                  gap: '0.75rem',
-                  justifyContent: 'space-between',
                   padding: '0.5rem 0',
                 }}
               >
-                <span>
-                  <span style={{ fontWeight: 700 }}>{entry.name}</span>
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
-                    {CATEGORY_LABELS[entry.category] ?? entry.category}
+                <div
+                  style={{
+                    alignItems: 'baseline',
+                    display: 'flex',
+                    gap: '0.75rem',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <span>
+                    <span style={{ fontWeight: 700 }}>{entry.name}</span>
+                    <span
+                      style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}
+                      title={BOOK_LABELS[entry.book] ?? entry.book}
+                    >
+                      {entry.book}
+                    </span>
+                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
+                      {CATEGORY_LABELS[entry.category] ?? entry.category}
+                    </span>
                   </span>
-                </span>
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                  {entry.costGp === null ? '—' : `${entry.costGp} gp`}
-                </span>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                    {entry.costGp === null ? '—' : `${entry.costGp} gp`}
+                  </span>
+                </div>
+                {/*
+                  The book's own prose, already rendered by the Rust adapter's
+                  `serve_description`. Rendered verbatim and in full — this is
+                  the surface that owns the complete text, which is why the Add
+                  Item picker is free to show only a bounded summary.
+
+                  Rows with no corpus description emit no element at all: no
+                  empty paragraph, no stand-in dash. `white-space: pre-line`
+                  honours the paragraph breaks the corpus text carries.
+                */}
+                {hasDescription(entry.description) ? (
+                  <p
+                    style={{
+                      color: 'var(--color-text-muted)',
+                      fontSize: '0.78rem',
+                      lineHeight: 1.45,
+                      margin: '0.3rem 0 0',
+                      whiteSpace: 'pre-line',
+                    }}
+                  >
+                    {entry.description}
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>

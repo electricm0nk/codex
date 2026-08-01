@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 1200.0,
+    "description": "Enables user to see through Deeper Darkness when using Darkvision",
+    "key": "Elixir of Darksight",
+    "name": "Elixir of Darksight",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VISION",
+          "Darkvision",
+          "60"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Potion.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1200"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.19"
+      },
+      {
+        "key": "SPROP",
+        "value": "Enables user to see through Deeper Darkness when using Darkvision"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Elixir of Darksight",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

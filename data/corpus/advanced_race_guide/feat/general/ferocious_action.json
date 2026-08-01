@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Ferocious Action",
+    "category": "general",
+    "name": "Ferocious Action",
+    "description": "You ferocity is quick but shorter lived.",
+    "effect": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 359,
+    "record_key": "Ferocious Action"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Gravedigger's Spade",
     "category": "MagicItems",
-    "name": "Gravedigger's Spade",
     "cost_gp": 12150.0,
-    "weight": 4.0,
-    "description": "can be used as a masterwork shovel"
+    "description": "can be used as a masterwork shovel",
+    "key": "Gravedigger's Spade",
+    "name": "Gravedigger's Spade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Staff"
+      },
+      {
+        "key": "COST",
+        "value": "12150"
+      },
+      {
+        "key": "WT",
+        "value": "4"
+      },
+      {
+        "key": "BASEITEM",
+        "value": "Staff"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Staff Charges|CHARGES[10]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.221"
+      },
+      {
+        "key": "SPROP",
+        "value": "can be used as a masterwork shovel"
+      }
+    ],
+    "weight": 4.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 306,
-    "record_key": "Gravedigger's Spade"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Gravedigger's Spade",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

@@ -1,0 +1,21 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Web Cloud",
+    "school": "Conjuration",
+    "level": 4,
+    "description": "You create a cloud of flame-resistant strands of adhesive webbing that billows and flows much like a cloudkill spell. The cloud moves away from you at a rate of 10 feet per round, rolling along the surface of the ground. Figure out the cloud's new spread each round based on its new point of origin, which is 10 feet farther away from the point of origin where the caster cast the spell. Creatures trapped in the webbing remain trapped even after the cloud passes, but the area the cloud leaves behind does not count as difficult terrain. Because the webbing is heavier than air, it sinks to the lowest level of the land, even pouring down den or sinkhole openings. The cloud of webbing cannot penetrate liquids,nor can it be cast underwater. The cloud otherwise acts like a web spell. A creature in the cloud at the start of its turn must save against the cloud or be affected. The webbing of this spell is flammable (see the web spell), but has fire resistance 5."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 85,
+    "record_key": "Web Cloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

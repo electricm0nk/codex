@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Elven Spirit",
+    "category": "general",
+    "name": "Elven Spirit",
+    "description": "Although you are of mixed heritage, you are closer to your elven relatives and the magic in their blood flows freely in your veins.",
+    "effect": [
+      [
+        "ABILITYPOOL",
+        "Elven Spirit Choice",
+        "1"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 49,
+    "record_key": "Elven Spirit"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

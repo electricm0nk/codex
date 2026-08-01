@@ -1,20 +1,70 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Bag of Tricks (Gray)",
     "category": "magic_items",
-    "name": "Bag of Tricks (Gray)",
     "cost_gp": 3400.0,
-    "weight_lbs": null,
-    "description": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.\nThe heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.\nAnimals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.\nd%% Animal\n01-30 Bat\n31-60 Rat\n61-75 Cat\n76-90 Weasel\n91-100 Riding Dog"
+    "description": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.\nThe heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.\nAnimals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.\nd%% Animal\n01-30 Bat\n31-60 Rat\n61-75 Cat\n76-90 Weasel\n91-100 Riding Dog",
+    "key": "Bag of Tricks (Gray)",
+    "name": "Bag of Tricks (Gray)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bag of Tricks (Gray)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bag of Tricks (Gray)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "3400"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.501"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|1,700 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, summon nature's ally II"
+      },
+      {
+        "key": "DESC",
+        "value": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.&nl;The heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.&nl;Animals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.&nl;d%% Animal&nl;01-30 Bat&nl;31-60 Rat&nl;61-75 Cat&nl;76-90 Weasel&nl;91-100 Riding Dog"
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 32,
-    "record_key": "Bag of Tricks (Gray)"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Bag of Tricks (Gray)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

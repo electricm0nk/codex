@@ -17,5 +17,8 @@
     "line": 97,
     "record_key": "Barding (Hide)",
     "inherited_from_record_key": "Hide Barding (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

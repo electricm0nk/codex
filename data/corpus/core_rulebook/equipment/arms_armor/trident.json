@@ -17,5 +17,8 @@
     "line": 227,
     "record_key": "Trident",
     "inherited_from_record_key": "Trident (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

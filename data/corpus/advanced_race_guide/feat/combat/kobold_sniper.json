@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Kobold Sniper",
+    "category": "combat",
+    "name": "Kobold Sniper",
+    "description": "You snipe quickly, making it harder for others to find the location of your attack.",
+    "effect": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 335,
+    "record_key": "Kobold Sniper"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

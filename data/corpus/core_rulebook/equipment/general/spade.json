@@ -17,5 +17,8 @@
     "line": 173,
     "record_key": "Spade",
     "inherited_from_record_key": "Shovel"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

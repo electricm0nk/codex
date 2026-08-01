@@ -31,7 +31,7 @@
 //! `KEY:Material ~ Adamantine ~ Weapon`, line 101,
 //! `BONUS:WEAPON|TOHIT|1|TYPE=Enhancement`) — confirmed directly against
 //! the live corpus at
-//! `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst`.
+//! `$HOME/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst`.
 //! Same parser (`parse_equipment_entries`) and IR converter
 //! (`convert_equipment_record`) the sibling tests already use — so this
 //! test genuinely proves the engine's real

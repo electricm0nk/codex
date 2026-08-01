@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Ring of Invisibility",
     "category": "magic_items",
-    "name": "Ring of Invisibility",
     "cost_gp": 20000.0,
-    "weight_lbs": null,
-    "description": "By activating this simple silver ring, the wearer can benefit from invisibility, as the spell."
+    "description": "By activating this simple silver ring, the wearer can benefit from invisibility, as the spell.",
+    "key": "Ring of Invisibility",
+    "name": "Ring of Invisibility",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Ring of Invisibility"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Ring of Invisibility"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Ring"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.481"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Ring of Invisibility|TIMES=ATWILL|CASTERLEVEL=3|Invisibility"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint illusion"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|ring"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|10,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Forge Ring, invisibility"
+      },
+      {
+        "key": "DESC",
+        "value": "By activating this simple silver ring, the wearer can benefit from invisibility, as the spell."
+      }
+    ],
+    "weight_lbs": null
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 392,
-    "record_key": "Ring of Invisibility"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Ring of Invisibility",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

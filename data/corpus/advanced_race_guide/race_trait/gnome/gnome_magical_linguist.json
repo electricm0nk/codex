@@ -1,0 +1,107 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Gnome ~ Magical Linguist",
+    "name": "Magical Linguist",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceGnomeMagic",
+      "Gnome_ReplaceIllusionResistance"
+    ],
+    "description": "Gnomes study languages in both their mundane and supernatural manifestations. Gnomes with this racial trait add +1 to the DC of spells they cast with the language-dependent descriptor or those that create glyphs, symbols, or other magical writings. They gain a +2 racial bonus on saving throws against such spells. Gnomes with Charisma scores of 11 or higher also gain the following spell-like abilities: 1/day--arcane mark, comprehend languages, message, read magic. The caster level for these effects is equal to the gnome's level. This racial trait replaces gnome magic and illusion resistance.",
+    "source_page": "p.32",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Magical Linguist"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Magical Linguist],[!PREFACT:1,ABILITIES,Gnome_ReplaceGnomeMagic=true,Gnome_ReplaceIllusionResistance=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes study languages in both their mundane and supernatural manifestations. Gnomes with this racial trait add +1 to the DC of spells they cast with the language-dependent descriptor or those that create glyphs, symbols, or other magical writings. They gain a +2 racial bonus on saving throws against such spells. Gnomes with Charisma scores of 11 or higher also gain the following spell-like abilities: 1/day--arcane mark, comprehend languages, message, read magic. The caster level for these effects is equal to the gnome's level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces gnome magic and illusion resistance.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Magical Linguist"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Arcane Mark|Racial SLA ~ Comprehend Languages|Racial SLA ~ Message|Racial SLA ~ Read Magic|PRESTAT:1,CHA=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.32"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Add +1 to the DC of spells that create glyphs, symbols, or other magical writings that don't have the language-dependent descriptor."
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws against spells with the language-dependent descriptor or those that create glyphs, symbols, or other magical writings."
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceGnomeMagic|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceIllusionResistance|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "DC",
+          "DESCRIPTOR.Language-Dependent",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_LanguageSpells",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 129,
+    "record_key": "Gnome ~ Magical Linguist"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

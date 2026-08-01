@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Half-Orc ~ Orc Ferocity",
+    "name": "Orc Ferocity",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "Half-Orc Racial Default",
+      "SpecialQuality",
+      "Defensive"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "HalfOrc_ReplaceOrcFerocity",
+    "sets_replace_flags": [],
+    "description": "Once per day, when a half-orc is brought below 0 hit points but not killed, he can fight on for one more round as if disabled. At the end of his next turn, unless brought to above 0 hit points, he immediately falls unconscious and begins dying.",
+    "source_page": "p.25",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Orc Ferocity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.Half-Orc Racial Default.SpecialQuality.Defensive"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,HalfOrc_ReplaceOrcFerocity=true"
+      },
+      {
+        "key": "DEFINE",
+        "value": "Orc_OrcFerocity_Times|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Once|PREVARLTEQ:Orc_OrcFerocity_Times,1"
+      },
+      {
+        "key": "DESC",
+        "value": "Twice|PREVAREQ:Orc_OrcFerocity_Times,2"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 times|Orc_OrcFerocity_Times|Orc_OrcFerocity_Times|PREVARGTEQ:Orc_OrcFerocity_Times,3"
+      },
+      {
+        "key": "DESC",
+        "value": "per day, when a half-orc is brought below 0 hit points but not killed, he can fight on for one more round as if disabled. At the end of his next turn, unless brought to above 0 hit points, he immediately falls unconscious and begins dying."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "Orc_OrcFerocity_Times",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_race.lst",
+    "sha256": "f6ee56352d24d49bc05955f40296ba3db009530a488c78515b64238895f44f48",
+    "line": 24,
+    "record_key": "Half-Orc ~ Orc Ferocity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

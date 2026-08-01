@@ -17,5 +17,8 @@
     "line": 235,
     "record_key": "Guisarme",
     "inherited_from_record_key": "Guisarme (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

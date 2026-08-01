@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:12:38Z",
+  "data": {
+    "key": "Combat Stamina",
+    "category": "CombatStamina",
+    "name": "Combat Stamina",
+    "description": "You stop at nothing to drive your attack home.",
+    "source_page": "p.112"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+    "sha256": "7152b04c335ae5ca8ecd260310cd338bda74d10983760533ea997fec324a3b52",
+    "line": 18,
+    "record_key": "Combat Stamina"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

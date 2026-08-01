@@ -139,7 +139,7 @@ The parity baseline is the canonical reference for the 19 books' future per-cycl
 
 The per-book cycle ends with two registry updates:
 
-1. `docs/governance/wired-integration-stubs-registry.md` — the `book_stub` entry's `Status` flips from "Registered stub" to "Resolved" with `resolved_at: <ISO-8601>`, `resolved_by: claude-code`, `bundle_of_record: SD-27`, `cycle_receipt: artifacts/epic_2/<book>_cache-cycle_receipt.md`.
+1. `docs/governance/wired-integration-stubs-registry.md` — the `book_stub` entry's `Status` flips from "Registered stub" to "Resolved" with `resolved_at: <ISO-8601>`, `resolved_by: claude-code`, `bundle_of_record: SD-27`, `cycle_receipt: artifacts/epic_2/<book>_pre_build-cycle_receipt.md`.
 
 2. `data/stubs/<book>.json` — the manifest's `content_kind_counts` field is updated from `null` to a real number map (e.g. `{"classes": 50, "spells": 200, "equipment": 150, "feats": 110}`). The `planned_resolution_bundle` field stays at the value resolved in cycle 2.0.
 
@@ -163,7 +163,7 @@ No new schemas. No new engines. No new doctrine.
 - `../SD-26-ingest-strategy-and-rule-system-plumbing/decisions.md` — Shape B schema authority.
 - `src/oracle_validation/` — SD-26's PCGen harness; SD-27 consumes.
 - `src/rules_core/rules_tables/{crb,apg,acg,beastiary1}/` — the 4 in-scope precedents; SD-27 mirrors.
-- `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/<book>/` — the source LST corpus for each of the 19 future-state books.
+- `$PCGEN_DATA_ROOT/<book>/` (default `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/`) — the source LST corpus for each of the 19 future-state books. **Outside this repo**; `scripts/sd27-workflow.py preflight` asserts the 2 in-scope books' directories exist and are non-empty.
 - `scripts/pcgen-run-character.sh` + `scripts/pcgen-normalize-output.py` — SD-25/26 PCGen pipeline; SD-27 reuses.
 - `skill:workflow-orchestrated-dispatch` — dispatch shape.
 - `skill:identifier-discipline` — audit + rename cycle.

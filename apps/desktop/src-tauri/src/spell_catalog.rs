@@ -1,6 +1,16 @@
 //! Spell catalog browser — Tauri command adapter over every ingested PF1
-//! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297)
-//! and `acg::spell_list` (144), 1093 in total.
+//! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297),
+//! `acg::spell_list` (144) and `advanced_race_guide::spell_list` (92),
+//! 1185 in total.
+//!
+//! Pathfinder Unchained is deliberately absent, and that absence is real
+//! rather than an oversight: `pu_spells.lst` is 224 lines and every single
+//! one is a `#`-commented-out row, so the book defines no spell of its own
+//! and there is no `pathfinder_unchained::spell_list` module to chain.
+//! Re-verified against the raw corpus rather than taken from the ingest
+//! notes: `grep -v '^\s*#' pu_spells.lst | grep -vc '^\s*$'` returns 0.
+//! Inventing a PU spell surface here would mean serving records the corpus
+//! does not contain.
 //!
 //! This adapter previously served CRB alone. The APG and ACG tables were
 //! fully ingested — with school, level and real corpus spell text — but
@@ -15,44 +25,48 @@
 //!
 //! **Optional fields are absences, never placeholders.** CRB's and ACG's
 //! tables carry a school, level and description on every record. APG's
-//! table types those three as `Option`, and as ingested, 16 of its records
-//! carry no school, 41 no level and 12 no description. Those arrive here
-//! as `null` rather than an invented value, and the UI must render the
-//! absence rather than a plausible-looking default.
+//! table types those three as `Option`, and as ingested, 3 of its records
+//! carry no school, 25 no level and none lack a description. Those arrive
+//! here as `null` rather than an invented value, and the UI must render
+//! the absence rather than a plausible-looking default.
 //!
-//! Those three counts are properties of `apg::spell_list` as ingested, and
-//! are asserted below as such — they are deliberately NOT presented as
-//! counts of gaps in `apg_spells.lst` itself, because they do not match
-//! it. Re-derived from the raw file, the APG rows genuinely lacking a
-//! `SCHOOL:` token number ~4-6 (plain records) or 21 (counting the 17
-//! `.COPY=` delta records, which carry no fields of their own and inherit
-//! from their base); neither is 16. The same mismatch holds for the level
-//! and description counts. So the ingest is doing something in between —
-//! partially resolving `.COPY=` inheritance, and/or folding `.MOD` rows
-//! into the tally — and until that is traced, the honest statement is what
-//! this adapter can actually verify: how many records it serves without
-//! each field. Tracking as an open ingest-fidelity question; it does not
-//! affect this adapter's correctness, which is to pass absences through
-//! rather than invent values.
+//! **Those counts were 16 / 41 / 12 until 2026-07-31**, and this doc used
+//! to record the difference between them and the raw file as an untraced
+//! "open ingest-fidelity question". It is traced, and the answer was
+//! `.COPY=`: fifteen delta rows in `apg_spells.lst` name a base spell that
+//! lives in CRB's `cr_spells.lst`, and the APG ingest deliberately stopped
+//! at the book boundary rather than reaching across for the base's fields.
+//! Twelve of them therefore reached this adapter as a key and three nulls
+//! and rendered as a row of empty columns. `apg::spell_list` now resolves
+//! every one against its CRB base, pinned record-by-record against the
+//! live CRB table by
+//! `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
+//!
+//! The remainder are real corpus absences, not unresolved deltas: mostly
+//! Summoner eidolon-only spells that PF1 grants automatically and so never
+//! places on a leveled spell list. The counts below are still properties
+//! of `apg::spell_list` as ingested and are asserted as such.
 
 use serde::{Deserialize, Serialize};
 
-use codex::rules_core::rules_tables::{acg, apg, crb};
+use codex::rules_core::pcgen_desc::render_pcgen_desc;
+use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb};
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form; the frontend maps them to display labels.
 const BOOK_CRB: &str = "CRB";
 const BOOK_APG: &str = "APG";
 const BOOK_ACG: &str = "ACG";
+const BOOK_ARG: &str = "ARG";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogEntryDto {
     /// The record's corpus identity — its `KEY:` token when the row
-    /// carries one, else its display name. Unique across all three books;
+    /// carries one, else its display name. Unique across all four books;
     /// see `tests/spell_cross_book_identity.rs`.
     pub key: String,
-    /// `"CRB"`, `"APG"` or `"ACG"`.
+    /// `"CRB"`, `"APG"`, `"ACG"` or `"ARG"`.
     pub book: String,
     /// The `Pf1SchoolId` variant name verbatim (e.g. "Abjuration"), or
     /// `None` for an APG record whose corpus row has no `SCHOOL:` token.
@@ -64,13 +78,37 @@ pub struct SpellCatalogEntryDto {
     pub description: Option<String>,
 }
 
+/// Renders one table description into the prose this catalog is allowed to
+/// serve.
+///
+/// The four `spell_list` tables hold each record's `DESC:` token as the
+/// corpus writes it — prose plus, where the book states a caster-level
+/// formula, a `%N` reference and its `|`-delimited argument tail. That is the
+/// right thing for a corpus transcription to store and the wrong thing to put
+/// in front of a player: before this, ARG's "Absorbing Inhalation" reached the
+/// Spell Catalog screen (and the Character Sheet's Add Spell picker, which
+/// calls `list_spells`) reading *"contained within you for up to %1 rounds"*
+/// and ending *"you suffer the cloud's effects|CASTERLEVEL"*.
+///
+/// Derived over the four tables rather than assumed: 79 of the 1173 served
+/// descriptions carried PCGen syntax — 63 CRB, 3 APG, 0 ACG, 13 ARG. 21 of
+/// CRB's are its inline rulebook tables' ` | ` column separators, which are
+/// real prose and are preserved; the rest are `%%` escapes (49 records) and
+/// ARG's 10 caster-level `%N` references.
+///
+/// [`render_pcgen_desc`] owns the treatment and the reasoning about what may
+/// and may not be substituted; this is only the point of application.
+fn serve_description(raw: &str) -> String {
+    render_pcgen_desc(raw).text
+}
+
 fn map_crb_entry(entry: &crb::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
     SpellCatalogEntryDto {
         key: entry.key.to_string(),
         book: BOOK_CRB.to_string(),
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
-        description: Some(entry.description.to_string()),
+        description: Some(serve_description(entry.description)),
     }
 }
 
@@ -80,7 +118,7 @@ fn map_apg_entry(entry: &apg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         book: BOOK_APG.to_string(),
         school: entry.school.map(|school| format!("{school:?}")),
         level: entry.level,
-        description: entry.description.map(|text| text.to_string()),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -90,7 +128,21 @@ fn map_acg_entry(entry: &acg::spell_list::SpellListEntry) -> SpellCatalogEntryDt
         book: BOOK_ACG.to_string(),
         school: Some(format!("{:?}", entry.school)),
         level: Some(entry.level),
-        description: Some(entry.description.to_string()),
+        description: Some(serve_description(entry.description)),
+    }
+}
+
+/// ARG's table types `school`, `level` and `description` non-optionally,
+/// exactly as CRB's and ACG's do, so like those two this map invents
+/// nothing by wrapping in `Some` — every ARG record genuinely carries all
+/// three (pinned by `crb_acg_and_arg_records_are_always_fully_populated`).
+fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_ARG.to_string(),
+        school: Some(format!("{:?}", entry.school)),
+        level: Some(entry.level),
+        description: Some(serve_description(entry.description)),
     }
 }
 
@@ -109,6 +161,11 @@ pub fn build_spell_catalog() -> SpellCatalogResponse {
         .map(map_crb_entry)
         .chain(apg::spell_list::SPELL_LIST.iter().map(map_apg_entry))
         .chain(acg::spell_list::SPELL_LIST.iter().map(map_acg_entry))
+        .chain(
+            advanced_race_guide::spell_list::SPELL_LIST
+                .iter()
+                .map(map_arg_entry),
+        )
         .collect();
     SpellCatalogResponse { entries }
 }
@@ -134,7 +191,7 @@ pub struct SpellCatalogFilter {
     /// matches no school filter — it is genuinely unknown, so it is not
     /// swept into any school.
     pub school: Option<String>,
-    /// Exact match against `"CRB"`, `"APG"` or `"ACG"`.
+    /// Exact match against `"CRB"`, `"APG"`, `"ACG"` or `"ARG"`.
     pub book: Option<String>,
 }
 
@@ -190,10 +247,11 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1093);
+        assert_eq!(response.entries.len(), 1185);
         assert_eq!(book_entries(BOOK_CRB).len(), 652);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
+        assert_eq!(book_entries(BOOK_ARG).len(), 92);
     }
 
     #[test]
@@ -219,7 +277,7 @@ mod tests {
     fn every_entry_has_a_non_empty_key_and_a_known_book() {
         for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
-            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG].contains(&entry.book.as_str()));
+            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG].contains(&entry.book.as_str()));
         }
     }
 
@@ -234,10 +292,11 @@ mod tests {
     }
 
     #[test]
-    fn crb_and_acg_records_are_always_fully_populated() {
+    fn crb_acg_and_arg_records_are_always_fully_populated() {
         for entry in book_entries(BOOK_CRB)
             .iter()
             .chain(book_entries(BOOK_ACG).iter())
+            .chain(book_entries(BOOK_ARG).iter())
         {
             assert!(entry.school.is_some(), "{} has no school", entry.key);
             assert!(entry.level.is_some(), "{} has no level", entry.key);
@@ -252,14 +311,22 @@ mod tests {
     #[test]
     fn apg_records_missing_a_field_are_served_with_that_field_null() {
         // Transcribed from `apg::spell_list` as ingested — a pin on what
-        // this adapter serves, NOT a claim about how many rows
-        // `apg_spells.lst` omits each field on (see this module's doc
-        // comment: the raw-file figures differ and the gap is untraced).
+        // this adapter serves. Was 16 / 41 / 12 before the `.COPY=`
+        // cross-book resolution landed (see this module's doc comment).
         // If the ingest changes, re-derive these; do not relax them.
         let apg = book_entries(BOOK_APG);
-        assert_eq!(apg.iter().filter(|e| e.school.is_none()).count(), 16);
-        assert_eq!(apg.iter().filter(|e| e.level.is_none()).count(), 41);
-        assert_eq!(apg.iter().filter(|e| e.description.is_none()).count(), 12);
+        assert_eq!(apg.iter().filter(|e| e.school.is_none()).count(), 3);
+        assert_eq!(apg.iter().filter(|e| e.level.is_none()).count(), 25);
+        assert_eq!(apg.iter().filter(|e| e.description.is_none()).count(), 0);
+        // The defect this closed, asserted as the property rather than as
+        // three numbers: no APG record reaches the catalog carrying nothing
+        // but its key.
+        assert_eq!(
+            apg.iter()
+                .filter(|e| e.school.is_none() && e.level.is_none() && e.description.is_none())
+                .count(),
+            0
+        );
     }
 
     #[test]
@@ -310,7 +377,7 @@ mod tests {
             book: None,
         });
 
-        // Now spans all three books, so strictly more than CRB's own 87.
+        // Now spans all four books, so strictly more than CRB's own 87.
         assert!(response.entries.len() > 87);
         for entry in &response.entries {
             assert_eq!(entry.school.as_deref(), Some("Evocation"));
@@ -332,6 +399,79 @@ mod tests {
     }
 
     #[test]
+    fn arg_school_counts_match_the_real_ingested_table() {
+        // Derived from `advanced_race_guide::spell_list::SPELL_LIST` as
+        // served by this adapter, not from any planning figure. The nine
+        // school variants sum to ARG's whole 92; `Universal` is absent
+        // from `arg_spells.lst` (the variant exists only for cross-book
+        // schema parity), so it is pinned at 0 rather than omitted.
+        let arg = book_entries(BOOK_ARG);
+        let counts = |school: &str| {
+            arg.iter()
+                .filter(|e| e.school.as_deref() == Some(school))
+                .count()
+        };
+        assert_eq!(counts("Abjuration"), 9);
+        assert_eq!(counts("Conjuration"), 10);
+        assert_eq!(counts("Divination"), 4);
+        assert_eq!(counts("Enchantment"), 8);
+        assert_eq!(counts("Evocation"), 8);
+        assert_eq!(counts("Illusion"), 9);
+        assert_eq!(counts("Necromancy"), 7);
+        assert_eq!(counts("Transmutation"), 37);
+        assert_eq!(counts("Universal"), 0);
+        assert_eq!(
+            counts("Abjuration")
+                + counts("Conjuration")
+                + counts("Divination")
+                + counts("Enchantment")
+                + counts("Evocation")
+                + counts("Illusion")
+                + counts("Necromancy")
+                + counts("Transmutation")
+                + counts("Universal"),
+            arg.len(),
+            "an ARG record landed outside the nine PF1 schools"
+        );
+    }
+
+    #[test]
+    fn filter_spell_catalog_narrows_to_arg() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: None,
+            school: None,
+            book: Some(BOOK_ARG.to_owned()),
+        });
+
+        assert_eq!(response.entries.len(), 92);
+        for entry in &response.entries {
+            assert_eq!(entry.book, BOOK_ARG);
+        }
+    }
+
+    #[test]
+    fn a_real_arg_spell_reaches_the_catalog_with_its_corpus_text() {
+        let entries = build_spell_catalog().entries;
+        let entry = entries
+            .iter()
+            .find(|entry| entry.key == "Aboleth's Lung")
+            .expect("ARG's `Aboleth's Lung` record must reach the catalog");
+        assert_eq!(entry.book, BOOK_ARG);
+        assert_eq!(entry.school.as_deref(), Some("Transmutation"));
+        assert_eq!(entry.level, Some(2));
+        assert!(
+            entry
+                .description
+                .as_deref()
+                .is_some_and(|text| text.contains("breathe water")),
+            // Phrased without the word this repo's wired-integration audit
+            // treats as a stub marker (tests/sd24_wired_integration_audit.rs):
+            // the assertion is that the shipped `DESC:` text arrives verbatim.
+            "the ARG record must carry its real corpus `DESC:` text verbatim"
+        );
+    }
+
+    #[test]
     fn filter_spell_catalog_combines_name_and_school_filters() {
         let response = filter_spell_catalog(&SpellCatalogFilter {
             name_contains: Some("flame".to_owned()),
@@ -348,5 +488,78 @@ mod tests {
             assert_eq!(entry.school.as_deref(), Some("Evocation"));
             assert!(entry.key.to_lowercase().contains("flame"));
         }
+    }
+
+    /// The production guard `src/bin/ingest_race_traits_arg.rs` already
+    /// carries for racial traits, ported to the surface that actually serves
+    /// spell text to a player.
+    ///
+    /// Before this, 79 of the 1173 served descriptions carried raw PCGen
+    /// `DESC:` syntax — ARG's "Absorbing Inhalation" ended
+    /// `…the cloud's effects|CASTERLEVEL` and read `for up to %1 rounds` in
+    /// the middle of the sentence. A future book that lands a leaking table
+    /// now fails this test instead of reaching a screen.
+    #[test]
+    fn no_served_spell_description_carries_raw_pcgen_syntax() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+
+        let response = build_spell_catalog();
+        let leaks: Vec<String> = response
+            .entries
+            .iter()
+            .filter_map(|entry| {
+                let description = entry.description.as_deref()?;
+                let leak = leaked_pcgen_syntax(description)?;
+                Some(format!("{} ({}): {leak}", entry.key, entry.book))
+            })
+            .collect();
+        assert!(leaks.is_empty(), "served spell descriptions leaking PCGen syntax: {leaks:#?}");
+    }
+
+    /// The one record the defect was reported against, pinned end to end so a
+    /// regression names itself.
+    #[test]
+    fn absorbing_inhalation_reads_as_prose_rather_than_as_a_pcgen_token() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: Some("Absorbing Inhalation".to_owned()),
+            school: None,
+            book: Some("ARG".to_owned()),
+        });
+        let entry = response
+            .entries
+            .first()
+            .expect("Absorbing Inhalation is a real ARG spell record");
+        let description = entry.description.as_deref().expect("ARG records always carry description text");
+
+        assert!(
+            description.ends_with("you suffer the cloud's effects"),
+            "the `|CASTERLEVEL` argument tail must not survive: {description}"
+        );
+        assert!(
+            !description.contains("%1"),
+            "the `%1` caster-level reference must not survive: {description}"
+        );
+        assert!(
+            description.contains("contained within you for up to rounds"),
+            "the caster-level formula is dropped, not guessed, and the sentence closes up: {description}"
+        );
+    }
+
+    /// The reason this catalog does not reuse the race-trait binary's
+    /// "any `|` is an argument tail" rule: CRB spell text renders rulebook
+    /// tables inline.
+    #[test]
+    fn a_crb_prose_table_survives_the_render_intact() {
+        let response = filter_spell_catalog(&SpellCatalogFilter {
+            name_contains: Some("Power Word Stun".to_owned()),
+            school: None,
+            book: Some("CRB".to_owned()),
+        });
+        let entry = response.entries.first().expect("Power Word Stun is a real CRB record");
+        let description = entry.description.as_deref().expect("CRB records always carry description text");
+        assert!(
+            description.contains("Hit Points | Duration"),
+            "the inline rulebook table's column separators are prose and must survive: {description}"
+        );
     }
 }

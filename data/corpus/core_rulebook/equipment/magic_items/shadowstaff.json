@@ -1,20 +1,74 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Shadowstaff",
     "category": "magic_items",
-    "name": "The Shadowstaff",
     "cost_gp": 0.0,
-    "weight_lbs": 1.0,
-    "description": "This artifact was crafted ages ago, weaving together wispy strands of shadow into a twisted black staff. The Shadowstaff makes the wielder slightly shadowy and incorporeal, granting him a +4 bonus to AC and on Reflex saves (which stacks with any other bonuses). However, in bright light (such as that of the sun, but not a torch) or in absolute darkness, the wielder takes a -2 penalty on all attack rolls, saves, and checks. The Shadowstaff also has these powers.\n* Summon Shadows: Three times per day the staff may summon 2d4 shadows. Immune to turning, they serve the wielder as if called by a summon monster V spell cast at 20th level.\n* Summon Nightshade: Once per month, the staff can summon an advanced shadow demon that serves the wielder as if called by a summon monster IX spell cast at 20th level.\n* Shadow Form: Three times per day the wielder can become a living shadow, with all the movement powers granted by gaseous form.\n* Shadow Bolt: Three times per day the staff can project a ray attack that deals 10d6 points of cold damage to a single target. The shadow bolt has a range of 100 feet."
+    "description": "This artifact was crafted ages ago, weaving together wispy strands of shadow into a twisted black staff. The Shadowstaff makes the wielder slightly shadowy and incorporeal, granting him a +4 bonus to AC and on Reflex saves (which stacks with any other bonuses). However, in bright light (such as that of the sun, but not a torch) or in absolute darkness, the wielder takes a -2 penalty on all attack rolls, saves, and checks. The Shadowstaff also has these powers.\n* Summon Shadows: Three times per day the staff may summon 2d4 shadows. Immune to turning, they serve the wielder as if called by a summon monster V spell cast at 20th level.\n* Summon Nightshade: Once per month, the staff can summon an advanced shadow demon that serves the wielder as if called by a summon monster IX spell cast at 20th level.\n* Shadow Form: Three times per day the wielder can become a living shadow, with all the movement powers granted by gaseous form.\n* Shadow Bolt: Three times per day the staff can project a ray attack that deals 10d6 points of cold damage to a single target. The shadow bolt has a range of 100 feet.",
+    "key": "Shadowstaff",
+    "name": "The Shadowstaff",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Shadowstaff"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Shadowstaff, The"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Major.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.548"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|20th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Destruction|The Shadowstaff fades away to nothingness if it is exposed to true sunlight for a continuous 24 hour period."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "This artifact was crafted ages ago, weaving together wispy strands of shadow into a twisted black staff. The Shadowstaff makes the wielder slightly shadowy and incorporeal, granting him a +4 bonus to AC and on Reflex saves (which stacks with any other bonuses). However, in bright light (such as that of the sun, but not a torch) or in absolute darkness, the wielder takes a -2 penalty on all attack rolls, saves, and checks. The Shadowstaff also has these powers.&nl;* Summon Shadows: Three times per day the staff may summon 2d4 shadows. Immune to turning, they serve the wielder as if called by a summon monster V spell cast at 20th level.&nl;* Summon Nightshade: Once per month, the staff can summon an advanced shadow demon that serves the wielder as if called by a summon monster IX spell cast at 20th level.&nl;* Shadow Form: Three times per day the wielder can become a living shadow, with all the movement powers granted by gaseous form.&nl;* Shadow Bolt: Three times per day the staff can project a ray attack that deals 10d6 points of cold damage to a single target. The shadow bolt has a range of 100 feet."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 1619,
-    "record_key": "Shadowstaff"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Shadowstaff",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

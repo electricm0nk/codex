@@ -1,0 +1,97 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Rogue ~ Trapfinding",
+    "name": "Trapfinding",
+    "class_key": "Rogue ~ Unchained Class",
+    "base_class_key": "Rogue",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Rogue Class Feature",
+      "SpecialQuality",
+      "Extraordinary"
+    ],
+    "min_level": 1,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": "You add to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.",
+    "source_page": "p.20",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue ~ Trapfinding"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rogue Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Rogue ~ Trapfinding"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingLVL|0"
+      },
+      {
+        "key": "DEFINE",
+        "value": "TrapfindingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.20"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Perception=Trapfinding",
+          "TrapfindingBonus"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Disable Device",
+          "TrapfindingBonus"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapfindingBonus",
+          "max(TrapfindingLVL/2,1)"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "TrapfindingLVL",
+          "RogueLVL"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 590,
+    "record_key": "Unchained Rogue ~ Trapfinding"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

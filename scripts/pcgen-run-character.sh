@@ -29,7 +29,10 @@ set -euo pipefail
 
 PROG_NAME="$(basename "$0")"
 
-DEFAULT_PCGEN_DIR="/home/ubuntu/workspace/repos/pcgen"
+# HOME-relative on purpose: the operator keeps `workspace/` in the home
+# directory and syncs it between machines, so this default is correct on every
+# box. `$HOME` rather than `~` because `~` does not expand inside quotes.
+DEFAULT_PCGEN_DIR="${HOME}/workspace/repos/pcgen"
 DEFAULT_EXPORT_SHEET_REL="code/testsuite/base-xml.ftl"
 
 usage() {

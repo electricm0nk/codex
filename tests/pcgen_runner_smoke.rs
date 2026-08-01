@@ -48,7 +48,7 @@
 //!
 //! Test 2 (`pcgen_runner_and_normalizer_pipeline_produces_parseable_output`)
 //! requires a real `.pcg` fixture sourced from a checked-out PCGen repo at
-//! `$PCGEN_REPO_DIR` (fallback `/home/ubuntu/workspace/repos/pcgen`, the
+//! `$PCGEN_REPO_DIR` (fallback `$HOME/workspace/repos/pcgen`, the
 //! path on the operator's dev host). The GitHub Actions runner does NOT
 //! check out the PCGen repo alongside this one, so on CI test 2 is a
 //! pre-condition miss, not a real regression. Test 2 detects the missing
@@ -82,9 +82,14 @@ fn normalizer_script() -> PathBuf {
 /// this fixture keeps this smoke test real (a genuine PCGen character run through
 /// a genuine PCGen engine) rather than inventing fixture-only sample XML.
 fn pcgen_repo_dir() -> PathBuf {
-    std::env::var("PCGEN_REPO_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|_| PathBuf::from("/home/ubuntu/workspace/repos/pcgen"))
+    if let Ok(configured) = std::env::var("PCGEN_REPO_DIR") {
+        return PathBuf::from(configured);
+    }
+    // HOME-relative default: the operator keeps `workspace/` in the home
+    // directory and syncs it between machines. Rust does not expand `~`.
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen repo checkout");
+    PathBuf::from(home).join("workspace/repos/pcgen")
 }
 
 fn substitute_pcg_fixture() -> PathBuf {

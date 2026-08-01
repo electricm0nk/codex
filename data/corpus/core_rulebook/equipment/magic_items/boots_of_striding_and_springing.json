@@ -1,20 +1,95 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Boots of Striding And Springing",
     "category": "magic_items",
-    "name": "Boots of Striding And Springing",
     "cost_gp": 5500.0,
-    "weight_lbs": 1.0,
-    "description": "These boots increase the wearer's base land speed by 10 feet. In addition to this striding ability (considered an enhancement bonus), these boots allow the wearer to make great leaps. She can jump with a +5 competence bonus on Acrobatics checks."
+    "description": "These boots increase the wearer's base land speed by 10 feet. In addition to this striding ability (considered an enhancement bonus), these boots allow the wearer to make great leaps. She can jump with a +5 competence bonus on Acrobatics checks.",
+    "key": "Boots of Striding And Springing",
+    "name": "Boots of Striding And Springing",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "POSTMOVEADD",
+          "TYPE=Walk",
+          "10",
+          "TYPE=Enhancement"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Acrobatics=When Jumping",
+          "5",
+          "TYPE=Competence"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Boots of Striding And Springing"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Boots of Striding And Springing"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Feet.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "5500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.504"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|3rd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|feet"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|2,750 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, longstrider, creator must have 5 ranks in the Acrobatics skill"
+      },
+      {
+        "key": "DESC",
+        "value": "These boots increase the wearer's base land speed by 10 feet. In addition to this striding ability (considered an enhancement bonus), these boots allow the wearer to make great leaps. She can jump with a +5 competence bonus on Acrobatics checks."
+      }
+    ],
+    "weight_lbs": 1.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 64,
-    "record_key": "Boots of Striding And Springing"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Boots of Striding And Springing",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

@@ -1,0 +1,22 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Elven Battle Training",
+    "category": "combat",
+    "name": "Elven Battle Training",
+    "description": "You have been specially trained to wield a variety of traditional elven weapons.",
+    "effect": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 32,
+    "record_key": "Elven Battle Training"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

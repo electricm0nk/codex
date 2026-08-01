@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 60000.0,
+    "description": "Every 24 hours, the belt's wearer gains DR 10/adamantine until the belt absorbs 100 points of damage. It must worn for 24 consecutive hours in order for its magic to take effect.",
+    "key": "Belt of Stoneskin",
+    "name": "Belt of Stoneskin",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Belt"
+      },
+      {
+        "key": "COST",
+        "value": "60000"
+      },
+      {
+        "key": "WT",
+        "value": "10"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.148"
+      },
+      {
+        "key": "SPROP",
+        "value": "Every 24 hours, the belt's wearer gains DR 10/adamantine until the belt absorbs 100 points of damage. It must worn for 24 consecutive hours in order for its magic to take effect."
+      }
+    ],
+    "weight_lbs": 10.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 18,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Belt of Stoneskin",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

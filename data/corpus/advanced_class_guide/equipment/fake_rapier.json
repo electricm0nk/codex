@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Fake Rapier",
     "category": "ArmsArmor",
-    "name": "Fake Rapier",
     "cost_gp": null,
-    "weight": null,
-    "description": "Tests"
+    "description": "Tests",
+    "key": "Fake Rapier",
+    "name": "Fake Rapier",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Weapon.Melee.Piercing.Weapon Group Melee OneHanded Piercing"
+      },
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Rapier"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "1d6"
+      },
+      {
+        "key": "SPROP",
+        "value": "Tests"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 35,
-    "record_key": "Fake Rapier"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Fake Rapier",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

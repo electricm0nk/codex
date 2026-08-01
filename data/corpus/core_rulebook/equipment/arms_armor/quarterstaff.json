@@ -17,5 +17,8 @@
     "line": 210,
     "record_key": "Quarterstaff",
     "inherited_from_record_key": "Quarterstaff (Base)"
-  }
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

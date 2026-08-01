@@ -1,20 +1,54 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Special Ability ~ Exclusionary ~ Weapon",
     "category": "Equipmods",
-    "name": "Exclusionary",
     "cost_gp": 3750.0,
-    "weight": null,
-    "description": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions"
+    "description": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions",
+    "key": "Special Ability ~ Exclusionary ~ Weapon",
+    "name": "Exclusionary",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Exclusionary ~ Weapon"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "3750"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.213"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,WeaponEnhancement,Weapon"
+      },
+      {
+        "key": "SPROP",
+        "value": "can choose not to include target in channel ability for next minute; maximum of Wisdom bonus plus enhancement bonus exclusions"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
-    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c",
     "line": 36,
-    "record_key": "Special Ability ~ Exclusionary ~ Weapon"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equipmods.lst",
+    "record_key": "Special Ability ~ Exclusionary ~ Weapon",
+    "sha256": "48a6507abf8d3a3a6965e6a8635f5bc69bf0e959261439eb1108ca4e3faae96c"
   }
 }

@@ -1,20 +1,42 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Handkerchief of Finding",
     "category": "MagicItems",
-    "name": "Handkerchief of Finding",
     "cost_gp": 15000.0,
-    "weight": null,
-    "description": "attune to handkerchief by having it for 1 week; once attuned, can sense direction to handkerchief. Bearer unaware of the handkerchief 's power cannot attune to it."
+    "description": "attune to handkerchief by having it for 1 week; once attuned, can sense direction to handkerchief. Bearer unaware of the handkerchief 's power cannot attune to it.",
+    "key": "Handkerchief of Finding",
+    "name": "Handkerchief of Finding",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.230"
+      },
+      {
+        "key": "SPROP",
+        "value": "attune to handkerchief by having it for 1 week; once attuned, can sense direction to handkerchief. Bearer unaware of the handkerchief 's power cannot attune to it."
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 373,
-    "record_key": "Handkerchief of Finding"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Handkerchief of Finding",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

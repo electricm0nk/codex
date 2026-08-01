@@ -1,0 +1,30 @@
+//! ARG equipment modifiers -- generated from the real `arg_equipmods.lst`
+//! corpus (SD-27 Cycle E2.1/E2.2 per-book pre-build). Not hand-authored --
+//! see `equipment_tables.rs`'s own doc comment for the generation method.
+//!
+//! 14 corpus rows are deliberately excluded: the file's own trailing
+//! `# Old KEYs` block (`VISIBLE:NO` `.COPY=<OLD_KEY>` alias rows with no
+//! `KEY:` token of their own, referencing legacy short-form key names that
+//! resolve nowhere else in this file) -- the same documented exclusion
+//! `rules_tables::crb::equipment_data::equipmods` already establishes for
+//! `cr_equipmods.lst`'s own identical trailing block.
+
+use super::super::equipment_tables::{EquipmentCategory, EquipmentTableEntry};
+
+pub const EQUIPMODS_TABLE: &[EquipmentTableEntry] = &[
+    EquipmentTableEntry { key: "Material ~ Darkleaf Cloth ~ Armor / Light", category: EquipmentCategory::Equipmods, name: "Darkleaf Cloth", cost_gp: Some(750.0), weight_lbs: None, description: None },
+    EquipmentTableEntry { key: "Material ~ Darkleaf Cloth ~ Armor / Medium", category: EquipmentCategory::Equipmods, name: "Darkleaf Cloth", cost_gp: Some(1500.0), weight_lbs: None, description: None },
+    EquipmentTableEntry { key: "Material ~ Darkleaf Cloth ~ Clothing", category: EquipmentCategory::Equipmods, name: "Darkleaf Cloth", cost_gp: Some(500.0), weight_lbs: None, description: None },
+    EquipmentTableEntry { key: "Material ~ Darkleaf Cloth ~ Item", category: EquipmentCategory::Equipmods, name: "Darkleaf Cloth", cost_gp: None, weight_lbs: None, description: None },
+    EquipmentTableEntry { key: "Material ~ Whipwood", category: EquipmentCategory::Equipmods, name: "Whipwood", cost_gp: Some(500.0), weight_lbs: None, description: Some("+5 Weapon's HP") },
+    EquipmentTableEntry { key: "Material ~ Wyroot / 1 Life Point", category: EquipmentCategory::Equipmods, name: "Wyroot(1 Life Point)", cost_gp: Some(1000.0), weight_lbs: None, description: Some("On confirmed critical, creature hit is unharmed and weapon gains 1 life point which can be absorbed by its wielder as 1 arcane or ki pool point with a swift action. This weapon can hold up to 1 life point.  Unspent life points dissipate at dusk.") },
+    EquipmentTableEntry { key: "Material ~ Wyroot / 2 Life Points", category: EquipmentCategory::Equipmods, name: "Wyroot(2 Life Points)", cost_gp: Some(2000.0), weight_lbs: None, description: Some("On confirmed critical, creature hit is unharmed and weapon gains 1 life point which can be absorbed by its wielder as 1 arcane or ki pool point with a swift action. This weapon can hold up to 2 life points.  Unspent life points dissipate at dusk.") },
+    EquipmentTableEntry { key: "Material ~ Wyroot / 3 Life Points", category: EquipmentCategory::Equipmods, name: "Wyroot(3 Life Points)", cost_gp: Some(4000.0), weight_lbs: None, description: Some("On confirmed critical, creature hit is unharmed and weapon gains 1 life point which can be absorbed by its wielder as 1 arcane or ki pool point with a swift action. This weapon can hold up to 3 life points.  Unspent life points dissipate at dusk.") },
+    EquipmentTableEntry { key: "Special Ability ~ Cloudburst ~ Armor", category: EquipmentCategory::Equipmods, name: "Cloudburst", cost_gp: Some(5000.0), weight_lbs: None, description: Some("If an attack strikes the wearer and deals at least 10 points of electricity damage, as a swift action on the wearer's next turn that does not provoke an attack of opportunity, she may use shocking grasp as a spell-like ability, dealing 1d6 points of electricity damage for every 10 points of damage dealt to the wearer since last turn.") },
+    EquipmentTableEntry { key: "Special Ability ~ Cruel ~ Weapon", category: EquipmentCategory::Equipmods, name: "Cruel", cost_gp: None, weight_lbs: None, description: Some("When the wielder strikes a creature that is frightened, shaken, or panicked, that creature becomes sickened for 1 round. When the wielder uses the weapon to knock unconscious or kill a creature, he gains 5 temporary hit points that last for 10 minutes.") },
+    EquipmentTableEntry { key: "Special Ability ~ Deadly ~ Weapon", category: EquipmentCategory::Equipmods, name: "Deadly", cost_gp: None, weight_lbs: None, description: Some("This special ability can only be placed on weapons that normally deal nonlethal damage, such as whips and saps. All damage a deadly weapon deals is lethal damage. A whip (or similar weapon that cannot damage creatures with armor or natural armor bonuses) with this special ability deals damage even to creatures with armor or natural armor. On command, the weapon suppresses this ability until told to resume it.") },
+    EquipmentTableEntry { key: "Special Ability ~ Guarding / Greater ~ Shield", category: EquipmentCategory::Equipmods, name: "Guarding (Greater)", cost_gp: None, weight_lbs: None, description: Some("Allows the wearer to transfer some or all of the shield's enhancement bonus to any number of adjacent allies.  All selected allies receive the same bonus. If a shielded target is ever more than 5 feet from the wearer, the effect ends for that target but not for any other targets.") },
+    EquipmentTableEntry { key: "Special Ability ~ Guarding ~ Shield", category: EquipmentCategory::Equipmods, name: "Guarding", cost_gp: None, weight_lbs: None, description: Some("Allows the wearer to transfer some or all of the shield's enhancement bonus to an adjacent creature's AC") },
+    EquipmentTableEntry { key: "Special Quality ~ Purifier Celestial Armor ~ Archetype", category: EquipmentCategory::Equipmods, name: "Purifier Celestial", cost_gp: Some(0.0), weight_lbs: None, description: Some("No benefit.; The purifier's armor takes on a golden or silvery sheen and becomes light as a feather.") },
+    EquipmentTableEntry { key: "Special Quality ~ Undine Weaponshaft ~ Weapon", category: EquipmentCategory::Equipmods, name: "Undine Weaponshaft", cost_gp: Some(300.0), weight_lbs: None, description: Some("As a full-round action, an undine can make a single melee attack with the weapon and use her hydraulic push spell-like ability against the target of that melee attack.") },
+];

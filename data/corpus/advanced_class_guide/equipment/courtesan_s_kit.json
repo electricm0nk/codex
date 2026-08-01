@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Courtesan's Kit",
     "category": "General",
-    "name": "Courtesan's Kit",
     "cost_gp": 10.0,
-    "weight": 5.0,
-    "description": "Includes razor, scented oils and salves, frangrances, warming pot, variety of outfits, books of poetry, literature, plays"
+    "description": "Includes razor, scented oils and salves, frangrances, warming pot, variety of outfits, books of poetry, literature, plays",
+    "key": "Courtesan's Kit",
+    "name": "Courtesan's Kit",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "SPROP",
+        "value": "Includes razor, scented oils and salves, frangrances, warming pot, variety of outfits, books of poetry, literature, plays"
+      }
+    ],
+    "weight": 5.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 172,
-    "record_key": "Courtesan's Kit"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Courtesan's Kit",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

@@ -62,6 +62,7 @@ use codex::rules_core::pilot_compute::{HeadlessReceiptStatus, build_pilot_headle
 use codex::rules_core::rules_tables::acg::AcgClassId;
 use codex::rules_core::rules_tables::apg::ApgClassId;
 use codex::rules_core::rules_tables::crb::class_tables::ClassId;
+use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
 /// Read at runtime (rather than `include_str!`ed) so a `src/` target does not
@@ -448,6 +449,15 @@ fn main() {
     }
     for class_id in AcgClassId::ALL {
         states.push(state_for(&fixture, class_id.name(), "ACG"));
+    }
+    // SD-27 (2026-07-31): Pathfinder Unchained's four classes. They are
+    // REPLACEMENTS for their Core Rulebook / Advanced Player's Guide
+    // namesakes, not additions, so they appear here as four additional
+    // rows alongside -- never instead of -- `barbarian`, `monk`, `rogue`
+    // and `summoner`. Both members of each pair must keep computing; the
+    // dump is where a collision between them would show up first.
+    for class_id in PuClassId::ALL {
+        states.push(state_for(&fixture, class_id.name(), "PU"));
     }
 
     std::panic::set_hook(previous_hook);

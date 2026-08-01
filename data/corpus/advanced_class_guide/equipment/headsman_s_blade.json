@@ -1,20 +1,82 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Headsman's Blade",
     "category": "ArmsArmor",
-    "name": "Headsman's Blade",
     "cost_gp": 50.0,
-    "weight": 8.0,
-    "description": "1/day assassinate (as slayer advanced talent); full-round action to study, DC 15 to avoid death; +2 to enhancement bonus vs. studied darget, +2 to assassination attempt DC, target decapitated instead of merely slain"
+    "description": "1/day assassinate (as slayer advanced talent); full-round action to study, DC 15 to avoid death; +2 to enhancement bonus vs. studied darget, +2 to assassination attempt DC, target decapitated instead of merely slain",
+    "key": "Headsman's Blade",
+    "name": "Headsman's Blade",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "PROFICIENCY",
+        "value": "WEAPON|Greatsword"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Resizable.Melee.TwoHanded.Martial.Slashing.Sword.BladeHeavy.Specific.Weapon Group Blades Heavy"
+      },
+      {
+        "key": "COST",
+        "value": "50"
+      },
+      {
+        "key": "WT",
+        "value": "8"
+      },
+      {
+        "key": "CRITMULT",
+        "value": "x2"
+      },
+      {
+        "key": "CRITRANGE",
+        "value": "2"
+      },
+      {
+        "key": "DAMAGE",
+        "value": "2d6"
+      },
+      {
+        "key": "EQMOD",
+        "value": "Special Ability ~ Keen ~ Weapon.Special Ability ~ Enhancement Cost|5500.Special Ability ~ +1 ~ Weapon.Material ~ Steel"
+      },
+      {
+        "key": "WIELD",
+        "value": "TwoHanded"
+      },
+      {
+        "key": "SIZE",
+        "value": "M"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day assassinate (as slayer advanced talent)"
+      },
+      {
+        "key": "SPROP",
+        "value": "full-round action to study, DC 15 to avoid death|!PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "SPROP",
+        "value": "+2 to enhancement bonus vs. studied darget, +2 to assassination attempt DC, target decapitated instead of merely slain|PRECLASS:1,Slayer=1"
+      }
+    ],
+    "weight": 8.0
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 262,
-    "record_key": "Headsman's Blade"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Headsman's Blade",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

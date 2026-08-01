@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "data": {
+    "key": "Wings of Air",
+    "category": "general",
+    "name": "Wings of Air",
+    "description": "The winds lift you, carrying you where you want to go.",
+    "effect": [
+      [
+        "VAR",
+        "Maneuverability",
+        "4",
+        "PREVAREQ:ENCUMBERANCE,0"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 399,
+    "record_key": "Wings of Air"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

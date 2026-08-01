@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 45000.0,
+    "description": "A battle standard may be carried (on foot or mounted) or planted. In the latter case, the standard does not need a bearer, but if it is toppled or touched by an enemy, it loses its effectiveness until reclaimed and replanted by allies of its owner. Allies gain 10 temporary hit points and the benefits of the Diehard feat for as long as they are within 30 feet of the banner. The temporary hit points can only be gained once per day per creature.",
+    "key": "Hobgoblin Battle Standard of Iron Resolve",
+    "name": "Hobgoblin Battle Standard of Iron Resolve",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Racial.Hobgoblin"
+      },
+      {
+        "key": "COST",
+        "value": "45000"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.125"
+      },
+      {
+        "key": "SPROP",
+        "value": "A battle standard may be carried (on foot or mounted) or planted. In the latter case, the standard does not need a bearer, but if it is toppled or touched by an enemy, it loses its effectiveness until reclaimed and replanted by allies of its owner. Allies gain 10 temporary hit points and the benefits of the Diehard feat for as long as they are within 30 feet of the banner. The temporary hit points can only be gained once per day per creature."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 49,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Hobgoblin Battle Standard of Iron Resolve",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  }
+}

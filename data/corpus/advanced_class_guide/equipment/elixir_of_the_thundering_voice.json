@@ -1,20 +1,46 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
   "data": {
-    "key": "Elixir of the Thundering Voice",
     "category": "MagicItems",
-    "name": "Elixir of the Thundering Voice",
     "cost_gp": 250.0,
-    "weight": null,
-    "description": "+10 to Intimidate for 1 hour"
+    "description": "+10 to Intimidate for 1 hour",
+    "key": "Elixir of the Thundering Voice",
+    "name": "Elixir of the Thundering Voice",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.229"
+      },
+      {
+        "key": "SPROP",
+        "value": "+10 to Intimidate for 1 hour"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Intimidate|10|TYPE=Competence"
+      }
+    ],
+    "weight": null
   },
+  "ingested_at": "2026-07-23T00:03:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
-    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39",
     "line": 368,
-    "record_key": "Elixir of the Thundering Voice"
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Elixir of the Thundering Voice",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
   }
 }

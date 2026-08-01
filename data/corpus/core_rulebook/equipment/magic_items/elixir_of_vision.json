@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Elixir of Vision",
     "category": "magic_items",
-    "name": "Elixir of Vision",
     "cost_gp": 250.0,
-    "weight_lbs": 0.0,
-    "description": "Drinking this elixir grants the imbiber the ability to notice acute details with great accuracy (+10 competence bonus on Perception checks for 1 hour)."
+    "description": "Drinking this elixir grants the imbiber the ability to notice acute details with great accuracy (+10 competence bonus on Perception checks for 1 hour).",
+    "key": "Elixir of Vision",
+    "name": "Elixir of Vision",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elixir of Vision"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Elixir of Vision"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Elixir.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.512"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint divination"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|2nd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|125 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, true seeing"
+      },
+      {
+        "key": "DESC",
+        "value": "Drinking this elixir grants the imbiber the ability to notice acute details with great accuracy (+10 competence bonus on Perception checks for 1 hour)."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Perception|10|TYPE=Competence"
+      }
+    ],
+    "weight_lbs": 0.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 149,
-    "record_key": "Elixir of Vision"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Elixir of Vision",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

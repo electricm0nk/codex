@@ -1,20 +1,78 @@
 {
-  "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
   "data": {
-    "key": "Helm of Teleportation",
     "category": "magic_items",
-    "name": "Helm of Teleportation",
     "cost_gp": 73500.0,
-    "weight_lbs": 3.0,
-    "description": "A character wearing this device may teleport three times per day, exactly as if he had cast the spell of the same name."
+    "description": "A character wearing this device may teleport three times per day, exactly as if he had cast the spell of the same name.",
+    "key": "Helm of Teleportation",
+    "name": "Helm of Teleportation",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Helm of Teleportation"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Helm of Teleportation"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Head.Helm"
+      },
+      {
+        "key": "COST",
+        "value": "73500"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.518"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Helm of Teleportation|TIMES=3|CASTERLEVEL=9|Teleport"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|9th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|head"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|36,750 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, teleport"
+      },
+      {
+        "key": "DESC",
+        "value": "A character wearing this device may teleport three times per day, exactly as if he had cast the spell of the same name."
+      }
+    ],
+    "weight_lbs": 3.0
   },
+  "ingested_at": "2026-07-22T23:36:36Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
   "source": {
     "kind": "lst_token",
-    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
-    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
     "line": 211,
-    "record_key": "Helm of Teleportation"
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Helm of Teleportation",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
   }
 }

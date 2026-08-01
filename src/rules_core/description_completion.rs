@@ -51,7 +51,7 @@
 //! doc comment records why its feature is zero-magnitude.
 
 use crate::rules_core::character_input::CharacterInput;
-use crate::rules_core::rules_tables::crb::feats::FeatTableEntry;
+use crate::rules_core::rules_tables::feats_all::FeatCatalogRecord;
 use crate::rules_core::rules_tables::feats_all::all_feat_tables;
 
 /// Where in the shipped desktop app a feature's description is rendered.
@@ -142,8 +142,9 @@ use crate::rules_core::feat_identity::fold as fold_feat_identity;
 ///
 /// Both required facts are checked against live data, never assumed:
 ///
-/// 1. The feat resolves in the real 486-record feat catalog across every
-///    ingested book (`all_feat_tables()`: 185 CRB + 172 APG + 129 ACG) and
+/// 1. The feat resolves in the real 690-record feat catalog across every
+///    ingested book (`all_feat_tables()`: 185 CRB + 172 APG + 129 ACG +
+///    187 ARG + 17 PU) and
 ///    that record's `description` is present and non-blank. This is the
 ///    same catalog, and the same field, that the `list_feats` command
 ///    projects to the frontend, so a description found here is exactly the
@@ -166,7 +167,7 @@ use crate::rules_core::feat_identity::fold as fold_feat_identity;
 /// Every feat record the picker can serve, flattened across all ingested
 /// books in book order — the exact set `feat_catalog.rs`'s
 /// `build_feat_catalog` walks.
-fn all_catalog_feats() -> impl Iterator<Item = &'static FeatTableEntry> {
+fn all_catalog_feats() -> impl Iterator<Item = &'static FeatCatalogRecord> {
     all_feat_tables().iter().flat_map(|book| book.entries.iter())
 }
 

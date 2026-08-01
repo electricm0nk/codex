@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": 500.0,
+    "description": "+5 Weapon's HP",
+    "key": "Material ~ Whipwood",
+    "name": "Whipwood",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_Sunder",
+          "2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Material ~ Whipwood"
+      },
+      {
+        "key": "TYPE",
+        "value": "BaseMaterial.Weapon"
+      },
+      {
+        "key": "COST",
+        "value": "500"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "Whipwood"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.207"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Wooden"
+      },
+      {
+        "key": "SPROP",
+        "value": "+5 Weapon's HP"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-07-27T21:26:32Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 38,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "Material ~ Whipwood",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  }
+}
