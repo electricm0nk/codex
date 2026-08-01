@@ -480,3 +480,86 @@ This is a statement about the **orchestrating session only** — the session tha
 **Already registered for this bundle.** `forward-scope-register.md §7.7` names the same four traps against SD-29's own records, and §7.1–§7.6 carry the measured corrections behind them (83 deferrals not 74; ledger row 03 open, not closed; seven rows understating progress; §2.3 being one third of a defect; the magnitude-predicate blocker; and the shared-ownership rule with SD-28 and SD-30). This decision is the doctrinal form of that register section — **read §7 for the per-record detail.**
 
 **Authority:** SD-27 `decisions.md §29` (traps), `§30` (paths and artifacts), `docs/retro/tranche-7-retrospective.md` (measurements).
+
+## Decision 30 — `<SameRowVar> ± <integer literal>` is transcription, not interpretation (resolved 2026-08-01)
+
+**Status:** Operator-directed, resolved pre-dispatch. Closes ledger row 03 / `forward-scope-register.md §7.2`, which was recorded CLOSED while open. **Refines the §24.1 boundary; does not widen it.**
+
+**The question was:** SD-27 `decisions.md §24.1` forbids a general `BONUS:`/`DEFINE:`/`PREREQ:` formula interpreter, and draws the line as *"reading a constant off the row that defines it is transcription; evaluating an arbitrary expression is interpretation."* `Halfling ~ Adaptable Luck`'s second `DESC:` argument is `Halfling_AdaptableLuck_Bonus-1` — a same-row variable minus an integer literal. Which side is it on?
+
+### 30.1 The census that decides it
+
+Every `DESC:` argument across the entire ingested corpus, classified:
+
+| shape | count | status |
+|---|---:|---|
+| bare same-row variable (`Halfling_AdaptableLuck_Times`) | 24 | already resolved as transcription |
+| `PRE`-family gate clause (`!PREABILITY:1,CATEGORY=…`) | 144 | already resolved — a gate, not a value |
+| **arithmetic expression** | **1** | `Halfling_AdaptableLuck_Bonus-1` — this row, and nothing else |
+
+**The population is one.** `§24.1` guards against an *unbounded* interpreter — a general evaluator that must handle arbitrary nesting, precedence and variable scope, and whose wrong answers are plausible numbers nobody checks. That risk does not arise from a closed form with a single instance.
+
+### 30.2 The ruling
+
+**`<SameRowVar> <+|-> <integer literal>` is transcription and is permitted.** Bounded to exactly that form:
+
+- the left operand must be a variable **defined on the same row** (the existing `same_row_vars` rule);
+- the operator is `+` or `-`;
+- the right operand is an **integer literal**, not a variable, not a further expression;
+- **anything else is refused, not approximated** — no nesting, no second operator, no variable on the right, no multiplication or division.
+
+Implementations must **pin the refusal**, not just the acceptance: a test asserting that a form outside this grammar yields no number rather than a guess. That guard is the load-bearing half — it is what keeps this ruling from becoming an interpreter by increments.
+
+### 30.3 Why this is the honest reading
+
+The engine already resolves two things `§24.1` accepted as transcription: same-row constants (`same_row_vars`) and same-row constant *comparisons* (`eval_prevar_gate`, which evaluates `PREVAR*` gates by comparing two same-row values). **Comparing two constants is a strictly larger operation than subtracting a literal from one.** Ruling this out while permitting those would draw the boundary somewhere the existing code has already crossed.
+
+The alternative — leaving it — is not neutral. The row **ships to players today** reading *"…if they choose to do so afterward, they only gain a bonus."* A sentence with the number deleted is not a conservative outcome; it is a wrong one, and `decisions.md §29.4`'s discipline (never manufacture, never silently drop) cuts against it.
+
+### 30.4 What implementing it takes
+
+`src/bin/ingest_race_traits_arg.rs` — extend `desc_prose`'s argument resolution to the grammar in §30.2, add the refusal test, regenerate `data/corpus/advanced_race_guide/race_trait/`, and re-pin the rendered sentence. The rendered text becomes *"…they only gain a +1 bonus"* at base, moving with the character's ARG luck feats exactly as the other two segments already do (SD-27 proved that path: `Three → 4 → 5`, `+2 → +4`).
+
+**Scope: one row of 156, one binary, one regeneration.** It is a cycle task, not a bundle.
+
+### 30.5 Ledger correction
+
+`forward-scope-register.md §4.3` records row 03 as CLOSED, grouped with row 64. **Row 64 is closed; row 03 is this row and was not.** It was closed on its neighbour's evidence — the same generalise-from-one-sample shape `decisions.md §27.2` already records. §7.2 caught it; this decision resolves it.
+
+**Authority:** operator directive 2026-08-01 ("resolve… before SD-30 starts", extended to this open ruling); bounded by SD-27 `decisions.md §24.1`; census derived by command over `data/corpus/**`.
+
+## Decision 31 — The magnitude predicate: `source_record` on `ComputationExplanation` (2026-08-01)
+
+**Status:** Cross-bundle. **Whichever of SD-28 / SD-29 / SD-30 dispatches first lands it; the other two consume it.** Blocks any coverage ratio any of the three publishes.
+
+**The defect.** There is no stable predicate for *"this record carries a computed magnitude."* Magnitude rows carry no corpus key — only `detail` prose that *usually* repeats the record's name — so the question is answered today by substring-matching prose. Four reasonable variants of that match returned **48 / 49 / 51 / 52 on one unchanged tree** during SD-27, and every one was correctly derived. The tranche published 23, 32, 35, 46, 49, 51 and 52 for one property in a single session; each was a different *predicate*, not a different tree.
+
+**Why it blocks all three bundles.** SD-28, SD-29 and SD-30 will each want a "% of records that reach a player" figure. Without a shared predicate, all three publish numbers that are individually defensible and **mutually incomparable** — and incomparable with SD-27's. A reader cannot tell progress from a change of definition.
+
+**The fix, and it is small.** `ComputationExplanation` (`src/rules_core/pilot_compute.rs:209`) is `{ id, value, detail }`. Add an optional fourth field naming the corpus record the row came from:
+
+```rust
+pub struct ComputationExplanation {
+    pub id: String,
+    pub value: i16,
+    pub detail: String,
+    /// The corpus record key this magnitude was derived from, when it came
+    /// from one. `None` for rows computed from the chassis rather than a
+    /// record. Makes "does record X carry a magnitude?" a lookup instead of
+    /// a prose substring match.
+    pub source_record: Option<String>,
+}
+```
+
+Then the predicate is a set membership test — exact, reproducible, and identical across bundles — instead of a regex over English.
+
+**Ruling on how it lands:**
+
+1. **Additive and optional.** `None` on every existing row; no call site is forced to change in the same commit.
+2. **Populate it where a row is derived from a corpus record**, starting with the families the bundle is measuring. A partially-populated field still gives an exact answer for the populated part, which prose matching never does.
+3. **Publish no coverage ratio until the families in that ratio are populated.** A ratio over a partially-populated field is the same defect wearing a new field name.
+4. **State the predicate beside every ratio** regardless (`forward-scope-register.md §7.5`, and the dispatching-brief rule *"a ratio ships with its predicate"* now in `AGENTS.md`).
+
+**This is SD-27 `decisions.md §27.1` recurring one layer up** — *625 mentions vs 271 settings; the arithmetic was never the defect, the label was.* There the label was ambiguous between two readings of one file; here it is ambiguous between four readings of one tree.
+
+**Authority:** operator directive 2026-08-01; evidence in `docs/retro/tranche-7-retrospective.md` and `forward-scope-register.md §7.5`; cross-referenced from `../SD-28-ultimate-book-content-ingestion/forward-scope-register.md §C4.3` and `../SD-30-occult-and-companion-content-ingestion/forward-scope-register.md §C4.5`.
