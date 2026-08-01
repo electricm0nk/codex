@@ -1,0 +1,280 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Monk ~ Unchained Class",
+    "name": "Unchained Monk",
+    "base_class_key": "Monk",
+    "base_class_book": "core_rulebook",
+    "category": "CLASS",
+    "type_tokens": [
+      "Monk Class Selection",
+      "AltMonkChoice"
+    ],
+    "hit_die": 10,
+    "hit_die_template": "Monk ~ Unchained HD",
+    "bab": "level",
+    "bab_replaces_base": true,
+    "save_fort": "level/2+2",
+    "save_ref": "level/2+2",
+    "save_will": "level/3",
+    "class_skills": [
+      "Acrobatics",
+      "Climb",
+      "TYPE=Craft",
+      "Escape Artist",
+      "Intimidate",
+      "Knowledge (History)",
+      "Knowledge (Religion)",
+      "Perception",
+      "TYPE=Perform",
+      "TYPE=Profession",
+      "Ride",
+      "Sense Motive",
+      "Stealth",
+      "Swim"
+    ],
+    "feature_grants": [
+      {
+        "feature_key": "Unchained Monk ~ Weapon and Armor Proficiency",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_WeaponandArmorProficiency"
+      },
+      {
+        "feature_key": "Unchained Monk ~ AC Bonus",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_ACBonus"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Bonus Feat",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_BonusFeat"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Flurry of Blows",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_FlurryofBlows"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Stunning Fist",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_StunningFist"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Unarmed Strike",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_UnarmedStrike"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Evasion",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 2,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_Evasion"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Fast Movement",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 3,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_FastMovement"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Ki Pool",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 3,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_KiPool"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Ki Powers",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 4,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_KiPowers"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Still Mind",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 4,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_StillMind"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Purity of Body",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 5,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_PurityofBody"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Style Strike",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 5,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_StyleStrike"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Improved Evasion",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 9,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_ImprovedEvasion"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Tongue of the Sun and Moon",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 13,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_TongueoftheSunandMoon"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Timeless Body",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 17,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_TimelessBody"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Flawless Mind",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 19,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_FlawlessMind"
+      },
+      {
+        "feature_key": "Unchained Monk ~ Perfect Self",
+        "feature_category": "Unchained Monk Class Feature",
+        "min_level": 20,
+        "granted_by_key": "Monk ~ Unchained Class",
+        "suppressed_by_var": "Monk_CF_PerfectSelf"
+      }
+    ],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Monk ~ Unchained Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Monk Class Selection.AltMonkChoice"
+      },
+      {
+        "key": "!PREABILITY",
+        "value": "1,CATEGORY=Archetype,TYPE.MonkArchetype,[Archetype Monk]"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Monk ~ Unchained HD"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Class Skills ~ Unchained Monk|PREVAREQ:Monk_CF_ClassSkills,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Unchained Monk Archetype|AUTOMATIC|Unchained Monk Archetype"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IsMonk",
+          "1",
+          "TYPE=Boolean"
+        ]
+      },
+      {
+        "qualifiers": [
+          "COMBAT",
+          "BASEAB",
+          "classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")",
+          "TYPE=Base.REPLACE",
+          "PREVAREQ:UseAlternateBABProgression,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SAVE",
+          "BASE.Fortitude,BASE.Reflex",
+          "classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")/2+2",
+          "PREVAREQ:UseAlternateSaveProgression,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SAVE",
+          "BASE.Will",
+          "classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")/3",
+          "PREVAREQ:UseAlternateSaveProgression,0"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ClassBABFull",
+          "classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")",
+          "PREVAREQ:UseFractionalBAB,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ClassSaveGood_Fortitude",
+          "classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")",
+          "PREVAREQ:UseFractionalSave,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ClassSaveGood_Reflex",
+          "classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")",
+          "PREVAREQ:UseFractionalSave,1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "ClassSavePoor_Will",
+          "classlevel(\"Monk\",\"APPLIEDAS=NONEPIC\")",
+          "PREVAREQ:UseFractionalSave,1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 115,
+    "record_key": "Monk ~ Unchained Class"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

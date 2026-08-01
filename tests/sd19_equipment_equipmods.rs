@@ -122,7 +122,7 @@ fn every_addressable_real_corpus_item_resolves_reaches_equipped_items_and_ground
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };

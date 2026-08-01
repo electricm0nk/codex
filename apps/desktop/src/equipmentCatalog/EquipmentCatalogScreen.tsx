@@ -53,6 +53,18 @@ export function formatBookList(codes: readonly string[]): string {
 }
 
 /**
+ * True when a record carries real corpus description prose worth rendering.
+ *
+ * `null` is the corpus's honest "this row has no `DESC:` token" — 974 of the
+ * 3830 served records are in that state — and a whitespace-only string is the
+ * same absence wearing a different shape. Both render as no description line
+ * at all, never as an empty box or an invented sentence.
+ */
+export function hasDescription(description: string | null | undefined): description is string {
+  return typeof description === 'string' && description.trim().length > 0;
+}
+
+/**
  * Full equipment catalog browser — every real corpus record across every
  * ingested book, not a per-character sample. The Rust adapter chains CRB,
  * APG, ACG, Bestiary 1, ARG and Pathfinder Unchained into one catalog
@@ -115,6 +127,16 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
     [entries]
   );
 
+  /**
+   * Records carrying real corpus `DESC:` prose. Derived from what loaded,
+   * like every other number on this screen, so the caption cannot claim
+   * description coverage the data does not back.
+   */
+  const describedCount = useMemo(
+    () => (entries ?? []).filter((entry) => hasDescription(entry.description)).length,
+    [entries]
+  );
+
   const filtered = useMemo(() => {
     if (!entries) return [];
     const needle = query.trim().toLowerCase();
@@ -162,6 +184,14 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
                 {' '}
                 {costlessCount} carry no flat gp cost in the corpus and show a dash rather than a
                 made-up price.
+              </>
+            ) : null}
+            {totalCount > 0 && describedCount < totalCount ? (
+              <>
+                {' '}
+                {describedCount} carry the book's own description text; the other{' '}
+                {totalCount - describedCount} have none in the corpus and show no description line
+                rather than an invented one.
               </>
             ) : null}
           </p>
@@ -236,29 +266,57 @@ export function EquipmentCatalogScreen(props: { onClose: () => void }) {
               <div
                 key={`${entry.book}:${entry.category}:${entry.key}:${index}`}
                 style={{
-                  alignItems: 'baseline',
                   borderBottom: '1px solid var(--color-border)',
-                  display: 'flex',
-                  gap: '0.75rem',
-                  justifyContent: 'space-between',
                   padding: '0.5rem 0',
                 }}
               >
-                <span>
-                  <span style={{ fontWeight: 700 }}>{entry.name}</span>
-                  <span
-                    style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}
-                    title={BOOK_LABELS[entry.book] ?? entry.book}
+                <div
+                  style={{
+                    alignItems: 'baseline',
+                    display: 'flex',
+                    gap: '0.75rem',
+                    justifyContent: 'space-between',
+                  }}
+                >
+                  <span>
+                    <span style={{ fontWeight: 700 }}>{entry.name}</span>
+                    <span
+                      style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}
+                      title={BOOK_LABELS[entry.book] ?? entry.book}
+                    >
+                      {entry.book}
+                    </span>
+                    <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
+                      {CATEGORY_LABELS[entry.category] ?? entry.category}
+                    </span>
+                  </span>
+                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
+                    {entry.costGp === null ? '—' : `${entry.costGp} gp`}
+                  </span>
+                </div>
+                {/*
+                  The book's own prose, already rendered by the Rust adapter's
+                  `serve_description`. Rendered verbatim and in full — this is
+                  the surface that owns the complete text, which is why the Add
+                  Item picker is free to show only a bounded summary.
+
+                  Rows with no corpus description emit no element at all: no
+                  empty paragraph, no stand-in dash. `white-space: pre-line`
+                  honours the paragraph breaks the corpus text carries.
+                */}
+                {hasDescription(entry.description) ? (
+                  <p
+                    style={{
+                      color: 'var(--color-text-muted)',
+                      fontSize: '0.78rem',
+                      lineHeight: 1.45,
+                      margin: '0.3rem 0 0',
+                      whiteSpace: 'pre-line',
+                    }}
                   >
-                    {entry.book}
-                  </span>
-                  <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginLeft: '0.5rem' }}>
-                    {CATEGORY_LABELS[entry.category] ?? entry.category}
-                  </span>
-                </span>
-                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', whiteSpace: 'nowrap' }}>
-                  {entry.costGp === null ? '—' : `${entry.costGp} gp`}
-                </span>
+                    {entry.description}
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>

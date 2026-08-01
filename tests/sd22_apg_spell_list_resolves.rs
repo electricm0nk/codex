@@ -76,7 +76,7 @@ fn bombers_eye_returns_none_for_ruleset_crb() {
 // Real-corpus-gated grounding test, opt-in via `PCGEN_CORPUS_ROOT` per the
 // established pattern in tests/sd22_apg_class_alchemist_resolves.rs.
 #[test]
-#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data"]
+#[ignore = "requires a local PCGen corpus checkout; set PCGEN_CORPUS_ROOT=$HOME/workspace/repos/pcgen/data"]
 fn hand_transcribed_spell_sample_matches_the_real_lst_lines() {
     let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
         .expect("set PCGEN_CORPUS_ROOT to the pcgen data/ directory to run this grounding test");

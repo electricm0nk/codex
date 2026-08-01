@@ -1,0 +1,148 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Rogue ~ Unchained Class",
+    "name": "Unchained Rogue",
+    "base_class_key": "Rogue",
+    "base_class_book": "core_rulebook",
+    "category": "CLASS",
+    "type_tokens": [
+      "Rogue Class Selection",
+      "AltRogueChoice"
+    ],
+    "hit_die": null,
+    "hit_die_template": null,
+    "bab": null,
+    "bab_replaces_base": false,
+    "save_fort": null,
+    "save_ref": null,
+    "save_will": null,
+    "class_skills": [],
+    "feature_grants": [
+      {
+        "feature_key": "Unchained Rogue ~ Armor Proficiency",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_ArmorProficiency"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Finesse Training",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_FinesseTraining"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Skills",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_Skills"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Sneak Attack",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_SneakAttack"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Trapfinding",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_Trapfinding"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Weapon Proficiency",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 1,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_WeaponProficiency"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Evasion",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 2,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_Evasion"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Rogue Talents",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 2,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_RogueTalents"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Danger Sense",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 3,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_TrapSense"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Debilitating Injury",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 4,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_DebilitatingInjury"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Uncanny Dodge Tracker",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 4,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_UncannyDodge"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Rogues Edge",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 5,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_RoguesEdge"
+      },
+      {
+        "feature_key": "Unchained Rogue ~ Master Strike",
+        "feature_category": "Unchained Rogue Class Feature",
+        "min_level": 20,
+        "granted_by_key": "Rogue ~ Unchained Class",
+        "suppressed_by_var": "Rogue_CF_MasterStrike"
+      }
+    ],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rogue ~ Unchained Class"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "CLASS"
+      },
+      {
+        "key": "TYPE",
+        "value": "Rogue Class Selection.AltRogueChoice"
+      },
+      {
+        "key": "COST",
+        "value": "1"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 116,
+    "record_key": "Rogue ~ Unchained Class"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

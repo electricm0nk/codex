@@ -15,7 +15,7 @@
 //! lines 185 and 89 respectively), both carrying a real, verbatim
 //! `BONUS:WEAPONPROF=%LIST|DAMAGE|2` token — confirmed directly against
 //! the live corpus at
-//! `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst`.
+//! `$HOME/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_feats.lst`.
 //! CRB's own benefit text confirms the constant: "You gain a +2 bonus on
 //! all damage rolls you make using the selected weapon" (p.137 / p.126).
 //!

@@ -47,6 +47,26 @@ export interface EquipmentCatalogEntryDto {
   costGp: number | null;
   /** Which ingested book this record came from. */
   book: EquipmentBookDto;
+  /**
+   * The record's corpus `DESC:` prose, already rendered on the Rust side by
+   * `equipment_catalog.rs`'s `serve_description` (the same
+   * `render_pcgen_desc` treatment the spell catalog uses, which is what
+   * strips the raw `%%` escapes 54 records used to leak). **Safe to render
+   * verbatim — do not re-process it here.**
+   *
+   * `null` where the corpus row genuinely carries no description, which is
+   * a real and documented gap for template/bookkeeping rows, never a
+   * fabricated placeholder. 2856 of the 3830 served records carry one;
+   * the remaining 974 are honestly `null` and must render as *nothing*
+   * rather than as an invented line of text.
+   *
+   * **Required, not optional.** An optional field would let a fixture omit
+   * it and still type-check, which is precisely how this field came to be
+   * rendered by the Rust adapter and read by nothing: it crossed the IPC
+   * boundary and no consumer was obliged to notice. `null` is the way to
+   * say "this record has no description"; leaving it out is not.
+   */
+  description: string | null;
 }
 
 export interface EquipmentCatalogResponse {

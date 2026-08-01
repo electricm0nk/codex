@@ -35,6 +35,16 @@ export function buildPreviewListSurface(): CharacterHubListSurface {
 
 export function buildPreviewDetail(): LoadSavedCharacterResponse {
   return {
+    // The preview character takes no alternate racial trait. Inventing one
+    // would put a swap on a sample sheet that no engine resolved.
+    selectedAlternateTraitKeys: [],
+    // And no racial-trait resolution: every sentence in one is *rendered* by
+    // the engine from the corpus row's own `DESC:` tokens against this
+    // character's feats. Hand-writing a sample here would put corpus-looking
+    // rules prose on screen that no corpus produced — the fixture-in-a-
+    // production-path failure `docs/governance/no-stub-mvp-doctrine.md`
+    // prohibits. The preview says the section is unavailable instead.
+    resolvedRacialTraits: null,
     summary: {
       characterId: PREVIEW_CHARACTER_ID,
       displayLabel: 'Aldric Ironhand',

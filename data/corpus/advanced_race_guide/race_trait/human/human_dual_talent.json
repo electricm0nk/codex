@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Human ~ Dual Talent",
+    "name": "Dual Talent",
+    "race_key": "Human",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Human Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Human_ReplaceAbilityScores",
+      "Human_ReplaceBonusFeat",
+      "Human_ReplaceSkilled"
+    ],
+    "description": "Some humans are uniquely skilled at maximizing their natural gifts. These humans pick two ability scores and gain a +2 racial bonus in each of those scores. This racial trait replaces the +2 bonus to any one ability score, the bonus feat, and the skilled traits.",
+    "source_page": "p.72",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Dual Talent"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Dual Talent],[!PREFACT:1,ABILITIES,Human_ReplaceAbilityScores=true,Human_ReplaceBonusFeat=true,Human_ReplaceSkilled=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some humans are uniquely skilled at maximizing their natural gifts. These humans pick two ability scores and gain a +2 racial bonus in each of those scores."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the +2 bonus to any one ability score, the bonus feat, and the skilled traits.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Dual Talent"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.72"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceAbilityScores|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceBonusFeat|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceSkilled|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Ability Bonus",
+          "2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 258,
+    "record_key": "Human ~ Dual Talent"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

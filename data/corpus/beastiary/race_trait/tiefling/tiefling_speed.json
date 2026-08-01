@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Tiefling ~ Speed",
+    "name": "Normal Speed",
+    "race_key": "Tiefling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tiefling Racial Trait",
+      "Tiefling Racial Default",
+      "SpecialQuality",
+      "Racial Speed"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Tiefling_ReplaceSpeed",
+    "sets_replace_flags": [],
+    "description": "Tieflings have a base speed of 30 feet.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.Tiefling Racial Default.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Tiefling_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Tieflings have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "MOVEBASE",
+          "30"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race.lst",
+    "sha256": "00e5df2aea67ee05c75a64f8116a0da2aacf03252d8dae24073ea196365c1960",
+    "line": 18,
+    "record_key": "Tiefling ~ Speed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

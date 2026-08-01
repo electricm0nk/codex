@@ -53,6 +53,7 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
 };
@@ -95,6 +96,29 @@ pub struct EquipmentCatalogEntryDto {
     /// not read it is unaffected, and one that does can label or filter
     /// by book the way the Spell Catalog screen already does.
     pub book: String,
+    /// The record's corpus `DESC:` prose, rendered by [`serve_description`].
+    /// `None` where the corpus row genuinely carries no description — a
+    /// real and documented gap for template/bookkeeping rows (see
+    /// `crb::equipment_tables::EquipmentTableEntry::description`), never a
+    /// fabricated placeholder.
+    pub description: Option<String>,
+}
+
+/// Renders one table description into the prose this catalog is allowed to
+/// serve — the identical treatment `spell_catalog::serve_description`
+/// already applies, and the reason this module now has one.
+///
+/// Equipment descriptions were being read out of the compiled tables and
+/// were **never** run through the renderer, so 54 records still carried the
+/// raw PCGen `%%` literal-percent escape: ARG's `Helmet (Dwarven Boulder)`
+/// ("adds 20%% to the wearer's arcane spell failure chance") plus 53 CRB
+/// records (41 MagicItems, 6 General, 6 ArmsArmor). Counts derived by
+/// running the catalog through `leaked_pcgen_syntax`, not assumed.
+///
+/// [`render_pcgen_desc`] owns the treatment and the reasoning about what
+/// may and may not be substituted; this module does not re-decide it.
+fn serve_description(raw: &str) -> String {
+    render_pcgen_desc(raw).text
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -110,6 +134,7 @@ fn map_crb_entry(entry: &crb::equipment_tables::EquipmentTableEntry) -> Equipmen
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
         book: BOOK_CRB.to_string(),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -120,6 +145,7 @@ fn map_apg_entry(entry: &apg::equipment_tables::EquipmentTableEntry) -> Equipmen
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
         book: BOOK_APG.to_string(),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -130,6 +156,7 @@ fn map_acg_entry(entry: &acg::equipment_tables::EquipmentTableEntry) -> Equipmen
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
         book: BOOK_ACG.to_string(),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -142,6 +169,7 @@ fn map_beastiary1_entry(
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
         book: BOOK_B1.to_string(),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -152,6 +180,7 @@ fn map_arg_entry(entry: &arg::equipment_tables::EquipmentTableEntry) -> Equipmen
         name: entry.name.to_string(),
         cost_gp: entry.cost_gp,
         book: BOOK_ARG.to_string(),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -167,6 +196,7 @@ fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentC
         name: entry.name.to_string(),
         cost_gp: None,
         book: BOOK_PU.to_string(),
+        description: entry.description.map(serve_description),
     }
 }
 
@@ -262,6 +292,249 @@ pub fn list_equipment(filter: EquipmentCatalogFilter) -> EquipmentCatalogRespons
 mod tests {
     use super::*;
     use std::collections::{BTreeMap, BTreeSet};
+
+    /// **One guard over every catalog, rather than one guard per catalog.**
+    ///
+    /// `spell_catalog.rs` already carried a per-catalog version of this test,
+    /// and it caught nothing outside spells — which is exactly how equipment
+    /// descriptions kept 54 raw `%%` escapes and the Add Feat picker kept 16
+    /// leaking feat descriptions. Five per-catalog guards leave the sixth
+    /// catalog unguarded; this one fails the moment *any* description-bearing
+    /// surface serves PCGen syntax, so a new catalog is covered by existing
+    /// code rather than by someone remembering to add a test.
+    ///
+    /// **Every description-bearing catalog surface in the desktop app is
+    /// enumerated here.** Derived by reading each `*_catalog.rs`/picker DTO,
+    /// not assumed:
+    ///
+    /// | module | prose field(s) | covered |
+    /// |---|---|---|
+    /// | `spell_catalog` | `description` | yes |
+    /// | `feat_catalog` | `description` | yes |
+    /// | `equipment_catalog` | `description` | yes |
+    /// | `race_catalog` | `detail` (the trait's `DESC:`), `trait_name` | yes |
+    /// | `race_trait_picker` | alternates' + standard traits' `description` | yes |
+    /// | `class_catalog` | none — the DTO is `classId` plus five integers | n/a |
+    /// | `monster_catalog` | none — no description field on the DTO | n/a |
+    ///
+    /// **Two monster-catalog strings are deliberately out of this guard's
+    /// scope, and neither is a description:**
+    ///
+    /// * `NaturalAttackDto::grounding_note` quotes real corpus tokens inside
+    ///   backticks on purpose (``ABILITY:Internal|AUTOMATIC|Bite``) — it is
+    ///   provenance for a reader re-checking a transcription, and rendering
+    ///   the quoted token would destroy the thing it exists to show. 14 notes.
+    /// * `MonsterCatalogEntryDto::race_subtype` serves the `RACESUBTYPE:`
+    ///   token verbatim, and 2 rows are multi-valued: Vargouille
+    ///   `"Evil|Extraplanar"` and Hell Hound `"Evil|Extraplanar|Fire|Lawful"`.
+    ///   That **is** a raw PCGen separator reaching a player, but it is a
+    ///   token field rather than a `DESC:` rendering, its fix is to join the
+    ///   values for display, and `monster_catalog.rs` is outside this change's
+    ///   write scope. Recorded here so it is a known open finding rather than
+    ///   a silent omission.
+    #[test]
+    fn no_catalog_serves_a_description_carrying_raw_pcgen_syntax() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+
+        let mut checked = 0usize;
+        let mut leaks: Vec<String> = Vec::new();
+        let mut check = |surface: &str, identity: &str, text: &str| {
+            checked += 1;
+            if let Some(leak) = leaked_pcgen_syntax(text) {
+                leaks.push(format!("{surface} {identity}: {leak} in {text:?}"));
+            }
+        };
+
+        for entry in &crate::spell_catalog::build_spell_catalog().entries {
+            if let Some(description) = entry.description.as_deref() {
+                check("spell", &entry.key, description);
+            }
+        }
+        for entry in &crate::feat_catalog::build_feat_catalog().entries {
+            if let Some(description) = entry.description.as_deref() {
+                check("feat", &entry.key, description);
+            }
+        }
+        for entry in &build_equipment_catalog().entries {
+            if let Some(description) = entry.description.as_deref() {
+                check("equipment", &entry.key, description);
+            }
+        }
+
+        // The two corpus-backed surfaces report their own read failures. A
+        // diagnostic here would mean the guard is inspecting a shrunken
+        // catalog, so it fails rather than passing on less than it claims.
+        let races = crate::race_catalog::build_race_catalog();
+        assert!(races.diagnostics.is_empty(), "race catalog diagnostics: {:?}", races.diagnostics);
+        for entry in &races.entries {
+            let identity = format!("{}/{}", entry.race_id, entry.trait_name);
+            check("race.detail", &identity, &entry.detail);
+            check("race.traitName", &identity, &entry.trait_name);
+        }
+
+        let picker = crate::race_trait_picker::build_alternate_racial_traits();
+        assert!(
+            picker.diagnostics.is_empty(),
+            "race trait picker diagnostics: {:?}",
+            picker.diagnostics
+        );
+        for race in &picker.races {
+            for trait_dto in &race.alternates {
+                check("raceTrait.alternate", &trait_dto.key, &trait_dto.description);
+            }
+            for trait_dto in &race.standard_traits {
+                check("raceTrait.standard", &trait_dto.key, &trait_dto.description);
+            }
+        }
+
+        assert!(leaks.is_empty(), "catalogs serving raw PCGen syntax ({}): {leaks:#?}", leaks.len());
+        // A guard that silently stopped reading anything would also report
+        // zero leaks, so the reach is pinned as a floor. 5394 strings,
+        // derived by printing each surface's own tally rather than assumed:
+        // 1185 spell + 681 feat + 2856 equipment descriptions, 2x173 race
+        // (detail and traitName), and 326 race-trait descriptions (153
+        // alternates + 173 standard). The catalogs may grow; they cannot
+        // quietly empty out beneath the guard.
+        assert!(
+            checked >= 5394,
+            "the guard inspected only {checked} descriptions; it is no longer covering the \
+             catalogs it claims to"
+        );
+    }
+
+    /// The 54-record `%%` leak, pinned on both sides of the render so the
+    /// fix cannot be mistaken for the corpus having changed.
+    ///
+    /// The compiled tables still hold the raw escape — that is correct, they
+    /// are a transcription of the corpus — and the catalog is what must not
+    /// pass it on. Per book and category, derived by running
+    /// `leaked_pcgen_syntax` over both sides:
+    ///
+    /// | book | category | raw table | served |
+    /// |---|---|---:|---:|
+    /// | CRB | MagicItems | 41 | 0 |
+    /// | CRB | General | 6 | 0 |
+    /// | CRB | ArmsArmor | 6 | 0 |
+    /// | ARG | ArmsArmor | 1 | 0 |
+    /// | APG / ACG / B1 / PU | all | 0 | 0 |
+    #[test]
+    fn the_raw_percent_escape_stops_at_the_catalog_boundary() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+
+        let mut raw_leaks: BTreeMap<(&str, String), usize> = BTreeMap::new();
+        let mut count_raw = |book: &'static str, category: String, description: Option<&str>| {
+            if let Some(text) = description {
+                if leaked_pcgen_syntax(text).is_some() {
+                    *raw_leaks.entry((book, category)).or_default() += 1;
+                }
+            }
+        };
+        for entry in crb::equipment_tables::equipment_tables() {
+            count_raw("CRB", format!("{:?}", entry.category), entry.description);
+        }
+        for entry in apg::equipment_tables::EQUIPMENT_TABLE {
+            count_raw("APG", format!("{:?}", entry.category), entry.description);
+        }
+        for entry in acg::equipment_tables::equipment_tables() {
+            count_raw("ACG", format!("{:?}", entry.category), entry.description);
+        }
+        for entry in beastiary1::equipment_tables::EQUIPMENT_TABLE {
+            count_raw("B1", format!("{:?}", entry.category), entry.description);
+        }
+        for entry in arg::equipment_tables::equipment_tables() {
+            count_raw("ARG", format!("{:?}", entry.category), entry.description);
+        }
+        for entry in pu::equipment_tables::equipment_tables() {
+            count_raw("PU", PU_CATEGORY.to_owned(), entry.description);
+        }
+
+        let expected: BTreeMap<(&str, String), usize> = [
+            (("CRB", "MagicItems".to_owned()), 41),
+            (("CRB", "General".to_owned()), 6),
+            (("CRB", "ArmsArmor".to_owned()), 6),
+            (("ARG", "ArmsArmor".to_owned()), 1),
+        ]
+        .into_iter()
+        .collect();
+        assert_eq!(raw_leaks, expected, "the raw tables' own leak profile");
+        assert_eq!(raw_leaks.values().sum::<usize>(), 54);
+
+        let served_leaks: Vec<&str> = build_equipment_catalog()
+            .entries
+            .iter()
+            .filter(|entry| {
+                entry
+                    .description
+                    .as_deref()
+                    .is_some_and(|d| leaked_pcgen_syntax(d).is_some())
+            })
+            .map(|_| "leak")
+            .collect();
+        assert!(served_leaks.is_empty(), "{} served equipment descriptions still leak", served_leaks.len());
+    }
+
+    /// The record the defect was reported against, asserted as the whole
+    /// sentence a player reads rather than as "does not contain `%%`" — a
+    /// containment check would also pass if the renderer had eaten the
+    /// number along with the escape.
+    #[test]
+    fn helmet_dwarven_boulder_reads_as_prose() {
+        let helmet = build_equipment_catalog()
+            .entries
+            .into_iter()
+            .find(|entry| entry.key == "Helmet (Dwarven Boulder)")
+            .expect("ARG's Dwarven Boulder Helmet is in the catalog");
+        assert_eq!(helmet.book, "ARG");
+
+        let description = helmet.description.expect("the ARG row carries a DESC: token");
+        assert!(
+            description.contains(
+                "A dwarven boulder helmet adds 20% to the wearer's arcane spell failure chance."
+            ),
+            "the arcane-spell-failure sentence must read as prose: {description}"
+        );
+        assert_eq!(
+            description,
+            "This heavy, reinforced helmet can be used to make melee attacks. The wearer may \
+             also use the helmet when attempting bull rush maneuvers, granting a +2 circumstance \
+             bonus on the check, but after completing the maneuver (whether successful or not), \
+             the wearer is staggered until the end of his next turn. In addition, the helmet \
+             grants a +2 circumstance bonus to the wearer's AC against critical hit confirmation \
+             rolls. A dwarven boulder helmet adds 20% to the wearer's arcane spell failure \
+             chance. It occupies the head slot and is made of metal, not stone, meaning that it \
+             can be crafted from unusual materials as a metal weapon. A dwarven boulder helmet \
+             can be enchanted as a weapon (not as armor, despite providing some protection)."
+        );
+    }
+
+    /// How many records actually carry description text, per book. Pinned
+    /// because `description` is `Option` and a mapper silently handing out
+    /// `None` everywhere would pass every leak assertion above.
+    #[test]
+    fn description_coverage_is_pinned_per_book() {
+        let response = build_equipment_catalog();
+        let with_description = |book: &str| {
+            response
+                .entries
+                .iter()
+                .filter(|e| e.book == book && e.description.is_some())
+                .count()
+        };
+
+        // Real corpus coverage, not a target: CRB and ARG carry template and
+        // bookkeeping rows with no `DESC:` token at all, and that gap is
+        // documented on `crb::equipment_tables::EquipmentTableEntry`.
+        assert_eq!(with_description("CRB"), 2021);
+        assert_eq!(with_description("APG"), 331);
+        assert_eq!(with_description("ACG"), 264);
+        assert_eq!(with_description("B1"), 4);
+        assert_eq!(with_description("ARG"), 194);
+        assert_eq!(with_description("PU"), 42);
+        assert_eq!(
+            response.entries.iter().filter(|e| e.description.is_some()).count(),
+            2856
+        );
+    }
 
     /// Every count in this module's tests was derived, never assumed, by
     /// running the catalog itself and printing the tallies:

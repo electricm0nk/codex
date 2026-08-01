@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Drow ~ Speed",
+    "name": "Normal Speed",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "Drow Racial Default",
+      "SpecialQuality",
+      "Racial Speed"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Drow_ReplaceSpeed",
+    "sets_replace_flags": [],
+    "description": "Drow have a base speed of 30 feet.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.Drow Racial Default.SpecialQuality.Racial Speed"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Drow_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Drow have a base speed of 30 feet."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,30"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "MOVEBASE",
+          "30"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_abilities_race.lst",
+    "sha256": "c7e61fc9b3213d4d6c074685d5e9e4876ed2dce76f4d225ff23f76224027cc8f",
+    "line": 17,
+    "record_key": "Drow ~ Speed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Dwarf ~ Craftsman",
+    "name": "Craftsman",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceGreed"
+    ],
+    "description": "Dwarves are known for their superior craftsmanship when it comes to metallurgy and stonework. Dwarves with this racial trait receive a +2 racial bonus on all Craft or Profession checks related to metal or stone. This racial trait replaces greed.",
+    "source_page": "p.11",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Craftsman"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Craftsman],[!PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves are known for their superior craftsmanship when it comes to metallurgy and stonework. Dwarves with this racial trait receive a +2 racial bonus on all Craft or Profession checks related to metal or stone."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces greed.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Craftsman"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.11"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on all Craft or Profession checks that create objects from metal or stone."
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceGreed|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 34,
+    "record_key": "Dwarf ~ Craftsman"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

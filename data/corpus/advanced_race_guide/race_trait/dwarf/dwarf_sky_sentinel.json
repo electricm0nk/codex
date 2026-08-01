@@ -1,0 +1,116 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Dwarf ~ Sky Sentinel",
+    "name": "Sky Sentinel",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "Defensive"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceDefensiveTraining",
+      "Dwarf_ReplaceHatred",
+      "Dwarf_ReplaceStonecunning"
+    ],
+    "description": "As creatures with a deep affinity for the ground, dwarves are wary of attacks from above. Enemies on higher ground gain no attack roll bonus against dwarves with this racial trait, and they gain a +1 racial bonus on attack rolls, a +2 dodge bonus to AC, and a +2 bonus on Perception checks against flying creatures. This racial trait replaces defensive training, hatred, and stonecunning.",
+    "source_page": "p.12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Sky Sentinel"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialAttack.Special Attack.Defensive"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Sky Sentinel],[!PREFACT:1,ABILITIES,Dwarf_ReplaceDefensiveTraining=true,Dwarf_ReplaceHatred=true,Dwarf_ReplaceStonecunning=true]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialDefensiveTrainingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "As creatures with a deep affinity for the ground, dwarves are wary of attacks from above. Enemies on higher ground gain no attack roll bonus against dwarves with this racial trait, and they gain a +1 racial bonus on attack rolls, a +2 dodge bonus to AC, and a +2 bonus on Perception checks against flying creatures."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces defensive training, hatred, and stonecunning.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Sky Sentinel"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on attack rolls and a +2 dodge bonus to AC against flying creatures."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 dodge bonus to AC vs. flying creatures)|RacialDefensiveTrainingBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against flying creatures"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceDefensiveTraining|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceHatred|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceStonecunning|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Perception=to notice flying creatures",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialDefensiveTrainingBonus",
+          "2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 44,
+    "record_key": "Dwarf ~ Sky Sentinel"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

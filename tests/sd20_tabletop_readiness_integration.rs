@@ -560,7 +560,7 @@ fn character_input_from_fixture(input: &Json) -> CharacterInput {
 }
 
 /// Real verbatim rows copied from the live corpus
-/// (`/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/`):
+/// (`$HOME/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/`):
 /// `cr_equip_arms_armor.lst` (`KEY:Longsword (Base)` line 165,
 /// `KEY:Chain Shirt (Base)` line 40) and `cr_equipmods.lst`
 /// (`KEY:Special Quality ~ Masterwork ~ Weapon` line 18, the "Masterwork

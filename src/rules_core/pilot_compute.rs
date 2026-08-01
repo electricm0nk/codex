@@ -123,12 +123,23 @@ use super::feat_prereqs::metamagic::{evaluate_metamagic_feat_prerequisites, reso
 use super::rules_tables::acg::{self, AcgClassId};
 use super::rules_tables::acg::shaman_spell_list;
 use super::rules_tables::acg::hunter_spell_list;
+use super::rules_tables::advanced_race_guide;
 use super::rules_tables::apg::{self, ApgClassId};
+use super::rules_tables::class_spell_levels;
 use super::rules_tables::apg::alchemist_spell_list;
 use super::rules_tables::apg::inquisitor_spell_list;
 use super::rules_tables::apg::witch_spell_list;
+use super::rules_tables::pathfinder_unchained::class_chassis::{self as pu_class_chassis, PuClassId};
+use super::rules_tables::pathfinder_unchained::{
+    barbarian_features, monk_features, rogue_features, summoner_features,
+};
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
+use crate::rules_core::pcgen_desc::{
+    leaked_pcgen_syntax, render_pcgen_desc_tokens, PcgenDisplayValues,
+};
+use crate::rules_core::race_resolver::race_size_for_race_token;
+use crate::rules_core::size::SizeCategory;
 use super::rules_tables::crb::class_tables::{ClassId, class_tables, good_saves_for};
 use super::rules_tables::crb::paladin_spell_list;
 use super::rules_tables::crb::bard_spell_list;
@@ -6835,6 +6846,374 @@ const CHAIN_SHIRT_MAX_DEX: i16 = 4;
 pub(crate) const DODGE_AC_BONUS: i16 = 1;
 pub(crate) const WEAPON_FOCUS_TO_HIT_BONUS: i16 = 1;
 
+/// Raised when a character's `race_id` resolves to no ingested race, so its
+/// creature size -- and therefore its size modifier to Armor Class -- is
+/// unknown.
+///
+/// Claim-blocking, deliberately, and for the same reason
+/// `contract::encumbrance_size_for_race` already blocks on the identical
+/// condition: an Armor Class computed at an assumed size is not real data, and
+/// this repo's recorded failure mode is wrong numbers that survived because
+/// nothing failed loudly. All 18 creatable races resolve, so no character a
+/// player can actually build reaches this.
+pub(crate) const UNKNOWN_RACE_ARMOR_CLASS_SIZE_DIAGNOSTIC_ID: &str =
+    "defense.size_modifier.unknown_race";
+
+/// Every size-derived term the combat baseline needs, resolved **once** per
+/// computation so a single unknown race raises exactly one diagnostic rather
+/// than one per consumer.
+///
+/// The two magnitudes are different PF1 columns, not one value reused: Table
+/// 8-1's *Size Modifier* (Armor Class, and attack rolls, which take the
+/// identical value) and the *special size modifier* the CMB/CMD text calls for,
+/// which runs in the opposite direction. See `size.rs`, which transcribes both
+/// against the published table and pins them independently.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub(crate) struct CombatSizeModifiers {
+    /// PF1 Table 8-1's size modifier: applies to Armor Class (and therefore
+    /// touch AC) **and** to attack rolls.
+    pub(crate) armor_class_and_attack: i16,
+    /// The special size modifier: applies to CMB and CMD.
+    pub(crate) special: i16,
+    /// Human-readable size name for the explanation strings, or `"unknown"`.
+    pub(crate) label: &'static str,
+    /// The resolved category itself, or `None` for an unresolvable race.
+    /// Needed because CMB's ability-modifier term is size-*dependent*, not just
+    /// size-*modified*: Tiny and smaller creatures substitute Dexterity for
+    /// Strength, which no scalar modifier can express.
+    pub(crate) category: Option<SizeCategory>,
+}
+
+/// The character's creature size, resolved into the two PF1 size-modifier
+/// columns the combat baseline consumes.
+///
+/// When the race does not resolve, both modifiers are 0 **and** a
+/// claim-blocking diagnostic is pushed, so the assumption is visible rather
+/// than laundered into a plausible-looking total.
+///
+/// # Why the size comes from `race_resolver` and not `rules_tables::crb`
+///
+/// `race_resolver::race_size_for_race_token` is the authority per
+/// `decisions.md §25.5`: it covers all 18 in-scope races and reads each one's
+/// `~ Size` racial-default trait `TEMPLATE:SIZE_<code>`, which is *not* always
+/// the chassis' `FACT:BaseSize` (Aasimar and Tiefling carry `FACT:BaseSize|S`
+/// and are Medium creatures). `rules_tables::crb::race_tables::race_size_for_race_id`
+/// knew only the 7 hardcoded CRB races and returned `None` for all 11 Bestiary 1
+/// ones -- using it here would have silently left Goblin, Kobold and
+/// Svirfneblin on Medium arithmetic, which is the very defect being fixed.
+fn combat_size_modifiers(
+    input: &CharacterInput,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> CombatSizeModifiers {
+    match race_size_for_race_token(&input.chosen.race_id) {
+        Some(size) => CombatSizeModifiers {
+            armor_class_and_attack: size.armor_class_size_modifier(),
+            special: size.special_size_modifier(),
+            label: size_label(size),
+            category: Some(size),
+        },
+        None => {
+            diagnostics.push(ComputationDiagnostic {
+                id: UNKNOWN_RACE_ARMOR_CLASS_SIZE_DIAGNOSTIC_ID.to_owned(),
+                message: format!(
+                    "race {:?} resolves to no ingested race, so its creature size is unknown; \
+                     the size modifiers to Armor Class, touch AC, attack rolls, CMB and CMD \
+                     could not be applied and the combat totals below are not real data",
+                    input.chosen.race_id
+                ),
+                claim_blocking: true,
+            });
+            CombatSizeModifiers {
+                armor_class_and_attack: 0,
+                special: 0,
+                label: "unknown",
+                category: None,
+            }
+        }
+    }
+}
+
+/// PF1's Combat Maneuver Defense base, as the Core Rulebook prints it:
+/// `CMD = 10 + BAB + Str modifier + Dex modifier + special size modifier`.
+///
+/// Deliberately its own constant rather than a reuse of `ARMOR_CLASS_BASE`.
+/// Both happen to be 10, but they are two separate published formulas; tying
+/// them together would encode "these are the same fact", which is exactly the
+/// unstated assumption `size.rs` refuses to make between its own two columns.
+pub(crate) const COMBAT_MANEUVER_DEFENSE_BASE: i16 = 10;
+
+/// PF1's Combat Maneuver Bonus: `BAB + Strength modifier + special size
+/// modifier`.
+///
+/// # The Tiny-or-smaller substitution is real and is applied
+///
+/// The Core Rulebook's CMB entry states that creatures of size Tiny or smaller
+/// use their **Dexterity** modifier in place of Strength. No currently
+/// creatable race is Tiny or smaller (the 18 in-scope races are 13 Medium and 5
+/// Small), so this branch is unreachable from the UI today -- it is written
+/// anyway, and pinned by a unit test, because the alternative is a function
+/// that is silently wrong the moment a Tiny race is ingested. That is the same
+/// reasoning `size.rs::load_capacity_ratio` gives for transcribing all nine
+/// `SIZEMULT:` rows rather than the two that are reachable.
+///
+/// # Named boundary, not silently omitted
+///
+/// Real PF1 CMB also takes the Improved/Greater maneuver feats, a size-changing
+/// effect, and any circumstance bonus. None of those is modelled anywhere in
+/// this engine, so none is summed here; the explanation string states the terms
+/// it actually contains rather than implying completeness.
+pub(crate) fn combat_maneuver_bonus(
+    base_attack_bonus: i16,
+    strength_modifier: i16,
+    dexterity_modifier: i16,
+    size: Option<SizeCategory>,
+    special_size_modifier: i16,
+) -> i16 {
+    // `None` is an unresolvable race, which the caller has already raised a
+    // claim-blocking diagnostic for. Strength is used so the shape of the
+    // formula is unchanged; the number is not claimed to be real either way.
+    let ability_modifier = match size {
+        Some(SizeCategory::Fine | SizeCategory::Diminutive | SizeCategory::Tiny) => {
+            dexterity_modifier
+        }
+        _ => strength_modifier,
+    };
+    base_attack_bonus + ability_modifier + special_size_modifier
+}
+
+/// PF1's Combat Maneuver Defense: `10 + BAB + Str modifier + Dex modifier +
+/// special size modifier`, exactly as the Core Rulebook prints the formula.
+///
+/// # Two boundaries, both stated rather than guessed
+///
+/// 1. **The AC bonuses CMD also receives are not folded in.** The CRB adds that
+///    circumstance, deflection, dodge, insight, luck, morale, profane and
+///    sacred bonuses to Armor Class apply to CMD as well. This engine grounds
+///    several of those (Dodge's +1, Brawler's AC Bonus, Inquisitor's Protection
+///    judgment). They are deliberately **not** summed here: the defect this
+///    cycle closes is the missing *size* term, and folding in a second,
+///    unmeasured correction at the same time would make it impossible to say
+///    which change moved a number. The explanation string names the terms it
+///    contains, so nothing is implied that is not computed.
+/// 2. **The Dexterity modifier is the raw ability modifier**, not the
+///    armor-capped contribution touch AC uses. That is what the published
+///    formula prints ("Dex modifier"), and it is what this repo's UI already
+///    computed, so this cycle does not move it. Whether an armor's `MAXDEX`
+///    limits CMD is a separate published question this codebase has no
+///    authority on yet; it is named here rather than silently decided.
+pub(crate) fn combat_maneuver_defense(
+    base_attack_bonus: i16,
+    strength_modifier: i16,
+    dexterity_modifier: i16,
+    special_size_modifier: i16,
+) -> i16 {
+    COMBAT_MANEUVER_DEFENSE_BASE
+        + base_attack_bonus
+        + strength_modifier
+        + dexterity_modifier
+        + special_size_modifier
+}
+
+/// PF1 touch Armor Class: the character's **own** Armor Class total with the
+/// contributors a touch attack ignores removed.
+///
+/// Derived by subtraction, not recomputed from scratch, and that is the whole
+/// point. Touch AC is not an independent statistic -- it is the same Armor
+/// Class, minus armor, shield and natural armor. Computing it separately is
+/// precisely how the shipped sheet ended up displaying `AC 19` beside
+/// `TOUCH 14` with a 4-point armor bonus, a self-contradiction that no amount
+/// of correct-looking arithmetic in the touch formula would have caught.
+/// Expressed this way, the two cannot disagree.
+///
+/// `excluded` is the caller's own sum of its armor + shield + natural-armor
+/// terms. Each call site knows which of its terms are which; this function
+/// deliberately does not try to re-derive that from a total it cannot see
+/// inside.
+pub(crate) fn touch_armor_class(armor_class: i16, excluded: i16) -> i16 {
+    armor_class - excluded
+}
+
+/// PF1 flat-footed Armor Class: the character's **own** Armor Class total with
+/// the contributors a flat-footed creature is denied removed.
+///
+/// Same subtract-from-the-real-total shape as [`touch_armor_class`], and for
+/// the same reason. Until SD-27 (`decisions.md §28`) this statistic did not
+/// exist in this engine at all — it was a THIRD compute twin living in
+/// `apps/desktop/src/characterHub/CharacterSheet.tsx` as
+/// `ac - Math.max(0, dexMod)` (introduced by `f5117103`, 2026-07-11). That
+/// formula is missing half the rule, so a Tiefling who took Dodge read
+/// `AC 20 / flat-footed 17` on screen where PF1's answer is 16.
+///
+/// # The two quantities, each named rather than inferred
+///
+/// * `dexterity_contribution_to_armor_class` — the caller's whole
+///   Dexterity-derived contribution, **after** any armor `MAXDEX` cap, and
+///   including any ability that substitutes another score *for* Dexterity
+///   (Oracle Nature's Whispers). Only a positive contribution is removed: a
+///   Dexterity *penalty* is not a bonus, and PF1 denies the bonus, so a
+///   clumsy character keeps their penalty while flat-footed. That `max(0)` is
+///   the one piece of the old React line that was already right, and it is
+///   kept here so both compute twins share one copy of it.
+/// * `dodge_typed_bonuses` — every dodge-typed term the caller summed into
+///   `armor_class`. PF1, *Bonus Types*: "A dodge bonus improves Armor Class
+///   resulting from physical skill at avoiding blows. Any situation that
+///   denies you your Dexterity bonus to Armor Class also denies you dodge
+///   bonuses." Each call site knows which of its own terms are dodge-typed;
+///   this function deliberately does not try to re-derive that from a total it
+///   cannot see inside.
+///
+/// Every other modifier type stays: armor, shield, natural armor, deflection,
+/// the size modifier, sacred/profane bonuses, and every penalty (a penalty is
+/// never dropped by being caught unprepared).
+pub(crate) fn flat_footed_armor_class(
+    armor_class: i16,
+    dexterity_contribution_to_armor_class: i16,
+    dodge_typed_bonuses: i16,
+) -> i16 {
+    armor_class - dexterity_contribution_to_armor_class.max(0) - dodge_typed_bonuses
+}
+
+/// SD-27 `decisions.md §28` defect 1: the three formulas above, pinned against
+/// the published PF1 arithmetic on their own, independent of any fixture.
+///
+/// `tests/sd27_size_modifiers_to_touch_cmb_cmd_and_attack.rs` pins the same
+/// three through the real compute path across all 18 in-scope races. These
+/// unit tests exist for the branch that file *cannot* reach: no creatable race
+/// is Tiny or smaller, so CMB's Dexterity substitution has no integration
+/// coverage and would otherwise ship unproven.
+#[cfg(test)]
+mod combat_maneuver_and_touch_formula_tests {
+    use super::*;
+
+    /// The Goblin Fighter 1 measured on screen (STR 14 -> +2, DEX 18 -> +4,
+    /// BAB +1, Chain Shirt): the exact case that exposed the defect. PF1's
+    /// correct values are CMB +2 and CMD 16; the sheet was showing +3 and 17.
+    #[test]
+    fn the_measured_small_goblin_fighter_matches_the_published_pf1_values() {
+        let size = SizeCategory::Small;
+        assert_eq!(
+            combat_maneuver_bonus(1, 2, 4, Some(size), size.special_size_modifier()),
+            2,
+            "Small Goblin Fighter 1: BAB +1 + STR +2 + special size -1 = +2"
+        );
+        assert_eq!(
+            combat_maneuver_defense(1, 2, 4, size.special_size_modifier()),
+            16,
+            "Small Goblin Fighter 1: 10 + BAB +1 + STR +2 + DEX +4 + special size -1 = 16"
+        );
+        // AC 19 with a +4 armor bonus is touch 15, not 14 -- the contradiction
+        // the sheet was displaying.
+        assert_eq!(touch_armor_class(19, 4), 15);
+    }
+
+    /// The same character at Medium size is the regression half: Medium is
+    /// PF1's +0 baseline and must produce exactly the pre-fix arithmetic.
+    #[test]
+    fn medium_is_the_unchanged_baseline_on_both_maneuver_formulas() {
+        let size = SizeCategory::Medium;
+        assert_eq!(
+            combat_maneuver_bonus(1, 2, 4, Some(size), size.special_size_modifier()),
+            3
+        );
+        assert_eq!(combat_maneuver_defense(1, 2, 4, size.special_size_modifier()), 17);
+    }
+
+    /// The branch no creatable race reaches: PF1's CMB entry substitutes
+    /// Dexterity for Strength at Tiny and smaller. Written and pinned rather
+    /// than deferred, so a later Tiny ingest does not silently compute a
+    /// Strength-based CMB.
+    #[test]
+    fn tiny_and_smaller_creatures_substitute_dexterity_for_strength_on_cmb() {
+        for size in [SizeCategory::Tiny, SizeCategory::Diminutive, SizeCategory::Fine] {
+            assert_eq!(
+                combat_maneuver_bonus(1, 2, 4, Some(size), size.special_size_modifier()),
+                1 + 4 + size.special_size_modifier(),
+                "{size:?} is Tiny or smaller: CMB uses the Dexterity modifier (+4), not Strength"
+            );
+        }
+        // Small is NOT Tiny-or-smaller, and must keep using Strength -- the
+        // off-by-one-category error this test exists to catch.
+        assert_eq!(
+            combat_maneuver_bonus(1, 2, 4, Some(SizeCategory::Small), -1),
+            2,
+            "Small still uses Strength: the substitution begins at Tiny"
+        );
+        // CMD has no such substitution in PF1: it sums BOTH abilities at every
+        // size, so a Tiny creature's CMD is unaffected by the CMB rule.
+        assert_eq!(combat_maneuver_defense(1, 2, 4, -2), 15);
+    }
+
+    /// An unresolvable race yields `None`, which must not be treated as
+    /// Tiny-or-smaller by accident (a `matches!`-style catch-all written the
+    /// other way round would do exactly that).
+    #[test]
+    fn an_unknown_size_falls_back_to_strength_rather_than_the_tiny_substitution() {
+        assert_eq!(combat_maneuver_bonus(1, 2, 4, None, 0), 3);
+    }
+
+    /// Touch AC is the Armor Class minus its excluded contributors, and
+    /// nothing else -- including when that makes it lower than 10, which is a
+    /// real PF1 state (penalties apply to touch attacks) and must not be
+    /// clamped into looking healthy.
+    #[test]
+    fn touch_armor_class_subtracts_and_does_not_clamp() {
+        assert_eq!(touch_armor_class(17, 4), 13);
+        assert_eq!(touch_armor_class(10, 0), 10);
+        assert_eq!(touch_armor_class(8, 0), 8);
+    }
+
+    /// The measured screen defect (SD-27 `decisions.md §28`): a Tiefling read
+    /// `AC 19 / flat-footed 16`, took Dodge, and read `AC 20 / flat-footed 17`.
+    /// PF1 forbids the second number moving at all.
+    #[test]
+    fn a_dodge_bonus_raises_armor_class_and_leaves_flat_footed_ac_where_it_was() {
+        // Before Dodge: AC 19, Dexterity contribution +3, no dodge-typed term.
+        assert_eq!(flat_footed_armor_class(19, 3, 0), 16);
+        // After Dodge: AC 20, same Dexterity contribution, +1 dodge-typed.
+        assert_eq!(flat_footed_armor_class(20, 3, 1), 16);
+        // What the shipped sheet displayed instead, reproduced so the
+        // regression is stated as an equation rather than as prose: it dropped
+        // the dodge term entirely.
+        assert_eq!(20 - 3, 17);
+    }
+
+    /// A Dexterity *penalty* is not a Dexterity *bonus*. PF1 denies the bonus,
+    /// so a flat-footed character with DEX 8 keeps their -1 rather than having
+    /// it forgiven — the `max(0)` branch, pinned in both directions.
+    #[test]
+    fn a_dexterity_penalty_is_kept_while_a_dexterity_bonus_is_denied() {
+        assert_eq!(flat_footed_armor_class(13, -1, 0), 13);
+        assert_eq!(flat_footed_armor_class(13, 0, 0), 13);
+        assert_eq!(flat_footed_armor_class(13, 1, 0), 12);
+    }
+
+    /// Dodge-typed bonuses stack with each other in PF1 (the one bonus type
+    /// that does), so the caller passes a sum and every point of it is denied.
+    /// Like touch AC, the result is not clamped: penalties can legitimately
+    /// carry it below 10.
+    #[test]
+    fn every_point_of_dodge_typed_bonus_is_denied_and_the_result_is_not_clamped() {
+        assert_eq!(flat_footed_armor_class(22, 4, 3), 15);
+        assert_eq!(flat_footed_armor_class(10, 0, 0), 10);
+        assert_eq!(flat_footed_armor_class(9, 2, 1), 6);
+    }
+}
+
+/// The PF1 size-category name, for explanation strings.
+fn size_label(size: SizeCategory) -> &'static str {
+    match size {
+        SizeCategory::Fine => "Fine",
+        SizeCategory::Diminutive => "Diminutive",
+        SizeCategory::Tiny => "Tiny",
+        SizeCategory::Small => "Small",
+        SizeCategory::Medium => "Medium",
+        SizeCategory::Large => "Large",
+        SizeCategory::Huge => "Huge",
+        SizeCategory::Gargantuan => "Gargantuan",
+        SizeCategory::Colossal => "Colossal",
+    }
+}
+
 // Grounded selected-skill contributors (source evidence only; not oracle-checked):
 //   cr_skills.lst:10   Climb      -> KEYSTAT:STR, ACHECK:YES, BONUS:SKILL|Climb|3|TYPE=ClassSkill
 //   cr_skills.lst:42   Intimidate -> KEYSTAT:CHA (no ACHECK), BONUS:SKILL|Intimidate|3|TYPE=ClassSkill
@@ -7230,8 +7609,15 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
         &mut explanations,
     );
 
-    let (base_attack_bonus, base_saves) =
-        compute_class_chassis(input, &ability_modifiers, &mut explanations, &mut diagnostics)
+    let computed_chassis =
+        compute_class_chassis(input, &ability_modifiers, &mut explanations, &mut diagnostics);
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): whether the chassis really
+    // produced a base attack bonus, kept separately from the `0` the fallback
+    // below substitutes. PU's Combat Stamina pool is `BAB + CON`, and a `0`
+    // that means "not computed" would silently ship a stamina pool short by the
+    // character's whole base attack bonus.
+    let chassis_supported = computed_chassis.is_some();
+    let (base_attack_bonus, base_saves) = computed_chassis
             .unwrap_or_else(|| {
             diagnostics.push(ComputationDiagnostic {
                 id: "class_chassis.unsupported".to_owned(),
@@ -7289,7 +7675,13 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     // effects, not class-specific, so they ground for every character
     // regardless of chassis support.
     ground_standalone_feat_skill_facts(input, &mut explanations);
-    ground_orphan_feat_facts(input, &mut explanations);
+    ground_orphan_feat_facts(
+        input,
+        base_attack_bonus,
+        chassis_supported,
+        &ability_modifiers,
+        &mut explanations,
+    );
 
     explain_fighter_class_features(input, &mut explanations);
 
@@ -7414,6 +7806,8 @@ pub fn compute_pilot_base_chassis(input: &CharacterInput) -> PilotBaseChassisCom
     );
 
     explain_halfling_race_seam(input, &mut explanations, &mut diagnostics);
+
+    explain_selected_alternate_racial_traits(input, &mut explanations, &mut diagnostics);
 
     validate_fighter_feat_choice_legality(input, &mut diagnostics);
 
@@ -7746,6 +8140,27 @@ fn explain_human_pilot_race_seam(
 }
 
 const DWARF_RACE_ID: &str = "race:dwarf";
+/// Each PF1 Core Dwarf standard racial trait's own replace-flag, verbatim from
+/// the `!PREFACT:1,ABILITIES,<flag>=True` gate the corpus row declares
+/// (`core_essentials/races/dwarf/dwarf_abilities_race.lst`; the ingested
+/// records' `suppressed_by_flag`). `decisions.md §26`: a standard trait applies
+/// **iff** no selected alternate has set its flag, so these are the exact
+/// strings that decide whether each record below is emitted.
+/// `tests/sd27_alternate_racial_trait_reachability.rs` pins every one of them
+/// against the on-disk corpus, so a renamed flag is a failing test rather than
+/// a record that silently stops swapping.
+const DWARF_REPLACE_VISION_FLAG: &str = "Dwarf_ReplaceVision";
+const DWARF_REPLACE_STONECUNNING_FLAG: &str = "Dwarf_ReplaceStonecunning";
+const DWARF_REPLACE_GREED_FLAG: &str = "Dwarf_ReplaceGreed";
+const DWARF_REPLACE_HARDY_FLAG: &str = "Dwarf_ReplaceHardy";
+const DWARF_REPLACE_STABILITY_FLAG: &str = "Dwarf_ReplaceStability";
+const DWARF_REPLACE_DEFENSIVE_TRAINING_FLAG: &str = "Dwarf_ReplaceDefensiveTraining";
+/// ARG's `Dwarf ~ Minesight` (`arg_abilities_race.lst:39`, ARG p.12): the one
+/// Dwarf alternate that replaces a standard trait this engine grounds a
+/// *number* for, and replaces it with a different number —
+/// `VISION:Darkvision (90)` against the CRB row's `Darkvision (60)`.
+const DWARF_MINESIGHT_TRAIT_KEY: &str = "Dwarf ~ Minesight";
+const DWARF_MINESIGHT_DARKVISION_FEET: i16 = 90;
 const DWARF_SIZE_CATEGORY: &str = "Medium";
 const DWARF_BASE_SPEED_FEET: i16 = 20;
 const DWARF_DARKVISION_FEET: i16 = 60;
@@ -7929,17 +8344,51 @@ fn explain_dwarf_race_seam(
     // ----- senses -----
     // Recognition record for Darkvision 60 ft, distinct from Human's bounded
     // no-special-senses classification.
-    explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.senses".to_owned(),
-        value: DWARF_DARKVISION_FEET,
-        detail: format!(
-            "Dwarf racial trait bundle — senses: PF1 Core Dwarf grants Darkvision \
-             {DWARF_DARKVISION_FEET} ft (cr_races.lst race:dwarf SENSE:Darkvision \
-             ({DWARF_DARKVISION_FEET} ft)). This is a grounded recognition value carrying the \
-             Dwarf Darkvision identity on the deterministic pilot seam; it contributes no \
-             computed low-light or perception-derived effect to any chassis output"
-        ),
-    });
+    //
+    // SD-27 (alternate racial traits reach compute): the CRB `Dwarf ~ Vision`
+    // row declares `!PREFACT:1,ABILITIES,Dwarf_ReplaceVision=True`, so it stops
+    // applying the moment a selected ARG alternate sets that flag. Two
+    // alternates do — `Dwarf ~ Minesight` and `Dwarf ~ Surface Survivalist` —
+    // and Minesight replaces the sense with a *different range*, so this is the
+    // one place on the Dwarf seam where a player's choice changes a grounded
+    // number rather than only removing one.
+    if replaced_by_alternate_trait(input, DWARF_REPLACE_VISION_FLAG) {
+        if selected_alternate_trait_keys(input).iter().any(|key| key == DWARF_MINESIGHT_TRAIT_KEY) {
+            explanations.push(ComputationExplanation {
+                id: "race.dwarf.alternate_trait.minesight.senses".to_owned(),
+                value: DWARF_MINESIGHT_DARKVISION_FEET,
+                detail: format!(
+                    "Dwarf alternate racial trait — Minesight (Advanced Race Guide p.12): the \
+                     chosen alternate replaces the standard Dwarf darkvision, increasing its \
+                     range from {DWARF_DARKVISION_FEET} ft to \
+                     {DWARF_MINESIGHT_DARKVISION_FEET} ft \
+                     (arg_abilities_race.lst:39 KEY:Dwarf ~ Minesight, VISION:Darkvision \
+                     ({DWARF_MINESIGHT_DARKVISION_FEET}); the standard row it replaces is \
+                     dwarf_abilities_race.lst's Dwarf ~ Vision, gated \
+                     !PREFACT:1,ABILITIES,{DWARF_REPLACE_VISION_FLAG}=True, which Minesight \
+                     sets). The standard {DWARF_DARKVISION_FEET} ft record is therefore NOT \
+                     emitted for this character. Minesight's own drawbacks — automatically \
+                     dazzled in bright light, and a -2 penalty on saving throws against \
+                     effects with the light descriptor — are carried in the trait's corpus \
+                     description and are deliberately not folded into any save total, for the \
+                     same reason Dwarf Hardy is not: they are conditional on what the save is \
+                     against, and BaseSaves has no by-source dimension"
+                ),
+            });
+        }
+    } else {
+        explanations.push(ComputationExplanation {
+            id: "race.dwarf.trait_bundle.senses".to_owned(),
+            value: DWARF_DARKVISION_FEET,
+            detail: format!(
+                "Dwarf racial trait bundle — senses: PF1 Core Dwarf grants Darkvision \
+                 {DWARF_DARKVISION_FEET} ft (cr_races.lst race:dwarf SENSE:Darkvision \
+                 ({DWARF_DARKVISION_FEET} ft)). This is a grounded recognition value carrying the \
+                 Dwarf Darkvision identity on the deterministic pilot seam; it contributes no \
+                 computed low-light or perception-derived effect to any chassis output"
+            ),
+        });
+    }
 
     // ----- Stonecunning (SD18 dwarf-stonecunning cycle) -----
     // Grounded flat +2 situational bonus on Perception checks to potentially
@@ -7954,22 +8403,24 @@ fn explain_dwarf_race_seam(
     // not a check-execution engine. Distinct from Greed (a separate +2
     // Appraise racial trait for assessing nonmagical precious-metal/gemstone
     // goods), which remains unground.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_STONECUNNING_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.stonecunning".to_owned(),
-        value: DWARF_STONECUNNING_PERCEPTION_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Stonecunning: PF1 Core Dwarf grants a flat \
-             {DWARF_STONECUNNING_PERCEPTION_BONUS:+} bonus on Perception checks to potentially \
-             notice unusual stonework, such as traps and hidden doors located in stone walls or \
-             floors (dwarf_abilities_race.lst:27 BONUS:SITUATION|Perception=to notice unusual \
-             stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6 \
-             Perception.MOD SITUATION:to notice unusual stonework). This is a bounded flat \
-             situational-bonus-magnitude recognition record naming the Stonecunning identity on \
-             the deterministic pilot seam; no Perception-check-total or stonework-detection \
-             engine exists anywhere in this codebase, so no check resolution is fabricated from \
-             this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.stonecunning".to_owned(),
+            value: DWARF_STONECUNNING_PERCEPTION_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Stonecunning: PF1 Core Dwarf grants a flat \
+                 {DWARF_STONECUNNING_PERCEPTION_BONUS:+} bonus on Perception checks to potentially \
+                 notice unusual stonework, such as traps and hidden doors located in stone walls or \
+                 floors (dwarf_abilities_race.lst:27 BONUS:SITUATION|Perception=to notice unusual \
+                 stonework|{DWARF_STONECUNNING_PERCEPTION_BONUS}|TYPE=Racial; dwarf_skills.lst:6 \
+                 Perception.MOD SITUATION:to notice unusual stonework). This is a bounded flat \
+                 situational-bonus-magnitude recognition record naming the Stonecunning identity on \
+                 the deterministic pilot seam; no Perception-check-total or stonework-detection \
+                 engine exists anywhere in this codebase, so no check resolution is fabricated from \
+                 this record"
+            ),
+        });
+    }
 
     // ----- Greed (SD18 dwarf-greed cycle) -----
     // Grounded flat +2 situational bonus on Appraise checks made to
@@ -7982,22 +8433,24 @@ fn explain_dwarf_race_seam(
     // Appraise-check-total or goods-valuation engine exists anywhere in
     // this codebase, so this names only the flat situational-bonus
     // magnitude, not a check-execution engine.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_GREED_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.greed".to_owned(),
-        value: DWARF_GREED_APPRAISE_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Greed: PF1 Core Dwarf grants a flat \
-             {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the \
-             price of nonmagical goods that contain precious metals or gemstones \
-             (dwarf_abilities_race.lst:23 BONUS:SITUATION|Appraise=to assess nonmagical \
-             metals or gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; \
-             dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals or \
-             gemstones). This is a bounded flat situational-bonus-magnitude recognition \
-             record naming the Greed identity on the deterministic pilot seam; no \
-             Appraise-check-total or goods-valuation engine exists anywhere in this \
-             codebase, so no check resolution is fabricated from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.greed".to_owned(),
+            value: DWARF_GREED_APPRAISE_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Greed: PF1 Core Dwarf grants a flat \
+                 {DWARF_GREED_APPRAISE_BONUS:+} bonus on Appraise checks made to determine the \
+                 price of nonmagical goods that contain precious metals or gemstones \
+                 (dwarf_abilities_race.lst:23 BONUS:SITUATION|Appraise=to assess nonmagical \
+                 metals or gemstones|{DWARF_GREED_APPRAISE_BONUS}|TYPE=Racial; \
+                 dwarf_skills.lst:5 Appraise.MOD SITUATION:to assess nonmagical metals or \
+                 gemstones). This is a bounded flat situational-bonus-magnitude recognition \
+                 record naming the Greed identity on the deterministic pilot seam; no \
+                 Appraise-check-total or goods-valuation engine exists anywhere in this \
+                 codebase, so no check resolution is fabricated from this record"
+            ),
+        });
+    }
 
     // ----- Hardy (SD18 dwarf-hardy cycle) -----
     // Bundles two distinct save categories, both grounded honestly, mirroring
@@ -8020,28 +8473,30 @@ fn explain_dwarf_race_seam(
     // correct, for the reason now stated instead: Hardy is conditional on what
     // the save is AGAINST, and `BaseSaves` is three by-category scalars with no
     // by-source dimension, so adding it would apply it to every save.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_HARDY_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.hardy".to_owned(),
-        value: DWARF_HARDY_SAVE_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Hardy: PF1 Core Dwarf grants a flat \
-             {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a \
-             flat {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
-             spell-like abilities (dwarf_abilities_race.lst:25 \
-             BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial, \
-             BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
-             bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
-             identity on the deterministic pilot seam, mirroring the already-grounded Elf \
-             Elven Immunities enchantment-save-bonus idiom. It is deliberately NOT added to \
-             this character's integrated save totals, which do exist (`total_saves`, surfaced \
-             as the `defense.total_save.*` records, and already folding in unconditional feat \
-             save bonuses): both halves of Hardy are conditional on what the saving throw is \
-             against, and a save total is three by-category scalars (Fortitude/Reflex/Will) \
-             with no by-source dimension, so folding a vs-poison or vs-spells bonus into one \
-             would wrongly apply it to every save of that category. The magnitude is therefore \
-             reported standalone, and no check resolution is fabricated from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.hardy".to_owned(),
+            value: DWARF_HARDY_SAVE_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Hardy: PF1 Core Dwarf grants a flat \
+                 {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against poison, and a \
+                 flat {DWARF_HARDY_SAVE_BONUS:+} racial bonus on saving throws against spells and \
+                 spell-like abilities (dwarf_abilities_race.lst:25 \
+                 BONUS:VAR|SaveBonus_vs_Poison|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial, \
+                 BONUS:VAR|SaveBonus_vs_Spells|{DWARF_HARDY_SAVE_BONUS}|TYPE=Racial). This is a \
+                 bounded flat saving-throw-bonus-magnitude recognition record naming the Hardy \
+                 identity on the deterministic pilot seam, mirroring the already-grounded Elf \
+                 Elven Immunities enchantment-save-bonus idiom. It is deliberately NOT added to \
+                 this character's integrated save totals, which do exist (`total_saves`, surfaced \
+                 as the `defense.total_save.*` records, and already folding in unconditional feat \
+                 save bonuses): both halves of Hardy are conditional on what the saving throw is \
+                 against, and a save total is three by-category scalars (Fortitude/Reflex/Will) \
+                 with no by-source dimension, so folding a vs-poison or vs-spells bonus into one \
+                 would wrongly apply it to every save of that category. The magnitude is therefore \
+                 reported standalone, and no check resolution is fabricated from this record"
+            ),
+        });
+    }
 
     // ----- Stability (SD18 dwarf-stability cycle) -----
     // Bundles two distinct combat-maneuver-defense categories, both grounded
@@ -8058,23 +8513,25 @@ fn explain_dwarf_race_seam(
     // CMD-bonus magnitude, not a Combat-Maneuver-Defense-total engine: no
     // such engine exists anywhere in this codebase, so no check resolution
     // is fabricated from this record.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_STABILITY_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.stability".to_owned(),
-        value: DWARF_STABILITY_CMD_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Stability: PF1 Core Dwarf grants a flat \
-             {DWARF_STABILITY_CMD_BONUS:+} racial bonus to Combat Maneuver Defense when \
-             resisting a bull rush attempt, and a flat {DWARF_STABILITY_CMD_BONUS:+} racial \
-             bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases \
-             while standing on the ground (dwarf_abilities_race.lst:26 \
-             BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial). This \
-             is a bounded flat CMD-bonus-magnitude recognition record naming the Stability \
-             identity on the deterministic pilot seam, mirroring the already-grounded Dwarf \
-             Hardy two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total \
-             engine exists anywhere in this codebase, so no check resolution is fabricated \
-             from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.stability".to_owned(),
+            value: DWARF_STABILITY_CMD_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Stability: PF1 Core Dwarf grants a flat \
+                 {DWARF_STABILITY_CMD_BONUS:+} racial bonus to Combat Maneuver Defense when \
+                 resisting a bull rush attempt, and a flat {DWARF_STABILITY_CMD_BONUS:+} racial \
+                 bonus to Combat Maneuver Defense when resisting a trip attempt, in both cases \
+                 while standing on the ground (dwarf_abilities_race.lst:26 \
+                 BONUS:VAR|CMD_BullRush,CMD_Trip|{DWARF_STABILITY_CMD_BONUS}|TYPE=Racial). This \
+                 is a bounded flat CMD-bonus-magnitude recognition record naming the Stability \
+                 identity on the deterministic pilot seam, mirroring the already-grounded Dwarf \
+                 Hardy two-save-category flat-bonus idiom; no Combat-Maneuver-Defense-total \
+                 engine exists anywhere in this codebase, so no check resolution is fabricated \
+                 from this record"
+            ),
+        });
+    }
 
     // ----- Defensive Training (SD18 dwarf-defensive-training cycle) -----
     // Grounded flat +4 dodge bonus to Armor Class against monsters of the
@@ -8085,21 +8542,23 @@ fn explain_dwarf_race_seam(
     // Armor-Class-total or giant-subtype-detection engine exists anywhere in
     // this codebase, so this names only the flat dodge-bonus magnitude, not
     // a check-execution engine.
+    if !replaced_by_alternate_trait(input, DWARF_REPLACE_DEFENSIVE_TRAINING_FLAG) {
     explanations.push(ComputationExplanation {
-        id: "race.dwarf.trait_bundle.defensive_training".to_owned(),
-        value: DWARF_DEFENSIVE_TRAINING_DODGE_BONUS,
-        detail: format!(
-            "Dwarf racial trait bundle — Defensive Training: PF1 Core Dwarf grants a flat \
-             {DWARF_DEFENSIVE_TRAINING_DODGE_BONUS:+} dodge bonus to Armor Class against \
-             monsters of the giant subtype (dwarf_abilities_race.lst:22 \
-             BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}). \
-             This is a bounded flat dodge-bonus-magnitude recognition record naming the \
-             Defensive Training identity on the deterministic pilot seam, mirroring the \
-             already-grounded Dwarf Stability flat-bonus idiom; no Armor-Class-total or \
-             giant-subtype-detection engine exists anywhere in this codebase, so no check \
-             resolution is fabricated from this record"
-        ),
-    });
+            id: "race.dwarf.trait_bundle.defensive_training".to_owned(),
+            value: DWARF_DEFENSIVE_TRAINING_DODGE_BONUS,
+            detail: format!(
+                "Dwarf racial trait bundle — Defensive Training: PF1 Core Dwarf grants a flat \
+                 {DWARF_DEFENSIVE_TRAINING_DODGE_BONUS:+} dodge bonus to Armor Class against \
+                 monsters of the giant subtype (dwarf_abilities_race.lst:22 \
+                 BONUS:VAR|RacialDefensiveTrainingBonus|{DWARF_DEFENSIVE_TRAINING_DODGE_BONUS}). \
+                 This is a bounded flat dodge-bonus-magnitude recognition record naming the \
+                 Defensive Training identity on the deterministic pilot seam, mirroring the \
+                 already-grounded Dwarf Stability flat-bonus idiom; no Armor-Class-total or \
+                 giant-subtype-detection engine exists anywhere in this codebase, so no check \
+                 resolution is fabricated from this record"
+            ),
+        });
+    }
 
     // Bounded honesty: nine named dimensions are now grounded (ability
     // modifiers, size, speed, senses, Stonecunning, Greed, Hardy, Stability,
@@ -8540,6 +8999,49 @@ const HALF_ELF_RACE_ID: &str = "race:half-elf";
 const HALF_ELF_SIZE_CATEGORY: &str = "Medium";
 const HALF_ELF_BASE_SPEED_FEET: i16 = 30;
 const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
+/// ARG's `Half-Elf ~ Dual Minded` (`arg_abilities_race.lst:158`, ARG p.42).
+///
+/// The one alternate racial trait across all 153 whose declared bonus lands on
+/// a **saving throw** this engine totals: its whole mechanical body is
+/// `BONUS:SAVE|Will|2`, with no situational qualifier and no PCGen variable,
+/// against `compute_total_saves`' real `total_saves.will`. The only other ten
+/// that reach a computed total at all are skill bonuses, handled by
+/// [`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`].
+///
+/// Derived by scanning every ARG alternate's `raw_bonus_chains` against the
+/// engine's computed-total surface, not asserted —
+/// `tests/sd27_alternate_racial_trait_reachability.rs` re-runs that scan and
+/// pins the whole set of eleven.
+///
+/// **It stacks, unlike the ten skill bonuses.** The corpus chain carries no
+/// `TYPE=` token at all, so this is an untyped bonus and PF1's
+/// same-type-does-not-stack rule does not apply to it; it is added, not
+/// maximised.
+///
+/// The standard trait it replaces is `Half-Elf ~ Adaptability` (a Skill Focus
+/// bonus feat), which this engine grounds no record for, so this is a pure
+/// addition rather than a swap of one number for another.
+const HALF_ELF_DUAL_MINDED_TRAIT_KEY: &str = "Half-Elf ~ Dual Minded";
+const HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS: i16 = 2;
+
+/// `Half-Elf ~ Dual Minded`'s +2 on all Will saving throws, or 0.
+///
+/// Race-gated by construction: the trait key is a Half-Elf record, and this
+/// additionally requires `race_id == race:half-elf` so a selection copied onto
+/// another race can never contribute. Unconditional once held — the corpus
+/// chain carries no situational qualifier — so it layers into
+/// `compute_total_saves` exactly the way `feat_effects::save_bonuses_from_feats`
+/// already does for Iron Will.
+fn half_elf_dual_minded_will_save_bonus(input: &CharacterInput) -> i16 {
+    if input.chosen.race_id != HALF_ELF_RACE_ID {
+        return 0;
+    }
+    if selected_alternate_trait_keys(input).iter().any(|key| key == HALF_ELF_DUAL_MINDED_TRAIT_KEY) {
+        HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS
+    } else {
+        0
+    }
+}
 
 /// SD13-E2/SD18 Half-Elf racial trait bundle explanation seam (mirroring the
 /// Dwarf/Elf/Gnome recognition pattern for the fourth non-Human core race, but
@@ -9182,6 +9684,239 @@ fn explain_human_trait_bundle(
     });
 }
 
+/// The choice-set id under which a chosen ARG alternate racial trait is
+/// persisted on `ChosenCharacterState::selected_choices`.
+///
+/// Reuses the engine's existing general choice channel rather than adding a
+/// field to `ChosenCharacterState`: a `SelectedChoice` already round-trips
+/// through `SavedCharacterStore`'s serializer, through `clone_character`, and
+/// through `apply_level_up`, so a persisted alternate racial trait survives
+/// save/load/clone/level-up with no schema change. The selection id is the
+/// corpus record key verbatim (`"Dwarf ~ Saltbeard"`) — the same string
+/// `RaceCorpus::resolve` and `race_trait_picker`'s command surface take, so
+/// the picker round-trips it unchanged.
+///
+/// The set is repeatable: a character may hold several alternates at once, so
+/// readers must scan every matching entry rather than use `choice_selection`,
+/// which returns only the first.
+pub const RACE_ALTERNATE_TRAIT_CHOICE_ID: &str = "choice:race_alternate_trait";
+
+/// The namespace every alternate-racial-trait selection id carries.
+///
+/// **Not decoration.** `SavedCharacterStore`'s serializer rejects any
+/// `SelectedChoice::selection_id` with fewer than two colon-segments, because
+/// its line grammar splits `choice=<set>:<selection>` on colons — so a bare
+/// corpus key (`"Dwarf ~ Minesight"`) cannot be persisted at all. Prefixing it
+/// gives the same `feat:` / `school:` / `bond:` shape every other selection id
+/// in this engine already has, and the key survives verbatim after the first
+/// colon (the corpus keys contain no colon of their own, verified across all
+/// 156 ingested records by
+/// `tests/sd27_alternate_racial_trait_reachability.rs`).
+pub const RACE_ALTERNATE_TRAIT_SELECTION_PREFIX: &str = "race_trait:";
+
+/// Wraps a corpus alternate-racial-trait key into the persisted selection id.
+pub fn race_alternate_trait_selection_id(trait_key: &str) -> String {
+    format!("{RACE_ALTERNATE_TRAIT_SELECTION_PREFIX}{trait_key}")
+}
+
+/// Every alternate racial trait key this character has taken, in selection
+/// order, deduplicated, with the storage namespace stripped back off.
+///
+/// A selection recorded without the prefix is read as-is rather than dropped:
+/// the engine's job here is to see every choice that was made, and an
+/// unrecognized key is reported by `explain_selected_alternate_racial_traits`
+/// rather than silently skipped.
+pub(crate) fn selected_alternate_trait_keys(input: &CharacterInput) -> Vec<String> {
+    let mut out: Vec<String> = Vec::new();
+    for choice in &input.chosen.selected_choices {
+        if choice.choice_set_id != RACE_ALTERNATE_TRAIT_CHOICE_ID {
+            continue;
+        }
+        let key = choice
+            .selection_id
+            .strip_prefix(RACE_ALTERNATE_TRAIT_SELECTION_PREFIX)
+            .unwrap_or(choice.selection_id.as_str())
+            .to_owned();
+        if !out.contains(&key) {
+            out.push(key);
+        }
+    }
+    out
+}
+
+/// The alternate racial trait key ARG's Armor of the Pit feat tests for, as
+/// the shipped 153-record table spells it
+/// (`race_resolver.rs`: `("Tiefling ~ Scaled Skin", &["Tiefling_ReplaceFiendishResistance"])`,
+/// matching `data/corpus/advanced_race_guide/race_trait/tiefling/tiefling_scaled_skin.json`'s
+/// own `key`).
+///
+/// The feat's own corpus token names PCGen's three per-energy sub-abilities
+/// (`Scaled Skin C ~ Tiefling`, `... E ...`, `... F ...`) rather than the
+/// parent trait. Those three are the cold/electricity/fire variants a Scaled
+/// Skin holder ends up with, and this engine's alternate-trait picker offers
+/// only the parent — so the parent is the exact, and only, decidable form of
+/// the same question here. Naming the three sub-keys instead would test for
+/// strings no character in this codebase can ever carry, which is how a gate
+/// silently never fires.
+const TIEFLING_SCALED_SKIN_TRAIT_KEY: &str = "Tiefling ~ Scaled Skin";
+
+/// Whether this character took the Scaled Skin alternate racial trait — the
+/// single fact ARG's Armor of the Pit needs in order to decide which of its two
+/// mutually exclusive halves applies.
+fn character_has_tiefling_scaled_skin(input: &CharacterInput) -> bool {
+    selected_alternate_trait_keys(input)
+        .iter()
+        .any(|key| key == TIEFLING_SCALED_SKIN_TRAIT_KEY)
+}
+
+/// Whether one of this character's chosen alternate racial traits fires the
+/// named `<Race>_Replace<Trait>` flag — i.e. whether the standard trait whose
+/// `!PREFACT:1,ABILITIES,<flag>=True` gate names it has been replaced.
+///
+/// This is `decisions.md §26`'s protocol applied to the engine's own
+/// hand-modelled records. Every standard racial trait this file grounds is now
+/// gated on its own corpus-declared flag, so a swap the player made in the
+/// picker really does stop the standard trait's effect from applying.
+///
+/// The flag lookup is `race_resolver::alternate_traits_fire_flag`, a pure
+/// function over a table pinned against the on-disk corpus — this file may not
+/// read the filesystem (see `RACE_SIZES`' own doc comment for the same
+/// constraint and the same resolution).
+fn replaced_by_alternate_trait(input: &CharacterInput, flag: &str) -> bool {
+    crate::rules_core::race_resolver::alternate_traits_fire_flag(
+        &selected_alternate_trait_keys(input),
+        flag,
+    )
+}
+
+/// Every ARG alternate racial trait that declares a plain-integer
+/// `BONUS:SKILL` on one of the three skills `compute_selected_skill_modifiers`
+/// actually totals, as `(trait key, owning race id, Climb, Intimidate, Swim)`.
+///
+/// # This list is a measurement, not a selection
+///
+/// `tests/sd27_alternate_racial_trait_reachability.rs` re-derives it by
+/// scanning all 153 alternates' `raw_bonus_chains` against the engine's own
+/// computed-total surface, and fails if the two disagree in either direction.
+/// It is short because the *engine* is narrow, not because the content is:
+/// every other alternate's declared number is situational
+/// (`BONUS:SITUATION|Perception=to notice flying creatures|2`), aimed at a
+/// skill this codebase computes no total for (Perception, Fly, Linguistics,
+/// Profession, Handle Animal), or formula-valued (`TL/2`,
+/// `1+Global_LuckBonus`) and so out of reach under `decisions.md §24`'s
+/// no-interpreter ruling. Widen the engine's totals and this table grows —
+/// the test will say by how much and name the traits.
+///
+/// # Why the values are read out of multi-skill chains
+///
+/// A chain names every skill it covers: `Goblin ~ Tree Runner` is
+/// `BONUS:SKILL|Acrobatics,Climb|4|TYPE=Racial`, and Acrobatics has no total
+/// here, so only the Climb half lands. `Gnome ~ Explorer`'s
+/// `Climb,%LIST` likewise contributes its Climb half; the `%LIST` half is a
+/// player-chosen skill this engine models no chooser for, and is deliberately
+/// not guessed at.
+const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &[
+    // (trait key, race id, Climb, Intimidate, Swim)
+    ("Elf ~ Spirit of the Waters", "race:elf", 0, 0, 4),
+    ("Gnome ~ Explorer", "race:gnome", 2, 0, 0),
+    ("Goblin ~ Tree Runner", "race:goblin", 4, 0, 0),
+    ("Half-Elf ~ Water Child", "race:half-elf", 0, 0, 4),
+    ("Half-Orc ~ Forest Walker", "race:half-orc", 2, 0, 0),
+    ("Half-Orc ~ Rock Climber", "race:half-orc", 1, 0, 0),
+    ("Hobgoblin ~ Bandy-Legged", "race:hobgoblin", 2, 0, 0),
+    ("Hobgoblin ~ Fearsome", "race:hobgoblin", 0, 4, 0),
+    ("Human ~ Heart of the Mountain", "race:human", 2, 0, 0),
+    ("Human ~ Heart of the Sea", "race:human", 0, 0, 2),
+];
+
+/// The Climb / Intimidate / Swim racial bonus this character's chosen
+/// alternate racial traits contribute.
+///
+/// **The highest applies, not the sum.** All ten corpus chains carry
+/// `TYPE=Racial`, and PF1's stacking rule for two same-typed named bonuses is
+/// that only the largest counts. This matters for a real pair a player can
+/// legally hold: `Half-Orc ~ Forest Walker` (+2 Climb, replaces vision) and
+/// `Half-Orc ~ Rock Climber` (+1 Climb, replaces Intimidating) fire different
+/// flags, so ARG's own `PREMULT` guard does not exclude them from each other —
+/// a Half-Orc may take both, and gets +2, not +3.
+///
+/// Race-gated by construction: a trait key is matched only against its owning
+/// race, so a selection copied onto another race contributes nothing.
+fn alternate_trait_selected_skill_bonuses(input: &CharacterInput) -> SelectedSkillModifiers {
+    let selected = selected_alternate_trait_keys(input);
+    let mut best = SelectedSkillModifiers::default();
+    for (key, race_id, climb, intimidate, swim) in ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES {
+        if input.chosen.race_id != *race_id || !selected.iter().any(|chosen| chosen == key) {
+            continue;
+        }
+        best.climb = best.climb.max(*climb);
+        best.intimidate = best.intimidate.max(*intimidate);
+        best.swim = best.swim.max(*swim);
+    }
+    best
+}
+
+/// Names every alternate racial trait this character has taken, and the
+/// standard-trait replace-flags those choices fired.
+///
+/// Runs for every race, including the eleven with no hand-modelled seam of
+/// their own: a chosen alternate is a real, persisted player decision, and a
+/// sheet that shows nothing for it is the "selection vanished" failure this
+/// repo has already shipped twice (`unresolved_spell_ids`,
+/// `unresolved_equipment_item_ids`).
+///
+/// The record carries `value = 0` deliberately. Which *numbers* change is
+/// decided per trait by the race seams above (today: Dwarf Minesight's
+/// darkvision range, Half-Elf Dual Minded's Will save, and the removal of every
+/// standard-trait record whose flag fired); summing anything here would be a
+/// fabricated aggregate.
+///
+/// A selection key the pinned table does not know raises a **claim-blocking**
+/// diagnostic rather than being dropped: a saved character naming a trait this
+/// engine cannot place has an unknown racial trait bundle, and every number
+/// derived from it is unproven.
+fn explain_selected_alternate_racial_traits(
+    input: &CharacterInput,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let selected = selected_alternate_trait_keys(input);
+    if selected.is_empty() {
+        return;
+    }
+
+    let unknown = crate::rules_core::race_resolver::unknown_alternate_trait_keys(&selected);
+    if !unknown.is_empty() {
+        diagnostics.push(ComputationDiagnostic {
+            id: "race.alternate_trait.unknown".to_owned(),
+            message: format!(
+                "chosen alternate racial trait(s) {unknown:?} name no record this engine knows; \
+                 the ARG alternate-trait table covers the 153 selectable records across the 18 \
+                 in-scope races (decisions.md §25.3), so nothing was replaced for these and the \
+                 character's racial trait bundle is not fully grounded"
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    let fired = crate::rules_core::race_resolver::replace_flags_fired_by(&selected);
+    explanations.push(ComputationExplanation {
+        id: "race.alternate_trait.selected".to_owned(),
+        value: 0,
+        detail: format!(
+            "Alternate racial traits chosen for {}: {}. Firing replace-flag(s) {}, each of which \
+             suppresses the standard racial trait whose \
+             !PREFACT:1,ABILITIES,<flag>=True gate names it (decisions.md §26 — the swap is a \
+             relationship the PCGen corpus declares, not one this engine invents). This record \
+             names the selection itself and carries no mechanical value (+0); the numbers that \
+             actually change are emitted by the affected per-trait records",
+            input.chosen.race_id,
+            selected.join(", "),
+            if fired.is_empty() { "(none)".to_owned() } else { fired.join(", ") }
+        ),
+    });
+}
+
 /// Return the selection id chosen for the named choice set, if present.
 pub(crate) fn choice_selection<'a>(input: &'a CharacterInput, choice_set_id: &str) -> Option<&'a str> {
     input
@@ -9437,6 +10172,10 @@ pub(crate) fn has_supported_class_chassis(input: &CharacterInput) -> bool {
         || is_supported_witch_single_class(input)
         || is_supported_shaman_single_class(input)
         || is_supported_summoner_single_class(input)
+        // SD-27 (2026-07-31): all four Pathfinder Unchained classes at once
+        // -- see `is_supported_pu_single_class` for why this one gate is
+        // broad where the sixteen APG/ACG gates above are per-class.
+        || is_supported_pu_single_class(input)
 }
 
 /// Prose listing of every chassis `has_supported_class_chassis` accepts,
@@ -9460,7 +10199,9 @@ pub(crate) fn supported_class_chassis_description() -> String {
          1-{MAX_SUPPORTED_WIZARD_LEVEL}, a supported multiclass mix, a supported generic \
          single class, or a supported single-class Skald, Bloodrager, Brawler, Hunter, \
          Cavalier, Alchemist, Inquisitor, Oracle, Arcanist, Warpriest, Slayer, Swashbuckler, \
-         Investigator, Witch, Shaman, or Summoner chassis"
+         Investigator, Witch, Shaman, or Summoner chassis, or a supported \
+         single-class Unchained Barbarian, Unchained Monk, Unchained Rogue, or \
+         Unchained Summoner chassis (Pathfinder Unchained)"
     )
 }
 
@@ -9729,6 +10470,35 @@ fn is_supported_skald_single_class(input: &CharacterInput) -> bool {
         return false;
     }
     acg::class_chassis_resolve(AcgClassId::Skald, class_level.level, RuleSetId::Acg).is_some()
+}
+
+/// SD-27 (Pathfinder Unchained class wiring, 2026-07-31): whether `input`
+/// is a single-class Unchained Barbarian / Monk / Rogue / Summoner at a
+/// level within `pu::class_chassis::class_chassis_resolve`'s declared
+/// ceiling.
+///
+/// **Deliberately a broad `from_class_id_str(...).is_some()` where the ten
+/// ACG and six APG gates above are each an exact single-variant match.**
+/// That difference is intentional and is the opposite of a widening
+/// mistake, so it is stated rather than left to be noticed: those books
+/// were wired one class at a time, so a broad check would have silently
+/// admitted classes whose features nothing grounded. Pathfinder Unchained
+/// declares exactly four classes and this change wires **all four** at
+/// once -- each one gets its own `ground_unchained_*_class_features` call
+/// in `compute_pu_class_chassis`, so there is no fifth PU class for a
+/// broad check to let through. `PuClassId::ALL.len() == 4` is asserted in
+/// `rules_tables::pathfinder_unchained::class_chassis`'s own tests, and
+/// `pu_gate_admits_exactly_the_four_unchained_classes` below re-checks the
+/// admitted set from this side of the seam, so adding a fifth variant
+/// without wiring it fails loudly instead of leaking through here.
+fn is_supported_pu_single_class(input: &CharacterInput) -> bool {
+    let [class_level] = input.chosen.class_levels.as_slice() else {
+        return false;
+    };
+    let Some(pu_class_id) = PuClassId::from_class_id_str(&class_level.class_id) else {
+        return false;
+    };
+    pu_class_chassis::class_chassis_resolve(pu_class_id, class_level.level, RuleSetId::Pu).is_some()
 }
 
 /// Whether `input` is a single class, other than Fighter/Wizard (which have
@@ -14892,15 +15662,22 @@ fn unmet_arcanist_spellbook_conditions(
         }
     }
 
+    // Same up-front per-class resolution as `unmet_wizard_spellbook_conditions`
+    // — see `resolve_prepared_spell_level`. Arcanist's corpus-stated
+    // `SPELLLIST:1|Wizard` means it resolves against Wizard's list.
+    let mut prepared_levels: Vec<u8> = Vec::new();
+    for spell_id in &prepared {
+        match resolve_prepared_spell_level(ARCANIST_CLASS_ID, spell_id) {
+            PreparedSpellLevel::Known(spell_level) => prepared_levels.push(spell_level),
+            PreparedSpellLevel::Unknown(reason) => unmet.push(reason),
+        }
+    }
+
     let base_spells_per_day = arcanist_base_spells_per_day(level);
     for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
         let spell_level = spell_level as u8;
         let Some(base_count) = base_count else {
-            if prepared
-                .iter()
-                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-                .any(|(_, l)| l == spell_level)
-            {
+            if prepared_levels.contains(&spell_level) {
                 unmet.push(format!(
                     "a prepared spell targets spell level {spell_level}, not yet accessible at \
                      arcanist level {level}"
@@ -14911,11 +15688,7 @@ fn unmet_arcanist_spellbook_conditions(
         let int_bonus =
             ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
         let total_slots = base_count + int_bonus;
-        let consumed: i16 = prepared
-            .iter()
-            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-            .filter(|(_, l)| *l == spell_level)
-            .count() as i16;
+        let consumed: i16 = prepared_levels.iter().filter(|l| **l == spell_level).count() as i16;
         if consumed > total_slots {
             unmet.push(format!(
                 "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
@@ -15319,15 +16092,22 @@ fn unmet_warpriest_spellbook_conditions(
         }
     }
 
+    // Same up-front per-class resolution as `unmet_wizard_spellbook_conditions`
+    // — see `resolve_prepared_spell_level`. Warpriest's corpus-stated
+    // `SPELLLIST:1|Cleric` means it resolves against Cleric's list.
+    let mut prepared_levels: Vec<u8> = Vec::new();
+    for spell_id in &prepared {
+        match resolve_prepared_spell_level(WARPRIEST_CLASS_ID, spell_id) {
+            PreparedSpellLevel::Known(spell_level) => prepared_levels.push(spell_level),
+            PreparedSpellLevel::Unknown(reason) => unmet.push(reason),
+        }
+    }
+
     let base_spells_per_day = warpriest_base_spells_per_day(level);
     for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
         let spell_level = spell_level as u8;
         let Some(base_count) = base_count else {
-            if prepared
-                .iter()
-                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-                .any(|(_, l)| l == spell_level)
-            {
+            if prepared_levels.contains(&spell_level) {
                 unmet.push(format!(
                     "a prepared spell targets spell level {spell_level}, not yet accessible at \
                      warpriest level {level}"
@@ -15338,11 +16118,7 @@ fn unmet_warpriest_spellbook_conditions(
         let wisdom_bonus =
             ability_bonus_spells(ability_modifiers.wisdom, i16::from(spell_level));
         let total_slots = base_count + wisdom_bonus;
-        let consumed: i16 = prepared
-            .iter()
-            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-            .filter(|(_, l)| *l == spell_level)
-            .count() as i16;
+        let consumed: i16 = prepared_levels.iter().filter(|l| **l == spell_level).count() as i16;
         if consumed > total_slots {
             unmet.push(format!(
                 "spell level {spell_level} over-prepared: {consumed} spells prepared but only \
@@ -23259,9 +24035,1747 @@ fn compute_class_chassis(
             explanations,
             diagnostics,
         )
+    } else if let Some(pu_class_id) = PuClassId::from_class_id_str(&class_level.class_id) {
+        // Deliberately NOT registered with `table_class_id` -- same reasoning
+        // as the APG and ACG branches above, and it matters more here: the
+        // four Unchained classes are replacements for CRB/APG classes, and
+        // registering them with the generic CRB table would be the one edit
+        // that could make `class:unchained_rogue` resolve CRB Rogue rows.
+        // See `compute_pu_class_chassis`'s own doc comment.
+        compute_pu_class_chassis(
+            pu_class_id,
+            &class_level.class_id,
+            class_level.level,
+            input,
+            ability_modifiers,
+            explanations,
+            diagnostics,
+        )
     } else {
         None
     }
+}
+
+/// SD-27 (Pathfinder Unchained class wiring, 2026-07-31): compute the
+/// base-attack-bonus / base-save chassis pillar for one of the four
+/// Unchained classes, then ground that class's own named features.
+///
+/// Structurally identical to `compute_apg_class_chassis` /
+/// `compute_acg_class_chassis` — same explanation ids, same
+/// `class_chassis.unsupported` diagnostic shape, same "chassis first, then
+/// per-class grounding" order — so nothing downstream has to learn a new
+/// path. It is only ever called from `compute_class_chassis`'s
+/// single-class-only section (multiclass returns early there), and
+/// `PuClassId::from_class_id_str` is deliberately NOT registered with
+/// `table_class_id`, so an Unchained class inside a multiclass mix never
+/// reaches here and never resolves a CRB row by accident.
+///
+/// **Three of the four chassis rows are the base class's own row, byte for
+/// byte, and that is a corpus fact rather than a shortcut**: the ingested
+/// `class` record for the Unchained Barbarian, Rogue and Summoner carries
+/// `null` for `hit_die`, `bab` and all three save columns, i.e. the
+/// selection ability overrides no chassis field. The Unchained Monk is the
+/// one that does override (d10 / full BAB / poor Will). All of that lives
+/// in `rules_tables::pathfinder_unchained::class_chassis`, which owns the
+/// sourcing and pins it; this function only reads the row it returns.
+fn compute_pu_class_chassis(
+    class_id: PuClassId,
+    class_id_str: &str,
+    level: u8,
+    input: &CharacterInput,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) -> Option<(i16, BaseSaves)> {
+    let Some(row) = pu_class_chassis::class_chassis_resolve(class_id, level, RuleSetId::Pu) else {
+        diagnostics.push(ComputationDiagnostic {
+            id: "class_chassis.unsupported".to_owned(),
+            message: format!(
+                "base class chassis has no {class_id_str} Pathfinder Unchained \
+                 class_chassis_resolve row at level {level} (exceeds this class's real MAXLEVEL \
+                 ceiling), so no chassis values were computed"
+            ),
+            claim_blocking: true,
+        });
+        return None;
+    };
+
+    let base_attack_bonus = row.base_attack_bonus;
+    let base_saves = BaseSaves {
+        fortitude: row.fort_save,
+        reflex: row.ref_save,
+        will: row.will_save,
+    };
+
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_attack_bonus".to_owned(),
+        value: base_attack_bonus,
+        detail: format!(
+            "{class_id_str} level {level} base attack bonus from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {base_attack_bonus}"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.fortitude".to_owned(),
+        value: base_saves.fortitude,
+        detail: format!(
+            "{class_id_str} level {level} base Fortitude save from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {}",
+            base_saves.fortitude
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.reflex".to_owned(),
+        value: base_saves.reflex,
+        detail: format!(
+            "{class_id_str} level {level} base Reflex save from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {}",
+            base_saves.reflex
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_chassis.base_save.will".to_owned(),
+        value: base_saves.will,
+        detail: format!(
+            "{class_id_str} level {level} base Will save from \
+             rules_tables::pathfinder_unchained::class_chassis::class_chassis_resolve's row for \
+             this class: {}",
+            base_saves.will
+        ),
+    });
+
+    // The replacement relationship, recorded on every Unchained character's
+    // own receipt rather than only in a doc comment: a reader of the sheet
+    // can see which class this one stands in for. Value is the class's
+    // level, matching the "standalone flat fact" idiom the ACG/APG feature
+    // groundings already use for non-numeric statements.
+    explanations.push(ComputationExplanation {
+        id: format!("class_chassis.pu.{}.replaces", class_id.name()),
+        value: i16::from(level),
+        detail: format!(
+            "{class_id_str} ({}) is Pathfinder Unchained's replacement for {}, not an addition \
+             to it: PCGen declares it as the `{}` selection ability in that class's single-slot \
+             selection pool, so a character holds one or the other and never both. Both remain \
+             separately selectable in this engine under distinct class ids",
+            class_id.display_name(),
+            class_id.replaces_class_id(),
+            class_id.corpus_key(),
+        ),
+    });
+
+    // The corpus-record roster, emitted before the magnitude groundings so a
+    // reader of the sheet meets the class's own feature list first and the
+    // derived numbers second. See `push_pu_class_feature_records`.
+    push_pu_class_feature_records(class_id, level, ability_modifiers, explanations, diagnostics);
+
+    match class_id {
+        PuClassId::UnchainedBarbarian => {
+            ground_unchained_barbarian_class_features(level, ability_modifiers, explanations, diagnostics);
+        }
+        PuClassId::UnchainedMonk => {
+            ground_unchained_monk_class_features(
+                level,
+                base_attack_bonus,
+                ability_modifiers,
+                &input.chosen.race_id,
+                explanations,
+                diagnostics,
+            );
+        }
+        PuClassId::UnchainedRogue => {
+            ground_unchained_rogue_class_features(level, ability_modifiers, explanations, diagnostics);
+        }
+        PuClassId::UnchainedSummoner => {
+            ground_unchained_summoner_class_features(level, ability_modifiers, explanations, diagnostics);
+        }
+    }
+
+    // `input` carries the character's race to the Unchained Monk branch above,
+    // whose unarmed strike damage die is a column of the shared Core Rulebook
+    // record chosen by creature size. Nothing else here reads it: no Unchained
+    // feature is choice-gated yet, and this assertion says so out loud rather
+    // than the fact being inferable only from the absence of a call.
+    debug_assert_eq!(input.chosen.class_levels.len(), 1);
+
+    Some((base_attack_bonus, base_saves))
+}
+
+// ---------------------------------------------------------------------------
+// Pathfinder Unchained class-feature records, carried by corpus key
+// ---------------------------------------------------------------------------
+
+/// The citation this engine appends to every Pathfinder Unchained
+/// class-feature receipt row, naming the ingested corpus record the row is
+/// about.
+///
+/// # Why this exists
+///
+/// `reach_gate.rs` recorded the gap verbatim: PU's 64 ingested `class_feature`
+/// records demonstrably influence the character sheet, but *which* of them
+/// could not be claimed, "because `pilot_compute` names its receipt rows
+/// semantically (`class_feature.pu.unchained_rogue.sneak_attack_dice`) while
+/// the corpus record is keyed `Unchained Rogue ~ Sneak Attack`, so nothing can
+/// join the two without a hand-written mapping". A mapping written in the gate
+/// would be an unexecuted claim — the thing that file exists to refuse. So the
+/// key travels **on the receipt**, authored where the row is emitted, and the
+/// gate reads it back off the live response.
+///
+/// Deliberately a function rather than a format string at each call site: the
+/// same wording is what [`pu_class_feature_cited_key`] parses, and a citation
+/// only one of the two knows how to spell would silently stop being findable.
+pub fn pu_class_feature_citation(key: &str, corpus_line: u32) -> String {
+    format!(" Corpus record `{key}` (pu_abilities_class.lst:{corpus_line}).")
+}
+
+/// Reads the corpus `KEY:` token back out of a receipt row's `detail`, or
+/// `None` when the row carries no citation.
+///
+/// The backtick delimiters are load-bearing rather than decorative: without
+/// them `Unchained Barbarian ~ Rage` is a prefix of
+/// `Unchained Barbarian ~ Rage Powers`, and a substring match would report the
+/// wrong record as reached.
+pub fn pu_class_feature_cited_key(detail: &str) -> Option<&str> {
+    let rest = detail.split_once("Corpus record `")?.1;
+    rest.split_once("` (pu_abilities_class.lst:")
+        .map(|(key, _)| key)
+}
+
+// ---------------------------------------------------------------------------
+// Pathfinder Unchained class-feature descriptions, resolved to this
+// character's own numbers
+// ---------------------------------------------------------------------------
+
+/// The clause that introduces a resolved corpus description on a Pathfinder
+/// Unchained class-feature receipt row.
+///
+/// Written by [`push_pu_class_feature_records`] and read back by
+/// [`pu_resolved_description_from_detail`]. The pair exists for the same reason
+/// [`pu_class_feature_citation`] and [`pu_class_feature_cited_key`] do: a marker
+/// only one of the two knows how to spell silently stops being findable.
+///
+/// It names the text as the book's rather than the engine's, because the rest of
+/// a `detail` is this engine's own derivation prose and the two must not read as
+/// one voice.
+pub const PU_RESOLVED_DESCRIPTION_MARKER: &str =
+    " Rules text, with this character's own numbers resolved into it: ";
+
+/// Reads the resolved rules text back out of a receipt row's `detail`, or `None`
+/// when the row carries none.
+pub fn pu_resolved_description_from_detail(detail: &str) -> Option<&str> {
+    detail.split_once(PU_RESOLVED_DESCRIPTION_MARKER).map(|(_, text)| text)
+}
+
+/// One Pathfinder Unchained class feature whose corpus description states a
+/// number this engine already computes, paired with that description's `DESC:`
+/// tokens verbatim.
+///
+/// # Why the tokens are transcribed here
+///
+/// `compute_pilot_base_chassis` is a pure function that may not read the
+/// filesystem, and `rules_tables::pathfinder_unchained`'s feature tables carry a
+/// record's key, name and grant level but not its prose. This is the same
+/// situation `RACE_SIZES` and `ALTERNATE_TRAIT_REPLACE_FLAGS` already occupy, and
+/// it gets the same treatment `decisions.md §24` prescribes: a hand-transcribed
+/// constant, cited to the row it came from, with a test that re-derives every
+/// byte of it from the on-disk corpus so drift is a caught failure rather than a
+/// stale string.
+///
+/// See `tests/sd27_pu_class_feature_descriptions_carry_the_characters_numbers.rs`'s
+/// `every_transcribed_desc_token_is_byte_identical_to_the_corpus_record`.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct PuResolvableDescription {
+    /// The corpus `KEY:`, matched against the feature table's own `key`.
+    pub record_key: &'static str,
+    /// The record's `DESC:` tokens, in corpus source order, verbatim.
+    pub desc_tokens: &'static [&'static str],
+}
+
+/// Every PU class-feature record carrying a `%N` whose variable this engine
+/// resolves. Derived by command over `data/corpus/pathfinder_unchained/`, not
+/// chosen: these are all of them, and
+/// `the_transcribed_set_is_exactly_the_pu_records_carrying_a_percent_n`
+/// re-derives the denominator off disk so a newly-ingested `%N` record cannot
+/// join the corpus without joining this list.
+///
+/// All seven shipped with the number **dropped** — *"You can rage for rounds per
+/// day"*, *"[Ki Pool = ]"*, *"Subtract from the damage you take"*, *"The DC of
+/// this save is ."*, *"You add to Perception skill checks"* — and
+/// `Unchained Rogue ~ Rogues Edge` shipped with a **null** description, because
+/// every one of its prose-bearing segments is gated on a variable the ingest
+/// could not resolve.
+pub const PU_RESOLVABLE_DESCRIPTIONS: &[PuResolvableDescription] = &[
+    // `pu_abilities_class.lst:290`
+    PuResolvableDescription {
+        record_key: "Unchained Barbarian ~ Rage",
+        desc_tokens: &[PU_RAGE_DESC_TOKEN],
+    },
+    // `pu_abilities_class.lst:303` — the same prose, reached through the sibling
+    // record `Unchained Barbarian ~ Rage` grants automatically
+    // (`ABILITY:Special Ability|AUTOMATIC|Unchained Rage`), plus one extra
+    // `PREABILITY`-gated sentence this engine leaves alone: `eval_desc_gate`
+    // decides only the `PREVAR*` family, so a `PREABILITY` gate is `Undecided`
+    // and its prose survives rather than being deleted on the strength of a fact
+    // this engine does not hold.
+    PuResolvableDescription {
+        record_key: "Unchained Rage",
+        desc_tokens: &[
+            PU_UNCHAINED_RAGE_DESC_TOKEN,
+            "You are using an alternative raging method.|PREABILITY:1,CATEGORY=Special Ability,TYPE.RageSelectionAlt",
+        ],
+    },
+    // `pu_abilities_class.lst:293`
+    PuResolvableDescription {
+        record_key: "Unchained Barbarian ~ Damage Reduction",
+        desc_tokens: &[
+            "You gain damage reduction. Subtract %1 from the damage you take each time you are dealt damage from a weapon or natural attack. Damage reduction can reduce damage to 0 but not below 0.|BarbarianDR",
+        ],
+    },
+    // `pu_abilities_class.lst:467`
+    PuResolvableDescription {
+        record_key: "Unchained Monk ~ Ki Pool",
+        desc_tokens: &[PU_KI_POOL_DESC_TOKEN],
+    },
+    // `pu_abilities_class.lst:586`
+    PuResolvableDescription {
+        record_key: "Unchained Rogue ~ Master Strike",
+        desc_tokens: &[PU_MASTER_STRIKE_DESC_TOKEN],
+    },
+    // `pu_abilities_class.lst:588` — four segments, two of them mutually
+    // exclusive `PREVAR` branches on the same variable.
+    PuResolvableDescription {
+        record_key: "Unchained Rogue ~ Rogues Edge",
+        desc_tokens: &[
+            "You have mastered",
+            "a single skill beyond that skill's normal boundaries,|PREVAREQ:RoguesEdgeLVL,1",
+            "%1 skills beyond those skill's normal boundaries,|RoguesEdgeLVL|PREVARGT:RoguesEdgeLVL,1",
+            "gaining results that others can only dream about. You gain the skill unlock powers as appropriate for the number of ranks you have.",
+        ],
+    },
+    // `pu_abilities_class.lst:590`
+    PuResolvableDescription {
+        record_key: "Unchained Rogue ~ Trapfinding",
+        desc_tokens: &[
+            "You add +%1 to Perception skill checks made to locate traps and to Disable Device skill checks. You can use the Disable Device skill to disarm magical traps.|TrapfindingBonus",
+        ],
+    },
+];
+
+/// `pu_abilities_class.lst:290`'s `DESC:` token, verbatim.
+const PU_RAGE_DESC_TOKEN: &str = "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter a rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours need not be consecutive. While in a rage, you gain a +%2 bonus on melee attack rolls, melee damage rolls, thrown weapon damage rolls, and Will saving throws. In addition, you take a %3 penalty to Armor Class. You also gain %4 temporary hit points. These temporary hit points are lost first when you take damage, disappear when the rage ends, and are not replenished if you enter a rage again within 1 minute of your previous rage. While in a rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). You can end your rage as a free action, and are fatigued for 1 minute after a rage ends. You can't enter a new rage while fatigued or exhausted, but can otherwise enter a rage multiple times per day. If you fall unconscious, your rage immediately ends.|RageDuration|RageBonus|RageACPenalty|RageBonusHP";
+
+/// `pu_abilities_class.lst:303`'s first `DESC:` token, verbatim. Identical to
+/// [`PU_RAGE_DESC_TOKEN`] except for the trailing `PREABILITY` gate, which is
+/// why it is transcribed separately rather than shared — a shared constant would
+/// make the corpus re-derivation test unable to tell the two rows apart.
+const PU_UNCHAINED_RAGE_DESC_TOKEN: &str = "You can call upon inner reserves of strength and ferocity, granting you additional combat prowess. You can rage for %1 rounds per day. You can enter a rage as a free action. The total number of rounds of rage per day is renewed after resting for 8 hours, although these hours need not be consecutive. While in a rage, you gain a +%2 bonus on melee attack rolls, melee damage rolls, thrown weapon damage rolls, and Will saving throws. In addition, you take a %3 penalty to Armor Class. You also gain %4 temporary hit points. These temporary hit points are lost first when you take damage, disappear when the rage ends, and are not replenished if you enter a rage again within 1 minute of your previous rage. While in a rage, you cannot use any Charisma-, Dexterity-, or Intelligence-based skill (except Acrobatics, Fly, Intimidate, and Ride) or any ability that requires patience or concentration (such as spellcasting). You can end your rage as a free action, and are fatigued for 1 minute after a rage ends. You can't enter a new rage while fatigued or exhausted, but can otherwise enter a rage multiple times per day. If you fall unconscious, your rage immediately ends.|RageDuration|RageBonus|RageACPenalty|RageBonusHP|PREABILITY:1,CATEGORY=Special Ability,Standard Unchained Rage";
+
+/// `pu_abilities_class.lst:467`'s `DESC:` token, verbatim.
+const PU_KI_POOL_DESC_TOKEN: &str = "[Ki Pool = %1] At 3rd level, a monk gains a pool of ki points, supernatural energy he can use to accomplish amazing feats. The number of points in a monk's ki pool is equal to 1/2 his monk level + his Wisdom modifier. As long as he has at least 1 point in his ki pool, he can make a ki strike. At 3rd level, ki strike allows his unarmed attacks to be treated as magic weapons for the purpose of overcoming damage reduction. At 7th level, his unarmed attacks are also treated as cold iron and silver for the purpose of overcoming damage reduction. At 10th level, his unarmed attacks are also treated as lawful weapons for the purpose of overcoming damage reduction. At 16th level, his unarmed attacks are treated as adamantine weapons for the purpose of overcoming damage reduction and bypassing hardness. By spending 1 point from his ki pool as a swift action, a monk can make one additional unarmed strike at his highest attack bonus when making a flurry of blows attack. This bonus attack stacks with all bonus attacks gained from flurry of blows, as well as those from haste and similar effects. A monk gains additional powers that consume points from his ki pool as he gains levels. The ki pool is replenished each morning after 8 hours of rest or meditation; these hours do not need to be consecutive.|KiPoints";
+
+/// `pu_abilities_class.lst:586`'s `DESC:` token, verbatim.
+const PU_MASTER_STRIKE_DESC_TOKEN: &str = "You are incredibly deadly when dealing sneak attack damage. Each time you deal sneak attack damage, you can choose one of the following three effects: the target can be put to sleep for 1d4 hours, paralyzed for 2d6 rounds, or slain. Regardless of the effect chosen, the target receives a Fortitude save to negate the additional effect. The DC of this save is %1. Once a creature has been the target of a master strike, regardless of whether or not the save is made, that creature is immune to your master strike for 24 hours. Creatures that are immune to sneak attack damage are also immune to this ability.|MasterStrikeDC";
+
+/// The display values one Unchained character has for the PCGen variables its
+/// own class-feature descriptions reference.
+///
+/// **Every value is read from the hand-modelled function that already owns it**
+/// — `barbarian_features::rage_rounds_per_day`, `monk_features::ki_points`,
+/// `rogue_features::master_strike_dc` and their siblings, the same functions
+/// whose results are already pushed as standalone magnitude explanations by
+/// `ground_unchained_*_class_features`. Nothing is recomputed here, so a
+/// description can never disagree with the magnitude record beside it.
+///
+/// A feature the character has not reached yet contributes no entry, which leaves
+/// its `%N` dropped and reported rather than rendered as a misleading `0`.
+///
+/// # No feat contribution, deliberately, and what that costs
+///
+/// `Extra Rage` (`crb/feat_data/general.rs:32`,
+/// `BONUS:VAR|RageDuration|6`) and `Extra Ki` (`:28`,
+/// `BONUS:VAR|KiPoints|2`) are live catalog feats that move two of these
+/// variables. Neither is applied here, because neither is applied to the
+/// standalone magnitude row either — `class_feature.pu.unchained_barbarian.
+/// rage_rounds_per_day` is `rage_rounds_per_day(level, con)` and nothing else.
+/// Adding the feat to the sentence alone would put two different rage-round
+/// counts on one sheet, which is `decisions.md §29.2`'s exact defect. Closing it
+/// properly needs two new fields on `feat_effects::FeatDisplayValueDeltas` (the
+/// §29.1 shared seam for this kind of contribution) consumed by both the sentence
+/// and the magnitude row; that file is outside this change's write scope and the
+/// gap is reported rather than half-closed.
+fn pu_display_values(
+    class_id: PuClassId,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+) -> PcgenDisplayValues {
+    let mut values = PcgenDisplayValues::new();
+    let mut set = |name: &str, value: Option<i16>| {
+        if let Some(value) = value {
+            values.set(name, i64::from(value));
+        }
+    };
+
+    match class_id {
+        PuClassId::UnchainedBarbarian => {
+            // `:306` `BONUS:VAR|RageDuration|2+var("STAT.2.MOD.NOTEMP")+(2*RageLVL)`
+            // with `:290` `BONUS:VAR|RageLVL|BarbarianLVL`.
+            set(
+                "RageDuration",
+                barbarian_features::rage_rounds_per_day(level, ability_modifiers.constitution),
+            );
+            // `:306` `BONUS:VAR|RageBonus|2`, plus `:294` and `:296`'s `|1` each.
+            set("RageBonus", barbarian_features::rage_morale_bonus(level));
+            // `:306` `BONUS:VAR|RageACPenalty|-2`.
+            set("RageACPenalty", barbarian_features::rage_armor_class_penalty(level));
+            // `:306` `BONUS:VAR|RageBonusHP|TL*2`, plus `:294` and `:296`'s
+            // `|TL` each. Single-class only on this path, so character level ==
+            // class level — the identical note
+            // `ground_unchained_barbarian_class_features` already carries for
+            // the same call.
+            set("RageBonusHP", barbarian_features::rage_temporary_hit_points(level, level));
+            // `:293` `BONUS:VAR|BarbarianDR|(BarbarianDRLVL-4)/3` with the same
+            // row's `BONUS:VAR|BarbarianDRLVL|BarbarianLVL`.
+            set("BarbarianDR", barbarian_features::damage_reduction(level));
+        }
+        PuClassId::UnchainedMonk => {
+            // `:467` `BONUS:VAR|KiPoolLVL|MonkLVL` feeding
+            // `core_rulebook/cr_abilities_class.lst:1175`'s
+            // `BONUS:VAR|KiPoints|KiPoolLVL/2` and `:1179`'s
+            // `BONUS:VAR|KiPoints|WIS`. Wisdom is passed for the same
+            // corpus-declared-choice reason `ground_unchained_monk_class_features`
+            // records at its own `ki_points` call.
+            set("KiPoints", monk_features::ki_points(level, ability_modifiers.wisdom));
+        }
+        PuClassId::UnchainedRogue => {
+            // `:590` `BONUS:VAR|TrapfindingBonus|max(TrapfindingLVL/2,1)`.
+            set("TrapfindingBonus", rogue_features::trapfinding_bonus(level));
+            // `:586` `BONUS:VAR|MasterStrikeDC|10+(MasterStrikeLVL/2)+INT`.
+            set(
+                "MasterStrikeDC",
+                rogue_features::master_strike_dc(level, ability_modifiers.intelligence),
+            );
+            // `:588` `BONUS:VAR|RoguesEdgeLVL|RogueLVL/5`. Also the gate
+            // variable for that record's two mutually exclusive prose branches.
+            set(
+                "RoguesEdgeLVL",
+                rogue_features::rogues_edge_skill_unlocks(level).map(i16::from),
+            );
+        }
+        // The Unchained Summoner's own records carry no `%N` at all
+        // (`data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class/`),
+        // so it contributes no display values rather than an empty-looking
+        // special case.
+        PuClassId::UnchainedSummoner => {}
+    }
+
+    values
+}
+
+/// This record's corpus description with **this character's numbers in it**, or
+/// `None` when the record carries no resolvable `%N` description.
+///
+/// Returns `None` rather than a partially-resolved sentence when any argument is
+/// still unresolved: a description that has lost a number reads as a defect
+/// (*"You can rage for rounds per day"*), and the roster line without it is
+/// honest where the mangled sentence is not. The un-rendered case is exactly what
+/// a character below the feature's grant level hits.
+fn pu_resolved_description(record_key: &str, values: &PcgenDisplayValues) -> Option<String> {
+    let record = PU_RESOLVABLE_DESCRIPTIONS.iter().find(|r| r.record_key == record_key)?;
+    let rendered = render_pcgen_desc_tokens(record.desc_tokens, values);
+    if !rendered.dropped_args.is_empty() || rendered.text.is_empty() {
+        return None;
+    }
+    debug_assert!(
+        leaked_pcgen_syntax(&rendered.text).is_none(),
+        "a resolved description must never carry PCGen syntax to a player: {rendered:?}"
+    );
+    Some(rendered.text)
+}
+
+/// One ingested Pathfinder Unchained `class_feature` record, normalised across
+/// the four per-class table shapes.
+///
+/// The four tables are genuinely different shapes — Barbarian and Monk expose a
+/// `pub struct` roster, Rogue and Summoner a `pub enum` with accessor methods,
+/// and `min_level` is `Option<u8>` on two of them and `u8` on the other two.
+/// Normalising here rather than reshaping four corpus-pinned tables keeps this
+/// change inside the seam it belongs in.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+struct PuClassFeatureRecord {
+    /// The corpus `KEY:` token, verbatim.
+    key: &'static str,
+    /// The corpus row's display name (its first column).
+    name: &'static str,
+    /// The class level a progression row first grants this record at. `None`
+    /// means the row states no `PREVARGTEQ:` level gate — for a granted record
+    /// that means "from level 1", and for an ungranted one there is no level to
+    /// state.
+    min_level: Option<u8>,
+    /// Whether any progression row grants this record at all. Five of the 64
+    /// are declared and never granted; that is a real corpus fact, not an
+    /// ingest gap.
+    is_granted: bool,
+    /// 1-based line in `pu_abilities_class.lst`.
+    corpus_line: u32,
+}
+
+/// Every ingested `class_feature` record for one Unchained class, read live off
+/// that class's own corpus-pinned table.
+fn pu_class_feature_records(class_id: PuClassId) -> Vec<PuClassFeatureRecord> {
+    match class_id {
+        PuClassId::UnchainedBarbarian => barbarian_features::features()
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key,
+                name: feature.name,
+                min_level: feature.min_level,
+                is_granted: feature.is_granted,
+                corpus_line: feature.corpus_line,
+            })
+            .collect(),
+        // Every one of the Monk's 18 records is granted by the single
+        // `Monk ~ Unchained Class.MOD` progression block, so the table carries
+        // no `is_granted` flag to read — there is no ungranted case to model.
+        PuClassId::UnchainedMonk => monk_features::features()
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key,
+                name: feature.name,
+                min_level: Some(feature.min_level),
+                is_granted: true,
+                corpus_line: feature.corpus_line,
+            })
+            .collect(),
+        PuClassId::UnchainedRogue => rogue_features::UnchainedRogueFeature::ALL
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key(),
+                name: feature.name(),
+                min_level: feature.min_level(),
+                // The Rogue table states the same fact as the Barbarian's
+                // `is_granted` flag through `min_level`: `None` there is
+                // documented as "no progression row grants either one".
+                is_granted: feature.min_level().is_some(),
+                corpus_line: feature.declaring_line(),
+            })
+            .collect(),
+        PuClassId::UnchainedSummoner => summoner_features::UnchainedSummonerFeature::ALL
+            .iter()
+            .map(|feature| PuClassFeatureRecord {
+                key: feature.key(),
+                name: feature.name(),
+                min_level: Some(feature.min_level()),
+                is_granted: true,
+                corpus_line: feature.declaring_line(),
+            })
+            .collect(),
+    }
+}
+
+/// The receipt-id segment for one record: its corpus key with the
+/// `<Class> ~ ` prefix dropped and the rest slugged.
+///
+/// Dropping the prefix is what keeps the id readable — the id already names the
+/// class two segments earlier, and `classFeaturesModel.ts` humanises the
+/// remaining segments into the row's on-screen label. Uniqueness within a class
+/// is not assumed: `pu_class_feature_receipt_ids_are_unique_within_each_class`
+/// asserts it over all four live rosters.
+fn pu_feature_slug(key: &str) -> String {
+    let tail = key.rsplit(" ~ ").next().unwrap_or(key);
+    let mut slug = String::with_capacity(tail.len());
+    let mut last_was_separator = false;
+    for character in tail.chars() {
+        if character.is_ascii_alphanumeric() {
+            slug.extend(character.to_lowercase());
+            last_was_separator = false;
+        } else if is_intraword_punctuation(character) {
+            // Swallowed, not separated. See `is_intraword_punctuation`.
+        } else if !last_was_separator && !slug.is_empty() {
+            slug.push('_');
+            last_was_separator = true;
+        }
+    }
+    slug.trim_end_matches('_').to_owned()
+}
+
+/// Punctuation an id slug **swallows** instead of turning into a `_`.
+///
+/// # The defect this closes
+///
+/// An apostrophe sits inside a word, so promoting it to a separator splits the
+/// word in two. `classFeaturesModel.ts::humanise` then splits the id on
+/// `[\s._]+` and title-cases every part, so the orphaned letter is capitalised
+/// on its own: `Unchained Summoner ~ Maker's Call` became
+/// `…corpus_record.maker_s_call` and rendered on the character sheet as
+/// **"Maker S Call"**. `Scavenger's Eye` did the same through
+/// [`slugify_id_segment`].
+///
+/// Dropping the character instead yields `makers_call` -> "Makers Call", which
+/// is the convention [`class_feature_id_slug`] already used for the Advanced
+/// Class Guide's deeds (`Swashbuckler's Edge` -> `swashbucklers_edge`). This is
+/// that rule, shared, rather than a third spelling of it.
+///
+/// Both the ASCII apostrophe and the Unicode right single quotation mark are
+/// swallowed: PCGen writes ASCII in every row this repo has ingested, and a
+/// future row arriving with the typographic form would otherwise reopen the
+/// defect silently.
+///
+/// Deliberately *not* generalised to all punctuation. A parenthesis or a
+/// hyphen separates words (`Craft (Alchemy)`, `Kip-Up`) and must stay a
+/// separator; only the apostrophe family sits mid-word.
+fn is_intraword_punctuation(character: char) -> bool {
+    matches!(character, '\'' | '\u{2019}')
+}
+
+/// Emits one receipt row per ingested Pathfinder Unchained `class_feature`
+/// record this character actually holds, each carrying the record's own corpus
+/// key.
+///
+/// # What a player gets that they did not have before
+///
+/// The magnitude groundings below this function each explain one *number* —
+/// Rage's rounds per day, the Rogue's sneak-attack dice. Several of them derive
+/// from a single corpus record (four rows come out of
+/// `Unchained Barbarian ~ Rage` alone), and many corpus records state no number
+/// at all and so produced no row whatsoever. The sheet's Class Features section
+/// was therefore a list of derived magnitudes rather than a list of the
+/// character's class features: an Unchained Monk 20 saw nothing named
+/// "Timeless Body" or "Tongue of the Sun and Moon" anywhere.
+///
+/// These rows are that roster, one per record, with the grant level the corpus
+/// states and a citation of the record itself.
+///
+/// # Which rows are emitted, and which deliberately are not
+///
+/// * **Granted, and this character has reached its level** — a roster row.
+/// * **Granted, but above this character's level** — no row. A level-1 Rogue
+///   does not have Master Strike, and listing a feature the character has not
+///   got would be the same overstatement the rest of this file avoids.
+/// * **Never granted by any progression row** (5 of the 64) — an
+///   `.unsupported` row, which `classFeaturesModel.ts` routes to the sheet's
+///   "Not computed" lane. These are declared machinery records whose effect the
+///   book reaches through a sibling record the class *does* grant (the Uncanny
+///   Dodge Tracker drives both Uncanny Dodge rows;
+///   `Unchained Barbarian ~ Rage`'s own
+///   `ABILITY:Special Ability|AUTOMATIC|Unchained Rage` reaches
+///   `Unchained Rage`). Saying that on the sheet is honest; silently dropping
+///   them would leave five ingested records reaching nothing.
+fn push_pu_class_feature_records(
+    class_id: PuClassId,
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let class_name = class_id.name();
+    let display_name = class_id.display_name();
+    // Resolved once per class rather than per record: every entry comes from a
+    // hand-modelled function of this character's level and ability modifiers, so
+    // it is the same table for all 64 rows.
+    let display_values = pu_display_values(class_id, level, ability_modifiers);
+
+    for record in pu_class_feature_records(class_id) {
+        let citation = pu_class_feature_citation(record.key, record.corpus_line);
+        let slug = pu_feature_slug(record.key);
+        // Empty for the 57 records stating no `%N`, and for any record whose
+        // variable this character has not reached. See `pu_resolved_description`
+        // for why a partial sentence is never emitted.
+        let rules_text = match pu_resolved_description(record.key, &display_values) {
+            Some(text) => format!("{PU_RESOLVED_DESCRIPTION_MARKER}{text}"),
+            None => String::new(),
+        };
+
+        if !record.is_granted {
+            push_deferred_class_features(
+                &format!("class_feature.pu.{class_name}.corpus_record.{slug}.unsupported"),
+                format!(
+                    "{display_name}: `{}` is declared by Pathfinder Unchained but no progression \
+                     row grants it a level of its own, so nothing is computed for the record \
+                     directly. The book reaches its effect through a sibling record this class \
+                     does grant, whose own rows carry the magnitude.{citation}{rules_text}",
+                    record.name
+                ),
+                explanations,
+                diagnostics,
+            );
+            continue;
+        }
+
+        // `None` on a granted record means the progression row states no level
+        // gate, which PCGen applies from the class's first level.
+        let granted_at = record.min_level.unwrap_or(1);
+        if level < granted_at {
+            continue;
+        }
+
+        explanations.push(ComputationExplanation {
+            id: format!("class_feature.pu.{class_name}.corpus_record.{slug}"),
+            value: i16::from(granted_at),
+            detail: format!(
+                "{display_name} level {level}: `{}` is a class feature of this character, granted \
+                 from class level {granted_at}.{citation}{rules_text}",
+                record.name
+            ),
+        });
+    }
+}
+
+/// Grounds the Unchained Barbarian's named features
+/// (`rules_tables::pathfinder_unchained::barbarian_features`).
+///
+/// Every magnitude below is that module's own pure function, called with
+/// this character's real level and ability modifiers. Nothing is recomputed
+/// here, and nothing is emitted for a feature the character has not reached
+/// — each function returns `None` below its grant level and this function
+/// simply pushes no record in that case, which is the same "absent means
+/// not yet granted" contract the ACG/APG groundings use.
+fn ground_unchained_barbarian_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if let Some(rounds) = barbarian_features::rage_rounds_per_day(level, ability_modifiers.constitution) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_rounds_per_day".to_owned(),
+            value: rounds,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: {rounds} rounds per day \
+                 (2 + Constitution modifier {} + 2 x level)",
+                ability_modifiers.constitution
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::rage_morale_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_morale_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: a +{bonus} morale bonus on melee attack \
+                 rolls, melee and thrown damage rolls, and Will saves while raging. This is the \
+                 sharpest divergence from the Core Rulebook Barbarian, which instead raises \
+                 Strength and Constitution by 4 and Will by 2"
+            ),
+        });
+    }
+    if let Some(penalty) = barbarian_features::rage_armor_class_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_armor_class_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: a {penalty} penalty to Armor Class while \
+                 raging. Grounded as a standalone magnitude -- rage is an activated state and no \
+                 activation model exists here, so it is deliberately NOT folded into the \
+                 character's resting Armor Class total"
+            ),
+        });
+    }
+    // Single-class only (`compute_class_chassis` routes multiclass away
+    // before this function can be reached), so character level == class
+    // level here. The two arguments stay distinct anyway, because the
+    // corpus makes the multiplicand total level and the multiplier class
+    // level, and collapsing them would be wrong the day multiclass lands.
+    if let Some(temp_hp) = barbarian_features::rage_temporary_hit_points(level, level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_temporary_hit_points".to_owned(),
+            value: temp_hp,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage: {temp_hp} temporary hit points while \
+                 raging (character level x 2, rising to x3 at level 11 and x4 at level 20). A \
+                 standalone magnitude: this engine tracks max and current hit points but has no \
+                 temporary-hit-point total to add it to, so nothing consumes it yet"
+            ),
+        });
+    }
+    if let Some(powers) = barbarian_features::rage_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.rage_powers_known".to_owned(),
+            value: powers,
+            detail: format!(
+                "Unchained Barbarian level {level} Rage Powers: a pool of {powers} (level / 2). \
+                 The 54 Unchained Rage Powers this pool is spent on are not modelled anywhere in \
+                 this repo, so this is the size of the pool and not a claim that a catalogue of \
+                 choices exists"
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::danger_sense_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.danger_sense_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Danger Sense: +{bonus} (level / 3) on Reflex \
+                 saves to avoid traps and on Perception checks to notice them"
+            ),
+        });
+    }
+    if let Some(dr) = barbarian_features::damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.damage_reduction".to_owned(),
+            value: dr,
+            detail: format!(
+                "Unchained Barbarian level {level} Damage Reduction: {dr}/- ((level - 4) / 3)"
+            ),
+        });
+    }
+    if let Some(feet) = barbarian_features::fast_movement_bonus_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.fast_movement_bonus_feet".to_owned(),
+            value: feet,
+            detail: format!(
+                "Unchained Barbarian level {level} Fast Movement: +{feet} feet to base land speed \
+                 when carrying no more than a medium load and wearing no heavy armor. The \
+                 load/armor condition is stated, not silently applied -- this engine has no \
+                 encumbrance model, so the magnitude is grounded and the condition is not"
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::indomitable_will_save_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.indomitable_will_save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Indomitable Will: +{bonus} on Will saves \
+                 against enchantment spells and effects while raging. Conditional on raging, so \
+                 it is NOT added to the character's resting Will save total"
+            ),
+        });
+    }
+    if let Some(flanking_level) = barbarian_features::uncanny_dodge_flanking_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.uncanny_dodge_flanking_level".to_owned(),
+            value: flanking_level,
+            detail: format!(
+                "Unchained Barbarian level {level} Uncanny Dodge: counts as a level-{flanking_level} \
+                 defender for the rule that only a rogue of at least four levels higher can flank \
+                 them"
+            ),
+        });
+    }
+    let tier = barbarian_features::uncanny_dodge_tier(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_barbarian.uncanny_dodge_tier".to_owned(),
+        value: i16::from(tier),
+        detail: format!(
+            "Unchained Barbarian level {level} Uncanny Dodge tier {tier}: 0 below level 2, 1 at \
+             levels 2-4 (Uncanny Dodge), 2 from level 5 (Improved Uncanny Dodge)"
+        ),
+    });
+    // Greater Rage and Mighty Rage are their own ingested records
+    // (`:294` / `:296`) and each carries two real formula tokens, but until
+    // now their `+1`s vanished into the Rage totals above and the rows a
+    // player reads under those two names carried no number at all. These
+    // state the value each record is responsible for producing.
+    if let Some(bonus) = barbarian_features::greater_rage_morale_bonus(level) {
+        let multiplier = barbarian_features::rage_temporary_hit_point_multiplier(level)
+            .expect("Rage is granted wherever Greater Rage is");
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.greater_rage_morale_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Greater Rage: the rage morale bonus is +{bonus} \
+                 and rage temporary hit points are character level x {multiplier}. Greater Rage's \
+                 own row adds one to each (BONUS:VAR|RageBonus|1 and BONUS:VAR|RageBonusHP|TL from \
+                 level 11); the values shown are the resulting totals, which is what the character \
+                 actually has"
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::mighty_rage_morale_bonus(level) {
+        let multiplier = barbarian_features::rage_temporary_hit_point_multiplier(level)
+            .expect("Rage is granted wherever Mighty Rage is");
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.mighty_rage_morale_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Mighty Rage: the rage morale bonus reaches \
+                 +{bonus} and rage temporary hit points character level x {multiplier}. Mighty \
+                 Rage's row carries the identical pair of tokens as Greater Rage \
+                 (BONUS:VAR|RageBonus|1, BONUS:VAR|RageBonusHP|TL), stacking a second time from \
+                 level 20"
+            ),
+        });
+    }
+    if let Some(rounds) =
+        barbarian_features::prose_derived::tireless_rage_temporary_hit_point_lockout_rounds(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.tireless_rage_lockout_rounds".to_owned(),
+            value: rounds,
+            detail: format!(
+                "Unchained Barbarian level {level} Tireless Rage: you are no longer fatigued when \
+                 a rage ends, but raging again within {rounds} rounds (1 minute) of the last rage \
+                 ending grants no temporary hit points. The row carries no formula token at all -- \
+                 the 1 minute is read out of its own DESC and converted to the rounds every other \
+                 rage magnitude here is measured in"
+            ),
+        });
+    }
+
+    push_deferred_class_features(
+        "class_feature.pu.unchained_barbarian.other_features_deferred.unsupported",
+            "class:unchained_barbarian grounds every Unchained Barbarian magnitude this book \
+             states as a formula token: the chassis (borrowed unchanged from the Core Rulebook \
+             Barbarian, which the corpus record confirms it does not override), Rage's rounds \
+             per day, morale bonus, Armor Class penalty and temporary hit points, the Rage Power \
+             pool size, Danger Sense, Damage Reduction, Fast Movement, Indomitable Will, the \
+             Uncanny Dodge flanking level and tier, the morale bonus and temporary-hit-point \
+             multiplier Greater Rage and Mighty Rage each produce, and Tireless Rage's \
+             temporary-hit-point lockout. This diagnostic is NOT claim-blocking; it carries the \
+             honest remainder. What is missing: (1) the 54 Unchained Rage Powers themselves -- \
+             the pool size is real, the catalogue of choices is not ingested; (2) APPLICATION \
+             rather than magnitude -- Rage is an activated state with no activation model here, \
+             so the morale bonus, Armor Class penalty, temporary hit points and Indomitable Will \
+             are derived correctly but deliberately not folded into any resting total; (3) Fast \
+             Movement's encumbrance/heavy-armor condition, which this engine cannot evaluate; (4) \
+             Tireless Rage's other clause -- no longer being fatigued when a rage ends -- removes \
+             a condition this engine does not track, so it carries no magnitude; and Weapon and \
+             Armor Proficiency is a proficiency-lane fact this engine models per-item, not \
+             per-class"
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
+}
+
+/// Emits one class's "these features are named but this engine computes
+/// nothing for them" record on **both** receipt channels.
+///
+/// Until this existed, the four Pathfinder Unchained classes pushed that
+/// record on the diagnostic channel only, and it reached no player. The
+/// Character Sheet's "Class Features & Special Abilities" section
+/// (`CharacterSheet.tsx` -> `classFeaturesModel.ts`) has always had a
+/// dedicated "Not computed" lane for exactly this — a record whose id ends in
+/// `.unsupported`, rendered with its detail text and deliberately without its
+/// filler-zero value, so the sheet never flattens "not computed" into "0" —
+/// but it reads `LoadSavedCharacterResponse.explanations`, and nothing in this
+/// engine had ever emitted an `.unsupported` *explanation*. The lane was
+/// therefore dead code and the deferral invisible: 23 of Unchained Rogue's,
+/// Barbarian's, Monk's and Summoner's 64 ingested class features compute
+/// nothing (including the Rogue's headline Debilitating Injury) and the sheet
+/// said nothing at all.
+///
+/// The diagnostic is kept as well as, not replaced by, the explanation: it is
+/// what `pf1_adapter`'s creation path and the headless receipt consumers read,
+/// and dropping it would silently change the mutation-blocking surface. Both
+/// carry the identical text, from one source, so the two channels cannot
+/// drift into telling different stories.
+///
+/// `value: 0` is the filler zero `classFeaturesModel.ts` documents and
+/// discards; nothing downstream renders it as a magnitude.
+fn push_deferred_class_features(
+    id: &str,
+    message: String,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    diagnostics.push(ComputationDiagnostic {
+        id: id.to_owned(),
+        message: message.clone(),
+        claim_blocking: false,
+    });
+    explanations.push(ComputationExplanation { id: id.to_owned(), value: 0, detail: message });
+}
+
+/// Grounds the Unchained Monk's unarmed strike damage die, in the same two
+/// facets the Core Rulebook Monk's chassis grounds: the die's face size and,
+/// separately, its count.
+///
+/// # Why this exists, given `monk_features.rs` declined to model it
+///
+/// That module's doc comment declined on the grounds that
+/// [`monk_unarmed_strike_damage_die`] "already states that progression". The
+/// function did; the sheet did not. Those rows are pushed only by
+/// `explain_monk_level1_chassis`, which returns early unless the character
+/// holds Core Rulebook `class:monk` (and is Human), so an Unchained Monk got
+/// the roster row naming Unarmed Strike and no number at any level. The
+/// remedy is to call the existing function from this path, not to write a
+/// second ladder.
+///
+/// # The progressions are identical, established against the corpus
+///
+/// * `pu_abilities_class.lst:464` (`Unchained Monk ~ Unarmed Strike`) grants
+///   `ABILITY:Internal|AUTOMATIC|Monk ~ Unarmed Damage` — the very record
+///   `cr_abilities_class.lst:1118` grants for the Core Rulebook Monk — and
+///   carries no damage token of its own.
+/// * Pathfinder Unchained emits **no** `MonkUnarmedDamage*` or `UDAM` token
+///   anywhere in its `.lst` files, so it overrides nothing about that record:
+///   no `.MOD`, no `BONUS:VAR`, no replacement band table.
+/// * The shared record (`cr_abilities_class.lst:1280`) picks its band with
+///   `BONUS:VAR|MonkUnarmedDamageProgression|(min(5,MonkUnarmedDamageLVL/4))`
+///   over `BONUS:VAR|MonkUnarmedDamageLVL|MonkLVL`, which is
+///   [`monk_unarmed_strike_damage_die`]'s `min(5, level / 4)` exactly.
+///
+/// # Why the size column is read, when the Core Rulebook path does not
+///
+/// The shared record fans each band out per creature size —
+/// `Monk Unarmed Damage LVL 8 (Small)`, `… (Medium)`, and seven more. The
+/// Core Rulebook path never had to choose, because it is gated on `race:human`.
+/// This path is not: `race_resolver::RACE_SIZES` gives the 18 playable races
+/// 13 Medium and 5 Small, so handing a Gnome or a Halfling the Medium ladder
+/// would put a specific, checkable, wrong die on a player's sheet. Only the
+/// two columns a playable race can occupy are modelled; any other size grounds
+/// an honest absence rather than a substituted number.
+///
+/// # Both facets are emitted at every level, unlike the Core Rulebook path
+///
+/// `explain_monk_level1_chassis` withholds the count row below level 12,
+/// because that facet was introduced by a later cycle at the level where the
+/// count first rises. A face size with no count beside it is ambiguous on the
+/// sheet — `10` alone does not distinguish 1d10 from 2d10 — so this path emits
+/// both from level 1. The Core Rulebook path is deliberately left exactly as
+/// it is; `tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs`'s
+/// `the_core_rulebook_monk_is_byte_identical` is the guard on that.
+fn ground_unchained_monk_unarmed_strike_damage(
+    level: u8,
+    race_id: &str,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let resolved = race_size_for_race_token(race_id).and_then(|size| {
+        monk_unarmed_strike_damage_die_for_size(level, size).map(|die| (size, die))
+    });
+    let Some((size, (die_face, die_count, die_name))) = resolved else {
+        push_deferred_class_features(
+            "class_feature.pu.unchained_monk.unarmed_strike_damage_die.unsupported",
+            format!(
+                "Unchained Monk level {level}: the unarmed strike damage die is a column of the \
+                 shared Core Rulebook `Monk ~ Unarmed Damage` record \
+                 (cr_abilities_class.lst:1280) chosen by the character's creature SIZE, and \
+                 race {race_id:?} resolves to no size this engine models. Only the Small and \
+                 Medium columns are transcribed -- the two every one of the 18 playable races \
+                 occupies -- so nothing is computed here rather than the Medium ladder being \
+                 substituted, which would be a specific, checkable, wrong die. This diagnostic \
+                 is NOT claim-blocking: every other Unchained Monk magnitude on this sheet is \
+                 size-independent and unaffected"
+            ),
+            explanations,
+            diagnostics,
+        );
+        return;
+    };
+    let size_label = size_label(size);
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.unarmed_strike_damage_die".to_owned(),
+        value: die_face,
+        detail: format!(
+            "Unchained Monk level {level} Unarmed Strike: {die_name} for a {size_label} monk, so \
+             the die-face-size facet is {die_face} (the d{die_face} in {die_name}); the count \
+             facet is grounded separately below. Pathfinder Unchained does NOT restate this \
+             progression -- `Unchained Monk ~ Unarmed Strike` (pu_abilities_class.lst:464) \
+             grants the shared Core Rulebook record `Monk ~ Unarmed Damage` \
+             (cr_abilities_class.lst:1280) and adds no damage token, and Pathfinder Unchained \
+             writes no MonkUnarmedDamage or UDAM token anywhere, so the band ladder \
+             min(5, level / 4) over 1d6/1d8/1d10/2d6/2d8/2d10 (Medium) is literally the Core \
+             Rulebook Monk's and is read from the same function. The size column matters: the \
+             shared record fans every band out per creature size, and a {size_label} monk reads \
+             the {size_label} column. No damage roll, damage total or attack-resolution engine \
+             is computed -- this is the die, not a result"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.unarmed_strike_damage_die_count".to_owned(),
+        value: die_count,
+        detail: format!(
+            "Unchained Monk level {level} Unarmed Strike damage die count: {die_count} for a \
+             {size_label} monk ({die_name}). Only this count facet is grounded here; the \
+             die-face-size facet is grounded separately above. Emitted at every level rather \
+             than only from the level the count first rises, because a face size with no count \
+             beside it does not distinguish 1d10 from 2d10 on the sheet"
+        ),
+    });
+}
+
+/// Grounds the Unchained Monk's named features
+/// (`rules_tables::pathfinder_unchained::monk_features`).
+///
+/// `total_base_attack_bonus` is the chassis row's own value, passed in
+/// rather than recomputed, because Flurry of Blows keys off base attack
+/// bonus and not off level — the one Unchained Monk magnitude that would be
+/// wrong if it were derived from the class level directly.
+///
+/// `race_id` is read for one thing only: the creature size the unarmed strike
+/// damage die is a column of. See
+/// [`ground_unchained_monk_unarmed_strike_damage`].
+fn ground_unchained_monk_class_features(
+    level: u8,
+    total_base_attack_bonus: i16,
+    ability_modifiers: &AbilityModifiers,
+    race_id: &str,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    ground_unchained_monk_unarmed_strike_damage(level, race_id, explanations, diagnostics);
+
+    let ac_from_level = monk_features::armor_class_bonus_from_level(level);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.armor_class_bonus_level_component".to_owned(),
+        value: ac_from_level,
+        detail: format!(
+            "Unchained Monk level {level} AC Bonus, level component: +{ac_from_level} \
+             (min(level / 4, 5))"
+        ),
+    });
+    let ac_bonus = monk_features::armor_class_bonus(level, ability_modifiers.wisdom);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.armor_class_bonus".to_owned(),
+        value: ac_bonus,
+        detail: format!(
+            "Unchained Monk level {level} AC Bonus: +{ac_bonus} to Armor Class and CMD when \
+             unarmored and unencumbered (level component +{ac_from_level} plus max(Wisdom \
+             modifier {}, 0)). Grounded as a standalone magnitude: the unarmored/unencumbered \
+             condition is a real gate this engine cannot evaluate, so it is stated and NOT \
+             silently folded into the character's Armor Class total",
+            ability_modifiers.wisdom
+        ),
+    });
+    if let Some(feats) = monk_features::bonus_feats_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.bonus_feats_known".to_owned(),
+            value: feats,
+            detail: format!(
+                "Unchained Monk level {level} Bonus Feat: {feats} bonus feats \
+                 (1 + max((level + 2) / 4, 0)). The Unchained Monk bonus-feat list is not \
+                 ingested, so this is the count of picks and not a catalogue of options"
+            ),
+        });
+    }
+    let flurry = monk_features::flurry_attack_count(total_base_attack_bonus);
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.flurry_attack_count".to_owned(),
+        value: flurry,
+        detail: format!(
+            "Unchained Monk level {level} Flurry of Blows: {flurry} attacks at a total base \
+             attack bonus of {total_base_attack_bonus} \
+             (2 + (bab>=6) + 2 x (bab>=11) + (bab>=16)). The Unchained Monk reaches 6 where the \
+             Core Rulebook Monk stops at 4"
+        ),
+    });
+    if let Some(feet) = monk_features::fast_movement_bonus_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.fast_movement_bonus_feet".to_owned(),
+            value: feet,
+            detail: format!(
+                "Unchained Monk level {level} Fast Movement: +{feet} feet to base land speed \
+                 (10 x (level / 3)) when unarmored and unencumbered. The condition is stated, \
+                 not silently applied"
+            ),
+        });
+    }
+    // The corpus makes the ki stat a choice (Wisdom, Charisma or
+    // Intelligence, behind `BONUS:ABILITYPOOL|Ki Pool Stat Choice`). No
+    // picker for it exists, and Wisdom is the plain Unchained Monk's stat,
+    // so Wisdom is passed and the substitution is named in the record
+    // rather than hidden.
+    if let Some(ki) = monk_features::ki_points(level, ability_modifiers.wisdom) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.ki_points".to_owned(),
+            value: ki,
+            detail: format!(
+                "Unchained Monk level {level} Ki Pool: {ki} ki points (level / 2 + ki-stat \
+                 modifier). The ki stat is a corpus-declared choice of Wisdom, Charisma or \
+                 Intelligence; no picker for it exists in this engine, so the plain Unchained \
+                 Monk's Wisdom modifier {} is used and the substitution is recorded here rather \
+                 than assumed silently",
+                ability_modifiers.wisdom
+            ),
+        });
+    }
+    if let Some(powers) = monk_features::ki_powers_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.ki_powers_known".to_owned(),
+            value: powers,
+            detail: format!(
+                "Unchained Monk level {level} Ki Powers: a pool of {powers} ((level - 2) / 2). \
+                 The 31 ki powers this pool is spent on are not ingested"
+            ),
+        });
+    }
+    if let Some(strikes) = monk_features::style_strikes_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.style_strikes_known".to_owned(),
+            value: strikes,
+            detail: format!(
+                "Unchained Monk level {level} Style Strike: {strikes} style strikes known \
+                 ((level - 1) / 4). The 10 style strikes this pool is spent on are not ingested"
+            ),
+        });
+    }
+    if let Some(bonus) = monk_features::still_mind_save_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.still_mind_save_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Monk level {level} Still Mind: +{bonus} on saving throws against \
+                 enchantment spells and effects. Conditional on the effect's school, which this \
+                 engine does not resolve at save time, so it is NOT added to any resting save \
+                 total"
+            ),
+        });
+    }
+    if let Some(dr) = monk_features::perfect_self_damage_reduction(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.perfect_self_damage_reduction".to_owned(),
+            value: dr,
+            detail: format!(
+                "Unchained Monk level {level} Perfect Self: damage reduction {dr}/chaotic"
+            ),
+        });
+    }
+    if let Some(monk_level) = monk_features::stunning_fist_monk_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.stunning_fist_monk_level".to_owned(),
+            value: monk_level,
+            detail: format!(
+                "Unchained Monk level {level} Stunning Fist: contributes an effective monk level \
+                 of {monk_level}. The save DC and uses per day live on the shared Core Rulebook \
+                 Stunning Fist FEAT record (already grounded in rules_core::feat_effects), not on \
+                 this class row -- feat-lane content stays in the feat lane"
+            ),
+        });
+    }
+    // Four Unchained Monk records whose whole numeric content is their own
+    // English DESC: and which therefore computed nothing until now. Each
+    // number below is read out of the sentence quoted in
+    // `monk_features::prose_derived`, and that sentence is re-read off the
+    // ingested corpus record by that module's own tests.
+    if let Some(percent) =
+        monk_features::prose_derived::evasion_damage_percent_on_a_successful_reflex_save(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.evasion_damage_percent_on_a_made_reflex_save"
+                .to_owned(),
+            value: percent,
+            detail: format!(
+                "Unchained Monk level {level} Evasion: on a successful Reflex save against an \
+                 attack that normally deals half damage on a save, the monk takes {percent}% of \
+                 the damage -- none at all, where the default is half. Only while wearing light \
+                 armor or none, and a helpless monk gains no benefit; both conditions are stated \
+                 rather than applied, because this engine evaluates neither"
+            ),
+        });
+    }
+    if let Some(percent) =
+        monk_features::prose_derived::improved_evasion_damage_percent_on_a_failed_reflex_save(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.improved_evasion_damage_percent_on_a_failed_reflex_save"
+                .to_owned(),
+            value: percent,
+            detail: format!(
+                "Unchained Monk level {level} Improved Evasion: from level 9 a failed Reflex save \
+                 costs only {percent}% of the damage, while a successful one still costs none. A \
+                 helpless monk gains no benefit"
+            ),
+        });
+    }
+    if let Some(rolls) = monk_features::prose_derived::flawless_mind_will_save_rolls(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.flawless_mind_will_save_rolls".to_owned(),
+            value: rolls,
+            detail: format!(
+                "Unchained Monk level {level} Flawless Mind: every Will save is rolled {rolls} \
+                 times and the better result taken. A failed Will save against an effect lasting \
+                 longer than 1 hour may additionally be re-attempted at the end of each hour -- a \
+                 retry interval, not a second magnitude, and this engine has no save resolution \
+                 for either clause to act on"
+            ),
+        });
+    }
+    if let Some(penalty) = monk_features::prose_derived::timeless_body_aging_ability_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.timeless_body_aging_ability_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Monk level {level} Timeless Body: the monk's ability-score penalty for \
+                 aging is {penalty} and he cannot be magically aged. A real zero, not a filler \
+                 one. Penalties already taken remain, age BONUSES still accrue, and the monk still \
+                 dies of old age when his time is up -- this number is the penalty, not immortality"
+            ),
+        });
+    }
+
+    push_deferred_class_features(
+        "class_feature.pu.unchained_monk.other_features_deferred.unsupported",
+            "class:unchained_monk grounds every Unchained Monk magnitude this book states as a \
+             formula token: its own chassis (d10 hit die, FULL base attack bonus, good Fortitude \
+             and Reflex and POOR Will -- all four genuinely different from the Core Rulebook \
+             Monk's), the AC Bonus and its level component, the bonus-feat count, the Flurry of \
+             Blows attack count, Fast Movement, the Ki Pool, the ki-power and style-strike pool \
+             sizes, Still Mind, Perfect Self's damage reduction, and Stunning Fist's effective \
+             monk level -- plus four whose only numbers are in their own prose: Evasion's and \
+             Improved Evasion's damage percentages, Flawless Mind's two Will-save rolls, and \
+             Timeless Body's zero aging penalty. This diagnostic is NOT claim-blocking; it \
+             carries the honest remainder. \
+             What is missing: (1) the 31 ki powers, 10 style strikes and the Unchained Monk \
+             bonus-feat list -- pool sizes are real, the option catalogues are not ingested; (2) \
+             the ki-stat choice has no picker, so Wisdom is used and said so; (3) APPLICATION -- \
+             the AC Bonus is gated on being unarmored and unencumbered, and Fast Movement the \
+             same, neither of which this engine can evaluate, so both are standalone magnitudes \
+             rather than contributions to a total; (4) unarmed strike damage IS grounded above, \
+             and is not restated as a second ladder: the corpus grants the SAME shared Core \
+             Rulebook record and Pathfinder Unchained overrides nothing about it, so the \
+             engine's existing progression is called rather than copied. What remains missing \
+             there is the other seven size columns of that record -- only Small and Medium are \
+             transcribed, which is every size a playable race occupies; (5) \
+             Purity of Body (immunity to all diseases) and Tongue of the Sun and Moon (speak with \
+             any living creature) state NO number anywhere -- not in a formula token and not in \
+             their prose -- so nothing is computed for them and nothing is invented; the same is \
+             true of Perfect Self's Outsider-type clause. The four prose-derived numbers above \
+             are magnitudes and not applications: this engine resolves no saving throws, so \
+             Evasion, Improved Evasion and Flawless Mind change no rolled outcome, and it models \
+             no aging, so Timeless Body cancels a penalty that was never applied; (6) archetype \
+             suppression flags \
+             (`Monk_CF_*`) are not implemented, so every progression above is the unsuppressed one"
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
+}
+
+/// Grounds the Unchained Rogue's named features
+/// (`rules_tables::pathfinder_unchained::rogue_features`).
+fn ground_unchained_rogue_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if let Some(dice) = rogue_features::sneak_attack_dice(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.sneak_attack_dice".to_owned(),
+            value: dice,
+            detail: format!(
+                "Unchained Rogue level {level} Sneak Attack: {dice}d{} ((level + 1) / 2). A \
+                 standalone magnitude -- this engine has no attack-resolution or damage total to \
+                 add the dice to",
+                rogue_features::SNEAK_ATTACK_DIE_SIZE
+            ),
+        });
+    }
+    if let Some(bonus) = rogue_features::trapfinding_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.trapfinding_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Rogue level {level} Trapfinding: +{bonus} (max(level / 2, 1)) on \
+                 Perception checks to locate traps and on Disable Device checks"
+            ),
+        });
+    }
+    if let Some(bonus) = rogue_features::danger_sense_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.danger_sense_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Rogue level {level} Danger Sense: +{bonus} (level / 3) on Reflex saves \
+                 to avoid traps, as a dodge bonus to Armor Class against traps, AND on Perception \
+                 checks to avoid being surprised. That third clause is what makes it Danger Sense \
+                 rather than the Core Rulebook Rogue's Trap Sense"
+            ),
+        });
+    }
+    if let Some(talents) = rogue_features::rogue_talents_known(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.rogue_talents_known".to_owned(),
+            value: i16::from(talents),
+            detail: format!(
+                "Unchained Rogue level {level} Rogue Talents: a pool of {talents} (level / 2). \
+                 The talent catalogue is not ingested for this book, so this is the size of the \
+                 pool and not a claim that the options exist"
+            ),
+        });
+    }
+    if let Some(choices) = rogue_features::finesse_training_weapon_choices(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.finesse_training_weapon_choices".to_owned(),
+            value: i16::from(choices),
+            detail: format!(
+                "Unchained Rogue level {level} Finesse Training: {choices} weapon choices \
+                 ((level + 5) / 8) that add Dexterity instead of Strength to damage. Absent \
+                 entirely from the Core Rulebook Rogue -- one of the features that makes this a \
+                 different class rather than a re-skin"
+            ),
+        });
+    }
+    if let Some(unlocks) = rogue_features::rogues_edge_skill_unlocks(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.rogues_edge_skill_unlocks".to_owned(),
+            value: i16::from(unlocks),
+            detail: format!(
+                "Unchained Rogue level {level} Rogue's Edge: {unlocks} skill unlocks (level / 5). \
+                 Absent entirely from the Core Rulebook Rogue. The skill-unlock content itself is \
+                 not ingested"
+            ),
+        });
+    }
+    if let Some(dc) = rogue_features::master_strike_dc(level, ability_modifiers.intelligence) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.master_strike_dc".to_owned(),
+            value: dc,
+            detail: format!(
+                "Unchained Rogue level {level} Master Strike: save DC {dc} \
+                 (10 + level / 2 + Intelligence modifier {}). A standalone magnitude -- there is \
+                 no saving-throw resolution here for it to be rolled against",
+                ability_modifiers.intelligence
+            ),
+        });
+    }
+    if let Some(flanking_level) = rogue_features::uncanny_dodge_flanking_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.uncanny_dodge_flanking_level".to_owned(),
+            value: i16::from(flanking_level),
+            detail: format!(
+                "Unchained Rogue level {level} Uncanny Dodge: counts as a level-{flanking_level} \
+                 defender for the flanking comparison"
+            ),
+        });
+    }
+    if let Some(steps) = rogue_features::uncanny_dodge_tracker_steps(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.uncanny_dodge_tracker_steps".to_owned(),
+            value: i16::from(steps),
+            detail: format!(
+                "Unchained Rogue level {level} Uncanny Dodge Tracker: {steps} satisfied step(s) \
+                 -- Uncanny Dodge, then Improved Uncanny Dodge"
+            ),
+        });
+    }
+    // Debilitating Injury: the Unchained Rogue's headline feature, and the
+    // one that made "23 of 64 compute nothing" a player-visible problem. Its
+    // corpus row (`:583`) is a bare declaration plus a DESC: -- no BONUS:, no
+    // DEFINE:, nothing PCGen itself computes -- so both numbers below are
+    // read out of its own sentences, quoted verbatim in
+    // `rogue_features::prose_derived` and re-checked against the ingested
+    // record by that module's tests.
+    if let Some(penalty) = rogue_features::prose_derived::general_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.debilitating_injury_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Rogue level {level} Debilitating Injury: sneak attack damage also \
+                 imposes one chosen penalty for {} round -- Bewildered ({penalty} to Armor \
+                 Class), Disoriented ({penalty} on attack rolls) or Hampered (all speeds halved, \
+                 minimum 5 feet, and no 5-foot step). Only one may afflict a target at a time; \
+                 further sneak attacks extend it a round each. A standalone magnitude: this \
+                 engine resolves no attacks, so nothing consumes it",
+                rogue_features::prose_derived::DURATION_ROUNDS
+            ),
+        });
+    }
+    if let Some(penalty) = rogue_features::prose_derived::penalty_vs_the_rogue(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.debilitating_injury_penalty_against_this_rogue"
+                .to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Rogue level {level} Debilitating Injury: against the rogue's own \
+                 attacks the Bewildered and Disoriented penalties total {penalty}, escalating by \
+                 -2 at level 10 and again at level 16 to the row's stated maximum of -8. The \
+                 sentence is ambiguous about whether the escalation applies to the additional \
+                 penalty or the combined one, but both readings converge on -4 / -6 / -8 and the \
+                 stated cap confirms them, so nothing is being guessed between competing answers"
+            ),
+        });
+    }
+    let class_skills = rogue_features::class_skills();
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_rogue.class_skill_count".to_owned(),
+        value: class_skills.len() as i16,
+        detail: format!(
+            "Unchained Rogue class skills, verbatim from the book's own CSKILL: token \
+             ({} entries): {}. TYPE= entries are PCGen skill-type selectors, preserved as \
+             written rather than expanded",
+            class_skills.len(),
+            class_skills.join(", ")
+        ),
+    });
+
+    push_deferred_class_features(
+        "class_feature.pu.unchained_rogue.other_features_deferred.unsupported",
+            "class:unchained_rogue grounds every Unchained Rogue magnitude this book states as a \
+             formula token: the chassis (borrowed unchanged from the Core Rulebook Rogue, which \
+             the corpus record confirms it does not override), Sneak Attack dice, Trapfinding, \
+             Danger Sense, the Rogue Talent pool, Finesse Training's weapon choices, Rogue's Edge \
+             skill unlocks, Master Strike's save DC, the Uncanny Dodge flanking level and tracker \
+             steps, and the class-skill list -- plus Debilitating Injury, whose penalties are \
+             stated only in its own prose and are now derived from it. This diagnostic is NOT \
+             claim-blocking; it carries the honest remainder. What is missing: (1) the \
+             rogue-talent and skill-unlock catalogues are not ingested -- the pool sizes are \
+             real, the option lists are not; (2) APPLICATION rather than magnitude -- Sneak \
+             Attack dice have no damage total, Master Strike's DC no save resolution, Danger \
+             Sense's dodge bonus no trap encounter to apply against, and Debilitating Injury no \
+             attack resolution to be imposed by; (3) Debilitating Injury's Hampered option \
+             (speeds halved to a minimum of 5 feet, no 5-foot step) is a movement effect on a \
+             TARGET, and this engine models no targets, so only the two penalty magnitudes are \
+             grounded; (4) Unchained Rogue's own Evasion row is empty -- no DESC, no token -- and \
+             SERVESAS the shared Core Rulebook `Rogue ~ Evasion` record, so any magnitude belongs \
+             to that record and not to this book; Improved Uncanny Dodge's qualitative clause and \
+             the weapon/armor proficiency rows likewise carry no numeric token"
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
+}
+
+/// Grounds the Unchained Summoner's named features
+/// (`rules_tables::pathfinder_unchained::summoner_features`).
+fn ground_unchained_summoner_class_features(
+    level: u8,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    if let Some(companion_level) = summoner_features::eidolon_companion_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.eidolon_companion_level".to_owned(),
+            value: i16::from(companion_level),
+            detail: format!(
+                "Unchained Summoner level {level} Eidolon: effective companion level \
+                 {companion_level} (1:1 with class level)"
+            ),
+        });
+    }
+    if let Some(pool) = summoner_features::eidolon_evolution_pool(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.eidolon_evolution_pool".to_owned(),
+            value: i16::from(pool),
+            detail: format!(
+                "Unchained Summoner level {level} Eidolon: an evolution pool of {pool} (a base of \
+                 1 plus one point at each of 14 level thresholds). This is the SHARPEST \
+                 divergence from the Advanced Player's Guide Summoner, whose pool starts at 3 and \
+                 takes double steps -- the two are separate functions in separate modules on \
+                 separate rule sets precisely so they cannot be confused"
+            ),
+        });
+    }
+    if let Some(spell_level) = summoner_features::summon_monster_spell_level(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.summon_monster_spell_level".to_owned(),
+            value: spell_level,
+            detail: format!(
+                "Unchained Summoner level {level} Summon Monster: casts summon monster \
+                 {spell_level} as a spell-like ability (min((level + 1) / 2, 9))"
+            ),
+        });
+    }
+    if let Some(uses) =
+        summoner_features::summon_monster_uses_per_day(level, ability_modifiers.charisma)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.summon_monster_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Unchained Summoner level {level} Summon Monster: {uses} uses per day \
+                 (max(Charisma modifier {}, 0) + 3). The max(...,0) is a genuine Unchained change \
+                 -- the Advanced Player's Guide Summoner writes plain CHA + 3, so a negative \
+                 Charisma modifier reduces a chained summoner below 3 uses and cannot reduce an \
+                 unchained one",
+                ability_modifiers.charisma
+            ),
+        });
+    }
+    if let Some(marker) = summoner_features::unchained_summoner_marker(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.unchained_summoner_marker".to_owned(),
+            value: i16::from(marker),
+            detail:
+                "The UnchainedSummoner flag is set. In the corpus this is the switch that swaps \
+                 the entire summoner spell list: every Advanced Player's Guide / Ultimate Magic / \
+                 Ultimate Combat / Mythic Adventures summoner spell row is gated on \
+                 StandardSummoner, which holding this class drives to 0, and only the Unchained \
+                 rows remain. It is grounded here so the replacement is checkable rather than \
+                 merely documented"
+                    .to_owned(),
+        });
+    }
+    // Nine Unchained Summoner records whose whole numeric content is their
+    // own English DESC:. Twelve of this class's seventeen features carry no
+    // arithmetic token at all -- it leans on prose harder than any of the
+    // other three -- so this is where most of the book's "computes nothing"
+    // set lived. Every sentence these come from is quoted in
+    // `summoner_features::prose_derived` and re-read off the ingested corpus
+    // record by that module's tests.
+    if let Some(rounds) = summoner_features::prose_derived::bond_senses_rounds_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.bond_senses_rounds_per_day".to_owned(),
+            value: i16::from(rounds),
+            detail: format!(
+                "Unchained Summoner level {level} Bond Senses: {rounds} rounds per day of sharing \
+                 the eidolon's senses (equal to summoner level), as a standard action, at \
+                 unlimited range so long as both are on the same plane"
+            ),
+        });
+    }
+    if let Some(bonus) = summoner_features::prose_derived::shield_ally_self_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.shield_ally_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Summoner level {level} Shield Ally: a +{bonus} shield bonus to Armor \
+                 Class and a +{bonus} circumstance bonus on saving throws while within the \
+                 eidolon's reach -- +2 from level 4, rising to +4 at level 12 when Greater Shield \
+                 Ally names the summoner himself. Conditional on the eidolon being in reach and \
+                 not grappled, helpless, paralyzed, stunned or unconscious, none of which this \
+                 engine tracks, so it is NOT folded into the character's resting Armor Class"
+            ),
+        });
+    }
+    if let Some(uses) = summoner_features::prose_derived::makers_call_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.makers_call_uses_per_day".to_owned(),
+            value: i16::from(uses),
+            detail: format!(
+                "Unchained Summoner level {level} Maker's Call: {uses} uses per day \
+                 (1 + (level - 6) / 4) of calling the eidolon to the summoner's side as dimension \
+                 door at the summoner's caster level"
+            ),
+        });
+    }
+    if let Some(points) = summoner_features::prose_derived::divertible_evolution_points(level) {
+        // Aspect grants the ability at 10 and Greater Aspect raises the same
+        // ceiling at 18, so the two records share one magnitude and are named
+        // together rather than double-counted.
+        if points > 0 {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.pu.unchained_summoner.aspect_evolution_points_divertible"
+                    .to_owned(),
+                value: i16::from(points),
+                detail: format!(
+                    "Unchained Summoner level {level} Aspect: up to {points} points may be \
+                     diverted from the eidolon's evolution pool to the summoner himself -- 2 from \
+                     level 10, raised to 6 by Greater Aspect at level 18, which additionally \
+                     changes the exchange rate so the eidolon loses 1 pool point per 2 diverted \
+                     (or fraction thereof) rather than 1 per 1. That second rule is a separate \
+                     rule and is deliberately NOT folded into this number. The evolution \
+                     catalogue these points are spent on is not ingested"
+                ),
+            });
+        }
+    }
+    if let Some(points) =
+        summoner_features::prose_derived::greater_aspect_divertible_evolution_points(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.greater_aspect_evolution_points_divertible"
+                .to_owned(),
+            value: i16::from(points),
+            detail: format!(
+                "Unchained Summoner level {level} Greater Aspect: the diversion ceiling rises to \
+                 {points} points, and the exchange rate improves -- the eidolon loses 1 pool \
+                 point for every 2 diverted (or fraction thereof) instead of 1 for each. The \
+                 ceiling is this number; the exchange rate is a second, separate rule and is not \
+                 folded into it"
+            ),
+        });
+    }
+    if let Some(bonus) = summoner_features::prose_derived::greater_shield_ally_bonus_to_allies(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.greater_shield_ally_bonus_to_allies"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Summoner level {level} Greater Shield Ally: allies other than the \
+                 summoner within the eidolon's reach gain a +{bonus} shield bonus to Armor Class \
+                 and a +{bonus} circumstance bonus on saving throws. This is the half of the \
+                 feature that is genuinely new at level 12 -- the summoner's own bonus is the \
+                 Shield Ally row above, which this raises to +4"
+            ),
+        });
+    }
+    if let Some(rounds) = summoner_features::prose_derived::merge_forms_rounds_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.merge_forms_rounds_per_day".to_owned(),
+            value: i16::from(rounds),
+            detail: format!(
+                "Unchained Summoner level {level} Merge Forms: {rounds} rounds per day merged \
+                 into the eidolon (equal to summoner level), untargetable while merged. If the \
+                 eidolon is sent home mid-merge the summoner takes 4d6 damage and is stunned for \
+                 1 round -- stated, not applied, because this engine resolves no damage"
+            ),
+        });
+    }
+    if let Some(minutes) = summoner_features::prose_derived::twin_eidolon_minutes_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.twin_eidolon_minutes_per_day".to_owned(),
+            value: i16::from(minutes),
+            detail: format!(
+                "Unchained Summoner level {level} Twin Eidolon: {minutes} MINUTES per day in the \
+                 eidolon's shape (equal to summoner level), spent in 1-minute increments. Minutes \
+                 rather than rounds is the row's own unit and is not converted -- its two sibling \
+                 durations here, Bond Senses and Merge Forms, are rounds"
+            ),
+        });
+    }
+    if let Some(feet) = summoner_features::prose_derived::life_link_full_strength_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.life_link_full_strength_range_feet".to_owned(),
+            value: feet,
+            detail: format!(
+                "Unchained Summoner level {level} Life Link: the eidolon stays at full strength \
+                 within {feet} feet of the summoner; beyond that and within {} feet its current \
+                 and maximum hit points are halved, beyond that and within {} feet they are cut \
+                 by three quarters, and past {} feet it returns to its home plane. The summoner \
+                 may also sacrifice hit points one-for-one to prevent damage that would send it \
+                 home",
+                summoner_features::prose_derived::LIFE_LINK_HALF_STRENGTH_RANGE_FEET,
+                summoner_features::prose_derived::LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET,
+                summoner_features::prose_derived::LIFE_LINK_BANISHMENT_RANGE_FEET,
+            ),
+        });
+    }
+    let class_skills = summoner_features::class_skills();
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_summoner.class_skill_count".to_owned(),
+        value: class_skills.len() as i16,
+        detail: format!(
+            "Unchained Summoner class skills, verbatim from the book's own CSKILL: token \
+             ({} entries): {}. Note TYPE=Knowledge -- this class gets every Knowledge skill, \
+             where the Unchained Rogue's row names only two",
+            class_skills.len(),
+            class_skills.join(", ")
+        ),
+    });
+
+    push_deferred_class_features(
+        "class_feature.pu.unchained_summoner.other_features_deferred.unsupported",
+            "class:unchained_summoner grounds every Unchained Summoner magnitude this book states \
+             as a formula token: the chassis (borrowed unchanged from the Advanced Player's Guide \
+             Summoner, which the corpus record confirms it does not override -- the one of the \
+             four Unchained classes whose base class is not the Core Rulebook), the eidolon's \
+             companion level and evolution pool, the Summon Monster spell level and uses per day, \
+             the spell-list swap flag, and the class-skill list -- plus nine whose only numbers \
+             are in their own prose: Life Link's range bands, Bond Senses' rounds per day, Shield \
+             Ally's and Greater Shield Ally's bonuses, Maker's Call's uses per day, Aspect's and \
+             Greater Aspect's diversion ceilings, Merge Forms' rounds per day and Twin Eidolon's \
+             minutes per day. This diagnostic is NOT claim-blocking; it carries the honest \
+             remainder. THE LARGEST MISSING PIECE IS \
+             SPELLCASTING: this class has its own 202-spell list (12/35/39/39/27/23/27 at levels \
+             0-6) declared in the book, and none of it is transcribed, so an Unchained Summoner \
+             computes with no spells known, no spells per day and no spell DCs. That is a real \
+             gap and is stated rather than filled with the Advanced Player's Guide list, which \
+             would be the WRONG list -- the corpus explicitly switches it off. Note also that 46 \
+             of those 202 spells are defined only in Ultimate Magic and Ultimate Combat, neither \
+             of which is an ingested book, so the list cannot be completed here even in \
+             principle. Also missing: the 13 eidolon subtypes are named slots with no contents \
+             ingested; the evolution catalogue the pool is spent on is not ingested; and three \
+             features state no number even in prose, so nothing is computed for them and nothing \
+             is invented -- CANTRIPS, whose count lives on Table 1-5 rather than on this row and \
+             whose spell list is the untranscribed one above; TRANSPOSITION, which spends a \
+             Maker's Call use to swap places rather than adding a quantity of its own; and LIFE \
+             BOND, whose only numbers ('1 or more hit points', damage 'transferred 1 point at a \
+             time') are the mechanic's granularity and not a quantity a player tracks. The nine \
+             prose-derived magnitudes above are magnitudes and not applications: none of them is \
+             folded into a resting total, because every one is gated on the eidolon's position or \
+             condition, which this engine does not model"
+            .to_owned(),
+        explanations,
+        diagnostics,
+    );
 }
 
 /// Compute the base-attack-bonus / base-save chassis pillar for a length-2+
@@ -30071,6 +32585,68 @@ fn monk_unarmed_strike_damage_die(level: u8) -> (i16, i16, &'static str) {
     }
 }
 
+/// The **Small** monk's unarmed strike damage die, in the same
+/// `(die face size, die count, display name)` shape
+/// [`monk_unarmed_strike_damage_die`] returns for the Medium column.
+///
+/// Transcribed from the shared Core Rulebook record's own per-size band rows
+/// in `core_rulebook/cr_abilities_class.lst`, whose `UDAM:` tokens are the
+/// authority:
+///
+/// | band | record | line | `UDAM:` |
+/// |---|---|---:|---|
+/// | 0 (levels 1-3)   | `Monk Unarmed Damage LVL 1 (Small)`  | 1296 | `1d4` |
+/// | 1 (levels 4-7)   | `Monk Unarmed Damage LVL 4 (Small)`  | 1306 | `1d6` |
+/// | 2 (levels 8-11)  | `Monk Unarmed Damage LVL 8 (Small)`  | 1316 | `1d8` |
+/// | 3 (levels 12-15) | `Monk Unarmed Damage LVL 12 (Small)` | 1326 | `1d10` |
+/// | 4 (levels 16-19) | `Monk Unarmed Damage LVL 16 (Small)` | 1336 | `2d6` |
+/// | 5 (level 20)     | `Monk Unarmed Damage LVL 20 (Small)` | 1346 | `2d8` |
+///
+/// The band index is the same `min(5, level / 4)` the Medium column uses --
+/// it comes from `BONUS:VAR|MonkUnarmedDamageProgression` on the parent
+/// record, which is shared across all nine size columns -- so only the six
+/// values differ, never the ladder shape.
+///
+/// **This is not a second progression; it is the same progression read one
+/// column across.** It exists because
+/// `ground_unchained_monk_unarmed_strike_damage` can be reached by a Gnome,
+/// Halfling, Goblin, Kobold or Svirfneblin, where `explain_monk_level1_chassis`
+/// cannot be reached by anything but a Human.
+fn small_monk_unarmed_strike_damage_die(level: u8) -> (i16, i16, &'static str) {
+    match (i16::from(level) / 4).min(5) {
+        0 => (4, 1, "1d4"),
+        1 => (6, 1, "1d6"),
+        2 => (8, 1, "1d8"),
+        3 => (10, 1, "1d10"),
+        4 => (6, 2, "2d6"),
+        _ => (8, 2, "2d8"),
+    }
+}
+
+/// The unarmed strike damage die for one creature size, or `None` for a size
+/// this engine has not transcribed a column for.
+///
+/// `None` is the honest answer rather than a fallback, and the caller grounds
+/// an absence notice on it. Substituting the Medium column for an unmodelled
+/// size would be a plausible-looking wrong die, which is the failure mode this
+/// repo's history is a list of.
+///
+/// Only Small and Medium are transcribed because `race_resolver::RACE_SIZES`
+/// gives the 18 playable races exactly those two -- 13 Medium, 5 Small. A race
+/// arriving at another size reaches the absence notice, and
+/// `every_playable_race_reads_its_own_size_column` fails the moment the roster
+/// stops matching this claim.
+fn monk_unarmed_strike_damage_die_for_size(
+    level: u8,
+    size: SizeCategory,
+) -> Option<(i16, i16, &'static str)> {
+    match size {
+        SizeCategory::Medium => Some(monk_unarmed_strike_damage_die(level)),
+        SizeCategory::Small => Some(small_monk_unarmed_strike_damage_die(level)),
+        _ => None,
+    }
+}
+
 /// The number of attacks a Flurry of Blows full-attack grants: 2 at 1st
 /// level (Two-Weapon Fighting shape), 3 at 8th (Improved TWF -- "the monk
 /// can make two additional attacks when he uses flurry of blows"), and 4 at
@@ -35211,7 +37787,15 @@ fn parse_wizard_spellbook_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> 
     if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == spell_id) {
         return Some((entry.school, entry.level));
     }
+    parse_synthetic_spell_id(spell_id)
+}
 
+/// This slice's corpus-free `<school>.<level>.<name>` fixture convention,
+/// on its own — no `SPELL_LIST` lookup. Split out of
+/// [`parse_wizard_spellbook_spell_id`] so [`resolve_prepared_spell_level`]
+/// can consult the synthetic form WITHOUT also inheriting a real record's
+/// minimum-across-classes `level`.
+fn parse_synthetic_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> {
     let mut parts = spell_id.splitn(3, '.');
     let school_token = parts.next()?;
     let level_token = parts.next()?;
@@ -35222,6 +37806,156 @@ fn parse_wizard_spellbook_spell_id(spell_id: &str) -> Option<(Pf1SchoolId, u8)> 
     let capitalized: String = first.to_uppercase().chain(chars).collect();
     let school = Pf1SchoolId::from_corpus_str(&capitalized)?;
     Some((school, level))
+}
+
+/// How a prepared spell's level resolved for one specific class.
+///
+/// The distinction is the whole point: a spell whose level is unknown must
+/// be **refused**, not skipped. See [`resolve_prepared_spell_level`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum PreparedSpellLevel {
+    /// The corpus states this spell's level for this class.
+    Known(u8),
+    /// No level can be stated without inventing one. Carries the honest
+    /// reason, ready to push onto an `unmet` list verbatim.
+    Unknown(String),
+}
+
+/// A prepared spell's level **for `class_id` specifically**, across every
+/// ingested book.
+///
+/// **The defect this closes (SD-27).** The three prepared-caster gates
+/// (Wizard, Arcanist, Warpriest) previously resolved a prepared spell's
+/// level through [`parse_wizard_spellbook_spell_id`], which knows only
+/// `crb::spell_list::SPELL_LIST`. An APG, ACG or ARG key is absent from
+/// that table and carries no dots, so the synthetic fallback failed too and
+/// the resolver returned `None` — and both consuming loops were
+/// `filter_map`s, so the spell vanished from the accessibility check AND
+/// from the slot-consumption count. Measured on the shipped catalog: a
+/// Wizard 1 correctly refused 508 of CRB's 652 records and accepted **all**
+/// 297 APG, 144 ACG and 92 ARG records at every caster level. A Dwarf
+/// Wizard 1 could add `Tsunami` — a 9th-level Wizard spell — and the sheet
+/// saved it. An affordance that succeeds where it must refuse is worse than
+/// one that refuses wrongly: the player gets an illegal character silently.
+///
+/// **It also fixes the level itself, not just the coverage.** The old CRB
+/// path used the record's own `level`, which is the MINIMUM across every
+/// class in its `CLASSES:` token — so a Wizard 1 could prepare
+/// `Hideous Laughter` (`CLASSES:Bard=1|Sorcerer,Wizard=2`, record level 1)
+/// although a Wizard learns it at 2. This resolves through
+/// `rules_tables::class_spell_levels`, which holds the per-class answer for
+/// all four books.
+///
+/// **Unknown is a refusal, never a default.** A spell with no stated level
+/// for this class comes back [`PreparedSpellLevel::Unknown`] carrying why;
+/// callers push that onto their unmet list. Falling back to the record's
+/// minimum level is precisely the wrong number
+/// `rules_tables::class_spell_levels` exists to remove, and inventing one
+/// would violate `docs/governance/no-stub-mvp-doctrine.md`.
+fn resolve_prepared_spell_level(class_id: &str, spell_id: &str) -> PreparedSpellLevel {
+    if let Some(level) = class_spell_levels::class_spell_level(class_id, spell_id) {
+        return PreparedSpellLevel::Known(level);
+    }
+    // The bounded synthetic `<school>.<level>.<name>` convention this
+    // file's own fixtures are written in states its level outright. Read
+    // via the dotted parse specifically, never via a real `SPELL_LIST`
+    // record's own `level` — that field is the minimum-across-classes
+    // value this function exists to stop trusting.
+    if let Some((_, level)) = parse_synthetic_spell_id(spell_id) {
+        return PreparedSpellLevel::Known(level);
+    }
+    if !class_spell_levels::class_has_spell_list(class_id) {
+        return PreparedSpellLevel::Unknown(format!(
+            "prepared spell '{spell_id}' cannot be checked: no spell list for '{class_id}' has \
+             been ingested, so no spell level is known for that class"
+        ));
+    }
+    PreparedSpellLevel::Unknown(format!(
+        "prepared spell '{spell_id}' has no '{class_id}' spell level in any ingested book, so \
+         the spell level it would occupy is unknown"
+    ))
+}
+
+/// Why a spell **recorded** under `class_id` (`AcquisitionMode::Known`) is
+/// not a spell that class can ever hold — or `None` when it is legitimate.
+///
+/// **This is the Known rule, and it is deliberately not the Prepared rule.**
+/// [`resolve_prepared_spell_level`] answers "which slot would this occupy
+/// today", and its callers then check that slot against the caster's own
+/// level and budget. Recording has no such budget: PF1 CRB *Spellbooks*
+/// caps only the two free spells gained at each new level ("of spell levels
+/// he can cast"); *Spells Copied from Another's Spellbook or a Scroll*
+/// places **no character-level restriction** on what a wizard may add to
+/// her book. A spellbook is a record, not a set of castable options, so a
+/// Wizard 1 may legitimately hold a 9th-level wizard spell she cannot yet
+/// prepare.
+///
+/// What *is* capped is membership. A wizard cannot scribe a spell that is
+/// on no wizard list — 543 of the desktop spell picker's 1185 records are
+/// exactly that (Cleric-only, Druid-only, Bard-only, Alchemist-only), and
+/// before this check every one of them was accepted and persisted under
+/// `class:wizard`. Sorcerer already refused its own equivalent
+/// (`unmet_sorcerer_known_spell_conditions`); wizard did not, and the
+/// asymmetry was the defect.
+///
+/// **Absence is reported, never invented.** A class with no ingested spell
+/// list yields `None` — refusing every spell for a class this crate simply
+/// has no list for would be a fabricated rule, the mirror image of the
+/// fabricated level `class_spell_levels` exists to remove (see
+/// `docs/governance/no-stub-mvp-doctrine.md`).
+fn class_spell_membership_refusal(class_id: &str, spell_id: &str) -> Option<String> {
+    if class_spell_levels::class_spell_level(class_id, spell_id).is_some() {
+        return None;
+    }
+    // Same bounded synthetic `<school>.<level>.<name>` fixture convention
+    // `resolve_prepared_spell_level` honours — those ids belong to no class
+    // list by construction and state their own level.
+    if parse_synthetic_spell_id(spell_id).is_some() {
+        return None;
+    }
+    if !class_spell_levels::class_has_spell_list(class_id) {
+        return None;
+    }
+    let class_name = class_id.strip_prefix("class:").unwrap_or(class_id);
+    Some(format!(
+        "recorded spell '{spell_id}' is not on the {class_name} spell list in any ingested \
+         book, so no {class_name} can learn it. Recording a spell is not level-gated (PF1 \
+         CRB, Spellbooks: a spell copied from a scroll or another spellbook has no \
+         character-level restriction) — but the spell still has to be one of that class's"
+    ))
+}
+
+/// The school a prepared spell belongs to, across every ingested book.
+///
+/// Only Wizard needs this (its opposed-school slots cost 2 each); Arcanist
+/// and Warpriest have no school mechanic. `None` when no ingested record
+/// names a school — APG has 16 such records, and the caller charges the
+/// ordinary 1-slot cost rather than inventing an opposed school.
+fn resolve_prepared_spell_school(spell_id: &str) -> Option<Pf1SchoolId> {
+    if let Some(entry) = SPELL_LIST.iter().find(|entry| entry.key == spell_id) {
+        return Some(entry.school);
+    }
+    if let Some(entry) = apg::spell_list::SPELL_LIST
+        .iter()
+        .find(|entry| entry.key == spell_id)
+    {
+        return entry
+            .school
+            .and_then(|school| Pf1SchoolId::from_corpus_str(&format!("{school:?}")));
+    }
+    if let Some(entry) = acg::spell_list::SPELL_LIST
+        .iter()
+        .find(|entry| entry.key == spell_id)
+    {
+        return Pf1SchoolId::from_corpus_str(&format!("{:?}", entry.school));
+    }
+    if let Some(entry) = advanced_race_guide::spell_list::SPELL_LIST
+        .iter()
+        .find(|entry| entry.key == spell_id)
+    {
+        return Pf1SchoolId::from_corpus_str(&format!("{:?}", entry.school));
+    }
+    parse_wizard_spellbook_spell_id(spell_id).map(|(school, _)| school)
 }
 
 /// The PF1 slot cost of preparing one spell of the given school for this
@@ -35302,6 +38036,15 @@ fn unmet_wizard_spellbook_conditions(
         unmet.push("no wizard spells prepared today (AcquisitionMode::Prepared)".to_owned());
     }
 
+    // The Known rule: membership only. See `class_spell_membership_refusal`
+    // for why a recorded spell is NOT checked against the wizard's own
+    // spell-level access ceiling the way a prepared one is.
+    for spell_id in &recorded {
+        if let Some(reason) = class_spell_membership_refusal(WIZARD_CLASS_ID, spell_id) {
+            unmet.push(reason);
+        }
+    }
+
     for spell_id in &prepared {
         if !recorded.contains(spell_id) {
             unmet.push(format!(
@@ -35310,15 +38053,24 @@ fn unmet_wizard_spellbook_conditions(
         }
     }
 
+    // Resolve every prepared spell's WIZARD-specific level up front, and
+    // refuse outright any the corpus states no wizard level for — see
+    // `resolve_prepared_spell_level`. Resolving here rather than inside the
+    // per-spell-level loop is what makes an unresolvable spell a blocker
+    // instead of a `filter_map` casualty.
+    let mut prepared_levels: Vec<(&str, u8)> = Vec::new();
+    for spell_id in &prepared {
+        match resolve_prepared_spell_level(WIZARD_CLASS_ID, spell_id) {
+            PreparedSpellLevel::Known(spell_level) => prepared_levels.push((spell_id, spell_level)),
+            PreparedSpellLevel::Unknown(reason) => unmet.push(reason),
+        }
+    }
+
     let base_spells_per_day = wizard_base_spells_per_day(level);
     for (spell_level, base_count) in base_spells_per_day.iter().enumerate() {
         let spell_level = spell_level as u8;
         let Some(base_count) = base_count else {
-            if prepared
-                .iter()
-                .filter_map(|id| parse_wizard_spellbook_spell_id(id))
-                .any(|(_, l)| l == spell_level)
-            {
+            if prepared_levels.iter().any(|(_, l)| *l == spell_level) {
                 unmet.push(format!(
                     "a prepared spell targets spell level {spell_level}, not yet accessible at \
                      wizard level {level}"
@@ -35330,11 +38082,14 @@ fn unmet_wizard_spellbook_conditions(
         let int_bonus =
             ability_bonus_spells(ability_modifiers.intelligence, i16::from(spell_level));
         let total_slots = base_count + specialist_bonus + int_bonus;
-        let consumed: i16 = prepared
+        let consumed: i16 = prepared_levels
             .iter()
-            .filter_map(|id| parse_wizard_spellbook_spell_id(id))
             .filter(|(_, l)| *l == spell_level)
-            .map(|(school, _)| wizard_opposed_school_slot_cost(school))
+            .map(|(spell_id, _)| {
+                resolve_prepared_spell_school(spell_id)
+                    .map(wizard_opposed_school_slot_cost)
+                    .unwrap_or(1)
+            })
             .sum();
         if consumed > total_slots {
             unmet.push(format!(
@@ -39078,6 +41833,14 @@ fn compute_total_saves(
     // Applies to REFLEX ONLY, unlike the all-three-saves bonuses above.
     let sidestep_secret_reflex_bonus =
         active_oracle_sidestep_secret_reflex_bonus(input, ability_modifiers).unwrap_or(0);
+    // SD-27 (alternate racial traits reach compute): ARG's `Half-Elf ~ Dual
+    // Minded` grants an unconditional +2 on all Will saving throws
+    // (`arg_abilities_race.lst:158`, `BONUS:SAVE|Will|2`). Race-gated and
+    // selection-gated by `half_elf_dual_minded_will_save_bonus` construction,
+    // 0 for every character who did not take it. See that function's own doc
+    // comment for why this is the only one of the 153 alternates that layers
+    // onto a total this engine computes.
+    let dual_minded_will_bonus = half_elf_dual_minded_will_save_bonus(input);
     let total_saves = BaseSaves {
         fortitude: base_saves.fortitude
             + ability_modifiers.constitution
@@ -39097,7 +41860,8 @@ fn compute_total_saves(
             + inspired_rage_will_bonus
             + bloodrage_will_bonus
             + touch_of_good_save_bonus
-            + purity_judgment_save_bonus,
+            + purity_judgment_save_bonus
+            + dual_minded_will_bonus,
     };
 
     let class_label = class_summary_label(input);
@@ -39137,7 +41901,8 @@ fn compute_total_saves(
              while actively, validly singing) + Bloodrager Bloodrage morale bonus (+{}, only \
              while actively, validly bloodraging) + Good domain Touch of Good sacred bonus (+{}, \
              self-applied) + Inquisitor Purity judgment sacred/profane bonus (+{}, only while \
-             actively, validly judging Purity) = {}",
+             actively, validly judging Purity) + Half-Elf Dual Minded alternate racial trait \
+             (+{}, Advanced Race Guide p.42, only for a Half-Elf who took it) = {}",
             base_saves.will,
             ability_modifiers.wisdom,
             feat_save_bonuses.will,
@@ -39146,6 +41911,7 @@ fn compute_total_saves(
             bloodrage_will_bonus,
             touch_of_good_save_bonus,
             purity_judgment_save_bonus,
+            dual_minded_will_bonus,
             total_saves.will
         ),
     });
@@ -39359,6 +42125,172 @@ fn active_rage_powers_level(input: &CharacterInput, ability_modifiers: &AbilityM
     0
 }
 
+/// Every feat-derived contribution to a pillar that BOTH compute paths
+/// produce independently -- the single place a feat is wired into a number
+/// the player reads.
+///
+/// **Why this type exists.** This engine has two compute twins.
+/// `compute_combat_baseline` / `compute_selected_skill_modifiers` in this file
+/// compute Armor Class, touch AC and Climb/Intimidate/Swim from hardcoded
+/// Chain-Shirt constants; `pilot_compute_corpus`'s
+/// `compute_combat_baseline_from_corpus` /
+/// `compute_selected_skill_modifiers_from_corpus` compute the same pillars
+/// from real corpus-resolved equipment, and *that* pair is what
+/// `pf1_adapter::resolve_unified_pilot_snapshot` gates on -- so it is the pair
+/// whose numbers reach the sheet.
+///
+/// Before this seam, each twin read `feat_effects` on its own: this file
+/// referenced 33 producers, `pilot_compute_corpus.rs` referenced zero and
+/// hand-inlined Dodge. Five feats were therefore wired, tested and green while
+/// changing nothing a player could see -- CRB's **Athletic** (+2 Climb/Swim),
+/// **Persuasive** (+2 Intimidate) and **Intimidating Prowess** (Strength to
+/// Intimidate), and ARG's **Armor of the Pit** (+2 natural armor) and **Sure
+/// and Fleet** (+2 Climb). Proven on screen: a live Tiefling Fighter 1 taking
+/// Armor of the Pit saw an unchanged Armor Class across a full app restart.
+///
+/// **The invariant.** Both twins now consume this one struct and neither reads
+/// `feat_effects` for these pillars at all, so a feat wired here reaches both
+/// paths by construction and cannot reach only one.
+/// `pilot_compute_corpus`'s `every_catalog_feat_moves_both_compute_paths_identically`
+/// pins that behaviourally over the live 690-record feat catalog, and
+/// `the_two_compute_twins_read_feat_effects_only_through_the_shared_seam`
+/// pins it structurally, so re-introducing a direct per-path `feat_effects`
+/// read fails the build rather than shipping silently.
+///
+/// Adding the next feat: give it a field here, fold it into the accessor for
+/// the pillar it belongs to, and both paths move together. Nothing else needs
+/// touching.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct FeatDerivedPillarContributions {
+    /// Natural armor from feats (`armor_of_the_pit_natural_armor_bonus_from_feats`).
+    /// Kept as its own field, not merged into the Armor Class total, because a
+    /// touch attack ignores natural armor and both paths must subtract exactly
+    /// this much and no more.
+    pub natural_armor_bonus: i16,
+    /// Dodge's dodge bonus. A conditional CONTRIBUTION, never a precondition
+    /// -- see `compute_combat_baseline`'s own note on why requiring it forced
+    /// character creation to claim a feat no slot had granted.
+    pub dodge_armor_class_bonus: i16,
+    /// `feat_effects::skill_bonuses_from_feats` -- Athletic's Climb/Swim,
+    /// Persuasive's and Intimidating Prowess's Intimidate.
+    pub skill_bonuses: crate::rules_core::feat_effects::SkillBonusesFromFeats,
+    /// `feat_effects::arg_computed_climb_bonus_from_feats` -- Sure and Fleet's
+    /// racial +2 Climb. Separate from `skill_bonuses` because the explanation
+    /// strings on the hardcoded path name the two sources independently.
+    pub arg_climb_bonus: i16,
+}
+
+impl FeatDerivedPillarContributions {
+    /// Everything feats add to Armor Class, natural armor included.
+    pub fn armor_class_bonus(self) -> i16 {
+        self.natural_armor_bonus + self.dodge_armor_class_bonus
+    }
+
+    /// The part of [`Self::armor_class_bonus`] a touch attack ignores. PF1
+    /// touch AC drops natural armor and keeps dodge bonuses.
+    pub fn excluded_from_touch_armor_class(self) -> i16 {
+        self.natural_armor_bonus
+    }
+
+    /// The part of [`Self::armor_class_bonus`] a **flat-footed** character is
+    /// denied — the exact complement of [`Self::excluded_from_touch_armor_class`]
+    /// on the two fields this struct carries today, and deliberately written as
+    /// its own accessor rather than as "whatever touch keeps".
+    ///
+    /// PF1, *Bonus Types*: "Any situation that denies you your Dexterity bonus
+    /// to Armor Class also denies you dodge bonuses." Natural armor is not
+    /// denied (it is part of the creature's hide, not its reflexes), so a feat
+    /// added to [`Self::natural_armor_bonus`] must move flat-footed AC exactly
+    /// as much as it moves Armor Class, and one added to
+    /// [`Self::dodge_armor_class_bonus`] must move it not at all. Reading this
+    /// accessor from both twins is what makes that true on both at once.
+    pub fn denied_to_flat_footed_armor_class(self) -> i16 {
+        self.dodge_armor_class_bonus
+    }
+
+    /// Everything feats add to the Climb total.
+    pub fn climb_skill_bonus(self) -> i16 {
+        self.skill_bonuses.climb + self.arg_climb_bonus
+    }
+
+    /// Everything feats add to the Intimidate total.
+    pub fn intimidate_skill_bonus(self) -> i16 {
+        self.skill_bonuses.intimidate
+    }
+
+    /// Everything feats add to the Swim total.
+    pub fn swim_skill_bonus(self) -> i16 {
+        self.skill_bonuses.swim
+    }
+}
+
+/// Resolves [`FeatDerivedPillarContributions`] for one character. The sole
+/// `feat_effects` reader for every pillar the two compute twins each derive
+/// independently.
+///
+/// `strength_modifier` is threaded in rather than re-derived because
+/// Intimidating Prowess adds the character's real Strength modifier to
+/// Intimidate, and both callers already hold the resolved
+/// `AbilityModifiers`.
+pub fn feat_derived_pillar_contributions(
+    input: &CharacterInput,
+    strength_modifier: i16,
+) -> FeatDerivedPillarContributions {
+    let feats = effective_character_feats(input);
+    FeatDerivedPillarContributions {
+        // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Armor of the Pit is
+        // the only one of the Advanced Race Guide's 187 feats whose
+        // unconditional corpus magnitude lands on a total this engine computes
+        // -- a `+2` natural armor bonus, and therefore a real, visible change to
+        // a tiefling's Armor Class and (by exclusion) to their touch AC.
+        //
+        // Its corpus token carries `!PREABILITY:1,CATEGORY=Special Ability,
+        // Scaled Skin C ~ Tiefling,...`, which a mechanical "an inline PRE means
+        // situational" reading would classify as conditional. It is not a
+        // situation: it asks whether this character took the Scaled Skin
+        // alternate racial trait, a persisted creation-time decision this engine
+        // already reads through `selected_alternate_trait_keys`. So the branch is
+        // fully decided here rather than deferred, matching the `BENEFIT:` prose
+        // exactly ("+2 natural armor bonus. If you have the scaled skin racial
+        // trait, you *instead* gain resistance 5 to two of ...").
+        //
+        // Deliberately NOT race-gated on `PREFACT:1,TEMPLATES,IsTiefling=true`:
+        // asserting a feat's selection prerequisites is `feat_prereqs`' job, the
+        // same split `master_craftsman_facts_from_choices` already documents.
+        natural_armor_bonus:
+            crate::rules_core::feat_effects::armor_of_the_pit_natural_armor_bonus_from_feats(
+                &feats,
+                character_has_tiefling_scaled_skin(input),
+            ),
+        // The identity fold is slot-blind: a Dodge granted through any slot
+        // counts exactly as one picked from the catalog.
+        dodge_armor_class_bonus: if feat_identity::holds(&input.chosen.selected_feats, DODGE_FEAT_ID)
+        {
+            DODGE_AC_BONUS
+        } else {
+            0
+        },
+        // Athletic's real +2 Climb/Swim, Persuasive's real +2 Intimidate, and
+        // Intimidating Prowess's real Strength-modifier-to-Intimidate, each
+        // stacking independently.
+        skill_bonuses: crate::rules_core::feat_effects::skill_bonuses_from_feats(
+            &feats,
+            strength_modifier,
+        ),
+        // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Sure and Fleet is
+        // the only one of the Advanced Race Guide's 187 feats whose
+        // unconditional `BONUS:SKILL` token names a skill this engine computes a
+        // total for. Its `+2` is `TYPE=Racial` and does NOT stack with the
+        // halfling Sure-Footed racial bonus -- but it cannot collide with it
+        // either: the feat requires `Halfling ~ Fleet Of Foot`, which is
+        // precisely the alternate racial trait that replaces Sure-Footed. See
+        // `feat_effects::ARG_SKILL_FEAT_FACTS`' own doc comment.
+        arg_climb_bonus: crate::rules_core::feat_effects::arg_computed_climb_bonus_from_feats(
+            &feats,
+        ),
+    }
+}
+
 fn compute_selected_skill_modifiers(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -39442,17 +42374,21 @@ fn compute_selected_skill_modifiers(
         String::new()
     };
 
-    // v0.6 alpha swarm: the real, grounded feat-derived skill bonus from
-    // `feat_effects::skill_bonuses_from_feats` (currently Athletic's real
-    // +2 Climb/Swim, Persuasive's real +2 Intimidate, and Intimidating
-    // Prowess's real Strength-modifier-to-Intimidate, each stacking
-    // independently) -- the same "headless-accessible, no corpus needed"
-    // layering `compute_total_saves`'s own `feat_save_bonuses` already
-    // established for Great Fortitude/Iron Will/Lightning Reflexes.
-    let feat_skill_bonuses = crate::rules_core::feat_effects::skill_bonuses_from_feats(
-        &effective_character_feats(input),
-        ability_modifiers.strength,
-    );
+    // v0.6 alpha swarm: the real, grounded feat-derived skill bonus -- the same
+    // "headless-accessible, no corpus needed" layering `compute_total_saves`'s
+    // own `feat_save_bonuses` already established for Great Fortitude/Iron
+    // Will/Lightning Reflexes.
+    //
+    // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): read through
+    // `feat_derived_pillar_contributions` rather than calling
+    // `feat_effects::skill_bonuses_from_feats` here, so the corpus twin
+    // (`compute_selected_skill_modifiers_from_corpus`, the path the shipped
+    // sheet actually reads) consumes the identical value. Athletic, Persuasive
+    // and Intimidating Prowess all moved this total and moved the sheet by
+    // nothing until it did.
+    let feat_contributions =
+        feat_derived_pillar_contributions(input, ability_modifiers.strength);
+    let feat_skill_bonuses = feat_contributions.skill_bonuses;
 
     // v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure, widened
     // 2026-07-26): Inquisitor Stern Gaze's morale bonus applies to
@@ -39474,8 +42410,41 @@ fn compute_selected_skill_modifiers(
     // 0 for every non-Barbarian, non-Skald, or not-currently-raging
     // character.
     let raging_climber_swimmer_bonus = active_rage_powers_level(input, ability_modifiers);
+    // SD-27 (alternate racial traits reach compute): the racial skill bonus a
+    // chosen ARG alternate declares, for the ten of 153 whose `BONUS:SKILL`
+    // names Climb, Intimidate or Swim with a plain integer. Race-gated and
+    // selection-gated by `alternate_trait_selected_skill_bonuses`
+    // construction, all zeroes for every character who took none — and the
+    // highest of two same-typed racial bonuses rather than their sum; see that
+    // function's own doc comment.
+    let alternate_trait_skill_bonuses = alternate_trait_selected_skill_bonuses(input);
+    let alternate_trait_skill_detail = |bonus: i16| {
+        if bonus > 0 {
+            format!(" + alternate racial trait bonus ({bonus:+}, racial)")
+        } else {
+            String::new()
+        }
+    };
     let raging_climber_swimmer_detail = if raging_climber_swimmer_bonus > 0 {
         format!(" + Raging Climber/Raging Swimmer enhancement bonus ({raging_climber_swimmer_bonus:+}, while raging)")
+    } else {
+        String::new()
+    };
+
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Sure and Fleet is the
+    // only one of the Advanced Race Guide's 187 feats whose unconditional
+    // `BONUS:SKILL` token names a skill this engine computes a total for.
+    // Its `+2` is `TYPE=Racial` and does NOT stack with the halfling
+    // Sure-Footed racial bonus — but it cannot collide with it either: the
+    // feat requires `Halfling ~ Fleet Of Foot`, which is precisely the
+    // alternate racial trait that replaces Sure-Footed. See
+    // `feat_effects::ARG_SKILL_FEAT_FACTS`' own doc comment.
+    //
+    // Read through `feat_derived_pillar_contributions` for the same reason
+    // `feat_skill_bonuses` above is: the corpus twin must see it too.
+    let arg_feat_climb_bonus = feat_contributions.arg_climb_bonus;
+    let arg_feat_climb_detail = if arg_feat_climb_bonus > 0 {
+        format!(" + ARG Sure and Fleet racial bonus ({arg_feat_climb_bonus:+})")
     } else {
         String::new()
     };
@@ -39487,15 +42456,19 @@ fn compute_selected_skill_modifiers(
         + armor_check_penalty
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.climb
-        + raging_climber_swimmer_bonus;
+        + arg_feat_climb_bonus
+        + raging_climber_swimmer_bonus
+        + alternate_trait_skill_bonuses.climb;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.climb".to_owned(),
         value: climb,
         detail: format!(
             "Selected Climb modifier: rank {rank} + Strength modifier ({:+}) + \
              {climb_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
-             + feat bonus (+{}, Athletic if selected){raging_climber_swimmer_detail} = {climb}",
-            ability_modifiers.strength, feat_skill_bonuses.climb
+             + feat bonus (+{}, Athletic if selected){arg_feat_climb_detail}\
+             {raging_climber_swimmer_detail}{} = {climb}",
+            ability_modifiers.strength, feat_skill_bonuses.climb,
+            alternate_trait_skill_detail(alternate_trait_skill_bonuses.climb)
         ),
     });
 
@@ -39505,16 +42478,18 @@ fn compute_selected_skill_modifiers(
         + intimidate_class_skill_bonus
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.intimidate
-        + stern_gaze_intimidate_bonus;
+        + stern_gaze_intimidate_bonus
+        + alternate_trait_skill_bonuses.intimidate;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.intimidate".to_owned(),
         value: intimidate,
         detail: format!(
             "Selected Intimidate modifier: rank {rank} + Charisma modifier ({:+}) + \
              {intimidate_class_skill_bonus_detail}{touch_of_good_skill_detail} + feat bonus \
-             (+{}, Persuasive and/or Intimidating Prowess if selected){stern_gaze_detail} = \
+             (+{}, Persuasive and/or Intimidating Prowess if selected){stern_gaze_detail}{} = \
              {intimidate}",
-            ability_modifiers.charisma, feat_skill_bonuses.intimidate
+            ability_modifiers.charisma, feat_skill_bonuses.intimidate,
+            alternate_trait_skill_detail(alternate_trait_skill_bonuses.intimidate)
         ),
     });
 
@@ -39531,7 +42506,8 @@ fn compute_selected_skill_modifiers(
         + touch_of_good_skill_bonus
         + feat_skill_bonuses.swim
         + flight_hex_swim_bonus
-        + raging_climber_swimmer_bonus;
+        + raging_climber_swimmer_bonus
+        + alternate_trait_skill_bonuses.swim;
     explanations.push(ComputationExplanation {
         id: "skill.selected_modifier.swim".to_owned(),
         value: swim,
@@ -39539,8 +42515,9 @@ fn compute_selected_skill_modifiers(
             "Selected Swim modifier: rank {rank} + Strength modifier ({:+}) + \
              {swim_class_skill_bonus_detail} + {armor_check_detail}{touch_of_good_skill_detail} \
              + feat bonus (+{}, Athletic if selected) + Witch Flight hex \
-             (+{flight_hex_swim_bonus}){raging_climber_swimmer_detail} = {swim}",
-            ability_modifiers.strength, feat_skill_bonuses.swim
+             (+{flight_hex_swim_bonus}){raging_climber_swimmer_detail}{} = {swim}",
+            ability_modifiers.strength, feat_skill_bonuses.swim,
+            alternate_trait_skill_detail(alternate_trait_skill_bonuses.swim)
         ),
     });
 
@@ -39584,6 +42561,9 @@ fn compute_selected_skill_modifiers(
 /// though neither ever appears in `selected_feats`.
 fn ground_orphan_feat_facts(
     input: &CharacterInput,
+    base_attack_bonus: i16,
+    chassis_supported: bool,
+    ability_modifiers: &AbilityModifiers,
     explanations: &mut Vec<ComputationExplanation>,
 ) {
     use crate::rules_core::feat_effects;
@@ -39827,6 +42807,377 @@ fn ground_orphan_feat_facts(
             ),
         });
     }
+
+    ground_arg_and_pu_feat_facts(
+        input,
+        &feats,
+        base_attack_bonus,
+        chassis_supported,
+        ability_modifiers,
+        explanations,
+    );
+}
+
+/// SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's and
+/// Pathfinder Unchained's feats whose unconditional corpus `BONUS:` token
+/// carries a real standing magnitude on a dimension this engine has no total
+/// for.
+///
+/// Split out of [`ground_orphan_feat_facts`] rather than appended to it because
+/// these are two whole books' worth of records with their own classification
+/// story (see `feat_effects`' own SD-27 section header for the derivation that
+/// chose this set), and because two of them -- Armor of the Pit's natural armor
+/// and Sure and Fleet's Climb -- deliberately do NOT ground here: they reach
+/// real computed totals instead, in `compute_combat_baseline` and
+/// `compute_selected_skill_modifiers`.
+///
+/// Every producer is keyed on the EFFECTIVE feat set, so a class-granted copy
+/// of any of these reaches its record exactly as a chosen one does.
+fn ground_arg_and_pu_feat_facts(
+    input: &CharacterInput,
+    feats: &[String],
+    base_attack_bonus: i16,
+    chassis_supported: bool,
+    ability_modifiers: &AbilityModifiers,
+    explanations: &mut Vec<ComputationExplanation>,
+) {
+    use crate::rules_core::feat_effects;
+
+    for fact in feat_effects::arg_maneuver_defense_facts_from_feats(feats) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        let maneuver_slug = slugify_id_segment(fact.maneuver);
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_maneuver_defense.{feat_slug}.{maneuver_slug}"),
+            value: fact.cmd_bonus,
+            detail: format!(
+                "{} (ARG) grants a +{} bonus to Combat Maneuver Defense against {}. \
+                 Deliberately NOT added to defense.combat_maneuver_defense: that total is the \
+                 general CMD, applying to every maneuver, and folding in a bonus that covers \
+                 only some of them would report a specific, checkable, wrong number against a \
+                 disarm or a sunder. The condition is the opponent's ACTION TYPE, a static \
+                 defensive property of the character, which is why it grounds at all",
+                fact.feat_key, fact.cmd_bonus, fact.maneuver
+            ),
+        });
+    }
+
+    for fact in feat_effects::arg_energy_resistance_facts_from_feats(feats) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_energy_resistance.{feat_slug}.{}", fact.energy_type),
+            value: fact.amount,
+            detail: format!(
+                "{} (ARG) grants resistance {} to {}. No energy-resistance total exists anywhere \
+                 in this codebase -- the same absence the Inquisitor Resistance judgment and the \
+                 Sorcerer Draconic Dragon Resistances records already name -- so this grounds \
+                 standalone. Two feats naming one energy type ground two records rather than a \
+                 sum: PF1 energy resistance from two sources does not add, the larger applies, \
+                 and both of these are 5",
+                fact.feat_key, fact.amount, fact.energy_type
+            ),
+        });
+    }
+
+    let flame_heart_caster_level = feat_effects::flame_heart_fire_caster_level_bonus_from_feats(feats);
+    if flame_heart_caster_level != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.flame_heart_fire_caster_level".to_owned(),
+            value: flame_heart_caster_level,
+            detail: format!(
+                "Flame Heart (ARG) treats the caster level of fire-descriptor spells (and the \
+                 alchemist level of fire bombs) as {flame_heart_caster_level} higher \
+                 (BONUS:CASTERLEVEL|DESCRIPTOR.Fire|1). Deliberately NOT added to any \
+                 effective_caster_level record: those are the character's general caster level \
+                 for every spell, while this applies only to spells carrying the fire \
+                 descriptor, and this engine's spell records carry no descriptor to test"
+            ),
+        });
+    }
+
+    let emotion_save = feat_effects::emotion_save_bonus_from_feats(feats);
+    if emotion_save != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.emotion_descriptor_save_bonus".to_owned(),
+            value: emotion_save,
+            detail: format!(
+                "Saving throws against effects with the EMOTION descriptor are \
+                 +{emotion_save} for this character. Fearless Curiosity and Intimidating \
+                 Confidence both write the same corpus variable (BONUS:VAR|FearlessCuriosityBonus|1 \
+                 each), PCGen's own way of saying they add -- and neither record states a literal \
+                 magnitude at all, printing the running total through a %1 substitution token instead, \
+                 so +1 alone and +2 together are read from the pair rather than off one row. \
+                 Deliberately NOT added to defense.total_save.will: that total is the general \
+                 Will save, and this applies only against emotion-descriptor effects"
+            ),
+        });
+    }
+
+    let swim_speed = feat_effects::aquatic_ancestry_swim_speed_bonus_from_feats(feats);
+    if swim_speed != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.aquatic_ancestry_swim_speed".to_owned(),
+            value: swim_speed,
+            detail: format!(
+                "Aquatic Ancestry (ARG) increases swim speed by {swim_speed} feet \
+                 (BONUS:MOVEADD|TYPE.Swim|10). This engine computes no movement total of any \
+                 kind, so this grounds standalone exactly as Fleet's base-speed bonus does. The \
+                 feat's amphibious special quality is a capability with no magnitude and is not \
+                 grounded as a number"
+            ),
+        });
+    }
+
+    // 2026-08-01, second pass over SD-27's deferral list. ARG's three
+    // `BONUS:SITUATION` tokens (2 feats) were deferred as "the corpus itself
+    // classifies these as situational". True -- and not a reason to withhold
+    // them: this very file already grounds `BONUS:SITUATION|Perception=to
+    // notice unusual stonework|2|TYPE=Racial` and
+    // `BONUS:SITUATION|Appraise=to assess nonmagical metals or gemstones|2`
+    // for the Core Rulebook dwarf, as flat situational-bonus-magnitude records
+    // carrying their circumstance in their own text. Being situational was
+    // never the bar; having nowhere to land was, and these land where the
+    // dwarf's do.
+    for fact in feat_effects::arg_situational_skill_facts_from_feats(feats) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        let skill_slug = slugify_id_segment(fact.skill_name);
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_situational_skill_bonus.{feat_slug}.{skill_slug}"),
+            value: fact.bonus,
+            detail: format!(
+                "{} (ARG) grants a {:+} bonus on {} checks {} \
+                 (BONUS:SITUATION|{}=...|{}), transcribed from its corpus token and confirmed \
+                 against its own BENEFIT prose. This is a SITUATIONAL bonus and is deliberately \
+                 NOT added to any skill total: it applies only in the circumstance named here, \
+                 and folding it into a general modifier would report a specific, checkable, \
+                 wrong number on every ordinary {} check. Same treatment the Dwarf Stonecunning \
+                 and Greed situational records already receive",
+                fact.feat_key,
+                fact.bonus,
+                fact.skill_name,
+                fact.circumstance,
+                fact.skill_name,
+                fact.bonus,
+                fact.skill_name
+            ),
+        });
+    }
+
+    // Improvisation / Improved Improvisation. Deferred in the first pass under
+    // "BONUS:VAR increments a bookkeeping variable with a base this engine does
+    // not model" -- which is false here: `DEFINE:ImprovisationBonus|0` is on the
+    // Improvisation feat record itself, so the running total is wholly
+    // feat-determined.
+    let improvisation = feat_effects::improvisation_untrained_skill_bonus_from_feats(feats);
+    if improvisation != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.improvisation_untrained_skill_bonus".to_owned(),
+            value: improvisation,
+            detail: format!(
+                "Skill checks for skills this character has NO ranks in are \
+                 +{improvisation}. Improvisation and Improved Improvisation both write the one \
+                 corpus variable ImprovisationBonus (BONUS:VAR|ImprovisationBonus|2 each), \
+                 PCGen's own way of saying they add, and neither record states a literal -- both \
+                 print the running total through a %1 substitution token -- so +2 alone and +4 \
+                 together are read from the pair. The scope is the corpus's own: Improvisation \
+                 carries 26 companion BONUS:SKILL|<skill>|ImprovisationBonus|!PRESKILL:1,<skill>=1 \
+                 tokens, one per skill, each gated on having no rank in it. Deliberately NOT \
+                 added to skill.selected_modifier.climb/intimidate/swim: this engine's \
+                 deterministic posture pins all three at rank 1, and this bonus applies only \
+                 where there are no ranks. Improvisation's BONUS:VAR|UseUntrainedSkills|1 (use \
+                 trained-only skills untrained) is a capability with no magnitude, and Improved \
+                 Improvisation's BONUS:VAR|ACCHECK|ArmorCheckPenalty/2 halves a NONPROFICIENCY \
+                 penalty this engine models no proficiency state to incur"
+            ),
+        });
+    }
+
+    // Stretched Wings. Deferred in the first pass as a fly-manoeuvrability feat
+    // -- but that is only its `BONUS:VAR|Maneuverability|1` half. Its other
+    // token is a plain `BONUS:MOVEADD|TYPE.Fly|40`, the identical movement shape
+    // Aquatic Ancestry is already grounded on.
+    let fly_speed = feat_effects::stretched_wings_fly_speed_bonus_from_feats(feats);
+    if fly_speed != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.stretched_wings_fly_speed".to_owned(),
+            value: fly_speed,
+            detail: format!(
+                "Stretched Wings (ARG) increases fly speed by {fly_speed} feet \
+                 (BONUS:MOVEADD|TYPE.Fly|40), to 60 feet. Its BENEFIT prose states the resulting \
+                 total rather than the increment (\"Your strix racial fly speed increases to 60 \
+                 feet (average)\"), and the two reconcile exactly because the feat's own \
+                 PREABILITY:1,CATEGORY=Special Ability,Strix ~ Wing-Clipped fixes the base: \
+                 arg_abilities_race.lst's Wing-Clipped ~ Strix ~ Flight carries MOVE:Fly,20. This \
+                 engine computes no movement total of any kind, so this grounds standalone \
+                 exactly as Aquatic Ancestry's swim speed does. The feat's companion \
+                 BONUS:VAR|Maneuverability|1 is NOT grounded: it moves a manoeuvrability tier on \
+                 PCGen's own integer scale (the wing-clipped flight record sets \
+                 BONUS:VAR|Maneuverability|2|TYPE=Base for \"poor\"), and this engine has no \
+                 manoeuvrability dimension for a tier index to mean anything in"
+            ),
+        });
+    }
+
+    // Defiant Luck / Bestow Luck. The one ARG per-day budget whose DEFINE: sits
+    // on the feat record itself, so unlike the halfling, suli and fetchling
+    // budgets there is no unmodelled racial base underneath it.
+    if let Some(uses) = feat_effects::defiant_luck_uses_per_day_from_feats(feats) {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.defiant_luck_uses_per_day".to_owned(),
+            value: uses,
+            detail: format!(
+                "Defiant Luck (ARG) is usable {uses} time(s) per day -- after a natural 1 on a \
+                 saving throw, or a confirmed critical hit against this character, that roll may \
+                 be rerolled. Defiant Luck and Bestow Luck both write the one corpus variable \
+                 DefiantLuckTimes (BONUS:VAR|DefiantLuckTimes|1 each) and neither states a \
+                 literal, printing the total through a %1 substitution token instead. Unlike \
+                 ARG's other per-day variables, DEFINE:DefiantLuckTimes|0 sits on the Defiant \
+                 Luck record itself, so this budget is wholly feat-determined rather than an \
+                 increment to a racial pool this engine does not model. No per-use consumption \
+                 is tracked -- this is the size of a daily pool, the same way Stunning Fist's \
+                 uses per day grounds"
+            ),
+        });
+    }
+
+    // Fiend Sight. Its `BONUS:VAR|FiendSightTier|1` is a pick counter, not the
+    // magnitude; the magnitude is on the record's own VISION token and prose.
+    let fiend_sight_darkvision = feat_effects::fiend_sight_darkvision_feet_from_feats(feats);
+    if fiend_sight_darkvision != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.fiend_sight_darkvision_feet".to_owned(),
+            value: fiend_sight_darkvision,
+            detail: format!(
+                "Fiend Sight (ARG) improves darkvision to {fiend_sight_darkvision} feet and \
+                 grants low-light vision. The record states the range absolutely and twice -- \
+                 VISION:Darkvision (120') and its BENEFIT prose -- over the 60-foot base its own \
+                 PREVISION:1,Darkvision=60 prerequisite fixes, so this is a doubling of a known \
+                 base rather than a free-floating claim; the same reconciliation the Deepsight \
+                 record performs, which reports its own 60-to-120 step as the increment its \
+                 BONUS:VISION token actually is. This engine models no vision numerically \
+                 anywhere, so the range grounds standalone. The feat's BONUS:VAR|FiendSightTier|1 \
+                 is a pick counter (STACK:YES MULT:YES, capped at two by \
+                 PREVARLT:FiendSightTier,2) whose only consumer is the record's own second pick, \
+                 granting the see-in-darkness universal monster ability -- a capability with no \
+                 magnitude, and no further range"
+            ),
+        });
+    }
+
+    let gnome_weapon_attack = feat_effects::gnome_weapon_focus_attack_bonus_from_feats(feats);
+    if gnome_weapon_attack != 0 {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.gnome_weapon_focus_attack_bonus".to_owned(),
+            value: gnome_weapon_attack,
+            detail: format!(
+                "Gnome Weapon Focus (ARG) grants a +{gnome_weapon_attack} bonus on attack rolls \
+                 with gnome weapons -- weapons with \"gnome\" in the title \
+                 (BONUS:WEAPONPROF=TYPE.Gnome|TOHIT|1). Deliberately NOT added to any attack \
+                 total: the bonus is scoped to a weapon TYPE and this engine's per-weapon attack \
+                 totals carry no gnome facet to test, unlike Weapon Focus whose target is a \
+                 specific weapon the player records"
+            ),
+        });
+    }
+
+    // Pathfinder Unchained's stamina pools. Gated on a real computed chassis:
+    // Combat Stamina's pool is BAB + CON, and the `0` the chassis fallback
+    // substitutes for an unsupported posture is not a base attack bonus.
+    let constitution = ability_modifiers.constitution;
+    if let Some(facts) = chassis_supported
+        .then(|| feat_effects::stamina_pool_facts_from_feats(feats, base_attack_bonus, constitution))
+        .flatten()
+    {
+        let extra = facts.extra_stamina_picks;
+        explanations.push(ComputationExplanation {
+            id: "feat.pu_standalone.stamina_pool".to_owned(),
+            value: facts.primary,
+            detail: format!(
+                "Combat Stamina (Pathfinder Unchained) grants a stamina pool of \
+                 {} points: base attack bonus (+{base_attack_bonus}) + Constitution \
+                 modifier ({constitution:+}), transcribed from BONUS:VAR|StaminaPool|BAB+CON, \
+                 plus {extra} Extra Stamina pick(s) at +3 each (STACK:YES MULT:YES, capped at \
+                 three by the feat's own !PREABILITY:3 token). No stamina expenditure, combat \
+                 trick or per-round state is modelled here, so the pool grounds standalone as \
+                 a size rather than as a running resource",
+                facts.primary
+            ),
+        });
+        if let Some(secondary) = facts.secondary {
+            explanations.push(ComputationExplanation {
+                id: "feat.pu_standalone.secondary_stamina_pool".to_owned(),
+                value: secondary,
+                detail: format!(
+                    "Push the Limits (Pathfinder Unchained) grants a SECOND stamina pool of \
+                     {secondary} points, equal to the Constitution modifier \
+                     (BONUS:VAR|SecondaryStaminaPool|CON). Reported separately rather than \
+                     added into the primary pool above: its points are spendable only at 0 \
+                     primary stamina or while fatigued, conditions this engine does not \
+                     model, so summing the two would overstate what the character can spend"
+                ),
+            });
+        }
+    }
+
+    // Armor of the Pit's OTHER half, named rather than silently dropped.
+    // Its `BONUS:VAR|Cold/Electricity/FireResistanceBonus|5|TYPE=Resistance`
+    // token names three energy types unconditionally; the rule grants two of
+    // three, chosen by the player from the ones they do not already resist.
+    // Grounding three would overstate it and grounding a guessed two would
+    // fabricate the choice, so this states the gap instead of inventing a
+    // number -- and only for the character the branch actually applies to.
+    if feat_identity::holds(feats, "Armor of the Pit") && character_has_tiefling_scaled_skin(input) {
+        explanations.push(ComputationExplanation {
+            id: "feat.arg_standalone.armor_of_the_pit_scaled_skin_branch".to_owned(),
+            value: 0,
+            detail: "Armor of the Pit (ARG) on a character who took the Scaled Skin alternate \
+                     racial trait grants resistance 5 to TWO of cold, electricity and fire -- \
+                     the two they do not already resist -- INSTEAD of its +2 natural armor \
+                     bonus, which is therefore withheld from this character's Armor Class. \
+                     Which two is a player choice this engine records nowhere, so no resistance \
+                     value is claimed here (+0) rather than guessing a pair or asserting all \
+                     three, which is what the feat's corpus token literally says"
+                .to_owned(),
+        });
+    }
+}
+
+/// Turns a human-readable name into a stable explanation-id segment:
+/// lowercase, ASCII alphanumerics kept, every other run of characters collapsed
+/// to a single `_`, with no leading or trailing separator.
+///
+/// The existing records here build their slugs with
+/// `.to_lowercase().replace(' ', "_")`, which is fine for the plain skill names
+/// they carry but produces `craft_(alchemy)` and `scavenger's_eye` for ARG's,
+/// putting punctuation into an id other code matches on. This collapses those
+/// to `craft_alchemy` and `scavengers_eye`. Deliberately a new helper rather
+/// than a rewrite of the shipped call sites: changing an id already asserted by
+/// tests and read by the desktop layer is a separate, larger change than this
+/// one is scoped for.
+///
+/// **Corrected 2026-08-01.** The `scavengers_eye` half of that paragraph was
+/// false when it was written: an apostrophe took the `else` arm, so
+/// `Scavenger's Eye` produced `scavenger_s_eye` and the sheet read
+/// "Scavenger S Eye". [`is_intraword_punctuation`] now swallows it, and
+/// `tests/sd27_apostrophes_do_not_split_id_slugs.rs` pins the corrected id
+/// against the live pipeline so the doc comment and the behaviour cannot
+/// disagree again.
+fn slugify_id_segment(name: &str) -> String {
+    let mut out = String::with_capacity(name.len());
+    let mut pending_separator = false;
+    for character in name.chars() {
+        if character.is_ascii_alphanumeric() {
+            if pending_separator && !out.is_empty() {
+                out.push('_');
+            }
+            pending_separator = false;
+            out.push(character.to_ascii_lowercase());
+        } else if is_intraword_punctuation(character) {
+            // Swallowed, not separated. See `is_intraword_punctuation`.
+        } else {
+            pending_separator = true;
+        }
+    }
+    out
 }
 
 /// `selected_choices` is scanned regardless of chassis support.
@@ -39847,6 +43198,41 @@ fn ground_standalone_feat_skill_facts(
                  grounds as a standalone flat record, not wired into any skill total this \
                  codebase computes",
                 fact.feat_key, fact.bonus, fact.skill_name, fact.skill_name
+            ),
+        });
+    }
+
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): the Advanced Race Guide's
+    // five `BONUS:SKILL` feats. Their ids carry the FEAT as well as the skill,
+    // unlike the CRB/APG records above, because ARG genuinely puts three
+    // different feats on one skill -- Seen and Unseen's +2 Stealth, Angelic
+    // Flesh's -2 Stealth, and CRB Stealthy's +2, which already owns
+    // `feat.standalone_skill_bonus.stealth`. A skill-only id would collapse
+    // them.
+    for fact in crate::rules_core::feat_effects::arg_skill_facts_from_feats(
+        &effective_character_feats(input),
+    ) {
+        let feat_slug = slugify_id_segment(fact.feat_key);
+        let skill_slug = slugify_id_segment(fact.skill_name);
+        let integrated = fact.skill_name == "Climb";
+        explanations.push(ComputationExplanation {
+            id: format!("feat.arg_skill_bonus.{feat_slug}.{skill_slug}"),
+            value: fact.bonus,
+            detail: format!(
+                "{} (ARG) grants a {:+} bonus on {} checks, transcribed from its corpus \
+                 BONUS:SKILL token and confirmed against its own BENEFIT prose. {}",
+                fact.feat_key,
+                fact.bonus,
+                fact.skill_name,
+                if integrated {
+                    "Climb IS one of the three skills compute_selected_skill_modifiers computes, \
+                     so this value is already summed into skill.selected_modifier.climb -- this \
+                     record names the contributor, it is not a second, separate bonus"
+                } else {
+                    "This skill is not among the three compute_selected_skill_modifiers tracks \
+                     (Climb/Intimidate/Swim), so it grounds as a standalone flat record and is \
+                     not wired into any skill total this codebase computes"
+                }
             ),
         });
     }
@@ -40341,6 +43727,12 @@ fn compute_combat_baseline(
         return (0, 0);
     }
 
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): resolved ONCE, up here,
+    // because four separate cells below need a size term -- Armor Class, touch
+    // AC, attack rolls, and CMB/CMD. Resolving it per-consumer would push the
+    // unknown-race diagnostic four times for the same single unknown.
+    let size = combat_size_modifiers(input, diagnostics);
+
     // Baseline melee attack bonus: Fighter BAB + STR modifier + Weapon Focus
     // (Longsword) + Weapon Training (from level 5, Heavy Blades). Power Attack is
     // selected but inactive, contributing 0. The posture check above guarantees a
@@ -40432,9 +43824,17 @@ fn compute_combat_baseline(
         });
     }
 
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): attack rolls take PF1
+    // Table 8-1's size modifier -- the SAME column and the same magnitude as
+    // Armor Class, not the CMB/CMD "special" one. `size.rs`'s
+    // `armor_class_size_modifier` doc comment named this gap explicitly
+    // ("Attack rolls take the identical modifier in real PF1 and do not yet
+    // receive it") rather than leaving it to be rediscovered; this closes it,
+    // and that doc comment is updated in the same change.
     let melee_attack_bonus = base_attack_bonus
         + strength_modifier
         + WEAPON_FOCUS_TO_HIT_BONUS
+        + size.armor_class_and_attack
         + weapon_training_bonus
         + inspire_courage_attack_bonus
         + touch_of_good_attack_bonus
@@ -40480,8 +43880,11 @@ fn compute_combat_baseline(
         value: melee_attack_bonus,
         detail: format!(
             "Baseline melee attack bonus for the Longsword: {class_label} base attack bonus (+{base_attack_bonus}) \
-             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}){weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}{nonproficiency_detail}; \
-             Power Attack is selected but inactive (+0) = {melee_attack_bonus}"
+             + Strength modifier (+{strength_modifier}) + Weapon Focus (Longsword) (+{WEAPON_FOCUS_TO_HIT_BONUS}) \
+             + {} size modifier ({:+}, PF1 Table 8-1 -- attack rolls take the same size modifier as Armor Class)\
+             {weapon_training_detail}{inspire_courage_detail}{touch_of_good_detail}{justice_judgment_detail}{nonproficiency_detail}; \
+             Power Attack is selected but inactive (+0) = {melee_attack_bonus}",
+            size.label, size.armor_class_and_attack
         ),
     });
 
@@ -40574,6 +43977,36 @@ fn compute_combat_baseline(
     // Draconic bloodline choice are both met, since it is a permanent (Ex) quality.
     let draconic_dragon_resistances_natural_armor_bonus =
         apply_sorcerer_draconic_dragon_resistances_ac_bonus_to_combat_baseline(input);
+    // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Armor of the Pit is the
+    // only one of the Advanced Race Guide's 187 feats whose unconditional
+    // corpus magnitude lands on a total this engine computes -- a `+2` natural
+    // armor bonus, and therefore a real, visible change to a tiefling's Armor
+    // Class and (by exclusion) to their touch AC.
+    //
+    // Its corpus token carries `!PREABILITY:1,CATEGORY=Special Ability,Scaled
+    // Skin C ~ Tiefling,...`, which a mechanical "an inline PRE means
+    // situational" reading would classify as conditional. It is not a
+    // situation: it asks whether this character took the Scaled Skin alternate
+    // racial trait, a persisted creation-time decision this engine already
+    // reads through `selected_alternate_trait_keys`. So the branch is fully
+    // decided here rather than deferred, matching the `BENEFIT:` prose exactly
+    // ("+2 natural armor bonus. If you have the scaled skin racial trait, you
+    // *instead* gain resistance 5 to two of ...").
+    //
+    // Deliberately NOT race-gated on `PREFACT:1,TEMPLATES,IsTiefling=true`:
+    // asserting a feat's selection prerequisites is `feat_prereqs`' job, the
+    // same split `master_craftsman_facts_from_choices` already documents.
+    //
+    // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): read through
+    // `feat_derived_pillar_contributions` rather than calling
+    // `feat_effects::armor_of_the_pit_natural_armor_bonus_from_feats` here, so
+    // the corpus twin (`compute_combat_baseline_from_corpus`, the path the
+    // shipped sheet actually reads) consumes the identical value. Wired only
+    // here, this feat moved a test and moved a live Tiefling's Armor Class by
+    // nothing at all.
+    let feat_contributions =
+        feat_derived_pillar_contributions(input, ability_modifiers.strength);
+    let armor_of_the_pit_natural_armor_bonus = feat_contributions.natural_armor_bonus;
     // v0.6 alpha swarm (creation-seed honesty fix): Dodge is a conditional
     // CONTRIBUTION, not a precondition. `unmet_combat_posture_conditions`
     // used to *require* `feat:dodge` before this baseline would compute
@@ -40587,15 +44020,32 @@ fn compute_combat_baseline(
     // character that really does carry Dodge (through any slot -- the
     // identity fold is slot-blind, exactly as before) gets the identical
     // number it always did.
-    let dodge_armor_class_bonus = if feat_identity::holds(&input.chosen.selected_feats, DODGE_FEAT_ID)
-    {
-        DODGE_AC_BONUS
-    } else {
-        0
-    };
+    let dodge_armor_class_bonus = feat_contributions.dodge_armor_class_bonus;
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): the creature's PF1 size
+    // modifier to Armor Class. Until this landed, every race computed a Medium
+    // creature's Armor Class -- a live Goblin Fighter 1 read 18 where PF1's
+    // Small value at those stats is 19 -- and the defect PRE-DATES the 18-race
+    // widening: Gnome and Halfling shipped with it.
+    //
+    // Placed here, immediately after the Dexterity contribution and ahead of
+    // every conditional class term, because that is where PF1 stacks it:
+    //   AC = 10 + armor + shield + Dex + SIZE + natural + deflection + dodge + misc
+    // Position is not arithmetically load-bearing in a flat sum, but the term
+    // order is the sheet's published order and the explanation string below is
+    // read by users, so it is put where a player would look for it.
+    //
+    // It is its own PF1 modifier type -- not a dodge bonus (so it is kept out
+    // of `dodge_armor_class_bonus`, and is NOT lost when the creature is denied
+    // its Dexterity), not armor, not natural armor, not untyped. Size modifiers
+    // do not stack with each other; a creature has exactly one size, so exactly
+    // one value is summed and non-stacking holds structurally rather than by
+    // de-duplicating a list.
+    let size_armor_class_modifier = size.armor_class_and_attack;
+    let size_label = size.label;
     let armor_class = ARMOR_CLASS_BASE
         + CHAIN_SHIRT_ARMOR_BONUS
         + dexterity_contribution
+        + size_armor_class_modifier
         + dodge_armor_class_bonus
         + rage_armor_class_penalty
         + inspired_rage_armor_class_penalty
@@ -40605,7 +44055,8 @@ fn compute_combat_baseline(
         + protection_judgment_ac_bonus
         + natures_whispers_ac_bonus
         + challenge_armor_class_penalty
-        + draconic_dragon_resistances_natural_armor_bonus;
+        + draconic_dragon_resistances_natural_armor_bonus
+        + armor_of_the_pit_natural_armor_bonus;
 
     explanations.push(ComputationExplanation {
         id: "defense.baseline_armor_class".to_owned(),
@@ -40613,6 +44064,7 @@ fn compute_combat_baseline(
         detail: format!(
             "Baseline armor class: base {ARMOR_CLASS_BASE} + Chain Shirt armor bonus (+{CHAIN_SHIRT_ARMOR_BONUS}) \
              + Dexterity contribution (+{dexterity_contribution}, DEX modifier +{dexterity_modifier} within MAXDEX:{effective_max_dex}) \
+             + {size_label} size modifier ({size_armor_class_modifier:+}, PF1 Table 8-1) \
              + Dodge (+{dodge_armor_class_bonus}, only for a character actually carrying \
              {DODGE_FEAT_ID}) + Barbarian Rage penalty ({rage_armor_class_penalty}, only while \
              actively, validly raging) + Skald Inspired Rage penalty ({inspired_rage_armor_class_penalty}, only \
@@ -40627,8 +44079,174 @@ fn compute_combat_baseline(
              ({challenge_armor_class_penalty}, only while actively challenging) + Sorcerer \
              Draconic Bloodline Dragon Resistances natural armor bonus \
              (+{draconic_dragon_resistances_natural_armor_bonus}, only for a Draconic-bloodline \
-             Sorcerer at 3rd level or higher); shield \
+             Sorcerer at 3rd level or higher) + ARG Armor of the Pit natural armor bonus \
+             (+{armor_of_the_pit_natural_armor_bonus}, only for a character holding that feat \
+             who did NOT take the Scaled Skin alternate racial trait); shield \
              is absent (+0) = {armor_class}"
+        ),
+    });
+
+    // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC, CMB and CMD.
+    //
+    // None of the three existed in this engine at all. They were computed in
+    // React, in `apps/desktop/src/characterHub/CharacterSheet.tsx`, as
+    // `10 + dexMod` / `bab + str` / `10 + bab + str + dexMod` -- three rules
+    // formulas living in a view, none of them aware of creature size, and one
+    // of them (touch) able to contradict the engine's own Armor Class on the
+    // same panel. Grounding them here is the fix; the sheet now renders what
+    // the engine computed.
+    //
+    // Which of this function's terms a touch attack ignores, stated per term
+    // rather than inferred:
+    //   EXCLUDED -- armor bonus (Chain Shirt), Alchemist Mutagen's natural
+    //     armor bonus, Sorcerer Draconic Dragon Resistances' natural armor
+    //     bonus, ARG Armor of the Pit's natural armor bonus. PF1 touch AC
+    //     ignores armor, shield and natural armor.
+    //   INCLUDED -- the Dexterity contribution (still subject to the armor's
+    //     MAXDEX, which limits the Dexterity bonus to Armor Class generally),
+    //     the size modifier, Dodge's dodge bonus, Brawler's AC Bonus (also a
+    //     dodge bonus), Inquisitor Protection judgment's sacred/profane bonus,
+    //     Oracle Nature's Whispers' Charisma-for-Dexterity substitution, and
+    //     every Rage/Inspired Rage/Bloodrage/Challenge PENALTY (penalties are
+    //     never ignored by a touch attack).
+    // There is no shield term to exclude: this posture requires the shield
+    // absent, contributing 0.
+    let excluded_from_touch = CHAIN_SHIRT_ARMOR_BONUS
+        + alchemist_mutagen_ac_bonus_value
+        + draconic_dragon_resistances_natural_armor_bonus
+        // The feat-derived half comes from the shared seam's own accessor, not
+        // from re-listing its fields here: a feat added to
+        // `FeatDerivedPillarContributions` as natural armor must leave touch AC
+        // on both twins at once, and re-listing is how one twin drifts.
+        + feat_contributions.excluded_from_touch_armor_class();
+    let touch_armor_class_total = touch_armor_class(armor_class, excluded_from_touch);
+    explanations.push(ComputationExplanation {
+        id: "defense.touch_armor_class".to_owned(),
+        value: touch_armor_class_total,
+        detail: format!(
+            "Touch armor class: the armor class above ({armor_class}) with the contributors a \
+             touch attack ignores removed -- Chain Shirt armor bonus (-{CHAIN_SHIRT_ARMOR_BONUS}), \
+             Alchemist Mutagen natural armor (-{alchemist_mutagen_ac_bonus_value}), Sorcerer \
+             Draconic Bloodline natural armor (-{draconic_dragon_resistances_natural_armor_bonus}), \
+             ARG Armor of the Pit natural armor (-{armor_of_the_pit_natural_armor_bonus}); \
+             shield is absent (-0). The Dexterity contribution (+{dexterity_contribution}), the \
+             {size_label} size modifier ({size_armor_class_modifier:+}, PF1 Table 8-1) and every \
+             dodge/sacred/ability bonus and penalty are all retained = {touch_armor_class_total}"
+        ),
+    });
+
+    // SD-27, decisions.md §28 (flat-footed defect, 2026-07-31): flat-footed
+    // Armor Class, which -- exactly like touch AC one cycle earlier -- did not
+    // exist in this engine at all. It was a THIRD compute twin, living in
+    // `apps/desktop/src/characterHub/CharacterSheet.tsx` as
+    // `ac - Math.max(0, dexMod)` since `f5117103` (2026-07-11): half of PF1's
+    // rule, in a view, with no engine record to contradict it.
+    //
+    // Which of this function's terms a flat-footed creature loses, stated per
+    // term by walking the `armor_class` sum above rather than inferred:
+    //   DENIED -- the Dexterity contribution (the Dexterity BONUS only; see
+    //     `flat_footed_armor_class` on why a Dexterity penalty is kept), the
+    //     Oracle Nature's Whispers Charisma-for-Dexterity substitution (it
+    //     stands in FOR the Dexterity bonus, so it is denied with it), and
+    //     Dodge's dodge bonus.
+    //   KEPT -- the Chain Shirt's armor bonus, the size modifier, all three
+    //     natural-armor terms (Alchemist Mutagen, Sorcerer Draconic Dragon
+    //     Resistances, ARG Armor of the Pit), Inquisitor Protection judgment's
+    //     sacred/profane bonus, every Rage / Inspired Rage / Bloodrage /
+    //     Challenge PENALTY (a penalty is never forgiven by being caught
+    //     unprepared), and Brawler's AC Bonus.
+    //
+    // Brawler's AC Bonus is the one term whose reason has to be written down.
+    // It IS a dodge bonus (`ground_brawler_ac_bonus_and_defer_the_rest` says so
+    // from the corpus formula), but its own rule text carves itself out of the
+    // general dodge rule: "These bonuses to AC apply even against touch attacks
+    // or when the [character] is flat-footed." The ACG Brawler record in this
+    // repo is `completeness: chassis_only` and carries no DESC, but that exact
+    // sentence is in-corpus verbatim for the identical mechanic at
+    // `data/corpus/pathfinder_unchained/class_feature/monk_unchained_class/`
+    // `unchained_monk_ac_bonus.json` -- and this engine ALREADY implements its
+    // first clause, by leaving `brawler_ac_bonus_value` out of
+    // `excluded_from_touch` above. Denying it here would obey one half of one
+    // sentence and not the other.
+    //
+    // The six other dodge-typed magnitudes this file grounds -- Dwarf
+    // Defensive Training, Slayer/Investigator Trap Sense, Swashbuckler Nimble,
+    // Dodging Panache and Dizzying Defense, and Bard Inspire Heroics -- are
+    // deliberately NOT subtracted, because none of them is ADDED. Each is an
+    // explanation-only recognition record and none appears in the `armor_class`
+    // sum above; verified by grepping each symbol's every reference rather than
+    // by reading the file. Subtracting a term that was never summed is how a
+    // thorough-looking fix produces a flat-footed AC below what PF1 allows.
+    let dexterity_bonus_denied_when_flat_footed = dexterity_contribution + natures_whispers_ac_bonus;
+    // Read through the shared feat seam's own accessor, not from the local
+    // `dodge_armor_class_bonus`: a future feat-derived dodge bonus must leave
+    // flat-footed AC on both twins at once, and re-listing is how one twin
+    // drifts -- the same reason `excluded_from_touch` reads its accessor.
+    let dodge_typed_armor_class_bonuses = feat_contributions.denied_to_flat_footed_armor_class();
+    let flat_footed_armor_class_total = flat_footed_armor_class(
+        armor_class,
+        dexterity_bonus_denied_when_flat_footed,
+        dodge_typed_armor_class_bonuses,
+    );
+    explanations.push(ComputationExplanation {
+        id: "defense.flat_footed_armor_class".to_owned(),
+        value: flat_footed_armor_class_total,
+        detail: format!(
+            "Flat-footed armor class: the armor class above ({armor_class}) with the \
+             contributors a flat-footed character is denied removed -- the Dexterity \
+             contribution (-{dexterity_contribution}, bonus only; a Dexterity penalty is kept) \
+             including the Oracle Nature's Whispers Charisma-for-Dexterity substitution \
+             (-{natures_whispers_ac_bonus}, which stands in for that bonus), and every \
+             dodge-typed bonus (-{dodge_typed_armor_class_bonuses}: Dodge's \
+             {DODGE_AC_BONUS:+}, per PF1 \"any situation that denies you your Dexterity bonus \
+             to Armor Class also denies you dodge bonuses\"). The Chain Shirt armor bonus \
+             (+{CHAIN_SHIRT_ARMOR_BONUS}), the {size_label} size modifier \
+             ({size_armor_class_modifier:+}), every natural armor and sacred/profane bonus, \
+             every penalty, and Brawler's AC Bonus (+{brawler_ac_bonus_value}, whose own rule \
+             text applies it even when flat-footed) are all retained = \
+             {flat_footed_armor_class_total}"
+        ),
+    });
+
+    let combat_maneuver_bonus_total = combat_maneuver_bonus(
+        base_attack_bonus,
+        strength_modifier,
+        dexterity_modifier,
+        size.category,
+        size.special,
+    );
+    explanations.push(ComputationExplanation {
+        id: "combat.combat_maneuver_bonus".to_owned(),
+        value: combat_maneuver_bonus_total,
+        detail: format!(
+            "Combat Maneuver Bonus: {class_label} base attack bonus (+{base_attack_bonus}) + \
+             Strength modifier (+{strength_modifier}) + {size_label} special size modifier \
+             ({:+}) = {combat_maneuver_bonus_total}. The special size modifier runs OPPOSITE to \
+             Table 8-1's Armor Class column: being smaller makes a creature worse at combat \
+             maneuvers, not better. No Improved/Greater maneuver feat or size-changing effect is \
+             modelled by this engine, so none is summed here",
+            size.special
+        ),
+    });
+
+    let combat_maneuver_defense_total = combat_maneuver_defense(
+        base_attack_bonus,
+        strength_modifier,
+        dexterity_modifier,
+        size.special,
+    );
+    explanations.push(ComputationExplanation {
+        id: "defense.combat_maneuver_defense".to_owned(),
+        value: combat_maneuver_defense_total,
+        detail: format!(
+            "Combat Maneuver Defense: base {COMBAT_MANEUVER_DEFENSE_BASE} + {class_label} base \
+             attack bonus (+{base_attack_bonus}) + Strength modifier (+{strength_modifier}) + \
+             Dexterity modifier (+{dexterity_modifier}) + {size_label} special size modifier \
+             ({:+}) = {combat_maneuver_defense_total}. These are exactly the terms PF1's published \
+             CMD formula prints; the deflection/dodge/insight/luck/morale/profane/sacred bonuses \
+             to Armor Class that also apply to CMD in real PF1 are NOT folded in here yet, and \
+             are named rather than silently implied",
+            size.special
         ),
     });
 

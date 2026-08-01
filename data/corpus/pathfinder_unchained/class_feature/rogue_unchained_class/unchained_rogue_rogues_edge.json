@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Rogue ~ Rogues Edge",
+    "name": "Rogue's Edge",
+    "class_key": "Rogue ~ Unchained Class",
+    "base_class_key": "Rogue",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Rogue Class Feature",
+      "SpecialQuality",
+      "Extraordinary"
+    ],
+    "min_level": 5,
+    "is_granted": true,
+    "visible": null,
+    "class_skills": [],
+    "description": null,
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Rogue ~ Rogues Edge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Rogue Class Feature.SpecialQuality.Extraordinary"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RoguesEdgeLVL|0"
+      },
+      {
+        "key": "DESC",
+        "value": "You have mastered"
+      },
+      {
+        "key": "DESC",
+        "value": "a single skill beyond that skill's normal boundaries,|PREVAREQ:RoguesEdgeLVL,1"
+      },
+      {
+        "key": "DESC",
+        "value": "%1 skills beyond those skill's normal boundaries,|RoguesEdgeLVL|PREVARGT:RoguesEdgeLVL,1"
+      },
+      {
+        "key": "DESC",
+        "value": "gaining results that others can only dream about. You gain the skill unlock powers as appropriate for the number of ranks you have."
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Skill Unlock Choice",
+          "RoguesEdgeLVL"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RoguesEdgeLVL",
+          "RogueLVL/5"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 588,
+    "record_key": "Unchained Rogue ~ Rogues Edge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -485,6 +485,50 @@ pub const CLASS_WEAPON_PROFICIENCIES: &[ClassWeaponProficiency] = &[
     ClassWeaponProficiency { class_id: "class:warpriest", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:witch", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
     ClassWeaponProficiency { class_id: "class:wizard", tiers: &[], named: &["Club", "Dagger", "Crossbow (Heavy)", "Crossbow (Light)", "Quarterstaff"], weapon_groups: &[] },
+    // SD-27 (2026-07-31): Pathfinder Unchained's four classes. Each row is
+    // transcribed from that class's OWN proficiency record under
+    // `data/corpus/pathfinder_unchained/class_feature/<class>/`, never
+    // copied across from the class it replaces -- three of the four happen
+    // to come out identical to their namesake, and the fourth does not,
+    // which is exactly why they were read separately.
+    //
+    //  - Unchained Barbarian (`~ Weapon and Armor Proficiency`, p.8) grants
+    //    `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Simple` and
+    //    `... ~ Martial` -- convention 2 above. Same as CRB Barbarian.
+    //  - Unchained Rogue (`~ Weapon Proficiency`) carries both
+    //    `AUTO:WEAPONPROF|Crossbow (Hand)|Rapier|Sap|Shortbow|Sword (Short)`
+    //    and `ABILITY:Internal|AUTOMATIC|Weapon Prof ~ Simple`. Same as CRB
+    //    Rogue.
+    //  - Unchained Summoner (`~ Weapon and Armor Proficiency`, p.25) grants
+    //    `ABILITY:Internal|AUTOMATIC|TYPE=WeaponProfSimple`. Same as APG
+    //    Summoner.
+    //  - Unchained Monk (`~ Weapon and Armor Proficiency`, p.14) is the one
+    //    that differs, and the difference is transcribed rather than
+    //    smoothed over. Its token is
+    //    `AUTO:WEAPONPROF|Club|Crossbow (Light)|Crossbow (Heavy)|Dagger|Handaxe|Javelin|Kama|Nunchaku|Quarterstaff|Sai|Sword (Short)|Shortspear|Shuriken|Siangham|Sling|Spear|TYPE=Monk`
+    //    -- SIXTEEN named weapons where the CRB Monk row above carries
+    //    seventeen. PU's token does NOT name `Unarmed Strike`; CRB's does.
+    //    Two consequences, both stated rather than papered over:
+    //      (a) `TYPE=Monk` is a PCGen weapon *type* selector. This table
+    //          models tiers, named weapons and `Weapon Group <name>`, and a
+    //          weapon type is none of those, so the clause is NOT modelled.
+    //          Its practical cost today is nil: every weapon in the ingested
+    //          CRB table that carries the monk quality (Kama, Nunchaku, Sai,
+    //          Shuriken, Siangham) is already on the named list above.
+    //          Conflating it with the `Monk` weapon *group* Sai and Shuriken
+    //          carry would be inventing a mapping, so it is not done.
+    //      (b) unarmed-strike proficiency for this class does not come from
+    //          the weapon-proficiency lane at all: `Unchained Monk ~ Unarmed
+    //          Strike` grants `ABILITY:FEAT|VIRTUAL|Improved Unarmed Strike`.
+    //          Virtual feat grants from class features are not modelled in
+    //          this engine, so an Unchained Monk reads as non-proficient with
+    //          an Unarmed Strike here. That is a real gap, recorded in the
+    //          class's own `class_feature.pu.unchained_monk.
+    //          other_features_deferred` diagnostic.
+    ClassWeaponProficiency { class_id: "class:unchained_barbarian", tiers: &[WeaponProficiency::Simple, WeaponProficiency::Martial], named: &[], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:unchained_monk", tiers: &[], named: &["Club", "Crossbow (Light)", "Crossbow (Heavy)", "Dagger", "Handaxe", "Javelin", "Kama", "Nunchaku", "Quarterstaff", "Sai", "Sword (Short)", "Shortspear", "Shuriken", "Siangham", "Sling", "Spear"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:unchained_rogue", tiers: &[WeaponProficiency::Simple], named: &["Crossbow (Hand)", "Rapier", "Sap", "Shortbow", "Sword (Short)"], weapon_groups: &[] },
+    ClassWeaponProficiency { class_id: "class:unchained_summoner", tiers: &[WeaponProficiency::Simple], named: &[], weapon_groups: &[] },
 ];
 
 /// This class's weapon proficiency, or `None` for a class this table does
@@ -659,12 +703,17 @@ mod class_weapon_proficiency_tests {
         assert!(class_weapon_proficiency("class:eldritch_knight").is_none());
     }
 
-    /// The whole 27-class roster, not just the CRB set.
+    /// The whole 31-class roster, not just the CRB set.
     ///
     /// Shipping this CRB-only was a real near-miss: it returned "unknown"
     /// for 16 classes, and any caller flagging non-proficiency by omission
     /// would have penalised seven martial ones (Bloodrager, Skald, Slayer,
     /// Swashbuckler, Cavalier, Hunter, Warpriest).
+    ///
+    /// SD-27 (2026-07-31) added Pathfinder Unchained's four. The same
+    /// near-miss applied to them in a sharper form: an Unchained class with
+    /// no row here reads as "unknown", which claim-blocks the whole combat
+    /// baseline, so the class would have been selectable and uncomputable.
     #[test]
     fn every_class_in_the_roster_is_covered() {
         for class_id in [
@@ -675,18 +724,63 @@ mod class_weapon_proficiency_tests {
             "class:ranger", "class:rogue", "class:shaman", "class:skald",
             "class:slayer", "class:sorcerer", "class:summoner", "class:swashbuckler",
             "class:warpriest", "class:witch", "class:wizard",
+            "class:unchained_barbarian", "class:unchained_monk",
+            "class:unchained_rogue", "class:unchained_summoner",
         ] {
             assert!(
                 class_weapon_proficiency(class_id).is_some(),
                 "{class_id} has a real corpus proficiency record and must be covered"
             );
         }
-        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 27);
+        assert_eq!(CLASS_WEAPON_PROFICIENCIES.len(), 31);
+    }
+
+    /// Each Unchained class's grants against the class it replaces. Three
+    /// match exactly; the Unchained Monk does not, and the difference is
+    /// pinned rather than tolerated -- PU's `AUTO:WEAPONPROF` names 16
+    /// weapons where CRB's Monk row names 17, omitting `Unarmed Strike`.
+    #[test]
+    fn unchained_weapon_grants_match_their_base_class_except_the_monks_unarmed_strike() {
+        for (unchained, base) in [
+            ("class:unchained_barbarian", "class:barbarian"),
+            ("class:unchained_rogue", "class:rogue"),
+            ("class:unchained_summoner", "class:summoner"),
+        ] {
+            let u = prof(unchained);
+            let b = prof(base);
+            assert_eq!(u.tiers, b.tiers, "{unchained} tiers");
+            assert_eq!(u.named, b.named, "{unchained} named weapons");
+            assert_eq!(u.weapon_groups, b.weapon_groups, "{unchained} weapon groups");
+        }
+
+        let pu_monk = prof("class:unchained_monk");
+        let crb_monk = prof("class:monk");
+        assert_eq!(pu_monk.named.len(), 16);
+        assert_eq!(crb_monk.named.len(), 17);
+        assert!(crb_monk.named.contains(&"Unarmed Strike"));
+        assert!(
+            !pu_monk.named.contains(&"Unarmed Strike"),
+            "PU's own token does not name it -- transcribed, not corrected"
+        );
+        // Everything else on the CRB list is on PU's list too, so the
+        // difference really is exactly the one entry.
+        for weapon_name in crb_monk.named {
+            if *weapon_name == "Unarmed Strike" {
+                continue;
+            }
+            assert!(pu_monk.named.contains(weapon_name), "{weapon_name}");
+        }
     }
 
     /// The Longsword question decided for the whole roster in one place --
-    /// this is what the melee baseline actually turns on. 12 proficient,
-    /// 15 not.
+    /// this is what the melee baseline actually turns on. 13 proficient,
+    /// 18 not.
+    ///
+    /// SD-27 added `class:unchained_barbarian` to the proficient side and
+    /// the other three Unchained classes to the non-proficient side, each
+    /// on its own corpus record: the Unchained Barbarian grants the Martial
+    /// tier, and the Unchained Monk / Rogue / Summoner do not, exactly like
+    /// the classes they replace.
     #[test]
     fn longsword_proficiency_is_correct_for_every_class() {
         let longsword = weapon("Longsword");
@@ -694,6 +788,7 @@ mod class_weapon_proficiency_tests {
             "class:barbarian", "class:bard", "class:bloodrager", "class:cavalier",
             "class:fighter", "class:hunter", "class:paladin", "class:ranger",
             "class:skald", "class:slayer", "class:swashbuckler", "class:warpriest",
+            "class:unchained_barbarian",
         ];
         let mut proficient = 0;
         for class in CLASS_WEAPON_PROFICIENCIES {
@@ -706,7 +801,7 @@ mod class_weapon_proficiency_tests {
             );
             proficient += usize::from(actual);
         }
-        assert_eq!(proficient, 12, "12 of 27 classes are Longsword-proficient");
+        assert_eq!(proficient, 13, "13 of 31 classes are Longsword-proficient");
     }
 
     /// Bard reaches Longsword through its explicit list, NOT a martial

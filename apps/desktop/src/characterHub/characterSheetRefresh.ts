@@ -72,7 +72,11 @@ export function toCharacterMutationRefresh(
   // (equipment, modifiers, spells) stay unchanged. A caller that DID change
   // a chooser target must pass the updated list, exactly as it already must
   // for `selectedFeats`.
-  chosenFeatTargets: ChosenFeatTargetsDto[] = []
+  chosenFeatTargets: ChosenFeatTargetsDto[] = [],
+  // Same reasoning as `chosenFeatTargets`: no mutation command changes a
+  // racial-trait choice, so every existing call site carries its current list
+  // through unchanged and the default is the empty one.
+  selectedAlternateTraitKeys: string[] = []
 ): CharacterMutationRefresh {
   if (outcome.kind === 'Blocked') {
     return { kind: 'blocked', message: blockedMessageFromDiagnostics(outcome.diagnostics) };
@@ -85,6 +89,10 @@ export function toCharacterMutationRefresh(
       snapshot: outcome.snapshot,
       diagnostics: [],
       corpusDerived: outcome.corpusDerived,
+      // Carried through from the pre-mutation detail: a re-save changes no
+      // racial-trait choice, and dropping them here would make the sheet
+      // forget a swap the saved character still has.
+      selectedAlternateTraitKeys,
       selectedFeats,
       spellsSelected,
       chosenFeatTargets,
@@ -99,6 +107,12 @@ export function toCharacterMutationRefresh(
       // `refreshDurability` already established there.
       explanations: [],
       weaponDamage: [],
+      // Same reasoning, one field further: a mutation that adds a feat really
+      // does change what a racial trait's prose says (ARG's `Fortunate One`
+      // moves halfling luck from "three times per day" to "4"), so the
+      // pre-mutation resolution is stale the moment this returns. Absent
+      // rather than stale; `refreshEngineRecords` re-reads it.
+      resolvedRacialTraits: null,
     },
   };
 }

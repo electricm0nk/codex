@@ -32,9 +32,21 @@ export interface BodyProfile {
   weightMultiplierLb: number;
 }
 
+/**
+ * One race the creation form offers.
+ *
+ * Built from the backend's corpus-derived roster by
+ * `raceRoster.raceOptionsFromChassis` — **not** declared as a constant here.
+ * A seven-entry `RACE_OPTIONS` table used to live at this spot; it offered
+ * the Core Rulebook races only, while the corpus carried 18. See
+ * `raceRoster.ts` for the full account.
+ */
 export interface RaceOption {
+  /** The `race:<slug>` token submitted with the character. */
   id: string;
   label: string;
+  /** Short sourcebook code, e.g. `CRB`, `B1`. */
+  book: string;
   /** Fixed PF1 racial ability modifiers applied to every member of the race. */
   abilityAdjustments: Partial<Record<AbilityKey, number>>;
   /**
@@ -43,101 +55,63 @@ export interface RaceOption {
    * player-selectable enhancement.
    */
   floatingBonusPoints: number;
-  size: 'Small' | 'Medium';
+  /** `Small` or `Medium` — a string, not a union, because the roster is data. */
+  size: string;
   vision: string;
-  body: Record<Sex, BodyProfile>;
+  /** Base land speed in feet. */
+  baseSpeedFt: number;
+  /**
+   * Random height/weight profile, or `null` for a race this repo carries no
+   * profile for. Height and weight are display-only in the form (neither is
+   * part of `CreateCharacterRequest`), and the corpus carries them for no
+   * race at all — see `RACE_BODY_PROFILES`.
+   */
+  body: Record<Sex, BodyProfile> | null;
 }
 
-/** The full PF1 core rulebook race roster, with core ability modifiers and physical profiles. */
-export const RACE_OPTIONS: RaceOption[] = [
-  {
-    id: 'race:human',
-    label: 'Human',
-    abilityAdjustments: {},
-    floatingBonusPoints: 2,
-    size: 'Medium',
-    vision: 'Normal',
-    body: {
-      male: { baseHeightInches: 58, heightModDice: { count: 2, sides: 10 }, baseWeightLb: 120, weightMultiplierLb: 5 },
-      female: { baseHeightInches: 53, heightModDice: { count: 2, sides: 10 }, baseWeightLb: 85, weightMultiplierLb: 5 },
-    },
-  },
-  {
-    id: 'race:dwarf',
-    label: 'Dwarf',
-    abilityAdjustments: { constitution: 2, wisdom: 2, charisma: -2 },
-    floatingBonusPoints: 0,
-    size: 'Medium',
-    vision: 'Darkvision 60 ft.',
-    body: {
-      male: { baseHeightInches: 45, heightModDice: { count: 2, sides: 4 }, baseWeightLb: 150, weightMultiplierLb: 7 },
-      female: { baseHeightInches: 43, heightModDice: { count: 2, sides: 4 }, baseWeightLb: 120, weightMultiplierLb: 7 },
-    },
-  },
-  {
-    id: 'race:elf',
-    label: 'Elf',
-    abilityAdjustments: { dexterity: 2, intelligence: 2, constitution: -2 },
-    floatingBonusPoints: 0,
-    size: 'Medium',
-    vision: 'Low-light vision',
-    body: {
-      male: { baseHeightInches: 60, heightModDice: { count: 2, sides: 6 }, baseWeightLb: 100, weightMultiplierLb: 3 },
-      female: { baseHeightInches: 60, heightModDice: { count: 2, sides: 6 }, baseWeightLb: 90, weightMultiplierLb: 3 },
-    },
-  },
-  {
-    id: 'race:gnome',
-    label: 'Gnome',
-    abilityAdjustments: { constitution: 2, charisma: 2, strength: -2 },
-    floatingBonusPoints: 0,
-    size: 'Small',
-    vision: 'Low-light vision',
-    body: {
-      male: { baseHeightInches: 36, heightModDice: { count: 2, sides: 4 }, baseWeightLb: 35, weightMultiplierLb: 1 },
-      female: { baseHeightInches: 34, heightModDice: { count: 2, sides: 4 }, baseWeightLb: 30, weightMultiplierLb: 1 },
-    },
-  },
-  {
-    id: 'race:half-elf',
-    label: 'Half-Elf',
-    abilityAdjustments: {},
-    floatingBonusPoints: 2,
-    size: 'Medium',
-    vision: 'Low-light vision',
-    body: {
-      male: { baseHeightInches: 55, heightModDice: { count: 2, sides: 8 }, baseWeightLb: 110, weightMultiplierLb: 5 },
-      female: { baseHeightInches: 55, heightModDice: { count: 2, sides: 8 }, baseWeightLb: 90, weightMultiplierLb: 5 },
-    },
-  },
-  {
-    id: 'race:half-orc',
-    label: 'Half-Orc',
-    abilityAdjustments: {},
-    floatingBonusPoints: 2,
-    size: 'Medium',
-    vision: 'Darkvision 60 ft.',
-    body: {
-      male: { baseHeightInches: 58, heightModDice: { count: 2, sides: 12 }, baseWeightLb: 150, weightMultiplierLb: 7 },
-      female: { baseHeightInches: 58, heightModDice: { count: 2, sides: 12 }, baseWeightLb: 120, weightMultiplierLb: 7 },
-    },
-  },
-  {
-    id: 'race:halfling',
-    label: 'Halfling',
-    abilityAdjustments: { dexterity: 2, charisma: 2, strength: -2 },
-    floatingBonusPoints: 0,
-    size: 'Small',
-    vision: 'Normal',
-    body: {
-      male: { baseHeightInches: 32, heightModDice: { count: 2, sides: 4 }, baseWeightLb: 30, weightMultiplierLb: 1 },
-      female: { baseHeightInches: 30, heightModDice: { count: 2, sides: 4 }, baseWeightLb: 25, weightMultiplierLb: 1 },
-    },
-  },
-];
+/**
+ * What the sheet prints for a race-derived field it has no profile for.
+ *
+ * Not a PF1 value, and deliberately not a plausible one. The Character
+ * Sheet's Details panel tells the player "Vision and Size are calculated
+ * from race", so anything printed there is read as a derived rules fact. A
+ * saved character whose `raceId` is not in the roster the caller supplies —
+ * a sheet written by a later build, or any character opened before the
+ * roster has arrived from the backend — must not be handed
+ * "Medium"/"Normal"/"30 ft." as though they had been calculated.
+ */
+export const UNKNOWN_RACE_TRAIT = 'Unknown';
+
+export interface RaceDerivedTraits {
+  size: string;
+  vision: string;
+  /** Base land speed, already formatted (`"30 ft."`), or `UNKNOWN_RACE_TRAIT`. */
+  landSpeed: string;
+}
 
 /**
- * `full` — reaches `Computed` for any race in `RACE_OPTIONS`.
+ * Size, vision and land speed for a saved character's `raceId`, read off the
+ * roster the backend served, or `UNKNOWN_RACE_TRAIT` for each when that
+ * roster carries no entry for the race. Never guesses.
+ *
+ * `roster` is a parameter rather than a module constant because the roster is
+ * corpus-derived and arrives asynchronously (`raceRoster.ts`). An empty
+ * roster — still loading, or no desktop backend — therefore reads as "not
+ * known", which is the truth at that moment.
+ */
+export function deriveRaceTraits(
+  raceId: string | null | undefined,
+  roster: RaceOption[]
+): RaceDerivedTraits {
+  const race = roster.find((option) => option.id === raceId);
+  if (!race) {
+    return { size: UNKNOWN_RACE_TRAIT, vision: UNKNOWN_RACE_TRAIT, landSpeed: UNKNOWN_RACE_TRAIT };
+  }
+  return { size: race.size, vision: race.vision, landSpeed: `${race.baseSpeedFt} ft.` };
+}
+
+/**
+ * `full` — reaches `Computed` for any race the creation roster offers.
  * `partial-human-only` — reaches `Computed` for `race:human` only; every
  * other race falls back to the same 4 generic diagnostics as a `none`
  * class.
@@ -462,6 +436,39 @@ export const CLASS_OPTIONS: ClassOption[] = [
   { id: 'class:slayer', label: 'Slayer', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
   { id: 'class:swashbuckler', label: 'Swashbuckler', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
   { id: 'class:warpriest', label: 'Warpriest', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  /*
+   * Pathfinder Unchained (`pathfinder_unchained/pu_abilities_class.lst`),
+   * added SD-27 2026-07-31.
+   *
+   * These four are REPLACEMENTS for the CRB Barbarian / Monk / Rogue and
+   * the APG Summoner, not additions to them. PCGen models each as a
+   * selection ability in that class's single-slot pool, so a campaign
+   * picks one of the pair and a character never holds both. Both members
+   * stay in this list because the *app* has no campaign-level rules
+   * toggle: the player picks the version their table uses. They are kept
+   * apart on three axes and none of them is cosmetic — a distinct `id`
+   * (`class:unchained_*`, which is what is persisted to disk), a distinct
+   * `label`, and a distinct engine path
+   * (`rules_tables::pathfinder_unchained`, rule set `Pu`).
+   *
+   * `hitDie` is the engine's own value per class, not the base class's by
+   * assumption: three of the four genuinely borrow it (their corpus record
+   * overrides no chassis field) and the Unchained Monk does not — d10
+   * here against the CRB Monk's d8 above. That row is the reason this
+   * table could not simply alias the four.
+   *
+   * All four are `full` on the same evidence every other row uses:
+   * `cargo run --bin v06_class_state_dump` reports 31/31 classes reaching
+   * `Computed` at every level 1-20, with the original 27 byte-identical to
+   * their pre-change dump. Their remaining feature gaps are carried as
+   * non-claim-blocking `class_feature.pu.*.other_features_deferred`
+   * diagnostics on the character's own receipt — most notably the
+   * Unchained Summoner's 202-spell list, which is NOT transcribed.
+   */
+  { id: 'class:unchained_barbarian', label: 'Unchained Barbarian', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 12 },
+  { id: 'class:unchained_monk', label: 'Unchained Monk', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 10 },
+  { id: 'class:unchained_rogue', label: 'Unchained Rogue', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
+  { id: 'class:unchained_summoner', label: 'Unchained Summoner', supportLevel: 'full', levelOptions: EVERY_CLASS_LEVEL, hitDie: 8 },
 ];
 
 const DEFAULT_LEVEL_OPTIONS: number[] = [1];

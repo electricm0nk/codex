@@ -26,6 +26,27 @@ export interface ItemPickerEntry {
    * frontend, which would be rules knowledge duplicated out of the engine.
    */
   chooserTargetKind?: string | null;
+  /**
+   * True when this row must be shown but not selectable — a feat whose real
+   * corpus prerequisites this character does not meet.
+   *
+   * Deliberately "greyed out and explained" rather than "filtered away":
+   * hiding the row would tell a player nothing about why their build cannot
+   * take Improved Two-Weapon Fighting, and offering it and then refusing the
+   * mutation is the offered-then-refused shape the no-stub doctrine calls a
+   * dead affordance.
+   */
+  disabled?: boolean;
+  /**
+   * Why this row is disabled. Required whenever `disabled` is true — a
+   * greyed-out row with no reason is exactly as unhelpful as no enforcement.
+   */
+  disabledReason?: string;
+  /**
+   * A note shown on a row that IS selectable: prerequisites the rules engine
+   * could not evaluate. Never a reason to disable.
+   */
+  unverifiedNote?: string;
 }
 
 /** Friendly labels for `EquipmentCategory` variants — mirrors `EquipmentCatalogScreen`'s own map. */
@@ -36,14 +57,70 @@ const EQUIPMENT_CATEGORY_LABELS: Record<string, string> = {
   Equipmods: 'Equipment Mods',
 };
 
+/**
+ * How much corpus description prose one picker row may carry.
+ *
+ * The picker is a scan-and-select list rendered inside a modal, and the
+ * catalog's descriptions are not uniformly short: median 107 characters, but
+ * 817 of the 2856 described records run past 200 and the longest is 5971.
+ * Pasting those in full turns a 3830-row list into an unscrollable wall.
+ *
+ * So the picker shows a bounded summary and the **Equipment Catalog screen
+ * shows the full text** — a division of labour, not a loss. The bound is
+ * marked with an ellipsis whenever it bites, so a truncated line always
+ * announces itself rather than reading as the whole description.
+ */
+export const ITEM_PICKER_DESCRIPTION_MAX_CHARS = 140;
+
+/**
+ * Trims description prose to a readable one-liner for a picker row.
+ *
+ * Cuts on a word boundary rather than mid-word, and appends `…` only when
+ * something was actually removed — a description that already fits is
+ * returned byte-for-byte, so short rules text (the median case) is never
+ * decorated with a truncation mark it does not deserve.
+ *
+ * Newlines collapse to spaces because the picker row is a single line; the
+ * full, paragraph-preserving text is on the catalog screen.
+ */
+export function summariseItemDescription(
+  description: string,
+  maxChars: number = ITEM_PICKER_DESCRIPTION_MAX_CHARS
+): string {
+  const flat = description.replace(/\s+/g, ' ').trim();
+  if (flat.length <= maxChars) return flat;
+
+  const cut = flat.slice(0, maxChars);
+  const lastSpace = cut.lastIndexOf(' ');
+  // A single word longer than the bound has no boundary to cut on; hard-cut
+  // it rather than returning the whole thing and defeating the bound.
+  const trimmed = (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.]+$/, '');
+  return `${trimmed}…`;
+}
+
 export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[]): ItemPickerEntry[] {
-  return entries.map((entry) => ({
-    key: entry.key,
-    name: entry.name,
+  return entries.map((entry) => {
     // Unknown/future categories fall back to the raw variant string verbatim
     // rather than a fabricated label.
-    detail: EQUIPMENT_CATEGORY_LABELS[entry.category] ?? entry.category,
-  }));
+    const category = EQUIPMENT_CATEGORY_LABELS[entry.category] ?? entry.category;
+    // The corpus `DESC:` prose the Rust adapter already renders. Until this
+    // hop existed the field crossed the IPC boundary and was read by nothing,
+    // so a player picking equipment saw a bare category label and had no way
+    // to tell a Longsword from a Longspear except by name.
+    //
+    // `null`/blank stays absent: the detail line is then exactly what it was
+    // before, not a category followed by a dangling separator.
+    const description =
+      typeof entry.description === 'string' && entry.description.trim().length > 0
+        ? summariseItemDescription(entry.description)
+        : null;
+
+    return {
+      key: entry.key,
+      name: entry.name,
+      detail: description === null ? category : `${category} · ${description}`,
+    };
+  });
 }
 
 export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPickerEntry[] {
@@ -114,7 +191,52 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
       .filter((part): part is string => Boolean(part))
       .join(' · '),
     chooserTargetKind: entry.chooserTargetKind,
+    // `eligibility` is absent on the character-less `listFeats` response,
+    // which leaves every row selectable — the previous behaviour, unchanged,
+    // for the browse surfaces that have no character to check against.
+    disabled: entry.eligibility ? !entry.eligibility.eligible : undefined,
+    disabledReason: entry.eligibility?.unavailableReason ?? undefined,
+    unverifiedNote:
+      entry.eligibility && entry.eligibility.eligible && entry.eligibility.unverified.length > 0
+        ? entry.eligibility.unverified.join('; ')
+        : undefined,
   }));
+}
+
+/**
+ * One sentence describing what the Add Feat picker actually serves, derived
+ * from the catalog response itself.
+ *
+ * The Feats tab's caption used to read *"Add feats from the real CRB feat
+ * catalog."* — true when `feat_catalog.rs` served CRB alone, and false from
+ * the moment APG, ACG, ARG and PU landed: the catalog serves 690 feats across
+ * 5 books, and 204 of them (ARG's 187 and PU's 17) sat behind a caption
+ * telling the player they were not there.
+ *
+ * The point of deriving it is that the replacement cannot rot the same way. A
+ * sixth book's feats change this sentence by being in the response, with
+ * nobody editing a string. `FEAT_SOURCE_LABELS` is reused so the caption names
+ * books exactly as the picker's own rows label them, and an unknown/future
+ * book falls back to its raw `RuleSetId` variant rather than being dropped
+ * from the count of books.
+ *
+ * Returns `null` for an empty response — the catalog failed to load or is
+ * genuinely empty, and a caption is not the place to guess which.
+ */
+export function describeFeatCatalogCoverage(entries: readonly FeatCatalogEntryDto[]): string | null {
+  if (entries.length === 0) {
+    return null;
+  }
+  const books: string[] = [];
+  for (const entry of entries) {
+    const label = FEAT_SOURCE_LABELS[entry.source] ?? entry.source;
+    if (!books.includes(label)) {
+      books.push(label);
+    }
+  }
+  const bookWord = books.length === 1 ? 'book' : 'books';
+  const featWord = entries.length === 1 ? 'feat' : 'feats';
+  return `Add feats from the real feat catalog: ${entries.length} ${featWord} across ${books.length} ${bookWord} (${books.join(', ')}).`;
 }
 
 /** Case-insensitive substring match against either the name or the detail line. */

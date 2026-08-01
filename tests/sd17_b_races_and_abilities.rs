@@ -24,11 +24,17 @@ use std::path::PathBuf;
 use codex::pcgen_import::lst_parser::race_ability::LstDiagnosticKind;
 use codex::pcgen_import::lst_parser::{AbilityKind, parse_lst_entry};
 
+/// `PCGEN_CORPUS_ROOT` wins when set; otherwise
+/// `$HOME/workspace/repos/pcgen/data` — HOME-relative because the operator
+/// keeps `workspace/` in the home directory and syncs it between machines.
+/// Rust does not expand `~`, so `$HOME` is read via `std::env::var_os`.
 fn corpus_root() -> Option<PathBuf> {
     let configured = std::env::var_os("PCGEN_CORPUS_ROOT").map(PathBuf::from);
-    let default = PathBuf::from("/home/ubuntu/workspace/repos/pcgen/data");
+    let default = std::env::var_os("HOME")
+        .filter(|home| !home.is_empty())
+        .map(|home| PathBuf::from(home).join("workspace/repos/pcgen/data"));
     configured
-        .or_else(|| default.is_dir().then_some(default))
+        .or_else(|| default.filter(|path| path.is_dir()))
         .filter(|path| path.is_dir())
 }
 

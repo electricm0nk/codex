@@ -37,5 +37,25 @@
 //! "no established schema, high hallucination risk" exclusion. Not
 //! attempted here; see this cycle's own report for the full reasoning.
 
+// This module tree is now reached ONLY through the library crate.
+//
+// `src/bin/sd27_gen_book_cache.rs` used to pull this `mod.rs` in with
+// `#[path]`, a workaround from a cycle that could not touch
+// `rules_tables/mod.rs`; that file's own doc comment invited a later cycle
+// to undo it once `pub mod pathfinder_unchained;` existed there. It does,
+// so the binary now imports `codex::rules_core::rules_tables::pathfinder_unchained`
+// like every other consumer. That removal is what lets `class_chassis`
+// below use `crate::rules_core::...` paths at all -- under `#[path]` into a
+// binary crate there is no `crate::rules_core` to resolve.
+//
+// The four class-feature modules' `#[allow(dead_code)]` went with it: they
+// are ordinary `pub` items on the library's public surface, so the lint
+// never applied through this path, and the allow only ever existed to
+// silence the binary-crate copy.
+pub mod barbarian_features;
+pub mod class_chassis;
 pub mod equipment_tables;
 pub mod feat_tables;
+pub mod monk_features;
+pub mod rogue_features;
+pub mod summoner_features;

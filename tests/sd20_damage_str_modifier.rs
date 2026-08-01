@@ -13,7 +13,7 @@
 //! Builds a corpus from real, verbatim tokens copied from
 //! `core_rulebook/cr_equip_arms_armor.lst` — confirmed directly against
 //! the live corpus at
-//! `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst`:
+//! `$HOME/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst`:
 //! `KEY:Longsword (Base)` (line 165) carries `WIELD:OneHanded`,
 //! `KEY:Dagger (Base)` (line 142) carries `WIELD:Light`, `KEY:Longspear
 //! (Base)` (line 151) carries `WIELD:TwoHanded`. `KEY:Leather Armor

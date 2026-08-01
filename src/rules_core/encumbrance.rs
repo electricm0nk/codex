@@ -23,7 +23,7 @@
 //!
 //! It *is*, however, available in machine-readable form in the same PCGen
 //! checkout the ingested corpus comes from, as game-mode system data:
-//! `/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`.
+//! `$HOME/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`.
 //! That file is the authoritative source for this module:
 //!
 //!  - `LOAD:<Strength>|<value>` (lines 10-38) gives the *heavy* maximum for

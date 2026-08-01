@@ -42,6 +42,7 @@
 //! spells/equipment/feats layered onto existing classes/races), so unlike
 //! `rules_tables::acg::mod`, there is no `class_chassis_resolve` here.
 
+pub mod class_spell_levels;
 pub mod equipment_data;
 pub mod equipment_tables;
 pub mod feat_data;

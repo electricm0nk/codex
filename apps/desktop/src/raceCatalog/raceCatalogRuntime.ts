@@ -6,11 +6,11 @@ import { hasTauriRuntime } from '../boundary/runtime';
  * `classCatalog/classCatalogRuntime.ts` convention. */
 function buildPreviewCatalog(): RaceCatalogEntryDto[] {
   return [
-    { raceId: 'Human', traitName: 'Ability Bonus', value: 0, detail: 'Player-chosen +2 to any one ability score.' },
-    { raceId: 'Human', traitName: 'Speed', value: 30, detail: '30 ft base land speed.' },
-    { raceId: 'Dwarf', traitName: 'Stonecunning', value: 2, detail: '+2 Perception to notice unusual stonework.' },
-    { raceId: 'Elf', traitName: 'Keen Senses', value: 2, detail: '+2 Perception skill checks.' },
-    { raceId: 'Halfling', traitName: 'Sure-Footed', value: 2, detail: '+2 Acrobatics and Climb skill checks.' },
+    { raceId: 'Human', traitName: 'Ability Bonus', value: 0, detail: 'Player-chosen +2 to any one ability score.', book: 'CRB' },
+    { raceId: 'Human', traitName: 'Speed', value: 30, detail: '30 ft base land speed.', book: 'CRB' },
+    { raceId: 'Dwarf', traitName: 'Stonecunning', value: 2, detail: '+2 Perception to notice unusual stonework.', book: 'CRB' },
+    { raceId: 'Elf', traitName: 'Keen Senses', value: 2, detail: '+2 Perception skill checks.', book: 'CRB' },
+    { raceId: 'Halfling', traitName: 'Sure-Footed', value: 2, detail: '+2 Acrobatics and Climb skill checks.', book: 'CRB' },
   ];
 }
 

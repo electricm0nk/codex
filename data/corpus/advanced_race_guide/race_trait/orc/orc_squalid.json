@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Orc ~ Squalid",
+    "name": "Squalid",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Orc_ReplaceFerocity"
+    ],
+    "description": "Some orcs exist in surroundings so filthy and pestilent that even other orcs would have difficulty living in them. Orcs with this racial trait gain a +2 racial bonus on saving throws made to resist nausea, the sickened condition, and disease. This racial trait replaces ferocity.",
+    "source_page": "p.139",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Squalid"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Orc ~ Squalid],[!PREFACT:1,ABILITIES,Orc_ReplaceFerocity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some orcs exist in surroundings so filthy and pestilent that even other orcs would have difficulty living in them. Orcs with this racial trait gain a +2 racial bonus on saving throws made to resist nausea, the sickened condition, and disease."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces ferocity.|!PREABILITY:1,CATEGORY=Special Ability,Orc ~ Squalid"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial bonus on saving throws made to resist nausea, the sickened condition, and disease."
+      },
+      {
+        "key": "FACT",
+        "value": "Orc_ReplaceFerocity|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_Disease,SaveBonus_vs_NauseatedCondition,SaveBonus_vs_SickenedCondition",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 602,
+    "record_key": "Orc ~ Squalid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -80,7 +80,7 @@ fn conjuration_school_spell_count_matches_real_corpus() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };
@@ -115,7 +115,7 @@ fn every_conjuration_spell_resolves_and_reaches_school_coverage() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };

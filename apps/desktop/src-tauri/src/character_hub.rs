@@ -12,6 +12,7 @@
 //! today; every other class/level combination returns real claim-blocking
 //! diagnostics from the engine, verbatim.
 
+use std::collections::BTreeMap;
 use std::path::{Path, PathBuf};
 
 use base64::Engine as _;
@@ -30,7 +31,8 @@ use codex::rules_core::level_up::{compute_level_up_grants_for_class, LevelUpPlan
 use codex::rules_core::money;
 use codex::rules_core::pilot_compute::{
     ability_modifier, apply_human_ability_bonus, build_pilot_headless_receipt,
-    ComputationExplanation, HeadlessReceiptStatus,
+    race_alternate_trait_selection_id, ComputationExplanation, HeadlessReceiptStatus,
+    RACE_ALTERNATE_TRAIT_CHOICE_ID, RACE_ALTERNATE_TRAIT_SELECTION_PREFIX,
 };
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
@@ -362,6 +364,25 @@ pub struct CreateCharacterRequest {
     pub ability_scores: AbilityScoresDto,
     pub ability_bonus_target: String,
     pub saved_at: String,
+    /// The ARG alternate racial traits the player chose for this race, as
+    /// corpus record keys (`"Dwarf ~ Saltbeard"`) — exactly the keys
+    /// `race_trait_picker`'s `listAlternateRacialTraits` /
+    /// `resolveRaceAlternateSelection` commands emit and take, so the picker
+    /// round-trips its own identifiers unchanged.
+    ///
+    /// SD-27: before this field, ARG's 153 alternate racial traits were
+    /// browse-only — the picker resolved a swap live and correctly, and then
+    /// had nowhere to send it, because `CreateCharacterRequest` had no field
+    /// for a selection and `ChosenCharacterState` therefore never received
+    /// one. `#[serde(default)]` so a caller that sends no selection (and every
+    /// pre-existing saved payload) keeps working unchanged.
+    ///
+    /// Validated at creation against the real on-disk corpus by
+    /// [`resolve_alternate_trait_choices`] — an unknown key, a key belonging to
+    /// another race, or a pair that violates ARG's own `PREMULT` mutual-
+    /// exclusion guard blocks the save rather than being silently dropped.
+    #[serde(default)]
+    pub selected_alternate_trait_keys: Vec<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -461,6 +482,35 @@ pub struct LoadSavedCharacterResponse {
     /// would be needed to build one honestly is unknown. The sheet
     /// renders the breakdown as separate columns; it does not add them up.
     pub weapon_damage: Vec<WeaponDamageDto>,
+    /// The ARG alternate racial traits this character actually holds, read back
+    /// out of its persisted `chosen.selected_choices` (SD-27).
+    ///
+    /// Same shape of gap, and same fix, as `selected_feats` and
+    /// `spells_selected`: without this the frontend has no way to know a loaded
+    /// character's racial-trait choices, so the picker would reopen empty and
+    /// the sheet would show a Dwarf with darkvision 90 and no reason why.
+    pub selected_alternate_trait_keys: Vec<String>,
+    /// **This character's racial traits, resolved and rendered for *it*.**
+    ///
+    /// [`selected_alternate_trait_keys`](Self::selected_alternate_trait_keys)
+    /// carries the choice; this carries what the choice *says*. Without it the
+    /// sheet could name a trait and never state what it does — which is exactly
+    /// what it did: one name-only card per chosen key, with the prose, the
+    /// magnitudes, and the standard trait each one replaced all absent.
+    ///
+    /// Produced by [`resolve_racial_traits_for_character`], which calls
+    /// `race_trait_picker::build_race_selection_for_feats` — the **same**
+    /// renderer the Race Traits picker screen consumes, against the same
+    /// corpus. `decisions.md §29.1`'s rule is one renderer with several
+    /// consumers; this field is another consumer, not another renderer.
+    ///
+    /// `appliedTraits[].description`, `renderedTraitDescriptions[].text` and
+    /// `displayValueFeats` are all rendered against **this character's own
+    /// persisted `selected_feats`**, so a Halfling holding ARG's `Fortunate
+    /// One` reads "4 times per day" where the book prints three. Render them
+    /// verbatim: they are corpus prose with the engine's numbers resolved into
+    /// it, not text to paraphrase.
+    pub resolved_racial_traits: crate::race_trait_picker::RaceSelectionResponse,
 }
 
 /// Wire form of `pilot_compute::ComputationExplanation`.
@@ -690,8 +740,9 @@ pub(crate) use crate::pf1_adapter::{
 // `use super::*` resolving them inside `mod tests` unchanged.
 #[cfg(test)]
 pub(crate) use crate::pf1_adapter::{
-    apply_add_equipment_selection, apply_add_feat_selection, apply_add_spell_selection,
-    apply_level_up, apply_record_and_prepare_spell_selection, apply_set_skill_allocations,
+    apply_add_equipment_selection, apply_add_feat_selection, apply_add_feat_selection_with_target,
+    apply_add_spell_selection, apply_level_up, apply_record_and_prepare_spell_selection,
+    apply_set_skill_allocations, resolve_feat_target_choice,
 };
 
 /// Join the OS app-data directory with the characters-root subdirectory.
@@ -1012,7 +1063,10 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
         op: SavedCharacterMutationOp::AddFeatSelection,
         name: "add_feat_selection",
         description: "Appends an entry to chosen.selected_feats, then \
-            recomputes and re-saves.",
+            recomputes and re-saves. SD-27: refuses first when the \
+            character does not meet the feat's real corpus prerequisites, \
+            naming the unmet ones -- see \
+            add_feat_selection_enforcing_prerequisites_at_root.",
         wired: true,
     },
     SavedCharacterMutationOpDescriptor {
@@ -1048,12 +1102,170 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
 /// `money.json` uninitialized -- the existing "no file yet" convention
 /// already means a 0 balance, so this never fabricates a value for a class
 /// this table doesn't cover.
+/// Turns a creation request's chosen alternate racial traits into the
+/// `SelectedChoice` entries the engine reads, or into blocking diagnostics.
+///
+/// **Validation is the real picker's, not a second opinion.** Everything here
+/// comes from one `race_trait_picker::build_race_selection` call — the same
+/// command the picker screen drives, which itself calls `RaceCorpus::resolve`,
+/// the single implementation of `decisions.md §26`'s protocol. This function
+/// decides nothing about which traits are legal together; it only refuses to
+/// persist a selection the resolver already reported a problem with.
+///
+/// Four ways a selection is refused, each with the resolver's own finding
+/// carried verbatim rather than paraphrased:
+///
+/// * the race is not in the loaded corpus (`errors`),
+/// * a key matches no alternate for that race — a typo, or a trait belonging to
+///   a different race (`unmatchedSelections`),
+/// * two chosen alternates violate each other's ARG `PREMULT` self-exclusion
+///   guard (`conflictingSelections`),
+/// * a chosen alternate's replace-flag suppresses and grants nothing in the
+///   loaded books (`inertFlags`) — the standard trait it claims to replace
+///   would silently stay, so the character would quietly get both. That is the
+///   9-Aasimar-alternate upstream gap `race_trait_picker` documents; refusing
+///   the save is the honest answer until the `globalvar` files are ingested.
+///
+/// Refusing rather than dropping matters: a silently-ignored selection is
+/// exactly the failure `unresolved_spell_ids` / `unresolved_equipment_item_ids`
+/// were both added to stop.
+fn resolve_alternate_trait_choices(
+    race_id: &str,
+    selected_alternate_trait_keys: &[String],
+) -> Result<Vec<SelectedChoice>, Vec<DiagnosticDto>> {
+    if selected_alternate_trait_keys.is_empty() {
+        return Ok(Vec::new());
+    }
+
+    let resolution = crate::race_trait_picker::build_race_selection(&crate::race_trait_picker::RaceSelectionRequest {
+        race_key: race_id.to_owned(),
+        selected_alternate_keys: selected_alternate_trait_keys.to_vec(),
+    });
+
+    let mut diagnostics: Vec<DiagnosticDto> = Vec::new();
+    for error in &resolution.errors {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.unresolved_race".to_owned(),
+            message: error.clone(),
+            claim_blocking: true,
+        });
+    }
+    for key in &resolution.unmatched_selections {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.unmatched_selection".to_owned(),
+            message: format!(
+                "alternate racial trait {key:?} matches no ARG alternate for race {race_id:?}; \
+                 nothing was replaced, so the character was not saved"
+            ),
+            claim_blocking: true,
+        });
+    }
+    for conflict in &resolution.conflicting_selections {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.mutually_exclusive".to_owned(),
+            message: format!(
+                "{} and {} cannot both be taken: ARG's own PREMULT self-exclusion guard on {} \
+                 names {}, which {} sets (arg_abilities_race.lst)",
+                conflict.name, conflict.blocked_by_name, conflict.name, conflict.flag,
+                conflict.blocked_by_name
+            ),
+            claim_blocking: true,
+        });
+    }
+    for flag in &resolution.inert_flags {
+        diagnostics.push(DiagnosticDto {
+            id: "race.alternate_trait.inert_flag".to_owned(),
+            message: format!(
+                "the chosen alternate racial trait fires replace-flag {flag}, which suppresses \
+                 and grants nothing in the loaded books, so the standard trait it claims to \
+                 replace would still apply and the character would hold both; refused rather \
+                 than saved with a swap that did not happen"
+            ),
+            claim_blocking: true,
+        });
+    }
+
+    if !diagnostics.is_empty() {
+        return Err(diagnostics);
+    }
+
+    Ok(selected_alternate_trait_keys
+        .iter()
+        .map(|key| SelectedChoice {
+            choice_set_id: RACE_ALTERNATE_TRAIT_CHOICE_ID.to_owned(),
+            selection_id: race_alternate_trait_selection_id(key),
+        })
+        .collect())
+}
+
+/// Every alternate racial trait key a saved character holds, read back out of
+/// its persisted `selected_choices` in selection order.
+///
+/// The read half of the round-trip: `load_saved_character` needs it so the
+/// sheet and the picker can show a loaded character's real choices instead of
+/// re-deriving them (the gap `selected_feats` and `spells_selected` were each
+/// added to close).
+/// One saved character's racial traits, resolved against its own choices and
+/// **rendered against its own feats**.
+///
+/// The sibling of [`resolve_alternate_trait_choices`], and deliberately a
+/// different call. That one validates whether a *selection* is legal, which is
+/// a race-and-selection question a feat cannot change, so it passes no feats
+/// and must keep passing none — `build_race_selection`'s own doc records that
+/// contract. This one answers a different question: what does this character's
+/// sheet *say*. A trait's stated magnitude does move with the feats it holds
+/// (`Halfling ~ Adaptable Luck` reads "three times per day" in the book and
+/// "4 times per day" for a halfling with ARG's `Fortunate One`), so this call
+/// hands over `chosen.selected_feats` verbatim.
+///
+/// **No rendering happens here.** `race_trait_picker::render_trait_description`
+/// is the single renderer (`decisions.md §29.1`); this function only routes a
+/// saved character's real race id, real selections and real feats into it. The
+/// race id crosses as-is — `RaceCorpus::resolve_key` is prefix- and
+/// case-tolerant, so `race:half-elf` reaches the same record as `Half-Elf`
+/// without this module inventing a mapping.
+///
+/// An unknown race yields a response carrying `errors`, never a silently empty
+/// trait list: a sheet showing no racial traits at all must be able to say why.
+pub(crate) fn resolve_racial_traits_for_character(
+    input: &CharacterInput,
+) -> crate::race_trait_picker::RaceSelectionResponse {
+    crate::race_trait_picker::build_race_selection_for_feats(
+        &crate::race_trait_picker::RaceSelectionRequest {
+            race_key: input.chosen.race_id.clone(),
+            selected_alternate_keys: read_alternate_trait_keys(input),
+        },
+        &input.chosen.selected_feats,
+    )
+}
+
+pub(crate) fn read_alternate_trait_keys(input: &CharacterInput) -> Vec<String> {
+    input
+        .chosen
+        .selected_choices
+        .iter()
+        .filter(|choice| choice.choice_set_id == RACE_ALTERNATE_TRAIT_CHOICE_ID)
+        .map(|choice| {
+            choice
+                .selection_id
+                .strip_prefix(RACE_ALTERNATE_TRAIT_SELECTION_PREFIX)
+                .unwrap_or(choice.selection_id.as_str())
+                .to_owned()
+        })
+        .collect()
+}
+
 pub(crate) fn create_character_at_root(
     root: &Path,
     request: &CreateCharacterRequest,
     app_version: String,
 ) -> Result<CreateCharacterResponse, String> {
-    let character_input = compose_character_input(request);
+    let mut character_input = compose_character_input(request);
+    match resolve_alternate_trait_choices(&request.race_id, &request.selected_alternate_trait_keys) {
+        Ok(choices) => character_input.chosen.selected_choices.extend(choices),
+        Err(diagnostics) => return Ok(CreateCharacterResponse::Blocked { diagnostics }),
+    }
+    let character_input = character_input;
 
     let (snapshot, corpus_receipt) =
         match resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle()) {
@@ -1215,6 +1427,10 @@ pub fn seed_default_character_if_needed(app: &tauri::AppHandle) -> Result<(), St
         },
         ability_bonus_target: "strength".to_owned(),
         saved_at: DEFAULT_CHARACTER_SAVED_AT.to_owned(),
+        // The starter character takes no alternate racial trait: it is a plain
+        // Human Fighter, and seeding a swap nobody chose would be exactly the
+        // fabricated-default this file's other seeds are each argued down to.
+        selected_alternate_trait_keys: Vec::new(),
     };
 
     let character_input = compose_character_input(&request);
@@ -1309,6 +1525,8 @@ pub(crate) fn load_saved_character_at_root(
         chosen_feat_targets: map_chosen_feat_targets_dto(&envelope.character_input),
         explanations,
         weapon_damage,
+        selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
+        resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
     })
 }
 
@@ -1672,8 +1890,20 @@ pub(crate) fn purchase_equipment_at_root(
     active_state: ActiveState,
     saved_at: &str,
 ) -> Result<PurchaseEquipmentResponse, String> {
+    // SD-27: the Add Weapon / Add Armor picker hands this command a catalog
+    // `key` straight off `build_equipment_catalog()`, so the by-key lookup
+    // is tried first -- it names the exact row the user picked, including
+    // for the one cross-book identity collision (`"Wooden"`) where the
+    // free-form resolver deliberately keeps CRB's answer. The free-form
+    // resolver remains the fallback for ids that are not catalog keys at
+    // all, notably the legacy `"item:longsword"` fixture namespace that
+    // seeded characters still carry.
     let Some(cost_gp) =
-        codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id)
+        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(item_id)
+            .map_or_else(
+                || codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(item_id),
+                |row| row.cost_gp,
+            )
     else {
         return Ok(PurchaseEquipmentResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
@@ -1744,10 +1974,34 @@ pub enum AttachEquipmentModifierResponse {
 /// -> mutate -> charge sequencing, with two deliberate differences:
 ///
 /// 1. **Validates `modifier_item_id` against the real equipment catalog
-///    first** (`equipment_tables()`, the same check
-///    `append_to_character_at_root` already runs), before any cost or
-///    target-selection check -- a typo'd or fabricated modifier id must
-///    never silently attach.
+///    first**, before any cost or target-selection check -- a typo'd or
+///    fabricated modifier id must never silently attach.
+///
+///    **SD-27 dead-affordance fix.** This check read
+///    `crb::equipment_tables()` alone while the Attach Modifier picker that
+///    feeds it is served by `build_equipment_catalog()`, which has spanned
+///    all six ingested books since the catalog widening. The picker offered
+///    763 `Equipmods` rows and this command accepted only CRB's 658, so
+///    **105 rows (ACG 48, ARG 15, PU 42) were offered and then refused**
+///    with "is not a recognized equipment catalog item" -- the exact dead
+///    affordance `docs/governance/no-stub-mvp-doctrine.md` forbids.
+///    Recognition now runs against
+///    `equipment_resolver::equipment_catalog_row_by_key`, the same six-book
+///    row set the picker is built from.
+///
+///    **Recognition and price come from one lookup, deliberately.** 20 of
+///    those 105 refused rows carry a real, non-zero flat price (ACG's
+///    4,500 gp `Amorphous`, ARG's 500 gp `Material ~ Whipwood`, ...).
+///    Widening recognition while leaving the CRB-only cost path in place
+///    would have attached those for free -- silent mispricing, strictly
+///    worse than an honest refusal. So the single `equipment_catalog_row_by_key`
+///    call below supplies **both** answers from the same row, which is
+///    also what makes them impossible to drift apart. It is not
+///    interchangeable with `equipment_cost_gp_headless_resolve` here:
+///    the picker hands this command a catalog `key`, and for the one
+///    genuine cross-book identity collision (`"Wooden"` is APG's `KEY:`
+///    at 20 gp and a CRB row's `name` at 1 gp) only the by-key lookup
+///    answers with the row the user actually picked.
 /// 2. **An unknown `cost_gp` is treated as free to attach, not blocked** --
 ///    a deliberate deviation from `purchase_equipment_at_root`'s own
 ///    "unknown cost = blocked, same as unaffordable" rule. Checked against
@@ -1772,10 +2026,9 @@ pub(crate) fn attach_equipment_modifier_at_root(
     modifier_item_id: &str,
     saved_at: &str,
 ) -> Result<AttachEquipmentModifierResponse, String> {
-    let is_known_modifier = codex::rules_core::rules_tables::crb::equipment_tables::equipment_tables()
-        .iter()
-        .any(|entry| entry.key == modifier_item_id);
-    if !is_known_modifier {
+    let Some(modifier_row) =
+        codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(modifier_item_id)
+    else {
         return Ok(AttachEquipmentModifierResponse::Blocked {
             diagnostics: vec![DiagnosticDto {
                 id: "equipment.attach_modifier.unknown_item".to_owned(),
@@ -1786,7 +2039,7 @@ pub(crate) fn attach_equipment_modifier_at_root(
                 claim_blocking: true,
             }],
         });
-    }
+    };
 
     let envelope = codex::saved_character::local_store::SavedCharacterStore::load(root)
         .map_err(|err| err.message)?;
@@ -1809,11 +2062,12 @@ pub(crate) fn attach_equipment_modifier_at_root(
         });
     }
 
-    let cost_copper =
-        match codex::rules_core::equipment_resolver::equipment_cost_gp_headless_resolve(modifier_item_id) {
-            Some(cost_gp) => money::gp_to_copper(cost_gp),
-            None => 0,
-        };
+    // Same row that satisfied recognition above -- see this function's doc
+    // comment for why price must not come from a second, independent lookup.
+    let cost_copper = match modifier_row.cost_gp {
+        Some(cost_gp) => money::gp_to_copper(cost_gp),
+        None => 0,
+    };
 
     if cost_copper > 0 {
         let balance_copper = load_character_money_at_root(root)?.total_copper;
@@ -2025,18 +2279,551 @@ pub struct AddFeatSelectionRequest {
 /// Loads the saved character, appends the requested feat selection,
 /// recomputes via the real engine, and re-saves — see
 /// `add_feat_selection_at_root` for the full semantics.
+///
+/// **SD-27: this now refuses a feat whose real corpus prerequisites the
+/// character does not meet.** See
+/// `add_feat_selection_enforcing_prerequisites_at_root`.
 #[tauri::command]
 pub fn add_feat_selection(
     app: tauri::AppHandle,
     request: AddFeatSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    add_feat_selection_at_root(
+    add_feat_selection_enforcing_prerequisites_at_root(
         &root,
         &request.feat_id,
         request.target.as_deref(),
         &request.saved_at,
     )
+}
+
+// ---------------------------------------------------------------------------
+// SD-27: feat prerequisite enforcement
+// ---------------------------------------------------------------------------
+//
+// There was no feat prerequisite enforcement anywhere in the product: a
+// Fighter 1 with a +1 base attack bonus could take Improved Two-Weapon
+// Fighting (BAB +6, Dex 17, Two-Weapon Fighting), and all 690 offered feats
+// were accepted by every character. The engine side is
+// `codex::rules_core::feat_prereqs`; these two seams are how it reaches a
+// player.
+//
+// Both seams exist deliberately, and neither replaces the other:
+//
+//  * `list_feats_for_character` is the *honest UI*: it returns all 690
+//    records with a verdict on each, so the picker greys the unavailable
+//    ones and shows the reason. Removing them from the list instead would
+//    hide the rules from the player.
+//  * `add_feat_selection_enforcing_prerequisites_at_root` is the *guard*:
+//    the mutation itself refuses. Without it the check would be advisory —
+//    any caller that skipped the picker (a level-up grant, a replayed
+//    command, a future importer) could still write an illegal character to
+//    disk.
+
+/// Builds the prerequisite fact snapshot for the character saved at `root`.
+///
+/// The base attack bonus comes from the engine's own computed chassis
+/// (`corpus_receipt.base.base_attack_bonus`) rather than being re-derived
+/// here, so a Fighter, an Unchained Rogue and an ACG Warpriest all get the
+/// number their own class chassis produced. `base` is used rather than the
+/// unified snapshot because it is computed even for a build whose
+/// deterministic posture is blocked — a character whose sheet cannot fully
+/// compute must still get truthful feat prerequisites rather than a
+/// silently-zero BAB.
+pub(crate) fn character_prereq_facts_at_root(
+    root: &Path,
+) -> Result<
+    (
+        codex::saved_character::SavedCharacterEnvelope,
+        codex::rules_core::feat_prereqs::pre_tokens::CharacterPrereqFacts,
+    ),
+    String,
+> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let receipt = compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+    let facts = codex::rules_core::feat_prereqs::character_prereq_facts(
+        &envelope.character_input,
+        receipt.base.base_attack_bonus,
+    );
+    Ok((envelope, facts))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListFeatsForCharacterRequest {
+    pub character_id: String,
+    /// The same optional narrowing `list_feats` takes. Omitted/`null`
+    /// fields match everything.
+    #[serde(default)]
+    pub filter: crate::feat_catalog::FeatCatalogFilter,
+}
+
+/// The feat catalog with each record's real prerequisite verdict for this
+/// character attached.
+///
+/// Serves **all 690 records**, ineligible ones included and marked, because
+/// the requirement is that an unavailable feat is *visibly* unavailable
+/// with its reason — not that it disappears. A picker that silently dropped
+/// the rows would tell a player nothing about why their build cannot take
+/// Improved Two-Weapon Fighting.
+#[tauri::command]
+pub fn list_feats_for_character(
+    app: tauri::AppHandle,
+    request: ListFeatsForCharacterRequest,
+) -> Result<crate::feat_catalog::FeatCatalogResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    list_feats_for_character_at_root(&root, &request.filter)
+}
+
+/// The real body of `list_feats_for_character`, split from the
+/// `AppHandle`-taking command so it is directly testable against a temp-dir
+/// character root — this module's established `*_at_root` convention.
+pub(crate) fn list_feats_for_character_at_root(
+    root: &Path,
+    filter: &crate::feat_catalog::FeatCatalogFilter,
+) -> Result<crate::feat_catalog::FeatCatalogResponse, String> {
+    let (_, facts) = character_prereq_facts_at_root(root)?;
+    Ok(crate::feat_catalog::filter_feat_catalog_with_eligibility(filter, &facts))
+}
+
+/// `add_feat_selection_at_root`, refusing first when the character does not
+/// meet the feat's real corpus prerequisites.
+///
+/// Three deliberate properties:
+///
+/// * **Only a definitively unmet prerequisite refuses.** A clause the
+///   engine cannot evaluate is reported by the picker and does not block
+///   here either, so an unmodelled `PRE` kind can never lock a player out
+///   of a feat they are entitled to.
+/// * **A feat id with no catalog record is passed through untouched.**
+///   `chosen.selected_feats` legitimately holds ids this catalog does not
+///   carry (engine-seeded tokens for content outside the five ingested
+///   books). Refusing those would break existing characters over a lookup
+///   miss rather than over a rule.
+/// * **The error names the reason.** A refusal a player cannot act on is
+///   as bad as no refusal at all.
+pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
+    root: &Path,
+    feat_id: &str,
+    target: Option<&str>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let (_, facts) = character_prereq_facts_at_root(root)?;
+    if let Some(report) =
+        codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts)
+    {
+        if let Some(reason) = report.unavailable_reason() {
+            return Err(format!(
+                "'{}' cannot be taken by this character: {reason}",
+                report.feat_key
+            ));
+        }
+    }
+    add_feat_selection_at_root(root, feat_id, target, saved_at)
+}
+
+// ---------------------------------------------------------------------------
+// Selection removal (the inverse of the three add paths above)
+// ---------------------------------------------------------------------------
+//
+// Every selection command in this module was append-only: a character sheet
+// could take a feat, learn a spell or buy a weapon and then had no way to
+// undo any of it short of hand-editing the saved JSON. The three functions
+// below are the missing inverses, each built on the SAME
+// `mutate_saved_character_at_root` load -> mutate -> recompute -> re-save
+// spine its add-path twin uses, so a removal that leaves the build unable to
+// compute is discarded exactly like an add that does — the on-disk character
+// is never left holding a stale computed value.
+//
+// Deliberately NOT built here: post-creation alternate racial trait removal.
+// Alternate racial traits have no post-creation *add* path either
+// (`selected_alternate_trait_keys` is a `create_character` field, resolved
+// once by `resolve_alternate_trait_choices`); adding only the remove half
+// would give the sheet a one-way door in the other direction. See this
+// module's `read_alternate_trait_keys`.
+
+/// Removes one held copy of `feat_id` from `chosen.selected_feats`, plus the
+/// chooser target that copy recorded.
+///
+/// Returns `false` without mutating when the character does not hold the
+/// feat — the caller turns that into an honest error rather than a
+/// `Saved` response for a removal that removed nothing.
+///
+/// Three details that are not arbitrary:
+///
+/// * **Matching is by [`feat_identity::same`], not string equality.**
+///   `selected_feats` really carries both shapes (`"Toughness"` from the
+///   picker, `"feat:toughness"` from creation seeding), and the same
+///   function `add_feat_selection_enforcing_prerequisites_at_root` matches
+///   with must be the one that unmatches, or a feat becomes unremovable
+///   purely because of which path added it.
+/// * **One copy, not all copies.** `selected_feats` is an append-only list
+///   that legitimately holds a chooser feat more than once (Weapon Focus in
+///   two weapons). Removing every copy on a request to remove one would
+///   silently discard a pick the player did not name.
+/// * **The last copy takes its orphaned targets with it.** Each chooser
+///   feat owns a distinct `choice_set_id`
+///   ([`feat_effects::CHOOSER_FEAT_CONTRACTS`]), so once no copy of the
+///   feat remains, every choice under that set belongs to nothing. Leaving
+///   them behind would show a target for a feat the character no longer
+///   has. When `target` names a specific one, only that choice goes and any
+///   remaining copies keep theirs.
+pub(crate) fn apply_remove_feat_selection(
+    character_input: &mut CharacterInput,
+    feat_id: &str,
+    target: Option<&str>,
+) -> bool {
+    use codex::rules_core::feat_identity;
+
+    let Some(index) = character_input
+        .chosen
+        .selected_feats
+        .iter()
+        .position(|held| feat_identity::same(held, feat_id))
+    else {
+        return false;
+    };
+    character_input.chosen.selected_feats.remove(index);
+
+    let Some(contract) = feat_effects::chooser_contract_for_feat(feat_id) else {
+        // Not a chooser feat: it never recorded a target, so there is
+        // nothing else to take with it.
+        return true;
+    };
+
+    let still_held = character_input
+        .chosen
+        .selected_feats
+        .iter()
+        .any(|held| feat_identity::same(held, feat_id));
+
+    if let Some(named) = target {
+        let selection_id = format!("{}{}", contract.selection_prefix, named.trim());
+        if let Some(choice_index) = character_input
+            .chosen
+            .selected_choices
+            .iter()
+            .position(|choice| {
+                choice.choice_set_id == contract.choice_set_id
+                    && choice.selection_id.eq_ignore_ascii_case(&selection_id)
+            })
+        {
+            character_input.chosen.selected_choices.remove(choice_index);
+        }
+    }
+
+    if !still_held {
+        character_input
+            .chosen
+            .selected_choices
+            .retain(|choice| choice.choice_set_id != contract.choice_set_id);
+    }
+
+    true
+}
+
+/// The feat whose own prerequisites this removal would break, and why.
+///
+/// Reuses `rules_core::feat_prereqs` rather than restating any rule: it
+/// evaluates every OTHER feat the character holds twice — once against the
+/// facts as they stand, once against the facts as they would stand after
+/// the removal — and reports the first feat that was eligible before and is
+/// definitively ineligible after.
+///
+/// The before/after comparison is the whole point. Evaluating only the
+/// "after" state would refuse removals for feats that were already failing
+/// their prerequisites before anyone touched anything (a character seeded
+/// with engine tokens outside the five ingested books, or one built before
+/// `add_feat_selection` enforced prerequisites at all), which would tell the
+/// player that removing feat A broke feat B when A had nothing to do with
+/// it. Only a regression caused *by this removal* refuses.
+///
+/// A feat with no catalog record is skipped in both passes, matching
+/// `add_feat_selection_enforcing_prerequisites_at_root`'s own decision that
+/// a lookup miss is not a rules verdict.
+pub(crate) fn feat_removal_dependency_refusal(
+    before: &CharacterInput,
+    after: &CharacterInput,
+) -> Option<String> {
+    use codex::rules_core::feat_prereqs::{
+        character_prereq_facts, evaluate_feat_key_prerequisites,
+    };
+
+    let facts_before = character_prereq_facts(
+        before,
+        compute_pilot_with_corpus(before, corpus_fixture_bundle())
+            .base
+            .base_attack_bonus,
+    );
+    let facts_after = character_prereq_facts(
+        after,
+        compute_pilot_with_corpus(after, corpus_fixture_bundle())
+            .base
+            .base_attack_bonus,
+    );
+
+    for dependent in &after.chosen.selected_feats {
+        let Some(report_after) = evaluate_feat_key_prerequisites(dependent, &facts_after) else {
+            continue;
+        };
+        if report_after.is_eligible {
+            continue;
+        }
+        let was_eligible = evaluate_feat_key_prerequisites(dependent, &facts_before)
+            .map(|report| report.is_eligible)
+            .unwrap_or(false);
+        if !was_eligible {
+            // Already failing before this removal — not this removal's doing.
+            continue;
+        }
+        let reason = report_after
+            .unavailable_reason()
+            .unwrap_or_else(|| "its prerequisites would no longer be met".to_owned());
+        return Some(format!(
+            "'{}' still depends on it: {reason}",
+            report_after.feat_key
+        ));
+    }
+
+    None
+}
+
+/// `remove_feat_selection`'s real implementation.
+///
+/// Order matters and is the mirror image of
+/// `add_feat_selection_enforcing_prerequisites_at_root`: the refusals happen
+/// *before* `mutate_saved_character_at_root` is entered, because that
+/// function takes an infallible closure — a rejected removal must surface as
+/// an `Err` here rather than as a silently-unchanged `Saved` envelope that
+/// tells the player the feat is gone when it is not.
+///
+/// Two refusals, both naming their reason:
+///
+/// * the character does not hold the feat at all, and
+/// * removing it would break another held feat's prerequisites
+///   (`feat_removal_dependency_refusal`).
+///
+/// Past those, `mutate_saved_character_at_root` supplies the same
+/// recompute-before-persist gate every add path has, so a removal that left
+/// the build unable to compute returns `Blocked` with the engine's own
+/// diagnostics and leaves the saved character untouched.
+pub(crate) fn remove_feat_selection_at_root(
+    root: &Path,
+    feat_id: &str,
+    target: Option<&str>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let before = envelope.character_input.clone();
+
+    let mut after = before.clone();
+    if !apply_remove_feat_selection(&mut after, feat_id, target) {
+        return Err(format!(
+            "'{feat_id}' cannot be removed: this character does not hold it"
+        ));
+    }
+
+    if let Some(dependency) = feat_removal_dependency_refusal(&before, &after) {
+        return Err(format!("'{feat_id}' cannot be removed: {dependency}"));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_remove_feat_selection(character_input, feat_id, target);
+    })
+}
+
+/// Removes every `chosen.spells_selected` entry for `spell_id` under
+/// `source_class_id`, in every acquisition mode.
+///
+/// Returns `false` without mutating when no entry matched.
+///
+/// **Every mode, not one.** `record_and_prepare_spell_selection` writes a
+/// `Known` and a `Prepared` entry for the same spell in one atomic
+/// mutation (see its doc comment), so removing only the `Known` half would
+/// leave the character with a spell prepared that they no longer know —
+/// a state the engine's own spellbook conditions treat as broken. "Forget
+/// this spell" is the honest inverse of the pair.
+pub(crate) fn apply_remove_spell_selection(
+    character_input: &mut CharacterInput,
+    spell_id: &str,
+    source_class_id: &str,
+) -> bool {
+    let before = character_input.chosen.spells_selected.len();
+    character_input.chosen.spells_selected.retain(|selection| {
+        !(selection.spell_id.eq_ignore_ascii_case(spell_id)
+            && selection.source_class_id.eq_ignore_ascii_case(source_class_id))
+    });
+    character_input.chosen.spells_selected.len() != before
+}
+
+/// `remove_spell_selection`'s real implementation — the same
+/// load -> mutate -> recompute -> re-save spine
+/// `add_spell_selection_at_root` uses.
+///
+/// A prepared caster whose last spell this would remove gets a `Blocked`
+/// response carrying the engine's own spellbook diagnostics, and the saved
+/// character is left exactly as it was. That is `mutate_saved_character_at_root`'s
+/// standing invariant, not a special case here: a Wizard with an empty
+/// spellbook does not compute, so it does not persist.
+pub(crate) fn remove_spell_selection_at_root(
+    root: &Path,
+    spell_id: &str,
+    source_class_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let mut probe = envelope.character_input.clone();
+    if !apply_remove_spell_selection(&mut probe, spell_id, source_class_id) {
+        return Err(format!(
+            "'{spell_id}' cannot be removed: this character has no {spell_id} recorded for \
+             {source_class_id}"
+        ));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_remove_spell_selection(character_input, spell_id, source_class_id);
+    })
+}
+
+/// Removes one `chosen.equipment_selections` entry for `item_id`, together
+/// with the equipmods applied to that entry.
+///
+/// Returns `false` without mutating when the character holds no such item.
+///
+/// **One entry, not all.** A character can legitimately carry two of the
+/// same item (two daggers, one of them with a `+1` equipmod attached);
+/// removing both on a request to remove one would discard a purchase the
+/// player did not name. The applied modifiers go with the entry they live
+/// on because that is where PCGen's `CUSTOMIZATION:EQMOD=` convention puts
+/// them — they have no independent selection of their own (see
+/// `apply_attach_equipment_modifier`).
+///
+/// **No refund.** Removal does not touch the persisted money balance.
+/// Selling equipment back is a real PF1 rule with a real rate (half price
+/// for most items) that nothing in this codebase models; crediting full
+/// price here would invent a rule, and crediting half would invent the
+/// half-price table's coverage. Dropping an item you already paid for is
+/// the truthful subset. The UI states this rather than leaving the player
+/// to discover it.
+pub(crate) fn apply_remove_equipment_selection(
+    character_input: &mut CharacterInput,
+    item_id: &str,
+) -> bool {
+    let Some(index) = character_input
+        .chosen
+        .equipment_selections
+        .iter()
+        .position(|selection| selection.item_id.eq_ignore_ascii_case(item_id))
+    else {
+        return false;
+    };
+    character_input.chosen.equipment_selections.remove(index);
+    true
+}
+
+/// `remove_equipment_selection`'s real implementation — the same
+/// load -> mutate -> recompute -> re-save spine
+/// `add_equipment_selection_at_root` uses.
+pub(crate) fn remove_equipment_selection_at_root(
+    root: &Path,
+    item_id: &str,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let mut probe = envelope.character_input.clone();
+    if !apply_remove_equipment_selection(&mut probe, item_id) {
+        return Err(format!(
+            "'{item_id}' cannot be removed: this character does not carry it"
+        ));
+    }
+
+    mutate_saved_character_at_root(root, saved_at, |character_input| {
+        apply_remove_equipment_selection(character_input, item_id);
+    })
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RemoveFeatSelectionRequest {
+    pub character_id: String,
+    pub feat_id: String,
+    /// Which recorded target this removal takes with the feat, without its
+    /// prefix — the same un-prefixed shape `AddFeatSelectionRequest.target`
+    /// takes, so a caller that added Weapon Focus (Longsword) removes it by
+    /// naming `"Longsword"` again.
+    ///
+    /// `None` removes one held copy and, if it was the last, every target
+    /// that copy's chooser set still held.
+    #[serde(default)]
+    pub target: Option<String>,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, removes one held copy of the requested feat,
+/// recomputes via the real engine, and re-saves — the inverse of
+/// `add_feat_selection`. See `remove_feat_selection_at_root` for the
+/// refusals and `feat_removal_dependency_refusal` for the prerequisite-chain
+/// guard.
+#[tauri::command]
+pub fn remove_feat_selection(
+    app: tauri::AppHandle,
+    request: RemoveFeatSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    remove_feat_selection_at_root(
+        &root,
+        &request.feat_id,
+        request.target.as_deref(),
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RemoveSpellSelectionRequest {
+    pub character_id: String,
+    pub spell_id: String,
+    pub source_class_id: String,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, forgets the requested spell in every
+/// acquisition mode, recomputes via the real engine, and re-saves — the
+/// inverse of `add_spell_selection` / `record_and_prepare_spell_selection`.
+/// See `remove_spell_selection_at_root`.
+#[tauri::command]
+pub fn remove_spell_selection(
+    app: tauri::AppHandle,
+    request: RemoveSpellSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    remove_spell_selection_at_root(
+        &root,
+        &request.spell_id,
+        &request.source_class_id,
+        &request.saved_at,
+    )
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RemoveEquipmentSelectionRequest {
+    pub character_id: String,
+    pub item_id: String,
+    pub saved_at: String,
+}
+
+/// Loads the saved character, drops one carried copy of the requested item
+/// (with its applied equipmods), recomputes via the real engine, and
+/// re-saves — the inverse of `add_equipment_selection` / `purchase_equipment`.
+/// Does **not** refund the purchase; see `apply_remove_equipment_selection`.
+#[tauri::command]
+pub fn remove_equipment_selection(
+    app: tauri::AppHandle,
+    request: RemoveEquipmentSelectionRequest,
+) -> Result<CreateCharacterResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    remove_equipment_selection_at_root(&root, &request.item_id, &request.saved_at)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -3062,11 +3849,978 @@ pub fn export_character(app: tauri::AppHandle, request: ExportCharacterRequest) 
     std::fs::write(&path, contents.as_bytes()).map_err(|err| format!("{}: {err}", path.display()))
 }
 
+// ---------------------------------------------------------------------------
+// Race-creation roster
+// ---------------------------------------------------------------------------
+
+/// The per-race chassis character creation needs, read out of the real race
+/// corpus rather than hand-maintained beside it.
+///
+/// # Why this exists
+///
+/// `RACE_OPTIONS` in `characterHubModel.ts` was a hand-written table of the
+/// 7 Core Rulebook races. The corpus carries **18** (CRB's 7 + Bestiary 1's
+/// 11), every one of them with a complete creation chassis — asserted field
+/// by field, per race, by `raceCreationCoverage.test.ts` against the same
+/// on-disk records this reads. The 11 Bestiary 1 races were ingested,
+/// resolvable, and browsable in the Race Trait Catalog, but no player could
+/// make one.
+///
+/// A hand-maintained mirror of corpus facts is also how the identical table
+/// one layer down (`rules_tables::crb::race_tables`) silently drifted from
+/// the corpus on four races' ability modifiers: `BONUS:STAT|CON,WIS|2`
+/// states two ability grants in one token and a transcription read only up
+/// to the comma. Deriving removes the class of defect rather than re-checking
+/// for it.
+///
+/// # What is derived, and why that is not formula interpretation
+///
+/// `decisions.md §24` forbids a general `BONUS:`/`DEFINE:`/`PREREQ:` formula
+/// interpreter and requires each feature to be a hand-modelled,
+/// corpus-verified pure function with a test. Every field below is exactly
+/// that: [`fixed_ability_adjustments`] reads the ability codes and magnitude
+/// off a `BONUS:STAT` chain's own qualifiers, [`vision_reading`] reads a
+/// `VISION:` token's own declared range, size and speed come from
+/// [`ResolvedRace`]'s already-modelled chassis-then-trait-override rule.
+/// Nothing is summed across traits, no PCGen variable is resolved, and no
+/// `PREREQ:` is evaluated.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RaceCreationChassisDto {
+    /// The `race:<slug>` token the rest of the engine identifies a race by —
+    /// what `CreateCharacterRequest::race_id` carries, what
+    /// `compose_character_input` threads into `CharacterInput`, and what
+    /// `race_resolver::race_size_for_race_token` resolves for carrying
+    /// capacity. Derived as the corpus race key lowercased, which reproduces
+    /// the 7 previously hardcoded ids exactly (`Half-Elf` -> `race:half-elf`).
+    pub race_id: String,
+    /// The corpus race key verbatim, e.g. `Half-Elf`, `Svirfneblin`.
+    pub label: String,
+    /// The short book code, from `race_catalog::book_code` so this cannot
+    /// drift from the codes the Race Trait Catalog labels the same race with.
+    pub book: String,
+    /// `"Small"` or `"Medium"` — [`ResolvedRace::size`], i.e. the race's
+    /// `~ Size` trait's `TEMPLATE:SIZE_<code>` over the chassis'
+    /// `FACT:BaseSize`. Never the chassis token alone: Aasimar and Tiefling
+    /// carry `FACT:BaseSize|S` and are Medium creatures.
+    pub size: String,
+    /// The race's senses as the Character Sheet prints them, e.g.
+    /// `Darkvision 60 ft.`, `Low-light vision`, `Darkvision 120 ft.,
+    /// Low-light vision`, or `Normal` for a race that declares no `VISION:`
+    /// token at all.
+    pub vision: String,
+    /// Base land speed in feet — [`ResolvedRace::walk_speed_ft`]. Not the
+    /// chassis row's `MOVE:Walk` alone: Goblin's and Hobgoblin's chassis rows
+    /// say `MOVE:Walk,0` and their `~ Speed` traits override it to 30.
+    pub base_speed_ft: i32,
+    /// Fixed racial ability modifiers, keyed by the same ability names
+    /// `AbilityScoresDto` uses. Only non-zero entries appear. The frontend
+    /// bakes these into the submitted scores (see
+    /// `applyRacialAbilityAdjustments`), so a wrong value here is a wrong
+    /// character.
+    pub ability_adjustments: BTreeMap<String, i16>,
+    /// Points the player distributes freely — PF1's "+2 to one ability
+    /// score" races. `0` for a race with no such pool.
+    pub floating_bonus_points: u8,
+}
+
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct RaceCreationRosterResponse {
+    /// Every race with a complete creation chassis, ordered CRB first then
+    /// Bestiary 1, alphabetically within each book.
+    pub races: Vec<RaceCreationChassisDto>,
+    /// Corpus files that could not be read, plus one entry naming each race
+    /// that had to be withheld and the field it was missing. Empty in a
+    /// healthy checkout. A race is **dropped rather than defaulted**: an
+    /// offered race with a guessed size would compute a wrong carrying
+    /// capacity and say nothing about it.
+    pub diagnostics: Vec<String>,
+}
+
+/// PCGen's `BONUS:STAT` ability codes, mapped to the ability names
+/// `AbilityScoresDto` / `characterHubModel.ABILITY_KEYS` use on the wire.
+const STAT_CODE_TO_ABILITY: &[(&str, &str)] = &[
+    ("STR", "strength"),
+    ("DEX", "dexterity"),
+    ("CON", "constitution"),
+    ("INT", "intelligence"),
+    ("WIS", "wisdom"),
+    ("CHA", "charisma"),
+];
+
+/// The `TYPE:` token PCGen tags a race's ability-modifier row with.
+const RACIAL_ABILITY_SCORES_TYPE: &str = "Racial Ability Scores";
+
+/// The race's ability-modifier trait, if it declares one.
+fn racial_ability_scores_trait(
+    race: &codex::rules_core::race_resolver::ResolvedRace,
+) -> Option<&codex::rules_core::race_resolver::ResolvedTrait> {
+    race.traits
+        .iter()
+        .find(|resolved| resolved.type_tokens.iter().any(|t| t == RACIAL_ABILITY_SCORES_TYPE))
+}
+
+/// The fixed ability modifiers a `Racial Ability Scores` row declares.
+///
+/// Reads `BONUS:STAT|<codes>|<magnitude>` chains only. `<codes>` is
+/// comma-separated and frequently names more than one ability — Goblin's
+/// `BONUS:STAT|STR,CHA|-2` grants **both** — so every code in the list is
+/// credited. An unrecognized code is reported by the caller rather than
+/// dropped.
+fn fixed_ability_adjustments(
+    ability_trait: &codex::rules_core::race_resolver::ResolvedTrait,
+) -> Result<BTreeMap<String, i16>, String> {
+    let mut out: BTreeMap<String, i16> = BTreeMap::new();
+    for chain in &ability_trait.raw_bonus_chains {
+        if chain.qualifiers.first().map(String::as_str) != Some("STAT") {
+            continue;
+        }
+        let (Some(codes), Some(raw_magnitude)) = (chain.qualifiers.get(1), chain.qualifiers.get(2))
+        else {
+            return Err(format!("{}: a BONUS:STAT chain is missing its codes or magnitude", ability_trait.key));
+        };
+        let magnitude: i16 = raw_magnitude
+            .parse()
+            .map_err(|_| format!("{}: BONUS:STAT magnitude {raw_magnitude:?} is not an integer", ability_trait.key))?;
+        for code in codes.split(',') {
+            let code = code.trim();
+            let ability = STAT_CODE_TO_ABILITY
+                .iter()
+                .find(|(stat, _)| *stat == code)
+                .map(|(_, ability)| *ability)
+                .ok_or_else(|| format!("{}: unknown BONUS:STAT ability code {code:?}", ability_trait.key))?;
+            *out.entry(ability.to_owned()).or_insert(0) += magnitude;
+        }
+    }
+    out.retain(|_, delta| *delta != 0);
+    Ok(out)
+}
+
+/// The freely-distributed "+2 to one ability score" points a
+/// `Racial Ability Scores` row grants.
+///
+/// PCGen splits the fact across two places: the *number of picks* is
+/// machine-readable (`BONUS:ABILITYPOOL|Ability Bonus|1`) but the *magnitude
+/// per pick* appears only in the row's own display name. That is stated here
+/// rather than hidden, and the name is matched strictly — a row that does not
+/// have the shape yields an error naming it, never a guessed magnitude.
+fn floating_ability_bonus_points(
+    ability_trait: &codex::rules_core::race_resolver::ResolvedTrait,
+) -> Result<u8, String> {
+    let picks: u8 = ability_trait
+        .raw_bonus_chains
+        .iter()
+        .filter(|chain| {
+            chain.qualifiers.first().map(String::as_str) == Some("ABILITYPOOL")
+                && chain.qualifiers.get(1).map(String::as_str) == Some("Ability Bonus")
+        })
+        .map(|chain| chain.qualifiers.get(2).and_then(|n| n.parse::<u8>().ok()).unwrap_or(0))
+        .sum();
+    if picks == 0 {
+        return Ok(0);
+    }
+    let magnitude = ability_trait
+        .name
+        .strip_prefix('+')
+        .and_then(|rest| rest.strip_suffix(" to One Ability Score"))
+        .and_then(|n| n.parse::<u8>().ok())
+        .ok_or_else(|| {
+            format!(
+                "{}: an ability-pool row must state its magnitude in its own name, got {:?}",
+                ability_trait.key, ability_trait.name
+            )
+        })?;
+    Ok(picks * magnitude)
+}
+
+/// The race's senses, rendered the way the Character Sheet's Details panel
+/// prints them, from the `VISION:` tokens on its resolved traits.
+///
+/// A race with no `VISION:` token honestly has normal vision. An
+/// unrecognized token yields an error naming it rather than being silently
+/// skipped — a dropped sense is a rules fact the player would never learn was
+/// missing.
+fn vision_reading(
+    race: &codex::rules_core::race_resolver::ResolvedRace,
+) -> Result<String, String> {
+    let mut readings: Vec<String> = Vec::new();
+    for resolved in &race.traits {
+        for token in resolved.raw_tokens.iter().filter(|t| t.key == "VISION") {
+            let value = token.value.trim();
+            let reading = if let Some(range) =
+                value.strip_prefix("Darkvision (").and_then(|rest| rest.strip_suffix(')'))
+            {
+                range
+                    .parse::<u16>()
+                    .map(|feet| format!("Darkvision {feet} ft."))
+                    .map_err(|_| format!("{}: unreadable Darkvision range {value:?}", resolved.key))?
+            } else if value == "Low-Light Vision" {
+                "Low-light vision".to_owned()
+            } else {
+                return Err(format!("{}: unrecognized VISION token {value:?}", resolved.key));
+            };
+            if !readings.contains(&reading) {
+                readings.push(reading);
+            }
+        }
+    }
+    Ok(if readings.is_empty() { "Normal".to_owned() } else { readings.join(", ") })
+}
+
+/// Builds one race's creation chassis, or the reason it cannot be offered.
+fn race_creation_chassis(
+    race: &codex::rules_core::race_resolver::ResolvedRace,
+) -> Result<RaceCreationChassisDto, String> {
+    let size = race
+        .size
+        .ok_or_else(|| format!("{}: declares no readable creature size", race.race_key))?;
+    let base_speed_ft = race
+        .walk_speed_ft
+        .ok_or_else(|| format!("{}: declares no readable base land speed", race.race_key))?;
+    let vision = vision_reading(race)?;
+    let (ability_adjustments, floating_bonus_points) = match racial_ability_scores_trait(race) {
+        Some(ability_trait) => {
+            (fixed_ability_adjustments(ability_trait)?, floating_ability_bonus_points(ability_trait)?)
+        }
+        None => (BTreeMap::new(), 0),
+    };
+    if ability_adjustments.is_empty() && floating_bonus_points == 0 {
+        return Err(format!(
+            "{}: states neither a fixed ability modifier nor a floating ability pool",
+            race.race_key
+        ));
+    }
+
+    Ok(RaceCreationChassisDto {
+        race_id: format!("race:{}", race.race_key.to_lowercase()),
+        label: race.race_key.clone(),
+        book: crate::race_catalog::book_code(&race.book_id),
+        size: format!("{size:?}"),
+        vision,
+        base_speed_ft,
+        ability_adjustments,
+        floating_bonus_points,
+    })
+}
+
+/// Builds the full creation roster from the real on-disk race corpus.
+///
+/// A race whose chassis cannot be read completely is **withheld and named in
+/// `diagnostics`**, so one gap costs that race and not the other 17.
+pub fn build_race_creation_roster() -> RaceCreationRosterResponse {
+    let corpus = match crate::race_catalog::race_corpus() {
+        Ok(corpus) => corpus,
+        Err(message) => {
+            return RaceCreationRosterResponse { races: Vec::new(), diagnostics: vec![message.clone()] }
+        }
+    };
+
+    let mut diagnostics: Vec<String> = corpus
+        .diagnostics()
+        .iter()
+        .map(|diagnostic| format!("{}: {}", diagnostic.path, diagnostic.message))
+        .collect();
+
+    let mut races: Vec<RaceCreationChassisDto> = Vec::new();
+    for race_key in corpus.race_keys() {
+        let Some(resolved) = corpus.resolve(race_key, &[]) else {
+            diagnostics.push(format!("{race_key}: could not be resolved against the loaded race corpus"));
+            continue;
+        };
+        match race_creation_chassis(&resolved) {
+            Ok(chassis) => races.push(chassis),
+            Err(reason) => diagnostics.push(format!("withheld from character creation — {reason}")),
+        }
+    }
+
+    // The 7 Core Rulebook races first (the roster creation already offered,
+    // in the order it offered them), then Bestiary 1's, alphabetically within
+    // each book. A book this list does not name sorts last rather than being
+    // dropped.
+    let book_rank = |book: &str| crate::race_catalog::RACE_CATALOG_BOOKS.iter().position(|b| *b == book).unwrap_or(usize::MAX);
+    races.sort_by(|a, b| book_rank(&a.book).cmp(&book_rank(&b.book)).then_with(|| a.label.cmp(&b.label)));
+
+    RaceCreationRosterResponse { races, diagnostics }
+}
+
+/// Serves the corpus-derived race roster the creation form builds its race
+/// picker from.
+#[tauri::command]
+pub fn list_race_creation_roster() -> RaceCreationRosterResponse {
+    build_race_creation_roster()
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     use codex::rules_core::pilot_compute::HeadlessReceiptStatus;
     use std::collections::BTreeSet;
+
+    // ----- Race-creation roster (the 7 -> 18 widening) -----
+
+    fn roster_race(race_id: &str) -> RaceCreationChassisDto {
+        build_race_creation_roster()
+            .races
+            .into_iter()
+            .find(|race| race.race_id == race_id)
+            .unwrap_or_else(|| panic!("{race_id} must be offered by the creation roster"))
+    }
+
+    /// The widening itself. The roster is built from the corpus, so its size
+    /// is a derived fact — 18 records on disk, 18 creatable races. Every id
+    /// is asserted, not just the count, so a race silently swapping for
+    /// another cannot pass.
+    #[test]
+    fn creation_roster_offers_every_ingested_race_not_just_the_core_seven() {
+        let roster = build_race_creation_roster();
+        assert!(
+            roster.diagnostics.is_empty(),
+            "a healthy checkout serves every race with no diagnostics: {:?}",
+            roster.diagnostics
+        );
+
+        let ids: Vec<&str> = roster.races.iter().map(|race| race.race_id.as_str()).collect();
+        assert_eq!(
+            ids,
+            vec![
+                // The 7 the form offered before this widening.
+                "race:dwarf",
+                "race:elf",
+                "race:gnome",
+                "race:half-elf",
+                "race:half-orc",
+                "race:halfling",
+                "race:human",
+                // The 11 Bestiary 1 races that reached creation nowhere.
+                "race:aasimar",
+                "race:drow",
+                "race:duergar",
+                "race:goblin",
+                "race:hobgoblin",
+                "race:kobold",
+                "race:merfolk",
+                "race:orc",
+                "race:svirfneblin",
+                "race:tengu",
+                "race:tiefling",
+            ]
+        );
+    }
+
+    /// Every id the roster emits must be one the compute engine's own race
+    /// seams recognize. `race_size_for_race_token` returning `None` is
+    /// exactly what silently handed Goblin a Medium creature's carrying
+    /// capacity, so a roster entry the size seam cannot resolve is a race
+    /// that would be creatable and wrong.
+    #[test]
+    fn every_offered_race_id_resolves_in_the_engines_own_size_seam() {
+        for race in build_race_creation_roster().races {
+            let size = codex::rules_core::race_resolver::race_size_for_race_token(&race.race_id)
+                .unwrap_or_else(|| panic!("{} must resolve a real creature size", race.race_id));
+            assert_eq!(
+                format!("{size:?}"),
+                race.size,
+                "{}: the roster's size must be the engine's own",
+                race.race_id
+            );
+        }
+    }
+
+    /// One row of the shipped-values pin below:
+    /// `(race_id, size, vision, base_speed_ft, floating_ability_bonuses,
+    /// fixed_ability_adjustments)`.
+    type ShippedRaceRow = (
+        &'static str,
+        &'static str,
+        &'static str,
+        i32,
+        u8,
+        &'static [(&'static str, i16)],
+    );
+
+    /// The 7 races creation already offered keep exactly the values the
+    /// hand-maintained `RACE_OPTIONS` table shipped. This is the regression
+    /// pin for the swap: corpus-driven must not mean different.
+    #[test]
+    fn the_seven_previously_offered_races_keep_their_shipped_values() {
+        let expected: [ShippedRaceRow; 7] = [
+            ("race:human", "Medium", "Normal", 30, 2, &[]),
+            ("race:dwarf", "Medium", "Darkvision 60 ft.", 20, 0, &[("charisma", -2), ("constitution", 2), ("wisdom", 2)]),
+            ("race:elf", "Medium", "Low-light vision", 30, 0, &[("constitution", -2), ("dexterity", 2), ("intelligence", 2)]),
+            ("race:gnome", "Small", "Low-light vision", 20, 0, &[("charisma", 2), ("constitution", 2), ("strength", -2)]),
+            ("race:half-elf", "Medium", "Low-light vision", 30, 2, &[]),
+            ("race:half-orc", "Medium", "Darkvision 60 ft.", 30, 2, &[]),
+            ("race:halfling", "Small", "Normal", 20, 0, &[("charisma", 2), ("dexterity", 2), ("strength", -2)]),
+        ];
+        for (race_id, size, vision, speed, floating, adjustments) in expected {
+            let race = roster_race(race_id);
+            assert_eq!(race.size, size, "{race_id} size");
+            assert_eq!(race.vision, vision, "{race_id} vision");
+            assert_eq!(race.base_speed_ft, speed, "{race_id} speed");
+            assert_eq!(race.floating_bonus_points, floating, "{race_id} floating ability points");
+            let expected_adjustments: BTreeMap<String, i16> =
+                adjustments.iter().map(|(k, v)| ((*k).to_owned(), *v)).collect();
+            assert_eq!(race.ability_adjustments, expected_adjustments, "{race_id} ability adjustments");
+        }
+    }
+
+    /// The Bestiary 1 end-to-end case the widening exists for. Goblin is
+    /// Small — the exact race whose size was defaulted to Medium at both
+    /// encumbrance call sites until the size fix — so its roster entry is
+    /// pinned field by field against
+    /// `data/corpus/beastiary/race_trait/goblin/`.
+    #[test]
+    fn goblin_is_creatable_with_its_real_bestiary_1_chassis() {
+        let goblin = roster_race("race:goblin");
+        assert_eq!(goblin.label, "Goblin");
+        assert_eq!(goblin.book, "B1");
+        assert_eq!(goblin.size, "Small");
+        assert_eq!(goblin.vision, "Darkvision 60 ft.");
+        // The chassis row says `MOVE:Walk,0`; `Goblin ~ Speed`'s own
+        // `MOVE:Walk,30` overrides it. A roster reading the chassis alone
+        // would offer a Goblin that cannot move.
+        assert_eq!(goblin.base_speed_ft, 30);
+        assert_eq!(goblin.floating_bonus_points, 0);
+        assert_eq!(
+            goblin.ability_adjustments,
+            BTreeMap::from([
+                ("charisma".to_owned(), -2),
+                ("dexterity".to_owned(), 4),
+                ("strength".to_owned(), -2),
+            ]),
+            "Goblin ~ Ability Scores states +4 Dex in one BONUS:STAT chain and -2 Str/-2 Cha in a \
+             second two-ability one"
+        );
+    }
+
+    /// `BONUS:STAT|STR,CHA|-2` names two abilities in one token. Reading
+    /// only up to the comma is the transcription defect that silently
+    /// drifted `race_tables.rs` from the corpus on four races, so the
+    /// multi-ability chains are pinned explicitly across every race that
+    /// has one.
+    #[test]
+    fn multi_ability_bonus_stat_chains_credit_every_ability_they_name() {
+        assert_eq!(roster_race("race:orc").ability_adjustments.len(), 4);
+        assert_eq!(
+            roster_race("race:svirfneblin").ability_adjustments,
+            BTreeMap::from([
+                ("charisma".to_owned(), -4),
+                ("dexterity".to_owned(), 2),
+                ("strength".to_owned(), -2),
+                ("wisdom".to_owned(), 2),
+            ])
+        );
+    }
+
+    /// Aasimar and Tiefling carry `FACT:BaseSize|S` on their chassis rows and
+    /// are Medium creatures; Merfolk's 5 ft. swim-bound land speed is the
+    /// roster's extreme non-30 value. Both are cases where a plausible
+    /// default would have been silently wrong.
+    #[test]
+    fn the_roster_reports_sizes_and_speeds_a_default_would_have_got_wrong() {
+        assert_eq!(roster_race("race:aasimar").size, "Medium");
+        assert_eq!(roster_race("race:tiefling").size, "Medium");
+        assert_eq!(roster_race("race:merfolk").base_speed_ft, 5);
+        assert_eq!(roster_race("race:duergar").base_speed_ft, 20);
+        // Svirfneblin declares both vision kinds; neither may be dropped.
+        assert_eq!(roster_race("race:svirfneblin").vision, "Darkvision 120 ft., Low-light vision");
+        assert_eq!(roster_race("race:drow").vision, "Darkvision 120 ft.");
+    }
+
+    /// **The end-to-end proof.** A Goblin created through the same
+    /// `compose_character_input` the `create_character` command uses must
+    /// reach `Computed`, and its carrying capacity must be the Small
+    /// column, not the Medium one. `SIZEMULT:S|0.75` — so a Small creature's
+    /// thresholds are three quarters of a Medium creature's at the same
+    /// Strength, computed on the untruncated heavy load.
+    #[test]
+    fn a_created_goblin_computes_and_gets_a_small_creatures_carrying_capacity() {
+        let goblin_input = compose_character_input(&request_for("race:goblin", 1));
+        assert_eq!(
+            build_pilot_headless_receipt(&goblin_input).status,
+            HeadlessReceiptStatus::Computed,
+            "a level-1 Goblin Fighter must reach a fully computed build, or creation would \
+             refuse to persist it: {:?}",
+            claim_blocking_diagnostic_ids("race:goblin", FIGHTER_CLASS_ID, 1)
+        );
+        let goblin = compute_pilot_with_corpus(&goblin_input, corpus_fixture_bundle());
+
+        // Same Strength, same loadout, Medium race: the only difference is
+        // size, so the ratio isolates it.
+        let hobgoblin = compute_pilot_with_corpus(
+            &compose_character_input(&request_for("race:hobgoblin", 1)),
+            corpus_fixture_bundle(),
+        );
+        assert_eq!(
+            roster_race("race:hobgoblin").size,
+            "Medium",
+            "the control race must be Medium for this comparison to isolate size"
+        );
+
+        // Both requests carry the same Strength 16 (`request_for` is
+        // race-blind), so the thresholds differ by creature size and nothing
+        // else. `load.lst`'s Strength-16 heavy load is 230 lb.
+        //   Medium (no SIZEMULT row, the baseline): 230/3=76, 460/3=153, 230
+        //   Small   (SIZEMULT:S|0.75, applied to the load value *before* the
+        //            per-tier truncation): 690/12=57, 1380/12=115, 690/4=172
+        // Those are exactly PF1's published Small and Medium columns for
+        // Strength 16.
+        let small = &goblin.corpus_derived.encumbrance.thresholds;
+        let medium = &hobgoblin.corpus_derived.encumbrance.thresholds;
+        assert_eq!((medium.light_max_lbs, medium.medium_max_lbs, medium.heavy_max_lbs), (76.0, 153.0, 230.0));
+        assert_eq!(
+            (small.light_max_lbs, small.medium_max_lbs, small.heavy_max_lbs),
+            (57.0, 115.0, 172.0),
+            "a Small Goblin must not be handed a Medium creature's carrying capacity"
+        );
+    }
+
+    // -----------------------------------------------------------------
+    // SD-27: ARG alternate racial traits survive creation, save and load.
+    // -----------------------------------------------------------------
+
+    fn request_with_alternates(
+        race_id: &str,
+        alternates: &[&str],
+    ) -> CreateCharacterRequest {
+        CreateCharacterRequest {
+            selected_alternate_trait_keys: alternates.iter().map(|key| (*key).to_string()).collect(),
+            ..request_for(race_id, 1)
+        }
+    }
+
+    fn saved_or_panic(response: CreateCharacterResponse) -> Box<CharacterSummaryDto> {
+        match response {
+            CreateCharacterResponse::Saved { summary, .. } => summary,
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("this build must be creatable, got: {diagnostics:?}")
+            }
+        }
+    }
+
+    /// **The persistence half of the SD-27 alternate-racial-trait closure**,
+    /// through the same `create_character` path the UI button calls: a Dwarf
+    /// takes `Dwarf ~ Minesight`, is persisted, read back, and the choice is
+    /// still there — carried on `chosen.selected_choices`, which
+    /// `SavedCharacterStore` already round-trips, so this needed no schema
+    /// change.
+    #[test]
+    fn a_chosen_alternate_racial_trait_survives_creation_save_and_load() {
+        let root = tempdir("create-character-arg-alternate-trait");
+        let request = request_with_alternates("race:dwarf", &["Dwarf ~ Minesight"]);
+        let summary = saved_or_panic(
+            create_character_at_root(&root, &request, "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+        assert_eq!(summary.race_id, "race:dwarf");
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved Dwarf must load back");
+        assert_eq!(
+            loaded.selected_alternate_trait_keys,
+            vec!["Dwarf ~ Minesight".to_string()],
+            "the choice must survive the round trip, not be silently dropped"
+        );
+
+        // ...and it reaches the engine: the standard 60 ft darkvision record is
+        // gone and Minesight's own 90 ft record is in its place. The sheet
+        // renders `explanations` verbatim, so this is the number the player
+        // sees change.
+        let ids: BTreeSet<&str> = loaded.explanations.iter().map(|e| e.id.as_str()).collect();
+        assert!(!ids.contains("race.dwarf.trait_bundle.senses"), "the standard darkvision must stop");
+        let minesight = loaded
+            .explanations
+            .iter()
+            .find(|e| e.id == "race.dwarf.alternate_trait.minesight.senses")
+            .expect("Minesight's own record must be on the loaded sheet");
+        assert_eq!(minesight.value, 90);
+    }
+
+    // ----- SD-27 gap 4: resolved racial-trait prose reaches the sheet -----
+
+    /// One applied trait's rendered prose out of a loaded character's payload.
+    fn applied_trait<'a>(
+        loaded: &'a LoadSavedCharacterResponse,
+        key: &str,
+    ) -> &'a crate::race_trait_picker::AppliedTraitDto {
+        loaded
+            .resolved_racial_traits
+            .applied_traits
+            .iter()
+            .find(|applied| applied.key == key)
+            .unwrap_or_else(|| {
+                panic!(
+                    "{key} must apply for this character; got {:?}",
+                    loaded
+                        .resolved_racial_traits
+                        .applied_traits
+                        .iter()
+                        .map(|applied| applied.key.as_str())
+                        .collect::<Vec<_>>()
+                )
+            })
+    }
+
+    /// **The character sheet's half of `decisions.md §29.1`'s
+    /// producer-with-no-consumer trap.**
+    ///
+    /// `race_trait_picker::render_trait_description` re-renders a trait's
+    /// `DESC:` tokens against the character's own display values, and the Race
+    /// Traits picker was its only consumer. `load_saved_character` — the one
+    /// call the sheet a player lives in actually makes — carried the chosen
+    /// trait *keys* and nothing else, so the sheet could name a trait and never
+    /// state what it does.
+    ///
+    /// The proof is a before/after pair over **one corpus record** (`§28`'s
+    /// standing guard): the same `Halfling ~ Adaptable Luck` row must state a
+    /// different number for the same character once it holds ARG's
+    /// `Fortunate One`. A baked string cannot pass this, and neither can the
+    /// stored `data.description` — which is why the racial base below has to
+    /// read "Three times per day" and the fed one "4 times per day", the
+    /// `PREVARLTEQ:...,3` gate ceasing to apply rather than a number being
+    /// substituted.
+    #[test]
+    fn a_loaded_characters_racial_trait_prose_states_the_number_its_own_feats_produce() {
+        let root = tempdir("sheet-racial-trait-prose");
+        saved_or_panic(
+            create_character_at_root(
+                &root,
+                &request_with_alternates("race:halfling", &["Halfling ~ Adaptable Luck"]),
+                "test-version".to_owned(),
+            )
+            .expect("create call should not error"),
+        );
+
+        // Before: the character holds no display-value feat, so the sheet
+        // states the racial base.
+        let base = load_saved_character_at_root(&root).expect("the saved Halfling must load back");
+        assert!(base.resolved_racial_traits.errors.is_empty(), "{:?}", base.resolved_racial_traits.errors);
+        assert_eq!(base.resolved_racial_traits.race_key, "Halfling");
+        let base_luck = applied_trait(&base, "Halfling ~ Adaptable Luck");
+        assert!(base_luck.description.contains("Three times per day"), "{}", base_luck.description);
+        assert!(base_luck.description.contains("gain the full +2 bonus"), "{}", base_luck.description);
+        assert!(base_luck.description.contains("only gain a +1 bonus"), "{}", base_luck.description);
+        assert!(
+            base.resolved_racial_traits.display_value_feats.is_empty(),
+            "a created Halfling holds no feat that moves a display value: {:?}",
+            base.resolved_racial_traits.display_value_feats
+        );
+
+        // After: the very same record, for the very same character, once it
+        // holds the ARG luck feat.
+        let mut envelope = SavedCharacterStore::load(&root).expect("reload");
+        envelope.character_input.chosen.selected_feats.push("Fortunate One".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("re-save");
+
+        let fed = load_saved_character_at_root(&root).expect("loads");
+        let fed_luck = applied_trait(&fed, "Halfling ~ Adaptable Luck");
+        assert!(fed_luck.description.contains("4 times per day"), "3 + 1 = 4: {}", fed_luck.description);
+        assert!(
+            !fed_luck.description.contains("Three"),
+            "the PREVARLTEQ gate stops applying rather than a number being swapped: {}",
+            fed_luck.description
+        );
+        assert_ne!(base_luck.description, fed_luck.description, "same record, different sentence");
+        assert_eq!(fed.resolved_racial_traits.display_value_feats, vec!["Fortunate One".to_string()]);
+
+        // The per-record `moved_by_feats` flag is the screen's licence to say
+        // *why* the number differs, and it is derived by re-rendering rather
+        // than asserted from the feat list.
+        let moved = fed
+            .resolved_racial_traits
+            .rendered_trait_descriptions
+            .iter()
+            .find(|row| row.key == "Halfling ~ Adaptable Luck")
+            .expect("a rendered row for the applied trait");
+        assert!(moved.moved_by_feats);
+        assert_eq!(moved.text, fed_luck.description, "one sentence per trait, whichever list shows it");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Every racial trait that reaches the sheet carries real prose, and the
+    /// chosen alternate really replaced something. A name-only card — what the
+    /// sheet showed before — would pass a "the key survived" test and fail this
+    /// one.
+    #[test]
+    fn every_racial_trait_on_a_loaded_sheet_carries_rendered_prose_and_names_what_it_replaced() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+
+        let root = tempdir("sheet-racial-trait-coverage");
+        saved_or_panic(
+            create_character_at_root(
+                &root,
+                &request_with_alternates("race:dwarf", &["Dwarf ~ Minesight"]),
+                "test-version".to_owned(),
+            )
+            .expect("create call should not error"),
+        );
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        let resolved = &loaded.resolved_racial_traits;
+
+        assert!(resolved.errors.is_empty(), "{:?}", resolved.errors);
+        assert!(!resolved.applied_traits.is_empty(), "a Dwarf applies its racial traits");
+        for applied in &resolved.applied_traits {
+            assert!(!applied.description.trim().is_empty(), "{} has prose", applied.key);
+            assert_eq!(leaked_pcgen_syntax(&applied.description), None, "{}: {}", applied.key, applied.description);
+        }
+        assert!(resolved.applied_traits.iter().any(|applied| applied.key == "Dwarf ~ Minesight"));
+
+        // The swap the player made, in the resolver's own words.
+        let suppressed: Vec<&str> =
+            resolved.suppressions.iter().map(|s| s.suppressed_trait_key.as_str()).collect();
+        assert!(
+            suppressed.contains(&"Dwarf ~ Vision"),
+            "Minesight replaces the standard darkvision row: {suppressed:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A character who chose no alternate still gets its race's standard
+    /// traits rendered — the sheet's racial section is not an
+    /// alternates-only surface, and an empty payload here would read as "this
+    /// race has no traits".
+    #[test]
+    fn a_character_with_no_alternate_chosen_still_gets_its_standard_traits_rendered() {
+        let root = tempdir("sheet-racial-trait-standard-only");
+        saved_or_panic(
+            create_character_at_root(&root, &request_for("race:halfling", 1), "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert!(loaded.selected_alternate_trait_keys.is_empty());
+        let resolved = &loaded.resolved_racial_traits;
+        assert!(resolved.errors.is_empty(), "{:?}", resolved.errors);
+        assert!(resolved.suppressions.is_empty(), "nothing was replaced");
+        assert!(
+            resolved.applied_traits.iter().all(|applied| applied.role == "default"),
+            "no alternate was taken, so every applied trait is a racial default"
+        );
+        assert!(resolved.applied_traits.len() >= 5, "{}", resolved.applied_traits.len());
+        // The standard Halfling Luck row, which the alternate above replaces.
+        assert!(resolved.applied_traits.iter().any(|applied| applied.key == "Halfling ~ Halfling Luck"));
+    }
+
+    /// A Dwarf who chose nothing is byte-identical to the pre-SD-27 build:
+    /// no selection persisted, and the standard 60 ft darkvision intact. The
+    /// opt-in half of the guard.
+    #[test]
+    fn a_dwarf_who_chose_no_alternate_persists_none_and_keeps_the_standard_trait() {
+        let root = tempdir("create-character-no-alternate-trait");
+        saved_or_panic(
+            create_character_at_root(&root, &request_for("race:dwarf", 1), "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert!(loaded.selected_alternate_trait_keys.is_empty());
+        assert!(loaded.explanations.iter().any(|e| e.id == "race.dwarf.trait_bundle.senses"));
+        assert!(loaded
+            .explanations
+            .iter()
+            .all(|e| e.id != "race.dwarf.alternate_trait.minesight.senses"));
+    }
+
+    /// **A top-level sheet number moving because of a racial-trait choice.**
+    /// A Half-Elf Fighter 1 who takes `Dual Minded` (ARG p.42,
+    /// `BONUS:SAVE|Will|2`) saves and loads with Will +3 where the same build
+    /// without it has +1 — on `snapshot.total_saves`, which the sheet prints at
+    /// the top of the page.
+    #[test]
+    fn dual_minded_moves_a_saved_half_elfs_total_will_save_on_the_loaded_sheet() {
+        let plain_root = tempdir("create-character-half-elf-plain");
+        saved_or_panic(
+            create_character_at_root(&plain_root, &request_for("race:half-elf", 1), "test-version".to_owned())
+                .expect("create"),
+        );
+        let plain = load_saved_character_at_root(&plain_root).expect("loads");
+
+        let swapped_root = tempdir("create-character-half-elf-dual-minded");
+        saved_or_panic(
+            create_character_at_root(
+                &swapped_root,
+                &request_with_alternates("race:half-elf", &["Half-Elf ~ Dual Minded"]),
+                "test-version".to_owned(),
+            )
+            .expect("create"),
+        );
+        let swapped = load_saved_character_at_root(&swapped_root).expect("loads");
+
+        let will = |response: &LoadSavedCharacterResponse| {
+            response.snapshot.as_ref().expect("a computed build has a snapshot").total_saves.will
+        };
+        assert_eq!(will(&plain), 1, "Fighter 1 base Will +0, Wisdom 12 (+1)");
+        assert_eq!(will(&swapped), 3, "+2 from Dual Minded");
+        assert_eq!(swapped.selected_alternate_trait_keys, vec!["Half-Elf ~ Dual Minded".to_string()]);
+    }
+
+    /// A selection the corpus does not recognize is refused at creation, with
+    /// the resolver's own finding, rather than silently dropped into a saved
+    /// character that quietly does not have the trait.
+    #[test]
+    fn an_alternate_trait_key_that_is_not_this_races_blocks_the_save_rather_than_vanishing() {
+        let root = tempdir("create-character-wrong-race-alternate-trait");
+        let response = create_character_at_root(
+            &root,
+            // A real ARG alternate — but a Half-Elf's, offered to a Dwarf.
+            &request_with_alternates("race:dwarf", &["Half-Elf ~ Dual Minded"]),
+            "test-version".to_owned(),
+        )
+        .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Saved { .. } => {
+                panic!("a trait belonging to another race must not be accepted")
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                let diagnostic = diagnostics
+                    .iter()
+                    .find(|d| d.id == "race.alternate_trait.unmatched_selection")
+                    .expect("the refusal must name why");
+                assert!(diagnostic.claim_blocking);
+                assert!(diagnostic.message.contains("Half-Elf ~ Dual Minded"));
+            }
+        }
+        assert!(load_saved_character_at_root(&root).is_err(), "nothing may have been persisted");
+    }
+
+    /// Two alternates that ARG's own `PREMULT` guard excludes from each other
+    /// are refused together, naming the shared flag — the picker disables the
+    /// second option, and this is the backend saying no to a caller that
+    /// submits it anyway.
+    #[test]
+    fn two_mutually_exclusive_alternates_are_refused_with_the_flag_that_excludes_them() {
+        let root = tempdir("create-character-conflicting-alternate-traits");
+        let response = create_character_at_root(
+            &root,
+            // Both fire Dwarf_ReplaceStonecunning; Sky Sentinel's guard names it.
+            &request_with_alternates("race:dwarf", &["Dwarf ~ Saltbeard", "Dwarf ~ Sky Sentinel"]),
+            "test-version".to_owned(),
+        )
+        .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Saved { .. } => panic!("an illegal pair must not be accepted"),
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                let diagnostic = diagnostics
+                    .iter()
+                    .find(|d| d.id == "race.alternate_trait.mutually_exclusive")
+                    .expect("the refusal must name the guard");
+                assert!(diagnostic.claim_blocking);
+                assert!(diagnostic.message.contains("Dwarf_Replace"), "{}", diagnostic.message);
+            }
+        }
+    }
+
+    /// Every key the picker offers for a race is one `create_character`
+    /// accepts for that race. A menu item the creation path refuses would be a
+    /// dead affordance — the failure `docs/governance/no-stub-mvp-doctrine.md`
+    /// names directly.
+    ///
+    /// Run over the 7 CRB races' alternates only: those are the races whose
+    /// Fighter 1 build this deterministic fixture reaches `Computed` for
+    /// without further seeding, so a `Blocked` here is unambiguously the
+    /// racial-trait path's fault rather than an unrelated chassis gate.
+    #[test]
+    fn every_alternate_the_picker_offers_for_a_crb_race_is_one_creation_accepts() {
+        let menu = crate::race_trait_picker::build_alternate_racial_traits();
+        assert!(menu.diagnostics.is_empty(), "{:?}", menu.diagnostics);
+        let mut accepted = 0usize;
+        for race in &menu.races {
+            let race_id = format!("race:{}", race.race_key.to_lowercase());
+            if !["race:dwarf", "race:elf", "race:gnome", "race:half-elf", "race:half-orc", "race:halfling", "race:human"]
+                .contains(&race_id.as_str())
+            {
+                continue;
+            }
+            for alternate in &race.alternates {
+                let root = tempdir(&format!("arg-alt-{}", accepted));
+                let response = create_character_at_root(
+                    &root,
+                    &request_with_alternates(&race_id, &[alternate.key.as_str()]),
+                    "test-version".to_owned(),
+                )
+                .expect("create call should not error");
+                match response {
+                    CreateCharacterResponse::Saved { .. } => {}
+                    CreateCharacterResponse::Blocked { diagnostics } => panic!(
+                        "the picker offers {} for {race_id} but creation refused it: {diagnostics:?}",
+                        alternate.key
+                    ),
+                }
+                let loaded = load_saved_character_at_root(&root).expect("loads");
+                assert_eq!(loaded.selected_alternate_trait_keys, vec![alternate.key.clone()]);
+                accepted += 1;
+            }
+        }
+        assert_eq!(accepted, 93, "the 7 CRB races' ARG alternates: 17+13+12+9+14+13+15");
+    }
+
+    /// **The full end-to-end proof**, through the same `create_character`
+    /// path the button in the UI calls: a Bestiary 1 Goblin is created,
+    /// persisted to disk, read back, and the carrying capacity that survives
+    /// the round trip is the Small one.
+    ///
+    /// Distinct from
+    /// `a_created_goblin_computes_and_gets_a_small_creatures_carrying_capacity`,
+    /// which stops at the compute seam. `create_character_at_root` refuses to
+    /// persist anything that is not `Computed`, so reaching a saved envelope
+    /// at all is itself part of the claim.
+    #[test]
+    fn a_goblin_created_through_the_real_command_persists_a_small_creatures_carrying_capacity() {
+        let root = tempdir("create-character-bestiary-1-goblin");
+        let response =
+            create_character_at_root(&root, &request_for("race:goblin", 1), "test-version".to_owned())
+                .expect("create call should not error");
+        match response {
+            CreateCharacterResponse::Saved { summary, .. } => {
+                assert_eq!(summary.race_id, "race:goblin", "the Bestiary 1 race reaches the saved envelope");
+            }
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("a Goblin Fighter level 1 must be creatable, got: {diagnostics:?}")
+            }
+        }
+
+        let loaded = load_saved_character_at_root(&root).expect("the saved Goblin must load back");
+        assert_eq!(loaded.summary.race_id, "race:goblin");
+        assert_eq!(
+            (
+                loaded.corpus_derived.encumbrance.light_max_lbs,
+                loaded.corpus_derived.encumbrance.medium_max_lbs,
+                loaded.corpus_derived.encumbrance.heavy_max_lbs,
+            ),
+            (57.0, 115.0, 172.0),
+            "PF1's Small column at Strength 16; the Medium column would be 76/153/230"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The claim-blocking size diagnostic must fire for a race the engine
+    /// cannot resolve — and must *not* fire for any race the roster offers.
+    /// Without this, a roster entry that outran the engine's size seam would
+    /// look identical to one that did not.
+    #[test]
+    fn no_offered_race_trips_the_unknown_size_diagnostic_and_an_unoffered_one_does() {
+        use codex::rules_core::contract::UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID;
+        for race in build_race_creation_roster().races {
+            let receipt = compute_pilot_with_corpus(
+                &compose_character_input(&request_for(&race.race_id, 1)),
+                corpus_fixture_bundle(),
+            );
+            assert!(
+                !receipt.base.diagnostics.iter().any(|d| d.id == UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID),
+                "{} is offered for creation, so its size must be real data",
+                race.race_id
+            );
+        }
+        let unknown = compute_pilot_with_corpus(
+            &compose_character_input(&request_for("race:dhampir", 1)),
+            corpus_fixture_bundle(),
+        );
+        assert!(
+            unknown.base.diagnostics.iter().any(|d| d.id == UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID),
+            "an un-ingested race must report its guessed size rather than computing quietly"
+        );
+    }
 
     /// An empty-loadout `EncumbranceDto` for the *serialization-shape*
     /// tests below, which assert camelCase key naming and tag placement and
@@ -3094,15 +4848,23 @@ mod tests {
         }
     }
 
-    const CURATED_RACE_IDS: [&str; 7] = [
-        "race:human",
-        "race:dwarf",
-        "race:elf",
-        "race:gnome",
-        "race:half-elf",
-        "race:half-orc",
-        "race:halfling",
-    ];
+    /// Every race a player can actually pick, read off the roster the
+    /// creation form's picker is built from rather than re-listed here.
+    ///
+    /// This was a hardcoded 7-entry array of the Core Rulebook races. Derived
+    /// instead, it cannot fall behind the roster: the moment a race becomes
+    /// creatable it also becomes something
+    /// `compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3`
+    /// has to prove computes, which is the whole point of that test.
+    fn curated_race_ids() -> Vec<String> {
+        let roster = build_race_creation_roster();
+        assert!(
+            roster.races.len() >= 7,
+            "the creation roster must never shrink below the 7 Core Rulebook races: {:?}",
+            roster.diagnostics
+        );
+        roster.races.into_iter().map(|race| race.race_id).collect()
+    }
     const FIGHTER_CLASS_ID: &str = "class:fighter";
 
     // `GENERIC_DIAGNOSTIC_IDS` / `generic_ids()` / `generic_plus()` used to
@@ -3134,6 +4896,7 @@ mod tests {
                 charisma: 8,
             },
             ability_bonus_target: "strength".to_owned(),
+            selected_alternate_trait_keys: Vec::new(),
             saved_at: "2026-07-08T00:00:00Z".to_owned(),
         }
     }
@@ -3225,6 +4988,7 @@ mod tests {
         assert_eq!(input.chosen.race_id, "race:half-orc");
     }
 
+
     #[test]
     fn compose_character_input_threads_the_requested_class_id() {
         let input = compose_character_input(&request_for_class("race:human", "class:paladin", 1));
@@ -3238,9 +5002,9 @@ mod tests {
     /// showing "Blocked" for what users were told was the supported path.
     #[test]
     fn compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3() {
-        for race_id in CURATED_RACE_IDS {
+        for race_id in curated_race_ids() {
             for level in 1..=3u8 {
-                let input = compose_character_input(&request_for(race_id, level));
+                let input = compose_character_input(&request_for(&race_id, level));
                 let receipt = build_pilot_headless_receipt(&input);
                 assert_eq!(
                     receipt.status,
@@ -4448,6 +6212,314 @@ mod tests {
         assert!(!object.contains_key("corpus_derived"), "{object:?}");
     }
 
+    // ----- SD-27: the Attach Modifier dead-affordance invariant -----
+    //
+    // 57 rows was the reported figure; the real, derived figure is 105
+    // (ACG 48 + ARG 15 + PU 42) -- ACG's own equipmods were refused by the
+    // same CRB-only check and had been missed. Every count in this section
+    // was produced by running the catalog, never taken from a brief.
+
+    /// The offered set: exactly what the Gear tab's "Attach Modifier"
+    /// picker asks the backend for -- `buildItemPickerConfig`'s `modifier`
+    /// branch calls `listEquipment({ category: 'Equipmods' })` and sends
+    /// the chosen row's `key` as `modifierItemId`.
+    fn offered_modifier_rows() -> Vec<crate::equipment_catalog::EquipmentCatalogEntryDto> {
+        crate::equipment_catalog::filter_equipment_catalog(
+            &crate::equipment_catalog::EquipmentCatalogFilter {
+                name_contains: None,
+                category: Some("Equipmods".to_owned()),
+                book: None,
+            },
+        )
+        .entries
+    }
+
+    /// **The invariant that stops this defect class returning: every row
+    /// the picker OFFERS is a row attach ACCEPTS.**
+    ///
+    /// This is a pure check of the same `equipment_catalog_row_by_key`
+    /// recognition gate `attach_equipment_modifier_at_root` runs (calling
+    /// the full command 763 times would be a save+recompute per row); the
+    /// end-to-end tests below then drive the real command for one row from
+    /// each of the newly reachable books plus a CRB control.
+    #[test]
+    fn every_equipmods_row_the_picker_offers_is_recognized_by_the_attach_gate() {
+        let offered = offered_modifier_rows();
+        assert_eq!(offered.len(), 763, "the picker's real offered-row count");
+
+        let refused: Vec<&str> = offered
+            .iter()
+            .filter(|entry| {
+                codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&entry.key)
+                    .is_none()
+            })
+            .map(|entry| entry.key.as_str())
+            .collect();
+
+        assert!(
+            refused.is_empty(),
+            "{} of {} offered modifier rows would be refused as 'not a recognized equipment \
+             catalog item' -- a dead affordance. First offenders: {:?}",
+            refused.len(),
+            offered.len(),
+            refused.iter().take(5).collect::<Vec<_>>()
+        );
+    }
+
+    /// Recognition alone is only half the fix: 20 of the 105 newly
+    /// recognized rows carry a real, non-zero flat price, and attaching
+    /// those for free would be silent mispricing -- strictly worse than the
+    /// honest refusal it replaces. This pins that **every** newly reachable
+    /// row charges exactly the price the picker displayed for it.
+    ///
+    /// It also pins, rather than hides, the one place that is *not* true.
+    /// Two CRB rows -- `Holy Symbol (Wooden)` and `Holy Symbol (Silver)` --
+    /// carry the same `KEY:` in two different categories, so the row the
+    /// `Equipmods` picker displays (1 gp / 25 gp) is not the first row in
+    /// the full table for that key (which has no cost, and so attaches
+    /// free). That is **pre-existing shipped behaviour**: the CRB-only
+    /// `equipment_cost_gp_headless_resolve` this gate replaced took the
+    /// first full-table match too, and produced the identical answer. It is
+    /// a real, separate defect in `crb::equipment_tables`'s 316 duplicate
+    /// keys, not fixable from this file -- disambiguating it means changing
+    /// the `key` the catalog puts on the wire.
+    #[test]
+    fn every_offered_modifier_row_charges_the_price_the_picker_displayed() {
+        let offered = offered_modifier_rows();
+        let mut divergent: Vec<(&str, &str)> = Vec::new();
+        let mut priced_non_crb = 0usize;
+
+        for entry in &offered {
+            let row = codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(&entry.key)
+                .expect("recognition is pinned by the test above");
+
+            // Compare against the FIRST offered row for this key: CRB
+            // carries 316 duplicate keys, so the filtered list holds both
+            // members of each pair and only the first is reachable by key.
+            let displayed = offered
+                .iter()
+                .find(|candidate| candidate.key == entry.key)
+                .expect("the key came from this very list")
+                .cost_gp;
+
+            if row.cost_gp != displayed {
+                divergent.push((row.book, entry.key.as_str()));
+            }
+            if row.book != "CRB" && row.cost_gp.unwrap_or(0.0) > 0.0 {
+                priced_non_crb += 1;
+            }
+        }
+
+        divergent.sort_unstable();
+        divergent.dedup();
+        assert_eq!(
+            divergent,
+            vec![("CRB", "Holy Symbol (Silver)"), ("CRB", "Holy Symbol (Wooden)")],
+            "the display-vs-charge divergence set must stay exactly these two pre-existing CRB \
+             duplicate-key rows"
+        );
+        assert!(
+            divergent.iter().all(|(book, _)| *book == "CRB"),
+            "the widening must not add a single new display-vs-charge divergence"
+        );
+        assert_eq!(
+            priced_non_crb, 20,
+            "the 20 newly-reachable rows carrying a real non-zero price (ACG 11 + ARG 9) are \
+             exactly the rows a recognition-only fix would have attached for free"
+        );
+    }
+
+    /// The rules-core book codes and the desktop catalog's book codes must
+    /// stay the same set: a book present in one and not the other is
+    /// silently either an unofferable row or an unrecognizable one.
+    #[test]
+    fn the_catalog_and_the_resolver_agree_on_the_book_set() {
+        use codex::rules_core::equipment_resolver::equipment_catalog_rows;
+        let resolver_books: std::collections::BTreeSet<&str> =
+            equipment_catalog_rows().iter().map(|row| row.book).collect();
+        let catalog_books: std::collections::BTreeSet<&str> =
+            crate::equipment_catalog::EQUIPMENT_CATALOG_BOOKS.iter().copied().collect();
+        assert_eq!(resolver_books, catalog_books);
+    }
+
+    /// End-to-end through the real command: ARG's `Material ~ Whipwood`
+    /// was refused on screen as unrecognized. It must now attach **and be
+    /// charged its real `arg_equipmods.lst` `COST:500`** -- 50,000 cp.
+    /// Attaching it for free would be silent mispricing, strictly worse
+    /// than the refusal this replaces.
+    #[test]
+    fn a_previously_refused_arg_modifier_attaches_and_is_charged_its_real_corpus_cost() {
+        let root = tempdir("attach-modifier-arg-whipwood");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 60_000).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Material ~ Whipwood",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(
+                    money.total_copper, 10_000,
+                    "60,000 cp minus ARG's real 500 gp (50,000 cp) Whipwood price"
+                );
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("an offered ARG modifier must attach, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections[0].applied_modifiers,
+            vec!["Material ~ Whipwood".to_string()],
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The affordability path works for the newly reachable books too: the
+    /// same ARG modifier is `Blocked` -- with the real price in the
+    /// message, not a recognition error -- when the character cannot
+    /// afford it, and nothing is charged or attached.
+    #[test]
+    fn a_previously_refused_arg_modifier_blocks_on_price_when_unaffordable() {
+        let root = tempdir("attach-modifier-arg-unaffordable");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 3_500).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Material ~ Whipwood",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "money.equipment_attach_modifier.insufficient_funds"),
+                    "must fail on price, not on recognition: {diagnostics:?}"
+                );
+                assert!(
+                    diagnostics.iter().any(|d| d.message.contains("50000 cp")),
+                    "the real ARG price must appear in the message: {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("an unaffordable modifier must never attach")
+            }
+        }
+
+        assert_eq!(load_character_money_at_root(&root).unwrap().total_copper, 3_500);
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(reloaded.character_input.chosen.equipment_selections[0]
+            .applied_modifiers
+            .is_empty());
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// End-to-end through the real command: PU's `ABP ~ +3 Attunement ~
+    /// Armor` was refused on screen. `pu_equipmods.lst` carries no `COST:`
+    /// token on any of its 42 rows, so this attaches free -- and that is
+    /// the corpus truth, identical to how CRB's own formula-priced `+1`
+    /// enhancement has always behaved, not a fabricated zero.
+    #[test]
+    fn a_previously_refused_pu_modifier_attaches_free_because_its_corpus_row_has_no_cost_token() {
+        let root = tempdir("attach-modifier-pu-abp");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        // Balance stays at 0 cp: any charge at all would Block here, so a
+        // successful attach proves the free path for real.
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "ABP ~ +3 Attunement ~ Armor",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Attached { money, .. } => {
+                assert_eq!(money.total_copper, 0);
+            }
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                panic!("an offered PU modifier must attach, got Blocked: {diagnostics:?}")
+            }
+        }
+
+        assert_eq!(
+            codex::rules_core::equipment_resolver::equipment_catalog_row_by_key(
+                "ABP ~ +3 Attunement ~ Armor"
+            )
+            .and_then(|row| row.cost_gp),
+            None,
+            "free because the corpus row genuinely has no COST: token, not because the price \
+             lookup failed to find the row"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert_eq!(
+            reloaded.character_input.chosen.equipment_selections[0].applied_modifiers,
+            vec!["ABP ~ +3 Attunement ~ Armor".to_string()],
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// **CRB control.** The modifier that was already correctly failing on
+    /// price still fails on price, with the identical diagnostic id and the
+    /// identical 100,000 cp figure observed on screen before the change.
+    #[test]
+    fn the_crb_control_modifier_still_blocks_on_exactly_the_same_price() {
+        let root = tempdir("attach-modifier-crb-control");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        adjust_character_money_at_root(&root, 3_500).expect("funding should succeed");
+
+        let response = attach_equipment_modifier_at_root(
+            &root,
+            "item:longsword",
+            "Material ~ Mithril ~ Armor / Light",
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("attach call should not error");
+
+        match response {
+            AttachEquipmentModifierResponse::Blocked { diagnostics } => {
+                assert!(
+                    diagnostics
+                        .iter()
+                        .any(|d| d.id == "money.equipment_attach_modifier.insufficient_funds"),
+                    "{diagnostics:?}"
+                );
+                assert!(
+                    diagnostics.iter().any(|d| d.message.contains(
+                        "costs 100000 cp but the character's balance is only 3500 cp"
+                    )),
+                    "the CRB row's message must be byte-identical to the pre-change behaviour: \
+                     {diagnostics:?}"
+                );
+            }
+            AttachEquipmentModifierResponse::Attached { .. } => {
+                panic!("the CRB control must still block on price")
+            }
+        }
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     // ----- `add_feat_selection` (v0.6 alpha swarm) -----
 
     #[test]
@@ -4509,6 +6581,513 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-27: feat prerequisite enforcement -----
+
+    /// The operator's exact reported defect, at the mutation boundary:
+    /// **a Fighter 1 was allowed to take Improved Two-Weapon Fighting.**
+    /// The guard must refuse, name every unmet prerequisite, and leave the
+    /// saved character untouched.
+    #[test]
+    fn a_fighter_1_is_refused_improved_two_weapon_fighting_with_the_reasons() {
+        let root = tempdir("add-feat-prereq-refused");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
+
+        let error = add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Improved Two-Weapon Fighting",
+            None,
+            "2026-07-31T00:00:00Z",
+        )
+        .expect_err("a Fighter 1 must not be able to take Improved Two-Weapon Fighting");
+
+        assert!(error.contains("Improved Two-Weapon Fighting"), "{error}");
+        assert!(error.contains("base attack bonus +6"), "{error}");
+        assert!(error.contains("Two-Weapon Fighting feat"), "{error}");
+        assert!(error.contains("DEX 17"), "{error}");
+
+        let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
+        assert_eq!(before, after, "a refused feat must not be written to disk");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// ...and a build that legitimately qualifies still goes through the
+    /// same guarded path. A guard that refuses everything is not
+    /// enforcement.
+    #[test]
+    fn a_qualified_fighter_6_is_allowed_improved_two_weapon_fighting() {
+        let root = tempdir("add-feat-prereq-allowed");
+        let mut envelope = level_up_test_envelope("race:human", 6);
+        envelope.character_input.chosen.ability_scores.dexterity = 17;
+        envelope
+            .character_input
+            .chosen
+            .selected_feats
+            .push("Two-Weapon Fighting".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Improved Two-Weapon Fighting",
+            None,
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("a BAB +6 / Dex 17 / TWF fighter qualifies");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(reloaded
+            .character_input
+            .chosen
+            .selected_feats
+            .iter()
+            .any(|feat| feat == "Improved Two-Weapon Fighting"));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A prerequisite-free feat must still be addable -- the guard must not
+    /// have become a blanket refusal.
+    #[test]
+    fn a_feat_with_no_prerequisites_is_still_added_through_the_guard() {
+        let root = tempdir("add-feat-prereq-free");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "feat:toughness",
+            None,
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("Toughness has no corpus prerequisites");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(reloaded
+            .character_input
+            .chosen
+            .selected_feats
+            .iter()
+            .any(|feat| feat == "feat:toughness"));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- Selection removal -----
+
+    /// The reported defect, end to end: a feat that moves a real number is
+    /// added, the number moves, the feat is removed, and the number goes
+    /// back — **read from a fresh load off disk**, not from the mutation's
+    /// own response, so a removal that left a stale computed value on disk
+    /// would fail here.
+    ///
+    /// Toughness is the probe because its effect is a plain arithmetic
+    /// change to max HP (`+1` per character level, minimum 3), so "the
+    /// number moved" is checkable rather than a matter of interpretation.
+    #[test]
+    fn removing_a_feat_returns_the_number_it_moved_and_survives_reload() {
+        let root = tempdir("remove-feat-round-trip");
+        let envelope = level_up_test_envelope("race:human", 3);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        // Read through the exact command the Defense tab reads through, off
+        // a fresh load, so this asserts the number a player actually sees.
+        let max_hp_now = |root: &Path| -> i16 {
+            load_character_durability_at_root(root)
+                .expect("durability should compute for a single-class Fighter")
+                .max_hp
+        };
+
+        let baseline = max_hp_now(&root);
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Toughness",
+            None,
+            "2026-08-01T00:00:00Z",
+        )
+        .expect("Toughness has no prerequisites");
+        let with_feat = max_hp_now(&root);
+        assert!(
+            with_feat > baseline,
+            "Toughness must move max HP for the removal test to mean anything: \
+             baseline {baseline}, with feat {with_feat}"
+        );
+
+        remove_feat_selection_at_root(&root, "Toughness", None, "2026-08-01T00:01:00Z")
+            .expect("removing a held feat with no dependents must succeed");
+
+        let after_removal = max_hp_now(&root);
+        assert_eq!(
+            after_removal, baseline,
+            "removing Toughness must return max HP to its pre-feat value"
+        );
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            !reloaded
+                .character_input
+                .chosen
+                .selected_feats
+                .iter()
+                .any(|feat| feat == "Toughness"),
+            "the removed feat must be gone from the persisted character"
+        );
+        assert_eq!(reloaded.saved_at, "2026-08-01T00:01:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The dependency guard, on a real corpus chain: Great Cleave's own
+    /// `PRE` tokens name Cleave, so removing Cleave out from under it must
+    /// be refused with both feats named — and must leave the saved
+    /// character untouched.
+    #[test]
+    fn removing_a_feat_another_held_feat_depends_on_is_refused_with_the_reason() {
+        let root = tempdir("remove-feat-dependency-refused");
+        let envelope = level_up_test_envelope("race:human", 6);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Cleave",
+            None,
+            "2026-08-01T00:00:00Z",
+        )
+        .expect("a Fighter 6 qualifies for Cleave");
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Great Cleave",
+            None,
+            "2026-08-01T00:01:00Z",
+        )
+        .expect("Cleave is now held, so Great Cleave qualifies");
+
+        let before = SavedCharacterStore::load(&root).unwrap().character_input;
+
+        let error = remove_feat_selection_at_root(&root, "Cleave", None, "2026-08-01T00:02:00Z")
+            .expect_err("Great Cleave depends on Cleave, so removing Cleave must be refused");
+
+        assert!(error.contains("Cleave"), "{error}");
+        assert!(error.contains("Great Cleave"), "{error}");
+
+        let after = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert_eq!(
+            before.chosen.selected_feats, after.chosen.selected_feats,
+            "a refused removal must not touch the saved character"
+        );
+
+        // ...and the guard is a dependency guard, not a blanket refusal:
+        // remove the dependent first and the prerequisite comes out fine.
+        remove_feat_selection_at_root(&root, "Great Cleave", None, "2026-08-01T00:03:00Z")
+            .expect("the leaf of the chain has no dependents");
+        remove_feat_selection_at_root(&root, "Cleave", None, "2026-08-01T00:04:00Z")
+            .expect("with Great Cleave gone, Cleave is removable");
+
+        let reloaded = SavedCharacterStore::load(&root).unwrap().character_input;
+        assert!(!reloaded.chosen.selected_feats.iter().any(|f| f == "Cleave"));
+        assert!(!reloaded
+            .chosen
+            .selected_feats
+            .iter()
+            .any(|f| f == "Great Cleave"));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A feat the character never took cannot be "removed" successfully.
+    /// A `Saved` response for a removal that removed nothing is exactly
+    /// the `success: true` lie `no-stub-mvp-doctrine.md` forbids.
+    #[test]
+    fn removing_a_feat_the_character_does_not_hold_fails_honestly() {
+        let root = tempdir("remove-feat-not-held");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        let before = SavedCharacterStore::load(&root).unwrap().saved_at;
+
+        let error =
+            remove_feat_selection_at_root(&root, "Toughness", None, "2026-08-01T00:00:00Z")
+                .expect_err("a feat that is not held cannot be removed");
+
+        assert!(error.contains("does not hold it"), "{error}");
+        assert_eq!(
+            SavedCharacterStore::load(&root).unwrap().saved_at,
+            before,
+            "a failed removal must not re-save the character"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Matching is by feat identity, not string equality: a feat seeded as
+    /// the engine token `feat:toughness` is removable by the catalog key
+    /// `Toughness` the picker uses, and vice versa. Otherwise a feat would
+    /// be unremovable purely because of which path added it.
+    #[test]
+    fn a_feat_is_removable_in_either_id_shape() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.selected_feats = vec!["feat:toughness".to_owned()];
+
+        assert!(apply_remove_feat_selection(&mut input, "Toughness", None));
+        assert!(input.chosen.selected_feats.is_empty());
+
+        input.chosen.selected_feats = vec!["Toughness".to_owned()];
+        assert!(apply_remove_feat_selection(&mut input, "feat:toughness", None));
+        assert!(input.chosen.selected_feats.is_empty());
+    }
+
+    /// One copy comes out, not every copy — `selected_feats` legitimately
+    /// holds a chooser feat twice — and the last copy takes its now-orphaned
+    /// recorded target with it.
+    #[test]
+    fn removing_a_chooser_feat_removes_one_copy_and_finally_its_orphaned_target() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.selected_feats.clear();
+        input.chosen.selected_choices.clear();
+        apply_add_feat_selection_with_target(
+            &mut input,
+            "Weapon Focus",
+            resolve_feat_target_choice("Weapon Focus", Some("Longsword")).unwrap(),
+        );
+        apply_add_feat_selection_with_target(
+            &mut input,
+            "Weapon Focus",
+            resolve_feat_target_choice("Weapon Focus", Some("Dagger")).unwrap(),
+        );
+        assert_eq!(input.chosen.selected_feats.len(), 2);
+        assert_eq!(input.chosen.selected_choices.len(), 2);
+
+        // Naming a target takes exactly that target, and one copy.
+        assert!(apply_remove_feat_selection(&mut input, "Weapon Focus", Some("Longsword")));
+        assert_eq!(input.chosen.selected_feats.len(), 1);
+        assert_eq!(input.chosen.selected_choices.len(), 1);
+        assert!(input.chosen.selected_choices[0]
+            .selection_id
+            .to_lowercase()
+            .contains("dagger"));
+
+        // The last copy leaves no orphaned target behind.
+        assert!(apply_remove_feat_selection(&mut input, "Weapon Focus", None));
+        assert!(input.chosen.selected_feats.is_empty());
+        assert!(
+            input.chosen.selected_choices.is_empty(),
+            "a target for a feat the character no longer holds must not survive: {:?}",
+            input.chosen.selected_choices
+        );
+    }
+
+    /// Forgetting a spell removes every acquisition mode it was recorded
+    /// in. `record_and_prepare_spell_selection` writes a `Known` and a
+    /// `Prepared` entry together, so removing only one half would leave a
+    /// spell prepared that the character no longer knows.
+    #[test]
+    fn removing_a_spell_forgets_every_acquisition_mode_of_it() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.spells_selected.clear();
+        apply_record_and_prepare_spell_selection(&mut input, "Magic Missile", "class:wizard");
+        apply_add_spell_selection(
+            &mut input,
+            "Shield",
+            "class:wizard",
+            AcquisitionMode::Known,
+        );
+        assert_eq!(input.chosen.spells_selected.len(), 3);
+
+        assert!(apply_remove_spell_selection(
+            &mut input,
+            "Magic Missile",
+            "class:wizard"
+        ));
+
+        assert_eq!(input.chosen.spells_selected.len(), 1);
+        assert_eq!(input.chosen.spells_selected[0].spell_id, "Shield");
+        assert!(
+            !apply_remove_spell_selection(&mut input, "Magic Missile", "class:wizard"),
+            "removing an already-forgotten spell must report that it removed nothing"
+        );
+    }
+
+    /// A spell the character never learned cannot be "removed" successfully.
+    #[test]
+    fn removing_a_spell_the_character_never_learned_fails_honestly() {
+        let root = tempdir("remove-spell-not-known");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let error = remove_spell_selection_at_root(
+            &root,
+            "Magic Missile",
+            "class:wizard",
+            "2026-08-01T00:00:00Z",
+        )
+        .expect_err("a spell that was never learned cannot be forgotten");
+
+        assert!(error.contains("Magic Missile"), "{error}");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Dropping a carried item takes one entry with its applied equipmods,
+    /// leaves the second copy alone, and survives a reload.
+    #[test]
+    fn removing_equipment_drops_one_entry_with_its_modifiers() {
+        let root = tempdir("remove-equipment-round-trip");
+        // Uses the ids `compose_character_input` really seeds
+        // (`item:longsword`), not invented catalog keys — an id the corpus
+        // cannot resolve would be discarded by the recompute gate and the
+        // test would be measuring the gate, not the removal.
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        apply_add_equipment_selection(
+            &mut envelope.character_input,
+            "item:longsword",
+            ActiveState::EquippedActive,
+        );
+        let before = envelope.character_input.chosen.equipment_selections.len();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response =
+            remove_equipment_selection_at_root(&root, "item:longsword", "2026-08-01T00:00:00Z")
+                .expect("a carried item must be removable");
+        match response {
+            CreateCharacterResponse::Saved { .. } => {}
+            CreateCharacterResponse::Blocked { diagnostics } => {
+                panic!("dropping one of two longswords must still compute: {diagnostics:?}")
+            }
+        }
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        let after = &reloaded.character_input.chosen.equipment_selections;
+        assert_eq!(after.len(), before - 1, "exactly one entry comes out");
+        assert_eq!(
+            after
+                .iter()
+                .filter(|selection| selection.item_id == "item:longsword")
+                .count(),
+            1,
+            "only the named copy comes out — the second longsword stays"
+        );
+        assert_eq!(reloaded.saved_at, "2026-08-01T00:00:00Z");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The equipmods attached to a selection leave with the selection they
+    /// live on — PCGen's `CUSTOMIZATION:EQMOD=` convention gives them no
+    /// independent entry of their own, so leaving them behind would orphan
+    /// a `+1` onto a weapon the character no longer carries.
+    ///
+    /// Asserted on the pure function rather than through the store because
+    /// `SavedCharacterStore`'s `equipment_modifier` line is colon-delimited
+    /// and cannot round-trip a colon-bearing modifier id — a real
+    /// pre-existing persistence limit, unrelated to removal, that this test
+    /// deliberately does not paper over.
+    #[test]
+    fn removing_equipment_takes_its_applied_modifiers_with_it() {
+        let mut input = compose_character_input(&request_for("race:human", 1));
+        input.chosen.equipment_selections.clear();
+        apply_add_equipment_selection(&mut input, "item:longsword", ActiveState::EquippedActive);
+        apply_add_equipment_selection(&mut input, "item:longsword", ActiveState::EquippedActive);
+        assert!(apply_attach_equipment_modifier(
+            &mut input,
+            "item:longsword",
+            "item:masterwork_component"
+        ));
+        assert_eq!(input.chosen.equipment_selections[0].applied_modifiers.len(), 1);
+
+        assert!(apply_remove_equipment_selection(&mut input, "item:longsword"));
+
+        assert_eq!(input.chosen.equipment_selections.len(), 1);
+        assert!(
+            input.chosen.equipment_selections[0]
+                .applied_modifiers
+                .is_empty(),
+            "the modifier went out with the entry it was attached to"
+        );
+        assert!(apply_remove_equipment_selection(&mut input, "item:longsword"));
+        assert!(!apply_remove_equipment_selection(&mut input, "item:longsword"));
+    }
+
+    /// An item the character does not carry cannot be "removed" successfully.
+    #[test]
+    fn removing_equipment_the_character_does_not_carry_fails_honestly() {
+        let root = tempdir("remove-equipment-not-carried");
+        let mut envelope = level_up_test_envelope("race:human", 1);
+        envelope.character_input.chosen.equipment_selections.clear();
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let error =
+            remove_equipment_selection_at_root(&root, "Longsword", "2026-08-01T00:00:00Z")
+                .expect_err("an item that is not carried cannot be dropped");
+
+        assert!(error.contains("does not carry it"), "{error}");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The picker's data source: all 690 records come back, ineligible ones
+    /// included and marked with a reason. Removing them would hide the
+    /// rules from the player instead of explaining them.
+    #[test]
+    fn list_feats_for_character_marks_every_record_and_removes_none() {
+        let root = tempdir("list-feats-eligibility");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response =
+            list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
+                .expect("listing should succeed");
+
+        assert_eq!(response.entries.len(), 690, "no record may be filtered away");
+        for entry in &response.entries {
+            let eligibility = entry
+                .eligibility
+                .as_ref()
+                .unwrap_or_else(|| panic!("'{}' came back with no verdict at all", entry.key));
+            if eligibility.eligible {
+                assert!(eligibility.unavailable_reason.is_none());
+                assert!(eligibility.unmet.is_empty());
+            } else {
+                let reason = eligibility
+                    .unavailable_reason
+                    .as_deref()
+                    .unwrap_or_default();
+                assert!(
+                    !reason.trim().is_empty(),
+                    "'{}' is greyed out with no reason -- a dead affordance",
+                    entry.key
+                );
+                assert!(!eligibility.unmet.is_empty());
+            }
+        }
+
+        let improved_twf = response
+            .entries
+            .iter()
+            .find(|entry| entry.key == "Improved Two-Weapon Fighting")
+            .expect("still offered, just unavailable");
+        assert!(!improved_twf.eligibility.as_ref().unwrap().eligible);
+
+        let toughness = response
+            .entries
+            .iter()
+            .find(|entry| entry.key == "Toughness")
+            .expect("Toughness is in the catalog");
+        assert!(toughness.eligibility.as_ref().unwrap().eligible);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The character-less catalog commands must keep their exact previous
+    /// wire shape -- no `eligibility` key at all, not a `null` one.
+    #[test]
+    fn the_character_less_catalog_sends_no_eligibility_key() {
+        let response = crate::feat_catalog::build_feat_catalog();
+        assert_eq!(response.entries.len(), 690);
+        assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
+        let json = serde_json::to_string(&response.entries[0]).expect("serialises");
+        assert!(!json.contains("eligibility"), "{json}");
     }
 
     // ----- `add_spell_selection` (Criterion 18) -----
@@ -6264,3 +8843,4 @@ mod tests {
         assert_eq!(preview.character_level, 4);
     }
 }
+

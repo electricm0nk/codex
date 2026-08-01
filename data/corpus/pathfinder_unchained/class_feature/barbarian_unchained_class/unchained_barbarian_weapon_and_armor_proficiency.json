@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:21:39Z",
+  "data": {
+    "key": "Unchained Barbarian ~ Weapon and Armor Proficiency",
+    "name": "Weapon and Armor Proficiency",
+    "class_key": "Barbarian ~ Unchained Class",
+    "base_class_key": "Barbarian",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Unchained Barbarian Class Feature",
+      "ClassFeatures",
+      "SpecialQuality"
+    ],
+    "min_level": null,
+    "is_granted": true,
+    "visible": "DISPLAY",
+    "class_skills": [],
+    "description": "A barbarian is proficient with all simple and martial weapons, light armor, medium armor, and shields (except tower shields).",
+    "source_page": "p.8",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Unchained Barbarian ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Unchained Barbarian Class Feature.ClassFeatures.SpecialQuality"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "SERVESAS",
+        "value": "ABILITY=Special Ability|Barbarian ~ Weapon and Armor Proficiency"
+      },
+      {
+        "key": "DESC",
+        "value": "A barbarian is proficient with all simple and martial weapons, light armor, medium armor, and shields (except tower shields)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Auto|Weapon Prof ~ Simple"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Weapon Prof ~ Martial|PREVAREQ:Barbarian_CF_WeaponProficiencies,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Shield Prof|TYPE=ArmorProfMedium|PREVAREQ:Barbarian_CF_ArmorProficiencies,0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.8"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_abilities_class.lst",
+    "sha256": "2becbb0524bd4c367cc1273434c20bcd8e42e3e08abd372f99b005e69e8c4725",
+    "line": 288,
+    "record_key": "Unchained Barbarian ~ Weapon and Armor Proficiency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

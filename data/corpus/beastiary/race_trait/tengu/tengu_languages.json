@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Tengu ~ Languages",
+    "name": "Languages",
+    "race_key": "Tengu",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tengu Racial Trait",
+      "Tengu Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Tengu_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Tengus begin play speaking Common and Tengu. Tengus with high Intelligence scores can choose any languages they want (except for secret languages, such as Druidic).",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tengu ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tengu Racial Trait.Tengu Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Tengu_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Tengus begin play speaking Common and Tengu. Tengus with high Intelligence scores can choose any languages they want (except for secret languages, such as Druidic)."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Any Spoken"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Tengu"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tengu/tengu_abilities_race.lst",
+    "sha256": "96ecac0ad8fd92fc4bc2b89e0cb1e4bee96de0f78b6ebf8ce4d7464d34f92dfd",
+    "line": 23,
+    "record_key": "Tengu ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

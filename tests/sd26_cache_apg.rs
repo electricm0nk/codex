@@ -10,7 +10,17 @@
 //! §11.4`, re-verified this cycle directly from the compiled
 //! `rules_tables::apg` module before generation — see this cycle's
 //! receipt): equipment `description` 331/338 (97.9%); spell `full_text`
-//! 284/297 (95.6%); spell `description` 285/297.
+//! 296/297 (99.7%); spell `description` 297/297.
+//!
+//! **Those two spell ceilings were 284/297 and 285/297 until 2026-07-31.**
+//! The shortfall was PCGen `.COPY=` delta rows whose base spell lives in
+//! CRB's `cr_spells.lst` rather than in `apg_spells.lst`: they carry no
+//! `SCHOOL:`, `CLASSES:` or `DESC:` token of their own, and the APG ingest
+//! stopped at the book boundary rather than reaching across for the base.
+//! Sixteen records now carry `source.kind: "lst_inherited_copy"` naming the
+//! base they resolved against; twelve of them previously reached
+//! `list_spell_catalog` as a key and three nulls. The one remaining
+//! `full_text: false` is `Threefold Aspect`, unrelated.
 
 use std::collections::{BTreeSet, HashSet};
 use std::fs;
@@ -185,8 +195,10 @@ fn spell_cache_has_all_297_records_with_real_full_text_ceiling() {
         assert!(slugs.insert(stem.clone()), "{}: duplicate spell cache filename {stem}", path.display());
     }
 
-    assert_eq!(has_description, 285, "real spell description ceiling (decisions.md §11.4)");
-    assert_eq!(full_text_true, 284, "real spell full_text ceiling (decisions.md §11.4, 95.6%)");
+    // Was 285 / 284 before the cross-book `.COPY=` resolution; see this
+    // file's module doc. Do not relax these — re-derive them.
+    assert_eq!(has_description, 297, "real spell description ceiling");
+    assert_eq!(full_text_true, 296, "real spell full_text ceiling (99.7%)");
 }
 
 #[test]
@@ -214,9 +226,36 @@ fn spell_cache_correctly_attributes_the_three_provenance_kinds_beyond_plain_lst_
         assert_eq!(record["source"]["kind"], "lst_corrected_ingest", "{key} should be lst_corrected_ingest");
     }
 
-    // A known honest gap: description stays null, never fabricated.
-    let gap = records.get("Wall of Thorms").expect("Wall of Thorms present");
-    assert!(gap["data"]["description"].is_null(), "Wall of Thorms is a documented honest gap (corpus typo, cross-book base)");
+    // Cross-book `.COPY=` inheritance (16 records), including the 11 that
+    // used to render as blank rows.
+    for key in [
+        "Beast Shape I (Animals Only)",
+        "Planar Binding (Demons Only)",
+        "Planar Ally (Archon Only)",
+        "Meteor Swarm (Dealing Cold Damage)",
+        "Blindness/Deafness (Only Cause Blindness)",
+    ] {
+        let record = records.get(key).unwrap_or_else(|| panic!("missing spell record {key}"));
+        assert_eq!(record["source"]["kind"], "lst_inherited_copy", "{key} should be lst_inherited_copy");
+        assert!(!record["source"]["inherited_from_record_key"].is_null(), "{key} names its base");
+    }
+
+    // `Wall of Thorms` USED TO BE asserted here as "a documented honest gap
+    // (corpus typo, cross-book base)" whose description stays null. Half of
+    // that was right and half was a gap being mistaken for a decision.
+    //
+    // `apg_spells.lst:1555` is `Wall of Thorms  DOMAINS:Blood Subdomain=5
+    // SOURCELINK:.../spells/wallOfThorns.html#_wall-of-thorns`. It is meant
+    // to be `Wall of Thorns.MOD` — `:1431` in the same file is exactly that
+    // construct, correctly spelled and suffixed, and `Thorms` occurs once in
+    // the entire PCGen checkout. So the typo is genuinely upstream and the
+    // KEY is still preserved verbatim (asserted below); what was never
+    // honest was leaving the record blank, because the base spell it points
+    // at was readable all along.
+    let repaired = records.get("Wall of Thorms").expect("Wall of Thorms present, key unchanged");
+    assert!(!repaired["data"]["description"].is_null());
+    assert_eq!(repaired["source"]["inherited_from_record_key"], "Wall of Thorns");
+    assert!(!records.contains_key("Wall of Thorns"), "the typo'd key is not silently renamed");
 }
 
 #[test]

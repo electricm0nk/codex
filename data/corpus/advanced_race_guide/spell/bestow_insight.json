@@ -1,12 +1,12 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
+  "ingested_at": "2026-07-31T21:43:42Z",
   "data": {
     "key": "Bestow Insight",
     "school": "Enchantment",
     "level": 2,
-    "description": "When casting this spell, choose a single skill that you have at least one rank in. The target gains a +%1 insight bonus on skill checks with this skill and is considered trained in that skill. Furthermore, once before the spell's duration, the target can choose to roll two checks and take the greater result. Doing so ends the spell's other effects.|min(6,2+CASTERLEVEL/4)"
+    "description": "When casting this spell, choose a single skill that you have at least one rank in. The target gains a insight bonus on skill checks with this skill and is considered trained in that skill. Furthermore, once before the spell's duration, the target can choose to roll two checks and take the greater result. Doing so ends the spell's other effects."
   },
   "source": {
     "kind": "lst_token",

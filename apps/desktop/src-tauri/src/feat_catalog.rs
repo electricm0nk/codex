@@ -24,7 +24,49 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::feat_effects;
+use codex::rules_core::feat_prereqs::pre_tokens::CharacterPrereqFacts;
+use codex::rules_core::feat_prereqs::{evaluate_catalog_feat_prerequisites, FeatPrerequisiteReport};
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+
+/// One feat's prerequisite verdict for the character the picker is open
+/// for. Absent (`None`) when the catalog is served with no character
+/// context at all -- `list_feats` / `list_feat_catalog`, which the Tester
+/// Workbench and the release-checks surfaces read.
+///
+/// The frontend greys a row out when `eligible` is false and shows
+/// `unavailableReason` on it. `unverified` is shown as a note on rows that
+/// stay selectable, so a player is told what could not be checked instead
+/// of being quietly allowed or quietly denied.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct FeatEligibilityDto {
+    pub eligible: bool,
+    /// One line, already joined, for the greyed-out row. `None` exactly
+    /// when `eligible` is true.
+    pub unavailable_reason: Option<String>,
+    /// The prerequisites this character satisfies.
+    pub met: Vec<String>,
+    /// The prerequisites this character does not satisfy. Empty when
+    /// `eligible`.
+    pub unmet: Vec<String>,
+    /// Prerequisites the engine could not evaluate. These never block --
+    /// see `feat_prereqs::pre_tokens`' three-outcome design.
+    pub unverified: Vec<String>,
+    /// How many `PRE`-family tokens the corpus record carries. `0` means
+    /// the feat genuinely has no prerequisites.
+    pub prerequisite_count: usize,
+}
+
+fn map_eligibility_dto(report: &FeatPrerequisiteReport) -> FeatEligibilityDto {
+    FeatEligibilityDto {
+        eligible: report.is_eligible,
+        unavailable_reason: report.unavailable_reason(),
+        met: report.met.clone(),
+        unmet: report.unmet.iter().map(|failed| failed.reason.clone()).collect(),
+        unverified: report.unverified.iter().map(|warning| warning.message.clone()).collect(),
+        prerequisite_count: report.prerequisite_token_count,
+    }
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -57,6 +99,15 @@ pub struct FeatCatalogEntryDto {
     /// the feats in `feat_effects::CHOOSER_FEAT_CONTRACTS` are marked, so a
     /// prompt shown to a player always leads to real arithmetic.
     pub chooser_target_kind: Option<String>,
+    /// This feat's prerequisite verdict for the character the picker is
+    /// open for, or `None` when the catalog was requested with no
+    /// character (`list_feats` / `list_feat_catalog`).
+    ///
+    /// `#[serde(skip_serializing_if)]` so the character-less callers send
+    /// no key at all rather than a literal `null` a frontend `!== undefined`
+    /// check would wave through as "checked, and fine".
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub eligibility: Option<FeatEligibilityDto>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -68,8 +119,10 @@ pub struct FeatCatalogResponse {
 fn map_catalog_entry(
     entry: &codex::rules_core::rules_tables::feats_all::FeatCatalogRecord,
     source: &str,
+    eligibility: Option<FeatEligibilityDto>,
 ) -> FeatCatalogEntryDto {
     FeatCatalogEntryDto {
+        eligibility,
         key: entry.key.to_string(),
         // Already the source book's own `FeatCategory` variant name
         // verbatim — the aggregate projects it there, over an exhaustive
@@ -79,7 +132,23 @@ fn map_catalog_entry(
         // `category_names_match_the_debug_form_of_every_variant`.
         category: entry.category.to_string(),
         name: entry.name.to_string(),
-        description: entry.description.map(|d| d.to_string()),
+        // Rendered, not copied. The Add Feat picker folds this straight
+        // into its `detail` line (`itemPickerFilter::mapFeatCatalogEntries`),
+        // so the raw corpus `DESC:` token reached the player verbatim.
+        //
+        // 17 of the 681 served descriptions carried PCGen syntax; partitioned
+        // by their first-detected leak that is 13 an unsubstituted `%N`
+        // ("%1 times per day"), 3 an undecoded `&nl;`, and ACG's
+        // `Twinned Feint` a trailing
+        // `|!PREABILITY:1,CATEGORY=FEAT,Improved Feint`. The remaining 664 are
+        // returned byte-identical — `render_pcgen_desc` rewrites nothing in
+        // prose that carries no PCGen syntax, which
+        // `feat_descriptions_are_rendered_and_otherwise_byte_identical` pins.
+        // `render_pcgen_desc` owns the treatment; this module does not
+        // re-decide it.
+        description: entry
+            .description
+            .map(|d| codex::rules_core::pcgen_desc::render_pcgen_desc(d).text),
         source: source.to_string(),
         chooser_target_kind: feat_effects::chooser_contract_for_feat(entry.key)
             .map(|contract| format!("{:?}", contract.target_kind)),
@@ -91,10 +160,23 @@ fn map_catalog_entry(
 /// Tauri command below — mirrors
 /// `equipment_catalog::build_equipment_catalog`.
 pub fn build_feat_catalog() -> FeatCatalogResponse {
+    build_feat_catalog_for(None)
+}
+
+fn build_feat_catalog_for(facts: Option<&CharacterPrereqFacts>) -> FeatCatalogResponse {
     let mut entries = Vec::new();
     for book in all_feat_tables() {
         let source = format!("{:?}", book.rule_set);
-        entries.extend(book.entries.iter().map(|entry| map_catalog_entry(entry, &source)));
+        entries.extend(book.entries.iter().map(|entry| {
+            let eligibility = facts.map(|facts| {
+                map_eligibility_dto(&evaluate_catalog_feat_prerequisites(
+                    entry,
+                    book.rule_set,
+                    facts,
+                ))
+            });
+            map_catalog_entry(entry, &source, eligibility)
+        }));
     }
     FeatCatalogResponse { entries }
 }
@@ -134,13 +216,38 @@ pub struct FeatCatalogFilter {
 /// testable wrapper behind the `list_feats` Tauri command below — mirrors
 /// `equipment_catalog::filter_equipment_catalog`.
 pub fn filter_feat_catalog(filter: &FeatCatalogFilter) -> FeatCatalogResponse {
+    filter_feat_catalog_for(filter, None)
+}
+
+/// `filter_feat_catalog`, with each surviving record's real prerequisite
+/// verdict for `facts` attached. Backs the `list_feats_for_character`
+/// command.
+///
+/// **This is what closes the "no feat prerequisite enforcement anywhere"
+/// defect at the UI boundary.** A Fighter 1 asking for the catalog gets
+/// Improved Two-Weapon Fighting back with `eligible: false` and the reason,
+/// so the picker can grey the row *and say why* -- rather than offering it,
+/// accepting it, and silently producing an illegal character. Every record
+/// surviving `filter` is still returned: an unavailable feat must be
+/// visible and explained, never removed from the list.
+pub fn filter_feat_catalog_with_eligibility(
+    filter: &FeatCatalogFilter,
+    facts: &CharacterPrereqFacts,
+) -> FeatCatalogResponse {
+    filter_feat_catalog_for(filter, Some(facts))
+}
+
+fn filter_feat_catalog_for(
+    filter: &FeatCatalogFilter,
+    facts: Option<&CharacterPrereqFacts>,
+) -> FeatCatalogResponse {
     let name_needle = filter
         .name_contains
         .as_ref()
         .filter(|needle| !needle.is_empty())
         .map(|needle| needle.to_lowercase());
 
-    let entries = build_feat_catalog()
+    let entries = build_feat_catalog_for(facts)
         .entries
         .into_iter()
         .filter(|entry| match &name_needle {
@@ -170,6 +277,79 @@ pub fn list_feats(filter: FeatCatalogFilter) -> FeatCatalogResponse {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The rendering `map_catalog_entry` now applies, pinned on both sides.
+    ///
+    /// The Add Feat picker was showing raw PCGen `DESC:` tokens. This asserts
+    /// two things at once: the leaking records really are rewritten, and the
+    /// rewrite touches **nothing else** — a renderer that reflowed all 681
+    /// descriptions would pass a leak check while quietly changing every feat
+    /// a player reads.
+    #[test]
+    fn feat_descriptions_are_rendered_and_otherwise_byte_identical() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+        use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+        use std::collections::BTreeMap;
+
+        let raw_by_key: BTreeMap<(String, &str), &str> = all_feat_tables()
+            .iter()
+            .flat_map(|table| {
+                table.entries.iter().filter_map(move |entry| {
+                    entry
+                        .description
+                        .map(|d| ((format!("{:?}", table.rule_set), entry.key), d))
+                })
+            })
+            .collect();
+
+        let mut with_description = 0usize;
+        let mut changed: Vec<&str> = Vec::new();
+        let mut raw_leaks = 0usize;
+        let catalog = build_feat_catalog();
+        for entry in &catalog.entries {
+            let Some(served) = entry.description.as_deref() else { continue };
+            with_description += 1;
+            let raw = raw_by_key[&(entry.source.clone(), entry.key.as_str())];
+            if leaked_pcgen_syntax(raw).is_some() {
+                raw_leaks += 1;
+            }
+            if served != raw {
+                changed.push(entry.key.as_str());
+            }
+            assert_eq!(
+                leaked_pcgen_syntax(served),
+                None,
+                "served feat {:?} still leaks",
+                entry.key
+            );
+        }
+
+        assert_eq!(with_description, 681, "9 of the 690 records carry no DESC: token");
+        assert_eq!(raw_leaks, 17, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 17, "exactly the leaking records are rewritten");
+        assert_eq!(
+            changed,
+            vec![
+                "Arcane Strike",
+                "Stunning Fist",
+                "Unfettered Familiar",
+                "Battle Cry",
+                "Befuddling Strike",
+                "Dazing Fist",
+                "Draining Strike",
+                "Faerie's Strike",
+                "Grasping Strike",
+                "Gruesome Slaughter",
+                "Paralyzing Strike",
+                "Raging Concentration",
+                "Recovered Rage",
+                "Staggering Fist",
+                "Twinned Feint",
+                "Winter's Strike",
+                "Wounded Paw Gambit",
+            ]
+        );
+    }
 
     #[test]
     fn catalog_spans_every_ingested_book_with_their_real_counts() {

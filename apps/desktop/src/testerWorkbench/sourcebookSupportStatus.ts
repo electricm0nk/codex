@@ -27,6 +27,15 @@
  *   `catalog_spans_every_ingested_book_with_their_real_counts`).
  * - feats — pinned per-source by `feat_catalog.rs`
  *   (Crb 185, Apg 172, Acg 129, Arg 187, Pu 17; 690 total).
+ * - races — the rows `race_catalog.rs` serves out of `data/corpus/<book>/`
+ *   through `list_race_catalog`, pinned by its
+ *   `every_book_code_is_a_declared_one_and_every_declared_code_is_present`
+ *   (CRB 67, B1 106; 173 total across 18 races). Only the Core Rulebook and
+ *   Bestiary 1 declare races; the Advanced Race Guide declares none of its
+ *   own (SD-27 `decisions.md` §25) and so gains no race line here. The 153
+ *   *alternate* racial traits ARG does declare are loaded but reach no
+ *   catalog surface yet, so claiming them would overstate what a tester can
+ *   actually browse.
  *
  * ## What "Ingested" claims, and what it deliberately does not
  *
@@ -66,7 +75,7 @@ export const INGESTED_SOURCEBOOKS: readonly IngestedSourcebook[] = [
   },
   {
     name: 'Bestiary 1',
-    contributes: '4 equipment records',
+    contributes: '4 equipment records, 11 races (106 racial trait rows)',
   },
 ];
 

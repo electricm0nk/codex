@@ -15,8 +15,8 @@
   "redistribution_posture": "ogl-notice-attached",
   "classified_at": "2026-07-27T20:38:09Z",
   "classified_by_cycle": "E2.0.9",
-  "screening_method_note": "This is a heuristic first-pass screen against a bounded, documented term list (the 20 canonical Golarion core deity names) run over every free-text `description` value in this book's records (monster records carry no free-text field at all -- only mechanical stat-block fields, verified by enumerating all data keys across all 41 monster/*.json). It is NOT an exhaustive human legal review, and no claim of exhaustive PI-freedom is made for the 4 equipment `description` values screened, beyond: no substring match against the documented term list was found.",
-  "records_processed": 45,
+  "screening_method_note": "This book's 164 records reached disk through TWO screening passes, and this note states both rather than implying one. PASS 1 -- cycle E2.0.9, 2026-07-27 -- covered the 45 records then on disk (41 monster + 4 equipment): a heuristic first-pass screen against a bounded, documented term list (the 20 canonical Golarion core deity names) run over every free-text `description` value in those records. The 41 monster records carry no free-text field at all -- only mechanical stat-block fields, verified by enumerating all data keys across all 41 monster/*.json -- so pass 1 had exactly 4 equipment `description` values to run over. PASS 2 covered the 119 records added on 2026-07-31 by `src/bin/ingest_races.rs` (11 race chassis + 108 standard racial traits): that binary runs a WIDER 54-term scan -- the same 20 deities plus 34 Golarion place and nation names -- over each record's `key`, `name` and `description`, and aborts the ingest with an error on any hit, so a record cannot reach disk unscreened. Zero matches were found in either pass. It is NOT an exhaustive human legal review, and no claim of exhaustive PI-freedom is made beyond: no substring match against the documented term lists was found.",
+  "records_processed": 164,
   "records_redacted": 0,
   "operator_sign_off": {
     "signed_off": false,

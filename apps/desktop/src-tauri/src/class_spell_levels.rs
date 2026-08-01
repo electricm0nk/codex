@@ -181,10 +181,20 @@ mod tests {
         }
     }
 
+    /// **580 and 578 while the per-class tables covered CRB+APG+ACG only;
+    /// 642 and 640 since SD-27 ingested the Advanced Race Guide's own
+    /// `CLASSES:` token** into
+    /// `advanced_race_guide::class_spell_levels`. ARG names Wizard on 62 of
+    /// its 92 spells and Sorcerer on the same 62, and none of those keys was
+    /// already on either list — hence exactly +62 on both. The engine-side
+    /// `the_two_layers_agree_wherever_they_overlap` pins that the two
+    /// layers never contradict each other where they do overlap.
+    ///
+    /// Re-derive rather than relax these when another book lands.
     #[test]
-    fn the_wizard_list_is_the_full_five_hundred_and_eighty() {
-        assert_eq!(levels_for("class:wizard").entries.len(), 580);
-        assert_eq!(levels_for("class:sorcerer").entries.len(), 578);
+    fn the_wizard_and_sorcerer_lists_carry_every_ingested_books_rows() {
+        assert_eq!(levels_for("class:wizard").entries.len(), 642);
+        assert_eq!(levels_for("class:sorcerer").entries.len(), 640);
     }
 
     /// **The join is one-directional, and that is what makes the known
@@ -313,6 +323,14 @@ mod tests {
     /// rendering got wrong for each class — the measurement that justifies
     /// this command, computed from what the two commands actually serve
     /// rather than asserted from a prior agent's note.
+    ///
+    /// **Every figure rose when SD-27 ingested ARG's per-class levels**
+    /// (Wizard 67 -> 79, Sorcerer 67 -> 79, Cleric 46 -> 60, Druid 52 -> 57,
+    /// Bard 13 -> 16, Ranger 8 -> 10), because ARG's records are now on
+    /// these lists and each one whose record `level` is the minimum across
+    /// its own `CLASSES:` groups reads wrong for the higher classes exactly
+    /// as CRB's do. Asserted as one vector so a drift shows every class at
+    /// once rather than only the first.
     #[test]
     fn the_catalog_level_disagrees_with_the_class_level_at_the_expected_rate() {
         let catalog: std::collections::HashMap<String, Option<u8>> = build_spell_catalog()
@@ -331,11 +349,22 @@ mod tests {
                 .count()
         };
 
-        assert_eq!(wrong_for("class:wizard"), 67);
-        assert_eq!(wrong_for("class:sorcerer"), 67);
-        assert_eq!(wrong_for("class:druid"), 52);
-        assert_eq!(wrong_for("class:cleric"), 46);
-        assert_eq!(wrong_for("class:bard"), 13);
-        assert_eq!(wrong_for("class:ranger"), 8);
+        let measured: Vec<(&str, usize)> =
+            ["class:wizard", "class:sorcerer", "class:druid", "class:cleric", "class:bard",
+             "class:ranger"]
+                .into_iter()
+                .map(|class_id| (class_id, wrong_for(class_id)))
+                .collect();
+        assert_eq!(
+            measured,
+            vec![
+                ("class:wizard", 79),
+                ("class:sorcerer", 79),
+                ("class:druid", 57),
+                ("class:cleric", 60),
+                ("class:bard", 16),
+                ("class:ranger", 10),
+            ]
+        );
     }
 }

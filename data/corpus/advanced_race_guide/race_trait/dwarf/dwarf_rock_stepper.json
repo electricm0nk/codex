@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Dwarf ~ Rock Stepper",
+    "name": "Rock Stepper",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceStonecunning"
+    ],
+    "description": "Dwarves with this racial trait can skillfully negotiate rocky terrain. They can ignore difficult terrain created by rubble, broken ground, or steep stairs when they take a 5-foot step. This racial trait replaces stonecunning.",
+    "source_page": "p.12",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Rock Stepper"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Rock Stepper],[!PREFACT:1,ABILITIES,Dwarf_ReplaceStonecunning=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves with this racial trait can skillfully negotiate rocky terrain. They can ignore difficult terrain created by rubble, broken ground, or steep stairs when they take a 5-foot step."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces stonecunning.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Rock Stepper"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.12"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Ignore difficult terrain created by rubble, broken ground, or steep stairs when taking a 5-foot step."
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceStonecunning|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 42,
+    "record_key": "Dwarf ~ Rock Stepper"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -232,7 +232,7 @@ fn catalog_matches_live_corpus_type_facet_counts() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };
@@ -295,7 +295,7 @@ fn catalog_effect_presence_matches_live_corpus_bonus_tokens() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };

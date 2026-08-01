@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T18:13:11Z",
+  "data": {
+    "key": "Duergar ~ Dwarf Traits (Replaces Stability)",
+    "name": "Dwarf Traits (Replaces Stability)",
+    "race_key": "Duergar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Duergar Racial Trait"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Duergar_ReplaceStability"
+    ],
+    "description": "Duergar can select any dwarf racial trait that replaces stability. They can select dwarf racial traits that replace the hardy dwarf racial trait by giving up duergar immunities instead.",
+    "source_page": "p.186",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duergar ~ Dwarf Traits (Replaces Stability)"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Duergar Racial Trait"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Duergar ~ Dwarf Traits (Replaces Stability)],[!PREFACT:1,ABILITIES,Duergar_ReplaceStability=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Duergar can select any dwarf racial trait that replaces stability. They can select dwarf racial traits that replace the hardy dwarf racial trait by giving up duergar immunities instead."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.186"
+      },
+      {
+        "key": "FACT",
+        "value": "Duergar_ReplaceStability|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "ABILITYPOOL",
+          "Duergar Dwarf Traits (Replaces Stability)",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 850,
+    "record_key": "Duergar ~ Dwarf Traits (Replaces Stability)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

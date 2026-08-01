@@ -1,7 +1,7 @@
 //! One-off generation entry point for the ACG JSON cache (SD-26 Epic 3,
 //! Criterion 3.3). Run via `cargo run --bin gen_cache_acg` with
 //! `PCGEN_CORPUS_ROOT` pointing at a local PCGen `data/` checkout
-//! (defaults to `/home/ubuntu/workspace/repos/pcgen/data`, the same
+//! (defaults to `$HOME/workspace/repos/pcgen/data`, the same
 //! default `gen_cache_apg`/`tests/sd17_b5_equipment.rs` and siblings
 //! already use). Writes
 //! `data/corpus/advanced_class_guide/{class,spell,equipment}/*.json`.
@@ -29,9 +29,17 @@ fn real_now_iso8601() -> String {
 }
 
 fn main() {
-    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let corpus_root = PathBuf::from(corpus_root);
+    // HOME-relative default: the operator keeps `workspace/` in the home
+    // directory and syncs it between machines, so this resolves correctly on
+    // any box. `PCGEN_CORPUS_ROOT` still wins when set.
+    let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
+        Ok(configured) => PathBuf::from(configured),
+        Err(_) => {
+            let home = std::env::var("HOME")
+                .expect("HOME must be set to locate the default PCGen corpus checkout");
+            PathBuf::from(home).join("workspace/repos/pcgen/data")
+        }
+    };
 
     let manifest_dir = env!("CARGO_MANIFEST_DIR");
     let out_dir = PathBuf::from(manifest_dir).join("data/corpus/advanced_class_guide");

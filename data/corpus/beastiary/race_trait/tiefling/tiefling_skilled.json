@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Tiefling ~ Skilled",
+    "name": "Skilled",
+    "race_key": "Tiefling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tiefling Racial Trait",
+      "Tiefling Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Tiefling_ReplaceSkilled",
+    "sets_replace_flags": [],
+    "description": "Tieflings gain a +2 racial bonus on Bluff and Stealth checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.Tiefling Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Tiefling_ReplaceSkilled=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Tieflings gain a +2 racial bonus on Bluff and Stealth checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Bluff, +2 Stealth"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Bluff,Stealth",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race.lst",
+    "sha256": "00e5df2aea67ee05c75a64f8116a0da2aacf03252d8dae24073ea196365c1960",
+    "line": 20,
+    "record_key": "Tiefling ~ Skilled"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

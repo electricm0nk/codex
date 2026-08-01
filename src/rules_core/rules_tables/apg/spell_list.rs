@@ -48,10 +48,41 @@
 //!   record's own fields when the variant line itself doesn't carry them.
 //!   A handful of these variants' bases (e.g. the `Planar Binding`/
 //!   `Planar Ally`/`Summon Monster` family) are themselves core-rulebook
-//!   spells living in `cr_spells.lst`, not `apg_spells.lst` — those stay
-//!   `None`/`None` here rather than reaching across books, a deliberate
-//!   scope boundary for this per-book module (cross-book spell variant
-//!   resolution is future work, not this cycle's).
+//!   spells living in `cr_spells.lst`, not `apg_spells.lst`.
+//!
+//!   **That cross-book boundary is now resolved (SD-27, 2026-07-31), and
+//!   it used to say "future work".** It cost a player eleven blank rows:
+//!   a `.COPY=` row carries no `SCHOOL:`, `CLASSES:` or `DESC:` token of
+//!   its own, so eleven variants whose base is a CRB spell arrived at
+//!   `list_spell_catalog` as a key and three nulls and rendered as empty
+//!   columns. Each now inherits its base record's school, level and
+//!   description from [`crb::spell_list`](crate::rules_core::rules_tables::crb::spell_list),
+//!   marked `// Inherited from CRB ...` at the entry. The values are
+//!   literals — this is a flat `const` table and cannot call a lookup at
+//!   compile time — so
+//!   `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`
+//!   re-reads the CRB record at runtime and requires equality, which is
+//!   what keeps a copy from drifting from what it copied.
+//!
+//!   All 15 cross-book `.COPY=` rows are resolved the same way, including
+//!   the four that were only *partly* resolved before (three
+//!   `Summon Monster` variants that had a school and text but no level,
+//!   and `Call Lightning Storm (Starsoul)`, which had neither).
+//!   `Call Lightning Storm (Starsoul)` keeps its own `description`: its
+//!   `.MOD` record at `apg_spells.lst:1075` overrides `DESC:` outright,
+//!   which is PCGen's layering — `.COPY=` takes the base, then a `.MOD`
+//!   replaces individual fields — so inheriting school and level while
+//!   keeping the overridden text is the faithful reading, not an
+//!   exception to it.
+//!
+//!   Note on `CLASSES:.CLEARALL`: eleven of these variants carry a
+//!   `<variant>.MOD CLASSES:.CLEARALL` line, which strips the copied class
+//!   list so the variant is granted by a subdomain rather than by a class
+//!   list. Their `level` still reports the base spell's level, matching
+//!   both the in-book precedent set by `Elemental Aura (Cold Only)` and
+//!   the `DOMAINS:...=N` grant level on their own `.MOD` rows (Planar
+//!   Binding's variants are `=6`, and Planar Binding is a 6th-level
+//!   spell). A blank level would be a worse answer, not a stricter one.
 //!
 //! **Real, honest, corpus-level gaps (not fabricatable, not a parsing
 //! defect):** 41 of 297 records lack a `SCHOOL:` and/or `CLASSES:` token
@@ -2209,81 +2240,91 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Blindness/Deafness` (see this module's `.COPY=` note).
         key: "Blindness/Deafness (Only Cause Blindness)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Necromancy),
+        level: Some(2),
+        description: Some("You call upon the powers of unlife to render the subject blinded or deafened, as you choose."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster V (Summons 1d3 Shadows)",
         school: Some(Pf1SchoolId::Conjuration),
-        level: None,
+        level: Some(5), // inherited from CRB `Summon Monster V`
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 5th-level list, 1d3 creatures of the same kind from the 4th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
         full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Binding` (see this module's `.COPY=` note).
         key: "Planar Binding (Demons Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar binding, except that you may call a single creature of 12 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 12. Each creature gets a saving throw, makes an independent attempt to escape, and must be individually persuaded to aid you."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Binding` (see this module's `.COPY=` note).
         key: "Planar Binding (Devils Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar binding, except that you may call a single creature of 12 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 12. Each creature gets a saving throw, makes an independent attempt to escape, and must be individually persuaded to aid you."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Ally` (see this module's `.COPY=` note).
         key: "Planar Ally (Agathions Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar ally, except you may call a single creature of 12 HD or less, or two creatures of the same kind whose HD total no more than 12. The creatures agree to help you and request your return payment together."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Ally` (see this module's `.COPY=` note).
         key: "Planar Ally (Archon Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar ally, except you may call a single creature of 12 HD or less, or two creatures of the same kind whose HD total no more than 12. The creatures agree to help you and request your return payment together."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Ally` (see this module's `.COPY=` note).
         key: "Planar Ally (Azata Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar ally, except you may call a single creature of 12 HD or less, or two creatures of the same kind whose HD total no more than 12. The creatures agree to help you and request your return payment together."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Beast Shape I` (see this module's `.COPY=` note).
         key: "Beast Shape I (Animals Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Transmutation),
+        level: Some(3),
+        description: Some("When you cast this spell, you can assume the form of any Small or Medium creature of the animal type. If the form you assume has any of the following abilities, you gain the listed ability: climb 30 feet, fly 30 feet [average maneuverability], swim 30 feet, darkvision 60 feet, low-light vision, and scent. Small animal: If the form you take is that of a Small animal, you gain a +2 size bonus to your Dexterity and a +1 natural armor bonus. Medium animal: If the form you take is that of a Medium animal, you gain a +2 size bonus to your Strength and a +2 natural armor bonus."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Binding` (see this module's `.COPY=` note).
         key: "Planar Binding (Daemons Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar binding, except that you may call a single creature of 12 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 12. Each creature gets a saving throw, makes an independent attempt to escape, and must be individually persuaded to aid you."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Binding` (see this module's `.COPY=` note).
         key: "Planar Binding (Inevitables Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar binding, except that you may call a single creature of 12 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 12. Each creature gets a saving throw, makes an independent attempt to escape, and must be individually persuaded to aid you."),
+        full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Planar Binding` (see this module's `.COPY=` note).
         key: "Planar Binding (Proteans Only)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(6),
+        description: Some("This spell functions like lesser planar binding, except that you may call a single creature of 12 HD or less, or up to three creatures of the same kind whose Hit Dice total no more than 12. Each creature gets a saving throw, makes an independent attempt to escape, and must be individually persuaded to aid you."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Elemental Aura (Cold Only)",
@@ -2293,23 +2334,24 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         full_text: true,
     },
     SpellListEntry {
+        // Inherited from CRB `Meteor Swarm` (see this module's `.COPY=` note).
         key: "Meteor Swarm (Dealing Cold Damage)",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Evocation),
+        level: Some(9),
+        description: Some("Meteor swarm is a very powerful and spectacular spell that is similar to fireball in many aspects. When you cast it, four 2- foot-diameter spheres spring from your outstretched hand and streak in straight lines to the spots you select. The meteor spheres leave a fiery trail of sparks. If you aim a sphere at a specific creature, you may make a ranged touch attack to strike the target with the meteor. Any creature struck by a sphere takes 2d6 points of bludgeoning damage [no save] and takes a -4 penalty on the saving throw against the sphere's fire damage [see below]. If a targeted sphere misses its target, it simply explodes at the nearest corner of the target's space. You may aim more than one sphere at the same target. Once a sphere reaches its destination, it explodes in a 40- foot-radius spread, dealing 6d6 points of fire damage to each creature in the area. If a creature is within the area of more than one sphere, it must save separately against each. Despite stemming from separate spheres, all of the fire damage is added together after the saves have been made, and fire resistance is applied only once."),
+        full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster III (Reptiles Only)",
         school: Some(Pf1SchoolId::Conjuration),
-        level: None,
+        level: Some(3), // inherited from CRB `Summon Monster III`
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 3rd-level list, 1d3 creatures of the same kind from the 2nd-level list, or 1d4+1 creatures of the same kind from the 1st-level list."),
         full_text: true,
     },
     SpellListEntry {
         key: "Summon Monster VII (Reptiles Only)",
         school: Some(Pf1SchoolId::Conjuration),
-        level: None,
+        level: Some(7), // inherited from CRB `Summon Monster VII`
         description: Some("This spell functions like summon monster I, except that you can summon one creature from the 7th-level list, 1d3 creatures of the same kind from the 6th-level list, or 1d4+1 creatures of the same kind from a lower-level list."),
         full_text: true,
     },
@@ -2323,18 +2365,46 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
         // this book's corpus (cross-book base, per this module's
         // documented `.COPY=` scope boundary), so there is no in-book
         // `SCHOOL:`/`CLASSES:` token to inherit.
+        //
+        // **The cross-book boundary is resolved (2026-07-31)**, so
+        // `school`/`level` now come from CRB `Call Lightning Storm`
+        // (Evocation, 5) like every other cross-book `.COPY=` row. The
+        // `description` above is unaffected and stays the variant's own
+        // `.MOD` override — which is exactly PCGen's layering: `.COPY=`
+        // inherits the base, then the variant's `.MOD DESC:` replaces one
+        // field. It is deliberately NOT equal to the base's text.
         key: "Call Lightning Storm (Starsoul)",
-        school: None,
-        level: None,
+        school: Some(Pf1SchoolId::Evocation),
+        level: Some(5),
         description: Some("This spell functions like call lightning, except that each bolt deals 5d6 points of Fire damage [or 5d10 if created outdoors at night], and you may call a maximum of 15 bolts."),
         full_text: true,
     },
     SpellListEntry {
+        // **Upstream typo, preserved verbatim.** `apg_spells.lst:1555` reads
+        // `Wall of Thorms<TAB>DOMAINS:Blood Subdomain=5<TAB>SOURCELINK:...
+        // /spells/wallOfThorns.html#_wall-of-thorns`. It is meant to be
+        // `Wall of Thorns.MOD`, and the same file proves it: `:1431` is
+        // `Wall of Thorns.MOD  DOMAINS:Decay Subdomain=5` — the identical
+        // construct, correctly spelled and correctly suffixed — every other
+        // row in the `:1550`-`:1560` subdomain block is `<CRB spell>.MOD
+        // DOMAINS:...`, the row's own SOURCELINK names the real spell, and
+        // `Thorms` appears exactly once in the whole PCGen checkout. Dropping
+        // the `.MOD` is what makes PCGen mint a junk spell object rather than
+        // modify the real one.
+        //
+        // The KEY is NOT corrected here: a record in this repo cites a
+        // `source.line` a reader is expected to be able to open, and renaming
+        // it would make this table disagree with the file it cites. The
+        // fields are resolved against CRB `Wall of Thorns` exactly as the
+        // eleven `.COPY=` rows above are resolved against their bases, so a
+        // player sees the real spell under a visibly odd name instead of a
+        // blank row. Pinned by
+        // `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs`.
         key: "Wall of Thorms",
-        school: None,
-        level: None,
-        description: None,
-        full_text: false,
+        school: Some(Pf1SchoolId::Conjuration),
+        level: Some(5),
+        description: Some("A wall of thorns spell creates a barrier of very tough, pliable, tangled brush bearing needle-sharp thorns as long as a human's finger. Any creature forced into or attempting to move through a wall of thorns takes piercing damage per round of movement equal to 25 minus the creature's AC. Dexterity and dodge bonuses to AC do not count for this calculation. [Creatures with an AC of 25 or higher, without considering Dexterity and dodge bonuses, take no damage from contact with the wall.] You can make the wall as thin as 5 feet thick, which allows you to shape the wall as a number of 10-by-10-by-5-foot blocks equal to twice your caster level. This has no effect on the damage dealt by the thorns, but any creature attempting to break through takes that much less time to force its way through the barrier. Creatures can force their way slowly through the wall by making a Strength check as a full-round action. For every 5 points by which the check exceeds 20, a creature moves 5 feet [up to a maximum distance equal to its normal land speed]. Of course, moving or attempting to move through the thorns incurs damage as described above. A creature trapped in the thorns can choose to remain motionless in order to avoid taking any more damage. Any creature within the area of the spell when it is cast takes damage as if it had moved into the wall and is caught inside. In order to escape, it must attempt to push its way free, or it can wait until the spell ends. Creatures with the ability to pass through overgrown areas unhindered can pass through a wall of thorns at normal speed without taking damage. A wall of thorns can be breached by slow work with edged weapons. Chopping away at the wall creates a safe passage 1 foot deep for every 10 minutes of work. Normal fire cannot harm the barrier, but magical fire burns it away in 10 minutes."),
+        full_text: true,
     },
     SpellListEntry {
         // Web second-source pass (SD-25 criterion 7.N, "apg-spell-text"):

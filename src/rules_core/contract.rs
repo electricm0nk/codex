@@ -28,7 +28,7 @@
 use crate::rules_core::character_input::{ActiveState, CharacterInput, EquipmentSelection};
 use crate::rules_core::damage_total::{resolve_weapon_damage_breakdown, WeaponDamageBreakdown};
 use crate::rules_core::encumbrance::{compute_encumbrance, EncumbranceComputation};
-use crate::rules_core::rules_tables::crb::race_tables::race_size_for_race_id;
+use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::size::SizeCategory;
 use crate::rules_core::equipment_effects::{compute_equipment_effects, EquipmentEffects};
 use crate::rules_core::feat_prereqs::{
@@ -376,25 +376,21 @@ pub fn to_pilot_receipt(
     // avoids a duplicate id in `PilotReceipt.diagnostics`/`chassis`).
     let mut discarded_explanations = Vec::new();
     let effective_ability_scores = apply_human_ability_bonus(input, &mut discarded_explanations);
-    // PF1 scales carrying capacity by creature size, read from the race's
-    // own corpus `FACT:BaseSize|<code>` token. An unrecognized race falls
-    // back to Medium: that is the pre-existing behaviour for every race
-    // (capacity used to be computed at Medium unconditionally), and Medium
-    // is the unmultiplied baseline `load.lst`'s own `LOAD:` column is
-    // expressed in -- so this fallback changes nothing for a race we
-    // cannot identify, while every curated playable race now gets its real
-    // size. Gnome and Halfling are Small and were previously handed 4/3 of
-    // their true capacity.
-    let size = race_size_for_race_id(&input.chosen.race_id).unwrap_or(SizeCategory::Medium);
+    // PF1 scales carrying capacity by creature size. All 18 ingested races
+    // resolve their real size; anything else reports itself rather than
+    // quietly computing at Medium -- see `encumbrance_size_for_race`.
+    let (size, size_diagnostic) = encumbrance_size_for_race(&input.chosen.race_id);
     let encumbrance = compute_encumbrance(
         &input.chosen.equipment_selections,
         corpus,
         effective_ability_scores.strength,
         size,
     );
+    let mut diagnostics = receipt.base.diagnostics.clone();
+    diagnostics.extend(size_diagnostic);
 
     PilotReceipt {
-        diagnostics: receipt.base.diagnostics.clone(),
+        diagnostics,
         chassis: receipt.base.clone(),
         corpus_derived: receipt.corpus_derived.clone(),
         skills: allocate_skill_ranks(input),
@@ -433,6 +429,55 @@ pub fn compute_level_up_preview(
     to_level: u8,
 ) -> LevelUpPlan {
     compute_level_up_grants(character, from_level, to_level)
+}
+
+/// The diagnostic id emitted when a character's `race_id` cannot be resolved
+/// to a real creature size, so its carrying capacity had to be computed at an
+/// assumed Medium. `claim_blocking: true`: the resulting thresholds, load
+/// tier, load max-Dex cap and load armor check penalty are all a guess, and a
+/// consumer must not present them as computed numbers.
+pub const UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID: &str = "encumbrance.race_size.unknown";
+
+/// The single creature-size seam for carrying capacity, shared by both
+/// encumbrance call sites (`to_pilot_receipt` here and
+/// `pilot_compute_corpus::compute_pilot_with_corpus`).
+///
+/// # The defect this replaces
+///
+/// Both sites previously read
+/// `rules_tables::crb::race_tables::race_size_for_race_id(...).unwrap_or(SizeCategory::Medium)`.
+/// That function is a seven-variant `RaceId` lookup over the hardcoded CRB
+/// races, so it returned `None` for all 11 ingested Bestiary 1 races and the
+/// `unwrap_or` silently turned that into Medium. **Goblin, Kobold and
+/// Svirfneblin are Small**, and every one of them was therefore handed 4/3 of
+/// its real carrying capacity, a wrong load tier, and the wrong max-Dex cap and
+/// armor check penalty that follow from the tier — the identical defect
+/// `size.rs` was written to remove for Gnome and Halfling, still live for three
+/// more races. `race_resolver::race_size_for_race_token` covers all 18.
+///
+/// # Why there is still a fallback, and why it is no longer silent
+///
+/// `compute_encumbrance` needs *a* size to compute with, and Medium is the
+/// unmultiplied baseline `load.lst`'s own `LOAD:` column is expressed in, so it
+/// is the only defensible assumption. What was wrong before was not the choice
+/// of fallback but that taking it was invisible. It now comes back with a
+/// claim-blocking [`UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID`] naming the unresolvable
+/// token, so a receipt built on an assumed size says so.
+pub fn encumbrance_size_for_race(race_id: &str) -> (SizeCategory, Option<ComputationDiagnostic>) {
+    match race_size_for_race_token(race_id) {
+        Some(size) => (size, None),
+        None => (
+            SizeCategory::Medium,
+            Some(ComputationDiagnostic {
+                id: UNKNOWN_RACE_SIZE_DIAGNOSTIC_ID.to_string(),
+                message: format!(
+                    "race {race_id:?} resolves to no ingested race, so its creature size is unknown; \
+                     carrying capacity was computed at an assumed Medium and is not real data"
+                ),
+                claim_blocking: true,
+            }),
+        ),
+    }
 }
 
 /// The diagnostic id that, when `claim_blocking: true`, means the chassis

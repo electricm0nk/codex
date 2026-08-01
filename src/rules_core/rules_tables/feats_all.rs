@@ -60,15 +60,35 @@
 //! zero-magnitude description check, the feat-identity collision proof,
 //! and the two inventory binaries).
 //!
-//! It does **not** carry `effect`, `prerequisites` or `source_page`.
-//! Those are per-book facets only some books ingested, and hoisting them
-//! here would have to represent "this book's ingest does not carry this
-//! field" and "this corpus record has no such token" with the same
-//! `None` -- two different facts collapsed into one value, which is the
-//! same ambiguity the per-book types each refuse. A consumer that needs
-//! CRB's `prerequisites`, ARG's `effect` or PU's `source_page` reads that
-//! book's own table directly, exactly as `feat_prereqs::*` already reads
-//! `crb::feats` directly.
+//! It does **not** carry `effect` or `source_page`. Those are per-book
+//! facets only some books ingested, and hoisting them here would have to
+//! represent "this book's ingest does not carry this field" and "this
+//! corpus record has no such token" with the same `None` -- two different
+//! facts collapsed into one value, which is the same ambiguity the
+//! per-book types each refuse. A consumer that needs ARG's `effect` or
+//! PU's `source_page` reads that book's own table directly.
+//!
+//! # `prerequisites` used to be on that list. It is not any more.
+//!
+//! The argument above was the *only* reason this record refused to carry
+//! `prerequisites`, and it rested on a fact that has since been fixed:
+//! ARG's and PU's ingests never gathered their `PRE`-family tokens, so a
+//! `prerequisites` field here would have had to mean two things at once.
+//! [`ARG_FEAT_PREREQUISITES`] / [`PU_FEAT_PREREQUISITES`] closes that gap -- it gathers all 187 ARG rows' and all
+//! 17 PU rows' top-level `PRE` tokens from the corpus, listing every key
+//! including the ones whose corpus record genuinely has none. With the
+//! data actually present for all five books, `Option<&[&str]>` here means
+//! exactly what it means on `crb::feats::FeatTableEntry.prerequisites`:
+//! `None` is "this corpus record carries no `PRE`-family token", never
+//! "nobody looked".
+//!
+//! This matters because there was **no feat prerequisite enforcement
+//! anywhere in the product**: a Fighter 1 with a +1 base attack bonus
+//! could take Improved Two-Weapon Fighting (which requires BAB +6, Dex 17
+//! and the Two-Weapon Fighting feat), and every one of the 690 offered
+//! feats was accepted by every character. `feat_prereqs` evaluates these
+//! tokens; it can only do so if the aggregate the picker reads actually
+//! carries them.
 //!
 //! `category` is the book's own `FeatCategory` variant name verbatim, as
 //! a `&'static str`. The three enums are genuinely different closed sets
@@ -130,6 +150,26 @@ pub struct FeatCatalogRecord {
     /// applies that rule -- never substituted or borrowed from a sibling
     /// record.
     pub description: Option<&'static str>,
+    /// Every top-level `PRE`-family token the corpus record carries,
+    /// verbatim and unparsed, in source order -- `PREABILITY:`,
+    /// `PREMULT:`, `PRESTAT:`, `PRETOTALAB:`, `PRESKILL:`, `PREFACT:`,
+    /// the negated `!PREABILITY:` form, and the rest.
+    ///
+    /// `None` when the corpus record carries none -- 91 of the catalog's
+    /// 690 records (55 CRB, 29 APG, 4 ACG, 0 ARG, 3 PU). `Some(&[])`
+    /// never occurs, mirroring
+    /// `crb::feats::FeatTableEntry.prerequisites`'s own rule, from which
+    /// the CRB/APG/ACG values are passed through unchanged. ARG's and
+    /// PU's come from [`ARG_FEAT_PREREQUISITES`] / [`PU_FEAT_PREREQUISITES`], which gathers what those books'
+    /// own tables never did.
+    ///
+    /// Deliberately raw strings, not a parsed prerequisite AST, for the
+    /// same reason the per-book field keeps them raw: these are PCGen
+    /// expressions over runtime character state. `feat_prereqs` is the
+    /// one place that interprets them, and it is hand-modelled per token
+    /// kind (`decisions.md` §24) rather than being a general formula
+    /// interpreter.
+    pub prerequisites: Option<&'static [&'static str]>,
 }
 
 /// One book's feat catalog, tagged with the book it came from.
@@ -137,6 +177,289 @@ pub struct FeatCatalogRecord {
 pub struct BookFeatTable {
     pub rule_set: RuleSetId,
     pub entries: &'static [FeatCatalogRecord],
+}
+
+// ---------------------------------------------------------------------------
+// The `PRE`-family tokens ARG's and PU's own tables never gathered
+// ---------------------------------------------------------------------------
+// The `PRE`-family prerequisite tokens for the two books whose own feat
+// tables never gathered them: Advanced Race Guide and Pathfinder
+// Unchained.
+//
+// # Why this module exists at all
+//
+// `rules_tables::crb::feats::FeatTableEntry.prerequisites` carries every
+// top-level `PRE`-family token, verbatim, for CRB/APG/ACG -- the three
+// books that share that type. ARG and PU declare their own record types
+// (see `feats_all`'s module doc for why they could not be widened onto the
+// shared one) and neither carries a `prerequisites` field. That is not a
+// statement about their corpus rows. Counted directly off the corpus:
+// **all 187 of `arg_feats.lst`'s `CATEGORY:FEAT` records carry at least
+// one `PRE`-family token**, and 14 of `pu_feats.lst`'s 17 do. Without this
+// module those 201 real prerequisites do not exist anywhere in the engine,
+// and a prerequisite checker reading only the shared field would silently
+// report every ARG feat as unconditionally available.
+//
+// # Where the data came from, and how it is checked
+//
+// Extracted programmatically from the live corpus
+// (`pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst`
+// and `.../pathfinder_unchained/pu_feats.lst`) by the same offline method
+// `crb/feat_data/` documents -- not hand-transcribed, so there is no
+// per-row transcription risk at this scale. The extractor was validated
+// before use by re-running it over CRB, APG and ACG and comparing against
+// the `prerequisites` those books already carry: **485 of 486 rows matched
+// byte-for-byte**, the single difference being CRB's two `Combat
+// Expertise` records (a genuine duplicate key; the extractor keeps the
+// first row, the table keeps both).
+//
+// `tests/sd27_feat_prerequisite_enforcement.rs` re-derives this table from
+// the on-disk corpus whenever `PCGEN_CORPUS_ROOT` is set, exactly as the
+// other hand-modelled corpus tables in this crate are gated, so a drift
+// between this file and the corpus is a named test failure rather than a
+// silent wrong answer.
+//
+// # Shape
+//
+// `&[(key, tokens)]` keyed by the book table's own `key`, in that table's
+// own source order. Every key in the book's table appears here exactly
+// once, including the rows whose corpus record carries no `PRE` token at
+// all -- those map to an empty slice. An empty slice here means "checked,
+// and the corpus row has none"; a *missing* key would mean "not gathered",
+// and `every_arg_and_pu_catalog_key_has_a_gathered_prerequisite_row` in
+// `feats_all` fails if one ever is. That is the same distinction
+// `FeatTableEntry.effect`'s `None`-vs-`Some(&[])` rule draws, expressed
+// for a lookup table rather than a per-record field.
+
+/// Advanced Race Guide: all 187 `CATEGORY:FEAT` records from
+/// `arg_feats.lst`, in `advanced_race_guide::feats::feat_tables()` order
+/// (General, then Combat, then Teamwork).
+pub const ARG_FEAT_PREREQUISITES: &[(&str, &[&str])] = &[
+    ("Adaptive Fortune", &["PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck", "PREABILITY:1,CATEGORY=FEAT,Fortunate One", "PRELEVEL:MIN=10", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
+    ("Agile Tongue", &["PREFACT:1,TEMPLATES,IsGrippli=true"]),
+    ("Airy Step", &["PREFACT:1,TEMPLATES,IsSylph=true"]),
+    ("Angel Wings", &["PREABILITY:1,CATEGORY=FEAT,Angelic Blood", "PREPCLEVEL:MIN=10", "PREFACT:1,TEMPLATES,IsAasimar=true"]),
+    ("Angelic Blood", &["PREFACT:1,TEMPLATES,IsAasimar=true", "PRESTAT:1,CON=13"]),
+    ("Angelic Flesh", &["PREABILITY:1,CATEGORY=FEAT,Angelic Blood", "PREFACT:1,TEMPLATES,IsAasimar=true"]),
+    ("Aquatic Ancestry", &["PREFACT:1,TEMPLATES,IsUndine=true"]),
+    ("Armor of the Pit", &["PREFACT:1,TEMPLATES,IsTiefling=true"]),
+    ("Attuned to the Wild", &["PREFACT:1,TEMPLATES,IsElf=true"]),
+    ("Beast Rider", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion,TYPE.Special Mount", "PRELEVEL:MIN=7", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Bestow Luck", &["PREABILITY:2,CATEGORY=FEAT,Defiant Luck,Inexplicable Luck", "PREFACT:1,TEMPLATES,IsHuman=true"]),
+    ("Black Cat", &["PREFACT:1,TEMPLATES,IsCatfolk=true"]),
+    ("Blood Drinker", &["PREFACT:1,TEMPLATES,IsDhampir=true"]),
+    ("Blood Feaster", &["PREABILITY:1,CATEGORY=FEAT,Blood Drinker", "PREFACT:1,TEMPLATES,IsDhampir=true", "PRETOTALAB:6"]),
+    ("Blood Salvage", &["PREABILITY:1,CATEGORY=FEAT,Blood Drinker", "PREFACT:1,TEMPLATES,IsDhampir=true"]),
+    ("Blood Vengeance", &["!PREALIGN:LG,LN,LE", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Born Alone", &["PREFACT:1,TEMPLATES,IsOrc=true"]),
+    ("Brewmaster", &["PREFACT:1,TEMPLATES,IsDwarf=true", "PRESKILL:2,Craft (Alchemy)=1,Profession (Brewer)=1"]),
+    ("Burn! Burn! Burn!", &["PREFACT:1,TEMPLATES,IsGoblin=true", "PRESKILL:1,Disable Device=1"]),
+    ("Burrowing Teeth", &["PREABILITY:2,CATEGORY=FEAT,Sharpclaw,Tunnel Rat", "PREFACT:1,TEMPLATES,IsRatfolk=true"]),
+    ("Carrion Feeder", &["PREFACT:1,TEMPLATES,IsTengu=true"]),
+    ("Casual Illusionist", &["PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Gnome Magic", "PREFACT:1,TEMPLATES,IsGnome=true"]),
+    ("Catfolk Exemplar", &["PREFACT:1,TEMPLATES,IsCatfolk=true"]),
+    ("Celestial Servant", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion,TYPE.Special Mount,TYPE.Familiar", "PREFACT:1,TEMPLATES,IsAasimar=true"]),
+    ("Channel Force", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Channel Energy", "PREMULT:1,[PREVARGTEQ:OracleChannelDice,2],[PREVARGTEQ:ClericChannelPositiveEnergyDice,2],[PREVARGTEQ:PaladinChannelDice,2],[PREVARGTEQ:ShamanChannelDice,2]", "PREFACT:1,TEMPLATES,IsAasimar=true", "PRETEXT:channel energy 2d6"]),
+    ("Cloud Gazer", &["PREFACT:1,TEMPLATES,IsSylph=true"]),
+    ("Courageous Resolve", &["PREABILITY:2,CATEGORY=Special Ability,Halfling ~ Craven,Halfling ~ Fearless", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
+    ("Dark Sight", &["PREABILITY:1,CATEGORY=FEAT,Gloom Sight", "PREFACT:1,TEMPLATES,IsFetchling=true"]),
+    ("Dauntless Destiny", &["PREABILITY:1,CATEGORY=FEAT,Fearless Curiosity", "PREFACT:1,TEMPLATES,IsHuman=true", "PRESKILL:1,Intimidate=10", "PRESTAT:1,CHA=13"]),
+    ("Deafening Explosion", &["PREABILITY:1,CATEGORY=Special Ability,Bomb", "PREFACT:1,TEMPLATES,IsHobgoblin=true"]),
+    ("Defiant Luck", &["PREFACT:1,TEMPLATES,IsHuman=true"]),
+    ("Discerning Eye", &["PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Keen Senses", "PREFACT:1,TEMPLATES,IsElf=true,IsHalfElf=true"]),
+    ("Diverse Palate", &["PREABILITY:1,CATEGORY=FEAT,Blood Drinker", "PREFACT:1,TEMPLATES,IsDhampir=true"]),
+    ("Draconic Aspect", &["PREFACT:1,TEMPLATES,IsKobold=true"]),
+    ("Draconic Breath", &["PREABILITY:1,CATEGORY=FEAT,Draconic Aspect", "PREFACT:1,TEMPLATES,IsKobold=true"]),
+    ("Draconic Glide", &["PREABILITY:1,CATEGORY=FEAT,Draconic Aspect", "PREFACT:1,TEMPLATES,IsKobold=true"]),
+    ("Draconic Paragon", &["PREABILITY:2,CATEGORY=FEAT,Draconic Breath,Draconic Glide", "PREABILITY:1,CATEGORY=FEAT,Draconic Aspect", "PRELEVEL:MIN=10", "PREFACT:1,TEMPLATES,IsKobold=true"]),
+    ("Drow Nobility", &["PREABILITY:1,CATEGORY=Special Ability,Drow ~ Spell-Like Abilities", "PREFACT:1,TEMPLATES,IsDrow=True"]),
+    ("Drow ~ Spider Step", &["PREFACT:1,TEMPLATES,IsDrow=True", "PRELEVEL:MIN=3"]),
+    ("Dwarf Blooded", &["PREFACT:1,TEMPLATES,IsOread=true"]),
+    ("Echoes of Stone", &["PREFACT:1,TEMPLATES,IsOread=true"]),
+    ("Elemental Jaunt", &["PRELEVEL:MIN=15", "PREFACT:1,TEMPLATES,IsIfrit=true,IsOread=true,IsSylph=true,IsUndine=true"]),
+    ("Elven Spirit", &["!PREABILITY:1,CATEGORY=FEAT,Human Spirit", "PREPCLEVEL:MAX=1", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
+    ("Exile's Path", &["PREFACT:1,TEMPLATES,IsHalfElf=true"]),
+    ("Expanded Fiendish Resistance (Acid)", &["!PREABILITY:1,CATEGORY=Special Ability,Resistance to Acid", "PREFACT:1,TEMPLATES,IsTiefling=true"]),
+    ("Expanded Fiendish Resistance (Cold)", &["!PREABILITY:1,CATEGORY=Special Ability,Resistance to Cold", "PREFACT:1,TEMPLATES,IsTiefling=true"]),
+    ("Expanded Fiendish Resistance (Electricity)", &["!PREABILITY:1,CATEGORY=Special Ability,Resistance to Electricity", "PREFACT:1,TEMPLATES,IsTiefling=true"]),
+    ("Expanded Fiendish Resistance (Fire)", &["!PREABILITY:1,CATEGORY=Special Ability,Resistance to Fire", "PREFACT:1,TEMPLATES,IsTiefling=true"]),
+    ("Expanded Resistance", &["PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Illusion Resistance", "PREFACT:1,TEMPLATES,IsGnome=true"]),
+    ("Extra Elemental Assault", &["PREFACT:1,TEMPLATES,IsSuli=true"]),
+    ("Fast Learner", &["PREFACT:1,TEMPLATES,IsHuman=true", "PRESTAT:1,INT=13"]),
+    ("Fearless Curiosity", &["PREFACT:1,TEMPLATES,IsHuman=true", "PRESTAT:1,CHA=13"]),
+    ("Feline Grace", &["PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]", "PREFACT:1,TEMPLATES,IsCatfolk=true"]),
+    ("Ferocious Action", &["PREABILITY:1,CATEGORY=Special Ability,Orc ~ Ferocity", "PREFACT:1,TEMPLATES,IsOrc=true"]),
+    ("Ferocious Resolve", &["PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Orc Ferocity", "PREFACT:1,TEMPLATES,IsHalfOrc=true", "PRESTAT:1,CON=13"]),
+    ("Ferocious Summons", &["PREABILITY:2,CATEGORY=FEAT,Augment Summoning,Spell Focus (Conjuration)", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Fiend Sight", &["PREFACT:1,TEMPLATES,IsTiefling=true", "PREVARLT:FiendSightTier,2", "PREVISION:1,Darkvision=60"]),
+    ("Fire Tamer", &["PREFACT:1,TEMPLATES,IsGoblin=true"]),
+    ("Firesight", &["PREFACT:1,TEMPLATES,IsIfrit=true"]),
+    ("Flame Heart", &["PREABILITY:1,CATEGORY=FEAT,Fire Tamer", "PRELEVEL:MIN=5", "PREFACT:1,TEMPLATES,IsGoblin=true"]),
+    ("Foment the Blood", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Channel Energy", "PREFACT:1,TEMPLATES,IsOrc=true"]),
+    ("Fortunate One", &["PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
+    ("Giant Steps", &["PREABILITY:1,CATEGORY=Special Ability,Duergar ~ Slow and Steady", "PREFACT:1,TEMPLATES,IsDuergar=true"]),
+    ("Gloom Sight", &["PREFACT:1,TEMPLATES,IsFetchling=true"]),
+    ("Gore Fiend", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Rage", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Grasping Tail", &["PREFACT:1,TEMPLATES,IsTiefling=true"]),
+    ("Greater Channel Force", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Channel Energy", "PREABILITY:2,CATEGORY=FEAT,Channel Force,Improved Channel Force", "PREMULT:1,[PREVARGTEQ:OracleChannelDice,6],[PREVARGTEQ:ClericChannelPositiveEnergyDice,6],[PREVARGTEQ:PaladinChannelDice,6],[PREVARGTEQ:ShamanChannelDice,6]", "PREFACT:1,TEMPLATES,IsAasimar=true", "PRETEXT:channel energy 6d6"]),
+    ("Greater Drow Nobility", &["PREABILITY:1,CATEGORY=Special Ability,Drow ~ Spell-Like Abilities", "PREABILITY:2,CATEGORY=FEAT,Drow Nobility,Improved Drow Nobility", "PREFACT:1,TEMPLATES,IsDrow=True", "PRESTAT:1,CHA=13"]),
+    ("Guardian of the Wild", &["PREABILITY:1,CATEGORY=FEAT,Attuned to the Wild", "PREFACT:1,TEMPLATES,IsElf=true"]),
+    ("Half-Drow Paragon", &["PREABILITY:2,CATEGORY=Special Ability,Half-Elf ~ Drow Blooded,Half-Elf ~ Drow Magic", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
+    ("Heavenly Radiance", &["PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Spell-Like Ability", "PREFACT:1,TEMPLATES,IsAasimar=true"]),
+    ("Heroic Will", &["PREABILITY:1,CATEGORY=FEAT,Iron Will", "PRECHECKBASE:1,Will=4", "PREFACT:1,TEMPLATES,IsHuman=true"]),
+    ("Hobgoblin Discipline", &["PREFACT:1,TEMPLATES,IsHobgoblin=true", "PRETOTALAB:1"]),
+    ("Human Spirit", &["PREPCLEVEL:MAX=1", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
+    ("Huntmaster", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Animal Companion,TYPE.Special Mount", "!PREABILITY:1,CATEGORY=FEAT,Huntmaster", "PREFACT:1,TEMPLATES,IsHuman=true", "PRESKILL:1,Handle Animal=1"]),
+    ("Hydraulic Maneuver", &["PREABILITY:1,CATEGORY=Special Ability,Undine ~ Spell-Like Ability", "PREFACT:1,TEMPLATES,IsUndine=true"]),
+    ("Improved Channel Force", &["PREABILITY:1,CATEGORY=FEAT,Channel Force", "PREMULT:1,[PREVARGTEQ:OracleChannelDice,4],[PREVARGTEQ:ClericChannelPositiveEnergyDice,4],[PREVARGTEQ:PaladinChannelDice,4],[PREVARGTEQ:ShamanChannelDice,4]", "PREFACT:1,TEMPLATES,IsAasimar=true", "PRETEXT:channel energy 4d6"]),
+    ("Improved Dark Sight", &["PREABILITY:2,CATEGORY=FEAT,Dark Sight,Gloom Sight", "PREFACT:1,TEMPLATES,IsFetchling=true"]),
+    ("Improved Drow Nobility", &["PREABILITY:1,CATEGORY=Special Ability,Drow ~ Spell-Like Abilities", "PREABILITY:1,CATEGORY=FEAT,Drow Nobility", "PREFACT:1,TEMPLATES,IsDrow=True", "PRESTAT:1,CHA=13"]),
+    ("Improved Improvisation", &["PREABILITY:2,CATEGORY=FEAT,Fast Learner,Improvisation", "PREFACT:1,TEMPLATES,IsHuman=true", "PRESTAT:1,INT=13"]),
+    ("Improved Umbral Scion", &["PREABILITY:1,CATEGORY=Special Ability,Drow ~ Spell-Like Abilities", "PREABILITY:4,CATEGORY=FEAT,Drow Nobility,Greater Drow Nobility,Improved Drow Nobility,Umbral Scion", "PREFACT:1,TEMPLATES,IsDrow=True", "PRESTAT:2,CHA=13,WIS=13"]),
+    ("Improvisation", &["PREABILITY:1,CATEGORY=FEAT,Fast Learner", "PREFACT:1,TEMPLATES,IsHuman=true", "PRESTAT:1,INT=13"]),
+    ("Incremental Elemental Assault", &["PREFACT:1,TEMPLATES,IsSuli=true"]),
+    ("Inexplicable Luck", &["PREABILITY:1,CATEGORY=FEAT,Defiant Luck", "PREFACT:1,TEMPLATES,IsHuman=true"]),
+    ("Inner Breath", &["PRELEVEL:MIN=11", "PREFACT:1,TEMPLATES,IsSylph=true"]),
+    ("Intimidating Confidence", &["PREABILITY:1,CATEGORY=FEAT,Fearless Curiosity", "PREFACT:1,TEMPLATES,IsHuman=true", "PRESKILL:1,Intimidate=5", "PRESTAT:1,CHA=13"]),
+    ("Ledge Walker", &["PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Mountaineer,Dwarf ~ Stability", "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]", "PREFACT:1,TEMPLATES,IsDwarf=true"]),
+    ("Life's Blood", &["PREFACT:1,TEMPLATES,IsSamsaran=true"]),
+    ("Lingering Invisibility", &["PREFACT:1,TEMPLATES,IsDuergar=true"]),
+    ("Long-Nose Form", &["PRELEVEL:MIN=3", "PREFACT:1,TEMPLATES,IsTengu=true"]),
+    ("Lucky Healer", &["PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
+    ("Mage of the Wild", &["PREABILITY:1,CATEGORY=FEAT,Attuned to the Wild", "PREFACT:1,TEMPLATES,IsElf=true"]),
+    ("Magical Tail", &["PREFACT:1,TEMPLATES,IsKitsune=true", "PREVARLT:KitsuneTails,8"]),
+    ("Metallic Wings", &["PREABILITY:3,CATEGORY=FEAT,Angel Wings,Angelic Blood,Angelic Flesh", "PRELEVEL:MIN=11", "PREFACT:1,TEMPLATES,IsAasimar=true"]),
+    ("Mother's Gift", &["PREFACT:1,TEMPLATES,IsChangeling=true"]),
+    ("Multitalented Mastery", &["PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Multitalented", "PRELEVEL:MIN=5", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
+    ("Murmurs of Earth", &["PREABILITY:1,CATEGORY=FEAT,Echoes of Stone", "PRELEVEL:MIN=9", "PREFACT:1,TEMPLATES,IsOread=true"]),
+    ("Natural Charmer", &["PREFACT:1,TEMPLATES,IsDhampir=true", "PRESTAT:1,CHA=17"]),
+    ("Neither Elf nor Human", &["PREABILITY:2,CATEGORY=FEAT,Exile's Path,Seen and Unseen", "PRELEVEL:MIN=11", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
+    ("Noble Spell Resistance", &["PREABILITY:1,CATEGORY=FEAT,Greater Drow Nobility", "PREFACT:1,TEMPLATES,IsDrow=True", "PRELEVEL:MIN=13", "PRESTAT:2,CHA=13,WIS=13"]),
+    ("Oread Burrower", &["PREABILITY:1,CATEGORY=FEAT,Stony Step", "PRELEVEL:MIN=9", "PREFACT:1,TEMPLATES,IsOread=true"]),
+    ("Oread Earth Glider", &["PREABILITY:2,CATEGORY=FEAT,Oread Burrower,Stony Step", "PRELEVEL:MIN=13", "PREFACT:1,TEMPLATES,IsOread=true"]),
+    ("Realistic Likeness", &["PREFACT:1,TEMPLATES,IsKitsune=true"]),
+    ("Resilient Brute", &["PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Resolute Rager", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Rage", "PREFACT:1,TEMPLATES,IsOrc=true"]),
+    ("Scavenger's Eye", &["PREFACT:1,TEMPLATES,IsTengu=true"]),
+    ("Seen and Unseen", &["PREABILITY:1,CATEGORY=FEAT,Exile's Path", "PRELEVEL:MIN=5", "PREFACT:1,TEMPLATES,IsHalfElf=true"]),
+    ("Shadow Caster", &["PREFACT:1,TEMPLATES,IsDrow=True", "PREMULT:1,[PRECLASS:1,SPELLCASTER=1],[PREVARGTEQ:CasterLevel_Highest,1]"]),
+    ("Shadow Ghost", &["PREABILITY:1,CATEGORY=Special Ability,Fetchling ~ Spell-Like Abilities", "PREPCLEVEL:MIN=9", "PREFACT:1,TEMPLATES,IsFetchling=true"]),
+    ("Shadow Walker", &["PREABILITY:1,CATEGORY=Special Ability,Fetchling ~ Spell-Like Abilities", "PREPCLEVEL:MIN=9", "PREFACT:1,TEMPLATES,IsFetchling=true"]),
+    ("Shadowy Dash", &["PREFACT:1,TEMPLATES,IsWayang=true"]),
+    ("Shared Manipulation", &["PREFACT:1,TEMPLATES,IsHalfElf=true", "PRESTAT:1,CHA=13"]),
+    ("Sleep Venom", &["PREFACT:1,TEMPLATES,IsVishkanya=true"]),
+    ("Spider Summoner", &["PREFACT:1,TEMPLATES,IsDrow=True", "PRESPELL:1,Summon Monster I,Summon Monster II,Summon Monster III,Summon Monster IV,Summon Monster V,Summon Monster VI,Summon Monster VII,Summon Monster VIII,Summon Monster IX,Summon Nature's Ally I,Summon Nature's Ally II,Summon Nature's Ally III,Summon Nature's Ally IV,Summon Nature's Ally V,Summon Nature's Ally VI,Summon Nature's Ally VII,Summon Nature's Ally VIII,Summon Nature's Ally IX"]),
+    ("Spirit of the Wild", &["PREABILITY:2,CATEGORY=FEAT,Attuned to the Wild,Guardian of the Wild", "PREFACT:1,TEMPLATES,IsElf=true"]),
+    ("Steam Caster", &["PREFACT:1,TEMPLATES,IsUndine=true"]),
+    ("Stoic Pose", &["PREFACT:1,TEMPLATES,IsSvirfneblin=true"]),
+    ("Stony Step", &["PREFACT:1,TEMPLATES,IsOread=true"]),
+    ("Stretched Wings", &["PREABILITY:1,CATEGORY=Special Ability,Strix ~ Wing-Clipped", "PREABILITY:1,CATEGORY=FEAT,Skill Focus (Fly)", "PREFACT:1,TEMPLATES,IsStrix=true", "PRESTAT:1,STR=13"]),
+    ("Sure and Fleet", &["PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Fleet Of Foot", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
+    ("Surge of Success", &["PREFACT:1,TEMPLATES,IsHuman=true"]),
+    ("Tenacious Survivor", &["PREABILITY:2,CATEGORY=FEAT,Diehard,Endurance", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true", "PRESTAT:1,CON=13"]),
+    ("Tengu Raven Form", &["PREABILITY:1,CATEGORY=FEAT,Tengu Wings", "PRELEVEL:MIN=7", "PREFACT:1,TEMPLATES,IsTengu=true"]),
+    ("Tengu Wings", &["PRELEVEL:MIN=5", "PREFACT:1,TEMPLATES,IsTengu=true"]),
+    ("Thrill of the Kill", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Rage", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Toxic Recovery", &["PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Hardy", "PREFACT:1,TEMPLATES,IsDwarf=true"]),
+    ("Trap Wrecker", &["PREABILITY:1,CATEGORY=FEAT,Power Attack", "PREFACT:1,TEMPLATES,IsOrc=true", "PRESKILL:1,Disable Device=1"]),
+    ("Triton Portal", &["PREABILITY:1,CATEGORY=Special Ability,Undine ~ Spell-Like Ability", "PRELEVEL:MIN=5", "PREFACT:1,TEMPLATES,IsUndine=true"]),
+    ("Tunnel Rat", &["PREABILITY:1,CATEGORY=Special Ability,Ratfolk ~ Swarming", "PREFACT:1,TEMPLATES,IsRatfolk=true"]),
+    ("Umbral Scion", &["PREABILITY:1,CATEGORY=Special Ability,Drow ~ Spell-Like Abilities", "PREABILITY:3,CATEGORY=FEAT,Drow Nobility,Greater Drow Nobility,Improved Drow Nobility", "PREFACT:1,TEMPLATES,IsDrow=True", "PRESTAT:2,CHA=13,WIS=13"]),
+    ("Water Skinned", &["PREFACT:1,TEMPLATES,IsUndine=true"]),
+    ("Wings of Air", &["PREABILITY:1,CATEGORY=FEAT,Airy Step", "PRELEVEL:MIN=9", "PREFACT:1,TEMPLATES,IsSylph=true"]),
+    ("Blazing Aura", &["PREABILITY:2,CATEGORY=FEAT,Inner Flame,Scorching Weapons", "PRELEVEL:MIN=13", "PREFACT:1,TEMPLATES,IsIfrit=true"]),
+    ("Blistering Feint", &["PREABILITY:2,CATEGORY=FEAT,Combat Expertise,Improved Feint", "PREFACT:1,TEMPLATES,IsIfrit=true"]),
+    ("Blood Beak", &["PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Natural Weapon", "PREFACT:1,TEMPLATES,IsTengu=true", "PRETOTALAB:5"]),
+    ("Blundering Defense", &["PREABILITY:1,CATEGORY=FEAT,Cautious Fighter", "PREFACT:1,TEMPLATES,IsHalfling=true"]),
+    ("Bullying Blow", &["PREFACT:1,TEMPLATES,IsOrc=true", "PRESKILL:1,Intimidate=1"]),
+    ("Cautious Fighter", &["PREFACT:1,TEMPLATES,IsHalfling=true"]),
+    ("Claw Pounce", &["PREABILITY:1,CATEGORY=FEAT,Nimble Striker", "PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Cat's Claws],[PREABILITY:1,CATEGORY=FEAT,Aspect of the Beast (Claws of the Beast)]", "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]", "PREFACT:1,TEMPLATES,IsCatfolk=true", "PRESTAT:1,STR=13", "PRETOTALAB:10"]),
+    ("Cleave Through", &["PREABILITY:2,CATEGORY=FEAT,Power Attack,Cleave", "PREFACT:1,TEMPLATES,IsDwarf=true", "PRESTAT:1,STR=13", "PRETOTALAB:11"]),
+    ("Cloven Helm", &["PREABILITY:2,CATEGORY=FEAT,Dented Helm,Hard Headed", "PREFACT:1,TEMPLATES,IsDwarf=true", "PRETOTALAB:11"]),
+    ("Critical Versatility", &["PREFACT:1,TEMPLATES,IsHuman=true", "PREVARGTEQ:FighterWeaponQualifyLVL,11"]),
+    ("Demoralizing Lash", &["PREFACT:1,TEMPLATES,IsHobgoblin=true", "PRESKILL:1,Intimidate=1", "PRETOTALAB:1"]),
+    ("Dented Helm", &["PREABILITY:1,CATEGORY=FEAT,Hard Headed", "PREFACT:1,TEMPLATES,IsDwarf=true", "PRETOTALAB:6"]),
+    ("Desperate Swing", &["PREABILITY:1,CATEGORY=FEAT,Cautious Fighter", "PREFACT:1,TEMPLATES,IsHalfling=true", "PRETOTALAB:1"]),
+    ("Destroyer's Blessing", &["PREABILITY:1,CATEGORY=Special Ability,TYPE.Rage", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Elven Battle Training", &["PREFACT:1,TEMPLATES,IsElf=true", "PRETOTALAB:1"]),
+    ("Ferocious Tenacity", &["PREABILITY:2,CATEGORY=Special Ability,Half-Orc ~ Orc Ferocity,TYPE.Rage", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Fire Hand", &["PREFACT:1,TEMPLATES,IsGoblin=true"]),
+    ("Giant Killer", &["PREABILITY:5,CATEGORY=FEAT,Cleave,Goblin Cleaver,Orc Hewer,Power Attack,Strike Back", "PREFACT:1,TEMPLATES,IsDwarf=true", "PRESTAT:1,STR=13", "PRETOTALAB:11"]),
+    ("Gloom Strike", &["PREABILITY:1,CATEGORY=FEAT,Blind-Fight", "PREFACT:1,TEMPLATES,IsFetchling=true"]),
+    ("Gnome Weapon Focus", &["PREFACT:1,TEMPLATES,IsGnome=true", "PRETOTALAB:1", "PREWEAPONPROF:1,TYPE.Martial"]),
+    ("Goblin Cleaver", &["PREABILITY:2,CATEGORY=FEAT,Cleave,Power Attack", "PREFACT:1,TEMPLATES,IsDwarf=true", "PRESTAT:1,STR=13"]),
+    ("Goblin Gunslinger", &["PREFACT:1,TEMPLATES,IsGoblin=true"]),
+    ("Great Hatred", &["PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Hatred", "PREFACT:1,TEMPLATES,IsGnome=true"]),
+    ("Grudge Fighter", &["PREFACT:1,TEMPLATES,IsOrc=true"]),
+    ("Hard-Headed", &["PREFACT:1,TEMPLATES,IsDwarf=true", "PRETOTALAB:1"]),
+    ("Improved Low Blow", &["PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Low-Blow", "PREFACT:1,TEMPLATES,IsHalfling=true", "PRETOTALAB:4"]),
+    ("Improved Surprise Follow-Through", &["PREABILITY:4,CATEGORY=FEAT,Cleave,Great Cleave,Power Attack,Surprise Follow-Through", "PRESTAT:1,STR=13", "PRETOTALAB:8"]),
+    ("Inner Flame", &["PREABILITY:1,CATEGORY=FEAT,Scorching Weapons", "PRELEVEL:MIN=7", "PREFACT:1,TEMPLATES,IsIfrit=true"]),
+    ("Kobold Ambusher", &["PREFACT:1,TEMPLATES,IsKobold=true", "PRESKILL:1,Stealth=4"]),
+    ("Kobold Sniper", &["PREFACT:1,TEMPLATES,IsKobold=true", "PRESKILL:1,Stealth=1"]),
+    ("Lucky Strike", &["PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Adaptable Luck", "PREFACT:1,TEMPLATES,IsHalfling=true", "PRETOTALAB:5"]),
+    ("Martial Mastery", &["PREABILITY:1,CATEGORY=FEAT,Martial Versatility", "PREFACT:1,TEMPLATES,IsHuman=true", "PREVARGTEQ:FighterWeaponQualifyLVL,16"]),
+    ("Martial Versatility", &["PREFACT:1,TEMPLATES,IsHuman=true", "PREVARGTEQ:FighterWeaponQualifyLVL,4"]),
+    ("Nimble Striker", &["PREABILITY:1,CATEGORY=Special Ability,Catfolk ~ Sprinter", "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,13],[PREVARGTEQ:FeatDexRequirement,13]", "PREFACT:1,TEMPLATES,IsCatfolk=true", "PRETOTALAB:1"]),
+    ("Orc Hewer", &["PREABILITY:3,CATEGORY=FEAT,Cleave,Goblin Cleaver,Power Attack", "PREFACT:1,TEMPLATES,IsDwarf=true", "PRESTAT:1,STR=13"]),
+    ("Orc Weapon Expertise", &["PREFACT:1,TEMPLATES,IsOrc=true", "PRETOTALAB:1"]),
+    ("Reverse-Feint", &["PREABILITY:1,CATEGORY=FEAT,Toughness", "PREFACT:1,TEMPLATES,IsOrc=true", "PRETOTALAB:1"]),
+    ("Risky Striker", &["PREFACT:1,TEMPLATES,IsHalfling=true", "PRETOTALAB:1"]),
+    ("Scorching Weapons", &["PREFACT:1,TEMPLATES,IsIfrit=true"]),
+    ("Sea Hunter", &["PREABILITY:1,CATEGORY=FEAT,Combat Expertise", "PREFACT:1,TEMPLATES,IsMerfolk=true"]),
+    ("Sharpclaw", &["PREFACT:1,TEMPLATES,IsRatfolk=true"]),
+    ("Shatterspell", &["PREABILITY:2,CATEGORY=FEAT,Disruptive,Spellbreaker", "PREFACT:1,TEMPLATES,IsDwarf=true", "PREVARGTEQ:FighterWeaponQualifyLVL,10"]),
+    ("Spit Venom", &["PREFACT:1,TEMPLATES,IsNagaji=true"]),
+    ("Surprise Follow-Through", &["PREABILITY:2,CATEGORY=FEAT,Cleave,Power Attack", "PRESTAT:1,STR=13", "PRETOTALAB:1"]),
+    ("Surprise Strike", &["PREABILITY:2,CATEGORY=FEAT,Cautious Fighter,Desperate Swing", "PREFACT:1,TEMPLATES,IsHalfling=true", "PRETOTALAB:6"]),
+    ("Sympathetic Rage", &["!PREALIGN:LG,LN,LE", "PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true"]),
+    ("Tail Terror", &["PREFACT:1,TEMPLATES,IsKobold=true", "PRETOTALAB:1"]),
+    ("Tangle Feet", &["PREABILITY:3,CATEGORY=FEAT,Dodge,Mobility,Underfoot", "PREFACT:1,TEMPLATES,IsGoblin=true", "PRESIZELTEQ:S"]),
+    ("Taskmaster", &["PREABILITY:1,CATEGORY=FEAT,Demoralizing Lash", "PREFACT:1,TEMPLATES,IsHobgoblin=true", "PRESKILL:1,Intimidate=5"]),
+    ("Tree Hanger", &["PREFACT:1,TEMPLATES,IsVanara=true", "PRESKILL:1,Acrobatics=1"]),
+    ("Uncanny Defense", &["PREABILITY:1,CATEGORY=FEAT,Cautious Fighter", "PREFACT:1,TEMPLATES,IsHalfling=true", "PRETOTALAB:3"]),
+    ("Vast Hatred", &["PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Hatred", "PREFACT:1,TEMPLATES,IsGnome=true"]),
+    ("Focusing Blow", &["PREABILITY:1,CATEGORY=FEAT,Hobgoblin Discipline", "PREFACT:1,TEMPLATES,IsHobgoblin=true"]),
+    ("Greater Brand", &["PREABILITY:1,CATEGORY=Archetype,Inquisitor Archetype ~ Kinslayer", "PREFACT:1,TEMPLATES,IsDhampir=true"]),
+    ("Horde Charge", &["PREFACT:1,TEMPLATES,IsOrc=true,IsHalfOrc=true", "PRETOTALAB:1"]),
+];
+
+/// Pathfinder Unchained: all 17 records from `pu_feats.lst`, in
+/// `pathfinder_unchained::feat_tables::feat_tables()` order. Three carry no
+/// `PRE` token at all (`Critical Cure`, `Endurance`, `Twist the Knife`) and
+/// are present with an empty slice rather than omitted.
+pub const PU_FEAT_PREREQUISITES: &[(&str, &[&str])] = &[
+    ("Champion of Anarchy", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Anarchy", "PREALIGN:CN", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, chaotic neutral alignment."]),
+    ("Champion of Balance", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Balance", "PREALIGN:TN", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, neutral alignment."]),
+    ("Champion of Destruction", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Destruction", "PREALIGN:CE", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, chaotic evil alignment."]),
+    ("Champion of Freedom", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Freedom", "PREALIGN:CG", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, chaotic good alignment."]),
+    ("Champion of Grace", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Grace", "PREALIGN:NG", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, neutral good alignment."]),
+    ("Champion of Malevolence", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Malevolence", "PREALIGN:NE", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, neutral evil alignment."]),
+    ("Champion of Righteousness", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Righteousness", "PREALIGN:LG", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, lawful good alignment."]),
+    ("Champion of Tranquility", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Tranquility", "PREALIGN:LN", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, lawful neutral alignment."]),
+    ("Champion of Tyranny", &["PREABILITY:1,CATEGORY=FEAT,TYPE.Alignment,Champion of Tyranny", "PREALIGN:LE", "PREHD:MIN=10", "PRETEXT:10 Hit Dice, lawful evil alignment."]),
+    ("Combat Stamina", &["PRETEXT:Prerequisite: Base attack bonus +1.", "PRETOTALAB:1"]),
+    ("Extra Stamina", &["PREABILITY:1,CATEGORY=FEAT,Combat Stamina", "!PREABILITY:3,CATEGORY=FEAT,Extra Stamina", "PRETEXT:Prerequisites: Combat Stamina, base attack bonus +5.", "PRETOTALAB:5"]),
+    ("Push the Limits", &["PREABILITY:1,CATEGORY=FEAT,Combat Stamina", "PRESTAT:1,CON=13", "PRETEXT:Prerequisites: Con 13, Combat Stamina, base attack bonus +1.", "PRETOTALAB:1"]),
+    ("Critical Cure", &[]),
+    ("Endurance", &[]),
+    ("Twist the Knife", &[]),
+    ("Extra Unchained Rogue Talent", &["PREABILITY:1,CATEGORY=CLASS,Rogue ~ Unchained Class", "PREVARGTEQ:RogueTalentLVL,1"]),
+    ("Signature Skill", &["PRESKILL:1,TYPE.Base=5", "PRETEXT:Prerequisite: 5 ranks in the chosen skill.", "PREVAREQ:CannotUseSignatureSkill,0"]),
+];
+
+/// The gathered tokens for `key` in `table`, or `None` when the table has
+/// no row for it.
+///
+/// Returns `None` (never `Some(&[])`) for an absent key, and `Some(&[])`
+/// for a key whose corpus row genuinely carries no `PRE` token -- the two
+/// facts stay distinguishable, which is the whole reason this table lists
+/// every key including the empty ones.
+pub fn gathered_prerequisites(
+    table: &'static [(&'static str, &'static [&'static str])],
+    key: &str,
+) -> Option<&'static [&'static str]> {
+    table.iter().find(|(row_key, _)| *row_key == key).map(|(_, tokens)| *tokens)
 }
 
 // ---------------------------------------------------------------------------
@@ -193,7 +516,24 @@ fn map_shared_entry(entry: &SharedFeatTableEntry) -> FeatCatalogRecord {
         category: shared_category_name(entry.category),
         name: entry.name,
         description: entry.description,
+        // Passed straight through: CRB/APG/ACG already gathered these.
+        prerequisites: entry.prerequisites,
     }
+}
+
+/// Looks the record's gathered `PRE` tokens up in `table` and applies the
+/// `None`-when-absent rule this record's `prerequisites` field documents.
+///
+/// A key the gather table does not list at all also yields `None` here,
+/// which would be indistinguishable from "the corpus row has none" -- so
+/// that case is not allowed to arise silently:
+/// `every_arg_and_pu_catalog_key_has_a_gathered_prerequisite_row` asserts
+/// every key in both books' tables is listed.
+fn gathered(
+    table: &'static [(&'static str, &'static [&'static str])],
+    key: &str,
+) -> Option<&'static [&'static str]> {
+    gathered_prerequisites(table, key).filter(|tokens| !tokens.is_empty())
 }
 
 fn map_arg_entry(entry: &arg_feats::FeatTableEntry) -> FeatCatalogRecord {
@@ -202,6 +542,7 @@ fn map_arg_entry(entry: &arg_feats::FeatTableEntry) -> FeatCatalogRecord {
         category: arg_category_name(entry.category),
         name: entry.name,
         description: entry.description,
+        prerequisites: gathered(ARG_FEAT_PREREQUISITES, entry.key),
     }
 }
 
@@ -211,6 +552,7 @@ fn map_pu_entry(entry: &pu_feats::FeatTableEntry) -> FeatCatalogRecord {
         category: pu_category_name(entry.category),
         name: entry.name,
         description: entry.description,
+        prerequisites: gathered(PU_FEAT_PREREQUISITES, entry.key),
     }
 }
 
@@ -335,6 +677,132 @@ mod tests {
                 );
             }
         }
+    }
+
+    /// The gather table must list **every** ARG and PU key, including the
+    /// ones whose corpus row carries no `PRE` token. A missing key and a
+    /// genuinely-empty row both surface as `prerequisites: None` on the
+    /// record, so without this assertion a key the gather missed would be
+    /// silently reported as "this feat has no prerequisites" -- exactly
+    /// the fabricated absence this catalog's `None` rules exist to
+    /// prevent.
+    #[test]
+    fn every_arg_and_pu_catalog_key_has_a_gathered_prerequisite_row() {
+        for entry in arg_feats::feat_tables() {
+            assert!(
+                gathered_prerequisites(ARG_FEAT_PREREQUISITES, entry.key).is_some(),
+                "ARG feat '{}' has no row in ARG_FEAT_PREREQUISITES; an absent row is \
+                 indistinguishable from a genuinely prerequisite-free record once it \
+                 reaches FeatCatalogRecord",
+                entry.key
+            );
+        }
+        for entry in pu_feats::feat_tables() {
+            assert!(
+                gathered_prerequisites(PU_FEAT_PREREQUISITES, entry.key).is_some(),
+                "PU feat '{}' has no row in PU_FEAT_PREREQUISITES",
+                entry.key
+            );
+        }
+        assert_eq!(ARG_FEAT_PREREQUISITES.len(), arg_feats::feat_tables().len());
+        assert_eq!(PU_FEAT_PREREQUISITES.len(), pu_feats::feat_tables().len());
+    }
+
+    /// The real per-book prerequisite coverage, derived from the live
+    /// aggregate. The ARG number is the point of the whole gather: **every
+    /// one of that book's 187 records carries at least one `PRE`-family
+    /// token**, and before this gather landed the engine held none of
+    /// them.
+    #[test]
+    fn the_per_book_prerequisite_coverage_is_the_real_one() {
+        let with_prerequisites = |rule_set: RuleSetId| -> usize {
+            all_feat_tables()
+                .iter()
+                .filter(|book| book.rule_set == rule_set)
+                .flat_map(|book| book.entries.iter())
+                .filter(|entry| entry.prerequisites.is_some())
+                .count()
+        };
+
+        assert_eq!(with_prerequisites(RuleSetId::Crb), 130, "of 185");
+        assert_eq!(with_prerequisites(RuleSetId::Apg), 143, "of 172");
+        assert_eq!(with_prerequisites(RuleSetId::Acg), 125, "of 129");
+        assert_eq!(with_prerequisites(RuleSetId::Arg), 187, "of 187 -- all of them");
+        assert_eq!(with_prerequisites(RuleSetId::Pu), 14, "of 17");
+
+        let total: usize = all_feat_tables()
+            .iter()
+            .flat_map(|book| book.entries.iter())
+            .filter(|entry| entry.prerequisites.is_some())
+            .count();
+        assert_eq!(total, 599, "599 of the catalog's 690 records have a prerequisite");
+    }
+
+    /// `Some(&[])` must never reach a consumer: an empty slice would read
+    /// as "has prerequisites, none of them anything", which no corpus row
+    /// says.
+    #[test]
+    fn no_record_carries_an_empty_prerequisite_slice() {
+        for book in all_feat_tables() {
+            for entry in book.entries {
+                if let Some(tokens) = entry.prerequisites {
+                    assert!(
+                        !tokens.is_empty(),
+                        "{:?} '{}' carries Some(&[]); absence must be None",
+                        book.rule_set,
+                        entry.key
+                    );
+                    for token in tokens {
+                        assert!(
+                            token.starts_with("PRE") || token.starts_with("!PRE"),
+                            "{:?} '{}' carries a non-PRE token {token:?}",
+                            book.rule_set,
+                            entry.key
+                        );
+                    }
+                }
+            }
+        }
+    }
+
+    /// The three feats the on-screen proof turns on, plus one ARG record
+    /// whose tokens did not exist anywhere in the engine before this
+    /// gather.
+    #[test]
+    fn the_real_prerequisite_tokens_reach_the_aggregate() {
+        let find = |key: &str, rule_set: RuleSetId| {
+            all_feat_tables()
+                .iter()
+                .filter(move |book| book.rule_set == rule_set)
+                .flat_map(|book| book.entries.iter())
+                .find(|entry| entry.key == key)
+                .unwrap_or_else(|| panic!("'{key}' must be in the aggregate"))
+        };
+
+        assert_eq!(
+            find("Improved Two-Weapon Fighting", RuleSetId::Crb).prerequisites,
+            Some(
+                &[
+                    "PREABILITY:1,CATEGORY=FEAT,Two-Weapon Fighting",
+                    // Note the corpus states the Dex 17 requirement purely
+                    // through PCGen variables -- there is no `PRESTAT:` on
+                    // this record at all. `pre_tokens` models both:
+                    // `PreStatScore_DEX` IS the Dex score per
+                    // `cr__stats.lst`, and `FeatDexRequirement` is 0 for
+                    // every character built here.
+                    "PREMULT:1,[PREVARGTEQ:PreStatScore_DEX,17],[PREVARGTEQ:FeatDexRequirement,17]",
+                    "PRETOTALAB:6",
+                ][..]
+            )
+        );
+        assert_eq!(find("Two-Weapon Fighting", RuleSetId::Crb).prerequisites.unwrap().len(), 1);
+        // A CRB record whose corpus row genuinely has no PRE token.
+        assert_eq!(find("Toughness", RuleSetId::Crb).prerequisites, None);
+        // ARG: never gathered before this module existed.
+        assert_eq!(
+            find("Armor of the Pit", RuleSetId::Arg).prerequisites,
+            Some(&["PREFACT:1,TEMPLATES,IsTiefling=true"][..])
+        );
     }
 
     /// The category strings are the wire form the desktop picker filters

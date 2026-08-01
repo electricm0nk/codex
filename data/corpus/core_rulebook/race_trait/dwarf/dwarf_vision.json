@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Dwarf ~ Vision",
+    "name": "Darkvision",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "Dwarf Racial Default",
+      "SpecialQuality",
+      "Extraordinary",
+      "Racial Vision"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Dwarf_ReplaceVision",
+    "sets_replace_flags": [],
+    "description": "Dwarves can see in the dark up to 60 feet.",
+    "source_page": "p.21",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.Dwarf Racial Default.SpecialQuality.Extraordinary.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Dwarf_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves can see in the dark up to 60 feet."
+      },
+      {
+        "key": "VISION",
+        "value": "Darkvision (60)"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.21"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/dwarf/dwarf_abilities_race.lst",
+    "sha256": "4fb2ab0aef727dd0a69362eb017239ce552931425b29d31938df35ffc30d7705",
+    "line": 21,
+    "record_key": "Dwarf ~ Vision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -13,8 +13,10 @@ mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod feat_catalog;
 mod ge08_workbench;
+mod monster_catalog;
 mod pf1_adapter;
 mod race_catalog;
+mod race_trait_picker;
 /// Test-only: the reach gate, which fails when ingested content has no
 /// consumer carrying it to a player. Compiled out of the shipping binary
 /// because it is a verification surface, not a runtime one.
@@ -36,10 +38,12 @@ use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_hp,
     adjust_character_money, attach_equipment_modifier, clone_character, create_character,
     delete_character, delete_character_portrait, export_character, export_character_json,
-    import_character, level_up_character, list_saved_characters, load_character_bio,
+    import_character, level_up_character, list_feats_for_character, list_saved_characters,
+    load_character_bio,
     load_character_durability, load_character_money, load_character_portrait,
-    load_saved_character, preview_level_up, purchase_equipment,
-    record_and_prepare_spell_selection,
+    list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
+    remove_spell_selection,
     save_character_portrait, set_skill_allocations, update_character_bio,
 };
 use characterHub::appendToCharacter::append_to_character;
@@ -50,7 +54,9 @@ use class_spell_levels::list_class_spell_levels;
 use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
 use equipment_catalog::{list_equipment, list_equipment_catalog};
 use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
+use monster_catalog::list_monster_catalog;
 use race_catalog::list_race_catalog;
+use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
 use spell_catalog::{list_spell_catalog, list_spells};
 use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
 use update::transaction::{
@@ -156,6 +162,9 @@ fn main() {
             add_spell_selection,
             record_and_prepare_spell_selection,
             add_feat_selection,
+            remove_feat_selection,
+            remove_spell_selection,
+            remove_equipment_selection,
             set_skill_allocations,
             append_to_character,
             re_save_character,
@@ -183,13 +192,23 @@ fn main() {
             list_equipment_catalog,
             list_spell_catalog,
             list_feat_catalog,
+            // SD-27: Bestiary 1's 41 ingested monster stat blocks, which
+            // reached no surface at all until this catalog landed.
+            list_monster_catalog,
             list_equipment,
             list_spells,
             list_feats,
+            // SD-27: the same catalog with each record's real prerequisite
+            // verdict for a specific saved character, so the picker can grey
+            // out what that character cannot take and say why.
+            list_feats_for_character,
             list_weapon_targets,
             list_class_catalog,
             list_class_spell_levels,
             list_race_catalog,
+            list_race_creation_roster,
+            list_alternate_racial_traits,
+            resolve_race_alternate_selection,
             corpus_ingest_diagnostic
         ])
         .run(tauri::generate_context!())

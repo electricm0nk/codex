@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-07-31T15:03:58Z",
+  "data": {
+    "key": "Tiefling ~ Fiendish Sorcery",
+    "name": "Fiendish Sorcery",
+    "race_key": "Tiefling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tiefling Racial Trait",
+      "Tiefling Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Tiefling_ReplaceFiendishSorcery",
+    "sets_replace_flags": [],
+    "description": "Tiefling sorcerers with the Abyssal or Infernal bloodlines treat their Charisma scores as 2 points higher for the purposes of all sorcerer class abilities.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Fiendish Sorcery"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.Tiefling Racial Default.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Tiefling_ReplaceFiendishSorcery=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Tiefling sorcerers with the Abyssal or Infernal bloodlines treat their Charisma scores as 2 points higher for the purposes of all sorcerer class abilities."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Affinity Sorcerer Bonus|PREMULT:2,[PRECLASS:1,Sorcerer=1],[PREABILITY:1,CATEGORY=Special Ability,Sorcerer Bloodline ~ Abyssal,Sorcerer Bloodline ~ Infernal]"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race.lst",
+    "sha256": "00e5df2aea67ee05c75a64f8116a0da2aacf03252d8dae24073ea196365c1960",
+    "line": 23,
+    "record_key": "Tiefling ~ Fiendish Sorcery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

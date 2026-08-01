@@ -1,12 +1,27 @@
 import {
   CLASS_OPTIONS,
   MAX_CLASS_LEVEL,
+  UNKNOWN_RACE_TRAIT,
   canTakeAnotherLevelIn,
   clampLevelForClass,
+  deriveRaceTraits,
   describeClassSupportLevel,
   getLevelOptionsForClass,
+  type RaceOption,
 } from './characterHubModel';
 import { assert, assertEqual } from '../testSupport/asserts';
+
+/**
+ * A stand-in for the roster the backend serves, so this file can test
+ * `deriveRaceTraits`' contract without a Tauri runtime. The real roster's
+ * agreement with the corpus is proved where the corpus is: in
+ * `raceCreationCoverage.test.ts` and in `character_hub::tests`.
+ */
+const ROSTER: RaceOption[] = [
+  { id: 'race:human', label: 'Human', book: 'CRB', abilityAdjustments: {}, floatingBonusPoints: 2, size: 'Medium', vision: 'Normal', baseSpeedFt: 30, body: null },
+  { id: 'race:gnome', label: 'Gnome', book: 'CRB', abilityAdjustments: { constitution: 2, charisma: 2, strength: -2 }, floatingBonusPoints: 0, size: 'Small', vision: 'Low-light vision', baseSpeedFt: 20, body: null },
+  { id: 'race:goblin', label: 'Goblin', book: 'B1', abilityAdjustments: { dexterity: 4, strength: -2, charisma: -2 }, floatingBonusPoints: 0, size: 'Small', vision: 'Darkvision 60 ft.', baseSpeedFt: 30, body: null },
+];
 
 /**
  * `levelOptions` is the app's honest claim about which levels of a class a
@@ -14,8 +29,12 @@ import { assert, assertEqual } from '../testSupport/asserts';
  * `cargo run --bin v06_class_state_dump`, which sweeps every class over
  * levels 1-20 through the real `build_pilot_headless_receipt` pipeline under
  * the exact posture `compose_character_input` produces. The run of
- * 2026-07-29 reports **all 27 classes `Computed` at every level 1-20**
- * (`computed_count: 27`, every row `levels_blocked: []`).
+ * 2026-07-31 reports **all 31 classes `Computed` at every level 1-20**
+ * (`class_count: 31`, `computed_count: 31`, `blocked_count: 0`, every row
+ * `levels_blocked: []`). That run was diffed against the same dump taken in
+ * a clean worktree at the pre-change HEAD: the 27 classes that were already
+ * there are byte-identical, and the 4 Pathfinder Unchained classes are the
+ * only additions.
  *
  * These tests pin exactly that. A class either offers the full 1-20 range
  * because the engine computes it there, or it offers only level 1 (the "let
@@ -57,6 +76,12 @@ const FULLY_COMPUTED_CLASS_IDS = [
   'class:slayer',
   'class:swashbuckler',
   'class:warpriest',
+  // Pathfinder Unchained. Four REPLACEMENTS for four of the classes above,
+  // present alongside them under distinct ids (SD-27, 2026-07-31).
+  'class:unchained_barbarian',
+  'class:unchained_monk',
+  'class:unchained_rogue',
+  'class:unchained_summoner',
 ];
 
 /**
@@ -104,9 +129,71 @@ const HIT_DIE_BY_CLASS_ID: Record<string, number> = {
   'class:slayer': 10,
   'class:swashbuckler': 10,
   'class:warpriest': 8,
+  // Pathfinder Unchained. Three of the four deliberately equal the class
+  // they replace — their corpus record overrides no chassis field. The
+  // Unchained Monk does NOT: `pu_templates.lst:5`'s
+  // `Monk ~ Unchained HD  HITDIE:10|CLASS=Monk` gives it a d10, against the
+  // operator-ruled d8 above. That divergence is the single loudest reason
+  // these are separate classes and not aliases, and the assertion that the
+  // pair differs lives in `sd27_pu_class_wiring_pin.rs`.
+  'class:unchained_barbarian': 12,
+  'class:unchained_monk': 10,
+  'class:unchained_rogue': 8,
+  'class:unchained_summoner': 8,
 };
 
+/**
+ * The Character Sheet prints Vision and Size under the fixed caption
+ * "Vision and Size are calculated from race and aren't editable". It used to
+ * read them as `race?.size ?? 'Medium'` / `race?.vision ?? 'Normal'` against
+ * a hardcoded seven-entry table of the Core Rulebook races. Any saved
+ * character whose `raceId` was outside that list — a clone, a sheet written
+ * by a later build, or any of the eleven Bestiary 1 races — therefore had
+ * "Medium" and "Normal" asserted for it as a calculated result. For a kobold
+ * or a svirfneblin (both Small, both with darkvision) that is a wrong rules
+ * value presented as a derived one.
+ *
+ * `deriveRaceTraits` must instead say it does not know.
+ */
+function verifiesKnownRacesStillReportTheirRealSizeAndVision() {
+  for (const option of ROSTER) {
+    const traits = deriveRaceTraits(option.id, ROSTER);
+    assertEqual(traits.size, option.size, `${option.label} keeps its real size`);
+    assertEqual(traits.vision, option.vision, `${option.label} keeps its real vision`);
+  }
+}
+
+function verifiesAnUnprofiledRaceIsNotGivenAFabricatedSizeOrVision() {
+  // Bestiary 1 races SD-27 brings into the race catalog. Neither is Medium
+  // and neither has normal vision, so the old defaults were not merely
+  // vague — they were wrong.
+  for (const raceId of ['race:kobold', 'race:svirfneblin', 'race:tengu']) {
+    const traits = deriveRaceTraits(raceId, ROSTER);
+    assertEqual(traits.size, UNKNOWN_RACE_TRAIT, `${raceId} reports an unknown size rather than "Medium"`);
+    assertEqual(traits.vision, UNKNOWN_RACE_TRAIT, `${raceId} reports unknown vision rather than "Normal"`);
+  }
+}
+
+function verifiesAMissingRaceIdIsAlsoUnknownRatherThanDefaulted() {
+  for (const raceId of [null, undefined, '']) {
+    const traits = deriveRaceTraits(raceId, ROSTER);
+    assertEqual(traits.size, UNKNOWN_RACE_TRAIT, 'a missing raceId claims no size');
+    assertEqual(traits.vision, UNKNOWN_RACE_TRAIT, 'a missing raceId claims no vision');
+  }
+}
+
+function verifiesTheUnknownMarkerIsNotItselfARulesValue() {
+  const sizes = new Set(ROSTER.map((option) => option.size));
+  const visions = new Set(ROSTER.map((option) => option.vision));
+  assert(!sizes.has(UNKNOWN_RACE_TRAIT as never), 'the unknown marker is not a real PF1 size');
+  assert(!visions.has(UNKNOWN_RACE_TRAIT), 'the unknown marker is not a real PF1 vision string');
+}
+
 async function main() {
+  verifiesKnownRacesStillReportTheirRealSizeAndVision();
+  verifiesAnUnprofiledRaceIsNotGivenAFabricatedSizeOrVision();
+  verifiesAMissingRaceIdIsAlsoUnknownRatherThanDefaulted();
+  verifiesTheUnknownMarkerIsNotItselfARulesValue();
   verifiesEveryEngineComputedClassOffersAllTwentyLevels();
   verifiesEveryEngineComputedClassIsActuallyOffered();
   verifiesEveryOfferedClassCarriesItsCorpusHitDie();
