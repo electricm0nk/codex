@@ -57,9 +57,9 @@ For classes that appear in both Ultimate Intrigue and Occult Adventures (Occulti
 - Forbidden patterns: `sd28_*`, `SD28_*`, `Sd28*`, `sd28-*`, `t_<hex>`, `SD-28-Ex...`, `AV-PAY-N`.
 - Doctrine-of-record at `~/workspace/governance/identifier-discipline.md`.
 
-## Decision 7 — Operating form
+## Decision 7 — Operating form [SUPERSEDED — see §22]
 
-**Status:** Doctrine-of-record (per SD-22 doctrine).
+**Status:** Doctrine-of-record (per SD-22 doctrine); **superseded 2026-08-01** by Decision §22, which replaces the dispatch mechanism named here with the `Workflow` tool.
 
 `/loop 60m /batch /goal <loop-instruction-file>`. Not ad-hoc single-task invocations.
 
@@ -238,7 +238,7 @@ Per the 2026-07-17 build-version amendment (doctrine-of-record at SD-21 Decision
 
 **Decision:** The `codex-tranche-8` board is NOT a Hermes board. SD-28's pre-launch checklist no longer requires a Hermes-board instance; the work-queue artifact is a local-file `kanban.md` paired with `progress.md` (per the operator 2026-08-01 confirmation "we will stop using the hermes board" + "kanban.md + progress.md for the work-queue artifact").
 
-**Operator-on-file override.** The 2026-07-18 loop-instruction doctrine-of-record includes a `/loop 60m /batch /goal <loop-instruction-file>` operating form predicated on Hermes-board card dispatch. SD-28 **inherits** the `/loop /batch /goal` cadence but the dispatch is local-file only — the supervisor reads `kanban.md` at top of each cycle (rather than Hermes-board card state) and writes cycle receipts to `progress.md`. The same file-touch partition discipline applies: 1 cycle per file at a time.
+**Operator-on-file override.** The 2026-07-18 loop-instruction doctrine-of-record includes a `/loop 60m /batch /goal <loop-instruction-file>` operating form predicated on Hermes-board card dispatch. SD-28 **inherited** the `/loop /batch /goal` cadence with the dispatch made local-file only — the supervisor reads `kanban.md` at top of each cycle (rather than Hermes-board card state) and writes cycle receipts to `progress.md`. **This paragraph is superseded on dispatch mechanism by §22** (2026-08-01): the local-file state source (`kanban.md`/`progress.md`) stands, but the dispatcher is the `Workflow` tool driven from a live session, not `/loop /batch`. The file-touch partition discipline (1 cycle per file at a time) is unchanged by the mechanism swap.
 
 ## Decision 16 — Cross-book conflict rule (operator directive 2026-08-01)
 
@@ -325,9 +325,60 @@ The load-bearing ramification is on the choices per above decision document: whe
 2. **No `clarify` tool calls.** The operator clarification tool is hard-banned under unattended mode.
 3. **Blockers are recorded, not raised.** Hard-blocks (auth failure, branch creation conflict, identity conflict on disk) go in `progress.md` with the command and exit code. The bundle does not halt; the supervisor picks up the next ready card.
 4. **`decision-blocked` IS allowed.** Operator-decision points (Epic 7 closure, Epic 1 fire order, cross-bundle-class overlap resolution) record `decision-blocked` in `progress.md` and proceed on the safe default per `forward-scope-register.md C3.x` retrofits.
-5. **Closure is a goal, not a stop signal.** The bundle runs to closure per `/loop` cadence.
+5. **Closure is a goal, not a stop signal.** The bundle runs to closure under the dispatcher's own loop (the `Workflow` tool per §22, not a human re-invoking a slash command per cycle).
 
 **Operator's verbatim:** "include instructions to all 3 that indicate they will be running in unnattended mode since i will be out of town while this runs. They may not stop to ask questions - it might be days before i notice."
 
 **Cross-reference:** the doctrine is mirrored in `loop-instruction.md` (cycle supervisor reads it first) and `progress.md` (per-cycle receipt confirms the operator-on-record). The receipt chain is the operator's after-return review surface.
+
+## Decision 22 — Dispatch is session-driven `Workflow`-tool orchestration, not `/loop` or `/batch` (adopted from SD-27 `decisions.md §19`, 2026-08-01)
+
+**Status:** Operator-pinned by inheritance — SD-27 `decisions.md §19` records the correction ("adopted from SD-26 `decisions.md §13`"); this package had not yet propagated it before this pass. No new operator input required; this is process alignment, not a new ruling.
+
+**Decision:** SD-28 dispatches via the **in-harness `Workflow` tool, driven from a live session** — not `scripts/workflow-dispatch.sh` or any headless script, and not a cron driver. Deterministic control flow (per-epic ordering, fan-out, `decision-blocked` handling) is written into `loop-instruction.md` and tracked as state in `kanban.md`'s claim/complete queue; model judgment lives inside the dispatched `agent()`/`Workflow` calls, never in the orchestrating session's own tool calls.
+
+`/batch` defaults to parallel isolated-worktree fan-out. It is used only where an epic's criteria are genuinely file-disjoint (see `loop-instruction.md` "Epic ordering"); where cycles touch shared state — `progress.md`, `kanban.md`, `reach_gate.rs`'s `OPEN_FINDINGS` — the correct dispatch is an explicit single-cycle procedure, not `/batch`. Any parallel wave that does run passes `isolation: 'worktree'` to every mutating agent (`docs/governance/loop-instruction-template.md §3`).
+
+The orchestrating session never implements directly — it dispatches, verifies, and rules (`loop-instruction-template.md §2.2`). This held across SD-27's launch and the CRB run before it; nothing about SD-28's shape is an exception.
+
+**Reasoning:** `loop-instruction.md`'s OPERATING METHOD callout (authored before this correction propagated) still named `/loop 60m /batch /goal ...` as the dispatch command. That form requires a human to re-type a slash command per invocation and cannot run headless — directly contradicting §21's unattended-mode authorization, which requires the bundle to run to closure across days with nobody watching. A `Workflow`-tool session, not a slash-command invocation, is what can actually satisfy that requirement.
+
+**Consequence:** `loop-instruction.md`'s OPERATING METHOD callout now names the `Workflow` tool; §21 point 5 ("closure is a goal, not a stop signal") is corrected to read "under the dispatcher's own loop" rather than "per `/loop` cadence."
+
+**Cross-reference:** `docs/release/SD-27-future-state-book-content-ingestion/decisions.md §19` (the adopted correction, itself from SD-26 `decisions.md §13`); `docs/governance/loop-instruction-template.md §2` (orchestration mode), `§2.1` (`RETRO_ACTOR`), `§2.2` (execution boundary), `§3` (worktree-isolation requirement for parallel waves).
+
+## Decision 23 — A running retrospective log is part of the cycle procedure, not an optional courtesy (2026-08-01)
+
+**Status:** Process alignment — the tooling already exists on `tranche/8` (`scripts/retro.py`, `docs/retro/schema.json`, `docs/retro/events/<actor>.jsonl`); this package had not yet wired emission into its own cycle procedure.
+
+**Decision:** Every SD-28 cycle emits at least one retrospective event via `scripts/retro.py`. The event vocabulary (`correction`, `incident`, `near_miss`, `deferral`, `rework`, `verification`, `note`) and the field contract live in `docs/retro/schema.json` and are not re-specified here — read `python3 scripts/retro.py help <type>` for the real flags before emitting.
+
+- Every dispatched agent has `RETRO_ACTOR` set to its role name (`loop-instruction.md` OPERATING METHOD callout, per `loop-instruction-template.md §2.1`). The harness has no variable that identifies an agent's role; the fallback (worktree directory name) names a checkout, not a role, which makes the by-actor breakdown in `scripts/retro.py summary` meaningless.
+- `./scripts/verify.sh` auto-emits its own `verification` event on every run, passing or failing, so the denominator of "how often did we actually check" is honest without anyone deciding to record it.
+- A `correction` event requires `--verified-by` — an unverified correction is a competing assertion, not a finding.
+- Emitting the event is cycle step 8 (`loop-instruction.md` "Cycle mechanics"), not a follow-on task a cycle can skip under time pressure.
+
+**Cross-reference:** `loop-instruction.md` §"Retrospective log"; `scripts/retro.py`'s own `--help` docstring (do not hand-roll the emission syntax from memory).
+
+## Decision 24 — Stop vs. press on: when a cycle halts and when it doesn't (2026-08-01)
+
+**Status:** New — codifies a rule this bundle's `loop-instruction.md` "Hard stops" section applied implicitly (via its concrete instances) but never stated generally.
+
+**Decision:** A cycle STOPS (records `decision-blocked` per §21's unattended-mode protocol, does not fabricate a pass) when:
+
+- A gate fails for a reason that is a real finding about content or scope. Never weaken, skip, `#[ignore]`, or exclude a gate to get green, and never invent a surface or a number to satisfy one.
+- Two authorities disagree on scope.
+- The work would revert or clobber another session's live work.
+- Proceeding would require inventing data not present in the corpus.
+
+A cycle PRESSES ON, without recording `decision-blocked`, when:
+
+- This package's own stated figure or premise is wrong — correcting it is expected, not insubordination.
+- The scope is larger than expected — size alone is never a stop reason.
+- A mechanical defect needs fixing (duplicate module, stale fixture, lint fix).
+- A routine judgment call has a conventional default — pick it, record it, move on.
+
+**Reasoning:** Under §21's unattended-mode authorization, the cost of stopping on the wrong things and the cost of pressing on through the wrong things are both real and asymmetric with a human days away. `decision-blocked` already gives cycles a way to stop without literally asking the operator; what was missing was a general rule for which situations qualify, so a cycle facing a case not on "Hard stops"'s concrete list still classifies it correctly.
+
+**Cross-reference:** `loop-instruction.md` §"Stop vs. press on"; §21 (unattended-mode protocol, the mechanism a STOP actually invokes); `loop-instruction.md` "Hard stops" (this bundle's concrete STOP instances) and "Self-heal" (this bundle's concrete PRESS-ON instances).
 

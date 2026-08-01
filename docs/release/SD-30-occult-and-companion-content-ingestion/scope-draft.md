@@ -9,7 +9,7 @@
 **Scope:** universal
 
 > ⚠️ **OPERATING METHOD — REQUIRED FOR THIS BUNDLE**
-> This bundle is operated via `/loop 60m /batch /goal ~/workspace/programs/codex/requirements/SD-30-occult-and-companion-content-ingestion/loop-instruction.md`, NOT via ad-hoc single-task invocations. The `/loop` cadence + `/batch` concurrency primitive is the supervisor's file-touch partition that enforces 1-cycle-at-a-time per file. One launch runs to closure.
+> This bundle is operated via the in-harness `Workflow` tool driven from a live session, NOT via `/loop`/`/batch` and NOT via ad-hoc single-task invocations — see `loop-instruction.md`'s OPERATING METHOD callout and `decisions.md §22` for the full mechanism (supersedes Decision §8 above).
 >
 > **Pre-launch checklist (must be true before any cycle fires):**
 > 1. `kanban.md` exists at this directory and lists the ready queue (local-file dispatch).
@@ -188,7 +188,7 @@ as absence.
 ## What is operator-pinned vs. doctrine
 
 - **Operator-pinned (CONFIRMED 2026-08-01):** Book list (sixteen books: occult + mythic + Monster Codex + Inner Sea series + Book of the Damned ×2; NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes deferred to forward-scope-register). Per-book path locations confirmed. Per-book ingest subtype confirmed. Epic structure (one epic per book group) confirmed. Branch `tranche/10`. No Hermes board; local-file dispatch. Build version `0.10.<build>`. Cross-book conflict rule. Reach-gate DoD doctrine.
-- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme (`<major>.<tranche-base>.<build>`). `/loop /batch /goal` operating form. Per-bundle progress file. Reach-gate = definition of done. Engine policy (real-time forbidden; rules-data in scope only when strictly necessary).
+- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme (`<major>.<tranche-base>.<build>`). `Workflow`-tool operating form (`decisions.md §22`, supersedes the prior `/loop /batch /goal` form at §8). Per-bundle progress file. Reach-gate = definition of done. Engine policy (real-time forbidden; rules-data in scope only when strictly necessary).
 
 ## Next step (operator-pinned CONFIRMED 2026-08-01)
 

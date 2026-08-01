@@ -9,7 +9,7 @@
 **Scope:** universal
 
 > ⚠️ **OPERATING METHOD — REQUIRED FOR THIS BUNDLE**
-> This bundle is operated via `/loop 60m /batch /goal ~/workspace/programs/codex/requirements/SD-28-ultimate-book-content-ingestion/loop-instruction.md`, NOT via ad-hoc single-task invocations. The `/loop` cadence + `/batch` concurrency primitive is the supervisor's file-touch partition that enforces 1-cycle-at-a-time per file. One launch runs to closure.
+> This bundle is operated via the in-harness `Workflow` tool driven from a live session, NOT via `/loop`/`/batch` and NOT via ad-hoc single-task invocations — see `loop-instruction.md`'s OPERATING METHOD callout and `decisions.md §22` for the full mechanism (supersedes Decision §7 above).
 >
 > **Pre-launch checklist (must be true before any cycle fires):**
 > 1. `kanban.md` exists at this directory and lists the ready queue (local-file dispatch).
@@ -136,7 +136,7 @@ bundle-specific process. The full procedure is
 ## What is operator-pinned vs. doctrine
 
 - **Operator-pinned (NOT yet confirmed):** Book list (4 books), per-book path locations, per-book ingest subtype, epic count, criterion count, branch name, board name, build version target.
-- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline (PascalCase / camelCase, no `sd<N>_*` patterns). Build-version scheme `<major>.<tranche-base>.<build>` (major stays at 0 until first main-publish; tranche-base is the active working tranche's base digit; build is monotonic never-resets). `/loop /batch /goal` operating form. Per-bundle progress file at `~/workspace/programs/codex/requirements/SD-28-ultimate-book-content-ingestion/progress.md`.
+- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline (PascalCase / camelCase, no `sd<N>_*` patterns). Build-version scheme `<major>.<tranche-base>.<build>` (major stays at 0 until first main-publish; tranche-base is the active working tranche's base digit; build is monotonic never-resets). `Workflow`-tool operating form (`decisions.md §22`, supersedes the prior `/loop /batch /goal` form at §7). Per-bundle progress file at `~/workspace/programs/codex/requirements/SD-28-ultimate-book-content-ingestion/progress.md`.
 
 ## Next step (operator-pinned CONFIRMED 2026-08-01)
 

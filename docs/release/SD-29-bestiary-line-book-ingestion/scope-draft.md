@@ -9,7 +9,7 @@
 **Scope:** universal
 
 > ⚠️ **OPERATING METHOD — REQUIRED FOR THIS BUNDLE**
-> This bundle is operated via `/loop 60m /batch /goal ~/workspace/programs/codex/requirements/SD-29-bestiary-2-3-4-5-content-ingestion/loop-instruction.md`, NOT via ad-hoc single-task invocations. The `/loop` cadence + `/batch` concurrency primitive is the supervisor's file-touch partition that enforces 1-cycle-at-a-time per file. One launch runs to closure.
+> This bundle is operated via the in-harness `Workflow` tool driven from a live session, NOT via `/loop`/`/batch` and NOT via ad-hoc single-task invocations — see `loop-instruction.md`'s OPERATING METHOD callout and `decisions.md §23` for the full mechanism (supersedes Decision §7 above).
 >
 > **Pre-launch checklist (must be true before any cycle fires):**
 > 1. `kanban.md` exists at this directory and lists the ready queue (local-file dispatch).
@@ -183,7 +183,7 @@ to search under.
 ## What is operator-pinned vs. doctrine
 
 - **Operator-pinned (NOT yet confirmed):** Book list (4 books), epics 3-6 per-book paths, per-book entity count, Epic 7 in-scope vs. separate-bundle decision, branch name, board name, build version target.
-- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme. `/loop /batch /goal` operating form. Per-bundle progress file.
+- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme. `Workflow`-tool operating form (`decisions.md §23`, supersedes the prior `/loop /batch /goal` form at §7). Per-bundle progress file.
 
 ## Next step
 
