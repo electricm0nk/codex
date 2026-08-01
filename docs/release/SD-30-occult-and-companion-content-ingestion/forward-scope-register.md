@@ -95,6 +95,84 @@ The Inner Sea series (×9 modules) is primarily campaign-setting data
 the cycle's reach gate may flag missing consumer integration (e.g.,
 a campaign-setup wizard surface). Per-cycle gap filing.
 
+## Class 4 — Measured inheritance from tranche/7 (SD-30-specific, derived 2026-08-01)
+
+Findings that are **about this bundle specifically**. Zero tranche/7 deferrals route to SD-30 — the
+register says so rather than filling the table. Its real inheritance was found instead by grepping
+**shipped source for SD-30's own book names**, which surfaced three live constraints that no deferral
+recorded. Sources: `docs/retro/tranche-7-retrospective.md`.
+
+**Method worth repeating before cycle 1:** `command grep -rn "<book_slug>" --include=*.rs src/` for each
+book in scope. Shipped code carries correctness constraints keyed to books that are *not yet ingested*,
+and those constraints become false the moment the book lands. A deferral register cannot find them
+because nobody deferred them — they were written as facts that silently expire.
+
+### C4.1 — Ingesting `horror_adventures` invalidates a shipped constant, by its own doc comment
+
+`src/rules_core/durability.rs:333` ships `FAMILIAR_TOAD_MAX_HP_BONUS: i16 = 3`. Its doc comment
+(`:325–332`) states the negative `FamiliarGrantedBonus_N|-1/-2/-3/-4` setters that would cancel it are
+*"provably vacuous here"* because **every one lives in `player_companion/familiar_folio` or
+`horror_adventures`, neither ingested** — and closes with:
+
+> *"Re-verify if the ingested book set ever widens."*
+
+**SD-30 ingests `horror_adventures`. That widening is this bundle.** The constant does not become wrong
+automatically, but its stated justification expires on the day the book lands, and the comment names the
+exact re-verification: trace all twelve setters to their files.
+
+**Readiness:** schedule the re-verification in the same cycle that ingests `horror_adventures`, not
+after. This is a correctness constraint with a trigger, not a deferral.
+
+### C4.2 — The Shaman later-book Spirits split across SD-30 and SD-28; neither closes it alone
+
+`src/rules_core/pilot_compute.rs:19364` and `:19586` carry a claim-blocking diagnostic naming *"the two
+later-book Spirits (Mammoth, Wood)"* this codebase does not recognise.
+
+**Mammoth is SD-30's; Wood is SD-28's.** Whichever bundle lands first will find the diagnostic still
+firing on the other's Spirit and must resist closing it. **The finding for both registers: this is a
+two-bundle claim and closing it requires both** — a cycle that flips it on one Spirit has made the
+diagnostic lie.
+
+### C4.3 — A measurement-shape trap already recorded in shipped source, keyed to SD-30's books
+
+`src/rules_core/rules_tables/acg/bloodrager_spell_list.rs` documents that a tree-wide count of its
+spells returns 220, sweeping in `monster_codex`, `inner_sea_races`, `adventurers_guide` and
+`aquatic_adventures` — books the repo does not ingest — and names that *"measurement-shape error"* as
+the cause of a stale figure the task had been carrying.
+
+**Every spell/feat list in this repo is scoped to a single book's `.lst` on purpose.** SD-30 widens the
+ingested book set, so any tree-wide count taken today and re-taken after ingest will move for reasons
+that have nothing to do with the cycle's work. **Scope every count to its source file and state the
+file**, per SD-27 `decisions.md §27.1`.
+
+### C4.4 — Two scope hazards derived, neither recorded in the bundle's own docs
+
+- **Occult Adventures is a subsystem, not a content drop.** Nine classes' worth of psychic magic with
+  **472 spell keys not defined in any currently-ingested book**, plus its own casting mechanics.
+  `C3.2` already flags the consumer surface; the *ingest* side is the larger half and is unsized.
+- **Mythic Adventures is predominantly a `.MOD` graft layer.** `ma_spells.lst` carries 279 rows and
+  only **10 distinct non-`.MOD` keys** — the rest modify records defined elsewhere. Shape B has no
+  precedent for a record that exists only as a delta on another book's record, and SD-27 hit the same
+  shape with ARG's races (`decisions.md §25.2`: 37 `.MOD` lines declaring nothing). **Resolve the
+  schema question before the first Mythic cycle dispatches**, or it will be resolved per-record by
+  whoever hits it first.
+
+### C4.5 — Shared with SD-28 and SD-29: pay the pipeline debt once
+
+There is no single ingestion pipeline. Four binaries (`ingest_races.rs`, `ingest_race_traits_arg.rs`,
+`ingest_pu_classes.rs`, `cache_gen/apg.rs`) carry three private partial copies of the PCGen description
+treatment; only `codex::rules_core::pcgen_desc::render_pcgen_desc` is sanctioned. SD-27 paid this defect
+three times in three places.
+
+Likewise the **magnitude predicate**: four reasonable variants of "does this record carry a computed
+magnitude" returned 48/49/51/52 on one unchanged tree, so any coverage ratio SD-30 publishes will not be
+comparable to SD-28's, SD-29's or SD-27's until an optional `source_record` lands on
+`ComputationExplanation`.
+
+**Ownership rule agreed across all three registers: whichever bundle dispatches first pays it; the
+others re-verify rather than re-implement.** See `../SD-29-bestiary-line-book-ingestion/forward-scope-register.md §7.4`
+and `§7.6`, and `../SD-28-ultimate-book-content-ingestion/forward-scope-register.md §C4.3`–`§C4.4`.
+
 ## Review trigger
 
 Reopen SD-30's forward-scope register when:
