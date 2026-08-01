@@ -37,7 +37,8 @@ use character_hub::{
     add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_hp,
     adjust_character_money, attach_equipment_modifier, clone_character, create_character,
     delete_character, delete_character_portrait, export_character, export_character_json,
-    import_character, level_up_character, list_saved_characters, load_character_bio,
+    import_character, level_up_character, list_feats_for_character, list_saved_characters,
+    load_character_bio,
     load_character_durability, load_character_money, load_character_portrait,
     list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
     record_and_prepare_spell_selection,
@@ -188,6 +189,10 @@ fn main() {
             list_equipment,
             list_spells,
             list_feats,
+            // SD-27: the same catalog with each record's real prerequisite
+            // verdict for a specific saved character, so the picker can grey
+            // out what that character cannot take and say why.
+            list_feats_for_character,
             list_weapon_targets,
             list_class_catalog,
             list_class_spell_levels,

@@ -3591,6 +3591,143 @@ mod tests {
         std::fs::remove_dir_all(&root).ok();
     }
 
+    // ----- The Known path's own correctness rule reaches the UI command -----
+    //
+    // `unmet_wizard_spellbook_conditions` validated the prepared set three
+    // ways and the recorded (`Known`) set exactly once: that it was
+    // non-empty. Nothing checked a recorded spell was a wizard spell at
+    // all, and `CharacterSheet.tsx`'s Add Spell picker writes
+    // `acquisitionMode: 'Known'` for every non-bootstrap add against the
+    // unfiltered 1185-record catalog -- so a Wizard 1 could pick any of the
+    // 543 records on no wizard list and it persisted to disk. These two
+    // tests drive the exact command the picker calls
+    // (`add_spell_selection_at_root`, `AcquisitionMode::Known`) and pin the
+    // two halves of the rule apart, because they are different rules.
+
+    /// A composed Wizard 1, saved exactly as `create_character` saves it,
+    /// then asked to record a Cleric/Druid/Bard spell. The command must
+    /// refuse and persist nothing.
+    fn seeded_wizard_root(character_id: &str, dir_label: &str) -> std::path::PathBuf {
+        let root = tempdir(dir_label);
+        let character_input = compose_character_input(&wizard_request_for(character_id, 1));
+        let envelope = SavedCharacterEnvelope {
+            character_id: character_id.to_owned(),
+            revision_id: format!("{character_id}.rev.1"),
+            revision_kind: SavedCharacterRevisionKind::Authoritative,
+            saved_at: TEST_SAVED_AT.to_owned(),
+            schema_version: CURRENT_SAVED_CHARACTER_SCHEMA_VERSION,
+            app_or_runtime_version: "codex-dev".to_owned(),
+            content_or_rules_provenance: SOURCE_PACKAGE_ID.to_owned(),
+            game_system: GAME_SYSTEM_ID.to_owned(),
+            latest_authoritative_revision_ref: format!("{character_id}.rev.1"),
+            display_label: "Pf1Adapter Wizard Known-Spell Rule Test".to_owned(),
+            character_input,
+        };
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        root
+    }
+
+    #[test]
+    fn add_spell_selection_refuses_a_known_spell_that_is_not_on_the_wizard_list() {
+        let root = seeded_wizard_root("pf1-adapter-wizard-offlist", "wizard-known-offlist");
+
+        let response = add_spell_selection_at_root(
+            &root,
+            "Cure Light Wounds",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Known,
+            "2026-07-31T01:00:00Z",
+        )
+        .expect("the command itself should not error -- it reports a refusal, not a crash");
+
+        let CreateCharacterResponse::Blocked { diagnostics } = response else {
+            panic!(
+                "recording a Cleric/Druid/Bard spell under class:wizard must be refused: \
+                 {response:?}"
+            );
+        };
+        let joined = diagnostics
+            .iter()
+            .map(|d| d.message.as_str())
+            .collect::<Vec<_>>()
+            .join(" ");
+        assert!(
+            joined.contains("Cure Light Wounds") && joined.contains("wizard spell list"),
+            "the refusal the player sees must name the spell and the rule it broke, got: \
+             {joined}"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            !reloaded
+                .character_input
+                .chosen
+                .spells_selected
+                .iter()
+                .any(|s| s.spell_id == "Cure Light Wounds"),
+            "a Blocked mutation must persist nothing: {:?}",
+            reloaded.character_input.chosen.spells_selected
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The other half, and the reason this is not the Prepared rule: PF1
+    /// CRB *Spellbooks* caps the two free spells gained at each new level
+    /// ("of spell levels he can cast"), but *Spells Copied from Another's
+    /// Spellbook or a Scroll* places no character-level restriction at all.
+    /// A Wizard 1 recording a 9th-level **wizard** spell is a legal PF1
+    /// character who simply cannot prepare it, so the command accepts it.
+    #[test]
+    fn add_spell_selection_accepts_a_known_wizard_spell_above_the_castable_level() {
+        let root = seeded_wizard_root("pf1-adapter-wizard-scribe", "wizard-known-scribe");
+
+        let response = add_spell_selection_at_root(
+            &root,
+            "Tsunami",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Known,
+            "2026-07-31T01:00:00Z",
+        )
+        .expect("record call should not error");
+
+        assert!(
+            matches!(response, CreateCharacterResponse::Saved { .. }),
+            "scribing a 9th-level wizard spell into a Wizard 1's spellbook is legal PF1 and \
+             must not be refused: {response:?}"
+        );
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(
+            reloaded
+                .character_input
+                .chosen
+                .spells_selected
+                .iter()
+                .any(|s| s.spell_id == "Tsunami"
+                    && s.acquisition_mode == AcquisitionMode::Known),
+            "and it must actually persist: {:?}",
+            reloaded.character_input.chosen.spells_selected
+        );
+
+        // The half that IS gated: preparing it stays refused, so accepting
+        // the record above did not quietly open the casting path.
+        let prepared = add_spell_selection_at_root(
+            &root,
+            "Tsunami",
+            WIZARD_CLASS_ID,
+            AcquisitionMode::Prepared,
+            "2026-07-31T02:00:00Z",
+        )
+        .expect("prepare call should not error");
+        assert!(
+            matches!(prepared, CreateCharacterResponse::Blocked { .. }),
+            "preparing a 9th-level spell at wizard level 1 must stay refused: {prepared:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
     #[test]
     fn add_spell_selection_at_root_advances_revision_id() {
         let character_id = "pf1-adapter-revision-spell";

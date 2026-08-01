@@ -36783,6 +36783,55 @@ fn resolve_prepared_spell_level(class_id: &str, spell_id: &str) -> PreparedSpell
     ))
 }
 
+/// Why a spell **recorded** under `class_id` (`AcquisitionMode::Known`) is
+/// not a spell that class can ever hold — or `None` when it is legitimate.
+///
+/// **This is the Known rule, and it is deliberately not the Prepared rule.**
+/// [`resolve_prepared_spell_level`] answers "which slot would this occupy
+/// today", and its callers then check that slot against the caster's own
+/// level and budget. Recording has no such budget: PF1 CRB *Spellbooks*
+/// caps only the two free spells gained at each new level ("of spell levels
+/// he can cast"); *Spells Copied from Another's Spellbook or a Scroll*
+/// places **no character-level restriction** on what a wizard may add to
+/// her book. A spellbook is a record, not a set of castable options, so a
+/// Wizard 1 may legitimately hold a 9th-level wizard spell she cannot yet
+/// prepare.
+///
+/// What *is* capped is membership. A wizard cannot scribe a spell that is
+/// on no wizard list — 543 of the desktop spell picker's 1185 records are
+/// exactly that (Cleric-only, Druid-only, Bard-only, Alchemist-only), and
+/// before this check every one of them was accepted and persisted under
+/// `class:wizard`. Sorcerer already refused its own equivalent
+/// (`unmet_sorcerer_known_spell_conditions`); wizard did not, and the
+/// asymmetry was the defect.
+///
+/// **Absence is reported, never invented.** A class with no ingested spell
+/// list yields `None` — refusing every spell for a class this crate simply
+/// has no list for would be a fabricated rule, the mirror image of the
+/// fabricated level `class_spell_levels` exists to remove (see
+/// `docs/governance/no-stub-mvp-doctrine.md`).
+fn class_spell_membership_refusal(class_id: &str, spell_id: &str) -> Option<String> {
+    if class_spell_levels::class_spell_level(class_id, spell_id).is_some() {
+        return None;
+    }
+    // Same bounded synthetic `<school>.<level>.<name>` fixture convention
+    // `resolve_prepared_spell_level` honours — those ids belong to no class
+    // list by construction and state their own level.
+    if parse_synthetic_spell_id(spell_id).is_some() {
+        return None;
+    }
+    if !class_spell_levels::class_has_spell_list(class_id) {
+        return None;
+    }
+    let class_name = class_id.strip_prefix("class:").unwrap_or(class_id);
+    Some(format!(
+        "recorded spell '{spell_id}' is not on the {class_name} spell list in any ingested \
+         book, so no {class_name} can learn it. Recording a spell is not level-gated (PF1 \
+         CRB, Spellbooks: a spell copied from a scroll or another spellbook has no \
+         character-level restriction) — but the spell still has to be one of that class's"
+    ))
+}
+
 /// The school a prepared spell belongs to, across every ingested book.
 ///
 /// Only Wizard needs this (its opposed-school slots cost 2 each); Arcanist
@@ -36892,6 +36941,15 @@ fn unmet_wizard_spellbook_conditions(
     }
     if prepared.is_empty() {
         unmet.push("no wizard spells prepared today (AcquisitionMode::Prepared)".to_owned());
+    }
+
+    // The Known rule: membership only. See `class_spell_membership_refusal`
+    // for why a recorded spell is NOT checked against the wizard's own
+    // spell-level access ceiling the way a prepared one is.
+    for spell_id in &recorded {
+        if let Some(reason) = class_spell_membership_refusal(WIZARD_CLASS_ID, spell_id) {
+            unmet.push(reason);
+        }
     }
 
     for spell_id in &prepared {
@@ -40974,6 +41032,156 @@ fn active_rage_powers_level(input: &CharacterInput, ability_modifiers: &AbilityM
     0
 }
 
+/// Every feat-derived contribution to a pillar that BOTH compute paths
+/// produce independently -- the single place a feat is wired into a number
+/// the player reads.
+///
+/// **Why this type exists.** This engine has two compute twins.
+/// `compute_combat_baseline` / `compute_selected_skill_modifiers` in this file
+/// compute Armor Class, touch AC and Climb/Intimidate/Swim from hardcoded
+/// Chain-Shirt constants; `pilot_compute_corpus`'s
+/// `compute_combat_baseline_from_corpus` /
+/// `compute_selected_skill_modifiers_from_corpus` compute the same pillars
+/// from real corpus-resolved equipment, and *that* pair is what
+/// `pf1_adapter::resolve_unified_pilot_snapshot` gates on -- so it is the pair
+/// whose numbers reach the sheet.
+///
+/// Before this seam, each twin read `feat_effects` on its own: this file
+/// referenced 33 producers, `pilot_compute_corpus.rs` referenced zero and
+/// hand-inlined Dodge. Five feats were therefore wired, tested and green while
+/// changing nothing a player could see -- CRB's **Athletic** (+2 Climb/Swim),
+/// **Persuasive** (+2 Intimidate) and **Intimidating Prowess** (Strength to
+/// Intimidate), and ARG's **Armor of the Pit** (+2 natural armor) and **Sure
+/// and Fleet** (+2 Climb). Proven on screen: a live Tiefling Fighter 1 taking
+/// Armor of the Pit saw an unchanged Armor Class across a full app restart.
+///
+/// **The invariant.** Both twins now consume this one struct and neither reads
+/// `feat_effects` for these pillars at all, so a feat wired here reaches both
+/// paths by construction and cannot reach only one.
+/// `pilot_compute_corpus`'s `every_catalog_feat_moves_both_compute_paths_identically`
+/// pins that behaviourally over the live 690-record feat catalog, and
+/// `the_two_compute_twins_read_feat_effects_only_through_the_shared_seam`
+/// pins it structurally, so re-introducing a direct per-path `feat_effects`
+/// read fails the build rather than shipping silently.
+///
+/// Adding the next feat: give it a field here, fold it into the accessor for
+/// the pillar it belongs to, and both paths move together. Nothing else needs
+/// touching.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct FeatDerivedPillarContributions {
+    /// Natural armor from feats (`armor_of_the_pit_natural_armor_bonus_from_feats`).
+    /// Kept as its own field, not merged into the Armor Class total, because a
+    /// touch attack ignores natural armor and both paths must subtract exactly
+    /// this much and no more.
+    pub natural_armor_bonus: i16,
+    /// Dodge's dodge bonus. A conditional CONTRIBUTION, never a precondition
+    /// -- see `compute_combat_baseline`'s own note on why requiring it forced
+    /// character creation to claim a feat no slot had granted.
+    pub dodge_armor_class_bonus: i16,
+    /// `feat_effects::skill_bonuses_from_feats` -- Athletic's Climb/Swim,
+    /// Persuasive's and Intimidating Prowess's Intimidate.
+    pub skill_bonuses: crate::rules_core::feat_effects::SkillBonusesFromFeats,
+    /// `feat_effects::arg_computed_climb_bonus_from_feats` -- Sure and Fleet's
+    /// racial +2 Climb. Separate from `skill_bonuses` because the explanation
+    /// strings on the hardcoded path name the two sources independently.
+    pub arg_climb_bonus: i16,
+}
+
+impl FeatDerivedPillarContributions {
+    /// Everything feats add to Armor Class, natural armor included.
+    pub fn armor_class_bonus(self) -> i16 {
+        self.natural_armor_bonus + self.dodge_armor_class_bonus
+    }
+
+    /// The part of [`Self::armor_class_bonus`] a touch attack ignores. PF1
+    /// touch AC drops natural armor and keeps dodge bonuses.
+    pub fn excluded_from_touch_armor_class(self) -> i16 {
+        self.natural_armor_bonus
+    }
+
+    /// Everything feats add to the Climb total.
+    pub fn climb_skill_bonus(self) -> i16 {
+        self.skill_bonuses.climb + self.arg_climb_bonus
+    }
+
+    /// Everything feats add to the Intimidate total.
+    pub fn intimidate_skill_bonus(self) -> i16 {
+        self.skill_bonuses.intimidate
+    }
+
+    /// Everything feats add to the Swim total.
+    pub fn swim_skill_bonus(self) -> i16 {
+        self.skill_bonuses.swim
+    }
+}
+
+/// Resolves [`FeatDerivedPillarContributions`] for one character. The sole
+/// `feat_effects` reader for every pillar the two compute twins each derive
+/// independently.
+///
+/// `strength_modifier` is threaded in rather than re-derived because
+/// Intimidating Prowess adds the character's real Strength modifier to
+/// Intimidate, and both callers already hold the resolved
+/// `AbilityModifiers`.
+pub fn feat_derived_pillar_contributions(
+    input: &CharacterInput,
+    strength_modifier: i16,
+) -> FeatDerivedPillarContributions {
+    let feats = effective_character_feats(input);
+    FeatDerivedPillarContributions {
+        // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Armor of the Pit is
+        // the only one of the Advanced Race Guide's 187 feats whose
+        // unconditional corpus magnitude lands on a total this engine computes
+        // -- a `+2` natural armor bonus, and therefore a real, visible change to
+        // a tiefling's Armor Class and (by exclusion) to their touch AC.
+        //
+        // Its corpus token carries `!PREABILITY:1,CATEGORY=Special Ability,
+        // Scaled Skin C ~ Tiefling,...`, which a mechanical "an inline PRE means
+        // situational" reading would classify as conditional. It is not a
+        // situation: it asks whether this character took the Scaled Skin
+        // alternate racial trait, a persisted creation-time decision this engine
+        // already reads through `selected_alternate_trait_keys`. So the branch is
+        // fully decided here rather than deferred, matching the `BENEFIT:` prose
+        // exactly ("+2 natural armor bonus. If you have the scaled skin racial
+        // trait, you *instead* gain resistance 5 to two of ...").
+        //
+        // Deliberately NOT race-gated on `PREFACT:1,TEMPLATES,IsTiefling=true`:
+        // asserting a feat's selection prerequisites is `feat_prereqs`' job, the
+        // same split `master_craftsman_facts_from_choices` already documents.
+        natural_armor_bonus:
+            crate::rules_core::feat_effects::armor_of_the_pit_natural_armor_bonus_from_feats(
+                &feats,
+                character_has_tiefling_scaled_skin(input),
+            ),
+        // The identity fold is slot-blind: a Dodge granted through any slot
+        // counts exactly as one picked from the catalog.
+        dodge_armor_class_bonus: if feat_identity::holds(&input.chosen.selected_feats, DODGE_FEAT_ID)
+        {
+            DODGE_AC_BONUS
+        } else {
+            0
+        },
+        // Athletic's real +2 Climb/Swim, Persuasive's real +2 Intimidate, and
+        // Intimidating Prowess's real Strength-modifier-to-Intimidate, each
+        // stacking independently.
+        skill_bonuses: crate::rules_core::feat_effects::skill_bonuses_from_feats(
+            &feats,
+            strength_modifier,
+        ),
+        // SD-27 (`decisions.md` §24/§28, 2026-07-31): ARG's Sure and Fleet is
+        // the only one of the Advanced Race Guide's 187 feats whose
+        // unconditional `BONUS:SKILL` token names a skill this engine computes a
+        // total for. Its `+2` is `TYPE=Racial` and does NOT stack with the
+        // halfling Sure-Footed racial bonus -- but it cannot collide with it
+        // either: the feat requires `Halfling ~ Fleet Of Foot`, which is
+        // precisely the alternate racial trait that replaces Sure-Footed. See
+        // `feat_effects::ARG_SKILL_FEAT_FACTS`' own doc comment.
+        arg_climb_bonus: crate::rules_core::feat_effects::arg_computed_climb_bonus_from_feats(
+            &feats,
+        ),
+    }
+}
+
 fn compute_selected_skill_modifiers(
     input: &CharacterInput,
     ability_modifiers: &AbilityModifiers,
@@ -41057,17 +41265,21 @@ fn compute_selected_skill_modifiers(
         String::new()
     };
 
-    // v0.6 alpha swarm: the real, grounded feat-derived skill bonus from
-    // `feat_effects::skill_bonuses_from_feats` (currently Athletic's real
-    // +2 Climb/Swim, Persuasive's real +2 Intimidate, and Intimidating
-    // Prowess's real Strength-modifier-to-Intimidate, each stacking
-    // independently) -- the same "headless-accessible, no corpus needed"
-    // layering `compute_total_saves`'s own `feat_save_bonuses` already
-    // established for Great Fortitude/Iron Will/Lightning Reflexes.
-    let feat_skill_bonuses = crate::rules_core::feat_effects::skill_bonuses_from_feats(
-        &effective_character_feats(input),
-        ability_modifiers.strength,
-    );
+    // v0.6 alpha swarm: the real, grounded feat-derived skill bonus -- the same
+    // "headless-accessible, no corpus needed" layering `compute_total_saves`'s
+    // own `feat_save_bonuses` already established for Great Fortitude/Iron
+    // Will/Lightning Reflexes.
+    //
+    // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): read through
+    // `feat_derived_pillar_contributions` rather than calling
+    // `feat_effects::skill_bonuses_from_feats` here, so the corpus twin
+    // (`compute_selected_skill_modifiers_from_corpus`, the path the shipped
+    // sheet actually reads) consumes the identical value. Athletic, Persuasive
+    // and Intimidating Prowess all moved this total and moved the sheet by
+    // nothing until it did.
+    let feat_contributions =
+        feat_derived_pillar_contributions(input, ability_modifiers.strength);
+    let feat_skill_bonuses = feat_contributions.skill_bonuses;
 
     // v0.6 alpha swarm, risks item 8 (Inquisitor Judgment closure, widened
     // 2026-07-26): Inquisitor Stern Gaze's morale bonus applies to
@@ -41118,10 +41330,10 @@ fn compute_selected_skill_modifiers(
     // feat requires `Halfling ~ Fleet Of Foot`, which is precisely the
     // alternate racial trait that replaces Sure-Footed. See
     // `feat_effects::ARG_SKILL_FEAT_FACTS`' own doc comment.
-    let arg_feat_climb_bonus =
-        crate::rules_core::feat_effects::arg_computed_climb_bonus_from_feats(
-            &effective_character_feats(input),
-        );
+    //
+    // Read through `feat_derived_pillar_contributions` for the same reason
+    // `feat_skill_bonuses` above is: the corpus twin must see it too.
+    let arg_feat_climb_bonus = feat_contributions.arg_climb_bonus;
     let arg_feat_climb_detail = if arg_feat_climb_bonus > 0 {
         format!(" + ARG Sure and Fleet racial bonus ({arg_feat_climb_bonus:+})")
     } else {
@@ -42529,11 +42741,17 @@ fn compute_combat_baseline(
     // Deliberately NOT race-gated on `PREFACT:1,TEMPLATES,IsTiefling=true`:
     // asserting a feat's selection prerequisites is `feat_prereqs`' job, the
     // same split `master_craftsman_facts_from_choices` already documents.
-    let armor_of_the_pit_natural_armor_bonus =
-        crate::rules_core::feat_effects::armor_of_the_pit_natural_armor_bonus_from_feats(
-            &effective_character_feats(input),
-            character_has_tiefling_scaled_skin(input),
-        );
+    //
+    // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): read through
+    // `feat_derived_pillar_contributions` rather than calling
+    // `feat_effects::armor_of_the_pit_natural_armor_bonus_from_feats` here, so
+    // the corpus twin (`compute_combat_baseline_from_corpus`, the path the
+    // shipped sheet actually reads) consumes the identical value. Wired only
+    // here, this feat moved a test and moved a live Tiefling's Armor Class by
+    // nothing at all.
+    let feat_contributions =
+        feat_derived_pillar_contributions(input, ability_modifiers.strength);
+    let armor_of_the_pit_natural_armor_bonus = feat_contributions.natural_armor_bonus;
     // v0.6 alpha swarm (creation-seed honesty fix): Dodge is a conditional
     // CONTRIBUTION, not a precondition. `unmet_combat_posture_conditions`
     // used to *require* `feat:dodge` before this baseline would compute
@@ -42547,12 +42765,7 @@ fn compute_combat_baseline(
     // character that really does carry Dodge (through any slot -- the
     // identity fold is slot-blind, exactly as before) gets the identical
     // number it always did.
-    let dodge_armor_class_bonus = if feat_identity::holds(&input.chosen.selected_feats, DODGE_FEAT_ID)
-    {
-        DODGE_AC_BONUS
-    } else {
-        0
-    };
+    let dodge_armor_class_bonus = feat_contributions.dodge_armor_class_bonus;
     // SD-27, decisions.md §28 defect 1 (2026-07-31): the creature's PF1 size
     // modifier to Armor Class. Until this landed, every race computed a Medium
     // creature's Armor Class -- a live Goblin Fighter 1 read 18 where PF1's
@@ -42646,7 +42859,11 @@ fn compute_combat_baseline(
     let excluded_from_touch = CHAIN_SHIRT_ARMOR_BONUS
         + alchemist_mutagen_ac_bonus_value
         + draconic_dragon_resistances_natural_armor_bonus
-        + armor_of_the_pit_natural_armor_bonus;
+        // The feat-derived half comes from the shared seam's own accessor, not
+        // from re-listing its fields here: a feat added to
+        // `FeatDerivedPillarContributions` as natural armor must leave touch AC
+        // on both twins at once, and re-listing is how one twin drifts.
+        + feat_contributions.excluded_from_touch_armor_class();
     let touch_armor_class_total = touch_armor_class(armor_class, excluded_from_touch);
     explanations.push(ComputationExplanation {
         id: "defense.touch_armor_class".to_owned(),

@@ -3,6 +3,7 @@ import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
 import type { ClassSpellLevelsDto } from '../boundary/loadClassSpellLevels';
 import type { SpellSelectionDto } from '../boundary/loadSavedCharacterDetail';
 import type { AcquisitionModeDto } from '../boundary/addSpellSelection';
+import { mapSpellCatalogEntries, type ItemPickerEntry } from './itemPickerFilter';
 
 /**
  * Pure logic backing `SpellsTab`: resolving each persisted
@@ -277,6 +278,108 @@ function describeSpellLevelClause(entry: ResolvedSpellEntry): string | null {
     case 'class-list-unknown':
       return entry.level === null ? null : `Lowest class level ${entry.level}`;
   }
+}
+
+/**
+ * The Add Spell picker's rows for `sourceClassId` — narrowed to the spells
+ * that class can actually learn.
+ *
+ * `sourceClassId` is the same class `resolveSpellRouting` will attribute
+ * the pick to, so the list the player browses and the list the mutation is
+ * validated against are the same list. `classSpellLevels` is a
+ * `list_class_spell_levels` response's `classes` array.
+ *
+ * ## The defect this closes
+ *
+ * The picker loaded `list_spells` unfiltered and offered all **1185**
+ * catalog records to everyone. For a Wizard 1, **543** of those are on no
+ * wizard list in any ingested book — Cleric-only, Druid-only, Bard-only,
+ * Alchemist-only spells no wizard can ever learn — and every one of them
+ * was accepted and persisted under `class:wizard`. Numbers re-derived from
+ * the shipped tables by `tests/sd27_known_spells_must_be_on_the_class_spell_list.rs`,
+ * not quoted from memory.
+ *
+ * ## What is filtered, and what deliberately is not
+ *
+ * **Filtered: class-list membership.** A spell not on the routed class's
+ * own list is removed, because no amount of levelling makes it legal. The
+ * engine refuses it too (`class_spell_membership_refusal` in
+ * `pilot_compute.rs`); this stops the picker from *offering* a pick the
+ * engine would then reject.
+ *
+ * **Not filtered: spell level.** PF1 CRB *Spellbooks* caps only the two
+ * free spells gained at each new level ("of spell levels he can cast");
+ * *Spells Copied from Another's Spellbook or a Scroll* places no
+ * character-level restriction on what a wizard may add to her book. A
+ * Wizard 1 holding a 9th-level wizard spell she cannot yet prepare is a
+ * legal PF1 character, so hiding those 524 rows would remove a legal
+ * action — a fresh wrongness in place of the old one. Each row instead
+ * states the level **for this class** (`"Wizard level 9"`), which is the
+ * number the player needs and the number the unfiltered picker got wrong:
+ * a catalog record's own `level` is the minimum across every class in its
+ * `CLASSES:` tag, so `Hideous Laughter` read "Level 1" to a Wizard who
+ * learns it at 2.
+ *
+ * ## A class with no ingested list is not narrowed
+ *
+ * `known: false` (Magus, Summoner, Oracle) means no membership fact
+ * exists here. Narrowing on a rule this crate does not have would be
+ * inventing one, so the full catalog is offered with the record's own
+ * level under its honest `"Lowest class level"` label — the same wording
+ * `SpellCatalogScreen` and the Spells tab already use for that case (see
+ * `docs/governance/no-stub-mvp-doctrine.md`).
+ */
+export function buildSpellPickerOffering(
+  catalog: SpellCatalogEntryDto[],
+  classSpellLevels: ClassSpellLevelsDto[],
+  sourceClassId: string | null
+): ItemPickerEntry[] {
+  const classEntry =
+    sourceClassId === null
+      ? undefined
+      : classSpellLevels.find((entry) => entry.classId === sourceClassId && entry.known);
+
+  if (!classEntry || sourceClassId === null) {
+    // Deliberately the same mapping the picker used before this function
+    // existed, reused rather than restated: when nothing can be narrowed,
+    // nothing about the rows should change either.
+    return mapSpellCatalogEntries(catalog);
+  }
+
+  // Folded on the same identity as `resolveSelectedSpellEntries`, so a
+  // catalog key and a class-list key that differ only in punctuation or
+  // case still join — the picker and the sheet must agree on membership or
+  // a spell could be offered here and unresolvable there.
+  const levelByIdentity = new Map<string, number>();
+  for (const entry of classEntry.entries) {
+    const identity = normalizeSpellIdentity(entry.key);
+    if (!levelByIdentity.has(identity)) {
+      levelByIdentity.set(identity, entry.level);
+    }
+  }
+
+  const className = describeSourceClass(sourceClassId);
+  const entries: ItemPickerEntry[] = [];
+  for (const entry of catalog) {
+    const classLevel = levelByIdentity.get(normalizeSpellIdentity(entry.key));
+    if (classLevel === undefined) {
+      continue;
+    }
+    entries.push({
+      key: entry.key,
+      // The spell catalog DTO has no separate display-name field — `key`
+      // is the spell's real corpus identity and doubles as the name.
+      name: entry.key,
+      // The class's own level replaces the record's minimum-across-classes
+      // one; `school` is still omitted rather than defaulted when the
+      // corpus row genuinely lacks it (a real `apg_spells.lst` gap).
+      detail: [entry.book, entry.school, `${className} level ${classLevel}`]
+        .filter((part): part is string => part !== null)
+        .join(' · '),
+    });
+  }
+
+  return entries;
 }
 
 /**

@@ -27,7 +27,7 @@ import { recordAndPrepareSpellSelection } from '../boundary/recordAndPrepareSpel
 import { addFeatSelection } from '../boundary/addFeatSelection';
 import { listEquipment } from '../boundary/listEquipment';
 import { listSpells } from '../boundary/listSpells';
-import { listFeats } from '../boundary/listFeats';
+import { listFeats, listFeatsForCharacter } from '../boundary/listFeats';
 import { cloneCharacter } from '../boundary/cloneCharacter';
 import { recomputeCharacter, type RecomputedCharacterSnapshotDto } from '../boundary/recomputeCharacter';
 import { buildRecomputeCharacterRequest } from './characterHubRuntime';
@@ -42,6 +42,7 @@ import {
 } from './itemPickerFilter';
 import { describeFeatTarget, mergeChosenFeatTarget, resolveSelectedFeatEntries } from './featsTabModel';
 import {
+  buildSpellPickerOffering,
   describeSpellAcquisition,
   describeSpellSchoolAndLevel,
   resolveSelectedSpellEntries,
@@ -2262,6 +2263,42 @@ export function CharacterSheet(props: {
     }
   }
 
+  /**
+   * The Add Spell picker's rows, narrowed to the spell list of the exact
+   * class `handleAddSpell` will attribute the pick to.
+   *
+   * Before this, the picker called `listSpells` unfiltered and offered all
+   * 1185 catalog records to every character. 543 of them are on no wizard
+   * list in any ingested book, and the Known path had no membership check,
+   * so a Wizard 1 could pick a Druid-only spell and it persisted. The
+   * engine now refuses that (`class_spell_membership_refusal` in
+   * `pilot_compute.rs`); this stops the picker offering the pick in the
+   * first place, so the player meets the rule as a shorter list rather
+   * than as an error after the fact.
+   *
+   * The routing decision is deliberately the same call `handleAddSpell`
+   * makes — one function decides which class both the browse and the
+   * mutation answer to, so the two cannot drift into offering from one
+   * class's list and saving against another's. Spell LEVEL is not
+   * filtered; see `buildSpellPickerOffering` for the PF1 reasoning.
+   */
+  async function loadSpellPickerEntries(): Promise<ItemPickerEntry[]> {
+    const routing = resolveSpellRouting(
+      heldClasses,
+      props.detail?.spellsSelected ?? [],
+      WIZARD_CLASS_ID
+    );
+    const catalog = await listSpells({ nameContains: null, school: null });
+    if (!routing) {
+      // No held class to attribute a pick to. `handleAddSpell` refuses the
+      // pick anyway with its own message; narrowing against a class that
+      // does not exist would be inventing one.
+      return mapSpellCatalogEntries(catalog.entries);
+    }
+    const levels = await loadClassSpellLevels([routing.primaryClassId]);
+    return buildSpellPickerOffering(catalog.entries, levels.classes, routing.primaryClassId);
+  }
+
   async function handleAddSpell(entry: ItemPickerEntry) {
     setMutationError(null);
     // `add_spell_selection`/`record_and_prepare_spell_selection` require a
@@ -2716,8 +2753,16 @@ export function CharacterSheet(props: {
   const itemPickerConfig = buildItemPickerConfig(itemPickerOpen, {
     loadEquipment: (category) =>
       listEquipment({ nameContains: null, category }).then((response) => mapEquipmentCatalogEntries(response.entries)),
-    loadSpells: () => listSpells({ nameContains: null, school: null }).then((response) => mapSpellCatalogEntries(response.entries)),
-    loadFeats: () => listFeats({ nameContains: null, category: null }).then((response) => mapFeatCatalogEntries(response.entries)),
+    loadSpells: loadSpellPickerEntries,
+    // SD-27: the Add Feat picker reads the catalog *for this character*, so
+    // every row carries its real prerequisite verdict and the ones this
+    // build cannot take render greyed with the reason. All 690 records are
+    // still returned -- an unavailable feat is shown and explained, never
+    // hidden and never offered-then-refused.
+    loadFeats: () =>
+      listFeatsForCharacter(props.row.characterId, { nameContains: null, category: null }).then((response) =>
+        mapFeatCatalogEntries(response.entries)
+      ),
     loadFeatTargets: () => {
       const kind = pendingFeatTarget?.targetKind ?? null;
       if (kind === 'Weapon') {

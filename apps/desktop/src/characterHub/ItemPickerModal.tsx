@@ -59,7 +59,10 @@ export function ItemPickerModal(props: {
   }
 
   const filtered = filterItemPickerEntries(entries ?? [], search);
-  const selected = filtered.find((entry) => entry.key === selectedKey) ?? null;
+  // A disabled row can never become the selection, so the Add button cannot
+  // fire for one even if a stale `selectedKey` survives a re-filter.
+  const selected = filtered.find((entry) => entry.key === selectedKey && !entry.disabled) ?? null;
+  const unavailableCount = filtered.filter((entry) => entry.disabled).length;
 
   function handleConfirm() {
     if (!selected) {
@@ -138,7 +141,13 @@ export function ItemPickerModal(props: {
             }}
           />
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.5rem 0 0' }}>
-            {entries ? `Showing ${filtered.length} of ${entries.length}` : loadError ? 'Catalog unavailable' : 'Loading…'}
+            {entries
+              ? `Showing ${filtered.length} of ${entries.length}${
+                  unavailableCount > 0 ? ` · ${unavailableCount} unavailable (prerequisites not met)` : ''
+                }`
+              : loadError
+                ? 'Catalog unavailable'
+                : 'Loading…'}
           </p>
         </div>
 
@@ -149,7 +158,8 @@ export function ItemPickerModal(props: {
             <p style={{ color: 'var(--color-text-faint)', fontSize: '0.85rem', padding: '1rem', textAlign: 'center' }}>No matches.</p>
           ) : null}
           {filtered.map((entry, index) => {
-            const active = selectedKey === entry.key;
+            const disabled = entry.disabled === true;
+            const active = selectedKey === entry.key && !disabled;
             return (
               <button
                 // A compound key, not just `entry.key` — the real feat
@@ -166,8 +176,21 @@ export function ItemPickerModal(props: {
                 // another catalog entry collides the same way.
                 key={`${entry.key}::${index}`}
                 type="button"
-                onClick={() => setSelectedKey(entry.key)}
+                // A row whose prerequisites are unmet is shown, greyed, with
+                // the reason — not hidden, and not selectable-then-refused.
+                disabled={disabled}
+                aria-disabled={disabled}
+                title={disabled ? entry.disabledReason : undefined}
+                onClick={() => {
+                  if (disabled) {
+                    return;
+                  }
+                  setSelectedKey(entry.key);
+                }}
                 onDoubleClick={() => {
+                  if (disabled) {
+                    return;
+                  }
                   props.onSelect(entry);
                   props.onClose();
                 }}
@@ -175,15 +198,35 @@ export function ItemPickerModal(props: {
                   background: active ? 'var(--color-surface-2)' : 'none',
                   border: 'none',
                   borderBottom: '1px solid var(--color-border)',
-                  cursor: 'pointer',
+                  cursor: disabled ? 'not-allowed' : 'pointer',
                   display: 'block',
+                  opacity: disabled ? 0.55 : 1,
                   padding: '0.55rem 0.75rem',
                   textAlign: 'left',
                   width: '100%',
                 }}
               >
-                <p style={{ color: active ? 'var(--color-accent)' : 'var(--color-text)', fontWeight: 700, margin: 0 }}>{entry.name}</p>
+                <p
+                  style={{
+                    color: disabled ? 'var(--color-text-muted)' : active ? 'var(--color-accent)' : 'var(--color-text)',
+                    fontWeight: 700,
+                    margin: 0,
+                    textDecoration: disabled ? 'line-through' : 'none',
+                  }}
+                >
+                  {entry.name}
+                </p>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.1rem 0 0' }}>{entry.detail}</p>
+                {disabled && entry.disabledReason ? (
+                  <p style={{ color: 'var(--color-error, #c0392b)', fontSize: '0.72rem', margin: '0.15rem 0 0' }}>
+                    Unavailable — {entry.disabledReason}
+                  </p>
+                ) : null}
+                {!disabled && entry.unverifiedNote ? (
+                  <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.15rem 0 0' }}>
+                    {entry.unverifiedNote}
+                  </p>
+                ) : null}
               </button>
             );
           })}

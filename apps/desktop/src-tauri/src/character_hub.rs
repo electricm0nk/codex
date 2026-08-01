@@ -1041,7 +1041,10 @@ pub const SAVED_CHARACTER_MUTATION_OPERATIONS: [SavedCharacterMutationOpDescript
         op: SavedCharacterMutationOp::AddFeatSelection,
         name: "add_feat_selection",
         description: "Appends an entry to chosen.selected_feats, then \
-            recomputes and re-saves.",
+            recomputes and re-saves. SD-27: refuses first when the \
+            character does not meet the feat's real corpus prerequisites, \
+            naming the unmet ones -- see \
+            add_feat_selection_enforcing_prerequisites_at_root.",
         wired: true,
     },
     SavedCharacterMutationOpDescriptor {
@@ -2219,18 +2222,147 @@ pub struct AddFeatSelectionRequest {
 /// Loads the saved character, appends the requested feat selection,
 /// recomputes via the real engine, and re-saves — see
 /// `add_feat_selection_at_root` for the full semantics.
+///
+/// **SD-27: this now refuses a feat whose real corpus prerequisites the
+/// character does not meet.** See
+/// `add_feat_selection_enforcing_prerequisites_at_root`.
 #[tauri::command]
 pub fn add_feat_selection(
     app: tauri::AppHandle,
     request: AddFeatSelectionRequest,
 ) -> Result<CreateCharacterResponse, String> {
     let root = resolve_character_root(&app, &request.character_id)?;
-    add_feat_selection_at_root(
+    add_feat_selection_enforcing_prerequisites_at_root(
         &root,
         &request.feat_id,
         request.target.as_deref(),
         &request.saved_at,
     )
+}
+
+// ---------------------------------------------------------------------------
+// SD-27: feat prerequisite enforcement
+// ---------------------------------------------------------------------------
+//
+// There was no feat prerequisite enforcement anywhere in the product: a
+// Fighter 1 with a +1 base attack bonus could take Improved Two-Weapon
+// Fighting (BAB +6, Dex 17, Two-Weapon Fighting), and all 690 offered feats
+// were accepted by every character. The engine side is
+// `codex::rules_core::feat_prereqs`; these two seams are how it reaches a
+// player.
+//
+// Both seams exist deliberately, and neither replaces the other:
+//
+//  * `list_feats_for_character` is the *honest UI*: it returns all 690
+//    records with a verdict on each, so the picker greys the unavailable
+//    ones and shows the reason. Removing them from the list instead would
+//    hide the rules from the player.
+//  * `add_feat_selection_enforcing_prerequisites_at_root` is the *guard*:
+//    the mutation itself refuses. Without it the check would be advisory —
+//    any caller that skipped the picker (a level-up grant, a replayed
+//    command, a future importer) could still write an illegal character to
+//    disk.
+
+/// Builds the prerequisite fact snapshot for the character saved at `root`.
+///
+/// The base attack bonus comes from the engine's own computed chassis
+/// (`corpus_receipt.base.base_attack_bonus`) rather than being re-derived
+/// here, so a Fighter, an Unchained Rogue and an ACG Warpriest all get the
+/// number their own class chassis produced. `base` is used rather than the
+/// unified snapshot because it is computed even for a build whose
+/// deterministic posture is blocked — a character whose sheet cannot fully
+/// compute must still get truthful feat prerequisites rather than a
+/// silently-zero BAB.
+pub(crate) fn character_prereq_facts_at_root(
+    root: &Path,
+) -> Result<
+    (
+        codex::saved_character::SavedCharacterEnvelope,
+        codex::rules_core::feat_prereqs::pre_tokens::CharacterPrereqFacts,
+    ),
+    String,
+> {
+    let envelope = SavedCharacterStore::load(root).map_err(|err| err.message)?;
+    let receipt = compute_pilot_with_corpus(&envelope.character_input, corpus_fixture_bundle());
+    let facts = codex::rules_core::feat_prereqs::character_prereq_facts(
+        &envelope.character_input,
+        receipt.base.base_attack_bonus,
+    );
+    Ok((envelope, facts))
+}
+
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ListFeatsForCharacterRequest {
+    pub character_id: String,
+    /// The same optional narrowing `list_feats` takes. Omitted/`null`
+    /// fields match everything.
+    #[serde(default)]
+    pub filter: crate::feat_catalog::FeatCatalogFilter,
+}
+
+/// The feat catalog with each record's real prerequisite verdict for this
+/// character attached.
+///
+/// Serves **all 690 records**, ineligible ones included and marked, because
+/// the requirement is that an unavailable feat is *visibly* unavailable
+/// with its reason — not that it disappears. A picker that silently dropped
+/// the rows would tell a player nothing about why their build cannot take
+/// Improved Two-Weapon Fighting.
+#[tauri::command]
+pub fn list_feats_for_character(
+    app: tauri::AppHandle,
+    request: ListFeatsForCharacterRequest,
+) -> Result<crate::feat_catalog::FeatCatalogResponse, String> {
+    let root = resolve_character_root(&app, &request.character_id)?;
+    list_feats_for_character_at_root(&root, &request.filter)
+}
+
+/// The real body of `list_feats_for_character`, split from the
+/// `AppHandle`-taking command so it is directly testable against a temp-dir
+/// character root — this module's established `*_at_root` convention.
+pub(crate) fn list_feats_for_character_at_root(
+    root: &Path,
+    filter: &crate::feat_catalog::FeatCatalogFilter,
+) -> Result<crate::feat_catalog::FeatCatalogResponse, String> {
+    let (_, facts) = character_prereq_facts_at_root(root)?;
+    Ok(crate::feat_catalog::filter_feat_catalog_with_eligibility(filter, &facts))
+}
+
+/// `add_feat_selection_at_root`, refusing first when the character does not
+/// meet the feat's real corpus prerequisites.
+///
+/// Three deliberate properties:
+///
+/// * **Only a definitively unmet prerequisite refuses.** A clause the
+///   engine cannot evaluate is reported by the picker and does not block
+///   here either, so an unmodelled `PRE` kind can never lock a player out
+///   of a feat they are entitled to.
+/// * **A feat id with no catalog record is passed through untouched.**
+///   `chosen.selected_feats` legitimately holds ids this catalog does not
+///   carry (engine-seeded tokens for content outside the five ingested
+///   books). Refusing those would break existing characters over a lookup
+///   miss rather than over a rule.
+/// * **The error names the reason.** A refusal a player cannot act on is
+///   as bad as no refusal at all.
+pub(crate) fn add_feat_selection_enforcing_prerequisites_at_root(
+    root: &Path,
+    feat_id: &str,
+    target: Option<&str>,
+    saved_at: &str,
+) -> Result<CreateCharacterResponse, String> {
+    let (_, facts) = character_prereq_facts_at_root(root)?;
+    if let Some(report) =
+        codex::rules_core::feat_prereqs::evaluate_feat_key_prerequisites(feat_id, &facts)
+    {
+        if let Some(reason) = report.unavailable_reason() {
+            return Err(format!(
+                "'{}' cannot be taken by this character: {reason}",
+                report.feat_key
+            ));
+        }
+    }
+    add_feat_selection_at_root(root, feat_id, target, saved_at)
 }
 
 #[derive(Debug, Clone, Deserialize)]
@@ -5822,6 +5954,163 @@ mod tests {
         );
 
         std::fs::remove_dir_all(&root).ok();
+    }
+
+    // ----- SD-27: feat prerequisite enforcement -----
+
+    /// The operator's exact reported defect, at the mutation boundary:
+    /// **a Fighter 1 was allowed to take Improved Two-Weapon Fighting.**
+    /// The guard must refuse, name every unmet prerequisite, and leave the
+    /// saved character untouched.
+    #[test]
+    fn a_fighter_1_is_refused_improved_two_weapon_fighting_with_the_reasons() {
+        let root = tempdir("add-feat-prereq-refused");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+        let before = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
+
+        let error = add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Improved Two-Weapon Fighting",
+            None,
+            "2026-07-31T00:00:00Z",
+        )
+        .expect_err("a Fighter 1 must not be able to take Improved Two-Weapon Fighting");
+
+        assert!(error.contains("Improved Two-Weapon Fighting"), "{error}");
+        assert!(error.contains("base attack bonus +6"), "{error}");
+        assert!(error.contains("Two-Weapon Fighting feat"), "{error}");
+        assert!(error.contains("DEX 17"), "{error}");
+
+        let after = SavedCharacterStore::load(&root).unwrap().character_input.chosen.selected_feats;
+        assert_eq!(before, after, "a refused feat must not be written to disk");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// ...and a build that legitimately qualifies still goes through the
+    /// same guarded path. A guard that refuses everything is not
+    /// enforcement.
+    #[test]
+    fn a_qualified_fighter_6_is_allowed_improved_two_weapon_fighting() {
+        let root = tempdir("add-feat-prereq-allowed");
+        let mut envelope = level_up_test_envelope("race:human", 6);
+        envelope.character_input.chosen.ability_scores.dexterity = 17;
+        envelope
+            .character_input
+            .chosen
+            .selected_feats
+            .push("Two-Weapon Fighting".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "Improved Two-Weapon Fighting",
+            None,
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("a BAB +6 / Dex 17 / TWF fighter qualifies");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(reloaded
+            .character_input
+            .chosen
+            .selected_feats
+            .iter()
+            .any(|feat| feat == "Improved Two-Weapon Fighting"));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A prerequisite-free feat must still be addable -- the guard must not
+    /// have become a blanket refusal.
+    #[test]
+    fn a_feat_with_no_prerequisites_is_still_added_through_the_guard() {
+        let root = tempdir("add-feat-prereq-free");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        add_feat_selection_enforcing_prerequisites_at_root(
+            &root,
+            "feat:toughness",
+            None,
+            "2026-07-31T00:00:00Z",
+        )
+        .expect("Toughness has no corpus prerequisites");
+
+        let reloaded = SavedCharacterStore::load(&root).expect("reload should succeed");
+        assert!(reloaded
+            .character_input
+            .chosen
+            .selected_feats
+            .iter()
+            .any(|feat| feat == "feat:toughness"));
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The picker's data source: all 690 records come back, ineligible ones
+    /// included and marked with a reason. Removing them would hide the
+    /// rules from the player instead of explaining them.
+    #[test]
+    fn list_feats_for_character_marks_every_record_and_removes_none() {
+        let root = tempdir("list-feats-eligibility");
+        let envelope = level_up_test_envelope("race:human", 1);
+        SavedCharacterStore::save(&envelope, &root).expect("seed save should succeed");
+
+        let response =
+            list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
+                .expect("listing should succeed");
+
+        assert_eq!(response.entries.len(), 690, "no record may be filtered away");
+        for entry in &response.entries {
+            let eligibility = entry
+                .eligibility
+                .as_ref()
+                .unwrap_or_else(|| panic!("'{}' came back with no verdict at all", entry.key));
+            if eligibility.eligible {
+                assert!(eligibility.unavailable_reason.is_none());
+                assert!(eligibility.unmet.is_empty());
+            } else {
+                let reason = eligibility
+                    .unavailable_reason
+                    .as_deref()
+                    .unwrap_or_default();
+                assert!(
+                    !reason.trim().is_empty(),
+                    "'{}' is greyed out with no reason -- a dead affordance",
+                    entry.key
+                );
+                assert!(!eligibility.unmet.is_empty());
+            }
+        }
+
+        let improved_twf = response
+            .entries
+            .iter()
+            .find(|entry| entry.key == "Improved Two-Weapon Fighting")
+            .expect("still offered, just unavailable");
+        assert!(!improved_twf.eligibility.as_ref().unwrap().eligible);
+
+        let toughness = response
+            .entries
+            .iter()
+            .find(|entry| entry.key == "Toughness")
+            .expect("Toughness is in the catalog");
+        assert!(toughness.eligibility.as_ref().unwrap().eligible);
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// The character-less catalog commands must keep their exact previous
+    /// wire shape -- no `eligibility` key at all, not a `null` one.
+    #[test]
+    fn the_character_less_catalog_sends_no_eligibility_key() {
+        let response = crate::feat_catalog::build_feat_catalog();
+        assert_eq!(response.entries.len(), 690);
+        assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
+        let json = serde_json::to_string(&response.entries[0]).expect("serialises");
+        assert!(!json.contains("eligibility"), "{json}");
     }
 
     // ----- `add_spell_selection` (Criterion 18) -----

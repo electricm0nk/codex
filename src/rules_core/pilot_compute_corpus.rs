@@ -34,12 +34,13 @@ use crate::rules_core::race_resolver::race_size_for_race_token;
 use crate::rules_core::pilot_compute::{
     apply_human_ability_bonus, character_is_proficient_with, choice_selection,
     combat_maneuver_bonus, combat_maneuver_defense, compute_pilot_base_chassis,
-    equipped_weapon_stat_block, fighter_armor_training, fighter_level_in_mix, touch_armor_class,
+    equipped_weapon_stat_block, feat_derived_pillar_contributions, fighter_armor_training,
+    fighter_level_in_mix, touch_armor_class,
     fighter_weapon_training_attack_bonus, has_supported_class_chassis, require_active_state,
     require_selected_skill_rank, selected_skill_climb_is_class_skill,
     selected_skill_intimidate_is_class_skill, selected_skill_swim_is_class_skill,
     supported_fighter_level, PilotBaseChassisComputation, ARMOR_CLASS_BASE, CLASS_SKILL_BONUS,
-    CLIMB_SKILL_ID, DODGE_AC_BONUS, DODGE_FEAT_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
+    CLIMB_SKILL_ID, FIGHTER_BONUS_FEAT_CHOICE_ID, FIGHTER_CLASS_ID,
     INTIMIDATE_SKILL_ID, LONGSWORD_ITEM_ID, MAX_SUPPORTED_FIGHTER_LEVEL, MAX_SUPPORTED_WIZARD_LEVEL,
     POWER_ATTACK_ITEM_ID, SELECTED_SKILL_RANK, SWIM_SKILL_ID, WEAPON_FOCUS_FEAT_ID,
     WEAPON_FOCUS_LONGSWORD_SELECTION, WEAPON_FOCUS_TO_HIT_BONUS,
@@ -527,16 +528,27 @@ pub fn compute_combat_baseline_from_corpus(
         Some(cap) => dexterity_modifier.min(cap),
         None => dexterity_modifier,
     };
-    // Conditional contribution, not a precondition -- identical to
-    // `pilot_compute::compute_combat_baseline`'s own `dodge_armor_class_bonus`,
-    // and kept byte-for-byte equivalent to it so
-    // `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
-    // stays a real parity check rather than a divergence waiting to happen.
-    let dodge_armor_class_bonus = if feat_identity::holds(&chosen.selected_feats, DODGE_FEAT_ID) {
-        DODGE_AC_BONUS
-    } else {
-        0
-    };
+    // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): every
+    // feat-derived contribution to this path's pillars, from the ONE seam
+    // `pilot_compute::compute_combat_baseline` also reads
+    // (`pilot_compute::feat_derived_pillar_contributions`).
+    //
+    // This file used to reference ZERO `feat_effects` producers while its twin
+    // referenced 33, and hand-inlined Dodge as its only feat awareness. Since
+    // this is the path `resolve_unified_pilot_snapshot` gates on, that made
+    // every other wired feat effect invisible on the shipped sheet while its
+    // own tests passed: CRB's Athletic, Persuasive and Intimidating Prowess
+    // (skills, below) and ARG's Armor of the Pit (natural armor, here) and Sure
+    // and Fleet (Climb, below) all moved a number in `pilot_compute.rs` and
+    // moved nothing a player could see. Reading the shared struct -- rather
+    // than re-deriving a parallel list of feat calls here -- is what makes
+    // wiring one path without the other impossible rather than merely
+    // discouraged.
+    let feat_contributions =
+        feat_derived_pillar_contributions(input, strength_modifier);
+    // Conditional contribution, not a precondition -- see
+    // `pilot_compute::compute_combat_baseline` for the full reasoning.
+    let feat_armor_class_bonus = feat_contributions.armor_class_bonus();
     // SD-27, decisions.md §28 defect 1 (2026-07-31): the creature's PF1
     // Table 8-1 size modifier to Armor Class. Applied HERE TOO, not only in
     // `pilot_compute::compute_combat_baseline` -- and for exactly the reason
@@ -556,7 +568,7 @@ pub fn compute_combat_baseline_from_corpus(
         + effects.armor_class_delta
         + dexterity_contribution
         + size_armor_class_modifier
-        + dodge_armor_class_bonus;
+        + feat_armor_class_bonus;
 
     // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC / CMB / CMD on
     // the path the shipped sheet reads. All three used to be computed in React
@@ -565,13 +577,17 @@ pub fn compute_combat_baseline_from_corpus(
     //
     // Touch AC is derived by SUBTRACTION from `armor_class` above -- see
     // `pilot_compute::touch_armor_class` for why that shape rather than a
-    // parallel formula. `effects.armor_class_delta` is the whole excluded set
-    // here: it is `compute_equipment_effects`' summed armor + shield bonus, and
-    // this path grounds no natural-armor term at all (unlike the hardcoded
-    // path's Mutagen / Dragon Resistances contributions). The Dexterity
-    // contribution, the size modifier and Dodge are all retained, which is
+    // parallel formula. The excluded set is `effects.armor_class_delta`
+    // (`compute_equipment_effects`' summed armor + shield bonus) plus the
+    // feat-derived NATURAL armor the shared seam resolved -- taken from that
+    // seam's own accessor, not by re-listing its fields, so a future natural-armor
+    // feat leaves touch AC on both twins at once. The Dexterity contribution,
+    // the size modifier and Dodge's dodge bonus are all retained, which is
     // correct for a touch attack.
-    let touch = touch_armor_class(armor_class, effects.armor_class_delta);
+    let touch = touch_armor_class(
+        armor_class,
+        effects.armor_class_delta + feat_contributions.excluded_from_touch_armor_class(),
+    );
     // Shared formulas, deliberately not re-derived: `pilot_compute` owns both,
     // so the two engine paths cannot drift into two different CMB/CMD rules the
     // way they nearly did on the nonproficiency penalty. `dexterity_modifier`
@@ -682,11 +698,30 @@ pub fn compute_selected_skill_modifiers_from_corpus(
     let swim_class_skill_bonus =
         if selected_skill_swim_is_class_skill(input) { CLASS_SKILL_BONUS } else { 0 };
 
-    let climb =
-        rank + base.ability_modifiers.strength + climb_class_skill_bonus + armor_check_penalty;
-    let intimidate = rank + base.ability_modifiers.charisma + intimidate_class_skill_bonus;
-    let swim =
-        rank + base.ability_modifiers.strength + swim_class_skill_bonus + armor_check_penalty;
+    // SD-27 (`decisions.md` §28, feat-seam defect, 2026-07-31): the same shared
+    // seam `pilot_compute::compute_selected_skill_modifiers` reads. Before it,
+    // this path -- the one `resolve_unified_pilot_snapshot` gates on, so the one
+    // the sheet renders -- consumed no feat effects at all: CRB's Athletic
+    // (+2 Climb/Swim), Persuasive (+2 Intimidate) and Intimidating Prowess
+    // (Strength to Intimidate), and ARG's Sure and Fleet (+2 Climb) each moved
+    // the hardcoded twin's number and moved the player's sheet by nothing.
+    let feat_contributions =
+        feat_derived_pillar_contributions(input, base.ability_modifiers.strength);
+
+    let climb = rank
+        + base.ability_modifiers.strength
+        + climb_class_skill_bonus
+        + armor_check_penalty
+        + feat_contributions.climb_skill_bonus();
+    let intimidate = rank
+        + base.ability_modifiers.charisma
+        + intimidate_class_skill_bonus
+        + feat_contributions.intimidate_skill_bonus();
+    let swim = rank
+        + base.ability_modifiers.strength
+        + swim_class_skill_bonus
+        + armor_check_penalty
+        + feat_contributions.swim_skill_bonus();
 
     Ok(CorpusAwareSelectedSkillModifiers { climb, intimidate, swim })
 }
@@ -1226,6 +1261,249 @@ Breastplate\tKEY:Breastplate (Base)\tTYPE:Armor.Medium\tCOST:200\tWT:30\tACCHECK
         // rank 1 + STR mod 3 + class-skill 3 + Breastplate's real -4 ACP = 3.
         assert_eq!(result.climb, 3);
         assert_eq!(result.swim, 3);
+    }
+
+    /// SD-27 `decisions.md` §28, feat-seam defect (2026-07-31): **the
+    /// invariant test**. A feat wired into one compute path must move the
+    /// other path identically.
+    ///
+    /// Why `matches_the_hardcoded_baseline_exactly_for_every_currently_computed_build`
+    /// did not catch this: it varies only *class and level*, on a single fixed
+    /// three-feat loadout (Power Attack / Dodge / Weapon Focus). Every
+    /// feat-derived term on either path is 0 for that loadout, so the two
+    /// formulas agreed on a posture where the feat channel was vacuous. This
+    /// test varies the **feat axis** instead, over the live 690-record catalog
+    /// (`rules_tables::feats_all::all_feat_tables` -- CRB + APG + ACG + ARG +
+    /// PU), and so exercises every feat any producer keys on, present and
+    /// future, with no per-feat list to keep up to date.
+    ///
+    /// It is the regression guard for a real, screen-proven defect: ARG's
+    /// "Armor of the Pit" moved `pilot_compute::compute_combat_baseline`'s
+    /// Armor Class by its real +2 natural armor and moved the shipped sheet by
+    /// nothing at all, because `compute_combat_baseline_from_corpus` -- the
+    /// path `resolve_unified_pilot_snapshot` actually gates on -- consumed no
+    /// feat effects whatsoever beyond a hand-inlined Dodge. "Sure and Fleet"
+    /// had the identical shape on Climb.
+    #[test]
+    fn every_catalog_feat_moves_both_compute_paths_identically() {
+        use crate::rules_core::rules_tables::feats_all::all_feat_tables;
+
+        let corpus = corpus_with_fixture();
+        // Tiefling, deliberately: `Armor of the Pit`'s real +2 natural armor is
+        // withheld from a character who took the Scaled Skin alternate racial
+        // trait, and this posture takes none, so the bonus is live here. Any
+        // Medium race would do for the other 689.
+        let base_input = load(
+            &fixed_posture_fixture("class:fighter", 1)
+                .replace("race_id=race:human", "race_id=race:tiefling"),
+        );
+
+        let mut divergences: Vec<String> = Vec::new();
+        for book in all_feat_tables() {
+            for record in book.entries {
+                let mut input = base_input.clone();
+                input.chosen.selected_feats.push(record.key.to_owned());
+
+                let headless = build_pilot_headless_receipt(&input);
+                assert_eq!(
+                    headless.status,
+                    HeadlessReceiptStatus::Computed,
+                    "{:?} feat {:?}: adding a catalog feat must not block the hardcoded path: {:?}",
+                    book.rule_set,
+                    record.key,
+                    headless.computation.diagnostics
+                );
+                let hardcoded = &headless.computation;
+
+                let combat =
+                    compute_combat_baseline_from_corpus(hardcoded, &input, &corpus)
+                        .unwrap_or_else(|unmet| {
+                            panic!(
+                                "{:?} feat {:?}: the corpus path must also compute, unmet: {unmet:?}",
+                                book.rule_set, record.key
+                            )
+                        });
+                let skills =
+                    compute_selected_skill_modifiers_from_corpus(hardcoded, &input, &corpus)
+                        .unwrap_or_else(|unmet| {
+                            panic!(
+                                "{:?} feat {:?}: the corpus skill path must also compute, unmet: {unmet:?}",
+                                book.rule_set, record.key
+                            )
+                        });
+
+                let explanation = |id: &str| {
+                    hardcoded
+                        .explanations
+                        .iter()
+                        .find(|e| e.id == id)
+                        .unwrap_or_else(|| panic!("feat {:?} must produce {id}", record.key))
+                        .value
+                };
+                let cells: [(&str, i16, i16); 8] = [
+                    ("armor_class", combat.armor_class, hardcoded.baseline_armor_class),
+                    (
+                        "touch_armor_class",
+                        combat.touch_armor_class,
+                        explanation("defense.touch_armor_class"),
+                    ),
+                    (
+                        "combat_maneuver_bonus",
+                        combat.combat_maneuver_bonus,
+                        explanation("combat.combat_maneuver_bonus"),
+                    ),
+                    (
+                        "combat_maneuver_defense",
+                        combat.combat_maneuver_defense,
+                        explanation("defense.combat_maneuver_defense"),
+                    ),
+                    (
+                        "melee_attack_bonus",
+                        combat.melee_attack_bonus,
+                        hardcoded.baseline_melee_attack_bonus,
+                    ),
+                    ("climb", skills.climb, hardcoded.selected_skill_modifiers.climb),
+                    (
+                        "intimidate",
+                        skills.intimidate,
+                        hardcoded.selected_skill_modifiers.intimidate,
+                    ),
+                    ("swim", skills.swim, hardcoded.selected_skill_modifiers.swim),
+                ];
+                for (cell, corpus_value, hardcoded_value) in cells {
+                    if corpus_value != hardcoded_value {
+                        divergences.push(format!(
+                            "{:?} feat {:?}: {cell} is {corpus_value} on the corpus path the \
+                             sheet reads but {hardcoded_value} on the hardcoded path",
+                            book.rule_set, record.key
+                        ));
+                    }
+                }
+            }
+        }
+
+        assert!(
+            divergences.is_empty(),
+            "{} feat/cell pair(s) diverge between the two compute paths -- a feat wired into \
+             one path only is invisible to the player:\n{}",
+            divergences.len(),
+            divergences.join("\n")
+        );
+    }
+
+    /// The five feats the seam defect was hiding, pinned by magnitude on
+    /// **both** paths.
+    ///
+    /// Every `after` value below is the number the hardcoded twin
+    /// (`pilot_compute::compute_combat_baseline` /
+    /// `compute_selected_skill_modifiers`) already produced *before* this
+    /// cycle, captured by running
+    /// `every_catalog_feat_moves_both_compute_paths_identically` against the
+    /// unfixed code. So this test carries two claims at once:
+    ///
+    /// * the corpus path -- the one `resolve_unified_pilot_snapshot` gates on,
+    ///   so the one the sheet renders -- now moves, where it did not; and
+    /// * the hardcoded path is **byte-identical to before**. The fix relocated
+    ///   three `feat_effects` calls into `feat_derived_pillar_contributions`
+    ///   with their arguments unchanged; it did not restate a magnitude. Any
+    ///   arithmetic drift would show up here as a changed `after`.
+    ///
+    /// `before` is the same posture with the feat absent, so each row states
+    /// the real delta rather than an opaque total.
+    #[test]
+    fn the_feats_the_seam_defect_hid_now_move_both_paths_by_their_real_magnitudes() {
+        /// Which of the eight shared cells a row pins.
+        #[derive(Clone, Copy)]
+        enum Cell {
+            ArmorClass,
+            TouchArmorClass,
+            Climb,
+            Intimidate,
+            Swim,
+        }
+
+        // Tiefling Fighter 1 on the fixed posture: STR 16 (+3), DEX 14 (+2),
+        // CHA 8 (-1), Chain Shirt, Longsword, Dodge + Weapon Focus + Power
+        // Attack. Tiefling deliberately: Armor of the Pit's +2 is withheld from
+        // a character who took the Scaled Skin alternate racial trait, and this
+        // posture takes none.
+        //
+        // (feat, cell, value without the feat, value with it)
+        let rows: &[(&str, Cell, i16, i16)] = &[
+            // CRB. All three were wired into `compute_selected_skill_modifiers`
+            // and reached the sheet as no change at all.
+            ("Athletic", Cell::Climb, 5, 7),
+            ("Athletic", Cell::Swim, 5, 7),
+            ("Persuasive", Cell::Intimidate, 3, 5),
+            // rank 1 + CHA -1 + class-skill 3 = 3, then + STR 3.
+            ("Intimidating Prowess", Cell::Intimidate, 3, 6),
+            // ARG. The screen-proven one: a live Tiefling Fighter 1 added this
+            // feat and saw AC/touch/flat-footed unchanged across a full app
+            // restart.
+            ("Armor of the Pit", Cell::ArmorClass, 17, 19),
+            // ...and touch AC must NOT move: PF1 touch attacks ignore natural
+            // armor. Pinned explicitly, because "AC moved" and "AC moved
+            // correctly" are different claims.
+            ("Armor of the Pit", Cell::TouchArmorClass, 13, 13),
+            ("Sure and Fleet", Cell::Climb, 5, 7),
+        ];
+
+        let corpus = corpus_with_fixture();
+        let base_input = load(
+            &fixed_posture_fixture("class:fighter", 1)
+                .replace("race_id=race:human", "race_id=race:tiefling"),
+        );
+
+        let read = |input: &CharacterInput, cell: Cell| -> (i16, i16) {
+            let headless = build_pilot_headless_receipt(input);
+            let hardcoded = &headless.computation;
+            let combat = compute_combat_baseline_from_corpus(hardcoded, input, &corpus)
+                .expect("the corpus combat path must compute for this posture");
+            let skills = compute_selected_skill_modifiers_from_corpus(hardcoded, input, &corpus)
+                .expect("the corpus skill path must compute for this posture");
+            match cell {
+                Cell::ArmorClass => (combat.armor_class, hardcoded.baseline_armor_class),
+                Cell::TouchArmorClass => (
+                    combat.touch_armor_class,
+                    hardcoded
+                        .explanations
+                        .iter()
+                        .find(|e| e.id == "defense.touch_armor_class")
+                        .expect("a touch armor class explanation must exist")
+                        .value,
+                ),
+                Cell::Climb => (skills.climb, hardcoded.selected_skill_modifiers.climb),
+                Cell::Intimidate => {
+                    (skills.intimidate, hardcoded.selected_skill_modifiers.intimidate)
+                }
+                Cell::Swim => (skills.swim, hardcoded.selected_skill_modifiers.swim),
+            }
+        };
+
+        for (feat, cell, expected_before, expected_after) in rows {
+            let (corpus_before, hardcoded_before) = read(&base_input, *cell);
+            assert_eq!(
+                (corpus_before, hardcoded_before),
+                (*expected_before, *expected_before),
+                "{feat}: without the feat, both paths must read {expected_before}"
+            );
+
+            let mut with_feat = base_input.clone();
+            with_feat.chosen.selected_feats.push((*feat).to_owned());
+            let (corpus_after, hardcoded_after) = read(&with_feat, *cell);
+
+            assert_eq!(
+                hardcoded_after, *expected_after,
+                "{feat}: the hardcoded path's value must be byte-identical to what it produced \
+                 before the shared seam existed"
+            );
+            assert_eq!(
+                corpus_after, *expected_after,
+                "{feat}: the CORPUS path -- the one the shipped sheet reads -- must now move to \
+                 {expected_after} too. Before the shared seam it stayed at {expected_before}, \
+                 which is the whole defect"
+            );
+        }
     }
 }
 

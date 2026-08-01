@@ -26,6 +26,27 @@ export interface ItemPickerEntry {
    * frontend, which would be rules knowledge duplicated out of the engine.
    */
   chooserTargetKind?: string | null;
+  /**
+   * True when this row must be shown but not selectable — a feat whose real
+   * corpus prerequisites this character does not meet.
+   *
+   * Deliberately "greyed out and explained" rather than "filtered away":
+   * hiding the row would tell a player nothing about why their build cannot
+   * take Improved Two-Weapon Fighting, and offering it and then refusing the
+   * mutation is the offered-then-refused shape the no-stub doctrine calls a
+   * dead affordance.
+   */
+  disabled?: boolean;
+  /**
+   * Why this row is disabled. Required whenever `disabled` is true — a
+   * greyed-out row with no reason is exactly as unhelpful as no enforcement.
+   */
+  disabledReason?: string;
+  /**
+   * A note shown on a row that IS selectable: prerequisites the rules engine
+   * could not evaluate. Never a reason to disable.
+   */
+  unverifiedNote?: string;
 }
 
 /** Friendly labels for `EquipmentCategory` variants — mirrors `EquipmentCatalogScreen`'s own map. */
@@ -114,6 +135,15 @@ export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPicke
       .filter((part): part is string => Boolean(part))
       .join(' · '),
     chooserTargetKind: entry.chooserTargetKind,
+    // `eligibility` is absent on the character-less `listFeats` response,
+    // which leaves every row selectable — the previous behaviour, unchanged,
+    // for the browse surfaces that have no character to check against.
+    disabled: entry.eligibility ? !entry.eligibility.eligible : undefined,
+    disabledReason: entry.eligibility?.unavailableReason ?? undefined,
+    unverifiedNote:
+      entry.eligibility && entry.eligibility.eligible && entry.eligibility.unverified.length > 0
+        ? entry.eligibility.unverified.join('; ')
+        : undefined,
   }));
 }
 
