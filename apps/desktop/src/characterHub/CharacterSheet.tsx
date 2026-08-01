@@ -9,6 +9,12 @@ import {
 } from '../boundary/loadSavedCharacterDetail';
 import { previewLevelUp as previewLevelUpGrants } from '../boundary/previewLevelUp';
 import { buildClassFeatureSurface } from './classFeaturesModel';
+import {
+  buildRacialTraitsSurface,
+  type RacialTraitRow,
+  type RacialTraitsSurface,
+} from './racialTraitsModel';
+import type { RaceSelectionResponse } from '../boundary/loadAlternateRacialTraits';
 import { buildWeaponsTabSurface, ABSENT as ABSENT_FACET } from './weaponsTabModel';
 import { buildSpellsPerDaySurface } from './spellsPerDayModel';
 import type {
@@ -286,6 +292,50 @@ function NavCard(props: { label: string; value: string }) {
         {props.label}
       </p>
       <p style={{ color: 'var(--color-text)', fontWeight: 700, margin: '0.1rem 0 0' }}>{props.value}</p>
+    </div>
+  );
+}
+
+/**
+ * One racial trait, with the prose the engine rendered for *this* character.
+ *
+ * Replaces the name-only `NavCard` this section used to show for each chosen
+ * alternate: a card reading "Adaptable Luck" told a player which choice they
+ * made and nothing about what it does, while the sentence stating the number —
+ * already computed, already carrying their feats — reached no screen at all
+ * (`decisions.md §29.1`, the producer-with-no-consumer trap).
+ *
+ * `row.text` is rendered verbatim. It is corpus prose with the engine's own
+ * magnitudes resolved into it, and rewriting any of it here would create a
+ * second, unverified source of rules text.
+ */
+function RacialTraitCard(props: { row: RacialTraitRow }) {
+  const { row } = props;
+  return (
+    <div style={{ ...panel, padding: '0.55rem 0.75rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', letterSpacing: '0.04em', margin: 0, textTransform: 'uppercase' }}>
+        {row.roleLabel}
+        <span style={{ letterSpacing: 0, textTransform: 'none' }}> · {row.book}</span>
+      </p>
+      <p style={{ color: 'var(--color-text)', fontWeight: 700, margin: '0.1rem 0 0' }}>{row.name}</p>
+      <p style={{ color: 'var(--color-text-secondary)', fontSize: '0.72rem', margin: '0.25rem 0 0' }}>{row.text}</p>
+      {row.replaces.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', margin: '0.25rem 0 0' }}>
+          Replaces {row.replaces.join(', ')}.
+        </p>
+      ) : null}
+      {/* The engine's own claim, derived by rendering the record twice — never
+          this component inferring a move from the feat list. */}
+      {row.movedByFeats ? (
+        <p style={{ color: 'var(--color-accent)', fontSize: '0.68rem', margin: '0.2rem 0 0' }}>
+          A feat this character holds changed the numbers above.
+        </p>
+      ) : null}
+      {row.droppedArgs.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.68rem', margin: '0.2rem 0 0' }}>
+          The engine could not resolve {row.droppedArgs.join(', ')}, so this description is incomplete.
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -1616,17 +1666,139 @@ function GearTab(props: {
  */
 const CLASS_FEATURE_GUTTER = '9.5rem';
 
+/**
+ * The character's racial traits, in the engine's own words.
+ *
+ * The sibling of the class-feature list above it, and deliberately the same
+ * shape: a label gutter, the trait, and the engine's own text beneath. Where
+ * a class-feature row shows `ComputationExplanation.detail`, a racial-trait row
+ * shows `race_trait_picker::render_trait_description`'s output — corpus `DESC:`
+ * prose re-rendered against this character's display values, so the magnitudes
+ * in it are this character's and not the book's printed defaults.
+ *
+ * Before this section existed the sheet carried the chosen trait *keys* and
+ * nothing else, and the standard traits a race keeps appeared nowhere at all.
+ */
+function RacialTraitsSection(props: { surface: RacialTraitsSurface; raceLabel: string }) {
+  const { surface } = props;
+
+  if (surface.unavailableReason !== null) {
+    return (
+      <div style={{ marginTop: '1.25rem' }}>
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+          Racial traits
+        </p>
+        <p style={{ color: 'var(--color-text-faint)', fontSize: '0.75rem', margin: 0 }}>
+          {surface.unavailableReason}
+        </p>
+      </div>
+    );
+  }
+
+  if (surface.rows.length === 0) {
+    return null;
+  }
+
+  return (
+    <div style={{ marginTop: '1.25rem' }}>
+      <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+        Racial traits — {props.raceLabel}
+      </p>
+      {/* Stated only when the engine reported at least one feat that really
+          moved a display value, derived feat by feat rather than assumed from
+          the character's feat list. */}
+      {surface.displayValueFeats.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.6rem' }}>
+          Numbers below include {surface.displayValueFeats.join(', ')}.
+        </p>
+      ) : null}
+      {surface.rows.map((row) => (
+        <div key={row.key} style={{ borderBottom: '1px solid var(--color-border)', padding: '0.5rem 0' }}>
+          <div style={{ alignItems: 'baseline', display: 'flex', gap: '0.6rem' }}>
+            <span
+              style={{
+                color: 'var(--color-text-muted)',
+                flexShrink: 0,
+                fontSize: '0.72rem',
+                width: CLASS_FEATURE_GUTTER,
+              }}
+            >
+              {row.roleLabel}
+            </span>
+            <span style={{ color: 'var(--color-text)', fontSize: '0.85rem', fontWeight: 700 }}>{row.name}</span>
+            <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem' }}>{row.book}</span>
+            {row.movedByFeats ? (
+              <span style={{ color: 'var(--color-accent)', fontSize: '0.72rem', fontWeight: 700 }}>
+                raised by a feat
+              </span>
+            ) : null}
+          </div>
+          {/* Rendered verbatim: corpus prose with this character's numbers
+              resolved into it, never paraphrased here. */}
+          <p
+            style={{
+              color: 'var(--color-text-secondary)',
+              fontSize: '0.72rem',
+              margin: `0.2rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+            }}
+          >
+            {row.text}
+          </p>
+          {row.replaces.length > 0 ? (
+            <p
+              style={{
+                color: 'var(--color-text-muted)',
+                fontSize: '0.7rem',
+                margin: `0.15rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+              }}
+            >
+              Replaces {row.replaces.join(', ')}.
+            </p>
+          ) : null}
+          {row.droppedArgs.length > 0 ? (
+            <p
+              style={{
+                color: 'var(--color-text-muted)',
+                fontSize: '0.7rem',
+                margin: `0.15rem 0 0 calc(${CLASS_FEATURE_GUTTER} + 0.6rem)`,
+              }}
+            >
+              Incomplete: the engine could not resolve {row.droppedArgs.join(', ')}.
+            </p>
+          ) : null}
+        </div>
+      ))}
+      {/* What the chosen alternates took away. Shown so a swap reads as a
+          swap rather than as a trait that quietly stopped existing. */}
+      {surface.replaced.length > 0 ? (
+        <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.6rem 0 0' }}>
+          No longer applies:{' '}
+          {surface.replaced.map((entry) => `${entry.name} (replaced by ${entry.byName})`).join(', ')}.
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
 function ActionsTab(props: {
   levelEntries: LevelEntry[];
   explanations: readonly ExplanationDto[];
   heldClasses: HeldClass[];
+  racialTraits: RacialTraitsSurface;
+  raceLabel: string;
 }) {
   const surface = buildClassFeatureSurface(props.explanations, props.heldClasses);
   const generalBenefits = props.levelEntries.flatMap((entry) =>
     entry.features.map((feature) => ({ characterLevel: entry.characterLevel, feature }))
   );
 
-  if (surface.features.length === 0 && surface.notComputed.length === 0 && generalBenefits.length === 0) {
+  if (
+    surface.features.length === 0 &&
+    surface.notComputed.length === 0 &&
+    generalBenefits.length === 0 &&
+    props.racialTraits.rows.length === 0 &&
+    props.racialTraits.unavailableReason === null
+  ) {
     return (
       <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>
         No class features granted yet.
@@ -1636,6 +1808,7 @@ function ActionsTab(props: {
 
   return (
     <div>
+      <RacialTraitsSection surface={props.racialTraits} raceLabel={props.raceLabel} />
       {surface.features.length > 0 ? (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 1rem', textAlign: 'center' }}>
@@ -2111,11 +2284,17 @@ export function CharacterSheet(props: {
   }, [props.row.characterId]);
   /**
    * The engine's computed records for this build: every
-   * `ComputationExplanation` it emitted, and the per-weapon damage
-   * breakdown. Both arrive on `load_saved_character` and on nothing else,
-   * so they are held here and re-read after mutations
-   * (`refreshEngineRecords`) rather than threaded through the mutation
-   * responses, which do not carry them.
+   * `ComputationExplanation` it emitted, the per-weapon damage breakdown, and
+   * this character's racial traits resolved and rendered against its own
+   * feats. All three arrive on `load_saved_character` and on nothing else, so
+   * they are held here and re-read after mutations (`refreshEngineRecords`)
+   * rather than threaded through the mutation responses, which do not carry
+   * them.
+   *
+   * `resolvedRacialTraits` belongs here for the sharpest version of that
+   * reason: adding ARG's `Fortunate One` changes what the halfling luck row
+   * *says* ("three times per day" → "4 times per day"), so a stale copy of it
+   * is a wrong number on a player's sheet, not merely an out-of-date one.
    *
    * Seeded from `props.detail` so the browser preview (no Tauri runtime)
    * still renders its sample records.
@@ -2123,20 +2302,27 @@ export function CharacterSheet(props: {
   const [engineRecords, setEngineRecords] = useState<{
     explanations: ExplanationDto[];
     weaponDamage: WeaponDamageDto[];
+    resolvedRacialTraits: RaceSelectionResponse | null;
   }>({
     explanations: props.detail?.explanations ?? [],
     weaponDamage: props.detail?.weaponDamage ?? [],
+    resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
   });
   useEffect(() => {
     let cancelled = false;
     setEngineRecords({
       explanations: props.detail?.explanations ?? [],
       weaponDamage: props.detail?.weaponDamage ?? [],
+      resolvedRacialTraits: props.detail?.resolvedRacialTraits ?? null,
     });
     loadSavedCharacterDetail({ characterId: props.row.characterId })
       .then((loaded) => {
         if (!cancelled) {
-          setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+          setEngineRecords({
+            explanations: loaded.explanations,
+            weaponDamage: loaded.weaponDamage,
+            resolvedRacialTraits: loaded.resolvedRacialTraits,
+          });
         }
       })
       .catch(() => {
@@ -2373,6 +2559,8 @@ export function CharacterSheet(props: {
         // reads them from `engineRecords`, re-read immediately below.
         explanations: [],
         weaponDamage: [],
+        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
+        resolvedRacialTraits: null,
       });
       setMoney(outcome.money);
       // Buying a weapon is exactly what makes a new Weapons row appear.
@@ -2427,6 +2615,8 @@ export function CharacterSheet(props: {
         // See `handleAddEquipment` — no engine records on this response.
         explanations: [],
         weaponDamage: [],
+        // Nor a racial-trait resolution — see `characterSheetRefresh.ts`.
+        resolvedRacialTraits: null,
       });
       setMoney(outcome.money);
       // Attaching a +1 enhancement changes that weapon's Enh. columns.
@@ -2635,7 +2825,14 @@ export function CharacterSheet(props: {
   async function republishFromDisk() {
     const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
     props.onDetailRefreshed(loaded);
-    setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+    setEngineRecords({
+      explanations: loaded.explanations,
+      weaponDamage: loaded.weaponDamage,
+      // Removing a feat can move a racial trait's stated magnitude just as
+      // surely as adding one — dropping `Fortunate One` takes halfling luck
+      // back from "4 times per day" to "Three".
+      resolvedRacialTraits: loaded.resolvedRacialTraits,
+    });
     await refreshDurability();
   }
 
@@ -2862,7 +3059,11 @@ export function CharacterSheet(props: {
   async function refreshEngineRecords() {
     try {
       const loaded = await loadSavedCharacterDetail({ characterId: props.row.characterId });
-      setEngineRecords({ explanations: loaded.explanations, weaponDamage: loaded.weaponDamage });
+      setEngineRecords({
+        explanations: loaded.explanations,
+        weaponDamage: loaded.weaponDamage,
+        resolvedRacialTraits: loaded.resolvedRacialTraits,
+      });
     } catch {
       // Intentionally keeps the current records.
     }
@@ -2993,6 +3194,24 @@ export function CharacterSheet(props: {
   // special size modifier, so every Small character read a point high on both.
   const cmb = engineValue(engineRecords.explanations, 'combat.combat_maneuver_bonus');
   const cmd = engineValue(engineRecords.explanations, 'defense.combat_maneuver_defense');
+
+  /**
+   * This character's racial traits, resolved by `RaceCorpus::resolve` and
+   * rendered by `race_trait_picker::render_trait_description` against the feats
+   * it actually holds. Nothing on this screen decides which traits apply or
+   * what any of them says.
+   */
+  const racialTraits = buildRacialTraitsSurface(engineRecords.resolvedRacialTraits);
+  /** The chosen swaps, for the left rail's digest. */
+  const alternateTraitCards = racialTraits.rows.filter((row) => row.role === 'alternate');
+  /**
+   * Chosen keys with no resolved row — a resolution that has not arrived yet,
+   * or one the engine could not produce. Named rather than dropped: a player's
+   * own selection disappearing from the sheet is worse than showing it bare.
+   */
+  const unresolvedAlternateTraitKeys = (props.detail?.selectedAlternateTraitKeys ?? []).filter(
+    (traitKey) => !alternateTraitCards.some((row) => row.key === traitKey)
+  );
 
   // Weapon proficiency is the union across all held classes.
   const weaponProficiency = heldClasses.reduce<WeaponProficiency>(
@@ -3270,14 +3489,28 @@ export function CharacterSheet(props: {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 <NavCard label="Race" value={props.row.raceLabel} />
                 {/* SD-27: the ARG alternate racial traits this character
-                    actually holds, read off its persisted selection. One card
-                    per trait, and nothing at all when none were taken — an
-                    empty "Alternate Racial Traits" heading would imply the
-                    race has none to offer, which is a different claim. The
-                    numbers these traits change are on the stat rows above and
-                    in the engine's own explanation records; this says which
-                    choice produced them. */}
-                {(props.detail?.selectedAlternateTraitKeys ?? []).map((traitKey) => (
+                    actually holds — now with the prose the engine rendered for
+                    *this* character, not the bare name the key happens to
+                    contain.
+
+                    The card used to read "Adaptable Luck" and stop there, so
+                    the sentence stating the number (already computed, already
+                    carrying this character's feats) reached no screen at all.
+                    Everything else about the section is unchanged: nothing at
+                    all when no alternate was taken, because an empty
+                    "Alternate Racial Traits" heading would imply the race has
+                    none to offer, which is a different claim.
+
+                    The full racial-trait list, standard rows included, is in
+                    the Actions tab; this column stays the chosen-swaps digest
+                    the left rail has always been. */}
+                {alternateTraitCards.map((row) => (
+                  <RacialTraitCard key={row.key} row={row} />
+                ))}
+                {/* A chosen key whose resolution has not arrived (or could not
+                    be produced) still names the choice, rather than vanishing
+                    and leaving the player's own selection invisible. */}
+                {unresolvedAlternateTraitKeys.map((traitKey) => (
                   <NavCard
                     key={traitKey}
                     label="Alternate Racial Trait"
@@ -3419,6 +3652,8 @@ export function CharacterSheet(props: {
                   levelEntries={currentBenefits}
                   explanations={engineRecords.explanations}
                   heldClasses={heldClasses}
+                  racialTraits={racialTraits}
+                  raceLabel={props.row.raceLabel}
                 />
               ) : (
                 <p style={{ color: 'var(--color-text-faint)', margin: 0, textAlign: 'center' }}>{tab} — coming soon.</p>

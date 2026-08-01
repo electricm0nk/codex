@@ -67,10 +67,25 @@
 //! - **Unarmed strike damage.** `Unchained Monk ~ Unarmed Strike`
 //!   (`:464`) grants the shared `ABILITY:Internal|AUTOMATIC|Monk ~ Unarmed
 //!   Damage` record — the same one CRB's Monk grants — and adds no token of
-//!   its own. `pilot_compute.rs`'s `monk_unarmed_strike_damage_die` already
-//!   states that progression. Restating it here would create a second,
-//!   competing source of truth for one fact, which this repo has been burned
-//!   by before.
+//!   its own. Pathfinder Unchained writes no `MonkUnarmedDamage` or `UDAM`
+//!   token anywhere, so it overrides nothing about that record and the
+//!   progression is literally the Core Rulebook's.
+//!   `pilot_compute.rs`'s `monk_unarmed_strike_damage_die` already states it,
+//!   and restating it here would create a second, competing source of truth
+//!   for one fact, which this repo has been burned by before.
+//!
+//!   **Corrected 2026-08-01: "not modelled here" was being read as "reaches
+//!   the sheet".** It did not. Those rows
+//!   (`class_chassis.monk.unarmed_strike_damage_die` and its `_die_count`
+//!   sibling) are pushed only by `explain_monk_level1_chassis`, which returns
+//!   early unless the character holds Core Rulebook `class:monk`, so an
+//!   Unchained Monk got the roster row naming Unarmed Strike and no number at
+//!   any level from 1 to 20. `pilot_compute.rs`'s
+//!   `ground_unchained_monk_unarmed_strike_damage` now calls the existing
+//!   function from the Unchained path — still one ladder, now reached from
+//!   both classes. **This module is still the wrong home for it**, which is
+//!   why the fix landed there and not here: the fact is a Core Rulebook
+//!   record's, not Pathfinder Unchained's.
 //! - **Stunning Fist's save DC and uses per day.** PU's row (`:463`)
 //!   carries exactly one token, `BONUS:VAR|StunningFistMonkLVL|MonkLVL`
 //!   ([`stunning_fist_monk_level`]). The DC (`10+(TL/2)+WIS`) and uses

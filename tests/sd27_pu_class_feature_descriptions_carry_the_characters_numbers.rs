@@ -85,9 +85,15 @@ const PU_CLASSES: &[(&str, &str)] = &[
 /// from `sd27_pu_class_features_reach_by_corpus_key.rs`'s `GROUNDED_PIN` and
 /// `sd27_pu_prose_derived_class_features_reach_the_sheet.rs`'s "after" column.
 /// This change adds no magnitude, so every number must survive it unchanged.
+///
+/// **Monk raised 2026-08-01**, 12 -> 14, by a *later* cycle — the one that made
+/// the Unchained Monk's unarmed strike damage die reach the sheet. That is a
+/// magnitude this file's own change did not add; the literal is re-copied from
+/// its sources rather than this file's claim being weakened. See
+/// `tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs`.
 const GROUNDED_ROWS_AT_LEVEL_10: &[(&str, usize)] = &[
     ("unchained_barbarian", 10),
-    ("unchained_monk", 12),
+    ("unchained_monk", 14),
     ("unchained_rogue", 11),
     ("unchained_summoner", 11),
 ];

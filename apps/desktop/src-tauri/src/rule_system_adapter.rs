@@ -148,7 +148,8 @@ mod tests {
     use crate::character_hub::{
         compose_character_input, map_chosen_feat_targets_dto, map_encumbrance_dto,
         map_explanations_dto, map_resolved_equipment_dto, map_snapshot_dto,
-        map_spells_selected_dto, map_weapon_damage_dto, read_alternate_trait_keys, AbilityScoresDto,
+        map_spells_selected_dto, map_weapon_damage_dto, read_alternate_trait_keys,
+        resolve_racial_traits_for_character, AbilityScoresDto,
         CharacterSummaryDto, CorpusDerivedDto, CreateCharacterRequest, DiagnosticDto,
         EquipmentEffectsDto, ResolvedEquipmentEffectDto, SchoolCoverageDto,
     };
@@ -360,6 +361,9 @@ mod tests {
                     corpus_receipt.base.ability_modifiers.strength,
                 )),
                 selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
+                resolved_racial_traits: resolve_racial_traits_for_character(
+                    &envelope.character_input,
+                ),
             })
         }
     }

@@ -107,6 +107,12 @@ export function toCharacterMutationRefresh(
       // `refreshDurability` already established there.
       explanations: [],
       weaponDamage: [],
+      // Same reasoning, one field further: a mutation that adds a feat really
+      // does change what a racial trait's prose says (ARG's `Fortunate One`
+      // moves halfling luck from "three times per day" to "4"), so the
+      // pre-mutation resolution is stale the moment this returns. Absent
+      // rather than stale; `refreshEngineRecords` re-reads it.
+      resolvedRacialTraits: null,
     },
   };
 }

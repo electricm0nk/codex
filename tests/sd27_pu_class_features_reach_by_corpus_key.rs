@@ -76,9 +76,14 @@ const PU_CLASSES: &[(&str, &str)] = &[
 /// See that file's note, and
 /// `tests/sd27_pu_prose_derived_class_features_reach_the_sheet.rs` for the
 /// before/after pair and the per-feature reasoning.
+///
+/// **Monk raised again 2026-08-01**, 12 -> 14, by the cycle that made the
+/// Unchained Monk's unarmed strike damage die reach the sheet — two rows, the
+/// die face and the die count, at every level. See
+/// `tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs`.
 const GROUNDED_PIN: &[(&str, usize)] = &[
     ("unchained_barbarian", 10),
-    ("unchained_monk", 12),
+    ("unchained_monk", 14),
     ("unchained_rogue", 11),
     ("unchained_summoner", 11),
 ];

@@ -182,17 +182,24 @@ function verifiesABookNamespacedIdIsAttributedToItsClassRatherThanToNoOne() {
  * The per-record roster rows carry an extra `corpus_record` segment naming the
  * record family. It is id structure, not feature text, and must not reach the
  * label.
+ *
+ * The `makers_call` id here is the one the engine really emits
+ * (`pilot_compute::pu_feature_slug` swallows the apostrophe in
+ * `Unchained Summoner ~ Maker's Call`). It previously read `maker_s_call` and
+ * asserted the label `'Maker S Call'` — an id the engine can no longer produce
+ * and the rendering of a fixed defect. A synthetic fixture that pins an
+ * impossible input proves nothing, so it was corrected rather than left to pass.
  */
 function verifiesTheRecordFamilySegmentIsNotPartOfTheFeatureName() {
   const surface = buildClassFeatureSurface(
     [
-      explanation('class_feature.pu.unchained_summoner.corpus_record.maker_s_call', 6),
+      explanation('class_feature.pu.unchained_summoner.corpus_record.makers_call', 6),
       explanation('class_feature.pu.unchained_summoner.corpus_record.greater_shield_ally', 12),
     ],
     UNCHAINED_SUMMONER
   );
 
-  assertEqual(surface.features[0].label, 'Maker S Call', 'the record family segment is dropped');
+  assertEqual(surface.features[0].label, 'Makers Call', 'the record family segment is dropped');
   assertEqual(surface.features[1].label, 'Greater Shield Ally', 'and dropped on every row');
   assertEqual(surface.features[0].classToken, 'unchained_summoner', 'still attributed');
 }

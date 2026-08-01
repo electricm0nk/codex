@@ -739,7 +739,9 @@ function CreateCharacterFields(props: {
                 style={{
                   border: '1px solid var(--color-border)',
                   borderRadius: 8,
-                  maxHeight: 220,
+                  // Each row now carries its rendered description, so the old
+                  // 220px showed barely two of them.
+                  maxHeight: 320,
                   overflowY: 'auto',
                   padding: '0.35rem 0.5rem',
                 }}
@@ -755,7 +757,7 @@ function CreateCharacterFields(props: {
                       opacity: row.disabledReason === null ? 1 : 0.55,
                       padding: '0.3rem 0',
                     }}
-                    title={row.disabledReason ?? row.alternate.description}
+                    title={row.disabledReason ?? row.description}
                   >
                     <input
                       type="checkbox"
@@ -771,6 +773,33 @@ function CreateCharacterFields(props: {
                         · {row.alternate.book}
                         {row.alternate.sourcePage === null ? '' : ` ${row.alternate.sourcePage}`}
                       </span>
+                      {/* What the trait actually does, with its numbers.
+
+                          This row used to show a name, a page and "Replaces X"
+                          — three facts, none of them a magnitude — while the
+                          rendered sentence stating the number sat in the same
+                          payload, reaching only a hover tooltip. A player
+                          choosing between two alternates could not compare
+                          them. `description` is rendered verbatim: it is
+                          corpus prose with the engine's own numbers resolved
+                          into it (`decisions.md §29.1`). */}
+                      <span
+                        style={{
+                          color: 'var(--color-text-secondary)',
+                          display: 'block',
+                          fontSize: '0.72rem',
+                        }}
+                      >
+                        {row.description}
+                      </span>
+                      {row.droppedArgs.length > 0 ? (
+                        <span
+                          style={{ color: 'var(--color-text-muted)', display: 'block', fontSize: '0.7rem' }}
+                        >
+                          The engine could not resolve {row.droppedArgs.join(', ')}, so this description is
+                          incomplete.
+                        </span>
+                      ) : null}
                       <span
                         style={{
                           color: 'var(--color-text-muted)',

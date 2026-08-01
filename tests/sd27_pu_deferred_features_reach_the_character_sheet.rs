@@ -72,9 +72,16 @@ const LEVEL: u8 = 10;
 /// Barbarian does not move because all three of its newly-closed features
 /// gate above level 10. The before/after pair and the per-feature reasoning
 /// live in `tests/sd27_pu_prose_derived_class_features_reach_the_sheet.rs`.
+///
+/// **Monk raised again 2026-08-01**, 12 -> 14, by the cycle that made the
+/// Unchained Monk's unarmed strike damage die reach the sheet: it adds the
+/// die-face and die-count rows at every level, so this pin gains exactly two.
+/// The before/after pair and the corpus evidence that the progression is the
+/// Core Rulebook Monk's own live in
+/// `tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs`.
 const PU_CLASS_PIN: &[(&str, usize)] = &[
     ("unchained_barbarian", 10),
-    ("unchained_monk", 12),
+    ("unchained_monk", 14),
     ("unchained_rogue", 11),
     ("unchained_summoner", 11),
 ];

@@ -3,6 +3,7 @@ import { formatError, hasTauriRuntime } from './runtime';
 import type { CharacterSummaryDto } from './loadListSavedCharacters';
 import type { CorpusDerivedDto, DiagnosticDto, PilotSnapshotDto } from './loadCreateCharacter';
 import type { AcquisitionModeDto } from './addSpellSelection';
+import type { RaceSelectionResponse } from './loadAlternateRacialTraits';
 
 /** Mirrors `SpellSelectionImportDto` in `character_hub.rs` — a general-purpose round-trip shape, not import-only despite the name. */
 export interface SpellSelectionDto {
@@ -77,6 +78,32 @@ export interface LoadSavedCharacterResponse {
    * no way to say why.
    */
   selectedAlternateTraitKeys: string[];
+  /**
+   * **This character's racial traits, resolved and rendered for *it*.**
+   *
+   * `selectedAlternateTraitKeys` carries the choice; this carries what the
+   * choice *says*. Produced by `character_hub::resolve_racial_traits_for_character`,
+   * which calls the same `race_trait_picker` renderer the Race Traits picker
+   * screen consumes — one renderer, several consumers (`decisions.md §29.1`).
+   *
+   * Every `description` / `text` in it is rendered against this character's own
+   * persisted `selectedFeats`, so a halfling holding ARG's `Fortunate One`
+   * reads "4 times per day" where the book prints three. **Render verbatim** —
+   * it is corpus prose with the engine's numbers resolved into it.
+   *
+   * Project it with `characterHub/racialTraitsModel.ts`; do not read the fields
+   * directly in a component.
+   *
+   * **`load_saved_character` always sends one.** `null` marks a detail object
+   * this frontend *built* rather than loaded — a mutation response reshaped by
+   * `toCharacterMutationRefresh`, or the browser preview's sample. Those
+   * responses genuinely carry no resolution, and a mutation can change one
+   * (adding `Fortunate One` moves the halfling luck sentence), so carrying the
+   * pre-mutation prose forward would show a stale number as if it were current.
+   * The same reasoning, and the same fix, as `explanations` and `weaponDamage`:
+   * left absent, and re-read through `refreshEngineRecords`.
+   */
+  resolvedRacialTraits: RaceSelectionResponse | null;
 }
 
 /** Mirrors `ExplanationDto` in `character_hub.rs`. */

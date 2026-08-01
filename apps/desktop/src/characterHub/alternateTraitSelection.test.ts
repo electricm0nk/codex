@@ -96,6 +96,8 @@ async function main() {
   neverDisablesAnAlreadySelectedAlternate();
   reportsTheEnginesOwnSuppressionsRatherThanDerivingThem();
   surfacesEveryConditionThatWouldBlockTheSave();
+  everyRowCarriesTheProseTheEngineRendered();
+  aRowsSentenceIsTheOneRenderedForWhoeverTheResolutionNamed();
   console.log('alternateTraitSelection: all assertions passed');
 }
 
@@ -246,6 +248,106 @@ function surfacesEveryConditionThatWouldBlockTheSave() {
   assert(warnings[0].includes('Dwarf ~ Saltbeerd'), 'the typo is named');
   assert(warnings[1].includes('Sky Sentinel') && warnings[1].includes('Saltbeard'), 'both ends of the conflict');
   assert(warnings[2].includes('Aasimar_ReplaceVision'), 'the inert flag is named');
+}
+
+/**
+ * **The creation form used to show a name, a page reference and "Replaces X",
+ * and no numbers at all.** A player choosing between `Saltbeard` and
+ * `Minesight` saw two names and could not tell what either one was worth.
+ *
+ * The prose was never missing from the engine — `race_trait_picker` renders
+ * every alternate's `DESC:` tokens and ships the result on both the menu and
+ * the resolve payload. It simply reached no part of this screen except a
+ * `title` tooltip. These assertions are about the row carrying it.
+ */
+function everyRowCarriesTheProseTheEngineRendered() {
+  // Before the engine answers, the menu's own rendering (the same renderer,
+  // called with no feats) is what there is — never a blank cell.
+  const early = buildAlternateTraitRows(MENU, 'race:dwarf', [], null);
+  for (const row of early) {
+    assertEqual(row.description, row.alternate.description, "the menu's rendering until one arrives");
+    assertEqual(row.movedByFeats, false, 'no resolution, no claim that anything moved');
+    assertEqual(row.droppedArgs.length, 0, 'and nothing claimed incomplete');
+  }
+
+  // Once it does, the resolution's rendering wins: it is the one rendered for
+  // whoever the call named.
+  const resolved = buildAlternateTraitRows(
+    MENU,
+    'race:dwarf',
+    [],
+    resolution({
+      renderedTraitDescriptions: [
+        {
+          key: 'Dwarf ~ Saltbeard',
+          name: 'Saltbeard',
+          text: 'Saltbeard dwarves gain a +2 racial bonus on Profession (sailor) checks.',
+          droppedArgs: [],
+          movedByFeats: false,
+        },
+      ],
+    }),
+  );
+  const saltbeard = resolved.find((row) => row.alternate.key === 'Dwarf ~ Saltbeard');
+  assert(saltbeard!.description.includes('+2 racial bonus'), `the number reaches the row: ${saltbeard!.description}`);
+  const minesight = resolved.find((row) => row.alternate.key === 'Dwarf ~ Minesight');
+  assertEqual(
+    minesight!.description,
+    minesight!.alternate.description,
+    'a record the resolution did not render keeps the menu sentence rather than blanking',
+  );
+}
+
+/**
+ * **The same-record-different-sentence proof, at the creation surface.**
+ *
+ * `resolveRaceAlternateSelection` takes the held feats as a sibling argument,
+ * so the two payloads below are the same corpus record rendered for two
+ * different characters. The row must show whichever one it was handed — a row
+ * that reads the menu's static `description` instead would show the book's
+ * printed number to a character whose feats have already changed it.
+ */
+function aRowsSentenceIsTheOneRenderedForWhoeverTheResolutionNamed() {
+  const base = 'Three times per day, a halfling can gain a +2 luck bonus on an ability check.';
+  const fed = '4 times per day, a halfling can gain a +2 luck bonus on an ability check.';
+  const luckMenu: AlternateRacialTraitsResponse = {
+    races: [
+      race({
+        raceId: 'Halfling',
+        raceKey: 'Halfling',
+        raceName: 'Halfling',
+        alternates: [
+          alternate({ key: 'Halfling ~ Adaptable Luck', name: 'Adaptable Luck', description: base }),
+        ],
+      }),
+    ],
+    diagnostics: [],
+    findings: [],
+  };
+  const forFeats = (text: string, movedByFeats: boolean, displayValueFeats: string[]) =>
+    buildAlternateTraitRows(
+      luckMenu,
+      'race:halfling',
+      [],
+      resolution({
+        raceId: 'Halfling',
+        raceKey: 'Halfling',
+        raceName: 'Halfling',
+        displayValueFeats,
+        renderedTraitDescriptions: [
+          { key: 'Halfling ~ Adaptable Luck', name: 'Adaptable Luck', text, droppedArgs: [], movedByFeats },
+        ],
+      }),
+    )[0];
+
+  const withoutFeat = forFeats(base, false, []);
+  const withFeat = forFeats(fed, true, ['Fortunate One']);
+
+  assert(withoutFeat.description.includes('Three times per day'), withoutFeat.description);
+  assert(withFeat.description.includes('4 times per day'), withFeat.description);
+  assert(withoutFeat.description !== withFeat.description, 'same record, different sentence');
+  assertEqual(withoutFeat.movedByFeats, false, 'the engine reported no move');
+  assertEqual(withFeat.movedByFeats, true, 'and reported one here');
 }
 
 main().catch((cause: unknown) => {

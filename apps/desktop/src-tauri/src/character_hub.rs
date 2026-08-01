@@ -490,6 +490,27 @@ pub struct LoadSavedCharacterResponse {
     /// character's racial-trait choices, so the picker would reopen empty and
     /// the sheet would show a Dwarf with darkvision 90 and no reason why.
     pub selected_alternate_trait_keys: Vec<String>,
+    /// **This character's racial traits, resolved and rendered for *it*.**
+    ///
+    /// [`selected_alternate_trait_keys`](Self::selected_alternate_trait_keys)
+    /// carries the choice; this carries what the choice *says*. Without it the
+    /// sheet could name a trait and never state what it does — which is exactly
+    /// what it did: one name-only card per chosen key, with the prose, the
+    /// magnitudes, and the standard trait each one replaced all absent.
+    ///
+    /// Produced by [`resolve_racial_traits_for_character`], which calls
+    /// `race_trait_picker::build_race_selection_for_feats` — the **same**
+    /// renderer the Race Traits picker screen consumes, against the same
+    /// corpus. `decisions.md §29.1`'s rule is one renderer with several
+    /// consumers; this field is another consumer, not another renderer.
+    ///
+    /// `appliedTraits[].description`, `renderedTraitDescriptions[].text` and
+    /// `displayValueFeats` are all rendered against **this character's own
+    /// persisted `selected_feats`**, so a Halfling holding ARG's `Fortunate
+    /// One` reads "4 times per day" where the book prints three. Render them
+    /// verbatim: they are corpus prose with the engine's numbers resolved into
+    /// it, not text to paraphrase.
+    pub resolved_racial_traits: crate::race_trait_picker::RaceSelectionResponse,
 }
 
 /// Wire form of `pilot_compute::ComputationExplanation`.
@@ -1184,6 +1205,40 @@ fn resolve_alternate_trait_choices(
 /// sheet and the picker can show a loaded character's real choices instead of
 /// re-deriving them (the gap `selected_feats` and `spells_selected` were each
 /// added to close).
+/// One saved character's racial traits, resolved against its own choices and
+/// **rendered against its own feats**.
+///
+/// The sibling of [`resolve_alternate_trait_choices`], and deliberately a
+/// different call. That one validates whether a *selection* is legal, which is
+/// a race-and-selection question a feat cannot change, so it passes no feats
+/// and must keep passing none — `build_race_selection`'s own doc records that
+/// contract. This one answers a different question: what does this character's
+/// sheet *say*. A trait's stated magnitude does move with the feats it holds
+/// (`Halfling ~ Adaptable Luck` reads "three times per day" in the book and
+/// "4 times per day" for a halfling with ARG's `Fortunate One`), so this call
+/// hands over `chosen.selected_feats` verbatim.
+///
+/// **No rendering happens here.** `race_trait_picker::render_trait_description`
+/// is the single renderer (`decisions.md §29.1`); this function only routes a
+/// saved character's real race id, real selections and real feats into it. The
+/// race id crosses as-is — `RaceCorpus::resolve_key` is prefix- and
+/// case-tolerant, so `race:half-elf` reaches the same record as `Half-Elf`
+/// without this module inventing a mapping.
+///
+/// An unknown race yields a response carrying `errors`, never a silently empty
+/// trait list: a sheet showing no racial traits at all must be able to say why.
+pub(crate) fn resolve_racial_traits_for_character(
+    input: &CharacterInput,
+) -> crate::race_trait_picker::RaceSelectionResponse {
+    crate::race_trait_picker::build_race_selection_for_feats(
+        &crate::race_trait_picker::RaceSelectionRequest {
+            race_key: input.chosen.race_id.clone(),
+            selected_alternate_keys: read_alternate_trait_keys(input),
+        },
+        &input.chosen.selected_feats,
+    )
+}
+
 pub(crate) fn read_alternate_trait_keys(input: &CharacterInput) -> Vec<String> {
     input
         .chosen
@@ -1471,6 +1526,7 @@ pub(crate) fn load_saved_character_at_root(
         explanations,
         weapon_damage,
         selected_alternate_trait_keys: read_alternate_trait_keys(&envelope.character_input),
+        resolved_racial_traits: resolve_racial_traits_for_character(&envelope.character_input),
     })
 }
 
@@ -4378,6 +4434,172 @@ mod tests {
             .find(|e| e.id == "race.dwarf.alternate_trait.minesight.senses")
             .expect("Minesight's own record must be on the loaded sheet");
         assert_eq!(minesight.value, 90);
+    }
+
+    // ----- SD-27 gap 4: resolved racial-trait prose reaches the sheet -----
+
+    /// One applied trait's rendered prose out of a loaded character's payload.
+    fn applied_trait<'a>(
+        loaded: &'a LoadSavedCharacterResponse,
+        key: &str,
+    ) -> &'a crate::race_trait_picker::AppliedTraitDto {
+        loaded
+            .resolved_racial_traits
+            .applied_traits
+            .iter()
+            .find(|applied| applied.key == key)
+            .unwrap_or_else(|| {
+                panic!(
+                    "{key} must apply for this character; got {:?}",
+                    loaded
+                        .resolved_racial_traits
+                        .applied_traits
+                        .iter()
+                        .map(|applied| applied.key.as_str())
+                        .collect::<Vec<_>>()
+                )
+            })
+    }
+
+    /// **The character sheet's half of `decisions.md §29.1`'s
+    /// producer-with-no-consumer trap.**
+    ///
+    /// `race_trait_picker::render_trait_description` re-renders a trait's
+    /// `DESC:` tokens against the character's own display values, and the Race
+    /// Traits picker was its only consumer. `load_saved_character` — the one
+    /// call the sheet a player lives in actually makes — carried the chosen
+    /// trait *keys* and nothing else, so the sheet could name a trait and never
+    /// state what it does.
+    ///
+    /// The proof is a before/after pair over **one corpus record** (`§28`'s
+    /// standing guard): the same `Halfling ~ Adaptable Luck` row must state a
+    /// different number for the same character once it holds ARG's
+    /// `Fortunate One`. A baked string cannot pass this, and neither can the
+    /// stored `data.description` — which is why the racial base below has to
+    /// read "Three times per day" and the fed one "4 times per day", the
+    /// `PREVARLTEQ:...,3` gate ceasing to apply rather than a number being
+    /// substituted.
+    #[test]
+    fn a_loaded_characters_racial_trait_prose_states_the_number_its_own_feats_produce() {
+        let root = tempdir("sheet-racial-trait-prose");
+        saved_or_panic(
+            create_character_at_root(
+                &root,
+                &request_with_alternates("race:halfling", &["Halfling ~ Adaptable Luck"]),
+                "test-version".to_owned(),
+            )
+            .expect("create call should not error"),
+        );
+
+        // Before: the character holds no display-value feat, so the sheet
+        // states the racial base.
+        let base = load_saved_character_at_root(&root).expect("the saved Halfling must load back");
+        assert!(base.resolved_racial_traits.errors.is_empty(), "{:?}", base.resolved_racial_traits.errors);
+        assert_eq!(base.resolved_racial_traits.race_key, "Halfling");
+        let base_luck = applied_trait(&base, "Halfling ~ Adaptable Luck");
+        assert!(base_luck.description.contains("Three times per day"), "{}", base_luck.description);
+        assert!(base_luck.description.contains("gain the full +2 bonus"), "{}", base_luck.description);
+        assert!(base_luck.description.contains("only gain a +1 bonus"), "{}", base_luck.description);
+        assert!(
+            base.resolved_racial_traits.display_value_feats.is_empty(),
+            "a created Halfling holds no feat that moves a display value: {:?}",
+            base.resolved_racial_traits.display_value_feats
+        );
+
+        // After: the very same record, for the very same character, once it
+        // holds the ARG luck feat.
+        let mut envelope = SavedCharacterStore::load(&root).expect("reload");
+        envelope.character_input.chosen.selected_feats.push("Fortunate One".to_owned());
+        SavedCharacterStore::save(&envelope, &root).expect("re-save");
+
+        let fed = load_saved_character_at_root(&root).expect("loads");
+        let fed_luck = applied_trait(&fed, "Halfling ~ Adaptable Luck");
+        assert!(fed_luck.description.contains("4 times per day"), "3 + 1 = 4: {}", fed_luck.description);
+        assert!(
+            !fed_luck.description.contains("Three"),
+            "the PREVARLTEQ gate stops applying rather than a number being swapped: {}",
+            fed_luck.description
+        );
+        assert_ne!(base_luck.description, fed_luck.description, "same record, different sentence");
+        assert_eq!(fed.resolved_racial_traits.display_value_feats, vec!["Fortunate One".to_string()]);
+
+        // The per-record `moved_by_feats` flag is the screen's licence to say
+        // *why* the number differs, and it is derived by re-rendering rather
+        // than asserted from the feat list.
+        let moved = fed
+            .resolved_racial_traits
+            .rendered_trait_descriptions
+            .iter()
+            .find(|row| row.key == "Halfling ~ Adaptable Luck")
+            .expect("a rendered row for the applied trait");
+        assert!(moved.moved_by_feats);
+        assert_eq!(moved.text, fed_luck.description, "one sentence per trait, whichever list shows it");
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// Every racial trait that reaches the sheet carries real prose, and the
+    /// chosen alternate really replaced something. A name-only card — what the
+    /// sheet showed before — would pass a "the key survived" test and fail this
+    /// one.
+    #[test]
+    fn every_racial_trait_on_a_loaded_sheet_carries_rendered_prose_and_names_what_it_replaced() {
+        use codex::rules_core::pcgen_desc::leaked_pcgen_syntax;
+
+        let root = tempdir("sheet-racial-trait-coverage");
+        saved_or_panic(
+            create_character_at_root(
+                &root,
+                &request_with_alternates("race:dwarf", &["Dwarf ~ Minesight"]),
+                "test-version".to_owned(),
+            )
+            .expect("create call should not error"),
+        );
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        let resolved = &loaded.resolved_racial_traits;
+
+        assert!(resolved.errors.is_empty(), "{:?}", resolved.errors);
+        assert!(!resolved.applied_traits.is_empty(), "a Dwarf applies its racial traits");
+        for applied in &resolved.applied_traits {
+            assert!(!applied.description.trim().is_empty(), "{} has prose", applied.key);
+            assert_eq!(leaked_pcgen_syntax(&applied.description), None, "{}: {}", applied.key, applied.description);
+        }
+        assert!(resolved.applied_traits.iter().any(|applied| applied.key == "Dwarf ~ Minesight"));
+
+        // The swap the player made, in the resolver's own words.
+        let suppressed: Vec<&str> =
+            resolved.suppressions.iter().map(|s| s.suppressed_trait_key.as_str()).collect();
+        assert!(
+            suppressed.contains(&"Dwarf ~ Vision"),
+            "Minesight replaces the standard darkvision row: {suppressed:?}"
+        );
+
+        std::fs::remove_dir_all(&root).ok();
+    }
+
+    /// A character who chose no alternate still gets its race's standard
+    /// traits rendered — the sheet's racial section is not an
+    /// alternates-only surface, and an empty payload here would read as "this
+    /// race has no traits".
+    #[test]
+    fn a_character_with_no_alternate_chosen_still_gets_its_standard_traits_rendered() {
+        let root = tempdir("sheet-racial-trait-standard-only");
+        saved_or_panic(
+            create_character_at_root(&root, &request_for("race:halfling", 1), "test-version".to_owned())
+                .expect("create call should not error"),
+        );
+        let loaded = load_saved_character_at_root(&root).expect("loads");
+        assert!(loaded.selected_alternate_trait_keys.is_empty());
+        let resolved = &loaded.resolved_racial_traits;
+        assert!(resolved.errors.is_empty(), "{:?}", resolved.errors);
+        assert!(resolved.suppressions.is_empty(), "nothing was replaced");
+        assert!(
+            resolved.applied_traits.iter().all(|applied| applied.role == "default"),
+            "no alternate was taken, so every applied trait is a racial default"
+        );
+        assert!(resolved.applied_traits.len() >= 5, "{}", resolved.applied_traits.len());
+        // The standard Halfling Luck row, which the alternate above replaces.
+        assert!(resolved.applied_traits.iter().any(|applied| applied.key == "Halfling ~ Halfling Luck"));
     }
 
     /// A Dwarf who chose nothing is byte-identical to the pre-SD-27 build:

@@ -71,17 +71,28 @@ const FIXTURE: &str =
 /// newly-closed features (Greater Rage 11, Tireless Rage 17, Mighty Rage 20)
 /// gate above it — which is itself worth pinning, since a change that started
 /// emitting them early would show up here.
+///
+/// **Monk's "after" raised 2026-08-01**, 12 -> 14, by the later cycle that made
+/// the Unchained Monk's unarmed strike damage die reach the sheet (two rows,
+/// the die face and the die count, at every level). Only the "after" column
+/// moves: the "before" column is this file's own measurement of the state
+/// before *its* change and is history, not a live number, so rewriting it
+/// would erase the delta this pin exists to record. The unarmed-strike change
+/// carries its own before/after in
+/// `tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs`.
 const GROUNDED_ROWS_AT_LEVEL_10_BEFORE_AND_AFTER: &[(&str, usize, usize)] = &[
     ("unchained_barbarian", 10, 10),
-    ("unchained_monk", 10, 12),
+    ("unchained_monk", 10, 14),
     ("unchained_rogue", 9, 11),
     ("unchained_summoner", 6, 11),
 ];
 
 /// Grounded rows at level 20, per class. Literals read off the real pipeline.
+///
+/// **Monk raised 2026-08-01**, 15 -> 17, by the same unarmed-strike cycle.
 const GROUNDED_ROWS_AT_LEVEL_20: &[(&str, usize)] = &[
     ("unchained_barbarian", 14),
-    ("unchained_monk", 15),
+    ("unchained_monk", 17),
     ("unchained_rogue", 12),
     ("unchained_summoner", 15),
 ];

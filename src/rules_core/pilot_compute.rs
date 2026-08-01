@@ -24180,6 +24180,7 @@ fn compute_pu_class_chassis(
                 level,
                 base_attack_bonus,
                 ability_modifiers,
+                &input.chosen.race_id,
                 explanations,
                 diagnostics,
             );
@@ -24192,12 +24193,11 @@ fn compute_pu_class_chassis(
         }
     }
 
-    // `input` is threaded through for signature symmetry with
-    // `compute_apg_class_chassis`/`compute_acg_class_chassis` and because
-    // the class-skill groundings below read nothing else from it today.
-    // Touched explicitly so the parameter is genuinely used rather than
-    // silently underscore-prefixed away, which would hide the fact that no
-    // Unchained feature is choice-gated yet.
+    // `input` carries the character's race to the Unchained Monk branch above,
+    // whose unarmed strike damage die is a column of the shared Core Rulebook
+    // record chosen by creature size. Nothing else here reads it: no Unchained
+    // feature is choice-gated yet, and this assertion says so out loud rather
+    // than the fact being inferable only from the absence of a call.
     debug_assert_eq!(input.chosen.class_levels.len(), 1);
 
     Some((base_attack_bonus, base_saves))
@@ -24590,12 +24590,43 @@ fn pu_feature_slug(key: &str) -> String {
         if character.is_ascii_alphanumeric() {
             slug.extend(character.to_lowercase());
             last_was_separator = false;
+        } else if is_intraword_punctuation(character) {
+            // Swallowed, not separated. See `is_intraword_punctuation`.
         } else if !last_was_separator && !slug.is_empty() {
             slug.push('_');
             last_was_separator = true;
         }
     }
     slug.trim_end_matches('_').to_owned()
+}
+
+/// Punctuation an id slug **swallows** instead of turning into a `_`.
+///
+/// # The defect this closes
+///
+/// An apostrophe sits inside a word, so promoting it to a separator splits the
+/// word in two. `classFeaturesModel.ts::humanise` then splits the id on
+/// `[\s._]+` and title-cases every part, so the orphaned letter is capitalised
+/// on its own: `Unchained Summoner ~ Maker's Call` became
+/// `…corpus_record.maker_s_call` and rendered on the character sheet as
+/// **"Maker S Call"**. `Scavenger's Eye` did the same through
+/// [`slugify_id_segment`].
+///
+/// Dropping the character instead yields `makers_call` -> "Makers Call", which
+/// is the convention [`class_feature_id_slug`] already used for the Advanced
+/// Class Guide's deeds (`Swashbuckler's Edge` -> `swashbucklers_edge`). This is
+/// that rule, shared, rather than a third spelling of it.
+///
+/// Both the ASCII apostrophe and the Unicode right single quotation mark are
+/// swallowed: PCGen writes ASCII in every row this repo has ingested, and a
+/// future row arriving with the typographic form would otherwise reopen the
+/// defect silently.
+///
+/// Deliberately *not* generalised to all punctuation. A parenthesis or a
+/// hyphen separates words (`Craft (Alchemy)`, `Kip-Up`) and must stay a
+/// separator; only the apostrophe family sits mid-word.
+fn is_intraword_punctuation(character: char) -> bool {
+    matches!(character, '\'' | '\u{2019}')
 }
 
 /// Emits one receipt row per ingested Pathfinder Unchained `class_feature`
@@ -24948,6 +24979,116 @@ fn push_deferred_class_features(
     explanations.push(ComputationExplanation { id: id.to_owned(), value: 0, detail: message });
 }
 
+/// Grounds the Unchained Monk's unarmed strike damage die, in the same two
+/// facets the Core Rulebook Monk's chassis grounds: the die's face size and,
+/// separately, its count.
+///
+/// # Why this exists, given `monk_features.rs` declined to model it
+///
+/// That module's doc comment declined on the grounds that
+/// [`monk_unarmed_strike_damage_die`] "already states that progression". The
+/// function did; the sheet did not. Those rows are pushed only by
+/// `explain_monk_level1_chassis`, which returns early unless the character
+/// holds Core Rulebook `class:monk` (and is Human), so an Unchained Monk got
+/// the roster row naming Unarmed Strike and no number at any level. The
+/// remedy is to call the existing function from this path, not to write a
+/// second ladder.
+///
+/// # The progressions are identical, established against the corpus
+///
+/// * `pu_abilities_class.lst:464` (`Unchained Monk ~ Unarmed Strike`) grants
+///   `ABILITY:Internal|AUTOMATIC|Monk ~ Unarmed Damage` — the very record
+///   `cr_abilities_class.lst:1118` grants for the Core Rulebook Monk — and
+///   carries no damage token of its own.
+/// * Pathfinder Unchained emits **no** `MonkUnarmedDamage*` or `UDAM` token
+///   anywhere in its `.lst` files, so it overrides nothing about that record:
+///   no `.MOD`, no `BONUS:VAR`, no replacement band table.
+/// * The shared record (`cr_abilities_class.lst:1280`) picks its band with
+///   `BONUS:VAR|MonkUnarmedDamageProgression|(min(5,MonkUnarmedDamageLVL/4))`
+///   over `BONUS:VAR|MonkUnarmedDamageLVL|MonkLVL`, which is
+///   [`monk_unarmed_strike_damage_die`]'s `min(5, level / 4)` exactly.
+///
+/// # Why the size column is read, when the Core Rulebook path does not
+///
+/// The shared record fans each band out per creature size —
+/// `Monk Unarmed Damage LVL 8 (Small)`, `… (Medium)`, and seven more. The
+/// Core Rulebook path never had to choose, because it is gated on `race:human`.
+/// This path is not: `race_resolver::RACE_SIZES` gives the 18 playable races
+/// 13 Medium and 5 Small, so handing a Gnome or a Halfling the Medium ladder
+/// would put a specific, checkable, wrong die on a player's sheet. Only the
+/// two columns a playable race can occupy are modelled; any other size grounds
+/// an honest absence rather than a substituted number.
+///
+/// # Both facets are emitted at every level, unlike the Core Rulebook path
+///
+/// `explain_monk_level1_chassis` withholds the count row below level 12,
+/// because that facet was introduced by a later cycle at the level where the
+/// count first rises. A face size with no count beside it is ambiguous on the
+/// sheet — `10` alone does not distinguish 1d10 from 2d10 — so this path emits
+/// both from level 1. The Core Rulebook path is deliberately left exactly as
+/// it is; `tests/sd27_unchained_monk_unarmed_strike_reaches_the_sheet.rs`'s
+/// `the_core_rulebook_monk_is_byte_identical` is the guard on that.
+fn ground_unchained_monk_unarmed_strike_damage(
+    level: u8,
+    race_id: &str,
+    explanations: &mut Vec<ComputationExplanation>,
+    diagnostics: &mut Vec<ComputationDiagnostic>,
+) {
+    let resolved = race_size_for_race_token(race_id).and_then(|size| {
+        monk_unarmed_strike_damage_die_for_size(level, size).map(|die| (size, die))
+    });
+    let Some((size, (die_face, die_count, die_name))) = resolved else {
+        push_deferred_class_features(
+            "class_feature.pu.unchained_monk.unarmed_strike_damage_die.unsupported",
+            format!(
+                "Unchained Monk level {level}: the unarmed strike damage die is a column of the \
+                 shared Core Rulebook `Monk ~ Unarmed Damage` record \
+                 (cr_abilities_class.lst:1280) chosen by the character's creature SIZE, and \
+                 race {race_id:?} resolves to no size this engine models. Only the Small and \
+                 Medium columns are transcribed -- the two every one of the 18 playable races \
+                 occupies -- so nothing is computed here rather than the Medium ladder being \
+                 substituted, which would be a specific, checkable, wrong die. This diagnostic \
+                 is NOT claim-blocking: every other Unchained Monk magnitude on this sheet is \
+                 size-independent and unaffected"
+            ),
+            explanations,
+            diagnostics,
+        );
+        return;
+    };
+    let size_label = size_label(size);
+
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.unarmed_strike_damage_die".to_owned(),
+        value: die_face,
+        detail: format!(
+            "Unchained Monk level {level} Unarmed Strike: {die_name} for a {size_label} monk, so \
+             the die-face-size facet is {die_face} (the d{die_face} in {die_name}); the count \
+             facet is grounded separately below. Pathfinder Unchained does NOT restate this \
+             progression -- `Unchained Monk ~ Unarmed Strike` (pu_abilities_class.lst:464) \
+             grants the shared Core Rulebook record `Monk ~ Unarmed Damage` \
+             (cr_abilities_class.lst:1280) and adds no damage token, and Pathfinder Unchained \
+             writes no MonkUnarmedDamage or UDAM token anywhere, so the band ladder \
+             min(5, level / 4) over 1d6/1d8/1d10/2d6/2d8/2d10 (Medium) is literally the Core \
+             Rulebook Monk's and is read from the same function. The size column matters: the \
+             shared record fans every band out per creature size, and a {size_label} monk reads \
+             the {size_label} column. No damage roll, damage total or attack-resolution engine \
+             is computed -- this is the die, not a result"
+        ),
+    });
+    explanations.push(ComputationExplanation {
+        id: "class_feature.pu.unchained_monk.unarmed_strike_damage_die_count".to_owned(),
+        value: die_count,
+        detail: format!(
+            "Unchained Monk level {level} Unarmed Strike damage die count: {die_count} for a \
+             {size_label} monk ({die_name}). Only this count facet is grounded here; the \
+             die-face-size facet is grounded separately above. Emitted at every level rather \
+             than only from the level the count first rises, because a face size with no count \
+             beside it does not distinguish 1d10 from 2d10 on the sheet"
+        ),
+    });
+}
+
 /// Grounds the Unchained Monk's named features
 /// (`rules_tables::pathfinder_unchained::monk_features`).
 ///
@@ -24955,13 +25096,20 @@ fn push_deferred_class_features(
 /// rather than recomputed, because Flurry of Blows keys off base attack
 /// bonus and not off level — the one Unchained Monk magnitude that would be
 /// wrong if it were derived from the class level directly.
+///
+/// `race_id` is read for one thing only: the creature size the unarmed strike
+/// damage die is a column of. See
+/// [`ground_unchained_monk_unarmed_strike_damage`].
 fn ground_unchained_monk_class_features(
     level: u8,
     total_base_attack_bonus: i16,
     ability_modifiers: &AbilityModifiers,
+    race_id: &str,
     explanations: &mut Vec<ComputationExplanation>,
     diagnostics: &mut Vec<ComputationDiagnostic>,
 ) {
+    ground_unchained_monk_unarmed_strike_damage(level, race_id, explanations, diagnostics);
+
     let ac_from_level = monk_features::armor_class_bonus_from_level(level);
     explanations.push(ComputationExplanation {
         id: "class_feature.pu.unchained_monk.armor_class_bonus_level_component".to_owned(),
@@ -25167,9 +25315,12 @@ fn ground_unchained_monk_class_features(
              the ki-stat choice has no picker, so Wisdom is used and said so; (3) APPLICATION -- \
              the AC Bonus is gated on being unarmored and unencumbered, and Fast Movement the \
              same, neither of which this engine can evaluate, so both are standalone magnitudes \
-             rather than contributions to a total; (4) unarmed strike damage is deliberately not \
-             restated here -- the corpus grants the SAME shared Core Rulebook record, which this \
-             engine already grounds, and a second copy would be a competing source of truth; (5) \
+             rather than contributions to a total; (4) unarmed strike damage IS grounded above, \
+             and is not restated as a second ladder: the corpus grants the SAME shared Core \
+             Rulebook record and Pathfinder Unchained overrides nothing about it, so the \
+             engine's existing progression is called rather than copied. What remains missing \
+             there is the other seven size columns of that record -- only Small and Medium are \
+             transcribed, which is every size a playable race occupies; (5) \
              Purity of Body (immunity to all diseases) and Tongue of the Sun and Moon (speak with \
              any living creature) state NO number anywhere -- not in a formula token and not in \
              their prose -- so nothing is computed for them and nothing is invented; the same is \
@@ -32431,6 +32582,68 @@ fn monk_unarmed_strike_damage_die(level: u8) -> (i16, i16, &'static str) {
         3 => (6, 2, "2d6"),
         4 => (8, 2, "2d8"),
         _ => (10, 2, "2d10"),
+    }
+}
+
+/// The **Small** monk's unarmed strike damage die, in the same
+/// `(die face size, die count, display name)` shape
+/// [`monk_unarmed_strike_damage_die`] returns for the Medium column.
+///
+/// Transcribed from the shared Core Rulebook record's own per-size band rows
+/// in `core_rulebook/cr_abilities_class.lst`, whose `UDAM:` tokens are the
+/// authority:
+///
+/// | band | record | line | `UDAM:` |
+/// |---|---|---:|---|
+/// | 0 (levels 1-3)   | `Monk Unarmed Damage LVL 1 (Small)`  | 1296 | `1d4` |
+/// | 1 (levels 4-7)   | `Monk Unarmed Damage LVL 4 (Small)`  | 1306 | `1d6` |
+/// | 2 (levels 8-11)  | `Monk Unarmed Damage LVL 8 (Small)`  | 1316 | `1d8` |
+/// | 3 (levels 12-15) | `Monk Unarmed Damage LVL 12 (Small)` | 1326 | `1d10` |
+/// | 4 (levels 16-19) | `Monk Unarmed Damage LVL 16 (Small)` | 1336 | `2d6` |
+/// | 5 (level 20)     | `Monk Unarmed Damage LVL 20 (Small)` | 1346 | `2d8` |
+///
+/// The band index is the same `min(5, level / 4)` the Medium column uses --
+/// it comes from `BONUS:VAR|MonkUnarmedDamageProgression` on the parent
+/// record, which is shared across all nine size columns -- so only the six
+/// values differ, never the ladder shape.
+///
+/// **This is not a second progression; it is the same progression read one
+/// column across.** It exists because
+/// `ground_unchained_monk_unarmed_strike_damage` can be reached by a Gnome,
+/// Halfling, Goblin, Kobold or Svirfneblin, where `explain_monk_level1_chassis`
+/// cannot be reached by anything but a Human.
+fn small_monk_unarmed_strike_damage_die(level: u8) -> (i16, i16, &'static str) {
+    match (i16::from(level) / 4).min(5) {
+        0 => (4, 1, "1d4"),
+        1 => (6, 1, "1d6"),
+        2 => (8, 1, "1d8"),
+        3 => (10, 1, "1d10"),
+        4 => (6, 2, "2d6"),
+        _ => (8, 2, "2d8"),
+    }
+}
+
+/// The unarmed strike damage die for one creature size, or `None` for a size
+/// this engine has not transcribed a column for.
+///
+/// `None` is the honest answer rather than a fallback, and the caller grounds
+/// an absence notice on it. Substituting the Medium column for an unmodelled
+/// size would be a plausible-looking wrong die, which is the failure mode this
+/// repo's history is a list of.
+///
+/// Only Small and Medium are transcribed because `race_resolver::RACE_SIZES`
+/// gives the 18 playable races exactly those two -- 13 Medium, 5 Small. A race
+/// arriving at another size reaches the absence notice, and
+/// `every_playable_race_reads_its_own_size_column` fails the moment the roster
+/// stops matching this claim.
+fn monk_unarmed_strike_damage_die_for_size(
+    level: u8,
+    size: SizeCategory,
+) -> Option<(i16, i16, &'static str)> {
+    match size {
+        SizeCategory::Medium => Some(monk_unarmed_strike_damage_die(level)),
+        SizeCategory::Small => Some(small_monk_unarmed_strike_damage_die(level)),
+        _ => None,
     }
 }
 
@@ -42940,6 +43153,14 @@ fn ground_arg_and_pu_feat_facts(
 /// than a rewrite of the shipped call sites: changing an id already asserted by
 /// tests and read by the desktop layer is a separate, larger change than this
 /// one is scoped for.
+///
+/// **Corrected 2026-08-01.** The `scavengers_eye` half of that paragraph was
+/// false when it was written: an apostrophe took the `else` arm, so
+/// `Scavenger's Eye` produced `scavenger_s_eye` and the sheet read
+/// "Scavenger S Eye". [`is_intraword_punctuation`] now swallows it, and
+/// `tests/sd27_apostrophes_do_not_split_id_slugs.rs` pins the corrected id
+/// against the live pipeline so the doc comment and the behaviour cannot
+/// disagree again.
 fn slugify_id_segment(name: &str) -> String {
     let mut out = String::with_capacity(name.len());
     let mut pending_separator = false;
@@ -42950,6 +43171,8 @@ fn slugify_id_segment(name: &str) -> String {
             }
             pending_separator = false;
             out.push(character.to_ascii_lowercase());
+        } else if is_intraword_punctuation(character) {
+            // Swallowed, not separated. See `is_intraword_punctuation`.
         } else {
             pending_separator = true;
         }

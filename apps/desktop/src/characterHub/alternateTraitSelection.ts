@@ -82,6 +82,32 @@ export interface AlternateTraitRow {
    * must always be able to undo a choice.
    */
   disabledReason: string | null;
+  /**
+   * **The prose to show, with its numbers in it.**
+   *
+   * Rendered by `race_trait_picker::render_trait_description` from the corpus
+   * row's own `DESC:` tokens — never the stored `data.description`, whose
+   * magnitudes were collapsed (and, for `Halfling ~ Adaptable Luck`, lost) at
+   * ingest time.
+   *
+   * Taken from the live resolution when one has arrived, because that is the
+   * rendering produced for whoever the resolve call named; the menu's own
+   * rendering (the same renderer, called with no feats) until then. Never
+   * blank: a row with a name and no sentence is what this screen showed
+   * before, and it told a player nothing about what they were choosing.
+   */
+  description: string;
+  /**
+   * True when the feats passed to the resolve call changed this sentence from
+   * its racial base. The engine's claim, derived by rendering the record twice
+   * and comparing — never inferred here from a feat list.
+   */
+  movedByFeats: boolean;
+  /**
+   * `DESC:` arguments the engine could not resolve to a literal and therefore
+   * dropped, so a partially-resolved sentence is visibly partial.
+   */
+  droppedArgs: string[];
 }
 
 /**
@@ -103,12 +129,24 @@ export function buildAlternateTraitRows(
       blocked.set(entry.key, `Locked out by ${entry.blockedByName} — both replace the same standard trait (${entry.flag}).`);
     }
   }
+  // The resolution renders every trait record the race declares — selected or
+  // not — precisely so an alternate the player has not ticked yet still shows
+  // the number *they* would get.
+  const rendered = new Map(
+    (resolution?.renderedTraitDescriptions ?? []).map((row) => [row.key, row] as const),
+  );
   const chosen = new Set(selected);
-  return alternatesForRaceId(menu, raceId).map((alternate) => ({
-    alternate,
-    selected: chosen.has(alternate.key),
-    disabledReason: chosen.has(alternate.key) ? null : (blocked.get(alternate.key) ?? null),
-  }));
+  return alternatesForRaceId(menu, raceId).map((alternate) => {
+    const row = rendered.get(alternate.key);
+    return {
+      alternate,
+      selected: chosen.has(alternate.key),
+      disabledReason: chosen.has(alternate.key) ? null : (blocked.get(alternate.key) ?? null),
+      description: row?.text ?? alternate.description,
+      movedByFeats: row?.movedByFeats ?? false,
+      droppedArgs: row?.droppedArgs ?? [],
+    };
+  });
 }
 
 /**
