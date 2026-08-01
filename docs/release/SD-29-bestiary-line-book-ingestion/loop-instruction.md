@@ -48,6 +48,28 @@ each book.
    `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`. Record the
    output in the cycle receipt. See `decisions.md` Decision 9.
 1. **Read** the doctrine-of-record (`scope-draft.md`, `decisions.md`, current `progress.md`).
+1b. **Re-derive.** Before accepting any figure carried in a brief, a doc, or a
+   prior cycle's `progress.md` entry — including this package's own
+   `scope-draft.md` and `decisions.md` — re-derive it yourself with a
+   one-line `grep`/`awk`/`python3` command over the actual source data (the
+   PCGen `.lst` tree under `~/workspace/repos/pcgen/data/` for anything not
+   yet ingested, `data/corpus/<book>/` for anything that is), and record the
+   exact command in the cycle receipt. Do not transcribe a count from a doc,
+   a summary tool, or memory of a prior cycle. Worked example, this bundle's
+   own data: `awk '!/^#/ && !/^SOURCELONG/ && NF>0' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst | wc -l`
+   → **322** (re-derived 2026-08-01), the number to cite for "Bestiary 2
+   monster/race count," not a remembered or copied-forward estimate. This is
+   the tranche/7 retrospective's rank-1 finding, re-run against the current
+   log rather than transcribed: ad-hoc commands over source data caught
+   **47%** of that tranche's logged corrections (54 of 116 events currently
+   in `docs/retro/events/*.jsonl`; the retrospective's own published
+   snapshot was 46% of 115 — the log grew by one correction after
+   publication, which is itself the lesson) and were the single strongest
+   detector by a wide margin — more than `./scripts/verify.sh` (8%, Cycle
+   mechanics step 4 below), on-screen driving (14%, Definition of done item
+   8 below), and every repo test combined. See
+   `docs/retro/tranche-7-retrospective.md` §3 and §0 for the reproduction
+   command.
 2. **Claim** the highest-priority ready card on `codex-tranche-6-1`.
 3. **Do** the bounded work (TDD per the repo's `AGENTS.md`: failing test → smallest change → green → refactor). **The player surface is part of the bounded work, not a follow-on** — see `decisions.md` Decision 10.
 4. **Verify** with `./scripts/verify.sh` (full, not `--quick`), exit code captured
@@ -111,6 +133,23 @@ All of the following, each checkable by someone who was not present:
    the defect, not shipping content.**
 7. Baseline movements in `scripts/verify-baselines.env`, if any, are a separate
    reviewable commit carrying `--show-actuals` output.
+8. **On-screen verification for any record family whose reach claim is
+   player-visible.** `reach_gate.rs` passing proves a code path exists; it
+   does not prove a player sees the value, and three separate compute twins
+   have each independently passed that gate while showing nothing on the
+   sheet (`decisions.md §29`'s inherited traps). Drive the running desktop
+   app via `apps/desktop/.claude/skills/run-desktop/driver.sh` (launch,
+   navigate to the record, `screenshot`) and confirm the value on the
+   captured image for a sample of this cycle's newly-surfaced families —
+   not by reading the gate's exit code. **Set `RUN_DESKTOP_AGENT` to a value
+   unique to this cycle before the first `driver.sh` call** — see
+   `apps/desktop/.claude/skills/run-desktop/SKILL.md` §"Concurrent agents";
+   its unset default collides with any sibling dispatch that also left it
+   unset. This is the tranche/7 retrospective's rank-3 finding: on-screen
+   driving was the *sole* mechanism that caught 14% of that tranche's
+   corrections, and it is the only mechanism that reaches the "wired into a
+   twin the sheet doesn't read" class of defect — a passing test cannot, by
+   construction (`docs/retro/tranche-7-retrospective.md` §3, §6.1 rule A7).
 
 ## Epic ordering
 
