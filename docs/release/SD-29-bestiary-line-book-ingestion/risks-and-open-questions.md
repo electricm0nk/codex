@@ -5,7 +5,7 @@
 | ID | Risk | Consequence | Mitigation |
 |----|------|-------------|------------|
 | R-29-001 | Bestiary 5 cycle shape differs from Bestiary 2-4 (player-options vs monster-block) | Per-book cycle shape variability, dispatch timing differences | Cycle-0 trap-report + work-inventory output gates Epic 6; per-cycle receipt records shape-finding |
-| R-29-002 | Bestiary 1 monster-surface prerequisite blocks Epic 7 | DM Toolkit extension records gap; cycles pause on `decision-blocked` | `forward-scope-register.md C3.1` records the toolkit extension as operator-on-request retrofit; cycles land even if Epic 7 surfaces |
+| R-29-002 | Bestiary 1 monster-surface prerequisite blocks Epic 7 | DM Toolkit extension records gap; cycles pause on `decision-blocked` | `successor-forward-scope-register.md C3.1` records the toolkit extension as operator-on-request retrofit; cycles land even if Epic 7 surfaces |
 | R-29-003 | Cross-bundle monster reprint (e.g., a famous monster in B2 reappearing in B5 with wording changes) | Cycle records the conflict; trap-report re-runs | `decisions.md §16` cross-book conflict rule applies; newer book is doctrine, older is errata |
 | R-29-004 | Build version `0.9.<build>` counter reads stale at closure | Wrong version published | Supervisor reads the current counter at cycle close, not at cycle open; closure Epic 8 reads the post-cycle value |
 | R-29-005 | Identifier-discipline audit fails on a cycle PR | Cycle blocked; PR cannot merge | Identifier audit runs in pre-cycle pre-flight (Epic 1 fires FIRST); failed audits gate the cycle |
@@ -19,7 +19,7 @@
 **Question:** Does the DM Toolkit extension (consume Bestiary 2-5) land in
 SD-29's Epic 7, or surface as a separate bundle?
 
-**Recommendation:** Retrofit per `forward-scope-register.md C3.1` unless
+**Recommendation:** Retrofit per `successor-forward-scope-register.md C3.1` unless
 operator overrides. SD-29's epic structure does not force the surface
 build; cycles pause on `decision-blocked` if widening is absent at
 Epic 7's closure.

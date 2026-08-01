@@ -1,4 +1,15 @@
-# Forward-Scope Register — SD-29
+# Successor Forward-Scope Register — SD-29
+
+> **Renamed at package consolidation (2026-08-01).** This file originated in the
+> `SD-29-bestiary-2-3-4-5-content-ingestion` package under the name
+> `forward-scope-register.md`. During consolidation into this directory it collided
+> with a differently-scoped, differently-authored file of the same name that
+> originated in this package (`./forward-scope-register.md`, authored by the
+> `tranche/7-1` debt cycle) — that file routes work **into** SD-29 from the
+> predecessor's retro log and is the operator sign-off gate; this file instead
+> tracks work **downstream of** SD-29 (successor/retrofit dependencies). Both are
+> real and neither supersedes the other; this one was renamed, not deleted, so
+> both survive under distinct names. See `README.md` for the reconciliation note.
 
 This register captures work downstream of SD-29. SD-29's successor bundle
 (SD-30) is recorded as **Class 1** (named successor). Bundles that depend

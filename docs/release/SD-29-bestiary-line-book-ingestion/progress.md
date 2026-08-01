@@ -85,7 +85,7 @@ that the harness made on its behalf.
 
 Epic 7 (DM Toolkit extension, consumer of Bestiary 2-5 records) is the most
 likely place where the cycle will want an operator decision. The unattended-mode
-protocol routes Epic 7's resolution through `forward-scope-register.md C3.1`
+protocol routes Epic 7's resolution through `successor-forward-scope-register.md C3.1`
 retrofit — record `decision-blocked` in this file with the recorded reason and
 proceed on the safe default (retrofit; Epic 7 lands inside SD-29's epic
 structure only if Epic 3-6 per-book cycles complete with reach-gate claims and

@@ -73,6 +73,19 @@ against a directory listing of the corpus:
   Bestiary 5 would produce zero cycles.
 - **Bestiary 6 is the same shape** as Bestiary 5 in this corpus.
 
+**CORRECTED at package consolidation (2026-08-01) — old value → new value:**
+this section's own "broadly in the expected band" language for Bestiary 2/3/4
+was never given exact numbers here; the sibling package
+(`forward-scope-register.md §1.3`, consolidated into this directory) supplies
+the verified base `races.lst` row counts, re-derived against the PCGen
+checkout on 2026-08-01: bestiary_2 **322**, bestiary_3 **261**, bestiary_4
+**220** (803 combined — note 322 and 220 actually fall just outside the
+original "~250-300" band, at the high and low ends respectively), bestiary_5
+**0** (confirmed, matching this section's own finding above). The register
+also confirms `bestiary_6` and a seventh book, `monster_codex`, are outside
+this package's four-book scope — see that register and the merged `README.md`
+for the scope discrepancy between the two source packages.
+
 **This is flagged, not resolved.** The recorded book list and the recorded
 ingest subtype are operator-pinned decisions; whether Bestiary 5 stays in scope
 under a *different* ingest subtype (races/companions rather than monster

@@ -169,4 +169,4 @@ No Hermes-board interaction is required.
 - [ ] AT-29-011 move-not-copy publish landed.
 - [ ] AT-29-012 local-file dispatch verified by Epic 2's pre-flight + Epic 8's closure.
 - [ ] `release-notes.md` populated.
-- [ ] `forward-scope-register.md` reviewed for successor work.
+- [ ] `successor-forward-scope-register.md` reviewed for successor work.

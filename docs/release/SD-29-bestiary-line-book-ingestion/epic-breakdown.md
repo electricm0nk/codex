@@ -144,7 +144,7 @@ Acceptance:
 
 **Objective:** Extend `src/rules_core/encounters.rs` + `src/rules_core/party_cr.rs` to consume Bestiary 2-5's monster records.
 
-**Derived from:** `scope-draft.md §"Out of cycle ingestion and surfacing"` + `forward-scope-register.md C1.2` + `decisions.md §19` (reach-gate-doD).
+**Derived from:** `scope-draft.md §"Out of cycle ingestion and surfacing"` + `successor-forward-scope-register.md C1.2` + `decisions.md §19` (reach-gate-doD).
 
 **Status:** Operator-pinned whether in scope per-cycle at Epic 5/6 closure. If Epic 7 lands inside SD-29, it satisfies the reach gate's `OPEN_FINDINGS` Bestiary-1-monster-surface prerequisite. If deferred to a separate bundle, cycles pause on `decision-blocked` until the surface is built.
 

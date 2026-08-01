@@ -14,7 +14,7 @@
 > 1. **Default-and-flag, not ask.** When the cycle needs a decision, pick the safer default, capture it in the cycle's `progress.md` receipt, and continue. The operator reviews the receipts after return.
 > 2. **No `clarify` tool calls.** Cycles must not invoke the operator clarification tool under any circumstance; this is a hard ban during unattended mode.
 > 3. **Blockers are recorded, not raised.** If a cycle hits a true hard-block (auth failed, branch can't be created, identity conflict on disk), record the blocker in `progress.md` with the command and exit code, then attempt the next ready card per `kanban.md`. Do not halt the bundle.
-> 4. **`decision-blocked` IS allowed.** Where the playbook calls for an operator decision (Epic 7 DM Toolkit extension in-scope-vs-separate), record `decision-blocked` in `progress.md` with the recorded reason and proceed on the safe default per `forward-scope-register.md C3.1` retrofit. Do not wait.
+> 4. **`decision-blocked` IS allowed.** Where the playbook calls for an operator decision (Epic 7 DM Toolkit extension in-scope-vs-separate), record `decision-blocked` in `progress.md` with the recorded reason and proceed on the safe default per `successor-forward-scope-register.md C3.1` retrofit. Do not wait.
 > 5. **Closure is a goal, not a stop signal.** The bundle runs to closure per `/loop` cadence. The operator's review happens after return; cycles do not pause for operator review.
 > 6. **Operator's verbatim:** "include instructions to all 3 that indicate they will be running in unnattended mode since i will be out of town while this runs. They may not stop to ask questions - it might be days before i notice."
 
@@ -85,7 +85,7 @@ All of the following, each checkable by someone who was not present:
 - **Epic 1 (Identifier Cleanup)** fires FIRST. No other epic may start until Epic 1 is closed.
 - **Epic 2 (Operator Pre-Launch)** is the pre-launch gate. Pre-launch checklist verifies before any other epic starts.
 - **Epics 3-6 (per-bestiary content-source ingest: B2, B3, B4, B5)** may run in any order, but each book is a single cycle-batch.
-- **Epic 7 (DM Toolkit extension to consume Bestiary 2-5)** is optional-but-proposed. Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles need the consumer surface to satisfy reach) or surfaces as a Class 1 retrofit in `forward-scope-register.md`. Operator-pinned per-cycle at Epic 5/6 closure.
+- **Epic 7 (DM Toolkit extension to consume Bestiary 2-5)** is optional-but-proposed. Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles need the consumer surface to satisfy reach) or surfaces as a Class 1 retrofit in `successor-forward-scope-register.md`. Operator-pinned per-cycle at Epic 5/6 closure.
 - **Epic 8 (Closure Epilogue)** fires LAST. Tranche promotion PR fires only after all other epics are closed.
 - **Epic 9 (Build Version Numbering)** fires after Epic 1, before Epic 8. First concrete value `0.9.<build>` per the 2026-08-01 amendment.
 

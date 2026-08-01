@@ -22,6 +22,16 @@
   and the shortfall is concentrated in one book rather than spread across four.
   See `scope-draft.md` §"Shape finding that affects this bundle's cycle plan".
   **The book list itself remains an operator decision and is not changed here.**
+  **CORRECTED at package consolidation (2026-08-01) — old value → new value:**
+  "~250-300 monsters each; ~1,000-1,200 total" → verified base `races.lst` row
+  counts, re-derived against the PCGen checkout and documented in
+  `forward-scope-register.md §1.3`: bestiary_2 **322**, bestiary_3 **261**,
+  bestiary_4 **220** (the three books actually in scope here as
+  per-monster-block cycles — 803 combined), bestiary_5 **0** (confirmed
+  player-options only, no base `races.lst`). This package's own withdrawal note
+  above correctly flagged the estimate as wrong but did not carry the
+  replacement figure; `forward-scope-register.md` (the sibling package,
+  consolidated into this directory) supplies it.
 
 ## Decision 2 — Branch and board
 
@@ -179,7 +189,8 @@ coverage matrix read 1 wired feature where the code had 6; shipped deferral
 strings still claim engines do not exist that do. This package's own
 "~250-300 monsters each; total ~1,000-1,200" estimate is a worked example: it
 is wrong, and it was wrong in a way that would have produced an epic with zero
-cycles in it.
+cycles in it. **See Decision 1's consolidation-time correction above for the
+verified replacement figures** (322 / 261 / 220 / 0 across bestiary_2-5).
 
 **Authority:** `src/bin/v06_work_inventory.rs`, `docs/work-inventory.json`,
 `docs/governance/book-ingestion-playbook.md` §6.
@@ -262,7 +273,7 @@ Reprint cross-bundle overlaps in Pathfinder bestiaries are common: a famous mons
 
 **Status:** Operator-pinned, **confirmed 2026-08-01** with cycle-0 trap-report + work-inventory gating.
 
-**Decision:** SD-29 carries Bestiary 5 as one of its four books per scope-draft.md, but Bestiary 5's ingest type is **player-options** (race, feat, companion-mod records) rather than **monster blocks**. Epic 5 (Bestiary 5 ingest cycle) is gated on cycle-0 inventory + trap-report output. If the inventory surfaces zero `monster` units (consistent with the 2026-07-30 shape finding), Epic 5's cycle runs the per-race / per-feat / per-companion-mod cycles instead. Bestiary 6 + Bonus Bestiary are recorded in `forward-scope-register.md C2.x` as drop-in replacements if operator prefers them over Bestiary 5.
+**Decision:** SD-29 carries Bestiary 5 as one of its four books per scope-draft.md, but Bestiary 5's ingest type is **player-options** (race, feat, companion-mod records) rather than **monster blocks**. Epic 5 (Bestiary 5 ingest cycle) is gated on cycle-0 inventory + trap-report output. If the inventory surfaces zero `monster` units (consistent with the 2026-07-30 shape finding), Epic 5's cycle runs the per-race / per-feat / per-companion-mod cycles instead. Bestiary 6 + Bonus Bestiary are recorded in `successor-forward-scope-register.md C2.x` as drop-in replacements if operator prefers them over Bestiary 5.
 
 This is an in-bundle resolution, not an out-of-bundle deferral — the work is in scope, the cycle shape adapts to what the corpus actually contains.
 
@@ -280,7 +291,7 @@ This is an in-bundle resolution, not an out-of-bundle deferral — the work is i
 
 **What this changes.** §12's blanket "no engines" rule was too coarse. §19 narrows it to real-time engines. Reach remains the gate; pre-computed values are preferred.
 
-**Bestiary 1 surface gap.** Bestiary 1's 41 ingested monsters reach no surface today (per `reach_gate.rs OPEN_FINDINGS`). SD-29's monster-surface prerequisite is the Epic 7 DM Toolkit extension (operator-pinned at Epic 5/6 closure) or a Class 1 retrofit per `forward-scope-register.md C3.x`. Cycles pause on `decision-blocked` if the surface is absent.
+**Bestiary 1 surface gap.** Bestiary 1's 41 ingested monsters reach no surface today (per `reach_gate.rs OPEN_FINDINGS`). SD-29's monster-surface prerequisite is the Epic 7 DM Toolkit extension (operator-pinned at Epic 5/6 closure) or a Class 1 retrofit per `successor-forward-scope-register.md C3.x`. Cycles pause on `decision-blocked` if the surface is absent.
 
 **Authority:** operator verbatim 2026-08-01: "reach gate is the definition of done, if an engine is required to get there, then we generate the engine — that said, often an engine isn't strictly necessary."
 
@@ -294,7 +305,7 @@ This is an in-bundle resolution, not an out-of-bundle deferral — the work is i
 
 - `./scope-draft.md` — committed scope shape, four bestiaries + Cycle-0 trap-report gating.
 - `./loop-instruction.md` — per-cycle procedure; updated for `tranche/9`, no-Hermes-board, local-file dispatch.
-- `./forward-scope-register.md` — successor work depending on SD-29's output.
+- `./successor-forward-scope-register.md` — successor work depending on SD-29's output.
 - `./kanban.md` — local-file work queue (replaces Hermes board).
 - `./epic-breakdown.md` — 9-epic structure, Closure Epilogue fires LAST.
 - `~/workspace/programs/codex/requirements/SD-22-.../decisions.md` — predecessor doctrine for the per-book ingest pipeline.
@@ -315,7 +326,7 @@ an encounter is not.
 1. **Default-and-flag, not ask.** When a cycle needs a decision, pick the safer default, capture it in `progress.md`, and continue.
 2. **No `clarify` tool calls.** The operator clarification tool is hard-banned under unattended mode.
 3. **Blockers are recorded, not raised.** Hard-blocks (auth failure, branch creation conflict, identity conflict on disk) go in `progress.md` with the command and exit code. The bundle does not halt; the supervisor picks up the next ready card.
-4. **`decision-blocked` IS allowed.** Operator-decision points (Epic 7 DM Toolkit extension in-scope-vs-separate, Epic 5/6 closure operator-on-call) record `decision-blocked` in `progress.md` and proceed on the safe default per `forward-scope-register.md C3.1` retrofit.
+4. **`decision-blocked` IS allowed.** Operator-decision points (Epic 7 DM Toolkit extension in-scope-vs-separate, Epic 5/6 closure operator-on-call) record `decision-blocked` in `progress.md` and proceed on the safe default per `successor-forward-scope-register.md C3.1` retrofit.
 5. **Closure is a goal, not a stop signal.** The bundle runs to closure per `/loop` cadence.
 
 **Operator's verbatim:** "include instructions to all 3 that indicate they will be running in unnattended mode since i will be out of town while this runs. They may not stop to ask questions - it might be days before i notice."
