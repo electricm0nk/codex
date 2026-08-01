@@ -44,7 +44,7 @@
 //!    the 7 hardcoded CRB races.
 //!  - **What that size multiplies capacity by**: `SIZEMULT:<code>|<value>`
 //!    in the PCGen Pathfinder game mode's
-//!    `/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
+//!    `$HOME/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
 //!    -- the same file `encumbrance.rs`'s `LOAD:` table comes from.
 //!    Transcribed in `SizeCategory::load_capacity_ratio` below.
 //!  - **What that size modifies on the sheet**: PF1 Core Rulebook Table 8-1,
@@ -89,7 +89,7 @@ impl SizeCategory {
     /// `(numerator, denominator)` rational.
     ///
     /// Transcribed verbatim from
-    /// `/home/ubuntu/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
+    /// `$HOME/workspace/repos/pcgen/system/gameModes/Pathfinder/load.lst`
     /// lines 1-8:
     ///
     /// ```text

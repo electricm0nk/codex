@@ -23,6 +23,20 @@ use codex::pcgen_import::lst_parser::{
     EquipmentDiagnosticKind, EquipmentRecordKind, parse_equipment_entries, parse_equipment_file,
 };
 
+/// The PCGen corpus root this test reads. `PCGEN_CORPUS_ROOT` wins when set;
+/// otherwise `$HOME/workspace/repos/pcgen/data` — HOME-relative because the
+/// operator keeps `workspace/` in the home directory and syncs it between
+/// machines, so the default is correct on any box. Rust does not expand `~`,
+/// so `$HOME` is read via `std::env::var`. `None` when `HOME` itself is
+/// unset, which leaves the caller's existing skip path intact.
+fn corpus_root() -> Option<std::path::PathBuf> {
+    if let Some(configured) = std::env::var_os("PCGEN_CORPUS_ROOT") {
+        return Some(std::path::PathBuf::from(configured));
+    }
+    let home = std::env::var_os("HOME").filter(|home| !home.is_empty())?;
+    Some(std::path::PathBuf::from(home).join("workspace/repos/pcgen/data"))
+}
+
 #[test]
 fn recognizes_every_equipment_kind_declared_in_the_slice() {
     assert_eq!(
@@ -483,10 +497,11 @@ fn real_corpus_cr_equip_arms_armor_parses_with_line_numbers_preserved() {
     // The core_rulebook cr_equip_arms_armor.lst is the canonical
     // Pathfinder equipment corpus file. The parser must round-trip line
     // numbers and produce records for both Ammunition and Armor blocks.
-    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let path = std::path::PathBuf::from(corpus_root)
-        .join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst");
+    let Some(corpus_root) = corpus_root() else {
+        eprintln!("skipping: no PCGEN_CORPUS_ROOT and no $HOME to derive one for cr_equip_arms_armor.lst");
+        return;
+    };
+    let path = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst");
     if !path.is_file() {
         eprintln!(
             "skipping: real cr_equip_arms_armor.lst not at {}",
@@ -519,10 +534,11 @@ fn real_corpus_cr_equip_arms_armor_parses_with_line_numbers_preserved() {
 
 #[test]
 fn real_corpus_cr_equipmods_parses_with_kind_inferred_from_path() {
-    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let path = std::path::PathBuf::from(corpus_root)
-        .join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst");
+    let Some(corpus_root) = corpus_root() else {
+        eprintln!("skipping: no PCGEN_CORPUS_ROOT and no $HOME to derive one for cr_equipmods.lst");
+        return;
+    };
+    let path = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst");
     if !path.is_file() {
         eprintln!("skipping: real cr_equipmods.lst not at {}", path.display());
         return;
@@ -626,10 +642,11 @@ fn real_corpus_distinct_wands_resolve_independently_not_shadowed_by_base_templat
     // in the real corpus used to collapse into one merged "Wand" record,
     // so only the alphabetically/positionally-first wand's KEY: token
     // survived and every other wand became unresolvable.
-    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let path = std::path::PathBuf::from(corpus_root)
-        .join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst");
+    let Some(corpus_root) = corpus_root() else {
+        eprintln!("skipping: no PCGEN_CORPUS_ROOT and no $HOME to derive one for cr_equip_magic_items.lst");
+        return;
+    };
+    let path = corpus_root.join("pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst");
     if !path.is_file() {
         eprintln!("skipping: real cr_equip_magic_items.lst not at {}", path.display());
         return;

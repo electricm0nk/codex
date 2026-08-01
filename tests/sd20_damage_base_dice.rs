@@ -7,7 +7,7 @@
 //! `core_rulebook/cr_equip_arms_armor.lst` (`KEY:Longsword (Base)`
 //! carries `DAMAGE:1d8`; `KEY:Dagger (Base)` carries `DAMAGE:1d4`; both
 //! confirmed directly against the live corpus at
-//! `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst`
+//! `$HOME/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst`
 //! lines 165 and 142 respectively) plus a `KEY:Leather Armor (Base)`
 //! control record that carries no `DAMAGE:` token at all — the same
 //! parser (`parse_equipment_entries`) and IR converter

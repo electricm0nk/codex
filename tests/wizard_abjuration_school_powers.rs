@@ -2,7 +2,7 @@
 //!
 //! Grounds the three magnitude-bearing Abjuration School power records from
 //! `cr_abilities_class.lst` (independently verified this session against
-//! `/home/ubuntu/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst`,
+//! `$HOME/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_class.lst`,
 //! `KEY:Abjuration School ~ *`):
 //!
 //! - Resistance (`KEY:Abjuration School ~ Resistance`): `BONUS:VAR|

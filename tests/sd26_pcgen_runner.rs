@@ -34,10 +34,17 @@ fn repo_root() -> PathBuf {
 /// Same substitute the SD-25 `pcgen_runner_smoke.rs` end-to-end test uses,
 /// since no real `.pcg` exists anywhere in either repo yet for the SD-25/26
 /// pilot case (`pf1-crb-human-fighter-level1`).
+/// `PCGEN_REPO_DIR` wins when set; otherwise `$HOME/workspace/repos/pcgen`
+/// — HOME-relative because the operator keeps `workspace/` in the home
+/// directory and syncs it between machines, so the default is correct on any
+/// box. Rust does not expand `~`, so `$HOME` is read via `std::env::var`.
 fn pcgen_repo_dir() -> PathBuf {
-    std::env::var("PCGEN_REPO_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|_| PathBuf::from("/home/ubuntu/workspace/repos/pcgen"))
+    if let Ok(configured) = std::env::var("PCGEN_REPO_DIR") {
+        return PathBuf::from(configured);
+    }
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen repo checkout");
+    PathBuf::from(home).join("workspace/repos/pcgen")
 }
 
 fn substitute_pcg_fixture() -> PathBuf {

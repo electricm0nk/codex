@@ -11,7 +11,7 @@
 //! appendix): 1 platinum piece (pp) = 10 gold pieces (gp) = 100 silver
 //! pieces (sp) = 1000 copper pieces (cp) -- standard open-content d20/PF1
 //! currency. v0.6 alpha swarm item 3 re-verified this against the local
-//! PCGen checkout (`/home/ubuntu/workspace/repos/pcgen`) directly: no
+//! PCGen checkout (`$HOME/workspace/repos/pcgen`) directly: no
 //! `.lst` data file defines a currency-denomination table (only
 //! `system/gameModes/Pathfinder/miscinfo.lst`'s `CURRENCYUNITABBREV:gp`,
 //! naming the display unit, not a ratio), no `.java` source file under the

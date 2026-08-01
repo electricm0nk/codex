@@ -35,9 +35,14 @@ use serde::Deserialize;
 
 use crate::oracle_validation::comparator::{NormalizedDimensionValue, NormalizedOutput};
 
-/// Default PCGen repo checkout location, mirroring
+/// Default PCGen repo checkout location relative to `$HOME`, mirroring
 /// `scripts/pcgen-run-character.sh`'s own `DEFAULT_PCGEN_DIR`.
-const DEFAULT_PCGEN_REPO_DIR: &str = "/home/ubuntu/workspace/repos/pcgen";
+///
+/// Kept HOME-relative on purpose: the operator keeps `workspace/` in the
+/// home directory and syncs it across machines, so `$HOME/workspace/...`
+/// is correct on every box while an absolute `/home/<someone>/...` is
+/// correct on exactly one.
+const DEFAULT_PCGEN_REPO_DIR_REL: &str = "workspace/repos/pcgen";
 const RUNNER_SCRIPT_REL: &str = "scripts/pcgen-run-character.sh";
 const NORMALIZER_SCRIPT_REL: &str = "scripts/pcgen-normalize-output.py";
 
@@ -56,11 +61,15 @@ fn codex_repo_root() -> PathBuf {
 /// Resolves the PCGen repo checkout this wrapper invokes against.
 /// `PCGEN_REPO_DIR` wins when set (matching
 /// `scripts/pcgen-run-character.sh`'s own `-w`/`$PCGEN_REPO_DIR` contract);
-/// otherwise the same hardcoded default that script uses.
+/// otherwise `$HOME/workspace/repos/pcgen`, the same HOME-relative default
+/// that script falls back to.
 fn default_pcgen_repo_dir() -> PathBuf {
-    std::env::var("PCGEN_REPO_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|_| PathBuf::from(DEFAULT_PCGEN_REPO_DIR))
+    if let Ok(configured) = std::env::var("PCGEN_REPO_DIR") {
+        return PathBuf::from(configured);
+    }
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen repo checkout");
+    PathBuf::from(home).join(DEFAULT_PCGEN_REPO_DIR_REL)
 }
 
 /// Resolves the absolute path to `scripts/pcgen-run-character.sh` in this

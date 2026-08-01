@@ -394,7 +394,7 @@ fn apg_and_acg_catalogs_match_the_live_corpus() {
     let Some(root) = corpus_root() else {
         eprintln!(
             "CORPUS_ROOT not set or not a directory; skipping (set \
-             CORPUS_ROOT=/home/ubuntu/workspace/repos/pcgen/data to enable)"
+             CORPUS_ROOT=$HOME/workspace/repos/pcgen/data to enable)"
         );
         return;
     };

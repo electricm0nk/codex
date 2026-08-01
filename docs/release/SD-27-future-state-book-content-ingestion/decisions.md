@@ -667,3 +667,104 @@ recurred often enough this tranche (85 `correction` events in `docs/retro/events
 tranche's most reproducible finding, and the countermeasure that worked was mechanical: **every brief
 instructed agents to derive counts by command rather than trust the brief, and the briefs were wrong
 repeatedly.**
+
+## 30. Two path conventions, operator-ruled (2026-08-01)
+
+Both rulings arrived after a full tranche was spent treating their absence as an environmental fact.
+They are recorded here in the operator's own words because the paraphrase is what failed: every prior
+agent understood "the fixtures aren't on this box" and none understood "the default names another
+machine's home directory."
+
+### 30.1 — `$HOME`-relative, never a hardcoded user path
+
+> "If you use ~/workspace you will always be right, no matter which machine you are working from. I'm
+> putting workspace in the home directory and keeping it synced with syncthing."
+
+**The convention.** Any default that points at the operator's workspace resolves `$HOME` at runtime.
+In shell that is `"${HOME}/workspace/..."`; in Rust it is `std::env::var("HOME")` joined with the
+relative remainder — never a `~`-prefixed string literal, because Rust does not expand `~` and such a
+literal is a relative directory named `~` that silently does not exist. Environment overrides
+(`PCGEN_REPO_DIR`, `PCGEN_CORPUS_ROOT`, `CORPUS_ROOT`, `CODEX_REPO_ROOT`) still win; only the fallback
+changed.
+
+**Why it is a convention and not a preference.** `workspace/` is Syncthing-synced across the
+operator's machines, so the *same relative path under `$HOME`* is correct on every one of them. An
+absolute `/home/<someone>/workspace/...` is correct on exactly one machine and quietly wrong on all
+the others — and "quietly" is the whole problem, because the failure it produces reads as a missing
+environment rather than as a bad literal.
+
+**Enforced, not just documented:** `tests/no_foreign_home_paths.rs` fails the build if a foreign
+absolute home path reappears anywhere under `tests/`, `src/` or `scripts/`, and separately if any Rust
+string literal starts a path with `~`. It carries a third test that proves the walk actually reads
+files, so a broken scan cannot make the guard pass forever while checking nothing.
+
+### 30.2 — Build artifacts live in the build's own artifact folder
+
+> "This is why we always include artifacts needed for the build in the artifact folder for the build
+> instead of referring to an external source."
+
+**The convention.** If a build or a test needs a file, that file is vendored into the build's own
+artifact folder and committed. It is not read from a sibling checkout, a home-directory scratch tree,
+or any other path outside the repository. The two GE-05 pilot `.pcg` saves now live at
+`docs/release/GE-05-oracle-validation-and-parity-harness/artifacts/`, pinned by sha256 in
+`tests/ge05_vendored_pcg_fixtures.rs` so a silent substitution fails loudly. The pre-existing
+`data/corpus/{advanced_race_guide,pathfinder_unchained}/_parity/*.pcg` fixtures are the precedent this
+follows.
+
+**Why a sha pin and not just a copy.** A vendored fixture that nothing verifies is a copy that can
+drift. The pin was negative-tested rather than asserted: appending a single byte to each fixture makes
+all three guards fire with a naming message, and the digests were re-verified after restoring.
+
+### 30.3 — What the two missing conventions actually cost this bundle
+
+Not a build inconvenience. **SD-27's own per-book parity gates never ran, once, during the entire
+tranche.** `tests/sd27_advanced_race_guide_parity.rs` and
+`tests/sd27_pathfinder_unchained_parity.rs` are the E3.x cycle's proof that this bundle's two books
+produce the same character sheet as a real PCGen engine run. Across eight recorded verification
+sweeps, both reported `0 passed; 1 failed` every time. The parity claim for Advanced Race Guide and
+for Pathfinder Unchained was therefore **unverified for the whole bundle** — and not because the data
+was missing, the corpus was incomplete, or PCGen was unavailable. All three were present and correct.
+One `const` in `src/oracle_validation/pcgen_runner.rs` named another machine's home directory, and
+`PcgenRunOptions::new` routes both suites through it.
+
+The cost compounds in a specific way worth naming: because the failure looked environmental, each
+sweep dutifully re-recorded it as environmental in `scripts/verify-baselines.env` and moved on. The
+misdiagnosis was not one agent's mistake — it was carried forward, with citations, eight times. The
+countermeasure that worked was the one this bundle already applies to content: **derive it by command,
+and treat a brief's framing as a claim to be tested rather than a fact to be inherited.**
+
+### 30.4 — What the two parity suites, now that they run, actually proved
+
+Measured on 2026-08-01 with no PCGen environment variables set, against real PCGen 6.09.08.RC1 engine
+invocations (7.1 s and 6.8 s of real JVM work respectively):
+
+| pilot case | dimensions compared | matched | mismatched |
+|---|---|---|---|
+| `pf1-arg-human-fighter-level1` | 15 | 14 | 1 |
+| `pf-pathfinder_unchained-human-fighter-level1` | 15 | 14 | 1 |
+
+**No new parity defect in either book.** The single mismatch is identical in both, and identical to
+the one the CRB pilot has carried since SD-26: `combat.baseline_melee_attack_bonus`, PCGen 5 vs.
+Codex 6 — the already-diagnosed weapon-agnostic-versus-weapon-specific melee-total discrepancy
+(Codex's figure legitimately includes Weapon Focus (Longsword); whether PCGen's compared export field
+is a different quantity or the harness maps the wrong field is the open item SD-26 forwarded). It is a
+harness/oracle-semantics question, not book content, and it reproduces on the Core Rulebook pilot that
+has nothing to do with either of this bundle's books.
+
+**What did get proven is book-specific and real.** Both suites carry a genuine record from their own
+book's Shape B cache through the full pipeline, and the two books' encumbrance totals differ by
+exactly the amount that record weighs:
+
+- ARG: `encumbrance.total_carried_weight_lbs` = **30** on both sides. The +1 lb over the shared GE-06
+  posture is `data/corpus/advanced_race_guide/equipment/arms_armor/dogslicer.json` (`WT:1`), plus the
+  ARG feat `defiant_luck.json` carried on both the `.pcg` and the Codex input.
+- PU: the same dimension is **29** on both sides — the same posture without the Dogslicer, plus
+  Pathfinder Unchained's own Wound Threshold variant of `endurance.json`.
+
+A real ARG equipment record resolved to the same weight in the real PCGen engine and in Codex's
+corpus-aware compute path. That is the thing the E3.x cycles were written to demonstrate, and it is
+the first time it has actually been observed rather than assumed.
+
+**Conclusion for SD-27: no conclusion changes, and that is now a measured result rather than an
+untested assumption.** The distinction matters — before this run, "ARG and PU are at parity" was a
+claim resting on a suite that had never executed.

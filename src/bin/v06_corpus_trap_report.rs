@@ -35,7 +35,7 @@
 //! ```
 //!
 //! `PCGEN_CORPUS_ROOT` overrides the corpus location, defaulting to the
-//! same `/home/ubuntu/workspace/repos/pcgen/data` the cache-generator
+//! same `$HOME/workspace/repos/pcgen/data` the cache-generator
 //! binaries (`gen_cache_acg` and siblings) already use. A book argument
 //! may be a bare directory name under
 //! `pathfinder/paizo/roleplaying_game` or an absolute path.
@@ -58,7 +58,10 @@ use codex::pcgen_import::corpus_traps::{
     BookScan, Finding, Severity, Trap, audit_ingested_cache, concept_census, scan_book,
 };
 
-const DEFAULT_CORPUS_ROOT: &str = "/home/ubuntu/workspace/repos/pcgen/data";
+/// Default corpus location relative to `$HOME`. HOME-relative on purpose:
+/// the operator keeps `workspace/` in the home directory and syncs it
+/// between machines, so this is correct on every box.
+const DEFAULT_CORPUS_ROOT_REL: &str = "workspace/repos/pcgen/data";
 const BOOKS_SUBDIR: &str = "pathfinder/paizo/roleplaying_game";
 const DEFAULT_EXAMPLES: usize = 3;
 
@@ -140,9 +143,12 @@ fn usage() -> String {
 }
 
 fn corpus_root() -> PathBuf {
-    PathBuf::from(
-        std::env::var("PCGEN_CORPUS_ROOT").unwrap_or_else(|_| DEFAULT_CORPUS_ROOT.to_string()),
-    )
+    if let Ok(configured) = std::env::var("PCGEN_CORPUS_ROOT") {
+        return PathBuf::from(configured);
+    }
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen corpus checkout");
+    PathBuf::from(home).join(DEFAULT_CORPUS_ROOT_REL)
 }
 
 fn resolve_book(root: &Path, book: &str) -> PathBuf {

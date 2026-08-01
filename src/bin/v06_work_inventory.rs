@@ -1656,9 +1656,17 @@ fn main() {
     // overwriting the full inventory with one would be a silent data loss.
     let stdout_only = summary_only || args.iter().any(|a| a == "--stdout-only");
 
-    let corpus_root = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    let books_dir = PathBuf::from(&corpus_root).join(BOOKS_RELATIVE);
+    // HOME-relative default: `workspace/` lives in the operator's home
+    // directory and is synced across machines. `PCGEN_CORPUS_ROOT` still wins.
+    let corpus_root = match std::env::var("PCGEN_CORPUS_ROOT") {
+        Ok(configured) => PathBuf::from(configured),
+        Err(_) => {
+            let home = std::env::var("HOME")
+                .expect("HOME must be set to locate the default PCGen corpus checkout");
+            PathBuf::from(home).join("workspace/repos/pcgen/data")
+        }
+    };
+    let books_dir = corpus_root.join(BOOKS_RELATIVE);
     if !books_dir.is_dir() {
         eprintln!(
             "corpus not found at {} -- set PCGEN_CORPUS_ROOT to a PCGen data/ checkout",
