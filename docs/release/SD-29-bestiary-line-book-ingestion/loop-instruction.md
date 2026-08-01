@@ -11,6 +11,8 @@
 >
 > The orchestrating session never implements directly — it dispatches, verifies, and rules (`loop-instruction-template.md §2.2`). Do NOT engage this bundle via ad-hoc single-task invocations; one Workflow-tool launch runs to closure.
 >
+> **Orchestrator model: Opus, low reasoning effort** (operator directive 2026-08-01, `decisions.md §26`) — Opus at low reasoning effort produced materially better orchestration results than Sonnet at high reasoning effort, and is the new normal for the *orchestrating session* on this program. This supersedes any prior "orchestration runs on Sonnet" guidance (none existed in this package before this pass). Dispatched sub-agents are unaffected — they keep task-matched tiers (Haiku for housekeeping, Sonnet for real implementation/debugging/review, Opus for adversarial verification/judge-panel steps only) per `loop-instruction-template.md §2`. A session cannot change its own model mid-run: setting Opus-low is a **pre-launch operator step**, done before this cycle session starts.
+>
 > **🟡 UNATTENDED MODE (operator directive 2026-08-01).** The operator is out of town. Cycles MUST NOT pause to ask the operator questions; the operator may not see the harness's output for days. The operating protocol for the duration of the bundle is:
 >
 > 1. **Default-and-flag, not ask.** When the cycle needs a decision, pick the safer default, capture it in the cycle's `progress.md` receipt, and continue. The operator reviews the receipts after return.
@@ -118,6 +120,7 @@ All of the following, each checkable by someone who was not present:
 - **Epic 7 (DM Toolkit extension to consume Bestiary 2-5)** is optional-but-proposed. Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles need the consumer surface to satisfy reach) or surfaces as a Class 1 retrofit in `successor-forward-scope-register.md`. Operator-pinned per-cycle at Epic 5/6 closure.
 - **Epic 8 (Closure Epilogue)** fires LAST. Tranche promotion PR fires only after all other epics are closed.
 - **Epic 9 (Build Version Numbering)** fires after Epic 1, before Epic 8. First concrete value `0.9.<build>` per the 2026-08-01 amendment.
+- **Epic 10 (Bundle Code Review)** fires after Epic 9 and every content-ingest epic (3-6, plus Epic 7 if in scope), before Epic 8. Reviews the whole bundle's diff against its branch point, not the closing cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per `decisions.md §27`.
 
 ## Hard stops
 

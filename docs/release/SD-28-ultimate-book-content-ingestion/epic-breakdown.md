@@ -10,13 +10,18 @@ companion_to: ./scope-draft.md, ./decisions.md
 
 # SD-28 Epic Breakdown
 
-11 epics × ~3 acceptance criteria = ~33 criteria. Mirrors SD-22's epic
+12 epics × ~3 acceptance criteria = ~36 criteria. Mirrors SD-22's epic
 shape with the seven-book expansion (UC, UM, UE, UI, UCam, UW, UPsi) →
-seven per-book content-source-ingest epics.
+seven per-book content-source-ingest epics, plus Epic 12's end-of-run
+code review (operator directive 2026-08-01, added post-launch).
 
-Epic 1 fires FIRST. Epic 11 fires LAST. Epics 3-9 (per-book) may run in
-any order post-Epic 2, but each book is one cycle-batch (no Epic 3 cycle
-interleaves with Epic 4 cycle).
+Epic 1 fires FIRST. Epic 10 (Closure Epilogue) fires LAST — corrected
+here from a prior "Epic 11 fires LAST" statement that was never true
+against this file's own "Recommended sequencing" diagram below, which
+has always ordered `E11 → E10`. Epics 3-9 (per-book) may run in any
+order post-Epic 2, but each book is one cycle-batch (no Epic 3 cycle
+interleaves with Epic 4 cycle). Epic 12 (Bundle Code Review) fires
+after Epic 11 and all content epics, before Epic 10.
 
 ## Epic 1 (SD28-E1) — Code-Side Identifier Cleanup
 
@@ -217,22 +222,96 @@ Acceptance:
 - Closing-PR iteration on Epic 10 increments per the 2026-07-17 build-version amendment.
 - Major remains `0` until first main-publish.
 
+## Epic 12 (SD28-E12) — Bundle Code Review
+
+**Objective:** A full code review of the bundle's entire diff against its
+branch point, run after every content-ingest epic (3-9) and Epic 11 (Build
+Version Numbering) are closed — not in parallel with them, and not scoped to
+only the final cycle. `./scripts/verify.sh` passing is a **precondition** to
+this epic firing, not the review itself: a green gate says the tests that
+exist pass, it says nothing about whether the code is right.
+
+**Derived from:** operator directive 2026-08-01 (the v0.6 CRB run closed
+without an end-of-run code review) + `decisions.md §26`.
+
+### Feature seeds
+
+#### SD28-E12-F1 — Whole-bundle diff review
+
+Acceptance:
+
+- The reviewed diff scope is the bundle's full change set against its branch
+  point (`git diff origin/develop...HEAD`, the same merge-base triple-dot
+  comparison `scripts/identifier-discipline-audit.sh` and
+  `scripts/wired-integration-audit.sh` already default to via
+  `BASE_BRANCH`), not the closing cycle's slice alone.
+- `./scripts/verify.sh` has a recorded green run for that diff, cited as a
+  precondition in the epic's receipt.
+- `scripts/identifier-discipline-audit.sh` and `scripts/wired-integration-audit.sh`
+  (this bundle's standing per-cycle dual-audit) are re-run once more at
+  bundle scope.
+
+#### SD28-E12-F2 — Correctness, no-stub, reach, test-quality, no-hand-authored-frontend-data sweep
+
+Acceptance:
+
+- A sample of this bundle's rules logic is checked against the source corpus
+  for the seven books; disagreements are recorded as findings, not assumed
+  away.
+- No stub, fixture-only, or mock data in a production path per
+  `docs/governance/no-stub-mvp-doctrine.md`; any operator-approved exception
+  is entered in `docs/governance/wired-integration-stubs-registry.md`, not
+  left unregistered.
+- A sample of records this bundle claims reach a player surface is spot-checked
+  against `reach_gate.rs`'s `OPEN_FINDINGS` mechanism and the live IPC/UI
+  path — reach-gate green is necessary, not sufficient, on its own.
+- Test quality, not just count: per
+  `docs/governance/book-ingestion-playbook.md §7.4`, a sample of this
+  bundle's new gates/tests is checked for a case that actually fails when the
+  thing it protects is broken, not only a case that passes.
+- No hand-authored rules data under `apps/desktop/src/` — rules content is
+  sourced from `src/rules_core/rules_tables/`, never hand-typed into a
+  frontend file.
+
+#### SD28-E12-F3 — Findings triage
+
+Acceptance:
+
+- Every finding records a severity and a disposition: `fixed-in-bundle` or
+  `deferred`. No finding is silently dropped.
+- A `deferred` finding names an owner (a person or a specific successor
+  bundle) and is entered in `forward-scope-register.md` — not left
+  unrecorded.
+- Real defects found are fixed in-bundle before Epic 10 (Closure Epilogue)
+  fires; the review does not become a rubber stamp that defers everything to
+  avoid scope growth.
+- A `scripts/retro.py` event is emitted per finding, carrying `--verified-by`.
+
+**Note:** the operator can separately trigger `/code-review ultra` (a
+multi-agent cloud review of the branch) at any time. That path is
+operator-triggered and billed — a cycle running under §21's unattended-mode
+protocol cannot launch it itself — so Epic 12 must stand on its own as the
+bundle's actual gate; `/code-review ultra` is a supplement, not a dependency.
+
 ## Recommended sequencing (dependency order, not exclusive scope)
 
 ```
-E1 → E2 → E3, E4, E5, E6, E7, E8, E9 (any order, file-disjoint) → E11 → E10
+E1 → E2 → E3, E4, E5, E6, E7, E8, E9 (any order, file-disjoint) → E11 → E12 → E10
 ```
 
 The per-book epics are **file-disjoint** by source path (each writes to its own
 `src/rules_core/rules_tables/<book>/`), so they can run in parallel under
 operator-pinned concurrency. The classic repo-level wiring epics (E1, E2,
-E11, E10) are sequential.
+E11, E12, E10) are sequential. E12 (Bundle Code Review) runs after every
+other epic but E10 — any review finding is fixed before the tranche-promotion
+PR (part of E10) opens.
 
 ## Completion gate
 
 SD-28 closes when:
 
 - All Epic 3-9 per-book cycles `complete` with reach-gate claims and trap-report outputs.
+- Epic 12 (Bundle Code Review) closed, all findings triaged with named owners for deferrals.
 - `progress.md` carries the closure receipt.
 - `release-notes.md` is populated.
 - The tranche-promotion PR `tranche/8 → develop` is opened and merged.

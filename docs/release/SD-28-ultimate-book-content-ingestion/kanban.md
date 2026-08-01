@@ -25,6 +25,7 @@ file-touch partition ensures only one cycle claims a card at a time.
 | `epic-9-upsi` | READY | Ultimate Psionics (Dreamscarred Press tier) | per-class / per-power, license-gated | — | — | — |
 | `epic-10-closure` | READY (gated) | Closure Epilogue | tranche promotion PR | — | — | — |
 | `epic-11-version` | READY (gated) | Build Version Numbering | first concrete value `0.8.<build>` | — | — | — |
+| `epic-12-code-review` | READY (gated) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
 | `epic-1-identifier` | READY | Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY | Operator Pre-Launch | local-file dispatch readiness + license precheck | — | — | — |
 

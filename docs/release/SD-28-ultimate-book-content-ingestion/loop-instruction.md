@@ -11,6 +11,8 @@
 >
 > The orchestrating session never implements directly — it dispatches, verifies, and rules (`loop-instruction-template.md §2.2`). Do NOT engage this bundle via ad-hoc single-task invocations; one Workflow-tool launch runs to closure.
 >
+> **Orchestrator model: Opus, low reasoning effort** (operator directive 2026-08-01, `decisions.md §25`) — Opus at low reasoning effort produced materially better orchestration results than Sonnet at high reasoning effort, and is the new normal for the *orchestrating session* on this program. This supersedes any prior "orchestration runs on Sonnet" guidance (none existed in this package before this pass). Dispatched sub-agents are unaffected — they keep task-matched tiers (Haiku for housekeeping, Sonnet for real implementation/debugging/review, Opus for adversarial verification/judge-panel steps only) per `loop-instruction-template.md §2`. A session cannot change its own model mid-run: setting Opus-low is a **pre-launch operator step**, done before this cycle session starts.
+>
 > **🟡 UNATTENDED MODE (operator directive 2026-08-01).** The operator is out of town. Cycles MUST NOT pause to ask the operator questions; the operator may not see the harness's output for days. The operating protocol for the duration of the bundle is:
 >
 > 1. **Default-and-flag, not ask.** When the cycle needs a decision, pick the safer default, capture it in the cycle's `progress.md` receipt, and continue. The operator reviews the receipts after return.
@@ -113,6 +115,7 @@ All of the following, each checkable by someone who was not present:
 - **Epics 3-9 (per-book content-source ingest: UC, UM, UE, UI, UCam, UW, UPsi)** may run in any order, but each book is a single cycle-batch. Epic 9 is the Dreamscarred Press tier per `decisions.md §17`.
 - **Epic 10 (Closure Epilogue)** fires LAST. Tranche promotion PR fires only after all other epics are closed; the version bumps per `decisions.md §15` (`0.8.<last_build>` remains until the next bundle's tranche-base changes).
 - **Epic 11 (Build Version Numbering)** fires after Epic 1, before Epic 10. First concrete value `0.8.<build>` per `decisions.md §15`.
+- **Epic 12 (Bundle Code Review)** fires after Epic 11 and every content-ingest epic (3-9), before Epic 10. Reviews the whole bundle's diff against its branch point, not the closing cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per `decisions.md §26`.
 
 ## Hard stops
 

@@ -159,6 +159,21 @@ Then:
 
 No Hermes-board interaction is required.
 
+## AT-28-013 — Bundle code review (final epic)
+
+Given Epic 12 (Bundle Code Review), firing after all content-ingest epics (3-9) and Epic 11 (Build Version Numbering) are closed, before Epic 10 (Closure Epilogue).
+
+When the review runs.
+
+Then:
+
+- `./scripts/verify.sh` has a recorded green run — a precondition to the review, not the review itself.
+- The diff scope reviewed is the whole bundle against its branch point (`git diff origin/develop...HEAD`), not the closing cycle alone.
+- `scripts/identifier-discipline-audit.sh` and `scripts/wired-integration-audit.sh` are re-run at bundle scope.
+- The review covers, at minimum: rules-logic correctness sampled against the corpus; no stubs/fixture-only data in production paths (`docs/governance/no-stub-mvp-doctrine.md`); records reaching a player surface per `reach_gate.rs`; test quality per `docs/governance/book-ingestion-playbook.md §7.4`; no hand-authored rules data under `apps/desktop/src/`.
+- Every finding records a disposition: `fixed-in-bundle` or `deferred` with a named owner. No finding is silently dropped.
+- Real defects are fixed in-bundle before Epic 10 fires.
+
 ## Exit gate checklist
 
 - [ ] All Epic 3-9 cycles complete with reach-gate claims.
@@ -169,5 +184,6 @@ No Hermes-board interaction is required.
 - [ ] AT-28-010 rules-as-data verified across the seven books' numerical effects.
 - [ ] AT-28-011 move-not-copy publish landed.
 - [ ] AT-28-012 local-file dispatch verified by Epic 2's pre-flight + Epic 10's closure.
+- [ ] AT-28-013 bundle code review (Epic 12) closed; all findings triaged with named owners for deferrals.
 - [ ] `release-notes.md` populated.
 - [ ] `forward-scope-register.md` reviewed for successor work.

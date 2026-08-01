@@ -43,6 +43,7 @@ file-touch partition ensures only one cycle claims a card at a time.
 | `epic-18-bd2` | READY | Book of the Damned Vol. 2 | per-archetype / per-monster-block / per-tactic | — | — | — |
 | `epic-19-closure` | READY (gated) | Closure Epilogue | tranche promotion PR | — | — | — |
 | `epic-20-version` | READY (gated) | Build Version Numbering | first concrete value `0.10.<build>` | — | — | — |
+| `epic-21-code-review` | READY (gated) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
 | `epic-1-identifier` | READY | Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report (16 books) | — | — | — |
 

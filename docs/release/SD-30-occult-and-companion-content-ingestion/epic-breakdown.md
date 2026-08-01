@@ -10,13 +10,17 @@ companion_to: ./scope-draft.md, ./decisions.md
 
 # SD-30 Epic Breakdown
 
-9+ epics × ~3 acceptance criteria each = ~30+ criteria. Mirrors SD-22's
-epic shape with the sixteen-book expansion. Per-book epics may group
-Inner Sea's nine modules into one shared epic, or split per book; the
-boundary is decided at Cycle 2's inventory gate.
+10+ epics × ~3 acceptance criteria each = ~30+ criteria, plus Epic 21's
+end-of-run code review (operator directive 2026-08-01, added
+post-launch; numbered per `kanban.md`'s existing `epic-1`...`epic-20`
+scheme). Mirrors SD-22's epic shape with the sixteen-book expansion.
+Per-book epics may group Inner Sea's nine modules into one shared epic,
+or split per book; the boundary is decided at Cycle 2's inventory gate.
 
 Epic 1 fires FIRST. Closure fires LAST. Per-book epics may run in any
-order post-Epic 2, but each book is one cycle-batch.
+order post-Epic 2, but each book is one cycle-batch. Epic 21 (Bundle
+Code Review) fires after Build Version Numbering and every content
+epic, before Closure.
 
 ## Epic 1 (SD30-E1) — Code-Side Identifier Cleanup
 
@@ -173,23 +177,106 @@ Acceptance:
 - First concrete value: `0.10.<build>` (read from current build counter at cycle close).
 - Closing-PR iteration on Closure increments per the 2026-07-17 build-version amendment.
 
+## Epic 21 (SD30-E21) — Bundle Code Review
+
+**Objective:** A full code review of the bundle's entire diff against its
+branch point, run after every content-ingest epic (3 through the Inner
+Sea/Book of the Damned set) and Build Version Numbering are closed — not in
+parallel with them, and not scoped to only the final cycle.
+`./scripts/verify.sh` passing is a **precondition** to this epic firing, not
+the review itself: a green gate says the tests that exist pass, it says
+nothing about whether the code is right.
+
+**Derived from:** operator directive 2026-08-01 (the v0.6 CRB run closed
+without an end-of-run code review) + `decisions.md §26`.
+
+### Feature seeds
+
+#### SD30-E21-F1 — Whole-bundle diff review
+
+Acceptance:
+
+- The reviewed diff scope is the bundle's full change set against its branch
+  point (`git diff origin/develop...HEAD`, the same merge-base triple-dot
+  comparison `scripts/identifier-discipline-audit.sh` and
+  `scripts/wired-integration-audit.sh` already default to via
+  `BASE_BRANCH`), not the closing cycle's slice alone.
+- `./scripts/verify.sh` has a recorded green run for that diff, cited as a
+  precondition in the epic's receipt.
+- `scripts/identifier-discipline-audit.sh` and `scripts/wired-integration-audit.sh`
+  (this bundle's standing per-cycle dual-audit) are re-run once more at
+  bundle scope.
+
+#### SD30-E21-F2 — Correctness, no-stub, reach, test-quality, no-hand-authored-frontend-data sweep
+
+Acceptance:
+
+- A sample of this bundle's rules logic is checked against the source corpus
+  across the sixteen in-scope books; disagreements are recorded as findings,
+  not assumed away.
+- No stub, fixture-only, or mock data in a production path per
+  `docs/governance/no-stub-mvp-doctrine.md`; any operator-approved exception
+  is entered in `docs/governance/wired-integration-stubs-registry.md`, not
+  left unregistered.
+- A sample of records this bundle claims reach a player surface is spot-checked
+  against `reach_gate.rs`'s `OPEN_FINDINGS` mechanism and the live IPC/UI
+  path — including the Mythic Adventures reach-surface prerequisite (Epic 5).
+  Reach-gate green is necessary, not sufficient, on its own.
+- Test quality, not just count: per
+  `docs/governance/book-ingestion-playbook.md §7.4`, a sample of this
+  bundle's new gates/tests is checked for a case that actually fails when the
+  thing it protects is broken, not only a case that passes.
+- No hand-authored rules data under `apps/desktop/src/` — rules content is
+  sourced from `src/rules_core/rules_tables/`, never hand-typed into a
+  frontend file.
+
+#### SD30-E21-F3 — Findings triage
+
+Acceptance:
+
+- Every finding records a severity and a disposition: `fixed-in-bundle` or
+  `deferred`. No finding is silently dropped.
+- A `deferred` finding names an owner (a person or a specific successor
+  bundle) and is entered in `forward-scope-register.md` — not left
+  unrecorded.
+- Real defects found are fixed in-bundle before Closure Epilogue fires; the
+  review does not become a rubber stamp that defers everything to avoid
+  scope growth.
+- A `scripts/retro.py` event is emitted per finding, carrying `--verified-by`.
+
+**Note:** the operator can separately trigger `/code-review ultra` (a
+multi-agent cloud review of the branch) at any time. That path is
+operator-triggered and billed — a cycle running under §21's unattended-mode
+protocol cannot launch it itself — so Epic 21 must stand on its own as the
+bundle's actual gate; `/code-review ultra` is a supplement, not a dependency.
+
 ## Recommended sequencing (dependency order, not exclusive scope)
 
 ```
-E1 → E2 → {E3, E4, E5, E6, E7-N+, M+ Closure M+ Version} (any order post-E2, file-disjoint per book) → Closure → Version
+E1 → E2 → {E3, E4, E5, E6, E7-N+, M+} (any order post-E2, file-disjoint per book) → Version → E21 (Bundle Code Review) → Closure
 ```
+
+Corrected here: the prior diagram embedded "Closure"/"Version" inside the
+parallel set and then repeated `→ Closure → Version` at the end, which both
+contradicted each other and contradicted `loop-instruction.md §"Epic
+ordering"`'s explicit statement that Build Version Numbering fires before
+Closure and Closure fires LAST. The corrected order matches
+`loop-instruction.md`.
 
 Per-book epics are file-disjoint by source path (each writes to its own
 `src/rules_core/rules_tables/<book>/`), so they can run in parallel
 under operator-pinned concurrency. The Mythic Adventures reach-surface
 precycle gating may pause Epic 5 if `reach_gate.rs OPEN_FINDINGS`
-records missing-surface gaps.
+records missing-surface gaps. Epic 21 (Bundle Code Review) runs after every
+other epic but Closure — any review finding is fixed before the
+tranche-promotion PR (part of Closure) opens.
 
 ## Completion gate
 
 SD-30 closes when:
 
 - All sixteen in-scope books' per-book cycles `complete` with reach-gate claims and trap-report outputs.
+- Epic 21 (Bundle Code Review) closed, all findings triaged with named owners for deferrals.
 - Closure fires.
 - `progress.md` carries the closure receipt.
 - `release-notes.md` is populated.

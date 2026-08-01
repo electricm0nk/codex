@@ -23,6 +23,7 @@ file-touch partition ensures only one cycle claims a card at a time.
 | `epic-7-dm-toolkit` | READY (gated) | DM Toolkit extension | consume Bestiary 2-5 | — | — | — |
 | `epic-8-closure` | READY (gated) | Closure Epilogue | tranche promotion PR | — | — | — |
 | `epic-9-version` | READY (gated) | Build Version Numbering | first concrete value `0.9.<build>` | — | — | — |
+| `epic-10-code-review` | READY (gated) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §27`) | — | — | — |
 | `epic-1-identifier` | READY | Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report | — | — | — |
 
