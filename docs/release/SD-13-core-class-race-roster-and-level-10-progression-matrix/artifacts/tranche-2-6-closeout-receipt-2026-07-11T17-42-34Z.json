@@ -1,0 +1,123 @@
+{
+  "schema": "kanban-already-merged-closure/v1",
+  "ts": "2026-07-11T17-42-34Z",
+  "operator": "god-emporer (operator-autonomous verdict, per user instruction R1-A)",
+  "board": "codex-tranche-2-6",
+  "epic": "SD-13",
+  "scope": "Reconciliation of 8 blocked cards against the live machine-usable carrier state and merged PR history.",
+  "investigation_summary": {
+    "approach": "For each blocked card, read the live carrier row state from src/rules_core/support_state_matrix.rs, identify the PR(s) that landed the slice, and verify the cited test file exists in develop.",
+    "finding_1": "All 8 cards authorized slice work that has already merged to develop. The kanban lifecycle did not close because the prior tech-priest workers hit 90/90 iteration budget on their second dispatch and the protocol-violation gives_up rule fired.",
+    "finding_2": "The machine-usable carrier at src/rules_core/support_state_matrix.rs is the source of truth. The documentation matrix at programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md is stale relative to the carrier -- Bard is documented as unverified/observed but the carrier says Blocked/Computed, etc.",
+    "finding_3": "PR #109 (ad9be2a fix(sd13): reconcile all stale support-state matrix rows with post-tranche truth) was titled to update both surfaces; the carrier was updated but the doc was not."
+  },
+  "closure_posture": {
+    "carrier_state_distribution": "21 rows total; 13 Partial/Computed; 7 Blocked/Computed; 1 Unverified/Observed (the non-Human interaction row).",
+    "no_row_supported_at_any_tier": "Every row still has named missing semantics. Tier floor for tranche-2.6 closure is partial/computed for most rows, blocked/computed for the spell-bearing classes that landed only burden proofs.",
+    "tier_floor_for_closure": "tier oracle-checked per programs/codex/doctrine/support-state-vocabulary.md. The carrier is at tier computed for 20 of 21 rows; one row is at observed. The oracle-checked tier requires PCGen parity, which is not yet shipped."
+  },
+  "actions_taken": {
+    "step_1": {
+      "what": "Closed 8 cards with kanban_complete against their actual carrier-derived row state.",
+      "cards": [
+        {
+          "card_id": "t_356173db",
+          "row_id": "race.half_elf.bounded_semantics",
+          "carrier_state": "Partial",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#95"
+        },
+        {
+          "card_id": "t_fdbfb629",
+          "row_id": "race.human.pilot_semantics",
+          "carrier_state": "Partial",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#87"
+        },
+        {
+          "card_id": "t_404e3657",
+          "row_id": "class.rogue.bounded_progression",
+          "carrier_state": "Partial",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#115"
+        },
+        {
+          "card_id": "t_14c3f1d9",
+          "row_id": "class.barbarian.bounded_progression",
+          "carrier_state": "Partial",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#115"
+        },
+        {
+          "card_id": "t_bfd55451",
+          "row_id": "class.monk.bounded_progression",
+          "carrier_state": "Partial",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#115"
+        },
+        {
+          "card_id": "t_5673b4d4",
+          "row_id": "class.bard.progression_and_spell_burden",
+          "carrier_state": "Blocked",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#104, #118, #132"
+        },
+        {
+          "card_id": "t_27aa9bf3",
+          "row_id": "class.paladin.hybrid_chassis_and_spell_burden",
+          "carrier_state": "Blocked",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#93, #106, #118, #132"
+        },
+        {
+          "card_id": "t_77cb765c",
+          "row_id": "interaction.human_bonus_feat_ability_bonus.pilot_pressure",
+          "carrier_state": "Partial",
+          "carrier_tier": "Computed",
+          "provenance_prs": "#94"
+        }
+      ],
+      "pre_count": {
+        "done": 17,
+        "blocked": 8,
+        "archived": 22
+      },
+      "post_count": {
+        "done": 25,
+        "blocked": 0,
+        "archived": 22
+      }
+    },
+    "step_2": {
+      "what": "Minted FLOW card on codex-tranche-2-6 for matrix-doc reconciliation (R2-B).",
+      "card_id": "t_9142538c",
+      "title": "SD-13 FLOW: Reconcile matrix doc with post-tranche carrier state",
+      "assignee": "god-emporer",
+      "initial_status": "blocked (with empty blocked_on -- ready to dispatch as documentation flow)",
+      "purpose": "Refresh the doc to match the carrier. Pure documentation work; lands via PR."
+    },
+    "step_3": {
+      "what": "Verified the two parent gates were already done (R3-A).",
+      "t_5d57e115_SD13_GATE_status": "done (closed 2026-07-06 22:09 by god-emporer operator-autonomous verdict)",
+      "t_c451c13b_CODE_LANE_GATE_status": "done (closed 2026-07-07 00:09 by tech-priest -- the agent that did the slice reconciliation pass).",
+      "action_taken": "none required."
+    }
+  },
+  "outstanding_work": [
+    {
+      "card_id": "t_9142538c",
+      "what": "Reconcile matrix doc with carrier state (R2-B). Doc-only PR.",
+      "blocker": "none -- the card is unblocked."
+    },
+    {
+      "scope": "Beyond tranche-2-6.",
+      "what": "Tranche-3 scope. Per the assumptions doc, the next tranche is the SD-13 work continued at level 20 across all core races and classes, plus SD-17 corpus ingestion follow-up, plus UI surface delivery.",
+      "blocker": "Operator scope conversation."
+    },
+    {
+      "scope": "Tranche-2-7 board is corrupt.",
+      "what": "codex-tranche-2-7/kanban.db is corrupt (138953 bytes; integrity_check fails). The 4 cards minted on it earlier never made it into the DB.",
+      "blocker": "Same kind of corruption that affected codex-tranche-2-6 earlier. Recovery procedure: rebuild from forensic dump if available; otherwise re-mint from the source STC bundle (which is still on disk at programs/codex/requirements/SD-17-pcgen-corpus-include-graph-resolution/)."
+    }
+  ]
+}
