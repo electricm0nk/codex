@@ -57,14 +57,70 @@ const EQUIPMENT_CATEGORY_LABELS: Record<string, string> = {
   Equipmods: 'Equipment Mods',
 };
 
+/**
+ * How much corpus description prose one picker row may carry.
+ *
+ * The picker is a scan-and-select list rendered inside a modal, and the
+ * catalog's descriptions are not uniformly short: median 107 characters, but
+ * 817 of the 2856 described records run past 200 and the longest is 5971.
+ * Pasting those in full turns a 3830-row list into an unscrollable wall.
+ *
+ * So the picker shows a bounded summary and the **Equipment Catalog screen
+ * shows the full text** — a division of labour, not a loss. The bound is
+ * marked with an ellipsis whenever it bites, so a truncated line always
+ * announces itself rather than reading as the whole description.
+ */
+export const ITEM_PICKER_DESCRIPTION_MAX_CHARS = 140;
+
+/**
+ * Trims description prose to a readable one-liner for a picker row.
+ *
+ * Cuts on a word boundary rather than mid-word, and appends `…` only when
+ * something was actually removed — a description that already fits is
+ * returned byte-for-byte, so short rules text (the median case) is never
+ * decorated with a truncation mark it does not deserve.
+ *
+ * Newlines collapse to spaces because the picker row is a single line; the
+ * full, paragraph-preserving text is on the catalog screen.
+ */
+export function summariseItemDescription(
+  description: string,
+  maxChars: number = ITEM_PICKER_DESCRIPTION_MAX_CHARS
+): string {
+  const flat = description.replace(/\s+/g, ' ').trim();
+  if (flat.length <= maxChars) return flat;
+
+  const cut = flat.slice(0, maxChars);
+  const lastSpace = cut.lastIndexOf(' ');
+  // A single word longer than the bound has no boundary to cut on; hard-cut
+  // it rather than returning the whole thing and defeating the bound.
+  const trimmed = (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.]+$/, '');
+  return `${trimmed}…`;
+}
+
 export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[]): ItemPickerEntry[] {
-  return entries.map((entry) => ({
-    key: entry.key,
-    name: entry.name,
+  return entries.map((entry) => {
     // Unknown/future categories fall back to the raw variant string verbatim
     // rather than a fabricated label.
-    detail: EQUIPMENT_CATEGORY_LABELS[entry.category] ?? entry.category,
-  }));
+    const category = EQUIPMENT_CATEGORY_LABELS[entry.category] ?? entry.category;
+    // The corpus `DESC:` prose the Rust adapter already renders. Until this
+    // hop existed the field crossed the IPC boundary and was read by nothing,
+    // so a player picking equipment saw a bare category label and had no way
+    // to tell a Longsword from a Longspear except by name.
+    //
+    // `null`/blank stays absent: the detail line is then exactly what it was
+    // before, not a category followed by a dangling separator.
+    const description =
+      typeof entry.description === 'string' && entry.description.trim().length > 0
+        ? summariseItemDescription(entry.description)
+        : null;
+
+    return {
+      key: entry.key,
+      name: entry.name,
+      detail: description === null ? category : `${category} · ${description}`,
+    };
+  });
 }
 
 export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPickerEntry[] {

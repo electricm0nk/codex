@@ -76,6 +76,69 @@
 //! either side — which is exactly the shape PCGen writes and exactly the shape
 //! rulebook prose does not.
 
+/// The named PCGen variables this engine has already resolved for **one
+/// character**, keyed by the variable name a `DESC:` argument names.
+///
+/// # Why this is not the formula interpreter `decisions.md §24` forbids
+///
+/// §24 bans evaluating PCGen's formula language. Nothing here evaluates one.
+/// The caller computes each value with a hand-modelled, corpus-verified pure
+/// function it already owns — `monk_features::ki_points`,
+/// `barbarian_features::rage_rounds_per_day`, `rogue_features::master_strike_dc`
+/// and their siblings — and *states* the result under the name PCGen uses for
+/// it. This type is a lookup table; the arithmetic happened upstream, in the
+/// same hand-modelled functions §24 prescribes.
+///
+/// The operator's ruling that motivates it (2026-08-01):
+///
+/// > You do not need a full blown engine for things like uses per day. You just
+/// > need the ability to calculate the value that is displayed in the
+/// > description or elsewhere in the UI. […] These are all just display values.
+///
+/// A description resolved through this table therefore renders a *number*, and
+/// re-renders a different number when the character changes, without any
+/// uses-tracking, resource-pool or expenditure state existing anywhere.
+#[derive(Debug, Clone, Default, PartialEq, Eq)]
+pub struct PcgenDisplayValues {
+    values: std::collections::BTreeMap<String, i64>,
+}
+
+impl PcgenDisplayValues {
+    /// An empty table. Rendering against it is byte-identical to the
+    /// value-free [`render_pcgen_desc`], which is what every caller with no
+    /// character in hand (the spell catalog) keeps getting.
+    pub fn new() -> Self {
+        Self::default()
+    }
+
+    /// States one resolved value under the PCGen variable name that stands for
+    /// it. Overwrites rather than accumulates: the caller's hand-modelled
+    /// function already produced the *total*, and adding to it here would
+    /// double-count.
+    pub fn set(&mut self, name: &str, value: i64) {
+        self.values.insert(name.to_string(), value);
+    }
+
+    /// The resolved value for one PCGen variable name, or `None` when this
+    /// engine has not computed it. `None` is what keeps a placeholder dropped
+    /// rather than guessed.
+    pub fn get(&self, name: &str) -> Option<i64> {
+        self.values.get(name).copied()
+    }
+
+    /// True when nothing has been resolved.
+    pub fn is_empty(&self) -> bool {
+        self.values.is_empty()
+    }
+
+    /// Every variable name this table carries, sorted. Exists so a test can
+    /// assert *which* values a character resolved rather than only that the
+    /// text came out right.
+    pub fn names(&self) -> Vec<&str> {
+        self.values.keys().map(String::as_str).collect()
+    }
+}
+
 /// One rendered `DESC:` token.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct RenderedPcgenDesc {
@@ -169,18 +232,151 @@ fn is_pcgen_qualifier(segment: &str) -> bool {
 }
 
 /// Drops any run of trailing PCGen `PRE`-family qualifier segments, returning
-/// what remains of the token.
+/// what remains of the token **and the qualifiers that were removed**, in
+/// source order.
 ///
 /// Applied before the argument split so a qualifier can never be mistaken for
 /// argument N, and unconditionally so it is removed even from a token whose
 /// prose references no `%N` at all — the case that put
 /// `|!PREABILITY:1,CATEGORY=FEAT,Improved Feint` in front of a player.
-fn strip_trailing_qualifiers(raw: &str) -> String {
+///
+/// The qualifiers were previously discarded. They are returned now because a
+/// `DESC:` gate is not decoration: `Halfling ~ Adaptable Luck` writes its
+/// uses-per-day as two mutually exclusive segments,
+/// `Three|PREVARLTEQ:…,3` and `%1|…|PREVARGTEQ:…,4`, and a renderer that keeps
+/// both emits *"Three 5 times per day"*. See [`render_pcgen_desc_tokens`].
+fn strip_trailing_qualifiers(raw: &str) -> (String, Vec<String>) {
     let mut segments: Vec<&str> = raw.split('|').collect();
+    let mut qualifiers: Vec<String> = Vec::new();
     while segments.len() > 1 && is_pcgen_qualifier(segments[segments.len() - 1]) {
-        segments.pop();
+        qualifiers.push(segments.pop().expect("checked non-empty").to_string());
     }
-    segments.join("|")
+    qualifiers.reverse();
+    (segments.join("|"), qualifiers)
+}
+
+/// Resolves one `DESC:` argument to an integer, or `None` when this engine has
+/// not computed it.
+///
+/// Three shapes, and deliberately no more:
+///
+/// 1. **An integer literal** (`2`) — what [`render_pcgen_desc`] already read.
+/// 2. **A bare variable name** (`KiPoints`, `RageDuration`) — looked up in
+///    `values`, which the caller filled from its own hand-modelled functions.
+/// 3. **A variable with an integer offset** (`Halfling_AdaptableLuck_Bonus-1`).
+///
+/// Shape 3 is not the thin end of an interpreter — it is the *entire*
+/// non-bare argument population of the shipped corpus, derived by command
+/// rather than assumed:
+///
+/// ```text
+/// # over every data/corpus/**/*.json DESC token's argument tail,
+/// # excluding PRE-family gates and bare integers:
+/// non-bare, non-literal DESC args across the whole corpus:
+///     {'Halfling_AdaptableLuck_Bonus-1': 1}
+/// ```
+///
+/// One argument, in one record. Supporting it is transcription of a single
+/// subtraction whose left operand this engine already holds; supporting
+/// anything beyond what the corpus contains would be the speculative
+/// evaluator `decisions.md §24` bans. A shape not on this list resolves to
+/// `None` and its placeholder is dropped and reported, exactly as before.
+fn resolve_desc_argument(arg: &str, values: &PcgenDisplayValues) -> Option<i64> {
+    let arg = arg.trim();
+    if let Ok(literal) = arg.parse::<i64>() {
+        return Some(literal);
+    }
+    if let Some(value) = values.get(arg) {
+        return Some(value);
+    }
+    // Shape 3: `<Name><+|-><integer>`, split at the last sign so a name
+    // containing an underscore or digits is not torn apart.
+    let split_at = arg.rfind(['+', '-']).filter(|index| *index > 0)?;
+    let (name, offset) = arg.split_at(split_at);
+    let base = values.get(name.trim())?;
+    let offset = offset.parse::<i64>().ok()?;
+    Some(base + offset)
+}
+
+/// Whether one `DESC:` gate holds for this character.
+///
+/// `Undecided` is a first-class outcome, not a failure: a gate naming a
+/// variable this engine has not resolved must leave its prose alone. Deleting
+/// real rulebook text on the strength of an unknown is a worse error than
+/// showing an extra clause, and it is the error a two-valued result would
+/// force.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum GateOutcome {
+    Applies,
+    DoesNotApply,
+    Undecided,
+}
+
+/// Evaluates one `DESC:` gate segment against the resolved display values.
+///
+/// Only PCGen's `PREVAR<CMP>:<lhs>,<rhs>[,<lhs>,<rhs>…]` family is decided,
+/// with an optional leading `!` negating the result and every pair required to
+/// hold. The comparator set is closed and derived by command over the shipped
+/// corpus, not guessed:
+///
+/// ```text
+/// DESC gate token kinds:
+///   {'PREVARLTEQ': 2, 'PREVAREQ': 2, 'PREVARGTEQ': 2, 'PREVARGT': 1,
+///    '!PREABILITY': 144, 'PREABILITY': 7}
+/// ```
+///
+/// Seven `PREVAR*` gates across four comparators — `LT` and `NEQ` are
+/// implemented alongside them because they are the same one-line comparison
+/// and their absence would be an arbitrary hole, but nothing outside the
+/// `PREVAR` family is decided here. The 151 `PREABILITY` gates ask which
+/// abilities the character holds, which is not a fact this table carries, so
+/// they return `Undecided` and their prose survives — the behaviour every
+/// caller has today.
+///
+/// Mirrors `ingest_races::eval_prevar_gate`, which does the same reading over
+/// a row's own same-row variables, and differs from it in exactly one way: an
+/// undecidable gate is reported rather than being an error, because this
+/// renderer runs against a live character where a missing value is ordinary.
+fn eval_desc_gate(gate: &str, values: &PcgenDisplayValues) -> GateOutcome {
+    let (negated, body) = match gate.strip_prefix('!') {
+        Some(rest) => (true, rest),
+        None => (false, gate),
+    };
+    let Some((token, operands)) = body.split_once(':') else {
+        return GateOutcome::Undecided;
+    };
+    let Some(comparator) = token.strip_prefix("PREVAR") else {
+        return GateOutcome::Undecided;
+    };
+
+    let parts: Vec<&str> = operands.split(',').collect();
+    if parts.is_empty() || !parts.len().is_multiple_of(2) {
+        return GateOutcome::Undecided;
+    }
+
+    let mut all_hold = true;
+    for pair in parts.chunks(2) {
+        let (Some(left), Some(right)) =
+            (resolve_desc_argument(pair[0], values), resolve_desc_argument(pair[1], values))
+        else {
+            return GateOutcome::Undecided;
+        };
+        let holds = match comparator {
+            "EQ" => left == right,
+            "NEQ" => left != right,
+            "GT" => left > right,
+            "GTEQ" => left >= right,
+            "LT" => left < right,
+            "LTEQ" => left <= right,
+            _ => return GateOutcome::Undecided,
+        };
+        all_hold &= holds;
+    }
+
+    match all_hold ^ negated {
+        true => GateOutcome::Applies,
+        false => GateOutcome::DoesNotApply,
+    }
 }
 
 /// Replaces every PCGen entity escape with the character it stands for.
@@ -204,7 +400,7 @@ fn decode_pcgen_entities(text: &str) -> String {
 /// separator) is rejoined rather than mistaken for an argument boundary. A
 /// token whose prose references no argument is returned whole and untouched.
 fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
-    let raw = strip_trailing_qualifiers(raw);
+    let (raw, _gates) = strip_trailing_qualifiers(raw);
     let raw = raw.as_str();
     let max = max_arg_reference(raw);
     if max == 0 {
@@ -232,6 +428,23 @@ fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
 /// `%`, a `%N` backed by an integer literal becomes that integer, every other
 /// `%N` is dropped and reported, and the argument tail never survives.
 pub fn render_pcgen_desc(raw: &str) -> RenderedPcgenDesc {
+    render_pcgen_desc_with_values(raw, &PcgenDisplayValues::new())
+}
+
+/// Renders one raw PCGen `DESC:` token against the values this engine has
+/// already computed for a specific character.
+///
+/// Identical to [`render_pcgen_desc`] except that a `%N` whose argument names a
+/// variable present in `values` renders **that character's number** instead of
+/// being dropped. Passing an empty table is byte-identical to
+/// [`render_pcgen_desc`], which is exactly how that function is implemented.
+///
+/// The no-fabrication rule is unchanged and load-bearing: an argument this
+/// engine has not computed is still dropped, still takes its introducing sign
+/// with it, and is still reported in
+/// [`dropped_args`](RenderedPcgenDesc::dropped_args). Resolution widened; the
+/// honesty bar did not move.
+pub fn render_pcgen_desc_with_values(raw: &str, values: &PcgenDisplayValues) -> RenderedPcgenDesc {
     let (prose, args) = split_prose_and_args(raw);
     let chars: Vec<char> = prose.chars().collect();
     let mut out = String::new();
@@ -252,7 +465,7 @@ pub fn render_pcgen_desc(raw: &str) -> RenderedPcgenDesc {
             && digit >= 1
         {
             let arg = args.get(digit as usize - 1);
-            match arg.and_then(|a| a.trim().parse::<i64>().ok()) {
+            match arg.and_then(|a| resolve_desc_argument(a, values)) {
                 Some(value) => out.push_str(&value.to_string()),
                 None => {
                     if let Some(name) = arg {
@@ -273,6 +486,51 @@ pub fn render_pcgen_desc(raw: &str) -> RenderedPcgenDesc {
 
     let text = if dropped_any { collapse_whitespace(&out) } else { out };
     RenderedPcgenDesc { text: decode_pcgen_entities(&text), dropped_args }
+}
+
+/// Renders a record's **whole** `DESC:` token list into one description,
+/// honouring the `PREVAR*` gates that decide which segments apply.
+///
+/// A PCGen record may carry several `DESC:` tokens whose surviving segments
+/// concatenate in source order — the shape `ingest_races::render_description`
+/// already reads at ingest time. This is that reading, moved to render time so
+/// the gates can be decided against a **live character** instead of against one
+/// row's own constants.
+///
+/// Why it must exist separately from [`render_pcgen_desc_with_values`]: the
+/// gate and the value are the same fact seen twice. `Halfling ~ Adaptable Luck`
+/// writes
+///
+/// ```text
+/// DESC:Three|PREVARLTEQ:Halfling_AdaptableLuck_Times,3
+/// DESC:%1|Halfling_AdaptableLuck_Times|PREVARGTEQ:Halfling_AdaptableLuck_Times,4
+/// DESC:times per day, a halfling can gain a +%1 luck bonus …
+/// ```
+///
+/// so a halfling with the Fortunate One feat must render *"4 times per day"* —
+/// which requires both substituting `%1` **and** suppressing the word "Three".
+/// Rendering the tokens one at a time cannot do the second.
+///
+/// Segments are dropped only on a **decided** false gate.
+/// [`GateOutcome::Undecided`] keeps its prose, so a caller with no values
+/// resolved gets the same text it does today.
+pub fn render_pcgen_desc_tokens(tokens: &[&str], values: &PcgenDisplayValues) -> RenderedPcgenDesc {
+    let mut segments: Vec<String> = Vec::new();
+    let mut dropped_args: Vec<String> = Vec::new();
+
+    for token in tokens {
+        let (_, gates) = strip_trailing_qualifiers(token);
+        if gates.iter().any(|gate| eval_desc_gate(gate, values) == GateOutcome::DoesNotApply) {
+            continue;
+        }
+        let rendered = render_pcgen_desc_with_values(token, values);
+        dropped_args.extend(rendered.dropped_args);
+        if !rendered.text.is_empty() {
+            segments.push(rendered.text);
+        }
+    }
+
+    RenderedPcgenDesc { text: segments.join(" "), dropped_args }
 }
 
 /// The PCGen syntax that must never reach a player: an unsubstituted `%N`
@@ -458,5 +716,136 @@ mod tests {
         let rendered = render_pcgen_desc("a bonus of %3 with no tail");
         assert_eq!(rendered.text, "a bonus of with no tail");
         assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    // -----------------------------------------------------------------
+    // Character-resolved display values (operator ruling, 2026-08-01).
+    // -----------------------------------------------------------------
+
+    fn values(pairs: &[(&str, i64)]) -> PcgenDisplayValues {
+        let mut out = PcgenDisplayValues::new();
+        for (name, value) in pairs {
+            out.set(name, *value);
+        }
+        out
+    }
+
+    /// The whole point: a `%N` whose argument names a variable the engine has
+    /// already computed renders the number instead of vanishing.
+    #[test]
+    fn a_percent_n_naming_a_known_variable_renders_its_value() {
+        let rendered = render_pcgen_desc_with_values(
+            "[Ki Pool = %1] ...|KiPoints",
+            &values(&[("KiPoints", 3)]),
+        );
+        assert_eq!(rendered.text, "[Ki Pool = 3] ...");
+        assert!(rendered.dropped_args.is_empty());
+        assert_eq!(leaked_pcgen_syntax(&rendered.text), None);
+    }
+
+    /// The same token with a different character state renders a different
+    /// number. This is the property that makes it a display value rather than
+    /// a constant baked at ingest.
+    #[test]
+    fn the_same_token_renders_a_different_number_for_a_different_character() {
+        let raw = "[Ki Pool = %1] ...|KiPoints";
+        assert_eq!(
+            render_pcgen_desc_with_values(raw, &values(&[("KiPoints", 3)])).text,
+            "[Ki Pool = 3] ..."
+        );
+        assert_eq!(
+            render_pcgen_desc_with_values(raw, &values(&[("KiPoints", 9)])).text,
+            "[Ki Pool = 9] ..."
+        );
+    }
+
+    /// An unknown variable is still dropped and reported, never guessed. The
+    /// no-fabrication rule is unchanged by the new capability.
+    #[test]
+    fn an_unknown_variable_is_still_dropped_and_reported() {
+        let rendered =
+            render_pcgen_desc_with_values("You add +%1 to Perception.|TrapfindingBonus", &values(&[]));
+        assert_eq!(rendered.text, "You add to Perception.");
+        assert_eq!(rendered.dropped_args, vec!["TrapfindingBonus".to_string()]);
+    }
+
+    /// The one non-bare argument shape the whole corpus contains.
+    #[test]
+    fn the_single_offset_argument_shape_the_corpus_uses_resolves() {
+        let rendered = render_pcgen_desc_with_values(
+            "the full +%1 bonus; afterward only +%2.|Halfling_AdaptableLuck_Bonus|Halfling_AdaptableLuck_Bonus-1",
+            &values(&[("Halfling_AdaptableLuck_Bonus", 2)]),
+        );
+        assert_eq!(rendered.text, "the full +2 bonus; afterward only +1.");
+        assert!(rendered.dropped_args.is_empty());
+    }
+
+    /// A `PREVAR*` gate that is decidably false removes its whole segment, so
+    /// the "Three" / "%1" alternation PCGen writes renders one branch, not both.
+    #[test]
+    fn a_decidably_false_prevar_gate_drops_its_segment() {
+        let tokens = [
+            "Three|PREVARLTEQ:Halfling_AdaptableLuck_Times,3",
+            "%1|Halfling_AdaptableLuck_Times|PREVARGTEQ:Halfling_AdaptableLuck_Times,4",
+            "times per day.",
+        ];
+        assert_eq!(
+            render_pcgen_desc_tokens(&tokens, &values(&[("Halfling_AdaptableLuck_Times", 3)])).text,
+            "Three times per day."
+        );
+        assert_eq!(
+            render_pcgen_desc_tokens(&tokens, &values(&[("Halfling_AdaptableLuck_Times", 5)])).text,
+            "5 times per day."
+        );
+    }
+
+    /// An undecidable gate keeps its segment. Dropping it would delete real
+    /// prose on the strength of a variable the engine has not resolved.
+    #[test]
+    fn an_undecidable_gate_keeps_its_segment() {
+        let tokens = ["Three|PREVARLTEQ:Halfling_AdaptableLuck_Times,3", "times per day."];
+        assert_eq!(
+            render_pcgen_desc_tokens(&tokens, &values(&[])).text,
+            "Three times per day."
+        );
+    }
+
+    /// `PREVAREQ` / `PREVARGT`, the other two comparators the corpus's seven
+    /// `DESC` gates use, on the record that uses them.
+    #[test]
+    fn the_rogues_edge_gate_pair_selects_singular_or_plural_prose() {
+        let tokens = [
+            "You have mastered",
+            "a single skill beyond that skill's normal boundaries,|PREVAREQ:RoguesEdgeLVL,1",
+            "%1 skills beyond those skill's normal boundaries,|RoguesEdgeLVL|PREVARGT:RoguesEdgeLVL,1",
+            "gaining results others only dream about.",
+        ];
+        assert_eq!(
+            render_pcgen_desc_tokens(&tokens, &values(&[("RoguesEdgeLVL", 1)])).text,
+            "You have mastered a single skill beyond that skill's normal boundaries, gaining results others only dream about."
+        );
+        assert_eq!(
+            render_pcgen_desc_tokens(&tokens, &values(&[("RoguesEdgeLVL", 3)])).text,
+            "You have mastered 3 skills beyond those skill's normal boundaries, gaining results others only dream about."
+        );
+    }
+
+    /// Back-compatibility: the value-free entry point must behave exactly as
+    /// it did before this capability existed. Every caller that has no
+    /// character in hand (the spell catalog) keeps its current output.
+    #[test]
+    fn the_value_free_entry_point_is_unchanged_by_the_new_capability() {
+        for raw in [
+            "contained within you for up to %1 rounds.|CASTERLEVEL",
+            "a +%1 luck bonus|2",
+            "reduced by 20%%.",
+            "If you have the Improved Feint feat.|!PREABILITY:1,CATEGORY=FEAT,Improved Feint",
+        ] {
+            assert_eq!(
+                render_pcgen_desc(raw),
+                render_pcgen_desc_with_values(raw, &PcgenDisplayValues::new()),
+                "{raw}"
+            );
+        }
     }
 }

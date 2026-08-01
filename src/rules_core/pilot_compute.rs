@@ -24566,6 +24566,56 @@ fn ground_unchained_barbarian_class_features(
              levels 2-4 (Uncanny Dodge), 2 from level 5 (Improved Uncanny Dodge)"
         ),
     });
+    // Greater Rage and Mighty Rage are their own ingested records
+    // (`:294` / `:296`) and each carries two real formula tokens, but until
+    // now their `+1`s vanished into the Rage totals above and the rows a
+    // player reads under those two names carried no number at all. These
+    // state the value each record is responsible for producing.
+    if let Some(bonus) = barbarian_features::greater_rage_morale_bonus(level) {
+        let multiplier = barbarian_features::rage_temporary_hit_point_multiplier(level)
+            .expect("Rage is granted wherever Greater Rage is");
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.greater_rage_morale_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Greater Rage: the rage morale bonus is +{bonus} \
+                 and rage temporary hit points are character level x {multiplier}. Greater Rage's \
+                 own row adds one to each (BONUS:VAR|RageBonus|1 and BONUS:VAR|RageBonusHP|TL from \
+                 level 11); the values shown are the resulting totals, which is what the character \
+                 actually has"
+            ),
+        });
+    }
+    if let Some(bonus) = barbarian_features::mighty_rage_morale_bonus(level) {
+        let multiplier = barbarian_features::rage_temporary_hit_point_multiplier(level)
+            .expect("Rage is granted wherever Mighty Rage is");
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.mighty_rage_morale_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Barbarian level {level} Mighty Rage: the rage morale bonus reaches \
+                 +{bonus} and rage temporary hit points character level x {multiplier}. Mighty \
+                 Rage's row carries the identical pair of tokens as Greater Rage \
+                 (BONUS:VAR|RageBonus|1, BONUS:VAR|RageBonusHP|TL), stacking a second time from \
+                 level 20"
+            ),
+        });
+    }
+    if let Some(rounds) =
+        barbarian_features::prose_derived::tireless_rage_temporary_hit_point_lockout_rounds(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_barbarian.tireless_rage_lockout_rounds".to_owned(),
+            value: rounds,
+            detail: format!(
+                "Unchained Barbarian level {level} Tireless Rage: you are no longer fatigued when \
+                 a rage ends, but raging again within {rounds} rounds (1 minute) of the last rage \
+                 ending grants no temporary hit points. The row carries no formula token at all -- \
+                 the 1 minute is read out of its own DESC and converted to the rounds every other \
+                 rage magnitude here is measured in"
+            ),
+        });
+    }
 
     push_deferred_class_features(
         "class_feature.pu.unchained_barbarian.other_features_deferred.unsupported",
@@ -24573,17 +24623,20 @@ fn ground_unchained_barbarian_class_features(
              states as a formula token: the chassis (borrowed unchanged from the Core Rulebook \
              Barbarian, which the corpus record confirms it does not override), Rage's rounds \
              per day, morale bonus, Armor Class penalty and temporary hit points, the Rage Power \
-             pool size, Danger Sense, Damage Reduction, Fast Movement, Indomitable Will, and the \
-             Uncanny Dodge flanking level and tier. This diagnostic is NOT claim-blocking; it \
-             carries the honest remainder. What is missing: (1) the 54 Unchained Rage Powers \
-             themselves -- the pool size is real, the catalogue of choices is not ingested; (2) \
-             APPLICATION rather than magnitude -- Rage is an activated state with no activation \
-             model here, so the morale bonus, Armor Class penalty, temporary hit points and \
-             Indomitable Will are derived correctly but deliberately not folded into any resting \
-             total; (3) Fast Movement's encumbrance/heavy-armor condition, which this engine \
-             cannot evaluate; (4) Tireless Rage and Mighty Rage carry no numeric token of their \
-             own beyond the tier bumps already applied above, and Weapon and Armor Proficiency \
-             is a proficiency-lane fact this engine models per-item, not per-class"
+             pool size, Danger Sense, Damage Reduction, Fast Movement, Indomitable Will, the \
+             Uncanny Dodge flanking level and tier, the morale bonus and temporary-hit-point \
+             multiplier Greater Rage and Mighty Rage each produce, and Tireless Rage's \
+             temporary-hit-point lockout. This diagnostic is NOT claim-blocking; it carries the \
+             honest remainder. What is missing: (1) the 54 Unchained Rage Powers themselves -- \
+             the pool size is real, the catalogue of choices is not ingested; (2) APPLICATION \
+             rather than magnitude -- Rage is an activated state with no activation model here, \
+             so the morale bonus, Armor Class penalty, temporary hit points and Indomitable Will \
+             are derived correctly but deliberately not folded into any resting total; (3) Fast \
+             Movement's encumbrance/heavy-armor condition, which this engine cannot evaluate; (4) \
+             Tireless Rage's other clause -- no longer being fatigued when a rage ends -- removes \
+             a condition this engine does not track, so it carries no magnitude; and Weapon and \
+             Armor Proficiency is a proficiency-lane fact this engine models per-item, not \
+             per-class"
             .to_owned(),
         explanations,
         diagnostics,
@@ -24770,6 +24823,66 @@ fn ground_unchained_monk_class_features(
             ),
         });
     }
+    // Four Unchained Monk records whose whole numeric content is their own
+    // English DESC: and which therefore computed nothing until now. Each
+    // number below is read out of the sentence quoted in
+    // `monk_features::prose_derived`, and that sentence is re-read off the
+    // ingested corpus record by that module's own tests.
+    if let Some(percent) =
+        monk_features::prose_derived::evasion_damage_percent_on_a_successful_reflex_save(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.evasion_damage_percent_on_a_made_reflex_save"
+                .to_owned(),
+            value: percent,
+            detail: format!(
+                "Unchained Monk level {level} Evasion: on a successful Reflex save against an \
+                 attack that normally deals half damage on a save, the monk takes {percent}% of \
+                 the damage -- none at all, where the default is half. Only while wearing light \
+                 armor or none, and a helpless monk gains no benefit; both conditions are stated \
+                 rather than applied, because this engine evaluates neither"
+            ),
+        });
+    }
+    if let Some(percent) =
+        monk_features::prose_derived::improved_evasion_damage_percent_on_a_failed_reflex_save(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.improved_evasion_damage_percent_on_a_failed_reflex_save"
+                .to_owned(),
+            value: percent,
+            detail: format!(
+                "Unchained Monk level {level} Improved Evasion: from level 9 a failed Reflex save \
+                 costs only {percent}% of the damage, while a successful one still costs none. A \
+                 helpless monk gains no benefit"
+            ),
+        });
+    }
+    if let Some(rolls) = monk_features::prose_derived::flawless_mind_will_save_rolls(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.flawless_mind_will_save_rolls".to_owned(),
+            value: rolls,
+            detail: format!(
+                "Unchained Monk level {level} Flawless Mind: every Will save is rolled {rolls} \
+                 times and the better result taken. A failed Will save against an effect lasting \
+                 longer than 1 hour may additionally be re-attempted at the end of each hour -- a \
+                 retry interval, not a second magnitude, and this engine has no save resolution \
+                 for either clause to act on"
+            ),
+        });
+    }
+    if let Some(penalty) = monk_features::prose_derived::timeless_body_aging_ability_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_monk.timeless_body_aging_ability_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Monk level {level} Timeless Body: the monk's ability-score penalty for \
+                 aging is {penalty} and he cannot be magically aged. A real zero, not a filler \
+                 one. Penalties already taken remain, age BONUSES still accrue, and the monk still \
+                 dies of old age when his time is up -- this number is the penalty, not immortality"
+            ),
+        });
+    }
 
     push_deferred_class_features(
         "class_feature.pu.unchained_monk.other_features_deferred.unsupported",
@@ -24779,7 +24892,10 @@ fn ground_unchained_monk_class_features(
              Monk's), the AC Bonus and its level component, the bonus-feat count, the Flurry of \
              Blows attack count, Fast Movement, the Ki Pool, the ki-power and style-strike pool \
              sizes, Still Mind, Perfect Self's damage reduction, and Stunning Fist's effective \
-             monk level. This diagnostic is NOT claim-blocking; it carries the honest remainder. \
+             monk level -- plus four whose only numbers are in their own prose: Evasion's and \
+             Improved Evasion's damage percentages, Flawless Mind's two Will-save rolls, and \
+             Timeless Body's zero aging penalty. This diagnostic is NOT claim-blocking; it \
+             carries the honest remainder. \
              What is missing: (1) the 31 ki powers, 10 style strikes and the Unchained Monk \
              bonus-feat list -- pool sizes are real, the option catalogues are not ingested; (2) \
              the ki-stat choice has no picker, so Wisdom is used and said so; (3) APPLICATION -- \
@@ -24788,9 +24904,14 @@ fn ground_unchained_monk_class_features(
              rather than contributions to a total; (4) unarmed strike damage is deliberately not \
              restated here -- the corpus grants the SAME shared Core Rulebook record, which this \
              engine already grounds, and a second copy would be a competing source of truth; (5) \
-             Evasion, Improved Evasion, Purity of Body, Tongue of the Sun and Moon, Timeless \
-             Body, Flawless Mind and Perfect Self's Outsider-type clause carry no numeric token \
-             and need engines this repo does not have; (6) archetype suppression flags \
+             Purity of Body (immunity to all diseases) and Tongue of the Sun and Moon (speak with \
+             any living creature) state NO number anywhere -- not in a formula token and not in \
+             their prose -- so nothing is computed for them and nothing is invented; the same is \
+             true of Perfect Self's Outsider-type clause. The four prose-derived numbers above \
+             are magnitudes and not applications: this engine resolves no saving throws, so \
+             Evasion, Improved Evasion and Flawless Mind change no rolled outcome, and it models \
+             no aging, so Timeless Body cancels a penalty that was never applied; (6) archetype \
+             suppression flags \
              (`Monk_CF_*`) are not implemented, so every progression above is the unsuppressed one"
             .to_owned(),
         explanations,
@@ -24906,6 +25027,43 @@ fn ground_unchained_rogue_class_features(
             ),
         });
     }
+    // Debilitating Injury: the Unchained Rogue's headline feature, and the
+    // one that made "23 of 64 compute nothing" a player-visible problem. Its
+    // corpus row (`:583`) is a bare declaration plus a DESC: -- no BONUS:, no
+    // DEFINE:, nothing PCGen itself computes -- so both numbers below are
+    // read out of its own sentences, quoted verbatim in
+    // `rogue_features::prose_derived` and re-checked against the ingested
+    // record by that module's tests.
+    if let Some(penalty) = rogue_features::prose_derived::general_penalty(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.debilitating_injury_penalty".to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Rogue level {level} Debilitating Injury: sneak attack damage also \
+                 imposes one chosen penalty for {} round -- Bewildered ({penalty} to Armor \
+                 Class), Disoriented ({penalty} on attack rolls) or Hampered (all speeds halved, \
+                 minimum 5 feet, and no 5-foot step). Only one may afflict a target at a time; \
+                 further sneak attacks extend it a round each. A standalone magnitude: this \
+                 engine resolves no attacks, so nothing consumes it",
+                rogue_features::prose_derived::DURATION_ROUNDS
+            ),
+        });
+    }
+    if let Some(penalty) = rogue_features::prose_derived::penalty_vs_the_rogue(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_rogue.debilitating_injury_penalty_against_this_rogue"
+                .to_owned(),
+            value: penalty,
+            detail: format!(
+                "Unchained Rogue level {level} Debilitating Injury: against the rogue's own \
+                 attacks the Bewildered and Disoriented penalties total {penalty}, escalating by \
+                 -2 at level 10 and again at level 16 to the row's stated maximum of -8. The \
+                 sentence is ambiguous about whether the escalation applies to the additional \
+                 penalty or the combined one, but both readings converge on -4 / -6 / -8 and the \
+                 stated cap confirms them, so nothing is being guessed between competing answers"
+            ),
+        });
+    }
     let class_skills = rogue_features::class_skills();
     explanations.push(ComputationExplanation {
         id: "class_feature.pu.unchained_rogue.class_skill_count".to_owned(),
@@ -24926,16 +25084,20 @@ fn ground_unchained_rogue_class_features(
              the corpus record confirms it does not override), Sneak Attack dice, Trapfinding, \
              Danger Sense, the Rogue Talent pool, Finesse Training's weapon choices, Rogue's Edge \
              skill unlocks, Master Strike's save DC, the Uncanny Dodge flanking level and tracker \
-             steps, and the class-skill list. This diagnostic is NOT claim-blocking; it carries \
-             the honest remainder. What is missing: (1) Debilitating Injury, which is real, is \
-             one of the class's headline features, and carries NO numeric magnitude on its corpus \
-             row -- its penalties live in prose only, so nothing is computed for it and nothing \
-             is invented; (2) the rogue-talent and skill-unlock catalogues are not ingested -- \
-             the pool sizes are real, the option lists are not; (3) APPLICATION rather than \
-             magnitude -- Sneak Attack dice have no damage total, Master Strike's DC no save \
-             resolution, and Danger Sense's dodge bonus no trap encounter to apply against; (4) \
-             Evasion, Improved Uncanny Dodge's qualitative clause, and the weapon/armor \
-             proficiency rows carry no numeric token"
+             steps, and the class-skill list -- plus Debilitating Injury, whose penalties are \
+             stated only in its own prose and are now derived from it. This diagnostic is NOT \
+             claim-blocking; it carries the honest remainder. What is missing: (1) the \
+             rogue-talent and skill-unlock catalogues are not ingested -- the pool sizes are \
+             real, the option lists are not; (2) APPLICATION rather than magnitude -- Sneak \
+             Attack dice have no damage total, Master Strike's DC no save resolution, Danger \
+             Sense's dodge bonus no trap encounter to apply against, and Debilitating Injury no \
+             attack resolution to be imposed by; (3) Debilitating Injury's Hampered option \
+             (speeds halved to a minimum of 5 feet, no 5-foot step) is a movement effect on a \
+             TARGET, and this engine models no targets, so only the two penalty magnitudes are \
+             grounded; (4) Unchained Rogue's own Evasion row is empty -- no DESC, no token -- and \
+             SERVESAS the shared Core Rulebook `Rogue ~ Evasion` record, so any magnitude belongs \
+             to that record and not to this book; Improved Uncanny Dodge's qualitative clause and \
+             the weapon/armor proficiency rows likewise carry no numeric token"
             .to_owned(),
         explanations,
         diagnostics,
@@ -25013,6 +25175,142 @@ fn ground_unchained_summoner_class_features(
                     .to_owned(),
         });
     }
+    // Nine Unchained Summoner records whose whole numeric content is their
+    // own English DESC:. Twelve of this class's seventeen features carry no
+    // arithmetic token at all -- it leans on prose harder than any of the
+    // other three -- so this is where most of the book's "computes nothing"
+    // set lived. Every sentence these come from is quoted in
+    // `summoner_features::prose_derived` and re-read off the ingested corpus
+    // record by that module's tests.
+    if let Some(rounds) = summoner_features::prose_derived::bond_senses_rounds_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.bond_senses_rounds_per_day".to_owned(),
+            value: i16::from(rounds),
+            detail: format!(
+                "Unchained Summoner level {level} Bond Senses: {rounds} rounds per day of sharing \
+                 the eidolon's senses (equal to summoner level), as a standard action, at \
+                 unlimited range so long as both are on the same plane"
+            ),
+        });
+    }
+    if let Some(bonus) = summoner_features::prose_derived::shield_ally_self_bonus(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.shield_ally_bonus".to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Summoner level {level} Shield Ally: a +{bonus} shield bonus to Armor \
+                 Class and a +{bonus} circumstance bonus on saving throws while within the \
+                 eidolon's reach -- +2 from level 4, rising to +4 at level 12 when Greater Shield \
+                 Ally names the summoner himself. Conditional on the eidolon being in reach and \
+                 not grappled, helpless, paralyzed, stunned or unconscious, none of which this \
+                 engine tracks, so it is NOT folded into the character's resting Armor Class"
+            ),
+        });
+    }
+    if let Some(uses) = summoner_features::prose_derived::makers_call_uses_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.makers_call_uses_per_day".to_owned(),
+            value: i16::from(uses),
+            detail: format!(
+                "Unchained Summoner level {level} Maker's Call: {uses} uses per day \
+                 (1 + (level - 6) / 4) of calling the eidolon to the summoner's side as dimension \
+                 door at the summoner's caster level"
+            ),
+        });
+    }
+    if let Some(points) = summoner_features::prose_derived::divertible_evolution_points(level) {
+        // Aspect grants the ability at 10 and Greater Aspect raises the same
+        // ceiling at 18, so the two records share one magnitude and are named
+        // together rather than double-counted.
+        if points > 0 {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.pu.unchained_summoner.aspect_evolution_points_divertible"
+                    .to_owned(),
+                value: i16::from(points),
+                detail: format!(
+                    "Unchained Summoner level {level} Aspect: up to {points} points may be \
+                     diverted from the eidolon's evolution pool to the summoner himself -- 2 from \
+                     level 10, raised to 6 by Greater Aspect at level 18, which additionally \
+                     changes the exchange rate so the eidolon loses 1 pool point per 2 diverted \
+                     (or fraction thereof) rather than 1 per 1. That second rule is a separate \
+                     rule and is deliberately NOT folded into this number. The evolution \
+                     catalogue these points are spent on is not ingested"
+                ),
+            });
+        }
+    }
+    if let Some(points) =
+        summoner_features::prose_derived::greater_aspect_divertible_evolution_points(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.greater_aspect_evolution_points_divertible"
+                .to_owned(),
+            value: i16::from(points),
+            detail: format!(
+                "Unchained Summoner level {level} Greater Aspect: the diversion ceiling rises to \
+                 {points} points, and the exchange rate improves -- the eidolon loses 1 pool \
+                 point for every 2 diverted (or fraction thereof) instead of 1 for each. The \
+                 ceiling is this number; the exchange rate is a second, separate rule and is not \
+                 folded into it"
+            ),
+        });
+    }
+    if let Some(bonus) = summoner_features::prose_derived::greater_shield_ally_bonus_to_allies(level)
+    {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.greater_shield_ally_bonus_to_allies"
+                .to_owned(),
+            value: bonus,
+            detail: format!(
+                "Unchained Summoner level {level} Greater Shield Ally: allies other than the \
+                 summoner within the eidolon's reach gain a +{bonus} shield bonus to Armor Class \
+                 and a +{bonus} circumstance bonus on saving throws. This is the half of the \
+                 feature that is genuinely new at level 12 -- the summoner's own bonus is the \
+                 Shield Ally row above, which this raises to +4"
+            ),
+        });
+    }
+    if let Some(rounds) = summoner_features::prose_derived::merge_forms_rounds_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.merge_forms_rounds_per_day".to_owned(),
+            value: i16::from(rounds),
+            detail: format!(
+                "Unchained Summoner level {level} Merge Forms: {rounds} rounds per day merged \
+                 into the eidolon (equal to summoner level), untargetable while merged. If the \
+                 eidolon is sent home mid-merge the summoner takes 4d6 damage and is stunned for \
+                 1 round -- stated, not applied, because this engine resolves no damage"
+            ),
+        });
+    }
+    if let Some(minutes) = summoner_features::prose_derived::twin_eidolon_minutes_per_day(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.twin_eidolon_minutes_per_day".to_owned(),
+            value: i16::from(minutes),
+            detail: format!(
+                "Unchained Summoner level {level} Twin Eidolon: {minutes} MINUTES per day in the \
+                 eidolon's shape (equal to summoner level), spent in 1-minute increments. Minutes \
+                 rather than rounds is the row's own unit and is not converted -- its two sibling \
+                 durations here, Bond Senses and Merge Forms, are rounds"
+            ),
+        });
+    }
+    if let Some(feet) = summoner_features::prose_derived::life_link_full_strength_range_feet(level) {
+        explanations.push(ComputationExplanation {
+            id: "class_feature.pu.unchained_summoner.life_link_full_strength_range_feet".to_owned(),
+            value: feet,
+            detail: format!(
+                "Unchained Summoner level {level} Life Link: the eidolon stays at full strength \
+                 within {feet} feet of the summoner; beyond that and within {} feet its current \
+                 and maximum hit points are halved, beyond that and within {} feet they are cut \
+                 by three quarters, and past {} feet it returns to its home plane. The summoner \
+                 may also sacrifice hit points one-for-one to prevent damage that would send it \
+                 home",
+                summoner_features::prose_derived::LIFE_LINK_HALF_STRENGTH_RANGE_FEET,
+                summoner_features::prose_derived::LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET,
+                summoner_features::prose_derived::LIFE_LINK_BANISHMENT_RANGE_FEET,
+            ),
+        });
+    }
     let class_skills = summoner_features::class_skills();
     explanations.push(ComputationExplanation {
         id: "class_feature.pu.unchained_summoner.class_skill_count".to_owned(),
@@ -25033,8 +25331,12 @@ fn ground_unchained_summoner_class_features(
              Summoner, which the corpus record confirms it does not override -- the one of the \
              four Unchained classes whose base class is not the Core Rulebook), the eidolon's \
              companion level and evolution pool, the Summon Monster spell level and uses per day, \
-             the spell-list swap flag, and the class-skill list. This diagnostic is NOT \
-             claim-blocking; it carries the honest remainder. THE LARGEST MISSING PIECE IS \
+             the spell-list swap flag, and the class-skill list -- plus nine whose only numbers \
+             are in their own prose: Life Link's range bands, Bond Senses' rounds per day, Shield \
+             Ally's and Greater Shield Ally's bonuses, Maker's Call's uses per day, Aspect's and \
+             Greater Aspect's diversion ceilings, Merge Forms' rounds per day and Twin Eidolon's \
+             minutes per day. This diagnostic is NOT claim-blocking; it carries the honest \
+             remainder. THE LARGEST MISSING PIECE IS \
              SPELLCASTING: this class has its own 202-spell list (12/35/39/39/27/23/27 at levels \
              0-6) declared in the book, and none of it is transcribed, so an Unchained Summoner \
              computes with no spells known, no spells per day and no spell DCs. That is a real \
@@ -25043,10 +25345,16 @@ fn ground_unchained_summoner_class_features(
              of those 202 spells are defined only in Ultimate Magic and Ultimate Combat, neither \
              of which is an ingested book, so the list cannot be completed here even in \
              principle. Also missing: the 13 eidolon subtypes are named slots with no contents \
-             ingested; the evolution catalogue the pool is spent on is not ingested; and Bond \
-             Senses, Shield Ally, Maker's Call, Transposition, Aspect, Greater Shield Ally, Life \
-             Bond, Greater Aspect, Merge Forms and Twin Eidolon state their effects in prose with \
-             no formula token, so nothing is computed for them"
+             ingested; the evolution catalogue the pool is spent on is not ingested; and three \
+             features state no number even in prose, so nothing is computed for them and nothing \
+             is invented -- CANTRIPS, whose count lives on Table 1-5 rather than on this row and \
+             whose spell list is the untranscribed one above; TRANSPOSITION, which spends a \
+             Maker's Call use to swap places rather than adding a quantity of its own; and LIFE \
+             BOND, whose only numbers ('1 or more hit points', damage 'transferred 1 point at a \
+             time') are the mechanic's granularity and not a quantity a player tracks. The nine \
+             prose-derived magnitudes above are magnitudes and not applications: none of them is \
+             folded into a resting total, because every one is gated on the eidolon's position or \
+             condition, which this engine does not model"
             .to_owned(),
         explanations,
         diagnostics,

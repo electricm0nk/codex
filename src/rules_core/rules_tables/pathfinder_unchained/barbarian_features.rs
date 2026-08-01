@@ -353,6 +353,21 @@ pub fn rage_armor_class_penalty(level: u8) -> Option<i16> {
 ///
 /// `None` below [`RAGE_LEVEL`].
 pub fn rage_temporary_hit_points(barbarian_level: u8, character_level: u8) -> Option<i16> {
+    let multiplier = rage_temporary_hit_point_multiplier(barbarian_level)?;
+    Some(i16::from(character_level) * multiplier)
+}
+
+/// The multiplier `TL` is taken by in [`rage_temporary_hit_points`]: `2`
+/// from [`RAGE_LEVEL`], `3` from [`GREATER_RAGE_LEVEL`], `4` from
+/// [`MIGHTY_RAGE_LEVEL`].
+///
+/// Factored out of [`rage_temporary_hit_points`] rather than duplicated,
+/// because the Greater Rage and Mighty Rage rows each need to state the
+/// multiplier their own `BONUS:VAR|RageBonusHP|TL` token produces, and two
+/// copies of a three-branch progression is exactly how the second one drifts.
+///
+/// `None` below [`RAGE_LEVEL`].
+pub fn rage_temporary_hit_point_multiplier(barbarian_level: u8) -> Option<i16> {
     if barbarian_level < RAGE_LEVEL {
         return None;
     }
@@ -363,7 +378,46 @@ pub fn rage_temporary_hit_points(barbarian_level: u8, character_level: u8) -> Op
     if barbarian_level >= MIGHTY_RAGE_LEVEL {
         multiplier += 1;
     }
-    Some(i16::from(character_level) * multiplier)
+    Some(multiplier)
+}
+
+/// The rage morale bonus a barbarian who has reached [`GREATER_RAGE_LEVEL`]
+/// actually has: `+3` at levels 11-19, `+4` from 20 once Mighty Rage stacks
+/// on top. `None` below 11.
+///
+/// # Why this is not the same row as [`rage_morale_bonus`]
+///
+/// `pu_abilities_class.lst:294` is its own ingested `class_feature` record
+/// (`Unchained Barbarian ~ Greater Rage`) and its whole content is two
+/// tokens — `BONUS:VAR|RageBonus|1` and `BONUS:VAR|RageBonusHP|TL`. Before
+/// this function existed the record computed nothing a player could see: the
+/// `+1` disappeared into [`rage_morale_bonus`]'s total and the row named
+/// "Greater Rage" carried no number at all. This states the value the record
+/// is responsible for producing, so the feature the sheet names has a
+/// magnitude next to it.
+///
+/// It deliberately reports the *resulting* bonus rather than the bare `+1`
+/// contribution: `+1` on its own is not a number a player can use, and the
+/// contribution is already spelled out in the receipt's derivation text.
+pub fn greater_rage_morale_bonus(level: u8) -> Option<i16> {
+    if level < GREATER_RAGE_LEVEL {
+        return None;
+    }
+    rage_morale_bonus(level)
+}
+
+/// The rage morale bonus a barbarian who has reached [`MIGHTY_RAGE_LEVEL`]
+/// has: `+4`. `None` below 20.
+///
+/// `pu_abilities_class.lst:296` (`Unchained Barbarian ~ Mighty Rage`) carries
+/// the identical two tokens as Greater Rage — `BONUS:VAR|RageBonus|1` and
+/// `BONUS:VAR|RageBonusHP|TL` — stacking a second time. Same reasoning as
+/// [`greater_rage_morale_bonus`].
+pub fn mighty_rage_morale_bonus(level: u8) -> Option<i16> {
+    if level < MIGHTY_RAGE_LEVEL {
+        return None;
+    }
+    rage_morale_bonus(level)
 }
 
 /// Rage powers known: `barbarian level / 2` (integer division).
@@ -484,6 +538,50 @@ pub fn uncanny_dodge_tier(level: u8) -> u8 {
         tier += 1;
     }
     tier
+}
+
+/// Numbers stated only in a row's English `DESC:`, never in a
+/// `BONUS:`/`DEFINE:` token.
+///
+/// Kept in its own module for the same reason as
+/// [`super::rogue_features::prose_derived`] and
+/// [`super::summoner_features::prose_derived`]: so no call site can mistake a
+/// sentence for a formula. Each item quotes the sentence it came from, and
+/// `tireless_rage_prose_still_says_one_minute` re-reads that sentence off the
+/// ingested corpus record so a corpus edit cannot silently invalidate it.
+pub mod prose_derived {
+    use super::TIRELESS_RAGE_LEVEL;
+
+    /// Rounds in the minute Tireless Rage's temporary-hit-point lockout
+    /// lasts. PF1's own round length; stated here rather than inlined so the
+    /// conversion in [`tireless_rage_temporary_hit_point_lockout_rounds`] is
+    /// visible instead of magic.
+    pub const ROUNDS_PER_MINUTE: i16 = 10;
+
+    /// How long after a rage ends an Unchained Barbarian gets **no**
+    /// temporary hit points from raging again: 10 rounds.
+    ///
+    /// From `pu_abilities_class.lst:295`, verbatim: "If you enters a rage
+    /// again within 1 minute of ending a rage, you don't gain any temporary
+    /// hit points from your rage." (The subject/verb disagreement is the
+    /// corpus's own; it is quoted, not corrected.)
+    ///
+    /// That row carries **no** `BONUS:` or `DEFINE:` token of any kind — its
+    /// whole numeric content is the "1 minute" in that sentence, converted
+    /// here to the rounds every other rage magnitude in this module is
+    /// measured in ([`super::rage_rounds_per_day`]). Flat: the sentence
+    /// states no level scaling, so this takes a level only to gate on the
+    /// grant.
+    ///
+    /// The row's other clause — "You are no longer fatigued at the end of
+    /// your rage" — removes a condition this engine does not track, so it
+    /// carries no magnitude and none is invented for it.
+    pub fn tireless_rage_temporary_hit_point_lockout_rounds(level: u8) -> Option<i16> {
+        if level < TIRELESS_RAGE_LEVEL {
+            return None;
+        }
+        Some(ROUNDS_PER_MINUTE)
+    }
 }
 
 #[cfg(test)]
@@ -731,6 +829,86 @@ mod tests {
         assert_eq!(rage_temporary_hit_points(11, 15), Some(45));
         // Barbarian 10 / Fighter 5: one barbarian level short of Greater Rage.
         assert_eq!(rage_temporary_hit_points(10, 15), Some(30));
+    }
+
+    /// The multiplier `Unchained Barbarian ~ Greater Rage` and
+    /// `~ Mighty Rage` each raise by one, factored out of
+    /// `rage_temporary_hit_points` so those two rows can state it.
+    #[test]
+    fn rage_temporary_hit_point_multiplier_is_two_three_four() {
+        assert_eq!(rage_temporary_hit_point_multiplier(0), None);
+        for level in RAGE_LEVEL..GREATER_RAGE_LEVEL {
+            assert_eq!(rage_temporary_hit_point_multiplier(level), Some(2), "level {level}");
+        }
+        for level in GREATER_RAGE_LEVEL..MIGHTY_RAGE_LEVEL {
+            assert_eq!(rage_temporary_hit_point_multiplier(level), Some(3), "level {level}");
+        }
+        assert_eq!(rage_temporary_hit_point_multiplier(MIGHTY_RAGE_LEVEL), Some(4));
+        // The factoring must not have changed the product.
+        for barbarian_level in RAGE_LEVEL..=MAX_SUPPORTED_LEVEL {
+            let multiplier = rage_temporary_hit_point_multiplier(barbarian_level).expect("granted");
+            assert_eq!(
+                rage_temporary_hit_points(barbarian_level, barbarian_level),
+                Some(i16::from(barbarian_level) * multiplier),
+                "level {barbarian_level}"
+            );
+        }
+    }
+
+    /// `Unchained Barbarian ~ Greater Rage` (`:294`) computed nothing a
+    /// player could see before this: its `BONUS:VAR|RageBonus|1` vanished
+    /// into the Rage total and the row named "Greater Rage" carried no
+    /// number.
+    #[test]
+    fn greater_rage_states_the_morale_bonus_it_produces() {
+        for level in 0..GREATER_RAGE_LEVEL {
+            assert_eq!(greater_rage_morale_bonus(level), None, "level {level}");
+        }
+        for level in GREATER_RAGE_LEVEL..MIGHTY_RAGE_LEVEL {
+            assert_eq!(greater_rage_morale_bonus(level), Some(3), "level {level}");
+        }
+        // Mighty Rage stacks on top, so the Greater Rage row's own resulting
+        // value at 20 is the same +4 the character actually has.
+        assert_eq!(greater_rage_morale_bonus(MIGHTY_RAGE_LEVEL), Some(4));
+    }
+
+    /// `Unchained Barbarian ~ Mighty Rage` (`:296`) — same defect, same fix.
+    #[test]
+    fn mighty_rage_states_the_morale_bonus_it_produces() {
+        for level in 0..MIGHTY_RAGE_LEVEL {
+            assert_eq!(mighty_rage_morale_bonus(level), None, "level {level}");
+        }
+        assert_eq!(mighty_rage_morale_bonus(MIGHTY_RAGE_LEVEL), Some(4));
+    }
+
+    /// `Unchained Barbarian ~ Tireless Rage` (`:295`) carries no `BONUS:` or
+    /// `DEFINE:` token at all — its only number is the "1 minute" in its
+    /// `DESC:`. Both halves of that claim are checked here.
+    #[test]
+    fn tireless_rage_lockout_is_the_one_minute_its_prose_states() {
+        use prose_derived::tireless_rage_temporary_hit_point_lockout_rounds as lockout;
+        for level in 0..TIRELESS_RAGE_LEVEL {
+            assert_eq!(lockout(level), None, "level {level}");
+        }
+        for level in TIRELESS_RAGE_LEVEL..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(lockout(level), Some(10), "level {level}");
+        }
+
+        let record = record_for("Unchained Barbarian ~ Tireless Rage");
+        assert!(
+            bonus_tokens(&record).is_empty(),
+            "Tireless Rage must still carry no BONUS: token -- if it gained one, the \
+             prose-derived reading is no longer the only source and must be revisited"
+        );
+        let description = record["description"].as_str().expect("Tireless Rage carries a DESC:");
+        assert!(
+            description.contains(
+                "If you enters a rage again within 1 minute of ending a rage, you don't gain any \
+                 temporary hit points from your rage."
+            ),
+            "Tireless Rage prose changed; the 1-minute lockout reading must be re-derived. \
+             Corpus says: {description}"
+        );
     }
 
     #[test]

@@ -32,23 +32,117 @@
 //!      ! -name LICENSE.json -not -path '*/_parity/*' | wc -l   # 635
 //! ```
 //!
-//! **Scope note, stated rather than left to be discovered.** Only the two
-//! books this cycle owns are asserted here. `data/corpus/core_rulebook` and
-//! `data/corpus/beastiary` carry the *same* staleness from the *same* cause
-//! (`src/bin/ingest_races.rs` added race + race_trait records to both without
-//! restating their `LICENSE.json`): core_rulebook says 3326 against 3400 real
-//! records on disk, beastiary says 45 against 164. Those two artifacts are
-//! outside this cycle's granted write scope, so correcting them — and
-//! extending `BOOKS` below to cover them, which is a one-line change — is a
-//! reported finding rather than a silent edit. `BOOKS` is deliberately the
-//! only thing that needs to change when that happens.
+//! # Why the guard did not catch core_rulebook and beastiary
+//!
+//! It was asked not to. The previous revision of this file carried
+//! `const BOOKS: &[&str] = &["pathfinder_unchained", "advanced_race_guide"]`
+//! and a scope note recording — accurately, in full, and with both real
+//! numbers — that `core_rulebook` said 3326 against 3400 records on disk and
+//! `beastiary` said 45 against 164, from the same cause
+//! (`src/bin/ingest_races.rs` added race + race_trait records to both books on
+//! 2026-07-31, four days after `bb497db0` last wrote either `LICENSE.json`,
+//! and that binary does not touch the compliance artifact). Those two files
+//! were outside that cycle's write scope, so the defect was reported instead
+//! of silently edited. That was the right call. What it left behind was a
+//! guard whose coverage was a **hand-maintained constant** — so the drift it
+//! existed to stop was invisible to it *by construction*, on exactly the two
+//! books that were drifting.
+//!
+//! **The fix is to stop hand-maintaining the list.** `books_on_disk()` below
+//! derives the covered set from the filesystem: every `data/corpus/<book>/`
+//! that ships a `LICENSE.json` is asserted. A seventh book cannot be added
+//! without this guard covering it, and no future cycle has to remember to
+//! extend anything.
+//!
+//! The same flaw had a second instance in this file, found while fixing the
+//! first and fixed the same way. Both remaining hardcoded literals were the
+//! string `"PI_REDACTED"` — a value the schema **cannot emit**.
+//! `shape_b_v1::License::PiRedacted` serialises as `"PI-REDACTED"` (hyphen;
+//! `shape_b_v1.rs:122`), and `advanced_class_guide/spell/discern_next_of_kin.json`
+//! is the one record on disk in that state. Under the old `BOOKS` that book
+//! was never read, so the mismatch was inert; the moment coverage widened,
+//! `every_counted_record_carries_a_real_license_classification` would have
+//! failed a correctly-classified record. Both literals are now derived by
+//! serialising the enum itself, so the test cannot disagree with the schema.
+//!
+//! Two books — `advanced_class_guide` and `advanced_players_guide` — ship a
+//! `LICENSE.json` that states no `records_processed` at all. That is a real
+//! third gap, and it is **pinned rather than papered over** by
+//! [`exactly_the_two_known_books_omit_a_stated_record_count`]: a new book
+//! omitting the field fails, and either of those two gaining it also fails,
+//! forcing the exemption list to shrink. Adding the field to those two
+//! artifacts is outside this cycle's granted write scope.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
 use std::path::{Path, PathBuf};
 
-/// The books whose `LICENSE.json` this cycle owns and therefore asserts.
-const BOOKS: &[&str] = &["pathfinder_unchained", "advanced_race_guide"];
+use codex::rules_core::shape_b_v1::License;
+
+/// The `license` wire values a record may legitimately carry, taken from the
+/// schema enum rather than retyped. `License::Pi` is deliberately included:
+/// it is a state `shape_b_v1` defines and `validate_license` accepts, so a
+/// record in it is classified, not unclassified — whether it *should* ship
+/// that way is `validate_license`'s question, not this artifact's.
+fn classified_license_values() -> BTreeSet<String> {
+    [License::Ogl, License::Pi, License::PiRedacted]
+        .into_iter()
+        .map(wire_value)
+        .collect()
+}
+
+/// One `License` variant's exact serialised form. Derived, so a rename of the
+/// wire string in `shape_b_v1.rs` moves this test with it instead of silently
+/// making it assert a string nothing produces.
+fn wire_value(license: License) -> String {
+    serde_json::to_value(license)
+        .expect("License serialises")
+        .as_str()
+        .expect("License serialises to a string")
+        .to_owned()
+}
+
+/// The books this guard covers: every `data/corpus/<book>/` that ships a
+/// `LICENSE.json`.
+///
+/// Derived from the filesystem, never listed. This is the whole repair — the
+/// previous hand-maintained constant is exactly why core_rulebook's 3326 and
+/// beastiary's 45 could sit stale under a green suite.
+fn books_on_disk() -> Vec<String> {
+    let root = repo_root().join("data/corpus");
+    let mut books: Vec<String> = fs::read_dir(&root)
+        .unwrap_or_else(|e| panic!("{} must be readable: {e}", root.display()))
+        .map(|entry| entry.expect("readable dir entry").path())
+        .filter(|path| path.join("LICENSE.json").is_file())
+        .map(|path| path.file_name().expect("book dir has a name").to_string_lossy().into_owned())
+        .collect();
+    books.sort();
+    assert!(
+        books.len() >= 6,
+        "derived only {} books with a LICENSE.json; the derivation, not the corpus, is broken",
+        books.len()
+    );
+    books
+}
+
+/// Books whose `LICENSE.json` states no `records_processed`.
+///
+/// These two were classified before the field existed and were not revisited;
+/// their artifacts are outside this cycle's granted write scope. Pinned as an
+/// exact set by [`exactly_the_two_known_books_omit_a_stated_record_count`] so
+/// the exemption cannot quietly grow, and so closing it forces this list down.
+const BOOKS_WITHOUT_A_STATED_RECORD_COUNT: &[&str] =
+    &["advanced_class_guide", "advanced_players_guide"];
+
+/// The books this file's count assertions actually run over: everything on
+/// disk that claims a number, which is the only thing a number can be checked
+/// against.
+fn books_stating_a_record_count() -> Vec<String> {
+    books_on_disk()
+        .into_iter()
+        .filter(|book| !BOOKS_WITHOUT_A_STATED_RECORD_COUNT.contains(&book.as_str()))
+        .collect()
+}
 
 /// `_parity` holds PCGen round-trip comparison fixtures (a `.pcg` character
 /// file and its expected JSON), not licensed content records extracted from
@@ -126,7 +220,8 @@ fn stated_u64(license: &serde_json::Value, field: &str, book: &str) -> u64 {
 /// that shrank.
 #[test]
 fn every_owned_books_stated_record_count_equals_the_records_on_disk() {
-    for book in BOOKS {
+    for book in books_stating_a_record_count() {
+        let book = book.as_str();
         let by_kind = record_files_by_kind(book);
         let on_disk: usize = by_kind.values().map(Vec::len).sum();
         let stated = stated_u64(&license_json(book), "records_processed", book) as usize;
@@ -162,7 +257,9 @@ fn every_owned_books_stated_record_count_equals_the_records_on_disk() {
 /// when another binary adds records. Derived here from the records themselves.
 #[test]
 fn every_owned_books_stated_redaction_count_equals_the_redactions_on_disk() {
-    for book in BOOKS {
+    let redacted = wire_value(License::PiRedacted);
+    for book in books_stating_a_record_count() {
+        let book = book.as_str();
         let mut redacted_paths = Vec::new();
         for files in record_files_by_kind(book).values() {
             for path in files {
@@ -170,7 +267,9 @@ fn every_owned_books_stated_redaction_count_equals_the_redactions_on_disk() {
                     serde_json::from_str(&fs::read_to_string(path).expect("readable record"))
                         .unwrap_or_else(|e| panic!("{} must be valid JSON: {e}", path.display()));
                 let license = record.get("license").and_then(serde_json::Value::as_str);
-                if license == Some("PI_REDACTED") || record.get("pi_marker").is_some_and(|m| !m.is_null()) {
+                if license == Some(redacted.as_str())
+                    || record.get("pi_marker").is_some_and(|m| !m.is_null())
+                {
                     redacted_paths.push(path.clone());
                 }
             }
@@ -196,7 +295,12 @@ fn every_owned_books_stated_redaction_count_equals_the_redactions_on_disk() {
 /// still be false.
 #[test]
 fn every_counted_record_carries_a_real_license_classification() {
-    for book in BOOKS {
+    let classified = classified_license_values();
+    // Every book on disk, not only the ones stating a count: a record's
+    // classification is checkable without any number in the artifact, so the
+    // two books missing `records_processed` are still covered here.
+    for book in books_on_disk() {
+        let book = book.as_str();
         let mut unclassified = Vec::new();
         for files in record_files_by_kind(book).values() {
             for path in files {
@@ -204,19 +308,75 @@ fn every_counted_record_carries_a_real_license_classification() {
                     serde_json::from_str(&fs::read_to_string(path).expect("readable record"))
                         .unwrap_or_else(|e| panic!("{} must be valid JSON: {e}", path.display()));
                 match record.get("license").and_then(serde_json::Value::as_str) {
-                    Some("OGL") | Some("PI_REDACTED") => {}
+                    Some(value) if classified.contains(value) => {}
                     _ => unclassified.push(path.clone()),
                 }
             }
         }
         assert!(
             unclassified.is_empty(),
-            "{} record(s) counted in {book}'s LICENSE.json carry no OGL/PI_REDACTED \
+            "{} record(s) counted in {book}'s LICENSE.json carry no {classified:?} \
              classification: {:?}",
             unclassified.len(),
             unclassified.iter().take(4).collect::<Vec<_>>()
         );
     }
+}
+
+/// The exemption list is exactly the two books known to omit the field.
+///
+/// Two-directional on purpose. A newly-added book whose `LICENSE.json` states
+/// no `records_processed` fails here rather than slipping past the count guard
+/// unnoticed — which is the same failure mode, one level up, as the
+/// hand-maintained `BOOKS` constant this file used to carry. And the day
+/// `advanced_class_guide` or `advanced_players_guide` gains the field, this
+/// fails too, forcing `BOOKS_WITHOUT_A_STATED_RECORD_COUNT` to shrink and the
+/// count guard to widen.
+#[test]
+fn exactly_the_two_known_books_omit_a_stated_record_count() {
+    let omitting: BTreeSet<String> = books_on_disk()
+        .into_iter()
+        .filter(|book| license_json(book).get("records_processed").is_none())
+        .collect();
+    let expected: BTreeSet<String> = BOOKS_WITHOUT_A_STATED_RECORD_COUNT
+        .iter()
+        .map(|book| (*book).to_owned())
+        .collect();
+
+    assert_eq!(
+        omitting, expected,
+        "the set of books whose LICENSE.json states no `records_processed` changed. Either a new \
+         book shipped a compliance artifact without the count (state it), or one of the two known \
+         omissions was filled in (remove it from BOOKS_WITHOUT_A_STATED_RECORD_COUNT so the count \
+         guard covers that book)."
+    );
+}
+
+/// Every book on disk is covered by this file, one way or the other.
+///
+/// The guard against the guard. `books_on_disk()` derives coverage, and this
+/// asserts the derivation actually reaches the whole corpus — so "which books
+/// does this test check?" has an answer that cannot drift away from "all of
+/// them" the way the old constant did.
+#[test]
+fn no_book_on_disk_escapes_this_files_coverage() {
+    let all: BTreeSet<String> = books_on_disk().into_iter().collect();
+    let counted: BTreeSet<String> = books_stating_a_record_count().into_iter().collect();
+    let exempt: BTreeSet<String> = BOOKS_WITHOUT_A_STATED_RECORD_COUNT
+        .iter()
+        .map(|book| (*book).to_owned())
+        .collect();
+
+    assert_eq!(
+        all,
+        counted.union(&exempt).cloned().collect::<BTreeSet<String>>(),
+        "a book on disk is in neither the count-guarded set nor the recorded-exemption set"
+    );
+    assert!(
+        exempt.is_subset(&all),
+        "BOOKS_WITHOUT_A_STATED_RECORD_COUNT names a book that is not on disk: {:?}",
+        exempt.difference(&all).collect::<Vec<_>>()
+    );
 }
 
 /// The prose `screening_method_note` quotes the record count in words. A
@@ -226,7 +386,8 @@ fn every_counted_record_carries_a_real_license_classification() {
 /// deliberate.
 #[test]
 fn the_screening_note_quotes_the_same_count_the_field_states() {
-    for book in BOOKS {
+    for book in books_stating_a_record_count() {
+        let book = book.as_str();
         let license = license_json(book);
         let stated = stated_u64(&license, "records_processed", book);
         let note = license

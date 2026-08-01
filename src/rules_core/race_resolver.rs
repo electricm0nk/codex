@@ -81,6 +81,8 @@ use std::fs;
 use std::path::{Path, PathBuf};
 
 use crate::rules_core::corpus_loader::BookCorpusRoot;
+use crate::rules_core::feat_effects::FeatDisplayValueDeltas;
+use crate::rules_core::pcgen_desc::{render_pcgen_desc_tokens, PcgenDisplayValues, RenderedPcgenDesc};
 use crate::rules_core::shape_b_v1::{
     validate_license, CorpusRecordV1, CorpusSource, RaceCacheData, RaceTraitCacheData, RawBonusChain, RawToken,
 };
@@ -163,6 +165,126 @@ pub struct RaceTraitRecord {
 impl RaceTraitRecord {
     fn key(&self) -> &str {
         &self.data.key
+    }
+
+    /// This row's own display variables: every variable it both `DEFINE`s and
+    /// finishes with unconditional integer `BONUS:VAR` tokens.
+    ///
+    /// PCGen writes a racial constant across two tokens —
+    /// `DEFINE:Gnome_Hatred_AttackBonus|0` plus
+    /// `BONUS:VAR|Gnome_Hatred_AttackBonus|1` is the number one — and the row's
+    /// own `DESC:` then substitutes it as `%1`. Reading it back is
+    /// transcription of a constant, not formula evaluation, so
+    /// `decisions.md §24`'s ban on an interpreter is not engaged. This is the
+    /// same reading `ingest_races::same_row_vars` already performs at ingest
+    /// time, moved here so it can be combined with a *character's* feats
+    /// instead of being frozen into the stored description.
+    ///
+    /// A variable stops resolving the instant any contribution stops being a
+    /// same-row literal — a conditional `BONUS:VAR` carrying a trailing
+    /// `PRE...` qualifier, an amount naming another variable, or a base
+    /// declared in a different file. It is then absent rather than guessed,
+    /// which leaves its `%N` dropped and reported exactly as before.
+    ///
+    /// `BONUS:` tokens live in `raw_bonus_chains`, not `raw_tokens` — the
+    /// ingest splits them out, and reading `raw_tokens` for them silently finds
+    /// nothing.
+    pub fn same_row_display_values(&self) -> PcgenDisplayValues {
+        // `Option<i64>` while accumulating so "declared but unresolvable" is
+        // distinguishable from "never mentioned"; only the resolved ones are
+        // published.
+        let mut accumulator: BTreeMap<String, Option<i64>> = BTreeMap::new();
+
+        for token in self.data.raw_tokens.iter().filter(|token| token.key == "DEFINE") {
+            let Some((name, base)) = token.value.split_once('|') else { continue };
+            accumulator.insert(name.trim().to_string(), base.trim().parse::<i64>().ok());
+        }
+
+        for chain in &self.data.raw_bonus_chains {
+            let quals = &chain.qualifiers;
+            if !quals.first().is_some_and(|q| q.eq_ignore_ascii_case("VAR")) {
+                continue;
+            }
+            let (Some(names), Some(amount)) = (quals.get(1), quals.get(2)) else { continue };
+            let conditional =
+                quals[3.min(quals.len())..].iter().any(|q| q.starts_with("PRE") || q.starts_with("!PRE"));
+            let amount = if conditional { None } else { amount.trim().parse::<i64>().ok() };
+            for name in names.split(',') {
+                let name = name.trim().to_string();
+                match accumulator.get_mut(&name) {
+                    // Never `DEFINE`d here, so the base lives elsewhere and
+                    // this row cannot finish the variable on its own.
+                    None => {
+                        accumulator.insert(name, None);
+                    }
+                    Some(slot) => {
+                        *slot = match (*slot, amount) {
+                            (Some(current), Some(add)) => Some(current + add),
+                            _ => None,
+                        };
+                    }
+                }
+            }
+        }
+
+        let mut values = PcgenDisplayValues::new();
+        for (name, resolved) in accumulator {
+            if let Some(value) = resolved {
+                values.set(&name, value);
+            }
+        }
+        values
+    }
+
+    /// This row's display variables with a character's feat contributions
+    /// added — the values its description should actually render for them.
+    ///
+    /// A feat delta applies only to a variable this row itself resolves. That
+    /// is deliberate and load-bearing: Great Hatred's `+1` belongs in
+    /// `Gnome ~ Hatred`'s sentence and nowhere else, and a delta that found no
+    /// base would otherwise invent one out of the feat alone.
+    pub fn display_values_with(&self, deltas: &FeatDisplayValueDeltas) -> PcgenDisplayValues {
+        let mut values = self.same_row_display_values();
+        for (name, delta) in [
+            ("Gnome_Hatred_AttackBonus", deltas.gnome_hatred_attack_bonus),
+            ("Halfling_AdaptableLuck_Times", deltas.halfling_adaptable_luck_times),
+            ("Halfling_AdaptableLuck_Bonus", deltas.halfling_adaptable_luck_bonus),
+        ] {
+            if delta == 0 {
+                continue;
+            }
+            if let Some(base) = values.get(name) {
+                values.set(name, base + i64::from(delta));
+            }
+        }
+        values
+    }
+
+    /// This record's player-facing description, rendered against `values`.
+    ///
+    /// Reads the record's `DESC:` tokens rather than the stored `description`
+    /// string, because the stored one is the *already-collapsed* result of
+    /// resolving the row against itself at ingest time — the number is baked in
+    /// and the gate branches are already chosen. Re-rendering from the tokens
+    /// is what lets a feat change both.
+    ///
+    /// Falls back to the stored description for a record carrying no `DESC:`
+    /// token, so this never returns less than the record already shipped.
+    pub fn render_description(&self, values: &PcgenDisplayValues) -> RenderedPcgenDesc {
+        let tokens: Vec<&str> = self
+            .data
+            .raw_tokens
+            .iter()
+            .filter(|token| token.key == "DESC")
+            .map(|token| token.value.as_str())
+            .collect();
+        if tokens.is_empty() {
+            return RenderedPcgenDesc {
+                text: self.data.description.clone().unwrap_or_default(),
+                dropped_args: Vec::new(),
+            };
+        }
+        render_pcgen_desc_tokens(&tokens, values)
     }
 
     /// Every ability key this record grants outright through PCGen's

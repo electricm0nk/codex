@@ -64,11 +64,19 @@ const LEVEL: u8 = 10;
 /// Several features gate above level 10 (Unchained Barbarian's Indomitable
 /// Will at 14, for one), so these are the counts at 10 and are not the
 /// classes' full feature totals.
+///
+/// **Raised 2026-08-01** from `(10, 10, 9, 6)` by the cycle that gave the 17
+/// prose-derived class features a displayed magnitude — Monk `+2` (Evasion,
+/// Improved Evasion), Rogue `+2` (Debilitating Injury's two penalties),
+/// Summoner `+5` (Life Link, Bond Senses, Shield Ally, Maker's Call, Aspect).
+/// Barbarian does not move because all three of its newly-closed features
+/// gate above level 10. The before/after pair and the per-feature reasoning
+/// live in `tests/sd27_pu_prose_derived_class_features_reach_the_sheet.rs`.
 const PU_CLASS_PIN: &[(&str, usize)] = &[
     ("unchained_barbarian", 10),
-    ("unchained_monk", 10),
-    ("unchained_rogue", 9),
-    ("unchained_summoner", 6),
+    ("unchained_monk", 12),
+    ("unchained_rogue", 11),
+    ("unchained_summoner", 11),
 ];
 
 fn fixture() -> CharacterInput {

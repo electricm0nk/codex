@@ -604,6 +604,105 @@ pub fn stunning_fist_monk_level(level: u8) -> Option<i16> {
     Some(i16::from(level))
 }
 
+/// Numbers stated only in a row's English `DESC:`, never in a
+/// `BONUS:`/`DEFINE:` token.
+///
+/// Kept in its own module for the same reason as
+/// [`super::rogue_features::prose_derived`] and
+/// [`super::summoner_features::prose_derived`]: so no call site can mistake a
+/// sentence for a formula. Each item quotes the sentence it came from, and
+/// `prose_derived_functions_still_match_the_corpus_prose` re-reads those
+/// sentences off the ingested corpus records.
+///
+/// **What is deliberately absent.** Purity of Body (`:470`, "immunity to all
+/// diseases") and Tongue of the Sun and Moon (`:473`, "understand and speak
+/// with any living creature") state no number at all, in prose or in token.
+/// They get no function here, because there is nothing to compute and a
+/// fabricated `1` would be a magnitude the book never wrote.
+pub mod prose_derived {
+    use super::{EVASION_LEVEL, FLAWLESS_MIND_LEVEL, IMPROVED_EVASION_LEVEL, TIMELESS_BODY_LEVEL};
+
+    /// The percentage of damage an Unchained Monk takes on a **successful**
+    /// Reflex save against an attack that normally deals half damage on a
+    /// save: `0`.
+    ///
+    /// From `pu_abilities_class.lst:465`, verbatim: "If a monk succeeds at a
+    /// Reflex saving throw against an attack that normally deals half damage
+    /// on a successful save, he instead takes no damage."
+    ///
+    /// "No damage" is the number: 0% where the default is 50%. That row
+    /// carries no `BONUS:`/`DEFINE:` token, so the percentage is read out of
+    /// the sentence.
+    ///
+    /// The row's two conditions — light armor or none, and not helpless —
+    /// are real gates this engine cannot evaluate, so they are stated in the
+    /// receipt rather than folded into this number.
+    pub const EVASION_DAMAGE_PERCENT_ON_A_SUCCESSFUL_REFLEX_SAVE: i16 = 0;
+
+    /// The percentage of damage an Unchained Monk takes on a **failed**
+    /// Reflex save once Improved Evasion is online: `50`.
+    ///
+    /// From `pu_abilities_class.lst:472`, verbatim: "He still takes no damage
+    /// on successful Ref lex saving throws against attacks, but henceforth he
+    /// takes only half damage on failed saves." (The broken "Ref lex" is the
+    /// corpus's own line-break artefact; it is quoted, not corrected.)
+    pub const IMPROVED_EVASION_DAMAGE_PERCENT_ON_A_FAILED_REFLEX_SAVE: i16 = 50;
+
+    /// [`EVASION_DAMAGE_PERCENT_ON_A_SUCCESSFUL_REFLEX_SAVE`] from
+    /// [`EVASION_LEVEL`], `None` below it.
+    pub fn evasion_damage_percent_on_a_successful_reflex_save(level: u8) -> Option<i16> {
+        if level < EVASION_LEVEL {
+            return None;
+        }
+        Some(EVASION_DAMAGE_PERCENT_ON_A_SUCCESSFUL_REFLEX_SAVE)
+    }
+
+    /// [`IMPROVED_EVASION_DAMAGE_PERCENT_ON_A_FAILED_REFLEX_SAVE`] from
+    /// [`IMPROVED_EVASION_LEVEL`], `None` below it.
+    pub fn improved_evasion_damage_percent_on_a_failed_reflex_save(level: u8) -> Option<i16> {
+        if level < IMPROVED_EVASION_LEVEL {
+            return None;
+        }
+        Some(IMPROVED_EVASION_DAMAGE_PERCENT_ON_A_FAILED_REFLEX_SAVE)
+    }
+
+    /// How many d20s an Unchained Monk of [`FLAWLESS_MIND_LEVEL`] rolls for a
+    /// Will save, keeping the better: `2`.
+    ///
+    /// From `pu_abilities_class.lst:475`, verbatim: "Whenever he attempts a
+    /// Will save, he can roll twice and take the better result."
+    ///
+    /// "Roll twice" is the number. The row's second clause — a fresh save at
+    /// the end of each hour against effects lasting longer than an hour —
+    /// is a retry interval, carried in the receipt's text; it is not a
+    /// second magnitude and gets no constant of its own.
+    pub fn flawless_mind_will_save_rolls(level: u8) -> Option<i16> {
+        if level < FLAWLESS_MIND_LEVEL {
+            return None;
+        }
+        Some(2)
+    }
+
+    /// The ability-score penalty an Unchained Monk of [`TIMELESS_BODY_LEVEL`]
+    /// takes for aging: `0`.
+    ///
+    /// From `pu_abilities_class.lst:474`, verbatim: "a monk no longer takes
+    /// penalties to his ability scores for aging and cannot be magically
+    /// aged."
+    ///
+    /// A genuine zero, not a filler one: the row's numeric content is that
+    /// the aging penalty becomes nothing. The same sentence's carve-outs —
+    /// penalties already taken remain, age *bonuses* still accrue, and the
+    /// monk still dies of old age — are stated in the receipt, because this
+    /// number is the penalty and not a claim of immortality.
+    pub fn timeless_body_aging_ability_penalty(level: u8) -> Option<i16> {
+        if level < TIMELESS_BODY_LEVEL {
+            return None;
+        }
+        Some(0)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -928,6 +1027,114 @@ mod tests {
         assert_eq!(stunning_fist_monk_level(0), None);
         assert_eq!(stunning_fist_monk_level(1), Some(1));
         assert_eq!(stunning_fist_monk_level(20), Some(20));
+    }
+
+    /// `Unchained Monk ~ Evasion` (`:465`) and `~ Improved Evasion` (`:472`)
+    /// each carry a `DESC:` and **no** `BONUS:`/`DEFINE:` token. Before this
+    /// they computed nothing; the numbers their prose states are 0% damage on
+    /// a made Reflex save and 50% on a failed one.
+    #[test]
+    fn evasion_percentages_are_the_ones_the_two_rows_prose_states() {
+        use prose_derived::{
+            evasion_damage_percent_on_a_successful_reflex_save as made,
+            improved_evasion_damage_percent_on_a_failed_reflex_save as failed,
+        };
+        for level in 0..EVASION_LEVEL {
+            assert_eq!(made(level), None, "level {level}");
+        }
+        for level in EVASION_LEVEL..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(made(level), Some(0), "level {level}");
+        }
+        for level in 0..IMPROVED_EVASION_LEVEL {
+            assert_eq!(failed(level), None, "level {level}");
+        }
+        for level in IMPROVED_EVASION_LEVEL..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(failed(level), Some(50), "level {level}");
+        }
+
+        for key in ["Unchained Monk ~ Evasion", "Unchained Monk ~ Improved Evasion"] {
+            assert!(
+                bonus_tokens(&record_for(key)).is_empty(),
+                "{key} must still carry no BONUS: token -- if it gained one, the prose-derived \
+                 reading is no longer the only source and must be revisited"
+            );
+        }
+        assert!(
+            description_of("Unchained Monk ~ Evasion").contains(
+                "against an attack that normally deals half damage on a successful save, he \
+                 instead takes no damage"
+            ),
+            "Evasion prose changed; the 0% reading must be re-derived"
+        );
+        assert!(
+            description_of("Unchained Monk ~ Improved Evasion")
+                .contains("henceforth he takes only half damage on failed saves"),
+            "Improved Evasion prose changed; the 50% reading must be re-derived"
+        );
+    }
+
+    /// `Unchained Monk ~ Flawless Mind` (`:475`) and `~ Timeless Body`
+    /// (`:474`) — same shape, same fix.
+    #[test]
+    fn flawless_mind_and_timeless_body_state_the_numbers_their_prose_carries() {
+        use prose_derived::{
+            flawless_mind_will_save_rolls as rolls,
+            timeless_body_aging_ability_penalty as aging_penalty,
+        };
+        for level in 0..FLAWLESS_MIND_LEVEL {
+            assert_eq!(rolls(level), None, "level {level}");
+        }
+        assert_eq!(rolls(FLAWLESS_MIND_LEVEL), Some(2));
+        assert_eq!(rolls(MAX_SUPPORTED_LEVEL), Some(2));
+
+        for level in 0..TIMELESS_BODY_LEVEL {
+            assert_eq!(aging_penalty(level), None, "level {level}");
+        }
+        for level in TIMELESS_BODY_LEVEL..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(aging_penalty(level), Some(0), "level {level}");
+        }
+
+        for key in ["Unchained Monk ~ Flawless Mind", "Unchained Monk ~ Timeless Body"] {
+            assert!(
+                bonus_tokens(&record_for(key)).is_empty(),
+                "{key} must still carry no BONUS: token"
+            );
+        }
+        assert!(
+            description_of("Unchained Monk ~ Flawless Mind")
+                .contains("Whenever he attempts a Will save, he can roll twice and take the better result"),
+            "Flawless Mind prose changed; the two-rolls reading must be re-derived"
+        );
+        assert!(
+            description_of("Unchained Monk ~ Timeless Body")
+                .contains("a monk no longer takes penalties to his ability scores for aging"),
+            "Timeless Body prose changed; the zero-aging-penalty reading must be re-derived"
+        );
+    }
+
+    /// The two Unchained Monk features that genuinely state no number, in
+    /// prose or in token. This pins the *reason* they compute nothing, so a
+    /// later cycle cannot quietly invent a magnitude for them — and so that
+    /// if the corpus ever grows one, this test fails and says so.
+    #[test]
+    fn purity_of_body_and_tongue_of_the_sun_and_moon_state_no_number_at_all() {
+        for (key, grant_level_digits) in [
+            ("Unchained Monk ~ Purity of Body", "5"),
+            ("Unchained Monk ~ Tongue of the Sun and Moon", "13"),
+        ] {
+            assert!(
+                bonus_tokens(&record_for(key)).is_empty(),
+                "{key} carries no BONUS: token"
+            );
+            let description = description_of(key);
+            let digits: String = description.chars().filter(|c| c.is_ascii_digit()).collect();
+            assert_eq!(
+                digits, grant_level_digits,
+                "{key}'s only digits must still be its own grant level -- a new number in this \
+                 prose means a magnitude is now derivable and must be modelled. \
+                 Corpus says: {description}"
+            );
+        }
     }
 
     /// The two prose-derived constants must still match the prose the corpus

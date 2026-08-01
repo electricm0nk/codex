@@ -1,4 +1,5 @@
-import { BOOK_LABELS, BOOK_ORDER, CATEGORY_ORDER, formatBookList } from './EquipmentCatalogScreen';
+import { BOOK_LABELS, BOOK_ORDER, CATEGORY_ORDER, formatBookList, hasDescription } from './EquipmentCatalogScreen';
+import { loadEquipmentCatalogRuntime } from './equipmentCatalogRuntime';
 import { assert, assertEqual } from '../testSupport/asserts';
 
 /**
@@ -91,7 +92,58 @@ function testFormatBookListOfNothingIsEmptyRatherThanAFabricatedBook() {
   assertEqual(formatBookList([]), '', 'no books yields no prose');
 }
 
-function main() {
+/**
+ * `equipment_catalog.rs` renders a real `description` for 2856 of the 3830
+ * served records, and until this cycle the TypeScript side did not declare
+ * the field, so it crossed the IPC boundary and reached no screen. The
+ * predicate below is what decides whether a row shows one.
+ */
+function testDescriptionPresenceIsDecidedByRealContentNotByPresenceOfAField() {
+  assert(hasDescription('This sword is about 3-1/2 feet in length.'), 'real prose is a description');
+  assert(!hasDescription(null), 'a null description is an absence, not an empty string to render');
+  assert(!hasDescription(undefined), 'an omitted description is an absence');
+  assert(!hasDescription(''), 'an empty string renders nothing rather than an empty line');
+  assert(!hasDescription('   \n  '), 'whitespace-only text is the same absence wearing a different shape');
+}
+
+/**
+ * The preview catalog must exercise both branches, or the browser preview
+ * silently stops representing the real catalog (where 974 of 3830 rows have
+ * no description at all) and the empty-state rendering goes unwalked.
+ */
+async function testThePreviewCatalogCarriesBothRealProseAndRealAbsences() {
+  const entries = await loadEquipmentCatalogRuntime();
+  const described = entries.filter((entry) => hasDescription(entry.description));
+  const undescribed = entries.filter((entry) => !hasDescription(entry.description));
+
+  assert(described.length > 0, 'the preview shows at least one real corpus description');
+  assert(undescribed.length > 0, 'the preview keeps at least one genuinely description-less record');
+
+  const longsword = entries.find((entry) => entry.key === 'Longsword (Base)');
+  assertEqual(
+    longsword?.description,
+    'This sword is about 3-1/2 feet in length.',
+    "the preview's Longsword carries its verbatim corpus DESC prose, not sample text"
+  );
+
+  const backpack = entries.find((entry) => entry.key === 'Backpack');
+  assertEqual(
+    backpack?.description,
+    null,
+    "Backpack's corpus row genuinely has no description; the preview says so rather than inventing one"
+  );
+
+  for (const entry of entries) {
+    assert(
+      !(entry.description ?? '').includes('%%'),
+      `${entry.key} would put a raw PCGen escape on screen: ${entry.description}`
+    );
+  }
+}
+
+async function main() {
+  await testThePreviewCatalogCarriesBothRealProseAndRealAbsences();
+  testDescriptionPresenceIsDecidedByRealContentNotByPresenceOfAField();
   testBookOrderCoversEveryServedBookInChainOrder();
   testEveryOrderedBookHasARealDisplayLabel();
   testLabelsDefineNoBookTheCatalogDoesNotServe();
@@ -102,4 +154,7 @@ function main() {
   testFormatBookListOfNothingIsEmptyRatherThanAFabricatedBook();
 }
 
-main();
+main().catch((error: unknown) => {
+  console.error(error);
+  throw error;
+});

@@ -114,8 +114,20 @@ pub struct MonsterCatalogEntryDto {
     pub speed_ft: u32,
     /// `RACETYPE:` verbatim, e.g. `"Magical Beast"`.
     pub race_type: String,
-    /// `RACESUBTYPE:` verbatim, or `None` where the row carries no such token.
+    /// The row's `RACESUBTYPE:` subtypes as readable prose, rendered by
+    /// [`serve_race_subtype`], or `None` where the row carries no such token.
     /// A genuine absence — never substituted with the type.
+    ///
+    /// **Not verbatim, and deliberately so.** `RACESUBTYPE:` is a
+    /// PCGen *multi-value* token whose separator is `|`; two Bestiary 1 rows
+    /// carry more than one subtype, and serving the token verbatim put the
+    /// separator itself on screen — `MonsterCatalogScreen.tsx`'s
+    /// `formatCreatureType` rendered Hell Hound as
+    /// `Outsider (Evil|Extraplanar|Fire|Lawful)`. That is the same class of
+    /// defect as an unrendered `DESC:` placeholder — internal corpus syntax
+    /// reaching a player — but it is a *display join*, not a `DESC` render, so
+    /// [`render_pcgen_desc`](codex::rules_core::pcgen_desc) is the wrong tool:
+    /// it has no `|` treatment and would pass the string through untouched.
     pub race_subtype: Option<String>,
     /// `SOURCEPAGE:` verbatim, e.g. `"p.15"`.
     pub source_page: String,
@@ -144,6 +156,26 @@ fn monster_key(block: &MonsterStatBlock) -> String {
         "beastiary1:monster:{}",
         block.name.to_lowercase().replace(' ', "_")
     )
+}
+
+/// Renders one `RACESUBTYPE:` token into the prose this catalog is allowed to
+/// serve: its `|`-separated subtypes joined as a readable list.
+///
+/// Two of Bestiary 1's 41 rows are multi-valued — Vargouille
+/// (`Evil|Extraplanar`) and Hell Hound (`Evil|Extraplanar|Fire|Lawful`) — and
+/// both were reaching the screen with the raw separator in them. The other 11
+/// subtype-bearing rows are single-valued and pass through unchanged, which is
+/// why the defect survived: 39 of 41 rows looked perfectly fine.
+///
+/// Empty segments are dropped rather than rendered as a stray `, `, so a
+/// malformed `A||B` degrades to `A, B` instead of putting the corpus's own
+/// defect on screen in a second form.
+fn serve_race_subtype(raw: &str) -> String {
+    raw.split('|')
+        .map(str::trim)
+        .filter(|part| !part.is_empty())
+        .collect::<Vec<&str>>()
+        .join(", ")
 }
 
 /// Projects one grounded-attack provenance row onto the wire.
@@ -211,7 +243,7 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
         size: block.size,
         speed_ft: block.speed_ft,
         race_type: block.race_type,
-        race_subtype: block.race_subtype,
+        race_subtype: block.race_subtype.as_deref().map(serve_race_subtype),
         source_page: block.source_page,
         natural_attacks,
     }
@@ -424,5 +456,102 @@ mod tests {
         assert!(note.contains("ABILITY:Internal|AUTOMATIC|Bite"), "{note}");
         assert!(note.contains("bite +5 (2d6+4 plus 1d4 acid and grab)"), "{note}");
         assert!(note.contains("aonprd.com"), "{note}");
+    }
+
+    /// The two multi-subtype rows read as prose, byte-exact.
+    ///
+    /// Pinned as whole strings rather than "contains no pipe", because the
+    /// point is not only that the separator left — it is that every subtype
+    /// survived the join. A renderer that dropped everything after the first
+    /// `|` would also pass a pipe-absence check.
+    #[test]
+    fn the_two_multi_subtype_monsters_read_as_prose_not_as_a_pcgen_token() {
+        let entries = build_monster_catalog().entries;
+        let subtype_of = |key: &str| -> String {
+            entries
+                .iter()
+                .find(|entry| entry.key == key)
+                .unwrap_or_else(|| panic!("{key} is a real Bestiary 1 record"))
+                .race_subtype
+                .clone()
+                .unwrap_or_else(|| panic!("{key} carries a RACESUBTYPE token"))
+        };
+
+        // Was served as `Evil|Extraplanar` (monster_subset_06.rs:134).
+        assert_eq!(subtype_of("beastiary1:monster:vargouille"), "Evil, Extraplanar");
+        // Was served as `Evil|Extraplanar|Fire|Lawful` (monster_subset_08.rs:141).
+        assert_eq!(
+            subtype_of("beastiary1:monster:hell_hound"),
+            "Evil, Extraplanar, Fire, Lawful"
+        );
+    }
+
+    /// No served string field carries the PCGen multi-value separator.
+    ///
+    /// Swept across every field the screen renders, not only `race_subtype`,
+    /// so the next token that turns out to be multi-valued fails here rather
+    /// than shipping. `grounding_note` is exempt and says why in its own
+    /// arm: it deliberately *quotes* corpus tokens
+    /// (`ABILITY:Internal|AUTOMATIC|Bite`) as evidence of provenance, which is
+    /// the one place the separator is content rather than syntax.
+    #[test]
+    fn no_rendered_field_serves_a_raw_pcgen_multi_value_separator() {
+        let mut checked = 0usize;
+        let mut check = |key: &str, field: &str, value: &str| {
+            checked += 1;
+            assert!(
+                !value.contains('|'),
+                "{key}'s {field} serves the raw PCGen multi-value separator to the player: {value}"
+            );
+        };
+
+        for entry in &build_monster_catalog().entries {
+            check(&entry.key, "name", &entry.name);
+            check(&entry.key, "size", &entry.size);
+            check(&entry.key, "race_type", &entry.race_type);
+            check(&entry.key, "source_page", &entry.source_page);
+            if let Some(subtype) = entry.race_subtype.as_deref() {
+                check(&entry.key, "race_subtype", subtype);
+            }
+            for attack in &entry.natural_attacks {
+                check(&entry.key, "attack name", &attack.name);
+                check(&entry.key, "attack damage_dice", &attack.damage_dice);
+            }
+        }
+
+        // The sweep is only worth its green if it actually walked the catalog.
+        assert!(
+            checked >= 41 * 4,
+            "the guard inspected only {checked} fields; it is no longer covering the catalog"
+        );
+    }
+
+    /// 18 of 41 rows carry a subtype at all, and exactly 2 of those are
+    /// multi-valued. Derived here rather than asserted from memory, so the
+    /// scale of the fix stays honest as the roster changes — this assertion
+    /// was first written as "13 of 41" from a miscounted grep and was
+    /// corrected by its own failure, which is the reason it exists.
+    #[test]
+    fn the_multi_subtype_population_is_exactly_two_of_eighteen() {
+        let entries = build_monster_catalog().entries;
+        let with_subtype: Vec<&MonsterCatalogEntryDto> =
+            entries.iter().filter(|entry| entry.race_subtype.is_some()).collect();
+        let multi = with_subtype
+            .iter()
+            .filter(|entry| entry.race_subtype.as_deref().is_some_and(|s| s.contains(", ")))
+            .count();
+
+        assert_eq!(with_subtype.len(), 18, "rows carrying a RACESUBTYPE token");
+        assert_eq!(multi, 2, "rows whose RACESUBTYPE token is multi-valued");
+    }
+
+    /// The renderer itself, on shapes the corpus does not currently contain.
+    #[test]
+    fn the_subtype_renderer_drops_empty_segments_rather_than_rendering_them() {
+        assert_eq!(serve_race_subtype("Aquatic"), "Aquatic");
+        assert_eq!(serve_race_subtype("Evil|Extraplanar"), "Evil, Extraplanar");
+        assert_eq!(serve_race_subtype("A||B"), "A, B");
+        assert_eq!(serve_race_subtype("A| B "), "A, B");
+        assert_eq!(serve_race_subtype(""), "");
     }
 }

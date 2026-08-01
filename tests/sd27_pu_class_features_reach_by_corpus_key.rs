@@ -37,8 +37,10 @@
 //! pinning the before/after per affected race or class."* [`GROUNDED_PIN`]
 //! carries the pre-change grounded-magnitude counts at level 10, verbatim from
 //! `tests/sd27_pu_deferred_features_reach_the_character_sheet.rs`'s own
-//! `PU_CLASS_PIN`, and asserts they are unchanged — this change adds rows and
-//! touches no grounding branch, so the "before" numbers must survive it exactly.
+//! `PU_CLASS_PIN`, and asserts the two agree — this file's own change adds
+//! roster rows and touches no grounding branch, so its numbers had to survive
+//! it exactly. (They were raised once since, on 2026-08-01, by a later cycle
+//! that *did* add grounding branches; see [`GROUNDED_PIN`].)
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
@@ -63,14 +65,22 @@ const PU_CLASSES: &[(&str, &str)] = &[
 ];
 
 /// `(class token, grounded `class_feature.pu.<class>.*` magnitude rows at level
-/// 10)` — the pre-change numbers, copied verbatim from
+/// 10)` — copied verbatim from
 /// `sd27_pu_deferred_features_reach_the_character_sheet.rs`. Roster rows and the
-/// deferral row are excluded, so this must not move.
+/// deferral row are excluded, so this moves only when a grounding branch
+/// changes, which is exactly what makes it a useful guard for cycles that
+/// only add roster rows.
+///
+/// **Raised 2026-08-01** from `(10, 10, 9, 6)` alongside its source pin, by
+/// the cycle that gave 17 prose-derived class features a displayed magnitude.
+/// See that file's note, and
+/// `tests/sd27_pu_prose_derived_class_features_reach_the_sheet.rs` for the
+/// before/after pair and the per-feature reasoning.
 const GROUNDED_PIN: &[(&str, usize)] = &[
     ("unchained_barbarian", 10),
-    ("unchained_monk", 10),
-    ("unchained_rogue", 9),
-    ("unchained_summoner", 6),
+    ("unchained_monk", 12),
+    ("unchained_rogue", 11),
+    ("unchained_summoner", 11),
 ];
 
 /// Roster rows emitted at level 20, per class — i.e. every ingested record,
@@ -334,8 +344,10 @@ fn the_grounded_magnitude_rows_are_unchanged_at_level_10() {
             .count();
         assert_eq!(
             grounded, *expected,
-            "{class_token}'s grounded magnitude rows at level 10 must not move; this change adds \
-             roster rows and touches no grounding branch"
+            "{class_token}'s grounded magnitude rows at level 10 must match GROUNDED_PIN; the \
+             roster-row change this file was written for touches no grounding branch, and the \
+             2026-08-01 prose-derived-magnitude cycle raised the literals in step with the pin \
+             it is copied from"
         );
     }
 }

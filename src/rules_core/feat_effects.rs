@@ -1801,11 +1801,56 @@ pub fn chosen_feat_targets(
 // | a chooser pool, not a magnitude (`BONUS:ABILITYPOOL`) | Elven Spirit, Mother's Gift, Catfolk Exemplar, Blood Drinker, Diverse Palate, Greater Brand, Umbral Scion, Orc Weapon Expertise, Multitalented Mastery, Heavenly Radiance |
 // | spell-like abilities and their uses/day (`RacialSLA_*`) | Drow Nobility, Greater Drow Nobility, Improved Drow Nobility, Magical Tail, Shadow Ghost, Heavenly Radiance |
 // | a racial per-day budget whose base is the racial trait, not the feat | Adaptive Fortune, Fortunate One, Extra Elemental Assault |
+//
+// **The per-day-budget row above was wrong about two of its three feats, and
+// is corrected here (2026-08-01, operator ruling).** It conflated "this engine
+// computes no *total* for uses per day" — still true, and nothing below builds
+// one — with "this engine cannot state the number", which is false. The
+// operator:
+//
+// > You do not need a full blown engine for things like uses per day. You just
+// > need the ability to calculate the value that is displayed in the
+// > description or elsewhere in the UI. […] These are all just display values.
+//
+// The base is not missing: `Halfling ~ Adaptable Luck` states it on its own row
+// as `DEFINE:Halfling_AdaptableLuck_Times|0` plus
+// `BONUS:VAR|Halfling_AdaptableLuck_Times|3`, which this engine already reads
+// as a same-row constant, and the trait's own `DESC:` substitutes it as `%1`.
+// **Adaptive Fortune and Fortunate One therefore now move a rendered number**
+// — see [`FeatDisplayValueDeltas`] and
+// `tests/sd27_resolved_racial_trait_display_values.rs`, which pins a halfling's
+// description reading "Three times per day" with neither feat, "4 times per
+// day" with Fortunate One, and "5 times per day … a +4 luck bonus" with both.
+// **Extra Elemental Assault stays deferred for a different and real reason**:
+// its `Suli_ElementalAssault_Duration` belongs to the Suli, a race outside
+// SD-27's 18 in-scope set, so no ingested description exists to put the number
+// into. The same correction reaches Great Hatred, which the
+// opponent-dependent row below still correctly bars from any attack-roll
+// *total* while its stated magnitude now renders in `Gnome ~ Hatred`'s
+// sentence.
 // | fly manoeuvrability tiers | Angel Wings |
 // | animal-companion / special-mount effective levels | Beast Rider |
 // | glide ratio while falling (and the corpus disagrees with itself: two unconditional `BONUS:VAR\|GlidingBaseSpeed` tokens, `5` and `25`) | Draconic Glide |
 // | weapon-size wielding penalties (`PCSIZE`) and natural-weapon damage dice (`DAMAGESIZE`) | Goblin Gunslinger, Blood Beak |
 // | opponent-dependent bonuses, excluded by this module's standing bar | Great Hatred |
+//
+// **The table above has 25 rows but only 24 distinct feats, and omits a 25th
+// (2026-08-01).** Heavenly Radiance is listed twice — under both the chooser
+// pool and the spell-like-ability rows, which is true of it and double-counts
+// it here — while **Bestow Luck** appears in no row at all. The headline "25 do
+// not" is therefore right only because the duplicate offsets the omission.
+// Bestow Luck's absence from the moving set is already explained and pinned by
+// `tests/sd27_arg_and_pu_feat_effects.rs`: alone it is not a legal character
+// and has no Defiant Luck ability for its extra use to attach to, so it moves a
+// number only in the company its own prerequisite requires. It belongs in this
+// table under a reason of its own, not in the silence between rows.
+//
+// This is the identical mentions-vs-distinct defect `decisions.md §27.1`
+// recorded for the replace-flag counts, in a table written after that
+// correction was published. Verified by set difference over
+// `rules_tables::advanced_race_guide::feats` rather than by re-reading the
+// table: 49 unconditionally bonused, 24 moving, 24 distinct deferred, and
+// `Bestow Luck` in neither set.
 // ---------------------------------------------------------------------------
 
 /// One ARG feat's real, corpus-verified flat bonus to a named skill.
@@ -1908,6 +1953,131 @@ pub fn arg_computed_climb_bonus_from_feats(selected_feats: &[String]) -> i16 {
     } else {
         0
     }
+}
+
+/// What a character's feats add to the named PCGen variables that appear as
+/// **numbers inside racial-trait descriptions**.
+///
+/// # Why this exists, and why it is not a resource subsystem
+///
+/// Three ARG feats were deferred as needing "a racial per-day budget whose base
+/// is the racial trait, not the feat" or as "opponent-dependent". The operator
+/// overruled the first reason on 2026-08-01:
+///
+/// > You do not need a full blown engine for things like uses per day. You just
+/// > need the ability to calculate the value that is displayed in the
+/// > description or elsewhere in the UI. […] These are all just display values.
+///
+/// The base *is* stated by the racial trait row, as a same-row
+/// `DEFINE:` + literal `BONUS:VAR:` pair this engine already reads — Adaptable
+/// Luck's `DEFINE:Halfling_AdaptableLuck_Times|0` plus
+/// `BONUS:VAR|Halfling_AdaptableLuck_Times|3` is the number three, written
+/// across two tokens. Adding a feat's `+1` to it is arithmetic, and the result
+/// is a word in a sentence. Nothing here tracks expenditure, holds a pool, or
+/// knows what "using" an ability means.
+///
+/// # Membership, and why it is only three feats
+///
+/// Every ARG feat carrying an unconditional `BONUS:VAR` was re-read for this.
+/// A feat earns a field here only when its variable is actually *shown to a
+/// player* — that is, when some record whose description this engine renders
+/// references it through a `%N`. Measured over the whole shipped corpus rather
+/// than assumed, only two rendered records carry such a variable
+/// (`Gnome ~ Hatred` and `Halfling ~ Adaptable Luck`), and exactly three feats
+/// feed them. The others are named in this module's deferral ledger with the
+/// reason each is still short.
+///
+/// Deliberately **not** included, and why, per record:
+///
+/// * **Draconic Glide** (`GlidingBaseSpeed`) and **Shadow Ghost**
+///   (`ShadowWalkTimes`) resolve completely — both are a same-row `DEFINE:0`
+///   plus literal `BONUS:VAR` tokens — but their `%1` sits in a `BENEFIT:`
+///   token, and no served table in this repo carries `BENEFIT:`. Grounding
+///   them would move no number on any screen, so they are reported rather than
+///   written as code nothing reaches.
+/// * **Extra Elemental Assault** (`Suli_ElementalAssault_Duration`),
+///   **Magical Tail** (`KitsuneTails`) and **Improved Drow Nobility** /
+///   **Heavenly Radiance** (`RacialSLA_*_Times`) resolve arithmetically too,
+///   but every record whose description would show them belongs to a race
+///   outside SD-27's 18 in-scope set (Suli, Kitsune) or to a spell-like-ability
+///   record kind this book has not ingested. There is no description to put the
+///   number into yet.
+/// * **Beast Rider** (`SpecialMountLVL`) genuinely cannot be resolved:
+///   `min(TL,max(PaladinLVL+2,AnimalCompanionLVL+2,CavalierMountLVL+2))` needs
+///   an animal-companion / special-mount effective level, and this engine
+///   computes none of the three.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub struct FeatDisplayValueDeltas {
+    /// Added to `Gnome_Hatred_AttackBonus`, the variable `Gnome ~ Hatred`'s
+    /// own description substitutes into *"Gnomes receive a +%1 bonus on attack
+    /// rolls…"*.
+    ///
+    /// **Great Hatred**, `arg_feats.lst:42` —
+    /// `BONUS:VAR|Gnome_Hatred_AttackBonus|1`, `BENEFIT:` "You gain an
+    /// additional +1 bonus on melee and thrown weapon attacks against targets
+    /// of your hatred racial trait." Token and prose agree.
+    ///
+    /// This module's standing bar on opponent-dependent bonuses still holds and
+    /// is not being relaxed: Great Hatred is **not** added to any attack-roll
+    /// total, because whether it applies depends on the creature being
+    /// attacked. What changes is the *sentence that states the magnitude*,
+    /// which is a fact about the character and always true of them.
+    pub gnome_hatred_attack_bonus: i16,
+    /// Added to `Halfling_AdaptableLuck_Times` — the uses-per-day count
+    /// `Halfling ~ Adaptable Luck`'s description renders, and the variable its
+    /// own `ASPECT:CheckType|Uses per Day` labels.
+    ///
+    /// * **Fortunate One**, `arg_feats.lst:89` —
+    ///   `BONUS:VAR|Halfling_AdaptableLuck_Times|1`.
+    /// * **Adaptive Fortune**, `arg_feats.lst:84` —
+    ///   `BONUS:VAR|Halfling_AdaptableLuck_Times|1`.
+    ///
+    /// Both stack in PCGen and in the published text ("Increase the number of
+    /// times per day … by 1"), and Adaptive Fortune's own
+    /// `PREABILITY:1,CATEGORY=FEAT,Fortunate One` means a legal holder of the
+    /// second always holds the first — so `+2` is the only combined value a
+    /// legal character reaches, never `+1` from Adaptive Fortune alone.
+    pub halfling_adaptable_luck_times: i16,
+    /// Added to `Halfling_AdaptableLuck_Bonus`, the luck bonus the same
+    /// description renders twice (`+%1` full, `+%2` after the roll, where the
+    /// second argument is the corpus's `Halfling_AdaptableLuck_Bonus-1`).
+    ///
+    /// **Adaptive Fortune**, `arg_feats.lst:84` —
+    /// `BONUS:VAR|Halfling_AdaptableLuck_Bonus|2`; `BENEFIT:` "…increase the
+    /// luck bonus for each type of use by 2." Fortunate One does **not** touch
+    /// this variable, which is the whole difference between the two feats.
+    pub halfling_adaptable_luck_bonus: i16,
+}
+
+impl FeatDisplayValueDeltas {
+    /// True when no held feat moves any display variable — the ordinary case,
+    /// and the one where a description must render exactly its racial base.
+    pub fn is_zero(self) -> bool {
+        self == Self::default()
+    }
+}
+
+/// Resolves [`FeatDisplayValueDeltas`] for one character's held feats.
+///
+/// Every magnitude is the corpus `BONUS:VAR` token's own integer, cited on the
+/// field it lands in. Nothing is summed across a variable this engine does not
+/// render, and nothing is invented for a feat whose variable has no description
+/// to appear in.
+pub fn display_value_deltas_from_feats(selected_feats: &[String]) -> FeatDisplayValueDeltas {
+    let mut deltas = FeatDisplayValueDeltas::default();
+
+    if feat_identity::holds(selected_feats, "Great Hatred") {
+        deltas.gnome_hatred_attack_bonus += 1;
+    }
+    if feat_identity::holds(selected_feats, "Fortunate One") {
+        deltas.halfling_adaptable_luck_times += 1;
+    }
+    if feat_identity::holds(selected_feats, "Adaptive Fortune") {
+        deltas.halfling_adaptable_luck_times += 1;
+        deltas.halfling_adaptable_luck_bonus += 2;
+    }
+
+    deltas
 }
 
 /// One ARG feat's real bonus to Combat Maneuver Defense against a named

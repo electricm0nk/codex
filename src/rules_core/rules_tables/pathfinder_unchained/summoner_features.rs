@@ -428,10 +428,24 @@ pub fn unchained_summoner_marker(level: u8) -> Option<u8> {
 /// sentence for a formula. Each item quotes the sentence it came from.
 ///
 /// The Unchained Summoner leans on this far harder than the rogue does — 12 of
-/// its 17 features carry prose and no arithmetic token at all. Where the prose
-/// states no number (Life Link, Transposition, Life Bond, Merge Forms, Twin
-/// Eidolon, Cantrips, and the two proficiency/skill rows) there is nothing to
-/// model and nothing is invented.
+/// its 17 features carry prose and no arithmetic token at all.
+///
+/// **Three of those 12 state no number even in prose, and get no function
+/// here.** Naming them is the point, so a later cycle cannot mistake the gap
+/// for an oversight:
+///
+/// * **Cantrips** (`:730`) — "a number of cantrips ... as noted on Table 1-5".
+///   The number is on a table this book's row does not carry, and the
+///   Unchained Summoner spell list is not transcribed at all, so there is
+///   nothing to read.
+/// * **Transposition** (`:737`) — spends a
+///   [`makers_call_uses_per_day`] use to swap places instead of teleporting
+///   the eidolon. It changes what a Maker's Call does, not how many the
+///   summoner has, so it adds no magnitude of its own.
+/// * **Life Bond** (`:740`) — "as long as the eidolon has 1 or more hit
+///   points"; damage "transferred 1 point at a time". Both `1`s are the
+///   mechanic's granularity, not a quantity a player tracks; there is no
+///   number to display.
 pub mod prose_derived {
     use super::{UnchainedSummonerFeature, active_level};
 
@@ -482,6 +496,20 @@ pub mod prose_derived {
         }
     }
 
+    /// [`GREATER_ASPECT_POINTS`] from Greater Aspect's 18th level, `None`
+    /// below it.
+    ///
+    /// The same number [`divertible_evolution_points`] reports from 18th, but
+    /// keyed to the Greater Aspect record rather than to the Aspect one, so
+    /// the feature a player reads under that name has a magnitude of its own
+    /// instead of silently raising a sibling row's.
+    pub fn greater_aspect_divertible_evolution_points(level: u8) -> Option<u8> {
+        if !UnchainedSummonerFeature::GreaterAspect.is_granted_at(level) {
+            return None;
+        }
+        Some(GREATER_ASPECT_POINTS)
+    }
+
     /// Shield Ally, from `:735`: "the summoner gains a +2 shield bonus to his
     /// Armor Class and a +2 circumstance bonus on his saving throws."
     pub const SHIELD_ALLY_BONUS: i16 = 2;
@@ -492,12 +520,134 @@ pub mod prose_derived {
     ///
     /// Allies get [`SHIELD_ALLY_BONUS`]; only the summoner gets this.
     pub const GREATER_SHIELD_ALLY_SELF_BONUS: i16 = 4;
+
+    /// The shield bonus to Armor Class — and the identical circumstance bonus
+    /// on saving throws — **the summoner himself** has: `+2` from
+    /// [`UnchainedSummonerFeature::ShieldAlly`]'s 4th level, rising to `+4`
+    /// from [`UnchainedSummonerFeature::GreaterShieldAlly`]'s 12th.
+    ///
+    /// `:735` gives the summoner `+2` while within his eidolon's reach;
+    /// `:739` says the same bonuses "increase to +4" when the ally in
+    /// question is the summoner. So the two rows are one progression from the
+    /// summoner's point of view, and this is it.
+    ///
+    /// Conditional on the eidolon being adjacent and not grappled, helpless,
+    /// paralyzed, stunned or unconscious — none of which this engine tracks —
+    /// so this is a standalone magnitude and is deliberately not folded into
+    /// the character's resting Armor Class.
+    pub fn shield_ally_self_bonus(level: u8) -> Option<i16> {
+        if !UnchainedSummonerFeature::ShieldAlly.is_granted_at(level) {
+            return None;
+        }
+        if UnchainedSummonerFeature::GreaterShieldAlly.is_granted_at(level) {
+            Some(GREATER_SHIELD_ALLY_SELF_BONUS)
+        } else {
+            Some(SHIELD_ALLY_BONUS)
+        }
+    }
+
+    /// The shield bonus to Armor Class — and the identical circumstance bonus
+    /// on saving throws — Greater Shield Ally extends to **allies other than
+    /// the summoner**: `+2`, from 12th.
+    ///
+    /// This is the half of `:739` that is genuinely new at 12th level: before
+    /// it, Shield Ally protects the summoner alone. `None` below 12.
+    pub fn greater_shield_ally_bonus_to_allies(level: u8) -> Option<i16> {
+        if !UnchainedSummonerFeature::GreaterShieldAlly.is_granted_at(level) {
+            return None;
+        }
+        Some(SHIELD_ALLY_BONUS)
+    }
+
+    /// Merge Forms rounds per day, from `:741`: "The summoner can use this
+    /// ability for a number of rounds per day equal to his summoner level."
+    ///
+    /// Same shape as [`bond_senses_rounds_per_day`] and, like it, carries no
+    /// `BONUS:VAR|` — PCGen does not compute this number either. `None` below
+    /// 16th.
+    pub fn merge_forms_rounds_per_day(level: u8) -> Option<u8> {
+        active_level(UnchainedSummonerFeature::MergeForms, level)
+    }
+
+    /// Twin Eidolon **minutes** per day, from `:743`: "The summoner can keep
+    /// this form for a number of minutes per day equal to his summoner
+    /// level."
+    ///
+    /// Minutes, not rounds — the unit is the row's own and is not silently
+    /// converted, because the two sibling durations in this module
+    /// ([`bond_senses_rounds_per_day`], [`merge_forms_rounds_per_day`]) are
+    /// rounds and a unit slip between them would be invisible. The same
+    /// sentence adds that the duration "must be spent in 1-minute
+    /// increments", which is why converting would also be wrong in substance.
+    /// `None` below 20th.
+    pub fn twin_eidolon_minutes_per_day(level: u8) -> Option<u8> {
+        active_level(UnchainedSummonerFeature::TwinEidolon, level)
+    }
+
+    /// The distance an eidolon may stray from its summoner and stay at full
+    /// strength: `100` feet, from `:732`.
+    ///
+    /// Verbatim: "the eidolon and the summoner must remain within 100 feet of
+    /// one another for the eidolon to remain at full strength."
+    ///
+    /// Flat — the row states no level scaling — so this takes a level only to
+    /// gate on Life Link's 1st-level grant. The three degradation bands the
+    /// same sentence goes on to state are
+    /// [`LIFE_LINK_HALF_STRENGTH_RANGE_FEET`],
+    /// [`LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET`] and
+    /// [`LIFE_LINK_BANISHMENT_RANGE_FEET`]; they are constants rather than a
+    /// second function because a range band is not a per-level magnitude.
+    pub fn life_link_full_strength_range_feet(level: u8) -> Option<i16> {
+        active_level(UnchainedSummonerFeature::LifeLink, level).map(|_| 100)
+    }
+
+    /// Beyond [`life_link_full_strength_range_feet`] but closer than this,
+    /// the eidolon's current and maximum hit points are halved (`:732`:
+    /// "reduced by 50%").
+    pub const LIFE_LINK_HALF_STRENGTH_RANGE_FEET: i32 = 1_000;
+
+    /// Beyond [`LIFE_LINK_HALF_STRENGTH_RANGE_FEET`] but closer than this,
+    /// the reduction is 75% (`:732`).
+    pub const LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET: i32 = 10_000;
+
+    /// Past [`LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET`] the eidolon "is
+    /// immediately returned to its home plane" (`:732`). Same number,
+    /// named for the third band so the receipt can state all three without
+    /// re-using a constant under a misleading name.
+    pub const LIFE_LINK_BANISHMENT_RANGE_FEET: i32 = LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET;
 }
 
 #[cfg(test)]
 mod tests {
     use super::prose_derived;
     use super::*;
+
+    /// The ingested `description` for one Unchained Summoner record, read off
+    /// disk. Every prose-derived reading in this module is checked against
+    /// this rather than against a copy of the sentence kept here — a pin that
+    /// quotes itself pins nothing.
+    fn description_of(key: &str) -> String {
+        let dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("data/corpus/pathfinder_unchained/class_feature/summoner_unchained_class");
+        let entries = std::fs::read_dir(&dir)
+            .unwrap_or_else(|e| panic!("ingested Summoner corpus dir {dir:?} must exist: {e}"));
+        for entry in entries {
+            let path = entry.expect("readable dir entry").path();
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let text = std::fs::read_to_string(&path).expect("readable corpus record");
+            let value: serde_json::Value =
+                serde_json::from_str(&text).expect("corpus record is valid JSON");
+            if value["data"]["key"] == key {
+                return value["data"]["description"]
+                    .as_str()
+                    .unwrap_or_else(|| panic!("{key} must carry a rendered description"))
+                    .to_owned();
+            }
+        }
+        panic!("no ingested record with KEY:{key}");
+    }
 
     #[test]
     fn every_declared_feature_is_enumerated_exactly_once() {
@@ -696,12 +846,166 @@ mod tests {
         assert_eq!(prose_derived::divertible_evolution_points(20), Some(6));
         assert_eq!(prose_derived::divertible_evolution_points(0), None);
         assert_eq!(prose_derived::divertible_evolution_points(21), None);
+
+        // Keyed to the Greater Aspect record rather than the Aspect one.
+        for level in 0..18 {
+            assert_eq!(
+                prose_derived::greater_aspect_divertible_evolution_points(level),
+                None,
+                "level {level}"
+            );
+        }
+        for level in 18..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(
+                prose_derived::greater_aspect_divertible_evolution_points(level),
+                Some(6),
+                "level {level}"
+            );
+        }
+        assert_eq!(prose_derived::greater_aspect_divertible_evolution_points(21), None);
     }
 
     #[test]
     fn shield_ally_bonuses_are_the_stated_two_and_four() {
         assert_eq!(prose_derived::SHIELD_ALLY_BONUS, 2);
         assert_eq!(prose_derived::GREATER_SHIELD_ALLY_SELF_BONUS, 4);
+    }
+
+    /// From the summoner's own point of view `Shield Ally` (`:735`) and
+    /// `Greater Shield Ally` (`:739`) are one progression: `+2` at 4th, `+4`
+    /// at 12th. Before this, both rows computed nothing.
+    #[test]
+    fn shield_ally_self_bonus_steps_from_two_to_four_at_twelfth() {
+        for level in [0u8, 1, 2, 3] {
+            assert_eq!(prose_derived::shield_ally_self_bonus(level), None, "level {level}");
+        }
+        for level in 4..12 {
+            assert_eq!(prose_derived::shield_ally_self_bonus(level), Some(2), "level {level}");
+        }
+        for level in 12..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::shield_ally_self_bonus(level), Some(4), "level {level}");
+        }
+        assert_eq!(prose_derived::shield_ally_self_bonus(21), None);
+
+        // The genuinely new half of :739 — allies other than the summoner.
+        for level in 0..12 {
+            assert_eq!(prose_derived::greater_shield_ally_bonus_to_allies(level), None, "level {level}");
+        }
+        for level in 12..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::greater_shield_ally_bonus_to_allies(level), Some(2), "level {level}");
+        }
+    }
+
+    /// `Merge Forms` (`:741`) is rounds per day; `Twin Eidolon` (`:743`) is
+    /// **minutes** per day. Both equal the summoner's level, and the differing
+    /// unit is the whole reason they are two functions.
+    #[test]
+    fn merge_forms_is_rounds_and_twin_eidolon_is_minutes_both_equal_to_level() {
+        for level in 0..16 {
+            assert_eq!(prose_derived::merge_forms_rounds_per_day(level), None, "level {level}");
+        }
+        for level in 16..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::merge_forms_rounds_per_day(level), Some(level), "level {level}");
+        }
+        for level in 0..20 {
+            assert_eq!(prose_derived::twin_eidolon_minutes_per_day(level), None, "level {level}");
+        }
+        assert_eq!(prose_derived::twin_eidolon_minutes_per_day(20), Some(20));
+        assert_eq!(prose_derived::twin_eidolon_minutes_per_day(21), None);
+    }
+
+    /// Life Link's leash: 100 feet at full strength, then two degradation
+    /// bands and banishment.
+    #[test]
+    fn life_link_leash_is_the_hundred_feet_its_prose_states() {
+        assert_eq!(prose_derived::life_link_full_strength_range_feet(0), None);
+        for level in 1..=MAX_SUPPORTED_LEVEL {
+            assert_eq!(prose_derived::life_link_full_strength_range_feet(level), Some(100), "level {level}");
+        }
+        assert_eq!(prose_derived::life_link_full_strength_range_feet(21), None);
+        assert_eq!(prose_derived::LIFE_LINK_HALF_STRENGTH_RANGE_FEET, 1_000);
+        assert_eq!(prose_derived::LIFE_LINK_QUARTER_STRENGTH_RANGE_FEET, 10_000);
+        assert_eq!(prose_derived::LIFE_LINK_BANISHMENT_RANGE_FEET, 10_000);
+    }
+
+    /// Every prose-derived reading above is a sentence, so every sentence is
+    /// re-read off the ingested corpus record. A corpus edit that changes the
+    /// wording fails here instead of silently invalidating a number.
+    #[test]
+    fn prose_derived_readings_still_match_the_ingested_corpus_prose() {
+        for (key, sentence) in [
+            (
+                "Unchained Summoner ~ Shield Ally",
+                "the summoner gains a +2 shield bonus to his Armor Class and a +2 circumstance \
+                 bonus on his saving throws",
+            ),
+            (
+                "Unchained Summoner ~ Greater Shield Ally",
+                "the ally gains a +2 shield bonus to its Armor Class and a +2 circumstance bonus \
+                 on its saving throws. If this ally is the summoner, these bonuses increase to +4",
+            ),
+            (
+                "Unchained Summoner ~ Merge Forms",
+                "The summoner can use this ability for a number of rounds per day equal to his \
+                 summoner level",
+            ),
+            (
+                "Unchained Summoner ~ Twin Eidolon",
+                "The summoner can keep this form for a number of minutes per day equal to his \
+                 summoner level",
+            ),
+            (
+                "Unchained Summoner ~ Life Link",
+                "the eidolon and the summoner must remain within 100 feet of one another for the \
+                 eidolon to remain at full strength",
+            ),
+            (
+                "Unchained Summoner ~ Bond Senses",
+                "He can use this ability a number of rounds per day equal to his summoner level",
+            ),
+            (
+                "Unchained Summoner ~ Maker's Call",
+                "The summoner can use this ability once per day at 6th level, plus one additional \
+                 time per day for every four levels beyond 6th",
+            ),
+            (
+                "Unchained Summoner ~ Aspect",
+                "a summoner can divert up to 2 points from his eidolon's evolution pool",
+            ),
+            (
+                "Unchained Summoner ~ Greater Aspect",
+                "the maximum number of evolution points the summoner can divert increases to 6",
+            ),
+        ] {
+            let description = description_of(key);
+            assert!(
+                description.contains(sentence),
+                "{key} prose changed; the reading derived from it must be re-derived.\n\
+                 expected to contain: {sentence}\ncorpus says: {description}"
+            );
+        }
+    }
+
+    /// The three Unchained Summoner features that state no number even in
+    /// prose. Pinning the *reason* keeps a later cycle from inventing one —
+    /// and makes a corpus that grows a number fail loudly.
+    #[test]
+    fn cantrips_transposition_and_life_bond_state_no_displayable_number() {
+        assert!(
+            description_of("Unchained Summoner ~ Cantrips").contains("as noted on Table 1-5"),
+            "Cantrips' count still lives on a table this row does not carry"
+        );
+        assert!(
+            description_of("Unchained Summoner ~ Transposition")
+                .contains("a summoner can use his maker's call ability to swap locations"),
+            "Transposition still spends a Maker's Call use rather than adding a magnitude"
+        );
+        let life_bond = description_of("Unchained Summoner ~ Life Bond");
+        assert!(
+            life_bond.contains("As long as the eidolon has 1 or more hit points")
+                && life_bond.contains("transferred 1 point at a time"),
+            "Life Bond's only numbers are still the mechanic's granularity, not a quantity"
+        );
     }
 
     // ---- refusal ----------------------------------------------------------
