@@ -164,6 +164,29 @@ four binaries is where SD-28 pays it repeatedly instead.
 Ownership is shared with SD-29 (`forward-scope-register.md §7.4`) and SD-30: **whichever bundle
 dispatches first pays it; the others re-verify rather than re-implement.**
 
+### C4.5 — The `.MOD` schema question is resolved; SD-28 inherits Ruling B
+
+`../SD-30-occult-and-companion-content-ingestion/decisions.md §29` resolves the `.MOD` schema question
+pre-dispatch, and it binds SD-28 because **Ultimate Magic carries 538 `.MOD` spell rows and Ultimate
+Combat 159**.
+
+Measured across the whole PCGen tree: **5371 `.MOD` spell rows — 1642 DESC-only, 3729
+mechanics-bearing.** The two shapes get different treatment:
+
+- **DESC-only** (Ultimate Combat 144, Ultimate Intrigue 101, Ultimate Wilderness 50) → **§29.2**: an
+  additive `variant_descriptions` field on the existing spell payload carrying its own book and page.
+  **Not a new record** — a `.MOD` row has no school, level or class list, so minting one puts an
+  uncastable row in the catalog (a dead affordance) and double-counts it in every coverage ratio.
+- **Mechanics-bearing** (Ultimate Magic 538 — `ITEM` 231, `CLASSES` 163, `DESCRIPTOR` 139; Ultimate
+  Combat 15) → **§29.3**: a `CLASSES:`-bearing `.MOD` is a per-class spell level, and the pattern
+  already exists — a per-book supplement chained into `rules_core::rules_tables::class_spell_levels`,
+  as `advanced_race_guide::class_spell_levels` does (commit `f4dcb522`).
+
+**Sizing consequence, and it cuts SD-28's estimate:** Ultimate Magic's 538 `.MOD` rows are **not** 538
+new spell records. They are supplements against spells other books already define. Count new
+declarations separately from `.MOD` supplements when sizing cycles — conflating them is the same
+measurement-shape error `§C4.3` warns about.
+
 ## Review trigger
 
 Reopen SD-28's forward-scope register when:

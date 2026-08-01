@@ -465,3 +465,67 @@ This is a statement about the **orchestrating session only** — the session tha
 
 
 **Authority:** SD-27 `decisions.md §29` (traps), `§30` (paths and artifacts), `docs/retro/tranche-7-retrospective.md` (measurements).
+
+## Decision 29 — `.MOD` schema: description augmentation vs. class-list supplement (resolved 2026-08-01, before dispatch)
+
+**Status:** Operator-directed, resolved pre-dispatch. Closes the open schema question raised in `forward-scope-register.md §C4.4`. **Also binds SD-28** — Ultimate Magic carries 538 rows of the same shape.
+
+**The question was:** Shape B has no precedent for a record that exists only as a delta on another book's record. Mythic Adventures is predominantly such a layer. What schema represents it?
+
+**It dissolves under measurement.** There is no single "`.MOD` record" shape. There are two, and each already has a home.
+
+### 29.1 The measurement
+
+`.MOD` spell rows across every book in the PCGen tree, classified by whether their tokens are prose-only or carry mechanics:
+
+| book | `.MOD` rows | DESC-only | mechanics-bearing |
+|---|---:|---:|---:|
+| occult_adventures | 1526 | **0** | **1526** |
+| advanced_players_guide | 1371 | 259 | 1112 |
+| core_rulebook | 675 | 612 | 63 |
+| advanced_class_guide | 598 | 134 | 464 |
+| ultimate_magic | 538 | **0** | **538** |
+| **mythic_adventures** | **269** | **269** | **0** |
+| ultimate_combat | 159 | 144 | 15 |
+| ultimate_intrigue | 101 | 101 | 0 |
+| horror_adventures | 76 | 72 | 4 |
+| ultimate_wilderness | 50 | 50 | 0 |
+| advanced_race_guide | 6 | 0 | 6 |
+| adventurers_guide / monster_codex | 1 / 1 | 1 / 0 | 0 / 1 |
+| **TOTAL** | **5371** | **1642** | **3729** |
+
+`.MOD` is a pervasive PCGen idiom, not a Mythic quirk. **Mythic is the cleanest case in the tree, not the hardest** — 100% DESC-only, zero mechanics.
+
+### 29.2 Ruling A — DESC-only `.MOD` is a description augmentation, not a record
+
+**All 269 of Mythic's `.MOD` rows carry exactly one token kind: `DESC`.** They append *"Mythic: …"* prose to a spell defined in another book. They change no school, level, class list, range, or duration.
+
+**Ruling: augment the existing record; do not mint a new one.** Add an additive, `#[serde(default)]` field to the spell payload (`json_cache::SpellCacheData`, currently `key`/`school`/`level`/`description`) carrying variant descriptions with their own book and page — e.g. `variant_descriptions: Vec<VariantDescription { book, source_page, text }>`. Records written before the addition deserialize unchanged.
+
+**Why not phantom records.** A `.MOD` row has no school, no level, no `CLASSES:`. Minting 269 records would put 269 rows into the spell catalog that no character can ever cast — dead affordances, forbidden by `docs/governance/no-stub-mvp-doctrine.md` — and would double-count in every coverage ratio (`forward-scope-register.md §C4.5`).
+
+**Why not merge the prose into the base description.** That attributes Mythic Adventures' text to the Core Rulebook and destroys provenance, against SD-27 `decisions.md §25` (attribute to the true source book) and `§29.4` (provenance checked per row). **The variant must carry its own book and page.**
+
+**This ruling covers 1642 rows across 10 books**, not just Mythic's 269.
+
+### 29.3 Ruling B — mechanics-bearing `.MOD` on spells is a class-list supplement, and the pattern already exists
+
+The 3729 mechanics-bearing rows are not arbitrary mutations. **All 1526 of Occult Adventures' carry `CLASSES:`** — they add psychic classes to existing spells' class lists. Ultimate Magic's 538 are `ITEM` (231), `CLASSES` (163) and `DESCRIPTOR` (139).
+
+**A `CLASSES:`-bearing `.MOD` says "this existing spell is also a Psychic 3 spell." That is a per-class spell level, and SD-27 already built the pattern** (commit `f4dcb522`): a per-book supplement table chained into `rules_core::rules_tables::class_spell_levels`, exactly as `advanced_race_guide::class_spell_levels` (389 rows, 13 classes) supplements CRB/APG/ACG. Occult Adventures gets `occult_adventures::class_spell_levels`; the chain resolves it.
+
+**Consequence for SD-30's sizing:** Occult Adventures' 1526 `.MOD` rows are **not** 1526 new spell records. They are class-level supplement entries against spells other books already define — plus its genuinely new psychic spells, which are a separate count. `§C4.4`'s "472 spell keys not in any ingested book" is the new-declaration figure and stands; the 1526 is additional and cheaper per row.
+
+### 29.4 Mythic's genuine content, and one corpus defect
+
+**9 rows in `ma_spells.lst` are real declarations** carrying full mechanics (`CASTTIME`, `CLASSES`, `COMPS`, `SCHOOL`, `RANGE`, `SAVEINFO`, `SPELLRES`, `TARGETAREA`): Ascension, Bleed Glory, Deathless, Lend Path, Mythic Severance, Restore Mythic Power, Share Glory, Steal Power, Terraform. These are ordinary spell records.
+
+**`ma_spells.lst:98` is a corpus typo.** The row is named `Elemental Body IIIMOD` — a missing `.` in `Elemental Body III.MOD`. It carries only `DESC`, and `Elemental Body III` is genuinely defined in `core_rulebook`, `advanced_players_guide` and `core_essentials`. Parsed literally it declares a **phantom spell with no school, level or class list**.
+
+**Handling, per SD-27 `decisions.md §25.4`'s precedent for the upstream `Wall of Thorms` misspelling:** treat it as the 270th description augmentation against `Elemental Body III`, preserve the upstream key verbatim in `raw_tokens`, and **do not silently rename the source**. Record it as an upstream defect. Ingesting it literally would ship an uncastable phantom into the spell catalog — the exact failure Ruling A exists to prevent.
+
+### 29.5 Correction to `forward-scope-register.md §C4.4`
+
+That section called Mythic Adventures a `.MOD` graft layer with *"no precedent in Shape B"* and flagged it as the schema hazard. **The measurement inverts that.** Mythic is the tree's cleanest `.MOD` case; **Occult Adventures — in this same bundle — is the hard one**, with 1526 mechanics-bearing rows against Mythic's zero. §C4.4's Occult warning was right for the wrong reason: the hazard is its `.MOD` class-list volume, not only its 472 new declarations.
+
+**Authority:** operator directive 2026-08-01 ("resolve the mythic `.MOD` schema question before SD-30 starts"); measurements derived by command over the PCGen tree; precedent SD-27 `decisions.md §25.4`, `§29.4`, and commit `f4dcb522`.
