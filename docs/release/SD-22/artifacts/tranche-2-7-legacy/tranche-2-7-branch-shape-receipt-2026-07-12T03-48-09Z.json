@@ -1,0 +1,66 @@
+{
+  "schema": "kanban-doctrine-correction/v1",
+  "ts": "2026-07-12T03-48-09Z",
+  "operator": "god-emporer (per user feedback: slice branches must target tranche/2-7, not develop)",
+  "board": "codex-tranche-2-7",
+  "issue": "Slice PRs opened against develop (e.g. PR #264 for Slice A) instead of the tranche branch tranche/2-7, which did not exist on origin. This is a devops/tranche-branch-governance step-1 violation: the tranche branch must be created from develop and pushed before any slice card goes to ready-agent.",
+  "actions_taken": [
+    {
+      "action": "Created local tranche/2-7 branch from origin/develop@15d073a",
+      "where": "/workspace/repos/codex (local checkout only; operator owns origin push)",
+      "verification": "git rev-parse tranche/2-7 = 15d073a91233f8361b1544f4c6afc12a92e6d5ea (matches origin/develop tip)"
+    },
+    {
+      "action": "Posted doctrine-correction comments to 8 affected cards",
+      "cards": [
+        "t_eb2135b3 (live Slice A; PR #264 was opened against develop, now closed)",
+        "t_5392333f (SD17-B-1 martial classes)",
+        "t_d7a584fc (SD17-B-2 spellcasting classes)",
+        "t_110e74cd (SD17-B-3 races)",
+        "t_c4983672 (SD17-B-4 spells)",
+        "t_ee279e5a (SD17-B-5 equipment)",
+        "t_1ba047e1 (SD17-B-6 metadata)",
+        "t_645047cd (SD17-C canonical-IR conversion)"
+      ],
+      "comment_body_template": "Operator doctrine correction (god-emporer, 2026-07-12). This card's body currently says branch: develop for the merge target. That is doctrinally wrong: per devops/tranche-branch-governance step 1, slice branches must target the tranche branch (tranche/2-7), not develop directly. The promotion to develop is the operator's PR after tranche/2-7 has accumulated its slices. ... If a slice has already opened a PR against develop (e.g. the live Slice A's PR #264), close it and re-open against tranche/2-7."
+    },
+    {
+      "action": "Minted OPS card t_230c4a14 'create tranche/2-7 branch on origin and rebase Slice A PR target'",
+      "where": "codex-tranche-2-7 board",
+      "assignee": "god-emporer (operator-driven; worker cannot perform)",
+      "priority": "0 (prerequisite; must complete before any other slice dispatches)",
+      "what_it_carries": "The exact procedure for the operator to create and push tranche/2-7 from origin/develop@c78287c. Once tranche/2-7 exists on origin, the slice workers will land PRs against tranche/2-7 instead of develop. Slice A's existing commit c7c27dc on feat/sd17-slice-a-include-graph is preserved; only the PR target changes when reopened against tranche/2-7."
+    },
+    {
+      "action": "Updated tranche-2-7-pcgen-corpus-ingestion/README.md with branch-shape doctrine",
+      "where": "programs/codex/requirements/tranche-2-7-pcgen-corpus-ingestion/README.md",
+      "what_added": "A 'Branch shape (operator doctrine, 2026-07-12)' section that names tranche/2-7 as the slice-merge target, states that slice PRs target tranche/2-7 (never develop), that the operator opens the tranche/2-7 -> develop promotion PR, that tranche/2-7 has no PR review requirement (matches tranche/3), and that 'if you find yourself minting slice cards whose bodies say branch: develop, that is a flag: the tranche branch has not been created or you forgot to update the body'."
+    }
+  ],
+  "what_i_did_not_do": [
+    "I did NOT push tranche/2-7 to origin. I do not have push access from this shell; that is operator-driven.",
+    "I did NOT close PR #264 again. It is already closed.",
+    "I did NOT re-dispatch Slice A. The work is done; only the PR target is wrong, and that is operator-driven.",
+    "I did NOT pre-emptively create origin branches on any local repo to 'demonstrate'. The doctrine says the operator pushes the branch from a working copy with push access."
+  ],
+  "what_the_operator_needs_to_do": [
+    "From a directory with push access to electricm0nk/codex:",
+    "  git checkout develop",
+    "  git pull",
+    "  git checkout -b tranche/2-7 develop",
+    "  git push -u origin tranche/2-7",
+    "(Optional) configure branch protection on tranche/2-7 in GitHub settings: require linear history, no force-push, no deletion; do NOT require pull-request reviews (per operator directive: no PR gate on tranche branches).",
+    "After tranche/2-7 exists on origin, the slice workers (when they dispatch) will land PRs against tranche/2-7 instead of develop.",
+    "If the live Slice A's PR #264 work (commit c7c27dc on feat/sd17-slice-a-include-graph) is desired, the operator can re-open it against tranche/2-7 instead of develop. Slice A's commit content is preserved; only the PR target changes."
+  ],
+  "doctrine_lessons_recorded": [
+    "When minting a tranche-level board (e.g. codex-tranche-2-7), the FIRST action must be to create the tranche branch on origin from develop, push it, and configure CI/protection. This is devops/tranche-branch-governance step 1.",
+    "Without the tranche branch existing, the slice workers will default to develop because that's the only branch available in their worktree.",
+    "Mint-time body fields like branch: develop or base_sha: develop@c78287c are red flags if the corresponding tranche branch does not exist.",
+    "The fix for slice-PRs-opening-on-develop-by-default is to (a) create the tranche branch first, (b) update card bodies to name the tranche branch, (c) post comments explaining the correction, (d) document the procedure in the tranche README so future sessions don't repeat the mistake."
+  ],
+  "open_questions_for_operator": [
+    "After tranche/2-7 exists on origin, should I (a) update each slice card body (using kanban edit if a body-edit CLI exists, or via comment-edit if not), or (b) leave the bodies as-is and rely on the comments? Bodies are mint-time only on this kernel; comments are append-only. If you want body edits, that requires a code change in hermes_cli/kanban_db.py to expose a body-edit CLI command.",
+    "Should I also draft a `.github/branch-protection-rulesets/tranche-2-7.json` ruleset so it's ready to land when the operator pushes tranche/2-7? That mirrors the existing tranche-3.json pattern and pre-empts a follow-up admin step."
+  ]
+}

@@ -100,6 +100,52 @@ sleep 1
 Coordinates above match the 1280x900 Xvfb screen / 1280x800 window this
 skill launches at; if you resize, re-derive them from a screenshot.
 
+## Concurrent agents — `RUN_DESKTOP_AGENT`
+
+**Every dispatched desktop agent must export `RUN_DESKTOP_AGENT` to a value
+unique to itself before invoking `driver.sh`.** If you omit it, you are
+`default` — and so is anyone else who omits it. Two agents sharing `default`
+collide: same `DISPLAY`, same state file, same logs, and one agent's
+`launch`/`stop` can kill the other's running app. This is not hypothetical —
+it collided twice in tranche/7, on a mechanism that had already existed for a
+week (`docs/retro/tranche-7-retrospective.md` §4.1, §6.3).
+
+**The mechanism, as implemented in `driver.sh` (read the script, not this
+summary, before relying on it):**
+
+- `AGENT_ID="${RUN_DESKTOP_AGENT:-default}"` — the whole isolation scheme
+  keys off this one variable, and its default is the literal string
+  `default`.
+- `DISPLAY_NUM` is derived deterministically from `AGENT_ID`: `default`→`:99`,
+  `frontend`→`:96`, `backend`→`:97`, `qa`→`:98`; any other `AGENT_ID` hashes
+  via `cksum` into `:60`–`:89`, so two arbitrary distinct names land on
+  different X displays with overwhelming probability but no absolute
+  guarantee (a hash collision between two unrelated agent names is possible,
+  though not observed in this program).
+- State, launch log, and Xvfb log are all namespaced by `AGENT_ID`:
+  `/tmp/run-desktop-driver-${AGENT_ID}.state`,
+  `.tauri-dev.log`, `.xvfb.log`.
+- The `stop`/cleanup kill loop (`kill_our_codex_processes`) only kills a
+  `target/debug/codex` process whose own `/proc/<pid>/environ` has
+  `DISPLAY=:$DISPLAY_NUM` matching *this* agent's display — so a correctly
+  distinct `RUN_DESKTOP_AGENT` genuinely prevents one agent's `stop` from
+  reaping another's app.
+- **Known gap, still live:** the *readiness* poll inside `cmd_launch`
+  (`pgrep -f "target/debug/codex"`, used to detect that the binary has
+  started) is **not** filtered by `DISPLAY` the way the kill loop is. If a
+  sibling agent's app process is already running when you `launch`, your
+  own readiness check can pass against a process you don't own, before your
+  own binary has even started. Confirm you actually got your own window with
+  `driver.sh title` (expect exactly `Codex`) before trusting `launch`'s
+  success and moving on to `screenshot`/`click`.
+
+**Practical rule:** pick a short, stable, role-named value —
+`RUN_DESKTOP_AGENT=frontend`, `RUN_DESKTOP_AGENT=qa`, or the dispatched
+agent's own name — and export it in the agent's environment before the first
+`driver.sh` call. Do this for every concurrently-dispatched desktop agent,
+not only when you know another one is already running: the whole point of
+the mechanism is that agents cannot see each other's assignments in advance.
+
 ## Run (human path)
 
 From a real graphical Linux session (not headless):

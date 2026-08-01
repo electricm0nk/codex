@@ -1,0 +1,10 @@
+Package: codex-desktop-shell-scaffold
+Status: install ok installed
+Priority: optional
+Installed-Size: 10615
+Maintainer: hintzmann
+Architecture: amd64
+Version: 0.0.0
+Depends: libwebkit2gtk-4.1-0, libgtk-3-0
+Description: (none)
+ (none)
