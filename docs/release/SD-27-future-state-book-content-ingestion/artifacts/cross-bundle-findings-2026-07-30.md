@@ -19,9 +19,9 @@ and a tool disagree, **the tool is right and this file is stale**.
 ## 1. Two contradictions inside SD-27's own process docs
 
 Both were found while updating the planning-tree copies of these files. They are
-recorded in full at the planning tree's `decisions.md §19`
-(`~/workspace/programs/codex/requirements/SD-27-future-state-book-content-ingestion/`),
-which as of this date is **ahead of the repo copy**.
+recorded in full at `decisions.md §19` (the planning-tree copy was retired 2026-08-01
+alongside the workspace tree; the conflicts migrate here to the canonical artifact
+for any future referrer).
 
 ### 1.1 `decisions.md §8` forbids what `loop-instruction.md:243` requires
 
@@ -35,6 +35,14 @@ scope question — but it must be made before it burns a cycle.
 
 *(Line numbers are against the planning-tree copy on 2026-07-30; re-locate by content,
 not by number, since `tranche/7` has since edited these files.)*
+
+**Resolution (operator directive 2026-08-01, captured for SD-28):** the underlying
+conflict that produced §1.2 is closed upstream by SD-28's "reach gate is the definition
+of done" rule (per operator directive 2026-08-01): engines are produced only when
+strictly necessary to satisfy reach, and rules are represented as data with
+pre-computed calculated values (e.g., a fireball's 1d6/level posted as `6d6` for a
+caster level of 6, with no runtime die-rolling engine). §1.1 (the partition-vs-
+loop-instruction contradiction) is a separate doc-fix; tracked as operator-pending.
 
 ### 1.2 Content-only scope vs. the content-reach gate
 
