@@ -21,9 +21,10 @@
 //! 1. *Corpus enumeration* (`enumerate_corpus`) walks every `.lst` file under
 //!    `PCGEN_CORPUS_ROOT`'s `pathfinder/paizo/roleplaying_game/`, for **all**
 //!    books including the ones no code has ever read, plus each extra root
-//!    named in [`EXTRA_BOOK_DIRS`] (SD-28: non-Paizo books that live outside
-//!    `roleplaying_game` entirely, such as Dreamscarred Press's
-//!    `ultimate_psionics`). "What exists" is the completeness guarantee, so a
+//!    named in [`EXTRA_BOOK_DIRS`] (books that live outside `roleplaying_game`
+//!    entirely: Dreamscarred Press's `ultimate_psionics` for SD-28, and the
+//!    twelve Paizo `campaign_setting` books for SD-30). "What exists" is the
+//!    completeness guarantee, so a
 //!    book the engine knows nothing about still contributes real, named units
 //!    — at `not-started` — rather than being silently skipped.
 //! 2. *Engine cross-reference* (`EngineFacts`) asks the compiled tables and the
@@ -75,9 +76,27 @@ const OUTPUT_RELATIVE_PATH: &str = "docs/work-inventory.json";
 /// The corpus subtree every PF1 book lives under, relative to `PCGEN_CORPUS_ROOT`.
 const BOOKS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game";
 
-/// Non-Paizo books in scope (SD-28). Paths are relative to the corpus root;
-/// the book id is the directory basename.
-const EXTRA_BOOK_DIRS: &[&str] = &["pathfinder/dreamscarred_press/ultimate_psionics"];
+/// Books in scope that live outside `roleplaying_game/`: SD-28's non-Paizo
+/// Ultimate Psionics, and SD-30's twelve Paizo campaign_setting books
+/// (Book of the Damned ×2, Inner Sea World Guide + nine Inner Sea modules).
+/// Paths are relative to the corpus root; the book id is the directory
+/// basename. Every entry must exist -- a missing one is a hard failure at
+/// startup, never a silent skip.
+const EXTRA_BOOK_DIRS: &[&str] = &[
+    "pathfinder/dreamscarred_press/ultimate_psionics",
+    "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
+    "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
+    "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
+    "pathfinder/paizo/campaign_setting/inner_sea_combat",
+    "pathfinder/paizo/campaign_setting/inner_sea_faiths",
+    "pathfinder/paizo/campaign_setting/inner_sea_gods",
+    "pathfinder/paizo/campaign_setting/inner_sea_magic",
+    "pathfinder/paizo/campaign_setting/inner_sea_races",
+    "pathfinder/paizo/campaign_setting/inner_sea_temples",
+    "pathfinder/paizo/campaign_setting/inner_sea_taverns",
+    "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
+    "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
+];
 
 /// The levels the engine-fact sweeps evaluate. Level 1 is the creation posture
 /// most operator questions are about; 5/10/15/20 reach the level-gated class

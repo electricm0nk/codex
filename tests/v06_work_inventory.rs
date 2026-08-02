@@ -566,18 +566,24 @@ fn every_corpus_book_appears_in_the_inventory() {
              is not listed is a book whose work is invisible"
         );
     }
-    // Every on-disk roleplaying_game book must be listed, and the only entry
-    // the inventory may carry beyond that set is `ultimate_psionics` (SD-28):
-    // a non-Paizo book enumerated from its own corpus root via
-    // `EXTRA_BOOK_DIRS`, not from this `roleplaying_game` directory at all.
+    // Every on-disk roleplaying_game book must be listed, and the only
+    // entries the inventory may carry beyond that set are the books
+    // enumerated from their own corpus roots via `EXTRA_BOOK_DIRS`:
+    // `ultimate_psionics` (SD-28, dreamscarred_press) and the twelve SD-30
+    // campaign_setting books.
     let on_disk_set: std::collections::HashSet<String> = on_disk.iter().cloned().collect();
     let extra: std::collections::HashSet<String> =
         listed.difference(&on_disk_set).cloned().collect();
+    let expected: std::collections::HashSet<String> = ["ultimate_psionics"]
+        .into_iter()
+        .chain(SD30_CAMPAIGN_SETTING_BOOKS.iter().copied())
+        .map(str::to_string)
+        .collect();
     assert_eq!(
-        extra,
-        ["ultimate_psionics".to_string()].into_iter().collect(),
+        extra, expected,
         "the inventory must list exactly the on-disk roleplaying_game books plus \
-         ultimate_psionics (SD-28); extra entries were {extra:?}"
+         the EXTRA_BOOK_DIRS roster (ultimate_psionics + the twelve SD-30 \
+         campaign_setting books)"
     );
 
     // And every un-ingested book must contribute real, named units rather than
@@ -595,6 +601,76 @@ fn every_corpus_book_appears_in_the_inventory() {
          not-started units, saw {}",
         unstarted_books.len()
     );
+}
+
+/// SD-30: the twelve campaign_setting books (Book of the Damned ×2, Inner Sea
+/// World Guide + nine Inner Sea modules). Kept in one place so the roster
+/// assertions above and the per-book assertions below can never disagree
+/// about which books SD-30 added.
+const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
+    "book_of_the_damned_volume_1",
+    "book_of_the_damned_volume_2",
+    "inner_sea_world_guide",
+    "inner_sea_combat",
+    "inner_sea_faiths",
+    "inner_sea_gods",
+    "inner_sea_magic",
+    "inner_sea_races",
+    "inner_sea_temples",
+    "inner_sea_taverns",
+    "inner_sea_bestiary",
+    "inner_sea_intrigue",
+];
+
+/// SD-30: every campaign_setting book on the pinned sixteen-book list must
+/// appear in the inventory like any other un-ingested book -- a real books[]
+/// entry registered `future_state`, real corpus files seen, and every unit it
+/// contributes at `not-started` (no compiled rule set claims any of them).
+/// Without this, cycle step 0 and definition-of-done item 4 are unexecutable
+/// for twelve of SD-30's sixteen books.
+#[test]
+fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
+    let _dir = corpus_or_skip!();
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        println!("SKIP: docs/work-inventory.json has not been generated yet");
+        return;
+    };
+    let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
+    let books = doc["books"].as_array().expect("books array");
+    let units = doc["units"].as_array().expect("units array");
+
+    for id in SD30_CAMPAIGN_SETTING_BOOKS {
+        let book = books
+            .iter()
+            .find(|b| b["id"].as_str() == Some(id))
+            .unwrap_or_else(|| panic!("{id} must appear in the inventory's books list"));
+        assert_eq!(
+            book["scope"].as_str(),
+            Some("future_state"),
+            "{id} must be registered as future_state (data/stubs/{id}.json), got {:?}",
+            book["scope"]
+        );
+        let enumerated = book["files_enumerated"].as_u64().unwrap_or(0);
+        let not_enumerated = book["files_not_enumerated"]
+            .as_array()
+            .map(|a| a.len() as u64)
+            .unwrap_or(0);
+        assert!(
+            enumerated + not_enumerated > 0,
+            "{id} must see real corpus files (enumerated or explicitly not), got none"
+        );
+        for unit in units.iter().filter(|u| u["book"].as_str() == Some(id)) {
+            assert_eq!(
+                unit["status"].as_str(),
+                Some("not-started"),
+                "unit {} of {id} must be not-started (no compiled rule set claims \
+                 this book), was {:?}",
+                unit["id"],
+                unit["status"]
+            );
+        }
+    }
 }
 
 /// SD-28: `ultimate_psionics` (Dreamscarred Press, a flat corpus directory
