@@ -2111,3 +2111,42 @@ Run 1 (2026-08-02) recorded all seven book epics as `decision-blocked` on a shar
 ### Kanban reset note
 
 Epics 3-9 cards (epic-3-uc through epic-9-upsi) are now `READY` and un-claimed. Per `loop-instruction.md` "Epic ordering," they remain unblocked by `epic-2-prelaunch` (COMPLETE) and their next dispatcher can claim them immediately. The per-book audit gate, once Decision 31 is applied, no longer blocks dispatch on an unrelated bundle's defects.
+
+## Precursor A — ACG Naturalist Re-key Recovery (2026-08-02)
+
+**Cycle ID:** `SD28-PRECURSOR-A-RECOVERY`
+**Actor:** `sd28-recovery`
+**Purpose:** Recover and land orphaned work from `sd28-fix-naturalist`, which correctly fixed the nine ACG Naturalist `key-differs-from-name` defects blocking the Precursor B gate but terminated without committing while waiting on a backgrounded `verify.sh` run. Its edits were left uncommitted in the shared working tree.
+
+### What landed (commit `053cfd51`)
+
+Re-keys the ACG spell-cache ingest so the Naturalist archetype's 9 Summon Nature's Ally I-IX variants (`acg_spells.lst:785-793`) resolve via their own archetype-qualified `KEY:` field instead of the base CRB spell's display name, which they had been silently clobbering:
+
+- `src/rules_core/cache_gen/acg.rs`: spell resolution now tries a `KEY:` field match (`find_by_key_field`) before falling back to first-column match.
+- 9 corpus records renamed/re-keyed: `data/corpus/advanced_class_guide/spell/summon_nature_s_ally_{i..ix}.json` → `naturalist_summon_nature_s_ally_{i..ix}.json`, with `data.key`/`source.record_key` now `Naturalist Summon Nature's Ally <roman>`.
+- `tests/sd26_cache_acg.rs`, `tests/spell_cross_book_identity.rs`: updated/added regression coverage for the KEY:-token resolution path and the on-disk cache identity.
+- `tests/v06_corpus_trap_report.rs`: the ratchet test's `KNOWN_KEY_MISMATCH_DEBT` allowlist emptied from the 9 enumerated ACG rows to `&[]` — the debt it named is now paid, and the assertion is strictly tighter (asserts zero key/`KEY:` mismatches corpus-wide, in any book). This file was not part of the original orphaned diff; the fix was incomplete without it, since paying off the enumerated debt without emptying the allowlist left the ratchet asserting a stale nonzero count.
+
+### Regression check performed before trusting the diff
+
+Confirmed the base CRB Summon Nature's Ally I-IX spells were **not** deleted from existence — the ACG-side files that were removed were ACG's own duplicate/clobbering copies. The genuine base spells remain untouched at `data/corpus/core_rulebook/spell/level_{1..9}/summon_nature_s_ally_{i..ix}.json`. Confirmed no other spell's identity changed as a side effect (diff scoped to the 9 pairs plus the 4 supporting source/test files).
+
+### Verification (both exit codes observed directly, never through a pipe)
+
+- `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 0**, "No defects: every ingested record's citation agrees with the line it names." (268 mod-record traps checked, 0 defects.)
+- `./scripts/verify.sh` (full): first run (before the `tests/v06_corpus_trap_report.rs` fix) → **exit 1**, `root-full` FAILED at `tests/v06_corpus_trap_report.rs:546` — the pre-existing ratchet test still hardcoded the 9 Naturalist mismatches as expected "known debt" and failed once they no longer existed. After updating that test's allowlist to `&[]`, second full run → **exit 0**, 10/10 stages passed (root-lib 1448, root-full 5939, desktop 411, reach 16, frontend-install/test 98/98/typecheck, clippy 0 errors, class-dump 31/31).
+
+### Scope note: unowned uncommitted work found and deliberately excluded
+
+Two files were found uncommitted in the same shared working tree, unrelated to the Naturalist fix, and were **not** touched, staged, or committed:
+
+- `src/bin/v06_content_state_dump.rs` (+58/-1): adds `arg_content()`/`pu_content()` to the emitted book roster; its own comment cites SD-27/`decisions.md §25` (ARG and PU tables compiled since SD-27 but omitted from the dump). Not part of this fix.
+- `src/bin/v06_work_inventory.rs`: was part of the original orphaned `git status` set but on inspection is entirely SD-27 ARG/PU rule-set mapping work (adds `RuleSetId::Arg`/`RuleSetId::Pu`, `corpus_dir_for`, regression tests) with zero Naturalist content — grepping the diff for `naturalist`/`summon` returns nothing. Excluded from the commit on team-lead's correction after initially being included in the authorized-set draft.
+
+Both are most likely `tech-priest`'s in-flight ARG/PU work, based on that actor's retro shard also being present (modified) in the same tree. Routed to team-lead for reassignment to the owning actor; not part of this commit's scope.
+
+**Verification caveat:** the passing `./scripts/verify.sh` run above executed against a tree that also contained these two uncommitted, unrelated files. The committed 22-path subset was therefore **not verified in isolation** — someone should re-run `verify.sh` at the new HEAD once the tree is fully clean of `tech-priest`'s pending changes, to confirm the subset is green on its own.
+
+### Near-miss recorded
+
+`sd28-fix-naturalist` completed genuine, correct work but terminated without committing while waiting on a backgrounded `verify.sh`, leaving it orphaned in the shared tree. This was caught only because a downstream agent ran `git status` before writing and refused to proceed against a dirty tree from another actor. See retro event `docs/retro/events/sd28-recovery.jsonl` for the structured near-miss record.
