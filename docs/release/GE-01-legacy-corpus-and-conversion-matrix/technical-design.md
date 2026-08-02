@@ -255,7 +255,7 @@ Design limits remain explicit:
 
 **Constraints on any implementation.**
 - The determinator MUST read `MAGNITUDE_TOKENS` from the work-inventory generator rather than forking the list. Two copies would drift and then disagree about which units have a magnitude at all.
-- The determinator MUST classify from the unit's **token closure** — its base row plus every `.MOD` row targeting it — resolving `.MOD` base names exactly as the generator does. Applying the closure changes 294 held units' classes, 293 of them upward and 160 out of `display`.
+- The determinator MUST classify from the unit's **token closure** — its base row plus every `.MOD` row targeting it — resolving `.MOD` base names exactly as the generator does. Applying the closure changes 295 held units' classes, 294 of them upward and 161 out of `display`.
 - `display` MUST be the last resort in the resolution order, never a short circuit. A record with no magnitude token can still state a magnitude in prose; letting `display` win there marks it done the moment its text renders.
 - An upstream `[Not Implemented]` marker in `DESC:` is an upstream-completeness signal and MUST NOT feed classification in either direction.
 

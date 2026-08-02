@@ -14,6 +14,7 @@ It is deliberately dependency-free and reads only:
 Usage, from the repo root:
     python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD
     python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py ingested-magnitude
+    python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py --selftest
 
 `HELD` means the five statuses under which the engine holds a record:
 `grounded`, `ingested-magnitude`, `text-complete`, `deferred-with-reason`,
@@ -79,13 +80,45 @@ PROSE_SCALING = re.compile(
     r"|per five levels|every \d+ levels|caster level \(max"
     # Added 2026-08-02 from the ultimate_campaign story feats, whose magnitudes
     # are stated in English on a `.MOD BENEFIT:` row: "spell resistance equal to
-    # 5 + your character level", "4 + your Constitution score", "1 temporary hit
-    # point per hit die".
-    r"|your (character|class|total) level|per (hit die|hit dice|HD)\b"
-    r"|your (Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma)"
+    # 5 + your character level", "1 temporary hit point per hit die".
+    r"|your (character|class|total) level|per (hit die|hit dice|HD)\b",
+    re.I,
+)
+
+# An ability-score phrase is a scaling magnitude ONLY when a granting
+# construction introduces it. Bare mention is overwhelmingly a cross-reference
+# to an existing rule, not a new magnitude this record computes -- PF1's
+# flat-footed idiom ("you don't lose your Dexterity bonus to AC") appears
+# throughout the corpus and grants nothing.
+ABILITY_PHRASE = re.compile(
+    r"\byour (Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma)"
     r" (score|modifier|bonus)",
     re.I,
 )
+_GRANT = (r"add|adds|adding|gain|gains|gaining|equal to|plus|minus|times"
+          r"|increased? by|increases by|bonus of")
+_REFER = (r"lose|loses|losing|lost|retain|retains|retaining|deny|denies|denied"
+          r"|deprived of|instead of|rather than|in place of|whichever is")
+_FILLER = r"[^.;|]{0,30}"
+ABILITY_GRANT = re.compile(r"\b(?:%s)\b%s$" % (_GRANT, _FILLER), re.I)
+ABILITY_REFER = re.compile(r"\b(?:%s)\b%s$" % (_REFER, _FILLER), re.I)
+
+
+def ability_scaling(field):
+    """True if `field` GRANTS a magnitude derived from an ability score.
+
+    Decided per occurrence, not per field. A field may both grant one magnitude
+    and reference another -- `Agile Maneuvers` adds Dex to CMB in one clause and
+    names Str in the next -- so a field-wide veto would discard the real grant.
+    For each occurrence, whichever construction sits NEAREST before it wins.
+    """
+    for m in ABILITY_PHRASE.finditer(field):
+        lead = field[max(0, m.start() - 45):m.start()]
+        g = ABILITY_GRANT.search(lead)
+        r = ABILITY_REFER.search(lead)
+        if g and (not r or g.start() > r.start()):
+            return True
+    return False
 
 _lines = {}
 
@@ -211,6 +244,8 @@ def signals(raw):
                     out.add("derived:prose_expr")
             if PROSE_SCALING.search(f):
                 out.add("ambiguous:prose_scaling_phrase")
+            elif ability_scaling(f):
+                out.add("ambiguous:prose_ability_scaling")
 
     if not mags:
         out.add("display:no_magnitude_token")
@@ -243,9 +278,51 @@ def wiring_class(sigs):
 
 HELD = ("ingested-magnitude", "text-complete", "grounded", "deferred-with-reason", "unknown")
 
+# Every string below is taken verbatim from a real corpus row. `True` means the
+# field GRANTS an ability-derived magnitude; `False` means it references one
+# that already exists. Run with `--selftest`.
+ABILITY_CASES = [
+    (True, "BENEFIT:You add your Dexterity bonus to your base attack bonus and "
+           "Strength modifier when determining CMB"),
+    (True, "DESC:you gain a bonus on electricity damage rolls equal to your Wisdom bonus (%1)"),
+    (True, "DESC:deal 1d6 points of bludgeoning damage plus your Strength modifier"),
+    (True, "BENEFIT:choose a number of spells that you already know equal to your "
+           "Intelligence modifier"),
+    (True, "DESC:you can add twice your Intelligence modifier in damage (minimum 2)"),
+    (True, "DESC:move up to 5 feet times your Intelligence modifier (minimum 1)"),
+    (True, "DESC:you recover additional hit points equal to half your Constitution "
+           "modifier (minimum +1)"),
+    (False, "DESC:you don't lose your Dexterity bonus to Armor Class, and the attacker "
+            "doesn't get the +2 bonus"),
+    (False, "DESC:While running, you retain your Dexterity bonus to your Armor Class."),
+    (False, "DESC:You retain your Dexterity bonus to AC even when flat-footed"),
+    (False, "DESC:you may use your Dexterity modifier instead of your Strength modifier "
+            "on attack rolls"),
+    (False, "DESC:While denied your Dexterity bonus to AC you are also denied this resistance"),
+    (False, "DESC:A condition that makes you lose your Dexterity bonus to Armor Class "
+            "also makes you lose dodge bonuses"),
+    (False, "DESC:use the higher of your caster level or your Strength modifier, "
+            "whichever is your Charisma modifier"),
+]
+
+
+def selftest():
+    """Assert the D4b grant-vs-reference discriminator against real corpus text."""
+    bad = 0
+    for want, text in ABILITY_CASES:
+        got = ability_scaling(text)
+        if got != want:
+            bad += 1
+            print("FAIL  want=%-5s got=%-5s  %s" % (want, got, text[:72]))
+    print("%d/%d ability discriminator cases pass"
+          % (len(ABILITY_CASES) - bad, len(ABILITY_CASES)))
+    return 1 if bad else 0
+
 
 def main():
     scope = sys.argv[1] if len(sys.argv) > 1 else "HELD"
+    if scope == "--selftest":
+        sys.exit(selftest())
     doc = json.load(open(INVENTORY))
     units = doc["units"]
     sel = [u for u in units

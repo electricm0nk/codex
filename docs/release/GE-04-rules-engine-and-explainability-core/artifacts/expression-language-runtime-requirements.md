@@ -68,14 +68,14 @@ GE-01 classifies every imported rule record on a `wiring_class` axis — `displa
 ```
 $ python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD
 scope HELD  n=9828
-  display      3577   36.4%
-  static       3046   31.0%
+  display      3599   36.6%
+  static       3050   31.0%
   computed     1695   17.2%
   derived      1224   12.5%
-  ambiguous     286    2.9%
+  ambiguous     260    2.6%
 ```
 
-1,224 currently-held units are `derived`; 898 of them are presently stalled in `ingested-magnitude` and therefore not counted as proven at all. A further 286 are `ambiguous` — records that state a scaling magnitude in English prose with no machine-readable expression. Those are NOT evaluator input until the record carries a real expression.
+1,224 currently-held units are `derived`; 898 of them are presently stalled in `ingested-magnitude` and therefore not counted as proven at all. A further 260 are `ambiguous` — records that state a scaling magnitude in English prose with no machine-readable expression. Those are NOT evaluator input until the record carries a real expression.
 
 **What the evaluator must handle, grounded in the corpus rather than assumed.** These are the concrete PCGen expression shapes the `derived` class is made of:
 

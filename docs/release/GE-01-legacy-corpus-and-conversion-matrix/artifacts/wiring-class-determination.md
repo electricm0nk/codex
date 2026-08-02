@@ -57,10 +57,10 @@ Reproduce with the reference determinator shipped alongside this file:
 $ python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py ingested-magnitude
 inventory docs/work-inventory.json generated_at 2026-08-02T04:02:12Z
 scope ingested-magnitude  n=4050
-  static       2562   63.3%
+  static       2565   63.3%
   derived       898   22.2%
   computed      511   12.6%
-  ambiguous      63    1.6%
+  ambiguous      60    1.5%
   display        16    0.4%
   dual-signal (derived AND computed) 161
 ```
@@ -141,17 +141,17 @@ PY
 96540 20831 8234 2087
 ```
 
-**8,234 `.MOD` rows carry a magnitude token** and are structurally invisible to per-unit classification without the closure. 1,895 of the 9,828 held units (19.3%) have at least one `.MOD` row targeting them, and **294 change class** once the closure is applied:
+**8,234 `.MOD` rows carry a magnitude token** and are structurally invisible to per-unit classification without the closure. 1,895 of the 9,828 held units (19.3%) have at least one `.MOD` row targeting them, and **295 change class** once the closure is applied:
 
 ```
    derived    -> computed     86        display    -> computed     27
-   display    -> static       79        static     -> computed     12
+   display    -> static       80        static     -> computed     12
    display    -> ambiguous    50        display    -> derived       4
    static     -> ambiguous    33        static     -> derived       2
                                         ambiguous  -> static        1
 ```
 
-293 of the 294 move **up** the lattice, 160 of them out of `display`. That direction is the whole point: without the closure, magnitudes hide on `.MOD` rows and their units read as text-only, which marks them done the moment text renders.
+294 of the 295 move **up** the lattice, 161 of them out of `display`. That direction is the whole point: without the closure, magnitudes hide on `.MOD` rows and their units read as text-only, which marks them done the moment text renders.
 
 **Base-name resolution MUST mirror the generator's own** (`CATEGORY=<x>|<Base>.MOD` → `<Base>`; `CLASS:<Base>.MOD` → `<Base>`), or the two components will disagree about which record a `.MOD` row belongs to and the closure will silently miss rows.
 
@@ -205,15 +205,42 @@ PY
 
 The operator's headline case is therefore **machine-determinable after all** — but not from a `BONUS:` token. It lives as a parenthesised PCGen expression inside `DESC:`, and `DESC:` is not in `MAGNITUDE_TOKENS`. Any determinator that scans only the magnitude tokens will miss every scaling spell in the corpus.
 
-**D4 — a prose-scaling phrase in any prose field of the closure → `ambiguous:prose_scaling_phrase`.**
-240 held units. Two type cases:
+**D4 — a magnitude stated only in English prose, anywhere in the closure → `ambiguous`.**
+214 held units, under two distinct signals.
+
+**D4a — `ambiguous:prose_scaling_phrase` (162 units).** A level-scaling phrase in any prose field. Two type cases:
 
 - `advanced_class_guide/acg_spells.lst:14` *Air Geyser*: `DESC:…deals 2d6 points of bludgeoning damage and hurls the target upward a number of feet equal to 5 x your caster level.` The `2d6` is a literal; the displacement is level-scaling stated only in English.
 - `ultimate_campaign/uca_feats.lst:59` *Accursed* (a `.MOD BENEFIT:` row): `You gain spell resistance equal to 5 + your character level…` No magnitude token anywhere in the closure, and the formula exists only as prose.
 
-Neither is honestly `static`, and neither is mechanically `derived` — the determinator cannot produce the formula without guessing. **Semantically these are derived magnitudes; mechanically they are undetermined, and `ambiguous` is the honest verdict.** The work item is to give the record a machine-readable magnitude, not to have a human eyeball the formula into a class.
+Phrases: `per (caster) level`, `per N levels`, `x`/`times your caster level`, `every N levels`, `caster level (max…`, `your character/class/total level`, `per hit die`/`per HD`.
 
-Detection phrases: `per (caster) level`, `per N levels`, `x`/`times your caster level`, `every N levels`, `caster level (max…`, `your character/class/total level`, `per hit die`/`per HD`, `your <Ability> score/modifier/bonus`.
+**D4b — `ambiguous:prose_ability_scaling` (52 units).** A magnitude derived from an ability score, stated in prose — e.g. `core_rulebook` *Metal Fist*: `unarmed strikes that deal 1d6 points of bludgeoning damage plus your Strength modifier`.
+
+**This one needs a discriminator, and a bare phrase match is not it.** `your <Ability> score|modifier|bonus` appears throughout the corpus as a *cross-reference to an existing rule* rather than as a magnitude the record grants. PF1's flat-footed idiom is the dominant instance: *Blind-Fight*, *Uncanny Dodge*, *Run*, *Mobility* and *Improved Blind-Fight* all say some form of "you don't lose your Dexterity bonus to AC", which grants nothing and computes nothing. *Weapon Finesse* and *Elven Curve Blade* say "use your Dexterity modifier **instead of** your Strength modifier" — a substitution rule, not a new magnitude.
+
+The rule is therefore: **an ability phrase is a scaling magnitude only when a granting construction is the nearest preceding clause.**
+
+| | constructions |
+|---|---|
+| grants (→ `ambiguous`) | `add`/`adds`/`adding`, `gain`/`gains`/`gaining`, `equal to`, `plus`, `minus`, `times`, `increased by`, `bonus of` |
+| references (→ not a signal) | `lose`/`loses`/`losing`/`lost`, `retain`/`retains`, `deny`/`denied`, `deprived of`, `instead of`, `rather than`, `in place of`, `whichever is` |
+
+Two properties of this rule are load-bearing and easy to get wrong:
+
+1. **The decision is per occurrence, not per field.** A field may grant one magnitude and reference another. *Agile Maneuvers* — `You add your Dexterity bonus to your base attack bonus and Strength modifier when determining CMB` — grants in one clause and names another ability in the next. A field-wide veto discards the real grant; this was a defect in the first draft of this rule, caught by inspecting the units it dropped.
+2. **Whichever construction sits nearest before the phrase wins**, searched within 45 characters and never across a `.`, `;` or `|`. Filler between verb and phrase is allowed up to 30 characters, so `add **twice** your Intelligence modifier` and `equal to **half** your Constitution modifier` both match.
+
+The discriminator ships with its cases, drawn verbatim from real corpus rows, so a reimplementation can be checked against the same bar:
+
+```
+$ python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py --selftest
+14/14 ability discriminator cases pass
+```
+
+**Two known false positives, left in deliberately.** *Diehard* (`if your negative hit points are equal to or greater than your Constitution score`) states a threshold, not a granted magnitude; *Slashing Grace* (`you can add your Dexterity modifier instead of your Strength modifier`) is a substitution whose nearest preceding verb is nevertheless `add`. Both err toward "something here is undetermined", which is the conservative direction under the lattice, and both are cheaper to leave than to special-case with rules that would themselves need auditing.
+
+**Why `ambiguous` and not `derived`, for all of D4.** None of these is honestly `static`, and none is mechanically `derived` — the determinator cannot produce the formula without guessing. **Semantically they are derived magnitudes; mechanically they are undetermined, and `ambiguous` is the honest verdict.** The work item is to give the record a machine-readable magnitude, not to have a human eyeball the formula into a class.
 
 **D5 — otherwise, `M` is empty → `display`.** Nothing in the closure states a magnitude, in tokens or in prose.
 
@@ -291,7 +318,7 @@ The reference determinator counts the marker and prints it on a separate line, e
 
 ## Validation against the existing classifier
 
-The determinator agrees with the generator's own `text-complete` rule on **2,130 of 2,390 units (89.1%)**:
+The determinator agrees with the generator's own `text-complete` rule on **2,147 of 2,390 units (89.8%)**:
 
 ```
 $ python3 - <<'EOF'
@@ -303,21 +330,21 @@ tc=[u for u in U if u['status']=='text-complete']
 cl=lambda u: w.wiring_class(w.closure_signals(w.token_closure(u)))
 print(len(tc), collections.Counter(cl(u)[0] for u in tc))
 EOF
-2390 Counter({'display': 2130, 'ambiguous': 128, 'static': 73, 'derived': 32, 'computed': 27})
+2390 Counter({'display': 2147, 'ambiguous': 110, 'static': 74, 'derived': 32, 'computed': 27})
 ```
 
-**Correction to an earlier figure in this artifact.** Before the token closure and the `BENEFIT:` prose scan were added, this section reported 99.1% agreement and 22 disagreements. Both were measured correctly, against a determinator that could not see `.MOD` rows or `BENEFIT:` prose. The real figures are **89.1% and 260 disagreements**. The earlier number was not merely imprecise; it was reassuring in the wrong direction. Near-perfect agreement with the existing rule read as evidence that the determinator was sound, when in fact both components shared the same blind spot. **Agreement with a rule that is wrong in a known way is not validation** — and a cross-check between two components built on the same assumption will always look like confirmation.
+**Correction to an earlier figure in this artifact.** Before the token closure and the `BENEFIT:` prose scan were added, this section reported 99.1% agreement and 22 disagreements. Both were measured correctly, against a determinator that could not see `.MOD` rows or `BENEFIT:` prose. The real figures are **89.8% and 243 disagreements**. The earlier number was not merely imprecise; it was reassuring in the wrong direction. Near-perfect agreement with the existing rule read as evidence that the determinator was sound, when in fact both components shared the same blind spot. **Agreement with a rule that is wrong in a known way is not validation** — and a cross-check between two components built on the same assumption will always look like confirmation.
 
-**The 260 disagreements are a real over-claim in today's `proven` number** — 10.9% of `text-complete`. They are counted `text-complete`, and therefore `proven`, because `magnitude_token_count == 0`, yet they carry a magnitude the token count cannot see:
+**The 243 disagreements are a real over-claim in today's `proven` number** — 10.2% of `text-complete`. They are counted `text-complete`, and therefore `proven`, because `magnitude_token_count == 0`, yet they carry a magnitude the token count cannot see:
 
 | n | class under closure | what the token count missed |
 |---|---|---|
-| 128 | `ambiguous` | a magnitude stated only in prose, largely on a `.MOD BENEFIT:` row |
-| 73 | `static` | a literal magnitude on a `.MOD` row |
+| 110 | `ambiguous` | a magnitude stated only in prose, largely on a `.MOD BENEFIT:` row |
+| 74 | `static` | a literal magnitude on a `.MOD` row |
 | 32 | `derived` | the `RANGE:Close` level-scaling keyword, or a parenthesised `CASTERLEVEL` expression |
 | 27 | `computed` | a guarded or temporary magnitude on a `.MOD` row |
 
-Of these, 132 become provable once their class's evidence exists; the 128 `ambiguous` units are not provable at all until the underlying records carry a machine-readable magnitude. None may be quietly left in `proven` in the interim; GE-09's transition rule covers this.
+Of these, 133 become provable once their class's evidence exists; the 110 `ambiguous` units are not provable at all until the underlying records carry a machine-readable magnitude. None may be quietly left in `proven` in the interim; GE-09's transition rule covers this.
 
 **The invariant that does hold, and the one worth auditing.** Agreement between the two components is not symmetric and must not be audited as if it were. The correct one-directional invariant is:
 
@@ -346,23 +373,50 @@ Divergence in the other direction — the token count says zero, the determinato
 $ python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD
 inventory docs/work-inventory.json generated_at 2026-08-02T04:02:12Z
 scope HELD  n=9828
-  display      3577   36.4%
-  static       3046   31.0%
+  display      3599   36.6%
+  static       3050   31.0%
   computed     1695   17.2%
   derived      1224   12.5%
-  ambiguous     286    2.9%
+  ambiguous     260    2.6%
   dual-signal (derived AND computed) 470
   carrying upstream '[Not Implemented]' marker 0 (reported, never classifying)
 per book:
    book                         held  display  static  derived  computed ambiguous
-   core_rulebook                4743      912    2260      672       777       122
-   advanced_class_guide         2527     1448     283      211       518        67
-   advanced_players_guide       2466     1216     500      301       398        51
+   core_rulebook                4743      920    2264      672       777       110
+   advanced_class_guide         2527     1458     283      211       518        57
+   advanced_players_guide       2466     1220     500      301       398        47
    bestiary                       46        1       3       40         2         0
    core_essentials                46        0       0        0         0        46
 ```
 
-The finding that matters for planning: of `core_rulebook`'s 4,743 held units, **777 (16.4%) genuinely require bespoke engine wiring**. Another 3,844 are reachable by three mechanical checks — a literal comparison, a formula evaluation, and a render assertion — and 122 must first be disambiguated. Corpus-wide the same split is 1,695 `computed` against 7,847 addressable and 286 ambiguous.
+The finding that matters for planning: of `core_rulebook`'s 4,743 held units, **777 (16.4%) genuinely require bespoke engine wiring**. Another 3,856 are reachable by three mechanical checks — a literal comparison, a formula evaluation, and a render assertion — and 110 must first be disambiguated. Corpus-wide the same split is 1,695 `computed` against 7,873 addressable and 260 ambiguous.
+
+## Figure movement — why these numbers differ from the first published set
+
+This artifact's first published distribution (commit `72f35178`, 2026-08-02) is superseded. The numbers moved **because the determination rules got better, not because the corpus or the inventory changed** — both figure sets were computed against the same `docs/work-inventory.json`, `generated_at 2026-08-02T04:02:12Z`. Recorded here in full because a spec that silently restates its own distribution is indistinguishable from one that is drifting, and later epics size their work against these counts.
+
+Over `ingested-magnitude` (n=4050):
+
+| | static | derived | computed | ambiguous | display | dual |
+|---|---|---|---|---|---|---|
+| `72f35178` (base row only) | 2,601 | 959 | 445 | 26 | 19 | 97 |
+| current (token closure) | 2,565 | 898 | 511 | 60 | 16 | 161 |
+| delta | −36 | −61 | **+66** | **+34** | −3 | **+64** |
+
+Every delta traces to a named rule change. None is a data change.
+
+| rule change | effect |
+|---|---|
+| **Token closure** (base row ∪ its `.MOD` rows) | The dominant cause. 8,234 `.MOD` rows carry a magnitude token that no unit could previously see; 1,895 of 9,828 held units have one. A `.MOD` row is where guards and `TEMPBONUS` disproportionately live, so the closure moves units **up** the lattice: `computed` +66 here, and 86 units move `derived → computed` corpus-wide. It is also why `dual-signal` rises 66% — a unit's derived main effect and its guarded rider are frequently on *different rows*, so the pair was previously unobservable by construction. |
+| **`BENEFIT:` added to the prose scan** | 2,087 corpus rows carry a record's mechanical benefit text in `BENEFIT:`, which appears in no magnitude-token list. Contributes to `ambiguous` and to `derived:prose_expr`. |
+| **Expanded prose-scaling detection** | `your character/class/total level`, `per hit die`, and the ability-score constructions. The main driver of `ambiguous` +34. |
+| **`display` demoted below `ambiguous`** | Previously `display` short-circuited: a record with no magnitude *token* could never reach the prose rules, so a prose-stated magnitude was invisible. Moves units out of `display` into `ambiguous`. |
+
+**`static` and `derived` fall slightly, and that is the lattice working as designed.** No unit stopped having a literal or a formula; some units gained a *stronger* signal from a `.MOD` row and were promoted past `static`/`derived` to `computed` under highest-bar-wins. A promotion out of `derived` is not a loss of derived work — it is the discovery that the record also needs wiring.
+
+**One movement in the other direction, recorded because it is a downgrade and downgrades are what the GE-09 audit exists to catch.** The ability-score prose rule was first written as a bare phrase match and flagged 96 units. Inspecting them showed systematic over-flagging: `your Dexterity bonus` appears throughout the corpus in PF1's flat-footed idiom (*Blind-Fight*, *Uncanny Dodge*, *Run*, *Mobility*), which references an existing rule and grants nothing. Adding the grant-versus-reference discriminator (D4b) reduced that signal to 52 units and moved `ambiguous` from 286 to 260 corpus-wide.
+
+**That reduction is a determinator definition change, not an observation change,** and under GE-09 check A1 it is exactly the shape that requires justification rather than silent acceptance. The justification is inspection of the affected units, the discriminator carries 14 cases drawn verbatim from real corpus rows (`--selftest`), and two known false positives are documented rather than tuned away. Recorded here so the first regeneration against a stored baseline can attribute the drop to this change instead of raising it as a finding.
 
 ## What this artifact does not decide
 - It does not change any `status` value, and it does not by itself move one unit into `proven`. It reclassifies the *remaining work*; the evaluators still have to be built and run.
