@@ -43,7 +43,7 @@
 #   3. NEVER delete a git worktree with uncommitted changes or unpushed
 #      commits — checked via `git status --porcelain` and the upstream
 #      ahead-count, not assumed from branch name or PR state alone.
-#   4. NEVER touch /home/ubuntu/workspace/repos/pcgen, this repo's own
+#   4. NEVER touch $HOME/workspace/repos/pcgen, this repo's own
 #      checkout, or any worktree/branch currently checked out anywhere.
 #   5. `git stash` is never invoked anywhere in this script.
 #   6. Age-thresholded: cargo-target and verify-logs candidates younger than
@@ -86,7 +86,7 @@ REPO_ROOT=$(cd -- "$SCRIPT_DIR/.." && pwd)
 # smuggle a forbidden path past a string comparison.
 FORBIDDEN_PATHS=(
     "$REPO_ROOT"
-    "/home/ubuntu/workspace/repos/pcgen"
+    "$HOME/workspace/repos/pcgen"
 )
 
 # ---------------------------------------------------------------------------
