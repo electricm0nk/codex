@@ -1727,6 +1727,35 @@ is never reconstructed as `books_dir.join(id)`. Its tests
 (`tests/v06_work_inventory.rs`) assert against the generated inventory, not
 against fixtures.
 
+### Tooling review — the two binaries that did change
+
+`src/bin/v06_work_inventory.rs` (`EXTRA_BOOK_DIRS`, +72): sound. The change
+that mattered is structural, not additive — the book roster went from a
+`Vec<String>` of basenames plus `books_dir.join(id)` at three call sites to a
+`BTreeMap<String, PathBuf>`, so a book living outside `roleplaying_game/`
+can never have its path silently reconstructed under the wrong root. A
+missing `EXTRA_BOOK_DIRS` entry is `std::process::exit(1)` at startup, not a
+skip. `additional_book_dirs` is emitted into the JSON, so the output states
+its own enumeration scope. No fixture data on any path.
+
+`src/bin/v06_corpus_trap_report.rs` (`BOOK_SUBTREES`, +59): sound, with one
+latent brittleness worth naming rather than fixing. `resolve_book` returns
+the first subtree in precedence order that contains the name, so two books
+with the same directory name in different subtrees would resolve silently to
+the first. No such collision exists today — verified:
+
+```sh
+for s in pathfinder/paizo/{roleplaying_game,campaign_setting,player_companion} \
+         pathfinder/dreamscarred_press; do ls ~/workspace/repos/pcgen/data/$s; done \
+  | sort | uniq -d      # -> (empty)
+```
+
+Separately, `a_bare_book_name_resolves_across_the_known_corpus_subtrees`
+skips only on a missing corpus *root*; if the root exists but one of the
+four probed books does not, the fallback makes the assertion fail rather
+than skip. All four exist today (checked individually), so this is a
+sharp-edge note, not a defect.
+
 ### Identifier discipline
 
 Clean. Scanned the bundle diff's code files and the whole live source tree:
@@ -1785,6 +1814,51 @@ both directions against families computed from live behaviour, and none of
 these seven books has an ingested family for the list to name. The correct
 record for "a book was never ingested" is this receipt, not a gate entry.
 
+### F9 — Epic 1's headline acceptance grep ran over directories that do not exist
+
+`SD28-E1-F1`'s stated acceptance criterion is "no `sd28_*` patterns in the
+seven books' surface code," and both the Epic 1 receipt (`SD28-E1-F1-001`,
+"Commands run") and commit `b8fb7d61`'s message record it as confirmed by:
+
+```sh
+grep -rniE 'sd28_|SD28_|Sd28[A-Z]|sd28-' \
+  src/rules_core/rules_tables/ultimate_* src/rules_core/rules_tables/dreamscarred_press
+# receipt records: "0 matches (exit 1 / no-match)"
+```
+
+Neither path exists, and no `ultimate_*` directory has ever existed under
+`src/rules_core/rules_tables/` — the whole point of F1 is that nothing was
+ingested. Re-run verbatim this cycle:
+
+```sh
+ls -d src/rules_core/rules_tables/ultimate_*        # -> no matches
+ls src/rules_core/rules_tables/                     # -> acg advanced_race_guide apg beastiary1
+                                                    #    class_spell_levels.rs crb feats_all.rs
+                                                    #    mod.rs pathfinder_unchained
+grep -rniE 'sd28_|SD28_|Sd28[A-Z]|sd28-' \
+  src/rules_core/rules_tables/ultimate_* src/rules_core/rules_tables/dreamscarred_press; echo $?
+# -> ugrep: warning: src/rules_core/rules_tables/ultimate_*: No such file or directory
+#    ugrep: warning: src/rules_core/rules_tables/dreamscarred_press: No such file or directory
+#    2
+```
+
+So "0 findings" was structurally guaranteed by the empty search space, and
+the recorded exit code (`1 / no-match`) is not the exit code the command
+returns (`2 / path error`) — the warning lines on stderr were not read.
+Incidentally this is `AGENTS.md`'s ugrep shim in the wild: the local `grep`
+is ugrep, whose non-match and bad-path exit codes differ from GNU grep's.
+
+**The conclusion happens to be true**, which is why this is a method finding
+and not a defect report. This cycle re-derived it over the live source tree
+rather than a nonexistent one, and the answer is still zero — see
+"Identifier discipline" above. But an acceptance criterion satisfied by an
+empty search space is not satisfied, and Epic 1 was the gate that unblocked
+every other epic in the bundle.
+
+The other two Epic 1 evidence lines are sound: `grep -rniE 'sd28_|SD28_'
+src/bin tests` and `bash scripts/identifier-discipline-audit.sh` →
+`OK_NO_BUNDLE_TAGS` both run over paths that exist.
+
 ### F8 — INCIDENT: a second writer is live in this shared checkout, and it
 ### silently contaminated this cycle's `v06_work_inventory` regeneration
 
@@ -1831,17 +1905,167 @@ newly compiled book, so ARG and PU corpus units reported
 `no_compiled_rule_set_for_book` while the engine shipped their tables). It
 is against two agents holding uncommitted work in one tree.
 
+### Mutation sample (Decision 26 item 4 — test quality, not test count)
+
+The bundle's one genuinely new gate is `tests/v06_work_inventory.rs`'s
+`EXTRA_BOOK_DIRS` roster assertions. Checked the way the playbook §7.4
+pattern requires — break the thing the test protects and confirm the test
+notices:
+
+```sh
+# in the isolated worktree, warm target dir
+# mutation: delete "pathfinder/dreamscarred_press/ultimate_psionics" from EXTRA_BOOK_DIRS
+cargo run  --locked --bin v06_work_inventory     # exit 0 (regenerates the inventory)
+cargo test --locked --test v06_work_inventory
+```
+
+→ `test result: FAILED. 12 passed; 2 failed`, and both failures name the
+real cause rather than a count:
+
+- `ultimate_psionics_appears_in_the_inventory_as_a_not_started_book` →
+  "ultimate_psionics must appear in the inventory's books list"
+- `every_corpus_book_appears_in_the_inventory` → set-difference assertion
+  showing exactly `ultimate_psionics` missing from the extras set
+
+`sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books`
+stayed green, correctly — it covers the other twelve books. Mutation
+reverted (`git checkout -- src/bin/v06_work_inventory.rs
+docs/work-inventory.json`); the worktree was clean afterwards apart from the
+retro shard.
+
+**The gate is real.** This matters more than usual here: with no ingest to
+review, these tests are essentially the bundle's whole executable output,
+and a test that passes whether or not the roster is right would have left
+the bundle with nothing verified at all.
+
 ### Verify
 
-`./scripts/verify.sh` (full, exit code captured directly, not through a
-pipe) — result and the exact tree state it ran against recorded below.
+Run in an **isolated worktree**, not the shared checkout, because of F8 —
+running it in place would have tested another agent's uncommitted
+`src/bin/v06_work_inventory.rs` and attributed the result to this commit:
+
+```sh
+git worktree add /home/ubuntu/workspace/wt-sd28-epic12 1420c71e --detach
+cd /home/ubuntu/workspace/wt-sd28-epic12
+export CARGO_TARGET_DIR=/home/ubuntu/workspace/.cargo-target-sd28-epic12   # own dir, not under /tmp
+./scripts/verify.sh                        # full, not --quick; exit code captured directly
+```
+
+**`VERIFY_EXIT=0`. `RESULT: PASS`.** Tree state: commit `1420c71e`
+(this cycle's review commit), clean worktree, no other agent's work present.
+
+All ten stages passed, each attributed by name rather than bucketed:
+
+```
+preflight-disk       PASS  (disk budget OK; 21% used, 385G available)
+root-lib             PASS  (1448 passed)
+root-full            PASS  (5933 passed across 533 suites)
+desktop              PASS  (411 passed)
+reach                PASS  (16 passed)
+frontend-install     PASS  (npm ci)
+frontend-test        PASS  (98/98 files)
+frontend-typecheck   PASS  (tsc --noEmit clean)
+clippy               PASS
+class-dump           PASS
+```
+
+Two things worth stating rather than leaving implied:
+
+- `root-full` measured **5933 across 533 suites**, exactly the baselines in
+  `scripts/verify-baselines.env` (`BASELINE_ROOT_FULL_TESTS=5933` moved from
+  5930 in its own commit `3a4a4169` with `--show-actuals` output in the
+  message, satisfying DoD item 7). No baseline was touched this cycle.
+- `reach` ran **16 tests, not 0** — so DoD item 2's "a gate running zero
+  tests asserts nothing" clause did not trigger. It passed anyway with zero
+  SD-28 families in its inventory, which is precisely F1: green by absence.
+
+Peak disk during the sweep: 25% used, 363G available. Scratch target dir
+(23G) removed at cycle end.
+
+### Decision 26 scope — item by item
+
+Decision 26 names six review dimensions and one mechanism. Answered
+individually rather than as a blanket "reviewed":
+
+1. **Correctness of rules logic against the corpus (sampled).** No rules
+   logic was added — see F1. Sampling was redirected to the figures the
+   bundle published; results in "Figures spot-checked," F4, F5, F9.
+2. **No stubs or fixture-only data in production paths.** Clean — see
+   "No-stub / wired-integration audit." `scripts/wired-integration-audit.sh`
+   → `AUDIT PASSED. All four checks clean.` (Check 1 forbidden tokens,
+   Check 2 empty handlers, Check 3 mock leaks, Check 4 "Would …" strings),
+   exit `0`.
+3. **Content genuinely reaching a player surface, spot-checked by driving
+   the desktop app.** **Not performed, and correctly so**: the bundle
+   surfaced no new record family, so there is no newly-claimed value to read
+   off a screenshot. `RUN_DESKTOP_AGENT` was never set and `driver.sh` never
+   invoked. Launching the app to photograph an unchanged sheet would
+   manufacture evidence for a claim nobody made. The reach dimension of this
+   review is F1's finding: the gate passes by absence, which DoD item 2
+   names as a hard failure.
+4. **Test quality, not just count (mutation sample).** Performed on the
+   bundle's new gate — result recorded under "Mutation sample" below.
+5. **No hand-authored rules data in `apps/desktop/src/`.** Clean. The
+   bundle's entire frontend diff is eight `.test.ts` files plus
+   `testSupport/makeSurface.ts`, and every change in them is the build-label
+   string `'Codex 0.6.1-test'` → `'Codex 0.8.0-test'`:
+   `git diff --name-only 4d75856c..HEAD -- apps/desktop/src | grep -v '\.test\.ts$'`
+   → `apps/desktop/src/testSupport/makeSurface.ts` (test support), nothing
+   else.
+6. **Standing dual-audit at bundle scope** (`BASE_BRANCH=origin/develop`,
+   the triple-dot merge-base both scripts default to):
+   `bash scripts/identifier-discipline-audit.sh` → `OK_NO_BUNDLE_TAGS`, exit
+   `0`; `bash scripts/wired-integration-audit.sh` → `AUDIT PASSED`, exit
+   `0`. No new audit tooling invented, per Decision 26.
+
+### Findings triage (Decision 26: severity + disposition, deferrals owned)
+
+| id | severity | disposition | owner / where it lands |
+|----|----------|-------------|------------------------|
+| F1 zero content ingest | critical | deferred | SD-28 supervisor — `forward-scope-register.md` C4.7 |
+| F2 blocker misclassified as an entry gate | critical | deferred | SD-28 supervisor — `forward-scope-register.md` C4.7 |
+| F3 ACG Naturalist spell re-key | high | deferred (`decision-blocked`) | next bundle with SD-22 corpus write authority — `forward-scope-register.md` C4.6 |
+| F4 `65 of 191 (34%)` → `53 of 191 (28%)` | medium | fixed-in-bundle | `loop-instruction.md`, this cycle |
+| F5 `22 other sourcebooks` → 21 distinct | low | fixed-in-bundle | `loop-instruction.md`, this cycle |
+| F6 three corrections against correct doctrine | medium | fixed-in-bundle (recorded + annotated) | this receipt + `incident` event |
+| F7 Epic 11 lockfile sweep | low | deferred | `epic-10-closure` PR body — `forward-scope-register.md` C4.8 |
+| F8 second writer in the shared checkout | high | fixed-in-bundle (contaminated artifact excluded) | this receipt + `incident` event |
+| F9 Epic 1 acceptance grep over nonexistent paths | medium | fixed-in-bundle (re-derived over the live tree; answer unchanged) | this receipt + `correction` event |
+
+No finding is `deferred` without a named owner.
+
+### Recommendation to the supervisor — `epic-10-closure` is NOT eligible
+
+Stated here because this card is the last gate before it. `epic-10-closure`'s
+own written entry conditions are not met, and none of them is met by this
+review passing:
+
+- `epic-breakdown.md:198` and `:313` — "All Epic 3-9 per-book cycles
+  `complete` in `progress.md`" / "…`complete` with reach-gate claims and
+  trap-report outputs." Seven of seven are `IN-FLIGHT`; zero reach-gate
+  claims exist (F1).
+- `acceptance-and-verification.md:179` — "[ ] All Epic 3-9 cycles complete
+  with reach-gate claims." Unchecked, correctly.
+- `kanban.md` dispatch tiebreak — `epic-10-closure` depends on all of
+  `epic-3-uc`…`epic-9-upsi`.
+
+Firing a tranche-promotion PR now would publish `0.8.<build>` as "the seven
+Ultimate books bundle" carrying none of the seven books. The supervisor's
+next action should be F2's ruling — re-dispatch Epics 3-9 with the audit
+red reclassified as a shortfall rather than an entry gate — not Epic 10.
+
+The SD-28 doc set is honest about this: no completion checkbox anywhere in
+`acceptance-and-verification.md`, `epic-breakdown.md` or `README.md` is
+ticked. Verified: `grep -niE '\b(DONE|COMPLETE|SATISFIED|closed)\b'` over
+those three files returns only forward-looking condition statements, no
+claims of achievement.
 
 ### Retro events
 
-Emitted this cycle to `docs/retro/events/sd28-epic12.jsonl`: two
-`correction` events (F4, F5), one `incident` (F6), one `deferral` (F3 —
-the ACG re-key, out of write scope). Plus the automatic `verification`
-events from every `verify.sh` invocation.
+Emitted this cycle to `docs/retro/events/sd28-epic12.jsonl`: three
+`correction` events (F4, F5, F9), two `incident` events (F6, F8), one
+`deferral` (F3 — the ACG re-key, out of write scope). Plus the automatic
+`verification` events from every `verify.sh` invocation.
 
 ### Kanban
 

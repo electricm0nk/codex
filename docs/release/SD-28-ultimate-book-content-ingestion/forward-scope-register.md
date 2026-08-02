@@ -187,6 +187,62 @@ new spell records. They are supplements against spells other books already defin
 declarations separately from `.MOD` supplements when sizing cycles — conflating them is the same
 measurement-shape error `§C4.3` warns about.
 
+## Class 4 — Epic 12 code-review deferrals (owned, per `decisions.md §26`)
+
+Landed by cycle `SD28-E12-F1-001` (`epic-12-code-review`, 2026-08-02).
+Decision 26 requires every `deferred` finding to name an owner — an unowned
+deferral is not a valid disposition. Full evidence for each is in
+`progress.md` under the cited finding id.
+
+### C4.6 — Re-key the nine ACG Naturalist spell records (`progress.md` F3)
+
+**Severity:** high — it is the sole cause of definition-of-done item 3
+(`v06_corpus_trap_report -- --audit` exits 0) being red repo-wide, and all
+seven SD-28 book cycles cited it.
+
+**Owner:** the next bundle holding write authority over SD-22 corpus
+content. Not SD-29 or SD-30 by default — neither's scope includes
+`data/corpus/advanced_class_guide/`; the operator assigns this on return.
+
+**What:** `src/rules_core/cache_gen/acg.rs::generate_spells` writes
+`record_key: entry.key` (the display name) for every ACG spell, including
+the nine whose declared corpus `KEY:` is `Naturalist Summon Nature's Ally
+I..IX` (`acg_spells.lst:785-793`). The generated records therefore claim the
+base spell's identity, which already exists as a separate CRB record
+(`data/corpus/core_rulebook/spell/level_1/summon_nature_s_ally_i.json`).
+Remedy: re-key the nine `acg::spell_list` entries to their declared `KEY:`
+and regenerate via `gen_cache_acg`.
+
+**Explicitly not acceptable as a fix:** correcting `record_key` alone while
+leaving `data.key` as the base spell's name. That turns the audit green
+without fixing the defect.
+
+### C4.7 — Re-dispatch Epics 3-9 with the audit red reclassified (`progress.md` F1/F2)
+
+**Severity:** critical — the bundle's entire stated purpose is undelivered.
+
+**Owner:** the SD-28 supervisor session, before `epic-10-closure` fires.
+
+**What:** all seven book epics recorded `decision-blocked` citing C4.6's
+audit failure as a precondition for writing ingest code. It is a closure
+condition (DoD item 3), not an entry gate, and its cause is a different,
+closed book. Re-dispatch with that reclassification stated in the brief, so
+the audit red is carried as a DoD item 6 shortfall rather than as a reason
+to write nothing. All seven cycles' step 0/0b/1b shape findings are already
+recorded in `progress.md` and are reusable as the starting shape.
+
+### C4.8 — Epic 11's lockfile sweep (`progress.md` F7)
+
+**Severity:** low — a refresh, not a defect.
+
+**Owner:** `epic-10-closure`, at PR-authoring time.
+
+**What:** commit `27dbbdea` moved 79 transitive crate versions and added one
+package (`syn`) to `apps/desktop/src-tauri/Cargo.lock` inside a
+version-numbering commit. Not reverted (an unreviewed revert at closure time
+carries more risk than the sweep). The tranche-promotion PR body must
+disclose it rather than let it arrive unannounced.
+
 ## Review trigger
 
 Reopen SD-28's forward-scope register when:
