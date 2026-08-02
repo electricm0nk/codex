@@ -1119,3 +1119,173 @@ another epic/session, (2) confirm whether a `RuleSetId` variant for
 `ultimate_campaign` has been added by an intervening cycle, and (3) only
 once both are clear, proceed to Step 3 (TDD implementation) using this
 cycle's Step 0/0b/1b findings above as the starting shape.
+
+## Cycle `SD28-E8-F1-001` — `epic-8-uw` (Ultimate Wilderness)
+
+**Claimed:** `epic-8-uw`, 2026-08-02T00:00:00Z. `RETRO_ACTOR=epic-8-uw`.
+
+### Step 0 — shape (`v06_work_inventory`)
+
+`cargo run --locked --bin v06_work_inventory` regenerated
+`docs/work-inventory.json`. `ultimate_wilderness` entries carry
+`"evidence": "no_compiled_rule_set_for_book"` and `"engine_book": null`
+throughout (`python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+print([b for b in d['books'] if 'wilderness' in str(b)])"` — the book's
+units are keyed per-record inline, not a single `books[]` summary entry
+in this snapshot; per-record `evidence`/`status` fields were read
+directly from the `ultimate_wilderness:*` record entries).
+
+### Step 0b — trap report
+
+`cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_wilderness`
+→ exit **0**. Findings: 1479 `namespaced-key` (upstream `KEY:<namespace> ~
+<leaf>` shape, e.g. `Witch Archetype ~ Flood Walker`), 2
+`token-dense-record` (Shifter Claws: 10 `BONUS:VAR` tokens; Verdant
+Bloodline: 11), 176 `governing-token-hidden-by-filter` (records carrying
+`MULT`/`STACK`/`CHOOSE`/`SERVESAS`/`ASPECT` alongside `BONUS`/`PRE` that a
+filtered grep would drop). None are defects — report states this
+explicitly ("Everything above is legitimate upstream data... Nothing
+here is a reason to fail a build."). 271+ `KEY` namespaces present; top
+by count: Favored Class Bonus (68), Companion Advancement (52), Favored
+Class Bonus Output (50), Shifter Aspect (45), Animal Trick (39), Wild
+Talent (34), Animal Companion Feat (33).
+
+### Step 1 / 1b — read + re-derive
+
+Read `scope-draft.md`, `decisions.md`, `progress.md` (this file, tail).
+Re-derived figures against source data, none transcribed:
+
+```
+find "$BOOK" -maxdepth 1 -iname '*.pcc'                    # -> _ultimate_wilderness.pcc (leading underscore — brief said
+                                                             #    "glob *.pcc (not _*.pcc)"; wrong for this book, matching
+                                                             #    loop-instruction.md's own note and the epic-6-ui/epic-7-ucam
+                                                             #    precedent that only ultimate_equipment/ultimate_psionics lack it)
+find "$BOOK" -maxdepth 1 -iname '*.lst' | wc -l              # -> 24
+find "$BOOK" -iname '*.lst' | wc -l                          # -> 35  (recursive)
+find "$BOOK/support" -iname '*.lst' | wc -l                  # -> 11
+find "$BOOK" -path '*_pfs*' -iname '*.lst' | wc -l            # -> 0  (no _pfs/ dir in this book; brief's "34%"
+                                                             #    repo-wide figure does not apply file-for-file — matches
+                                                             #    loop-instruction.md's own breakdown: "UI and UW have only support/")
+ls -d "$BOOK"/*/                                             # -> support/ only
+grep -c 'CATEGORY:FEAT' "$BOOK"/uw_feats.lst                 # -> 136 (uw_feats.lst is 165 lines total)
+grep -rn "UltimateWilderness\|ultimate_wilderness" src/ apps/desktop/src-tauri/src/ --include=*.rs
+                                                             # -> only doc-comment references in pilot_compute.rs
+                                                             #    (lines 14976, 19366); no compiled RuleSetId variant
+```
+
+(`$BOOK` = `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_wilderness`)
+
+**Confirms brief error (repeat of epic-6-ui/epic-7-ucam finding, not a new
+class):** the dispatch brief said "glob `*.pcc` (not `_*.pcc`)" for this
+book; the file on disk is `_ultimate_wilderness.pcc` — leading
+underscore. This is the third book-specific confirmation of the same
+brief-authoring mistake (`epic-6-ui`/`SD28-E6-F1-001`,
+`epic-7-ucam`/`SD28-E7-F1-001`, now `epic-8-uw`).
+
+**Book-directory shape (not a defect):** 24 top-level `.lst` files, 11
+more in `support/` (35 total, 31% in `support/`), 0 in `_pfs/` (this book
+has no `_pfs/` directory) — consistent with `loop-instruction.md`'s own
+per-book note ("UI and UW have only `support/`").
+
+### Repo-wide precondition — re-checked fresh this cycle
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 2**
+(re-run live 2026-08-02, not transcribed from a prior cycle). Same 9
+`key-differs-from-name` defects, unchanged from `epic-3-uc` through
+`epic-7-ucam`: `advanced_class_guide/acg_spells.lst`'s "Naturalist Summon
+Nature's Ally I..IX" filed under the bare "Summon Nature's Ally I..IX"
+identity. This is a sixth confirmation the repo-wide precondition
+blocking DoD item 3 (`v06_corpus_trap_report -- --audit` exits 0) is
+still live — not a new instance, not a disagreement with any prior
+figure.
+
+`./scripts/verify.sh --only preflight-disk` → exit **0** (21% used, 385G
+available on both the repo filesystem and the scratch-log filesystem).
+No reclaim needed; `scripts/reclaim.sh --apply` still run at cycle-end
+per step 8.
+
+### Step 1b cross-check — engine RuleSetId
+
+`docs/work-inventory.json`'s `ultimate_wilderness` record entries all
+carry `"evidence": "no_compiled_rule_set_for_book"` and `"engine_book":
+null`, and `grep -rn "UltimateWilderness\|ultimate_wilderness" src/
+apps/desktop/src-tauri/src/ --include=*.rs` returns only doc-comment
+prose references (`pilot_compute.rs:14976`, `:19366`) — no compiled
+`RuleSetId` variant exists for this book. Identical shape to what
+`epic-6-ui` found for `ultimate_intrigue` and `epic-7-ucam` found for
+`ultimate_campaign`.
+
+### What did not land, and why (decision-blocked — repo-wide precondition, same as `epic-3-uc`/`epic-4-um`/`epic-5-ue`/`epic-6-ui`/`epic-7-ucam`)
+
+`decision-blocked`: **Full Ultimate Wilderness TDD ingest (new
+`RuleSetId` variant, ingest code, `reach_gate.rs` claim, wired-integration
+audit, on-screen verification) was not attempted this cycle.**
+
+Two independent, previously-recorded blockers, both re-checked fresh:
+
+1. `cargo run --locked --bin v06_corpus_trap_report -- --audit` exits
+   `2` on the same pre-existing, out-of-scope ACG `key-differs-from-name`
+   defects already recorded by `epic-3-uc` (`SD28-E3-F1-001`),
+   `epic-4-um` (`SD28-E4-F1-001`), `epic-5-ue` (`SD28-E5-F1-001`),
+   `epic-6-ui` (`SD28-E6-F1-001`), and `epic-7-ucam` (`SD28-E7-F1-001`) —
+   DoD item 3 precondition, still failing repo-wide, out of this cycle's
+   write scope (the defect is in `advanced_class_guide/acg_spells.lst`
+   ingest, not in `ultimate_wilderness`).
+2. `ultimate_wilderness` has no compiled `RuleSetId` variant
+   (`engine_book: null`, `evidence: no_compiled_rule_set_for_book`
+   throughout its work-inventory entries, re-confirmed above). Per the
+   same reasoning `epic-6-ui` and `epic-7-ucam` applied to their books:
+   inventing a `RuleSetId` variant, parser hookup, and reach-claim
+   surface unilaterally inside a single per-book cycle is exactly the
+   cross-cutting engine work the "Hard stops" rule reserves for explicit
+   scope decision, not a silent per-book invention.
+
+No ingest code, `RuleSetId` variant, or `reach_gate.rs` claim was written
+this cycle; none is claimed as done. `./scripts/verify.sh` (full) was not
+run against new production code because none was written; the
+disk-preflight subset above stands as this cycle's only `verify.sh`
+invocation, consistent with `epic-4-um`/`epic-5-ue`/`epic-6-ui`/`epic-7-ucam`'s
+precedent for a decision-blocked cycle.
+
+### Retro events
+
+`scripts/retro.py correction --subject "epic-8-uw dispatch brief"
+--claimed "glob *.pcc (not _*.pcc) for ultimate_wilderness" --actual
+"_ultimate_wilderness.pcc — leading underscore, matching
+loop-instruction.md's own corpus-shape note that only ultimate_equipment
+and ultimate_psionics lack the underscore; third book-specific
+confirmation of this brief error after epic-6-ui and epic-7-ucam"
+--verified-by "find
+~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_wilderness
+-maxdepth 1 -iname '*.pcc'"` — emitted this cycle to
+`docs/retro/events/epic-8-uw.jsonl`.
+
+`scripts/retro.py deferral --actor epic-8-uw --what "Ultimate Wilderness
+TDD ingest, new RuleSetId variant, reach_gate claim, wired-integration
+audit, on-screen verification" --reason "repo-wide
+v06_corpus_trap_report --audit exits 2 on the same pre-existing,
+out-of-scope ACG key-differs-from-name finding
+epic-3-uc/epic-4-um/epic-5-ue/epic-6-ui/epic-7-ucam already recorded
+(sixth confirmation, not a new instance); separately, ultimate_wilderness
+is engine_book:null / evidence:no_compiled_rule_set_for_book throughout
+work-inventory.json — no RuleSetId variant exists, and inventing one
+unilaterally in a single per-book cycle is exactly the cross-cutting
+engine work the hard-stops rule reserves for explicit scope decision"
+--scope "one book epic (epic-8-uw)" --blocked-by "ACG
+key-differs-from-name fix (out of SD-28 write scope); RuleSetId variant +
+parser hookup for ultimate_wilderness (not yet scoped to a single-book
+cycle)" --tracked-at
+"docs/release/SD-28-ultimate-book-content-ingestion/progress.md
+SD28-E8-F1-001"` — emitted this cycle to `docs/retro/events/epic-8-uw.jsonl`.
+
+### Kanban
+
+`epic-8-uw` remains `IN-FLIGHT`, `Claimed-by: epic-8-uw`, `Cycle-id:
+SD28-E8-F1-001`. Not moved to `COMPLETE` (the repo-wide precondition and
+missing `RuleSetId` are not this cycle's to fix; moving to `COMPLETE`
+would misrepresent DoD item 3 as satisfied). Next cycle against this
+card should: (1) confirm whether the ACG audit finding has been fixed by
+another epic/session, (2) confirm whether a `RuleSetId` variant for
+`ultimate_wilderness` has been added by an intervening cycle, and (3)
+only once both are clear, proceed to Step 3 (TDD implementation) using
+this cycle's Step 0/0b/1b findings above as the starting shape.
