@@ -474,10 +474,11 @@ fn has_prose_scaling_phrase(field: &str, rules: &SignalRules) -> bool {
                 return true;
             }
         }
-        if words[i] == "every" && words.get(i + 1).is_some_and(|w| starts_with_digit(w)) {
-            if words.get(i + 2).is_some_and(|w| is_level_word(w)) {
-                return true;
-            }
+        if words[i] == "every"
+            && words.get(i + 1).is_some_and(|w| starts_with_digit(w))
+            && words.get(i + 2).is_some_and(|w| is_level_word(w))
+        {
+            return true;
         }
     }
     false
