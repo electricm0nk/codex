@@ -62,8 +62,12 @@ use std::process::Command;
 
 use serde::Serialize;
 
+use crate::rules_core::cache_gen::WiringClassIndex;
 use crate::rules_core::rules_tables::apg::equipment_tables::EquipmentCategory;
 use crate::rules_core::rules_tables::apg::{self, ApgClassId};
+
+/// `wiring_class`'s corpus-wide book id for APG.
+const WIRING_CLASS_BOOK_ID: &str = "advanced_players_guide";
 
 // ---------------------------------------------------------------------
 // Shape B schema (decisions.md §7, corrected §11.1/§11.2)
@@ -116,6 +120,11 @@ pub struct CacheRecord<T: Serialize> {
     pub ingested_at: String,
     pub data: T,
     pub source: Source,
+    /// GE-01: what kind of evidence would prove this record done, from
+    /// `codex::rules_core::wiring_class`'s real corpus token closure --
+    /// see `cache_gen::acg::CacheRecord::wiring_class`'s doc comment.
+    pub wiring_class: String,
+    pub wiring_class_signals: Vec<String>,
 }
 
 // ---------------------------------------------------------------------
@@ -382,6 +391,8 @@ fn generate_classes(
     let sha256 = sha256_file(&path)?;
     let mut used = BTreeSet::new();
     let class_dir = out_dir.join("class");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for &class_id in ApgClassId::ALL {
         let rows: Vec<ClassChassisRow> = match class_id {
@@ -402,6 +413,14 @@ fn generate_classes(
         })
         .collect();
         let maxlevel = rows.last().map(|r| r.level).unwrap_or(0);
+        let line = class_line(class_id);
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            classes_file,
+            line,
+            class_capitalized_name(class_id),
+            class_capitalized_name(class_id),
+        );
 
         let record = CacheRecord {
             population: Population::InScope,
@@ -415,9 +434,11 @@ fn generate_classes(
             source: Source::LstToken {
                 path: format!("{APG_DIR}/{classes_file}"),
                 sha256: sha256.clone(),
-                line: class_line(class_id),
+                line,
                 record_key: format!("CLASS:{}", class_capitalized_name(class_id)),
             },
+            wiring_class,
+            wiring_class_signals,
         };
         let slug = slugify(class_id.name(), &mut used);
         write_json(&class_dir, &slug, &record)?;
@@ -554,6 +575,8 @@ fn generate_spells(
     let sha256 = sha256_file(&path)?;
     let mut used = BTreeSet::new();
     let spell_dir = out_dir.join("spell");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for entry in apg::spell_list::SPELL_LIST {
         let source = spell_source(
@@ -564,6 +587,21 @@ fn generate_spells(
             fetched_at_web,
             &mut report.unresolved_citations,
         );
+        // `wiring_class` describes the CORPUS RECORD's own row shape, which
+        // exists independent of where `source` (above) sourced the
+        // record's DESCRIPTION prose from -- a web-second-sourced or
+        // same-book-fallback spell still has a real base `.lst` row.
+        // Resolved separately from `source` so a citation this record
+        // does not use for its description is still used for wiring_class.
+        let wiring_citation = resolve_citation(corpus_root, spell_file, entry.key, entry.full_text)
+            .ok()
+            .flatten();
+        let (wiring_file, wiring_line) = match &wiring_citation {
+            Some(c) => (c.file_name.as_str(), c.line),
+            None => (spell_file, 0),
+        };
+        let (wiring_class, wiring_class_signals) =
+            wiring_index.wiring_class_for(&mut wiring_lines, wiring_file, wiring_line, entry.key, entry.key);
         let completeness = if entry.description.is_some() {
             Completeness::Full
         } else {
@@ -581,6 +619,8 @@ fn generate_spells(
                 full_text: entry.full_text,
             },
             source,
+            wiring_class,
+            wiring_class_signals,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&spell_dir, &slug, &record)?;
@@ -753,6 +793,8 @@ fn generate_equipment(
     }
     let mut used = BTreeSet::new();
     let equipment_dir = out_dir.join("equipment");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for entry in apg::equipment_tables::EQUIPMENT_TABLE {
         let source = equipment_source(
@@ -761,6 +803,23 @@ fn generate_equipment(
             &sha_by_file,
             fetched_at_web,
             &mut report.unresolved_citations,
+        );
+        // Same rationale as `generate_spells`: `wiring_class` reads the
+        // corpus record's own row, resolved independently of whether
+        // `source` (above) ended up web-second-sourced for its
+        // description prose.
+        let category_file = equipment_category_file(entry.category);
+        let wiring_citation = resolve_citation(corpus_root, category_file, entry.key, false).ok().flatten();
+        let (wiring_file, wiring_line) = match &wiring_citation {
+            Some(c) => (c.file_name.as_str(), c.line),
+            None => (category_file, 0),
+        };
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            wiring_file,
+            wiring_line,
+            entry.key,
+            entry.key,
         );
         let completeness = if entry.description.is_some() {
             Completeness::Full
@@ -780,6 +839,8 @@ fn generate_equipment(
                 description: entry.description.map(|d| d.to_string()),
             },
             source,
+            wiring_class,
+            wiring_class_signals,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&equipment_dir, &slug, &record)?;

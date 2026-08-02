@@ -62,6 +62,7 @@ use codex::rules_core::rules_tables::crb::{
     spell_list as crb_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
 /// Read at runtime rather than `include_str!`ed, exactly as
@@ -343,31 +344,12 @@ const TRAP_RULES: &[TrapRule] = &[
     },
 ];
 
-/// Tab-field prefixes that carry a real numeric magnitude. A record with none
-/// of these has no number for the engine to compute, which is the corpus half
-/// of the `text-complete` ruling.
-const MAGNITUDE_TOKENS: &[&str] = &[
-    "BONUS:",
-    "TEMPBONUS:",
-    "DEFINE:",
-    "COST:",
-    "WT:",
-    "CR:",
-    "AC:",
-    "ACCHECK:",
-    "DAMAGE:",
-    "CRITMULT:",
-    "CRITRANGE:",
-    "RANGE:",
-    "REACH:",
-    "MOVE:",
-    "HITDIE:",
-    "LEVELADJUSTMENT:",
-    "SR:",
-    "DR:",
-    "SPELLFAILURE:",
-    "STAT:",
-];
+// `MAGNITUDE_TOKENS` -- the tab-field prefixes that carry a real numeric
+// magnitude -- is imported from `codex::rules_core::wiring_class` above.
+// `wiring-class-determination.md` "Magnitude-bearing fields" is explicit
+// that the determinator MUST NOT fork this list: a second copy here would
+// drift from the one the generator itself uses to select magnitude fields,
+// and the two would disagree about which records even have a magnitude.
 
 // ---------------------------------------------------------------------------
 // Corpus records
@@ -439,6 +421,13 @@ struct BookEnumeration {
 fn tab_fields(line: &str) -> Vec<&str> {
     line.trim_end_matches(['\n', '\r']).split('\t').collect()
 }
+
+// `mod_base_name` (resolving a `.MOD` row's base record name) lives in
+// `codex::rules_core::wiring_class` -- imported below -- and is shared by
+// this file's `mod_only_rescue` path and `wiring_class`'s own token-closure
+// index, so the two always agree about which record a `.MOD` row belongs
+// to (the same resolution `wiring-class-determination.py`'s `mod_index()`
+// performs).
 
 /// The value of the first field with the given `TOKEN:` prefix, if any.
 fn token_value<'a>(fields: &[&'a str], prefix: &str) -> Option<&'a str> {
@@ -545,22 +534,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
 
         // `.MOD` is resolved corpus-wide after enumeration; stash it.
         if let Some(mod_at) = first.find(".MOD") {
-            let mut base = first[..mod_at].to_string();
-            if let Some(rest) = base
-                .strip_prefix("CATEGORY=")
-                .and_then(|r| r.split_once('|'))
-                .map(|(_, rest)| rest.to_string())
-            {
-                // `CATEGORY=Special Ability|Foo.MOD` -> `Foo`
-                base = rest;
-            }
-            // `CLASS:Bard.MOD` names the base class `Bard`, not a record
-            // called `CLASS:Bard`. Without this, the name never matches the
-            // declared set and the rescue invents a second Bard in every book
-            // that merely modifies the Core Rulebook's one.
-            if let Some(rest) = base.strip_prefix("CLASS:") {
-                base = rest.to_string();
-            }
+            let base = mod_base_name(&first[..mod_at]);
             *out.trap_hits.entry("mod_record").or_default() += 1;
             let magnitudes = MAGNITUDE_TOKENS
                 .iter()
@@ -670,6 +644,16 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
     }
     out
 }
+
+// `build_mod_index`, `CorpusLines`, and `token_closure_rows` -- the shared
+// GE-01 token-closure machinery -- live in `codex::rules_core::wiring_class`
+// so `cache_gen::*`'s per-book generators can build the same closure a
+// `.MOD` row belongs to without a second implementation. Only
+// `mod_base_name` stays local: it is also the `mod_only_rescue` path's own
+// base-name resolver, imported by name below.
+use codex::rules_core::wiring_class::{
+    CorpusLines, build_mod_index, mod_base_name, token_closure_rows,
+};
 
 // ---------------------------------------------------------------------------
 // Book roster
@@ -1707,6 +1691,12 @@ struct InventoryUnit {
     id: String,
     unit: CorpusUnit,
     verdict: Verdict,
+    /// GE-01: what kind of evidence would prove this unit done, determined
+    /// from the unit's token closure (`wiring_class::determine_closure`).
+    /// Orthogonal to `verdict.status` -- never derived from it.
+    wiring_class: wiring_class::WiringClass,
+    wiring_class_reason: String,
+    wiring_class_signals: BTreeSet<String>,
 }
 
 fn main() {
@@ -1906,6 +1896,12 @@ fn main() {
         .collect();
     let facts = gather_engine_facts(&fixture, corpus_class_names);
 
+    // --- wiring_class (GE-01) -----------------------------------------------
+    // Built once, corpus-wide: the token closure index and a raw-line cache
+    // shared by every unit's determination.
+    let mod_index = build_mod_index(&book_paths);
+    let mut corpus_lines = CorpusLines::new(&book_paths);
+
     // --- classify ----------------------------------------------------------
     let empty: BTreeSet<String> = BTreeSet::new();
     let mut inventory: Vec<InventoryUnit> = Vec::new();
@@ -1914,10 +1910,24 @@ fn main() {
         let hosts = included_by.get(&book.id).unwrap_or(&empty);
         for unit in &enumeration.units {
             let verdict = classify(unit, &facts, hosts);
+            let rows = token_closure_rows(
+                &mut corpus_lines,
+                &mod_index,
+                &unit.book,
+                &unit.provenance.file,
+                unit.provenance.line,
+                &unit.name,
+                &unit.key,
+            );
+            let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
+            let (wc_class, wc_reason, wc_signals) = wiring_class::determine_closure(&row_refs);
             inventory.push(InventoryUnit {
                 id: format!("{}:{}:{}", book.id, unit.kind.id(), slug(&unit.key)),
                 unit: unit.clone(),
                 verdict,
+                wiring_class: wc_class,
+                wiring_class_reason: wc_reason,
+                wiring_class_signals: wc_signals,
             });
         }
     }
@@ -2184,11 +2194,16 @@ fn main() {
     // line-by-line so a bad entry shows up as one changed line.
     out.push_str("  \"units\": [\n");
     for (i, item) in inventory.iter().enumerate() {
+        let wc_signals = format!(
+            "[{}]",
+            item.wiring_class_signals.iter().map(|s| q(s)).collect::<Vec<_>>().join(", ")
+        );
         out.push_str(&format!(
             "    {{\"id\": {}, \"book\": {}, \"engine_book\": {}, \"kind\": {}, \"name\": {}, \
              \"corpus_key\": {}, \"origin\": {}, \"visible\": {}, \"type_facet\": {}, \
              \"source_file\": {}, \"source_line\": {}, \"magnitude_token_count\": {}, \
-             \"status\": {}, \"evidence\": {}, \"reason\": {}}}",
+             \"status\": {}, \"evidence\": {}, \"reason\": {}, \"wiring_class\": {}, \
+             \"wiring_class_reason\": {}, \"wiring_class_signals\": {}}}",
             q(&item.id),
             q(&item.unit.book),
             opt_q(&item.verdict.engine_book),
@@ -2204,6 +2219,9 @@ fn main() {
             q(item.verdict.status),
             q(&item.verdict.evidence),
             opt_q(&item.verdict.reason),
+            q(item.wiring_class.id()),
+            q(&item.wiring_class_reason),
+            wc_signals,
         ));
         out.push_str(if i + 1 < inventory.len() { ",\n" } else { "\n" });
     }
@@ -2224,6 +2242,142 @@ fn main() {
         std::process::exit(1);
     }
     print!("{out}");
+}
+
+#[cfg(test)]
+mod wiring_class_wiring_tests {
+    use super::*;
+
+    /// A scratch corpus directory, cleaned up on drop, so these tests never
+    /// touch the real PCGen checkout `PCGEN_CORPUS_ROOT` would point at.
+    struct ScratchBook {
+        root: PathBuf,
+    }
+
+    impl ScratchBook {
+        fn new(name: &str) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_wiring_class_test_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            std::fs::create_dir_all(&root).unwrap();
+            ScratchBook { root }
+        }
+
+        fn write(&self, filename: &str, contents: &str) {
+            std::fs::write(self.root.join(filename), contents).unwrap();
+        }
+    }
+
+    impl Drop for ScratchBook {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    #[test]
+    fn mod_base_name_strips_category_and_class_qualifiers() {
+        assert_eq!(mod_base_name("Foo"), "Foo");
+        assert_eq!(mod_base_name("CATEGORY=Special Ability|Foo"), "Foo");
+        assert_eq!(mod_base_name("CLASS:Bard"), "Bard");
+    }
+
+    #[test]
+    fn build_mod_index_finds_a_mod_row_regardless_of_file_kind_recognition() {
+        let book = ScratchBook::new("modindex");
+        // `weird_file.lst` matches no `file_kind` the generator recognises,
+        // but `build_mod_index` must still find its `.MOD` row -- it walks
+        // the whole corpus tree independent of kind recognition, exactly
+        // like the reference determinator's own `mod_index()`.
+        book.write(
+            "weird_file.lst",
+            "Accursed.MOD\tBONUS:SAVE|Fortitude|CASTERLEVEL/2\n",
+        );
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+
+        let index = build_mod_index(&book_paths);
+        let rows = index.get(&("test_book".to_string(), "Accursed".to_string()));
+        assert!(rows.is_some(), "expected a .MOD row indexed under the base name");
+        assert_eq!(rows.unwrap().len(), 1);
+        assert!(rows.unwrap()[0].contains("CASTERLEVEL/2"));
+    }
+
+    #[test]
+    fn token_closure_rows_unions_base_row_and_mod_rows() {
+        let book = ScratchBook::new("closure");
+        book.write("cr_feats.lst", "Accursed\tTYPE:General\tDESC:You are marked by a curse.\n");
+        book.write("cr_feats_extra.lst", "Accursed.MOD\tBONUS:SAVE|Fortitude|CASTERLEVEL/2\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+
+        let mod_index = build_mod_index(&book_paths);
+        let mut lines = CorpusLines::new(&book_paths);
+        let unit = CorpusUnit {
+            book: "test_book".to_string(),
+            kind: Kind::Feat,
+            key: "Accursed".to_string(),
+            name: "Accursed".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "cr_feats.lst".to_string(), line: 1 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+
+        let rows = token_closure_rows(
+            &mut lines,
+            &mod_index,
+            &unit.book,
+            &unit.provenance.file,
+            unit.provenance.line,
+            &unit.name,
+            &unit.key,
+        );
+        assert_eq!(rows.len(), 2, "base row plus one .MOD row");
+        let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
+        let (class, _, sigs) = wiring_class::determine_closure(&row_refs);
+        // The base row alone (no magnitude token) would be `display`; the
+        // `.MOD` row's `BONUS:` promotes the unit to `derived` -- proves the
+        // closure is really unioned, not just the base row re-read.
+        assert_eq!(class, wiring_class::WiringClass::Derived);
+        assert!(sigs.iter().any(|s| s.starts_with("derived:")));
+    }
+
+    #[test]
+    fn token_closure_rows_is_none_for_a_line_past_end_of_file() {
+        let book = ScratchBook::new("nolinerow");
+        book.write("cr_feats.lst", "Only Line\tTYPE:General\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+        let mod_index: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
+        let mut lines = CorpusLines::new(&book_paths);
+        let unit = CorpusUnit {
+            book: "test_book".to_string(),
+            kind: Kind::Feat,
+            key: "Ghost".to_string(),
+            name: "Ghost".to_string(),
+            origin: Origin::Declared,
+            // Line 99 does not exist in a 1-line file.
+            provenance: Provenance { file: "cr_feats.lst".to_string(), line: 99 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let rows = token_closure_rows(
+            &mut lines,
+            &mod_index,
+            &unit.book,
+            &unit.provenance.file,
+            unit.provenance.line,
+            &unit.name,
+            &unit.key,
+        );
+        assert_eq!(rows, vec![None]);
+        let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
+        let (class, reason, _) = wiring_class::determine_closure(&row_refs);
+        assert_eq!(class, wiring_class::WiringClass::Ambiguous);
+        assert_eq!(reason, "no_corpus_line");
+    }
 }
 
 #[cfg(test)]

@@ -131,6 +131,8 @@ use std::collections::{BTreeMap, BTreeSet};
 use std::fmt;
 use std::path::Path;
 
+use crate::rules_core::cache_gen::WiringClassIndex;
+
 // ===========================================================================
 // Line classification
 // ===========================================================================
@@ -542,6 +544,11 @@ pub enum Trap {
     CopyRecord,
     /// Audit-only: an ingested record cites a line that does not resolve.
     UnresolvableCitation,
+    /// Audit-only: a stored `wiring_class` disagrees with what
+    /// `codex::rules_core::wiring_class` computes fresh from the record's
+    /// own cited token closure (GE-01). The property that makes the flag
+    /// self-correcting rather than another stale roster.
+    WiringClassMismatch,
 }
 
 impl Trap {
@@ -559,6 +566,7 @@ impl Trap {
             Trap::GoverningTokenHiddenByFilter => "governing-token-hidden-by-filter",
             Trap::CopyRecord => "copy-record",
             Trap::UnresolvableCitation => "unresolvable-citation",
+            Trap::WiringClassMismatch => "wiring-class-mismatch",
         }
     }
 
@@ -605,6 +613,11 @@ impl Trap {
             }
             Trap::UnresolvableCitation => {
                 "The provenance chain is broken: the cited line does not exist or is blank."
+            }
+            Trap::WiringClassMismatch => {
+                "A stale `wiring_class` reads as done forever, even after the corpus row or \
+                 the determination rules move -- exactly the stale-roster failure the flag \
+                 exists to prevent."
             }
         }
     }
@@ -1254,6 +1267,12 @@ pub fn audit_ingested_cache(cache_dir: &Path, corpus_root: &Path) -> std::io::Re
     let mut file_cache: BTreeMap<String, FileScan> = BTreeMap::new();
     // (book, kind, record_key) -> cache file, for collision detection.
     let mut seen_keys: BTreeMap<(String, String, String), String> = BTreeMap::new();
+    // One `.MOD`-closure index per real corpus book directory, built
+    // lazily off the first record's own `source.path` (so this function
+    // never has to know a book's directory ahead of time). Cached across
+    // every record in the book: `WiringClassIndex::build` walks every
+    // `.lst` file in the directory once.
+    let mut wiring_indexes: BTreeMap<String, WiringClassIndex> = BTreeMap::new();
 
     let mut books: Vec<std::path::PathBuf> = std::fs::read_dir(cache_dir)?
         .flatten()
@@ -1439,6 +1458,51 @@ pub fn audit_ingested_cache(cache_dir: &Path, corpus_root: &Path) -> std::io::Re
                         ),
                     });
                 }
+
+                // GE-01 self-check: a stored `wiring_class` must agree with
+                // what the determinator computes fresh, right now, from
+                // this record's own cited token closure. Records not yet
+                // regenerated with the field simply have nothing to check
+                // (this cycle intentionally does not regenerate the
+                // existing corpus) -- `None` is silently skipped, never
+                // treated as agreement.
+                if let Some(stored_class) = json["wiring_class"].as_str() {
+                    let index = wiring_indexes.entry(book.clone()).or_insert_with(|| {
+                        let book_dir = Path::new(rel)
+                            .parent()
+                            .map(|p| corpus_root.join(p))
+                            .unwrap_or_else(|| corpus_root.to_path_buf());
+                        WiringClassIndex::build(&book, &book_dir)
+                    });
+                    let file_basename =
+                        Path::new(rel).file_name().map(|f| f.to_string_lossy().into_owned()).unwrap_or_default();
+                    let mut lines = index.lines();
+                    let (computed_class, computed_signals) = index.wiring_class_for(
+                        &mut lines,
+                        &file_basename,
+                        line_no as u32,
+                        &record_key,
+                        &record_key,
+                    );
+                    if computed_class != stored_class {
+                        let stored_signals: Vec<String> = json["wiring_class_signals"]
+                            .as_array()
+                            .map(|a| a.iter().filter_map(|v| v.as_str()).map(str::to_string).collect())
+                            .unwrap_or_default();
+                        findings.push(Finding {
+                            file: cache_file.clone(),
+                            line: line_no as u32,
+                            trap: Trap::WiringClassMismatch,
+                            severity: Severity::Defect,
+                            record: record_key.clone(),
+                            detail: format!(
+                                "stored wiring_class `{stored_class}` (signals {stored_signals:?}) \
+                                 disagrees with `{computed_class}` (signals {computed_signals:?}) \
+                                 computed fresh from {rel}:{line_no}'s own token closure"
+                            ),
+                        });
+                    }
+                }
             }
         }
     }
@@ -1528,6 +1592,7 @@ mod tests {
             Trap::GoverningTokenHiddenByFilter,
             Trap::CopyRecord,
             Trap::UnresolvableCitation,
+            Trap::WiringClassMismatch,
         ];
         let ids: BTreeSet<&str> = traps.iter().map(|t| t.id()).collect();
         assert_eq!(ids.len(), traps.len(), "trap ids must be unique");
@@ -1572,5 +1637,105 @@ mod tests {
         let mut sorted = lines.clone();
         sorted.sort_unstable();
         assert_eq!(lines, sorted);
+    }
+
+    // --------------------------------------------------------------
+    // GE-01 `wiring_class` self-check (`Trap::WiringClassMismatch`)
+    // --------------------------------------------------------------
+
+    /// A scratch corpus + cache pair, cleaned up on drop, so this test
+    /// never touches the real PCGen checkout or `data/corpus`.
+    struct ScratchAudit {
+        corpus_root: std::path::PathBuf,
+        cache_dir: std::path::PathBuf,
+    }
+
+    impl ScratchAudit {
+        fn new(name: &str) -> Self {
+            let base = std::env::temp_dir()
+                .join(format!("codex_wiring_class_audit_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&base);
+            let corpus_root = base.join("corpus");
+            let cache_dir = base.join("cache");
+            std::fs::create_dir_all(corpus_root.join("test_book")).unwrap();
+            std::fs::create_dir_all(cache_dir.join("test_book/feat")).unwrap();
+            ScratchAudit { corpus_root, cache_dir }
+        }
+
+        fn write_corpus_line(&self, file: &str, contents: &str) {
+            std::fs::write(self.corpus_root.join("test_book").join(file), contents).unwrap();
+        }
+
+        fn write_cache_record(&self, slug: &str, wiring_class: &str, wiring_class_signals: &str) {
+            let json = format!(
+                r#"{{"population":"in_scope","completeness":"full","ingested_at":"2026-08-02T00:00:00Z",
+                    "data":{{}},
+                    "source":{{"kind":"lst_token","path":"test_book/cr_feats.lst","sha256":"x","line":1,"record_key":"Accursed"}},
+                    "wiring_class":"{wiring_class}","wiring_class_signals":{wiring_class_signals}}}"#
+            );
+            std::fs::write(self.cache_dir.join("test_book/feat").join(format!("{slug}.json")), json).unwrap();
+        }
+    }
+
+    impl Drop for ScratchAudit {
+        fn drop(&mut self) {
+            if let Some(base) = self.corpus_root.parent() {
+                let _ = std::fs::remove_dir_all(base);
+            }
+        }
+    }
+
+    #[test]
+    fn wiring_class_mismatch_is_not_flagged_when_stored_value_agrees() {
+        let scratch = ScratchAudit::new("agree");
+        // A real magnitude token (COST:) with a scalar -> `derived`.
+        scratch.write_corpus_line("cr_feats.lst", "Accursed\tCOST:100*PLUSTOTAL\n");
+        scratch.write_cache_record("accursed", "derived", r#"["derived:cost"]"#);
+
+        let findings =
+            audit_ingested_cache(&scratch.cache_dir, &scratch.corpus_root).expect("audit runs");
+        let mismatches: Vec<_> =
+            findings.iter().filter(|f| f.trap == Trap::WiringClassMismatch).collect();
+        assert!(mismatches.is_empty(), "agreeing record must not be flagged: {mismatches:#?}");
+    }
+
+    #[test]
+    fn wiring_class_mismatch_fails_when_stored_value_disagrees_with_a_fresh_computation() {
+        let scratch = ScratchAudit::new("mismatch");
+        // The real row has a scalar-bearing COST: -> the determinator
+        // computes `derived`. The cache record deliberately claims a
+        // stale `static` -- the exact failure mode the self-check exists
+        // to catch: a value the generator no longer agrees with.
+        scratch.write_corpus_line("cr_feats.lst", "Accursed\tCOST:100*PLUSTOTAL\n");
+        scratch.write_cache_record("accursed", "static", r#"["static:literal_magnitudes_only"]"#);
+
+        let findings =
+            audit_ingested_cache(&scratch.cache_dir, &scratch.corpus_root).expect("audit runs");
+        let mismatches: Vec<_> =
+            findings.iter().filter(|f| f.trap == Trap::WiringClassMismatch).collect();
+        assert_eq!(mismatches.len(), 1, "stale wiring_class must be flagged: {findings:#?}");
+        assert_eq!(mismatches[0].severity, Severity::Defect);
+        assert!(mismatches[0].detail.contains("derived"));
+        assert!(mismatches[0].detail.contains("static"));
+    }
+
+    #[test]
+    fn wiring_class_mismatch_is_skipped_not_assumed_when_field_absent() {
+        // A record from before this cycle's regeneration -- no
+        // `wiring_class` field at all. Must be silently skipped, never
+        // treated as either agreement or a defect (the operator's explicit
+        // "do not regenerate the existing corpus this cycle" instruction).
+        let scratch = ScratchAudit::new("absent");
+        scratch.write_corpus_line("cr_feats.lst", "Accursed\tCOST:100*PLUSTOTAL\n");
+        let json = r#"{"population":"in_scope","completeness":"full","ingested_at":"2026-08-02T00:00:00Z",
+            "data":{},
+            "source":{"kind":"lst_token","path":"test_book/cr_feats.lst","sha256":"x","line":1,"record_key":"Accursed"}}"#;
+        std::fs::write(scratch.cache_dir.join("test_book/feat/accursed.json"), json).unwrap();
+
+        let findings =
+            audit_ingested_cache(&scratch.cache_dir, &scratch.corpus_root).expect("audit runs");
+        let mismatches: Vec<_> =
+            findings.iter().filter(|f| f.trap == Trap::WiringClassMismatch).collect();
+        assert!(mismatches.is_empty(), "field-absent record must be skipped, not flagged: {mismatches:#?}");
     }
 }

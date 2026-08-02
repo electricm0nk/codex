@@ -81,8 +81,12 @@ use std::process::Command;
 
 use serde::Serialize;
 
+use crate::rules_core::cache_gen::WiringClassIndex;
 use crate::rules_core::rules_tables::acg::equipment_tables::EquipmentCategory;
 use crate::rules_core::rules_tables::acg::{self, AcgClassId};
+
+/// `wiring_class`'s corpus-wide book id for ACG.
+const WIRING_CLASS_BOOK_ID: &str = "advanced_class_guide";
 
 // ---------------------------------------------------------------------
 // Shape B schema (decisions.md §7, corrected §11.1/§11.2) -- mirrors
@@ -147,6 +151,15 @@ pub struct CacheRecord<T: Serialize> {
     pub ingested_at: String,
     pub data: T,
     pub source: Source,
+    /// GE-01: what kind of evidence would prove this record done --
+    /// `display`/`static`/`derived`/`computed`/`ambiguous`, determined by
+    /// `codex::rules_core::wiring_class` from this record's real corpus
+    /// token closure (its base row plus every `.MOD` row targeting it),
+    /// never hand-stamped.
+    pub wiring_class: String,
+    /// The full signal set behind `wiring_class` (e.g.
+    /// `["derived:bonus", "computed:pre_guard"]`), never empty.
+    pub wiring_class_signals: Vec<String>,
 }
 
 // ---------------------------------------------------------------------
@@ -334,6 +347,8 @@ fn generate_classes(
     let sha256 = sha256_file(&path)?;
     let mut used = BTreeSet::new();
     let class_dir = out_dir.join("class");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for &class_id in AcgClassId::ALL.iter() {
         let rows: Vec<ClassChassisRow> = match class_id {
@@ -358,6 +373,14 @@ fn generate_classes(
         })
         .collect();
         let maxlevel = rows.last().map(|r| r.level).unwrap_or(0);
+        let line = class_line(class_id);
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            classes_file,
+            line,
+            capitalized_class_name(class_id),
+            capitalized_class_name(class_id),
+        );
 
         let record = CacheRecord {
             population: Population::InScope,
@@ -371,9 +394,11 @@ fn generate_classes(
             source: Source::LstToken {
                 path: format!("{ACG_DIR}/{classes_file}"),
                 sha256: sha256.clone(),
-                line: class_line(class_id),
+                line,
                 record_key: format!("CLASS:{}", capitalized_class_name(class_id)),
             },
+            wiring_class,
+            wiring_class_signals,
         };
         let slug = slugify(class_id.name(), &mut used);
         write_json(&class_dir, &slug, &record)?;
@@ -413,6 +438,8 @@ fn generate_spells(
     let sha256 = sha256_file(&path)?;
     let mut used = BTreeSet::new();
     let spell_dir = out_dir.join("spell");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for entry in acg::spell_list::SPELL_LIST {
         // `entry.key` is the record's real identity (module doc comment
@@ -438,23 +465,26 @@ fn generate_spells(
             Ok(None) => find_exact_first_column(&lst_path, entry.key),
             Err(e) => Err(e),
         };
-        let source = match resolved {
-            Ok(Some(line)) => Source::LstToken {
-                path: format!("{ACG_DIR}/{spell_file}"),
-                sha256: sha256.clone(),
-                line,
-                record_key: entry.key.to_string(),
-            },
+        let resolved_line = match resolved {
+            Ok(Some(line)) => line,
             _ => {
                 report.unresolved_citations.push(format!("spell:{}", entry.key));
-                Source::LstToken {
-                    path: format!("{ACG_DIR}/{spell_file}"),
-                    sha256: sha256.clone(),
-                    line: 0,
-                    record_key: entry.key.to_string(),
-                }
+                0
             }
         };
+        let source = Source::LstToken {
+            path: format!("{ACG_DIR}/{spell_file}"),
+            sha256: sha256.clone(),
+            line: resolved_line,
+            record_key: entry.key.to_string(),
+        };
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            spell_file,
+            resolved_line,
+            entry.key,
+            entry.key,
+        );
 
         let record = CacheRecord {
             population: Population::InScope,
@@ -468,6 +498,8 @@ fn generate_spells(
                 full_text: true,
             },
             source,
+            wiring_class,
+            wiring_class_signals,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&spell_dir, &slug, &record)?;
@@ -492,7 +524,7 @@ fn equipment_source(
     entry: &acg::equipment_tables::EquipmentTableEntry,
     sha_by_file: &HashMap<&'static str, String>,
     unresolved: &mut Vec<String>,
-) -> Source {
+) -> (Source, &'static str, u32) {
     let category_file = if entry.category == EquipmentCategory::Equipmods {
         "acg_equipmods.lst"
     } else {
@@ -511,23 +543,20 @@ fn equipment_source(
         find_exact_first_column(&path, entry.key)
     };
 
-    match resolved_line {
-        Ok(Some(line)) => Source::LstToken {
-            path: format!("{ACG_DIR}/{category_file}"),
-            sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
-            line,
-            record_key: entry.key.to_string(),
-        },
+    let line = match resolved_line {
+        Ok(Some(line)) => line,
         _ => {
             unresolved.push(format!("equipment:{}", entry.key));
-            Source::LstToken {
-                path: format!("{ACG_DIR}/{category_file}"),
-                sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
-                line: 0,
-                record_key: entry.key.to_string(),
-            }
+            0
         }
-    }
+    };
+    let source = Source::LstToken {
+        path: format!("{ACG_DIR}/{category_file}"),
+        sha256: sha_by_file.get(category_file).cloned().unwrap_or_default(),
+        line,
+        record_key: entry.key.to_string(),
+    };
+    (source, category_file, line)
 }
 
 fn generate_equipment(
@@ -543,9 +572,19 @@ fn generate_equipment(
     }
     let mut used = BTreeSet::new();
     let equipment_dir = out_dir.join("equipment");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for entry in acg::equipment_tables::equipment_tables() {
-        let source = equipment_source(corpus_root, entry, &sha_by_file, &mut report.unresolved_citations);
+        let (source, category_file, line) =
+            equipment_source(corpus_root, entry, &sha_by_file, &mut report.unresolved_citations);
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            category_file,
+            line,
+            entry.key,
+            entry.key,
+        );
         let completeness = if entry.description.is_some() {
             Completeness::Full
         } else {
@@ -564,6 +603,8 @@ fn generate_equipment(
                 description: entry.description.map(|d| d.to_string()),
             },
             source,
+            wiring_class,
+            wiring_class_signals,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&equipment_dir, &slug, &record)?;

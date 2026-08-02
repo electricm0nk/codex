@@ -11,7 +11,8 @@
 //! in the crate may declare a second copy (`wiring-class-determination.md`
 //! "Magnitude-bearing fields").
 
-use std::collections::BTreeSet;
+use std::collections::{BTreeMap, BTreeSet};
+use std::path::PathBuf;
 
 /// Tab-field prefixes that carry a real numeric magnitude. The single
 /// definition; `v06_work_inventory`'s own generator selection logic uses
@@ -607,6 +608,145 @@ pub fn determine_closure(rows: &[Option<&str>]) -> (WiringClass, String, BTreeSe
     let sigs = closure_signals(rows);
     let (class, reason) = classify(&sigs);
     (class, reason, sigs)
+}
+
+// ---------------------------------------------------------------------------
+// Corpus-wide token-closure machinery
+// ---------------------------------------------------------------------------
+//
+// Shared by every real caller (`v06_work_inventory`'s classifier,
+// `rules_core::cache_gen`'s per-book generators) so a `.MOD` row's base
+// name is resolved exactly once, the same way everywhere. A unit's real
+// magnitude can live on a `.MOD` row rather than its own base row
+// (`wiring-class-determination.py` commit 9e9e6993/2e2ba619), so any
+// caller emitting `wiring_class` needs this closure, not just a single
+// corpus line.
+
+/// Resolve a `.MOD` row's base record name from the text of field 0 before
+/// `.MOD` (`"Foo.MOD"` -> `"Foo"`, already stripped of the `.MOD` suffix by
+/// the caller). The same resolution `v06_work_inventory`'s own
+/// `mod_only_rescue` path performs and `wiring-class-determination.py`'s
+/// `mod_index()` performs, so all three always agree about which record a
+/// `.MOD` row belongs to.
+pub fn mod_base_name(before_mod: &str) -> String {
+    let mut base = before_mod.to_string();
+    if let Some(rest) = base
+        .strip_prefix("CATEGORY=")
+        .and_then(|r| r.split_once('|'))
+        .map(|(_, rest)| rest.to_string())
+    {
+        // `CATEGORY=Special Ability|Foo.MOD` -> `Foo`
+        base = rest;
+    }
+    // `CLASS:Bard.MOD` names the base class `Bard`, not a record called
+    // `CLASS:Bard`. Without this, the name never matches the declared set
+    // and a naive rescue would invent a second Bard in every book that
+    // merely modifies the Core Rulebook's one.
+    if let Some(rest) = base.strip_prefix("CLASS:") {
+        base = rest.to_string();
+    }
+    base.trim().to_string()
+}
+
+/// `(book, base record name) -> every raw `.MOD` row targeting it`, built
+/// once over every `.lst` file in every known book directory. Independent
+/// of any per-record `file_kind` recognition or book-scope filtering --
+/// mirroring the reference determinator's own `mod_index()`, which walks
+/// the whole corpus tree rather than reusing a generator's own
+/// (kind-scoped, ingestion-scoped) enumeration.
+pub fn build_mod_index(
+    book_paths: &BTreeMap<String, PathBuf>,
+) -> BTreeMap<(String, String), Vec<String>> {
+    let mut index: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
+    for (book, dir) in book_paths {
+        let mut stack = vec![dir.clone()];
+        let mut files: Vec<PathBuf> = Vec::new();
+        while let Some(d) = stack.pop() {
+            let Ok(entries) = std::fs::read_dir(&d) else { continue };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else if path.extension().and_then(|e| e.to_str()) == Some("lst") {
+                    files.push(path);
+                }
+            }
+        }
+        for path in files {
+            let Ok(text) = std::fs::read_to_string(&path) else { continue };
+            for raw in text.split('\n') {
+                let trimmed = raw.trim_end_matches(['\r']);
+                let first = trimmed.trim_start();
+                if first.is_empty() || first.starts_with('#') {
+                    continue;
+                }
+                let head = trimmed.split('\t').next().unwrap_or("").trim();
+                let Some(mod_at) = head.find(".MOD") else { continue };
+                let base = mod_base_name(&head[..mod_at]);
+                index.entry((book.clone(), base)).or_default().push(trimmed.to_string());
+            }
+        }
+    }
+    index
+}
+
+/// Read+cache raw `.lst` text so a unit's base corpus row can be fetched by
+/// `(book, source_file, source_line)` without re-reading the file per unit.
+pub struct CorpusLines<'a> {
+    book_paths: &'a BTreeMap<String, PathBuf>,
+    cache: BTreeMap<(String, String), Vec<String>>,
+}
+
+impl<'a> CorpusLines<'a> {
+    pub fn new(book_paths: &'a BTreeMap<String, PathBuf>) -> Self {
+        CorpusLines { book_paths, cache: BTreeMap::new() }
+    }
+
+    /// The 1-based `line`'s raw text in `book`'s `file`, or `None` if the
+    /// book/file/line does not resolve (D0 -- a synthetic generator target
+    /// with no real corpus provenance, e.g. a `core_essentials` race file
+    /// nested two directories deeper than this single-level join reaches).
+    pub fn line(&mut self, book: &str, file: &str, line: usize) -> Option<String> {
+        let key = (book.to_string(), file.to_string());
+        if !self.cache.contains_key(&key) {
+            let Some(dir) = self.book_paths.get(book) else {
+                self.cache.insert(key.clone(), Vec::new());
+                return None;
+            };
+            let text = std::fs::read_to_string(dir.join(file)).unwrap_or_default();
+            self.cache.insert(key.clone(), text.split('\n').map(|s| s.to_string()).collect());
+        }
+        let buf = &self.cache[&key];
+        if line == 0 || line > buf.len() {
+            return None;
+        }
+        Some(buf[line - 1].clone())
+    }
+}
+
+/// The full token closure for one record: its base corpus row plus every
+/// `.MOD` row targeting its name or corpus key, as owned strings ready to
+/// pass (via `.iter().map(|r| r.as_deref())`) to [`determine_closure`].
+pub fn token_closure_rows(
+    lines: &mut CorpusLines,
+    mod_index: &BTreeMap<(String, String), Vec<String>>,
+    book: &str,
+    file: &str,
+    line: usize,
+    name: &str,
+    key: &str,
+) -> Vec<Option<String>> {
+    let mut rows = vec![lines.line(book, file, line)];
+    let mut seen_names: BTreeSet<&str> = BTreeSet::new();
+    for n in [name, key] {
+        if !seen_names.insert(n) {
+            continue;
+        }
+        if let Some(mods) = mod_index.get(&(book.to_string(), n.to_string())) {
+            rows.extend(mods.iter().cloned().map(Some));
+        }
+    }
+    rows
 }
 
 /// Collapse a signal set to one class + a named reason. Strictly
