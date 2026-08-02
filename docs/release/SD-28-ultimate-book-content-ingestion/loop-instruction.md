@@ -204,7 +204,7 @@ All of the following, each checkable by someone who was not present:
 2. The `reach` stage passes **with a claim for this book's families**, not by
    the families being absent from the gate's inventory. `reach_gate` reporting
    0 matched tests is a hard failure — a gate running zero tests asserts nothing.
-3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` exits `0`.
+3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` exits `0` **for this book's own records only.** A pre-existing defect in another bundle's content (e.g., ACG data referenced as a cross-bundle dependency) is recorded as a cross-bundle blocker against that bundle, not against this book. This narrows the gate from repo-wide scope to per-book scope, per `decisions.md` Decision 31.
 4. `cargo run --locked --bin v06_work_inventory` regenerates
    `docs/work-inventory.json`, the book's units leave `not-started`, and a
    second run changes only `generated_at`.

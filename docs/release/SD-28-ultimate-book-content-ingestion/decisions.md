@@ -508,3 +508,15 @@ Two additions, landed in `scripts/` (shared across SD-28/SD-29/SD-30, not per-bu
 **This bundle's `loop-instruction.md` Cycle mechanics now runs the preflight check at the start of each cycle and `scripts/reclaim.sh --apply` at cycle end.** The mandate is paired with the command, which is the entire lesson of §4.1 restated as a rule: a rule with no executable counterpart is the rule that produced 600G.
 
 **Authority:** `docs/retro/tranche-7-retrospective.md` §4.1 (disk exhaustion, 5 of 34 incidents) and §6.1 rule A4 (`CARGO_TARGET_DIR` deletion + pre-sweep disk check); `AGENTS.md` "Concurrency and Measurement."
+
+## Decision 31 — Per-book audit gate scope (2026-08-02, Precursor B)
+
+**Status:** New, process correction applied in Precursor B cycle.
+
+**Decision:** The Definition of done item 3 (`loop-instruction.md` §"Definition of done") is narrowed to **per-book scope**: a book epic passes when `cargo run --locked --bin v06_corpus_trap_report -- --audit` exits `0` **for that book's own records only**. A pre-existing defect in another bundle's content (e.g., ACG data referenced as a cross-bundle dependency) is recorded as a cross-bundle blocker against the owning bundle and does not block this book's completion.
+
+**Why this is a decision and not a silent gate-implementation change.** Run 1 (2026-08-02) ended with all seven book epics (3–9) recorded as `decision-blocked` on a single cause: the audit gate was repo-wide, so nine pre-existing ACG `key-differs-from-name` defects (SD-22 content, not SD-28) halted all seven books at once. This was not a design choice; it was an unintended consequence of reading "the audit must exit 0" without the qualifier "for this book's records." The gate itself remains mandatory — a book cannot claim done if its own records are unclean — but the scope narrows from repo-wide to per-book to permit parallel progress on multiple books while documenting the cross-bundle dependencies for the responsible bundle's remediation.
+
+**Scope of "this book's own records."** Records filed under the book's corpus directory (e.g., `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat/` for Ultimate Combat). Cross-bundle dependencies are out of scope for this gate.
+
+**Cross-reference:** `loop-instruction.md` Definition of done item 3; `acceptance-and-verification.md` AT-28-003a; `progress.md` Precursor B (this entry) and Run 1 receipts (epic-3-uc, epic-4-um, epic-5-ue, epic-6-ui, epic-7-ucam, epic-8-uw, epic-9-upsi), which recorded the shared blocker and its cause.

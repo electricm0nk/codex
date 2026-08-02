@@ -2075,3 +2075,39 @@ SD28-E12-F1-001`, then `COMPLETE` — the review itself is done and its
 findings are recorded. Completing this card does **not** imply the bundle
 passed review: F1, F2 and F3 are open against the bundle, and
 `epic-10-closure` must not read this card's `COMPLETE` as a sign-off.
+
+## Precursor B — Audit Gate Narrowing (2026-08-02)
+
+**Cycle ID:** `SD28-PRECURSOR-B`
+**Actor:** `sd28-gate-narrow`
+**Purpose:** Amend the Definition of done audit gate scope from repo-wide to per-book, per `decisions.md` Decision 31. No production code changes.
+
+### What landed
+
+Three documentation amendments and kanban reset:
+
+1. **`loop-instruction.md` Definition of done item 3:** Narrowed from "audit exits 0" (repo-wide) to "audit exits 0 for this book's own records only" with explicit note that cross-bundle defects are out of scope per Decision 31.
+
+2. **`acceptance-and-verification.md`:** Added new acceptance test AT-28-003a (Per-book trap-report audit gate) to formally define the per-book scope and rationale for the narrowing.
+
+3. **`decisions.md` Decision 31:** Recorded the gate narrowing, rationale (Run 1's seven-book block on a single ACG defect), and scope clarification.
+
+4. **`kanban.md` cards reset:** Cards epic-3-uc, epic-4-um, epic-5-ue, epic-6-ui, epic-7-ucam, epic-8-uw, epic-9-upsi moved from `IN-FLIGHT` → `READY` and cleared their `Claimed-by`, `Claimed-at`, and `Cycle-id` fields. Run 1 cycles ended on `decision-blocked` (gate precondition, not in-progress work), so IN-FLIGHT status was stale.
+
+### Rationale
+
+Run 1 (2026-08-02) recorded all seven book epics as `decision-blocked` on a shared repo-wide cause: `v06_corpus_trap_report --audit` exiting 2 on nine ACG Naturalist `key-differs-from-name` defects (SD-22 content, not SD-28). As written, the Definition of done gate was repo-wide scope, so a single out-of-scope defect anywhere halted all seven books at once. Decision 31 narrows the gate to per-book scope without weakening it: each book still must pass the audit against its own records, but cross-bundle blockers are documented separately for the responsible bundle's remediation.
+
+### Commands run (every figure re-derived)
+
+```sh
+./scripts/verify.sh --only preflight-disk                  # (see below)
+```
+
+### Verification
+
+`./scripts/verify.sh --only preflight-disk` → **exit 0**. Disk state: repo fs 21% used, 385G available. Full `./scripts/verify.sh` not required for docs-only change, per `loop-instruction.md` Cycle mechanics §1c.
+
+### Kanban reset note
+
+Epics 3-9 cards (epic-3-uc through epic-9-upsi) are now `READY` and un-claimed. Per `loop-instruction.md` "Epic ordering," they remain unblocked by `epic-2-prelaunch` (COMPLETE) and their next dispatcher can claim them immediately. The per-book audit gate, once Decision 31 is applied, no longer blocks dispatch on an unrelated bundle's defects.
