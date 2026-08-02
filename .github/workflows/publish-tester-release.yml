@@ -64,15 +64,14 @@ jobs:
       # own closure while still on the same tranche branch; an SD-22 Epic 7
       # cycle briefly bumped this to 0.6 in error and it was reverted).
       #
-      # tranche/6: bumped 0.5 -> 0.6 for the v0.6 alpha cut. Unlike the
-      # reverted Epic 7 bump, this one IS a real tranche promotion —
-      # tranche/6 was cut fresh from develop and is the live branch, and the
-      # repo version files moved to 0.6.0 with it. The stamp's tranche digit
-      # must always equal the repo version files' tranche digit; the two are
-      # kept in lockstep by src/sd21/buildVersionTriple.test.ts, which parses
-      # this line and compares the relationship rather than two independent
-      # literals (the previous form asserted each side's prefix separately
-      # and so blessed the 0.6.0-repo / 0.5.<build>-stamp mismatch).
+      # tranche/8: bumped 0.6 -> 0.8 for the SD-28 bundle cut per operator
+      # directive 2026-08-01. The tranche/8 branch is the live branch for SD-28,
+      # and the repo version files moved to 0.8.0 with it. The stamp's tranche
+      # digit must always equal the repo version files' tranche digit; the two
+      # are kept in lockstep by src/sd21/buildVersionTriple.test.ts, which
+      # parses this line and compares the relationship rather than two
+      # independent literals (the previous form asserted each side's prefix
+      # separately and so blessed mismatches).
       #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
@@ -81,7 +80,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.6.${GITHUB_RUN_NUMBER}"
+          VERSION="0.8.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];
