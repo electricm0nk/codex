@@ -4,8 +4,10 @@ This register captures work downstream of SD-30. SD-30 ships the final
 content-ingest slot on the post-2026-08-01 trio (SD-28, SD-29, SD-30).
 SD-30's successor bundles would consume SD-30's outputs, but the next
 post-tranche bundle isn't yet named; it's recorded here as **Class 1**.
-Bundles that depend on the four deferred books (NPC Codex, Planar Adventures,
-Occult Origins, Haunted Heroes) live in **Class 2** as deferred.
+Bundles that depend on the four deferred books (NPC Codex and Planar
+Adventures, absent from the corpus; Occult Origins and Haunted Heroes
+Handbook, present but deferred by operator choice 2026-08-01) live in
+**Class 2** as deferred.
 SD-30-specific retrofits land in **Class 3**.
 
 ## Class 0 — Doctrinal anchors (always-on)
@@ -60,13 +62,21 @@ without a `planar_adventures/` corpus directory. Deferred.
 
 ### C2.3 — Occult Origins
 
-Carried forward from the 07-30 stub; `occult_origins/` corpus
-directory is not present. Future bundle may acquire.
+**Present in the corpus** at
+`~/workspace/repos/pcgen/data/pathfinder/paizo/player_companion/occult_origins/`
+(7 `.lst`, `_occult_origins.pcc`; verified 2026-08-01). The 07-30 stub's
+"not present" finding searched only `roleplaying_game/`. Deferred from SD-30
+by explicit operator choice 2026-08-01 — no acquisition needed; a future
+bundle picks it up directly.
 
 ### C2.4 — Haunted Heroes Handbook
 
-Same disposition as C2.3 — `haunted_heroes/` corpus directory is not
-present. Carried forward from the 07-30 stub as a softcover companion.
+**Present in the corpus** at
+`~/workspace/repos/pcgen/data/pathfinder/paizo/player_companion/haunted_heroes_handbook/`
+(14 `.lst`, `_haunted_heroes_handbook.pcc`; verified 2026-08-01). The 07-30
+stub searched the bare stem `haunted_heroes` and the wrong subtree. Deferred
+from SD-30 by explicit operator choice 2026-08-01 — no acquisition needed; a
+future bundle picks it up directly.
 
 ## Class 3 — Retrofit (operator-on-request)
 
@@ -79,7 +89,17 @@ integration). Per `decisions.md §18` reach-gate = DoD, cycles pause on
 
 The remedy is either (a) a campaign-tool consumer epic inside SD-30, or
 (b) a separate bundle that consumes Mythic Adventures' records. The
-operator decides per cycle.
+operator decides per cycle — when attended.
+
+**Unattended safe default (2026-08-01, per `loop-instruction.md` UNATTENDED
+MODE):** never invent a surface and never add an epic on the cycle's own
+authority. Classify each record family into `RECORD_TYPE_KINDS` (with the
+surface that really renders it) or `SUPPORTING_RECORD_TYPES` (with why it is
+a facet of an existing family) only where honestly justifiable; otherwise
+record an `OPEN_FINDINGS` entry naming the remedy, count it as a cycle
+shortfall (Definition-of-done items 2 and 6), record `decision-blocked` in
+`progress.md` with the reason, and continue to the next ready card. The
+operator rules on (a)-vs-(b) after return.
 
 ### C3.2 — Occult Adventures psychic-discipline consumer surface
 
@@ -88,12 +108,24 @@ records) require a class-feature consumer surface to satisfy reach.
 `reach_gate.rs OPEN_FINDINGS` flags missing surfaces per the per-cycle
 audit.
 
+**Unattended safe default (2026-08-01):** same rule as C3.1 — classify into
+an existing family via `SUPPORTING_RECORD_TYPES` only where the discipline
+genuinely surfaces as a class feature the sheet already renders; otherwise
+`OPEN_FINDINGS` + recorded shortfall + `decision-blocked`, and move on. Do
+not build a new consumer surface on the cycle's own authority.
+
 ### C3.3 — Inner Sea series campaign-tool surface
 
 The Inner Sea series (×9 modules) is primarily campaign-setting data
 (traits, regions, factions). Per-book ingest produces canonical records;
 the cycle's reach gate may flag missing consumer integration (e.g.,
 a campaign-setup wizard surface). Per-cycle gap filing.
+
+**Unattended safe default (2026-08-01):** same rule as C3.1 — ingest the
+record families whose surfaces exist (traits and feats the sheet renders);
+for campaign-tool-only families, `OPEN_FINDINGS` + recorded shortfall +
+`decision-blocked`, and move on. No campaign-setup wizard is built on the
+cycle's own authority.
 
 ## Class 4 — Measured inheritance from tranche/7 (SD-30-specific, derived 2026-08-01)
 

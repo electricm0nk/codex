@@ -10,10 +10,12 @@ companion_to: ./scope-draft.md, ./decisions.md
 
 # SD-30 Epic Breakdown
 
-10+ epics × ~3 acceptance criteria each = ~30+ criteria, plus Epic 21's
-end-of-run code review (operator directive 2026-08-01, added
-post-launch; numbered per `kanban.md`'s existing `epic-1`...`epic-20`
-scheme). Mirrors SD-22's epic shape with the sixteen-book expansion.
+21 epics (matching `kanban.md`'s 21 cards: Epic 1-2 gates, 16 per-book
+epics, Build Version Numbering, Bundle Code Review, Closure) × ~3
+acceptance criteria each. Epic 21's end-of-run code review was added by
+operator directive 2026-08-01, numbered per `kanban.md`'s existing
+`epic-1`...`epic-20` scheme. Mirrors SD-22's epic shape with the
+sixteen-book expansion.
 Per-book epics may group Inner Sea's nine modules into one shared epic,
 or split per book; the boundary is decided at Cycle 2's inventory gate.
 
@@ -26,7 +28,7 @@ epic, before Closure.
 
 **Objective:** Establish identifier discipline across all code this bundle introduces.
 
-**Derived from:** `decisions.md §6` (Identifier discipline).
+**Derived from:** `decisions.md §7` (Identifier discipline).
 
 ### Feature seeds
 
@@ -124,7 +126,7 @@ Acceptance:
 The nine Inner Sea modules may run as one shared epic or split into nine
 separate epics; the boundary is decided at Cycle 2's inventory gate.
 
-### Feature seeds (per Inner Sea module)
+### Feature seeds (per Inner Sea book — World Guide plus the nine modules)
 
 - Inner Sea World Guide: per-trait / per-feat / per-region cycles.
 - Inner Sea Combat: per-trait / per-option cycles.
@@ -161,11 +163,11 @@ Acceptance:
 - `release-notes.md` populated.
 - Tranche promotion PR fires: `tranche/10 → develop`; `0.10.<last_build>` remains the post-closure value.
 
-#### Closure-F2 — Workspace-tree removal (move-not-copy)
+#### Closure-F2 — Workspace-tree removal (move-not-copy) — LANDED, verify at closure
 
-Acceptance:
+Acceptance (the publish landed 2026-08-01; Closure re-verifies rather than performs):
 
-- The source-of-record directory removed on the publish commit per `decisions.md §13`.
+- The source-of-record workspace directory was removed on the publish commit per the move-not-copy doctrine (`forward-scope-register.md` Class 0 anchor "Move-not-copy publish"; `acceptance-and-verification.md AT-30-011`).
 - The canonical repo-resident home is `docs/release/SD-30-occult-and-companion-content-ingestion/`.
 
 ## Build Version Numbering

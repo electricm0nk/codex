@@ -112,8 +112,11 @@ Per `decisions.md §18`:
 ## TR-30-010 — Move-not-copy publish
 
 Source-of-record `programs/codex/requirements/SD-30-.../` MUST be
-removed on the publish commit per `decisions.md §13`. The canonical
+removed on the publish commit per the move-not-copy doctrine
+(`forward-scope-register.md` Class 0 anchor; `AT-30-011`). The canonical
 repo-resident home is `docs/release/SD-30-occult-and-companion-content-ingestion/`.
+**SATISFIED 2026-08-01:** the publish landed; the workspace directory is
+gone and this package is repo-resident. Closure re-verifies (Closure-F2).
 
 ## TR-30-011 — Local-file work-queue dispatch
 

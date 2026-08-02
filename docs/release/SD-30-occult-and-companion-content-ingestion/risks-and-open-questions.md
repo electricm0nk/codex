@@ -55,7 +55,7 @@ Prior doctrine is left in place; references resolve at cycle dispatch.
 ## Intentionally deferred
 
 - Bulk-modification retrofit (per `decisions.md §17`).
-- The four deferred books (NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes) — recorded in `forward-scope-register.md C2.x` as future-acquisition candidates.
+- The four deferred books — recorded in `forward-scope-register.md C2.x`: NPC Codex and Planar Adventures (absent from the corpus, future-acquisition candidates); Occult Origins and Haunted Heroes Handbook (present in the corpus under `player_companion/`, deferred by explicit operator choice 2026-08-01).
 - Cross-bundle cycles that consume SD-28/SD-29's class id (the four shared classes cycle is the only such case; SD-28 references SD-30's canonical id per `decisions.md §16`).
 
 ## Review trigger

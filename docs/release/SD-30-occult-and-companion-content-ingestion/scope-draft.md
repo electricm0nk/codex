@@ -16,7 +16,7 @@
 
 ## Book list — operator-pinned CONFIRMED 2026-08-01
 
-Sixteen books in scope (plus NPC Codex and Planar Adventures deferred per the 2026-08-01 absent-book rule).
+Sixteen books in scope. Four books deferred: NPC Codex and Planar Adventures per the 2026-08-01 absent-book rule (genuinely absent from the corpus), Occult Origins and Haunted Heroes Handbook by explicit operator choice 2026-08-01 (present in the corpus under `player_companion/`; see the resolved shape finding below).
 
 | Slot | Book | Publisher | Ingest subtype | Path | Corpus dir | Per-entity count |
 |------|------|-----------|----------------|------|-----------|------------------|
@@ -41,10 +41,10 @@ Sixteen books in scope (plus NPC Codex and Planar Adventures deferred per the 20
 
 - **NPC Codex** — `npc_codex` not found in the PCGen corpus. Recorded in `forward-scope-register.md C2.x` as a future-acquisition candidate. A future bundle (or runtime operator directive) may acquire the LST data and bring it in.
 - **Planar Adventures** — `planar_adventures` not found in the PCGen corpus. Recorded in `forward-scope-register.md C2.x`.
-- **Occult Origins** — `occult_origins` not found in the PCGen corpus. Carried over from the 07-30 stub; recorded in `forward-scope-register.md C2.x` as future-acquisition.
-- **Haunted Heroes Handbook** — `haunted_heroes` not found in the PCGen corpus. Carried over from the 07-30 stub; recorded in `forward-scope-register.md C2.x` as future-acquisition.
+- **Occult Origins** — **present** in the PCGen corpus at `player_companion/occult_origins` (7 `.lst`, real `.pcc`; verified 2026-08-01). Deferred by explicit operator choice 2026-08-01, NOT by the absent-book rule — the 07-30 "not found" finding was a bad check (see the resolved shape finding below). Recorded in `forward-scope-register.md C2.3` as a future-bundle candidate.
+- **Haunted Heroes Handbook** — **present** in the PCGen corpus at `player_companion/haunted_heroes_handbook` (14 `.lst`, real `.pcc`; verified 2026-08-01 — the 07-30 check grepped the bare stem `haunted_heroes` and missed the real directory name). Deferred by explicit operator choice 2026-08-01, NOT by the absent-book rule. Recorded in `forward-scope-register.md C2.4` as a future-bundle candidate.
 
-**Cycle-0 trap-report + work-inventory gating.** Epic 2's pre-flight runs against all 16 in-scope books; for each book, the inventory surfaces the per-book shape (kinds, files_not_enumerated, trap_hits). Per-book cycles dispatch per the shape finding; cycles on the 4 absent slots are NOT in scope.
+**Cycle-0 trap-report + work-inventory gating.** Epic 2's pre-flight runs against all 16 in-scope books; for each book, the inventory surfaces the per-book shape (kinds, files_not_enumerated, trap_hits). Per-book cycles dispatch per the shape finding; cycles on the 4 deferred slots are NOT in scope.
 
 Verified 2026-08-01 by directory listing of `~/workspace/repos/pcgen/data/pathfinder/paizo/`.
 
@@ -71,47 +71,44 @@ This replaces the hand-maintained per-entity count. Every figure this project
 hand-maintained has drifted and then actively misled; the counting record is in
 `docs/governance/book-ingestion-playbook.md` §6.
 
-### Shape finding that affects this bundle's book list
+### Shape finding that affected the 07-30 book list — RESOLVED 2026-08-01
 
-**Two of the four candidate books have no PCGen corpus directory.** The
-generator enumerates every directory under
-`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/` — 25 of them,
-verified 2026-07-30 by both the generator's book enumeration and a plain
-directory listing. `occult_adventures` and `horror_adventures` are present.
-**`occult_origins` and `haunted_heroes` are not**, under those names or any
-recognisable variant.
+The 07-30 stub reported that "two of the four candidate books have no PCGen
+corpus directory" (`occult_origins`, `haunted_heroes`). **That finding was
+wrong on both counts, and the operator has since re-cut the bundle to the
+sixteen-book list above.** For the record, so the failure mode is not
+repeated:
 
-Both books are real Paizo products; the finding is about this corpus checkout,
-not about the books' existence. Three readings, in decreasing likelihood:
+- The 07-30 check enumerated only
+  `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/`. Both
+  books are player-companion products and live under
+  `pathfinder/paizo/player_companion/` — reading #2 of the three readings the
+  stub itself listed, written down and then never checked. The claimed
+  "verified by both the generator's book enumeration and a plain directory
+  listing" was not two independent checks: both walked the same wrong root.
+- The check also searched the identifier `haunted_heroes`; the directory is
+  `haunted_heroes_handbook`. A grep for a bare stem that returns zero reads,
+  wrongly, as absence — the exact trap §"Per-cycle repo tooling" below warns
+  about.
 
-1. The PCGen dataset does not package them separately and their content is
-   folded into `occult_adventures` / `horror_adventures`.
-2. They live outside `pathfinder/paizo/roleplaying_game` in the PCGen tree
-   (e.g. under a companion/player-companion path).
-3. The checkout is incomplete.
+Re-derived 2026-08-01: `ls ~/workspace/repos/pcgen/data/pathfinder/paizo/player_companion/`
+shows `occult_origins` (7 `.lst`, `_occult_origins.pcc`) and
+`haunted_heroes_handbook` (14 `.lst`, `_haunted_heroes_handbook.pcc`). Both
+are deferred from SD-30 **by operator choice** (2026-08-01), not by absence.
+`npc_codex` and `planar_adventures` remain genuinely absent from the whole
+corpus (`find` across all publishers, 2026-08-01) — their deferrals stand on
+the absent-book rule.
 
-**This is flagged, not resolved.** Determining which reading holds is a
-pre-launch task, and it changes the answer to operator question 1 below. **The
-recorded book list is an operator decision and is not changed here.**
-
-Also present in the corpus and unclaimed by SD-28 / SD-29 / SD-30:
-`ultimate_wilderness` and `ultimate_campaign` (SD-27 `decisions.md §9` Tier-2),
-and `mythic_adventures`, `pathfinder_unchained`, `monster_codex`, `bestiary_6`,
-`bonus_bestiary` (SD-27 §9 Tier-1). All seven are recorded there as deferred to
-"SD-28+" without a named successor bundle, so none currently has a bundle of
-record beyond that deferral. (`advanced_race_guide` and `adventurers_guide` are
-SD-27's own two in-scope books and are **not** in this list.)
-
-**Operator questions to confirm when reviewing on a real computer:**
-
-1. Are the three core books (Occult Adventures + Occult Origins + Horror Adventures) in scope, or is the bundle a different cut? The "some others" in the operator message is ambiguous between (a) Horror Adventures (the canonical Paizo companion), (b) Haunted Heroes Handbook (a softcover), and (c) something else. The candidate above reflects the canonical Paizo Occult Adventures product line. **See the shape finding above first: two of the four candidates have no corpus directory to ingest from, which may settle this question by itself.**
-2. Per-book ingest pattern: Occult Adventures is multi-subtype (classes + monsters + psychic disciplines). Confirm whether the Epic structure subdivides per subtype, or whether one epic handles all of Occult Adventures with one cycle per subtype.
-3. Cross-book class overlap with SD-28 (Ultimate Intrigue): Occultist, Spiritualist, Medium, Mesmerist appear in both Ultimate Intrigue and Occult Adventures. Canonical class definition lives in SD-30 (Occult Adventures is the primary hardcover defining those classes). SD-28 references the canonical class id from SD-30's progress file but does not redefine.
-4. Cross-book class overlap with SD-29 (Bestiary 2-5): Some occult monsters appear in both Bestiary books and Horror Adventures. Canonical monster definition lives in whichever book first introduces the monster.
+The former "operator questions to confirm" are all resolved and pinned above:
+the bundle is the sixteen-book cut (question 1); epic structure is one epic
+per book with cycles per subtype (question 2, `epic-breakdown.md`);
+cross-bundle class canon lives in SD-30 for Occultist / Spiritualist /
+Medium / Mesmerist (question 3, `decisions.md §5`); monster canon lives in
+the first-introducing book (question 4, `decisions.md §6`).
 
 ## Scope
 
-- **In scope:** End-to-end content-source ingest for the three (or four) Occult / Horror books enumerated above. Per-class / per-monster-block / per-discipline cycles produce canonical entries that match the SD-22 corpus-source-inventory doctrine-of-record. **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 11.
+- **In scope:** End-to-end content-source ingest for the sixteen books enumerated above. Per-class / per-monster-block / per-discipline cycles produce canonical entries that match the SD-22 corpus-source-inventory doctrine-of-record. **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 11.
 - **Out of scope:** Bestiary 1 (closed in SD-22). Ultimate books (separate bundle, SD-28). Bestiary 2-5 (separate bundle, SD-29). Update-UI bug remediation (lifecycle-routed from SD-16, separate).
 - **Boundary with SD-28:** Classes that appear in both Ultimate Intrigue and Occult Adventures (Occultist, Spiritualist, Medium, Mesmerist) live canonically in SD-30. SD-28 references the canonical class id only.
 
@@ -170,20 +167,16 @@ trap report's per-book `KEY:` namespace listing tells you the prefix to search
 under, which is why a grep for a bare leaf name returns zero and reads, wrongly,
 as absence.
 
-## Epic structure (proposed)
+## Epic structure
 
-| Epic | Title | Fires | Notes |
-|------|-------|-------|-------|
-| 1 | Code-Side Identifier Cleanup | FIRST | Governance base requirement. Per SD-22 Epic 1 pattern. |
-| 2 | Operator Pre-Launch | Gating | Pre-launch checklist verification. |
-| 3 | Occult Adventures content-source ingest | After Epic 2 | Per-class cycles + per-monster-block cycles + per-psychic-discipline cycles. |
-| 4 | Occult Origins content-source ingest | After Epic 2 | Per-class-options cycles + per-archetype cycles. |
-| 5 | Horror Adventures content-source ingest | After Epic 2 | Per-monster-block cycles + per-haunt-block cycles + per-corruption-mechanic cycles. |
-| 6 | (optional) Haunted Heroes Handbook content-source ingest | After Epic 2 | Per-class-options cycles. |
-| 7 | Closure Epilogue | LAST | Tranche promotion version increment. |
-| 8 | Build Version Numbering | After Epic 1, before Epic 7 | First concrete value `0.6.<build>`. |
-
-**Acceptance criteria stub:** 30 criteria, 9 epics (one per in-scope book group: occult group, mythic group, monster codex group, Inner Sea World Guide, Inner Sea modules ×9, Book of the Damned ×2 — fires in Epic 3-N+; pre-cycle trap-report + work-inventory output gates each). Mirrors SD-22's epic shape with the seventeen-book expansion.
+The authoritative epic structure lives in `epic-breakdown.md` and `kanban.md`
+(21 cards: Epic 1 Identifier Cleanup first, Epic 2 Operator Pre-Launch, one
+per-book epic per pinned book (epics 3-18), Build Version Numbering (epic 20,
+first concrete value `0.10.<build>` per `decisions.md §15`), Bundle Code
+Review (epic 21, `decisions.md §26`), Closure Epilogue (epic 19, fires last).
+An earlier revision of this section carried the superseded 07-30 four-book
+epic table with a `0.6.<build>` version target; both were stale — do not cite
+this file for epic structure.
 
 ## What is operator-pinned vs. doctrine
 
@@ -194,11 +187,11 @@ as absence.
 
 All six operator-pinned items are now confirmed:
 
-1. **Book list confirmed** — sixteen books in scope (occult + mythic + Monster Codex + Inner Sea series + Book of the Damned ×2); four books deferred (NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes).
+1. **Book list confirmed** — sixteen books in scope (occult + mythic + Monster Codex + Inner Sea series + Book of the Damned ×2); four books deferred (NPC Codex and Planar Adventures absent from the corpus; Occult Origins and Haunted Heroes Handbook present but deferred by operator choice).
 2. **Per-book path locations confirmed** — `src/rules_core/rules_tables/<book>/` for each.
 3. **Branch name + board name** — `tranche/10` branch; Hermes board retired in favor of local-file `kanban.md` + `progress.md`.
 4. **Build version target** — `0.10.<build>` per `<major>.<tranche-base>.<build>` scheme.
 5. **Book ingest subtype per book** — per-class / per-monster-block / per-psychic-discipline / per-haunt / per-corruption-mechanic / per-mythic-path / per-tactic / per-trait / per-feat / per-region / per-deity / per-domain / per-spell / per-race / per-temple / per-event / per-rule / per-faction.
-6. **Packaging decision** — promote this source-of-record to `docs/release/SD-30-occult-and-companion-content-ingestion/` in the repo as a planning-ready publication, with the canonical chassis (15 files) landing this cycle.
+6. **Packaging decision** — promote this source-of-record to `docs/release/SD-30-occult-and-companion-content-ingestion/` in the repo as a planning-ready publication. The move-not-copy publish has landed: this package is repo-resident and the workspace source tree is gone.
 
 The bundle is no longer a stub; it is a planning-ready package. Pre-launch checklist remains: `kanban.md`, branch `tranche/10` pushed, OAuth valid, working tree clean, cycle-0 trap-report + work-inventory validation run against all sixteen books in scope.

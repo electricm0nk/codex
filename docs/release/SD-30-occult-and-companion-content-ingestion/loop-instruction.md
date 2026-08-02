@@ -43,11 +43,16 @@ each book.
    the book's `books[]` entry in `docs/work-inventory.json` — `kinds`,
    `files_not_enumerated`, `trap_hits`, `reconciliation`. The shape decides the
    cycle; do not assume a template. **Confirm the book has a corpus directory
-   at all** — two of this bundle's four candidates currently do not. Done once
-   per book, not once per cycle.
+   at all** — all sixteen pinned books verified present 2026-08-01 (4 under
+   `roleplaying_game/`, 12 under `campaign_setting/`), so a missing directory
+   now means corpus drift, not expected absence; treat it as the hard stop
+   below. Done once per book, not once per cycle.
 0b. **Trap-report** the book, before writing a line of ingest code:
-   `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`. Record the
-   output in the cycle receipt. See `decisions.md` Decision 10.
+   `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`. A bare
+   book name resolves across all known corpus subtrees (`roleplaying_game`,
+   `campaign_setting`, `player_companion`, `dreamscarred_press`); an absolute
+   path also works. Record the output in the cycle receipt. See
+   `decisions.md` Decision 10.
 1. **Read** the doctrine-of-record (`scope-draft.md`, `decisions.md`, current `progress.md`).
 1b. **Re-derive.** Before accepting any figure carried in a brief, a doc, or a
    prior cycle's `progress.md` entry — including this package's own
@@ -62,13 +67,14 @@ each book.
    Adventures spell-row count," not a remembered or copied-forward estimate.
    This is the tranche/7 retrospective's rank-1 finding, re-run against the
    current log rather than transcribed: ad-hoc commands over source data
-   caught **47%** of that tranche's logged corrections (54 of 116 events
-   currently in `docs/retro/events/*.jsonl`; the retrospective's own
-   published snapshot was 46% of 115 — the log grew by one correction after
-   publication, which is itself the lesson) and were the single strongest
-   detector by a wide margin — more than `./scripts/verify.sh` (8%, Cycle
-   mechanics step 4 below), on-screen driving (14%, Definition of done item
-   8 below), and every repo test combined. See
+   caught **46%** of that tranche's logged corrections (56 of 122 events
+   currently in `docs/retro/events/*.jsonl` by the retrospective's own
+   filter; earlier snapshots read 47% of 116 and 46% of 115 — the log keeps
+   growing after publication, which is itself the lesson) and were the
+   single strongest detector by a wide margin — more than
+   `./scripts/verify.sh` (8%, Cycle mechanics step 4 below), on-screen
+   driving (~10%, Definition of done item 8 below), and every repo test
+   combined. See
    `docs/retro/tranche-7-retrospective.md` §3 and §0 for the reproduction
    command.
 1c. **Preflight** the disk. `./scripts/verify.sh --only preflight-disk` (fast —
@@ -88,15 +94,14 @@ each book.
    `apps/desktop/src-tauri` at all. See `decisions.md` Decision 9.
 5. **Commit** with a `feat(sd30): ...` or `fix(sd30): ...` prefix.
 6. **Append** the cycle record directly to `progress.md` (no Hermes release —
-   the board is retired). The cycle record carries the PR-id, branch-tip, and
-   per-cycle test result. The supervisor reads `kanban.md` at top of the next
-   cycle to find the next ready card.
-7. **Append** the cycle record to `progress.md`, with the command behind every
-   figure it publishes.
-8. **Emit** a retro event for anything this cycle corrected, deferred, reworked,
+   the board is retired), with the command behind every figure it publishes.
+   The cycle record carries the PR-id, branch-tip, and per-cycle test result.
+   The supervisor reads `kanban.md` at top of the next cycle to find the next
+   ready card.
+7. **Emit** a retro event for anything this cycle corrected, deferred, reworked,
    or narrowly avoided. See "Retrospective log" below — this step is part of
    the cycle, not an optional courtesy.
-9. **Reclaim.** `scripts/reclaim.sh --apply` at the end of every cycle — not
+8. **Reclaim.** `scripts/reclaim.sh --apply` at the end of every cycle — not
    only when disk pressure is already visible. The script is dry-run-safe by
    default and its safety guards (never touches a target dir a live build is
    using, never removes a worktree with uncommitted or unpushed work, never
@@ -164,10 +169,15 @@ All of the following, each checkable by someone who was not present:
    unique to this cycle before the first `driver.sh` call** — see
    `apps/desktop/.claude/skills/run-desktop/SKILL.md` §"Concurrent agents";
    its unset default collides with any sibling dispatch that also left it
-   unset. This is the tranche/7 retrospective's rank-3 finding: on-screen
-   driving was the *sole* mechanism that caught 14% of that tranche's
-   corrections, and it is the only mechanism that reaches the "wired into a
-   twin the sheet doesn't read" class of defect — a passing test cannot, by
+   unset. This is the tranche/7 retrospective's rank-3 finding, re-derived
+   2026-08-01: on-screen driving appears in ~10% of that tranche's logged
+   corrections (12 of 122 by the retrospective's own filter) and was the
+   *sole* catching mechanism for 8% of them (9 corrections; an earlier
+   revision here quoted 14% and conflated the mentions share with the
+   sole-mechanism count — the retrospective's §3 itself ranks only the
+   rank-1 finding as robust). The percentage is not the point: on-screen
+   driving is the only mechanism that reaches the "wired into a twin the
+   sheet doesn't read" class of defect — a passing test cannot, by
    construction (`docs/retro/tranche-7-retrospective.md` §3, §6.1 rule A7).
 
 ## Epic ordering
@@ -186,7 +196,7 @@ All of the following, each checkable by someone who was not present:
   - The build crashes in a way that requires a non-book-list fix.
   - A cross-bundle reference yields a missing class / monster id that the source bundle's progress file shows as not yet landed.
   - The operator-pinned branch / board diverges from the in-flight branch / board.
-  - **A book on the recorded list has no corpus directory to ingest from.** The cycle reports; the operator re-pins the book list. Known instances as of 2026-07-30: Occult Origins and Haunted Heroes Handbook.
+  - **A book on the recorded list has no corpus directory to ingest from.** The cycle reports; the operator re-pins the book list. No known instances as of 2026-08-01 — all sixteen pinned books have verified corpus directories. (An earlier revision named Occult Origins and Haunted Heroes Handbook here; that finding was a bad check — wrong search root and wrong identifier — and both books exist under `player_companion/`. They are deferred by operator choice, not absence; see `scope-draft.md` and `decisions.md` Decision 1.)
   - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 11's open question). The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
   - **A figure derived this cycle disagrees with a figure recorded in this package.** Investigate which is wrong and report; do not overwrite either on the assumption that the newer one wins.
 
@@ -262,4 +272,4 @@ See `decisions.md` for the running decision record. Each decision is dated, name
 
 ## Per-bundle progress file
 
-`~/workspace/programs/codex/requirements/SD-30-occult-and-companion-content-ingestion/progress.md` carries the per-cycle receipt. Do not use a shared chassis-lane progress file; each bundle's progress is its own.
+`docs/release/SD-30-occult-and-companion-content-ingestion/progress.md` — this package's own directory, where the move-not-copy publish landed it — carries the per-cycle receipt. (Corrected 2026-08-01: an earlier revision pointed at `~/workspace/programs/codex/requirements/SD-30-.../progress.md`, a directory that does not exist.) Do not use a shared chassis-lane progress file; each bundle's progress is its own.

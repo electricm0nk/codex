@@ -6,7 +6,7 @@
 
 **Status:** Operator-pinned, **confirmed 2026-08-01.**
 
-**Decision:** SD-30 ships content-source ingest for the following sixteen books, with NPC Codex + Planar Adventures + Occult Origins + Haunted Heroes deferred to `forward-scope-register.md C2.x` per the 2026-08-01 absent-book rule:
+**Decision:** SD-30 ships content-source ingest for the following sixteen books, with NPC Codex + Planar Adventures + Occult Origins + Haunted Heroes deferred to `forward-scope-register.md C2.x`:
 
 1. **Occult Adventures** — per-class cycles + per-monster-block cycles + per-psychic-discipline cycles. Corpus dir: `roleplaying_game/occult_adventures/`.
 2. **Horror Adventures** — per-monster-block cycles + per-haunt-block cycles + per-corruption-mechanic cycles. Corpus dir: `roleplaying_game/horror_adventures/`.
@@ -25,13 +25,13 @@
 15. **Inner Sea Bestiary** — per-monster-block cycles. Corpus dir: `campaign_setting/inner_sea_bestiary/`.
 16. **Inner Sea Intrigue** — per-trait cycles + per-faction cycles + per-rule cycles. Corpus dir: `campaign_setting/inner_sea_intrigue/`.
 
-**Deferred (NOT in scope):** NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes Handbook. Recorded in `forward-scope-register.md C2.x` as future-acquisition candidates. Per the 2026-08-01 absent-book rule, these drop from scope when the corpus directory does not exist.
+**Deferred (NOT in scope):** NPC Codex and Planar Adventures per the 2026-08-01 absent-book rule — genuinely absent from the whole PCGen corpus (verified across all publishers 2026-08-01). Occult Origins and Haunted Heroes Handbook by **explicit operator choice 2026-08-01**: both ARE present in the corpus under `player_companion/` (the 07-30 "absent" finding searched the wrong subtree and, for HHH, the wrong identifier — see `scope-draft.md` §"Shape finding … RESOLVED" and `forward-scope-register.md C2.3/C2.4`), so the absent-book rule does not apply to them; the operator keeps the sixteen-book pin regardless. All four recorded in `forward-scope-register.md C2.x`.
 
 **Per-book path locations under `src/rules_core/rules_tables/<book>/`** are in the §"Book list" table in `scope-draft.md`.
 
-## Decision 2 — Branch and board [SUPERSEDED — see §14]
+## Decision 2 — Branch and board [SUPERSEDED — see §13 and §14a]
 
-**Status:** Doctrine-of-record (per SD-22 doctrine); **superseded 2026-08-01** by Decision §14, which tightens the rule.
+**Status:** Doctrine-of-record (per SD-22 doctrine); **superseded 2026-08-01** by Decision §13 (branch) and §14a (board retirement), which tighten the rule.
 
 **Original text:** SD-30 launches on `tranche/6-2` branch + `codex-tranche-6-2` board.
 
@@ -45,9 +45,9 @@
 
 **Why superseded.** SD-30's tranche-base is 10, not 6. First concrete value is `0.10.<build>` per Decision §15.
 
-## Decision 2 (original text — SUPERSEDED, see §14) — Branch and board
+## Decision 2 (original text — SUPERSEDED, see §13 and §14a) — Branch and board
 
-> **Retained as the audit record of what was originally proposed. The values below are superseded and must not be acted on** — SD-30's branch is `tranche/10` and its build target `0.10.<build>`, per §14/§15. Heading disambiguated 2026-08-01; text unchanged.
+> **Retained as the audit record of what was originally proposed. The values below are superseded and must not be acted on** — SD-30's branch is `tranche/10` and its build target `0.10.<build>`, per §13/§15. Heading disambiguated 2026-08-01; text unchanged.
 
 **Status:** Pending operator confirmation.
 
@@ -228,7 +228,7 @@ The prior candidate (per the 2026-07-28 stub) was `tranche/6-2` + `codex-tranche
 
 ## Decision 14a — Hermes board retired (operator directive 2026-08-01)
 
-**Status:** Operator-pinned, **confirmed 2026-08-01.** Cross-cutting — affects Decision §7 (operating form), §13 above, and the loop-instruction pre-launch checklist.
+**Status:** Operator-pinned, **confirmed 2026-08-01.** Cross-cutting — affects Decision §8 (operating form), §13 above, and the loop-instruction pre-launch checklist.
 
 **Decision:** SD-30 has no Hermes kanban board. The work-queue artifact is a local-file `kanban.md` paired with `progress.md`. Cycle dispatch reads `kanban.md` at top of each tick; supervisor's file-touch partition enforces 1-cycle-per-file.
 
@@ -297,7 +297,7 @@ The class-grant overlap rule (canonical class definition lives in the bundle tha
 - `./loop-instruction.md` — per-cycle procedure; updated for `tranche/10`, no-Hermes-board, local-file dispatch.
 - `./forward-scope-register.md` — successor work depending on SD-30's output.
 - `./kanban.md` — local-file work queue (replaces Hermes board).
-- `./epic-breakdown.md` — 9+ epics × ~3-4 criteria each.
+- `./epic-breakdown.md` — 21 epics (matching `kanban.md`'s 21 cards) × ~3-4 criteria each.
 - `~/workspace/programs/codex/requirements/SD-22-.../decisions.md` — predecessor doctrine for the per-book ingest pipeline.
 - `~/workspace/programs/codex/requirements/SD-28-.../decisions.md` — sister bundle (cross-bundle class-grant doctrine).
 - `~/workspace/programs/codex/requirements/SD-29-.../decisions.md` — sister bundle (bestiary 2-5 ingest pipeline).
@@ -404,7 +404,7 @@ This is a statement about the **orchestrating session only** — the session tha
 
 - Correctness of rules logic against the corpus (sampled, not exhaustively re-derived) across the sixteen in-scope books.
 - No stubs or fixture-only data in production paths, per `docs/governance/no-stub-mvp-doctrine.md`.
-- Content genuinely reaching a player surface, per `reach_gate.rs`'s `OPEN_FINDINGS` mechanism (spot-checked against the live IPC/UI path, not just the gate's exit code) — including the Mythic Adventures reach-surface prerequisite called out in `loop-instruction.md`'s "Recommended sequencing". Mechanically, this means driving the running desktop app via `apps/desktop/.claude/skills/run-desktop/driver.sh` and reading the value off a screenshot, per `loop-instruction.md`'s Definition of done item 8, with `RUN_DESKTOP_AGENT` set to a value unique to this review (`apps/desktop/.claude/skills/run-desktop/SKILL.md` §"Concurrent agents").
+- Content genuinely reaching a player surface, per `reach_gate.rs`'s `OPEN_FINDINGS` mechanism (spot-checked against the live IPC/UI path, not just the gate's exit code) — including the Mythic Adventures reach-surface prerequisite called out in `epic-breakdown.md`'s "Recommended sequencing" (and `forward-scope-register.md C3.1`). Mechanically, this means driving the running desktop app via `apps/desktop/.claude/skills/run-desktop/driver.sh` and reading the value off a screenshot, per `loop-instruction.md`'s Definition of done item 8, with `RUN_DESKTOP_AGENT` set to a value unique to this review (`apps/desktop/.claude/skills/run-desktop/SKILL.md` §"Concurrent agents").
 - Test quality, not just count — per `docs/governance/book-ingestion-playbook.md §7.4`'s mutation-test pattern, a sample of new gates/tests is checked for a case that actually fails when the thing it protects is broken.
 - No hand-authored rules data in the frontend (`apps/desktop/src/`).
 

@@ -134,11 +134,11 @@ Then:
 - Real-time engines are absent from the cycle's source.
 - Rules-data engines are present only where strictly necessary to satisfy AT-30-002.
 
-## AT-30-011 — Move-not-copy publish
+## AT-30-011 — Move-not-copy publish (landed 2026-08-01; Closure re-verifies)
 
 Given the closure.
 
-When the publish commit fires.
+When the publish commit fires (fired 2026-08-01).
 
 Then:
 

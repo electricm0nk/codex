@@ -16,9 +16,11 @@ build_version_target: 0.10.<build>
 
 End-to-end content-source ingest for the sixteen books on SD-30's scope
 (occult + mythic + Monster Codex + Inner Sea World Guide + Inner Sea
-series ×9 modules + Book of the Damned ×2). NPC Codex, Planar
-Adventures, Occult Origins, and Haunted Heroes Handbook are deferred to
-`forward-scope-register.md C2.x` per the 2026-08-01 absent-book rule.
+series ×9 modules + Book of the Damned ×2). NPC Codex and Planar
+Adventures are deferred to `forward-scope-register.md C2.x` per the
+2026-08-01 absent-book rule; Occult Origins and Haunted Heroes Handbook
+(present in the corpus under `player_companion/`) are deferred there by
+explicit operator choice 2026-08-01.
 Per-book ingest cycles produce canonical records in
 `src/rules_core/rules_tables/<book>/` that satisfy the reach gate
 (`apps/desktop/src-tauri/src/reach_gate.rs`) — a record is not done
@@ -27,10 +29,10 @@ until it reaches a player surface.
 ## Source STC contents
 
 - `scope-draft.md` — committed scope shape, sixteen books confirmed.
-- `decisions.md` — 20 decisions including the operator-pinned amendments of 2026-08-01 (book list, tranche/10, build 0.10.x, no-Hermes-board, cross-book conflict rule with "recently published takes precident" precedence, reach-gate-doD doctrine as the prime rule).
+- `decisions.md` — 31 decisions (numbered 1-31 plus 14a) including the operator-pinned amendments of 2026-08-01 (book list, tranche/10, build 0.10.x, no-Hermes-board, cross-book conflict rule with "recently published takes precident" precedence, reach-gate-DoD doctrine as the prime rule).
 - `loop-instruction.md` — per-cycle procedure; local-file dispatch via `kanban.md`/`progress.md`.
 - `forward-scope-register.md` — successor work depending on SD-30's output.
-- `epic-breakdown.md` — 9+ epics × ~3 criteria = ~30+; Closure fires LAST.
+- `epic-breakdown.md` — 21 epics (matching `kanban.md`'s 21 cards); Closure fires LAST.
 - `technical-requirements.md` — pre-loop prerequisites + normative requirements + out-of-scope.
 - `technical-design.md` — architectural surface for the sixteen books.
 - `acceptance-and-verification.md` — Given/When/Then per criterion.
@@ -44,9 +46,11 @@ until it reaches a player surface.
 
 Canonical (repo-resident) home:
 
-`docs/release/SD-30-occult-and-companion-content-ingestion/` (after the
-move-not-copy publish landing this cycle). Source-of-record (this
-directory) is removed on the publish commit per `decisions.md §13`.
+`docs/release/SD-30-occult-and-companion-content-ingestion/`. The
+move-not-copy publish has landed: this directory IS the source-of-record,
+and the workspace source tree was removed on the publish commit per the
+move-not-copy doctrine (`forward-scope-register.md` Class 0 anchor;
+`acceptance-and-verification.md AT-30-011`).
 
 ## Objective
 
@@ -69,8 +73,8 @@ cycles named in `scope-draft.md §"Book list"`.
 
 - NPC Codex (deferred — corpus directory absent).
 - Planar Adventures (deferred — corpus directory absent).
-- Occult Origins (deferred — corpus directory absent; carried from the 07-30 stub).
-- Haunted Heroes Handbook (deferred — corpus directory absent; carried from the 07-30 stub).
+- Occult Origins (deferred by operator choice 2026-08-01 — present in the corpus at `player_companion/occult_origins`; the 07-30 "absent" finding was a bad check, see `forward-scope-register.md C2.3`).
+- Haunted Heroes Handbook (deferred by operator choice 2026-08-01 — present in the corpus at `player_companion/haunted_heroes_handbook`, see `forward-scope-register.md C2.4`).
 - Real-time execution engines (RNG, opponent state, turn sequencing). Per `decisions.md §18`, real-time engines remain out of scope; rules-data engines are in scope only when strictly necessary.
 - Hermes-board operations. The board is retired; SD-30 dispatches via local file per `decisions.md §14a`.
 

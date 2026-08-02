@@ -104,6 +104,86 @@ The deferred books (NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes
 Handbook) remain deferred — they are out of scope per the 2026-08-01 absent-book
 rule and the unattended-mode protocol does not change that.
 
+## Cycle 0.0+2 — Launch-readiness audit + pre-launch remediation (2026-08-01)
+
+**Date:** 2026-08-01
+**Cycle ID:** `SD30-LAND-3`
+**Actor:** `sd30-prelaunch-remediation` (operator-directed launch-readiness session)
+**Surface:** this directory (`docs/release/SD-30-occult-and-companion-content-ingestion/`)
+
+### What landed
+
+Three parallel audits (package cross-refs, repo tooling, pcgen sources)
+evaluated `loop-instruction.md` for unattended launch. Blockers found and
+fixed; every figure below carries its command.
+
+- **Roster fix (`c12b1905`).** 11 of 16 books had no `books[]` entry —
+  `v06_work_inventory` scanned only `roleplaying_game/`. Twelve
+  `campaign_setting/` paths added to `EXTRA_BOOK_DIRS` + stub registrations;
+  all 16 now `future_state` with real not-started units. Verified:
+  `python3` scan of regenerated `docs/work-inventory.json` against Decision 1
+  slots 1-16. `v06_corpus_trap_report` bare names now resolve across
+  subtrees (`cargo run --locked --bin v06_corpus_trap_report -- inner_sea_gods`
+  → exit 0, captured directly).
+- **Record correction: Occult Origins + Haunted Heroes Handbook EXIST** at
+  `player_companion/{occult_origins,haunted_heroes_handbook}` (verified:
+  `ls ~/workspace/repos/pcgen/data/pathfinder/paizo/player_companion/`).
+  The 07-30 "absent" finding used the wrong search root and, for HHH, the
+  bare stem `haunted_heroes`. **Operator re-ruled 2026-08-01: sixteen-book
+  pin stands; both books deferred by explicit choice** (`decisions.md`
+  Decision 1, `forward-scope-register.md C2.3/C2.4` corrected). NPC Codex
+  and Planar Adventures remain genuinely absent (`find` across all
+  publishers). Retro `correction` events emitted to
+  `docs/retro/events/sd30-prelaunch-remediation.jsonl` (5 events).
+- **`loop-instruction.md` fixes:** per-bundle progress path corrected to
+  this directory (old path pointed at a nonexistent
+  `~/workspace/programs/...` dir); step 0 "four candidates" text replaced
+  with the sixteen-book truth; hard-stop known-instances line corrected;
+  tranche/7 retro stats re-derived (ad-hoc 46% = 56/122; on-screen ~10%
+  mentions / 8% sole — the quoted 14%-sole conflated two columns);
+  duplicate steps 6/7 merged.
+- **`kanban.md`:** rows reordered to claim-priority (epic-1 first, epic-2
+  second) and gates encoded on every card's own Status — a top-down
+  "highest-priority ready card" read now matches the mandated epic
+  ordering.
+- **`forward-scope-register.md` C3.1/C3.2/C3.3:** each now carries an
+  explicit **Unattended safe default** (never invent a surface; classify
+  honestly or OPEN_FINDINGS + shortfall + `decision-blocked`; move on) —
+  the fallback `loop-instruction.md` UNATTENDED MODE §4 depends on.
+- **`scope-draft.md`:** 07-30 pre-confirmation text (shape finding,
+  operator questions, four-book epic table with `0.6.<build>`) rewritten
+  as dated RESOLVED records so no cycle reads a scope disagreement.
+- Citation drift fixed across `decisions.md` (§14→§13/§14a, §7→§8,
+  Recommended-sequencing attribution), `epic-breakdown.md` (§6→§7,
+  Closure-F2 authority, ISWG double-count), `README.md` (decision count,
+  epic count, authority-surface publish state), `technical-requirements.md`
+  TR-30-010 + `acceptance-and-verification.md` AT-30-011 (publish landed).
+- **Cycle 0.0's Surface line** reads `programs/codex/requirements/...` —
+  correct at authoring time (pre-publish), superseded by the move-not-copy
+  publish; the receipt is left as signed history and this entry is the
+  correction of record.
+
+### Verification
+
+- `./scripts/verify.sh` full: **PASS**, 10 stages, exit 0 captured
+  directly (`docs/retro/events/sd30-prelaunch-remediation.jsonl`
+  verification event). Baseline note: `ROOT_FULL_TESTS` 5930→5933
+  (new tests, this commit set + sibling SD-28/SD-29 remediation) —
+  baseline moved in its own commit per DoD item 7.
+- `cargo test --locked --test v06_work_inventory`: 14 passed.
+- Idempotence: second generator run diffs `generated_at` only (checked
+  post-commit, discarded).
+
+### Pre-launch state after this cycle
+
+| Check | Status |
+|-------|--------|
+| `kanban.md` exists with ready queue | ✅ (epic-1 first, gates encoded) |
+| Branch `tranche/10` pushed to origin | ✅ (cut from remediated `tranche/8` tip) |
+| OAuth credentials valid | ✅ (`gh auth status`: electricm0nk, repo scope) |
+| Working tree clean | ✅ at cut time (sibling SD-28/SD-29 sessions share this checkout — re-run `git status` at launch) |
+| Cycle-0 trap-report + work-inventory for 16 books | Epic 2's cycle (tooling now reaches all 16) |
+
 ---
 
 (c) Per-cycle receipts append below this line as cycles fire.
