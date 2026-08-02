@@ -636,3 +636,150 @@ once, not just one), (2) if fixed, proceed straight to Step 3 (TDD
 implementation) using this cycle's Step 0/0b/1b findings above as the
 starting shape, and (3) if not fixed, re-run the `--audit` pre-check before
 doing anything else — do not re-derive the ACG defect list from memory.
+
+## `epic-5-ue` — Ultimate Equipment (`SD28-E5-F1-001`, 2026-08-01)
+
+- **Step 0 (shape):** `cargo run --locked --bin v06_work_inventory` → exit
+  0. `docs/work-inventory.json` `ultimate_equipment` entry: `files_enumerated:
+  9`, 7 `files_not_enumerated` (`ue_abilities.lst`, `ue_abilitycategories.lst`,
+  `ue_kits.lst`, `ue_profs_armor.lst`, `ue_profs_weapon.lst`, `ue_skills.lst`,
+  `ue_templates.lst`). `kinds`: `equipment` 1424 units (all `not-started`),
+  `equipment_modifier` 190 units (all `not-started`), `spell` 1 unit
+  (`not-started`). `trap_hits`: `comment_or_disabled` 264, `copy_record` 92,
+  `directive_line` 9, `duplicate_identity` 3, `invisible_record` 5,
+  `mod_record` 1682.
+- **Step 0b (trap-report, book dir, before any ingest code):**
+  `cargo run --locked --bin v06_corpus_trap_report --
+  ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment`
+  → **exit 0**, clean. Findings are informational, not defects: 1
+  `define-zero-value-elsewhere` (`MerformBeltMerfolkForm` in
+  `ue_abilities.lst:13`), 185 `namespaced-key` (dominant namespaces:
+  `Special Ability` 120, `Material` 49, `Page of Spell Knowledge` 9,
+  `Special Quality` 7), 15 `governing-token-hidden-by-filter` (e.g.
+  `Headband of Intellect Knowledge Skill Selection` carries
+  `MULT`/`STACK`/`CHOOSE`; `Otherworldly Kimono` carries `TEMPBONUS`).
+- **Step 1 / 1b (read + re-derive):** `scope-draft.md`, `decisions.md`
+  (Decision 10, §18), `forward-scope-register.md` (C3.1), `kanban.md`, this
+  file, and `epic-4-um`'s receipt (above) read. Figures re-derived directly
+  against the corpus, not transcribed:
+  - `.pcc` discovery (glob `*.pcc`, no leading underscore per
+    `loop-instruction.md` corpus-shape notes): `find
+    ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment
+    -maxdepth 1 -iname '*.pcc'` → **1** (`ultimate_equipment.pcc`).
+  - `.lst` count, recursive: `find
+    ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment
+    -iname '*.lst' | wc -l` → **16**.
+  - `_pfs/` subset: `find ... -iname '*.lst' -path '*_pfs*' | wc -l` →
+    **4** (25% of 16). `_pfs/` (Pathfinder Society legality overrides) is
+    excluded from this cycle's ingest scope — exclusion stated here
+    explicitly, not dropped silently.
+  - `support/` subset: `find ... -iname '*.lst' -path '*support*' | wc -l`
+    → **0** — UE has only `_pfs/`, no `support/`, matching
+    `loop-instruction.md`'s corpus-shape notes.
+  - Feats file: `find ... -iname '*feat*'` → **no matches** — UE has no
+    feats file, confirmed (matches the brief's shape note).
+  - `CATEGORY:` distribution (`ue_abilities.lst` and
+    `ue_equip_magic_items.lst`): `grep -rho 'CATEGORY:[A-Za-z ]*'
+    <book-dir>/*.lst | sort | uniq -c | sort -rn` → `41 CATEGORY:Special
+    Ability`, `7 CATEGORY:Internal`, `1 CATEGORY:Headband Knowledge Skill`,
+    `1 CATEGORY:Equipment`.
+  - Repo-wide DoD item 3 precondition, re-checked fresh (not carried
+    forward from `epic-3-uc`/`epic-4-um`'s receipts): `cargo run --locked
+    --bin v06_corpus_trap_report -- --audit` → **exit 2**, same 9
+    `key-differs-from-name` defects on
+    `pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst`
+    (`Naturalist Summon Nature's Ally I..IX` filed under the bare `Summon
+    Nature's Ally I..IX` identity) that `epic-3-uc` (`SD28-E3-F1-001`) and
+    `epic-4-um` (`SD28-E4-F1-001`) both recorded. This is SD-22 (closed,
+    doctrinal-read-only) ACG content, out of `epic-5-ue`'s write scope —
+    same repo-wide blocker, not a new instance.
+- **Step 1c (disk preflight):** `./scripts/verify.sh --only
+  preflight-disk` → PASS, exit 0 (repo fs 21% used, 385G available).
+- **Step 2 (claim):** `kanban.md` row 5 edited to `IN-FLIGHT`,
+  `Claimed-by: epic-5-ue`, `Claimed-at: 2026-08-01T00:00:00Z`,
+  `Cycle-id: SD28-E5-F1-001`.
+
+### What did not land, and why (decision-blocked — two independent reasons)
+
+`decision-blocked`: **Full Ultimate Equipment TDD ingest, `reach_gate.rs`
+claim, wired-integration audit, and on-screen verification were not
+attempted this cycle.** Two independent blockers, either one sufficient on
+its own:
+
+1. **Repo-wide DoD-item-3 precondition (shared with `epic-3-uc` and
+   `epic-4-um`):** `cargo run --locked --bin v06_corpus_trap_report --
+   --audit` exits 2 on the pre-existing, out-of-scope ACG
+   `key-differs-from-name` finding (re-derived fresh this cycle, above).
+   UE's own book-dir trap report is clean (exit 0), so this is not a
+   UE-specific scope problem — it is the same bundle-wide blocker recorded
+   twice already.
+2. **The known C3.1 equipment-catalog widening
+   (`forward-scope-register.md` C3.1, `decisions.md` §10/§18):**
+   `apps/desktop/src-tauri/src/equipment_catalog.rs` reads CRB alone;
+   APG/ACG-ingested equipment already reaches no surface today per
+   `reach_gate.rs OPEN_FINDINGS`. UE is the largest equipment book in the
+   corpus, and per `decisions.md` §18 ("the reach gate is the definition
+   of done; engine or widening where strictly necessary; UE's cycling
+   pauses on `decision-blocked` if the surface remains absent") and the
+   "Hard stops" rule in `loop-instruction.md` ("A record family cannot be
+   surfaced without work outside this bundle's epic structure... The cycle
+   reports the gap; it does not add an epic and it does not ingest without
+   a reach claim"), this cycle takes the safe default: it does **not** add
+   a surface-building epic, and it does **not** ingest UE's 1424
+   `equipment` + 190 `equipment_modifier` units without a reach claim for
+   them. The operator's open question (precycle prerequisite outside SD-28
+   vs. SD-28-owned retrofit) is left unanswered per `forward-scope-register.md`
+   C3.1's own framing — this cycle does not force that answer.
+
+No ingest code, `RuleSetId` variant, or `reach_gate.rs` claim was written
+this cycle; none is claimed as done. `./scripts/verify.sh` (full) was not
+run against new production code because none was written; the disk-preflight
+subset above stands as this cycle's only `verify.sh` invocation, consistent
+with `epic-4-um`'s precedent for a decision-blocked cycle.
+
+### Commands run (every figure re-derived)
+
+```sh
+cargo run --locked --bin v06_work_inventory                                                                                  # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment   # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- --audit                                                                    # exit 2 (pre-existing ACG finding, out of scope)
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment -maxdepth 1 -iname '*.pcc'             # 1
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment -iname '*.lst' | wc -l                 # 16
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment -iname '*.lst' -path '*_pfs*' | wc -l  # 4
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment -iname '*.lst' -path '*support*' | wc -l  # 0
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment -iname '*feat*'                       # (no matches)
+grep -rho 'CATEGORY:[A-Za-z ]*' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_equipment/*.lst | sort | uniq -c | sort -rn   # see above
+./scripts/verify.sh --only preflight-disk                                                                                     # exit 0
+```
+
+### Retro events
+
+`scripts/retro.py deferral --actor epic-5-ue --what "Ultimate Equipment TDD
+ingest, reach_gate claim, wired-integration audit, on-screen verification"
+--reason "two independent decision-blocked reasons: (1) repo-wide
+v06_corpus_trap_report --audit exits 2 on the same pre-existing,
+out-of-scope ACG key-differs-from-name finding epic-3-uc/epic-4-um
+recorded; (2) the known C3.1 equipment-catalog-widening gap
+(forward-scope-register.md C3.1, decisions.md §10/§18) — equipment_catalog.rs
+reads CRB only, UE's 1424 equipment + 190 equipment_modifier units have no
+reach claim to make without widening it, and the hard-stop rule bars
+ingesting without a reach claim or adding an out-of-epic surface-building
+epic" --scope "one book epic (epic-5-ue)" --blocked-by "ACG
+key-differs-from-name fix (out of SD-28 write scope); equipment_catalog.rs
+widening (operator-pending, forward-scope-register.md C3.1)"
+--tracked-at
+"docs/release/SD-28-ultimate-book-content-ingestion/progress.md
+SD28-E5-F1-001"` — emitted this cycle to `docs/retro/events/epic-5-ue.jsonl`.
+
+### Kanban
+
+`epic-5-ue` remains `IN-FLIGHT`, `Claimed-by: epic-5-ue`, `Cycle-id:
+SD28-E5-F1-001`. Not moved to `COMPLETE`. Next cycle against this card
+should: (1) confirm whether the ACG audit finding has been fixed by another
+epic/session (check `epic-3-uc`/`epic-4-um`'s cards and this file for a
+newer receipt first), (2) confirm whether the equipment-catalog widening
+question has been operator-answered or otherwise resolved (check
+`forward-scope-register.md` C3.1 and `decisions.md` §10/§18 for an updated
+status), and (3) only once both are clear, proceed to Step 3 (TDD
+implementation) using this cycle's Step 0/0b/1b findings above as the
+starting shape.
