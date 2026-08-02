@@ -126,3 +126,77 @@ will want an operator decision. Per the unattended-mode protocol:
 ---
 
 (c) Per-cycle receipts append below this line as cycles fire.
+
+## Cycle SD28-E1-F1-001 — Epic 1, Identifier-disclosure audit pass
+
+**Date:** 2026-08-02
+**Cycle ID:** `SD28-E1-F1-001`
+**Actor:** `sd28-epic1`
+**Card:** `epic-1-identifier` (kanban.md row 1) — claimed IN-FLIGHT at
+2026-08-02T02:25:56Z, closed COMPLETE this cycle.
+
+### What landed
+
+Ran the Epic 1 identifier-disclosure audit pass (`epic-breakdown.md`
+SD28-E1-F1/F2, `decisions.md §6`) against the seven-book surface code and the
+repo's audit tooling. No renames were required — the audit returned 0
+findings, and the only known instance of the `sd28_` pattern issue
+(write-scope text in `technical-requirements.md` /
+`acceptance-and-verification.md` permitting `src/bin/sd28_*` /
+`tests/sd28_*`) was already corrected in commit `222611be` (pre-existing
+on this branch before this cycle). This cycle re-verifies that fix holds
+against live code, per SD28-E1-F1's acceptance criteria.
+
+### Commands run (every figure re-derived, per Cycle mechanics 1b)
+
+- Preflight disk: `./scripts/verify.sh --only preflight-disk` → PASS, exit 0
+  (repo fs 20% used, 389G available).
+- Repo audit script:
+  `bash scripts/identifier-discipline-audit.sh` → `OK_NO_BUNDLE_TAGS`, exit 0.
+- Direct re-derivation, seven-book surface tree (SD28-E1-F1's acceptance
+  path): `grep -rniE 'sd28_|SD28_|Sd28[A-Z]|sd28-' src/rules_core/rules_tables/ultimate_* src/rules_core/rules_tables/dreamscarred_press` →
+  0 matches (exit 1 / no-match).
+- Direct re-derivation, bins/tests: `grep -rniE 'sd28_|SD28_' src/bin tests` →
+  0 matches (exit 1 / no-match).
+- `t_<hex>` kanban-token check, scoped to SD28's surface + bins/tests:
+  `grep -rnE '\bt_[0-9a-f]{6,}\b' src/rules_core/rules_tables/ultimate_* src/rules_core/rules_tables/dreamscarred_press src/bin tests` →
+  8 matches, all in `tests/sd13_*` files (pre-existing SD-13 test slice
+  identifiers, outside this bundle's introduced code) — not a finding
+  against SD28-E1-F1's scope. No `sd28_*`-tagged `t_<hex>` tokens exist.
+- `./scripts/verify.sh` (full, not `--quick`), exit code captured directly:
+  **exit 0**. `SUMMARY: passed: 10  preflight-disk root-lib root-full desktop
+  reach frontend-install frontend-test frontend-typecheck clippy class-dump`.
+  Baseline note (informational, not a failure, not touched this cycle):
+  `BASELINE_ROOT_FULL_TESTS` stale — 5930 recorded vs. 5933 measured; this
+  cycle did not add or remove tests, so left for whichever cycle owns that
+  baseline file next.
+
+### Definition of done — Epic 1 scope
+
+- SD28-E1-F1 acceptance: no `sd28_*` / `SD28_*` / `Sd28*` / `sd28-*` patterns
+  in the seven books' surface code — confirmed, 0 findings.
+- SD28-E1-F1 acceptance: no `t_<hex>` kanban tokens in source files
+  introduced by this bundle — confirmed (only pre-existing SD-13 test
+  tokens exist, out of scope).
+- SD28-E1-F1 acceptance: identifier-discipline audit script returns 0
+  findings — confirmed (`OK_NO_BUNDLE_TAGS`).
+- SD28-E1-F2 acceptance: four-grep dual-audit runs cleanly post-Epic-1
+  commit — `scripts/identifier-discipline-audit.sh` and
+  `scripts/wired-integration-audit.sh` both present and exercised via
+  `./scripts/verify.sh`'s green run this cycle.
+
+### Decision-blocked entries
+
+None. No hard blocks encountered.
+
+### Retro events
+
+None emitted this cycle — no new correction, incident, deferral, or rework
+occurred (the write-scope text defect this audit re-verifies was already
+corrected and logged in the prior `222611be` cycle, not this one).
+
+### Kanban
+
+`epic-1-identifier` → `COMPLETE`. Per `loop-instruction.md` "Epic ordering,"
+Epics 2-9, 11 (`epic-11-version` also depends on `epic-1-identifier`) are now
+unblocked with respect to this dependency.
