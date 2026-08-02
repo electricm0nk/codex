@@ -30,5 +30,6 @@ pub mod size;
 pub mod skill_allocation;
 pub mod source_content;
 pub mod spell_resolver;
+pub mod wiring_class;
 pub mod spellbook;
 pub mod support_state_matrix;
