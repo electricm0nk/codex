@@ -519,3 +519,120 @@ or an accepted scope note) whether epic-3-uc proceeds with DoD item 3 red
 for a reason outside its own scope, and (3) if proceeding, design the
 `RuleSetId` addition and per-namespace ingest shape against the trap-report
 findings recorded above before writing ingest code.
+
+## SD28-E4-F1-001 — epic-4-um (Ultimate Magic) — 2026-08-02T03:40:27Z
+
+### Steps completed
+
+- **Step 0 (shape):** `cargo run --locked --bin v06_work_inventory` → exit 0.
+  `docs/work-inventory.json` `books[]` entry for `ultimate_magic`:
+  `files_enumerated: 16`, `files_not_enumerated: 14` (support/data-control
+  files with no `Kind` mapping yet — e.g. `um_abilities.lst`,
+  `um_domains.lst`, `um_kits.lst`, `um_templates.lst`). `kinds`: class 1,
+  class_feature 1783, race_trait 17, feat 155, spell 291, equipment 26,
+  companion 173 — all `not-started`. `trap_hits` dominated by
+  `mod_record: 750` and `comment_or_disabled: 826`.
+- **Step 0b (trap report, book dir, before any ingest code):**
+  `cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_magic`
+  → **exit 0**. Findings are informational per the tool's own footer ("Everything
+  above is legitimate upstream data... Nothing here is a reason to fail a
+  build."): 2007+ `namespace-collapsed-by-bare-key` hits (largest namespaces:
+  `Magus Spellblend` 553, `Evolution` 101, `Ki Power` 78, `Discovery` 44,
+  `Pack Lord` 42, `Forbidden Rites Domain` 33, `Magus Arcana` 33), 61
+  `token-dense-record` hits (e.g. `Aberrant Bloodline` — 12 `BONUS:VAR`
+  tokens on one record), 318 `governing-token-hidden-by-filter` hits (e.g.
+  `Magus` carries `MULT`/`STACK` alongside BONUS/PRE; `Arcane Pool` carries
+  `ASPECT`).
+- **Step 1 / 1b (read + re-derive):** `scope-draft.md`, `decisions.md`,
+  `kanban.md`, and this file read. Figures re-derived directly, not
+  transcribed:
+  - `.lst` file count: `find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_magic -iname '*.lst' | wc -l`
+    → **30**.
+  - `_pfs/` subset: `find ... -iname '*.lst' -path '*_pfs*' | wc -l` →
+    **5** (16.7% of 30, not "34%" — that figure in `loop-instruction.md`'s
+    corpus-shape notes is Ultimate Combat's, not Ultimate Magic's; UM has
+    no `support/` subdirectory per those same notes, only `_pfs/`). `_pfs/`
+    (Pathfinder Society legality overrides) is excluded from this cycle's
+    ingest scope — exclusion stated here explicitly, not dropped silently.
+  - `.pcc` count: `find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_magic -iname '*.pcc' | wc -l`
+    → **2**.
+- **Step 1c (disk preflight):** `./scripts/verify.sh --only preflight-disk`
+  → PASS, exit 0 (repo fs 21% used, 385G available).
+- **Step 2 (claim):** `kanban.md` row 4 edited to `IN-FLIGHT`,
+  `Claimed-by: epic-4-um`, `Claimed-at: 2026-08-02T03:40:27Z`,
+  `Cycle-id: SD28-E4-F1-001`.
+
+### What did not land, and why (decision-blocked)
+
+`decision-blocked`: **Full Ultimate Magic ingest (TDD implementation,
+`reach_gate.rs` claim, wired-integration audit, on-screen verification) was
+not attempted this cycle.**
+
+This cycle re-ran Definition-of-done item 3 as a pre-check before writing
+any ingest code, per this bundle's own "Stop vs. press on" rule ("A gate
+fails for a reason that is a real finding about content or scope... Never
+weaken, skip, `#[ignore]`, or exclude a gate to get green"):
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 2**
+(re-derived fresh this cycle, not carried forward from `epic-3-uc`'s
+receipt). The 9 defects are unchanged from the ones `epic-3-uc` recorded
+(`SD28-E3-F1-001`, this file, above): `[key-differs-from-name]` on
+`spell/summon_nature_s_ally_{i..ix}.json`, all sourced to
+`pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst`
+(e.g. `Naturalist Summon Nature's Ally I` ingested under the bare
+`Summon Nature's Ally I` identity). This is SD-22 (closed,
+doctrinal-read-only per `loop-instruction.md` "Cross-bundle references")
+ACG content — not Ultimate Magic, and out of `epic-4-um`'s write scope.
+
+Confirming this is the *same* repo-wide precondition `epic-3-uc` hit (not a
+new instance): the audit output's defect list, file paths, and count (9
+defects, 0 `mod-record` trap defects, 268 `TRAP` count) match `epic-3-uc`'s
+recorded receipt exactly. This is one bundle-wide blocker, not a
+per-book-recurring one — DoD item 3 is red for every book epic in this
+bundle until the ACG fix lands, and this cycle does not claim item 3 for
+Ultimate Magic while that fix is outstanding, per the same reasoning
+`epic-3-uc` recorded.
+
+Unlike `epic-3-uc`, this cycle's own book-dir trap report (`Step 0b` above)
+came back **exit 0** — Ultimate Magic's own corpus shape is not, by itself,
+a second reason to block. The sole recorded blocker for `epic-4-um` is the
+repo-wide DoD-item-3 precondition. No ingest code, `RuleSetId` variant, or
+`reach_gate.rs` claim was written this cycle; none is claimed as done.
+
+### Commands run (every figure re-derived)
+
+```sh
+cargo run --locked --bin v06_work_inventory                                          # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_magic   # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- --audit                            # exit 2 (pre-existing ACG finding, out of scope)
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_magic -iname '*.lst' | wc -l                # 30
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_magic -iname '*.lst' -path '*_pfs*' | wc -l  # 5
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_magic -iname '*.pcc' | wc -l                 # 2
+./scripts/verify.sh --only preflight-disk                                             # exit 0
+```
+
+### Retro events
+
+`scripts/retro.py deferral --actor epic-4-um --what "Ultimate Magic TDD
+ingest, reach_gate claim, wired-integration audit, on-screen verification"
+--reason "repo-wide v06_corpus_trap_report --audit exits 2 on the same
+pre-existing, out-of-scope ACG identifier finding epic-3-uc recorded
+(SD28-E3-F1-001); UM's own book-dir trap report is clean (exit 0), so this
+is a bundle-wide DoD-item-3 precondition failure, not a UM-specific
+scope problem" --scope "one book epic (epic-4-um)" --blocked-by "ACG
+key-differs-from-name fix (out of SD-28 write scope, likely SD-22
+follow-up)" --tracked-at
+"docs/release/SD-28-ultimate-book-content-ingestion/progress.md
+SD28-E4-F1-001"` — emitted this cycle to `docs/retro/events/epic-4-um.jsonl`.
+
+### Kanban
+
+`epic-4-um` remains `IN-FLIGHT`, `Claimed-by: epic-4-um`,
+`Cycle-id: SD28-E4-F1-001`. Not moved to `COMPLETE`. Next cycle against
+this card should: (1) confirm whether the ACG audit finding has been fixed
+by another epic/session (check `epic-3-uc`'s card and this file for a
+newer receipt first — the fix, once it lands, unblocks every book epic at
+once, not just one), (2) if fixed, proceed straight to Step 3 (TDD
+implementation) using this cycle's Step 0/0b/1b findings above as the
+starting shape, and (3) if not fixed, re-run the `--audit` pre-check before
+doing anything else — do not re-derive the ACG defect list from memory.

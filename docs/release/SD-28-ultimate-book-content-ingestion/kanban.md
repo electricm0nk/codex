@@ -23,7 +23,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 1 | `epic-1-identifier` | COMPLETE | Identifier Cleanup | identifier-discipline audit pass | none | sd28-epic1 | 2026-08-02T02:25:56Z | SD28-E1-F1-001 |
 | 2 | `epic-2-prelaunch` | COMPLETE | Operator Pre-Launch | local-file dispatch readiness + license precheck | `epic-1-identifier` | sd28-epic2 | 2026-08-01T00:00:00Z | SD28-E2-F1-001 |
 | 3 | `epic-3-uc` | IN-FLIGHT | Ultimate Combat | per-class / per-chooser | `epic-2-prelaunch` | epic-3-uc | 2026-08-01T00:00:00Z | SD28-E3-F1-001 |
-| 4 | `epic-4-um` | READY | Ultimate Magic | per-class / per-spell-subsystem | `epic-2-prelaunch` | — | — | — |
+| 4 | `epic-4-um` | IN-FLIGHT | Ultimate Magic | per-class / per-spell-subsystem | `epic-2-prelaunch` | epic-4-um | 2026-08-02T03:40:27Z | SD28-E4-F1-001 |
 | 5 | `epic-5-ue` | READY | Ultimate Equipment | per-equipment-entry | `epic-2-prelaunch` | — | — | — |
 | 6 | `epic-6-ui` | READY | Ultimate Intrigue | per-class / per-social-rule | `epic-2-prelaunch` | — | — | — |
 | 7 | `epic-7-ucam` | READY | Ultimate Campaign | per-system-subsystem | `epic-2-prelaunch` | — | — | — |
