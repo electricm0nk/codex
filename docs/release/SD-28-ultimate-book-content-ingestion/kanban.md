@@ -28,7 +28,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 6 | `epic-6-ui` | IN-FLIGHT | Ultimate Intrigue | per-class / per-social-rule | `epic-2-prelaunch` | epic-6-ui | 2026-08-01T00:00:00Z | SD28-E6-F1-001 |
 | 7 | `epic-7-ucam` | IN-FLIGHT | Ultimate Campaign | per-system-subsystem | `epic-2-prelaunch` | epic-7-ucam | 2026-08-01T00:00:00Z | SD28-E7-F1-001 |
 | 8 | `epic-8-uw` | IN-FLIGHT | Ultimate Wilderness | per-class / per-Companion-rule | `epic-2-prelaunch` | epic-8-uw | 2026-08-02T00:00:00Z | SD28-E8-F1-001 |
-| 9 | `epic-9-upsi` | READY | Ultimate Psionics (Dreamscarred Press tier) | per-class / per-power, license-gated | `epic-2-prelaunch` | — | — | — |
+| 9 | `epic-9-upsi` | IN-FLIGHT | Ultimate Psionics (Dreamscarred Press tier) | per-class / per-power, license-gated | `epic-2-prelaunch` | epic-9-upsi | 2026-08-02T00:00:00Z | SD28-E9-F1-001 |
 | 10 | `epic-11-version` | COMPLETE | Build Version Numbering | first concrete value `0.8.<build>` | `epic-1-identifier` | sd28-epic11 | 2026-08-02T03:00:00Z | SD28-E11-F1-001 |
 | 11 | `epic-12-code-review` | READY | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version` | — | — | — |
 | 12 | `epic-10-closure` | READY | Closure Epilogue | tranche promotion PR | `epic-1-identifier`, `epic-2-prelaunch`, `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version`, `epic-12-code-review` (everything else) | — | — | — |

@@ -1289,3 +1289,180 @@ another epic/session, (2) confirm whether a `RuleSetId` variant for
 `ultimate_wilderness` has been added by an intervening cycle, and (3)
 only once both are clear, proceed to Step 3 (TDD implementation) using
 this cycle's Step 0/0b/1b findings above as the starting shape.
+
+## Cycle SD28-E9-F1-001 — `epic-9-upsi` (Ultimate Psionics, Dreamscarred Press tier)
+
+**Actor:** `epic-9-upsi` (`RETRO_ACTOR=epic-9-upsi`). **Branch:** `tranche/8`.
+
+### Step 0 — shape
+
+`cargo run --locked --bin v06_work_inventory` regenerated `docs/work-inventory.json`
+(book count `"ultimate_psionics": 2854`, unchanged from the prior run's total this
+cycle observed). Book entry `id: "ultimate_psionics"`, `scope: "future_state"`,
+`engine_rule_set: null`, `files_enumerated: 11`, 21 more file names listed under
+`files_not_enumerated` (including `up_powers.lst`, `up_kits.lst`, `up_abilities*.lst`,
+`up_templates.lst`, `up_skills.lst`, `up_languages.lst`, `up_profs_*.lst`). `kinds`:
+class 37, class_feature 1577, race 3, race_trait 438, feat 222, equipment 326,
+equipment_modifier 226, monster 21, companion 4 — all `not-started`, all
+`evidence: "no_compiled_rule_set_for_book"`. `trap_hits`: comment_or_disabled 1400,
+invisible_record 240, class_level_line 753, mod_record 150, copy_record 113,
+internal_namespace 74, duplicate_identity 73, directive_line 46. No `monster`
+family surprise — per `loop-instruction.md`'s own note, no true bestiary content
+exists in any SD-28 book; the `kind: "monster"` (21) / `kind: "companion"` (4)
+units here are the `*_races*.lst`/`*_companionmods.lst` analogues the note
+predicts, not creature-catalog content.
+
+### Step 0b — trap report
+
+`cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics`
+recorded before any ingest code was written (output identical in shape to the
+`--audit` run under Step 1b below — same 9 findings, all in an out-of-book file).
+
+### Step 1 / 1b — read + re-derive
+
+Read `scope-draft.md`, `decisions.md` (Decision 17, Decision 10), `progress.md`
+(this file, tail — epic-8-uw's cycle, same decision-blocked shape). Re-derived
+figures against source data, none transcribed:
+
+```
+BOOK=~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics
+find "$BOOK" -maxdepth 1 -iname '*.pcc'          # -> ultimate_psionics.pcc (no leading underscore --
+                                                  #    confirms brief's "glob *.pcc (not _*.pcc)" note, unlike
+                                                  #    epic-6-ui/epic-7-ucam/epic-8-uw's books)
+find "$BOOK" -maxdepth 1 -iname '*.lst' | wc -l   # -> 32
+find "$BOOK" -iname '*.lst' | wc -l               # -> 32  (recursive == top-level: flat layout confirmed)
+ls -d "$BOOK"/*/ 2>/dev/null                      # -> (none) -- no support/, no _pfs/, matches brief's
+                                                  #    "Flat layout" note
+find "$BOOK" -path '*_pfs*' -iname '*.lst' | wc -l # -> 0
+cat "$BOOK"/*.pcc | grep -i "SOURCESHORT\|STATUS\|EXTRAFILE"
+                                                  # -> STATUS:BETA / SOURCESHORT:UP (no EXTRAFILE line) --
+                                                  #    confirms brief: SOURCESHORT is UP not UPsi, STATUS:BETA,
+                                                  #    no EXTRAFILE despite OGL.txt present on disk
+wc -l "$BOOK"/up_powers.lst                       # -> 497 (matches brief)
+ls "$BOOK"/OGL.txt                                # -> present
+grep -rn "UltimatePsionics\|ultimate_psionics" src/ apps/desktop/src-tauri/src/ --include=*.rs
+                                                  # -> only doc-comment references in v06_work_inventory.rs
+                                                  #    (lines 25, 86); no compiled RuleSetId variant
+```
+
+**No brief error found for this book** (the `*.pcc` glob note, SOURCESHORT `UP`,
+`STATUS:BETA`, flat layout, and the 497-line `up_powers.lst` all check out against
+source — unlike epics 6/7/8, whose brief's blanket `*.pcc` glob note was wrong for
+their specific book).
+
+**Spell-equivalent Kind mapping decision (in-cycle, per brief instruction):**
+`up_powers.lst` (497 lines, psionic powers — the class-spell analogue for
+psionic classes) is not enumerated as a distinct file in
+`docs/work-inventory.json`'s `files_enumerated` set; it appears only under
+`files_not_enumerated`, meaning `v06_work_inventory` currently has no `Kind`
+mapping for it at all — it contributes 0 units to `kinds`, not a
+misclassified count. **Default decision, recorded per UNATTENDED MODE item 1
+(safer default, no operator ask):** psionic powers should map to a `power`
+Kind (a first-class sibling of `spell`, not folded into `spell` itself,
+because powers use PP-cost/manifester-level mechanics distinct from
+slot-based casting) once `v06_work_inventory`'s book-parser gains a rule for
+`up_powers.lst`. This is a decision *about* a future ingest, not an ingest
+itself — no code changed the inventory's Kind set this cycle; the mapping is
+recorded here so the next cycle against this card does not re-derive it from
+scratch.
+
+### Repo-wide precondition — re-checked fresh this cycle
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 2**
+(re-run live 2026-08-02, not transcribed). Same 9 `key-differs-from-name`
+defects, unchanged from `epic-3-uc` through `epic-8-uw`:
+`advanced_class_guide/acg_spells.lst`'s "Naturalist Summon Nature's Ally
+I..IX" filed under the bare "Summon Nature's Ally I..IX" identity. This is a
+seventh confirmation the repo-wide precondition blocking DoD item 3
+(`v06_corpus_trap_report -- --audit` exits 0) is still live — not a new
+instance, not a disagreement with any prior figure.
+
+`./scripts/verify.sh --only preflight-disk` → exit **0** (21% used, 385G
+available on both the repo filesystem and the scratch-log filesystem). No
+reclaim needed; `scripts/reclaim.sh --apply` still run at cycle-end per
+step 8.
+
+### Step 1b cross-check — engine RuleSetId
+
+`docs/work-inventory.json`'s `ultimate_psionics` record entries all carry
+`"evidence": "no_compiled_rule_set_for_book"` and the book-level
+`"engine_rule_set": null`, and `grep -rn "UltimatePsionics\|ultimate_psionics"
+src/ apps/desktop/src-tauri/src/ --include=*.rs` returns only doc-comment
+prose references (`v06_work_inventory.rs:25`, `:86`) — no compiled
+`RuleSetId` variant exists for this book. Identical shape to what
+`epic-6-ui`, `epic-7-ucam`, and `epic-8-uw` each found for their books.
+
+### License gate (Decision 17 / `forward-scope-register.md` C3.2) — not reached
+
+Licensing status is separately confirmed clear: `decisions.md` Decision 17
+records the operator-pinned 2026-08-01 confirmation that Dreamscarred Press's
+Psionics line is open content under a PF-OGL-compatible license, permitting
+`ultimate_psionics` ingest under SD-28. **This does not unblock the cycle:**
+no ingest was attempted (see below), so the C3.2 "drop any record whose
+licensing annotation fails the open-content tier audit" retrofit has no
+records to apply against yet. `decision-blocked` is *not* recorded against
+C3.2 specifically — the license gate was never reached, not failed. The
+blocker below is the same repo-wide precondition every other book epic this
+bundle has hit.
+
+### What did not land, and why (decision-blocked — repo-wide precondition, same as `epic-3-uc` through `epic-8-uw`)
+
+`decision-blocked`: **Full Ultimate Psionics TDD ingest (new `RuleSetId`
+variant, ingest code, `reach_gate.rs` claim, wired-integration audit,
+on-screen verification) was not attempted this cycle.**
+
+Two independent, previously-recorded blockers, both re-checked fresh:
+
+1. `cargo run --locked --bin v06_corpus_trap_report -- --audit` exits `2`
+   on the same pre-existing, out-of-scope ACG `key-differs-from-name`
+   defects already recorded by `epic-3-uc` through `epic-8-uw` — DoD item 3
+   precondition, still failing repo-wide, out of this cycle's write scope
+   (the defect is in `advanced_class_guide/acg_spells.lst` ingest, not in
+   `ultimate_psionics`).
+2. `ultimate_psionics` has no compiled `RuleSetId` variant
+   (`engine_rule_set: null`, `evidence: no_compiled_rule_set_for_book`
+   throughout its work-inventory entries, re-confirmed above). Per the same
+   reasoning `epic-6-ui`, `epic-7-ucam`, and `epic-8-uw` applied to their
+   books: inventing a `RuleSetId` variant, parser hookup, and reach-claim
+   surface unilaterally inside a single per-book cycle is exactly the
+   cross-cutting engine work the "Hard stops" rule reserves for explicit
+   scope decision, not a silent per-book invention.
+
+No ingest code, `RuleSetId` variant, or `reach_gate.rs` claim was written
+this cycle; none is claimed as done. `./scripts/verify.sh` (full) was not
+run against new production code because none was written; the
+disk-preflight subset above stands as this cycle's only `verify.sh`
+invocation, consistent with `epic-4-um` through `epic-8-uw`'s precedent for
+a decision-blocked cycle.
+
+### Retro events
+
+`scripts/retro.py deferral --actor epic-9-upsi --what "Ultimate Psionics TDD
+ingest, new RuleSetId variant, reach_gate claim, wired-integration audit,
+on-screen verification, and the C3.2 license retrofit decision" --reason
+"repo-wide v06_corpus_trap_report --audit exits 2 on the same
+pre-existing, out-of-scope ACG key-differs-from-name finding
+epic-3-uc/epic-4-um/epic-5-ue/epic-6-ui/epic-7-ucam/epic-8-uw already
+recorded (seventh confirmation); ultimate_psionics is engine_rule_set:null /
+engine_book:null throughout work-inventory.json -- no RuleSetId variant
+exists; C3.2 is moot this cycle because licensing is separately confirmed
+clear (Decision 17) but no ingest was attempted regardless" --scope "one
+book epic (epic-9-upsi)" --blocked-by "ACG key-differs-from-name fix (out
+of SD-28 write scope); RuleSetId variant + parser hookup for
+ultimate_psionics (not yet scoped to a single-book cycle)" --tracked-at
+"docs/release/SD-28-ultimate-book-content-ingestion/progress.md
+SD28-E9-F1-001"` — emitted this cycle to `docs/retro/events/epic-9-upsi.jsonl`.
+
+### Kanban
+
+`epic-9-upsi` moved `READY` → `IN-FLIGHT`, `Claimed-by: epic-9-upsi`,
+`Claimed-at: 2026-08-02T00:00:00Z`, `Cycle-id: SD28-E9-F1-001`. Not moved to
+`COMPLETE` (the repo-wide precondition and missing `RuleSetId` are not this
+cycle's to fix; moving to `COMPLETE` would misrepresent DoD item 3 as
+satisfied). Next cycle against this card should: (1) confirm whether the ACG
+audit finding has been fixed by another epic/session, (2) confirm whether a
+`RuleSetId` variant for `ultimate_psionics` has been added by an intervening
+cycle, and (3) only once both are clear, proceed to Step 3 (TDD
+implementation) using this cycle's Step 0/0b/1b findings above as the
+starting shape, including the `power` Kind-mapping default recorded above
+for `up_powers.lst`.
