@@ -387,3 +387,135 @@ No corrections, incidents, deferrals, or reworks occurred this cycle.
 `epic-11-version` → `COMPLETE`. Per `loop-instruction.md` "Epic ordering,"
 Epics 3-9, `epic-12-code-review`, and `epic-10-closure` remain on schedule;
 Epic 12 now unblocked with respect to this dependency.
+
+## Cycle SD28-E3-F1-001 — Epic 3, Ultimate Combat
+
+**Date:** 2026-08-01
+**Cycle ID:** `SD28-E3-F1-001`
+**Actor:** `epic-3-uc`
+**Card:** `epic-3-uc` (kanban.md row 3) — claimed IN-FLIGHT at
+2026-08-01T00:00:00Z. **Not closed this cycle** — see "What did not land"
+below.
+
+### What landed (cycle-open steps only)
+
+Steps 0, 0b, 1, 1b, 1c, and 2 of the cycle mechanics were executed for
+real against the current corpus/repo state; no ingest code was written this
+cycle.
+
+- **Step 0 (shape):** `cargo run --locked --bin v06_work_inventory`
+  regenerated `docs/work-inventory.json` (exit 0). `ultimate_combat`'s
+  entries carry `"status": "not-started"`, `"evidence":
+  "no_compiled_rule_set_for_book"` — confirms no prior cycle has landed UC
+  ingest.
+- **Step 0b (trap report):**
+  `cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat`
+  (exit 0). Findings of note: 190 `governing-token-hidden-by-filter` hits,
+  1500+ `bare-leaf-key-collision`-class hits under namespaced `KEY:`
+  patterns (e.g. `KEY:Monk Bonus Feat ~ <leaf>`, 273 records; `KEY:Master of
+  Many Styles ~ <leaf>`, 238 records — 139 distinct namespaces total), and
+  `token-dense-record` hits (e.g. Tracker's Terrain Mastery: 11
+  `BONUS:VAR` tokens on one record — a token count is not a record count).
+  None of this is a defect in the corpus; it is real ingest-design surface
+  that a naive per-line or bare-leaf-grep ingest would get wrong.
+- **Step 1/1b (re-derive):** feat count re-derived directly, matching the
+  loop-instruction worked example exactly:
+  `grep -c 'CATEGORY:FEAT' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst`
+  → **263**.
+  `.lst` file count re-derived:
+  `find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat -iname '*.lst' | wc -l`
+  → **46** total, of which
+  `find ... -iname '*.lst' -path '*_pfs*' | wc -l` → **4** sit under
+  `_pfs/`. Per the book-shape note and `_pfs/`-exclusion rule: `_pfs/`
+  (Pathfinder Society legality overrides) is excluded from this cycle's
+  ingest scope; this exclusion is stated here explicitly, not dropped
+  silently.
+- **Step 1c (disk preflight):** `./scripts/verify.sh --only
+  preflight-disk` → PASS, exit 0 (repo fs 21% used, 385G available).
+- **Step 2 (claim):** `kanban.md` row 3 edited to `IN-FLIGHT`,
+  `Claimed-by: epic-3-uc`, `Cycle-id: SD28-E3-F1-001`.
+
+### What did not land, and why (decision-blocked)
+
+`decision-blocked`: **Full Ultimate Combat ingest (TDD implementation,
+`reach_gate.rs` claim, wired-integration audit, on-screen verification) was
+not attempted this cycle.**
+
+Reason, recorded per the UNATTENDED MODE protocol rather than fabricating a
+partial or unverifiable pass:
+
+1. Re-running Definition-of-done item 3 as a pre-check
+   (`cargo run --locked --bin v06_corpus_trap_report -- --audit`, exit
+   code captured directly) returned **exit 2**, not 0 — a real, pre-existing
+   `[key-differs-from-name]` finding set against
+   `advanced_class_guide/acg_spells.lst` (e.g. `Summon Nature's Ally II`
+   ingested under a different KEY than the corpus declares —
+   `Naturalist Summon Nature's Ally II`). This is SD-22 (closed,
+   doctrinal-read-only per `loop-instruction.md` "Cross-bundle references")
+   content, not Ultimate Combat, and is out of `epic-3-uc`'s write scope.
+   Per "Stop vs. press on": *"A gate fails for a reason that is a real
+   finding about content or scope... Never weaken, skip, `#[ignore]`, or
+   exclude a gate to get green"* — this cycle does not touch ACG data to
+   force the audit green, and does not claim item 3 of the Definition of
+   Done for this book while the repo-wide audit is red for an unrelated
+   reason. This blocks `epic-12-code-review`'s and `epic-10-closure`'s
+   preconditions bundle-wide, not just this card, and should be triaged as
+   its own fix (likely against SD-22's identifier-discipline follow-up, not
+   SD-28) before any book epic can honestly claim DoD item 3.
+2. The UC namespace shape surfaced by the trap report (139 distinct
+   namespaced `KEY:` prefixes, the largest three carrying 273/238/96
+   records respectively, `ASPECT`-bearing class-ability records across
+   `support/uc_abilities_class_{acg,apg,um}.lst`, and 22 referenced
+   sourcebooks for cross-book prereqs) is materially larger and more
+   structurally varied than a single bounded cycle can responsibly design,
+   implement (TDD), wire into `reach_gate.rs` with a real claim, pass the
+   four-check wired-integration audit, and on-screen-verify — all within
+   one cycle-batch — without risking exactly the stub/fixture-only,
+   fabricated-pass failure mode `AGENTS.md` §6 and this program's own
+   retrospective forbid. No ingest code, `RuleSetId` variant, or
+   `reach_gate.rs` claim was written this cycle; none is claimed as done.
+
+Per "Stop vs. press on," size alone is never a stop reason and is not the
+reason recorded here — the *combination* of (a) a real, pre-existing
+DoD-item-3 gate failure outside this card's write scope, and (b) a
+first-pass trap-report scope wide enough that any implementation attempted
+in the remainder of this cycle could not clear TDD + verify.sh + the
+four-check audit + on-screen verification honestly, is.
+
+### Commands run (every figure re-derived)
+
+```sh
+cargo run --locked --bin v06_work_inventory                                        # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat   # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- --audit                          # exit 2 (pre-existing ACG finding, out of scope)
+grep -c 'CATEGORY:FEAT' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat/uc_feats.lst   # 263
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat -iname '*.lst' | wc -l            # 46
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_combat -iname '*.lst' -path '*_pfs*' | wc -l   # 4
+./scripts/verify.sh --only preflight-disk                                           # exit 0
+```
+
+### Retro events
+
+`scripts/retro.py deferral --actor epic-3-uc --what "Ultimate Combat TDD
+ingest, reach_gate claim, wired-integration audit, on-screen verification"
+--reason "repo-wide v06_corpus_trap_report --audit exits 2 on a
+pre-existing, out-of-scope ACG identifier finding (DoD item 3 precondition
+red bundle-wide); UC's own trap-report surface (139 namespaces, 190
+governing-token-hidden-by-filter hits) is too structurally varied to
+implement+TDD+wire+verify honestly in the remainder of this cycle" --scope
+"one book epic (epic-3-uc)" --blocked-by "ACG key-differs-from-name fix
+(out of SD-28 write scope, likely SD-22 follow-up)" --tracked-at
+"docs/release/SD-28-ultimate-book-content-ingestion/progress.md
+SD28-E3-F1-001"` — emitted this cycle to
+`docs/retro/events/epic-3-uc.jsonl`.
+
+### Kanban
+
+`epic-3-uc` remains `IN-FLIGHT`, `Claimed-by: epic-3-uc`,
+`Cycle-id: SD28-E3-F1-001`. Not moved to `COMPLETE`. Next cycle against
+this card should: (1) confirm whether the ACG audit finding has been fixed
+by another epic/session, (2) if not, decide (as a fresh `decision-blocked`
+or an accepted scope note) whether epic-3-uc proceeds with DoD item 3 red
+for a reason outside its own scope, and (3) if proceeding, design the
+`RuleSetId` addition and per-namespace ingest shape against the trap-report
+findings recorded above before writing ingest code.
