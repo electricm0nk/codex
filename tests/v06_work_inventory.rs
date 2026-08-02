@@ -566,7 +566,19 @@ fn every_corpus_book_appears_in_the_inventory() {
              is not listed is a book whose work is invisible"
         );
     }
-    assert_eq!(listed.len(), on_disk.len());
+    // Every on-disk roleplaying_game book must be listed, and the only entry
+    // the inventory may carry beyond that set is `ultimate_psionics` (SD-28):
+    // a non-Paizo book enumerated from its own corpus root via
+    // `EXTRA_BOOK_DIRS`, not from this `roleplaying_game` directory at all.
+    let on_disk_set: std::collections::HashSet<String> = on_disk.iter().cloned().collect();
+    let extra: std::collections::HashSet<String> =
+        listed.difference(&on_disk_set).cloned().collect();
+    assert_eq!(
+        extra,
+        ["ultimate_psionics".to_string()].into_iter().collect(),
+        "the inventory must list exactly the on-disk roleplaying_game books plus \
+         ultimate_psionics (SD-28); extra entries were {extra:?}"
+    );
 
     // And every un-ingested book must contribute real, named units rather than
     // being skipped: that is what makes `not-started` a measurement.
@@ -583,4 +595,69 @@ fn every_corpus_book_appears_in_the_inventory() {
          not-started units, saw {}",
         unstarted_books.len()
     );
+}
+
+/// SD-28: `ultimate_psionics` (Dreamscarred Press, a flat corpus directory
+/// outside `roleplaying_game`) must appear in the inventory like any other
+/// un-ingested book -- real enumerated files, real kinds, real not-started
+/// units -- even though its `.pcc` has no `PCC:` includes and no compiled
+/// rule set claims it.
+#[test]
+fn ultimate_psionics_appears_in_the_inventory_as_a_not_started_book() {
+    let _dir = corpus_or_skip!();
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        println!("SKIP: docs/work-inventory.json has not been generated yet");
+        return;
+    };
+    let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
+
+    let books = doc["books"].as_array().expect("books array");
+    let book = books
+        .iter()
+        .find(|b| b["id"].as_str() == Some("ultimate_psionics"))
+        .expect("ultimate_psionics must appear in the inventory's books list");
+
+    assert!(
+        book["files_enumerated"].as_u64().unwrap_or(0) > 0,
+        "ultimate_psionics must enumerate at least one real .lst file, got {:?}",
+        book["files_enumerated"]
+    );
+
+    let not_enumerated: Vec<String> = book["files_not_enumerated"]
+        .as_array()
+        .expect("files_not_enumerated array")
+        .iter()
+        .filter_map(|v| v.as_str().map(|s| s.to_string()))
+        .collect();
+    assert!(
+        not_enumerated.iter().any(|f| f == "up_powers.lst"),
+        "up_powers.lst must land in files_not_enumerated -- mapping it to Spell \
+         is deliberately deferred to Epic 9. Saw: {not_enumerated:?}"
+    );
+
+    let kinds = book["kinds"].as_object().expect("kinds object");
+    for expected in ["class", "race", "feat", "equipment"] {
+        assert!(
+            kinds.contains_key(expected),
+            "ultimate_psionics must contribute at least a {expected} unit; kinds \
+             seen were {:?}",
+            kinds.keys().collect::<Vec<_>>()
+        );
+    }
+
+    let units = doc["units"].as_array().expect("units array");
+    let up_units: Vec<&serde_json::Value> =
+        units.iter().filter(|u| u["book"].as_str() == Some("ultimate_psionics")).collect();
+    assert!(!up_units.is_empty(), "ultimate_psionics must contribute real, named units");
+    for unit in &up_units {
+        assert_eq!(
+            unit["status"].as_str(),
+            Some("not-started"),
+            "unit {} of ultimate_psionics must be not-started (no compiled rule \
+             set claims this book), was {:?}",
+            unit["id"],
+            unit["status"]
+        );
+    }
 }

@@ -20,10 +20,12 @@
 //!
 //! 1. *Corpus enumeration* (`enumerate_corpus`) walks every `.lst` file under
 //!    `PCGEN_CORPUS_ROOT`'s `pathfinder/paizo/roleplaying_game/`, for **all**
-//!    books including the ones no code has ever read. "What exists" is the
-//!    completeness guarantee, so a book the engine knows nothing about still
-//!    contributes real, named units — at `not-started` — rather than being
-//!    silently skipped.
+//!    books including the ones no code has ever read, plus each extra root
+//!    named in [`EXTRA_BOOK_DIRS`] (SD-28: non-Paizo books that live outside
+//!    `roleplaying_game` entirely, such as Dreamscarred Press's
+//!    `ultimate_psionics`). "What exists" is the completeness guarantee, so a
+//!    book the engine knows nothing about still contributes real, named units
+//!    — at `not-started` — rather than being silently skipped.
 //! 2. *Engine cross-reference* (`EngineFacts`) asks the compiled tables and the
 //!    real compute pipeline what is actually done, and assigns each unit a
 //!    status **derived from the engine**, never from prose.
@@ -72,6 +74,10 @@ const OUTPUT_RELATIVE_PATH: &str = "docs/work-inventory.json";
 
 /// The corpus subtree every PF1 book lives under, relative to `PCGEN_CORPUS_ROOT`.
 const BOOKS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game";
+
+/// Non-Paizo books in scope (SD-28). Paths are relative to the corpus root;
+/// the book id is the directory basename.
+const EXTRA_BOOK_DIRS: &[&str] = &["pathfinder/dreamscarred_press/ultimate_psionics"];
 
 /// The levels the engine-fact sweeps evaluate. Level 1 is the creation posture
 /// most operator questions are about; 5/10/15/20 reach the level-gated class
@@ -1689,14 +1695,31 @@ fn main() {
     };
 
     // --- book roster, from the corpus itself ------------------------------
-    let mut book_dirs: Vec<String> = std::fs::read_dir(&books_dir)
+    // `book_paths` maps a book id (directory basename) to its real directory,
+    // whether that directory lives under `roleplaying_game/` or is one of the
+    // `EXTRA_BOOK_DIRS` roots elsewhere in the corpus (SD-28). Every later
+    // lookup goes through this map so an extra book's real, different path is
+    // never silently reconstructed as `books_dir.join(id)`.
+    let mut book_paths: BTreeMap<String, PathBuf> = std::fs::read_dir(&books_dir)
         .expect("corpus books directory is readable")
         .flatten()
         .filter(|e| e.path().is_dir())
-        .map(|e| e.file_name().to_string_lossy().into_owned())
+        .map(|e| (e.file_name().to_string_lossy().into_owned(), e.path()))
         .collect();
-    book_dirs.sort();
-    let known_books: BTreeSet<String> = book_dirs.iter().cloned().collect();
+    for extra in EXTRA_BOOK_DIRS {
+        let path = corpus_root.join(extra);
+        if !path.is_dir() {
+            eprintln!("extra book directory not found at {} -- EXTRA_BOOK_DIRS entry `{extra}` must exist", path.display());
+            std::process::exit(1);
+        }
+        let id = path
+            .file_name()
+            .map(|n| n.to_string_lossy().into_owned())
+            .unwrap_or_else(|| panic!("EXTRA_BOOK_DIRS entry `{extra}` has no basename"));
+        book_paths.insert(id, path);
+    }
+    let book_dirs: Vec<String> = book_paths.keys().cloned().collect();
+    let known_books: BTreeSet<String> = book_paths.keys().cloned().collect();
 
     // Which books the repository has registered as future-state stubs, read
     // from `data/stubs/` rather than from a list in this file.
@@ -1720,8 +1743,8 @@ fn main() {
 
     let mut books: Vec<BookMeta> = Vec::new();
     for id in &book_dirs {
-        let dir = books_dir.join(id);
-        let includes = pcc_includes(&dir, &known_books);
+        let dir = &book_paths[id];
+        let includes = pcc_includes(dir, &known_books);
         let rule_set = rule_set_for(id);
         // A directory that no book's `.pcc` stands alone for and that other
         // books pull in is a shared library, not a book. Derived from the real
@@ -1751,7 +1774,7 @@ fn main() {
     // --- enumerate ---------------------------------------------------------
     let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
     for book in &books {
-        enumerations.insert(book.id.clone(), enumerate_book(&books_dir.join(&book.id), &book.id));
+        enumerations.insert(book.id.clone(), enumerate_book(&book_paths[&book.id], &book.id));
     }
 
     // `mod_only_rescue`: a `.MOD` row whose base name appears nowhere in the
@@ -1904,6 +1927,14 @@ fn main() {
     out.push_str(&format!(
         "  \"corpus_root\": {},\n",
         q(&books_dir.to_string_lossy())
+    ));
+    out.push_str(&format!(
+        "  \"additional_book_dirs\": [{}],\n",
+        EXTRA_BOOK_DIRS
+            .iter()
+            .map(|extra| q(&corpus_root.join(extra).to_string_lossy()))
+            .collect::<Vec<_>>()
+            .join(", ")
     ));
     out.push_str(
         "  \"contract\": \"Every field below is derived from the corpus or observed from the \
