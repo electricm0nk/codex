@@ -75,8 +75,13 @@ Added 2026-08-02. Every canonical object imported from a legacy record — every
 |---|---|
 | `wiring_class` | Exactly one of `display`, `static`, `derived`, `computed`, `ambiguous`. States what kind of evidence would prove this record done. |
 | `wiring_class_signals` | The full, ordered set of signals the source record carried, e.g. `["derived:bonus", "computed:pre_guard"]`. Never collapsed away. |
+| `upstream_implementation_marker` | Whether the legacy record carries an upstream not-implemented admission (PCGen writes `[Not Implemented]` into `DESC:`), plus the marker text. |
 
 **The definitions and the determination rules are NOT restated here.** They are owned by GE-01 and live in `../../GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`. Duplicating them would create two authorities that drift.
+
+**Determination reads the record's token closure, not one row.** A `<Name>.MOD` row modifies a base record rather than declaring one, so it produces no unit of its own — but it can carry the record's only magnitude. 8,234 `.MOD` rows corpus-wide carry a magnitude token, and 1,895 of the 9,828 held units have at least one `.MOD` row targeting them. The class MUST therefore be determined from the base row **plus every `.MOD` row targeting it**, per GE-01's token-closure rule. An importer that classifies from the base row alone will model records with real magnitudes as text-only.
+
+**`upstream_implementation_marker` MUST NOT feed `wiring_class`, in either direction.** What PCGen did or did not implement upstream is a different claim from what evidence would prove *our* record done. `ultimate_campaign`'s *Accursed* is marked `[Not Implemented]` and still carries a fully specified benefit formula; conversely, a record must never be modelled as complete on the strength of a `[Not Implemented]` description alone. The two fields are reported side by side and never merged.
 
 **Why the field belongs on the canonical model rather than only in a report.** The class is derived from the legacy record at import time and is a durable property of the imported object, not a view over it. A record whose magnitude is `(min(10,CASTERLEVEL))d6` requires different downstream treatment — a `Formula` object and an evaluation, rather than an `Effect` with bespoke engine logic — and that requirement must survive from import into the model, not be re-derived by every consumer.
 
@@ -92,7 +97,7 @@ Added 2026-08-02. Every canonical object imported from a legacy record — every
 
 **`ambiguous` MUST mint a `Diagnostic`.** This is the model-level statement of GE-01's no-silent-default rule: a determination failure is a first-class unresolved construct, exactly like an unsupported token, and is subject to the same "unsupported behavior must not disappear into prose" failure-mode signal already governing this bundle.
 
-**`wiring_class_signals` is not decoration.** 368 of the 9,828 currently-held corpus units carry both a `derived` and a `computed` signal (re-derive with `python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD`, `dual-signal` line). `wiring_class` collapses those to `computed` by highest-bar-wins; without the retained signal set, a record with a formulaic main effect and a guarded rider is indistinguishable from one that is wholly bespoke, and neither the model nor GE-09's audit can tell them apart.
+**`wiring_class_signals` is not decoration.** 470 of the 9,828 currently-held corpus units carry both a `derived` and a `computed` signal (re-derive with `python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD`, `dual-signal` line). `wiring_class` collapses those to `computed` by highest-bar-wins; without the retained signal set, a record with a formulaic main effect and a guarded rider is indistinguishable from one that is wholly bespoke, and neither the model nor GE-09's audit can tell them apart.
 
 ## Pilot minimum object set
 For the first pilot, GE-02 requires enough model coverage to represent:

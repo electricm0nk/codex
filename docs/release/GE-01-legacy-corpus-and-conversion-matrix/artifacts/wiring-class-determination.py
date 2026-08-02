@@ -43,7 +43,14 @@ MAGNITUDE_TOKENS = (
 
 # Fields whose value is prose but which PCGen allows to carry a parenthesised
 # expression that the renderer substitutes, e.g. `(min(10,CASTERLEVEL))d6`.
-PROSE_FIELDS = ("DESC:", "DURATION:", "TARGETAREA:", "SPROP:", "RANGE:", "SPECIALS:")
+# `BENEFIT:` is here because 2,087 corpus rows carry a record's mechanical
+# benefit text in it and it appears in no magnitude-token list.
+PROSE_FIELDS = ("DESC:", "DURATION:", "TARGETAREA:", "SPROP:", "RANGE:",
+                "SPECIALS:", "BENEFIT:")
+
+# Upstream's own admission that a record is not mechanically implemented in
+# PCGen. Reported separately; MUST NOT feed `wiring_class` in either direction.
+UPSTREAM_NOT_IMPLEMENTED = "[Not Implemented]"
 
 # Character/item scalars a magnitude may be a function of.
 SCALARS = re.compile(
@@ -69,7 +76,14 @@ RANGE_KEYWORDS = ("Close", "Medium", "Long")
 PROSE_SCALING = re.compile(
     r"per (caster )?level|per \d+ (caster )?levels?|x your caster level"
     r"|times your caster level|per two levels|per three levels|per four levels"
-    r"|per five levels|every \d+ levels|caster level \(max",
+    r"|per five levels|every \d+ levels|caster level \(max"
+    # Added 2026-08-02 from the ultimate_campaign story feats, whose magnitudes
+    # are stated in English on a `.MOD BENEFIT:` row: "spell resistance equal to
+    # 5 + your character level", "4 + your Constitution score", "1 temporary hit
+    # point per hit die".
+    r"|your (character|class|total) level|per (hit die|hit dice|HD)\b"
+    r"|your (Strength|Dexterity|Constitution|Intelligence|Wisdom|Charisma)"
+    r" (score|modifier|bonus)",
     re.I,
 )
 
@@ -86,6 +100,80 @@ def corpus_line(book, filename, lineno):
             _lines[path] = []
     buf = _lines[path]
     return buf[lineno - 1] if 0 < lineno <= len(buf) else None
+
+
+_mod_index = None
+
+
+def mod_index():
+    """Map (book, resolved_base_name) -> [raw `.MOD` rows].
+
+    A `.MOD` row MODIFIES an existing base record rather than declaring one, so
+    the work-inventory generator emits no unit for it (`src/bin/v06_work_inventory.rs`
+    ~line 546 stashes it into `mod_targets` and returns; its magnitude count is
+    consumed only by the `mod_only_rescue` path, i.e. only when the base name
+    appears nowhere in the corpus). When a base declaration DOES exist, the
+    `.MOD` row's magnitudes are discarded and never reach the base unit.
+
+    Base-name resolution mirrors the generator's own, so the two agree about
+    which record a `.MOD` row belongs to.
+    """
+    global _mod_index
+    if _mod_index is not None:
+        return _mod_index
+    _mod_index = collections.defaultdict(list)
+    for root, _, files in os.walk(CORPUS):
+        book = os.path.relpath(root, CORPUS).split(os.sep)[0]
+        for fn in sorted(files):
+            if not fn.endswith(".lst"):
+                continue
+            with open(os.path.join(root, fn), encoding="utf-8", errors="replace") as fh:
+                for raw in fh:
+                    raw = raw.rstrip("\n")
+                    if not raw.strip() or raw.lstrip().startswith("#"):
+                        continue
+                    head = raw.split("\t", 1)[0].strip()
+                    at = head.find(".MOD")
+                    if at < 0:
+                        continue
+                    base = head[:at]
+                    if base.startswith("CATEGORY=") and "|" in base:
+                        base = base.split("|", 1)[1]
+                    if base.startswith("CLASS:"):
+                        base = base[6:]
+                    _mod_index[(book, base.strip())].append(raw)
+    return _mod_index
+
+
+def token_closure(unit):
+    """Every corpus row that governs this unit: its base row plus its `.MOD` rows."""
+    rows = [corpus_line(unit["book"], unit["source_file"], unit["source_line"])]
+    idx = mod_index()
+    for name in {unit.get("name"), unit.get("corpus_key")}:
+        if name:
+            rows.extend(idx.get((unit["book"], name), []))
+    return rows
+
+
+def closure_signals(rows):
+    """Union the signals over a token closure.
+
+    `display` survives only if NO row in the closure carries a magnitude-bearing
+    field. That is the whole point: a magnitude on a `.MOD` row must not leave
+    the base unit looking like a text-only record.
+    """
+    real = [r for r in rows if r is not None]
+    if not real:
+        return {"no_corpus_line"}
+    out = set()
+    for r in real:
+        out |= signals(r)
+    if len(real) > 1 and any(
+        any(f.strip().startswith(MAGNITUDE_TOKENS) for f in r.split("\t")) for r in real
+    ):
+        out.discard("display:no_magnitude_token")
+    out.discard("no_corpus_line")
+    return out or {"no_corpus_line"}
 
 
 def signals(raw):
@@ -135,12 +223,16 @@ def wiring_class(sigs):
     """Collapse a signal set to one class. Strictly highest-bar-wins."""
     if sigs == {"no_corpus_line"}:
         return "ambiguous", "no_corpus_line"
-    if any(s.startswith("display:") for s in sigs):
-        return "display", "no_magnitude_token"
     for prefix in ("computed:", "derived:"):
         hit = sorted(s for s in sigs if s.startswith(prefix))
         if hit:
             return prefix[:-1], hit[0].split(":", 1)[1]
+    # `ambiguous` outranks `display`. A row with no magnitude TOKEN can still
+    # state a magnitude in prose -- `ultimate_campaign`'s story feats carry
+    # "spell resistance equal to 5 + your character level" on a `.MOD BENEFIT:`
+    # row and nothing else. Letting `display` win there would mark a unit done
+    # the moment its text renders, which is the exact over-claim this axis
+    # exists to prevent. `display` is the LAST resort, never a short circuit.
     hit = sorted(s for s in sigs if s.startswith("ambiguous:"))
     if hit:
         return "ambiguous", hit[0].split(":", 1)[1]
@@ -163,9 +255,13 @@ def main():
     per_reason = collections.Counter()
     per_book = collections.defaultdict(collections.Counter)
     dual = 0
+    upstream_marked = 0
     for u in sel:
-        sigs = signals(corpus_line(u["book"], u["source_file"], u["source_line"]))
+        rows = token_closure(u)
+        sigs = closure_signals(rows)
         cls, why = wiring_class(sigs)
+        if any(r and UPSTREAM_NOT_IMPLEMENTED in r for r in rows):
+            upstream_marked += 1
         per_class[cls] += 1
         per_reason[(cls, why)] += 1
         per_book[u["book"]][cls] += 1
@@ -178,6 +274,8 @@ def main():
     for k, v in per_class.most_common():
         print("  %-10s %6d  %5.1f%%" % (k, v, 100.0 * v / max(len(sel), 1)))
     print("  dual-signal (derived AND computed) %d" % dual)
+    print("  carrying upstream '%s' marker %d (reported, never classifying)"
+          % (UPSTREAM_NOT_IMPLEMENTED, upstream_marked))
     print("reasons:")
     for k, v in per_reason.most_common():
         print("   %-28s %6d" % ("%s/%s" % k, v))

@@ -68,14 +68,14 @@ GE-01 classifies every imported rule record on a `wiring_class` axis — `displa
 ```
 $ python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD
 scope HELD  n=9828
-  display      3882   39.5%
-  static       3024   30.8%
-  computed     1570   16.0%
-  derived      1276   13.0%
-  ambiguous      76    0.8%
+  display      3577   36.4%
+  static       3046   31.0%
+  computed     1695   17.2%
+  derived      1224   12.5%
+  ambiguous     286    2.9%
 ```
 
-1,276 currently-held units are `derived`; 959 of them are units presently stalled in `ingested-magnitude` and therefore not counted as proven at all.
+1,224 currently-held units are `derived`; 898 of them are presently stalled in `ingested-magnitude` and therefore not counted as proven at all. A further 286 are `ambiguous` — records that state a scaling magnitude in English prose with no machine-readable expression. Those are NOT evaluator input until the record carries a real expression.
 
 **What the evaluator must handle, grounded in the corpus rather than assumed.** These are the concrete PCGen expression shapes the `derived` class is made of:
 
@@ -86,8 +86,9 @@ scope HELD  n=9828
 | a keyword whose value is a caster-level function | `RANGE:Close` = 25 ft + 5 ft per 2 caster levels; `Medium` = 100 + 10/CL; `Long` = 400 + 40/CL | 474 of 1,067 stalled spell units |
 | arithmetic over an item scalar | `COST:4000*PLUSTOTAL*PLUSTOTAL` | `core_rulebook/cr_equipmods.lst:263`, *Amulet of Mighty Fists* |
 | a `BONUS:` value over an ability modifier | `BONUS:SKILL\|TYPE.Charisma\|max(0,WIS)\|TYPE=WisdomBonus` | `advanced_class_guide/acg_equip.lst:332` |
+| the same, carried on a `.MOD` row rather than the record's own | 8,234 `.MOD` rows corpus-wide carry a magnitude token | GE-01 token closure |
 
-The first two matter most: the expression lives inside `DESC:`/`DURATION:`, which are **display fields, not magnitude tokens**. An evaluator wired only to `BONUS:`/`DEFINE:` will not see a single scaling spell in the corpus. The evaluator's input surface must include the prose fields GE-01 names (`DESC:`, `DURATION:`, `TARGETAREA:`, `SPROP:`, `RANGE:`, `SPECIALS:`), with the substitution rendered back into the text the player reads.
+The first two matter most: the expression lives inside `DESC:`/`DURATION:`, which are **display fields, not magnitude tokens**. An evaluator wired only to `BONUS:`/`DEFINE:` will not see a single scaling spell in the corpus. The evaluator's input surface must include the prose fields GE-01 names (`DESC:`, `DURATION:`, `TARGETAREA:`, `SPROP:`, `RANGE:`, `SPECIALS:`, `BENEFIT:`), with the substitution rendered back into the text the player reads. It must also resolve the record's **token closure** — the base row plus every `.MOD` row targeting it — because a `.MOD` row carries no unit of its own but can carry the record's only magnitude.
 
 **Result shape.** A `derived` evaluation returns the standard formula result already specified above (`expression_id`, `source_ref`, `status`, `value`, `dependencies`, `diagnostics`, `explanation_node_ref`). `dependencies` MUST name every scalar consumed — this is what makes the result auditable and what lets GE-09 detect a value that was hardcoded rather than evaluated.
 
@@ -96,6 +97,7 @@ The first two matter most: the expression lives inside `DESC:`/`DURATION:`, whic
 **Prohibited, in addition to the prohibitions above.**
 - MUST NOT return a `derived` value without its `dependencies` populated. A magnitude with no declared inputs cannot be distinguished from a transcribed constant.
 - MUST NOT evaluate a record classified `computed` through this path. Doing so would produce a plausible number for a magnitude that is conditional, and would silently lower that record's evidence bar.
-- MUST NOT treat an `ambiguous` record as `derived` by guessing the formula from prose. `advanced_class_guide/acg_spells.lst:14` *Air Geyser* — *"hurls the target upward a number of feet equal to 5 x your caster level"* — is scaling stated only in English; it is a content-resolution work item, not evaluator input.
+- MUST NOT treat an `ambiguous` record as `derived` by guessing the formula from prose. Two worked instances: `advanced_class_guide/acg_spells.lst:14` *Air Geyser* — *"hurls the target upward a number of feet equal to 5 x your caster level"*; and `ultimate_campaign/uca_feats.lst:59` *Accursed* — *"You gain spell resistance equal to 5 + your character level"*, carried on a `.MOD BENEFIT:` row. Both are semantically textbook `derived` magnitudes over scalars the engine already holds, and both are stated only in English. They are content-resolution work items, not evaluator input; the fix is to give the record a machine-readable expression, after which determination will route it here on its own.
+- MUST NOT read an upstream `[Not Implemented]` marker as a signal about evaluability. It is an upstream-completeness claim, not a statement about the record's tokens — *Accursed* carries both the marker and a fully specified formula.
 
 **Verification obligation.** A `derived` record is proven when the evaluator returns the correct value at sampled inputs against a fixture, per GE-09's per-class proven rule. Sampling, not a single level: a formula correct at level 1 and wrong at level 11 is the failure mode this class exists to catch, and `min(10,CASTERLEVEL)`-shaped caps make the boundary the interesting sample.

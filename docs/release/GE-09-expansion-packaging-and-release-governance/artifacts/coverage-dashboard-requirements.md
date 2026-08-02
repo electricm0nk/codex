@@ -150,7 +150,8 @@ One axis was doing two jobs. `grounded` means *a real computed magnitude was OBS
 | `wiring_class` | One of `display`, `static`, `derived`, `computed`, `ambiguous`. | GE-01 is the authority. Never inferred from `status`. |
 | `wiring_class_signals` | Full signal set from the source record, e.g. `["derived:bonus","computed:pre_guard"]`. | Mandatory. The audit below is impossible without it. |
 | `wiring_class_determinator_version` | Version of the determination ruleset that produced the class. | A class value with no ruleset version is unauditable. |
-| `source_row_digest` | Digest of the raw corpus row the class was determined from. | The discriminator between "the content changed" and "the rules changed". |
+| `source_row_digest` | Digest of the unit's whole **token closure** — its base row plus every `.MOD` row targeting it — not of the base row alone. | The discriminator between "the content changed" and "the rules changed". A digest over the base row alone would miss a `.MOD` row edit, which is where 8,234 corpus magnitudes live. |
+| `upstream_implementation_marker` | Whether the legacy record carries an upstream not-implemented admission (PCGen's `[Not Implemented]` prefix in `DESC:`). | Reported beside `wiring_class`; MUST NOT feed it or `proven` in either direction. See the conflation rule below. |
 
 ### What `proven` means, per class
 
@@ -164,15 +165,15 @@ One axis was doing two jobs. `grounded` means *a real computed magnitude was OBS
 
 Three rules bind these:
 
-- **`static` requires a consumer or a rendered field, not merely a stored value.** Without that clause `static` becomes "the number is in a table somewhere", which is precisely the over-claim `ingested-magnitude` was minted to prevent. 3,024 held units are `static` — the second-largest class — so a weak bar here moves the headline number more than any other single change.
+- **`static` requires a consumer or a rendered field, not merely a stored value.** Without that clause `static` becomes "the number is in a table somewhere", which is precisely the over-claim `ingested-magnitude` was minted to prevent. 3,046 held units are `static` — the second-largest class — so a weak bar here moves the headline number more than any other single change.
 - **`derived` requires sampling, not one evaluation.** A formula correct at level 1 and wrong at level 11 is the failure this class exists to catch, and `min(10,CASTERLEVEL)`-shaped caps make the cap boundary a required sample.
 - **The `computed` bar does not move.** No unit reaches proven by being called `derived` when its magnitude is guarded, temporary, or choice-driven.
 
 ### Aggregation
 
 - `proven_units` = the sum of units meeting their own class's bar. Nothing else counts. `ambiguous` units count toward the denominator and never toward the numerator.
-- **A single aggregate coverage percentage MUST NOT be published alone.** Every aggregate is published as a vector — proven and total per class — and any headline figure MUST appear adjacent to the `computed`-class figure computed on its own. Rationale, measured: of `core_rulebook`'s 4,743 held units only 696 (14.7%) are `computed`; the other 4,025 are reachable by three mechanical checks. An aggregate that mixes them lets 4,025 cheap units bury 696 expensive ones and read as near-complete while every hard record is untouched. The existing rule that *any summary that can turn `computed-but-not-oracle-checked` into an implied green state is invalid* extends verbatim to this axis.
-- Class distribution MUST be reported per book, not only corpus-wide. Books differ sharply: `core_rulebook` is 48.6% `static` (2,304 of 4,743) while `advanced_class_guide` is 61.1% `display` (1,544 of 2,527).
+- **A single aggregate coverage percentage MUST NOT be published alone.** Every aggregate is published as a vector — proven and total per class — and any headline figure MUST appear adjacent to the `computed`-class figure computed on its own. Rationale, measured: of `core_rulebook`'s 4,743 held units only 777 (16.4%) are `computed`; another 3,844 are reachable by three mechanical checks and 122 must first be disambiguated. An aggregate that mixes them lets 3,844 cheap units bury 777 expensive ones and read as near-complete while every hard record is untouched. The existing rule that *any summary that can turn `computed-but-not-oracle-checked` into an implied green state is invalid* extends verbatim to this axis.
+- Class distribution MUST be reported per book, not only corpus-wide. Books differ sharply: `core_rulebook` is 47.6% `static` (2,260 of 4,743) while `advanced_class_guide` is 57.3% `display` (1,448 of 2,527).
 - The `ambiguous` count MUST be shown on every view that shows the other four. It is a work item — an unresolved construct in exactly the sense this bundle already governs — not a rounding error.
 
 Reproduce the distribution:
@@ -181,17 +182,18 @@ Reproduce the distribution:
 $ python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD
 inventory docs/work-inventory.json generated_at 2026-08-02T04:02:12Z
 scope HELD  n=9828
-  display      3882   39.5%
-  static       3024   30.8%
-  computed     1570   16.0%
-  derived      1276   13.0%
-  ambiguous      76    0.8%
-  dual-signal (derived AND computed) 368
+  display      3577   36.4%
+  static       3046   31.0%
+  computed     1695   17.2%
+  derived      1224   12.5%
+  ambiguous     286    2.9%
+  dual-signal (derived AND computed) 470
+  carrying upstream '[Not Implemented]' marker 0 (reported, never classifying)
 per book:
    book                         held  display  static  derived  computed ambiguous
-   core_rulebook                4743     1003    2304      718       696        22
-   advanced_class_guide         2527     1544     278      210       488         7
-   advanced_players_guide       2466     1334     439      308       384         1
+   core_rulebook                4743      912    2260      672       777       122
+   advanced_class_guide         2527     1448     283      211       518        67
+   advanced_players_guide       2466     1216     500      301       398        51
    bestiary                       46        1       3       40         2         0
    core_essentials                46        0       0        0         0        46
 ```
@@ -200,7 +202,7 @@ per book:
 Introducing this axis MUST NOT move a single unit into `proven` on the day it lands. The classes describe *remaining work*; the evaluators still have to be built and run. Two consequences:
 
 - Until GE-04's evaluator exists, every `derived` unit is unproven regardless of how obviously correct its formula looks.
-- The reverse correction is due immediately. 22 units currently counted `text-complete` — and therefore `proven` — carry a magnitude the `magnitude_token_count == 0` test cannot see: 18 `derived` (12 `Summon Monster`-family/`Unfetter`/`Unravel Destiny`/`Summon Eidolon` spells with the level-scaling `RANGE:Close` keyword, 6 `Evolution Surge`/`Rejuvenate Eidolon` spells with parenthesised `CASTERLEVEL` expressions), 3 `static`, 1 `ambiguous`. All but one are in `advanced_players_guide/apg_spells.lst`. These leave `proven` when the axis lands and return only on their own class's evidence. A taxonomy that only ever moves units *into* proven is not a measurement.
+- The reverse correction is due immediately, and it is larger than it first appeared. **260 of the 2,390 units currently counted `text-complete` — 10.9%, and therefore counted `proven` — carry a magnitude the `magnitude_token_count == 0` test cannot see**: 128 `ambiguous` (a magnitude stated only in prose, largely on a `.MOD BENEFIT:` row), 73 `static` and 27 `computed` (a magnitude on a `.MOD` row, which produces no unit of its own), 32 `derived` (the level-scaling `RANGE:Close` keyword, or a parenthesised `CASTERLEVEL` expression). These leave `proven` when the axis lands; 132 return on their own class's evidence, and the 128 `ambiguous` cannot return until the underlying records carry a machine-readable magnitude. A taxonomy that only ever moves units *into* proven is not a measurement.
 
 ### Anti-gaming audit
 
@@ -214,22 +216,33 @@ The audit rests on one structural property: the classes form a strict lattice `d
 | A2 | **Signal-deletion detector.** Diff `wiring_class_signals` per unit. A signal present in run *N* and absent in run *N+1* with an unchanged `source_row_digest` is a determinator regression. | every regeneration | Blocking. This catches the downgrade mechanism itself, including on dual-class units where `wiring_class` did not visibly move. |
 | A3 | **`computed` ratchet, per book.** The count of `computed` units in a book may not decrease. | every regeneration | A decrease is blocking unless A1 justified every constituent unit individually. Aggregate justification is not accepted. |
 | A4 | **Determinator-diff review.** Any change to the determination ruleset is reviewed line by line and every hunk classified as *added observation* or *changed definition*. | any determinator change | A changed definition requires explicit recorded approval. This mirrors the review already required of the work-inventory generator, and applies for the same reason: the component that measures is the component a dishonest run edits. |
-| A5 | **Cross-check against the token count.** `display` must remain in close agreement with the generator's own `magnitude_token_count == 0` rule; agreement is 99.1% today (2,368 of 2,390 `text-complete` units). | every regeneration | A determinator change that grows `display` while corpus rows and `MAGNITUDE_TOKENS` are unchanged is the same over-claim wearing a new axis. Blocking below a recorded agreement floor. |
-| A6 | **`ambiguous` may not be drained silently.** A unit leaving `ambiguous` requires either a changed corpus row or an approved determinator change, per A1. | every regeneration | `ambiguous` is the honest bucket; quietly emptying it into `display` or `static` is a downgrade by another name. |
+| A5 | **One-directional token-count invariant: no unit with `magnitude_token_count > 0` may ever be classified `display`.** Verified at 0 violations across all 9,828 held units. | every regeneration | Any violation is blocking. **This check is deliberately one-directional.** An earlier draft specified a symmetric agreement floor against the generator's `magnitude_token_count == 0` rule — 99.1% at the time. That was wrong: the two components shared a blind spot (`.MOD` rows and `BENEFIT:` prose), so their agreement measured a shared assumption rather than correctness. Real agreement is 89.1%, and the 10.9% divergence is the fix, not a regression. A floor on symmetric agreement would have made the correct determinator fail the audit. |
+| A7 | **Closure integrity.** `source_row_digest` must cover the unit's whole token closure, and the determinator's `.MOD` base-name resolution must match the work-inventory generator's. | any change to either component | Blocking on divergence. If the two resolve `.MOD` targets differently they will disagree about which rows govern a unit, and every downstream diff becomes noise. |
+| A6 | **`ambiguous` may not be drained silently.** A unit leaving `ambiguous` requires either a changed corpus row or an approved determinator change, per A1. | every regeneration | `ambiguous` is the honest bucket; quietly emptying it into `display` or `static` is a downgrade by another name. 286 held units sit there today, 128 of them currently counted `proven`. |
 
 Two supporting requirements make the audit runnable rather than aspirational:
 
 - **Determination must be deterministic and versioned.** Given the same corpus row and the same determinator version, the class and signal set are identical. Without that, every diff in A1/A2 is noise and the audit degrades to a review of opinions.
-- **`source_row_digest` is mandatory.** It is the only thing that distinguishes "the corpus changed" from "the rules changed", and that distinction is the entire audit.
+- **`source_row_digest` is mandatory, and it digests the token closure.** It is the only thing that distinguishes "the corpus changed" from "the rules changed", and that distinction is the entire audit. Digesting the base row alone would leave `.MOD` edits invisible — which is where 8,234 corpus magnitudes live.
+
+### Upstream completeness is a separate claim and MUST NOT be conflated
+
+PCGen's stock data marks some records as not mechanically implemented upstream by prefixing `DESC:` with `[Not Implemented]` — every one of `ultimate_campaign`'s 23 story feats carries it. Reporting MUST keep that distinct from our own coverage:
+
+- `upstream_implementation_marker` is reported beside `wiring_class` and **never feeds it, `proven`, or any coverage figure**, in either direction. *Accursed* is marked `[Not Implemented]` upstream and still carries a fully specified benefit formula (`BENEFIT:You gain spell resistance equal to 5 + your character level`), so the marker predicts nothing about our evidence bar.
+- A unit MUST NOT be reported as done on the strength of a `[Not Implemented]` description alone. Rendering upstream's admission of incompleteness is not rendering the record's benefit.
+- A unit may legitimately be complete on our side — we render the accurate benefit text, it is not a stub — while upstream considers it unimplemented. A view that merges the two will read an upstream gap as our own, or our completeness as upstream's. Both errors are silent.
 
 ### Cross-reference: impact on SD-28's completion epics (recommendation only)
 
 `docs/release/SD-28-ultimate-book-content-ingestion/` is owned by another actor. This is a finding for that owner, recorded here because GE-09 owns the reporting surface it affects. **Nothing in SD-28 is modified by this artifact.**
 
-- **`epic-14-harness` is under-specified as written.** SD-28 `decisions.md §32` correctly identifies Epic 14 (observation-harness widening) as a gating prerequisite for roughly 4,050 `ingested-magnitude` units and a hard dependency of Epics 23, 25 and 28, on the grounds that `classify()`'s `Kind::Spell` and `Kind::Equipment` arms have no probe at all. That diagnosis is right. The prescription — *widen the observation harness* — fits only part of the work. Under this taxonomy those 4,050 units decompose as: **2,601 `static` (64.2%), 959 `derived` (23.7%), 445 `computed` (11.0%), 26 `ambiguous`, 19 `display`** (`python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py ingested-magnitude`). Only the 445 `computed` units need a widened observation harness. The 959 `derived` units need a **formula evaluator** — GE-04's scalar-derived magnitude evaluator, a different component with a different acceptance test — and the 2,601 `static` units need neither: they need a literal-equality check against the corpus row plus a named consumer. Three components, not one. Scoping all three as "harness widening" makes Epic 14 look like one task and will under-cost it.
-- **This taxonomy strengthens §32's anti-gaming rule rather than relaxing it.** §32 forbids reaching a target by *reclassifying units, relaxing the classifier, broadening what counts as text-complete, weakening or skipping a gate, or editing the work-inventory generator to report more favourably*, and names Epic 14 as the sharpest gaming risk in the set precisely because widening the harness is what a dishonest run would do. `wiring_class` adds a second surface with the same risk profile, and A1–A6 above are its Epic-30-equivalent. `wiring_class` is **not** a licence to move a unit out of `ingested-magnitude`: 11.0% of that bucket is `computed` and stays on the observed-delta bar, and no unit becomes proven until its own class's evidence exists.
+- **`epic-14-harness` is under-specified as written.** SD-28 `decisions.md §32` correctly identifies Epic 14 (observation-harness widening) as a gating prerequisite for roughly 4,050 `ingested-magnitude` units and a hard dependency of Epics 23, 25 and 28, on the grounds that `classify()`'s `Kind::Spell` and `Kind::Equipment` arms have no probe at all. That diagnosis is right. The prescription — *widen the observation harness* — fits only part of the work. Under this taxonomy those 4,050 units decompose as: **2,562 `static` (63.3%), 898 `derived` (22.2%), 511 `computed` (12.6%), 63 `ambiguous`, 16 `display`** (`python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py ingested-magnitude`). Only the 511 `computed` units need a widened observation harness. The 898 `derived` units need a **formula evaluator** — GE-04's scalar-derived magnitude evaluator, a different component with a different acceptance test — and the 2,562 `static` units need neither: they need a literal-equality check against the corpus row plus a named consumer. The 63 `ambiguous` units need a corpus fix before any of the three can touch them. **Four workstreams, not one harness.** Scoping them all as "harness widening" makes Epic 14 look like one task and will under-cost it by roughly eight to one.
+- **This taxonomy strengthens §32's anti-gaming rule rather than relaxing it.** §32 forbids reaching a target by *reclassifying units, relaxing the classifier, broadening what counts as text-complete, weakening or skipping a gate, or editing the work-inventory generator to report more favourably*, and names Epic 14 as the sharpest gaming risk in the set precisely because widening the harness is what a dishonest run would do. `wiring_class` adds a second surface with the same risk profile, and A1–A6 above are its Epic-30-equivalent. `wiring_class` is **not** a licence to move a unit out of `ingested-magnitude`: 12.6% of that bucket is `computed` and stays on the observed-delta bar, and no unit becomes proven until its own class's evidence exists.
 - **§27's display-value discriminator is the prose form of this axis.** SD-28 `decisions.md §27` already rules that a record whose value derives from data the engine holds is display-value work, not engine work, and requires a cycle to name *which input the engine does not have* before deferring. `wiring_class` applies that same test from the token shape instead of per-record human judgement, which is what makes it auditable at 44,191 units. The two should be reconciled by SD-28's owner, not by parallel drift.
-- **One correction the owner should carry.** §32 states `proven = grounded + text-complete`. 22 units currently satisfy `text-complete` while carrying a machine-readable derived magnitude (detail in the Transition rule above). Any 100%-proven target computed on today's `text-complete` set inherits that small over-claim.
+- **One correction the owner should carry, and it is not small.** §32 states `proven = grounded + text-complete`. **260 of the 2,390 `text-complete` units (10.9%) carry a magnitude the `magnitude_token_count == 0` test cannot see** (detail and breakdown in the Transition rule above). Any 100%-proven target computed on today's `text-complete` set inherits that over-claim, and it compounds: `text-complete` is the cheapest path to `proven`, so a bundle chasing a 100% target has the strongest possible incentive to route units into it.
+- **`.MOD`-carried magnitudes are a corpus-wide exposure, not an `ultimate_campaign` quirk.** The case that surfaced this — every `ultimate_campaign` unit reporting `magnitude_token_count: 0` while `Accursed`'s `.MOD BENEFIT:` row states *"spell resistance equal to 5 + your character level"* — is one instance of a pattern spanning **8,234 `.MOD` rows carrying a magnitude token**, touching 1,895 of the 9,828 held units. Any per-book completion epic that reads `magnitude_token_count` to decide what work remains will under-count that book's real magnitude surface. Credit to the `epic-13-calibration` actor, who found it in the field; verified independently here.
+- **`[Not Implemented]` must not be read as our own status.** All 23 `ultimate_campaign` records carry PCGen's upstream `[Not Implemented]` marker. It is an upstream-completeness claim and is specified above as a separately-reported field that never feeds `wiring_class` or `proven`. A completion epic that treats the marker as a blocker will defer work that is genuinely doable; one that treats a `[Not Implemented]` description as sufficient to render will ship a stub.
 
 ## Completion rule
 This requirement artifact is complete for the planning pass when a future builder can implement a governed dashboard or evidence ledger without inventing the row classes, field meanings, compatibility ceilings, or review triggers that control GE-09 truth.

@@ -244,10 +244,19 @@ Design limits remain explicit:
 
 **The classes.** `display` (no magnitude token), `static` (literal constants only), `derived` (a deterministic function of a character or item scalar), `computed` (conditional guard, temporary effect, or player choice), plus `ambiguous` for determination failure. Strict lattice, highest bar wins; a unit's full signal set is retained in `wiring_class_signals` so dual-class records stay legible.
 
-**Correction to the framing this addendum answers.** The proposal that prompted it named three kinds. The corpus partitions into four: 64.2% of the 4,050 stalled `ingested-magnitude` units are **static datum** — an item's `COST:`/`WT:`, a constant on its own row — which is neither bespoke-wiring work nor formula evaluation. Recorded here rather than only in the artifact, because a three-way split is the shape a future reader would otherwise assume.
+**Correction to the framing this addendum answers.** The proposal that prompted it named three kinds. The corpus partitions into four: 63.3% of the 4,050 stalled `ingested-magnitude` units are **static datum** — an item's `COST:`/`WT:`, a constant on its own row — which is neither bespoke-wiring work nor formula evaluation. Recorded here rather than only in the artifact, because a three-way split is the shape a future reader would otherwise assume.
 
-**Determination gaps this exposed in the current generator, both real and both in `MAGNITUDE_TOKENS`'s blind spot.** PCGen carries scaling magnitudes in places the magnitude-token list does not look: as parenthesised expressions inside `DESC:`/`DURATION:` (`(min(10,CASTERLEVEL))d6` on *Fireball*), and as the keyword ranges `Close`/`Medium`/`Long`, which are caster-level functions (474 of 1,067 stalled spells). A determinator that scans only the magnitude tokens misses every scaling spell in the corpus.
+**Determination gaps this exposed in the current generator — four, all real, all in `MAGNITUDE_TOKENS`'s blind spot.** PCGen carries magnitudes in places the magnitude-token list does not look:
 
-**Constraint on any implementation.** The determinator MUST read `MAGNITUDE_TOKENS` from the work-inventory generator rather than forking the list. Two copies would drift and then disagree about which units have a magnitude at all.
+1. As parenthesised expressions inside `DESC:`/`DURATION:` — `(min(10,CASTERLEVEL))d6` on *Fireball*. A determinator scanning only the magnitude tokens misses every scaling spell in the corpus.
+2. As the keyword ranges `Close`/`Medium`/`Long`, which are caster-level functions (474 of the 1,067 stalled spell units).
+3. In `BENEFIT:`, which appears in no magnitude-token list and is carried by 2,087 corpus rows.
+4. **On a separate `.MOD` row.** A `<Name>.MOD` row modifies a base record rather than declaring one, so the generator emits no unit for it and its magnitudes are discarded unless the base name appears nowhere else in the corpus. **8,234 `.MOD` rows carry a magnitude token**, and 1,895 of the 9,828 held units have at least one targeting them. This is the largest of the four and was found in the field by the `epic-13-calibration` actor on `ultimate_campaign`, then verified independently here.
+
+**Constraints on any implementation.**
+- The determinator MUST read `MAGNITUDE_TOKENS` from the work-inventory generator rather than forking the list. Two copies would drift and then disagree about which units have a magnitude at all.
+- The determinator MUST classify from the unit's **token closure** — its base row plus every `.MOD` row targeting it — resolving `.MOD` base names exactly as the generator does. Applying the closure changes 294 held units' classes, 293 of them upward and 160 out of `display`.
+- `display` MUST be the last resort in the resolution order, never a short circuit. A record with no magnitude token can still state a magnitude in prose; letting `display` win there marks it done the moment its text renders.
+- An upstream `[Not Implemented]` marker in `DESC:` is an upstream-completeness signal and MUST NOT feed classification in either direction.
 
 **Evidence.** All figures re-derived 2026-08-02 from `docs/work-inventory.json` (`generated_at 2026-08-02T04:02:12Z`) and the PCGen corpus tree; every command is recorded inline in `artifacts/wiring-class-determination.md`.
