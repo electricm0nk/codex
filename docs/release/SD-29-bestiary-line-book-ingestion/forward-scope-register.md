@@ -1,6 +1,6 @@
 # SD-29 — Forward-Scope Register
 
-> **Status:** scope pass, **awaiting operator sign-off**. Loader action: read this file first.
+> **Status:** scope pass, **signed off 2026-08-02**. The operator pinned this register's own §0/§1.1 seven-book scope (`decisions.md §34`); loader may proceed per that decision.
 > Nothing downstream (`scope-draft.md`, epics, criteria) exists yet, deliberately — per
 > `spec-domain-bundle-authoring` v1.2.0 and SD-27's own recorded pitfall, the register is the
 > disagreement surface the operator signs, and the committed scope is authored *after*.

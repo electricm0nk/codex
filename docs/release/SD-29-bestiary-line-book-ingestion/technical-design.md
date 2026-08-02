@@ -55,7 +55,7 @@ a single bestiary, cycles are sequential (one cycle per file at a time).
 
 ## Bestiary 5 shape-resolution
 
-Bestiary 5's corpus is `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/beastiary5/`.
+Bestiary 5's corpus is `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_5/`.
 Per the 07-30 shape finding, the corpus contains:
 
 - `b5_races_pc.lst` (player-character races)
@@ -132,4 +132,4 @@ A cycle stops and reports the blocker when:
 - The cross-bundle monster-record join yields a duplicate canonical id. Cycle reports the conflict and the per-source-record-state; cycle-0 trap-report re-runs.
 - The trap-report finds new trap patterns. Cycle records the trap; pre-cycle trap-report for the next bestiary re-runs with the trap catalog updated.
 - The 4-grep audit fails. Cycle reports the grep and the offending line.
-- Epic 7 (DM Toolkit extension) gates have not fired and the cycle's record needs the consumer surface to reach the gate. Cycle pauses on `decision-blocked` and surfaces Epic 7 as the operator-on-call action.
+- Epic 7 (DM Toolkit extension) gates have not fired and the cycle's record needs the consumer surface to reach the gate. Cycle records `decision-blocked` in progress.md and moves to the next ready card in kanban.md; Epic 7's safe default is the C3.1 retrofit (no operator contact during unattended mode).

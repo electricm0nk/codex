@@ -25,9 +25,10 @@
 ## Pre-launch checklist (must be true before any cycle fires)
 
 1. **`kanban.md` exists and lists a ready queue.** (Operator-pinned 2026-08-01: Hermes board retired; work-queue artifact is `kanban.md` paired with `progress.md` inside this directory.)
-2. **Branch pushed:** `tranche/9` is pushed to origin (`git push -u origin tranche/9`). (Operator-pinned 2026-08-01.)
+2. **Branch pushed:** `tranche/9` is pushed to origin (`git push -u origin tranche/9`). (Operator-pinned 2026-08-01; cut from the post-SD-28-closure tip per decisions.md §34; the SD-29 launch session performs the cut+push.)
 3. **OAuth credentials valid:** the active harness has fresh GitHub OAuth credentials for `git push` operations to origin.
 4. **Working tree clean:** no uncommitted work-in-progress from a prior bundle. Run `git status` from the repo root.
+5. **Sequential launch order:** SD-28 has reached closure on tranche/8 (its `progress.md` closure receipt exists). SD-29 does not launch concurrently with SD-28 on a shared checkout.
 
 If any of these is false, the cycle refuses to launch and reports the gap.
 
@@ -43,7 +44,9 @@ each book.
    the book's `books[]` entry in `docs/work-inventory.json` — `kinds`,
    `files_not_enumerated`, `trap_hits`, `reconciliation`. The shape decides the
    cycle; do not assume a template, and do not assume a bestiary contains
-   monsters (Bestiary 5's does not). Done once per book, not once per cycle.
+   monsters (Bestiary 5's and Bestiary 6's do not; Monster Codex carries only
+   2 — its weight is class features, feats, spells, and equipment). Done once
+   per book, not once per cycle.
 0b. **Trap-report** the book, before writing a line of ingest code:
    `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>`. Record the
    output in the cycle receipt. See `decisions.md` Decision 9.
@@ -60,16 +63,22 @@ each book.
    → **322** (re-derived 2026-08-01), the number to cite for "Bestiary 2
    monster/race count," not a remembered or copied-forward estimate. This is
    the tranche/7 retrospective's rank-1 finding, re-run against the current
-   log rather than transcribed: ad-hoc commands over source data caught
-   **47%** of that tranche's logged corrections (54 of 116 events currently
-   in `docs/retro/events/*.jsonl`; the retrospective's own published
-   snapshot was 46% of 115 — the log grew by one correction after
-   publication, which is itself the lesson) and were the single strongest
-   detector by a wide margin — more than `./scripts/verify.sh` (8%, Cycle
-   mechanics step 4 below), on-screen driving (14%, Definition of done item
-   8 below), and every repo test combined. See
-   `docs/retro/tranche-7-retrospective.md` §3 and §0 for the reproduction
-   command.
+   log rather than transcribed: applying the retrospective's own classifier
+   (`docs/retro/tranche-7-retrospective.md` §3's regex over each
+   correction's `verified_by` field) to the live log shows ad-hoc commands
+   over source data catching **50%** of all logged corrections (69 of 138
+   correction events currently in `docs/retro/events/*.jsonl`, re-derived
+   2026-08-01 with:
+   `python3 -c "import json,glob,re; p=re.compile(r'\b(grep|rg|awk|sed|wc -l|python3|find |sort -u|uniq|Counter|jq)\b'); evs=[json.loads(l) for f in glob.glob('docs/retro/events/*.jsonl') for l in open(f) if l.strip()]; c=[e for e in evs if e.get('type')=='correction']; print(sum(1 for e in c if p.search(e.get('verified_by',''))), len(c))"`
+   → `69 138`; the retrospective's own published snapshot was 46% of 115 —
+   the log has kept growing across every bundle that inherited the practice
+   since tranche/7, not just from tranche/7 itself, which is itself the
+   lesson: re-derive at the point of use rather than transcribe) and remain
+   the single strongest detector by a wide margin — more than
+   `./scripts/verify.sh` (8%, Cycle mechanics step 4 below), on-screen
+   driving (14%, Definition of done item 8 below), and every repo test
+   combined. See `docs/retro/tranche-7-retrospective.md` §3 and §0 for the
+   original reproduction command.
 1c. **Preflight** the disk. `./scripts/verify.sh --only preflight-disk` (fast —
    no build). Refuse to start the bounded work below if it fails; run
    `scripts/reclaim.sh` (no flags — dry run) to see what it would reclaim,
@@ -87,15 +96,14 @@ each book.
    `apps/desktop/src-tauri` at all. See `decisions.md` Decision 8.
 5. **Commit** with a `feat(sd29): ...` or `fix(sd29): ...` prefix.
 6. **Append** the cycle record directly to `progress.md` (no Hermes release —
-   the board is retired). The cycle record carries the PR-id, branch-tip, and
-   per-cycle test result. The supervisor reads `kanban.md` at top of the next
-   cycle to find the next ready card.
-7. **Append** the cycle record to `progress.md`, with the command behind every
-   figure it publishes.
-8. **Emit** a retro event for anything this cycle corrected, deferred, reworked,
+   the board is retired). The cycle record carries the PR-id, branch-tip,
+   per-cycle test result, and the command behind every figure it publishes.
+   The supervisor reads `kanban.md` at top of the next cycle to find the next
+   ready card.
+7. **Emit** a retro event for anything this cycle corrected, deferred, reworked,
    or narrowly avoided. See "Retrospective log" below — this step is part of
    the cycle, not an optional courtesy.
-9. **Reclaim.** `scripts/reclaim.sh --apply` at the end of every cycle — not
+8. **Reclaim.** `scripts/reclaim.sh --apply` at the end of every cycle — not
    only when disk pressure is already visible. The script is dry-run-safe by
    default and its safety guards (never touches a target dir a live build is
    using, never removes a worktree with uncommitted or unpushed work, never
@@ -104,6 +112,49 @@ each book.
    `decisions.md` Decision 33 — this is the executable counterpart to the
    `CARGO_TARGET_DIR` cleanup rule that this program has, until now, had only
    as a written instruction nobody automated.
+
+## Corpus shape notes (re-derived 2026-08-02)
+
+Operational guidance for Epics 3-6 and 11-13, re-derived directly against
+the corpus rather than transcribed. Re-check before relying on any of these
+if the corpus tree has moved since 2026-08-02.
+
+- **Quoting hazard:** `bestiary_6/_bestiary_6 _for_players.pcc` contains a
+  SPACE in the filename — all path handling must quote; an unquoted glob
+  silently drops it.
+- **`.pcc` naming split:** B1/B2/B3 main pccs have no leading underscore
+  (`bestiary_2.pcc`); B4/B5/B6 do (`_bestiary_4.pcc`) — glob `*.pcc`, never
+  `bestiary_*.pcc` or `_*.pcc` alone.
+- **`SOURCESHORT` is not unique per book:** B1 alone has three pccs carrying
+  `SOURCESHORT:B1` (main, `_for_players`, `_pfs`) — key ingest on pcc path or
+  `CAMPAIGN` name, not `SOURCESHORT`.
+- **`*_races_pc.lst` files are `.MOD` overlays** onto races defined in
+  Core/ARG — updates to existing records, not new monsters (e.g. B2's entire
+  `b2_races_pc.lst` is 7 `.MOD` lines).
+- **Worked count anatomy:** B2's 322 = 314 first-class `RACE` records + 8
+  `.COPY=` derived variants (Chupacabra (Flying), Gug Savant, etc.); B3=261,
+  B4=220, no `.MOD`/`.COPY` inflation there. State which convention a cycle
+  counts under in its receipt.
+- **Conditional cross-book support files:** `bestiary_4/support/*_ma.lst`
+  load only under Mythic Adventures, `bestiary_5/support/*_oa.lst` only
+  under Occult Adventures (`PRECAMPAIGN`-gated) — file-by-file ingest pulls
+  them unconditionally and mis-attaches content.
+- **B3's pcc `INCLUDE` lines reach into** `../ultimate_combat/` and
+  `campaign_setting/inner_sea_gods/` — naive pcc-following drags other books
+  in.
+- **Seven zero-byte `.lst` files exist across B1-B4** (datacontrols/globalvar)
+  — legitimately empty, referenced by pccs; not an error.
+- **Upstream quality:** B3/B4/B5/B6 pccs are `STATUS:BETA`; 16 files carry
+  `TODO` markers (heaviest b1/b2 races). Coverage claims cite corpus-as-shipped.
+- **Book shapes:** B5 (188 units) and B6 (63 units) have ZERO monsters —
+  player-options datasets (B5's pcc `CAMPAIGN` literally says "Only Player
+  Options Implemented"); bonus_bestiary is a tiny true monster book (14
+  monsters, 4 `.lst`); monster_codex is per-record-family (72
+  class_features, 32 feats, 24 spells, 45 equipment, 15 companions, 2
+  monsters; 18 `.lst` + `support/`).
+- **Out-of-scope adjacents:** `inner_sea_bestiary/` (pcc+jpg stub) and
+  `inner_sea_world_guide`'s `iswg_races_bestiary.lst` are NOT in this
+  bundle — do not pull by accident.
 
 ## Retrospective log
 
@@ -145,10 +196,17 @@ All of the following, each checkable by someone who was not present:
 5. The four-check wired-integration audit
    (`docs/governance/no-stub-mvp-doctrine.md` §"Per-cycle audit") is clean.
 6. Any family that could not be surfaced has an `OPEN_FINDINGS` entry in
-   `reach_gate.rs` naming its remedy — recorded as a cycle shortfall, not a pass.
-   **For this bundle, `beastiary1/monsters` is already such an entry; ingesting
-   a second bestiary while that entry stands means the bundle is accumulating
-   the defect, not shipping content.**
+   `reach_gate.rs` naming its remedy — recorded as a cycle shortfall, not a
+   pass. Each newly ingested book's families must land their own reach
+   claims; a bestiary passing "by absence" (its families simply missing from
+   the gate's inventory) is the DoD item 2 failure, not this item.
+   **`beastiary1/monsters` is no longer an `OPEN_FINDINGS` entry — it is a
+   live reach claim (`reach_gate.rs:840`), backed by the shipped monster
+   catalog.** The surviving `beastiary1/race_traits` entry (the Duergar
+   Spell-Like Ability ~ Invisibility record, upstream-blocked on
+   `monster_codex/mc_abilities_race.lst`) is expected to be **retired by
+   Epic 13** now that Monster Codex is in scope — a closure receipt that
+   leaves it standing must say why.
 7. Baseline movements in `scripts/verify-baselines.env`, if any, are a separate
    reviewable commit carrying `--show-actuals` output.
 8. **On-screen verification for any record family whose reach claim is
@@ -173,20 +231,20 @@ All of the following, each checkable by someone who was not present:
 
 - **Epic 1 (Identifier Cleanup)** fires FIRST. No other epic may start until Epic 1 is closed.
 - **Epic 2 (Operator Pre-Launch)** is the pre-launch gate. Pre-launch checklist verifies before any other epic starts.
-- **Epics 3-6 (per-bestiary content-source ingest: B2, B3, B4, B5)** may run in any order, but each book is a single cycle-batch.
-- **Epic 7 (DM Toolkit extension to consume Bestiary 2-5)** is optional-but-proposed. Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles need the consumer surface to satisfy reach) or surfaces as a Class 1 retrofit in `successor-forward-scope-register.md`. Operator-pinned per-cycle at Epic 5/6 closure.
+- **Epics 3-6 and 11-13 (per-book content-source ingest: B2, B3, B4, B5, B6, Bonus Bestiary, Monster Codex)** may run in any order, but each book is a single cycle-batch. Epics 11-13 added per decisions.md §34 (7-book scope, operator directive 2026-08-02). Epic 6 (B5) and Epic 11 (B6) are player-options cycle-batches (zero monsters); Epic 13 (Monster Codex) is per-record-family.
+- **Epic 7 (DM Toolkit extension to consume Bestiary 2-5)** is optional-but-proposed. Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles need the consumer surface to satisfy reach) or surfaces as a Class 3 retrofit (C3.1) in `successor-forward-scope-register.md`. Operator-pinned per-cycle at the closure of Epics 5 and 6.
 - **Epic 8 (Closure Epilogue)** fires LAST. Tranche promotion PR fires only after all other epics are closed.
 - **Epic 9 (Build Version Numbering)** fires after Epic 1, before Epic 8. First concrete value `0.9.<build>` per the 2026-08-01 amendment.
-- **Epic 10 (Bundle Code Review)** fires after Epic 9 and every content-ingest epic (3-6, plus Epic 7 if in scope), before Epic 8. Reviews the whole bundle's diff against its branch point, not the closing cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per `decisions.md §27`.
+- **Epic 10 (Bundle Code Review)** fires after Epic 9 and every content-ingest epic (3-6, 11-13, plus Epic 7 if in scope), before Epic 8. Reviews the whole bundle's diff against its branch point, not the closing cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per `decisions.md §27`.
 
 ## Hard stops
 
-- Stops and reports the blocker (per the repo's `AGENTS.md` hard-stop doctrine) when:
+- The cycle records `decision-blocked` (or the blocker) in `progress.md` and moves to the next ready card per `kanban.md`, rather than pausing (see "Stop vs. press on" below), when:
   - A single monster block's ingest cycle fails to converge after 3 attempts.
   - The build crashes in a way that requires a non-book-list fix.
   - A cross-bundle reference yields a missing monster id that the source bundle's progress file shows as not yet landed.
   - The operator-pinned branch / board diverges from the in-flight branch / board.
-  - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 10's open question — the monster catalog and browser are the known instance). The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
+  - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 10's open question). The monster catalog/browser SHIPPED (`reach_gate.rs:840`); the open instance of this class is any record family with no existing surface analog — e.g. a Monster Codex family the sheet and catalog have no screen for. The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
   - **A figure derived this cycle disagrees with a figure recorded in this package.** Investigate which is wrong and report; do not overwrite either on the assumption that the newer one wins.
   - **A book's derived shape contradicts its recorded ingest subtype** — e.g. a per-monster-block epic against a book the generator reports as carrying zero monsters. The cycle reports; the operator re-pins the book list.
 
@@ -253,7 +311,7 @@ A cycle is eligible to fire when:
 SD-29 references the following bundles:
 
 - **SD-22 (closed):** Bestiary 1 + DM toolkit. Reference is doctrinal read-only. Do not pull from `~/workspace/SD-22-...-*.md` files; pull from SD-22's repo canonical (`~/workspace/repos/codex/docs/release/SD-22/`).
-- **SD-28 (planned):** Ultimate book content-source ingest. No live cross-reference until SD-28 is launched.
+- **SD-28 (launched 2026-08-01, runs FIRST on tranche/8):** Ultimate book content-source ingest. SD-29 launches only after SD-28's closure (sequential order operator-pinned 2026-08-02, decisions.md §34). Read-only reference to its landed state is allowed once closed; its `source_record` work (decisions.md §31) lands there first and SD-29 consumes it.
 - **SD-30 (planned):** Occult Adventures + companions. No live cross-reference until SD-30 is launched.
 
 ## Decision record
@@ -262,4 +320,10 @@ See `decisions.md` for the running decision record. Each decision is dated, name
 
 ## Per-bundle progress file
 
-`~/workspace/programs/codex/requirements/SD-29-bestiary-2-3-4-5-content-ingestion/progress.md` carries the per-cycle receipt. Do not use a shared chassis-lane progress file; each bundle's progress is its own.
+`docs/release/SD-29-bestiary-line-book-ingestion/progress.md` (this
+directory) carries the per-cycle receipt — it is the sole receipt file for
+this bundle. The prior workspace-lane path
+(`~/workspace/programs/codex/requirements/SD-29-bestiary-2-3-4-5-content-ingestion/progress.md`)
+no longer exists; the source-of-record moved, not copied, on publish per the
+`release-package-promotion` skill. Do not use a shared chassis-lane progress
+file; each bundle's progress is its own.

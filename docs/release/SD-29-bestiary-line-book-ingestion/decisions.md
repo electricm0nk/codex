@@ -1,10 +1,10 @@
 # SD-29 Decisions
 
-**Status:** Stub. Operator-pinned pending.
+**Status:** Operator-pinned, confirmed 2026-08-01/02 (Decisions 13–34).
 
-## Decision 1 — Book list
+## Decision 1 — Book list [SUPERSEDED — see §34]
 
-**Status:** Pending operator confirmation.
+**Status:** Pending operator confirmation; **superseded 2026-08-02** by Decision §34, which pins the wider seven-book cut (Bestiary 2-6, Bonus Bestiary, Monster Codex) in place of this decision's four-book candidate and closes out its "Operator-pinned values needed" list below.
 
 **Candidate:** Bestiary 2 + Bestiary 3 + Bestiary 4 + Bestiary 5.
 
@@ -33,9 +33,9 @@
   replacement figure; `forward-scope-register.md` (the sibling package,
   consolidated into this directory) supplies it.
 
-## Decision 2 — Branch and board
+## Decision 2 — Branch and board [SUPERSEDED — see §§13, 34]
 
-**Status:** Pending operator confirmation.
+**Status:** Pending operator confirmation; **superseded 2026-08-01/02** by Decisions §13 (branch `tranche/9`, no Hermes board) and §34 (sequential launch: `tranche/9` cut from the post-SD-28 tip, not concurrently with `tranche/6-1`/`tranche/6` as this candidate assumed).
 
 **Candidate:** `tranche/6-1` branch + `codex-tranche-6-1` board.
 
@@ -43,9 +43,9 @@
 
 **Alternative:** SD-29 could split per-book across four sub-tranches (e.g., `tranche/6-b2`, `tranche/6-b3`, `tranche/6-b4`, `tranche/6-b5`). Operator preference.
 
-## Decision 3 — Build version target
+## Decision 3 — Build version target [SUPERSEDED — see §§14, 34]
 
-**Status:** Pending operator confirmation.
+**Status:** Pending operator confirmation; **superseded 2026-08-01/02** by Decision §14 (first concrete value `0.9.<build>`) and §34 (the scope this build target now covers is the seven-book cut, not the four-book candidate this decision was scoped against).
 
 **Candidate:** `0.6.<build>` first concrete value.
 
@@ -59,7 +59,7 @@
 
 **Status:** Doctrine-of-record (per SD-22 doctrine).
 
-9 epics / 30 criteria. Epic 1 = Code-Side Identifier Cleanup. Epic 2 = Operator Pre-Launch. Epic N = Closure Epilogue. Optional Epic 7 (DM Toolkit extension) per operator-pinned in-scope decision.
+9 epics / 30 criteria (superseded: 13 epics per epic-breakdown.md — see §34). Epic 1 = Code-Side Identifier Cleanup. Epic 2 = Operator Pre-Launch. Epic N = Closure Epilogue. Optional Epic 7 (DM Toolkit extension) per operator-pinned in-scope decision.
 
 ## Decision 5 — Cross-bundle monster overlap
 
@@ -174,6 +174,20 @@ the cycle either way.
 **Authority:** `apps/desktop/src-tauri/src/reach_gate.rs` (`OPEN_FINDINGS`),
 `docs/governance/book-ingestion-playbook.md` §3.
 
+**Supersession note (2026-08-01, dated).** The "open operator question" above is
+answered. `reach_gate.rs:840` now carries an executed reach claim for
+`("beastiary1", "monsters")` in place of the old `OPEN_FINDINGS` entry (comment
+at `:836` records the replacement); `monsters_reach()` (`:1089–1118`) exercises
+`build_monster_catalog()` for real. The IPC command `list_monster_catalog` is
+registered in `apps/desktop/src-tauri/src/main.rs:57,197`, and
+`MonsterCatalogScreen.tsx` is routed via `CharacterHubPage.tsx:104-105`, reachable
+from a "Browse Monster Catalog" button at `LandingScreen.tsx:353`. The
+2026-08-01 `verify-reach-reissue` retro event records this as a live catalog
+search, not a stub. Bestiary 1's monster-surface question this decision left
+open is therefore closed; the one surviving `OPEN_FINDINGS` entry is unrelated
+(`("beastiary1", "race_traits", ...)`, the Duergar Spell-Like-Ability-Invisibility
+record, upstream-blocked on `monster_codex` — see §34).
+
 ## Decision 11 — Per-entity counts are generated, never hand-maintained
 
 **Status:** Doctrine-of-record (repo tooling).
@@ -273,7 +287,7 @@ Reprint cross-bundle overlaps in Pathfinder bestiaries are common: a famous mons
 
 **Status:** Operator-pinned, **confirmed 2026-08-01** with cycle-0 trap-report + work-inventory gating.
 
-**Decision:** SD-29 carries Bestiary 5 as one of its four books per scope-draft.md, but Bestiary 5's ingest type is **player-options** (race, feat, companion-mod records) rather than **monster blocks**. Epic 5 (Bestiary 5 ingest cycle) is gated on cycle-0 inventory + trap-report output. If the inventory surfaces zero `monster` units (consistent with the 2026-07-30 shape finding), Epic 5's cycle runs the per-race / per-feat / per-companion-mod cycles instead. Bestiary 6 + Bonus Bestiary are recorded in `successor-forward-scope-register.md C2.x` as drop-in replacements if operator prefers them over Bestiary 5.
+**Decision:** SD-29 carries Bestiary 5 as one of its books per scope-draft.md, but Bestiary 5's ingest type is **player-options** (race, feat, companion-mod records) rather than **monster blocks**. Epic 6 (Bestiary 5 ingest cycle) is gated on cycle-0 inventory + trap-report output. If the inventory surfaces zero `monster` units (consistent with the 2026-07-30 shape finding), Epic 6's cycle runs the per-race / per-feat / per-companion-mod cycles instead. Bestiary 6 + Bonus Bestiary are recorded in `successor-forward-scope-register.md C2.x` as drop-in replacements if operator prefers them over Bestiary 5.
 
 This is an in-bundle resolution, not an out-of-bundle deferral — the work is in scope, the cycle shape adapts to what the corpus actually contains.
 
@@ -291,7 +305,7 @@ This is an in-bundle resolution, not an out-of-bundle deferral — the work is i
 
 **What this changes.** §12's blanket "no engines" rule was too coarse. §19 narrows it to real-time engines. Reach remains the gate; pre-computed values are preferred.
 
-**Bestiary 1 surface gap.** Bestiary 1's 41 ingested monsters reach no surface today (per `reach_gate.rs OPEN_FINDINGS`). SD-29's monster-surface prerequisite is the Epic 7 DM Toolkit extension (operator-pinned at Epic 5/6 closure) or a Class 1 retrofit per `successor-forward-scope-register.md C3.x`. Cycles pause on `decision-blocked` if the surface is absent.
+**Bestiary 1 surface gap — closed, 2026-08-01.** Bestiary 1's 41 ingested monsters reached no surface as of this decision's original authoring (per `reach_gate.rs OPEN_FINDINGS`); the monster catalog command and browser have since shipped (see §10's supersession note above — `reach_gate.rs:840`, `monster_catalog.rs`, `MonsterCatalogScreen.tsx` via `LandingScreen.tsx:353`), so the gate's Bestiary-1-monster-surface prerequisite is satisfied independent of Epic 7. The Epic 7 DM Toolkit extension (operator-pinned at Epics 5 and 6 closure) or a Class 3 (C3.1) retrofit per `successor-forward-scope-register.md C3.1` remain live decisions, but neither is a monster-surface prerequisite any longer. Cycles record `decision-blocked` in `progress.md` and move to the next ready card if a genuinely blocking gap is found.
 
 **Authority:** operator verbatim 2026-08-01: "reach gate is the definition of done, if an engine is required to get there, then we generate the engine — that said, often an engine isn't strictly necessary."
 
@@ -307,7 +321,7 @@ This is an in-bundle resolution, not an out-of-bundle deferral — the work is i
 - `./loop-instruction.md` — per-cycle procedure; updated for `tranche/9`, no-Hermes-board, local-file dispatch.
 - `./successor-forward-scope-register.md` — successor work depending on SD-29's output.
 - `./kanban.md` — local-file work queue (replaces Hermes board).
-- `./epic-breakdown.md` — 9-epic structure, Closure Epilogue fires LAST.
+- `./epic-breakdown.md` — 13-epic structure, Closure Epilogue fires LAST.
 - `~/workspace/programs/codex/requirements/SD-22-.../decisions.md` — predecessor doctrine for the per-book ingest pipeline.
 - `apps/desktop/src-tauri/src/reach_gate.rs` — definition-of-done surface for §19.
 - `docs/governance/book-ingestion-playbook.md` — playbook of record. This bears on the
@@ -326,7 +340,7 @@ an encounter is not.
 1. **Default-and-flag, not ask.** When a cycle needs a decision, pick the safer default, capture it in `progress.md`, and continue.
 2. **No `clarify` tool calls.** The operator clarification tool is hard-banned under unattended mode.
 3. **Blockers are recorded, not raised.** Hard-blocks (auth failure, branch creation conflict, identity conflict on disk) go in `progress.md` with the command and exit code. The bundle does not halt; the supervisor picks up the next ready card.
-4. **`decision-blocked` IS allowed.** Operator-decision points (Epic 7 DM Toolkit extension in-scope-vs-separate, Epic 5/6 closure operator-on-call) record `decision-blocked` in `progress.md` and proceed on the safe default per `successor-forward-scope-register.md C3.1` retrofit.
+4. **`decision-blocked` IS allowed.** Operator-decision points (Epic 7 DM Toolkit extension in-scope-vs-separate, Epics 5 and 6 closure operator-on-call) record `decision-blocked` in `progress.md` and proceed on the safe default per `successor-forward-scope-register.md C3.1` retrofit.
 5. **Closure is a goal, not a stop signal.** The bundle runs to closure under the dispatcher's own loop (the `Workflow` tool per §23, not a human re-invoking a slash command per cycle).
 
 **Operator's verbatim:** "include instructions to all 3 that indicate they will be running in unnattended mode since i will be out of town while this runs. They may not stop to ask questions - it might be days before i notice."
@@ -351,7 +365,7 @@ The orchestrating session never implements directly — it dispatches, verifies,
 
 ## Decision 24 — A running retrospective log is part of the cycle procedure, not an optional courtesy (2026-08-01)
 
-**Status:** Process alignment — the tooling already exists on `tranche/9` (`scripts/retro.py`, `docs/retro/schema.json`, `docs/retro/events/<actor>.jsonl`), and this package already reads the log as data in `forward-scope-register.md`. What was missing was the write side wired into the cycle procedure.
+**Status:** Process alignment — the tooling already exists on `tranche/8` (`scripts/retro.py`, `docs/retro/schema.json`, `docs/retro/events/<actor>.jsonl`) — `tranche/9` is not yet cut (per §34, it launches sequentially from the post-SD-28 tip) — and this package already reads the log as data in `forward-scope-register.md`. What was missing was the write side wired into the cycle procedure.
 
 **Decision:** Every SD-29 cycle emits at least one retrospective event via `scripts/retro.py`. The event vocabulary (`correction`, `incident`, `near_miss`, `deferral`, `rework`, `verification`, `note`) and the field contract live in `docs/retro/schema.json` and are not re-specified here — read `python3 scripts/retro.py help <type>` for the real flags before emitting.
 
@@ -597,3 +611,27 @@ Two additions, landed in `scripts/` (shared across SD-28/SD-29/SD-30, not per-bu
 **This bundle's `loop-instruction.md` Cycle mechanics now runs the preflight check at the start of each cycle and `scripts/reclaim.sh --apply` at cycle end.** The mandate is paired with the command, which is the entire lesson of §4.1 restated as a rule: a rule with no executable counterpart is the rule that produced 600G.
 
 **Authority:** `docs/retro/tranche-7-retrospective.md` §4.1 (disk exhaustion, 5 of 34 incidents) and §6.1 rule A4 (`CARGO_TARGET_DIR` deletion + pre-sweep disk check); `AGENTS.md` "Concurrency and Measurement."
+
+## Decision 34 — Scope width and planning-readiness resolved (operator directive 2026-08-02)
+
+**Status:** Operator-pinned, **confirmed 2026-08-02.** Supersedes Decision §1's four-book list; resolves the "Pending operator confirmation" status carried by Decisions §2 and §3; resolves both of `README.md`'s "operator must resolve" sections ("Unresolved: planning-readiness" and "Unresolved: scope width (4 books vs. 7 books)").
+
+**Decision:** SD-29's scope is the **wider seven-book cut** — Package B's `forward-scope-register.md` §0/§1.1 scope, not Package A's four-book `scope-draft.md` list:
+
+1. **Bestiary 2** — 322 base `races.lst` rows; per-monster-block cycles.
+2. **Bestiary 3** — 261 base `races.lst` rows; per-monster-block cycles.
+3. **Bestiary 4** — 220 base `races.lst` rows; per-monster-block cycles.
+4. **Bestiary 5** — 0 monsters; player-options dataset (races, feats, companion-mods).
+5. **Bestiary 6** — 63 units total (22 class_feature, 13 race_trait, 2 spell, 26 companion); **zero monsters** — player-options, same shape as Bestiary 5.
+6. **Bonus Bestiary** — 34 units total (3 class, 17 race_trait, 14 monster); 4 `.lst` files including `bb_races.lst`.
+7. **Monster Codex** — 213 units total (72 class_feature, 32 feat, 24 spell, 45 equipment, 4 equipment_modifier, 19 race_trait, 15 companion, 2 monster); 18 `.lst` files + `support/`.
+
+All seven books are present in `docs/work-inventory.json` as `future_state`. Base-race-declaration row counts for Bestiary 2/3/4 (322/261/220) plus the other four books' base-row counts re-derive `forward-scope-register.md §1.3`'s 819 seven-book total.
+
+**Planning-readiness adjudicated.** `README.md`'s "Unresolved: planning-readiness" section recorded Package A (`canonical: true`, `status: planning-ready`) and Package B (`scope pass only, not planning-ready`, awaiting sign-off on the register) as contradictory. That contradiction is resolved: Package B's register is signed off, its seven-book scope stands, and the existing chassis (`scope-draft.md`, `decisions.md`, `epic-breakdown.md`, `kanban.md`, and the rest) is **planning-ready at seven-book width** — the chassis is widened in place, not re-authored from a blank sign-off cycle.
+
+**Launch order is sequential, not concurrent.** SD-28 (`tranche/8`) runs to closure first. `tranche/9` is cut from the **post-SD-28 tip** — i.e., from `develop` after SD-28's tranche-promotion PR merges — not from `tranche/8` mid-flight, and SD-29 launches only from that point.
+
+**What this leaves standing.** Decisions §13 (branch `tranche/9` + local-file dispatch), §14 (build version target `0.9.<build>`), §14a (Hermes board retired), and §16–§33 (cross-book conflict rule, engine policy, orchestration doctrine, retrospective/disk-reclamation process) are unaffected by the scope-width change and continue to govern the widened seven-book bundle. Decision §15 ("SD-29's book list is four bestiaries") is narrower than this decision and is superseded by it for book-count purposes, though its per-book shape descriptions for Bestiary 2-5 remain accurate and are extended, not replaced, by the three additional books above.
+
+**Authority:** operator directive 2026-08-02; verified corpus figures per `forward-scope-register.md §1.1` and `§1.3`; `docs/work-inventory.json` (all seven books present as `future_state`).

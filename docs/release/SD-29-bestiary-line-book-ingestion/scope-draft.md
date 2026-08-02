@@ -13,11 +13,11 @@
 >
 > **Pre-launch checklist (must be true before any cycle fires):**
 > 1. `kanban.md` exists at this directory and lists the ready queue (local-file dispatch).
-> 2. Branch `tranche/6-1` is pushed to origin.
+> 2. Branch `tranche/9` is pushed to origin.
 > 3. OAuth credentials are valid for the active harness.
 > 4. Working tree is clean (no uncommitted work-in-progress from prior bundles).
 
-## Book list — operator-pinned pending
+## Book list — operator-pinned, confirmed 2026-08-02 (Decision §34)
 
 | Slot | Book | Publisher | Ingest subtype | Path | Corpus dir | Per-entity count |
 |------|------|-----------|----------------|------|-----------|------------------|
@@ -25,12 +25,19 @@
 | 2 | Bestiary 3 | Paizo (hardcover) | Per-monster-block cycles | `src/rules_core/rules_tables/beastiary3/` | `bestiary_3` | derived — see §"Book shape" |
 | 3 | Bestiary 4 | Paizo (hardcover) | Per-monster-block cycles | `src/rules_core/rules_tables/beastiary4/` | `bestiary_4` | derived — see §"Book shape" |
 | 4 | Bestiary 5 | Paizo (hardcover) | **See shape finding below — not a monster book in this corpus** | `src/rules_core/rules_tables/beastiary5/` | `bestiary_5` | derived — see §"Book shape" |
+| 5 | Bestiary 6 | Paizo (hardcover) | Per-race-trait / per-class-feature / per-companion cycles (player-options, same shape as Bestiary 5) | `src/rules_core/rules_tables/beastiary6/` | `bestiary_6` | 0 monsters; 63 units total (22 class_feature, 13 race_trait, 2 spell, 26 companion) |
+| 6 | Bonus Bestiary | Paizo (softcover) | Per-monster-block cycles (smallest book) | `src/rules_core/rules_tables/bonus_bestiary/` | `bonus_bestiary` | 14 monsters; 34 units total (3 class, 17 race_trait, 14 monster) |
+| 7 | Monster Codex | Paizo (softcover) | Per-record-family cycles, **not** per-monster-block | `src/rules_core/rules_tables/monster_codex/` | `monster_codex` | 2 monsters; 213 units total (72 class_feature, 32 feat, 24 spell, 45 equipment, 4 equipment_modifier, 19 race_trait, 15 companion, 2 monster) |
 
-All four corpus directories exist under
+All seven corpus directories exist under
 `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/` (verified
-2026-07-30 by directory listing and by `v06_work_inventory`'s book enumeration).
-`bestiary_6` and `bonus_bestiary` also exist and are not claimed by this bundle
-or by SD-28 / SD-30; SD-27 `decisions.md §9` lists both as Tier-1 deferrals.
+2026-07-30 by directory listing and by `v06_work_inventory`'s book enumeration;
+re-verified 2026-08-01/02 for `bestiary_6`, `bonus_bestiary`, and
+`monster_codex` per `forward-scope-register.md §1.1/§1.3`). **All seven are
+claimed by this bundle** per `decisions.md §34` (operator directive
+2026-08-02) — `bestiary_6`, `bonus_bestiary`, and `monster_codex` are no
+longer excluded; the "not claimed by this bundle" statement this section
+previously carried is superseded.
 
 ## Book shape — derived, never hand-maintained
 
@@ -101,7 +108,7 @@ operator's call. Re-derive before deciding — the corpus checkout can move.
 
 ## Scope
 
-- **In scope:** End-to-end content-source ingest for the four Bestiary books enumerated above. Per-monster-block cycles produce canonical monster entries that match the SD-22 corpus-source-inventory doctrine-of-record. **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 10.
+- **In scope:** End-to-end content-source ingest for the seven Bestiary-line books enumerated above (per `decisions.md §34`). Per-monster-block cycles produce canonical monster entries that match the SD-22 corpus-source-inventory doctrine-of-record for the monster-bearing books; Bestiary 5 and Bestiary 6 use player-options cycles, and Monster Codex uses per-record-family cycles — see §"Book shape" and §"Epic structure" below. **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 10.
 - **Out of scope:** Bestiary 1 (closed in SD-22). Mythic monster appendices (separate treatment). NPC codex (separate, not in any current SD). Update-UI bug remediation (lifecycle-routed from SD-16, separate).
 - **Boundary with SD-22:** Bestiary 1 lives canonically in SD-22. SD-29 references Bestiary 1's canonical id only; does not redefine.
 
@@ -117,8 +124,10 @@ scan of every `pub const <NAME>: &[<RecordType>]` slice under
 `src/rules_core/rules_tables/beastiary<N>/`, the gate applies directly to every
 cycle in this bundle.
 
-**This bundle is the one most exposed by that gate, and the exposure is
-recorded, not hypothetical.** From `reach_gate.rs`'s `OPEN_FINDINGS`:
+**This bundle was the one most exposed by that gate, and the exposure was
+recorded, not hypothetical.** From `reach_gate.rs`'s `OPEN_FINDINGS`, as it
+read prior to 2026-08-01 (historical record, preserved below — see the
+supersession note that follows it):
 
 > Bestiary 1's 41 ingested monster stat blocks reach no surface. The only
 > consumers are `corpus_ingest_diagnostic` (a count) and `cache_gen::beastiary1`
@@ -128,20 +137,36 @@ recorded, not hypothetical.** From `reach_gate.rs`'s `OPEN_FINDINGS`:
 > tables. Remedy: a monster catalog command and browser, mirroring
 > `spell_catalog.rs` + SpellCatalogScreen.tsx.
 
-Bestiary 1's four ingested equipment records are in the same list, for the same
-reason.
+Bestiary 1's four ingested equipment records were in the same list, for the
+same reason.
 
-**So: no monster record in this codebase reaches a player today.** Ingesting
-three more bestiaries without the monster surface reproduces the defect at
-several times the scale, and the gate will fail the cycles rather than let it
-happen quietly.
+**Superseded, 2026-08-01.** The monster catalog command and browser this
+finding called for have shipped: `reach_gate.rs:840` now carries an executed
+reach claim for `("beastiary1", "monsters")` in place of the old
+`OPEN_FINDINGS` entry (comment at `:836` records the replacement);
+`apps/desktop/src-tauri/src/monster_catalog.rs`'s `list_monster_catalog`
+command is registered (`main.rs:57,197`); `MonsterCatalogScreen.tsx` is
+routed via `CharacterHubPage.tsx:104-105`, reachable from a "Browse Monster
+Catalog" button at `LandingScreen.tsx:353`. **Monster records now reach a
+player.** The gate's sole surviving finding is unrelated to the quote above:
+`beastiary1/race_traits` — the Duergar `Spell-Like Ability ~ Invisibility`
+record, upstream-blocked on `monster_codex` (`forward-scope-register.md
+§1.2`). `monster_codex` is in scope for this bundle per `decisions.md §34`,
+and Epic 13 (`epic-breakdown.md`) is expected to retire that finding as part
+of its bounded work.
 
-**Open operator question this package cannot decide for itself.** SD-29's epic
-structure contains no surface-building epic. Either the monster catalog command
-and browser land inside SD-29, or they are a named prerequisite outside it —
-possibly folded into the proposed Epic 7 (DM Toolkit extension), which is the
-nearest existing consumer of monster data. **The operator picks; this package
-does not add an epic on its own authority.** Skipping it is not available.
+**The "open operator question" below is resolved and preserved as historical
+record.** SD-29's epic structure at the time contained no surface-building
+epic; the operator resolved this by the monster catalog shipping outside a
+dedicated SD-29 epic (above), which independently satisfies the gate's
+Bestiary-1-monster-surface prerequisite regardless of whether Epic 7 (DM
+Toolkit extension) lands in-bundle. Original text: SD-29's epic structure
+contains no surface-building epic. Either the monster catalog command and
+browser land inside SD-29, or they are a named prerequisite outside it —
+possibly folded into the proposed Epic 7 (DM Toolkit extension), which is
+the nearest existing consumer of monster data. **The operator picks; this
+package does not add an epic on its own authority.** Skipping it is not
+available.
 
 ## Per-cycle repo tooling (process, not scope)
 
@@ -164,34 +189,39 @@ shared display name never implies a shared record. Join on `KEY:`; the trap
 report's per-book `KEY:` namespace listing is what tells you the right prefix
 to search under.
 
-## Epic structure (proposed)
+## Epic structure — SUPERSEDED, see `epic-breakdown.md`
 
-| Epic | Title | Fires | Notes |
-|------|-------|-------|-------|
-| 1 | Code-Side Identifier Cleanup | FIRST | Governance base requirement. Per SD-22 Epic 1 pattern. |
-| 2 | Operator Pre-Launch | Gating | Pre-launch checklist verification. |
-| 3 | Bestiary 2 content-source ingest | After Epic 2 | Per-monster-block cycles. |
-| 4 | Bestiary 3 content-source ingest | After Epic 2 | Per-monster-block cycles. |
-| 5 | Bestiary 4 content-source ingest | After Epic 2 | Per-monster-block cycles. |
-| 6 | Bestiary 5 content-source ingest | After Epic 2 | Per-monster-block cycles. |
-| 7 | DM Toolkit extension (consume Bestiary 2-5) | After Epics 3-6 | Optional-but-proposed. Operator-pinned whether in scope. |
-| 8 | Closure Epilogue | LAST | Tranche promotion version increment. |
-| 9 | Build Version Numbering | After Epic 1, before Epic 8 | First concrete value `0.6.<build>`. |
+The 9-epic / 4-book table this section previously carried (dated to the
+2026-07-28 stub, before the book list widened to seven and the epic count
+to thirteen) is superseded in full by `epic-breakdown.md`'s 13-epic
+structure and `decisions.md §14`'s `0.9.<build>` version target. Do not
+maintain a duplicate epic table here; `epic-breakdown.md` is the
+canonical source. Summary: Epic 1 (Identifier Cleanup, fires first) →
+Epic 2 (Operator Pre-Launch, gating) → Epics 3-6, 11-13 (per-book
+content-source ingest: B2, B3, B4, B5, B6, Bonus Bestiary, Monster
+Codex) → Epic 9 (Build Version Numbering, after Epic 1, before Epic 10)
+→ Epic 10 (Bundle Code Review, after Epic 9 and Epics 3-6/11-13, plus
+Epic 7 if in scope, before Epic 8) → Epic 8 (Closure Epilogue, fires
+last). See `epic-breakdown.md`'s "Recommended sequencing" for the full
+dependency diagram.
 
-**Acceptance criteria stub:** 30 criteria, 9 epics (matches SD-22 shape; +1 over SD-22 because the optional Epic 7 is proposed). Per-criterion detail deferred until book list is operator-pinned.
+**Acceptance criteria:** ~46 criteria across 13 epics (~3-4 per epic) —
+see `epic-breakdown.md:13`. The 30-criteria/9-epic figure this section
+previously carried was a stub estimate against the superseded four-book
+cut and is retired along with it.
 
 ## What is operator-pinned vs. doctrine
 
-- **Operator-pinned (NOT yet confirmed):** Book list (4 books), epics 3-6 per-book paths, per-book entity count, Epic 7 in-scope vs. separate-bundle decision, branch name, board name, build version target.
+- **Operator-pinned, confirmed 2026-08-01/02:** Book list (7 books, per `decisions.md §34`), epics 3-6 and 11-13 per-book paths, per-book entity count, Epic 7 in-scope vs. separate-bundle decision, branch name, board name, build version target. See `decisions.md §§13, 14, 15, 34` and the "Next step" section below.
 - **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme. `Workflow`-tool operating form (`decisions.md §23`, supersedes the prior `/loop /batch /goal` form at §7). Per-bundle progress file.
 
-## Next step
+## Next step (operator-pinned, confirmed 2026-08-01/02)
 
-When the operator is back at a real computer, this stub needs:
+All operator-pinned items are now confirmed:
 
-1. Operator confirms the book list (4 books).
-2. Operator confirms the per-book path locations.
-3. Operator decides whether Epic 7 (DM Toolkit extension to consume Bestiary 2-5) is in scope.
-4. Operator confirms the branch name + board name.
-5. Operator confirms the build version target.
-6. Operator decides whether the package promotes to `docs/release/SD-29-...-.../` in the repo now (planning-ready publish) or waits for first-cycle launch.
+1. **Book list confirmed** — seven books (Bestiary 2, 3, 4, 5, 6, Bonus Bestiary, Monster Codex), 2026-08-02 per `decisions.md §34`.
+2. **Per-book path locations confirmed** — `src/rules_core/rules_tables/<book>/` for each of the seven books, per the §"Book list" table above.
+3. **Epic 7 (DM Toolkit extension)** remains operator-pinned whether in scope, per-cycle at Epics 5 and 6 closure (`decisions.md §19`); its safe default absent an explicit call is the Class 3 (C3.1) retrofit per `successor-forward-scope-register.md C3.1`.
+4. **Branch name + board name confirmed** — `tranche/9` branch (cut from the post-SD-28 tip per `decisions.md §34`); Hermes board retired in favor of local-file `kanban.md` + `progress.md`, 2026-08-01 per `decisions.md §13`/§14a.
+5. **Build version target confirmed** — `0.9.<build>` per `<major>.<tranche-base>.<build>` scheme, 2026-08-01 per `decisions.md §14`.
+6. **Packaging decision confirmed** — the canonical repo-resident home is `docs/release/SD-29-bestiary-line-book-ingestion/`, with the chassis planning-ready at seven-book width per `decisions.md §34`.

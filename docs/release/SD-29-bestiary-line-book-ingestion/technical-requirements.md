@@ -28,7 +28,7 @@ Cycle writes are bounded to:
 
 - `src/rules_core/rules_tables/beastiary<N>/` (one bestiary per cycle).
 - `data/corpus/beastiary<N>/` (Shape B cache for the active bestiary).
-- `src/bin/sd29_*` (new) and `tests/sd29_*` (new) if the cycle requires them.
+- new bins under `src/bin/` and new tests under `tests/` named per the identifier-discipline doctrine (no `sd29_` prefix).
 - `docs/release/SD-29-.../` (the bundle's own docs — published; landed source removed by move-not-copy).
 
 Cycle writes MUST NOT touch:
@@ -113,7 +113,7 @@ Per `decisions.md §19`:
 
 Source-of-record `programs/codex/requirements/SD-29-.../` MUST be removed
 on the publish commit per `decisions.md §13`. The canonical
-repo-resident home is `docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/`.
+repo-resident home is `docs/release/SD-29-bestiary-line-book-ingestion/`.
 
 ## TR-29-012 — Local-file work-queue dispatch
 
@@ -124,7 +124,7 @@ enforced by the supervisor reading one card at a time.
 
 ## Produced artifacts
 
-- 15-file canonical chassis at `docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/` (after the move-not-copy publish lands).
+- 15-file canonical chassis at `docs/release/SD-29-bestiary-line-book-ingestion/` (after the move-not-copy publish lands).
 - `src/rules_core/rules_tables/beastiary{2,3,4,5}/` — four bestiaries' canonical records.
 - `data/corpus/beastiary{2,3,4,5}/` — Shape B cache per book.
 - Per-cycle artifacts under `artifacts/` — trap-reports, cycle-0 inventory findings, progress receipts.
@@ -138,4 +138,4 @@ The bundle closes when:
 2. Epic 7 (DM Toolkit extension) lands (in scope) or surfaces as a Class 1/3 retrofit.
 3. Epic 8 (Closure Epilogue) has opened and merged the tranche promotion PR.
 4. The workspace tree has been removed on the publish commit.
-5. The canonical 15-file chassis lives at `docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/`.
+5. The canonical 15-file chassis lives at `docs/release/SD-29-bestiary-line-book-ingestion/`.

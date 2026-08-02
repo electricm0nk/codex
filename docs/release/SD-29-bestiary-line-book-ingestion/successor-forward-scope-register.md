@@ -47,26 +47,42 @@ already canonical.
 records for the encounter builder + party-CR math. Cycles do not
 interleave with Epic 7 until Epic 3-6 close.
 
-**Status:** Epic 7 is in scope, gated at cycle-0 per `decisions.md §18`.
+**Status:** Epic 7 is optional, operator-pinned; absent an explicit call it takes the safe default of a Class 3 (C3.1) retrofit per §C3.1 below, per `decisions.md §19`.
 
 ## Class 2 — Future-acquired (deferred)
 
-### C2.1 — Bestiary 6 + Bonus Bestiary drop-in
+### C2.1 — Bestiary 6 + Bonus Bestiary drop-in [SUPERSEDED — decisions.md §34, 2026-08-02]
 
-The 07-30 scope-draft flagged that Bestiary 5 has no `monster` records
-(player-options dataset). Bestiary 6 + Bonus Bestiary are listed in the
-07-30 scope-draft as drop-in replacements for Bestiary 5. Cycle-0
-trap-report + inventory runs first; the swap fires only if operator
-prefers B6 + Bonus over B5's player-options cycles.
+**Superseded.** Bestiary 6 and Bonus Bestiary are no longer contingent
+swap-in candidates for Bestiary 5 — `decisions.md §34` (operator directive
+2026-08-02) commits all seven books, including these two, as in-scope
+alongside Bestiary 5, not as a replacement for it. See `epic-breakdown.md`
+Epics 11 (Bestiary 6) and 12 (Bonus Bestiary).
 
-### C2.2 — Monster catalog command and browser
+**Original text, preserved as historical record:** The 07-30 scope-draft
+flagged that Bestiary 5 has no `monster` records (player-options dataset).
+Bestiary 6 + Bonus Bestiary are listed in the 07-30 scope-draft as drop-in
+replacements for Bestiary 5. Cycle-0 trap-report + inventory runs first;
+the swap fires only if operator prefers B6 + Bonus over B5's
+player-options cycles.
 
-Bestiary 1's 41 ingested monsters reach no surface today (per
-`reach_gate.rs OPEN_FINDINGS`). The remedy proposed by the 07-30
-scope-draft is "a monster catalog command and browser, mirroring
-`spell_catalog.rs` + `SpellCatalogScreen.tsx`." This is a separate
-surface-building epic. SD-29's Epic 7 (DM Toolkit extension) is the
-nearest existing consumer; the surface-build epic itself is deferred.
+### C2.2 — Monster catalog command and browser [RETIRED — 2026-08-01]
+
+**Retired.** The monster catalog command and browser this item deferred
+have shipped: `reach_gate.rs:840` carries an executed reach claim for
+`("beastiary1", "monsters")` in place of the old `OPEN_FINDINGS` entry;
+`apps/desktop/src-tauri/src/monster_catalog.rs`'s `list_monster_catalog`
+command is registered (`main.rs:57,197`); `MonsterCatalogScreen.tsx` is
+routed via `CharacterHubPage.tsx:104-105`, reachable from a "Browse Monster
+Catalog" button at `LandingScreen.tsx:353`. The deferred work this item
+named no longer exists as an open item.
+
+The surviving related item is the `beastiary1/race_traits` Duergar
+`Spell-Like Ability ~ Invisibility` record — the sole remaining
+`OPEN_FINDINGS` entry, upstream-blocked on `monster_codex`. That record is
+now expected to be addressed by Epic 13 (`monster_codex` is in scope per
+`decisions.md §34`) — see `epic-breakdown.md` Epic 13 and
+`forward-scope-register.md §1.2`.
 
 ### C2.3 — Bulk-modification retrofit
 
@@ -81,13 +97,19 @@ discipline.
 
 If Epic 7 (DM Toolkit extension) does not land inside SD-29, it
 surfaces as a Class 3 retrofit: separate bundle that consumes
-`beastiary<N>/` slices. Operator-pinned per-cycle at Epic 5/6 closure.
+`beastiary<N>/` slices. Operator-pinned per-cycle at Epics 5 and 6 closure.
 
-### C3.2 — Bestiary 6 + Bonus Bestiary ingestion
+### C3.2 — Bestiary 6 + Bonus Bestiary ingestion [SUPERSEDED — decisions.md §34, 2026-08-02]
 
-If operator prefers Bestiary 6 + Bonus Bestiary over Bestiary 5 (per
-`decisions.md §18`), a retrofit bundle adds them. Cycle-0 trap-report +
-inventory produces the per-book shape finding.
+**Superseded.** This is no longer an operator-on-request retrofit —
+`decisions.md §34` commits Bestiary 6 and Bonus Bestiary as in-scope
+content epics (`epic-breakdown.md` Epics 11 and 12) inside SD-29 itself,
+not a separate bundle.
+
+**Original text, preserved as historical record:** If operator prefers
+Bestiary 6 + Bonus Bestiary over Bestiary 5 (per `decisions.md §18`), a
+retrofit bundle adds them. Cycle-0 trap-report + inventory produces the
+per-book shape finding.
 
 ## Review trigger
 

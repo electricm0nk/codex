@@ -12,7 +12,7 @@ claim (per `decisions.md §14a` local-file dispatch + `loop-instruction.md`
 **Date:** 2026-08-01
 **Cycle ID:** `SD29-LAND-1`
 **Operator:** Todd Hintzmann (directive 2026-08-01)
-**Surface:** this directory (`programs/codex/requirements/SD-29-bestiary-2-3-4-5-content-ingestion/`)
+**Surface:** this directory (`docs/release/SD-29-bestiary-line-book-ingestion/`)
 
 ### What landed
 
@@ -32,7 +32,7 @@ claim (per `decisions.md §14a` local-file dispatch + `loop-instruction.md`
 
 | Check | Status |
 |-------|--------|
-| `kanban.md` exists | PENDING (lands this cycle) |
+| `kanban.md` exists | DONE 2026-08-02 — kanban.md present, 13 dispatch-ordered cards (epics 1–13) |
 | Branch `tranche/9` pushed to origin | PENDING (operator action at cycle launch) |
 | OAuth credentials valid | PENDING (operator action at cycle launch) |
 | Working tree clean | ASSUMED (pre-launch verification) |
@@ -40,17 +40,14 @@ claim (per `decisions.md §14a` local-file dispatch + `loop-instruction.md`
 
 ### Next cycle
 
-The next cycle is Epic 2's pre-flight: create `kanban.md` with the four
-per-book epics (Epics 3-6) as ready cards; verify branch + OAuth + tree
-state; run cycle-0 trap-report + work-inventory for all four bestiaries
-(B5's shape finding determines Epic 6's cycle shape).
+The next cycle is Epic 2's pre-flight: claim from the existing 13-card `kanban.md` board (epics 1-13 as dispatch-ordered cards); verify branch + OAuth + tree state; run cycle-0 trap-report + work-inventory for all four bestiaries (B5's shape finding determines Epic 6's cycle shape).
 
 ## Cycle 0.0+1 — Unattended-mode acknowledgment (operator directive 2026-08-01)
 
 **Date:** 2026-08-01
 **Cycle ID:** `SD29-LAND-2` (unattended-mode directive landing)
 **Operator:** Todd Hintzmann (out of town per directive)
-**Surface:** this directory (`docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/`)
+**Surface:** this directory (`docs/release/SD-29-bestiary-line-book-ingestion/`)
 
 ### What landed
 
@@ -90,6 +87,10 @@ retrofit — record `decision-blocked` in this file with the recorded reason and
 proceed on the safe default (retrofit; Epic 7 lands inside SD-29's epic
 structure only if Epic 3-6 per-book cycles complete with reach-gate claims and
 the toolkit-extension scope is operator-pinned in scope before Epic 7 fires).
+
+## Pre-launch readiness audit (2026-08-02)
+
+**2026-08-02 pre-launch readiness pass (operator-side):** branch tip at audit: b63cda4e on tranche/8 (tranche/9 cut deferred to SD-29 launch per decisions.md §34). Scope operator-pinned to the 7-book cut (adds bestiary_6, bonus_bestiary, monster_codex — Epics 11–13). Launch-readiness fixes applied across the package; decisions §21–§34 landed. Sequential launch after SD-28 closure.
 
 ---
 

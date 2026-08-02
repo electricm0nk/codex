@@ -20,7 +20,7 @@ When the cycle writes files.
 
 Then:
 
-- Files written under `src/rules_core/rules_tables/beastiary<bestiary>/`, `data/corpus/beastiary<bestiary>/`, `src/bin/sd29_*`, `tests/sd29_*`, or `docs/release/SD-29-.../`.
+- Files written under `src/rules_core/rules_tables/beastiary<bestiary>/`, `data/corpus/beastiary<bestiary>/`, new bins under `src/bin/`, new tests under `tests/` (named per identifier-discipline doctrine; no `sd29_` prefix), or `docs/release/SD-29-.../`.
 - No file written under `src/rules_core/pilot_compute.rs`, `src/rules_core/rules_tables/beastiary<other>/`, `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
 
 Evidence: per-cycle receipt carries the audit command and the captured exit code.
@@ -141,7 +141,7 @@ When the publish commit fires.
 Then:
 
 - The source-of-record directory (`programs/codex/requirements/SD-29-.../`) is removed.
-- The canonical repo-resident home (`docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/`) carries the 15-file chassis.
+- The canonical repo-resident home (`docs/release/SD-29-bestiary-line-book-ingestion/`) carries the 15-file chassis.
 
 ## AT-29-012 — Local-file work-queue dispatch
 

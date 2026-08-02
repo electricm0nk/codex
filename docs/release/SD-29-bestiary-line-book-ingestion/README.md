@@ -44,10 +44,17 @@ build_version_target: 0.9.<build>
 > anyway. That is the authority conflict this consolidation preserves rather than
 > resolves — see below.
 
-## Unresolved: planning-readiness
+## RESOLVED: planning-readiness (operator directive 2026-08-02)
 
-The two source packages make contradictory claims and **this consolidation does
-not adjudicate between them**:
+**Resolution:** Package B's register is signed off; the existing chassis
+(Package A's `scope-draft.md`, `decisions.md`, `epic-breakdown.md`, and the
+rest) is planning-ready at seven-book width — the chassis is retained and
+widened in place, not re-authored from a blank sign-off cycle. See
+`decisions.md §34`.
+
+**Pre-resolution record, preserved below.** The two source packages made
+contradictory claims and the original consolidation did not adjudicate
+between them:
 
 - **Package A** (`SD-29-bestiary-2-3-4-5-content-ingestion`, now merged into this
   directory's `scope-draft.md`, `decisions.md`, `epic-breakdown.md`, etc.) claims,
@@ -69,11 +76,17 @@ them, nor silently prefers one process over the other. Whichever way it resolves
 note that Package A's corpus-figure errors (below) are now corrected in place
 regardless of which package's planning-readiness claim stands.
 
-## Unresolved: scope width (4 books vs. 7 books)
+## RESOLVED: scope width (4 books vs. 7 books) (operator directive 2026-08-02)
 
-Not flagged in the original consolidation brief, found during this consolidation:
-the two packages do not just disagree on numbers, they disagree on **how many
-books are in scope**.
+**Resolution:** SD-29's scope is the wider seven-book cut — Bestiary 2, 3, 4,
+5, 6, Bonus Bestiary, and Monster Codex (Package B's scope). See
+`decisions.md §34` for the full ruling, verified per-book shapes, and the
+sequential-after-SD-28 launch order.
+
+**Pre-resolution record, preserved below.** Not flagged in the original
+consolidation brief, found during this consolidation: the two packages did
+not just disagree on numbers, they disagreed on **how many books are in
+scope**.
 
 - **Package A** scopes **four** books: Bestiary 2, 3, 4, 5 (see `scope-draft.md`
   "Book list", `decisions.md` Decision 1). Bestiary 6 and Bonus Bestiary appear only
@@ -148,16 +161,17 @@ until it reaches a player surface.
 ## Source STC contents (consolidated, 14 files)
 
 - `scope-draft.md` — Package A's committed scope shape, four bestiaries confirmed.
-- `decisions.md` — 21 decisions including the operator-pinned amendments of
-  2026-08-01, with consolidation-time figure corrections inline.
+- `decisions.md` — 35 decision headings (1–34, plus 14a) including the
+  operator-pinned amendments of 2026-08-01/02, with consolidation-time
+  figure corrections inline.
 - `loop-instruction.md` — per-cycle procedure; local-file dispatch via
   `kanban.md`/`progress.md`.
 - `forward-scope-register.md` — Package B's register: predecessor-deferral
   routing into SD-29, corpus-figure corrections (§1.3), operator sign-off gate.
 - `successor-forward-scope-register.md` — Package A's register (renamed):
   successor work depending on SD-29's output.
-- `epic-breakdown.md` — 9 epics × ~3 criteria = ~30 criteria; Closure Epilogue
-  fires LAST.
+- `epic-breakdown.md` — 13 epics × ~3-4 criteria = ~46 criteria; Closure
+  Epilogue fires LAST.
 - `technical-requirements.md` — pre-loop prerequisites + normative requirements +
   out-of-scope.
 - `technical-design.md` — architectural surface for the four bestiaries, including
@@ -190,8 +204,9 @@ B's register additionally scopes `bestiary_6`, `bonus_bestiary`, and
 
 ## In scope
 
-- **Bestiary 2, 3, 4** — per-monster-block cycles (322 / 261 / 220 verified base
-  race/monster rows respectively).
+- **Bestiary 2, 3, 4** — per-monster-block cycles (322 / 261 / 220 verified
+  base race-declaration rows respectively; sizing unit: `races.lst` rows,
+  not monster stat blocks).
 - **Bestiary 5** — player-options cycles (race / feat / companion-mod); confirmed
   0 base monster rows.
 - Reach-gate satisfaction for every record ingested (the reach gate is the

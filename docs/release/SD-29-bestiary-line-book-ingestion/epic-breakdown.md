@@ -10,12 +10,13 @@ companion_to: ./scope-draft.md, ./decisions.md
 
 # SD-29 Epic Breakdown
 
-10 epics × ~3-4 acceptance criteria = ~34 criteria. Mirrors SD-22's epic
-shape with the four-bestiary expansion, plus Epic 10's end-of-run code
-review (operator directive 2026-08-01, added post-launch).
+13 epics × ~3-4 acceptance criteria = ~46 criteria. Mirrors SD-22's epic
+shape with the seven-book expansion (Epics 3-6 and 11-13; `decisions.md
+§34`), plus Epic 10's end-of-run code review (operator directive
+2026-08-01, added post-authoring).
 
-Epic 1 fires FIRST. Epic 8 fires LAST. Epics 3-6 (per-bestiary) may run
-in any order post-Epic 2, but each bestiary is one cycle-batch. Epic 10
+Epic 1 fires FIRST. Epic 8 fires LAST. Epics 3-6, 11-13 (per-book) may run
+in any order post-Epic 2, but each book is one cycle-batch. Epic 10
 (Bundle Code Review) fires after Epic 9 and every content-ingest epic
 (including Epic 7, if in scope), before Epic 8.
 
@@ -64,7 +65,7 @@ Acceptance:
 - Branch `tranche/9` is pushed to origin (`git push -u origin tranche/9` succeeds).
 - `cargo run --locked --bin v06_work_inventory` regenerated `docs/work-inventory.json`; the four bestiaries' entries confirm per-book shape (kinds, files_not_enumerated, trap_hits, reconciliation).
 - `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>` ran for all four bestiaries; output recorded in `artifacts/<book>-cycle0-trap-report.md`.
-- For Bestiary 5: the trap-report + inventory confirms zero `monster` units; Epic 5 cycle runs player-options cycles instead. Cycle proceeds.
+- For Bestiary 5: the trap-report + inventory confirms zero `monster` units; Epic 6 cycle runs player-options cycles instead. Cycle proceeds.
 
 ## Epic 3 (SD29-E3) — Bestiary 2 content-source ingest
 
@@ -149,7 +150,7 @@ Acceptance:
 
 **Derived from:** `scope-draft.md §"Out of cycle ingestion and surfacing"` + `successor-forward-scope-register.md C1.2` + `decisions.md §19` (reach-gate-doD).
 
-**Status:** Operator-pinned whether in scope per-cycle at Epic 5/6 closure. If Epic 7 lands inside SD-29, it satisfies the reach gate's `OPEN_FINDINGS` Bestiary-1-monster-surface prerequisite. If deferred to a separate bundle, cycles pause on `decision-blocked` until the surface is built.
+**Status:** Operator-pinned whether in scope per-cycle at Epics 5 and 6 closure. If Epic 7 lands inside SD-29, it satisfies the reach gate's `OPEN_FINDINGS` Bestiary-1-monster-surface prerequisite. If deferred to a separate bundle, cycles record `decision-blocked` in `progress.md` and move to the next ready card.
 
 ### Feature seeds
 
@@ -169,7 +170,7 @@ Acceptance:
 
 **Objective:** Tranche promotion PR fires after all per-book + Epic 7 (if in scope) cycles closed.
 
-**Derived from:** `decisions.md §13` (operating form) + the build-version amendment (2026-07-17).
+**Derived from:** `decisions.md §23` (operating form) + the build-version amendment (2026-07-17).
 
 ### Feature seeds
 
@@ -186,8 +187,8 @@ Acceptance:
 
 Acceptance:
 
-- The source-of-record directory removed on the publish commit per `decisions.md §13`.
-- The canonical repo-resident home is `docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/`.
+- The source-of-record directory removed on the publish commit per `decisions.md §14`.
+- The canonical repo-resident home is `docs/release/SD-29-bestiary-line-book-ingestion/`.
 
 ## Epic 9 (SD29-E9) — Build Version Numbering
 
@@ -208,8 +209,8 @@ Acceptance:
 ## Epic 10 (SD29-E10) — Bundle Code Review
 
 **Objective:** A full code review of the bundle's entire diff against its
-branch point, run after every content-ingest epic (3-6), Epic 7 (DM Toolkit
-extension, if in scope), and Epic 9 (Build Version Numbering) are closed —
+branch point, run after every content-ingest epic (3-6, 11-13), Epic 7 (DM
+Toolkit extension, if in scope), and Epic 9 (Build Version Numbering) are closed —
 not in parallel with them, and not scoped to only the final cycle.
 `./scripts/verify.sh` passing is a **precondition** to this epic firing, not
 the review itself: a green gate says the tests that exist pass, it says
@@ -278,16 +279,141 @@ operator-triggered and billed — a cycle running under §22's unattended-mode
 protocol cannot launch it itself — so Epic 10 must stand on its own as the
 bundle's actual gate; `/code-review ultra` is a supplement, not a dependency.
 
+## Epic 11 (SD29-E11) — Bestiary 6 content-source ingest
+
+**Objective:** Per-race / per-class-feature / per-companion cycles for
+Bestiary 6 — a player-options dataset, the same shape as Bestiary 5. Zero
+monsters is the correct shape for this book, confirmed by
+`forward-scope-register.md §1.3` and the cycle-0 work-inventory run; it is
+not a sign of an incomplete cycle plan.
+
+**Derived from:** `decisions.md §34` (seven-book scope) +
+`forward-scope-register.md §1.1/§1.3` (63 units: 22 class_feature, 13
+race_trait, 2 spell, 26 companion).
+
+### Feature seeds
+
+#### SD29-E11-F1 — Race-trait records
+
+Acceptance:
+
+- Canonical race-trait records for Bestiary 6's 13 `race_trait` units in
+  `src/rules_core/rules_tables/beastiary6/`.
+- Reach-gate coverage for each race trait.
+
+#### SD29-E11-F2 — Class-feature records
+
+Acceptance:
+
+- Canonical class-feature records for Bestiary 6's 22 `class_feature`
+  units.
+- Reach-gate coverage for each class feature.
+
+#### SD29-E11-F3 — Companion + spell records
+
+Acceptance:
+
+- Canonical companion records for Bestiary 6's 26 `companion` units and
+  spell records for its 2 `spell` units.
+- Cycle-0 trap-report output confirms zero `monster` units before the
+  cycle proceeds (per Epic 2's inventory gate).
+
+## Epic 12 (SD29-E12) — Bonus Bestiary content-source ingest
+
+**Objective:** Per-monster-block cycles for Bonus Bestiary's 14 monsters,
+plus its 17 race-trait and 3 class units. The smallest of the seven books.
+
+**Derived from:** `decisions.md §34` (seven-book scope) +
+`forward-scope-register.md §1.1/§1.3` (34 units: 3 class, 17 race_trait,
+14 monster; 4 `.lst` files including `bb_races.lst`).
+
+### Feature seeds
+
+#### SD29-E12-F1 — Monster records
+
+Acceptance:
+
+- One canonical record per monster block for Bonus Bestiary's 14 monsters
+  in `src/rules_core/rules_tables/bonus_bestiary/`.
+- Reach-gate claim executes the real IPC builder for each monster.
+- Trap-report output recorded in `artifacts/bb-trap-report.md`.
+
+#### SD29-E12-F2 — Race-trait population
+
+Acceptance:
+
+- Canonical race-trait records for the 17 `race_trait` units, including
+  `bb_races.lst`'s base declarations.
+
+#### SD29-E12-F3 — Class records
+
+Acceptance:
+
+- Canonical class records for the 3 `class` units.
+
+## Epic 13 (SD29-E13) — Monster Codex content-source ingest
+
+**Objective:** Per-record-family cycles for Monster Codex — **not**
+per-monster-block. The book's payload is player-and-NPC options for races
+that already exist (72 class features, 32 feats, 24 spells, 45 equipment,
+4 equipment modifiers, 19 race-trait rows, 15 companion kits), plus only 2
+monster declarations. Sizing this epic as a monster ingest produces a
+cycle plan that does not match the book (`forward-scope-register.md
+§1.3` Correction 2).
+
+**Derived from:** `decisions.md §34` (seven-book scope) +
+`forward-scope-register.md §1.1/§1.3` (213 units total) + `§1.2` (the
+Duergar upstream-blocker finding).
+
+### Feature seeds
+
+#### SD29-E13-F1 — Class-feature and feat records
+
+Acceptance:
+
+- Canonical records for the 72 `class_feature` and 32 `feat` units in
+  `src/rules_core/rules_tables/monster_codex/`.
+
+#### SD29-E13-F2 — Spell and equipment records
+
+Acceptance:
+
+- Canonical records for the 24 `spell`, 45 `equipment`, and 4
+  `equipment_modifier` units.
+
+#### SD29-E13-F3 — Race-trait records, including the Duergar upstream-blocker retirement attempt
+
+Acceptance:
+
+- Canonical records for the 19 `race_trait` units read from
+  `mc_abilities_race.lst` and the book's other race-trait sources.
+- **This epic is the upstream blocker of the surviving
+  `beastiary1/race_traits` `OPEN_FINDINGS` entry** — the Duergar
+  `Spell-Like Ability ~ Invisibility` record
+  (`forward-scope-register.md §1.2`, `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs`).
+  The cycle that ingests `mc_abilities_race.lst`'s
+  `FACT:Duergar_ReplaceSLAEnlargePerson|True` row (`Duergar ~ Ironskinned`,
+  line 16) is expected to retire that finding. The cycle records the
+  outcome either way — the finding closing, or a documented reason it did
+  not — rather than silently ingesting the row without checking.
+
+#### SD29-E13-F4 — Companion-kit records
+
+Acceptance:
+
+- Canonical records for the 15 `companion` units (companion kits).
+- Trap-report output recorded in `artifacts/mc-trap-report.md`.
+
 ## Recommended sequencing (dependency order, not exclusive scope)
 
 ```
-E1 → E2 → E3, E4, E5, E6 (any order, file-disjoint) → E7 (gated) → E9 → E10 → E8
+E1 → E2 → {E3, E4, E5, E6, E11, E12, E13} (any order, file-disjoint) → E7 (gated) → E9 → E10 → E8
 ```
 
 Per-book epics are file-disjoint by source path (each writes to its own
-`src/rules_core/rules_tables/beastiary<N>/`), so they can run in parallel
+`src/rules_core/rules_tables/<book>/`), so they can run in parallel
 under operator-pinned concurrency. Epic 7 (DM Toolkit extension) is
-gated on Epic 3-6 closure per `decisions.md §18`. Epic 10 (Bundle Code
+gated on Epic 3-6, 11-13 closure per `decisions.md §19`. Epic 10 (Bundle Code
 Review) runs after every other epic but Epic 8 — any review finding is
 fixed before the tranche-promotion PR (part of Epic 8) opens.
 
@@ -295,10 +421,10 @@ fixed before the tranche-promotion PR (part of Epic 8) opens.
 
 SD-29 closes when:
 
-- All Epic 3-6 per-book cycles `complete` with reach-gate claims and trap-report outputs.
+- All Epic 3-6, 11-13 per-book cycles `complete` with reach-gate claims and trap-report outputs.
 - Epic 7 (DM Toolkit extension) lands (in scope) or surfaces as a Class 1/3 retrofit.
 - Epic 10 (Bundle Code Review) closed, all findings triaged with named owners for deferrals.
 - `progress.md` carries the closure receipt.
 - `release-notes.md` is populated.
 - The tranche-promotion PR `tranche/9 → develop` is opened and merged.
-- `docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/` carries the canonical 15-file chassis (post-move-not-copy publish).
+- `docs/release/SD-29-bestiary-line-book-ingestion/` carries the canonical 14-file chassis (post-move-not-copy publish).
