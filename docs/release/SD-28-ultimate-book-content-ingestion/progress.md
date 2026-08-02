@@ -783,3 +783,171 @@ question has been operator-answered or otherwise resolved (check
 status), and (3) only once both are clear, proceed to Step 3 (TDD
 implementation) using this cycle's Step 0/0b/1b findings above as the
 starting shape.
+
+## Cycle `SD28-E6-F1-001` — Card `epic-6-ui` (Ultimate Intrigue)
+
+**Date:** 2026-08-01
+**Actor:** `epic-6-ui`
+**Card:** `epic-6-ui` (kanban.md row 6) — claimed `IN-FLIGHT` at
+2026-08-01T00:00:00Z. **Not closed this cycle** — see "What did not land" below.
+
+### What landed (cycle-open steps only)
+
+- **Step 0 (shape):** `cargo run --locked --bin v06_work_inventory` → exit 0.
+  `docs/work-inventory.json` `books[]` entry for `ultimate_intrigue`:
+  `scope: "future_state"`, `engine_rule_set: null` (no compiled `RuleSetId`
+  variant exists yet — re-confirmed with
+  `grep -rn "UltimateIntrigue\|ultimate_intrigue" src/ apps/desktop/src-tauri/src/ --include=*.rs`
+  → zero matches). `kinds`: class 3, class_feature 931, race_trait 17,
+  feat 107, spell 101, equipment 91, equipment_modifier 14, companion 1 —
+  all `"status": "not-started"`. `trap_hits` dominated by `mod_record: 262`,
+  `comment_or_disabled: 341`, `internal_namespace: 48`.
+- **Step 0b (trap report, book dir, before any ingest code):**
+  `cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue`
+  → **exit 0**. 950 `namespaced-key` findings (largest namespaces: `Refined
+  Education` 94, `Social Grace` 85, `Vigilante Talent` 74, `Skinshaper` 32,
+  `Refined Education Unlock` 25), 45 `governing-token-hidden-by-filter`
+  findings (e.g. `Combat Skill` carries `MULT`/`STACK`/`CHOOSE` alongside
+  BONUS/PRE), and several `DEFINE`d-to-0-here findings whose real value is
+  granted elsewhere (e.g. `Vigilante Specialization` — `VigilanteIsAvenger`
+  / `VigilanteIsStalker`). All informational per the tool's own footer;
+  none is a defect.
+- **Step 1/1b (re-derive; corrects two book-shape notes carried in this
+  cycle's dispatch brief):**
+  - `.pcc` discovery: `find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -maxdepth 1 -iname '*.pcc'`
+    → `_ultimate_intrigue.pcc` (**leading underscore**). The dispatch
+    brief for this cycle stated "glob `*.pcc` (not `_*.pcc`)" for this
+    book; that is wrong — Ultimate Intrigue is one of the five books
+    `loop-instruction.md`'s own corpus-shape notes already correctly flag
+    as underscore-prefixed (only `ultimate_equipment.pcc` and
+    `ultimate_psionics.pcc` lack the underscore). **Correction recorded**
+    via `scripts/retro.py correction` below.
+  - `.lst` file count (recursive): `find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -iname '*.lst' | wc -l`
+    → **21**. Subdirectory breakdown: `find ... -iname '*.lst' -path '*support*' | wc -l`
+    → **5** (24% of 21); `find ... -iname '*.lst' -path '*_pfs*' | wc -l`
+    → **0** — Ultimate Intrigue has **no `_pfs/` directory at all**, matching
+    `loop-instruction.md`'s note "UI and UW have only `support/`". The
+    dispatch brief's "34% of them sit in support/ and `_pfs/`" figure is
+    the whole-bundle aggregate, not UI-specific; there is nothing to
+    exclude for `_pfs/` in this book (0 files), so the exclusion is
+    recorded here as a no-op, not dropped silently.
+  - Feat count: `grep -c 'CATEGORY:FEAT' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst`
+    → **104** at the top level; recursive total including
+    `support/ui_feats_oa.lst` via
+    `find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -iname '*.lst' -exec grep -c 'CATEGORY:FEAT' {} \; | awk '{s+=$1} END{print s}'`
+    → **108**, matching `work-inventory.json`'s `feat: 107` closely enough
+    to be within its own dedup/`.MOD` handling (not re-derived further this
+    cycle — feat ingest itself is blocked, see below).
+  - License: `SOURCESHORT:UI` (confirmed against `loop-instruction.md`'s
+    note). `OGL.txt` exists on disk at the book root *and* `_ultimate_intrigue.pcc`
+    carries `COPYRIGHT:` blocks — both mechanisms present for this book (UC/UPsi's
+    asymmetry per `loop-instruction.md` does not apply to UI).
+  - Class overlap note (re-confirmed, not re-derived numerically — this is
+    a scope-boundary check, not a count): Occultist/Spiritualist/Medium/
+    Mesmerist class content in this corpus is canonical-to-SD-30 per
+    `decisions.md`/`loop-instruction.md`'s Cross-bundle-references section;
+    any future ingest cycle for this book references the canonical class
+    id only, never re-derives or forks it here.
+- **Step 1c (disk preflight):** `./scripts/verify.sh --only preflight-disk`
+  → PASS, exit 0 (repo fs 21% used, 385G available).
+- **Step 2 (claim):** `kanban.md` row 6 edited to `IN-FLIGHT`,
+  `Claimed-by: epic-6-ui`, `Claimed-at: 2026-08-01T00:00:00Z`,
+  `Cycle-id: SD28-E6-F1-001`.
+
+### What did not land, and why (decision-blocked — repo-wide precondition, same as `epic-3-uc`/`epic-4-um`/`epic-5-ue`)
+
+`decision-blocked`: **Full Ultimate Intrigue TDD ingest (new `RuleSetId`
+variant, ingest code, `reach_gate.rs` claim, wired-integration audit,
+on-screen verification) was not attempted this cycle.**
+
+Repo-wide DoD item 3 precondition, re-checked fresh this cycle (not carried
+forward from a sibling receipt): `cargo run --locked --bin
+v06_corpus_trap_report -- --audit` (piped to a file, exit code read
+directly, never through a pipe) → **exit 2**, the same 9
+`key-differs-from-name` defects on
+`pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst`
+(`Naturalist Summon Nature's Ally I..IX` filed under the bare `Summon
+Nature's Ally I..IX` identity) already recorded by `epic-3-uc`
+(`SD28-E3-F1-001`), `epic-4-um` (`SD28-E4-F1-001`), and `epic-5-ue`
+(`SD28-E5-F1-001`). This is SD-22 (closed, doctrinal-read-only) ACG
+content, out of `epic-6-ui`'s write scope — the same repo-wide blocker,
+recorded a fourth time, not a new instance. Per "Hard stops" in
+`loop-instruction.md` ("A figure derived this cycle disagrees with a
+figure recorded in this package... Investigate which is wrong and report")
+this cycle investigated: the figure agrees exactly with the three prior
+receipts, so it is not disagreement — it is confirmation the blocker is
+still live and untouched by any intervening cycle.
+
+Separately, `ultimate_intrigue` carries `scope: "future_state"` and
+`engine_rule_set: null` in `docs/work-inventory.json` — no compiled
+`RuleSetId` variant exists for this book yet (re-confirmed above). Even
+absent the repo-wide blocker, a from-scratch `RuleSetId` variant plus
+parser hookup plus a reach-claim surface is exactly the class of
+cross-cutting engine work the "Hard stops" rule reserves for explicit
+scope decision, not a single per-book cycle's silent invention. This cycle
+does not add that surface unilaterally.
+
+No ingest code, `RuleSetId` variant, or `reach_gate.rs` claim was written
+this cycle; none is claimed as done. `./scripts/verify.sh` (full) was not
+run against new production code because none was written; the
+disk-preflight subset above stands as this cycle's only `verify.sh`
+invocation, consistent with `epic-4-um`/`epic-5-ue`'s precedent for a
+decision-blocked cycle.
+
+### Commands run (every figure re-derived)
+
+```sh
+cargo run --locked --bin v06_work_inventory                                                                                             # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue      # exit 0
+cargo run --locked --bin v06_corpus_trap_report -- --audit                                                                                # exit 2 (pre-existing ACG finding, out of scope)
+grep -rn "UltimateIntrigue\|ultimate_intrigue" src/ apps/desktop/src-tauri/src/ --include=*.rs                                            # (no matches)
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -maxdepth 1 -iname '*.pcc'                          # _ultimate_intrigue.pcc
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -iname '*.lst' | wc -l                              # 21
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -iname '*.lst' -path '*support*' | wc -l            # 5
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -iname '*.lst' -path '*_pfs*' | wc -l               # 0
+grep -c 'CATEGORY:FEAT' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst                     # 104
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -iname '*.lst' -exec grep -c 'CATEGORY:FEAT' {} \; | awk '{s+=$1} END{print s}'  # 108
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue -iname 'OGL*'                                       # OGL.txt
+grep -i 'SOURCESHORT' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/_ultimate_intrigue.pcc             # SOURCESHORT:UI
+./scripts/verify.sh --only preflight-disk                                                                                                 # exit 0
+```
+
+### Retro events
+
+`scripts/retro.py correction --subject "epic-6-ui dispatch brief" --claimed
+"glob *.pcc (not _*.pcc) for ultimate_intrigue" --actual
+"_ultimate_intrigue.pcc — leading underscore, matching
+loop-instruction.md's own corpus-shape note that only ultimate_equipment
+and ultimate_psionics lack the underscore" --verified-by "find
+~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue
+-maxdepth 1 -iname '*.pcc'" — emitted this cycle to
+`docs/retro/events/epic-6-ui.jsonl`.
+
+`scripts/retro.py deferral --actor epic-6-ui --what "Ultimate Intrigue TDD
+ingest, new RuleSetId variant, reach_gate claim, wired-integration audit,
+on-screen verification" --reason "repo-wide v06_corpus_trap_report
+--audit exits 2 on the same pre-existing, out-of-scope ACG
+key-differs-from-name finding epic-3-uc/epic-4-um/epic-5-ue already
+recorded (fourth confirmation, not a new instance); separately,
+ultimate_intrigue is scope:future_state / engine_rule_set:null in
+work-inventory.json — no RuleSetId variant exists, and inventing one
+unilaterally in a single per-book cycle is exactly the cross-cutting
+engine work the hard-stops rule reserves for explicit scope decision"
+--scope "one book epic (epic-6-ui)" --blocked-by "ACG
+key-differs-from-name fix (out of SD-28 write scope); RuleSetId variant +
+parser hookup for ultimate_intrigue (not yet scoped to a single-book
+cycle)" --tracked-at
+"docs/release/SD-28-ultimate-book-content-ingestion/progress.md
+SD28-E6-F1-001"` — emitted this cycle to `docs/retro/events/epic-6-ui.jsonl`.
+
+### Kanban
+
+`epic-6-ui` remains `IN-FLIGHT`, `Claimed-by: epic-6-ui`, `Cycle-id:
+SD28-E6-F1-001`. Not moved to `COMPLETE`. Next cycle against this card
+should: (1) confirm whether the ACG audit finding has been fixed by
+another epic/session (check `epic-3-uc`/`epic-4-um`/`epic-5-ue`'s cards
+and this file for a newer receipt first), (2) confirm whether a
+`RuleSetId` variant for `ultimate_intrigue` has been added by an
+intervening cycle, and (3) only once both are clear, proceed to Step 3
+(TDD implementation) using this cycle's Step 0/0b/1b findings above as the
+starting shape.
