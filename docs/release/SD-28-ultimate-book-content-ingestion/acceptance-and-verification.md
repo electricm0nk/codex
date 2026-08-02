@@ -20,7 +20,7 @@ When the cycle writes files.
 
 Then:
 
-- Files written under `src/rules_core/rules_tables/<book>/`, `data/corpus/<book>/`, `src/bin/sd28_*`, `tests/sd28_*`, or `docs/release/SD-28-.../`.
+- Files written under `src/rules_core/rules_tables/<book>/`, `data/corpus/<book>/`, new bins under `src/bin/`, new tests under `tests/` (named per identifier-discipline doctrine; no `sd28_` prefix), or `docs/release/SD-28-.../`.
 - No file written under `src/rules_core/pilot_compute.rs`, `src/rules_core/rules_tables/<other_book>/`, `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
 
 Evidence: per-cycle receipt carries the audit command and the captured exit code.

@@ -29,7 +29,7 @@ Cycle writes are bounded to:
 - `src/rules_core/rules_tables/ultimate_<paizo-book>/` (one book per cycle).
 - `src/rules_core/rules_tables/ultimate_psionics/` (Dreamscarred Press tier).
 - `data/corpus/<book>/` (Shape B cache for the active book).
-- `src/bin/sd28_*` (new) and `tests/sd28_*` (new) if the cycle requires them.
+- new bins under `src/bin/` and new tests under `tests/` named per the identifier-discipline doctrine (no `sd28_` prefix).
 - `docs/release/SD-28-.../` (the bundle's own docs — published; landed source removed by move-not-copy).
 
 Cycle writes MUST NOT touch:
