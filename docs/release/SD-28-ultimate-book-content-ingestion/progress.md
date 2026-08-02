@@ -951,3 +951,171 @@ and this file for a newer receipt first), (2) confirm whether a
 intervening cycle, and (3) only once both are clear, proceed to Step 3
 (TDD implementation) using this cycle's Step 0/0b/1b findings above as the
 starting shape.
+
+## Cycle SD28-E7-F1-001 — `epic-7-ucam` (Ultimate Campaign)
+
+**Date:** 2026-08-01
+**Cycle ID:** `SD28-E7-F1-001`
+**Claim:** kanban.md row 7 → `Status: IN-FLIGHT`,
+`Claimed-by: epic-7-ucam`, `Claimed-at: 2026-08-01T00:00:00Z`,
+`Cycle-id: SD28-E7-F1-001`.
+
+### Step 0 — shape (`v06_work_inventory`)
+
+`cargo run --locked --bin v06_work_inventory` → exit 0. `ultimate_campaign`
+entry in `docs/work-inventory.json`: `scope: "future_state"`,
+`engine_rule_set: null`, `files_enumerated: 1` (only the `.pcc`),
+`kinds: {"feat": {"units": 23, "by_status": {"not-started": 23}}}`. The
+book-specific brief's "~23 inventory units is the correct shape" is
+confirmed exactly, not approximately — 23, re-derived, matches.
+
+Note the work-inventory's `kinds` map shows only `feat` — its `Kind`
+mapping folds traits/drawbacks/retraining records under the `feat` kind
+for this book (a work-inventory taxonomy fact, not a corpus fact); the
+corpus itself has separate trait/drawback/retraining files as enumerated
+below.
+
+### Step 0b — trap report (before any ingest code)
+
+`cargo run --locked --bin v06_corpus_trap_report --
+~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_campaign`
+→ exit 0. Findings, all upstream-legitimate per the tool's own footer ("Everything
+above is legitimate upstream data... Nothing here is a reason to fail a
+build"):
+
+- `comment-or-disabled`: ~81 (78 shown + header)
+- `key-differs-from-name`: 271 — every trait/drawback/retraining record is
+  namespaced (`Drawback ~ Attached`, `Trait ~ ...`, `Retrain ~ ...`,
+  `Retraining ~ ...`, `Deathtouched ~ ...`); joining on display name would
+  merge distinct records.
+- `namespaced-key`: 271 (same records, flagged from the opposite side)
+- `define-zero-value-elsewhere`: 1 (`RetrainingDaysSpent` DEFINEd to 0 in
+  `uca_abilities_retraining.lst:6`, granted via `BONUS:VAR` elsewhere in
+  the same file)
+- `governing-token-hidden-by-filter`: 81 (`MULT`/`STACK`/`CHOOSE` alongside
+  BONUS/PRE on retraining records)
+- KEY namespaces in this book: `Trait` (154), `Retrain` (50), `Retraining`
+  (48), `Drawback` (17), `Deathtouched` (2).
+
+**`_pfs/` exclusion (stated per instruction, not dropped silently):** this
+cycle's inventory and trap-report both exclude
+`ultimate_campaign/_pfs/pfs_uca_abilities_drawbacks.lst` and
+`ultimate_campaign/_pfs/pfs_uca_abilities_traits.lst` (2 files, confirmed
+below) — Pathfinder Society legality overrides, deliberately out of scope
+per `loop-instruction.md` "Corpus shape notes."
+
+### Step 1b — re-derivation (every figure, own command)
+
+```sh
+BOOK=~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_campaign
+find "$BOOK" -maxdepth 1 -iname '*.pcc'                                   # _ultimate_campaign.pcc (leading underscore)
+find "$BOOK" -iname '*.lst' | wc -l                                       # 11 (recursive)
+find "$BOOK" -maxdepth 1 -iname '*.lst' | wc -l                           # 9 (top-level)
+find "$BOOK" -iname '*.lst' -path '*_pfs*' | wc -l                        # 2
+find "$BOOK" -iname '*.lst' -path '*support*' | wc -l                     # 0 (no support/ dir in this book)
+grep -i SOURCESHORT "$BOOK"/*.pcc                                          # SOURCESHORT:UCA
+grep -c 'KEY:' "$BOOK"/uca_abilities_drawbacks.lst                        # 17
+grep -c 'KEY:' "$BOOK"/uca_abilities_retraining.lst                       # 83
+grep -c 'KEY:' "$BOOK"/uca_abilities_traits.lst                           # 233
+grep -c '"book": "ultimate_campaign"' docs/work-inventory.json            # 23 (inventory units)
+grep -rn "UltimateCampaign\|ultimate_campaign" src/ apps/desktop/src-tauri/src/ --include=*.rs  # (no matches)
+cargo run --locked --bin v06_corpus_trap_report -- --audit                # exit 2 (pre-existing, out-of-scope ACG finding)
+./scripts/verify.sh --only preflight-disk                                 # exit 0
+```
+
+**Correction to the dispatch brief:** the brief said "glob `*.pcc` (not
+`_*.pcc`)" for this book. `find "$BOOK" -maxdepth 1 -iname '*.pcc'`
+returns `_ultimate_campaign.pcc` — a leading underscore, the opposite of
+what the brief stated, matching `loop-instruction.md`'s own corpus-shape
+note that only `ultimate_equipment` and `ultimate_psionics` lack the
+underscore. `epic-6-ui`'s receipt (`SD28-E6-F1-001`) recorded the
+identical brief error for `ultimate_intrigue`; this is a second, book-2
+confirmation the same brief-authoring mistake repeats per book, not a
+new class of error.
+
+**Book-directory naming note (not a defect):** the brief's "9 top-level
+`.lst` files" is confirmed exactly (9). "34% of them sit in support/ and
+_pfs/" (a repo-wide loop-instruction figure) does not apply file-for-file
+to this specific book, which has `_pfs/` only (2 files) and no `support/`
+dir at all — consistent with `loop-instruction.md`'s own per-book
+breakdown ("UM, UE and UCam have only `_pfs/`").
+
+### Step 0 / Step 1b cross-check — engine RuleSetId
+
+`docs/work-inventory.json`'s `ultimate_campaign` entry carries
+`"scope": "future_state"` and `"engine_rule_set": null`, and
+`grep -rn "UltimateCampaign\|ultimate_campaign" src/
+apps/desktop/src-tauri/src/ --include=*.rs` returns no matches — no
+compiled `RuleSetId` variant exists for this book, the same shape
+`epic-6-ui` found for `ultimate_intrigue`.
+
+### What did not land, and why (decision-blocked — repo-wide precondition, same as `epic-3-uc`/`epic-4-um`/`epic-5-ue`/`epic-6-ui`)
+
+`decision-blocked`: **Full Ultimate Campaign TDD ingest (new `RuleSetId`
+variant, ingest code, `reach_gate.rs` claim, wired-integration audit,
+on-screen verification) was not attempted this cycle.**
+
+Repo-wide DoD item 3 precondition, re-checked fresh this cycle:
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 2**,
+the same 9 `key-differs-from-name` defects on
+`pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst`
+(`Naturalist Summon Nature's Ally I..IX` filed under the bare `Summon
+Nature's Ally I..IX` identity) already recorded by `epic-3-uc`
+(`SD28-E3-F1-001`), `epic-4-um` (`SD28-E4-F1-001`), `epic-5-ue`
+(`SD28-E5-F1-001`), and `epic-6-ui` (`SD28-E6-F1-001`) — a fifth
+confirmation the blocker is still live, not a new instance and not
+disagreement with any prior figure (Hard stops rule re-checked: agrees
+exactly).
+
+Separately, `ultimate_campaign` carries `scope: "future_state"` and
+`engine_rule_set: null` — no compiled `RuleSetId` variant exists for this
+book (re-confirmed above). Per the same reasoning `epic-6-ui` applied to
+`ultimate_intrigue`: inventing a `RuleSetId` variant, parser hookup, and
+reach-claim surface unilaterally inside a single per-book cycle is exactly
+the cross-cutting engine work the "Hard stops" rule reserves for explicit
+scope decision, not a silent per-book invention.
+
+No ingest code, `RuleSetId` variant, or `reach_gate.rs` claim was written
+this cycle; none is claimed as done. `./scripts/verify.sh` (full) was not
+run against new production code because none was written; the
+disk-preflight subset above stands as this cycle's only `verify.sh`
+invocation, consistent with `epic-4-um`/`epic-5-ue`/`epic-6-ui`'s
+precedent for a decision-blocked cycle.
+
+### Retro events
+
+`scripts/retro.py correction --subject "epic-7-ucam dispatch brief"
+--claimed "glob *.pcc (not _*.pcc) for ultimate_campaign" --actual
+"_ultimate_campaign.pcc — leading underscore, matching
+loop-instruction.md's own corpus-shape note that only ultimate_equipment
+and ultimate_psionics lack the underscore" --verified-by "find
+~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_campaign
+-maxdepth 1 -iname '*.pcc'"` — emitted this cycle to
+`docs/retro/events/epic-7-ucam.jsonl`.
+
+`scripts/retro.py deferral --actor epic-7-ucam --what "Ultimate Campaign
+TDD ingest, new RuleSetId variant, reach_gate claim, wired-integration
+audit, on-screen verification" --reason "repo-wide v06_corpus_trap_report
+--audit exits 2 on the same pre-existing, out-of-scope ACG
+key-differs-from-name finding epic-3-uc/epic-4-um/epic-5-ue/epic-6-ui
+already recorded (fifth confirmation, not a new instance); separately,
+ultimate_campaign is scope:future_state / engine_rule_set:null in
+work-inventory.json — no RuleSetId variant exists, and inventing one
+unilaterally in a single per-book cycle is exactly the cross-cutting
+engine work the hard-stops rule reserves for explicit scope decision"
+--scope "one book epic (epic-7-ucam)" --blocked-by "ACG
+key-differs-from-name fix (out of SD-28 write scope); RuleSetId variant +
+parser hookup for ultimate_campaign (not yet scoped to a single-book
+cycle)" --tracked-at
+"docs/release/SD-28-ultimate-book-content-ingestion/progress.md
+SD28-E7-F1-001"` — emitted this cycle to `docs/retro/events/epic-7-ucam.jsonl`.
+
+### Kanban
+
+`epic-7-ucam` remains `IN-FLIGHT`, `Claimed-by: epic-7-ucam`, `Cycle-id:
+SD28-E7-F1-001`. Not moved to `COMPLETE`. Next cycle against this card
+should: (1) confirm whether the ACG audit finding has been fixed by
+another epic/session, (2) confirm whether a `RuleSetId` variant for
+`ultimate_campaign` has been added by an intervening cycle, and (3) only
+once both are clear, proceed to Step 3 (TDD implementation) using this
+cycle's Step 0/0b/1b findings above as the starting shape.
