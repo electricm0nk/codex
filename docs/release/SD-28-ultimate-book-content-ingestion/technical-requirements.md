@@ -118,7 +118,7 @@ Per `decisions.md §18`:
 ## TR-28-011 — Move-not-copy publish
 
 Source-of-record `programs/codex/requirements/SD-28-.../` MUST be removed
-on the publish commit per `decisions.md §6`. The canonical
+on the publish commit per `decisions.md §22`. The canonical
 repo-resident home is `docs/release/SD-28-ultimate-book-content-ingestion/`.
 
 ## TR-28-012 — Local-file work-queue dispatch

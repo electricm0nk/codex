@@ -7,27 +7,31 @@ file-touch partition ensures only one cycle claims a card at a time.
 
 ## Status legend
 
-- `READY` — not yet claimed. Cycle can pick up.
+- `READY` — not yet claimed. Cycle can pick up once every `Depends-on` card is `COMPLETE`.
 - `IN-FLIGHT` — claimed by a cycle, in progress. Other cycles must wait.
 - `BLOCKED` — cycle claims the block, captures the gap, surfaces in `progress.md` as a blocker.
 - `COMPLETE` — cycle receipt in `progress.md` closes the card.
 
-## Cards (one row per per-book epic cycle-batch)
+**Dispatch tiebreak:** next card = lowest `Order` among `READY` cards whose
+every `Depends-on` card is `COMPLETE`. A card whose `Depends-on` is not
+fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 
-| ID | Status | Book | Cycle-type | Claimed-by | Claimed-at | Cycle-id |
-|----|--------|------|-----------|------------|------------|----------|
-| `epic-3-uc` | READY | Ultimate Combat | per-class / per-chooser | — | — | — |
-| `epic-4-um` | READY | Ultimate Magic | per-class / per-spell-subsystem | — | — | — |
-| `epic-5-ue` | READY | Ultimate Equipment | per-equipment-entry | — | — | — |
-| `epic-6-ui` | READY | Ultimate Intrigue | per-class / per-social-rule | — | — | — |
-| `epic-7-ucam` | READY | Ultimate Campaign | per-system-subsystem | — | — | — |
-| `epic-8-uw` | READY | Ultimate Wilderness | per-class / per-Companion-rule | — | — | — |
-| `epic-9-upsi` | READY | Ultimate Psionics (Dreamscarred Press tier) | per-class / per-power, license-gated | — | — | — |
-| `epic-10-closure` | READY (gated) | Closure Epilogue | tranche promotion PR | — | — | — |
-| `epic-11-version` | READY (gated) | Build Version Numbering | first concrete value `0.8.<build>` | — | — | — |
-| `epic-12-code-review` | READY (gated) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
-| `epic-1-identifier` | READY | Identifier Cleanup | identifier-discipline audit pass | — | — | — |
-| `epic-2-prelaunch` | READY | Operator Pre-Launch | local-file dispatch readiness + license precheck | — | — | — |
+## Cards (one row per per-book epic cycle-batch), in dispatch order
+
+| Order | ID | Status | Book | Cycle-type | Depends-on | Claimed-by | Claimed-at | Cycle-id |
+|---|----|--------|------|-----------|------------|------------|------------|----------|
+| 1 | `epic-1-identifier` | READY | Identifier Cleanup | identifier-discipline audit pass | none | — | — | — |
+| 2 | `epic-2-prelaunch` | READY | Operator Pre-Launch | local-file dispatch readiness + license precheck | `epic-1-identifier` | — | — | — |
+| 3 | `epic-3-uc` | READY | Ultimate Combat | per-class / per-chooser | `epic-2-prelaunch` | — | — | — |
+| 4 | `epic-4-um` | READY | Ultimate Magic | per-class / per-spell-subsystem | `epic-2-prelaunch` | — | — | — |
+| 5 | `epic-5-ue` | READY | Ultimate Equipment | per-equipment-entry | `epic-2-prelaunch` | — | — | — |
+| 6 | `epic-6-ui` | READY | Ultimate Intrigue | per-class / per-social-rule | `epic-2-prelaunch` | — | — | — |
+| 7 | `epic-7-ucam` | READY | Ultimate Campaign | per-system-subsystem | `epic-2-prelaunch` | — | — | — |
+| 8 | `epic-8-uw` | READY | Ultimate Wilderness | per-class / per-Companion-rule | `epic-2-prelaunch` | — | — | — |
+| 9 | `epic-9-upsi` | READY | Ultimate Psionics (Dreamscarred Press tier) | per-class / per-power, license-gated | `epic-2-prelaunch` | — | — | — |
+| 10 | `epic-11-version` | READY | Build Version Numbering | first concrete value `0.8.<build>` | `epic-1-identifier` | — | — | — |
+| 11 | `epic-12-code-review` | READY | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version` | — | — | — |
+| 12 | `epic-10-closure` | READY | Closure Epilogue | tranche promotion PR | `epic-1-identifier`, `epic-2-prelaunch`, `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version`, `epic-12-code-review` (everything else) | — | — | — |
 
 ## Cycle claims (cycle-supervisor protocol)
 

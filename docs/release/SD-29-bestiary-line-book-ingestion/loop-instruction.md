@@ -79,7 +79,7 @@ each book.
    including `/home` at 100% used, 0 bytes available) and a ~490-binary
    `root-full` build (cycle mechanics step 4 below) is exactly what tips a
    box over. See `decisions.md` Decision 33.
-2. **Claim** the highest-priority ready card on `codex-tranche-6-1`.
+2. **Claim** the highest-priority ready card on `kanban.md` per its claim/complete protocol.
 3. **Do** the bounded work (TDD per the repo's `AGENTS.md`: failing test → smallest change → green → refactor). **The player surface is part of the bounded work, not a follow-on** — see `decisions.md` Decision 10.
 4. **Verify** with `./scripts/verify.sh` (full, not `--quick`), exit code captured
    directly and never through a pipe. Do not compose a substitute command set;
@@ -246,7 +246,7 @@ A cycle is eligible to fire when:
 
 - A flaky test that fails once but passes on a clean re-run is annotated in the cycle record and not re-fired.
 - A code-side identifier that leaks the `sd29_` pattern is renamed in-cycle (per the identifier-discipline doctrine).
-- A cross-bundle reference that yields a missing-monster error is filed as a blocker against the source bundle and the cycle pauses.
+- A cross-bundle reference that yields a missing-monster error is filed as a blocker against the source bundle per UNATTENDED MODE item 3 (blocker + command + exit code in progress.md) and the cycle moves to the next ready card in kanban.md.
 
 ## Cross-bundle references
 

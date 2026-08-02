@@ -187,7 +187,7 @@ Acceptance:
 
 **Objective:** Standard part-of-handoff; tranche promotion PR fires after all per-book epics closed.
 
-**Derived from:** `decisions.md §6` (operating form) + the build-version amendment (2026-07-17).
+**Derived from:** `decisions.md §22` (operating form) + the build-version amendment (2026-07-17).
 
 ### Feature seeds
 
@@ -203,7 +203,7 @@ Acceptance:
 
 Acceptance:
 
-- The source-of-record directory (`programs/codex/requirements/SD-28-ultimate-book-content-ingestion/`) is removed on the publish commit per `decisions.md §6`.
+- The source-of-record directory (`programs/codex/requirements/SD-28-ultimate-book-content-ingestion/`) is removed on the publish commit per `decisions.md §22`.
 - The canonical repo-resident home is `docs/release/SD-28-ultimate-book-content-ingestion/`.
 
 ## Epic 11 (SD28-E11) — Build Version Numbering

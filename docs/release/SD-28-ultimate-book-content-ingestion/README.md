@@ -23,10 +23,10 @@ is not done until it reaches a player surface.
 ## Source STC contents
 
 - `scope-draft.md` — committed scope shape, seven books confirmed.
-- `decisions.md` — 20 decisions including the operator-pinned amendments of 2026-08-01 (book list, tranche/8, build 0.8.x, no-Hermes-board, cross-book conflict rule, reach-gate doctrine, third-party tier).
+- `decisions.md` — 30 decisions (plus §15a, §17a) including the operator-pinned amendments of 2026-08-01 (book list, tranche/8, build 0.8.x, no-Hermes-board, cross-book conflict rule, reach-gate doctrine, third-party tier).
 - `loop-instruction.md` — per-cycle procedure; local-file dispatch via `kanban.md`/`progress.md`.
 - `forward-scope-register.md` — successor work depending on SD-28's output.
-- `epic-breakdown.md` — 11 epics × ~3 criteria = 30+ criteria; Closure Epilogue fires LAST.
+- `epic-breakdown.md` — 12 epics × ~3 = ~36 criteria; Closure Epilogue fires LAST.
 - `technical-requirements.md` — pre-loop prerequisites + normative requirements + out-of-scope.
 - `technical-design.md` — architectural surface for the seven books, including the third-party (Dreamscarred Press) tier license gate.
 - `acceptance-and-verification.md` — Given/When/Then per criterion.
@@ -41,7 +41,7 @@ Canonical (repo-resident) home:
 
 `docs/release/SD-28-ultimate-book-content-ingestion/` (after the move-not-copy
 publish landing this cycle). Source-of-record (this directory) is removed on
-the publish commit per `decisions.md §6`.
+the publish commit per `decisions.md §22`.
 
 ## Objective
 

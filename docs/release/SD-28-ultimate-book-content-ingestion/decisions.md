@@ -1,6 +1,6 @@
 # SD-28 Decisions
 
-**Status:** Stub. Operator-pinned pending.
+**Status:** Operator-pinned, confirmed 2026-08-01 (Decisions 13–30).
 
 ## Decision 1 — Book list
 
@@ -39,7 +39,7 @@
 
 **Status:** Doctrine-of-record (per SD-22 doctrine).
 
-8 epics / 30 criteria. Epic 1 = Code-Side Identifier Cleanup. Epic 2 = Operator Pre-Launch. Epic N = Closure Epilogue.
+8 epics / 30 criteria (superseded: 12 epics / ~36 criteria per epic-breakdown.md — see Decision 26). Epic 1 = Code-Side Identifier Cleanup. Epic 2 = Operator Pre-Launch. Epic N = Closure Epilogue.
 
 ## Decision 5 — Cross-bundle class overlap
 
@@ -217,7 +217,7 @@ second.
 
 The prior candidate (per the 2026-07-28 stub) was `tranche/6` + `codex-tranche-6`; the operator moved SD-28 off the `tranche/6` family on 2026-08-01 so SD-29 (`tranche/6-1`) and SD-30 (`tranche/6-2`) can keep their dash-form sub-release positions unaltered. SD-28 takes its own tranche.
 
-**Operator-on-file override.** The published SD-22 / SD-27 chassis templates use `codex-tranche-<N>` as the convention slug for the kanban-board name. SD-28 inherits the slug format (`codex-tranche-8`) and the corresponding Hermes-board-instance identifier — see Decision §15a below for the Hermes-board status.
+**Operator-on-file override.** The published SD-22 / SD-27 chassis templates use `codex-tranche-<N>` as the convention slug for the kanban-board name. SD-28 inherits the slug format (`codex-tranche-8`) and the corresponding Hermes-board-instance identifier — see Decision §15a below for the Hermes-board status. Board identity wording superseded by §15a: `codex-tranche-8` is a slug for the local `kanban.md` queue, not a Hermes board instance.
 
 ## Decision 15 — Build version target (operator directive 2026-08-01)
 

@@ -32,17 +32,22 @@ claim (per `decisions.md §15a` local-file dispatch + `loop-instruction.md`
 
 | Check | Status |
 |-------|--------|
-| `kanban.md` exists | PENDING (lands this cycle) |
-| Branch `tranche/8` pushed to origin | PENDING (operator action at cycle launch) |
+| `kanban.md` exists | DONE 2026-08-01 — kanban.md present with 12 cards (epics 1–12), dispatch-ordered |
+| Branch `tranche/8` pushed to origin | DONE 2026-08-01 — `git branch -r --list 'origin/tranche/8'` → `origin/tranche/8` |
 | OAuth credentials valid | PENDING (operator action at cycle launch) |
 | Working tree clean | ASSUMED (pre-launch verification) |
 | Dreamscarred Press license precheck | PENDING (Epic 9 cycle 0) |
 
 ### Next cycle
 
-The next cycle is Epic 2's pre-flight: create `kanban.md` with the seven
-per-book epics as ready cards; verify branch + OAuth + tree state. This is
+The next cycle is Epic 2's pre-flight: launch the cycle on `kanban.md`; verify branch + OAuth + tree state. This is
 the local-file counterpart to the prior Hermes-board readiness check.
+
+---
+
+**(c) Per-cycle receipts append below this line as cycles fire.**
+
+**2026-08-01 pre-launch readiness pass (operator-side):** branch tip at launch prep: 4d75856c on `tranche/8`. Launch-readiness audit applied fixes to loop-instruction.md (claim step, merged append steps, corpus shape notes, unattended item 4, receipt path), kanban.md (dispatch ordering + Depends-on), scope-draft.md (seven-book reconciliation), and v06_work_inventory (ultimate_psionics roster entry). Eligibility rule 'progress.md corresponds to the operator-pinned branch tip' is satisfied by this entry.
 
 ---
 

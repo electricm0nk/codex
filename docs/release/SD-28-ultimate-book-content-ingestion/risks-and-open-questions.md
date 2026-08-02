@@ -10,7 +10,7 @@
 | R-28-004 | Build version `0.8.<build>` counter reads stale at closure | Wrong version published | The supervisor reads the current counter at cycle close, not at cycle open; closure Epic 10 reads the post-cycle value |
 | R-28-005 | Hermes board retirement mid-flight leaves orphaned card references | Prior doctrine references Hermes cards that no longer exist | `kanban.md` card-id mapping maintained in this directory; references resolve at cycle dispatch |
 | R-28-006 | Identifier-discipline audit fails on a cycle PR | Cycle blocked; PR cannot merge | Identifier audit runs in pre-cycle pre-flight (Epic 1 fires FIRST); failed audits gate the cycle |
-| R-28-007 | Trap-report finds new trap patterns in newer Paizo U-line books | Cycle blocked; trap catalog needs extension | Trap catalog extension is per-cycle operator-pinned; cycle records new pattern + pauses |
+| R-28-007 | Trap-report finds new trap patterns in newer Paizo U-line books | Cycle blocked; trap catalog needs extension | Cycle records new pattern as a blocker/`decision-blocked` in progress.md and moves to the next ready card in kanban.md |
 
 ## Open questions
 

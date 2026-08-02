@@ -18,7 +18,7 @@
 > 1. **Default-and-flag, not ask.** When the cycle needs a decision, pick the safer default, capture it in the cycle's `progress.md` receipt, and continue. The operator reviews the receipts after return.
 > 2. **No `clarify` tool calls.** Cycles must not invoke the operator clarification tool under any circumstance; this is a hard ban during unattended mode.
 > 3. **Blockers are recorded, not raised.** If a cycle hits a true hard-block (auth failed, branch can't be created, identity conflict on disk), record the blocker in `progress.md` with the command and exit code, then attempt the next ready card per `kanban.md`. Do not halt the bundle.
-> 4. **`decision-blocked` IS allowed.** Where the playbook calls for an operator decision (Epic 7 in-scope-vs-separate for SD-29; SD-30's Epic 5/6 closure operator-on-call), record `decision-blocked` in `progress.md` with the recorded reason and proceed on the safe default per `forward-scope-register.md C3.x` retrofits. Do not wait. See also "Stop vs. press on" below for the general rule this instance follows.
+> 4. **`decision-blocked` IS allowed.** Where the playbook calls for an operator decision (the UE equipment-catalog widening — `forward-scope-register.md C3.1`, `decisions.md §10`'s open question of whether the widening is a precycle prerequisite outside SD-28 or an SD-28-owned retrofit; the UPsi license retrofit — `forward-scope-register.md C3.2`, dropping any record whose licensing annotation fails the open-content tier audit), record `decision-blocked` in `progress.md` with the recorded reason and proceed on the safe default per `forward-scope-register.md C3.x` retrofits. Do not wait. See also "Stop vs. press on" below for the general rule this instance follows.
 > 5. **Closure is a goal, not a stop signal.** The bundle runs to closure under the Workflow tool's own dispatch loop, not a human re-invoking a slash command per cycle. The operator's review happens after return; cycles do not pause for operator review.
 > 6. **Operator's verbatim:** "include instructions to all 3 that indicate they will be running in unnattended mode since i will be out of town while this runs. They may not stop to ask questions - it might be days before i notice."
 
@@ -60,15 +60,22 @@ each book.
    → **263** (re-derived 2026-08-01), the number to cite for "Ultimate Combat
    feat count," not a remembered or copied-forward estimate. This is the
    tranche/7 retrospective's rank-1 finding, re-run against the current log
-   rather than transcribed: ad-hoc commands over source data caught **47%**
-   of that tranche's logged corrections (54 of 116 events currently in
-   `docs/retro/events/*.jsonl`; the retrospective's own published snapshot
-   was 46% of 115 — the log grew by one correction after publication, which
-   is itself the lesson) and were the single strongest detector by a wide
-   margin — more than `./scripts/verify.sh` (8%, Cycle mechanics step 4
-   below), on-screen driving (14%, Definition of done item 8 below), and
-   every repo test combined. See `docs/retro/tranche-7-retrospective.md` §3
-   and §0 for the reproduction command.
+   rather than transcribed: applying the retrospective's own classifier
+   (`docs/retro/tranche-7-retrospective.md` §3's regex over each
+   correction's `verified_by` field) to the live log shows ad-hoc commands
+   over source data catching **51%** of all logged corrections (67 of 132
+   correction events currently in `docs/retro/events/*.jsonl`, re-derived
+   2026-08-01 with:
+   `python3 -c "import json,glob,re; p=re.compile(r'\b(grep|rg|awk|sed|wc -l|python3|find |sort -u|uniq|Counter|jq)\b'); evs=[json.loads(l) for f in glob.glob('docs/retro/events/*.jsonl') for l in open(f) if l.strip()]; c=[e for e in evs if e.get('type')=='correction']; print(sum(1 for e in c if p.search(e.get('verified_by',''))), len(c))"`
+   → `67 132`; the retrospective's own published snapshot was 46% of 115 —
+   the log has kept growing across every bundle that inherited the practice
+   since tranche/7, not just from tranche/7 itself, which is itself the
+   lesson: re-derive at the point of use rather than transcribe) and remain
+   the single strongest detector by a wide margin — more than
+   `./scripts/verify.sh` (8%, Cycle mechanics step 4 below), on-screen
+   driving (14%, Definition of done item 8 below), and every repo test
+   combined. See `docs/retro/tranche-7-retrospective.md` §3 and §0 for the
+   original reproduction command.
 1c. **Preflight** the disk. `./scripts/verify.sh --only preflight-disk` (fast —
    no build). Refuse to start the bounded work below if it fails; run
    `scripts/reclaim.sh` (no flags — dry run) to see what it would reclaim,
@@ -78,7 +85,9 @@ each book.
    including `/home` at 100% used, 0 bytes available) and a ~490-binary
    `root-full` build (cycle mechanics step 4 below) is exactly what tips a
    box over. See `decisions.md` Decision 30.
-2. **Claim** the highest-priority ready card on `codex-tranche-6`.
+2. **Claim** the highest-priority ready card on `kanban.md`, per its claim/complete
+   protocol (`kanban.md` §"Cycle claims": edit `Status` → `IN-FLIGHT`, then
+   `Claimed-by`, `Claimed-at`, `Cycle-id`). Per `decisions.md §15a`.
 3. **Do** the bounded work (TDD per the repo's `AGENTS.md`: failing test → smallest change → green → refactor). **The player surface is part of the bounded work, not a follow-on** — see `decisions.md` Decision 10.
 4. **Verify** with `./scripts/verify.sh` (full, not `--quick`), exit code captured
    directly and never through a pipe. Do not compose a substitute command set;
@@ -86,15 +95,14 @@ each book.
    `apps/desktop/src-tauri` at all. See `decisions.md` Decision 8.
 5. **Commit** with a `feat(sd28): ...` or `fix(sd28): ...` prefix.
 6. **Append** the cycle record directly to `progress.md` (no Hermes release —
-   the board is retired). The cycle record carries the PR-id, branch-tip, and
-   per-cycle test result. The supervisor reads `kanban.md` at top of the next
-   cycle to find the next ready card.
-7. **Append** the cycle record to `progress.md`, with the command behind every
-   figure it publishes.
-8. **Emit** a retro event for anything this cycle corrected, deferred, reworked,
+   the board is retired). The cycle record carries the PR-id, branch-tip,
+   per-cycle test result, and the command behind every figure it publishes.
+   The supervisor reads `kanban.md` at top of the next cycle to find the next
+   ready card.
+7. **Emit** a retro event for anything this cycle corrected, deferred, reworked,
    or narrowly avoided. See "Retrospective log" below — this step is part of
    the cycle, not an optional courtesy.
-9. **Reclaim.** `scripts/reclaim.sh --apply` at the end of every cycle — not
+8. **Reclaim.** `scripts/reclaim.sh --apply` at the end of every cycle — not
    only when disk pressure is already visible. The script is dry-run-safe by
    default and its safety guards (never touches a target dir a live build is
    using, never removes a worktree with uncommitted or unpushed work, never
@@ -103,6 +111,50 @@ each book.
    `decisions.md` Decision 30 — this is the executable counterpart to the
    `CARGO_TARGET_DIR` cleanup rule that this program has, until now, had only
    as a written instruction nobody automated.
+
+## Corpus shape notes (re-derived 2026-08-01)
+
+Operational guidance for the book epics (3-9), re-derived directly against
+the corpus rather than transcribed. Re-check before relying on any of these
+if the corpus tree has moved since 2026-08-01.
+
+- **`.pcc` discovery:** glob `*.pcc`, not `_*.pcc` — `ultimate_equipment.pcc`
+  and `ultimate_psionics.pcc` have no leading underscore; the other five
+  books' `.pcc` files do.
+- **`SOURCESHORT` keys:** Ultimate Campaign is `UCA` (not `UCam`); Ultimate
+  Psionics is `UP` (not `UPsi`). Do not assume the book-slug abbreviation
+  used elsewhere in this package matches the corpus's own key.
+- **Subdirectory layout:** 65 of 191 `.lst` files (34%) sit in `support/`
+  and `_pfs/` subdirectories — enumerate recursively, not top-level-only.
+  `_pfs/` holds Pathfinder Society legality overrides and is a deliberate
+  exclude (state the exclusion in the cycle receipt; do not drop it
+  silently). Subdirectory presence is uneven per book: UC has both
+  `support/` and `_pfs/`; UM, UE and UCam have only `_pfs/`; UI and UW have
+  only `support/`; UPsi is flat (neither).
+- **License files:** UC has no `OGL.txt` on disk even though
+  `_ultimate_combat.pcc` declares `#EXTRAFILE:OGL.txt` — the license text is
+  recoverable from the `.pcc`'s `COPYRIGHT` block instead. UPsi has an
+  `OGL.txt` on disk but no `EXTRAFILE` line pointing at it. Do not key
+  license discovery on either mechanism alone; check both.
+- **Cross-book references:** UC's `support/` files reference 22 other
+  sourcebooks — expect cross-book prerequisites pointing outside the SD-28
+  set. The cross-bundle hard-stop rule (see "Hard stops" above) covers
+  these.
+- **No bestiary content:** no monster/bestiary `.lst` file exists in any of
+  the seven books (creatures are Bestiary-dataset scope → SD-29); the
+  nearest analogues in this corpus are `*_races*.lst` and
+  `*_companionmods.lst`.
+- **Book shapes:**
+  - UCam is traits/drawbacks/retraining only (9 top-level `.lst` files) —
+    its ~23 inventory units are the correct shape for this book, not a
+    coverage red flag.
+  - UE has no feats file.
+  - UPsi's spell-equivalent is `up_powers.lst` (497 lines), which has no
+    work-inventory `Kind` mapping yet — Epic 9 decides that mapping
+    in-cycle.
+- **Upstream completeness:** UI and UPsi ship their own `TODO` files in the
+  corpus, and UPsi's `.pcc` declares `STATUS:BETA`. Coverage claims for
+  these two books cite the corpus as shipped, not as complete.
 
 ## Retrospective log
 
@@ -175,7 +227,7 @@ All of the following, each checkable by someone who was not present:
 
 ## Hard stops
 
-- Stops and reports the blocker (per the repo's `AGENTS.md` hard-stop doctrine) when:
+- The cycle records `decision-blocked` (or the blocker) in `progress.md` and moves to the next ready card per `kanban.md`, rather than pausing (see "Stop vs. press on" below), when:
   - A single entity's ingest cycle fails to converge after 3 attempts.
   - The build crashes in a way that requires a non-book-list fix.
   - A class / monster / equipment entry requires a cross-bundle reference that the other bundle's progress file shows as not yet landed.
@@ -239,7 +291,7 @@ A cycle is eligible to fire when:
 
 - A flaky test that fails once but passes on a clean re-run is annotated in the cycle record and not re-fired.
 - A code-side identifier that leaks the `sd28_` pattern is renamed in-cycle (per the identifier-discipline doctrine).
-- A cross-bundle reference that yields a missing-class / missing-monster error is filed as a blocker against the source bundle and the cycle pauses.
+- A cross-bundle reference that yields a missing-class / missing-monster error is recorded as a blocker against the source bundle per UNATTENDED MODE item 3 above (blocker + command + exit code in `progress.md`), and the cycle moves to the next ready card in `kanban.md` — it does not pause.
 
 ## Cross-bundle references
 
@@ -255,4 +307,10 @@ See `decisions.md` for the running decision record. Each decision is dated, name
 
 ## Per-bundle progress file
 
-`~/workspace/programs/codex/requirements/SD-28-ultimate-book-content-ingestion/progress.md` carries the per-cycle receipt. Do not use a shared chassis-lane progress file; each bundle's progress is its own.
+`docs/release/SD-28-ultimate-book-content-ingestion/progress.md` (this
+directory) carries the per-cycle receipt — it is the sole receipt file for
+this bundle. The prior workspace-lane path
+(`~/workspace/programs/codex/requirements/SD-28-ultimate-book-content-ingestion/progress.md`)
+no longer exists; the source-of-record moved, not copied, on publish per the
+`release-package-promotion` skill. Do not use a shared chassis-lane progress
+file; each bundle's progress is its own.
