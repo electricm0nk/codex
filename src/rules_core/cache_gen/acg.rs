@@ -415,13 +415,30 @@ fn generate_spells(
     let spell_dir = out_dir.join("spell");
 
     for entry in acg::spell_list::SPELL_LIST {
-        // Every ACG spell resolves via a plain first-column lookup on its
-        // own display name -- including the 9 Naturalist archetype
-        // variants (whose real KEY: differs from the display name, but
-        // whose first column is still the display name) and the 1
-        // domain-only variant. Never a .MOD lookup: ACG's base record
-        // already carries the full text (module doc comment).
-        let source = match find_exact_first_column(&book_dir(corpus_root).join(spell_file), entry.key) {
+        // `entry.key` is the record's real identity (module doc comment
+        // on `SpellListEntry::key`): the row's own `KEY:` token when it
+        // carries one, else its display name. The 9 Naturalist archetype
+        // variants (`acg_spells.lst:785`-`793`) carry a `KEY:` token that
+        // differs from their first column, so they must resolve via a
+        // `KEY:<...>` field match, not a first-column match -- a
+        // first-column lookup on the archetype-qualified `entry.key`
+        // would never match anything, and a first-column lookup on the
+        // bare display name would resolve to the *wrong* record's
+        // identity (this is precisely the defect
+        // `v06_corpus_trap_report --audit`'s `key-differs-from-name`
+        // trap flags: filing an archetype-qualified record under a
+        // different record's identity). Every other ACG spell has no
+        // `KEY:` token of its own, so `find_by_key_field` correctly
+        // returns `None` for them and the first-column fallback applies.
+        // Never a .MOD lookup: ACG's base record already carries the
+        // full text (module doc comment).
+        let lst_path = book_dir(corpus_root).join(spell_file);
+        let resolved = match find_by_key_field(&lst_path, entry.key) {
+            Ok(Some(line)) => Ok(Some(line)),
+            Ok(None) => find_exact_first_column(&lst_path, entry.key),
+            Err(e) => Err(e),
+        };
+        let source = match resolved {
             Ok(Some(line)) => Source::LstToken {
                 path: format!("{ACG_DIR}/{spell_file}"),
                 sha256: sha256.clone(),

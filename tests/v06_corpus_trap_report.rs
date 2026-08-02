@@ -488,41 +488,37 @@ fn no_two_ingested_records_share_a_record_key() {
     );
 }
 
-/// **Ratchet, with named outstanding debt.** An ingested record's
-/// `record_key` must equal the `KEY:` on the corpus line it cites.
+/// **Ratchet, debt paid to zero.** An ingested record's `record_key`
+/// must equal the `KEY:` on the corpus line it cites.
 ///
-/// Nine ACG spells violate this *today*: the ACG ingest stored the
+/// Nine ACG spells used to violate this: the ACG ingest stored the
 /// display name `Summon Nature's Ally N` for lines whose `KEY:` is
-/// `Naturalist Summon Nature's Ally N`. That is trap 3 already realised
-/// in shipped cache data — the Naturalist archetype's variant spell is
-/// filed under the Core spell's identity. Fixing it means regenerating
-/// the ACG spell cache and re-checking every consumer of those keys,
-/// which is a different piece of work from building this detector.
+/// `Naturalist Summon Nature's Ally N` — trap 3 realised in shipped
+/// cache data, with the Naturalist archetype's variant spell filed
+/// under the Core spell's identity. That has been fixed: the ACG spell
+/// cache now resolves those nine rows via their own `KEY:` field
+/// (`src/rules_core/cache_gen/acg.rs`) and is re-keyed to
+/// `Naturalist Summon Nature's Ally N` on disk, so the known-debt list
+/// below is empty.
 ///
-/// So the assertion is a ratchet, not a pass: the nine known rows are
-/// enumerated by name, and *any* other key mismatch — including a tenth
-/// Naturalist row, or the same trap in another book — fails. The debt
-/// cannot grow, and it cannot hide.
+/// The assertion stays a ratchet, not a one-time pass: the allowlist is
+/// enumerated (currently empty) so *any* key mismatch anywhere in any
+/// book — including a regression of the nine rows just fixed — fails.
+/// The debt cannot silently grow back, and it cannot hide.
 #[test]
-fn ingested_record_keys_match_their_cited_line_apart_from_known_acg_debt() {
+fn ingested_record_keys_match_their_cited_line() {
     let Some(root) = corpus_root() else {
         eprintln!("SKIP ingested_record_keys_match_their_cited_line...: no PCGEN_CORPUS_ROOT");
         return;
     };
 
     // Known outstanding debt, enumerated so it cannot silently grow.
-    // Each entry is (book, cached record_key).
-    const KNOWN_KEY_MISMATCH_DEBT: &[(&str, &str)] = &[
-        ("advanced_class_guide", "Summon Nature's Ally I"),
-        ("advanced_class_guide", "Summon Nature's Ally II"),
-        ("advanced_class_guide", "Summon Nature's Ally III"),
-        ("advanced_class_guide", "Summon Nature's Ally IV"),
-        ("advanced_class_guide", "Summon Nature's Ally V"),
-        ("advanced_class_guide", "Summon Nature's Ally VI"),
-        ("advanced_class_guide", "Summon Nature's Ally VII"),
-        ("advanced_class_guide", "Summon Nature's Ally VIII"),
-        ("advanced_class_guide", "Summon Nature's Ally IX"),
-    ];
+    // Each entry is (book, cached record_key). Empty: the ACG Naturalist
+    // debt (9 rows) was paid off by re-keying to the archetype-qualified
+    // KEY:. Leave this empty rather than deleting the mechanism — the
+    // next mis-keyed ingest, in ACG or any other book, must be added
+    // here deliberately, not silently absorbed.
+    const KNOWN_KEY_MISMATCH_DEBT: &[(&str, &str)] = &[];
 
     let findings = audit_ingested_cache(&cache_dir(), &root).expect("cache audit runs");
     let mismatches: Vec<_> = findings

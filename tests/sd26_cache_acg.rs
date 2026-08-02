@@ -233,20 +233,23 @@ fn spell_cache_has_all_144_records_at_the_real_100_percent_full_text_ceiling() {
 
 #[test]
 fn spell_cache_resolves_real_citations_for_the_naming_edge_cases() {
-    // The 9 "Naturalist Summon Nature's Ally <roman>" KEY:-tagged
-    // archetype records (display name != KEY:) and the 1 domain-only
-    // variant (level from DOMAINS:, not CLASSES:) -- all still resolve to
-    // a real base-record line via the display name's own first column
-    // (rules_tables::acg::spell_list's doc comment).
+    // The 9 "Naturalist Summon Nature's Ally <roman>" records are filed
+    // under their real, archetype-qualified `KEY:` identity (not the
+    // display name they share with the CRB base spell -- see
+    // `rules_tables::acg::spell_list`'s doc comment and
+    // `tests/spell_cross_book_identity.rs`), resolved via a `KEY:` field
+    // match against the corpus. The 1 domain-only variant (level from
+    // DOMAINS:, not CLASSES:) has no KEY: token and resolves via its
+    // display name's own first column, same as ever.
     let records: std::collections::HashMap<String, Value> = load_all("spell")
         .into_iter()
         .map(|(_, v)| (v["data"]["key"].as_str().unwrap().to_string(), v))
         .collect();
 
     for key in [
-        "Summon Nature's Ally I",
-        "Summon Nature's Ally V",
-        "Summon Nature's Ally IX",
+        "Naturalist Summon Nature's Ally I",
+        "Naturalist Summon Nature's Ally V",
+        "Naturalist Summon Nature's Ally IX",
         "Summon Monster V (fire elementals only)",
     ] {
         let record = records.get(key).unwrap_or_else(|| panic!("missing spell record {key}"));
