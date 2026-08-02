@@ -200,3 +200,91 @@ corrected and logged in the prior `222611be` cycle, not this one).
 `epic-1-identifier` → `COMPLETE`. Per `loop-instruction.md` "Epic ordering,"
 Epics 2-9, 11 (`epic-11-version` also depends on `epic-1-identifier`) are now
 unblocked with respect to this dependency.
+
+## Cycle `SD28-E2-F1-001` — Card `epic-2-prelaunch` (Operator Pre-Launch)
+
+Ran the loop-instruction.md "Pre-launch checklist" items 1-5.
+
+1. **`kanban.md` exists with a ready queue** — confirmed. `epic-1-identifier`
+   `COMPLETE`, `epic-2-prelaunch` claimed this cycle, `epic-3..9`,
+   `epic-11-version`, `epic-12-code-review`, `epic-10-closure` all `READY`
+   and correctly gated by `Depends-on`.
+2. **`tranche/8` pushed to origin** — confirmed.
+   `git rev-parse HEAD` → `b8fb7d61f105aef93ed6c6ecaf48f541e70c9ff5`;
+   `git rev-parse origin/tranche/8` → same hash. Exit 0/0.
+3. **GitHub OAuth credentials valid for push** — confirmed.
+   `gh auth status` → "Logged in to github.com account electricm0nk",
+   "Active account: true", token scopes `project, repo, workflow,
+   write:packages`. Exit 0. Note: token is missing `read:org`, which is not
+   required for `git push`; no action taken (safer-default: proceed, this
+   scope is unrelated to push authority).
+4. **Working tree clean** — confirmed clean at cycle start.
+   `git status` → "nothing to commit, working tree clean" (repo root, this
+   worktree). Note per handoff: this bundle's own doc edits (this cycle's
+   `kanban.md` claim edit and this `progress.md` append) are the only
+   changes made after that clean check; no other session's in-flight work
+   was clobbered — confirmed via `git status` before this write (only
+   `kanban.md` modified + new `docs/retro/events/sd28-epic2.jsonl`, both
+   this cycle's own).
+5. **Dreamscarred Press licensing pre-cycle verification** — confirmed
+   open-content per `decisions.md` Decision 17.
+   `cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics/`
+   → exit 0, ran clean over the full corpus dir (name-binding-collision,
+   token-dense-record, governing-token-hidden-by-filter categories
+   reported as informational, not defects — trap-report's own framing:
+   "Everything above is legitimate upstream data... Nothing here is a
+   reason to fail a build.").
+   License evidence checked directly (not transcribed from decisions.md):
+   `~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics/OGL.txt`
+   present, 12 occurrences of "Open Game Content" phrase
+   (`grep -c "Open Game Content" .../OGL.txt` → 12); `ultimate_psionics.pcc`
+   `COPYRIGHT:` block leads with
+   "Open Game License v 1.0a Copyright 2000, Wizards of the Coast, Inc."
+   and "System Reference Document" — consistent with the PF-OGL-compatible
+   open-content tier per Decision 17. No record failed the licensing audit
+   this cycle; nothing dropped from scope.
+
+**Local-file dispatch readiness:** confirmed — `kanban.md` claim/complete
+protocol exercised this cycle (Status → IN-FLIGHT → COMPLETE,
+Claimed-by/Claimed-at/Cycle-id fields populated), `progress.md` append-only
+receipt pattern followed, no Hermes board dependency invoked.
+
+**`./scripts/verify.sh` (full, not `--quick`) — exit code: 0.**
+Run backgrounded (foreground run exceeded a 2-minute tool timeout on
+`root-full`'s ~490-binary build); log tail confirms
+`SUMMARY  passed: 10  preflight-disk root-lib root-full desktop reach
+frontend-install frontend-test frontend-typecheck clippy class-dump` and
+`RESULT: PASS`. `scripts/verify.sh` line 798 is `exit 0` on its only exit
+path after a PASS summary, confirming exit code 0 for this run.
+
+`scripts/reclaim.sh --apply` run at cycle end — exit 0, 0 items reclaimed
+(all verify-log dirs from this and concurrent sessions' cycles were
+younger than the reclaim age threshold; `tranche/10` worktree skipped,
+not merged / upstream present — correctly left alone per shared-checkout
+git discipline).
+
+### Pre-launch checklist result: **ALL 5 ITEMS GREEN.** No gaps recorded.
+
+### Decision-blocked entries
+
+None. No hard blocks encountered.
+
+### Retro events
+
+`note` event emitted (no `decision` type exists in `scripts/retro.py`'s
+vocabulary — checked via `python3 scripts/retro.py help decision`, which
+lists the real types: `correction, incident, near-miss, deferral, rework,
+verification, note`) recording the confirmed-open-content ruling for
+`ultimate_psionics` this cycle in `docs/retro/events/sd28-epic2.jsonl`,
+since Decision 17's pre-cycle verification step is itself a decision point
+re-run each launch, not a one-time historical fact. Two `verification`
+events were also auto-emitted by `verify.sh` into the same shard (the
+`--only preflight-disk` run and the full run), per "Retrospective log"
+§2 — nothing manual required for those.
+
+### Kanban
+
+`epic-2-prelaunch` → `COMPLETE`. Per `loop-instruction.md` "Epic ordering,"
+Epics 3-9 and `epic-11-version` (already unblocked by `epic-1-identifier`)
+remain ready to dispatch; the pre-launch gate itself is now satisfied for
+the bundle as a whole.
