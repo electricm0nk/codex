@@ -59,7 +59,7 @@ use codex::rules_core::contract::to_pilot_receipt;
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// Same GE-06 deterministic posture equipment SD-26's own pilot fixture uses
 /// (Longsword / Chain Shirt, `WT:4`/`WT:25`) -- this pilot carries no other
@@ -143,6 +143,44 @@ fn pilot_case_pcg_fixture() -> PathBuf {
     )
 }
 
+/// Mirrors `src/oracle_validation/pcgen_runner::default_pcgen_repo_dir` and
+/// `scripts/pcgen-run-character.sh`'s own `-w`/`$PCGEN_REPO_DIR` contract:
+/// `PCGEN_REPO_DIR` wins when set; otherwise `$HOME/workspace/repos/pcgen`,
+/// the same HOME-relative default `pcgen-run-character.sh` falls back to.
+fn default_pcgen_repo_dir() -> PathBuf {
+    if let Ok(configured) = std::env::var("PCGEN_REPO_DIR") {
+        return PathBuf::from(configured);
+    }
+    let home =
+        std::env::var("HOME").expect("HOME must be set to locate the default PCGen repo checkout");
+    PathBuf::from(home).join("workspace/repos/pcgen")
+}
+
+/// True iff the PCGen Gradle wrapper at `<pcgen_repo_dir>/gradlew` is a
+/// present, executable file. Mirrors PR #356's contract for
+/// `tests/sd26_pilot_case_verification::pcgen_gradle_wrapper_is_runnable`,
+/// which is the canonical fix for the same E2E-vs-CI-runner precondition
+/// gap (GitHub Actions runners do not check out the companion PCGen repo,
+/// so `$HOME/workspace/repos/pcgen/gradlew` is absent there even though the
+/// runner script is present and invokable).
+fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
+    let gradlew = pcgen_repo_dir.join("gradlew");
+    if !gradlew.is_file() {
+        return false;
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        return std::fs::metadata(&gradlew)
+            .map(|meta| (meta.permissions().mode() & 0o111) != 0)
+            .unwrap_or(false);
+    }
+    #[cfg(not(unix))]
+    {
+        true
+    }
+}
+
 /// End-to-end proof: pcgen_runner (real PCGen engine run via Gradle) ->
 /// comparator (real dimension-by-dimension compare) -> parity_report
 /// (real Markdown render, in-memory only -- no write into
@@ -152,6 +190,27 @@ fn pilot_case_pcg_fixture() -> PathBuf {
 /// receipt transcribes.
 #[test]
 fn full_pipeline_runs_end_to_end_against_the_real_pu_pilot_case() {
+    // --- CI/runtime precondition: the real PCGen Gradle wrapper is not
+    // available on every host. PR #356 established the same skip-guard for
+    // SD-26's pilot parity test; this is the SD-27 PU parity cycle's mirror.
+    // When `gradlew` is absent or non-executable, the test exits early with a
+    // clear skip message instead of panicking on the missing PCGen checkout,
+    // which is the GitHub Actions runner's actual state — the wrapper, the
+    // runner script, and the parser are still exercised end-to-end on any host
+    // where the PCGen checkout is available, and a real failure of any of those
+    // components (script missing, normalizer non-zero exit, parseable-output
+    // contract violated) is still surfaced as a hard test failure. ---
+    let pcgen_repo_dir = default_pcgen_repo_dir();
+    if !pcgen_gradle_wrapper_is_runnable(&pcgen_repo_dir) {
+        eprintln!(
+            "[skip] sd27_pathfinder_unchained_parity: real PCGen Gradle wrapper not found/executable at {} \
+             (set $PCGEN_REPO_DIR to a checked-out PCGen repo to run this end-to-end; \
+             GitHub Actions runners do not check out the companion PCGen repo)",
+            pcgen_repo_dir.join("gradlew").display()
+        );
+        return;
+    }
+
     // --- Codex side: real, computed selected parity dimensions. ---
     let input_load = load_character_input_fixture(DETERMINISTIC_FIXTURE);
     assert!(
