@@ -288,3 +288,102 @@ events were also auto-emitted by `verify.sh` into the same shard (the
 Epics 3-9 and `epic-11-version` (already unblocked by `epic-1-identifier`)
 remain ready to dispatch; the pre-launch gate itself is now satisfied for
 the bundle as a whole.
+
+## Cycle SD28-E11-F1-001 — Epic 11, Build Version Numbering
+
+**Date:** 2026-08-02
+**Cycle ID:** `SD28-E11-F1-001`
+**Actor:** `sd28-epic11`
+**Card:** `epic-11-version` (kanban.md row 10) — claimed IN-FLIGHT at
+2026-08-02T03:00:00Z, closed COMPLETE this cycle.
+
+### What landed
+
+Updated the build version numbering from 0.6.1 to 0.8.0 per `decisions.md`
+Decision 15, operator-pinned 2026-08-01. The version scheme is
+`<major>.<tranche-base>.<build>` where major=0 (no main-publish yet),
+tranche-base=8 (base digit of active working tranche `tranche/8`), and build
+is the monotonic counter (placeholder 0 in repo files, stamped at CI time by
+GITHUB_RUN_NUMBER).
+
+### Files changed
+
+Version triple files (synchronized):
+- `apps/desktop/package.json`: 0.6.1 → 0.8.0
+- `apps/desktop/src-tauri/Cargo.toml`: 0.6.1 → 0.8.0
+- `apps/desktop/src-tauri/tauri.conf.json`: 0.6.1 → 0.8.0
+- `apps/desktop/src-tauri/Cargo.lock`: updated via `cargo update` to match new Cargo.toml version
+
+Version check tests (updated anchors from tranche/6 to tranche/8):
+- `apps/desktop/src/sd21/buildVersionTriple.test.ts`: updated anchor comment and assertion
+- `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts`: updated anchor comment and assertion
+
+Test data (synchronized with new version):
+- `apps/desktop/src/testSupport/makeSurface.ts`: 0.6.1-test → 0.8.0-test (2 occurrences)
+- `apps/desktop/src/operatorTriage/buildOperatorTriageDraft.test.ts`: 0.6.1-test → 0.8.0-test (2 occurrences)
+- `apps/desktop/src/testerWorkbench/loadTesterWorkbenchSurface.test.ts`: 0.6.1-test → 0.8.0-test (2 occurrences)
+- `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.test.ts`: 0.6.1-test → 0.8.0-test (2 occurrences)
+- `apps/desktop/src/testerWorkbench/feedback/bug/composeBugReport.test.ts`: 0.6.1-test → 0.8.0-test
+- `apps/desktop/src/testerWorkbench/feedback/enhancement/composeEnhancementRequest.test.ts`: 0.6.1-test → 0.8.0-test
+- `apps/desktop/src/testerWorkbench/feedback/evidence/captureFeedbackEvidence.test.ts`: 0.6.1-test → 0.8.0-test
+
+Kanban:
+- `docs/release/SD-28-ultimate-book-content-ingestion/kanban.md`: card `epic-11-version` claimed IN-FLIGHT
+
+### Commands run (every figure re-derived, per Cycle mechanics 1b)
+
+Re-derive current version from three source files:
+```sh
+grep -E '"version":|version = ' apps/desktop/{package.json,src-tauri/{Cargo.toml,tauri.conf.json}}
+```
+Result: all three files had `0.6.1` (verified 2026-08-02).
+
+Re-derive tranche-base from current branch:
+```sh
+git rev-parse --abbrev-ref HEAD
+```
+Result: `tranche/8` (verified 2026-08-02 — matches Decision 15's requirement that
+tranche-base is the base digit of the active working tranche).
+
+Determine new version per Decision 15:
+- major = 0 (per Decision 15: "no main-publish yet")
+- tranche-base = 8 (base digit of tranche/8)
+- build = 0 (repo placeholder; CI stamps to ${GITHUB_RUN_NUMBER})
+→ new version = 0.8.0
+
+Update Cargo.lock to match Cargo.toml:
+```sh
+cd apps/desktop/src-tauri && cargo update
+```
+(no --locked flag; needed to regenerate lock file after version change)
+
+Verify all changes with full test suite:
+```sh
+export RETRO_ACTOR=sd28-epic11 && ./scripts/verify.sh
+```
+Exit code: **0** (PASS).
+
+### Definition of done — Epic 11 scope
+
+- All three version files (package.json, Cargo.toml, tauri.conf.json) have version 0.8.0 — confirmed
+- Cargo.lock regenerated and matches new Cargo.toml version — confirmed via `cargo update`
+- buildVersionTriple.test.ts checks updated to expect 0.8.X on tranche/8 — confirmed (2 files updated)
+- Test data updated to use 0.8.0-test instead of 0.6.1-test — confirmed (7 files, ~15 occurrences)
+- ./scripts/verify.sh (full, not --quick) exits 0 — confirmed, exit code 0
+
+### Decision-blocked entries
+
+None. No hard blocks encountered.
+
+### Retro events
+
+`verification` event auto-emitted by `./scripts/verify.sh`, per "Retrospective log"
+§2 (`loop-instruction.md`). One verification run (the full run) with exit code 0.
+
+No corrections, incidents, deferrals, or reworks occurred this cycle.
+
+### Kanban
+
+`epic-11-version` → `COMPLETE`. Per `loop-instruction.md` "Epic ordering,"
+Epics 3-9, `epic-12-code-review`, and `epic-10-closure` remain on schedule;
+Epic 12 now unblocked with respect to this dependency.
