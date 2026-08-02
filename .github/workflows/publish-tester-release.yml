@@ -64,15 +64,15 @@ jobs:
       # own closure while still on the same tranche branch; an SD-22 Epic 7
       # cycle briefly bumped this to 0.6 in error and it was reverted).
       #
-      # tranche/6: bumped 0.5 -> 0.6 for the v0.6 alpha cut. Unlike the
-      # reverted Epic 7 bump, this one IS a real tranche promotion —
-      # tranche/6 was cut fresh from develop and is the live branch, and the
-      # repo version files moved to 0.6.0 with it. The stamp's tranche digit
-      # must always equal the repo version files' tranche digit; the two are
-      # kept in lockstep by src/sd21/buildVersionTriple.test.ts, which parses
-      # this line and compares the relationship rather than two independent
-      # literals (the previous form asserted each side's prefix separately
-      # and so blessed the 0.6.0-repo / 0.5.<build>-stamp mismatch).
+      # tranche/7: bumped 0.6 -> 0.7 for the SD-27 bundle closure on
+      # tranche/7 (and the v0.6 alpha cut on tranche/6 prior). The
+      # v0.6.120 publish at 5c432a1b stamped 0.6.120 even though it
+      # bundled the SD-27 closure work — that was a missed advance, not
+      # a wrong scheme; the fix here is to land the SD-27 advance as
+      # 0.7.0 in the repo, retroactively matching what the v0.6.120
+      # release actually contained. SD-28/29/30 follow the same
+      # one-advance-per-tranche-cut rule (v0.8.0 / v0.9.0 / v0.10.0).
+      #
       #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
@@ -81,7 +81,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.6.${GITHUB_RUN_NUMBER}"
+          VERSION="0.7.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];
@@ -223,7 +223,7 @@ jobs:
 
       - name: Validate tranche release notes
         run: |
-          python scripts/tranche/validate-tranche-notes.py --release-notes-path docs/release/SD-16/release-notes.md
+          python scripts/tranche/validate-tranche-notes.py --release-notes-path docs/release/v0.7/release-notes.md
 
       # SD16-F-WINDOWS: the version stamp moved out of this job into the
       # top-level `stamp` job to keep the linux and windows publish jobs
@@ -308,7 +308,7 @@ jobs:
             --version "${VERSION}" \
             --source-branch "${GITHUB_REF_NAME}" \
             --source-commit "${GITHUB_SHA}" \
-            --release-notes-path "docs/release/SD-16/release-notes.md" \
+            --release-notes-path "docs/release/v0.7/release-notes.md" \
             --appimage-name "${APPIMAGE_NAME}" \
             --appimage-path "${APPIMAGE_PATH}" \
             --appimage-url "${APPIMAGE_URL}" \
@@ -372,7 +372,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p release-staging
-          cp docs/release/SD-16/release-notes.md \
+          cp docs/release/v0.7/release-notes.md \
              release-staging/release-notes.md
 
       # SD16-F-WINDOWS: the platform publish jobs no longer `gh release
@@ -731,7 +731,7 @@ jobs:
           if [ -f release-staging/release-notes.md ]; then
             mkdir -p "docs/release/SD-16"
             cp release-staging/release-notes.md \
-               "docs/release/SD-16/release-notes.md"
+               "docs/release/v0.7/release-notes.md"
           fi
 
           RELEASE_NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
@@ -744,7 +744,7 @@ jobs:
             --version "${{ needs.stamp.outputs.version }}" \
             --source-branch "${GITHUB_REF_NAME}" \
             --source-commit "${GITHUB_SHA}" \
-            --release-notes-path "docs/release/SD-16/release-notes.md" \
+            --release-notes-path "docs/release/v0.7/release-notes.md" \
             --workflow ".github/workflows/publish-tester-release.yml" \
             --run-id "${GITHUB_RUN_ID}" \
             --run-attempt "${GITHUB_RUN_ATTEMPT}" \
@@ -785,7 +785,7 @@ jobs:
           # keeps the doc copy identical across runs.
           NOTES_FILE="release-notes.md"
           if [ ! -f "$NOTES_FILE" ]; then
-            cp ../docs/release/SD-16/release-notes.md "$NOTES_FILE"
+            cp ../docs/release/v0.7/release-notes.md "$NOTES_FILE"
           fi
 
           # Build the file glob: every artifact we have staged.

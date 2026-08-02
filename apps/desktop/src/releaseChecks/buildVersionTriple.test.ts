@@ -4,9 +4,13 @@ import { fileURLToPath } from 'node:url';
 import { assertEqual, assert } from '../testSupport/asserts';
 
 // SD-22 E8.27: package.json, tauri.conf.json, and Cargo.toml must all carry
-// the same `<major>.<tranche>.<build>` version triple, anchored to tranche/5
+// the same `<major>.<tranche>.<build>` version triple, anchored to tranche/7
 // (per decisions.md §2 + epic-breakdown.md criterion 27). Mirrors SD-21
-// E5.25's buildVersionTriple.test.ts, re-anchored from tranche=4 to tranche=5.
+// E5.25's buildVersionTriple.test.ts and the SD-21 counterpart at
+// src/sd21/buildVersionTriple.test.ts (which is anchored one tranche ahead
+// as the canonical source), re-anchored from tranche=6 to tranche=7 to
+// match the SD-27 bundle closure that landed in this commit (the v0.6.120
+// publish at 5c432a1b missed this advance).
 
 const appRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -38,15 +42,16 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: tranche moves to 6 (tranche/6 is the v0.6 alpha release swarm's
-  // active branch, cut fresh from develop) and major stays 0 until first
-  // main-publish, per decisions.md §2's build-version responsibility note.
-  // The tranche digit only advances when a new tranche/N branch is cut for
-  // the next bundle — not automatically at a bundle's own closure while
-  // still on the same tranche branch (an earlier Epic 7 closure-epilogue
-  // cycle bumped this to tranche=6 in error and it was reverted; this time
-  // the bump is intentional, driven by a real tranche/6 cut).
-  assert(pkg.startsWith('0.6.'), `version "${pkg}" must move to major=0, tranche=6 on tranche/6`);
+  // Anchor: tranche moves to 7 (SD-27 bundle closure on tranche/7, which
+  // is the same advance the v0.6.120 publish at 5c432a1b missed). Major
+  // stays 0 until first main-publish, per decisions.md §2's build-version
+  // responsibility note. The tranche digit only advances when a new
+  // tranche/N branch is cut for the next bundle — not automatically at a
+  // bundle's own closure while still on the same tranche branch (an
+  // earlier Epic 7 closure-epilogue cycle bumped this to tranche=6 in
+  // error and it was reverted; this time the bump is intentional, driven
+  // by the SD-27 closure landing on tranche/7).
+  assert(pkg.startsWith('0.7.'), `version "${pkg}" must move to major=0, tranche=7 on tranche/7`);
 }
 
 verifiesAllThreeVersionFilesAgreeAndFollowTripleShape();
