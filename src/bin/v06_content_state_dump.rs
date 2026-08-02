@@ -50,7 +50,10 @@ use codex::rules_core::rules_tables::crb::{
     race_tables::{RaceId, race_id_from_token, race_traits},
     spell_list as crb_spell_list,
 };
+use codex::rules_core::rules_tables::advanced_race_guide as arg;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_tables::pathfinder_unchained as pu;
+use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::RuleSetId;
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
@@ -183,6 +186,53 @@ fn acg_content() -> BookContent {
                 ingested: acg::equipment_tables::equipment_tables().len() as u32,
             },
             KindCount { kind: "feats", ingested: acg::feats::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD-27. These two were missing from the emitted list even though the engine
+/// has compiled their tables since SD-27 landed, so every consumer of this
+/// dump — the dashboard included — reported four books and silently omitted
+/// two. Same defect shape as `v06_work_inventory::rule_set_for`: the
+/// `RuleSetId` match below is exhaustive and was forced to grow, but this
+/// hand-listed roster was not, and nothing failed.
+fn arg_content() -> BookContent {
+    BookContent {
+        id: "advanced_race_guide",
+        kinds: vec![
+            // ARG declares zero races and zero racial defaults
+            // (`decisions.md §25`) — a measured zero, asserted by
+            // `race_catalog.rs`. Its race work is 153 alternate racial traits,
+            // which are deliberately not race rows.
+            KindCount { kind: "races", ingested: 0 },
+            KindCount {
+                kind: "classes",
+                ingested: arg::class_spell_levels::ARG_CLASS_SPELL_LEVELS.len() as u32,
+            },
+            KindCount { kind: "spells", ingested: arg::spell_list::SPELL_LIST.len() as u32 },
+            KindCount {
+                kind: "equipment",
+                ingested: arg::equipment_tables::equipment_tables().len() as u32,
+            },
+            KindCount { kind: "feats", ingested: arg::feats::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+fn pu_content() -> BookContent {
+    BookContent {
+        id: "pathfinder_unchained",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: PuClassId::ALL.len() as u32 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount {
+                kind: "equipment",
+                ingested: pu::equipment_tables::equipment_tables().len() as u32,
+            },
+            KindCount { kind: "feats", ingested: pu::feat_tables::feat_tables().len() as u32 },
             KindCount { kind: "monsters", ingested: 0 },
         ],
     }
@@ -479,7 +529,14 @@ fn main() {
         }
     };
 
-    let books = [crb_content(), apg_content(), acg_content(), bestiary1_content()];
+    let books = [
+        crb_content(),
+        apg_content(),
+        acg_content(),
+        bestiary1_content(),
+        arg_content(),
+        pu_content(),
+    ];
     let monsters = monster_states(&repo_root);
     let races = race_states(&fixture);
     let wired = probe_feat_effect_wiring(&fixture);

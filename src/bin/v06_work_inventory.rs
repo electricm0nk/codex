@@ -690,17 +690,53 @@ struct BookMeta {
     pcc_includes: BTreeSet<String>,
 }
 
-/// The engine's book id for a corpus directory. Only the four ingested books
-/// have one; everything else is `None`, which is what makes the rest of the
-/// corpus land at `not-started` honestly rather than by omission.
-fn rule_set_for(book_dir: &str) -> Option<RuleSetId> {
-    match book_dir {
-        "core_rulebook" => Some(RuleSetId::Crb),
-        "advanced_players_guide" => Some(RuleSetId::Apg),
-        "advanced_class_guide" => Some(RuleSetId::Acg),
-        "bestiary" => Some(RuleSetId::Bestiary1),
-        _ => None,
+/// Every rule set the engine compiles.
+///
+/// This list and `corpus_dir_for` together replace what used to be a
+/// `match book_dir { ... _ => None }`. That wildcard was silent breakage: when
+/// SD-27 added `RuleSetId::Arg` and `RuleSetId::Pu`, the *exhaustive*
+/// `rule_set_id` below was forced by the compiler to grow two arms, but the
+/// wildcard here absorbed both books without a word. The result was that
+/// 2,269 ARG and 882 PU corpus units reported `no_compiled_rule_set_for_book`
+/// -> `not-started` -> `scope: future_state` -> 0% proven, while the engine
+/// was in fact shipping their feat tables, class chassis and reach gating.
+/// Eleven days of delivered work read as untouched on the dashboard.
+///
+/// Adding a variant to `RuleSetId` now breaks `corpus_dir_for`'s match until
+/// the corpus directory is declared, so the next book cannot go unmeasured
+/// the same way.
+const COMPILED_RULE_SETS: &[RuleSetId] = &[
+    RuleSetId::Crb,
+    RuleSetId::Apg,
+    RuleSetId::Acg,
+    RuleSetId::Bestiary1,
+    RuleSetId::Arg,
+    RuleSetId::Pu,
+];
+
+/// The corpus directory whose records a rule set is compiled from. Exhaustive
+/// on purpose — see `COMPILED_RULE_SETS`.
+fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
+    match rule_set {
+        RuleSetId::Crb => "core_rulebook",
+        RuleSetId::Apg => "advanced_players_guide",
+        RuleSetId::Acg => "advanced_class_guide",
+        // The only id that is not spelled like its directory: the engine calls
+        // it `bestiary_1`, the corpus directory is `bestiary`.
+        RuleSetId::Bestiary1 => "bestiary",
+        RuleSetId::Arg => "advanced_race_guide",
+        RuleSetId::Pu => "pathfinder_unchained",
     }
+}
+
+/// The engine's rule set for a corpus directory, or `None` when the engine has
+/// not compiled that book at all — which is what makes the rest of the corpus
+/// land at `not-started` honestly rather than by omission.
+fn rule_set_for(book_dir: &str) -> Option<RuleSetId> {
+    COMPILED_RULE_SETS
+        .iter()
+        .copied()
+        .find(|&rs| corpus_dir_for(rs) == book_dir)
 }
 
 fn rule_set_id(rule_set: RuleSetId) -> &'static str {
@@ -2188,4 +2224,55 @@ fn main() {
         std::process::exit(1);
     }
     print!("{out}");
+}
+
+#[cfg(test)]
+mod rule_set_mapping_tests {
+    use super::*;
+
+    /// Regression guard for the wildcard bug. SD-27 shipped ARG and PU into the
+    /// engine — feat tables, class chassis, reach gating — but `rule_set_for`
+    /// ended in `_ => None`, so the inventory reported both books as
+    /// `not-started` / `future_state` / 0% proven. The compiler could not catch
+    /// it because a wildcard arm absorbs new variants silently.
+    #[test]
+    fn every_compiled_rule_set_round_trips_through_its_corpus_dir() {
+        for &rs in COMPILED_RULE_SETS {
+            let dir = corpus_dir_for(rs);
+            assert_eq!(
+                rule_set_for(dir),
+                Some(rs),
+                "{dir} must map back to the rule set it was compiled from",
+            );
+        }
+    }
+
+    #[test]
+    fn sd27_books_are_measurable() {
+        assert_eq!(rule_set_for("advanced_race_guide"), Some(RuleSetId::Arg));
+        assert_eq!(rule_set_for("pathfinder_unchained"), Some(RuleSetId::Pu));
+    }
+
+    /// The engine id and the corpus directory disagree for exactly one book.
+    #[test]
+    fn bestiary_directory_maps_despite_the_id_rename() {
+        assert_eq!(rule_set_for("bestiary"), Some(RuleSetId::Bestiary1));
+        assert_eq!(rule_set_id(RuleSetId::Bestiary1), "bestiary_1");
+    }
+
+    #[test]
+    fn corpus_dirs_are_distinct() {
+        let mut seen = std::collections::BTreeSet::new();
+        for &rs in COMPILED_RULE_SETS {
+            assert!(seen.insert(corpus_dir_for(rs)), "duplicate corpus dir for {rs:?}");
+        }
+        assert_eq!(seen.len(), COMPILED_RULE_SETS.len());
+    }
+
+    /// A book the engine has not compiled must still report honestly.
+    #[test]
+    fn uncompiled_books_stay_none() {
+        assert_eq!(rule_set_for("ultimate_psionics"), None);
+        assert_eq!(rule_set_for("inner_sea_gods"), None);
+    }
 }
