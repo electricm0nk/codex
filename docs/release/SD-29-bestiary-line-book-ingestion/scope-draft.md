@@ -109,7 +109,7 @@ operator's call. Re-derive before deciding — the corpus checkout can move.
 ## Scope
 
 - **In scope:** End-to-end content-source ingest for the seven Bestiary-line books enumerated above (per `decisions.md §34`). Per-monster-block cycles produce canonical monster entries that match the SD-22 corpus-source-inventory doctrine-of-record for the monster-bearing books; Bestiary 5 and Bestiary 6 use player-options cycles, and Monster Codex uses per-record-family cycles — see §"Book shape" and §"Epic structure" below. **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 10.
-- **Out of scope:** Bestiary 1 (closed in SD-22). Mythic monster appendices (separate treatment). NPC codex (separate, not in any current SD). Update-UI bug remediation (lifecycle-routed from SD-16, separate).
+- **Out of scope:** Bestiary 1 (closed in SD-22 procedurally; **4.1% proven, 42/1,027 units**, 41/326 declared monsters ingested — measured 2026-08-02, `decisions.md §35`). Mythic monster appendices (separate treatment). NPC codex (separate, not in any current SD). Update-UI bug remediation (lifecycle-routed from SD-16, separate).
 - **Boundary with SD-22:** Bestiary 1 lives canonically in SD-22. SD-29 references Bestiary 1's canonical id only; does not redefine.
 
 ## Ingest and surfacing are one unit of work

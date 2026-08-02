@@ -221,7 +221,7 @@ B's register additionally scopes `bestiary_6`, `bonus_bestiary`, and
 
 ## Out of scope
 
-- Bestiary 1 (closed in SD-22).
+- Bestiary 1 (closed in SD-22 procedurally; **4.1% proven, 42/1,027 units** as measured 2026-08-02 — `decisions.md §35`, not a finished content foundation).
 - SD-28's Ultimate books (separate bundle).
 - SD-30's Occult + companions (separate bundle).
 - Mythic monster appendices (not in any current SD).
@@ -248,7 +248,7 @@ B's register additionally scopes `bestiary_6`, `bonus_bestiary`, and
 ## Dependency position
 
 - **Depends on:** SD-22 (closed, Bestiary 1 ingest pipeline; reach-gate
-  mechanic); SD-27 (closed, Shape B schema).
+  mechanic — but the pipeline's *output* is 4.1% proven, `decisions.md §35`); SD-27 (closed, Shape B schema).
 - **Unblocks:** SD-30 (separate bundle, no SD-29 dependency).
 - **Blocks:** None in-cycle; the post-tranche consumer is whatever bundle picks
   up after SD-30.

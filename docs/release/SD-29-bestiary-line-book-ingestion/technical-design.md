@@ -98,7 +98,9 @@ Per `decisions.md §16`:
   changes. The newer book's stat block is doctrine; the older book's is
   errata.
 - Bestiary 1 (closed in SD-22) carries the canonical baseline; new reprints
-  are supersets or refinements, not contradictions.
+  are supersets or refinements, not contradictions. "Canonical baseline" is
+  an identity/authority claim, not a completeness claim — Bestiary 1 is
+  4.1% proven (42/1,027 units) as measured 2026-08-02 (`decisions.md §35`).
 - The trap-report's per-book `KEY:` namespace listing tells the cycle
   which prefix to search for when joining records across bestiaries.
 

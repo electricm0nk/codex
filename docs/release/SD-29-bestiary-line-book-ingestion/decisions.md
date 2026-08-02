@@ -635,3 +635,36 @@ All seven books are present in `docs/work-inventory.json` as `future_state`. Bas
 **What this leaves standing.** Decisions §13 (branch `tranche/9` + local-file dispatch), §14 (build version target `0.9.<build>`), §14a (Hermes board retired), and §16–§33 (cross-book conflict rule, engine policy, orchestration doctrine, retrospective/disk-reclamation process) are unaffected by the scope-width change and continue to govern the widened seven-book bundle. Decision §15 ("SD-29's book list is four bestiaries") is narrower than this decision and is superseded by it for book-count purposes, though its per-book shape descriptions for Bestiary 2-5 remain accurate and are extended, not replaced, by the three additional books above.
 
 **Authority:** operator directive 2026-08-02; verified corpus figures per `forward-scope-register.md §1.1` and `§1.3`; `docs/work-inventory.json` (all seven books present as `future_state`).
+
+## Decision 35 — Bestiary 1's "closed" foundation is ~4% proven; measured against the live dashboard, cross-referenced to SD-28's harness epic (2026-08-02)
+
+**Status:** New. Reconciliation pass against `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory` (`generated_at: 2026-08-02T12:40:01Z`), done in response to an operator directive that all previously-started and Ultimate books reach 100% proven, which exposed that this bundle's premises need re-stating in measured terms rather than corrected outright — the numeric claims already in this package (41 ingested monster stat blocks, Bestiary 5/6 zero monsters) turned out to be accurate; what needed fixing was the framing.
+
+**Measured starting state.** Command:
+
+```
+python3 -c "
+import json
+d = json.load(open('/home/ubuntu/swarm-observer/PF1e-dashboard.json'))
+b = {x['id']: x for x in d['work_inventory']['books']}['bestiary']
+print(b['units'], b['proven'], b['by_status'])
+for r in b['reconciliation']: print(r)
+"
+```
+
+Result: `bestiary` (Bestiary 1) is **42 proven of 1,027 units — 4.1%** (`by_status`: `grounded: 42`, `ingested-magnitude: 4`, `not-ingested: 981`). Per-kind reconciliation shows the monster kind specifically at **41 engine records of 326 declared** (`delta: 285`) — the figure this package already cites at `scope-draft.md:132` ("Bestiary 1's 41 ingested monster stat blocks reach no surface") is correct and is not being changed. What this decision corrects is the repeated shorthand elsewhere in this package — `README.md:224`, `README.md:250`, `scope-draft.md:112`, `technical-design.md:100` — that calls Bestiary 1 **"(closed in SD-22)"** without qualification. "Closed" describes SD-22's own procedural sign-off, not the corpus's proven state; read alongside this bundle's dependency on Bestiary 1 as a foundation, the unqualified phrase invites the false inference that Bestiary 1 is a complete, finished base. It is not: 96% of its units (985/1,027) are unproven. Each of those four locations is annotated in place with a pointer to this decision rather than rewritten, since none of them asserted the 100%-complete claim outright — the risk was omission, not misstatement.
+
+**Dependency stated plainly.** SD-29's per-book work (Bestiary 2-6, Bonus Bestiary, Monster Codex) references Bestiary 1's canonical monster ids (`decisions.md §"Boundary with SD-22"`) but does not itself need Bestiary 1 fully proven to proceed — cross-book identity is a reference, not a completion gate (`successor-forward-scope-register.md:39`). What SD-29 does inherit from Bestiary 1's low proven rate is the same measurement ceiling: **`proven` = `grounded` + `text-complete` only**, excluding `ingested-magnitude` (`status_vocabulary`: *"The engine holds the record WITH its real numeric fields, but this generator observes no consumer delta for this kind (spells, equipment)"*). SD-29's own in-scope books carry meaningful spell/equipment surface (Monster Codex: 24 spell + 45 equipment + 4 equipment_modifier units of its 213), so those units cannot reach `proven` regardless of ingestion quality until the harness is widened. That widening is **SD-28 Epic 14** (`docs/release/SD-28-ultimate-book-content-ingestion/decisions.md §"Decision — new, recording an operator directive..."`, added 2026-08-02, commit `3eb11a18`), a hard dependency of SD-28's own Epics 23/25/28 and, by the same generator mechanism, a prerequisite for this bundle's spell/equipment-bearing books ever reading 100% proven in the dashboard even after ingestion is done.
+
+**Bestiary 5/6 zero-monster finding — independently re-verified, not merely re-cited.** Decision §34 already states Bestiary 5 (0 monsters) and Bestiary 6 (63 units, zero monsters) correctly. Independent verification against the corpus:
+
+```
+ls ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_5/
+ls ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_6/
+```
+
+Both directories contain only companion/PC-race, feat, spell, deity/domain, and skill `.lst` files (e.g. `b5_races_companion.lst`, `b5_races_pc.lst`, `b6_races_companion.lst`) — no monster-statblock `.lst` of the shape Bestiary 1/2/3/4 carry. Confirmed: **no scope error exists in Decision §34's seven-book list** — Bestiary 5 and 6 are correctly scoped as player-options ingestion, not monster ingestion, and the "monster" language in this package's title/framing should be read book-by-book per Decision §34's per-book shape notes, not assumed uniform across all seven.
+
+**Launch-readiness assessment.** This package's chassis (scope, epics, decisions) is internally accurate and was already planning-ready per Decision §34. It is **not launch-ready in the sense of "the dependency it builds on is a finished base"** — it depends on a Bestiary 1 foundation that is 96% unproven by the same measure this bundle will itself be judged by, and its own spell/equipment-bearing books (Monster Codex) cannot reach 100% proven until SD-28 Epic 14 lands. Sequential launch order after SD-28 (Decision §34) is the correct mitigation already in place; this decision makes the reason explicit rather than assumed.
+
+**Authority:** `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory` section, `generated_at: 2026-08-02T12:40:01Z`; `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_5/` and `bestiary_6/` directory listings (2026-08-02); `docs/release/SD-28-ultimate-book-content-ingestion/decisions.md` (E13-E30 completion epics, Epic 14 harness-widening decision, commit `3eb11a18`).

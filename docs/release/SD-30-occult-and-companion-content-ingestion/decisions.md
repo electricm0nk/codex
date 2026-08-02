@@ -567,3 +567,47 @@ Two additions, landed in `scripts/` (shared across SD-28/SD-29/SD-30, not per-bu
 **This bundle's `loop-instruction.md` Cycle mechanics now runs the preflight check at the start of each cycle and `scripts/reclaim.sh --apply` at cycle end.** The mandate is paired with the command, which is the entire lesson of §4.1 restated as a rule: a rule with no executable counterpart is the rule that produced 600G.
 
 **Authority:** `docs/retro/tranche-7-retrospective.md` §4.1 (disk exhaustion, 5 of 34 incidents) and §6.1 rule A4 (`CARGO_TARGET_DIR` deletion + pre-sweep disk check); `AGENTS.md` "Concurrency and Measurement."
+
+## Decision 32 — Starting state is zero-proven across all sixteen books; `occult_adventures` is spell-heavy and hits the harness ceiling; the two-absent-book finding independently re-verified (2026-08-02)
+
+**Status:** New. Reconciliation pass against `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory` (`generated_at: 2026-08-02T12:40:01Z`), done for the same reason as SD-29's `decisions.md §35` (cross-reference): the operator directive that previously-started and Ultimate books reach 100% proven exposed that this package's launch-readiness must be stated in measured terms.
+
+**Measured starting state.** Command:
+
+```
+python3 -c "
+import json
+d = json.load(open('/home/ubuntu/swarm-observer/PF1e-dashboard.json'))
+books = {b['id']: b for b in d['work_inventory']['books']}
+for k in ['occult_adventures','horror_adventures','mythic_adventures','monster_codex',
+          'book_of_the_damned_volume_1','book_of_the_damned_volume_2','inner_sea_world_guide',
+          'inner_sea_combat','inner_sea_faiths','inner_sea_gods','inner_sea_magic',
+          'inner_sea_races','inner_sea_temples','inner_sea_taverns','inner_sea_bestiary',
+          'inner_sea_intrigue']:
+    b = books[k]; print(k, b['units'], b['proven'], b.get('scope'))
+"
+```
+
+Result: **all sixteen in-scope books read `0 proven` of a combined 12,246 units** (each carries `scope: future_state` in the dashboard and has not been touched by ingestion yet). This package's own chassis does not claim otherwise anywhere in `decisions.md`, `scope-draft.md`, or `README.md` — no correction to an existing false claim was needed here, unlike the "closed"-framing issue found in SD-29. This decision exists to make the zero-proven starting point and its consequence explicit rather than left implicit.
+
+**`proven` excludes `ingested-magnitude`, and `occult_adventures` is spell-heavy — verified against the corpus, not assumed.** Command:
+
+```
+find ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/occult_adventures -iname "*.lst" | xargs -I{} basename {}
+wc -l ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/occult_adventures/oa_spells*.lst | tail -1
+```
+
+Result: Occult Adventures carries **six separate spell-list `.lst` files** (`oa_spells.lst` plus `oa_spells_uc/um/acg/arg/ma.lst`, covering spells shared with Ultimate Combat/Magic/ACG/ARG/Mythic), totaling **2,170 lines in `oa_spells.lst` alone**. Per `docs/release/SD-28-ultimate-book-content-ingestion/decisions.md` (E13-E30 completion-epics decision, added 2026-08-02, commit `3eb11a18`): `status_vocabulary` defines `ingested-magnitude` as *"The engine holds the record WITH its real numeric fields, but this generator observes no consumer delta for this kind (spells, equipment)"* — `Kind::Spell` and `Kind::Equipment` have no wiring probe in `v06_work_inventory.rs`'s `classify()`, so no amount of correct spell ingestion in Occult Adventures can move it past `ingested-magnitude` into `proven` until **SD-28 Epic 14** (observation-harness widening) lands. This is the same measurement ceiling SD-29 inherits (`SD-29 decisions.md §35`), and it applies most acutely here: Occult Adventures is this package's largest single book (1,831 units) and its psychic-magic content is spell-dominant by design.
+
+**Two-absent-book finding — independently re-verified, not merely re-cited.** This package's `scope-draft.md` §"Deferred" and `decisions.md §1` already correctly record NPC Codex and Planar Adventures as genuinely absent from the corpus (2026-08-01 absent-book rule) and Occult Origins/Haunted Heroes Handbook as present-but-deferred by operator choice. Independent re-verification:
+
+```
+find ~/workspace/repos/pcgen/data -iname "*npc_codex*" -o -iname "*npccodex*"
+find ~/workspace/repos/pcgen/data -iname "*planar*"
+```
+
+`npc_codex` returns no hits anywhere in the corpus. `*planar*` returns only an unrelated 3.5e product (`35e/lions_den_press/secrets_of_the_planes/planar_magic/`), not Pathfinder's *Planar Adventures* — confirming it is genuinely absent, not misfiled. **Both absences confirmed; this package's existing framing is accurate and stands unchanged.**
+
+**Launch-readiness assessment.** This package's own documents contain no false "predecessor books are complete" premise to correct — sixteen books at zero-proven does not create a false completeness claim the way SD-29's Bestiary-1 dependency did, because SD-30 does not claim any of its sixteen books, or an external predecessor, is a finished foundation. What this package was missing was the explicit statement that (a) it starts from zero measured progress across the whole scope, and (b) its largest book cannot reach 100% proven post-ingestion without SD-28 Epic 14. **Not launch-ready** in the sense of "ready to reach 100% proven on its own" — it is planning-ready (per its existing sixteen-book pin) but gated on the same cross-bundle harness prerequisite as SD-29 and SD-28's own remaining spell/equipment-heavy books.
+
+**Authority:** `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory` section, `generated_at: 2026-08-02T12:40:01Z`; `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/occult_adventures/` directory listing (2026-08-02); `docs/release/SD-28-ultimate-book-content-ingestion/decisions.md` (E13-E30, Epic 14 harness decision, commit `3eb11a18`); `SD-29-bestiary-line-book-ingestion/decisions.md §35` (parallel reconciliation).
