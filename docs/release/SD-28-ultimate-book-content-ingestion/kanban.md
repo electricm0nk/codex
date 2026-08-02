@@ -31,7 +31,47 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 9 | `epic-9-upsi` | READY | Ultimate Psionics (Dreamscarred Press tier) | per-class / per-power, license-gated | `epic-2-prelaunch` | — | — | — |
 | 10 | `epic-11-version` | COMPLETE | Build Version Numbering | first concrete value `0.8.<build>` | `epic-1-identifier` | sd28-epic11 | 2026-08-02T03:00:00Z | SD28-E11-F1-001 |
 | 11 | `epic-12-code-review` | COMPLETE | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version` | sd28-epic12 | 2026-08-02T00:00:00Z | SD28-E12-F1-001 |
-| 12 | `epic-10-closure` | READY | Closure Epilogue | tranche promotion PR | `epic-1-identifier`, `epic-2-prelaunch`, `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version`, `epic-12-code-review` (everything else) | — | — | — |
+| 12 | `epic-13-calibration` | READY | Ultimate Campaign (23 units) | cost calibration — one small book end-to-end to 100% proven | `epic-2-prelaunch` | — | — | — |
+| 13 | `epic-14-harness` | READY | Observation harness (spell + equipment) | consumer-probe widening; unblocks 4050 `ingested-magnitude` units | `epic-13-calibration` | — | — | — |
+| 14 | `epic-15-unknown-sweep` | READY | Classification sweep | dispose all 4172 `unknown` units | `epic-13-calibration` | — | — | — |
+| 15 | `epic-16-backfill` | READY | `not-ingested` backfill | 8492 real gaps inside started books | `epic-13-calibration`, `epic-15-unknown-sweep` | — | — | — |
+| 16 | `epic-17-punchained` | READY | Pathfinder Unchained | per-book completion — gap 830 | `epic-14-harness`, `epic-15-unknown-sweep`, `epic-16-backfill` | — | — | — |
+| 17 | `epic-18-bestiary` | READY | Bestiary | per-book completion — gap 985 | `epic-17-punchained` | — | — | — |
+| 18 | `epic-19-arg` | READY | Advanced Race Guide | per-book completion — gap 2063 | `epic-17-punchained` | — | — | — |
+| 19 | `epic-20-acg` | READY | Advanced Class Guide | per-book completion — gap 2523 | `epic-17-punchained` | — | — | — |
+| 20 | `epic-21-ce` | READY | Core Essentials | per-book completion — gap 2593 | `epic-17-punchained` | — | — | — |
+| 21 | `epic-22-apg` | READY | Advanced Player's Guide | per-book completion — gap 2948 | `epic-17-punchained` | — | — | — |
+| 22 | `epic-23-crb` | READY | Core Rulebook | per-book completion — gap 4804 (3062 of it hard-gated on `epic-14-harness`) | `epic-17-punchained` | — | — | — |
+| 23 | `epic-24-ui-complete` | READY | Ultimate Intrigue | 100% proven — gap 1265; supersedes `epic-6-ui`; full-size-book cost calibration | `epic-14-harness`, `epic-15-unknown-sweep`, `epic-16-backfill` | — | — | — |
+| 24 | `epic-25-ue-complete` | READY | Ultimate Equipment | 100% proven — gap 1615; supersedes `epic-5-ue`; HARD-gated on harness | `epic-14-harness`, `epic-24-ui-complete` | — | — | — |
+| 25 | `epic-26-uw-complete` | READY | Ultimate Wilderness | 100% proven — gap 2030; supersedes `epic-8-uw` | `epic-14-harness`, `epic-24-ui-complete` | — | — | — |
+| 26 | `epic-27-uc-complete` | READY | Ultimate Combat | 100% proven — gap 2182; supersedes `epic-3-uc` | `epic-14-harness`, `epic-24-ui-complete` | — | — | — |
+| 27 | `epic-28-um-complete` | READY | Ultimate Magic | 100% proven — gap 2446; supersedes `epic-4-um`; HARD-gated on harness | `epic-14-harness`, `epic-24-ui-complete` | — | — | — |
+| 28 | `epic-29-upsi-complete` | READY | Ultimate Psionics | 100% proven — gap 2854; supersedes `epic-9-upsi`; licence precheck required | `epic-14-harness`, `epic-24-ui-complete`, `epic-2-prelaunch` | — | — | — |
+| 29 | `epic-30-integrity` | READY | Completion Integrity Gate | anti-gaming audit + final 32061/32061 count | `epic-12-code-review`, `epic-13-calibration`, `epic-14-harness`, `epic-15-unknown-sweep`, `epic-16-backfill`, `epic-17-punchained`, `epic-18-bestiary`, `epic-19-arg`, `epic-20-acg`, `epic-21-ce`, `epic-22-apg`, `epic-23-crb`, `epic-24-ui-complete`, `epic-25-ue-complete`, `epic-26-uw-complete`, `epic-27-uc-complete`, `epic-28-um-complete`, `epic-29-upsi-complete` | — | — | — |
+| 30 | `epic-10-closure` | READY | Closure Epilogue | tranche promotion PR | `epic-1-identifier`, `epic-2-prelaunch`, `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version`, `epic-12-code-review`, `epic-30-integrity` (everything else) | — | — | — |
+
+## Completion-epic cards (added 2026-08-02, operator 100%-proven directive)
+
+Cards `epic-13-calibration` through `epic-30-integrity` implement
+`epic-breakdown.md §"Completion epics (E13–E30)"` and `decisions.md §32`.
+Total gap across the 13 books: **29,161 units** (32,061 target − 2,900 proven,
+re-derived 2026-08-02T11:50:31Z).
+
+Two constraints govern dispatch of these cards specifically:
+
+- **`epic-13-calibration` runs before every other completion card**, and no
+  duration may be asserted for any later card until its receipt
+  (`artifacts/e13-cost-calibration.md`) reports a measured cost per unit.
+- **`epic-14-harness` and `epic-15-unknown-sweep` both edit
+  `src/bin/v06_work_inventory.rs`.** They may be claimed concurrently only in
+  separate worktrees with separate `CARGO_TARGET_DIR`s (`decisions.md §29`).
+  Two cycles holding uncommitted work in the same tree is a stop condition.
+
+Cards `epic-3-uc` … `epic-9-upsi` are **not retired**. Their definition of done
+is raised from "a reach claim exists" to "100% proven for this book," and each
+is superseded book-for-book by its completion card (`epic-7-ucam` by
+`epic-13-calibration`; the other six by `epic-24`…`epic-29`).
 
 ## Cycle claims (cycle-supervisor protocol)
 
