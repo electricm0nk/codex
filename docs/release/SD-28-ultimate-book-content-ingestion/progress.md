@@ -1466,3 +1466,388 @@ cycle, and (3) only once both are clear, proceed to Step 3 (TDD
 implementation) using this cycle's Step 0/0b/1b findings above as the
 starting shape, including the `power` Kind-mapping default recorded above
 for `up_powers.lst`.
+
+---
+
+## Cycle `SD28-E12-F1-001` — `epic-12-code-review` (Bundle Code Review)
+
+**Actor:** `sd28-epic12`. **Scope:** the whole bundle's diff against its
+branch point (`decisions.md §26`), not the closing cycle alone.
+
+**Branch point:** `git merge-base origin/develop HEAD` →
+`4d75856c51dda0dbd53d82869c2de70e6b03769e`. All findings below are stated
+against `git diff 4d75856c..HEAD`.
+
+### Step 1c — preflight
+
+`./scripts/verify.sh --only preflight-disk` → exit **0** (21% used, 385G
+available on both the repo and scratch-log filesystems). `df -h /home` →
+`/dev/sda1 484G 98G 386G 21% /`.
+
+### Eligibility gap recorded at claim time (not a pass)
+
+`kanban.md`'s dispatch tiebreak says a card whose `Depends-on` is not fully
+`COMPLETE` is not eligible. `epic-12-code-review` depends on
+`epic-3-uc`…`epic-9-upsi`; all seven are `IN-FLIGHT`, none `COMPLETE`. The
+card was dispatched and claimed anyway; this receipt records the gap rather
+than papering over it. Reviewing a bundle whose content epics never closed
+is still useful — it is how F1/F2 below were found — but the review is a
+review of what exists, not a sign-off that the bundle met its own DoD.
+
+### F1 — CRITICAL: the bundle shipped zero content ingest
+
+**Finding.** SD-28's stated purpose is ingesting seven Ultimate books. No
+line of ingest code was written for any of them. The entire code surface of
+the bundle diff is tooling and a version bump:
+
+```sh
+git diff --stat 4d75856c..HEAD -- src/ tests/ data/corpus/ apps/
+# -> src/bin/v06_corpus_trap_report.rs (59), src/bin/v06_work_inventory.rs (72),
+#    tests/v06_work_inventory.rs (155), apps/desktop version files + Cargo.lock,
+#    and 8 apps/desktop test files. data/corpus/ : NO CHANGES.
+git diff --name-only 4d75856c..HEAD | grep -i reach   # -> (no matches)
+```
+
+`apps/desktop/src-tauri/src/reach_gate.rs` is untouched. No `RuleSetId`
+variant exists for any of the seven books.
+
+**Measured, not asserted** — every unit of all seven books is still
+`not-started` (12,415 units), re-derived from the regenerated inventory:
+
+```sh
+python3 -c "import json,collections;d=json.load(open('docs/work-inventory.json'));\
+ids={'ultimate_combat','ultimate_magic','ultimate_equipment','ultimate_intrigue',\
+'ultimate_campaign','ultimate_wilderness','ultimate_psionics'};\
+print(collections.Counter((u['book'],u['status']) for u in d['units'] if u['book'] in ids))"
+```
+
+→ `ultimate_combat/not-started 2182`, `ultimate_magic 2446`,
+`ultimate_psionics 2854`, `ultimate_wilderness 2030`, `ultimate_equipment
+1615`, `ultimate_intrigue 1265`, `ultimate_campaign 23`. Zero units in any
+other status. Each book's `books[]` entry carries `"scope":
+"future_state"`, `"engine_rule_set": null`.
+
+**Definition-of-done status for the bundle, item by item:**
+
+- Item 2 (reach stage passes *with a claim for this book's families*):
+  **UNMET for all seven books.** The reach gate passes only because the
+  families are absent from its inventory — the exact condition DoD item 2
+  names as "a hard failure," since `full_inventory()` in `reach_gate.rs`
+  enumerates *ingested* families from `data/corpus/`.
+- Item 3 (`v06_corpus_trap_report -- --audit` exits 0): **UNMET** — see F3.
+- Item 4 (the book's units leave `not-started`): **UNMET for all seven**,
+  per the count above.
+- Item 8 (on-screen verification): not reached — nothing was surfaced.
+
+### F2 — CRITICAL: the cited blocker does not block the work it was used to block
+
+All seven book cycles recorded the identical `decision-blocked` reason:
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` exits `2`. That
+failure is real and I reproduced it (F3). But it is a **closure** condition
+(DoD item 3), not a precondition for *writing* ingest code, and its cause is
+nine pre-existing ACG spell records with no relationship to any of the seven
+Ultimate books. Treating one out-of-scope red gate as a gate on starting
+work converted seven cycles into seven shape-and-stop cycles with zero
+output.
+
+`loop-instruction.md`'s own "Stop vs. press on" section supports this
+reading, not the one taken: STOP is for "a gate fails for a reason that is a
+real finding about **content or scope**" — the paradigm case named there is
+"the reach gate flagging genuinely unsurfaced content," i.e. a gate failing
+*about the work in hand*. A pre-existing failure about a different book,
+from a closed bundle, is the "mechanical defect / routine judgment call"
+case: press on, ingest, and record the audit red as a cycle shortfall under
+DoD item 6. `decisions.md §9` itself frames `--audit` as "additionally a
+definition-of-done condition," not as an entry gate.
+
+**This is recorded as a finding, not fixed.** Executing seven book ingests
+is not in this review card's bounded scope, and doing it here would be the
+scope expansion `AGENTS.md` §3 forbids. The remedy is a supervisor ruling
+that re-dispatches Epics 3–9 with F2 in the brief.
+
+### F3 — the ACG audit failure is real, is a genuine content defect, and has a named remedy
+
+Reproduced live this cycle, exit code captured directly:
+
+```sh
+cargo run --locked --bin v06_corpus_trap_report -- --audit ; echo $?   # -> 2
+```
+
+→ `0 TRAP / 9 DEFECT key-differs-from-name`, all on
+`spell/summon_nature_s_ally_{i..ix}.json`.
+
+**It is not a false positive.** Verified against the corpus and the ingested
+record, both read whole rather than through a filter:
+
+```sh
+grep -n "Summon Nature's Ally I\b" \
+  ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst
+# -> 785: Summon Nature's Ally I  KEY:Naturalist Summon Nature's Ally I  TYPE:Arcane ...
+cat data/corpus/advanced_class_guide/spell/summon_nature_s_ally_i.json
+# -> "record_key": "Summon Nature's Ally I", "line": 785
+ls data/corpus/core_rulebook/spell/level_1/summon_nature_s_ally_i.json   # -> exists
+```
+
+The ACG record cites a line whose declared `KEY:` is the *Naturalist
+archetype* variant, but files it under the base spell's identity — and the
+base spell already exists as a separate CRB record. This is the
+identifier-scope-collision class exactly.
+
+**Root cause is in code, and is deliberate.**
+`src/rules_core/cache_gen/acg.rs::generate_spells` writes
+`record_key: entry.key.to_string()` (the display name) for every entry, and
+its own comment states the problem it is creating:
+
+> "Every ACG spell resolves via a plain first-column lookup on its own
+> display name -- including the 9 Naturalist archetype variants (whose real
+> KEY: differs from the display name, but whose first column is still the
+> display name)"
+
+**Remedy (named, not performed):** re-key the nine `acg::spell_list` entries
+to their declared `KEY:` (`Naturalist Summon Nature's Ally I..IX`) so the
+generated record has its own identity and slug, and regenerate
+`data/corpus/advanced_class_guide/spell/` via `gen_cache_acg`.
+
+`decision-blocked` — **the fix is out of SD-28's write scope and is
+player-visible.** `data/corpus/advanced_class_guide/` is SD-22 (closed)
+content; re-keying changes which spell id a player selects and which slug
+the catalog serves. Correcting only `record_key` while leaving `data.key` as
+the base spell's name would turn the audit green without fixing the defect —
+that is gate-weakening and was explicitly not done. Command and exit code
+for the block: `cargo run --locked --bin v06_corpus_trap_report -- --audit`
+→ exit `2`.
+
+### F4 — CORRECTED IN-CYCLE: `loop-instruction.md`'s subdirectory figure was not re-derived
+
+`loop-instruction.md` §"Corpus shape notes (**re-derived 2026-08-01**)"
+stated "65 of 191 `.lst` files (34%) sit in `support/` and `_pfs/`". Actual:
+**53 of 191 (28%)**. Two independent implementations, per `AGENTS.md`'s
+two-implementations rule:
+
+```sh
+P=~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game
+U=~/workspace/repos/pcgen/data/pathfinder/dreamscarred_press/ultimate_psionics
+find $P/ultimate_{combat,magic,equipment,intrigue,campaign,wilderness} $U -iname '*.lst' | wc -l
+# -> 191   (denominator confirmed unchanged)
+find $P/ultimate_{combat,magic,equipment,intrigue,campaign,wilderness} $U -iname '*.lst' -mindepth 2 | wc -l
+# -> 53
+# second implementation: python3 os.walk, counting .lst whose path relative to
+# the book root contains a separator -> 53
+```
+
+Per book: UC 26, UW 11, UM 5, UI 5, UE 4, UCam 2, UPsi 0. Corrected in
+`loop-instruction.md` this cycle; `correction` event emitted.
+
+### F5 — CORRECTED IN-CYCLE: a file count published as a book count
+
+Same section stated "UC's `support/` files reference 22 other sourcebooks".
+There are 22 **files** naming **21 distinct** sourcebooks (`um` appears
+twice), and only **18** of the 21 are outside the SD-28 set:
+
+```sh
+ls $P/ultimate_combat/support | wc -l                                      # -> 22
+ls $P/ultimate_combat/support | sed -E 's/^uc_[a-z]+_(class_)?//; s/\.lst$//' | sort -u | wc -l
+# -> 21   (acg ag amh apg aqua boa bos bota cr dtt ha hotw kog lod mah mhh mtt ui um uw wmh)
+```
+
+Corrected in `loop-instruction.md` this cycle; `correction` event emitted.
+
+### F6 — three cycles logged a correction that corrects nothing
+
+`epic-6-ui`, `epic-7-ucam` and `epic-8-uw` each emitted a `correction` retro
+event, and each wrote into this file, that the brief's ".pcc discovery: glob
+`*.pcc`, not `_*.pcc`" was wrong for their book because the file on disk is
+`_ultimate_<book>.pcc`. The shell glob `*.pcc` **matches**
+`_ultimate_campaign.pcc`; the note's whole point is to use the wider glob
+*because* two of the seven books lack the underscore. Re-derived:
+
+```sh
+find $P/ultimate_{combat,magic,equipment,intrigue,campaign,wilderness} $U \
+  -maxdepth 1 -iname '*.pcc' -printf '%f\n' | sort
+# -> _ultimate_campaign.pcc _ultimate_combat.pcc _ultimate_intrigue.pcc
+#    _ultimate_magic.pcc _ultimate_wilderness.pcc ultimate_equipment.pcc
+#    ultimate_psionics.pcc
+```
+
+That is exactly what `loop-instruction.md` says: five underscored, two not.
+Each of the three receipts even says "matching `loop-instruction.md`'s own
+corpus-shape note" in the same paragraph that calls it "the opposite of what
+the brief stated" — self-contradictory on its face. If the dispatch brief
+paraphrased the note into a false claim, the correction is against the
+paraphrase, not the doctrine; as written the receipts imply the doctrine is
+wrong for these books, and it is not.
+
+Why this matters beyond tidiness: `loop-instruction.md` step 1b cites the
+retro log's correction population as evidence for its own method ("51% of
+132 correction events"). Three false positives in one bundle inflate that
+denominator with non-corrections. `incident` event emitted; the three
+`correction` events are left in place (the log is append-only by design and
+rewriting history there would be worse than annotating it).
+
+### F7 — Epic 11's version commit carried an unreviewed dependency sweep
+
+`27dbbdea feat(sd28): close epic-11-version` changed
+`apps/desktop/src-tauri/Cargo.lock` by 256 insertions / 253 deletions. Only
+one of those is the intended `codex-desktop 0.6.1 -> 0.8.0` line:
+
+```sh
+git show 27dbbdea -- apps/desktop/src-tauri/Cargo.lock | grep -cE '^\+version = '   # -> 79
+git show 27dbbdea:apps/desktop/src-tauri/Cargo.lock  | grep '^name = ' | sort > /tmp/new
+git show 27dbbdea~1:apps/desktop/src-tauri/Cargo.lock | grep '^name = ' | sort > /tmp/old
+comm -13 /tmp/old /tmp/new   # -> name = "syn"     (added)
+comm -23 /tmp/old /tmp/new   # -> name = "utf-8"   (removed)
+```
+
+79 transitive crate versions moved and one new package entered the desktop
+app's dependency graph inside a commit whose subject is a version-number
+change. That is the "no unrelated sweeps" rule (`AGENTS.md` §3) and DoD item
+7's separate-reviewable-commit principle.
+
+**Not reverted, deliberately.** Restoring the base lockfile is itself an
+unreviewed change with build risk taken at bundle-closure time, and the
+sweep is a refresh rather than a defect. Recorded for the operator so the
+tranche-promotion PR describes it accurately instead of it arriving
+unannounced. Safer default per UNATTENDED MODE item 1.
+
+### No-stub / wired-integration audit
+
+Clean, for the structural reason that there is nothing to audit: the bundle
+added no production code path, no user-facing affordance and no fixture-fed
+surface. `data/stubs/*.json` additions (`ultimate_psionics` + twelve SD-30
+`campaign_setting` books) are entries in the repo's *future-state book
+registry* — the mechanism `v06_work_inventory` reads to mark a book
+`"scope": "future_state"` — not code stubs, and every one of their units is
+reported at `not-started` rather than being silently skipped. That is the
+registry working as designed.
+
+`v06_work_inventory`'s new `EXTRA_BOOK_DIRS` handling is real, not a stub:
+missing entries `std::process::exit(1)` at startup instead of being skipped,
+and lookups go through a `book_paths` map so an extra book's real directory
+is never reconstructed as `books_dir.join(id)`. Its tests
+(`tests/v06_work_inventory.rs`) assert against the generated inventory, not
+against fixtures.
+
+### Identifier discipline
+
+Clean. Scanned the bundle diff's code files and the whole live source tree:
+
+```sh
+grep -rnE '\bsd28_|\bSD28_|\bSd28[A-Z]' --include=*.rs --include=*.ts --include=*.tsx \
+  src/ apps/desktop/src apps/desktop/src-tauri/src tests/     # -> no matches
+git diff 4d75856c..HEAD --name-only | grep -E '\.(rs|ts|tsx|json|toml|sh)$' | grep -v '^docs/' \
+  | xargs -r grep -nE 'sd28_|SD28_|Sd28|sd28-|SD-28-Ex|t_[0-9a-f]{6,}|AV-PAY-'   # -> no matches
+```
+
+(`apps/desktop/src/sd21/` and `tests/sd27_*.rs` predate this bundle and are
+outside its diff.)
+
+### Figures spot-checked from prior receipts — all confirmed
+
+Re-run against source data, not transcribed from the receipts:
+
+```sh
+grep -c 'CATEGORY:FEAT' $P/ultimate_combat/uc_feats.lst                    # -> 263  (epic-3-uc: 263 OK)
+find $P/ultimate_combat -iname '*.lst' | wc -l                             # -> 46   (epic-3-uc: 46 OK)
+find $P/ultimate_combat -iname '*.lst' -path '*_pfs*' | wc -l              # -> 4    (epic-3-uc: 4 OK)
+find $P/ultimate_magic -iname '*.lst' | wc -l                              # -> 30   (epic-4-um: 30 OK)
+find $P/ultimate_magic -iname '*.lst' -path '*_pfs*' | wc -l               # -> 5    (epic-4-um: 5 OK)
+find $P/ultimate_magic -iname '*.pcc' | wc -l                              # -> 2    (epic-4-um: 2 OK)
+find $P/ultimate_campaign -iname '*.lst' | wc -l                           # -> 11   (epic-7-ucam OK)
+find $P/ultimate_campaign -maxdepth 1 -iname '*.lst' | wc -l               # -> 9    (epic-7-ucam OK)
+grep -c 'KEY:' $P/ultimate_campaign/uca_abilities_drawbacks.lst            # -> 17   (epic-7-ucam OK)
+grep -c 'KEY:' $P/ultimate_campaign/uca_abilities_retraining.lst           # -> 83   (epic-7-ucam OK)
+grep -c 'KEY:' $P/ultimate_campaign/uca_abilities_traits.lst               # -> 233  (epic-7-ucam OK)
+grep -c '"book": "ultimate_campaign"' docs/work-inventory.json             # -> 23   (epic-7-ucam OK)
+find $P/ultimate_wilderness -maxdepth 1 -iname '*.lst' | wc -l             # -> 24   (epic-8-uw OK)
+find $P/ultimate_wilderness -iname '*.lst' | wc -l                         # -> 35   (epic-8-uw OK)
+find $P/ultimate_wilderness/support -iname '*.lst' | wc -l                 # -> 11   (epic-8-uw OK)
+grep -c 'CATEGORY:FEAT' $P/ultimate_wilderness/uw_feats.lst                # -> 136  (epic-8-uw OK)
+wc -l < $U/up_powers.lst                                                   # -> 497  (loop-instruction OK)
+grep -h '^SOURCESHORT' $P/ultimate_campaign/*.pcc $U/*.pcc                 # -> UCA, UP  (loop-instruction OK)
+ls $P/ultimate_combat | grep -i ogl                                        # -> none (loop-instruction OK)
+ls $U | grep -i ogl ; grep -c EXTRAFILE $U/*.pcc                           # -> OGL.txt ; 0 (loop-instruction OK)
+find $P/ultimate_{combat,magic,equipment,intrigue,campaign,wilderness} $U -iname '*.lst' \
+     \( -iname '*monster*' -o -iname '*beast*' \) | wc -l                  # -> 0    ("no bestiary content" OK)
+```
+
+Every per-book figure the seven receipts published re-derived correctly.
+The two figures that did **not** survive re-derivation (F4, F5) are both in
+`loop-instruction.md`'s own "re-derived 2026-08-01" block — i.e. the package
+doc, not the cycle receipts. The receipts' discipline held; the doctrine
+doc's did not.
+
+### `reach_gate.rs` OPEN_FINDINGS — deliberately NOT edited
+
+The brief invited an `OPEN_FINDINGS` entry. Adding one for the seven
+un-ingested books would **break** the gate, not record a finding:
+`unsurfaced_families_are_exactly_the_recorded_findings` pins the list in
+both directions against families computed from live behaviour, and none of
+these seven books has an ingested family for the list to name. The correct
+record for "a book was never ingested" is this receipt, not a gate entry.
+
+### F8 — INCIDENT: a second writer is live in this shared checkout, and it
+### silently contaminated this cycle's `v06_work_inventory` regeneration
+
+Cycle-mechanics step 0 (`cargo run --locked --bin v06_work_inventory`, exit
+`0`) produced an inventory that differed from the committed one by far more
+than `generated_at`:
+
+```
+-      "grounded": 252,                 +      "grounded": 301,
+-      "deferred-with-reason": 29,      +      "deferred-with-reason": 32,
+```
+
+`git status --porcelain` immediately afterwards listed
+`M src/bin/v06_work_inventory.rs` — a file this cycle never touched, and one
+that was **clean** at cycle open. Another agent is mid-edit on it right now,
+replacing `rule_set_for`'s wildcard `match` with an exhaustive
+`COMPILED_RULE_SETS` / `corpus_dir_for` pair that adds `RuleSetId::Arg` and
+`RuleSetId::Pu` (97 insertions). `cargo run` compiled *their working tree*,
+so the numbers above are their in-flight result, not HEAD's.
+
+Two things follow, and both were acted on:
+
+1. **`docs/work-inventory.json` was reverted (`git checkout -- 
+   docs/work-inventory.json`) and is NOT part of this cycle's commit.**
+   Committing it would have published another agent's uncommitted work under
+   an `sd28` code-review commit — the exact clobber the shared-checkout rule
+   exists to prevent.
+2. **The tool is idempotent; the tree was not.** Verified separately: two
+   consecutive runs over the same tree differ only in `generated_at`
+   (`diff <(grep -v generated_at inv1.json) <(grep -v generated_at
+   docs/work-inventory.json)` → empty). DoD item 4's idempotence property
+   holds. What moved was the source under it.
+
+This is `AGENTS.md`'s "One writer per tree" rule firing exactly as written
+("if `git status --porcelain` lists a file you did not modify, stop and
+report"). `incident` event emitted with recurrence-key
+`shared-tree-second-writer`. Consequence for this receipt: this cycle's
+`verify.sh` run is attributed explicitly to the tree state it ran against,
+below — not silently to HEAD.
+
+Note the finding is not against the other agent's change, which looks
+correct and valuable on its face (a wildcard `match` arm was absorbing every
+newly compiled book, so ARG and PU corpus units reported
+`no_compiled_rule_set_for_book` while the engine shipped their tables). It
+is against two agents holding uncommitted work in one tree.
+
+### Verify
+
+`./scripts/verify.sh` (full, exit code captured directly, not through a
+pipe) — result and the exact tree state it ran against recorded below.
+
+### Retro events
+
+Emitted this cycle to `docs/retro/events/sd28-epic12.jsonl`: two
+`correction` events (F4, F5), one `incident` (F6), one `deferral` (F3 —
+the ACG re-key, out of write scope). Plus the automatic `verification`
+events from every `verify.sh` invocation.
+
+### Kanban
+
+`epic-12-code-review` moved `READY` → `IN-FLIGHT`, `Claimed-by:
+sd28-epic12`, `Claimed-at: 2026-08-02T00:00:00Z`, `Cycle-id:
+SD28-E12-F1-001`, then `COMPLETE` — the review itself is done and its
+findings are recorded. Completing this card does **not** imply the bundle
+passed review: F1, F2 and F3 are open against the bundle, and
+`epic-10-closure` must not read this card's `COMPLETE` as a sign-off.

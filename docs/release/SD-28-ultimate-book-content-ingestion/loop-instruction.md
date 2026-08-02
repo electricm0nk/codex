@@ -124,8 +124,16 @@ if the corpus tree has moved since 2026-08-01.
 - **`SOURCESHORT` keys:** Ultimate Campaign is `UCA` (not `UCam`); Ultimate
   Psionics is `UP` (not `UPsi`). Do not assume the book-slug abbreviation
   used elsewhere in this package matches the corpus's own key.
-- **Subdirectory layout:** 65 of 191 `.lst` files (34%) sit in `support/`
+- **Subdirectory layout:** 53 of 191 `.lst` files (28%) sit in `support/`
   and `_pfs/` subdirectories — enumerate recursively, not top-level-only.
+  (**Corrected 2026-08-02 by `epic-12-code-review`.** This note previously
+  read "65 of 191 (34%)"; the denominator is right, the numerator was not
+  re-derived. Two independent implementations agree on 53 — `find <7 book
+  dirs> -iname '*.lst' -mindepth 2 | wc -l` → 53, and a `python3 os.walk`
+  count of `.lst` files whose path relative to the book root contains a
+  separator → 53. Per book: UC 26, UW 11, UM 5, UI 5, UE 4, UCam 2, UPsi 0.
+  Total `.lst` across the seven books re-derived the same way → 191,
+  unchanged.)
   `_pfs/` holds Pathfinder Society legality overrides and is a deliberate
   exclude (state the exclusion in the cycle receipt; do not drop it
   silently). Subdirectory presence is uneven per book: UC has both
@@ -136,10 +144,18 @@ if the corpus tree has moved since 2026-08-01.
   recoverable from the `.pcc`'s `COPYRIGHT` block instead. UPsi has an
   `OGL.txt` on disk but no `EXTRAFILE` line pointing at it. Do not key
   license discovery on either mechanism alone; check both.
-- **Cross-book references:** UC's `support/` files reference 22 other
-  sourcebooks — expect cross-book prerequisites pointing outside the SD-28
-  set. The cross-bundle hard-stop rule (see "Hard stops" above) covers
-  these.
+- **Cross-book references:** UC's `support/` directory holds 22 `.lst`
+  files naming **21 distinct** other sourcebooks — expect cross-book
+  prerequisites pointing outside the SD-28 set. The cross-bundle hard-stop
+  rule (see "Hard stops" above) covers these. (**Corrected 2026-08-02 by
+  `epic-12-code-review`.** This note previously read "22 other
+  sourcebooks" — a file count published as a book count. `ls
+  <uc>/support | wc -l` → 22; `ls <uc>/support | sed -E 's/^uc_[a-z]+_(class_)?//;
+  s/\.lst$//' | sort -u | wc -l` → 21, because `um` appears twice
+  (`uc_abilities_class_um.lst` and `uc_abilitycategories_um.lst`). The 21
+  are: acg ag amh apg aqua boa bos bota cr dtt ha hotw kog lod mah mhh mtt
+  ui um uw wmh — of which `ui`, `um` and `uw` are inside the SD-28 set, so
+  only **18** are genuinely outside it.)
 - **No bestiary content:** no monster/bestiary `.lst` file exists in any of
   the seven books (creatures are Bestiary-dataset scope → SD-29); the
   nearest analogues in this corpus are `*_races*.lst` and
