@@ -155,3 +155,18 @@ GE-09 succeeds when future sessions can answer:
 - What decisions remain blocked until parity, contributor posture, or release authority is stronger?
 
 If those answers are visible, GE-09 is doing its job.
+
+
+## Design Addendum — 2026-08-02 — per-class coverage evidence and the wiring-class audit
+
+**Decision.** GE-09 reports coverage per `wiring_class`, with class-appropriate evidence, and owns the audit that keeps the axis from being used to inflate the headline number. The field contract, the per-class definition of `proven`, the aggregation rules, and audit checks A1–A6 are specified in `artifacts/coverage-dashboard-requirements.md` §"Unit wiring-class reporting". The class vocabulary itself is GE-01's, at `../GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`, and is cited rather than restated.
+
+**Why GE-09 rather than the generator.** Determining a unit's class is a corpus question (GE-01). Deciding what evidence that class must produce before a coverage claim may cite it is a claim-ceiling question, which is this bundle's subject. Letting the generator decide both would put the definition of `proven` inside the tool that reports it.
+
+**The rule this addendum most needs to survive.** A single aggregate coverage percentage may not be published alone; the `computed`-class figure must appear beside it. Measured: of `core_rulebook`'s 4,743 held units, 696 (14.7%) genuinely require bespoke wiring and 4,025 are reachable by three mechanical checks. An aggregate that mixes them lets the cheap majority bury the expensive minority and read as near-complete while every hard record is untouched. This is the existing `Minimum truth rules for aggregated views` prohibition — no summary may imply a green state the evidence does not support — restated for a new axis.
+
+**The gaming risk, named.** Reclassifying a `computed` unit as `derived` or `static` dodges the wiring bar and moves the number without doing work. It requires editing only the determinator and it looks like a refinement. The classes form a strict lattice collapsed highest-bar-wins, so a downgrade can only happen by deleting a signal; A1–A6 make signal deletion observable and blocking, and require every unit to carry a determinator version and a source-row digest so that "the corpus changed" is always distinguishable from "the rules changed".
+
+**Cross-bundle finding, recorded not actioned.** SD-28's `epic-14-harness` is specified as widening the observation harness for the ~4,050 `ingested-magnitude` units. Under this taxonomy that bucket is 64.2% `static`, 23.7% `derived`, 11.0% `computed` — three components with three different acceptance tests, not one harness. The finding is written up in `artifacts/coverage-dashboard-requirements.md` §"Cross-reference: impact on SD-28's completion epics" as a recommendation to that package's owner. GE-09 does not modify SD-28.
+
+**Evidence.** Every figure re-derived 2026-08-02 from `docs/work-inventory.json` (`generated_at 2026-08-02T04:02:12Z`); commands recorded inline in the artifact and in GE-01's determination artifact.

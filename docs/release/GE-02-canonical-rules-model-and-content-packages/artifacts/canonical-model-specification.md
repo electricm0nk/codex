@@ -67,6 +67,33 @@ Raw PCGen token text may appear only as:
 - `Diagnostic` and `ProvenanceRecord` attach to imported objects, effects, fields, formulas, prerequisites, and choices.
 - `CompiledRuntimeIR` is derived from validated source-package content and must be traceable back to the source content.
 
+## Required field: `wiring_class` on every imported rule record
+
+Added 2026-08-02. Every canonical object imported from a legacy record — every `Race`, `RaceTrait`, `Class`, `ClassFeature`, `Feat`, `Skill`, `Equipment`, and spell record — MUST carry two fields:
+
+| Field | Required meaning |
+|---|---|
+| `wiring_class` | Exactly one of `display`, `static`, `derived`, `computed`, `ambiguous`. States what kind of evidence would prove this record done. |
+| `wiring_class_signals` | The full, ordered set of signals the source record carried, e.g. `["derived:bonus", "computed:pre_guard"]`. Never collapsed away. |
+
+**The definitions and the determination rules are NOT restated here.** They are owned by GE-01 and live in `../../GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`. Duplicating them would create two authorities that drift.
+
+**Why the field belongs on the canonical model rather than only in a report.** The class is derived from the legacy record at import time and is a durable property of the imported object, not a view over it. A record whose magnitude is `(min(10,CASTERLEVEL))d6` requires different downstream treatment — a `Formula` object and an evaluation, rather than an `Effect` with bespoke engine logic — and that requirement must survive from import into the model, not be re-derived by every consumer.
+
+**Relationship to the existing model homes.** `wiring_class` is a *classification of how a record's magnitude behaves*, not a new kind of magnitude. It does not replace `Formula`, `Effect`, `Prerequisite`, or `ChoiceSet`; it predicts which of them a record will need:
+
+| `wiring_class` | expected canonical shape |
+|---|---|
+| `display` | no `Formula`, no numeric `Effect`; description text only |
+| `static` | a literal-valued field or `Effect`; no `Formula` |
+| `derived` | a `Formula` over declared dependencies, evaluated by GE-04 |
+| `computed` | a `Formula` and/or `Effect` guarded by a `Prerequisite`, or driven by a `ChoiceSet` |
+| `ambiguous` | a `Diagnostic`, mandatory — the record could not be classified and must not be silently modelled as one of the above |
+
+**`ambiguous` MUST mint a `Diagnostic`.** This is the model-level statement of GE-01's no-silent-default rule: a determination failure is a first-class unresolved construct, exactly like an unsupported token, and is subject to the same "unsupported behavior must not disappear into prose" failure-mode signal already governing this bundle.
+
+**`wiring_class_signals` is not decoration.** 368 of the 9,828 currently-held corpus units carry both a `derived` and a `computed` signal (re-derive with `python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD`, `dual-signal` line). `wiring_class` collapses those to `computed` by highest-bar-wins; without the retained signal set, a record with a formulaic main effect and a guarded rider is indistinguishable from one that is wholly bespoke, and neither the model nor GE-09's audit can tell them apart.
+
 ## Pilot minimum object set
 For the first pilot, GE-02 requires enough model coverage to represent:
 - source package: PF1 Core Rulebook package and include graph

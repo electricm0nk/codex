@@ -136,5 +136,100 @@ Any summary that can turn `computed-but-not-oracle-checked` into an implied gree
 - Automated rollups may summarize but must never delete row-level provenance.
 - GE-09 reporting surfaces must consume GE-05 known-gap truth and GE-01 evidence truth; they may not fork either model.
 
+## Unit wiring-class reporting (added 2026-08-02)
+
+GE-01 classifies every imported rule record on a second axis, `wiring_class`, orthogonal to the work-inventory `status` axis. The class vocabulary — `display`, `static`, `derived`, `computed`, plus `ambiguous` for determination failure — and its mechanical determination from the PCGen record are defined once, at `../../GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`. GE-02 carries the field on the canonical object; GE-04 owns the evaluator the `derived` class needs. **This section defines only what GE-09 owns: what proven means per class, how the aggregate is computed, and the audit that stops the axis being used to inflate coverage.** It does not restate the class definitions.
+
+### Why this section exists
+One axis was doing two jobs. `grounded` means *a real computed magnitude was OBSERVED reaching a consumer*, a test only a bespoke-wired magnitude can pass. Every record whose magnitude is a plain function of caster level therefore stalls in `ingested-magnitude` and reads as unfinished even when the engine is entirely right about it. Re-derived 2026-08-02 from `docs/work-inventory.json` (`generated_at 2026-08-02T04:02:12Z`): 4,050 units corpus-wide sit there, 3,062 of them in `core_rulebook`, which reports 912 of 5,716 units proven (16.0%) while holding 3,981 (69.6%). Reporting the same evidence bar for all four kinds of record is the defect; reporting a *lower* bar for all four would be the over-claim. Per-class evidence is the only honest fix.
+
+### Required fields, added to every unit-scoped row
+
+| Field | Required meaning | Notes |
+|---|---|---|
+| `wiring_class` | One of `display`, `static`, `derived`, `computed`, `ambiguous`. | GE-01 is the authority. Never inferred from `status`. |
+| `wiring_class_signals` | Full signal set from the source record, e.g. `["derived:bonus","computed:pre_guard"]`. | Mandatory. The audit below is impossible without it. |
+| `wiring_class_determinator_version` | Version of the determination ruleset that produced the class. | A class value with no ruleset version is unauditable. |
+| `source_row_digest` | Digest of the raw corpus row the class was determined from. | The discriminator between "the content changed" and "the rules changed". |
+
+### What `proven` means, per class
+
+| `wiring_class` | proven when | evidence artifact |
+|---|---|---|
+| `display` | the engine holds the record and its description renders on the surface the player reads | render assertion naming the surface |
+| `static` | the stored value is equal to the corpus literal **and** that value reaches a consumer or a rendered field | literal-equality check plus the naming of the consumer/field |
+| `derived` | the GE-04 scalar-derived evaluator returns the correct value **at sampled inputs**, with `dependencies` populated | evaluation fixture, sampled at ≥3 inputs including any formula cap boundary |
+| `computed` | a real consumer observes a delta — **today's `grounded` bar, unchanged and not weakened** | the existing grounded evidence |
+| `ambiguous` | **never.** An `ambiguous` unit is not provable while ambiguous. | — |
+
+Three rules bind these:
+
+- **`static` requires a consumer or a rendered field, not merely a stored value.** Without that clause `static` becomes "the number is in a table somewhere", which is precisely the over-claim `ingested-magnitude` was minted to prevent. 3,024 held units are `static` — the second-largest class — so a weak bar here moves the headline number more than any other single change.
+- **`derived` requires sampling, not one evaluation.** A formula correct at level 1 and wrong at level 11 is the failure this class exists to catch, and `min(10,CASTERLEVEL)`-shaped caps make the cap boundary a required sample.
+- **The `computed` bar does not move.** No unit reaches proven by being called `derived` when its magnitude is guarded, temporary, or choice-driven.
+
+### Aggregation
+
+- `proven_units` = the sum of units meeting their own class's bar. Nothing else counts. `ambiguous` units count toward the denominator and never toward the numerator.
+- **A single aggregate coverage percentage MUST NOT be published alone.** Every aggregate is published as a vector — proven and total per class — and any headline figure MUST appear adjacent to the `computed`-class figure computed on its own. Rationale, measured: of `core_rulebook`'s 4,743 held units only 696 (14.7%) are `computed`; the other 4,025 are reachable by three mechanical checks. An aggregate that mixes them lets 4,025 cheap units bury 696 expensive ones and read as near-complete while every hard record is untouched. The existing rule that *any summary that can turn `computed-but-not-oracle-checked` into an implied green state is invalid* extends verbatim to this axis.
+- Class distribution MUST be reported per book, not only corpus-wide. Books differ sharply: `core_rulebook` is 48.6% `static` (2,304 of 4,743) while `advanced_class_guide` is 61.1% `display` (1,544 of 2,527).
+- The `ambiguous` count MUST be shown on every view that shows the other four. It is a work item — an unresolved construct in exactly the sense this bundle already governs — not a rounding error.
+
+Reproduce the distribution:
+
+```
+$ python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD
+inventory docs/work-inventory.json generated_at 2026-08-02T04:02:12Z
+scope HELD  n=9828
+  display      3882   39.5%
+  static       3024   30.8%
+  computed     1570   16.0%
+  derived      1276   13.0%
+  ambiguous      76    0.8%
+  dual-signal (derived AND computed) 368
+per book:
+   book                         held  display  static  derived  computed ambiguous
+   core_rulebook                4743     1003    2304      718       696        22
+   advanced_class_guide         2527     1544     278      210       488         7
+   advanced_players_guide       2466     1334     439      308       384         1
+   bestiary                       46        1       3       40         2         0
+   core_essentials                46        0       0        0         0        46
+```
+
+### Transition rule
+Introducing this axis MUST NOT move a single unit into `proven` on the day it lands. The classes describe *remaining work*; the evaluators still have to be built and run. Two consequences:
+
+- Until GE-04's evaluator exists, every `derived` unit is unproven regardless of how obviously correct its formula looks.
+- The reverse correction is due immediately. 22 units currently counted `text-complete` — and therefore `proven` — carry a magnitude the `magnitude_token_count == 0` test cannot see: 18 `derived` (12 `Summon Monster`-family/`Unfetter`/`Unravel Destiny`/`Summon Eidolon` spells with the level-scaling `RANGE:Close` keyword, 6 `Evolution Surge`/`Rejuvenate Eidolon` spells with parenthesised `CASTERLEVEL` expressions), 3 `static`, 1 `ambiguous`. All but one are in `advanced_players_guide/apg_spells.lst`. These leave `proven` when the axis lands and return only on their own class's evidence. A taxonomy that only ever moves units *into* proven is not a measurement.
+
+### Anti-gaming audit
+
+The gaming risk is specific and worth naming plainly: **reclassifying a `computed` unit as `derived`, `static`, or `display` dodges the wiring bar and moves the headline number without doing any work.** It is the cheapest available way to fake progress under this design, it requires editing only the determinator, and it looks like a refinement. The audit below is mandatory, not advisory, and it is a release gate.
+
+The audit rests on one structural property: the classes form a strict lattice `display < static < derived < computed`, collapsed highest-bar-wins, so **a unit can only be downgraded by deleting a signal.** Signal deletion is observable.
+
+| # | Check | Trigger | Required effect |
+|---|---|---|---|
+| A1 | **Downgrade ledger.** Diff `wiring_class` per unit against the previous run. Any move down the lattice is a finding. | every regeneration | Finding must be resolved by exactly one of: (a) `source_row_digest` changed — the corpus row itself changed, evidence attached; or (b) `wiring_class_determinator_version` changed — then it is a **definition change**, not an observation, and requires recorded approval before the run's numbers may be published. An unexplained downgrade blocks the run. |
+| A2 | **Signal-deletion detector.** Diff `wiring_class_signals` per unit. A signal present in run *N* and absent in run *N+1* with an unchanged `source_row_digest` is a determinator regression. | every regeneration | Blocking. This catches the downgrade mechanism itself, including on dual-class units where `wiring_class` did not visibly move. |
+| A3 | **`computed` ratchet, per book.** The count of `computed` units in a book may not decrease. | every regeneration | A decrease is blocking unless A1 justified every constituent unit individually. Aggregate justification is not accepted. |
+| A4 | **Determinator-diff review.** Any change to the determination ruleset is reviewed line by line and every hunk classified as *added observation* or *changed definition*. | any determinator change | A changed definition requires explicit recorded approval. This mirrors the review already required of the work-inventory generator, and applies for the same reason: the component that measures is the component a dishonest run edits. |
+| A5 | **Cross-check against the token count.** `display` must remain in close agreement with the generator's own `magnitude_token_count == 0` rule; agreement is 99.1% today (2,368 of 2,390 `text-complete` units). | every regeneration | A determinator change that grows `display` while corpus rows and `MAGNITUDE_TOKENS` are unchanged is the same over-claim wearing a new axis. Blocking below a recorded agreement floor. |
+| A6 | **`ambiguous` may not be drained silently.** A unit leaving `ambiguous` requires either a changed corpus row or an approved determinator change, per A1. | every regeneration | `ambiguous` is the honest bucket; quietly emptying it into `display` or `static` is a downgrade by another name. |
+
+Two supporting requirements make the audit runnable rather than aspirational:
+
+- **Determination must be deterministic and versioned.** Given the same corpus row and the same determinator version, the class and signal set are identical. Without that, every diff in A1/A2 is noise and the audit degrades to a review of opinions.
+- **`source_row_digest` is mandatory.** It is the only thing that distinguishes "the corpus changed" from "the rules changed", and that distinction is the entire audit.
+
+### Cross-reference: impact on SD-28's completion epics (recommendation only)
+
+`docs/release/SD-28-ultimate-book-content-ingestion/` is owned by another actor. This is a finding for that owner, recorded here because GE-09 owns the reporting surface it affects. **Nothing in SD-28 is modified by this artifact.**
+
+- **`epic-14-harness` is under-specified as written.** SD-28 `decisions.md §32` correctly identifies Epic 14 (observation-harness widening) as a gating prerequisite for roughly 4,050 `ingested-magnitude` units and a hard dependency of Epics 23, 25 and 28, on the grounds that `classify()`'s `Kind::Spell` and `Kind::Equipment` arms have no probe at all. That diagnosis is right. The prescription — *widen the observation harness* — fits only part of the work. Under this taxonomy those 4,050 units decompose as: **2,601 `static` (64.2%), 959 `derived` (23.7%), 445 `computed` (11.0%), 26 `ambiguous`, 19 `display`** (`python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py ingested-magnitude`). Only the 445 `computed` units need a widened observation harness. The 959 `derived` units need a **formula evaluator** — GE-04's scalar-derived magnitude evaluator, a different component with a different acceptance test — and the 2,601 `static` units need neither: they need a literal-equality check against the corpus row plus a named consumer. Three components, not one. Scoping all three as "harness widening" makes Epic 14 look like one task and will under-cost it.
+- **This taxonomy strengthens §32's anti-gaming rule rather than relaxing it.** §32 forbids reaching a target by *reclassifying units, relaxing the classifier, broadening what counts as text-complete, weakening or skipping a gate, or editing the work-inventory generator to report more favourably*, and names Epic 14 as the sharpest gaming risk in the set precisely because widening the harness is what a dishonest run would do. `wiring_class` adds a second surface with the same risk profile, and A1–A6 above are its Epic-30-equivalent. `wiring_class` is **not** a licence to move a unit out of `ingested-magnitude`: 11.0% of that bucket is `computed` and stays on the observed-delta bar, and no unit becomes proven until its own class's evidence exists.
+- **§27's display-value discriminator is the prose form of this axis.** SD-28 `decisions.md §27` already rules that a record whose value derives from data the engine holds is display-value work, not engine work, and requires a cycle to name *which input the engine does not have* before deferring. `wiring_class` applies that same test from the token shape instead of per-record human judgement, which is what makes it auditable at 44,191 units. The two should be reconciled by SD-28's owner, not by parallel drift.
+- **One correction the owner should carry.** §32 states `proven = grounded + text-complete`. 22 units currently satisfy `text-complete` while carrying a machine-readable derived magnitude (detail in the Transition rule above). Any 100%-proven target computed on today's `text-complete` set inherits that small over-claim.
+
 ## Completion rule
 This requirement artifact is complete for the planning pass when a future builder can implement a governed dashboard or evidence ledger without inventing the row classes, field meanings, compatibility ceilings, or review triggers that control GE-09 truth.

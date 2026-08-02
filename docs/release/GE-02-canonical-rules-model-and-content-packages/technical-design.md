@@ -311,6 +311,7 @@ The high-pressure inputs from GE-01 map into GE-02 as follows:
 - Effects, prerequisites, formulas, and choices are first-class structures, not prose notes.
 - Imported content must preserve source lineage and diagnostic posture.
 - Authored source content and compiled runtime IR are separate authority surfaces.
+- **(2026-08-02)** Every imported rule record carries `wiring_class` and `wiring_class_signals`, per `artifacts/canonical-model-specification.md` §"Required field: `wiring_class`". The class vocabulary and its determination rules are GE-01's, at `../GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`, and are cited rather than restated here. A record whose class is `ambiguous` MUST mint a `Diagnostic`; an unclassifiable record is an unresolved construct, not a default.
 
 ## Deferred design decisions
 - exact stable ID syntax and namespace delimiter

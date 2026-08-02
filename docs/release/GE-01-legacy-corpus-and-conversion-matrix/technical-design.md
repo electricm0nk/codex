@@ -234,3 +234,20 @@ Design limits remain explicit:
 - this bundle does not implement an importer;
 - this bundle does not implement the oracle harness;
 - this bundle does not authorize coding work without a later coding-route handoff.
+
+
+## Design Addendum — 2026-08-02 — `wiring_class`, a second axis on every corpus unit
+
+**Decision.** GE-01 owns a second classification axis, `wiring_class`, orthogonal to the work-inventory `status` axis. It states what *kind of evidence* would prove a unit done, and it is determined mechanically from the PCGen record with no per-unit human judgement. The normative definition and the determination rules live in `artifacts/wiring-class-determination.md`, with a dependency-free reference determinator alongside it at `artifacts/wiring-class-determination.py`. Downstream packages cite that artifact; none of them restates it.
+
+**Why it belongs to GE-01.** The class is a property of the *legacy record*, derived from its token shape, exactly like the token taxonomy and the conversion matrix already in this bundle's artifacts. GE-02 carries the resulting field on the canonical object; GE-04 owns the evaluator one class needs; GE-09 owns aggregation and audit.
+
+**The classes.** `display` (no magnitude token), `static` (literal constants only), `derived` (a deterministic function of a character or item scalar), `computed` (conditional guard, temporary effect, or player choice), plus `ambiguous` for determination failure. Strict lattice, highest bar wins; a unit's full signal set is retained in `wiring_class_signals` so dual-class records stay legible.
+
+**Correction to the framing this addendum answers.** The proposal that prompted it named three kinds. The corpus partitions into four: 64.2% of the 4,050 stalled `ingested-magnitude` units are **static datum** — an item's `COST:`/`WT:`, a constant on its own row — which is neither bespoke-wiring work nor formula evaluation. Recorded here rather than only in the artifact, because a three-way split is the shape a future reader would otherwise assume.
+
+**Determination gaps this exposed in the current generator, both real and both in `MAGNITUDE_TOKENS`'s blind spot.** PCGen carries scaling magnitudes in places the magnitude-token list does not look: as parenthesised expressions inside `DESC:`/`DURATION:` (`(min(10,CASTERLEVEL))d6` on *Fireball*), and as the keyword ranges `Close`/`Medium`/`Long`, which are caster-level functions (474 of 1,067 stalled spells). A determinator that scans only the magnitude tokens misses every scaling spell in the corpus.
+
+**Constraint on any implementation.** The determinator MUST read `MAGNITUDE_TOKENS` from the work-inventory generator rather than forking the list. Two copies would drift and then disagree about which units have a magnitude at all.
+
+**Evidence.** All figures re-derived 2026-08-02 from `docs/work-inventory.json` (`generated_at 2026-08-02T04:02:12Z`) and the PCGen corpus tree; every command is recorded inline in `artifacts/wiring-class-determination.md`.
