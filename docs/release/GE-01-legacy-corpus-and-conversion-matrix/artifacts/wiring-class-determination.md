@@ -275,6 +275,45 @@ citation there is a wrong re-parse, not just wrong metadata. Fixed via
 `find_mod_with_desc` (`cache_gen::apg.rs`), which requires the matched
 `.MOD` row to carry a real `DESC:` token before `prefer_mod` accepts it.
 
+### OF-03 (fixed same cycle) — the differential round-trip test only checked one direction of the set difference, and one book's coverage is still unswept
+
+`tests/pi_screening_regeneration_round_trip.rs`'s `check_book_kind`
+originally asked only "is every REAL table entry present on disk?"
+(`missing_from_disk`). It never asked the reverse: "is every ON-DISK
+record still real?" That blind spot let 9 fossil records --
+`data/corpus/advanced_players_guide/spell/summon_monster_{i..ix}.json`,
+written once by the one-off `bb497db0` retrofit script and touched by
+no generator since -- survive undetected through the 2026-08-03
+regeneration. Their citations resolved to a content-free `.MOD`
+bookkeeping row (`apg_spells.lst:695` `Summon Monster I.MOD
+CLASSES:Witch=1`, no `DESC:`) rather than a real declaration; APG never
+declares plain `Summon Monster I`-`IX` at all, only `.MOD`s CRB's own
+copies, and the real APG-owned spells are the KEY-qualified `Summoner
+Summon Monster I`-`IX` rows (distinct filenames, distinct records).
+Consumer check (`spell_catalog.rs`, `reach_gate.rs`) confirmed nothing
+reads these files by path -- both read spells from the compiled
+`apg::spell_list::SPELL_LIST` table, which has no plain-keyed entry --
+so the 9 files were deleted in the same commit that fixed the test.
+
+Fixed by adding the reverse direction: diff `on_disk`'s keys against a
+`BTreeSet` of real-table keys and fail on anything on-disk-only
+(`stale_on_disk`), run unconditionally (not gated by the narrow-sample
+default) so it is exhaustive for every book/kind this test covers. A
+sweep across all 6 covered book/kind pairs (CRB/ACG/APG x
+spell/equipment) found no other phantom records.
+
+**Named, unswept remedy: Bestiary1, ARG, PU, and the races/race_trait
+writers have no equivalent reverse-direction check.** Each reads its
+source text via live `.lst` parsing rather than a static compiled
+table this test can call directly (the same boundary already stated at
+the top of this test file for ARG's 156 racial traits), so extending
+this exact mechanism to them needs either a re-parse this test does
+not otherwise do, or a callable-library refactor of each ingest
+binary's `main()`. Not built this cycle -- scope was already well past
+its original bound -- but the remedy is the same pattern: build the
+real-key set independently of the on-disk write, diff both directions,
+fail on either.
+
 **This one needs a discriminator, and a bare phrase match is not it.** `your <Ability> score|modifier|bonus` appears throughout the corpus as a *cross-reference to an existing rule* rather than as a magnitude the record grants. PF1's flat-footed idiom is the dominant instance: *Blind-Fight*, *Uncanny Dodge*, *Run*, *Mobility* and *Improved Blind-Fight* all say some form of "you don't lose your Dexterity bonus to AC", which grants nothing and computes nothing. *Weapon Finesse* and *Elven Curve Blade* say "use your Dexterity modifier **instead of** your Strength modifier" — a substitution rule, not a new magnitude.
 
 The rule is therefore: **an ability phrase is a scaling magnitude only when a granting construction is the nearest preceding clause.**

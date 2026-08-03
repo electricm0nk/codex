@@ -146,6 +146,7 @@ fn check_book_kind(
     real_entries: &[(&str, Option<&str>)], // (key, real description text)
     mismatches: &mut Vec<String>,
     missing_from_disk: &mut Vec<String>,
+    stale_on_disk: &mut Vec<String>,
 ) {
     let on_disk = load_on_disk(book, kind);
     if on_disk.is_empty() {
@@ -154,6 +155,31 @@ fn check_book_kind(
         // *counts*. Round-trip has nothing to prove against an empty set.
         return;
     }
+
+    // The OTHER direction of the set difference: a record on disk with NO
+    // corresponding real-table entry. This is the dangerous direction --
+    // "a record silently stops being generated" -- and was NOT checked
+    // here until 2026-08-03, when 9 stale advanced_players_guide
+    // `summon_monster_{i..ix}.json` records (last written by bb497db0,
+    // citing content-free `.MOD` bookkeeping rows -- `apg_spells.lst:695`
+    // `Summon Monster I.MOD  CLASSES:Witch=1`, no DESC:) survived
+    // undetected through a full regeneration because the forward-only
+    // loop below only ever asks "is every REAL entry present on disk",
+    // never "is every ON-DISK entry real". APG does not declare
+    // `Summon Monster I` at all -- it only `.MOD`s CRB's own copy to add
+    // Witch to its class list -- so these were never real APG records;
+    // the real one lives at
+    // `data/corpus/core_rulebook/spell/level_1/summon_monster_i.json`.
+    let real_keys: std::collections::BTreeSet<&str> = real_entries.iter().map(|(k, _)| *k).collect();
+    for (on_disk_key, _) in &on_disk {
+        if !real_keys.contains(on_disk_key.as_str()) {
+            stale_on_disk.push(format!(
+                "{book}/{kind}: on-disk record {on_disk_key:?} has no corresponding real table entry \
+                 (the generator would not write this record today -- a stale leftover, not a gap)"
+            ));
+        }
+    }
+
     let sweep = full_sweep();
     let sample_n = 15usize;
     let mut checked_sample = 0usize;
@@ -206,36 +232,45 @@ fn check_book_kind(
 fn crb_apg_acg_license_classification_round_trips_against_the_compiled_source_text() {
     let mut mismatches = Vec::new();
     let mut missing = Vec::new();
+    let mut stale = Vec::new();
 
     let crb_spells: Vec<(&str, Option<&str>)> =
         crb_spell_list::SPELL_LIST.iter().map(|e| (e.key, Some(e.description))).collect();
-    check_book_kind("core_rulebook", "spell", &crb_spells, &mut mismatches, &mut missing);
+    check_book_kind("core_rulebook", "spell", &crb_spells, &mut mismatches, &mut missing, &mut stale);
 
     let crb_equipment: Vec<(&str, Option<&str>)> =
         crb_equipment_tables::equipment_tables().iter().map(|e| (e.key, e.description)).collect();
-    check_book_kind("core_rulebook", "equipment", &crb_equipment, &mut mismatches, &mut missing);
+    check_book_kind("core_rulebook", "equipment", &crb_equipment, &mut mismatches, &mut missing, &mut stale);
 
     let acg_spells: Vec<(&str, Option<&str>)> =
         acg::spell_list::SPELL_LIST.iter().map(|e| (e.key, Some(e.description))).collect();
-    check_book_kind("advanced_class_guide", "spell", &acg_spells, &mut mismatches, &mut missing);
+    check_book_kind("advanced_class_guide", "spell", &acg_spells, &mut mismatches, &mut missing, &mut stale);
 
     let acg_equipment: Vec<(&str, Option<&str>)> =
         acg::equipment_tables::equipment_tables().iter().map(|e| (e.key, e.description)).collect();
-    check_book_kind("advanced_class_guide", "equipment", &acg_equipment, &mut mismatches, &mut missing);
+    check_book_kind("advanced_class_guide", "equipment", &acg_equipment, &mut mismatches, &mut missing, &mut stale);
 
     let apg_spells: Vec<(&str, Option<&str>)> =
         apg::spell_list::SPELL_LIST.iter().map(|e| (e.key, e.description)).collect();
-    check_book_kind("advanced_players_guide", "spell", &apg_spells, &mut mismatches, &mut missing);
+    check_book_kind("advanced_players_guide", "spell", &apg_spells, &mut mismatches, &mut missing, &mut stale);
 
     let apg_equipment: Vec<(&str, Option<&str>)> =
         apg::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| (e.key, e.description)).collect();
-    check_book_kind("advanced_players_guide", "equipment", &apg_equipment, &mut mismatches, &mut missing);
+    check_book_kind("advanced_players_guide", "equipment", &apg_equipment, &mut mismatches, &mut missing, &mut stale);
 
     assert!(
         missing.is_empty(),
         "records present in the compiled source but missing from disk (a record that silently \
          stopped being generated is the dangerous direction):\n{}",
         missing.join("\n")
+    );
+    assert!(
+        stale.is_empty(),
+        "{} on-disk records have no corresponding real table entry (a stale leftover the \
+         generator would not produce today -- the OTHER dangerous direction, see \
+         KNOWN_MISSING_FROM_DISK's sibling investigation):\n{}",
+        stale.len(),
+        stale.join("\n")
     );
     assert!(
         mismatches.is_empty(),
