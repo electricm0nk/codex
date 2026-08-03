@@ -115,6 +115,16 @@ pub struct CorpusRecord<T> {
     pub ingested_at: String,
     pub data: T,
     pub source: CorpusSource,
+    /// GE-01: what kind of evidence would prove this record done, from
+    /// `codex::rules_core::wiring_class`'s real corpus token closure.
+    /// `#[serde(default)]` so a not-yet-regenerated on-disk record
+    /// (there are none once this cycle's regeneration lands, but the
+    /// field must not become a hard parse failure for any reader that
+    /// predates it) still deserializes.
+    #[serde(default)]
+    pub wiring_class: String,
+    #[serde(default)]
+    pub wiring_class_signals: Vec<String>,
 }
 
 /// `data/corpus/core_rulebook/class/<slug>.json` payload. Mirrors

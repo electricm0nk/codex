@@ -26,6 +26,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
+use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::rules_tables::crb::class_tables::{self, ClassId, ClassTableRow};
 use codex::rules_core::rules_tables::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
 use codex::rules_core::rules_tables::crb::json_cache::{
@@ -33,6 +34,39 @@ use codex::rules_core::rules_tables::crb::json_cache::{
     SpellCacheData,
 };
 use codex::rules_core::rules_tables::crb::spell_list;
+
+/// `wiring_class`'s corpus-wide book id for CRB.
+const WIRING_CLASS_BOOK_ID: &str = "core_rulebook";
+
+/// The `(path, line, record_key)` a `CorpusSource` cites, when it cites a
+/// real corpus row at all. `WebSecondSource`/`SameBookFallback` carry no
+/// citation to read a token closure from -- `wiring_class` for those
+/// lands on `ambiguous:no_corpus_line` rather than guessing one.
+fn wiring_citation(source: &CorpusSource) -> Option<(&str, u32, &str)> {
+    match source {
+        CorpusSource::LstToken { path, line, record_key, .. }
+        | CorpusSource::LstInheritedCopy { path, line, record_key, .. }
+        | CorpusSource::LstCorrectedIngest { path, line, record_key, .. } => {
+            Some((path.as_str(), *line, record_key.as_str()))
+        }
+        CorpusSource::WebSecondSource { .. } => None,
+        CorpusSource::SameBookFallback { .. } => None,
+    }
+}
+
+fn wiring_class_for_source(
+    index: &WiringClassIndex,
+    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    source: &CorpusSource,
+) -> (String, Vec<String>) {
+    match wiring_citation(source) {
+        Some((path, line, record_key)) => {
+            let basename = path.rsplit('/').next().unwrap_or(path);
+            index.wiring_class_for(lines, basename, line, record_key, record_key)
+        }
+        None => ("ambiguous".to_string(), vec!["no_corpus_line".to_string()]),
+    }
+}
 
 const BOOK_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/core_rulebook";
 
@@ -355,6 +389,8 @@ fn main() {
     }
 
     let ingested_at = ingested_at_now();
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &root);
+    let mut wiring_lines = wiring_index.lines();
 
     // ---- Classes ----
     let classes_file = load_corpus_file(&root, "cr_classes.lst");
@@ -366,12 +402,16 @@ fn main() {
         match class_source(&classes_file, &class_name) {
             Some(source) => {
                 let data = class_cache_data(&class_rows, class_id);
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecord {
                     population: Population::InScope,
                     completeness: Completeness::ChassisOnly,
                     ingested_at: ingested_at.clone(),
                     data,
                     source,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let path = out_root.join("class").join(format!("{}.json", slugify(&class_name)));
                 write_record(&path, &record);
@@ -428,12 +468,16 @@ fn main() {
                     line: line_no,
                     record_key,
                 };
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecord {
                     population: Population::InScope,
                     completeness: Completeness::Full,
                     ingested_at: ingested_at.clone(),
                     data,
                     source,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let used = spell_slugs_used.entry(entry.level).or_default();
                 let slug = unique_slug(used, &slugify(entry.key));
@@ -532,12 +576,16 @@ fn main() {
                     weight_lbs: entry.weight_lbs,
                     description: entry.description.map(|d| d.to_string()),
                 };
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecord {
                     population: Population::InScope,
                     completeness,
                     ingested_at: ingested_at.clone(),
                     data,
                     source,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let category_slug = equipment_category_slug(entry.category);
                 let used = equipment_slugs_used.entry(category_slug).or_default();

@@ -62,10 +62,15 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
+use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceCacheData, RaceTraitCacheData, RawBonusChain,
     RawToken,
 };
+
+/// `wiring_class`'s corpus-wide book id for the shared race storage all
+/// 18 in-scope races and their traits live under.
+const WIRING_CLASS_BOOK_ID: &str = "core_essentials";
 
 /// PCGen-repo-relative prefix for the shared race storage. Matches the
 /// `source.path` convention every existing on-disk record uses (relative
@@ -840,6 +845,8 @@ fn main() {
     let races_root = data_root.join(RACES_RELATIVE);
     let out_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus");
     let stamp = ingested_at();
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &races_root);
+    let mut wiring_lines = wiring_index.lines();
 
     // Clear only the two content-kind directories this tool owns, so a
     // race removed from scope cannot linger as a stale record.
@@ -912,6 +919,16 @@ fn main() {
             errors.push(format!("PI-blacklist hit on race {race_key}: {hits:?}"));
         }
 
+        let chassis_file_rel_to_races_root =
+            chassis_rel.strip_prefix(&format!("{RACES_RELATIVE}/")).unwrap_or(&chassis_rel);
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            chassis_file_rel_to_races_root,
+            chassis_row.line_no,
+            &race_key,
+            &race_key,
+        );
+
         let record = CorpusRecordV1 {
             population: Population::InScope,
             // The chassis row is fully captured (every token is in
@@ -930,6 +947,8 @@ fn main() {
             license: Some(License::Ogl),
             pi_field: None,
             pi_marker: None,
+            wiring_class,
+            wiring_class_signals,
         };
         let race_slug = slugify(&race_key);
         write_record(&out_root.join(spec.book).join("race").join(format!("{race_slug}.json")), &record);
@@ -1068,6 +1087,16 @@ fn main() {
                 continue;
             }
 
+            let abilities_file_rel_to_races_root =
+                abilities_rel.strip_prefix(&format!("{RACES_RELATIVE}/")).unwrap_or(&abilities_rel);
+            let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+                &mut wiring_lines,
+                abilities_file_rel_to_races_root,
+                row.line_no,
+                &data.key,
+                &data.key,
+            );
+
             let record = CorpusRecordV1 {
                 population: Population::InScope,
                 // Every token on the trait row is captured, either as a
@@ -1084,6 +1113,8 @@ fn main() {
                 license: Some(License::Ogl),
                 pi_field: None,
                 pi_marker: None,
+                wiring_class,
+                wiring_class_signals,
             };
             write_record(&trait_dir.join(format!("{slug}.json")), &record);
             trait_count += 1;

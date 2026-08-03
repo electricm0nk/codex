@@ -67,6 +67,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
+use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::shape_b_v1::{
     Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceTraitCacheData, RawBonusChain, RawToken,
 };
@@ -599,6 +600,10 @@ fn main() {
 
     let out_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_race_guide/race_trait");
     let ingested_at = ingested_at_now();
+    let arg_book_dir = data_root.join("pathfinder/paizo/roleplaying_game/advanced_race_guide");
+    let wiring_index = WiringClassIndex::build("advanced_race_guide", &arg_book_dir);
+    let mut wiring_lines = wiring_index.lines();
+    let lst_basename = LST_RELATIVE.rsplit('/').next().unwrap_or(LST_RELATIVE);
 
     let in_scope: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
 
@@ -660,6 +665,13 @@ fn main() {
         *per_race.entry(row.race_key.clone()).or_default() += 1;
         *per_race_flags.entry(row.race_key.clone()).or_default() += row.sets_replace_flags.len();
 
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            lst_basename,
+            row.line_number,
+            &row.key,
+            &row.key,
+        );
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::Full,
@@ -687,6 +699,8 @@ fn main() {
             license: Some(License::Ogl),
             pi_field: None,
             pi_marker: None,
+            wiring_class,
+            wiring_class_signals,
         };
 
         let path = out_root.join(slugify(&row.race_key)).join(format!("{}.json", slugify(&row.key)));

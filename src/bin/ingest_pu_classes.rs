@@ -83,6 +83,7 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
+use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::shape_b_v1::{
     ClassFeatureCacheData, ClassFeatureGrant, ClassVariantCacheData, Completeness, CorpusRecordV1, CorpusSource,
     License, Population, RawBonusChain, RawToken,
@@ -876,6 +877,10 @@ fn main() {
         line,
         record_key: key.to_string(),
     };
+    let pu_book_dir = data_root.join("pathfinder/paizo/roleplaying_game/pathfinder_unchained");
+    let wiring_index = WiringClassIndex::build("pathfinder_unchained", &pu_book_dir);
+    let mut wiring_lines = wiring_index.lines();
+    let lst_basename = LST_RELATIVE.rsplit('/').next().unwrap_or(LST_RELATIVE);
 
     let mut unresolved_desc_args: Vec<String> = Vec::new();
     let mut dropped_app_instructions: Vec<String> = Vec::new();
@@ -959,6 +964,13 @@ fn main() {
         }
 
         let path = class_root.join(format!("{}.json", slugify(variant_key)));
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            lst_basename,
+            row.line_no,
+            variant_key,
+            variant_key,
+        );
         write_record(
             &path,
             &CorpusRecordV1 {
@@ -970,6 +982,8 @@ fn main() {
                 license: Some(License::Ogl),
                 pi_field: None,
                 pi_marker: None,
+                wiring_class,
+                wiring_class_signals,
             },
         );
         classes_written += 1;
@@ -1053,6 +1067,8 @@ fn main() {
                 continue;
             }
 
+            let (wiring_class, wiring_class_signals) =
+                wiring_index.wiring_class_for(&mut wiring_lines, lst_basename, frow.line_no, &key, &key);
             write_record(
                 &class_dir.join(format!("{slug}.json")),
                 &CorpusRecordV1 {
@@ -1064,6 +1080,8 @@ fn main() {
                     license: Some(License::Ogl),
                     pi_field: None,
                     pi_marker: None,
+                    wiring_class,
+                    wiring_class_signals,
                 },
             );
             written += 1;

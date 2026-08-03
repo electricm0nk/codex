@@ -57,7 +57,39 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
+use codex::rules_core::cache_gen::WiringClassIndex;
 use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, License, Population};
+
+/// The `(path, line, record_key)` a `CorpusSource` cites, when it cites a
+/// real corpus row at all -- same rationale as
+/// `sd26_gen_core_rulebook_cache.rs`'s own `wiring_citation`.
+/// `WebSecondSource`/`SameBookFallback` carry no citation to read a token
+/// closure from, so `wiring_class` for those lands on
+/// `ambiguous:no_corpus_line` rather than guessing one.
+fn wiring_citation(source: &CorpusSource) -> Option<(&str, u32, &str)> {
+    match source {
+        CorpusSource::LstToken { path, line, record_key, .. }
+        | CorpusSource::LstInheritedCopy { path, line, record_key, .. }
+        | CorpusSource::LstCorrectedIngest { path, line, record_key, .. } => {
+            Some((path.as_str(), *line, record_key.as_str()))
+        }
+        CorpusSource::WebSecondSource { .. } | CorpusSource::SameBookFallback { .. } => None,
+    }
+}
+
+fn wiring_class_for_source(
+    index: &WiringClassIndex,
+    lines: &mut codex::rules_core::wiring_class::CorpusLines,
+    source: &CorpusSource,
+) -> (String, Vec<String>) {
+    match wiring_citation(source) {
+        Some((path, line, record_key)) => {
+            let basename = path.rsplit('/').next().unwrap_or(path);
+            index.wiring_class_for(lines, basename, line, record_key, record_key)
+        }
+        None => ("ambiguous".to_string(), vec!["no_corpus_line".to_string()]),
+    }
+}
 
 // SD-27 task "wire PU's 4 Unchained classes" (2026-07-31): the `#[path]`
 // include this line used to carry is gone. It existed only because the
@@ -291,6 +323,8 @@ fn gen_pathfinder_unchained() {
     let root = corpus_root();
     let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/pathfinder_unchained");
     let ingested_at = ingested_at_now();
+    let wiring_index = WiringClassIndex::build("pathfinder_unchained", &root);
+    let mut wiring_lines = wiring_index.lines();
 
     for sub in ["feat", "equipment"] {
         let dir = out_root.join(sub);
@@ -326,6 +360,8 @@ fn gen_pathfinder_unchained() {
                     description: stored_desc,
                     source_page: entry.source_page.map(|s| s.to_string()),
                 };
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecordV1 {
                     population: Population::InScope,
                     completeness: if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly },
@@ -335,6 +371,8 @@ fn gen_pathfinder_unchained() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let path = out_root.join("feat").join(format!("{}.json", slugify(entry.key)));
                 write_record(&path, &record);
@@ -375,6 +413,8 @@ fn gen_pathfinder_unchained() {
                     weight_lbs: None,
                     description: stored_desc,
                 };
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecordV1 {
                     population: Population::InScope,
                     completeness: if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly },
@@ -384,6 +424,8 @@ fn gen_pathfinder_unchained() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let base_slug = slugify(entry.name);
                 let count = used_slugs.entry(base_slug.clone()).or_insert(0);
@@ -459,6 +501,8 @@ fn gen_advanced_race_guide() {
     let root = arg_corpus_root();
     let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_race_guide");
     let ingested_at = ingested_at_now();
+    let wiring_index = WiringClassIndex::build("advanced_race_guide", &root);
+    let mut wiring_lines = wiring_index.lines();
 
     for sub in ["spell", "equipment", "feat"] {
         let dir = out_root.join(sub);
@@ -490,6 +534,8 @@ fn gen_advanced_race_guide() {
                     line: line_no,
                     record_key: entry.key.to_string(),
                 };
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecordV1 {
                     population: Population::InScope,
                     completeness: Completeness::Full,
@@ -499,6 +545,8 @@ fn gen_advanced_race_guide() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let base = slugify(entry.key);
                 let slug = if spell_slugs_used.insert(base.clone()) {
@@ -592,6 +640,8 @@ fn gen_advanced_race_guide() {
                     line: line_no,
                     record_key: entry.key.to_string(),
                 };
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecordV1 {
                     population: Population::InScope,
                     completeness,
@@ -601,6 +651,8 @@ fn gen_advanced_race_guide() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let used = equipment_slugs_used.entry(category_slug).or_default();
                 let base = slugify(entry.key);
@@ -665,6 +717,8 @@ fn gen_advanced_race_guide() {
                     line: line_no,
                     record_key: entry.key.to_string(),
                 };
+                let (wiring_class, wiring_class_signals) =
+                    wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
                 let record = CorpusRecordV1 {
                     population: Population::InScope,
                     completeness: Completeness::Full,
@@ -674,6 +728,8 @@ fn gen_advanced_race_guide() {
                     license: Some(license),
                     pi_field,
                     pi_marker,
+                    wiring_class,
+                    wiring_class_signals,
                 };
                 let used = feat_slugs_used.entry(category_slug).or_default();
                 let base = slugify(entry.key);
