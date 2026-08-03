@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-03T17:42:13Z",
   "data": {
     "id": "beastiary1:monster:crocodile",
     "name": "Crocodile",
@@ -29,9 +29,6 @@
     "line": 83,
     "record_key": "Crocodile"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "field_provenance": [
     {
       "field": "natural_attacks[0].damage_dice",
@@ -61,5 +58,12 @@
         "record_key": "Crocodile ~ Tail Slap"
       }
     }
-  ]
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

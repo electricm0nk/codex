@@ -47,7 +47,7 @@
     ],
     "weight": 0.0
   },
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-03T17:42:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -58,5 +58,9 @@
     "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_equip_magic_items.lst",
     "record_key": "Heartstone (Night Hag)",
     "sha256": "eef68e29e208b71d103363bc70228d3c83391d9ad211816e012f2d0672d9cac6"
-  }
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

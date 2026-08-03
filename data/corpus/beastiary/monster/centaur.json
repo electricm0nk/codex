@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-03T17:42:13Z",
   "data": {
     "id": "beastiary1:monster:centaur",
     "name": "Centaur",
@@ -25,9 +25,6 @@
     "line": 60,
     "record_key": "Centaur"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "field_provenance": [
     {
       "field": "natural_attacks[0].damage_dice",
@@ -44,5 +41,12 @@
         "identity_match_basis": "name + CR 3 + Large monstrous humanoid + Bestiary pg. 42 (matches the cached chassis's own source_page); the longsword is a manufactured weapon and is deliberately excluded, matching how Gnoll/Derro/Bugbear are handled"
       }
     }
-  ]
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

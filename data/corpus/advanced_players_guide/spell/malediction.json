@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
     "key": "Malediction",
     "school": "Necromancy",
@@ -16,6 +16,11 @@
     "identity_match_basis": "name+school+level",
     "citation_precision": "exact_item_page"
   },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

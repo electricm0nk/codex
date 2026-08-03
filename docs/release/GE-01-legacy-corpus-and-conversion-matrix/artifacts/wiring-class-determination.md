@@ -217,6 +217,64 @@ Phrases: `per (caster) level`, `per N levels`, `x`/`times your caster level`, `e
 
 **D4b — `ambiguous:prose_ability_scaling` (52 units).** A magnitude derived from an ability score, stated in prose — e.g. `core_rulebook` *Metal Fist*: `unarmed strikes that deal 1d6 points of bludgeoning damage plus your Strength modifier`.
 
+## Open findings (from the 2026-08-03 corpus regeneration)
+
+Landing `wiring_class` on every writer required regenerating the whole
+corpus (per the operator's sequenced go-ahead). That regeneration
+surfaced two real, pre-existing generator gaps, neither introduced by
+the `wiring_class`/PI-screening work itself. Recorded here rather than
+left as tribal knowledge from a commit message.
+
+### OF-01 — `Source::LstInheritedCopy` is unreachable in `cache_gen::apg`
+
+`cache_gen::apg::spell_source()` wraps every successful
+`resolve_citation()` result as `Source::LstToken` unconditionally --
+there is no code path that constructs `Source::LstInheritedCopy`, even
+though `resolve_citation`'s own `find_copy_variant` helper correctly
+*locates* a `<Base>.COPY=<record_name>` line. 16 `advanced_players_guide`
+spell records carried `kind: lst_inherited_copy` on disk before the
+2026-08-03 regeneration (produced by some earlier tool, not traced);
+regenerating flattens all 16 to `lst_token`. The record `data`
+(description/school/level) is unaffected either way -- it comes from the
+compiled `rules_tables::apg::spell_list` table regardless of citation
+kind -- so this is a provenance-fidelity gap, not a player-facing
+correctness issue.
+
+**Remedy:** teach `cache_gen::apg::resolve_citation` to distinguish a
+`find_copy_variant` hit from a `find_exact_first_column` hit and emit
+`Source::LstInheritedCopy { inherited_from_record_key, .. }` for the
+former, the way `find_copy_variant` already has the information to do.
+
+**Fixture set** (all 16, recovered from the pre-2026-08-03 on-disk state):
+`Beast Shape I (Animals Only)`, `Blindness/Deafness (Only Cause
+Blindness)`, `Call Lightning Storm (Starsoul)`, `Meteor Swarm (Dealing
+Cold Damage)`, `Planar Ally (Agathions Only)`, `Planar Ally (Archon
+Only)`, `Planar Ally (Azata Only)`, `Planar Binding (Daemons Only)`,
+`Planar Binding (Demons Only)`, `Planar Binding (Devils Only)`, `Planar
+Binding (Inevitables Only)`, `Planar Binding (Proteans Only)`, `Summon
+Monster III (Reptiles Only)`, `Summon Monster V (Summons 1d3 Shadows)`,
+`Summon Monster VII (Reptiles Only)`, `Wall of Thorms`.
+
+`tests/sd26_cache_apg.rs::spell_cache_correctly_attributes_the_three_provenance_kinds_beyond_plain_lst_token`
+asserts today's actual (flattened) behavior against 5 of the 16, with a
+doc comment naming this gap and the full fixture set, rather than
+asserting a property no current code path can produce.
+
+### OF-02 (fixed same cycle, recorded for the pattern) — citation resolution preferred a content-free `.MOD` row
+
+Separately: `resolve_citation`'s `prefer_mod` path picked the FIRST
+`.MOD` row matching a record's name by file order, without checking that
+row actually carried a `DESC:` token. Several APG spells have multiple
+`.MOD` rows for one name -- one with real text, others doing unrelated
+bookkeeping (`Accelerate Poison`: `apg_spells.lst:1596` `.MOD
+SCHOOL:WaterSchool`, no `DESC:`; `:1842` `.MOD DESC:You hasten the
+onset...`, the real text). 92 records' citations pointed at the wrong
+row as a result -- and since `enrich_equipment_raw_tokens` and the trap
+report both resolve citations to re-parse the cited row, a wrong
+citation there is a wrong re-parse, not just wrong metadata. Fixed via
+`find_mod_with_desc` (`cache_gen::apg.rs`), which requires the matched
+`.MOD` row to carry a real `DESC:` token before `prefer_mod` accepts it.
+
 **This one needs a discriminator, and a bare phrase match is not it.** `your <Ability> score|modifier|bonus` appears throughout the corpus as a *cross-reference to an existing rule* rather than as a magnitude the record grants. PF1's flat-footed idiom is the dominant instance: *Blind-Fight*, *Uncanny Dodge*, *Run*, *Mobility* and *Improved Blind-Fight* all say some form of "you don't lose your Dexterity bonus to AC", which grants nothing and computes nothing. *Weapon Finesse* and *Elven Curve Blade* say "use your Dexterity modifier **instead of** your Strength modifier" — a substitution rule, not a new magnitude.
 
 The rule is therefore: **an ability phrase is a scaling magnitude only when a granting construction is the nearest preceding clause.**

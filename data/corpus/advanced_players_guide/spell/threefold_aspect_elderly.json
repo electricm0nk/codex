@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
     "key": "Threefold Aspect (Elderly)",
     "school": null,
@@ -13,6 +13,12 @@
     "kind": "same_book_fallback",
     "fallback_basis": "PRESPELL base record (Threefold Aspect) narrates this sub-form by name"
   },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:tempbonus"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

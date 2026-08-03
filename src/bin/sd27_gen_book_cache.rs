@@ -231,6 +231,51 @@ fn arg_find_citation_line(index: &ArgLineIndex<'_>, wanted_key: &str) -> Option<
     index.by_key.get(wanted_key).copied().or_else(|| index.by_identity.get(wanted_key).copied())
 }
 
+/// Every real `*.json` record under `book_dir`, counted directly from disk
+/// rather than from this run's own in-memory write count.
+///
+/// **Why this exists.** `LICENSE.json`'s `records_processed` used to be
+/// set from `feat_written + equipment_written` (this generator's own
+/// count) -- correct only when this generator is the sole writer into the
+/// book directory. `ingest_pu_classes.rs` and `ingest_race_traits_arg.rs`
+/// also write real, licence-classified records into the same directories
+/// and never touch `LICENSE.json` (`tests/sd27_book_license_record_counts.rs`'s
+/// own module doc comment documents this as a known, previously-reported
+/// gap). The combined counts that used to be correct on disk (PU 127, ARG
+/// 635) were a ONE-OFF MANUAL edit (`b4504c49`), not a mechanism -- so the
+/// very next time this generator ran standalone (GE-01's 2026-08-03
+/// regeneration cycle), it silently reverted both back to its own
+/// narrower count (59, 479), undocumenting 68 and 156 already-screened
+/// records as screened. Deriving the count from disk at write time, the
+/// same way the test itself verifies it, is correct regardless of write
+/// order or which other binaries have already run.
+fn count_on_disk_records(book_dir: &Path) -> usize {
+    fn walk(dir: &Path, count: &mut usize) {
+        let Ok(entries) = fs::read_dir(dir) else { return };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            // `_parity/` (and any similarly `_`-prefixed directory, matching
+            // this corpus's existing `_pfs`-style convention for
+            // non-content storage) holds test fixtures, not licensed
+            // content records -- `tests/sd27_book_license_record_counts.rs`
+            // counts only equipment/feat/race_trait/spell.
+            if path.is_dir() {
+                let is_internal = path.file_name().and_then(|f| f.to_str()).is_some_and(|n| n.starts_with('_'));
+                if !is_internal {
+                    walk(&path, count);
+                }
+            } else if path.extension().and_then(|e| e.to_str()) == Some("json")
+                && path.file_name().and_then(|f| f.to_str()) != Some("LICENSE.json")
+            {
+                *count += 1;
+            }
+        }
+    }
+    let mut count = 0;
+    walk(book_dir, &mut count);
+    count
+}
+
 fn write_record<T: serde::Serialize>(path: &Path, record: &CorpusRecordV1<T>) {
     fs::create_dir_all(path.parent().expect("record path must have a parent dir")).expect("failed to create output dir");
     let json = serde_json::to_string_pretty(record).expect("record must serialize");
@@ -456,6 +501,11 @@ fn gen_pathfinder_unchained() {
     }
 
     // ---- LICENSE.json ----
+    // Computed once, referenced by both `records_processed` and the note's
+    // own prose, so the two can never state two different numbers (exactly
+    // the self-contradiction `tests/sd27_book_license_record_counts.rs`'s
+    // `the_screening_note_quotes_the_same_count_the_field_states` checks for).
+    let records_processed = count_on_disk_records(&out_root);
     let license_json = serde_json::json!({
         "book": "pathfinder_unchained",
         "license_declaration": {
@@ -470,11 +520,14 @@ fn gen_pathfinder_unchained() {
             "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
             "blacklist_version_reviewed": "2026-07-27"
         },
-        "screening_method_note": "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the 20 canonical core Golarion deities plus a sampled set of known setting place names, the same list docs/governance/ogl-pi-blacklist.md's operating cycle used for the 4 in-scope books' retro-fit). Zero matches were found for this book's 59 records (17 feats + 42 equipment modifiers) -- consistent with this book's own subject matter (alignment/stamina/wound-threshold feats and Automatic Bonus Progression equipment modifiers) being entirely rules-mechanical, setting-neutral text. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see.",
+        "screening_method_note": format!(
+            "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the 20 canonical core Golarion deities plus a sampled set of known setting place names, the same list docs/governance/ogl-pi-blacklist.md's operating cycle used for the 4 in-scope books' retro-fit). This generator's own run screened {} records ({feat_written} feats + {equipment_written} equipment modifiers), zero PI hits -- consistent with this book's own subject matter (alignment/stamina/wound-threshold feats and Automatic Bonus Progression equipment modifiers) being entirely rules-mechanical, setting-neutral text. `records_processed` below is {records_processed}, the full on-disk count derived at write time rather than from this run alone, since `ingest_pu_classes.rs` also writes real, separately-screened records (its own `pi_hits()` term scan) into this book's directory. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see.",
+            feat_written + equipment_written
+        ),
         "redistribution_posture": "ogl-notice-attached",
         "classified_at": ingested_at,
         "classified_by_cycle": "E2.2",
-        "records_processed": feat_written + equipment_written,
+        "records_processed": records_processed,
         "records_redacted": 0,
         "operator_sign_off": {
             "signed_off": false,
@@ -755,12 +808,15 @@ fn gen_advanced_race_guide() {
     let total = spell_written + equipment_written + feat_written;
 
     // ---- LICENSE.json ----
+    // See gen_pathfinder_unchained()'s own comment: computed once so
+    // `records_processed` and the note's prose can never disagree.
+    let records_processed = count_on_disk_records(&out_root);
     let license_json = serde_json::json!({
         "book": "advanced_race_guide",
         "license_declaration": {
             "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2",
             "product_identity_source": "Paizo Pathfinder Roleplaying Game Advanced Race Guide, OGL §15 Product Identity section",
-            "product_identity_note": "Named deities, NPCs, and unique places are Product Identity per the book's own OGL Section 15 declaration; core spell/equipment/feat MECHANICS are Open Game Content."
+            "product_identity_note": "Named deities, NPCs, and unique places are Product Identity per the book's own OGL Section 15 declaration; core spell/equipment/feat and racial-trait MECHANICS are Open Game Content."
         },
         "redaction_policy": {
             "marker": "[redacted PI]",
@@ -770,12 +826,12 @@ fn gen_advanced_race_guide() {
             "blacklist_version_reviewed": "2026-07-27"
         },
         "screening_method_note": format!(
-            "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the same PI_BLACKLIST_TERMS this binary's gen_pathfinder_unchained() also uses -- the 20 canonical core Golarion deities plus a sampled set of known setting place names, matching docs/governance/ogl-pi-blacklist.md's operating cycle for the 4 in-scope books' retro-fit). Scan result for this book: {total} records screened, all matched OGL (0 PI hits observed in this cycle's real spell/equipment/feat description text). This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see."
+            "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the same PI_BLACKLIST_TERMS this binary's gen_pathfinder_unchained() also uses -- the 20 canonical core Golarion deities plus a sampled set of known setting place names, matching docs/governance/ogl-pi-blacklist.md's operating cycle for the 4 in-scope books' retro-fit). This generator's own run screened {total} records (spells + equipment + feats), zero PI hits. `records_processed` below is {records_processed}, the full on-disk count derived at write time rather than from this run alone, since `ingest_race_traits_arg.rs` also writes real, separately-screened alternate-racial-trait records into this book's directory. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see."
         ),
         "redistribution_posture": "ogl-notice-attached",
         "classified_at": ingested_at,
         "classified_by_cycle": "E2.1",
-        "records_processed": total,
+        "records_processed": records_processed,
         "records_redacted": 0,
         "operator_sign_off": {
             "signed_off": false,

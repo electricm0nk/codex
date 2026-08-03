@@ -74,10 +74,22 @@ const ALLOWED_SOURCE_KINDS: &[&str] =
 fn assert_shape_b_v1_record(path: &Path, record: &Value) {
     let obj = record.as_object().unwrap_or_else(|| panic!("{}: not a JSON object", path.display()));
 
-    let expected_keys: BTreeSet<&str> =
-        ["population", "completeness", "ingested_at", "data", "source", "license", "pi_field", "pi_marker"]
-            .into_iter()
-            .collect();
+    let expected_keys: BTreeSet<&str> = [
+        "population",
+        "completeness",
+        "ingested_at",
+        "data",
+        "source",
+        "license",
+        "pi_field",
+        "pi_marker",
+        // GE-01: every writer's records now also carry wiring_class /
+        // wiring_class_signals (2026-08-03 corpus regeneration).
+        "wiring_class",
+        "wiring_class_signals",
+    ]
+    .into_iter()
+    .collect();
     let actual_keys: BTreeSet<&str> = obj.keys().map(String::as_str).collect();
     assert_eq!(actual_keys, expected_keys, "{}: Shape B v1 key set mismatch", path.display());
 

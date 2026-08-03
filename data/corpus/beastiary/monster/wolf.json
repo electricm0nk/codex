@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-03T17:42:13Z",
   "data": {
     "id": "beastiary1:monster:wolf",
     "name": "Wolf",
@@ -25,9 +25,6 @@
     "line": 414,
     "record_key": "Wolf"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "field_provenance": [
     {
       "field": "natural_attacks[0].damage_dice",
@@ -44,5 +41,12 @@
         "identity_match_basis": "name + CR 1 + Medium animal + Bestiary pg. 278 (matches the cached chassis's own source_page); explicitly the plain Bestiary 1 wolf, NOT the dire wolf and NOT the wolf animal companion"
       }
     }
-  ]
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

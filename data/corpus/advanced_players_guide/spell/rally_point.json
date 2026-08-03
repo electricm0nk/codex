@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
     "key": "Rally Point",
     "school": "Enchantment",
@@ -16,6 +16,11 @@
     "line": 2031,
     "record_key": "Rally Point"
   },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

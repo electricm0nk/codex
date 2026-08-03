@@ -85,7 +85,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-07-27T21:12:38Z",
+  "ingested_at": "2026-08-03T19:41:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -96,5 +96,10 @@
     "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
     "record_key": "Special Ability ~ ABP +5 ~ Weapon",
     "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
-  }
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
 }

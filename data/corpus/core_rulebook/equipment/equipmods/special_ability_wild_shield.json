@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
     "key": "Special Ability ~ Wild ~ Shield",
     "category": "equipmods",
@@ -16,6 +16,10 @@
     "fetched_at": "2026-07-22",
     "identity_match_basis": "name"
   },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

@@ -1467,15 +1467,45 @@ pub fn audit_ingested_cache(cache_dir: &Path, corpus_root: &Path) -> std::io::Re
                 // existing corpus) -- `None` is silently skipped, never
                 // treated as agreement.
                 if let Some(stored_class) = json["wiring_class"].as_str() {
-                    let index = wiring_indexes.entry(book.clone()).or_insert_with(|| {
-                        let book_dir = Path::new(rel)
+                    // The shared `core_essentials/races/<race>/` storage
+                    // (`ingest_races.rs`) is TWO levels deeper than every
+                    // other writer's flat `<book>/*.lst` layout, and its
+                    // `.MOD`-closure rows can live in a sibling race's own
+                    // subdirectory -- so the index must cover the whole
+                    // `core_essentials/races` tree, not just the one race
+                    // subdirectory this particular record's citation
+                    // happens to sit in (a bare `.parent()`, one level up,
+                    // under-scopes it). Keyed by the DERIVED book_dir
+                    // itself, not the output `book` name: `core_rulebook`
+                    // and `beastiary` both carry race records pointing into
+                    // this same shared source tree alongside their own
+                    // ordinary (single-level) records, and caching by
+                    // `book` alone would let whichever record is scanned
+                    // first pin the wrong book_dir for every record after
+                    // it in the same output book.
+                    const RACES_MARKER: &str = "core_essentials/races/";
+                    let book_dir = if let Some(at) = rel.find(RACES_MARKER) {
+                        corpus_root.join(&rel[..at + RACES_MARKER.len()])
+                    } else {
+                        Path::new(rel)
                             .parent()
                             .map(|p| corpus_root.join(p))
-                            .unwrap_or_else(|| corpus_root.to_path_buf());
-                        WiringClassIndex::build(&book, &book_dir)
-                    });
-                    let file_basename =
-                        Path::new(rel).file_name().map(|f| f.to_string_lossy().into_owned()).unwrap_or_default();
+                            .unwrap_or_else(|| corpus_root.to_path_buf())
+                    };
+                    let index_key = book_dir.display().to_string();
+                    let index = wiring_indexes
+                        .entry(index_key)
+                        .or_insert_with(|| WiringClassIndex::build(&book, &book_dir));
+                    // Relative to `index`'s own book_dir (see above): the
+                    // bare filename for every ordinary writer, but
+                    // `<race>/<file>.lst` for the nested core_essentials
+                    // race storage, matching how `ingest_races.rs` itself
+                    // computes `chassis_file_rel_to_races_root`.
+                    let file_basename = if let Some(at) = rel.find(RACES_MARKER) {
+                        rel[at + RACES_MARKER.len()..].to_string()
+                    } else {
+                        Path::new(rel).file_name().map(|f| f.to_string_lossy().into_owned()).unwrap_or_default()
+                    };
                     let mut lines = index.lines();
                     let (computed_class, computed_signals) = index.wiring_class_for(
                         &mut lines,

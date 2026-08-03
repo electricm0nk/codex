@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-01T03:17:20Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
     "key": "Meteor Swarm (Dealing Cold Damage)",
     "school": "Evocation",
@@ -10,13 +10,16 @@
     "full_text": true
   },
   "source": {
-    "kind": "lst_inherited_copy",
+    "kind": "lst_token",
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
     "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
     "line": 1049,
-    "record_key": "Meteor Swarm (Dealing Cold Damage)",
-    "inherited_from_record_key": "Meteor Swarm"
+    "record_key": "Meteor Swarm (Dealing Cold Damage)"
   },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

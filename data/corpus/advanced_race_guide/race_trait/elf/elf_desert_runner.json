@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-31T18:13:11Z",
+  "ingested_at": "2026-08-03T17:43:16Z",
   "data": {
     "key": "Elf ~ Desert Runner",
     "name": "Desert Runner",
@@ -74,5 +74,9 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

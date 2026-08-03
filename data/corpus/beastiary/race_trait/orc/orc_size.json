@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-31T15:03:58Z",
+  "ingested_at": "2026-08-03T17:42:54Z",
   "data": {
     "key": "Orc ~ Size",
     "name": "Medium",
@@ -64,5 +64,9 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

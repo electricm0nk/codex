@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-03T17:42:13Z",
   "data": {
     "id": "beastiary1:monster:cockatrice",
     "name": "Cockatrice",
@@ -25,9 +25,6 @@
     "line": 73,
     "record_key": "Cockatrice"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "field_provenance": [
     {
       "field": "natural_attacks[0].damage_dice",
@@ -44,5 +41,12 @@
         "identity_match_basis": "name + CR 3 + Small magical beast + Bestiary pg. 48 (matches the cached chassis's own source_page); the '-2' is the Strength penalty, not a die-size change"
       }
     }
-  ]
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

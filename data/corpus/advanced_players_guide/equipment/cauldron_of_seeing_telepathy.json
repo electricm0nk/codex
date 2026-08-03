@@ -27,7 +27,7 @@
     ],
     "weight": 5.0
   },
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -38,5 +38,9 @@
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
     "record_key": "Cauldron of Seeing (Telepathy)",
     "sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3"
-  }
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -61,7 +61,7 @@
     ],
     "weight_lbs": null
   },
-  "ingested_at": "2026-07-27T21:12:38Z",
+  "ingested_at": "2026-08-03T19:41:44Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -72,5 +72,9 @@
     "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
     "record_key": "ABP ~ +0 Attunement ~ Weapon",
     "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
-  }
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

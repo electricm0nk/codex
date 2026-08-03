@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-23T00:03:45Z",
+  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
     "class_id": "bloodrager",
     "maxlevel": 20,
@@ -155,6 +155,12 @@
     "line": 40,
     "record_key": "CLASS:Bloodrager"
   },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "static:literal_magnitudes_only"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

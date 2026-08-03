@@ -63,7 +63,7 @@
     ],
     "weight_lbs": 0.0625
   },
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -74,5 +74,9 @@
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
     "record_key": "Wand of Order's Wrath",
     "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
-  }
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

@@ -31,7 +31,7 @@
     ],
     "weight": 0.0
   },
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-03T17:42:13Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -42,5 +42,9 @@
     "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_equip_general.lst",
     "record_key": "Poison (Black Smear)",
     "sha256": "1cc0b06e54f23593747d694ee4dd5f2ded0a1a559d1ca549fcd035be24a1c295"
-  }
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }
