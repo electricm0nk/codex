@@ -68,6 +68,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::beastiary1::equipment_tables::EquipmentTableEntry;
 use crate::rules_core::rules_tables::beastiary1::natural_attack_provenance::{
     self, AttackSource as ProvenanceSource,
@@ -201,6 +202,11 @@ pub struct CacheRecord<T: Serialize> {
     /// see `cache_gen::acg::CacheRecord::wiring_class`'s doc comment.
     pub wiring_class: String,
     pub wiring_class_signals: Vec<String>,
+    /// `"OGL" | "PI" | "PI-REDACTED"` -- see
+    /// `cache_gen::acg::CacheRecord::license`'s doc comment.
+    pub license: crate::rules_core::shape_b_v1::License,
+    pub pi_field: Option<String>,
+    pub pi_marker: Option<String>,
 }
 
 // ---------------------------------------------------------------------
@@ -436,6 +442,7 @@ fn generate_monsters(
             )
         };
 
+        let (license, pi_field, pi_marker) = pi_screening::blanket_ogl();
         let record = CacheRecord {
             population: Population::InScope,
             completeness: Completeness::ChassisOnly,
@@ -455,6 +462,9 @@ fn generate_monsters(
             field_provenance,
             wiring_class,
             wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         write_json(&monster_dir, &slug, &record)?;
         report.monsters_written += 1;
@@ -541,6 +551,8 @@ fn generate_equipment(
         );
         let completeness = if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
 
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field("description", entry.description);
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
@@ -551,7 +563,7 @@ fn generate_equipment(
                 name: entry.name.to_string(),
                 cost_gp: entry.cost_gp,
                 weight: entry.weight_lbs,
-                description: entry.description.map(|d| d.to_string()),
+                description: stored_desc,
             },
             source,
             // Equipment provenance is fully expressible at record level
@@ -560,6 +572,9 @@ fn generate_equipment(
             field_provenance: None,
             wiring_class,
             wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(entry.key);
         write_json(&equipment_dir, &slug, &record)?;

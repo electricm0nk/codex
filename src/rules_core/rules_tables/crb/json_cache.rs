@@ -125,6 +125,20 @@ pub struct CorpusRecord<T> {
     pub wiring_class: String,
     #[serde(default)]
     pub wiring_class_signals: Vec<String>,
+    /// `"OGL" | "PI" | "PI-REDACTED"`, per `docs/governance/ogl-pi-blacklist.md`.
+    /// Computed by the generator itself via `rules_core::pi_screening`
+    /// (this book previously reached this classification only through a
+    /// post-hoc retrofit pass the generator knew nothing about, which
+    /// silently reverted on every regeneration -- see
+    /// `rules_core::pi_screening`'s module doc comment).
+    /// `#[serde(default)]` matching `shape_b_v1::CorpusRecordV1`'s own
+    /// convention for this field.
+    #[serde(default)]
+    pub license: Option<crate::rules_core::shape_b_v1::License>,
+    #[serde(default)]
+    pub pi_field: Option<String>,
+    #[serde(default)]
+    pub pi_marker: Option<String>,
 }
 
 /// `data/corpus/core_rulebook/class/<slug>.json` payload. Mirrors

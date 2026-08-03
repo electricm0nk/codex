@@ -27,6 +27,7 @@ use std::path::{Path, PathBuf};
 use sha2::{Digest, Sha256};
 
 use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::pi_screening;
 use codex::rules_core::rules_tables::crb::class_tables::{self, ClassId, ClassTableRow};
 use codex::rules_core::rules_tables::crb::equipment_tables::{self, EquipmentCategory, EquipmentTableEntry};
 use codex::rules_core::rules_tables::crb::json_cache::{
@@ -404,6 +405,7 @@ fn main() {
                 let data = class_cache_data(&class_rows, class_id);
                 let (wiring_class, wiring_class_signals) =
                     wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
+                let (license, pi_field, pi_marker) = pi_screening::blanket_ogl();
                 let record = CorpusRecord {
                     population: Population::InScope,
                     completeness: Completeness::ChassisOnly,
@@ -412,6 +414,9 @@ fn main() {
                     source,
                     wiring_class,
                     wiring_class_signals,
+                    license: Some(license),
+                    pi_field,
+                    pi_marker,
                 };
                 let path = out_root.join("class").join(format!("{}.json", slugify(&class_name)));
                 write_record(&path, &record);
@@ -456,11 +461,13 @@ fn main() {
 
         match found {
             Some((line_no, record_key)) => {
+                let (license, pi_field, pi_marker, stored_desc) =
+                    pi_screening::classify_field("description", entry.description);
                 let data = SpellCacheData {
                     key: entry.key.to_string(),
                     school: format!("{:?}", entry.school),
                     level: entry.level,
-                    description: entry.description.to_string(),
+                    description: stored_desc,
                 };
                 let source = CorpusSource::LstToken {
                     path: spells_file.relative_path.clone(),
@@ -478,6 +485,9 @@ fn main() {
                     source,
                     wiring_class,
                     wiring_class_signals,
+                    license: Some(license),
+                    pi_field,
+                    pi_marker,
                 };
                 let used = spell_slugs_used.entry(entry.level).or_default();
                 let slug = unique_slug(used, &slugify(entry.key));
@@ -568,13 +578,15 @@ fn main() {
                 } else {
                     Completeness::ChassisOnly
                 };
+                let (license, pi_field, pi_marker, stored_desc) =
+                    pi_screening::classify_optional_field("description", entry.description);
                 let data = EquipmentCacheData {
                     key: entry.key.to_string(),
                     category: equipment_category_slug(entry.category).to_string(),
                     name: entry.name.to_string(),
                     cost_gp: entry.cost_gp,
                     weight_lbs: entry.weight_lbs,
-                    description: entry.description.map(|d| d.to_string()),
+                    description: stored_desc,
                 };
                 let (wiring_class, wiring_class_signals) =
                     wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
@@ -586,6 +598,9 @@ fn main() {
                     source,
                     wiring_class,
                     wiring_class_signals,
+                    license: Some(license),
+                    pi_field,
+                    pi_marker,
                 };
                 let category_slug = equipment_category_slug(entry.category);
                 let used = equipment_slugs_used.entry(category_slug).or_default();

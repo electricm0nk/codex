@@ -63,6 +63,7 @@ use std::process::Command;
 use serde::Serialize;
 
 use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::apg::equipment_tables::EquipmentCategory;
 use crate::rules_core::rules_tables::apg::{self, ApgClassId};
 
@@ -125,6 +126,11 @@ pub struct CacheRecord<T: Serialize> {
     /// see `cache_gen::acg::CacheRecord::wiring_class`'s doc comment.
     pub wiring_class: String,
     pub wiring_class_signals: Vec<String>,
+    /// `"OGL" | "PI" | "PI-REDACTED"` -- see
+    /// `cache_gen::acg::CacheRecord::license`'s doc comment.
+    pub license: crate::rules_core::shape_b_v1::License,
+    pub pi_field: Option<String>,
+    pub pi_marker: Option<String>,
 }
 
 // ---------------------------------------------------------------------
@@ -422,6 +428,7 @@ fn generate_classes(
             class_capitalized_name(class_id),
         );
 
+        let (license, pi_field, pi_marker) = pi_screening::blanket_ogl();
         let record = CacheRecord {
             population: Population::InScope,
             completeness: Completeness::ChassisOnly,
@@ -439,6 +446,9 @@ fn generate_classes(
             },
             wiring_class,
             wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(class_id.name(), &mut used);
         write_json(&class_dir, &slug, &record)?;
@@ -607,6 +617,8 @@ fn generate_spells(
         } else {
             Completeness::ChassisOnly
         };
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field("description", entry.description);
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
@@ -615,12 +627,15 @@ fn generate_spells(
                 key: entry.key.to_string(),
                 school: entry.school.map(|s| format!("{s:?}")),
                 level: entry.level,
-                description: entry.description.map(|d| d.to_string()),
+                description: stored_desc,
                 full_text: entry.full_text,
             },
             source,
             wiring_class,
             wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&spell_dir, &slug, &record)?;
@@ -826,6 +841,8 @@ fn generate_equipment(
         } else {
             Completeness::ChassisOnly
         };
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field("description", entry.description);
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
@@ -836,11 +853,14 @@ fn generate_equipment(
                 name: entry.name.to_string(),
                 cost_gp: entry.cost_gp,
                 weight: entry.weight,
-                description: entry.description.map(|d| d.to_string()),
+                description: stored_desc,
             },
             source,
             wiring_class,
             wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&equipment_dir, &slug, &record)?;
