@@ -21,6 +21,19 @@
 //! base they resolved against; twelve of them previously reached
 //! `list_spell_catalog` as a key and three nulls. The one remaining
 //! `full_text: false` is `Threefold Aspect`, unrelated.
+//!
+//! **On-disk record count briefly went 297 -> 306 -> 297 across two
+//! GE-01 corpus-regeneration cycles (2026-08-03), landing back at 297
+//! with a different set membership than before.** `0535a178` added 9
+//! real `Summoner Summon Monster I`-`IX` records (KEY-qualified,
+//! filenames `summoner_summon_monster_*.json`), which had no resolvable
+//! LST citation until that regeneration's `find_by_key_field` citation
+//! fix. `fc5f1fab` then deleted 9 unrelated *fossil* records
+//! (`summon_monster_{i..ix}.json`, no `summoner_` prefix) written once
+//! by a 2026-07 one-off retrofit script and produced by no generator
+//! since -- their citations resolved to a content-free `.MOD`
+//! bookkeeping row, and nothing read them by path. Net: +9 real, -9
+//! fossil, same total, real content only.
 
 use std::collections::{BTreeSet, HashSet};
 use std::fs;
@@ -189,11 +202,12 @@ fn class_cache_has_all_six_real_apg_classes_with_full_chassis() {
 #[test]
 fn spell_cache_has_all_297_records_with_real_full_text_ceiling() {
     let records = load_all("spell");
-    // 297 + the 9 Summoner `Summon Monster I`-`IX` records, which had no
-    // resolvable LST citation until GE-01's 2026-08-03 regeneration first
-    // wrote them (a real, previously-reported gap closing, not a coverage
-    // regression -- see docs/release/GE-01-.../decisions.md's dated entry).
-    assert_eq!(records.len(), 306, "real, deduplicated apg_spells.lst record count (decisions.md §11.4)");
+    // 297: the 9 real Summoner `Summon Monster I`-`IX` records (added by
+    // GE-01's 2026-08-03 regeneration, `0535a178`) replacing the 9 fossil
+    // `summon_monster_{i..ix}.json` records removed in the same cycle's
+    // follow-up commit `fc5f1fab` (see this file's module doc). Net zero
+    // change in count, but a different, now-real set of records.
+    assert_eq!(records.len(), 297, "real, deduplicated apg_spells.lst record count (decisions.md §11.4)");
 
     let mut has_description = 0;
     let mut full_text_true = 0;
@@ -213,13 +227,12 @@ fn spell_cache_has_all_297_records_with_real_full_text_ceiling() {
 
     // Was 285 / 284 before the cross-book `.COPY=` resolution; see this
     // file's module doc. Do not relax these — re-derive them.
-    // +9 over the prior 297/296 ceilings: the Summoner `Summon Monster
-    // I`-`IX` records, first written by GE-01's 2026-08-03 regeneration
-    // (see spell_cache_has_all_297_records_with_real_full_text_ceiling's
-    // own doc comment above this test). 306 have a description; 305 (not
-    // 306) have full_text: true.
-    assert_eq!(has_description, 306, "real spell description ceiling");
-    assert_eq!(full_text_true, 305, "real spell full_text ceiling");
+    // Back to the original 297/296 ceilings after the fossil-record
+    // deletion (`fc5f1fab`) replaced the 9 fossils with the 9 real
+    // Summoner records 1-for-1 -- re-derived directly from the on-disk
+    // corpus, not reasoned out from the prior 306/305 figures.
+    assert_eq!(has_description, 297, "real spell description ceiling");
+    assert_eq!(full_text_true, 296, "real spell full_text ceiling");
 }
 
 #[test]
