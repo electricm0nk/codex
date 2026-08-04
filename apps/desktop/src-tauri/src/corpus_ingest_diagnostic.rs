@@ -98,6 +98,7 @@ use codex::rules_core::rules_tables::crb::{
     race_tables::RaceId, spell_list as crb_spell_list,
 };
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
+use codex::rules_core::rules_tables::ultimate_campaign as uca;
 
 use crate::race_catalog::{book_code, build_race_catalog, RACE_CORPUS_BOOKS};
 
@@ -298,6 +299,17 @@ fn pathfinder_unchained_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Ultimate Campaign: SD-28 Epic 13 (`epic-13-calibration`) cost
+/// calibration book. 23 real corpus records, all `feats` -- see
+/// `ultimate_campaign::feat_tables`'s own doc comment for the catalog and
+/// its 3 `deferred-with-reason` records (still counted here: they are real
+/// ingested rows, not stubs -- see that module's own doc comment).
+fn ultimate_campaign_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), uca::feat_tables::feat_tables().len() as u32);
+    counts
+}
+
 /// Repo root, derived from the crate's own compile-time manifest
 /// directory (`apps/desktop/src-tauri`) rather than the process's current
 /// working directory, which Tauri does not guarantee.
@@ -383,6 +395,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             pathfinder_unchained_counts(),
             &races,
         ),
+        book_status(
+            "ultimate_campaign",
+            "src/rules_core/rules_tables/ultimate_campaign",
+            ultimate_campaign_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -458,7 +476,8 @@ mod tests {
                 "acg",
                 "beastiary1",
                 "advanced_race_guide",
-                "pathfinder_unchained"
+                "pathfinder_unchained",
+                "ultimate_campaign"
             ]
         );
     }

@@ -480,12 +480,16 @@ mod sd27_prerequisite_tests {
     ///
     /// The pinned number is the real one, derived by running this: a Human
     /// Fighter 1 with Str 14 / Dex 13 / Int 10, no feats and no allocated
-    /// skill ranks qualifies for **211 of 690**. That is not over-blocking,
-    /// it is PF1: the two dominant blockers are 284 clauses requiring
-    /// another feat the character has not taken (`Cleave` needs `Power
-    /// Attack`, `Mobility` needs `Dodge`) and 196 race gates, 183 of which
-    /// are ARG feats belonging to races other than Human. Spot-checked
-    /// against the published rulebook for 25 well-known feats in
+    /// skill ranks qualifies for **234 of 713** (was 211 of 690 before
+    /// SD28-E13 added Ultimate Campaign's 23 Story Feats -- all 23 carry
+    /// only a `PRETEXT:` prose prerequisite, which cannot mechanically
+    /// block, so all 23 land in the eligible set). That is not
+    /// over-blocking, it is PF1: the two dominant blockers among the
+    /// remaining denials are 284 clauses requiring another feat the
+    /// character has not taken (`Cleave` needs `Power Attack`, `Mobility`
+    /// needs `Dodge`) and 196 race gates, 183 of which are ARG feats
+    /// belonging to races other than Human. Spot-checked against the
+    /// published rulebook for 25 well-known feats in
     /// `tests/sd27_feat_prerequisite_enforcement.rs`.
     #[test]
     fn a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why() {
@@ -493,9 +497,16 @@ mod sd27_prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        assert_eq!(reports.len(), 690);
+        assert_eq!(reports.len(), 713);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
-        assert_eq!(eligible, 211, "a starting Fighter's real eligible-feat count");
+        // 211 (of the original 690) + all 23 UCA Story Feats: every one of
+        // UCA's records carries only a `PRETEXT:` prose prerequisite, which
+        // `pre_tokens` cannot mechanically verify and therefore never
+        // blocks -- so all 23 land in `met`/`unverified` rather than
+        // `unmet`, exactly the same non-blocking treatment PU's own
+        // `PRETEXT:` rows already get. Re-derived with this test after
+        // SD28-E13 landed the UCA catalog (2026-08-03).
+        assert_eq!(eligible, 234, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

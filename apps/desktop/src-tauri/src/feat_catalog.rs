@@ -324,9 +324,20 @@ mod tests {
             );
         }
 
-        assert_eq!(with_description, 681, "9 of the 690 records carry no DESC: token");
-        assert_eq!(raw_leaks, 17, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 17, "exactly the leaking records are rewritten");
+        // 9 of the original 690 carry no DESC: token; UCA's 23 records all
+        // carry a joined description (DESC + BENEFIT, or DESC + the
+        // deferral diagnostic for the 3 corrupted records), so all 23 add
+        // to `with_description` rather than the no-DESC: bucket.
+        assert_eq!(with_description, 704, "9 of the 713 records carry no DESC: token");
+        // 17 of the original 690 + UCA's `Battlefield Healer`, whose real
+        // `.MOD BENEFIT:` row carries a literal `%%` escape ("reduce the
+        // damage taken by 50%% for the purposes of..."), joined verbatim
+        // into `feats_all::map_uca_entry`'s description exactly as the
+        // corpus spells it -- `render_pcgen_desc` correctly collapses it to
+        // one `%` for the player, the same treatment CRB's own `%%`-bearing
+        // rows already get.
+        assert_eq!(raw_leaks, 18, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 18, "exactly the leaking records are rewritten");
         assert_eq!(
             changed,
             vec![
@@ -347,6 +358,7 @@ mod tests {
                 "Twinned Feint",
                 "Winter's Strike",
                 "Wounded Paw Gambit",
+                "Battlefield Healer",
             ]
         );
     }
@@ -356,8 +368,8 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            690,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU"
+            713,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA"
         );
 
         let by_source =
@@ -367,6 +379,7 @@ mod tests {
         assert_eq!(by_source("Acg"), 129);
         assert_eq!(by_source("Arg"), 187);
         assert_eq!(by_source("Pu"), 17);
+        assert_eq!(by_source("Uca"), 23);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
@@ -382,6 +395,9 @@ mod tests {
         assert_eq!(counts("Alignment"), 9);
         assert_eq!(counts("CombatStamina"), 3);
         assert_eq!(counts("WoundThreshold"), 3);
+        // UCA's single corpus-derived category -- all 23 records are
+        // `TYPE:Story`.
+        assert_eq!(counts("Story"), 23);
 
         let categorised: usize = [
             "General",
@@ -393,6 +409,7 @@ mod tests {
             "Alignment",
             "CombatStamina",
             "WoundThreshold",
+            "Story",
         ]
         .iter()
         .map(|category| counts(category))

@@ -62,6 +62,7 @@ use codex::rules_core::rules_tables::crb::{
     spell_list as crb_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
 use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
@@ -696,6 +697,7 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Bestiary1,
     RuleSetId::Arg,
     RuleSetId::Pu,
+    RuleSetId::Uca,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -710,6 +712,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Bestiary1 => "bestiary",
         RuleSetId::Arg => "advanced_race_guide",
         RuleSetId::Pu => "pathfinder_unchained",
+        RuleSetId::Uca => "ultimate_campaign",
     }
 }
 
@@ -736,6 +739,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         // whole root-crate bin set, this generator included, fails to compile.
         RuleSetId::Arg => "advanced_race_guide",
         RuleSetId::Pu => "pathfinder_unchained",
+        RuleSetId::Uca => "ultimate_campaign",
     }
 }
 
@@ -1385,6 +1389,27 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     reason: None,
                     engine_book: engine_book_field,
                 };
+            }
+            // SD28-E13: the only book with a feat-scoped engine diagnostic
+            // today. `ultimate_campaign::feat_tables::DEFERRED_WITH_REASON`
+            // names the 3 UCA feats whose own corpus `.MOD BENEFIT:` row is
+            // a confirmed upstream splice (see that module's own doc
+            // comment) -- quoted verbatim here rather than re-narrated, the
+            // same rule `Kind::ClassFeature`'s diagnostic lookup above
+            // follows.
+            if engine_book.as_str() == "ultimate_campaign" {
+                if let Some((_, diagnostic)) = uca_feat_tables::DEFERRED_WITH_REASON
+                    .iter()
+                    .find(|(key, _)| *key == unit.key || *key == unit.name)
+                {
+                    return Verdict {
+                        status: "deferred-with-reason",
+                        evidence: "engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON"
+                            .to_string(),
+                        reason: Some((*diagnostic).to_string()),
+                        engine_book: engine_book_field,
+                    };
+                }
             }
             if text_only {
                 return Verdict {

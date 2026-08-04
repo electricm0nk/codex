@@ -310,6 +310,11 @@ fn repo_root() -> PathBuf {
 /// name the ingest diagnostic uses.
 const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     ("FeatTableEntry", "feats"),
+    // Ultimate Campaign's own record type (SD28-E13) -- not
+    // `crb::feats::FeatTableEntry`, see `ultimate_campaign::feat_tables`'s
+    // own doc comment for why it declares its own type. Same family
+    // (`"feats"`) as every other book's feat table.
+    ("StoryFeatEntry", "feats"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -653,6 +658,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // PU joined `feats_all::all_feat_tables()` alongside ARG; the same
         // command carries its 17 records under the `Pu` wire source.
         ("pathfinder_unchained", "feats") => Some(feats_reach(RuleSetId::Pu, "Pu")),
+        // SD28-E13: Ultimate Campaign's 23 Story Feats joined
+        // `feats_all::all_feat_tables()` under the `Uca` wire source. All 23
+        // records carry `category: "Story"`, so every one of them has a
+        // payload per `feats_reach`'s own check (a non-empty category is
+        // sufficient) -- including the 3 `deferred-with-reason` records,
+        // which still carry real flavor text plus the deferral diagnostic
+        // in `description`, not a bare identity.
+        ("ultimate_campaign", "feats") => Some(feats_reach(RuleSetId::Uca, "Uca")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell

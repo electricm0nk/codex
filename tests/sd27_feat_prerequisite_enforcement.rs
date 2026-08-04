@@ -190,7 +190,12 @@ fn the_pre_kind_census_is_the_real_one() {
         ("PRECLASS", 56),
         ("PRERACE", 29),
         ("PRELEVEL", 23),
-        ("PRETEXT", 23),
+        // 23 (ARG's 3 "channel energy" rows + PU's 4 Combat
+        // Stamina/Signature Skill rows... the pre-UCA total) + 23 more from
+        // every one of UCA's 23 Story Feats, all of which carry only a
+        // `PRETEXT:` prose prerequisite (`feats_all::UCA_FEAT_PREREQUISITES`,
+        // SD28-E13, 2026-08-03).
+        ("PRETEXT", 46),
         ("PREALIGN", 10),
         ("PREHD", 9),
         ("PREPROFWITHSHIELD", 7),
@@ -217,12 +222,16 @@ fn the_pre_kind_census_is_the_real_one() {
 
     assert_eq!(catalog_kind_census(), expected);
 
-    // 1,592 prerequisite clauses across 31 distinct kinds. 1,518 of them
-    // (95.4%) are of a kind with a real evaluation arm, 23 are `PRETEXT:`
-    // display prose, and 51 are of a kind deliberately reported as
+    // 1,615 prerequisite clauses across 31 distinct kinds (was 1,592 before
+    // SD28-E13's 23 UCA `PRETEXT:` rows). 1,518 of them (unchanged -- UCA
+    // adds no new `MODELLED_KINDS` entries) are of a kind with a real
+    // evaluation arm, 46 (was 23) are `PRETEXT:` display prose -- its own
+    // third category, deliberately outside both `MODELLED_KINDS` and
+    // `UNMODELLED_KINDS`; see `pre_tokens.rs`'s own `ClauseOutcome::
+    // Informational` arm -- and 51 are of a kind deliberately reported as
     // unmodelled -- see `UNMODELLED_KINDS` for the per-kind reason.
     let total: usize = expected.values().sum();
-    assert_eq!(total, 1592);
+    assert_eq!(total, 1615);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
@@ -240,7 +249,9 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
         .flat_map(|book| book.entries.iter())
         .filter(|entry| entry.prerequisites.is_some())
         .count();
-    assert_eq!(with_any, 599, "of 690");
+    // 599 of the original 690 + all 23 UCA records (every one carries a
+    // `PRETEXT:` prerequisite entry -- see `feats_all::UCA_FEAT_PREREQUISITES`).
+    assert_eq!(with_any, 622, "of 713");
 }
 
 // ---------------------------------------------------------------------------
@@ -437,7 +448,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 690);
+        assert_eq!(reports.len(), 713);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);

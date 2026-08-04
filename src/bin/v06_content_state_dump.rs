@@ -54,6 +54,7 @@ use codex::rules_core::rules_tables::advanced_race_guide as arg;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
+use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::RuleSetId;
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
@@ -233,6 +234,25 @@ fn pu_content() -> BookContent {
                 ingested: pu::equipment_tables::equipment_tables().len() as u32,
             },
             KindCount { kind: "feats", ingested: pu::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E13. Same hand-listed-roster shape `arg_content()`/`pu_content()`'s
+/// own doc comment warns about: the `RuleSetId` match below is exhaustive
+/// and was forced to grow a `Uca` arm, but this roster is not
+/// compiler-enforced, so it is added explicitly here rather than trusted to
+/// follow automatically.
+fn uca_content() -> BookContent {
+    BookContent {
+        id: "ultimate_campaign",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount { kind: "equipment", ingested: 0 },
+            KindCount { kind: "feats", ingested: uca::feat_tables::feat_tables().len() as u32 },
             KindCount { kind: "monsters", ingested: 0 },
         ],
     }
@@ -536,6 +556,7 @@ fn main() {
         bestiary1_content(),
         arg_content(),
         pu_content(),
+        uca_content(),
     ];
     let monsters = monster_states(&repo_root);
     let races = race_states(&fixture);
@@ -642,6 +663,7 @@ fn main() {
             // SD-27: `all_feat_tables()` now yields ARG and PU tables too.
             RuleSetId::Arg => "advanced_race_guide",
             RuleSetId::Pu => "pathfinder_unchained",
+            RuleSetId::Uca => "ultimate_campaign",
         };
         let records = table.entries.len();
         let wired_here = table

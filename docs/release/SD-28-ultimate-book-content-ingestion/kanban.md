@@ -31,7 +31,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 9 | `epic-9-upsi` | READY | Ultimate Psionics (Dreamscarred Press tier) | per-class / per-power, license-gated | `epic-2-prelaunch` | — | — | — |
 | 10 | `epic-11-version` | COMPLETE | Build Version Numbering | first concrete value `0.8.<build>` | `epic-1-identifier` | sd28-epic11 | 2026-08-02T03:00:00Z | SD28-E11-F1-001 |
 | 11 | `epic-12-code-review` | COMPLETE | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version` | sd28-epic12 | 2026-08-02T00:00:00Z | SD28-E12-F1-001 |
-| 12 | `epic-13-calibration` | READY | Ultimate Campaign (23 units) | cost calibration — one small book end-to-end to 100% proven | `epic-2-prelaunch` | — | — | — |
+| 12 | `epic-13-calibration` | IN-FLIGHT | Ultimate Campaign (23 units) | cost calibration — one small book end-to-end to 100% proven | `epic-2-prelaunch` | epic-13-calibration | 2026-08-03T00:00:00Z | SD28-E13-F1-001 |
 | 13 | `epic-14-harness` | READY | Observation harness (spell + equipment) | consumer-probe widening; unblocks 4050 `ingested-magnitude` units | `epic-13-calibration` | — | — | — |
 | 14 | `epic-15-unknown-sweep` | READY | Classification sweep | dispose all 4172 `unknown` units | `epic-13-calibration` | — | — | — |
 | 15 | `epic-16-backfill` | READY | `not-ingested` backfill | 8492 real gaps inside started books | `epic-13-calibration`, `epic-15-unknown-sweep` | — | — | — |

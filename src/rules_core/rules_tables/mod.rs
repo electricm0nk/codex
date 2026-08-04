@@ -16,6 +16,7 @@ pub mod class_spell_levels;
 pub mod crb;
 pub mod feats_all;
 pub mod pathfinder_unchained;
+pub mod ultimate_campaign;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
 /// record belongs to.
@@ -27,5 +28,6 @@ pub enum RuleSetId {
     Bestiary1,
     Arg,
     Pu,
+    Uca,
     // future: Um, ...
 }
