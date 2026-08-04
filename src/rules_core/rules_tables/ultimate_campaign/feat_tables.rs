@@ -17,13 +17,14 @@
 //! `docs/governance/no-stub-mvp-doctrine.md`, since the actual rule text a
 //! player needs lives on the row this catalog also carries.
 //!
-//! **Three of the 23 are `deferred-with-reason`, not text-complete --
+//! **Two of the 23 are `deferred-with-reason`, not text-complete --
 //! upstream corpus splices, re-derived and confirmed against the live
 //! `.lst`, not the brief's own transcription.** `Fearless Zeal` was
-//! flagged going into this cycle; `Magnum Opus` and `Stronghold` were
-//! found independently while re-deriving every field (`decisions.md`,
-//! dated entry for SD28-E13, records the correction against the cycle
-//! brief, which named only `Fearless Zeal`):
+//! flagged going into this cycle; `Magnum Opus` was found independently
+//! while re-deriving every field (`decisions.md`, dated entries for
+//! SD28-E13, record the corrections against the cycle brief, which named
+//! only `Fearless Zeal`, and against this module's own first pass, which
+//! over-deferred a third record, `Stronghold` -- see below):
 //!
 //! * **`Fearless Zeal`** (`uca_feats.lst:66`) -- the `.MOD BENEFIT:` row
 //!   reads correctly through "...you can add a +2 bonus on any single
@@ -33,41 +34,75 @@
 //!   `Damned`'s own `BENEFIT:` row (`uca_feats.lst:37`) starting at "...
 //!   before the DC of spells and spell-like abilities you use against such
 //!   creatures." -- confirmed byte-for-byte against `Damned`'s row, not
-//!   merely similar phrasing.
+//!   merely similar phrasing. `Damned`'s own row is otherwise real and
+//!   distinct, not itself a splice -- two feats legitimately sharing a
+//!   "+2 enhancement bonus to an ability score" completion tier is not,
+//!   on its own, evidence of corruption (see the `Stronghold` correction
+//!   below for why that distinction matters); this one is confirmed
+//!   corrupted because `Fearless Zeal`'s own sentence changes subject
+//!   mid-clause into `Damned`'s unrelated topic, not merely because the
+//!   text repeats.
 //! * **`Magnum Opus`** (`uca_feats.lst:74`) -- the row's own sentence is
-//!   grammatically truncated ("...or win the artistic Completion
-//!   Benefit:...", missing whatever `Magnum Opus`'s own artistic-triumph
-//!   clause was supposed to name) and then continues directly into a
-//!   trailing sentence ("You gain the ability to reroll a failed saving
-//!   throw once per day. You must keep the result of the second roll,
-//!   even if it is lower.") that is byte-for-byte identical to a trailing
-//!   sentence appended to `Stronghold`'s row below.
-//! * **`Stronghold`** (`uca_feats.lst:76`) -- the row's own two-tier
-//!   completion benefit is internally coherent and complete on its own,
-//!   but a second, unrelated "Completion Benefit:" sentence is appended
-//!   after it -- the same sentence spliced onto `Magnum Opus` above. Since
-//!   `Stronghold` already closes cleanly without it, this tail reads as a
-//!   duplicated/misattributed fragment, not this feat's own text.
+//!   grammatically truncated in its own right, independent of any
+//!   cross-row comparison: "...or win the artistic Completion
+//!   Benefit:..." has no object after "artistic" -- a clause cut off
+//!   mid-phrase. The corpus does not say what `Magnum Opus`'s own
+//!   artistic-triumph goal actually was, so neither the `Goal:` clause nor
+//!   whatever `Completion Benefit:` genuinely follows it can be displayed
+//!   honestly.
 //!
-//!   Re-derivation method: a sliding 10-word shingle comparison across all
-//!   23 `BENEFIT:` rows (`python3` script, cycle receipt) flags any
-//!   10-word run repeated verbatim across two different feats' rows as a
-//!   splice candidate; every hit traces to one of the three splices above
-//!   plus one benign false positive (`Champion`/`Town Tamer` sharing the
-//!   generic "+1 dodge bonus to AC" phrase, which is not a splice --
-//!   ordinary repeated game-mechanics language, not a duplicated sentence
-//!   boundary).
+//! **`Stronghold` (`uca_feats.lst:76`) is NOT deferred -- corrected after
+//! independent review found the first pass over-deferred it.** This
+//! module's first version deferred `Stronghold` because its row carries a
+//! second "Completion Benefit:" sentence, byte-for-byte identical to the
+//! one appended to `Magnum Opus` above ("You gain the ability to reroll a
+//! failed saving throw once per day..."). On its own, a *repeated*
+//! sentence is not proof of corruption in this corpus -- `Damned` and
+//! `Fearless Zeal` (before the fix above) demonstrate the file can carry
+//! the same completion-tier text on two records, and one of those two
+//! (`Damned`) is genuinely undamaged. What distinguishes a real splice
+//! (`Fearless Zeal`, `Magnum Opus`) from a merely-repeated tier is whether
+//! the record's OWN sentence is grammatically broken. `Stronghold`'s own
+//! text terminates cleanly and completely with its own "Completion
+//! Benefit:" clause -- "...you could grant your archers +2 on attack
+//! rolls while your front line gains a +2 bonus to AC." -- a complete
+//! sentence needing nothing after it. The second "Completion Benefit:"
+//! sentence that follows is a verified-foreign fragment (byte-identical to
+//! `Magnum Opus`'s row, and `Magnum Opus`'s own row independently proves
+//! it belongs there, not here) rather than evidence that `Stronghold`'s
+//! own content is damaged. `benefit` below carries `Stronghold`'s own
+//! complete text ONLY, trimmed at the point its own sentence ends -- this
+//! is not inventing or repairing text (no word is added or guessed), it
+//! is declining to attribute a different record's sentence to this one,
+//! the same species of judgment the ingest pipeline already exercises
+//! when it decides which `.MOD` block's tokens belong to which feat.
+//!
+//! Re-derivation method: a sliding 10-word shingle comparison across all
+//! 23 `BENEFIT:` rows (`python3` script, cycle receipt) flags any 10-word
+//! run repeated verbatim across two different feats' rows as a splice
+//! candidate; every hit traces to `Fearless Zeal`/`Damned` or `Magnum
+//! Opus`/`Stronghold` plus one benign false positive (`Champion`/`Town
+//! Tamer` sharing the generic "+1 dodge bonus to AC" phrase, which is not
+//! a splice -- ordinary repeated game-mechanics language, not a
+//! duplicated sentence boundary). The shingle scan finds *candidates*; it
+//! is not, by itself, proof a given record's own text is damaged -- see
+//! the `Stronghold` correction above for why each candidate still needs
+//! its own record checked for internal grammatical completeness before
+//! being deferred.
 //!
 //! Per `docs/governance/no-stub-mvp-doctrine.md` and the operator ruling
 //! carried into this cycle, corrupted upstream text is never displayed to
-//! a player and never repaired by inventing replacement prose. All three
-//! ingest as real records (`key`/`name`/`description`/`pretext`/
-//! `source_page` populated, all independently correct) with `benefit:
-//! None` -- the engine's own diagnostic (`corpus_ingest_diagnostic`,
-//! `wiring_class`) names the defect with a file:line citation rather than
-//! silently omitting the row. Honest target for this book: **20
-//! text-complete + 3 deferred-with-reason = 23 accounted**, not 23
-//! text-complete.
+//! a player and never repaired by inventing replacement prose -- and,
+//! symmetrically, a record whose own text is genuinely intact is not
+//! withheld from the player merely because it shares wording with another
+//! record. Both deferred records ingest as real records
+//! (`key`/`name`/`description`/`pretext`/`source_page` populated, all
+//! independently correct) with `benefit: None` -- the engine's own
+//! diagnostic (`corpus_ingest_diagnostic`, `wiring_class`) names the
+//! defect with a file:line citation rather than silently omitting the
+//! row. Honest target for this book: **21 text-complete + 2
+//! deferred-with-reason = 23 accounted**, not 23 text-complete, and not
+//! the first pass's 20+3.
 //!
 //! **`PRETEXT:`, not a formal `PRE`-family token, on all 23.** Every
 //! record's prerequisite is prose ("Prerequisite:You must have..."),
@@ -126,11 +161,7 @@ pub const DEFERRED_WITH_REASON: &[(&str, &str)] = &[
     ),
     (
         "Magnum Opus",
-        "uca_feats.lst:74 -- .MOD BENEFIT: row's own sentence is grammatically truncated (\"...or win the artistic Completion Benefit:...\") and continues into a trailing sentence byte-for-byte identical to one also appended to Stronghold's row; upstream corpus defect, not repaired by inventing text.",
-    ),
-    (
-        "Stronghold",
-        "uca_feats.lst:76 -- .MOD BENEFIT: row's own two-tier completion benefit is complete and coherent on its own, but a second, unrelated \"Completion Benefit:\" sentence (byte-for-byte identical to the one appended to Magnum Opus's row) is appended after it; upstream corpus defect, not repaired by inventing text.",
+        "uca_feats.lst:74 -- .MOD BENEFIT: row's own sentence is grammatically truncated (\"...or win the artistic Completion Benefit:...\", no object after \"artistic\"); the Goal: clause's real ending is not recoverable from the corpus; upstream corpus defect, not repaired by inventing text.",
     ),
 ];
 
@@ -282,7 +313,15 @@ pub fn feat_tables() -> &'static [StoryFeatEntry] {
                 description: Some("[Not Implemented] You seek to build a bastion against which your enemies shall break like water against the rocks."),
                 pretext: Some("Prerequisites:You must have the Leadership feat and must lead at least 10 combat-capable followers (such as fighters or rangers)."),
                 source_page: Some("p.71"),
-                benefit: None,
+                // Trimmed at the point this record's own sentence ends --
+                // see this module's own doc comment ("Stronghold is NOT
+                // deferred") for why the corpus row's second, unrelated
+                // "Completion Benefit:" sentence (byte-identical to Magnum
+                // Opus's row) is excluded rather than attributed here.
+                // Nothing after this point is added, guessed, or
+                // paraphrased -- every word up to the trim point is
+                // verbatim uca_feats.lst:76.
+                benefit: Some("You can spend a move action to give battle orders to your troops, granting creatures under your command within 60 feet your choice of a +1 morale bonus on attack rolls, a +1 dodge bonus to AC, or a +1 bonus on a single type of saving throw. All creatures must receive the same benefit. You can't use this benefit on allies not under your command. This is a language-dependent, mind-affecting effect. Goal:Build or capture a stronghold capable of housing a force of at least 200 troops, and staff it with at least 100 combat-capable soldiers (or the equivalent) under your command. You must also provide food and water sufficient to survive at least a 6-month siege and a gold reserve sufficient for at least 6 months of wages if your troops require pay. Completion Benefit:Your battle order bonuses improve to +2, and the range of your orders increases to 120 feet. In addition, you can give two different orders to your troops. For example, you could grant your archers +2 on attack rolls while your front line gains a +2 bonus to AC."),
             },
             StoryFeatEntry {
                 key: "Thief of Legend",
@@ -346,26 +385,41 @@ mod tests {
     }
 
     #[test]
-    fn exactly_three_are_deferred_with_reason() {
+    fn exactly_two_are_deferred_with_reason() {
         let deferred: Vec<&str> = feat_tables()
             .iter()
             .filter(|e| e.benefit.is_none())
             .map(|e| e.key)
             .collect();
-        assert_eq!(deferred, vec!["Fearless Zeal", "Magnum Opus", "Stronghold"]);
-        assert_eq!(DEFERRED_WITH_REASON.len(), 3);
+        assert_eq!(deferred, vec!["Fearless Zeal", "Magnum Opus"]);
+        assert_eq!(DEFERRED_WITH_REASON.len(), 2);
     }
 
     #[test]
-    fn twenty_are_text_complete_with_real_benefit_text() {
+    fn twenty_one_are_text_complete_with_real_benefit_text() {
         let complete = feat_tables().iter().filter(|e| e.benefit.is_some()).count();
-        assert_eq!(complete, 20);
+        assert_eq!(complete, 21);
         for e in feat_tables() {
             if let Some(b) = e.benefit {
                 assert!(!b.is_empty());
                 assert!(b.len() > 20, "{} benefit text looks too short to be real", e.key);
             }
         }
+    }
+
+    /// `Stronghold`'s own text is genuinely complete -- it must not be
+    /// truncated at the point the excluded, foreign sentence used to
+    /// start, and it must not silently regain that foreign sentence
+    /// either.
+    #[test]
+    fn strongholds_benefit_is_its_own_complete_text_and_excludes_the_foreign_tail() {
+        let stronghold = feat_tables().iter().find(|e| e.key == "Stronghold").unwrap();
+        let benefit = stronghold.benefit.expect("Stronghold is text-complete, not deferred");
+        assert!(benefit.ends_with("gains a +2 bonus to AC."), "must end on Stronghold's own sentence");
+        assert!(
+            !benefit.contains("reroll a failed saving throw"),
+            "must not carry Magnum Opus's foreign trailing sentence"
+        );
     }
 
     #[test]

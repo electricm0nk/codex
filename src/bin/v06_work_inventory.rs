@@ -1392,24 +1392,23 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             }
             // SD28-E13: the only book with a feat-scoped engine diagnostic
             // today. `ultimate_campaign::feat_tables::DEFERRED_WITH_REASON`
-            // names the 3 UCA feats whose own corpus `.MOD BENEFIT:` row is
+            // names the 2 UCA feats whose own corpus `.MOD BENEFIT:` row is
             // a confirmed upstream splice (see that module's own doc
             // comment) -- quoted verbatim here rather than re-narrated, the
             // same rule `Kind::ClassFeature`'s diagnostic lookup above
             // follows.
-            if engine_book.as_str() == "ultimate_campaign" {
-                if let Some((_, diagnostic)) = uca_feat_tables::DEFERRED_WITH_REASON
+            if engine_book.as_str() == "ultimate_campaign"
+                && let Some((_, diagnostic)) = uca_feat_tables::DEFERRED_WITH_REASON
                     .iter()
                     .find(|(key, _)| *key == unit.key || *key == unit.name)
-                {
-                    return Verdict {
-                        status: "deferred-with-reason",
-                        evidence: "engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON"
-                            .to_string(),
-                        reason: Some((*diagnostic).to_string()),
-                        engine_book: engine_book_field,
-                    };
-                }
+            {
+                return Verdict {
+                    status: "deferred-with-reason",
+                    evidence: "engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON"
+                        .to_string(),
+                    reason: Some((*diagnostic).to_string()),
+                    engine_book: engine_book_field,
+                };
             }
             if text_only {
                 return Verdict {

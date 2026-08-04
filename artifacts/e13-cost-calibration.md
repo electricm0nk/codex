@@ -9,7 +9,7 @@
 
 `ultimate_campaign`: `proven` 0 → **23 of 23**, `not-started` 23 → 0. Every unit is `text-complete` or `deferred-with-reason` carrying the engine's verbatim diagnostic. Zero `unknown`, zero `not-ingested`, zero `not-started`.
 
-**Honest split: 20 text-complete + 3 deferred-with-reason = 23 accounted** — not the cycle brief's own stated target of 22+1. Re-derivation (a 10-word shingle comparison across all 23 `BENEFIT:` rows, `python3` script) found two more corpus splices beyond the one the brief named (`Fearless Zeal`): `Magnum Opus` and `Stronghold` share an identical, misattributed trailing sentence, and `Magnum Opus`'s own sentence is separately truncated. Recorded as a correction in `decisions.md` Decision 33 (`--verified-by` the shingle-comparison script) rather than silently absorbed. This finding **narrows** the delivered scope relative to the brief, not widens it — recorded per the anti-gaming instruction (`decisions.md §32`) as evidence the honest number moved because more corruption was found, not because the classifier was relaxed.
+**Honest split: 21 text-complete + 2 deferred-with-reason = 23 accounted** — not the cycle brief's own stated target of 22+1, and not this cycle's own first-pass figure of 20+3 either. Re-derivation (a 10-word shingle comparison across all 23 `BENEFIT:` rows, `python3` script) found a second splice candidate beyond the one the brief named (`Fearless Zeal`): `Magnum Opus` and `Stronghold` share an identical trailing sentence. The first pass deferred both. **Independent review (same day) asked for per-record evidence rather than accepting the shingle match alone, and found `Stronghold`'s own sentence is grammatically complete and self-terminating without the shared tail — unlike `Magnum Opus`, whose own sentence is independently truncated mid-clause ("...or win the artistic Completion Benefit:...").** A repeated sentence across two rows is not, by itself, proof either row is damaged — this corpus already carries the "+2 enhancement bonus to an ability score" completion tier on two rows (`Damned` and, pre-fix, `Fearless Zeal`), and `Damned`'s copy is genuinely undamaged. `Stronghold` now ships text-complete with its own real text, trimmed at the point its own sentence ends (the foreign tail is excluded, not attributed — no word added or guessed). See `decisions.md` Decision 33 for the full evidence trail and both correction events.
 
 ```
 python3 -c "
@@ -17,15 +17,15 @@ import json
 b=[x for x in json.load(open('docs/work-inventory.json'))['books'] if x['id']=='ultimate_campaign'][0]
 print(b['id'], b['kinds'])
 "
-# -> ultimate_campaign {'feat': {'units': 23, 'by_status': {'deferred-with-reason': 3, 'text-complete': 20}}}
+# -> ultimate_campaign {'feat': {'units': 23, 'by_status': {'deferred-with-reason': 2, 'text-complete': 21}}}
 ```
 
 ## By status bucket: units, evidence
 
 | Status | Units | Evidence |
 |---|---|---|
-| `text-complete` | 20 | Real corpus `.MOD BENEFIT:` mechanical text, joined with the flavor `DESC:` text, reaches `list_feat_catalog` (`feats_all::map_uca_entry`, `reach_gate::feats_reach`) |
-| `deferred-with-reason` | 3 | `Fearless Zeal`, `Magnum Opus`, `Stronghold` — confirmed upstream corpus splices, engine emits a verbatim file:line diagnostic (`ultimate_campaign::feat_tables::DEFERRED_WITH_REASON`), consumed by both `v06_work_inventory` status classification and the player-facing joined description |
+| `text-complete` | 21 | Real corpus `.MOD BENEFIT:` mechanical text, joined with the flavor `DESC:` text, reaches `list_feat_catalog` (`feats_all::map_uca_entry`, `reach_gate::feats_reach`). Includes `Stronghold`, whose own text is complete once the foreign trailing sentence (proven to belong to `Magnum Opus`'s row) is excluded rather than attributed here — see `decisions.md` Decision 33's correction. |
+| `deferred-with-reason` | 2 | `Fearless Zeal`, `Magnum Opus` — confirmed upstream corpus splices (each independently grammatically broken in its own text, not merely sharing wording with another row), engine emits a verbatim file:line diagnostic (`ultimate_campaign::feat_tables::DEFERRED_WITH_REASON`), consumed by both `v06_work_inventory` status classification and the player-facing joined description |
 | `grounded` | 0 | None of UCA's 23 records carry a `BONUS:`-family token the `feat_effect` probe can observe a computed delta from — every mechanical effect here is narrative/GM-adjudicated prose (temp HP, saving-throw rerolls tied to story completion, etc.), not an automatable numeric bonus. This is a real property of this book's content, not a shortfall of this cycle's work. |
 
 ## Measured cost, wall-clock and cycles
@@ -61,7 +61,9 @@ print(b['id'], b['kinds'])
 
 **Why this matters for extrapolation.** A 23-unit book's fixed cost (6+ wiring sites, a new module, a new type, two catalog-wide re-derivations, a diagnostic registration) is amortized over only 23 units — an unusually bad fixed-to-variable ratio. A 2,854-unit book (e.g. Ultimate Combat) pays the **same fixed cost once** and then 2,854× the per-unit cost, which is dramatically cheaper per unit than this book's blended rate would suggest. **Do not extrapolate this cycle's blended per-unit time to a large book without dividing out the fixed component first** — see `decisions.md §32`'s own caution against exactly this kind of blended-average error, restated here as this receipt's central finding.
 
-**Separate cost-per-unit, not blended (qualitative, since wall-clock was not instrumented per-record):** the marginal cost of `text-complete` records (20 of them) was materially lower than `deferred-with-reason` records (3 of them) — a `text-complete` unit is one field-extraction + one literal; a `deferred-with-reason` unit additionally required corruption detection, byte-for-byte cross-record comparison, a decisions.md ruling, and a diagnostic wired through 2 additional call sites (`v06_work_inventory.rs`'s new per-feat diagnostic lookup — itself a small fixed addition, since `Kind::Feat` had no per-feat diagnostic path before this cycle — and `feats_all::map_uca_entry`'s joined-description branch). No `grounded` units exist in this book to measure against.
+**Separate cost-per-unit, not blended (qualitative, since wall-clock was not instrumented per-record):** the marginal cost of `text-complete` records (21 of them) was materially lower than `deferred-with-reason` records (2 of them) — a `text-complete` unit is one field-extraction + one literal; a `deferred-with-reason` unit additionally required corruption detection, byte-for-byte cross-record comparison, a decisions.md ruling, and a diagnostic wired through 2 additional call sites (`v06_work_inventory.rs`'s new per-feat diagnostic lookup — itself a small fixed addition, since `Kind::Feat` had no per-feat diagnostic path before this cycle — and `feats_all::map_uca_entry`'s joined-description branch). One `text-complete` unit (`Stronghold`) additionally cost a full per-record evidence review before it could be confirmed undamaged rather than deferred by shingle-match alone — see "structural-unreachability" note below on why a splice *candidate* is not the same cost as a confirmed splice. No `grounded` units exist in this book to measure against.
+
+**A splice candidate and a confirmed splice are different costs, and conflating them overstated the deferred bucket in this cycle's own first pass.** The shingle-comparison script (fixed, one-time cost) finds *candidates* — repeated 10-word runs — cheaply. Confirming whether a candidate is a genuine splice (the record's own text is broken) or a benign repeat (the record's own text is complete, sharing wording with another record, which this corpus's `Damned`/pre-fix-`Fearless Zeal` pair already demonstrates happens legitimately) requires a second, per-record pass that this cycle initially skipped for `Stronghold` and had to redo after review. **Future book epics should budget the per-record confirmation pass as a distinct line item, not assume every shingle hit is a splice.**
 
 ## Structural-unreachability finding
 
@@ -90,11 +92,24 @@ for gram, names in ngrams.items():
     if len(set(names)) > 1:
         print(set(names), "|", gram)
 PY
-# -> {'Champion','Town Tamer'} (benign, generic phrase)
-# -> {'Damned','Fearless Zeal'} (confirmed splice, ~80 overlapping 10-grams)
-# -> {'Stronghold','Magnum Opus'} (confirmed splice, 19 overlapping 10-grams)
+# -> {'Champion','Town Tamer'} (benign, generic phrase -- not a splice)
+# -> {'Damned','Fearless Zeal'} (candidate; per-record check confirmed Fearless Zeal's own text
+#    is broken mid-sentence -- genuine splice)
+# -> {'Stronghold','Magnum Opus'} (candidate; per-record check found Magnum Opus's own text
+#    truncated -- genuine splice -- but Stronghold's own text is complete and self-terminating
+#    without the shared tail -- NOT a splice on Stronghold's side; text-complete, tail excluded)
 
-cargo run --locked --bin v06_work_inventory   # -> ultimate_campaign: 23 units, deferred-with-reason: 3, text-complete: 20
+# Per-record confirmation for the Stronghold/Magnum Opus candidate (the check the first pass skipped):
+python3 -c "
+m = \"...perform at least 10 performances for audiences of 100 or more while achieving an extraordinary result or better, or win the artistic Completion Benefit:...\"
+s = \"...you could grant your archers +2 on attack rolls while your front line gains a +2 bonus to AC.\"
+print('Magnum Opus own clause ends mid-phrase:', 'artistic' in m and 'Completion Benefit:' in m)
+print('Stronghold own clause ends on a period:', s.rstrip().endswith('.'))
+"
+# -> Magnum Opus own clause ends mid-phrase: True   (genuine truncation, independent of any splice)
+# -> Stronghold own clause ends on a period: True    (genuinely complete, tail excluded not attributed)
+
+cargo run --locked --bin v06_work_inventory   # -> ultimate_campaign: 23 units, deferred-with-reason: 2, text-complete: 21
 cargo run --locked --bin v06_corpus_trap_report -- --audit   # -> exit 0
 cd apps/desktop/src-tauri && cargo test --locked -- reach_gate   # -> 16 passed (including the new ultimate_campaign/feats claim)
 ```

@@ -605,7 +605,7 @@ fn map_pu_entry(entry: &pu_feats::FeatTableEntry) -> FeatCatalogRecord {
 /// joined into it here rather than dropping the mechanical text on the
 /// floor.
 ///
-/// For the 3 `deferred-with-reason` records, `benefit` is `None` and the
+/// For the 2 `deferred-with-reason` records, `benefit` is `None` and the
 /// corpus is corrupted -- the joined `description` carries the flavor
 /// text plus the engine's own verbatim diagnostic (from
 /// `ultimate_campaign::feat_tables::DEFERRED_WITH_REASON`) instead of any
@@ -990,15 +990,18 @@ mod tests {
         assert_eq!(stamina.category, "CombatStamina");
     }
 
-    /// UCA's 20 text-complete records surface both the corpus `DESC:`
+    /// UCA's 21 text-complete records surface both the corpus `DESC:`
     /// flavor text and the `.MOD BENEFIT:` mechanical text, joined --
     /// showing only `DESC:` (`"[Not Implemented] ..."`) would be a stub
-    /// by `docs/governance/no-stub-mvp-doctrine.md`. Its 3
+    /// by `docs/governance/no-stub-mvp-doctrine.md`. Its 2
     /// `deferred-with-reason` records surface the flavor text plus the
     /// engine's own verbatim diagnostic instead of the corrupted upstream
-    /// benefit text.
+    /// benefit text. (`Stronghold` was deferred in this module's first
+    /// pass and is now text-complete -- its own text is genuinely
+    /// complete; see `ultimate_campaign::feat_tables`'s own doc comment
+    /// for the correction.)
     #[test]
-    fn uca_records_join_desc_and_benefit_and_defer_the_three_corrupted_rows() {
+    fn uca_records_join_desc_and_benefit_and_defer_the_two_corrupted_rows() {
         let find = |key: &str| {
             all_feat_tables()
                 .iter()
@@ -1021,7 +1024,7 @@ mod tests {
             "Accursed must carry its PRETEXT: prerequisite, not a synthesised PRE token"
         );
 
-        for key in ["Fearless Zeal", "Magnum Opus", "Stronghold"] {
+        for key in ["Fearless Zeal", "Magnum Opus"] {
             let entry = find(key);
             let desc = entry.description.unwrap_or_else(|| panic!("{key} must still have a description"));
             assert!(
@@ -1034,13 +1037,28 @@ mod tests {
             );
         }
 
+        let stronghold = find("Stronghold");
+        let stronghold_desc = stronghold.description.expect("Stronghold must have a joined description");
+        assert!(
+            !stronghold_desc.contains("DEFERRED-WITH-REASON"),
+            "Stronghold's own text is complete and must not carry the deferral diagnostic"
+        );
+        assert!(
+            stronghold_desc.contains("gains a +2 bonus to AC."),
+            "Stronghold's joined description must carry its own real BENEFIT text"
+        );
+        assert!(
+            !stronghold_desc.contains("reroll a failed saving throw"),
+            "Stronghold's joined description must not carry Magnum Opus's foreign trailing sentence"
+        );
+
         let complete_count = all_feat_tables()
             .iter()
             .filter(|book| book.rule_set == RuleSetId::Uca)
             .flat_map(|book| book.entries.iter())
             .filter(|entry| !entry.description.unwrap_or_default().contains("DEFERRED-WITH-REASON"))
             .count();
-        assert_eq!(complete_count, 20, "20 of 23 UCA records are text-complete, not deferred");
+        assert_eq!(complete_count, 21, "21 of 23 UCA records are text-complete, not deferred");
     }
 
     /// Feat keys were globally unique across CRB/APG/ACG and are not
