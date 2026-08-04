@@ -95,11 +95,15 @@ fn full_sweep() -> bool {
     std::env::var("PI_ROUND_TRIP_FULL_SWEEP").as_deref() == Ok("1")
 }
 
+/// `(license, pi_field, pi_marker, description)`, in that order, for one
+/// on-disk record.
+type OnDiskFields = (Option<String>, Option<String>, Option<String>, Option<String>);
+
 /// One real, on-disk record's `license`/`pi_field`/`pi_marker`, keyed by
 /// the record's own `data.key` -- every generator in scope here stores the
 /// real corpus identity there, so this is a stable join key independent of
 /// each generator's own (collision-numbered) filename slug.
-fn load_on_disk(book: &str, kind: &str) -> BTreeMap<String, (Option<String>, Option<String>, Option<String>, Option<String>)> {
+fn load_on_disk(book: &str, kind: &str) -> BTreeMap<String, OnDiskFields> {
     let dir = corpus_dir().join(book).join(kind);
     let mut out = BTreeMap::new();
     let Ok(entries) = std::fs::read_dir(&dir) else { return out };
@@ -171,7 +175,7 @@ fn check_book_kind(
     // the real one lives at
     // `data/corpus/core_rulebook/spell/level_1/summon_monster_i.json`.
     let real_keys: std::collections::BTreeSet<&str> = real_entries.iter().map(|(k, _)| *k).collect();
-    for (on_disk_key, _) in &on_disk {
+    for on_disk_key in on_disk.keys() {
         if !real_keys.contains(on_disk_key.as_str()) {
             stale_on_disk.push(format!(
                 "{book}/{kind}: on-disk record {on_disk_key:?} has no corresponding real table entry \
