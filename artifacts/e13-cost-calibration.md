@@ -32,14 +32,22 @@ print(b['id'], b['kinds'])
 
 **Cycles consumed: 1** (a single continuous claim-to-commit cycle; the card was claimed once, per `kanban.md`'s IN-FLIGHT protocol, and closes in this same cycle).
 
-**Wall-clock: not instrumented precisely.** This cycle ran as one continuous interactive session with no external wall-clock timer captured at claim time; the honest statement is that it is a single-session, single-sitting cost, on the order of the elapsed time between the previous branch-tip commit (`fc5f1fab`, 2026-08-03T17:55:56-04:00) and this cycle's own commit timestamp (below), which is the best available proxy — not a precise measurement. **Future calibration receipts should record `date -u` at kanban claim time and at commit time explicitly**, which this cycle's own kanban edit did not do (recorded as a process gap, not smoothed over).
+**Wall-clock: not instrumented precisely, and the raw elapsed figure is a bad proxy for future books because it is dominated by tooling overhead, not book work.** No external timer was captured at kanban claim time (a process gap, recorded so it is not repeated). The best available proxy is commit timestamps: previous branch-tip `fc5f1fab` at 2026-08-03T17:55:56-04:00, this cycle's own first commit `d5606f59` at 2026-08-03T20:40:13-04:00 (2h44m), its correction commit `af5caa8a` at 2026-08-03T20:56:04-04:00 (+16m), and the final clean `verify.sh` + on-screen verification completing around 2026-08-03T21:41 (+45m against the correction). **Raw elapsed, claim to close: roughly 3h45m.**
 
-**What the wall-clock actually contained**, as a proxy for where cost went:
+**That raw figure must NOT be used as-is to size the remaining 13 books, because a large share of it is tooling/process overhead specific to this cycle, not book-ingestion work:**
 
-1. Diagnosis verification (root-cause confirmation, corpus re-derivation, splice detection) — approximately half the cycle's total effort.
+- **Three distinct completion-monitoring failures cost real, otherwise-avoidable time**: a completed background build sat unnoticed for ~52 minutes because the polling mechanism reported "still running" against a stale log rather than a live process; a `setsid`-wrapped process's PID was mis-captured (`$!` returned the wrapper's PID, not `cargo`'s real child), causing a monitor to report "exited" while the real process ran another ~40 minutes; and an early monitor's 1200-second timeout expired silently mid-build with no notification. **Estimated tooling-stall overhead: on the order of 1.5-2 hours of the 3h45m raw total** — this is the single largest cost component in this receipt, and it is a session/tooling problem, not a `ultimate_campaign`-specific one.
+- **One self-inflicted near-miss** (`git stash -u` run on the shared checkout, banned per standing project memory) cost a few minutes of recovery plus verification time, caught and reverted within the same turn before it could affect anyone else's work.
+- **The Stronghold reclassification** (independent review catching an over-broad first-pass deferral, requiring per-record re-evidence) was genuine quality work, not overhead — see `decisions.md` Decision 33 — but it is also a cost this specific book incurred because it happened to have a genuinely ambiguous corpus defect; not every book will have one.
+
+**Estimate of the work itself, with tooling overhead subtracted: roughly 1.5-2 hours** — diagnosis/re-derivation (~45min-1h), Rust implementation (~30-40min), verification and fix-forward on the 6 real test failures the change surfaced (~20-30min), documentation (~15-20min). **This ~1.5-2h figure, not the 3h45m raw figure, is the one to extrapolate from for future books' fixed-cost estimate** — and even that is generous, since it still includes review-driven rework (Stronghold) that will not recur identically on every book.
+
+**What the work itself actually contained**, as a proxy for where cost went:
+
+1. Diagnosis verification (root-cause confirmation, corpus re-derivation, splice detection, and — for `Stronghold` — a second per-record confirmation pass after independent review) — the largest single component even excluding tooling overhead.
 2. Rust implementation: 1 new module (`feat_tables.rs`, ~380 lines incl. doc comments/tests), 1 new `mod.rs`, 8 wiring edits across `mod.rs`/`v06_work_inventory.rs`/`feats_all.rs`/`v06_content_state_dump.rs`/`feat_identity.rs`/`feat_prereqs.rs`/`corpus_ingest_diagnostic.rs`/`reach_gate.rs`.
-3. Verification: targeted `cargo test` passes, `v06_work_inventory` regeneration + idempotency check, `v06_corpus_trap_report --audit`, reach-gate suite, four-check wired-integration audit, full `verify.sh`.
-4. Documentation: 2 `decisions.md` entries' worth of content (one dated ruling), this receipt, `progress.md` receipt, kanban claim/close.
+3. Verification: targeted `cargo test` passes, `v06_work_inventory` regeneration + idempotency check, `v06_corpus_trap_report --audit`, reach-gate suite, four-check wired-integration audit, full `verify.sh` (run twice: once for the initial classification, once for the Stronghold correction).
+4. Documentation: 2 `decisions.md` entries (one with a same-day amendment), this receipt, `progress.md` receipt, kanban claim/close, 4 retro events.
 
 ## Fixed vs. variable cost — the point of this receipt
 
