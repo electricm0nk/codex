@@ -37,6 +37,7 @@ use std::path::Path;
 use crate::pcgen_import::lst_parser::equipment::{
     BonusToken, EquipmentDiagnostic, EquipmentRecord, EquipmentRecordKind, EquipmentToken,
 };
+use crate::pcgen_import::lst_parser::spell::{LstSpellRecord, LstSpellRecordPayload};
 use crate::rules_core::source_content::{SourcePackageContent, SourceRef};
 
 /// One book's real corpus root, e.g. `data/corpus/core_rulebook`. The
@@ -89,6 +90,105 @@ pub fn load_equipment_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageC
         }
     }
     package
+}
+
+/// Loads every spell record from every given book's corpus directory into
+/// one `SourcePackageContent`, the spell-side sibling of
+/// [`load_equipment_corpus`] above (SD28-E14-F1: closes the observation gap
+/// `docs/release/SD-28-ultimate-book-content-ingestion/epic-breakdown.md`
+/// names for `Kind::Spell` -- there was no probe reading a spell's real
+/// on-disk record at all before this).
+///
+/// The on-disk Shape B v1 JSON carries `key` (the spell's corpus identity;
+/// PF1 spell records have no separate `KEY:` token, see
+/// `spell_resolver`'s own doc comment) and `school`, enough to reconstruct a
+/// minimal-but-real `LstSpellRecord` that `spell_id_resolve` and
+/// `pilot_compute_corpus::compute_pilot_with_corpus` both already consume
+/// unchanged. Every other `LstSpellRecord` field stays `None`: this loader
+/// does not fabricate mechanical data the JSON does not carry.
+pub fn load_spell_corpus<'a>(roots: &[BookCorpusRoot<'_>]) -> SourcePackageContent<'a> {
+    let mut package = SourcePackageContent::empty(
+        "corpus_loader",
+        SourceRef { lst_file: String::new(), line: 0 },
+    );
+    for root in roots {
+        let spell_dir = root.dir.join("spell");
+        if !spell_dir.is_dir() {
+            continue;
+        }
+        for path in find_json_files(&spell_dir) {
+            let Ok(text) = fs::read_to_string(&path) else {
+                package.push_diagnostic(load_diagnostic(&path, "failed to read file"));
+                continue;
+            };
+            let Ok(value) = serde_json::from_str::<serde_json::Value>(&text) else {
+                package.push_diagnostic(load_diagnostic(&path, "failed to parse as JSON"));
+                continue;
+            };
+            let Some(data) = value.get("data") else {
+                package.push_diagnostic(load_diagnostic(&path, "no top-level \"data\" object"));
+                continue;
+            };
+            match spell_record_from_json(&path, data) {
+                Some(record) => {
+                    let record: &'static LstSpellRecord = Box::leak(Box::new(record));
+                    package.push(crate::pcgen_import::ir_converter::convert_spell_record(record));
+                }
+                None => package.push_diagnostic(load_diagnostic(&path, "\"data\" is missing \"key\"")),
+            }
+        }
+    }
+    package
+}
+
+fn spell_record_from_json(path: &Path, data: &serde_json::Value) -> Option<LstSpellRecord> {
+    let name = data.get("key").and_then(serde_json::Value::as_str)?.to_string();
+    let school = data.get("school").and_then(serde_json::Value::as_str).map(str::to_string);
+    let payload = LstSpellRecordPayload {
+        name: name.clone(),
+        output_name: None,
+        spell_type: None,
+        classes: None,
+        school: school.clone(),
+        descriptor: None,
+        sub_school: None,
+        components: None,
+        casting_time: None,
+        range: None,
+        item: None,
+        target_area: None,
+        duration: None,
+        save_info: None,
+        spell_resistance: None,
+        source_page: None,
+        source_link: None,
+        description: None,
+        description_raw: None,
+    };
+    Some(LstSpellRecord {
+        line_number: 1,
+        source_path: path.display().to_string(),
+        name,
+        output_name: None,
+        spell_type: None,
+        classes: None,
+        school,
+        descriptor: None,
+        sub_school: None,
+        components: None,
+        casting_time: None,
+        range: None,
+        item: None,
+        target_area: None,
+        duration: None,
+        save_info: None,
+        spell_resistance: None,
+        source_page: None,
+        source_link: None,
+        description: None,
+        description_raw: None,
+        payload,
+    })
 }
 
 fn find_json_files(dir: &Path) -> Vec<std::path::PathBuf> {
@@ -263,6 +363,34 @@ mod tests {
         let computation = compute_encumbrance(&equipped, &package, 10, SizeCategory::Medium);
         assert_eq!(computation.total_carried_weight_lbs, 1.0, "ARG Dogslicer's real WT:1 through the real loader");
         assert!(computation.unresolved_item_ids.is_empty());
+    }
+
+    /// SD28-E14-F1: a real on-disk spell record (CRB's Animate Plants, seen
+    /// while scoping the probe) loads and resolves with its real school
+    /// intact through the unmodified `spell_id_resolve` path.
+    #[test]
+    fn a_real_on_disk_spell_record_loads_and_resolves_with_its_real_school() {
+        use crate::rules_core::spell_resolver::spell_id_resolve;
+
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: Path::new("data/corpus/core_rulebook"),
+        }];
+        let package = load_spell_corpus(&roots);
+        assert!(!package.is_empty(), "real spell corpus must load real records");
+
+        let (record, _) = spell_id_resolve("Animate Plants", RuleSetId::Crb, &package)
+            .expect("Animate Plants must resolve");
+        assert_eq!(record.school.as_deref(), Some("Transmutation"));
+    }
+
+    /// A book with no `spell/` subdirectory contributes nothing and does
+    /// not panic -- mirrors the equipment loader's own equivalent test.
+    #[test]
+    fn a_book_with_no_spell_dir_contributes_nothing_without_panicking() {
+        let roots = [BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") }];
+        let package = load_spell_corpus(&roots);
+        assert!(package.is_empty());
     }
 }
 

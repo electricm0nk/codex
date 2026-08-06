@@ -46,12 +46,15 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 use codex::rules_core::character_input::{
-    AcquisitionMode, CharacterClassLevel, CharacterInput, SelectedChoice, SpellSelection,
-    load_character_input_fixture,
+    AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, EquipmentSelection,
+    SelectedChoice, SpellSelection, load_character_input_fixture,
 };
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
+use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
+use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
@@ -784,6 +787,21 @@ struct EngineFacts {
     /// Feat keys whose presence genuinely changes a computed number, observed
     /// by running the real compute pipeline twice per feat.
     feat_effect_wired: BTreeSet<String>,
+    /// SD28-E14-F1: spell keys whose real on-disk corpus record was
+    /// observed reaching `pilot_compute_corpus::compute_pilot_with_corpus`
+    /// -- the twin the player reads -- and producing a non-empty
+    /// `school_coverage` entry. Populated by [`probe_spell_effect_wiring`].
+    /// A lower bound in the same documented direction as
+    /// `feat_effect_wired`: only spells with a real on-disk JSON record
+    /// under `data/corpus/<book>/spell/` can be observed at all.
+    spell_effect_wired: BTreeSet<String>,
+    /// SD28-E14-F2: equipment/equipment-modifier keys whose real on-disk
+    /// corpus record was observed reaching
+    /// `equipment_effects::compute_equipment_effects` and producing a real,
+    /// non-`None` per-item stat effect. Populated by
+    /// [`probe_equipment_effect_wiring`]. Same lower-bound caveat as
+    /// `spell_effect_wired`: gated on a real on-disk JSON record existing.
+    equipment_effect_wired: BTreeSet<String>,
     /// Every feat key the catalog holds, per book.
     feat_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every spell key the catalog holds, per book, with whether the engine
@@ -1066,6 +1084,151 @@ fn probe_feat_effect_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
     wired
 }
 
+/// Book roots the on-disk `data/corpus/<book>/` loader can currently reach
+/// (`corpus_loader.rs`'s own doc comment: equipment content-kind first, now
+/// joined by spell). This is exactly the set `data/corpus/` holds today --
+/// re-derive with `ls data/corpus/` before trusting it if that changes.
+const OBSERVABLE_BOOK_DIRS: &[&str] = &[
+    "core_rulebook",
+    "advanced_players_guide",
+    "advanced_class_guide",
+    "beastiary",
+    "advanced_race_guide",
+    "pathfinder_unchained",
+];
+
+fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {
+    OBSERVABLE_BOOK_DIRS.iter().map(|b| repo_root.join("data/corpus").join(b)).collect()
+}
+
+/// SD28-E14-F1: observes a real computed delta for a spell -- the twin the
+/// player reads, `pilot_compute_corpus::compute_pilot_with_corpus`, actually
+/// grouping the spell into a non-empty `school_coverage` entry -- rather
+/// than the mere presence of a spell-list entry with a resolved level
+/// `classify()`'s `Kind::Spell` arm used to stop at (`ingested-magnitude`'s
+/// own `STATUS_VOCABULARY` entry). A lower bound in the same documented
+/// direction `probe_feat_effect_wiring` already uses: a spell key present in
+/// the compiled `spell_levels` table but absent from the real on-disk JSON
+/// corpus (no `data/corpus/<book>/spell/...json` record for it) reads as
+/// unwired here even though the table says its level is known -- that is
+/// the honest direction to be wrong in for a work inventory, and it is
+/// exactly the case `spell_effect_probe_never_promotes_a_spell_absent_from_the_on_disk_corpus`
+/// pins as a negative.
+fn probe_spell_effect_wiring(fixture: &CharacterInput, repo_root: &Path) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let book_dirs: Vec<PathBuf> = book_corpus_roots(repo_root);
+    let roots: Vec<BookCorpusRoot> = OBSERVABLE_BOOK_DIRS
+        .iter()
+        .zip(book_dirs.iter())
+        .map(|(id, dir)| BookCorpusRoot { book_id: id, dir })
+        .collect();
+    let corpus = load_spell_corpus(&roots);
+    if corpus.is_empty() {
+        return wired;
+    }
+
+    let spell_keys: BTreeSet<&'static str> = crb_spell_list::SPELL_LIST
+        .iter()
+        .map(|e| e.key)
+        .chain(apg::spell_list::SPELL_LIST.iter().filter(|e| e.level.is_some()).map(|e| e.key))
+        .chain(acg::spell_list::SPELL_LIST.iter().map(|e| e.key))
+        .collect();
+
+    for &key in &spell_keys {
+        if spell_key_is_wired(fixture, key, &corpus) {
+            wired.insert(key.to_string());
+        }
+    }
+    wired
+}
+
+/// Whether selecting exactly this spell, alone, against the real corpus
+/// makes it reach `compute_pilot_with_corpus`'s `school_coverage` output --
+/// split out from [`probe_spell_effect_wiring`] as its own pure function so
+/// the negative test can call it directly against a hand-built (or empty)
+/// corpus, mirroring [`equipment_key_is_wired`]'s shape.
+fn spell_key_is_wired(
+    fixture: &CharacterInput,
+    key: &str,
+    corpus: &codex::rules_core::source_content::SourcePackageContent,
+) -> bool {
+    let mut input = fixture.clone();
+    input.chosen.spells_selected = vec![SpellSelection {
+        spell_id: key.to_string(),
+        source_class_id: "wizard".to_string(),
+        acquisition_mode: AcquisitionMode::Known,
+    }];
+    let receipt = compute_pilot_with_corpus(&input, corpus);
+    receipt.corpus_derived.unresolved_spell_ids.is_empty()
+        && !receipt.corpus_derived.school_coverage.is_empty()
+}
+
+/// SD28-E14-F2: observes a real computed delta for an equipment (or
+/// equipment-modifier) item -- the same `equipment_effects::compute_equipment_effects`
+/// pipeline `pilot_compute_corpus::compute_pilot_with_corpus` (the twin the
+/// player reads) already calls -- rather than the mere presence of an
+/// equipment-table entry carrying a corpus magnitude
+/// (`classify()`'s old `Kind::Equipment`/`Kind::EquipmentModifier` stop
+/// point). An item that resolves against the real on-disk corpus but whose
+/// record carries none of the mechanical tokens `compute_equipment_effects`
+/// reads (armor/max-dex/spell-failure/armor-check-penalty/skill/ability/
+/// weapon-enhancement) produces an all-`None` per-item effect and correctly
+/// stays unwired -- see
+/// `equipment_effect_probe_never_promotes_a_text_only_item_with_no_mechanical_tokens`.
+fn probe_equipment_effect_wiring(repo_root: &Path) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let book_dirs: Vec<PathBuf> = book_corpus_roots(repo_root);
+    let roots: Vec<BookCorpusRoot> = OBSERVABLE_BOOK_DIRS
+        .iter()
+        .zip(book_dirs.iter())
+        .map(|(id, dir)| BookCorpusRoot { book_id: id, dir })
+        .collect();
+    let corpus = load_equipment_corpus(&roots);
+    if corpus.is_empty() {
+        return wired;
+    }
+
+    let mut keys: BTreeSet<&'static str> = BTreeSet::new();
+    keys.extend(crb_equipment_tables::equipment_tables().iter().map(|e| e.key));
+    keys.extend(apg::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+    keys.extend(acg::equipment_tables::equipment_tables().iter().map(|e| e.key));
+    keys.extend(beastiary1::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+
+    for &key in &keys {
+        if equipment_key_is_wired(key, &corpus) {
+            wired.insert(key.to_string());
+        }
+    }
+    wired
+}
+
+/// Whether equipping exactly this item, alone, against the real corpus
+/// produces at least one non-`None` mechanical stat effect. Split out from
+/// [`probe_equipment_effect_wiring`] as its own pure function so the
+/// negative test can call it directly against a hand-built corpus, the same
+/// shape `equipment_effects.rs`'s own tests already use.
+fn equipment_key_is_wired(
+    key: &str,
+    corpus: &codex::rules_core::source_content::SourcePackageContent,
+) -> bool {
+    let selection =
+        vec![EquipmentSelection {
+            item_id: key.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }];
+    let effects = compute_equipment_effects(&selection, corpus);
+    let Some(item) = effects.per_item.first() else { return false };
+    item.armor_class_bonus.is_some()
+        || item.max_dex.is_some()
+        || item.spell_failure.is_some()
+        || item.armor_check_penalty.is_some()
+        || item.skill_bonus.is_some()
+        || item.ability_bonus.is_some()
+        || item.weapon_enhancement_bonus.is_some()
+}
+
 fn crb_class_name(class_id: ClassId) -> &'static str {
     match class_id {
         ClassId::Barbarian => "barbarian",
@@ -1097,6 +1260,7 @@ fn race_name(race: RaceId) -> &'static str {
 fn gather_engine_facts(
     fixture: &CharacterInput,
     corpus_class_names: BTreeSet<String>,
+    repo_root: &Path,
 ) -> EngineFacts {
     let mut feat_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
     for table in all_feat_tables() {
@@ -1213,6 +1377,8 @@ fn gather_engine_facts(
 
     EngineFacts {
         feat_effect_wired: probe_feat_effect_wiring(fixture),
+        spell_effect_wired: probe_spell_effect_wiring(fixture, repo_root),
+        equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
         feat_keys,
         spell_levels,
         equipment_keys,
@@ -1440,6 +1606,16 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             });
             match level_known {
                 None => not_ingested("spell_key_absent_from_spell_list"),
+                Some(true) if facts.spell_effect_wired.contains(&unit.key)
+                    || facts.spell_effect_wired.contains(&unit.name) =>
+                {
+                    Verdict {
+                        status: "grounded",
+                        evidence: "spell_effect_probe_observed_computed_delta".to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    }
+                }
                 Some(true) => Verdict {
                     status: "ingested-magnitude",
                     evidence: "spell_list_entry_with_resolved_level".to_string(),
@@ -1468,6 +1644,16 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     status: "text-complete",
                     evidence: "in_equipment_tables_and_corpus_record_carries_no_magnitude_token"
                         .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.equipment_effect_wired.contains(&unit.key)
+                || facts.equipment_effect_wired.contains(&unit.name)
+            {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "equipment_effect_probe_observed_computed_delta".to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
@@ -1918,7 +2104,7 @@ fn main() {
         .filter(|u| u.kind == Kind::Class)
         .map(|u| u.name.to_lowercase())
         .collect();
-    let facts = gather_engine_facts(&fixture, corpus_class_names);
+    let facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
 
     // --- wiring_class (GE-01) -----------------------------------------------
     // Built once, corpus-wide: the token closure index and a raw-line cache
@@ -2452,5 +2638,134 @@ mod rule_set_mapping_tests {
     fn uncompiled_books_stay_none() {
         assert_eq!(rule_set_for("ultimate_psionics"), None);
         assert_eq!(rule_set_for("inner_sea_gods"), None);
+    }
+}
+
+/// SD28-E14: observation-harness widening tests. F1 (spell probe) and F2
+/// (equipment probe), each with a positive proof against the real on-disk
+/// corpus and a negative proof that the probe does NOT promote a unit the
+/// engine genuinely does not wire (F3's anti-gaming binding).
+#[cfg(test)]
+mod e14_harness_tests {
+    use super::*;
+    use codex::pcgen_import::ir_converter::convert_equipment_record;
+    use codex::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn test_fixture() -> CharacterInput {
+        let fixture_path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&fixture_path)
+            .unwrap_or_else(|e| panic!("could not read {}: {e}", fixture_path.display()));
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("shared fixture must load")
+    }
+
+    fn equipment_corpus_from(text: &str) -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries("test.lst", text);
+        let source_ref = SourceRef { lst_file: "test.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("test", source_ref);
+        for record in result.entries {
+            let record: &'static _ = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    // ----- F2: equipment probe -----
+
+    /// Positive: CRB's real, on-disk Padded Armor (Base) carries real
+    /// AC/max-dex/spell-failure/ACP tokens, resolves against the real
+    /// corpus, and the probe's own wiring check observes them.
+    #[test]
+    fn equipment_probe_promotes_a_real_armor_item_with_real_ac_tokens() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(equipment_key_is_wired("Padded Armor (Base)", &corpus));
+    }
+
+    /// Negative (F3's anti-gaming binding): a real corpus record that
+    /// carries NO mechanical token at all -- no BONUS chain, no ACCHECK, no
+    /// COST-derived enhancement, nothing `compute_equipment_effects` reads
+    /// -- resolves (it is a genuine record) but must NOT be promoted. A
+    /// probe that returns `true` for every resolvable item, permissive
+    /// rather than observing a real delta, is exactly the failure mode this
+    /// pins.
+    #[test]
+    fn equipment_probe_never_promotes_a_text_only_item_with_no_mechanical_tokens() {
+        let text = "Plain Sack\tTYPE:Container\tCOST:0\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            !equipment_key_is_wired("Plain Sack", &corpus),
+            "an item with no armor/skill/ability/weapon-enhancement token must stay unwired"
+        );
+
+        // Control: proves the harness above is actually exercising the
+        // record (it resolves), not merely failing to find it at all --
+        // otherwise the negative result above would be meaningless.
+        let selection = vec![EquipmentSelection {
+            item_id: "Plain Sack".to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }];
+        let effects = compute_equipment_effects(&selection, &corpus);
+        assert_eq!(effects.per_item.len(), 1, "the plain item must still resolve and appear per-item");
+    }
+
+    /// An item absent from the corpus entirely (never ingested) must also
+    /// stay unwired -- distinct failure path from "resolves but inert".
+    #[test]
+    fn equipment_probe_never_promotes_an_item_absent_from_the_corpus() {
+        let corpus = equipment_corpus_from("Something Else\tTYPE:Container\tCOST:0\n");
+        assert!(!equipment_key_is_wired("Nonexistent Item Nobody Ingested", &corpus));
+    }
+
+    // ----- F1: spell probe -----
+
+    /// Positive: CRB's real, on-disk Animate Plants record resolves through
+    /// `compute_pilot_with_corpus` and lands in a real `school_coverage`
+    /// entry -- the twin the player reads observing a real spell delta.
+    #[test]
+    fn spell_probe_promotes_a_real_on_disk_spell() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_spell_corpus(&roots);
+        let fixture = test_fixture();
+        assert!(spell_key_is_wired(&fixture, "Animate Plants", &corpus));
+    }
+
+    /// Negative (F3's anti-gaming binding): a spell key the compiled
+    /// `SPELL_LIST` table carries a resolved level for, but which has no
+    /// matching on-disk JSON record (never ingested into `data/corpus/`),
+    /// must NOT be promoted -- the empty corpus below stands in for "not on
+    /// disk" exactly, since `spell_id_resolve` scans `corpus.records_by_kind`
+    /// and an empty package holds none. Proven to fail if the probe were
+    /// made permissive: a probe that promotes on table-presence alone
+    /// (mirroring the classifier's own pre-E14 `Some(true)` arm) would pass
+    /// this spell every time.
+    #[test]
+    fn spell_probe_never_promotes_a_spell_absent_from_the_on_disk_corpus() {
+        let empty = SourcePackageContent::empty("empty", SourceRef { lst_file: String::new(), line: 0 });
+        let fixture = test_fixture();
+        // A real CRB spell-list key with a genuinely resolved level.
+        let key = crb_spell_list::SPELL_LIST
+            .iter()
+            .next()
+            .expect("CRB spell list must be non-empty")
+            .key;
+        assert!(
+            !spell_key_is_wired(&fixture, key, &empty),
+            "a spell absent from the real on-disk corpus must not be promoted"
+        );
     }
 }

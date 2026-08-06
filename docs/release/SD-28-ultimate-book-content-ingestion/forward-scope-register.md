@@ -74,22 +74,29 @@ merge of SD-28's closure work.
 
 ## Class 3 — Retrofit (operator-on-request)
 
-### C3.1 — UE equipment catalog widening
+### C3.1 — UE equipment catalog widening (CLOSED — stale, corrected 2026-08-06 by `epic-14-harness`)
 
-`apps/desktop/src-tauri/src/equipment_catalog.rs` reads CRB alone; APG/ACG
-already-ingested equipment reaches no surface today (per
-`reach_gate.rs OPEN_FINDINGS`). UE adds the largest equipment book in
-the corpus — the catalog widening must complete before UE's cycles reach
-the gate. The remedy was proposed in SD-28's earlier stub as either an
-in-scope epic or a named prerequisite outside it; `decisions.md §10`
-(this version of the bundle) supersedes that with `§18` — the reach gate
-is the definition of done; engine or widening where strictly necessary;
-UE's cycling pauses on `decision-blocked` if the surface remains absent.
+**Stale as written.** `apps/desktop/src-tauri/src/equipment_catalog.rs` no
+longer "reads CRB alone" — it was widened to all 6 ingested books
+(`BOOK_CRB/APG/ACG/B1/ARG/PU`, one `map_<book>_entry` per book feeding a
+book-tagged DTO) in `a92ae066` ("widen equipment catalog from CRB-only to
+all 6 ingested books"), refined in SD-27's `d44ea892`. Confirmed by reading
+the file directly, not inherited from this entry.
 
-**Operator decision this surfaces:** is the catalog widening a
-precycle prerequisite outside SD-28 or a SD-28-owned retrofit? `decisions.md
-§10` (the prior version) marked this operator-pending; this retrofit entry
-preserves the question without forcing the answer.
+Separately, and more directly relevant to SD28-E14 (which cited this entry
+as a dependency before verifying it): the real rules-core consumer,
+`equipment_effects::compute_equipment_effects`, was **already book-agnostic**
+before any widening work — it resolves against whatever `SourcePackageContent`
+it is given, and every per-category resolver reads tokens directly off the
+resolved record rather than a CRB-only compiled table. So neither the
+desktop catalog nor the rules-core consumer had the CRB-only shape this
+entry describes by the time E14 needed to depend on it.
+
+**Operator decision this surfaced is moot.** The widening already shipped as
+a retrofit (SD-27/SD-28, prior to this correction) — there is no remaining
+"precycle prerequisite outside SD-28 or SD-28-owned retrofit" question to
+answer. See `docs/release/SD-28-ultimate-book-content-ingestion/artifacts/e14-harness-widening.md`
+for the full correction and its verification.
 
 ### C3.2 — Ultimate Psionics third-party tier license retro-fit
 

@@ -2190,3 +2190,31 @@ Ran `git stash -u` on this shared checkout mid-cycle while investigating a clipp
 - `docs/retro/events/epic-13-calibration.jsonl` — verification event, 3 corrections (brief's 22+1, this module's own first-pass 20+3, both superseded by 21+2), 1 near-miss (corpus splice caught before shipping), 1 note (git-timestamp finding).
 
 **Cross-reference:** `kanban.md` card `epic-13-calibration` → COMPLETE; `decisions.md §32` (anti-gaming rule both corrections comply with — the honest number moved twice because re-derivation and then independent review each found a more accurate classification).
+
+## Cycle `SD28-E14-F1-F2-F3-001` — Card `epic-14-harness` (Observation-harness widening)
+
+**Actor:** `epic-14-harness`
+**Result:** F1 (spell probe) + F2 (equipment probe) + F3 (anti-gaming binding) all landed in one commit. `grounded` 301 → 1,541 (**+1,240**); `ingested-magnitude` 4,050 → 2,810 (**-1,240**). All 1,067 targeted spell units promoted (100%); 173 of 2,983 targeted equipment/equipment-modifier units promoted, 2,810 remain `ingested-magnitude` with the disposition named in `artifacts/e14-harness-widening.md`.
+
+### What landed
+
+- `src/rules_core/corpus_loader.rs` — new `load_spell_corpus`, the spell-side sibling of the existing `load_equipment_corpus`, loading real on-disk `data/corpus/<book>/spell/*.json` records into a `SourcePackageContent`.
+- `src/bin/v06_work_inventory.rs` — `probe_spell_effect_wiring`/`spell_key_is_wired` (F1) and `probe_equipment_effect_wiring`/`equipment_key_is_wired` (F2), both the same shape as the existing `probe_feat_effect_wiring`: run the unit through the real consumer (`pilot_compute_corpus::compute_pilot_with_corpus` for spells, `equipment_effects::compute_equipment_effects` for equipment) and only promote on an observed delta. `classify()`'s `Kind::Spell`/`Kind::Equipment`/`Kind::EquipmentModifier` arms consult the two new `EngineFacts` sets before falling through to `ingested-magnitude`, strictly after the untouched `text_only`/`text-complete` check.
+- 7 new unit tests (`e14_harness_tests` module + 2 in `corpus_loader::tests`): 2 positive controls, 3 negative anti-gaming proofs (F3), 2 loader-level proofs.
+- `docs/release/SD-28-ultimate-book-content-ingestion/artifacts/e14-harness-widening.md` — the before/after receipt, generator invocation, book-coverage derivation, and the full OPEN_FINDINGS disposition for the 2,810 remaining units.
+- `scripts/verify-baselines.env` — `BASELINE_ROOT_LIB_TESTS` 1479→1488, `BASELINE_ROOT_FULL_TESTS` 5976→5990, `BASELINE_CLIPPY_WARNINGS_ROOT` 76→75, in its own commit per project convention, `--show-actuals` derived directly from the `verify.sh` run below.
+
+### Correction to the epic's own spec (recorded, `docs/retro/events/epic-14-harness.jsonl`)
+
+`epic-breakdown.md`'s F2 acceptance and the dispatching brief both named `decisions.md §10`'s equipment-catalog widening as this feature's dependency, on the premise that "a probe over a CRB-only `equipment_catalog.rs` can observe nothing for six other books." Verified false on two counts before writing code: (1) `apps/desktop/src-tauri/src/equipment_catalog.rs` was already widened to all 6 books in `a92ae066`/`d44ea892`; (2) more directly, the real rules-core consumer this epic needed, `equipment_effects::compute_equipment_effects`, was **already book-agnostic** — it resolves against whatever `SourcePackageContent` it is given, and every per-category resolver reads tokens directly off the resolved record rather than the CRB-only compiled table (`equipment_effects.rs:194-236`). The real gate was that no on-disk corpus existed for most SD-28 books, not book-scoping in the consumer. `forward-scope-register.md` C3.1 left uncorrected by this cycle (out of this epic's write scope; flagged for the next agent touching that file).
+
+### Verification (exit codes observed directly)
+
+- `cargo test --lib rules_core::corpus_loader` → 5 passed.
+- `cargo test --bin v06_work_inventory e14_harness_tests` → 5 passed.
+- Negative-test proof: `equipment_key_is_wired` temporarily replaced with a permissive `effects.per_item.first().is_some()` check → `equipment_probe_never_promotes_a_text_only_item_with_no_mechanical_tokens` FAILED as expected; reverted, re-ran, all 5 green again.
+- `cargo run --locked --bin v06_work_inventory` against the real `~/workspace/repos/pcgen/data` checkout → exit 0; `docs/work-inventory.json` regenerated, `generated_at` `2026-08-06T22:27:08Z`.
+- Full `./scripts/verify.sh` (mode full) at HEAD `df63db2c` (this cycle's uncommitted work applied on top of the branch tip at claim time; tree confirmed unchanged by any concurrent writer both before and after the ~27-minute run) → **exit 0**, all 10 stages PASS: root-lib 1488, root-full 5990/534 suites, desktop 411, reach 16, frontend-install/test 98/98/typecheck clean, clippy root:75 desktop:7 (0 errors), class-dump 31/31.
+- Count sweep (playbook DoD item 10): grepped for `4050`/`4,050`/pinned `301`-grounded assertions across `src`/`apps/desktop/src-tauri/src`/`tests`; the only `4050` hit outside this epic's own docs is an unrelated `cost_gp: Some(34050.0)` price constant in `apg/equipment_data.rs`. No pinned test assertion depends on either figure.
+
+**Cross-reference:** `kanban.md` card `epic-14-harness` → COMPLETE; `artifacts/e14-harness-widening.md` for the full before/after and OPEN_FINDINGS disposition; `docs/retro/events/epic-14-harness.jsonl` for the recorded spec correction.
