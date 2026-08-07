@@ -1891,8 +1891,9 @@ mod tests {
         let ingested = corpus_record_ids("beastiary", "monster");
         assert_eq!(
             ingested.len(),
-            41,
-            "Bestiary 1's 41 ingested monster records, counted on disk"
+            46,
+            "Bestiary 1's 46 ingested monster records, counted on disk (SD28-E16 subset 09 \
+             raised this from 41)"
         );
 
         let served: BTreeSet<String> = crate::monster_catalog::build_monster_catalog()
@@ -1906,8 +1907,8 @@ mod tests {
         );
 
         match reach_of(&Family::new("beastiary1", "monsters")).expect("a claim is declared") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 41),
-            other => panic!("expected all 41 to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 46),
+            other => panic!("expected all 46 to reach, got {other:?}"),
         }
     }
 

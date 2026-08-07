@@ -673,14 +673,19 @@ mod tests {
 
     #[test]
     fn beastiary1_monster_count_matches_the_documented_real_total() {
-        // docs/architecture/rules-data-tables.md: "41 monsters total as of
-        // this verification" (mod.rs's own subset roster doc comments).
+        // SD28-E16 subset 09 (2026-08-07) raised this from 41 to 46
+        // (Lion, Ogre, Pegasus, Rust Monster, Shadow —
+        // `beastiary1::mod.rs`'s own subset roster doc comments carry the
+        // current count; `docs/architecture/rules-data-tables.md`'s "41
+        // monsters" figure predates this subset and is stale, flagged here
+        // rather than edited -- that doc is outside this cycle's write
+        // scope).
         let response = build_corpus_ingest_diagnostic();
         let bestiary = response
             .iter()
             .find(|b| b.book_id == "beastiary1")
             .expect("beastiary1 present");
-        assert_eq!(bestiary.content_kind_counts["monsters"], 41);
+        assert_eq!(bestiary.content_kind_counts["monsters"], 46);
     }
 
     #[test]
@@ -784,7 +789,7 @@ mod tests {
             !status.content_kind_counts.contains_key("races"),
             "an unreachable corpus must omit the row, never report a fabricated zero"
         );
-        assert_eq!(status.content_kind_counts["monsters"], 41);
+        assert_eq!(status.content_kind_counts["monsters"], 46);
     }
 
     #[test]

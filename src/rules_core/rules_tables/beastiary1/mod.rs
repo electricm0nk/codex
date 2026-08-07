@@ -130,6 +130,7 @@ pub mod monster_subset_05;
 pub mod monster_subset_06;
 pub mod monster_subset_07;
 pub mod monster_subset_08;
+pub mod monster_subset_09;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -219,6 +220,11 @@ pub enum MonsterId {
     Ettercap,
     GelatinousCube,
     HellHound,
+    Lion,
+    Ogre,
+    Pegasus,
+    RustMonster,
+    Shadow,
 }
 
 impl MonsterId {
@@ -276,6 +282,11 @@ impl MonsterId {
         MonsterId::Ettercap,
         MonsterId::GelatinousCube,
         MonsterId::HellHound,
+        MonsterId::Lion,
+        MonsterId::Ogre,
+        MonsterId::Pegasus,
+        MonsterId::RustMonster,
+        MonsterId::Shadow,
     ];
 }
 
@@ -329,6 +340,11 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::Ettercap => monster_subset_08::ettercap(),
         MonsterId::GelatinousCube => monster_subset_08::gelatinous_cube(),
         MonsterId::HellHound => monster_subset_08::hell_hound(),
+        MonsterId::Lion => monster_subset_09::lion(),
+        MonsterId::Ogre => monster_subset_09::ogre(),
+        MonsterId::Pegasus => monster_subset_09::pegasus(),
+        MonsterId::RustMonster => monster_subset_09::rust_monster(),
+        MonsterId::Shadow => monster_subset_09::shadow(),
     })
 }
 
@@ -377,6 +393,11 @@ pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStat
         "beastiary1:monster:ettercap" => MonsterId::Ettercap,
         "beastiary1:monster:gelatinous_cube" => MonsterId::GelatinousCube,
         "beastiary1:monster:hell_hound" => MonsterId::HellHound,
+        "beastiary1:monster:lion" => MonsterId::Lion,
+        "beastiary1:monster:ogre" => MonsterId::Ogre,
+        "beastiary1:monster:pegasus" => MonsterId::Pegasus,
+        "beastiary1:monster:rust_monster" => MonsterId::RustMonster,
+        "beastiary1:monster:shadow" => MonsterId::Shadow,
         _ => return None,
     };
     monster_resolve(monster_id, rule_set)
@@ -388,10 +409,10 @@ mod tests {
     use std::collections::HashSet;
 
     #[test]
-    fn all_has_exactly_the_41_real_monsters_with_no_duplicates() {
-        assert_eq!(MonsterId::ALL.len(), 41, "real, corrected roster across subsets 01-08 (this module's doc comment)");
+    fn all_has_exactly_the_46_real_monsters_with_no_duplicates() {
+        assert_eq!(MonsterId::ALL.len(), 46, "real, corrected roster across subsets 01-09 (this module's doc comment)");
         let unique: HashSet<MonsterId> = MonsterId::ALL.iter().copied().collect();
-        assert_eq!(unique.len(), 41, "MonsterId::ALL must not repeat any variant");
+        assert_eq!(unique.len(), 46, "MonsterId::ALL must not repeat any variant");
     }
 
     #[test]

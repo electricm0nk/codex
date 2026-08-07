@@ -228,11 +228,20 @@ fn no_monster_outside_the_grounded_twelve_gained_or_lost_attacks() {
             untouched_with_attacks += 1;
         }
     }
-    // 41 total - 12 grounded - 5 correctly-empty weapon users = 24
+    // 46 total - 12 grounded - 6 correctly-empty weapon users = 28
     // untouched monsters, all of which carry real inline corpus tokens.
+    //
+    // SD28-E16 subset 09 added 5 (Lion, Ogre, Pegasus, Rust Monster,
+    // Shadow), none of them in the grounded twelve. Ogre carries no
+    // NATURALATTACKS: token at all (fights with weapons -- same shape as
+    // Dryad, one of the original 5 correctly-empty weapon users), moving
+    // that count 5 -> 6. Lion, Pegasus, Rust Monster, and Shadow each
+    // carry their own real inline NATURALATTACKS: token(s) (verified in
+    // `monster_subset_09.rs`'s own doc comments against the real
+    // `b1_races.lst` rows), moving this count 24 -> 28.
     assert_eq!(
-        untouched_with_attacks, 24,
-        "the 24 monsters with real inline NATURALATTACKS: tokens must be unchanged by this pass"
+        untouched_with_attacks, 28,
+        "the 28 monsters with real inline NATURALATTACKS: tokens must be unchanged by this pass"
     );
 }
 

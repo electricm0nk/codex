@@ -139,9 +139,9 @@ fn assert_shape_b_record(path: &Path, record: &Value) {
 }
 
 #[test]
-fn monster_cache_has_all_41_real_monsters_with_chassis_data() {
+fn monster_cache_has_all_46_real_monsters_with_chassis_data() {
     let records = load_all("monster");
-    assert_eq!(records.len(), 41, "expected exactly the 41 real, corrected-roster Bestiary 1 monsters (MonsterId::ALL, decisions.md §11.6)");
+    assert_eq!(records.len(), 46, "expected exactly the 46 real, corrected-roster Bestiary 1 monsters (MonsterId::ALL, decisions.md §11.6, raised from 41 by SD28-E16 subset 09)");
 
     let mut seen_names = HashSet::new();
     let mut slugs = BTreeSet::new();
@@ -167,7 +167,7 @@ fn monster_cache_has_all_41_real_monsters_with_chassis_data() {
         let stem = path.file_stem().unwrap().to_string_lossy().to_string();
         assert!(slugs.insert(stem.clone()), "{}: duplicate monster cache filename {stem}", path.display());
     }
-    assert_eq!(seen_names.len(), 41, "every monster name must be unique");
+    assert_eq!(seen_names.len(), 46, "every monster name must be unique");
 }
 
 #[test]
@@ -226,7 +226,7 @@ fn monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape() {
     }
 }
 
-/// Exhaustive corpus-vs-table field equality for all 41 monsters.
+/// Exhaustive corpus-vs-table field equality for all 46 monsters.
 ///
 /// The two neighbouring monster tests above are deliberately partial:
 /// `monster_cache_line_citations_match_the_real_corpus_for_spot_checked_entries`
@@ -237,17 +237,25 @@ fn monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape() {
 /// drift in either the Rust tables or the regenerated JSON cache could
 /// land green.
 ///
-/// This cycle verified all 41 records by hand, three ways: the cached
-/// JSON, the real PCGen row in
+/// The original cycle verified all 41 records by hand, three ways: the
+/// cached JSON, the real PCGen row in
 /// `pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst` (whose
 /// sha256 every record cites, and which matches the live checkout
 /// byte-for-byte), and — for a 16-monster sample — the published
-/// Bestiary values via aonprd/d20pfsrd. Zero discrepancies. This test
-/// pins that result so it cannot silently decay.
+/// Bestiary values via aonprd/d20pfsrd. Zero discrepancies. SD28-E16
+/// subset 09 (2026-08-07) added the 5 monsters that raise this from 41
+/// to 46 (Lion, Ogre, Pegasus, Rust Monster, Shadow); each is cited to
+/// its own `b1_races.lst` line and sha256 the same way, but was not
+/// independently cross-checked against a published third-party
+/// Bestiary source the way the original 16-monster sample was — that
+/// cross-check is not repeated here and is a real, smaller gap this
+/// note records rather than silently inheriting the stronger claim.
+/// This test pins the field-equality result so it cannot silently
+/// decay.
 #[test]
 fn every_monster_cache_record_matches_its_shipped_stat_block_field_for_field() {
     let records = load_all("monster");
-    assert_eq!(records.len(), 41, "the real, corrected Bestiary 1 roster is 41 monsters");
+    assert_eq!(records.len(), 46, "the real, corrected Bestiary 1 roster is 46 monsters");
 
     for (path, record) in &records {
         let data = &record["data"];

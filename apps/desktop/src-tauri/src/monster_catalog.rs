@@ -1,5 +1,6 @@
 //! SD-27 monster catalog browser — Tauri command adapter over Bestiary 1's
-//! ingested monster stat blocks (`beastiary1::MonsterId::ALL`, 41 records).
+//! ingested monster stat blocks (`beastiary1::MonsterId::ALL`, 46 records as
+//! of SD28-E16 subset 09, 2026-08-07; 41 when this module was authored).
 //!
 //! # The gap this closes
 //!
@@ -28,10 +29,10 @@
 //! `MonsterStatBlock`'s own doc comment: those values are PCGen-computed at
 //! runtime from the `MONSTERCLASS:` hit-dice table and ability-score modifiers,
 //! not literal tokens on the monster's `b1_races.lst` row. Rendering an empty
-//! "AC" column for all 41 rows would be exactly the placeholder this repo's
+//! "AC" column for all 46 rows would be exactly the placeholder this repo's
 //! wired-integration doctrine forbids, so the columns do not exist at all.
 //!
-//! **Natural-attack damage dice carry their provenance.** 12 of the 41 monsters
+//! **Natural-attack damage dice carry their provenance.** 12 of the 46 monsters
 //! name their attacks with a bare `ABILITY:Internal|AUTOMATIC|<Name>`
 //! cross-reference that resolves to a row carrying no dice at any hop, so their
 //! dice were grounded from the published Bestiary 1 text under
@@ -161,7 +162,7 @@ fn monster_key(block: &MonsterStatBlock) -> String {
 /// Renders one `RACESUBTYPE:` token into the prose this catalog is allowed to
 /// serve: its `|`-separated subtypes joined as a readable list.
 ///
-/// Two of Bestiary 1's 41 rows are multi-valued — Vargouille
+/// Two of Bestiary 1's 46 rows are multi-valued — Vargouille
 /// (`Evil|Extraplanar`) and Hell Hound (`Evil|Extraplanar|Fire|Lawful`) — and
 /// both were reaching the screen with the raw separator in them. The other 11
 /// subtype-bearing rows are single-valued and pass through unchanged, which is
@@ -274,9 +275,9 @@ mod tests {
         assert_eq!(response.entries.len(), MonsterId::ALL.len());
         assert_eq!(
             response.entries.len(),
-            41,
-            "Bestiary 1's ingested roster is 41 stat blocks (subsets 01-08); if the roster grew, \
-             re-derive this from the corpus rather than relaxing it"
+            46,
+            "Bestiary 1's ingested roster is 46 stat blocks (subsets 01-09, SD28-E16); if the \
+             roster grew, re-derive this from the corpus rather than relaxing it"
         );
         for entry in &response.entries {
             assert_eq!(entry.book, BOOK_B1);
@@ -338,14 +339,19 @@ mod tests {
     /// the only `speed_ft == 0` records, and each one's own doc comment cites a
     /// `MOVE:` token with no `Walk` pair.
     #[test]
-    fn a_land_speed_of_zero_is_a_real_corpus_value_on_exactly_three_records() {
+    fn a_land_speed_of_zero_is_a_real_corpus_value_on_exactly_four_records() {
+        // SD28-E16 subset 09 (2026-08-07) added a fourth: Shadow
+        // (`b1_races.lst:357`, `MOVE:Fly,40` with no `Walk` component at
+        // all -- the first Bestiary 1 record with no walk speed token
+        // whatsoever, not merely a walk speed of 0). `speed_ft` is 0
+        // because the row states no walk movement, never a guessed value.
         let entries = build_monster_catalog().entries;
         let landless: Vec<&str> = entries
             .iter()
             .filter(|entry| entry.speed_ft == 0)
             .map(|entry| entry.name.as_str())
             .collect();
-        assert_eq!(landless, vec!["Shark", "Squid", "Vargouille"]);
+        assert_eq!(landless, vec!["Shark", "Squid", "Vargouille", "Shadow"]);
         for entry in entries.iter().filter(|entry| entry.speed_ft > 0) {
             assert!(entry.speed_ft >= 5, "{} has an implausible land speed", entry.key);
         }
@@ -520,19 +526,31 @@ mod tests {
         }
 
         // The sweep is only worth its green if it actually walked the catalog.
+        // Derived from `MonsterId::ALL.len()` rather than re-pinning a
+        // literal (SD28-E16, decisions.md §36 instance 7): a `>=` bound
+        // against a stale literal still passes as the roster grows, silently
+        // checking a shrinking fraction of the real catalog every time a
+        // subset lands -- exactly the "hand-maintained number beside a
+        // derivable one" shape this decision names, just inside an
+        // assertion instead of a lookup table.
         assert!(
-            checked >= 41 * 4,
+            checked >= MonsterId::ALL.len() * 4,
             "the guard inspected only {checked} fields; it is no longer covering the catalog"
         );
     }
 
-    /// 18 of 41 rows carry a subtype at all, and exactly 2 of those are
-    /// multi-valued. Derived here rather than asserted from memory, so the
+    /// 20 of 46 rows carry a subtype at all (18 of 41 before SD28-E16 subset
+    /// 09 added Ogre and Shadow), and exactly 2 of those are multi-valued.
+    /// Derived here rather than asserted from memory, so the
     /// scale of the fix stays honest as the roster changes — this assertion
     /// was first written as "13 of 41" from a miscounted grep and was
     /// corrected by its own failure, which is the reason it exists.
     #[test]
-    fn the_multi_subtype_population_is_exactly_two_of_eighteen() {
+    fn the_multi_subtype_population_is_exactly_two_of_twenty() {
+        // SD28-E16 subset 09 (2026-08-07) added two more single-value
+        // RACESUBTYPE rows -- Ogre ("Giant") and Shadow ("Incorporeal") --
+        // moving the denominator 18 -> 20. The multi-valued (pipe-separated)
+        // population is unchanged: still only Vargouille and Hell Hound.
         let entries = build_monster_catalog().entries;
         let with_subtype: Vec<&MonsterCatalogEntryDto> =
             entries.iter().filter(|entry| entry.race_subtype.is_some()).collect();
@@ -541,7 +559,7 @@ mod tests {
             .filter(|entry| entry.race_subtype.as_deref().is_some_and(|s| s.contains(", ")))
             .count();
 
-        assert_eq!(with_subtype.len(), 18, "rows carrying a RACESUBTYPE token");
+        assert_eq!(with_subtype.len(), 20, "rows carrying a RACESUBTYPE token");
         assert_eq!(multi, 2, "rows whose RACESUBTYPE token is multi-valued");
     }
 

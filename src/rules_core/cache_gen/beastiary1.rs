@@ -39,9 +39,10 @@
 //! `monster/` and `equipment/` directories.
 //!
 //! ## Real, measured coverage ceilings this cycle re-verified
-//! (`decisions.md §11.4`)
+//! (`decisions.md §11.4`; raised from 41/41 to 46/46 by SD28-E16 subset
+//! 09, 2026-08-07)
 //!
-//! - **Monsters: 41/41** real, corrected-roster stat blocks
+//! - **Monsters: 46/46** real, corrected-roster stat blocks
 //!   (`MonsterId::ALL`), each with the full set of fields this book's
 //!   `MonsterStatBlock` schema tracks (name/CR/size/speed/race
 //!   type+subtype/source page/natural attacks -- AC/HP/saves are
