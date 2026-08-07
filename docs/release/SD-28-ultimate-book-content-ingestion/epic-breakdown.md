@@ -912,6 +912,71 @@ Acceptance:
 
 **Depends-on:** E13–E29 (all completion epics), and `epic-12-code-review`.
 
+## Epic 31 (SD28-E31) — Spell magnitude → player surface
+
+**Objective:** Wire the real, magnitude-bearing spellbook computation into a
+surface the player actually sees, closing the "third, disconnected twin"
+finding `epic-14-harness` recorded rather than papered over.
+
+**Derived from:** `epic-14-harness`'s "F1 -- what actually happened" section
+(`artifacts/e14-harness-widening.md`). `spellbook::compute_spellbook_coverage`
+reads each resolved spell's real `level` and computes `spell_save_dc`/
+`slots_total`/`slots_used` -- genuine magnitude-bearing output, wired into
+`contract::PilotReceipt.spellbook` -- but `contract::build_pilot_receipt` was
+called by nothing the desktop app runs (`grep -rn build_pilot_receipt
+apps/desktop/src-tauri/src` returned 0 hits at that epic's close).
+`pf1_adapter::resolve_unified_pilot_snapshot` -- the function the desktop app
+actually gates its sheet on -- never called it either. Exactly the shape
+`decisions.md §29.1`/`§29.2` already names: a real computation that never
+reaches the surface the player's sheet is built from.
+
+### Feature seeds
+
+#### SD28-E31-F1 — Wire the magnitude to a player-visible surface
+
+Acceptance:
+
+- `PilotSnapshot` (`src/rules_core/pilot_view_model.rs`) gains a
+  `spellbook: Option<PilotSpellbookViewModel>` field, projected via
+  `PilotSpellbookViewModel::from_coverage(&SpellbookCoverage)` --
+  `None` (not zeroed) for a non-caster or a build with no spell yet
+  resolved against the corpus, matching the `damage_reduction`/`companion`
+  "absent, not zeroed" convention already on that struct.
+- `pf1_adapter::resolve_unified_pilot_snapshot` calls
+  `compute_spellbook_coverage(character_input, corpus)` and populates the
+  new field -- the desktop app's own gate function, not a parallel path.
+- `character_hub.rs`'s `PilotSnapshotDto`/`map_snapshot_dto` carry the new
+  field to the wire (`PilotSpellbookDto`, `skip_serializing_if` absent
+  discipline).
+- The desktop Spells tab (`CharacterSheet.tsx`'s `SpellsTab`) renders real
+  spell save DC and slot total/used numbers from `snapshot.spellbook`,
+  replacing the tab's prior "DCs ... are not computed" caption.
+- **On-screen verification is the acceptance test**, per
+  `no-stub-mvp-doctrine.md`: a value computed but not rendered is a stub.
+  Screenshot a Wizard 1 holding a real resolved spell (Alarm, Abjuration,
+  level 1) and confirm the save DC reads `10 + spell level + ability
+  modifier` for that build.
+
+#### SD28-E31-F2 — Real spell probe (earned only if F1 makes one possible)
+
+Acceptance, only attempted once F1 lands and a spell's own level provably
+moves a number on the player-visible snapshot:
+
+- A `v06_work_inventory.rs` probe promotes `Kind::Spell` from
+  `ingested-magnitude` to `grounded` only when the observed
+  `slots_total`/`spell_save_dc` magnitude varies with that spell's own
+  `level` -- not merely that the spell resolves (the exact defect that got
+  `epic-14-harness`'s own spell probe reverted: it promoted 1,067 of 1,067
+  by testing resolution, not magnitude).
+- A negative test pins a present-but-non-mechanical spell as NOT promoted,
+  with recorded evidence that the negative test fails when the probe is
+  made permissive (`decisions.md §32`'s anti-gaming rule).
+- If no discriminating probe is possible, this feature seed is not built;
+  the 1,067 units stay `ingested-magnitude` with their existing
+  `OPEN_FINDINGS` entry, and the epic closes on F1 alone.
+
+**Depends-on:** `epic-14-harness`.
+
 ## Recommended sequencing — completion epics
 
 ```

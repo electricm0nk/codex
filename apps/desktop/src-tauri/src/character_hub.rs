@@ -37,7 +37,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
 };
-use codex::rules_core::pilot_view_model::PilotSnapshot;
+use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel};
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
@@ -132,6 +132,36 @@ pub struct PilotSnapshotDto {
     /// through into an empty stat block.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub companion: Option<AnimalCompanionDto>,
+    /// epic-31-spell-wiring: the character's real spellbook coverage
+    /// (spell save DCs, slots total/used), from
+    /// `spellbook::compute_spellbook_coverage`. Absent, not zeroed, for a
+    /// non-caster or a build with no spell yet resolved against the
+    /// corpus -- same discipline as `damage_reduction`/`companion` above.
+    /// See `PilotSpellbookViewModel`'s own doc comment for the twin
+    /// problem this closes.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub spellbook: Option<PilotSpellbookDto>,
+}
+
+/// Wire form of `pilot_view_model::PilotSpellSaveDc`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SpellSaveDcDto {
+    pub class_id: String,
+    pub dc: u8,
+}
+
+/// Wire form of `pilot_view_model::PilotSpellbookViewModel`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PilotSpellbookDto {
+    /// Total spell slots per level, keyed by level as a string (`"1"`,
+    /// `"2"`, ...) since JSON object keys are always strings — matching
+    /// the existing `sheet.spellbook.slots_total.<level>` cell convention
+    /// `contract.rs` established.
+    pub slots_total: std::collections::BTreeMap<String, u8>,
+    pub slots_used: std::collections::BTreeMap<String, u8>,
+    pub spell_save_dc: Vec<SpellSaveDcDto>,
 }
 
 /// Wire form of `pilot_view_model::PilotCompanionStat` -- one grounded
@@ -800,6 +830,27 @@ pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
         ),
         damage_reduction: snapshot.defense.damage_reduction,
         companion: snapshot.companion.as_ref().map(map_animal_companion_dto),
+        spellbook: snapshot.spellbook.as_ref().map(map_pilot_spellbook_dto),
+    }
+}
+
+fn map_pilot_spellbook_dto(spellbook: &PilotSpellbookViewModel) -> PilotSpellbookDto {
+    PilotSpellbookDto {
+        slots_total: spellbook
+            .slots_total
+            .iter()
+            .map(|(&level, &slots)| (level.to_string(), slots))
+            .collect(),
+        slots_used: spellbook
+            .slots_used
+            .iter()
+            .map(|(&level, &slots)| (level.to_string(), slots))
+            .collect(),
+        spell_save_dc: spellbook
+            .spell_save_dc
+            .iter()
+            .map(|entry| SpellSaveDcDto { class_id: entry.class_id.clone(), dc: entry.dc })
+            .collect(),
     }
 }
 
@@ -6185,6 +6236,7 @@ mod tests {
                 },
                 damage_reduction: None,
                 companion: None,
+                spellbook: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),
@@ -7693,6 +7745,7 @@ mod tests {
                 },
                 damage_reduction: None,
                 companion: None,
+                spellbook: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),
@@ -7893,6 +7946,7 @@ mod tests {
                 },
                 damage_reduction: None,
                 companion: None,
+                spellbook: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),

@@ -136,6 +136,32 @@ export interface PilotSnapshotDto {
    * zeroed stat block.
    */
   companion?: AnimalCompanionDto;
+  /**
+   * The character's real spellbook coverage (spell save DCs, slots
+   * total/used) — mirrors `PilotSpellbookDto` in `character_hub.rs`,
+   * projected from `spellbook::compute_spellbook_coverage`. Absent (not
+   * zeroed), same `skip_serializing_if` discipline as `damageReduction`/
+   * `companion`, for a non-caster or a build with no spell yet resolved
+   * against the corpus.
+   */
+  spellbook?: PilotSpellbookDto;
+}
+
+/** One class's spell save DC — mirrors `SpellSaveDcDto` in `character_hub.rs`. */
+export interface SpellSaveDcDto {
+  classId: string;
+  dc: number;
+}
+
+/**
+ * The character's real spellbook coverage — mirrors `PilotSpellbookDto` in
+ * `character_hub.rs`. `slotsTotal`/`slotsUsed` are keyed by spell level as
+ * a string (`'1'`, `'2'`, ...), since JSON object keys are always strings.
+ */
+export interface PilotSpellbookDto {
+  slotsTotal: Record<string, number>;
+  slotsUsed: Record<string, number>;
+  spellSaveDc: SpellSaveDcDto[];
 }
 
 export interface DiagnosticDto {

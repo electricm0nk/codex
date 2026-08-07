@@ -50,6 +50,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 28 | `epic-29-upsi-complete` | READY | Ultimate Psionics | 100% proven — gap 2854; supersedes `epic-9-upsi`; licence precheck required | `epic-14-harness`, `epic-24-ui-complete`, `epic-2-prelaunch` | — | — | — |
 | 29 | `epic-30-integrity` | READY | Completion Integrity Gate | anti-gaming audit + final 32061/32061 count | `epic-12-code-review`, `epic-13-calibration`, `epic-14-harness`, `epic-15-unknown-sweep`, `epic-16-backfill`, `epic-17-punchained`, `epic-18-bestiary`, `epic-19-arg`, `epic-20-acg`, `epic-21-ce`, `epic-22-apg`, `epic-23-crb`, `epic-24-ui-complete`, `epic-25-ue-complete`, `epic-26-uw-complete`, `epic-27-uc-complete`, `epic-28-um-complete`, `epic-29-upsi-complete` | — | — | — |
 | 30 | `epic-10-closure` | READY | Closure Epilogue | tranche promotion PR | `epic-1-identifier`, `epic-2-prelaunch`, `epic-3-uc`, `epic-4-um`, `epic-5-ue`, `epic-6-ui`, `epic-7-ucam`, `epic-8-uw`, `epic-9-upsi`, `epic-11-version`, `epic-12-code-review`, `epic-30-integrity` (everything else) | — | — | — |
+| 31 | `epic-31-spell-wiring` | COMPLETE | Spell magnitude → player surface | wire `spellbook::compute_spellbook_coverage` into `pf1_adapter::resolve_unified_pilot_snapshot`/`PilotSnapshot`/desktop Spells tab; closes `epic-14-harness`'s "third, disconnected twin" finding | `epic-14-harness` | epic-31-spell-wiring | 2026-08-07T00:00:00Z | SD28-E31-F1-001 |
 
 ## Completion-epic cards (added 2026-08-02, operator 100%-proven directive)
 
