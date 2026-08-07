@@ -49,12 +49,11 @@ use codex::rules_core::character_input::{
     AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, EquipmentSelection,
     SelectedChoice, SpellSelection, load_character_input_fixture,
 };
-use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
@@ -787,20 +786,13 @@ struct EngineFacts {
     /// Feat keys whose presence genuinely changes a computed number, observed
     /// by running the real compute pipeline twice per feat.
     feat_effect_wired: BTreeSet<String>,
-    /// SD28-E14-F1: spell keys whose real on-disk corpus record was
-    /// observed reaching `pilot_compute_corpus::compute_pilot_with_corpus`
-    /// -- the twin the player reads -- and producing a non-empty
-    /// `school_coverage` entry. Populated by [`probe_spell_effect_wiring`].
-    /// A lower bound in the same documented direction as
-    /// `feat_effect_wired`: only spells with a real on-disk JSON record
-    /// under `data/corpus/<book>/spell/` can be observed at all.
-    spell_effect_wired: BTreeSet<String>,
     /// SD28-E14-F2: equipment/equipment-modifier keys whose real on-disk
     /// corpus record was observed reaching
     /// `equipment_effects::compute_equipment_effects` and producing a real,
     /// non-`None` per-item stat effect. Populated by
-    /// [`probe_equipment_effect_wiring`]. Same lower-bound caveat as
-    /// `spell_effect_wired`: gated on a real on-disk JSON record existing.
+    /// [`probe_equipment_effect_wiring`]. A lower bound in the same
+    /// documented direction as `feat_effect_wired`: gated on a real
+    /// on-disk JSON record existing under `data/corpus/<book>/equipment/`.
     equipment_effect_wired: BTreeSet<String>,
     /// Every feat key the catalog holds, per book.
     feat_keys: BTreeMap<&'static str, BTreeSet<String>>,
@@ -1101,67 +1093,37 @@ fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {
     OBSERVABLE_BOOK_DIRS.iter().map(|b| repo_root.join("data/corpus").join(b)).collect()
 }
 
-/// SD28-E14-F1: observes a real computed delta for a spell -- the twin the
-/// player reads, `pilot_compute_corpus::compute_pilot_with_corpus`, actually
-/// grouping the spell into a non-empty `school_coverage` entry -- rather
-/// than the mere presence of a spell-list entry with a resolved level
-/// `classify()`'s `Kind::Spell` arm used to stop at (`ingested-magnitude`'s
-/// own `STATUS_VOCABULARY` entry). A lower bound in the same documented
-/// direction `probe_feat_effect_wiring` already uses: a spell key present in
-/// the compiled `spell_levels` table but absent from the real on-disk JSON
-/// corpus (no `data/corpus/<book>/spell/...json` record for it) reads as
-/// unwired here even though the table says its level is known -- that is
-/// the honest direction to be wrong in for a work inventory, and it is
-/// exactly the case `spell_effect_probe_never_promotes_a_spell_absent_from_the_on_disk_corpus`
-/// pins as a negative.
-fn probe_spell_effect_wiring(fixture: &CharacterInput, repo_root: &Path) -> BTreeSet<String> {
-    let mut wired = BTreeSet::new();
-    let book_dirs: Vec<PathBuf> = book_corpus_roots(repo_root);
-    let roots: Vec<BookCorpusRoot> = OBSERVABLE_BOOK_DIRS
-        .iter()
-        .zip(book_dirs.iter())
-        .map(|(id, dir)| BookCorpusRoot { book_id: id, dir })
-        .collect();
-    let corpus = load_spell_corpus(&roots);
-    if corpus.is_empty() {
-        return wired;
-    }
-
-    let spell_keys: BTreeSet<&'static str> = crb_spell_list::SPELL_LIST
-        .iter()
-        .map(|e| e.key)
-        .chain(apg::spell_list::SPELL_LIST.iter().filter(|e| e.level.is_some()).map(|e| e.key))
-        .chain(acg::spell_list::SPELL_LIST.iter().map(|e| e.key))
-        .collect();
-
-    for &key in &spell_keys {
-        if spell_key_is_wired(fixture, key, &corpus) {
-            wired.insert(key.to_string());
-        }
-    }
-    wired
-}
-
-/// Whether selecting exactly this spell, alone, against the real corpus
-/// makes it reach `compute_pilot_with_corpus`'s `school_coverage` output --
-/// split out from [`probe_spell_effect_wiring`] as its own pure function so
-/// the negative test can call it directly against a hand-built (or empty)
-/// corpus, mirroring [`equipment_key_is_wired`]'s shape.
-fn spell_key_is_wired(
-    fixture: &CharacterInput,
-    key: &str,
-    corpus: &codex::rules_core::source_content::SourcePackageContent,
-) -> bool {
-    let mut input = fixture.clone();
-    input.chosen.spells_selected = vec![SpellSelection {
-        spell_id: key.to_string(),
-        source_class_id: "wizard".to_string(),
-        acquisition_mode: AcquisitionMode::Known,
-    }];
-    let receipt = compute_pilot_with_corpus(&input, corpus);
-    receipt.corpus_derived.unresolved_spell_ids.is_empty()
-        && !receipt.corpus_derived.school_coverage.is_empty()
-}
+// SD28-E14-F1: **NOT implemented as a promoting probe.** An earlier version
+// of this cycle probed `pilot_compute_corpus::compute_pilot_with_corpus`'s
+// `school_coverage` map and promoted any spell that landed in it. Corrected
+// after independent review (team-lead, 2026-08-06): `school_coverage` is
+// populated purely by resolving the spell and reading its `school` string
+// (`pilot_compute_corpus.rs:189-205`) -- no spell magnitude (level, DC,
+// duration, ...) is read into any field a consumer produces. The predicate
+// reduced to "this spell resolves against the on-disk corpus", which is a
+// restatement of `ingested-magnitude`'s own existing evidence
+// (`spell_list_entry_with_resolved_level`) through a compute call, not an
+// observation of a delta. Confirmed by the 100% promotion rate (1,067 of
+// 1,067) the wrong version produced -- a discriminating probe over real
+// content does not do that; compare F2's 173-of-2,983 (5.8%).
+//
+// A genuine spell-magnitude consumer exists in this repo --
+// `spellbook::compute_spellbook_coverage` reads each resolved spell's real
+// `level` into `SpellEffect.level`, and from it computes `spell_save_dc`/
+// `slots_total`/`slots_used`, wired into `contract::PilotReceipt.spellbook`
+// (`contract.rs:397`) and from there into `sheet.spellbook.*` cells
+// (`contract.rs:794-810`). But `contract::build_pilot_receipt` is never
+// called by `apps/desktop/src-tauri/src/pf1_adapter.rs` or `character_hub.rs`
+// (confirmed: `grep -rn build_pilot_receipt apps/desktop/src-tauri/src`
+// returns nothing) -- it is exactly the "twin problem" `decisions.md §29.1`/
+// `§29.2` already names: a real computation that never reaches the surface
+// `pf1_adapter::resolve_unified_pilot_snapshot` gates on, i.e. not the twin
+// the player reads. So there is currently no wired spell-magnitude consumer
+// to observe at all, in either direction -- not a harness gap this cycle can
+// close, an engine-wiring gap the next cycle that touches `contract.rs`/
+// `pf1_adapter.rs` would have to close first. See
+// `artifacts/e14-harness-widening.md` for the full finding; every targeted
+// spell unit stays `ingested-magnitude`.
 
 /// SD28-E14-F2: observes a real computed delta for an equipment (or
 /// equipment-modifier) item -- the same `equipment_effects::compute_equipment_effects`
@@ -1377,7 +1339,6 @@ fn gather_engine_facts(
 
     EngineFacts {
         feat_effect_wired: probe_feat_effect_wiring(fixture),
-        spell_effect_wired: probe_spell_effect_wiring(fixture, repo_root),
         equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
         feat_keys,
         spell_levels,
@@ -1606,16 +1567,12 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             });
             match level_known {
                 None => not_ingested("spell_key_absent_from_spell_list"),
-                Some(true) if facts.spell_effect_wired.contains(&unit.key)
-                    || facts.spell_effect_wired.contains(&unit.name) =>
-                {
-                    Verdict {
-                        status: "grounded",
-                        evidence: "spell_effect_probe_observed_computed_delta".to_string(),
-                        reason: None,
-                        engine_book: engine_book_field,
-                    }
-                }
+                // SD28-E14-F1: NOT promoted. See the doc comment above
+                // `probe_equipment_effect_wiring` (the removed
+                // `probe_spell_effect_wiring`'s replacement note) -- no
+                // currently-wired consumer reads a spell's magnitude, so
+                // every resolved-level spell stays `ingested-magnitude`
+                // exactly as before this epic touched this arm.
                 Some(true) => Verdict {
                     status: "ingested-magnitude",
                     evidence: "spell_list_entry_with_resolved_level".to_string(),
@@ -2641,10 +2598,11 @@ mod rule_set_mapping_tests {
     }
 }
 
-/// SD28-E14: observation-harness widening tests. F1 (spell probe) and F2
-/// (equipment probe), each with a positive proof against the real on-disk
-/// corpus and a negative proof that the probe does NOT promote a unit the
-/// engine genuinely does not wire (F3's anti-gaming binding).
+/// SD28-E14: observation-harness widening tests. F2 (equipment probe) with
+/// a positive proof against the real on-disk corpus and negative proofs
+/// that the probe does NOT promote a unit the engine genuinely does not
+/// wire (F3's anti-gaming binding). F1 (spell probe) is deliberately absent
+/// -- see the doc comment at the bottom of this module for why.
 #[cfg(test)]
 mod e14_harness_tests {
     use super::*;
@@ -2654,15 +2612,6 @@ mod e14_harness_tests {
 
     fn repo_root() -> PathBuf {
         PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-    }
-
-    fn test_fixture() -> CharacterInput {
-        let fixture_path = repo_root().join(FIXTURE_RELATIVE_PATH);
-        let text = std::fs::read_to_string(&fixture_path)
-            .unwrap_or_else(|e| panic!("could not read {}: {e}", fixture_path.display()));
-        load_character_input_fixture(&text)
-            .character_input
-            .expect("shared fixture must load")
     }
 
     fn equipment_corpus_from(text: &str) -> SourcePackageContent<'static> {
@@ -2728,44 +2677,40 @@ mod e14_harness_tests {
         assert!(!equipment_key_is_wired("Nonexistent Item Nobody Ingested", &corpus));
     }
 
-    // ----- F1: spell probe -----
-
-    /// Positive: CRB's real, on-disk Animate Plants record resolves through
-    /// `compute_pilot_with_corpus` and lands in a real `school_coverage`
-    /// entry -- the twin the player reads observing a real spell delta.
-    #[test]
-    fn spell_probe_promotes_a_real_on_disk_spell() {
-        let roots = [BookCorpusRoot {
-            book_id: "core_rulebook",
-            dir: &repo_root().join("data/corpus/core_rulebook"),
-        }];
-        let corpus = load_spell_corpus(&roots);
-        let fixture = test_fixture();
-        assert!(spell_key_is_wired(&fixture, "Animate Plants", &corpus));
-    }
-
-    /// Negative (F3's anti-gaming binding): a spell key the compiled
-    /// `SPELL_LIST` table carries a resolved level for, but which has no
-    /// matching on-disk JSON record (never ingested into `data/corpus/`),
-    /// must NOT be promoted -- the empty corpus below stands in for "not on
-    /// disk" exactly, since `spell_id_resolve` scans `corpus.records_by_kind`
-    /// and an empty package holds none. Proven to fail if the probe were
-    /// made permissive: a probe that promotes on table-presence alone
-    /// (mirroring the classifier's own pre-E14 `Some(true)` arm) would pass
-    /// this spell every time.
-    #[test]
-    fn spell_probe_never_promotes_a_spell_absent_from_the_on_disk_corpus() {
-        let empty = SourcePackageContent::empty("empty", SourceRef { lst_file: String::new(), line: 0 });
-        let fixture = test_fixture();
-        // A real CRB spell-list key with a genuinely resolved level.
-        let key = crb_spell_list::SPELL_LIST
-            .iter()
-            .next()
-            .expect("CRB spell list must be non-empty")
-            .key;
-        assert!(
-            !spell_key_is_wired(&fixture, key, &empty),
-            "a spell absent from the real on-disk corpus must not be promoted"
-        );
-    }
+    // ----- F1: spell probe -- NOT implemented, and this is the finding -----
+    //
+    // An earlier version of this cycle probed
+    // `pilot_compute_corpus::compute_pilot_with_corpus`'s `school_coverage`
+    // map (a spell lands there once it resolves and its `school` string
+    // parses -- `pilot_compute_corpus.rs:189-205`). Independent review
+    // (team-lead, 2026-08-06) correctly identified that this observes
+    // resolution, not a magnitude: no spell field (level, DC, duration, ...)
+    // is read into any computed number on that path. The 100% promotion
+    // rate the wrong version produced (1,067 of 1,067) was the tell -- a
+    // discriminating probe over real content does not do that (contrast
+    // F2's 173-of-2,983, 5.8%).
+    //
+    // Per the dispatching brief's own instruction ("strengthen the negative
+    // test to pin a present-but-non-mechanical spell as not promoted; if no
+    // such test can be written because nothing distinguishes them, that is
+    // itself the finding") -- no such test can be written. Every spell that
+    // resolves against the on-disk corpus and has a recognized school
+    // string lands in `school_coverage` identically; there is no field on
+    // that path that varies between a spell with real mechanical content
+    // and one without. That absence of a discriminating signal, not a
+    // missing test, is the finding: **no currently-wired consumer reads a
+    // spell's magnitude at all.** `spellbook::compute_spellbook_coverage`
+    // does read a real magnitude (`SpellEffect.level`, feeding
+    // `spell_save_dc`/slot math) and is wired into
+    // `contract::PilotReceipt.spellbook` (`contract.rs:397`), but
+    // `contract::build_pilot_receipt` is never called from
+    // `apps/desktop/src-tauri/src/pf1_adapter.rs` or `character_hub.rs` --
+    // confirmed by `grep -rn build_pilot_receipt apps/desktop/src-tauri/src`
+    // returning nothing. That is exactly the "twin problem"
+    // `decisions.md §29.1`/`§29.2` already names: a real computation that
+    // never reaches the surface `pf1_adapter::resolve_unified_pilot_snapshot`
+    // gates on. Wiring `contract.rs`'s spellbook output into that surface
+    // is the remedy, and it is engine work outside this harness-widening
+    // epic's scope -- see `artifacts/e14-harness-widening.md`. All 1,067
+    // targeted spell units stay `ingested-magnitude`.
 }

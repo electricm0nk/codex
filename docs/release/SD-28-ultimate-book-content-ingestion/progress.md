@@ -2218,3 +2218,25 @@ Ran `git stash -u` on this shared checkout mid-cycle while investigating a clipp
 - Count sweep (playbook DoD item 10): grepped for `4050`/`4,050`/pinned `301`-grounded assertions across `src`/`apps/desktop/src-tauri/src`/`tests`; the only `4050` hit outside this epic's own docs is an unrelated `cost_gp: Some(34050.0)` price constant in `apg/equipment_data.rs`. No pinned test assertion depends on either figure.
 
 **Cross-reference:** `kanban.md` card `epic-14-harness` → COMPLETE; `artifacts/e14-harness-widening.md` for the full before/after and OPEN_FINDINGS disposition; `docs/retro/events/epic-14-harness.jsonl` for the recorded spec correction.
+
+### Correction after independent review (2026-08-06, same cycle)
+
+**The spell probe (F1) above was wrong and has been reverted.** Team-lead review found `spell_key_is_wired`'s predicate (`school_coverage` non-empty + spell resolved) observes spell *resolution*, not a *magnitude* — `pilot_compute_corpus.rs:189-205` populates `school_coverage` purely from the spell's `school` string, reading no level/DC/duration into any consumer field. The 100% promotion rate (1,067 of 1,067) was the tell the negative test could not catch, because that test only pinned a resolution property (spell absent from disk), not a magnitude property.
+
+Investigated further: a real spell-magnitude consumer does exist (`spellbook::compute_spellbook_coverage`, wired into `contract::PilotReceipt.spellbook`), but `contract::build_pilot_receipt` is never called from `pf1_adapter.rs`/`character_hub.rs` — an orphaned twin per `decisions.md §29.1`/`§29.2`, not a surface the player reads. Correct finding: **no spell-magnitude consumer is currently wired at all.**
+
+**Action taken:** `probe_spell_effect_wiring`/`spell_key_is_wired` and their tests deleted from `v06_work_inventory.rs`; `classify()`'s `Kind::Spell` arm reverted to pre-epic behavior (no promotion). `corpus_loader::load_spell_corpus` kept (real, tested, reusable for a future probe once `contract.rs`'s spellbook output is wired into `pf1_adapter::resolve_unified_pilot_snapshot`). All 1,067 spell units reverted to `ingested-magnitude`, with the full finding recorded in `artifacts/e14-harness-widening.md`. F2 (equipment) is unaffected and stands as originally shipped.
+
+**Retro correction logged:** `docs/retro/events/epic-14-harness.jsonl` (subject: "epic-14-harness's own SD28-E14-F1 spell probe").
+
+**Corrected final result:** `grounded` 301 → 474 (**+173**, equipment only); `ingested-magnitude` 4,050 → 3,877 (**-173**). `docs/work-inventory.json` regenerated a second time, `generated_at` `2026-08-06T23:05:21Z`.
+
+**Re-verification after the revert:**
+- `cargo test --bin v06_work_inventory e14_harness_tests` → 3 passed (spell tests removed; equipment tests unchanged).
+- `cargo build --bin v06_work_inventory` → clean, no new warnings.
+- `cargo run --locked --bin v06_work_inventory` → exit 0, corrected counts confirmed above.
+- Full `./scripts/verify.sh` re-run after the revert; result recorded in the commit that lands this correction.
+
+**Superseded numbers, for the log (do not cite as current):** the pre-correction run reported `grounded` 1,541 / `ingested-magnitude` 2,810 with 1,067 spell + 173 equipment promotions. Those are wrong and are not what shipped.
+
+**Cross-reference (updated):** `kanban.md` card `epic-14-harness` → COMPLETE with the corrected `+173`/`3877` figures; `artifacts/e14-harness-widening.md` fully rewritten with the corrected numbers and the F1 finding.
