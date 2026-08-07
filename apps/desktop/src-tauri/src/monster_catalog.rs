@@ -146,17 +146,17 @@ pub struct MonsterCatalogResponse {
 
 /// The canonical `beastiary1:monster:<slug>` key for a stat block.
 ///
-/// Derived from the record's own name rather than hand-listed, and the
-/// derivation is not trusted: `every_served_key_resolves_back_to_its_record`
-/// feeds every key produced here back through
-/// `beastiary1::monster_key_resolve` and requires the same record to come
-/// back, so a name whose slug does not match its shipped key fails the build
-/// instead of serving a key nothing can resolve.
+/// Delegates to `beastiary1::monster_key` (SD28-E16, `decisions.md` §36
+/// instance 9) rather than re-implementing the same lowercase/underscore
+/// formula in this crate -- a second copy of this exact derivation used to
+/// live here, silently able to drift from the engine's own, and the drift
+/// would have surfaced only as a served key nothing could resolve. Now
+/// there is one formula. Still not blindly trusted:
+/// `every_served_key_resolves_back_to_its_record` feeds every key produced
+/// here back through `beastiary1::monster_key_resolve` and requires the
+/// same record to come back.
 fn monster_key(block: &MonsterStatBlock) -> String {
-    format!(
-        "beastiary1:monster:{}",
-        block.name.to_lowercase().replace(' ', "_")
-    )
+    beastiary1::monster_key(&block.name)
 }
 
 /// Renders one `RACESUBTYPE:` token into the prose this catalog is allowed to
