@@ -720,6 +720,29 @@ by-kind figures (`race_trait` 3276, `class_feature` 1665, `companion` 754,
 `feat` 29, `equipment` 5) summed to 8,492 against the pre-correction total and
 have not been re-split against the 5,899 figure.
 
+> **SECOND CORRECTION, 2026-08-07 by `epic-16-backfill`, same cycle.** The
+> `race_trait` 3,276 figure above (and by extension a large share of the
+> 5,899 total) is not a reliable measure of real remaining work. Row-by-row
+> tracing of all six books' `_abilities_race.lst` files (`decisions.md §37`,
+> full table and commands there) found the `Kind::RaceTrait` classifier
+> overcounts `race_trait` `not-ingested` in every one of the six books, via
+> three distinct mechanisms (Favored Class Bonus / `CATEGORY:Choice`
+> mixing in ARG and APG; whole-file misclassification of monster/creature
+> special-ability content in ACG, CRB, Bestiary, and PU). **Only APG has a
+> real, non-zero, closable `race_trait` gap, and it is at most 50 units** —
+> every other book's `race_trait` `not-ingested` count is either already
+> fully ingested (ARG, 156/156), or contains zero genuine racial-trait
+> content at all. This does not by itself produce a corrected 5,899
+> replacement (that needs the same per-kind, per-book trace for
+> `class_feature`/`companion`/`equipment_modifier`/`monster`/`spell`/etc.,
+> not done this cycle) — it establishes that the `race_trait` component of
+> that total, the largest single kind in the original by-kind split, is
+> now known to be mostly noise, and that no other kind has yet been given
+> the same scrutiny. **Do not launch a per-book `race_trait` ingest epic
+> against any of ACG/CRB/Bestiary/PU's `not-ingested` count** without first
+> running `decisions.md §37`'s row-by-row trace for that book — the
+> ARG/APG mechanism (fixed) does not generalize to the other four.
+
 ### Feature seeds
 
 #### SD28-E16-F1 — Backfill to a real record
