@@ -689,25 +689,36 @@ not hold uncommitted work in the same tree; dispatch with
 
 ## Epic 16 (SD28-E16) — `not-ingested` backfill inside started books
 
-**Objective:** Close the 8,492 units where the book **is** ingested but the
-engine holds no matching record. These are real gaps inside books already
-described as finished.
+**Objective:** Close the `not-ingested` units where the book **is** ingested
+but the engine holds no matching record. These are real gaps inside books
+already described as finished.
 
-**Derived from:** `work_inventory.by_status["not-ingested"] == 8492`.
+**Derived from:** `work_inventory.by_status["not-ingested"]`.
 
-### Composition (re-derived)
+> **CORRECTED 2026-08-07 by `epic-16-backfill`.** This section previously
+> cited 8,492 as the target and named `core_essentials` (2,593 units) as "the
+> sharpest instance." Per operator directive 2026-08-02, `core_essentials`
+> and `beginner_box` are **excluded from SD-28 scope** — "redundant to other
+> tomes, never coming into scope" — and the live dashboard
+> (`/home/ubuntu/swarm-observer/PF1e-dashboard.json`,
+> `work_inventory.excluded_books`) already applies that exclusion. The epic
+> text had not absorbed the directive. Re-derived 2026-08-07 against the same
+> dashboard: `work_inventory.by_status["not-ingested"]` → **5,899**, and
+> `8492 - 2593 = 5899` reconciles exactly, confirming `core_essentials`'s
+> 2,593 units are the entire delta and are NOT in this epic's scope. See
+> `docs/retro/events/epic-16-backfill.jsonl` for the correction event.
 
-By book (`$WI`): `core_essentials` 2593, `advanced_race_guide` 1528,
-`advanced_players_guide` 1139, `advanced_class_guide` 981, `bestiary` 981,
-`core_rulebook` 973, `pathfinder_unchained` 297. By kind, from the 04:02Z shard
-(re-derive before use): `race_trait` 3276, `class_feature` 1665, `companion`
-754, `equipment_modifier` 417, `monster` 289, `spell` 121, `class` 58, `race`
-53, `feat` 29, `equipment` 5.
+### Composition (re-derived 2026-08-07, excluded books removed)
 
-`core_essentials` is the sharpest instance: **2593 of its 2639 units are
-`not-ingested`** — 98% of a book that has a compiled rule set and 46 proven
-units. Whatever "started" meant for that book, it did not mean its content is
-present.
+By book (`$WI`, dashboard `work_inventory.books[].by_status["not-ingested"]`):
+`advanced_race_guide` 1528, `advanced_players_guide` 1139,
+`advanced_class_guide` 981, `bestiary` 981, `core_rulebook` 973,
+`pathfinder_unchained` 297 — **total 5,899**. By-kind composition should be
+re-derived fresh from a current shard before use; the previously published
+by-kind figures (`race_trait` 3276, `class_feature` 1665, `companion` 754,
+`equipment_modifier` 417, `monster` 289, `spell` 121, `class` 58, `race` 53,
+`feat` 29, `equipment` 5) summed to 8,492 against the pre-correction total and
+have not been re-split against the 5,899 figure.
 
 ### Feature seeds
 
