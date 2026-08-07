@@ -345,6 +345,26 @@ const TRAP_RULES: &[TrapRule] = &[
              per-book figure can never be read as corpus-wide. A '27 hexes' figure was APG-only \
              where the corpus holds 53 across four books.",
     },
+    TrapRule {
+        id: "race_favored_class_bonus_row",
+        description:
+            "SD28-E16 (2026-08-07). A row in a `_abilities_race.lst` file whose `TYPE:` field \
+             carries a `FavoredClassBonus` dot-component. `file_kind` buckets the whole file as \
+             `Kind::RaceTrait`, but a Favored Class Bonus row is a different mechanic (one row \
+             per race x class) that can never appear in `race_trait_ids`. Counting it inflated \
+             ARG's race_trait `not-ingested` figure by 291 units that no amount of ingestion \
+             could ever close. See `decisions.md §35`.",
+    },
+    TrapRule {
+        id: "race_choice_suboption_row",
+        description:
+            "SD28-E16 (2026-08-07). A `_abilities_race.lst` row carrying `CATEGORY:Choice`. This \
+             is a `CHOOSE:` sub-option belonging to an already-counted parent trait (e.g. \
+             `Elf ~ Elemental Resistance`'s Acid/Cold/Electricity/Fire choices), never itself an \
+             independent racial trait -- every already-ingested ARG alternate trait carries \
+             `CATEGORY:Special Ability`, none carry `CATEGORY:Choice`. Counting it double-counts \
+             the parent. See `decisions.md §35`.",
+    },
 ];
 
 // `MAGNITUDE_TOKENS` -- the tab-field prefixes that carry a real numeric
@@ -557,6 +577,48 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
         if kind == Kind::Class && !first.starts_with("CLASS:") {
             *out.trap_hits.entry("class_level_line").or_default() += 1;
             continue;
+        }
+
+        // `_abilities_race.lst` is classified whole-file as `Kind::RaceTrait`
+        // by `file_kind`, but it carries at least two other row shapes that
+        // are real content in the wrong bucket, not racial traits:
+        //
+        // - A `TYPE:` field with a `FavoredClassBonus` dot-component is a
+        //   Favored Class Bonus row (one per race x class), e.g.
+        //   `TYPE:SpecialQuality.FavoredClassBonus.FavoredClassSorcerer`
+        //   (`arg_abilities_race.lst`). `race_trait_ids` is keyed on
+        //   `<race>.<trait-slug>` pairs and can never hold an FCB identity,
+        //   so counting these as `race_trait` units reports them
+        //   `not-ingested` forever regardless of ingestion effort.
+        // - A `CATEGORY:Choice` row is a `CHOOSE:` sub-option belonging to an
+        //   already-counted parent trait, e.g. `Elf ~ Elemental Resistance`
+        //   (CATEGORY:Special Ability, already a unit) offers 4
+        //   `CATEGORY:Choice` rows (Acid/Cold/Electricity/Fire) as its menu.
+        //   Every one of the 156 already-ingested ARG alternate racial
+        //   traits (`data/corpus/advanced_race_guide/race_trait/*/*.json`)
+        //   carries `CATEGORY:Special Ability`, never `CATEGORY:Choice` --
+        //   re-derived 2026-08-07 with a full scan of that corpus tree.
+        //   Counting the sub-option as a second, independent unit
+        //   double-counts the parent trait's own content.
+        //
+        // Neither is a unit for this inventory's purposes; both are recorded
+        // as trap hits (never silently dropped) rather than reclassified
+        // into a new `Kind`, since neither is itself the kind of standalone
+        // content this inventory tracks elsewhere (`decisions.md §35`).
+        if kind == Kind::RaceTrait {
+            let is_fcb = fields
+                .iter()
+                .filter_map(|f| f.trim_start().strip_prefix("TYPE:"))
+                .any(|value| value.split('.').any(|c| c == "FavoredClassBonus"));
+            if is_fcb {
+                *out.trap_hits.entry("race_favored_class_bonus_row").or_default() += 1;
+                continue;
+            }
+            let is_choice_suboption = fields.iter().any(|f| f.trim() == "CATEGORY:Choice");
+            if is_choice_suboption {
+                *out.trap_hits.entry("race_choice_suboption_row").or_default() += 1;
+                continue;
+            }
         }
 
         let (display_name, origin) = if let Some((_, variant)) = first.split_once(".COPY=") {

@@ -388,6 +388,68 @@ fn hex_records_span_more_than_one_book() {
     );
 }
 
+/// `race_favored_class_bonus_row` + `race_choice_suboption_row` (SD28-E16,
+/// `decisions.md §35`). `_abilities_race.lst` is classified whole-file as
+/// `Kind::RaceTrait`, but carries Favored Class Bonus rows (a different
+/// mechanic; `race_trait_ids` can never hold an FCB identity) and
+/// `CATEGORY:Choice` sub-option rows (menu options of an already-counted
+/// parent trait) that must not be double-counted as independent racial
+/// traits. Pinned against `arg_abilities_race.lst` directly, independent of
+/// the generator under test, per this file's own re-implementation
+/// philosophy.
+#[test]
+fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_traits() {
+    let dir = corpus_or_skip!();
+    let text = read(&dir, "advanced_race_guide", "arg_abilities_race.lst");
+    let rows = base_rows(&text);
+
+    let is_fcb = |r: &&Row| {
+        r.fields
+            .iter()
+            .any(|f| f.starts_with("TYPE:") && f[5..].split('.').any(|c| c == "FavoredClassBonus"))
+    };
+    let fcb_count = rows.iter().filter(is_fcb).count();
+    assert_eq!(
+        fcb_count, 291,
+        "arg_abilities_race.lst's Favored Class Bonus rows (TYPE:...FavoredClassBonus...) -- \
+         a different mechanic from a racial trait, one row per race x class"
+    );
+
+    let choice_count = rows.iter().filter(|r| !is_fcb(r) && r.fields.contains(&"CATEGORY:Choice")).count();
+    assert_eq!(
+        choice_count, 82,
+        "arg_abilities_race.lst's CATEGORY:Choice sub-option rows -- CHOOSE: menu options of an \
+         already-counted parent trait (e.g. Elf ~ Elemental Resistance's Acid/Cold/Electricity/Fire \
+         choices), never independent racial traits"
+    );
+
+    // The already-shipped ARG corpus never uses CATEGORY:Choice for a real
+    // trait -- the discriminator's other side, so a future trait added with
+    // CATEGORY:Choice would be a real regression this test would catch.
+    let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let trait_root = manifest.join("data/corpus/advanced_race_guide/race_trait");
+    let mut checked = 0usize;
+    let mut race_dirs: Vec<PathBuf> =
+        std::fs::read_dir(&trait_root).expect("race_trait dir must exist").filter_map(Result::ok).map(|e| e.path()).collect();
+    race_dirs.sort();
+    for race_dir in race_dirs {
+        let mut files: Vec<PathBuf> =
+            std::fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
+        files.sort();
+        for path in files {
+            let text = std::fs::read_to_string(&path).unwrap();
+            let value: serde_json::Value = serde_json::from_str(&text).unwrap();
+            checked += 1;
+            assert_eq!(
+                value["data"]["category"], "Special Ability",
+                "{path:?}: every already-ingested ARG alternate racial trait carries \
+                 CATEGORY:Special Ability, never CATEGORY:Choice"
+            );
+        }
+    }
+    assert_eq!(checked, 156, "156 already-ingested ARG alternate racial trait records");
+}
+
 // ---------------------------------------------------------------------------
 // Generator contract
 // ---------------------------------------------------------------------------
