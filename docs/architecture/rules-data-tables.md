@@ -1,7 +1,7 @@
 # Rules Data Tables
 
 > Scope: the hand-transcribed, per-book Paizo table store rules-core queries for class chassis, race traits, feats, spells, equipment, and monster stat blocks.
-> Last verified: 2026-07-23 against tranche/5-4 (SD-26 Epic 6 closure)
+> Last verified: 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -262,17 +262,37 @@ corpus. See [status.md](./status.md) for the full stub/gap ledger.
 
 ## JSON corpus cache (`data/corpus/`)
 
-The four in-scope books are also emitted as a repo-resident JSON cache under
-`data/corpus/<book>/**/*.json` (SD-26 Epic 3): `core_rulebook/` (3326 records —
-2663 equipment, 652 spell, 11 class), `advanced_players_guide/` (641),
-`advanced_class_guide/` (423), and `beastiary/` (45). This is a **dump of the
-already-landed `rules_tables` module state, not a second data source.** Each
-per-book generator under `src/rules_core/cache_gen/` (`acg.rs`, `apg.rs`,
-`beastiary1.rs`), driven by the generator binaries
-`src/bin/sd26_gen_core_rulebook_cache.rs`, `src/bin/gen_cache_apg.rs`,
-`src/bin/gen_cache_acg.rs`, and `src/bin/gen_cache_beastiary.rs`, walks the
-compiled Rust table module and writes each record out in the Shape-B on-disk
-form defined by `src/rules_core/rules_tables/crb/json_cache.rs`
+**Correction (2026-08-07, `arch-docs-refresh`):** this section previously
+described only four in-scope books and four generator binaries. As of the
+wiring_class/PI-screening convergence cycle, `data/corpus/` holds **six**
+book directories — `core_rulebook/`, `advanced_players_guide/`,
+`advanced_class_guide/`, `beastiary/`, plus `advanced_race_guide/` (637 JSON
+files) and `pathfinder_unchained/` (129 JSON files), the latter two added by
+SD-27/SD-28 ingest — and there are **eight** distinct writers, not four.
+`ultimate_campaign` (the `Uca` rule set) has no corpus cache directory yet;
+its 23 feat records live only in `rules_tables::ultimate_campaign`.
+
+Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
+`CacheRecord {` construction site under `src/`, 2026-08-07):
+
+- `src/rules_core/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
+  original per-book dump generators (SD-26 Epic 3 shape).
+- `src/bin/sd26_gen_core_rulebook_cache.rs` — CRB.
+- `src/bin/sd27_gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
+  Guide (both books share one binary).
+- `src/bin/ingest_races.rs`, `src/bin/ingest_pu_classes.rs`,
+  `src/bin/ingest_race_traits_arg.rs` — the three later single-purpose
+  ingest binaries added as ARG/PU widened.
+
+(`src/bin/gen_cache_apg.rs`, `gen_cache_acg.rs`, `gen_cache_beastiary.rs` are
+older, still-present binaries retained for historical/manual regeneration;
+`sd26_gen_core_rulebook_cache.rs` is the one wired into the current
+regeneration path for CRB.)
+
+This is a **dump of the already-landed `rules_tables` module state, not a
+second data source.** Each generator walks the compiled Rust table module
+and writes each record out in the Shape-B on-disk form defined by
+`src/rules_core/rules_tables/crb/json_cache.rs`
 (`Population`/`Completeness`/`source` discriminated unions, per the bundle's
 `decisions.md §7`/`§11`). The generators never re-parse raw PCGen `.lst` to
 *compute* a value — the value is already known to be correct from the compiled
@@ -283,6 +303,55 @@ Every book's cache is round-trip-tested by
 `tests/sd26_cache_acg.rs`, and `tests/sd26_cache_beastiary.rs`. Out-of-scope books
 carry no corpus cache; they are registered instead as `book_stub` future-state
 placeholders under `data/stubs/` (see [status.md](./status.md)).
+
+### PI screening (converged into all eight writers)
+
+Every one of the eight writers above now calls
+`rules_core::pi_screening::classify_field`/`classify_optional_field`
+(`src/rules_core/pi_screening.rs`), a single shared 55-term blacklist
+(`PI_BLACKLIST_TERMS`, asserted at exactly 55 by its own unit test). Before
+this convergence, the `license`/`pi_field`/`pi_marker` fields existed on disk
+**only** because a one-off post-hoc script
+(`scripts/sd27_apg_license_retrofit.py`) had stamped them after the fact —
+any full regeneration silently destroyed that stamping, including
+un-redacting a record that had been marked `PI-REDACTED`. Five of the eight
+writers lacked the screening call before this cycle (`fix(ge): screen
+license/pi_field/pi_marker inline in the 5 unscreened writers`,
+commit `f7c709a9`); a differential regeneration round-trip test now guards
+against the same class of loss:
+`tests/pi_screening_regeneration_round_trip.rs`.
+
+### `wiring_class` (GE-01 taxonomy)
+
+Every corpus record now carries a `wiring_class` — one of `Display`,
+`Static`, `Derived`, `Computed` (a strict lattice, highest-bar-wins) or
+`Ambiguous` — determined by `src/rules_core/wiring_class.rs`, the single
+production port of the GE-01 reference determinator
+(`docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`).
+Determination reads a unit's full **token closure**: its base `.lst` row
+plus every `.MOD` row that targets it, not the base row alone. Both
+`v06_work_inventory`'s classifier and every `cache_gen`/ingest generator
+call this one module, so the two surfaces cannot drift against each other.
+The result is emitted per-unit into `docs/work-inventory.json`, stamped onto
+every `data/corpus/**/*.json` record, and surfaced live on the operator
+dashboard as `by_wiring_class`. `Trap::WiringClassMismatch`
+(`src/pcgen_import/corpus_traps.rs`) fails when a record's stored flag
+disagrees with what the determinator recomputes from source, so a stale
+stamp cannot silently survive a partial regeneration.
+
+### `raw_tokens`/`raw_bonus_chains`: a deliberate asymmetry
+
+Unlike every other field above, equipment's `raw_tokens`/`raw_bonus_chains`
+are **not** produced by any of the eight typed writers — they are populated
+by a dedicated post-hoc tool, `src/bin/enrich_equipment_raw_tokens.rs`, run
+as a separate step after regeneration. This is intentional, not an
+oversight: an earlier attempt to converge these fields into the typed
+writers dropped data (`weight` vs `weight_lbs`, `equip_type`, `plus`) because
+the typed struct shape couldn't losslessly round-trip the raw token stream.
+`docs/governance/book-ingestion-playbook.md` DoD item 9 makes re-running the
+enricher mandatory after any equipment regeneration — skipping it silently
+reverts `raw_tokens`/`raw_bonus_chains` to stale or empty values on disk
+even though every other field looks freshly regenerated.
 
 ## Engine state dumps (`src/bin/v06_*_state_dump.rs`)
 
