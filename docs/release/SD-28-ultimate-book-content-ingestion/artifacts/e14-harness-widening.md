@@ -211,11 +211,69 @@ blocker):
 
 ### Spell: 1,067 units
 
-**Finding: no currently-wired consumer reads a spell's magnitude at all.**
-Full account above ("F1 — what actually happened"). Remedy: wire
-`contract::build_pilot_receipt`'s `spellbook` output into
-`pf1_adapter::resolve_unified_pilot_snapshot`, then build a probe against
-the real magnitude that unlocks (`spellbook.slots_total`/`spell_save_dc`).
+**Finding (amended, SD28-E15 cycle, 2026-08-08): the remedy this section
+originally named has since landed, and a second probe attempt against it
+was tried, and correctly refused.** `epic-31-spell-wiring` (`9f4b3bcd`,
+`bdbf3b0c`) wired `spellbook::compute_spellbook_coverage` into
+`pf1_adapter::resolve_unified_pilot_snapshot` — the exact remedy this
+section asked for — and verified on screen that a Wizard 1 / INT 10
+casting Alarm shows spell save DC 11. That made `spell_save_dc` a real,
+player-facing, wired consumer for the first time. A probe was built
+against it and the population was checked directly, using the same
+real-corpus rig `probe_equipment_effect_wiring` uses
+(`corpus_loader::load_spell_corpus` against `data/corpus/core_rulebook`, a
+real `CharacterInput` selecting one spell for a real casting class).
+
+**Result: `spell_save_dc` still cannot serve as a discriminating probe —
+not because the consumer is unwired (it now is), but because it reads
+only `spell_effect.level`, uniformly, for every resolvable spell.**
+`spellbook.rs:313-321`:
+
+```rust
+if let Some(ability) = casting_ability_for_class(&selection.source_class_id) {
+    let modifier = ability_modifier_for(&input.chosen.ability_scores, ability);
+    let dc = (10i16 + i16::from(spell_effect.level) + modifier).max(0) as u8;
+    coverage.spell_save_dc.entry(...).and_modify(...).or_insert(dc);
+```
+
+runs unconditionally the moment a spell resolves against a recognized
+casting class; it never branches on whether the spell mechanically calls
+for a save. Confirmed by reading all nine per-school resolvers
+(`spellbook/abjuration.rs` etc.): every one extracts only `level` and raw
+`effect_text` from `SPELL_LIST`, nothing else. Confirmed empirically, not
+just by reading code — ran the rig against three spells with `Saving
+Throw: none` in the actual PF1 rules (pure detection/utility effects, no
+save to make) alongside one save-based spell:
+
+| spell | Saving Throw (RAW) | `spell_save_dc` (INT 18 wizard) |
+|---|---|---|
+| Detect Magic | none | 14 |
+| Light | none | 14 |
+| Mage Hand | none | 14 |
+| Fireball | Reflex half | 17 |
+
+Three spells with literally no saving throw produce a `spell_save_dc`
+indistinguishable in kind from Fireball's. The computation cannot tell a
+save-requiring spell from a pure-utility one — it produces a number for
+anything with a resolved level, which `ingested-magnitude`'s own existing
+evidence (`spell_list_entry_with_resolved_level`) already asserts. This
+is F1's original defect (`school_coverage`: "resolves + has a school")
+recurring one arithmetic step downstream (`spell_save_dc`: "resolves +
+has a level") — the wiring gap this section named is closed, but the
+resulting consumer turned out to be the same shape of non-discriminator,
+not a coincidence of two unrelated bugs.
+
+**Sharpened remedy for the next cycle that attempts this:** a genuine
+spell-effect probe needs a consumer that reads **structured per-spell
+mechanical content beyond level** — save type, damage dice, duration,
+range. No resolver in `spellbook/*.rs` parses any of these from
+`SPELL_LIST.description`(a raw string) today; `SPELL_LIST` itself carries
+no structured field for them either (`SpellListEntry`: `key`, `school`,
+`level`, `description` only — confirmed against the struct definition).
+That parsing does not exist yet, in either the table store or the
+consumer, so this is real engine + corpus-schema work for a future epic,
+not a probe-design gap `v06_work_inventory.rs` can close by itself.
+Disposition unchanged: all 1,067 spell units stay `ingested-magnitude`.
 
 ## Anti-gaming (F3) evidence
 
