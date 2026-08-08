@@ -6285,7 +6285,7 @@ mod tests {
     #[test]
     fn every_equipmods_row_the_picker_offers_is_recognized_by_the_attach_gate() {
         let offered = offered_modifier_rows();
-        assert_eq!(offered.len(), 770, "the picker's real offered-row count");
+        assert_eq!(offered.len(), 950, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()
@@ -6312,7 +6312,7 @@ mod tests {
     /// honest refusal it replaces. This pins that **every** newly reachable
     /// row charges exactly the price the picker displayed for it.
     ///
-    /// It also pins, rather than hides, the one place that is *not* true.
+    /// It also pins, rather than hides, the places that are *not* true.
     /// Two CRB rows -- `Holy Symbol (Wooden)` and `Holy Symbol (Silver)` --
     /// carry the same `KEY:` in two different categories, so the row the
     /// `Equipmods` picker displays (1 gp / 25 gp) is not the first row in
@@ -6323,6 +6323,19 @@ mod tests {
     /// a real, separate defect in `crb::equipment_tables`'s 316 duplicate
     /// keys, not fixable from this file -- disambiguating it means changing
     /// the `key` the catalog puts on the wire.
+    ///
+    /// SD28-E25 adds a third, of the identical shape: `Masterwork Tool` is
+    /// both a real purchasable item (`ultimate_equipment::equipment_tables`'s
+    /// own `General` category, 50 gp) and a real equipment modifier
+    /// (`Equipmods`, no flat cost -- a `%CHOICE circumstance Bonus`),
+    /// sharing a `KEY:`. `equipment_catalog_rows()` chains UE's equipment
+    /// before its equipmods, so the resolver's first match is the 50 gp
+    /// item, not the free modifier the picker displays -- the same
+    /// first-match-wins divergence CRB's Holy Symbol pair already
+    /// demonstrates, from a genuine same-book same-key collision this
+    /// widening did not create (`equipment_catalog.rs`'s own
+    /// `keys_do_not_collide_across_books_and_crbs_own_duplicates_are_pinned`
+    /// pins the same fact).
     #[test]
     fn every_offered_modifier_row_charges_the_price_the_picker_displayed() {
         let offered = offered_modifier_rows();
@@ -6354,18 +6367,25 @@ mod tests {
         divergent.dedup();
         assert_eq!(
             divergent,
-            vec![("CRB", "Holy Symbol (Silver)"), ("CRB", "Holy Symbol (Wooden)")],
-            "the display-vs-charge divergence set must stay exactly these two pre-existing CRB \
-             duplicate-key rows"
+            vec![
+                ("CRB", "Holy Symbol (Silver)"),
+                ("CRB", "Holy Symbol (Wooden)"),
+                ("UE", "Masterwork Tool"),
+            ],
+            "the display-vs-charge divergence set must stay exactly these three same-book \
+             same-key rows -- named explicitly so a fourth arriving silently fails here"
         );
         assert!(
-            divergent.iter().all(|(book, _)| *book == "CRB"),
-            "the widening must not add a single new display-vs-charge divergence"
+            divergent.iter().all(|(book, _)| *book == "CRB" || *book == "UE"),
+            "the widening must not add a display-vs-charge divergence outside the two named books"
         );
         assert_eq!(
-            priced_non_crb, 20,
-            "the 20 newly-reachable rows carrying a real non-zero price (ACG 11 + ARG 9) are \
-             exactly the rows a recognition-only fix would have attached for free"
+            priced_non_crb, 90,
+            "the 20 rows from the ACG/ARG widening (ACG 11 + ARG 9), plus 69 real non-zero-priced \
+             UE equipmods (75 UE equipmod rows carry a real cost, 6 of them Some(0.0) and so \
+             excluded here), plus 1 more: `Masterwork Tool`'s own resolved row is UE's 50 gp \
+             General item, not its free Equipmods row -- see this test's own doc comment -- \
+             every one a row a recognition-only fix would have attached for free"
         );
     }
 

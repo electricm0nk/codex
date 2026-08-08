@@ -907,3 +907,47 @@ ACG's 821 -- the number `§42` had in hand when authorization was sought -- was 
 **Retro corrections filed** against every receipt whose `text-complete` `class_feature` figure this supersedes: `7c86f58a`'s own 47-unit claim (Ultimate Intrigue, corrected once already in `§42`, now corrected a second time by the actual mechanism rather than left as a described-but-uncorrected finding); and the five sibling books' receipts wherever they cited a `class_feature` `text-complete` count under this code path, `--verified-by` this decision's own before/after diff command.
 
 **Cross-reference:** `decisions.md §40` (the sibling branch's original fix, whose shape this decision completes); `decisions.md §42` (the Ultimate Intrigue finding and authorization that led here); `docs/work-inventory.json` (regenerated, reflects the corrected classification).
+
+## Decision 44 — SD28-E25: Ultimate Equipment's real new content is 1,549 of a 1,614-unit book, not the whole book -- and a source-grep collision check silently covered only a third of its domain (2026-08-08)
+
+**Status:** New. Records the corpus shape and the tooling defect found while landing `epic-25-ue-complete`'s first slice.
+
+**UE is Paizo's own equipment compendium book -- it republishes items from earlier books alongside genuinely new content, and 55 of its 1,615 declared units are exactly that: a re-listing, not new content.** Re-derived directly, not assumed, the same discipline `decisions.md §39` applied to APG's race-trait collision with ARG: cross-referencing UE's own corpus key set against every other ingested book's real key set found 55 colliding keys (45 equipment + 10 equipmods -- corrected below from an initial 55-equipment/10-equipmod miscount, see the tooling defect). Spot-checked: `Dogslicer` is confirmed to be ARG's own goblin weapon (`arg_equip_arms_armor.lst`), byte-identical stats -- a genuine republish, not a coincidental name clash. **Excluding these before ingest, not shipping them under UE's label, is worth stating plainly: "Ultimate Equipment, 1,615-unit book" overstates the real new content this epic can add by a meaningful margin, the same shape `§37`'s `race_trait` finding took at far larger scale (3,276 → 1).**
+
+**Full reconciliation, every subtraction named and verified programmatically (`raw − dupes − collisions == final`), not by eye:**
+
+```
+Equipment:  1,425 raw candidates (TYPE:-bearing or .COPY=-variant rows, .MOD excluded)
+             -1 same-book duplicate (Mountain Pattern Armor, byte-identical row, kept first)
+            -55 cross-book collisions (real republished items)
+          ------
+          1,369 final
+
+Equipmods:    190 raw candidates
+              -0 same-book duplicates
+             -10 cross-book collisions
+          ------
+            180 final
+
+Total new UE content: 1,369 + 180 = 1,549
+```
+
+The 1,425 raw equipment figure is itself a 1-unit correction to the inherited 1,424 (`docs/work-inventory.json`'s own declared count) -- confirmed by two independent methods (the ingest script's own parse, and a standalone recount of `TYPE:`-bearing + `.COPY=` rows) agreeing exactly with each other. Not chased further: a 1-unit delta at this scale is immaterial, and adopting either figure without reconciling would be worse than naming the small gap and moving on.
+
+**92 of the 1,425 raw equipment rows are `.COPY=` variants that declare a genuinely distinct new item** (a masterwork or size variant, e.g. `Harpsichord (Base).COPY=Musical Instrument, Masterwork Harpsichord`, `Barding (Haramaki).COPY=Barding (Haramaki/Large)`), not a mere re-listing the way `ui_equipmods.lst`'s `VISIBLE:NO` alias rows were (`decisions.md §42`'s addendum). These rows rarely carry their own `COST:`/`WT:` token (inherited via `BASEITEM:`, which this table does not resolve), so `cost_gp`/`weight_lbs` are honestly `None` for most of them rather than looked up and fabricated.
+
+### The tooling defect: a collision check that ran, reported a plausible number, and covered a third of its domain
+
+**This deserves top billing over the record count, because it is the more dangerous failure mode.** The first-pass collision exclusion globbed every other book's `equipment_tables.rs` source file for literal `key: "..."` string patterns. That shape exists for ARG/PU/UI/UCA's hand-authored tables, but **CRB, APG, ACG and Bestiary 1's equipment tables are not written that way** (a different codegen shape entirely -- confirmed directly: `grep -c 'key: "' src/rules_core/rules_tables/crb/equipment_tables.rs` → 0, despite the table holding 2,977 real records). The check ran without error, reported "54 collisions," and that number was plausible enough to almost ship -- it silently never compared against CRB, APG, or ACG at all, three of the six other ingested books, including the largest by far.
+
+**Caught by `equipment_catalog.rs`'s own `keys_do_not_collide_across_books_and_crbs_own_duplicates_are_pinned`**, a pre-existing guard written for exactly this defect class, which fired the moment the flawed exclusion let a real collision (`Alchemist's Kit`, among others) through. This is the **second** book in a row where a purpose-built pre-existing test caught a divergence before the ingesting cycle did -- `decisions.md §42`'s addendum names the first (`the_catalog_and_the_resolver_agree_on_the_book_set`, Ultimate Intrigue). Two working counter-examples now stand against the many `§36` instances of "nothing fails when a hand-maintained pair drifts."
+
+**Fixed by getting ground truth the right way**: a scratch `#[test]` inside `ultimate_equipment::equipment_tables` that calls every other book's real `equipment_tables()`/`EQUIPMENT_TABLE` accessor function at runtime and dumps the actual key set to a file -- the same data `equipment_catalog.rs`'s own tests already read, not a re-derivation of it. 3,928 real keys (3,612 unique) recovered this way, re-running the exclusion against them found the true 55/10 split above. The scratch test was removed before commit -- it exists only to produce the one-time ground-truth dump, not as shipped code.
+
+**The sharper, generalized lesson, worth carrying to whoever ingests the remaining Ultimate books (UW, UC, UM, UPsi):** *verify a cross-book fact at runtime, not by grepping a source shape you have not confirmed is uniform across every book being checked against.* A collision check needs to be validated against a case it should catch before its clean result is trusted -- "54 collisions, plausible" and "54 collisions, plus everything the check could not see" are indistinguishable from the outside. This is the same category of error `decisions.md §43`'s own first-pass classifier patch made (a fix that silently moved a second, wrong population alongside the intended one) -- both were caught by measuring the actual before/after state rather than trusting that a correctly-shaped change produced a correct result.
+
+### A genuine same-book, same-key collision, found and named rather than absorbed into a count
+
+`Masterwork Tool` exists twice within UE itself: once as a real purchasable item (`ue_equip_general.lst`, `General` category, 50 gp) and once as a real equipment modifier (`ue_equipmods.lst`, `Equipmods` category, a `%CHOICE circumstance Bonus`, no flat cost) -- two genuinely distinct corpus records sharing a display name, not a duplicate to be deduplicated. Kept both, the same "kept, not deduped" treatment `crb::equipment_tables`'s own 316 within-book duplicates already get. **The specific pair is named in the assertion (`equipment_catalog.rs`'s `keys_do_not_collide...` and `character_hub.rs`'s pricing-divergence test) rather than the pinned count simply incremented** -- the same discipline `KNOWN_UNREGISTERED_STUBS`/`KNOWN_KEY_MISMATCH_DEBT` already establish elsewhere in this program: a named member forces the next person to look at what changed; a bare count silently absorbs the next collision too.
+
+**Cross-reference:** `decisions.md §39` (the `already_ingested_keys()` precedent this exclusion follows); `decisions.md §42`'s addendum (the sibling `equipment_resolver.rs`/`equipment_catalog.rs` divergence instance, and the first pre-existing-guard counter-example); `decisions.md §43` (the sibling "measured, not assumed, before-and-after" discipline this decision's collision-check fix follows); `progress.md` `SD28-E25-F1-001` (this epic's own receipt).

@@ -113,7 +113,7 @@ use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_intrigue as ui, RuleSetId,
+    ultimate_equipment as ue, ultimate_intrigue as ui, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -786,6 +786,17 @@ fn reach_of(family: &Family) -> Option<Reach> {
             ui::equipment_tables::equipment_tables()
                 .iter()
                 .chain(ui::equipment_tables::equipmod_tables())
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD28-E25 slice 1: UE joined `build_equipment_catalog` under the
+        // `UE` book code, both `equipment_tables()` (1,380) and
+        // `equipmod_tables()` (180) served by that one code.
+        ("ultimate_equipment", "equipment") => Some(equipment_reach(
+            "UE",
+            ue::equipment_tables::equipment_tables()
+                .iter()
+                .chain(ue::equipment_tables::equipmod_tables())
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),

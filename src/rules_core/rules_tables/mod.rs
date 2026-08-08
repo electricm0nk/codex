@@ -17,6 +17,7 @@ pub mod crb;
 pub mod feats_all;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
+pub mod ultimate_equipment;
 pub mod ultimate_intrigue;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
@@ -32,5 +33,7 @@ pub enum RuleSetId {
     Uca,
     /// Ultimate Intrigue. SD-28 Epic 24 -- first record family (feats).
     Ui,
+    /// Ultimate Equipment. SD-28 Epic 25 -- first record family (equipment).
+    Ue,
     // future: Um, ...
 }

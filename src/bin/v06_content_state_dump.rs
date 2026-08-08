@@ -55,6 +55,7 @@ use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
+use codex::rules_core::rules_tables::ultimate_equipment as ue;
 use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 use codex::rules_core::rules_tables::RuleSetId;
 
@@ -263,18 +264,44 @@ fn uca_content() -> BookContent {
 /// comment warns about -- the `RuleSetId` match below is exhaustive and
 /// was forced to grow a `Ui` arm, but this roster is not
 /// compiler-enforced, so it is added explicitly here rather than trusted
-/// to follow automatically. First record family only (feats); the
-/// remaining `kinds` are real, verified zeros for this slice, not yet
-/// ingested.
+/// to follow automatically. Slices 1-2: feats, spells, equipment. (Caught
+/// while wiring UE: this roster was never updated when slice 2 landed
+/// spell/equipment -- fixed here.) `class_feature`/races/classes remain
+/// real, verified zeros, not yet ingested.
 fn ui_content() -> BookContent {
     BookContent {
         id: "ultimate_intrigue",
         kinds: vec![
             KindCount { kind: "races", ingested: 0 },
             KindCount { kind: "classes", ingested: 0 },
-            KindCount { kind: "spells", ingested: 0 },
-            KindCount { kind: "equipment", ingested: 0 },
+            KindCount { kind: "spells", ingested: ui::spell_list::SPELL_LIST.len() as u32 },
+            KindCount {
+                kind: "equipment",
+                ingested: (ui::equipment_tables::equipment_tables().len()
+                    + ui::equipment_tables::equipmod_tables().len()) as u32,
+            },
             KindCount { kind: "feats", ingested: ui::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E25. Same hand-listed-roster shape `ui_content()` above warns
+/// about. First slice: equipment only (no feats file exists in this
+/// book -- see `ultimate_equipment::equipment_tables`'s own doc comment).
+fn ue_content() -> BookContent {
+    BookContent {
+        id: "ultimate_equipment",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount {
+                kind: "equipment",
+                ingested: (ue::equipment_tables::equipment_tables().len()
+                    + ue::equipment_tables::equipmod_tables().len()) as u32,
+            },
+            KindCount { kind: "feats", ingested: 0 },
             KindCount { kind: "monsters", ingested: 0 },
         ],
     }
@@ -580,6 +607,7 @@ fn main() {
         pu_content(),
         uca_content(),
         ui_content(),
+        ue_content(),
     ];
     let monsters = monster_states(&repo_root);
     let races = race_states(&fixture);
@@ -688,6 +716,10 @@ fn main() {
             RuleSetId::Pu => "pathfinder_unchained",
             RuleSetId::Uca => "ultimate_campaign",
             RuleSetId::Ui => "ultimate_intrigue",
+            // UE has no feats file at all (`decisions.md`/`epic-25`'s own
+            // corpus-shape note) -- this arm exists only for exhaustiveness;
+            // `all_feat_tables()` never yields a `Ue` table.
+            RuleSetId::Ue => "ultimate_equipment",
         };
         let records = table.entries.len();
         let wired_here = table

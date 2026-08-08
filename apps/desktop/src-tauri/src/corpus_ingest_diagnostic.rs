@@ -99,6 +99,7 @@ use codex::rules_core::rules_tables::crb::{
 };
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
+use codex::rules_core::rules_tables::ultimate_equipment as ue;
 use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 
 use crate::race_catalog::{book_code, build_race_catalog, RACE_CORPUS_BOOKS};
@@ -312,14 +313,34 @@ fn ultimate_campaign_counts() -> BTreeMap<String, u32> {
 }
 
 /// Ultimate Intrigue: SD-28 Epic 24 (`epic-24-ui-complete`) from-scratch
-/// book ingest, first slice. 104 real corpus records, all `feats` -- see
-/// `ultimate_intrigue::feat_tables`'s own doc comment for the catalog.
-/// Remaining record families (classes, equipment, races, etc.) are not yet
-/// ingested and are honestly absent from this map rather than reported as
-/// a fabricated zero.
+/// book ingest, slices 1-2. 104 feats, 101 spells, 98 equipment (91 + 7
+/// equipmods) -- see `ultimate_intrigue::{feat_tables,spell_list,
+/// equipment_tables}`'s own doc comments for each catalog. Remaining
+/// record families (`class_feature`, races, etc.) are not yet ingested
+/// and are honestly absent from this map rather than reported as a
+/// fabricated zero. (Caught while wiring UE: this map was never updated
+/// when slice 2 landed spell/equipment -- fixed here.)
 fn ultimate_intrigue_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), ui::feat_tables::feat_tables().len() as u32);
+    counts.insert("spells".to_string(), ui::spell_list::SPELL_LIST.len() as u32);
+    counts.insert(
+        "equipment".to_string(),
+        (ui::equipment_tables::equipment_tables().len() + ui::equipment_tables::equipmod_tables().len()) as u32,
+    );
+    counts
+}
+
+/// Ultimate Equipment: SD-28 Epic 25 (`epic-25-ue-complete`) from-scratch
+/// book ingest, first slice. 1,380 equipment + 180 equipment-modifier
+/// records -- see `ultimate_equipment::equipment_tables`'s own doc
+/// comment for the catalog and its collision-exclusion ruling.
+fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert(
+        "equipment".to_string(),
+        (ue::equipment_tables::equipment_tables().len() + ue::equipment_tables::equipmod_tables().len()) as u32,
+    );
     counts
 }
 
@@ -420,6 +441,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_intrigue_counts(),
             &races,
         ),
+        book_status(
+            "ultimate_equipment",
+            "src/rules_core/rules_tables/ultimate_equipment",
+            ultimate_equipment_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -497,7 +524,8 @@ mod tests {
                 "advanced_race_guide",
                 "pathfinder_unchained",
                 "ultimate_campaign",
-                "ultimate_intrigue"
+                "ultimate_intrigue",
+                "ultimate_equipment"
             ]
         );
     }

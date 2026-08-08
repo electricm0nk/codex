@@ -56,7 +56,7 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_intrigue as ui,
+    ultimate_equipment as ue, ultimate_intrigue as ui,
 };
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -69,11 +69,12 @@ const BOOK_B1: &str = "B1";
 const BOOK_ARG: &str = "ARG";
 const BOOK_PU: &str = "PU";
 const BOOK_UI: &str = "UI";
+const BOOK_UE: &str = "UE";
 
 /// Every book code this catalog can emit, in the order
 /// `build_equipment_catalog` emits them.
 pub const EQUIPMENT_CATALOG_BOOKS: &[&str] = &[
-    BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_B1, BOOK_ARG, BOOK_PU, BOOK_UI,
+    BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_B1, BOOK_ARG, BOOK_PU, BOOK_UI, BOOK_UE,
 ];
 
 /// The category name used for every `pathfinder_unchained` record — see
@@ -222,6 +223,22 @@ fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentC
     }
 }
 
+/// UE's entry type reuses UI's own shape exactly (own `EquipmentCategory`
+/// enum, description joining `DESC:`/`SPROP:` -- see
+/// `ultimate_equipment::equipment_tables`'s own doc comment). Both
+/// `equipment_tables()` (1,380 records) and `equipmod_tables()` (180
+/// records) are served under the same `BOOK_UE` code.
+fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
+    EquipmentCatalogEntryDto {
+        key: entry.key.to_string(),
+        category: format!("{:?}", entry.category),
+        name: entry.name.to_string(),
+        cost_gp: entry.cost_gp,
+        book: BOOK_UE.to_string(),
+        description: entry.description.map(serve_description),
+    }
+}
+
 /// Build the full catalog response across every ingested book. A thin,
 /// testable wrapper behind the Tauri command below (mirroring this
 /// codebase's other command/pure-fn split, e.g.
@@ -241,6 +258,8 @@ pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
         .chain(pu::equipment_tables::equipment_tables().iter().map(map_pu_entry))
         .chain(ui::equipment_tables::equipment_tables().iter().map(map_ui_entry))
         .chain(ui::equipment_tables::equipmod_tables().iter().map(map_ui_entry))
+        .chain(ue::equipment_tables::equipment_tables().iter().map(map_ue_entry))
+        .chain(ue::equipment_tables::equipmod_tables().iter().map(map_ue_entry))
         .collect();
 
     EquipmentCatalogResponse { entries }
@@ -555,9 +574,10 @@ mod tests {
         assert_eq!(with_description("ARG"), 194);
         assert_eq!(with_description("PU"), 42);
         assert_eq!(with_description("UI"), 41);
+        assert_eq!(with_description("UE"), 435);
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            2897
+            3332
         );
     }
 
@@ -601,11 +621,17 @@ mod tests {
         // 91 equipment + 7 equipmods -- see `ultimate_intrigue::equipment_tables`'s
         // own doc comment for why 7, not the 14 `work-inventory.json` reports.
         assert_eq!(count_by_book(&response, "UI"), 98);
+        // 1,369 equipment + 180 equipmods -- see
+        // `ultimate_equipment::equipment_tables`'s own doc comment for the
+        // full raw/dupe/collision reconciliation (1,425 raw - 1 same-book
+        // dupe - 55 cross-book collisions = 1,369; 190 raw - 10 collisions
+        // = 180).
+        assert_eq!(count_by_book(&response, "UE"), 1549);
 
-        // 2977 + 338 + 269 + 4 + 200 + 42 + 98. Pinned as a total as well
-        // as per book so that a book silently dropping out of the chain
-        // cannot be masked by another book growing.
-        assert_eq!(response.entries.len(), 3928);
+        // 2977 + 338 + 269 + 4 + 200 + 42 + 98 + 1549. Pinned as a total as
+        // well as per book so that a book silently dropping out of the
+        // chain cannot be masked by another book growing.
+        assert_eq!(response.entries.len(), 5477);
     }
 
     #[test]
@@ -720,13 +746,22 @@ mod tests {
         // and it is pinned here so it cannot grow unnoticed — and so that
         // the cross-book assertion above is not quietly passing because
         // duplicate detection broke.
+        //
+        // UE adds one more, of a genuinely different shape: `Masterwork
+        // Tool` is both a real purchasable item (`ue_equip_general.lst`,
+        // `General`, 50 gp) and a real equipment *modifier* (a bonus you
+        // apply, `ue_equipmods.lst`, `Equipmods`, `%CHOICE circumstance
+        // Bonus`) -- two distinct corpus records that happen to share a
+        // display name, the same "kept, not deduped" treatment CRB's own
+        // 316 already get, not a defect this widening introduced.
         let intra_book_dupes = rows_per_book_key.values().filter(|count| **count > 1).count();
-        assert_eq!(intra_book_dupes, 316);
-        let intra_book_dupes_outside_crb = rows_per_book_key
+        assert_eq!(intra_book_dupes, 317);
+        let intra_book_dupes_outside_crb: Vec<&(&str, &str)> = rows_per_book_key
             .iter()
             .filter(|((book, _), count)| **count > 1 && *book != "CRB")
-            .count();
-        assert_eq!(intra_book_dupes_outside_crb, 0);
+            .map(|(key, _)| key)
+            .collect();
+        assert_eq!(intra_book_dupes_outside_crb, vec![&("UE", "Masterwork Tool")]);
     }
 
     #[test]
@@ -765,8 +800,8 @@ mod tests {
             book: None,
         });
 
-        // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU + 14 UI.
-        assert_eq!(response.entries.len(), 449);
+        // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU + 14 UI + 269 UE.
+        assert_eq!(response.entries.len(), 718);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }
