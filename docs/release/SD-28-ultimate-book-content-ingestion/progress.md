@@ -2538,3 +2538,61 @@ Ultimate Intrigue: 104 feats + 101 spells + 98 equipment (no deferrals, no fabri
 ### Kanban
 
 `epic-24-ui-complete` and `epic-25-ue-complete` both remain `IN-FLIGHT` -- neither book is closed. Standing by for a fresh assignment per team-lead's direction; not starting a third slice or another book this cycle.
+
+## Cycle `SD28-E26-F1-001` — Card `epic-26-uw-complete` (Ultimate Wilderness, slice 1: feat catalog)
+
+### Reconciliation
+
+```
+137  raw CATEGORY:FEAT rows declared in uw_feats.lst
+ -1  .MOD row (CATEGORY=FEAT|Intimidating Prowess.MOD -- modifies CRB's own feat, not new)
+ -1  cross-book collision (Extended Animal Focus -- ACG's own Hunter Animal Focus feat,
+     real BONUS:VAR token vs. UW's prose-only row; excluded per decisions.md §39/§44)
+----
+135  final
+```
+
+Collision check run **at runtime, before emitting anything** -- a scratch `#[test]` calling `feats_all::all_feat_tables()` itself (817 real keys pre-UW), applying `decisions.md §44`'s lesson from the start rather than re-learning it. Both subtractions verified programmatically.
+
+### The cost model's prediction, tested directly: confirmed, four books for four
+
+Team-lead's instruction was explicit: treat the model as a prediction, not a plan, and go looking for the "one unplanned corpus-shape finding" early. It landed once: `feat_catalog::feat_descriptions_are_rendered_and_otherwise_byte_identical` (a pre-existing guard, not manual review) flagged `Ferocious Beast` leaking a raw `|` tail after rendering. Traced: `Ferocious Beast`'s and `Ferocious Feint`'s own `BENEFIT:` rows carry a trailing `|max(1,MasterLevel/2)` PCGen formula reference with no `%N` token in the prose to consume it -- an orphaned formula tail, unlike every other leaking record in the catalog (CRB through UI), which pairs its `%N` with its `|formula` tail correctly. Fixed **locally in UW's own extraction script** (trimmed at the `|`, the same treatment `SPROP:` already gets for equipment), deliberately not touching the shared `render_pcgen_desc` -- a cross-cutting change belongs in its own scoped work, the same call this epic made for the `classify()` fix before evidence justified widening it.
+
+**Cross-book question, asked and answered properly, not assumed.** Ran the precise detector (`%` absent + `|` present, scoped strictly to the `benefit` field) against every book whose table is literal source (ARG/PU/UCA/UI): zero hits outside UW. Team-lead independently flagged ARG's `Casual Illusionist` as a plausible candidate from a raw-corpus grep; checked directly and found the real reason it can't leak: `advanced_race_guide::feats::FeatTableEntry` (the same shared shape CRB/APG/ACG use) carries no `benefit` field at all -- only `description` (`DESC:`) and `effect` (structured `BONUS:` tokens). `Casual Illusionist`'s `BENEFIT:` row, `|`-tail included, was never ingested as prose in the first place, for any of those four books. This is a *structural absence*, not a *stripping step that could regress* -- a materially stronger guarantee than "the ingest happens to strip it," and worth stating as its own distinction. Independently confirmed by team-lead reading the same struct definition.
+
+**Three-layer lesson, worth carrying forward on its own.** A "does this leak to a player" question has three possible layers to answer it at -- the raw PCGen corpus file, the ingested table, and the served description -- and they can disagree. Team-lead's own coarse grep read the raw corpus layer and found a false-positive-shaped hit; the comprehensive pre-existing test (`leaked_pcgen_syntax(served) == None`, asserted unconditionally across all 952 records in `all_feat_tables()`) answers at the layer that actually matters and had been green throughout. A claim about "leaking" needs to name which layer it is about. The same lesson recurred a second time today in the clippy-warning-count discussion: cargo's own summary line, a `wc -l` on the diagnostics file, and `clippy_one_crate`'s own grep are three different counts of "how many warnings," and only the last is the gate's opinion -- resolved by going to `scripts/verify.sh`'s own method rather than trusting either informal count.
+
+### `Wilding`'s named exception, not a silent carve-out
+
+`rules_core::feat_prereqs`'s `a_stronger_build_is_eligible_for_a_superset_of_a_weaker_ones_feats` property test assumes "more prerequisites open strictly more feats." `Wilding` (`uw_feats.lst:112`) carries a real, deliberate PF1 mechanic -- `PRELEVEL:MAX=1`, an early-level-only feat -- that genuinely breaks this property: a level-6 Fighter loses access a level-1 Fighter had. Named explicitly in the test's own exception set (`known_level_ceiling_exceptions`) rather than silently dropped from the comparison, so a second, unexpected exception still fails the test instead of being absorbed alongside it.
+
+### Clippy attribution and the desktop ceiling
+
+First `verify.sh` run (HEAD `dcee370a`) failed: `desktop: 8 warnings exceeds recorded ceiling 7`. Attributed before acting, per the standing rule this bundle has held all session: `unused import: 'ultimate_wilderness as uw'` in `reach_gate.rs`, introduced this cycle (the UW feats reach claim uses `RuleSetId::Uw` directly, never the `uw::` module alias). Fixed by removing the import, not raising the ceiling -- debt chosen this cycle is not debt inherited. Re-measured against the gate's own method (`scripts/verify.sh`'s `clippy_one_crate`: `grep '^warning:' | grep -v 'generated N warning'`, not cargo's own summary line, which undercounted): **7**, exactly at ceiling, which passes (`warnings > ceiling` is the fail condition). Committed separately as `5ebbae84`.
+
+**Desktop's clippy budget is now fully spent (7/7).** The next book touching desktop-side files (`feat_catalog.rs`, `character_hub.rs`, `equipment_catalog.rs`, `reach_gate.rs`, `corpus_ingest_diagnostic.rs`) will breach the ceiling on its first stray lint, not merely approach it. Flagged for whoever picks up UC/UM/UPsi next.
+
+### Verification (every exit code read from its own log)
+
+- `cargo test --lib --locked`: 1510 passed, 0 failed, 3 ignored.
+- Full desktop-crate suite: 412/413 before the git-timestamp Decision-34 case cleared on commit; clean thereafter.
+- **`./scripts/verify.sh` (full, `run_in_background: true`):** first run FAILed on the clippy ceiling (attributed and fixed above); second run:
+  ```
+  SUMMARY
+    passed:  10  preflight-disk root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump
+  RESULT: PASS
+  EXIT_CODE=0
+  ```
+  Against HEAD `5ebbae84`.
+
+### Commits, pushed and confirmed
+
+`dcee370a` -- feat catalog ingest (16 files, +1931/-102). `5ebbae84` -- clippy fix (1 file, +1/-1). Both confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
+
+### Session cumulative totals (this whole session, four books touched)
+
+Ultimate Intrigue (`epic-24`): 104 feats + 101 spells + 98 equipment. Ultimate Equipment (`epic-25`): 1,549 equipment records. Ultimate Wilderness (`epic-26`): 135 feat records. All reconciliations closed exactly, no fabricated data, no deferred-with-reason units this session. Program-wide `proven` figure corrected from 3,242 to 1,381 via the classifier fix (`decisions.md §43`). Four self-caught tooling issues (over-broad classifier patch, broken collision check, wrong-granularity guard, clippy ceiling breach), each attributed and fixed rather than absorbed or worked around. Four pre-existing guards earned their keep catching real issues before this epic did: `keys_do_not_collide_across_books_and_crbs_own_duplicates_are_pinned` (UE), `the_catalog_and_the_resolver_agree_on_the_book_set` (UI slice 2), `reports_every_landed_book_in_a_stable_order` (UE), `feat_descriptions_are_rendered_and_otherwise_byte_identical` (UW) -- against seventeen catalogued `decisions.md §36` instances where nothing fired.
+
+### Kanban
+
+`epic-24-ui-complete`, `epic-25-ue-complete`, `epic-26-uw-complete` all remain `IN-FLIGHT`; none closed. Standing by for a fresh assignment. Not starting UC/UM/UPsi without one.
