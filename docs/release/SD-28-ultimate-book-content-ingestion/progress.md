@@ -2282,3 +2282,100 @@ The brief's bar is met in principle: `spell_save_dc` now varies with the spell's
 Four consecutive `driver.sh launch` failures before success, driven by the same root cause read three different (two wrong) ways: a wrapper (`driver.sh`'s own timeout/exit code) obscuring what its wrapped process (`npx tauri dev` → `cargo build`) was actually doing. Diagnosed in order: GTK-init-under-Xvfb (wrong — no such error in the log), Vite dev server not starting (wrong — vite starts standalone in 1.3s), then correctly: a cold 496-crate Rust build racing `epic-16-backfill`'s concurrent edits to shared `src/` files, each of which resets `tauri dev`'s file-watcher mid-compile, so the build never finished inside the launcher's retry budget. Fixed by a plain `cargo build --locked` (no watcher, one-shot) to warm the shared `target/` dir, then launching immediately while the cache was hot — succeeded on the very next attempt. ~90 minutes lost across the misdiagnoses; recorded so the next agent hitting a launcher timeout reads the wrapped process's own log tail before theorising about the code it runs.
 
 **Cross-reference:** `kanban.md` card `epic-31-spell-wiring` → COMPLETE; `epic-breakdown.md` §"Epic 31" (objective, feature seeds, Part 2 disposition); `docs/retro/events/epic-31-spell-wiring.jsonl` (the launcher incident).
+
+## Cycle `SD28-E24-F1-001` — Card `epic-24-ui-complete` (Ultimate Intrigue, slice 1: feat catalog)
+
+### Objective and slice choice
+
+Ultimate Intrigue is a genuine from-scratch book ingest (1,265 units per the dispatching brief, `scope: future_state` / `engine_rule_set: null` in `docs/work-inventory.json` going into this cycle) — the same shape `epic-13-calibration` established for `ultimate_campaign`, at ~55x the size. Per the brief's own instruction ("slice it... land one coherent slice completely"), this cycle lands **one record family end to end: the 104-record feat catalog**, not a sample across families.
+
+### What landed
+
+- **`RuleSetId::Ui`** (`src/rules_core/rules_tables/mod.rs`) — the new variant, plus `src/rules_core/rules_tables/ultimate_intrigue/{mod,feat_tables}.rs`.
+- **`ultimate_intrigue::feat_tables::feat_tables()`** — all 104 `CATEGORY:FEAT` records from `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst` (re-derived: `grep -c 'CATEGORY:FEAT' ui_feats.lst` → 104), generated programmatically from the live corpus (not hand-transcribed — a one-off Python extraction script, spot-checked against the raw file). Every record carries real `DESC:`/`BENEFIT:`/`TYPE:` — **no upstream splice or truncation defect found**, unlike UCA's two confirmed corruptions (explicit negative finding, not merely unmentioned). All 104 are text-complete; **zero `deferred-with-reason`**.
+- **`category` reuses the shared `crb::feats::FeatCategory` enum** (General/Combat/Metamagic/Teamwork — all four of UI's `TYPE:` facets already exist on it, including folding `Combat.Critical`/`Combat.Panache`/`Combat.Style`/`Combat.Teamwork` sub-facets to `Combat`), unlike UCA/ARG/PU which each needed their own type.
+- **`prerequisites` carries UI's own real `PRE`-family tokens verbatim**, gathered directly at ingest (no `UI_FEAT_PREREQUISITES` backfill table needed, unlike ARG/PU) — **98 of 104 records are mechanically gated**, unlike UCA's 23 `PRETEXT:`-only records, which cannot mechanically block anything.
+- **`feats_all.rs`** — `map_ui_entry` (joins `description`+`benefit` the same way `map_uca_entry` does), `ui_records()`, roster entry in `all_feat_tables()`. New tests: `ui_records_join_desc_and_benefit_with_no_deferrals`, UI additions to `the_per_book_category_split_is_the_real_one` and `the_per_book_prerequisite_coverage_is_the_real_one`. Confirmed no new cross-book key collision (`cross_book_key_collisions_are_exactly_the_known_set` still passes with only the pre-existing `Endurance` entry).
+- **All 8 fixed-cost call sites** epic-13's receipt documented, closed:
+  1. `RuleSetId::Ui` variant (compiler-enforced exhaustive matches did the rest)
+  2. `feats_all.rs` join (above)
+  3. `v06_content_state_dump.rs` — hand-maintained roster (`ui_content()`) + `RuleSetId::Ui` arm (**not compiler-enforced**, added explicitly)
+  4. `v06_work_inventory.rs` — `COMPILED_RULE_SETS`, `corpus_dir_for`, `rule_set_id` arms
+  5. `apps/desktop/src-tauri/src/reach_gate.rs` — `("ultimate_intrigue", "feats")` claim + `RECORD_TYPE_KINDS` registration for `UiFeatEntry` (caught live by `every_ingested_record_type_is_classified`)
+  6. `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs` — `ultimate_intrigue_counts()` + roster entry (caught live by `every_book_landed_in_rules_tables_is_reported` / `reports_every_landed_book_in_a_stable_order`)
+  7. `pre_tokens.rs` — new unmodelled kind `PRESPELLSCHOOLSUB` (UI's `Superior Scryer`), added to `UNMODELLED_KINDS` with a reason, caught live by `every_pre_kind_in_the_catalog_is_either_modelled_or_declared_unmodelled`
+  8. Full count sweep (below)
+
+### Count sweep (playbook DoD item 10) — every pinned count re-derived from a real test failure, not computed by hand
+
+`grep -rln '\b713\b' src/ apps/desktop/src-tauri/src/ tests/` before this cycle → 6 files. Each was run, its real failure diff read, and the pinned value replaced with the **observed** number (never guessed forward):
+
+| File | What moved |
+|---|---|
+| `src/rules_core/feat_identity.rs` | `checked` 713 → 817 |
+| `src/rules_core/feat_prereqs.rs` | `reports.len()` 713 → 817; eligible-for-a-starting-Fighter 234 → **242** (re-derived via failing assertion, not estimated) |
+| `src/rules_core/feat_prereqs/pre_tokens.rs` | new `PRESPELLSCHOOLSUB` arm in `UNMODELLED_KINDS` |
+| `apps/desktop/src-tauri/src/feat_catalog.rs` | total 713 → 817; `with_description` 704 → 808; `raw_leaks`/`changed.len()` 18 → **28** (5 new `%%` leaks + 5 new `%N`/`|`-tail leaks, found by re-scanning the generated table, not assumed); per-category counts (`General` 315→367, `Combat` 302→348, `Metamagic` 36→40, `Teamwork` 10→12); `filter_feat_catalog_matches_category_exactly` (Metamagic) 36 → 40 |
+| `apps/desktop/src-tauri/src/character_hub.rs` | two catalog-length assertions 713 → 817 |
+| `tests/sd27_feat_prerequisite_enforcement.rs` | `with_any` 622 → 720; full `PRE`-kind census map re-derived from the real failure diff (`PREABILITY` 482→564, `PREVARGTEQ` 231→285, `PRESKILL` 63→121, etc.; total clauses 1,615 → **1,860**, not the arithmetically-wrong 1,875 my first pass hand-summed — caught by the test itself, not by inspection); `evaluate_every_catalog_feat` length 713 → 817 (5 build fixtures) |
+| `tests/v06_apg_acg_feat_catalog.rs` | `books.len()` 6 → 7; total 713 → 817; `RuleSetId::Ui` entry added |
+
+### Verification
+
+- `cargo test --lib --locked` (repo root, before commit): **1495 passed; 0 failed**.
+- Desktop-crate modules run directly (`feat_catalog`, `character_hub`, `corpus_ingest_diagnostic`, `reach_gate`): all green after fixes above, **except** `corpus_ingest_diagnostic::last_ingested_at_is_a_real_git_derived_timestamp_when_available`, correctly attributed to Decision 34 (no commit history yet for the new directory) rather than treated as a defect.
+- `cargo test --workspace --locked` (repo root only — a separate cargo workspace from `apps/desktop/src-tauri` per `AGENTS.md`'s own note): exit 0, 0 `FAILED` lines, confirmed by reading the full output, not the harness summary alone.
+- **Commit**: `7c86f58a` on `tranche/8`, 15 files (`+1515/-70`) — per Decision 34, committed before the full gate (a new book has no git history for the timestamp test until it is committed).
+- **Pushed**: `git push origin tranche/8` → `4c5c8d5f..7c86f58a`; `git rev-parse HEAD origin/tranche/8` → both `7c86f58abc5c1fb6bdad85aa378bd1acf788092e`.
+- **`./scripts/verify.sh` (full, `run_in_background: true`, exit code read from the log file itself, never inferred):**
+  ```
+  SUMMARY
+    passed:  10  preflight-disk root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump
+  RESULT: PASS
+  EXIT_CODE=0
+  ```
+  Against HEAD `7c86f58a`. Baseline-drift notes (not failures — `verify.sh`'s own distinction): `BASELINE_ROOT_LIB_TESTS` 1488→1495, `BASELINE_ROOT_FULL_TESTS` 5996→6012, `BASELINE_ROOT_TEST_BINARIES` 536→537 in `scripts/verify-baselines.env`, left unresolved this cycle (deliberate — not this card's file-touch scope, flagged for the next cycle that owns that file).
+
+### Measured cost: fixed-vs-variable split (the deliverable this slice exists to produce)
+
+Re-derived from `git show --numstat 7c86f58a`, not estimated:
+
+| Bucket | Files | Lines (+/-) | Character |
+|---|---|---|---|
+| **Content** (the 104 records themselves) | `ultimate_intrigue/feat_tables.rs`, `mod.rs` | +1261/-0 | Generated programmatically from the corpus by a one-off extraction script — near-zero marginal authoring cost per record once the script exists. |
+| **Fixed wiring** (the 8 call sites, excluding tests) | `rules_tables/mod.rs`, `feats_all.rs` (non-test portion), `v06_content_state_dump.rs`, `v06_work_inventory.rs`, `reach_gate.rs`, `corpus_ingest_diagnostic.rs`, `pre_tokens.rs` | ≈161 lines | Matches epic-13's finding: this is the same fixed set of touch points regardless of book size — a 23-record book and a 104-record book pay the same 8 call sites. |
+| **Count sweep / test re-derivation** | `feat_identity.rs`, `feat_prereqs.rs`, `feat_catalog.rs`, `character_hub.rs`, `sd27_feat_prerequisite_enforcement.rs`, `v06_apg_acg_feat_catalog.rs`, plus `feats_all.rs`'s test additions | ≈240 lines | **This is the bucket that does not scale with record count** — it scales with the number of pre-existing files that pin an aggregate count (7, unchanged whether this book adds 20 or 200 records) and required a real rebuild-test-fix loop per file (several counts, e.g. the `PRE`-kind census and the `%%`/`%N` leak count, could only be obtained correctly by reading a real test failure's diff, not by hand-computation — my own first hand-summed total for the `PRE`-kind census was arithmetically wrong and the test itself caught it). |
+
+**Headline for sizing the remaining six Ultimate books**: fixed wiring + count-sweep together (~400 lines, dominated by rebuild/test iteration, not by record count) is the true "book onboarding tax," paid once per book regardless of how large its first slice is. The content itself is nearly free once a book's extraction script exists. This means **the right strategy for the remaining six Ultimate books is the same one epic-13 recommended**: pay the fixed tax once per book on the smallest defensible first slice, then subsequent slices of the same book are content-only (no further wiring, no further count-sweep beyond incremental deltas).
+
+### Remaining Ultimate Intrigue scope — re-derived fresh, not trusted from the epic's stated composition
+
+Per the dispatching brief and this bundle's own hard-won lesson (`race_trait` 3,276→1, `unknown` shedding 2,275 to a single missing check in an earlier book), the epic's stated "1,265 units, all not-started" was **not** re-trusted. Regenerated `docs/work-inventory.json` fresh post-commit (`cargo run --locked --bin v06_work_inventory`) and read `ultimate_intrigue`'s own `kinds`/`reconciliation` block directly:
+
+| Kind | Total (re-derived) | Accounted (text-complete/grounded) | Remaining |
+|---|---:|---:|---:|
+| class | 3 | 0 | 3 |
+| class_feature | 931 | 47 | 884 |
+| race_trait | 10 | 0 | 10 |
+| feat | 107 | 96 | 11 |
+| spell | 101 | 0 | 101 |
+| equipment | 91 | 0 | 91 |
+| equipment_modifier | 14 | 0 | 14 |
+| companion | 1 | 0 | 1 |
+| **Total** | **1,258** | **143** | **1,115** |
+
+Two findings worth stating explicitly rather than rounding away:
+
+1. **The book's total is 1,258 by fresh re-derivation, not 1,265** — a 7-unit discrepancy against the brief, not reconciled this cycle (out of scope; flagged for whoever picks up slice 2 to investigate if it matters to the final SD-30 integrity count).
+2. **`feat`'s own total is 107, not 104** — reconciliation shows `engine_records: 104`, a real 3-unit gap: `Gaze Reflection`, `Improved Legendary Influence`, `Legendary Influence` live in a **second file**, `ui_feats_oa.lst`, which this slice did not scope (only `ui_feats.lst`'s 104 top-level records). Genuine remaining feat work for the next slice, not a classifier artifact — confirmed by reading the 3 `not-ingested` units directly rather than assuming.
+3. **A side effect worth noting**: adding `RuleSetId::Ui` alone (independent of any class-feature ingest) unlocked honest `text-complete` classification for 47 zero-magnitude `class_feature` records that were previously blanket-`not-started` under `no_compiled_rule_set_for_book` — the same effect `v06_work_inventory.rs`'s own doc comment records for ARG/PU's `RuleSetId` arrival. This is not claimed as class-feature ingest work; it is the classifier correctly re-evaluating units it can already see once the book is no longer wholesale unmeasured.
+
+**Accurate remaining count for the next slice: 1,115 units** (884 class_feature + 101 spell + 91 equipment + 14 equipment_modifier + 11 feat [3 in `ui_feats_oa.lst` + 8 `unknown` pending a feat-effect probe posture] + 10 race_trait + 3 class + 1 companion).
+
+### Retro events
+
+`scripts/retro.py deferral --actor epic-24-ultimate-intrigue --what "Ultimate Intrigue's remaining 1,115 units (class_feature, spell, equipment, equipment_modifier, race_trait, class, companion, and 3 feats in ui_feats_oa.lst)" --reason "brief's own slicing instruction: land one coherent record family end to end per cycle rather than attempt the whole book; feat catalog (104 of 107 declared feat units) is this cycle's complete slice" --scope "one book epic (epic-24-ui-complete), slice 1 of N" --blocked-by "none -- awaiting next slice assignment, not a hard blocker" --tracked-at "docs/release/SD-28-ultimate-book-content-ingestion/progress.md SD28-E24-F1-001"` — emitted to `docs/retro/events/epic-24-ultimate-intrigue.jsonl`.
+
+### Kanban
+
+`epic-24-ui-complete` → `IN-FLIGHT`, `Claimed-by: epic-24-ultimate-intrigue`, `Cycle-id: SD28-E24-F1-001`. Not moved to `COMPLETE` — 1,115 of 1,258 units remain. Next cycle against this card should pick its slice by shape from the table above (class_feature is by far the largest remaining kind at 884 units) and re-derive the corpus/engine numbers fresh again rather than trust this receipt's snapshot.

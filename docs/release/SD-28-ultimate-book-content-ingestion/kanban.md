@@ -42,7 +42,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 20 | `epic-21-ce` | READY | Core Essentials | per-book completion — gap 2593 | `epic-17-punchained` | — | — | — |
 | 21 | `epic-22-apg` | READY | Advanced Player's Guide | per-book completion — gap 2948 | `epic-17-punchained` | — | — | — |
 | 22 | `epic-23-crb` | READY | Core Rulebook | per-book completion — gap 4804 (3062 of it hard-gated on `epic-14-harness`) | `epic-17-punchained` | — | — | — |
-| 23 | `epic-24-ui-complete` | READY | Ultimate Intrigue | 100% proven — gap 1265; supersedes `epic-6-ui`; full-size-book cost calibration | `epic-14-harness`, `epic-15-unknown-sweep`, `epic-16-backfill` | — | — | — |
+| 23 | `epic-24-ui-complete` | IN-FLIGHT | Ultimate Intrigue | slice 1 (104-record feat catalog) landed and verified; 1,115 of 1,258 units remain (re-derived, see progress.md) | `epic-14-harness`, `epic-15-unknown-sweep`, `epic-16-backfill` | epic-24-ultimate-intrigue | 2026-08-08T03:20:44-04:00 | SD28-E24-F1-001 |
 | 24 | `epic-25-ue-complete` | READY | Ultimate Equipment | 100% proven — gap 1615; supersedes `epic-5-ue`; HARD-gated on harness | `epic-14-harness`, `epic-24-ui-complete` | — | — | — |
 | 25 | `epic-26-uw-complete` | READY | Ultimate Wilderness | 100% proven — gap 2030; supersedes `epic-8-uw` | `epic-14-harness`, `epic-24-ui-complete` | — | — | — |
 | 26 | `epic-27-uc-complete` | READY | Ultimate Combat | 100% proven — gap 2182; supersedes `epic-3-uc` | `epic-14-harness`, `epic-24-ui-complete` | — | — | — |
