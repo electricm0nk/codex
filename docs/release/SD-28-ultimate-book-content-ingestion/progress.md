@@ -2596,3 +2596,79 @@ Ultimate Intrigue (`epic-24`): 104 feats + 101 spells + 98 equipment. Ultimate E
 ### Kanban
 
 `epic-24-ui-complete`, `epic-25-ue-complete`, `epic-26-uw-complete` all remain `IN-FLIGHT`; none closed. Standing by for a fresh assignment. Not starting UC/UM/UPsi without one.
+
+## Cycle `SD28-E27-F1-001` — Card `epic-27-uc-complete` (Ultimate Combat, slice 1: feat catalog)
+
+### Reconciliation
+
+```
+263  raw CATEGORY:FEAT rows declared in uc_feats.lst
+     (re-derive with: grep -ci 'CATEGORY:FEAT' uc_feats.lst -- the naive
+      line-anchored `grep -c '^CATEGORY:FEAT'` returns 0; the file is not
+      line-anchored to that token and mixes `Feat|`/`FEAT|` casing)
+ -2  genuine textless records, excluded per no-stub-mvp-doctrine
+----
+261  final
+```
+
+Zero cross-book collisions -- re-derived at runtime against every other book's real feat key set (a scratch `#[test]` dump of `feats_all::all_feat_tables()`, `decisions.md §44`'s lesson applied from the start). UC's feats are genuinely new content, unlike UE's 55 or UW's 1.
+
+### The real finding: two textless stubs, one recovered record, and a mechanism that generalizes
+
+Landing this slice's own generated tests (`every_record_carries_desc_and_benefit`, `no_record_is_deferred`) failed immediately at the first record checked, not at an aggregate count -- a materially sharper failure than any prior book's count-sweep miss. Traced each of three flagged records by reading the raw corpus row directly:
+
+- **`Revelation Strike`** (`uc_feats.lst:261`) carries `DESC:` but no `BENEFIT:` on its own row. Its real mechanical text lives on `CATEGORY=Feat|Revelation Strike.MOD` (line 262) -- `=` not `:`, invisible to every book's standard `CATEGORY:FEAT` scan. Confirmed same-feat identity (name, adjacency, corpus-uniqueness) before embedding the recovered text. **Recovered, not excluded.**
+- **`Gundarme Bonus Feat`** (`uc_feats.lst:350`) -- no `DESC:`/`BENEFIT:` anywhere in the corpus; an `ABILITY:FEAT|AUTOMATIC|%LIST` auto-grant wrapper with no prose of its own. **Excluded.**
+- **`Deathless Master (Vigor/Wounds)`** (`uc_feats.lst:357`) -- no `DESC:`/`BENEFIT:`; a bare `PRERULE:1,DAMAGE_VW`-gated rules-variant sibling of the fully-texted `Deathless Master` (line 63). **Excluded.**
+
+Final catalog: **261 real, distinct, text-complete records** (263 raw − 2 genuine textless exclusions). Every downstream pinned count re-derived from 261, not the initially-emitted 263: `feats_all.rs` (books.len() 8→9, total 1215→1213, per-book category split, per-book prerequisite coverage 247/261, `with_prerequisites` total 1094 of 1213), `feat_identity.rs` (1213), `feat_prereqs.rs` (1213 reports; 319 of 1213 eligible for a starting Fighter, unchanged by the 263→261 correction since neither excluded record was Fighter-eligible), `sd27_feat_prerequisite_enforcement.rs`'s full `PRE`-kind census (two newly-unmodelled kinds added to `pre_tokens::UNMODELLED_KINDS`: `PREDR` — damage-reduction prerequisites, `PRERULE` — PCGen house-rule-flag prerequisites; total 2932, modelled 2784), `v06_apg_acg_feat_catalog.rs`, `feat_catalog.rs` (`with_description` 1204 "9 of the 1213 records carry no DESC:", `by_source("Uc")` 261, category counts including `Grit`=7/`CalledShot`=2/`Critical`=1/`Style`=1), `character_hub.rs` (both `response.entries.len()` assertions → 1213).
+
+**`UcFeatEntry`'s own `FeatCategory` enum keeps a `Panache` variant distinct from ACG's own `Panache`** (mapped to the string `"UcPanache"`, not deduped into ACG's), even though 0 UC records use it today. Kept deliberately, not collapsed: UC's grit/panache facets are declared as this book's own category set in the corpus, and collapsing an unused variant into another book's same-named one would silently couple two books' category vocabularies on a coincidence of spelling rather than a real shared mechanic -- a future agent seeing the unused variant should not "clean it up" without re-reading this note first.
+
+**Leak-list shift, verified non-vacuous.** `Revelation Strike`'s recovered `.MOD` text carries its own `&nl;` entity escape, moving the catalog's known-leaking-but-correctly-rendered set from 136 to 137 (`Revelation Strike` inserted alphabetically between `Recovered Rage` and `River Raider`). Confirmed the comparison this landed against was not vacuous: `feat_descriptions_are_rendered_and_otherwise_byte_identical` iterates `build_feat_catalog().entries` (the full 1213-record joined catalog), and its own `with_description` assertion (1204 "9 of the 1213...") proves the run examined the corrected post-UC scope, not the pre-UC 952.
+
+**UC broke the four-book "exactly one unplanned finding" pattern.** UI, UE, UW each produced exactly one; UC produces **three**: (1) the two textless exclusions + the `.MOD` recovery above, (2) `PREDR`/`PRERULE` as newly-unmodelled prerequisite kinds, (3) the nine-book `.MOD`-recovery sweep this cycle ran (below) finding a live sibling gap in an already-shipped book, APG. This was predicted, not surprising after the fact: UC was flagged before this slice started as the most unusually-shaped book left in the program (both `support/` and `_pfs/` present, 22 cross-book prerequisite references, a missing `OGL.txt` recoverable only from the `.pcc`'s `COPYRIGHT` block). Reported as three, not averaged back to one. Full method and the nine-book sweep table: `decisions.md §46`/`§47`.
+
+### `_pfs/` exclusion, stated not silent
+
+UC's corpus has both `support/` and `_pfs/` subdirectories -- the only book so far with both. `_pfs/` (Pathfinder Society legal/organized-play material, not core rules content) was deliberately excluded from this ingest; `support/`'s 22 cross-book prerequisite references point outside SD-28's book set and are blocked-elsewhere, not this cycle's work.
+
+### `OPEN_FINDINGS`-shaped handoff: APG's `Deadly Aim` carries uningested text
+
+Swept `§46`'s `.MOD`-recovery mechanism (a record's real prose living on an invisible `CATEGORY=<Book>|<Name>.MOD` row) across all nine landed books:
+
+```
+ultimate_campaign        46   already handled (UPSTREAM_NOT_IMPLEMENTED, wiring_class.rs)
+advanced_players_guide    1   live gap, not yet fixed -- this entry
+ultimate_combat            2   fixed in this slice (Revelation Strike recovered;
+                                Gundarme Bonus Feat / Deathless Master (Vigor/Wounds)
+                                excluded as genuinely textless)
+advanced_race_guide/advanced_class_guide/ultimate_intrigue/
+ultimate_wilderness/ultimate_magic/core_rulebook            0 each
+```
+
+**Live gap:** APG's `CATEGORY=FEAT|Deadly Aim.MOD` carries `DESC:&nl;[Zen Archer Flurry] You can make exceptionally deadly ranged...`. Our CRB `Deadly Aim` entry exists (`src/rules_core/rules_tables/crb/feat_data/combat.rs:31`) but `Zen Archer Flurry` appears nowhere in `src/` (re-confirmed by direct grep at time of writing) -- the text is uningested. Same defect class as `Revelation Strike`, different book, not yet fixed. One record, cheap, out of this cycle's write scope (APG is not `epic-27`'s territory). Recorded per `decisions.md §38`'s ruling (never-ingested gaps belong here and in `decisions.md`, not in `reach_gate.rs`'s own `OPEN_FINDINGS` array) as the handoff for a future cycle. Full detail: `decisions.md §47`.
+
+### Verification (every exit code read from its own completed log)
+
+- `cargo test --lib --locked` (own read, pre-commit): 1514 passed, 0 failed.
+- Full desktop-crate suite (own read, pre-commit): 412/1 -- the single expected Decision-34 git-timestamp case for a brand-new book pre-commit, cleared on commit.
+- Clippy at the gate's own method (`grep '^warning:' | grep -v 'generated N warning'`), checked locally before commit: root 75/75, desktop 7/7 -- both exactly at ceiling (not breached; `warnings > ceiling` is the fail condition).
+- **`./scripts/verify.sh` (full, `run_in_background: true`), against HEAD `8395a04d`:**
+  ```
+  SUMMARY
+    passed:  10  preflight-disk root-lib root-full desktop reach frontend-install
+                 frontend-test frontend-typecheck clippy class-dump
+  root-lib: 1514 passed · root-full: 6031 passed across 537 suites ·
+  desktop: 413 passed · reach: 16 passed · clippy: root 75, desktop 7 warnings, 0 errors
+  RESULT: PASS
+  EXIT_CODE=0
+  ```
+
+### Commit, pushed and confirmed
+
+`8395a04d` -- Ultimate Combat feat catalog ingest, SD28-E27 slice 1 (16 files, +3356/-65). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
+
+### Kanban
+
+`epic-24-ui-complete`, `epic-25-ue-complete`, `epic-26-uw-complete` remain `IN-FLIGHT`, unchanged this cycle. `epic-27-uc-complete` moves `READY` → `IN-FLIGHT` (slice 1 landed). Standing by for a fresh assignment. Not starting UM/UPsi, and not starting UC's remaining kinds (spell/equipment/race_trait etc.), without one.

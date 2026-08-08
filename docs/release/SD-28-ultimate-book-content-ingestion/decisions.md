@@ -1006,4 +1006,38 @@ Traced each of the three real issues by reading the raw corpus row directly, not
 
 **Why this matters as its own instance, not folded into the ordinary count sweep: a book could have shipped 263 records with 2 silent stubs, and every count-sweep assertion in this program would have passed, because those checks only verify totals agree with each other, not that every record carries real content.** The gap was caught only because this slice's own generated tests (`every_record_carries_desc_and_benefit`/`no_record_is_deferred`) exist at all -- the same discipline `ultimate_intrigue`/`ultimate_wilderness`'s own catalogs already carry, applied here before commit rather than discovered after. This is the cost model's predicted "one unplanned corpus-shape finding" for this book, and it is the sharpest one yet: not a rendering artifact (UW's orphaned formula tail) or a tooling gap (UE's collision check), but a genuine no-stub-mvp-doctrine violation caught before it shipped.
 
-**Cross-reference:** `decisions.md §44`/`§45` (the collision-check and cost-model-prediction precedents this decision continues); `docs/governance/no-stub-mvp-doctrine.md` (the doctrine this finding is a direct instance of); `progress.md` `SD28-E27-F1-001` (this epic's own receipt).
+**Three independent reasons a reasonable grep misses the `.MOD` recovery mechanism, worth stating together:** (1) it is not line-anchored to `CATEGORY:FEAT` at all -- `grep -c '^CATEGORY:FEAT' uc_feats.lst` returns **0**, not 263, because the file's rows are not anchored the way that command assumes; (2) casing is inconsistent *within a single file* -- both `Feat|` and `FEAT|` occur in `uc_feats.lst`, so even a correct unanchored pattern must be case-insensitive (`grep -ci 'CATEGORY:FEAT' uc_feats.lst` → 263, the form to use); (3) the recovery row itself uses `=` in place of `:` (`CATEGORY=Feat|Revelation Strike.MOD`), a token shape no book's own extraction script scans for. Anyone re-deriving this book's count needs the case-insensitive unanchored form, not the naive line-anchored one -- confirmed independently by team-lead, whose own first attempt hit the same 0 before correcting to 263.
+
+**Non-vacuity of the leak-check re-confirmed against the corrected 1213-record scope, not assumed clean.** `feat_catalog::feat_descriptions_are_rendered_and_otherwise_byte_identical` iterates `build_feat_catalog().entries` -- the full joined catalog, not a book-scoped subset -- and its own `with_description` count (1204, "9 of the 1213 records carry no DESC: token") proves the comparison ran over the corrected 1213-record scope, not the pre-UC 952. A pass here is real, not vacuous.
+
+**UC broke the four-book "exactly one unplanned finding" pattern -- with three, not one.** UI, UE, UW each landed exactly one unplanned corpus-shape finding; UC lands three: (1) the two textless-record exclusions plus the `.MOD` recovery documented above, (2) two newly-unmodelled prerequisite kinds (`PREDR`, `PRERULE`, added to `pre_tokens::UNMODELLED_KINDS`), and (3) the nine-book `.MOD`-recovery sweep this decision's addendum records finding a live sibling gap in APG (`§47`). This is not a break in the cost model so much as its refinement: UC was flagged, before this slice started, as the most unusually-shaped book left in the program (both `support/` and `_pfs/` present, 22 cross-book references, a missing `OGL.txt` recoverable only from the `.pcc`'s `COPYRIGHT` block) -- an unusual book shape predicting more than one finding, not a violation of the pattern. Reported plainly rather than averaged back to "one."
+
+**Cross-reference:** `decisions.md §44`/`§45` (the collision-check and cost-model-prediction precedents this decision continues); `docs/governance/no-stub-mvp-doctrine.md` (the doctrine this finding is a direct instance of); `progress.md` `SD28-E27-F1-001` (this epic's own receipt); `decisions.md §47` (the APG sibling gap this decision's `.MOD` mechanism led to finding).
+
+## Decision 47 — SD28: sweeping the `CATEGORY=…​.MOD` recovery mechanism across all nine landed books finds one live gap outside UC -- APG's `Deadly Aim` carries uningested text (2026-08-08)
+
+**Status:** New. `OPEN_FINDINGS`-shaped record, per `decisions.md §38`'s ruling that a never-ingested gap belongs in this decisions package and in `progress.md`, not in `reach_gate.rs`'s own `OPEN_FINDINGS` array (that array covers records already ingested but not yet reaching a player; this is a record never ingested at all). Not fixed in this cycle -- APG is outside `epic-27-uc-complete`'s write scope, and this cycle already holds 12 files uncommitted at discovery time.
+
+**Method:** `§46`'s `Revelation Strike` recovery (real prose text living on an invisible `CATEGORY=<Book>|<Name>.MOD` row rather than the record's own `CATEGORY:FEAT` row) is a mechanism, not a one-off -- so it was swept across every book's own feat file with `grep -rhE '^CATEGORY=.*\.MOD' <book>/*feat*.lst | grep -E 'DESC:|BENEFIT:'` (case-insensitive per `§46`'s own casing finding). Results, by book:
+
+```
+ultimate_campaign        46   (already handled -- see below)
+advanced_players_guide    1   (live gap -- this decision)
+ultimate_combat            2   (fixed in §46: Revelation Strike recovered,
+                                Gundarme Bonus Feat / Deathless Master (Vigor/Wounds)
+                                excluded as genuinely textless)
+advanced_race_guide        0
+advanced_class_guide       0
+ultimate_intrigue          0
+ultimate_wilderness        0
+ultimate_magic              0
+core_rulebook               0
+```
+
+The zeros bound the problem as much as the hit does: this mechanism is not a systemic gap across the program, it is confined to three books, and two of the three are already closed. `ultimate_campaign`'s 46 were reached by prior work in this bundle before today (`UPSTREAM_NOT_IMPLEMENTED` in `wiring_class.rs`; `feats_all.rs` already asserts `Accursed`'s joined description carries the real `.MOD`-sourced `BENEFIT:` text, not merely the base row's flavour `DESC:`) -- not a new finding, confirmed already-handled rather than re-opened.
+
+**The live gap:** `advanced_players_guide`'s `CATEGORY=FEAT|Deadly Aim.MOD` carries a real `DESC:&nl;[Zen Archer Flurry] You can make exceptionally deadly ranged...` block. The engine's own CRB `Deadly Aim` entry exists (`src/rules_core/rules_tables/crb/feat_data/combat.rs:31`), but the string `Zen Archer Flurry` appears **nowhere in `src/`** as of this writing -- re-confirmed by direct grep at the time of this entry. This is the same defect class as `§46`'s `Revelation Strike`, in a different, already-shipped book: a `.MOD` row's real prose was never picked up because APG's own extraction, like every book's before this sweep, only ever scanned the `:`-form `CATEGORY:FEAT` rows.
+
+**Remedy, not performed here:** recover `Deadly Aim`'s `.MOD`-sourced `Zen Archer Flurry` text into APG's own feat table, the same treatment `§46` gave `Revelation Strike` -- one record, cheap, scoped to APG's own file. To be scheduled as its own cycle by team-lead; this decision is the handoff.
+
+**Cross-reference:** `decisions.md §46` (the mechanism and the recovery pattern this sweep generalizes); `decisions.md §38` (the ruling that never-ingested gaps belong here, not in `reach_gate.rs`'s `OPEN_FINDINGS`); `progress.md` `SD28-E27-F1-001` (this epic's own receipt, which records the sweep result).
