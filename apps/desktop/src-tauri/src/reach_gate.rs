@@ -113,7 +113,7 @@ use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_wilderness as uw, RuleSetId,
+    ultimate_equipment as ue, ultimate_intrigue as ui, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
