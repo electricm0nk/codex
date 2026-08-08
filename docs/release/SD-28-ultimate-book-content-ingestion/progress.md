@@ -2738,7 +2738,7 @@ Four background-verification results sat unread this cycle before being read: UW
 
 ### Commit, pushed and confirmed
 
-`<pending>` -- Ultimate Magic feat catalog ingest, SD28-E28 slice 1 (14 files + new `rules_tables/ultimate_magic/` module). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
+`5c44a82f` -- Ultimate Magic feat catalog ingest, SD28-E28 slice 1 (14 files + new `rules_tables/ultimate_magic/` module). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### Kanban
 
