@@ -1757,6 +1757,34 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                         engine_book: engine_book_field,
                     };
                 }
+                // SD28-E15: `text-complete` requires the engine to HOLD the
+                // record (status_vocabulary's own definition), not merely
+                // that the corpus record carries no magnitude token -- a
+                // check first drafted here mirrored Kind::Feat's `text_only`
+                // check without confirming that second precondition, and was
+                // corrected before landing (decisions.md §40 amendment).
+                // Direct search of rules_core and the desktop app found no
+                // table, picker, or corpus JSON cache holding individual
+                // option-pool records by name for any of the sampled
+                // unowned groups (Rage Power, Discovery, ...) -- only a
+                // handful of pools have a wired SLOT-COUNT mechanism (e.g.
+                // barbarian_features::rage_powers_known), which counts how
+                // many picks a character gets, never what any specific pick
+                // is. Even pilot_compute.rs's own documented canonical
+                // grounding example (`Discovery ~ Feral Mutagen`) does not
+                // reach `grounded` through this code path. So for the
+                // zero-magnitude subset sampled and confirmed here, the
+                // engine genuinely holds none of these records -- a real,
+                // correctly-reported gap, not text already served to a
+                // player. Scoped deliberately to `text_only`: whether the
+                // same "not held anywhere" finding generalizes to the
+                // remaining magnitude>0 group-prefix units (856 distinct
+                // pools, only a handful spot-checked) is a hypothesis, not
+                // yet evidence at that scale -- left `unknown` below,
+                // pending the per-group trace.
+                if text_only {
+                    return not_ingested("class_feature_option_pool_record_not_held_by_engine");
+                }
                 return Verdict {
                     status: "unknown",
                     evidence: "class_feature_group_names_no_class_at_all".to_string(),

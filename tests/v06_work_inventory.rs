@@ -595,6 +595,66 @@ fn the_committed_inventory_is_well_formed_and_uses_only_declared_statuses() {
     );
 }
 
+/// SD28-E15: a `class_feature` record from an unowned option pool (Rage
+/// Power, Discovery, Domain Power, ...) that carries no magnitude token AND
+/// is confirmed absent from every engine table, corpus JSON cache, and
+/// picker this program has (verified by direct search, not inferred from
+/// the magnitude check alone) must land `not-ingested` -- a real, honestly
+/// reported gap -- never `unknown`, which implies a mystery rather than a
+/// confirmed absence. `text-complete` was tried and rejected here: it
+/// requires the engine to HOLD the record per `status_vocabulary`'s own
+/// definition, and it does not (decisions.md §40's amendment). Before this
+/// fix `classify()`'s `Kind::ClassFeature` "group names no class" branch
+/// returned `unknown` unconditionally, misclassifying 2,275 of the epic's
+/// 4,172 `unknown` units as an open mystery rather than a confirmed gap.
+#[test]
+fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        println!("SKIP: docs/work-inventory.json has not been generated yet");
+        return;
+    };
+    let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
+    let units = doc["units"].as_array().expect("units is an array");
+
+    // Real, verified-by-hand-trace units: zero-magnitude Rage Power records
+    // from acg_abilities_class.lst:2658,2660. Confirmed absent from every
+    // engine table this program has (rules_core, apps/desktop) -- only a
+    // slot-COUNT mechanism (barbarian_features::rage_powers_known) is
+    // wired, never a catalog of the individual named options.
+    for id in [
+        "advanced_class_guide:class_feature:rage_power_abyssal_blood",
+        "advanced_class_guide:class_feature:rage_power_abyssal_blood_lesser",
+    ] {
+        let unit = units.iter().find(|u| u["id"] == id).unwrap_or_else(|| panic!("{id} missing from inventory"));
+        assert_eq!(unit["magnitude_token_count"], 0, "{id}: fixture assumption changed, re-check");
+        assert_eq!(
+            unit["status"], "not-ingested",
+            "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be not-ingested, not unknown or text-complete"
+        );
+        assert_eq!(
+            unit["evidence"],
+            "class_feature_option_pool_record_not_held_by_engine"
+        );
+    }
+
+    // No unknown class_feature may carry magnitude_token_count == 0 -- that
+    // combination is now unreachable by construction (it either finds an
+    // owner and grounds/defers through the existing paths, or falls to the
+    // text_only check above and lands not-ingested).
+    let mut violations = 0usize;
+    for unit in units {
+        if unit["status"] == "unknown"
+            && unit["kind"] == "class_feature"
+            && unit["magnitude_token_count"] == 0
+        {
+            violations += 1;
+            eprintln!("VIOLATION: {} is unknown with magnitude_token_count 0", unit["id"]);
+        }
+    }
+    assert_eq!(violations, 0, "found {violations} unknown class_feature units with no magnitude token");
+}
+
 /// The inventory must cover EVERY corpus book, including the ones no code has
 /// read — that is the completeness guarantee, and it is what makes a
 /// full-corpus run viable. A book that vanishes from the roster is a silent
