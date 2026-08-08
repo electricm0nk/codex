@@ -6285,7 +6285,7 @@ mod tests {
     #[test]
     fn every_equipmods_row_the_picker_offers_is_recognized_by_the_attach_gate() {
         let offered = offered_modifier_rows();
-        assert_eq!(offered.len(), 763, "the picker's real offered-row count");
+        assert_eq!(offered.len(), 770, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()

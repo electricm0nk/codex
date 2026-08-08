@@ -56,6 +56,7 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
+    ultimate_intrigue as ui,
 };
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -67,11 +68,12 @@ const BOOK_ACG: &str = "ACG";
 const BOOK_B1: &str = "B1";
 const BOOK_ARG: &str = "ARG";
 const BOOK_PU: &str = "PU";
+const BOOK_UI: &str = "UI";
 
 /// Every book code this catalog can emit, in the order
 /// `build_equipment_catalog` emits them.
 pub const EQUIPMENT_CATALOG_BOOKS: &[&str] = &[
-    BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_B1, BOOK_ARG, BOOK_PU,
+    BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_B1, BOOK_ARG, BOOK_PU, BOOK_UI,
 ];
 
 /// The category name used for every `pathfinder_unchained` record — see
@@ -200,6 +202,26 @@ fn map_pu_entry(entry: &pu::equipment_tables::EquipmentTableEntry) -> EquipmentC
     }
 }
 
+/// UI's entry type reuses ARG's own shape exactly (own `EquipmentCategory`
+/// enum, `description` sourced from `SPROP:` -- see
+/// `ultimate_intrigue::equipment_tables`'s own doc comment). Both
+/// `equipment_tables()` (91 records) and `equipmod_tables()` (7 records,
+/// the honest count after excluding `ui_equipmods.lst`'s `VISIBLE:NO`
+/// alias rows -- see that function's own doc comment) are served under
+/// the same `BOOK_UI` code, mirroring how CRB/APG/ACG/ARG/PU each serve
+/// their own equipment-modifier records alongside their regular equipment
+/// under one book code rather than a separate one.
+fn map_ui_entry(entry: &ui::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
+    EquipmentCatalogEntryDto {
+        key: entry.key.to_string(),
+        category: format!("{:?}", entry.category),
+        name: entry.name.to_string(),
+        cost_gp: entry.cost_gp,
+        book: BOOK_UI.to_string(),
+        description: entry.description.map(serve_description),
+    }
+}
+
 /// Build the full catalog response across every ingested book. A thin,
 /// testable wrapper behind the Tauri command below (mirroring this
 /// codebase's other command/pure-fn split, e.g.
@@ -217,6 +239,8 @@ pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
         )
         .chain(arg::equipment_tables::equipment_tables().iter().map(map_arg_entry))
         .chain(pu::equipment_tables::equipment_tables().iter().map(map_pu_entry))
+        .chain(ui::equipment_tables::equipment_tables().iter().map(map_ui_entry))
+        .chain(ui::equipment_tables::equipmod_tables().iter().map(map_ui_entry))
         .collect();
 
     EquipmentCatalogResponse { entries }
@@ -530,9 +554,10 @@ mod tests {
         assert_eq!(with_description("B1"), 4);
         assert_eq!(with_description("ARG"), 194);
         assert_eq!(with_description("PU"), 42);
+        assert_eq!(with_description("UI"), 41);
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            2856
+            2897
         );
     }
 
@@ -573,11 +598,14 @@ mod tests {
         assert_eq!(count_by_book(&response, "B1"), 4);
         assert_eq!(count_by_book(&response, "ARG"), 200);
         assert_eq!(count_by_book(&response, "PU"), 42);
+        // 91 equipment + 7 equipmods -- see `ultimate_intrigue::equipment_tables`'s
+        // own doc comment for why 7, not the 14 `work-inventory.json` reports.
+        assert_eq!(count_by_book(&response, "UI"), 98);
 
-        // 2977 + 338 + 269 + 4 + 200 + 42. Pinned as a total as well as
-        // per book so that a book silently dropping out of the chain
+        // 2977 + 338 + 269 + 4 + 200 + 42 + 98. Pinned as a total as well
+        // as per book so that a book silently dropping out of the chain
         // cannot be masked by another book growing.
-        assert_eq!(response.entries.len(), 3830);
+        assert_eq!(response.entries.len(), 3928);
     }
 
     #[test]
@@ -737,8 +765,8 @@ mod tests {
             book: None,
         });
 
-        // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU.
-        assert_eq!(response.entries.len(), 435);
+        // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU + 14 UI.
+        assert_eq!(response.entries.len(), 449);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }

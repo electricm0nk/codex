@@ -112,7 +112,8 @@ use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu, RuleSetId,
+    acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
+    ultimate_intrigue as ui, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -717,6 +718,15 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD28-E24 slice 2: UI joined `build_spell_catalog` the same way ARG
+        // did -- same command, same unfiltered "All books" render path.
+        ("ultimate_intrigue", "spells") => Some(spells_reach(
+            "UI",
+            ui::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Equipment: `list_equipment_catalog` / `list_equipment` serve every
         // ingested book's table since the SD-27 widening of
@@ -763,6 +773,19 @@ fn reach_of(family: &Family) -> Option<Reach> {
             "PU",
             pu::equipment_tables::equipment_tables()
                 .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD28-E24 slice 2: UI joined `build_equipment_catalog` under the
+        // `UI` book code -- both `equipment_tables()` (91) and
+        // `equipmod_tables()` (7) are served by that one code, mirroring
+        // how every other book's equipment and equipment-modifier rows
+        // share one book code rather than a separate one.
+        ("ultimate_intrigue", "equipment") => Some(equipment_reach(
+            "UI",
+            ui::equipment_tables::equipment_tables()
+                .iter()
+                .chain(ui::equipment_tables::equipmod_tables())
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),

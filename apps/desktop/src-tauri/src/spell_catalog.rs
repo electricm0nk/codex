@@ -1,7 +1,7 @@
 //! Spell catalog browser — Tauri command adapter over every ingested PF1
 //! spell table: `crb::spell_list` (652 records), `apg::spell_list` (297),
-//! `acg::spell_list` (144) and `advanced_race_guide::spell_list` (92),
-//! 1185 in total.
+//! `acg::spell_list` (144), `advanced_race_guide::spell_list` (92) and
+//! `ultimate_intrigue::spell_list` (101), 1286 in total.
 //!
 //! Pathfinder Unchained is deliberately absent, and that absence is real
 //! rather than an oversight: `pu_spells.lst` is 224 lines and every single
@@ -50,7 +50,7 @@
 use serde::{Deserialize, Serialize};
 
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
-use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb};
+use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb, ultimate_intrigue};
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form; the frontend maps them to display labels.
@@ -58,6 +58,7 @@ const BOOK_CRB: &str = "CRB";
 const BOOK_APG: &str = "APG";
 const BOOK_ACG: &str = "ACG";
 const BOOK_ARG: &str = "ARG";
+const BOOK_UI: &str = "UI";
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -146,6 +147,21 @@ fn map_arg_entry(entry: &advanced_race_guide::spell_list::SpellListEntry) -> Spe
     }
 }
 
+/// UI's table types `school`, `level` and `description` non-optionally,
+/// exactly as ARG's does, so like that one this map invents nothing by
+/// wrapping in `Some` -- every UI record genuinely carries all three
+/// (every `ui_spells.lst` base record carries `SCHOOL:`, `CLASSES:` and
+/// `DESC:`; see `ultimate_intrigue::spell_list`'s own doc comment).
+fn map_ui_entry(entry: &ultimate_intrigue::spell_list::SpellListEntry) -> SpellCatalogEntryDto {
+    SpellCatalogEntryDto {
+        key: entry.key.to_string(),
+        book: BOOK_UI.to_string(),
+        school: Some(format!("{:?}", entry.school)),
+        level: Some(entry.level),
+        description: Some(serve_description(entry.description)),
+    }
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct SpellCatalogResponse {
@@ -166,6 +182,7 @@ pub fn build_spell_catalog() -> SpellCatalogResponse {
                 .iter()
                 .map(map_arg_entry),
         )
+        .chain(ultimate_intrigue::spell_list::SPELL_LIST.iter().map(map_ui_entry))
         .collect();
     SpellCatalogResponse { entries }
 }
@@ -247,7 +264,7 @@ mod tests {
     #[test]
     fn the_catalog_serves_every_ingested_book_not_only_crb() {
         let response = build_spell_catalog();
-        assert_eq!(response.entries.len(), 1185);
+        assert_eq!(response.entries.len(), 1286);
         assert_eq!(book_entries(BOOK_CRB).len(), 652);
         assert_eq!(book_entries(BOOK_APG).len(), 297);
         assert_eq!(book_entries(BOOK_ACG).len(), 144);
@@ -277,7 +294,7 @@ mod tests {
     fn every_entry_has_a_non_empty_key_and_a_known_book() {
         for entry in &build_spell_catalog().entries {
             assert!(!entry.key.is_empty());
-            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG].contains(&entry.book.as_str()));
+            assert!([BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_ARG, BOOK_UI].contains(&entry.book.as_str()));
         }
     }
 

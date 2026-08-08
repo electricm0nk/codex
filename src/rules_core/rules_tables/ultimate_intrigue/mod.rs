@@ -3,4 +3,6 @@
 //! `feat_tables`'s own module doc comment for the catalog and its
 //! text-complete/engine-computed tier ruling.
 
+pub mod equipment_tables;
 pub mod feat_tables;
+pub mod spell_list;
