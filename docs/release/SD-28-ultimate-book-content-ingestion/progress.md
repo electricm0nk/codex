@@ -2459,3 +2459,82 @@ Two `correction` events emitted to `docs/retro/events/epic-24-ultimate-intrigue.
 ### Kanban
 
 `epic-24-ui-complete` remains `IN-FLIGHT`. This cycle's totals: 104 feats + 101 spells + 98 equipment (91 + 7) landed across two slices, no deferrals, no fabricated data; `race_trait` traced to 0 real closable units; 1,861-unit classifier correction landed program-wide (not book-scoped); two engine blockers named with unit counts for a future scope decision. Remaining Ultimate Intrigue scope (re-derive fresh before the next cycle, do not trust this snapshot): `class_feature` (884, minus the portions now correctly attributed to the two named blockers), plus whatever the classifier fix's `class_feature` re-shuffle changes about the true remaining-work shape for this book specifically. Standing by for a fresh assignment per team-lead's direction — not starting a third slice or another book this cycle.
+
+## Cycle `SD28-E25-F1-001` — Card `epic-25-ue-complete` (Ultimate Equipment, slice 1: equipment catalog)
+
+### The broken collision check (top billing, per team-lead's explicit instruction)
+
+Before emitting any record, this cycle ran a cross-book KEY collision check, mirroring `decisions.md §39`'s `already_ingested_keys()` precedent -- and the first version of that check was itself broken. It globbed every other book's `equipment_tables.rs` **source file** for literal `key: "..."` string patterns. That shape exists for ARG/PU/UI/UCA's hand-authored tables, but **CRB, APG, ACG and Bestiary 1's equipment tables are not written that way** (`grep -c 'key: "' src/rules_core/rules_tables/crb/equipment_tables.rs` → 0, despite the table holding 2,977 real records, a different codegen shape entirely). The check ran without error and reported a plausible "54 collisions" -- it had silently never compared against three of the six other ingested books, including the largest by far.
+
+**This is worse than no check at all, because it manufactured confidence.** Caught by `equipment_catalog.rs`'s own pre-existing `keys_do_not_collide_across_books_and_crbs_own_duplicates_are_pinned` guard, which fired the moment the flawed exclusion let a real collision (`Alchemist's Kit`, among others) through. Fixed by getting ground truth the correct way: a scratch `#[test]` inside `ultimate_equipment::equipment_tables` calling every other book's real `equipment_tables()`/`EQUIPMENT_TABLE` accessor at runtime and dumping the actual key set (3,928 real keys, 3,612 unique) -- the same data the catalog's own tests already read, not a re-derivation of it. Removed before commit; it exists only to produce the one-time ground-truth dump.
+
+**The sharper rule, worth carrying to whoever ingests UW/UC/UM next: a collision check must be validated against a case it should catch before its clean result is trusted.** "54 collisions, plausible" and "54 collisions, plus everything the check could not see" were indistinguishable from the outside until the pre-existing guard forced the distinction. Full method and detail in `decisions.md §44`.
+
+### The reconciliation
+
+Re-derived, not inherited, and verified programmatically (`raw − dupes − collisions == final`), not by eye:
+
+```
+Equipment:  1,425 raw candidates (TYPE:-bearing or .COPY=-variant rows, .MOD excluded)
+             -1 same-book duplicate (Mountain Pattern Armor, byte-identical row, kept first)
+            -55 cross-book collisions (real republished items -- confirmed: Dogslicer
+                is ARG's own goblin weapon, byte-identical stats)
+          ------
+          1,369 final
+
+Equipmods:    190 raw candidates
+             -10 cross-book collisions
+          ------
+            180 final
+
+Total new UE content: 1,369 + 180 = 1,549 (of the corpus's 1,614-1,615-unit book)
+```
+
+**Stated plainly: 55 of UE's declared equipment content already exists in other books.** The "1,615-unit book" framing overstates the real new content by a meaningful margin -- the same shape `decisions.md §37`'s `race_trait` finding took at a much larger scale (3,276 → 1). The 1,425 raw figure is itself a re-derived 1-unit correction to the inherited 1,424 (two independent methods agree with each other, not chased further -- immaterial at this scale).
+
+92 of the 1,425 raw rows are `.COPY=` variants (masterwork/size variants) that declare genuinely distinct new items, not re-listings -- the same non-`VISIBLE:NO` treatment `ultimate_intrigue::equipment_tables` established for exactly this distinction.
+
+**A genuine same-book collision, found and named rather than absorbed:** `Masterwork Tool` exists twice within UE itself -- a real 50gp purchasable item and a real equipment modifier, sharing a display name. Kept both (the same treatment CRB's own 316 within-book duplicates get), the specific pair named explicitly in both affected assertions (the collision-count test and the pricing-divergence test) rather than a bare count increment -- matching the discipline `KNOWN_UNREGISTERED_STUBS`/`KNOWN_KEY_MISMATCH_DEBT` already establish elsewhere.
+
+### A guard at the wrong granularity (found incidentally, fixed alongside)
+
+While wiring UE's own diagnostic roster entries, found that `ultimate_intrigue`'s own `corpus_ingest_diagnostic.rs`/`v06_content_state_dump.rs` rosters were never updated when Ultimate Intrigue's slice 2 (spell/equipment) landed on `1f232d55` -- a full commit cycle, through a `verify.sh` that passed clean on all 10 stages at the time (independently confirmed by team-lead the same day). **The existing guard, `reports_every_landed_book_in_a_stable_order`, is keyed on books, not on families within an already-listed book** -- Ultimate Intrigue was already in the list from slice 1, so slice 2 adding new families tripped nothing. Fixed alongside this cycle's own commit. General rule for UW/UC/UM: **after any non-first slice of an already-listed book, verify the family-level rosters explicitly -- no existing test will catch a forgotten one.** Full writeup in `decisions.md §44`.
+
+**This is the second instance today of a `verify.sh`-green commit turning out incomplete** (the first: `7c86f58a`'s 47 falsely-`text-complete` units, `decisions.md §42`). Stated plainly as its own standing caution: a green `verify.sh` means a commit is not observably broken, not that it is complete.
+
+### Cost-model test: did the `equipment` kind's tax, already paid on Ultimate Intrigue, transfer to Ultimate Equipment?
+
+**Partially, and precisely which part transferred is the useful answer.** The *wiring pattern itself* (per-book `map_<book>_entry` function, `BOOK_UE`/`EQUIPMENT_BOOK_UE` constant, the roster-entry shape in each of the 5 fixed-cost files) transferred cleanly and cost near-zero design time -- no new pattern was invented for UE, every touch point was a direct copy of UI's own shape. But the **count-sweep did not get cheaper**: the same ~7 files still needed the same number of pinned-count updates, because each new *book* adds new numbers to the same set of files regardless of whether the *kind* was used before -- the tax is per-file-per-book for the count-sweep specifically, not reduced by kind familiarity.
+
+More significantly, **UE introduced an entirely new cost category the model did not predict at all: corpus-shape-specific tooling risk.** The broken collision check and the wrong-granularity guard are both properties of *this book's specific shape* (a compendium book republishing earlier content; a book whose second slice landed on an already-listed neighbor), not of the `equipment` kind generally. Neither would have been caught by "the equipment tax is already paid" reasoning. **Refined model for UW/UC/UM: budget the wiring-pattern reuse as near-free, budget the count-sweep as a constant per-book-per-file tax regardless of kind history, and budget one unplanned corpus-shape-specific finding per book as the norm, not the exception** -- three books in, this program has hit one per book (UI: the falsely-text-complete side effect; UI slice 2: the two aggregation-divergence bugs; UE: the broken collision check and the wrong-granularity guard).
+
+### What landed
+
+- `ultimate_equipment::equipment_tables` (1,369 equipment + 180 equipment-modifier records), `RuleSetId::Ue`, wired into `equipment_catalog.rs`/`equipment_resolver.rs`/`reach_gate.rs` under the `UE`/`EQUIPMENT_BOOK_UE` code, `corpus_ingest_diagnostic.rs` roster entry, `v06_work_inventory.rs`/`v06_content_state_dump.rs` fixed-cost arms.
+- Book-level open-content status confirmed (`OGL.txt` on disk at `ultimate_equipment`'s root, `.pcc` has no leading underscore, `_pfs/` only per the brief's own corpus-shape note -- both re-verified, not assumed).
+- No feats file in this book (confirmed, per the brief) -- equipment was the correct first slice, not a fallback.
+
+### Verification (every exit code read from its own log)
+
+- `cargo test --lib --locked` (repo root): 1506 passed, 0 failed, 3 ignored.
+- Full desktop-crate suite: 411/413 before the two remaining fixes (git-timestamp Decision-34 case, `ultimate_equipment` missing from the stable-order list); 22/22 targeted + 1/1 after both fixes; full suite clean thereafter.
+- **`./scripts/verify.sh` (full, `run_in_background: true`, exit code read from the log file):**
+  ```
+  SUMMARY
+    passed:  10  preflight-disk root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump
+  RESULT: PASS
+  EXIT_CODE=0
+  ```
+  Against HEAD `64996584`.
+
+### Commit, pushed and confirmed
+
+`64996584` -- 11 files, +1926/-38. `git rev-parse HEAD origin/tranche/8` matched both SHAs after push.
+
+### Session totals across this whole session (Ultimate Intrigue + Ultimate Equipment)
+
+Ultimate Intrigue: 104 feats + 101 spells + 98 equipment (no deferrals, no fabricated data). Ultimate Equipment: 1,549 real new equipment records (of 1,615 declared, 66 correctly excluded as republished/duplicate). Two engine blockers named with unit counts (Vigilante chassis, archetype-swap). A 57% program-wide correction to the `proven` figure (3,242 → 1,381) from a self-caught, self-corrected classifier fix. A self-caught broken collision check. A self-caught wrong-granularity guard gap. Every commit pushed and SHA-confirmed; every `verify.sh` run read from its own log, never inferred.
+
+### Kanban
+
+`epic-24-ui-complete` and `epic-25-ue-complete` both remain `IN-FLIGHT` -- neither book is closed. Standing by for a fresh assignment per team-lead's direction; not starting a third slice or another book this cycle.
