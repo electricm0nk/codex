@@ -1829,13 +1829,20 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     engine_book: engine_book_field,
                 };
             }
+            // SD28-E24 (decisions.md §42, completing §40's fix in its sibling
+            // branch): a class-name substring match on `owner` is not a
+            // holds-check. This branch used to grant `text-complete` to any
+            // zero-magnitude record whose group prefix matched a modelled
+            // class's name, without confirming any table or picker actually
+            // serves that specific record -- the same defect §40 already
+            // fixed a few lines above, in the "no owner" branch, for exactly
+            // the same reason (`class_feature_option_pool_record_not_held_by_engine`).
+            // Never fixed here until now. text_only alone is not sufficient;
+            // absent a real holds-check (no generic class_feature catalog
+            // exists anywhere in this engine, unlike feat/spell/equipment),
+            // this branch can no longer manufacture `text-complete` either.
             if text_only {
-                return Verdict {
-                    status: "text-complete",
-                    evidence: "corpus_record_carries_no_magnitude_token".to_string(),
-                    reason: None,
-                    engine_book: engine_book_field,
-                };
+                return not_ingested("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
             }
             not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
         }
