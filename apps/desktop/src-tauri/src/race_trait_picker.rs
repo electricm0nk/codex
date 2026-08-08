@@ -116,25 +116,7 @@ use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDispl
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, RaceTraitRecord, TraitRole};
 
 use crate::ge08_workbench::codex_repo_root;
-
-/// The corpus books that carry race content. Identical to
-/// `race_catalog::RACE_CORPUS_BOOKS`; duplicated rather than imported because
-/// that constant is private to its module and this cycle's write scope does
-/// not include editing it. A book with no `race/` or `race_trait/` directory
-/// contributes nothing and is not an error.
-const RACE_CORPUS_BOOKS: &[&str] = &["core_rulebook", "beastiary", "advanced_race_guide"];
-
-/// Maps a corpus book directory name to the short wire code the Equipment,
-/// Spell and Race catalogs already emit. An unrecognized id passes through
-/// verbatim rather than being silently relabelled.
-fn book_code(book_id: &str) -> String {
-    match book_id {
-        "core_rulebook" => "CRB".to_string(),
-        "beastiary" => "B1".to_string(),
-        "advanced_race_guide" => "ARG".to_string(),
-        other => other.to_string(),
-    }
-}
+use crate::race_catalog::{book_code, RACE_CORPUS_BOOKS};
 
 /// `Half-Elf` → `HalfElf`. The same identity rule `race_catalog.rs` uses, so a
 /// race's `raceId` is the same string on both screens.
@@ -163,12 +145,13 @@ pub struct AlternateTraitDto {
     pub key: String,
     pub name: String,
     pub book: String,
-    /// The record's real corpus `DESC:` prose. Every one of the 153 alternates
-    /// carries one (pinned by a test below), so this is never a fabricated
-    /// placeholder.
+    /// The record's real corpus `DESC:` prose. Every alternate this menu
+    /// serves carries one (pinned by a test below), so this is never a
+    /// fabricated placeholder.
     pub description: String,
     /// `SOURCEPAGE:`, `None` when the corpus row carries the placeholder
-    /// `p.xx` (`decisions.md §27.2`). All 153 alternates carry a real page.
+    /// `p.xx` (`decisions.md §27.2`). Every alternate this menu serves
+    /// carries a real page.
     pub source_page: Option<String>,
     /// The `<Race>_Replace<Trait>` flags this alternate sets, verbatim.
     pub sets_flags: Vec<String>,
@@ -183,8 +166,9 @@ pub struct AlternateTraitDto {
     /// Set flags that match **no** standard trait and grant nothing — a data
     /// finding, surfaced rather than hidden.
     ///
-    /// **Empty for all 153 alternates as of 2026-07-31**, and pinned that way
-    /// by `no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag`.
+    /// **Empty for every alternate this menu serves, as of 2026-08-08 (ARG's
+    /// 153 + APG's 50, `decisions.md §37`)**, and pinned that way by
+    /// `no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag`.
     /// It used to hold 5 distinct flags across 9 alternates, every one of them
     /// Aasimar's:
     /// `core_essentials/races/aasimar/aasimar_abilities_race.lst` contains zero
@@ -941,16 +925,34 @@ mod tests {
         race.alternates.iter().find(|alt| alt.key == key).unwrap_or_else(|| panic!("alternate {key} present"))
     }
 
-    /// The whole point: every one of ARG's alternates reaches a player surface,
-    /// spread across all 18 in-scope races.
+    /// The whole point: every alternate from every `RACE_CORPUS_BOOKS` book
+    /// reaches a player surface, spread across all 18 in-scope races.
+    ///
+    /// `advanced_players_guide` is now in `RACE_CORPUS_BOOKS`
+    /// (`decisions.md §39`), but contributes 0 alternates as of this cycle:
+    /// `decisions.md §37`'s first-pass estimate of 50 real APG alternates
+    /// was corrected to 1 genuinely new key (`Half-Orc ~ Plagueborn`, 49 of
+    /// the 50 collide with already-ingested ARG keys), and that 1 record is
+    /// deliberately **not yet ingested** -- `race_resolver.rs`'s
+    /// `ALTERNATE_TRAIT_REPLACE_FLAGS` (a hand-written, ARG-only table
+    /// `character_hub.rs`'s creation-acceptance path validates against,
+    /// `decisions.md §36` instance 15) does not know Plagueborn's key, so
+    /// shipping the corpus record without updating that table would offer
+    /// it in this picker and then refuse it at character-save time -- a
+    /// stub, not real content. Landing this test's own change (the
+    /// `RACE_CORPUS_BOOKS`/`book_code` dedup, a real fix) does not depend on
+    /// APG contributing any alternates yet; `menu.races.len()` and the total
+    /// stay at ARG's own 18/153 until Plagueborn's follow-up lands.
     #[test]
-    fn every_arg_alternate_reaches_the_menu_across_all_eighteen_in_scope_races() {
+    fn every_alternate_from_every_race_corpus_book_reaches_the_menu_across_all_eighteen_in_scope_races() {
         let menu = menu();
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        assert_eq!(total, 153, "ARG's 153 Alternate-classified records");
+        assert_eq!(total, 153, "ARG's 153 Alternate-classified records (APG's 1 genuinely new key is deferred, decisions.md §39)");
 
-        // Per-race counts, derived from the corpus by this very menu.
+        // Per-race counts, derived from the corpus by this very menu. All
+        // ARG-only for now -- `Half-Orc ~ Plagueborn` (would move HalfOrc
+        // 14 -> 15) is deferred, see the test's own doc comment above.
         let expected: &[(&str, usize)] = &[
             ("Aasimar", 9),
             ("Drow", 6),
@@ -1057,7 +1059,8 @@ mod tests {
     /// exactly one picker-visible condition: a chosen alternate firing a flag
     /// that suppresses and grants nothing. Nine rows — every Aasimar
     /// alternate — used to be in that state unconditionally, for every build,
-    /// forever. This asserts the menu and the resolver agree for all 153.
+    /// forever. This asserts the menu and the resolver agree for all 153
+    /// (ARG's own; APG's 1 genuinely new key is deferred, `decisions.md §39`).
     #[test]
     fn no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag() {
         let menu = menu();
@@ -1468,6 +1471,15 @@ mod tests {
         // difference names are `TraitRole::FlagGranted` rows — content granted
         // *by* an alternate, which is never offered as a menu choice and
         // appears on screen only once its granting alternate is selected.
+        // SD28-E16 (2026-08-08, `decisions.md §39`): `§37`'s first-pass
+        // estimate of 50 real APG alternates corrected to 1 genuinely new
+        // key (`Half-Orc ~ Plagueborn`) -- 49 collided with existing ARG
+        // keys and were excluded, and the 1 real key is deferred pending
+        // `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` table
+        // (`decisions.md §36` instance 15), so `alternates` stays ARG-only
+        // for now. `standard` is unaffected either way -- APG contributes no
+        // `race/` chassis, so the standard-trait column (sourced from
+        // ARG/CRB/Bestiary) never moves.
         let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
         let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!((standard, alternates), (173, 153));

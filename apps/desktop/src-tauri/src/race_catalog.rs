@@ -65,7 +65,7 @@ use crate::ge08_workbench::codex_repo_root;
 /// that is searched and contributes nothing (ARG), which is a measured zero
 /// rather than an omission.
 pub(crate) const RACE_CORPUS_BOOKS: &[&str] =
-    &["core_rulebook", "beastiary", "advanced_race_guide"];
+    &["core_rulebook", "beastiary", "advanced_race_guide", "advanced_players_guide"];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form, identical to the ones `equipment_catalog.rs` and `spell_catalog.rs`
@@ -73,6 +73,7 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] =
 const BOOK_CRB: &str = "CRB";
 const BOOK_B1: &str = "B1";
 const BOOK_ARG: &str = "ARG";
+const BOOK_APG: &str = "APG";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
@@ -92,6 +93,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "core_rulebook" => BOOK_CRB.to_string(),
         "beastiary" => BOOK_B1.to_string(),
         "advanced_race_guide" => BOOK_ARG.to_string(),
+        "advanced_players_guide" => BOOK_APG.to_string(),
         other => other.to_string(),
     }
 }
@@ -510,11 +512,20 @@ mod tests {
     /// module's doc comment — and are counted here so that gap stays measured
     /// rather than forgotten. 153, derived: ARG's 156 corpus records are 153
     /// `Alternate` plus 3 the resolver classifies otherwise (its
-    /// `FlagGranted`/`Unclassified` rows).
+    /// `FlagGranted`/`Unclassified` rows). APG contributes 0 alternates as of
+    /// this cycle: `decisions.md §37`'s first estimate of 50 real APG
+    /// alternates corrected to 1 genuinely new key (`decisions.md §39`), and
+    /// that 1 key is deliberately not yet ingested -- `race_resolver.rs`'s
+    /// `ALTERNATE_TRAIT_REPLACE_FLAGS` table (`§36` instance 15) does not
+    /// recognize it, and shipping the corpus record without updating that
+    /// table would offer it here and refuse it at character-save time.
+    /// APG likewise declares no races/defaults of its own, so it contributes
+    /// zero catalog rows either way.
     #[test]
-    fn arg_contributes_no_rows_but_its_alternates_are_loaded_and_counted() {
+    fn arg_and_apg_contribute_no_rows_but_their_alternates_are_loaded_and_counted() {
         let response = build_race_catalog();
         assert_eq!(response.entries.iter().filter(|e| e.book == BOOK_ARG).count(), 0);
+        assert_eq!(response.entries.iter().filter(|e| e.book == BOOK_APG).count(), 0);
 
         let corpus = race_corpus().as_ref().expect("race corpus loads in a source checkout");
         let alternates: usize =

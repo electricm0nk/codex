@@ -797,6 +797,15 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
+        // SD28-E16 (2026-08-08, decisions.md §39, correcting §37's first
+        // estimate of 50): APG's 1 genuinely new alternate racial trait
+        // (Half-Orc ~ Plagueborn) -- 49 of the original 50 collided with
+        // already-ingested ARG keys and were excluded at ingest time. Same
+        // shape as ARG -- served through
+        // `race_trait_picker::build_alternate_racial_traits`, not a compiled
+        // table -- now that `advanced_players_guide` is in
+        // `race_catalog::RACE_CORPUS_BOOKS`.
+        ("apg", "race_traits") => Some(race_traits_reach("APG", "advanced_players_guide")),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -1581,6 +1590,18 @@ mod tests {
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
+
+    // APG's own reach test is deliberately not added yet: `decisions.md §37`'s
+    // first estimate of 50 real alternates corrected to 1 genuinely new key
+    // (`Half-Orc ~ Plagueborn`, `decisions.md §39`), and that 1 key is not
+    // ingested this cycle -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`
+    // table (`§36` instance 15) does not recognize it, and shipping the
+    // corpus record without updating that table would offer it in the picker
+    // and refuse it at character-save time, a stub. The
+    // `("apg", "race_traits") => race_traits_reach(...)` match arm above is
+    // landed now (harmless and forward-compatible with 0 records today) so
+    // Plagueborn's follow-up only needs to add the corpus record and this
+    // test, not touch `reach_of` again.
 
     /// The other half of the same blind spot: `pathfinder_unchained` hid
     /// behind accessor functions, so a `pub const`-only scanner reported an
