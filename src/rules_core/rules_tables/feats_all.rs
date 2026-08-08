@@ -130,6 +130,7 @@ use super::pathfinder_unchained::feat_tables as pu_feats;
 use super::ultimate_campaign::feat_tables as uca_feats;
 use super::ultimate_intrigue::feat_tables as ui_feats;
 use super::ultimate_combat::feat_tables as uc_feats;
+use super::ultimate_magic::feat_tables as um_feats;
 use super::ultimate_wilderness::feat_tables as uw_feats;
 use super::RuleSetId;
 
@@ -743,6 +744,55 @@ fn map_uc_entry(entry: &uc_feats::UcFeatEntry) -> FeatCatalogRecord {
     }
 }
 
+/// UM's own eight-variant enum. `Critical`/`Masterpiece`/`Discovery` have
+/// no shared-enum equivalent -- see `ultimate_magic::feat_tables`'s own
+/// module doc comment for why `Masterpiece`/`Discovery` are UM-specific
+/// facets, not folded onto any other book's category.
+fn um_category_name(category: um_feats::FeatCategory) -> &'static str {
+    match category {
+        um_feats::FeatCategory::General => "General",
+        um_feats::FeatCategory::Combat => "Combat",
+        um_feats::FeatCategory::ItemCreation => "ItemCreation",
+        um_feats::FeatCategory::Metamagic => "Metamagic",
+        um_feats::FeatCategory::Teamwork => "Teamwork",
+        um_feats::FeatCategory::Critical => "Critical",
+        um_feats::FeatCategory::Masterpiece => "Masterpiece",
+        um_feats::FeatCategory::Discovery => "Discovery",
+    }
+}
+
+/// Joins UM's two prose fields (`description`, `benefit`) exactly as
+/// UC's own `map_uc_entry` does. **Deliberately does not join `effect`
+/// into the served description** -- `entry.effect` carries raw,
+/// unrendered PCGen `BONUS:`/`DEFINE:` formula tokens (e.g.
+/// `BONUS:SPELLKNOWN|CLASS=%LIST;LEVEL=0|2`), and serving those verbatim
+/// to a player would leak raw corpus syntax exactly as
+/// `feat_descriptions_are_rendered_and_otherwise_byte_identical` and
+/// `no_catalog_serves_a_description_carrying_raw_pcgen_syntax` exist to
+/// catch (and did, on first attempt at this join). This mirrors CRB's
+/// own established rule: `crb::feats::FeatTableEntry`'s `effect` field is
+/// never joined into `description` either (`map_shared_entry` passes
+/// `description` straight through, ignoring `effect` entirely) -- the
+/// four UM records whose only corpus content is a `BONUS:` mechanic
+/// (this book's own module doc comment) correctly serve `description:
+/// None` here, the same honest treatment CRB's 8 "Heighten Spell +N"
+/// tiers already get, not a raw-syntax leak dressed up as content.
+fn map_um_entry(entry: &um_feats::UmFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: um_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
 /// Project one book's table once and hand out a `'static` slice of it.
 ///
 /// The projection is a real allocation, so it is cached per book for the
@@ -807,6 +857,11 @@ fn uc_records() -> &'static [FeatCatalogRecord] {
     projected(&CELL, || uc_feats::feat_tables().iter().map(map_uc_entry).collect())
 }
 
+fn um_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || um_feats::feat_tables().iter().map(map_um_entry).collect())
+}
+
 /// Every ingested book's feat catalog, in book order (CRB, APG, ACG,
 /// ARG, PU, UCA, UI, UW).
 ///
@@ -828,6 +883,7 @@ pub fn all_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Ui, entries: ui_records() },
             BookFeatTable { rule_set: RuleSetId::Uw, entries: uw_records() },
             BookFeatTable { rule_set: RuleSetId::Uc, entries: uc_records() },
+            BookFeatTable { rule_set: RuleSetId::Um, entries: um_records() },
         ]
     })
 }
@@ -840,7 +896,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = all_feat_tables();
-        assert_eq!(books.len(), 9);
+        assert_eq!(books.len(), 10);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -859,12 +915,14 @@ mod tests {
         assert_eq!(books[7].entries.len(), 135);
         assert_eq!(books[8].rule_set, RuleSetId::Uc);
         assert_eq!(books[8].entries.len(), 261);
+        assert_eq!(books[9].rule_set, RuleSetId::Um);
+        assert_eq!(books[9].entries.len(), 144);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
             total,
-            1213,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC"
+            1357,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM"
         );
     }
 
@@ -883,6 +941,7 @@ mod tests {
         assert_eq!(books[6].entries.len(), ui_feats::feat_tables().len());
         assert_eq!(books[7].entries.len(), uw_feats::feat_tables().len());
         assert_eq!(books[8].entries.len(), uc_feats::feat_tables().len());
+        assert_eq!(books[9].entries.len(), um_feats::feat_tables().len());
     }
 
     #[test]
@@ -968,13 +1027,14 @@ mod tests {
         assert_eq!(with_prerequisites(RuleSetId::Ui), 98, "of 104 -- gathered directly at ingest, no backfill table");
         assert_eq!(with_prerequisites(RuleSetId::Uw), 127, "of 135 -- gathered directly at ingest, no backfill table");
         assert_eq!(with_prerequisites(RuleSetId::Uc), 247, "of 261 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Um), 135, "of 144 -- gathered directly at ingest, no backfill table");
 
         let total: usize = all_feat_tables()
             .iter()
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.prerequisites.is_some())
             .count();
-        assert_eq!(total, 1094, "1094 of the catalog's 1213 records have a prerequisite");
+        assert_eq!(total, 1229, "1229 of the catalog's 1357 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -1136,6 +1196,22 @@ mod tests {
                 ("Grit", 7),
                 ("Style", 1),
                 ("Teamwork", 7),
+            ])
+        );
+        // UM's own new facets: `Masterpiece` (Bard performance feats) and
+        // `Discovery` (Wizard bonus-discovery-as-feat records). No UM
+        // record carries `TYPE:Style`/`Grit`/`Panache`/`CalledShot`.
+        assert_eq!(
+            split(RuleSetId::Um),
+            BTreeMap::from([
+                ("Combat", 3),
+                ("Critical", 3),
+                ("Discovery", 11),
+                ("General", 100),
+                ("ItemCreation", 2),
+                ("Masterpiece", 15),
+                ("Metamagic", 9),
+                ("Teamwork", 1),
             ])
         );
     }

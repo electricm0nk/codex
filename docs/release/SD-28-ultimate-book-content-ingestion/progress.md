@@ -2680,3 +2680,66 @@ Team-lead's question, answered directly from the raw corpus row rather than by p
 Also checked, per team-lead's narrower follow-up: the other 36 APG `.MOD` rows with no `DESC:`/`BENEFIT:` are not a dropped-prose gap. 19 are pure `TYPE:` archetype-feat-pool tags (Druid Shaman totem lists Bear/Eagle/Lion/Serpent/Wolf, Mounted Mastery, one Martial Weapon Proficiency re-tag), 8 are `ABILITY:...AUTOMATIC` energy-keyed auto-granted sub-feat variants (Elemental Focus/Elemental Spell × 4 energies), 1 is a pure `BONUS:VAR` channel-DC hook (`Improved Channel`). None is a text gap; each names a different, larger, already-out-of-scope modelling surface (archetype feat-list membership, auto-granted variants, cross-feature bonus hooks). Full detail: `decisions.md §48`.
 
 No files under `apps/desktop/**` or `rules_core/**` touched this cycle -- docs-only. Reporting to team-lead before starting `epic-28-um-complete`, per their explicit gate.
+
+## Cycle `SD28-E28-F1-001` — Card `epic-28-um-complete` (Ultimate Magic, slice 1: feat catalog)
+
+### Reconciliation
+
+```
+147  raw CATEGORY:FEAT rows declared in um_feats.lst
+     (re-derive with: grep -c $'\tCATEGORY:FEAT\t' um_feats.lst -- the naive
+      line-anchored `grep -c '^CATEGORY:FEAT'` returns 0, decisions.md §46's
+      not-line-anchored trap recurring verbatim in this book)
+ -3  genuine auto-grant wrappers, excluded per no-stub-mvp-doctrine
+----
+144  final
+```
+
+Zero cross-book collisions and zero intra-book duplicate keys -- re-derived at runtime against every other book's real feat key set (a scratch `#[test]` dump of `feats_all::all_feat_tables()`, `decisions.md §44`'s lesson applied from the start, removed before commit). UM's `.MOD` rows carry no prose at all (confirmed directly; `decisions.md §47`'s nine-book sweep already reported UM at 0), so the `Revelation Strike`-shaped recovery defect does not recur here.
+
+### The real finding: a raw-syntax leak, caught by two independent guards before it shipped
+
+Three records are genuine auto-grant wrappers, the same disposition `decisions.md §46` gave UC's `Gundarme Bonus Feat`: `Skill Focus (Knowledge [Arcana])`, `Skill Focus (Intimidate)`, `Skill Focus (Swim)` (`um_feats.lst:189, 195, 201`) are each `VISIBLE:DISPLAY` with an `ABILITY:FEAT|AUTOMATIC|...` grant mechanism, auto-granted from an internal Dragon/Saurian/Shark Shaman class bonus-feat pool. **Excluded.**
+
+Four records carry a real, distinct game mechanic but no `DESC:`/`BENEFIT:` prose at all: `Extra Cantrips or Orisons`, `Extra Evolution`, `Extra Summons`, `Transfer Feat to Familiar`. Each is genuinely selectable with real `BONUS:`/`DEFINE:` tokens of its own -- unlike the three exclusions above, not an auto-grant wrapper, and unlike UC's textless exclusions, no sibling `.MOD` row carries missing prose to recover. **Kept, not excluded** -- `UmFeatEntry` gained an `effect: Option<&[&str]>` field (CRB's own `FeatTableEntry` precedent: its 104-of-185 `BONUS:`-only records) rather than dropping real content.
+
+**My first `map_um_entry` attempt joined these four records' raw `effect` tokens into the served description** (e.g. `Extra Cantrips or Orisons` served literal `"BONUS:SPELLKNOWN|CLASS=%LIST;LEVEL=0|2"` as its description) -- a genuine mistake, not a corpus defect. Two independent pre-existing guards caught it before commit: `equipment_catalog::no_catalog_serves_a_description_carrying_raw_pcgen_syntax` (repo-wide, all-catalogs) named all four feats explicitly with their leaking raw tail; `feat_catalog::feat_descriptions_are_rendered_and_otherwise_byte_identical` reported the leak-list grown to a wrong 151 with `Extra Cantrips or Orisons` still leaking after being "served." **Fixed by never joining `effect` into `description` at all** -- `map_um_entry` now matches `crb::feats::map_shared_entry`'s own established rule exactly (CRB's own `effect` field is never joined into `description` either); these four records correctly serve `description: None`, the same honest treatment CRB's 8 "Heighten Spell +N" tiers get, not a raw-syntax leak dressed up as content.
+
+The 15 `Masterpiece (<Name>)` records (`DESC:` present, no `BENEFIT:`) are genuinely complete, not a stub -- each feat's entire corpus content is "You learn the masterpiece `<Name>`.", the masterpiece's real mechanical effect living centrally under the Bard class's own masterpiece system, not per-feat.
+
+### The triad, now complete: three distinct `.MOD`/text-shape hazards across three books
+
+1. **Unconditional recovery** (UC's `Revelation Strike`, `decisions.md §46`): real prose on an invisible `.MOD` row, true for anyone with the feat. Recover and join.
+2. **Conditional variant** (APG's `Deadly Aim`, `decisions.md §48`): a `.MOD` row's text is `PRE`-gated, true only for one archetype interaction. Do not join -- the model has no field for it; left open.
+3. **Never-join** (UM, this cycle): a record's only real content is a structured `BONUS:`/`DEFINE:` mechanic, not prose. Keep it structured; never render it as served text.
+
+Full detail on all three: `decisions.md §49`.
+
+### Process finding: the stall pattern was this cycle's dominant cost
+
+Four background-verification results sat unread this cycle before being read: UW's `verify.sh` (25 min, prior book), UC's `verify.sl` (23 min, prior book), UM's full test suite (55 min), UM's clippy pair (~60 min). **Every one had already passed by the time it was read** -- zero real failures caught late. Root cause, diagnosed mid-cycle: a poll-wrapper's own PID can outlive the real build underneath it and keep reporting "alive" with nothing running -- fixed by polling for the `EXIT_CODE=` marker written into the completed log file, and confirming the real child PID (not the wrapper's) before trusting a wait loop. Named here because across today's three books this reading-latency, not any corpus defect, has been the largest single cost. Full detail: `decisions.md §49`.
+
+### Verification (every exit code read from its own completed log)
+
+- `cargo test --lib --locked` (targeted, pre-full-run): 1519 passed, 0 failed.
+- `cargo test --locked --test sd27_feat_prerequisite_enforcement`: 9 passed, 0 failed (0 ignored beyond the 3 corpus-dependent tests).
+- `cargo test --locked --test v06_apg_acg_feat_catalog`: 9 passed, 0 failed.
+- **Full `cargo test --locked --no-fail-fast`, backgrounded with output to a completed log file (not piped through `tail` before redirect, after the first attempt's truncation was caught):**
+  ```
+  538 test-result lines, 6036 passed, 0 failed, 0 "FAILED" occurrences
+  EXIT_CODE=0
+  ```
+- **Clippy, re-checked fresh at both crates after this cycle's desktop-file edits, gate's own method (`grep '^warning:' | grep -v 'generated N warning'`):**
+  ```
+  clippy_root.log     75 warnings, EXIT_CODE=0  -- at ceiling (75), not breached
+  clippy_desktop.log   7 warnings, EXIT_CODE=0  -- at ceiling (7), not breached
+  ```
+  Neither ceiling moved despite touching `character_hub.rs`/`corpus_ingest_diagnostic.rs`/`feat_catalog.rs`/`reach_gate.rs` this cycle.
+
+### Commit, pushed and confirmed
+
+`<pending>` -- Ultimate Magic feat catalog ingest, SD28-E28 slice 1 (14 files + new `rules_tables/ultimate_magic/` module). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
+
+### Kanban
+
+`epic-24-ui-complete`, `epic-25-ue-complete`, `epic-26-uw-complete` remain `IN-FLIGHT`, unchanged. `epic-27-uc-complete` remains `IN-FLIGHT`, unchanged this cycle. `epic-28-um-complete` moves `READY` → `IN-FLIGHT` (slice 1 landed). Standing by for a fresh assignment. Not starting UPsi, and not starting UM's remaining kinds (spell/equipment/race_trait etc.), without one.

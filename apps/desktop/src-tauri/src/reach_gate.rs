@@ -332,6 +332,10 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // equivalent, or are kept deliberately distinct). Same family
     // ("feats") as every other book's feat table.
     ("UcFeatEntry", "feats"),
+    // Ultimate Magic's own record type (SD28-E28) -- own category enum
+    // (Critical/Masterpiece/Discovery have no shared-enum equivalent).
+    // Same family ("feats") as every other book's feat table.
+    ("UmFeatEntry", "feats"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -698,6 +702,10 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // the `Uc` wire source. Every record carries a non-empty category,
         // so `feats_reach`'s own check is satisfied for all 263.
         ("ultimate_combat", "feats") => Some(feats_reach(RuleSetId::Uc, "Uc")),
+        // SD28-E28 slice 1: UM joined `feats_all::all_feat_tables()` under
+        // the `Um` wire source. Every record carries a non-empty category,
+        // so `feats_reach`'s own check is satisfied for all 144.
+        ("ultimate_magic", "feats") => Some(feats_reach(RuleSetId::Um, "Um")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell

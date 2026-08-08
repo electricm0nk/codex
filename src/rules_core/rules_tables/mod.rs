@@ -20,6 +20,7 @@ pub mod ultimate_campaign;
 pub mod ultimate_equipment;
 pub mod ultimate_intrigue;
 pub mod ultimate_combat;
+pub mod ultimate_magic;
 pub mod ultimate_wilderness;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
@@ -41,5 +42,7 @@ pub enum RuleSetId {
     Uw,
     /// Ultimate Combat. SD-28 Epic 27 -- first record family (feats).
     Uc,
-    // future: Um, ...
+    /// Ultimate Magic. SD-28 Epic 28 -- first record family (feats).
+    Um,
+    // future: UPsi, ...
 }

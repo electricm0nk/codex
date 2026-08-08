@@ -313,6 +313,7 @@ pub const MODELLED_KINDS: &[&str] = &[
 pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     ("PREALIGN", "the character record carries no alignment"),
     ("PRECHECKBASE", "base saving-throw prerequisites are not modelled"),
+    ("PREDEITY", "the character record carries no deity"),
     ("PREDEITYALIGN", "the character record carries no deity"),
     ("PREDOMAIN", "cleric domains are not modelled"),
     ("PREPROFWITHARMOR", "armor proficiency is not modelled"),
@@ -327,6 +328,7 @@ pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     ("PRESPELLTYPE", "spell-type prerequisites are not modelled"),
     ("PREVAREQ", "the referenced PCGen variable is not modelled"),
     ("PREVARLT", "the referenced PCGen variable is not modelled"),
+    ("PREVARLTEQ", "the referenced PCGen variable is not modelled"),
     ("PREVISION", "racial vision modes are not modelled"),
     ("PREWEAPONPROF", "weapon proficiency is not modelled"),
     ("PREMOVE", "movement-type prerequisites are not modelled"),

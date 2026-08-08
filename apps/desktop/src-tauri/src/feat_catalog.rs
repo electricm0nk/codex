@@ -329,7 +329,7 @@ mod tests {
         // or DESC + the deferral diagnostic for UCA's 2 corrupted records),
         // so all 127 add to `with_description` rather than the no-DESC:
         // bucket.
-        assert_eq!(with_description, 1204, "9 of the 1213 records carry no DESC: token");
+        assert_eq!(with_description, 1344, "13 of the 1357 records carry no served description");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -342,11 +342,11 @@ mod tests {
         // each for the player, the same treatment CRB's own leaking rows
         // already get.
         changed.sort_unstable();
-        assert_eq!(raw_leaks, 137, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 137, "exactly the leaking records are rewritten");
-        // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 new UC records. Every
-        // served description for all 136 is confirmed leak-free by this
-        // same test's per-record `leaked_pcgen_syntax(served) == None`
+        assert_eq!(raw_leaks, 151, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 151, "exactly the leaking records are rewritten");
+        // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 new UM records.
+        // Every served description for all 151 is confirmed leak-free by
+        // this same test's per-record `leaked_pcgen_syntax(served) == None`
         // assertion above -- this is a raw-corpus-shape count (`&nl;`
         // entity escapes, `%N`/raw `|` tails, all correctly rewritten by
         // `render_pcgen_desc`), not a new player-visible leak.
@@ -378,7 +378,10 @@ mod tests {
                 "Deceptive Exchange",
                 "Deep Diver",
                 "Defensive Weapon Training",
+                "Detect Expertise",
                 "Dimensional Dervish",
+                "Discovery (Arcane Builder)",
+                "Discovery (Split Slot)",
                 "Djinni Style",
                 "Domain Strike",
                 "Dragon Ferocity",
@@ -391,6 +394,7 @@ mod tests {
                 "Eidolon Mount",
                 "Energized Wild Shape",
                 "Expert Cartographer",
+                "Extended Bane",
                 "Extra Grit",
                 "Eye for Ingredients",
                 "Faerie's Strike",
@@ -416,10 +420,13 @@ mod tests {
                 "Improved Beast Hunter",
                 "Improved Charging Hurler",
                 "Improved Hunter's Bond",
+                "Improved Monster Lore",
                 "Improved Snap Shot",
                 "Improved Spring Attack",
                 "Indomitable Mountain Peak",
                 "Instant Judgment",
+                "Learn Ranger Trap",
+                "Life Lure",
                 "Master Siege Engineer",
                 "Menacing Bane",
                 "Merciful Bane",
@@ -437,21 +444,27 @@ mod tests {
                 "One Eye Open",
                 "Out of the Sun",
                 "Pack Attack",
+                "Painful Anchor",
                 "Paralyzing Strike",
                 "Passing Trick",
                 "Photosynthetic Healing",
                 "Pinpoint Poisoner",
                 "Planar Wanderer",
                 "Prone Slinger",
+                "Prophetic Visionary",
                 "Quick Bull Rush",
                 "Quick Dirty Trick",
                 "Quick Drag",
                 "Quick Reposition",
                 "Quick Steal",
+                "Radiant Charge",
                 "Raging Concentration",
                 "Rebuffing Reduction",
                 "Recovered Rage",
+                "Remote Bomb",
+                "Resilient Eidolon",
                 "Revelation Strike",
+                "Reward of Life",
                 "River Raider",
                 "School Strike",
                 "Scion of the Land",
@@ -483,6 +496,7 @@ mod tests {
                 "Two-Handed Thrower",
                 "Unfettered Familiar",
                 "Verdant Spell",
+                "Versatile Channeler",
                 "Vigilant Charger",
                 "Whip Mastery",
                 "Wild Growth Hex",
@@ -499,8 +513,8 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            1213,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC"
+            1357,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM"
         );
 
         let by_source =
@@ -514,21 +528,22 @@ mod tests {
         assert_eq!(by_source("Ui"), 104);
         assert_eq!(by_source("Uw"), 135);
         assert_eq!(by_source("Uc"), 261);
+        assert_eq!(by_source("Um"), 144);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
-        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77 + UC 63,
-        // and so on per category.
-        assert_eq!(counts("General"), 506);
-        // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182, and so on.
-        assert_eq!(counts("Combat"), 570);
-        // + UW 1.
-        assert_eq!(counts("ItemCreation"), 9);
-        // + UI 4 + UW 2.
-        assert_eq!(counts("Metamagic"), 42);
-        // + UI 2 + UW 3 + UC 7.
-        assert_eq!(counts("Teamwork"), 22);
+        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77 + UC 63
+        // + UM 100, and so on per category.
+        assert_eq!(counts("General"), 606);
+        // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182 + UM 3, and so on.
+        assert_eq!(counts("Combat"), 573);
+        // + UW 1 + UM 2.
+        assert_eq!(counts("ItemCreation"), 11);
+        // + UI 4 + UW 2 + UM 9.
+        assert_eq!(counts("Metamagic"), 51);
+        // + UI 2 + UW 3 + UC 7 + UM 1.
+        assert_eq!(counts("Teamwork"), 23);
         assert_eq!(counts("Panache"), 4);
         // PU's three `###Block:`-derived categories; no other book has them.
         assert_eq!(counts("Alignment"), 9);
@@ -544,11 +559,17 @@ mod tests {
         // `Critical`/`Style`/`Called Shot` facets, distinct from the
         // `Combat.*` sub-facets that fold to `Combat`. `UcPanache` never
         // appears (0 records; see `ultimate_combat::feat_tables`'s own
-        // doc comment).
+        // doc comment). UC + UM both carry a bare `Critical` facet
+        // (1 + 3 = 4).
         assert_eq!(counts("Grit"), 7);
         assert_eq!(counts("CalledShot"), 2);
-        assert_eq!(counts("Critical"), 1);
+        assert_eq!(counts("Critical"), 4);
         assert_eq!(counts("Style"), 1);
+        // UM's own new categories -- Bard `Masterpiece` performance feats
+        // and Wizard `Discovery`-as-feat records. No other book carries
+        // either facet.
+        assert_eq!(counts("Masterpiece"), 15);
+        assert_eq!(counts("Discovery"), 11);
 
         let categorised: usize = [
             "General",
@@ -566,6 +587,8 @@ mod tests {
             "CalledShot",
             "Critical",
             "Style",
+            "Masterpiece",
+            "Discovery",
         ]
         .iter()
         .map(|category| counts(category))
@@ -737,9 +760,9 @@ mod tests {
             source: None,
         });
 
-        // 17 CRB + 19 APG + 4 UI + 2 UW; ACG, ARG, PU and UCA have no
-        // Metamagic feat records.
-        assert_eq!(response.entries.len(), 42);
+        // 17 CRB + 19 APG + 4 UI + 2 UW + 9 UM; ACG, ARG, PU and UCA have
+        // no Metamagic feat records.
+        assert_eq!(response.entries.len(), 51);
         for entry in &response.entries {
             assert_eq!(entry.category, "Metamagic");
         }

@@ -766,6 +766,7 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Ue,
     RuleSetId::Uw,
     RuleSetId::Uc,
+    RuleSetId::Um,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -785,6 +786,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Ue => "ultimate_equipment",
         RuleSetId::Uw => "ultimate_wilderness",
         RuleSetId::Uc => "ultimate_combat",
+        RuleSetId::Um => "ultimate_magic",
     }
 }
 
@@ -816,6 +818,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Ue => "ultimate_equipment",
         RuleSetId::Uw => "ultimate_wilderness",
         RuleSetId::Uc => "ultimate_combat",
+        RuleSetId::Um => "ultimate_magic",
     }
 }
 

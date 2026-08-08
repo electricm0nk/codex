@@ -101,6 +101,7 @@ use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::ultimate_equipment as ue;
 use codex::rules_core::rules_tables::ultimate_combat as uc;
+use codex::rules_core::rules_tables::ultimate_magic as um;
 use codex::rules_core::rules_tables::ultimate_wilderness as uw;
 use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 
@@ -364,6 +365,15 @@ fn ultimate_combat_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Ultimate Magic: SD-28 Epic 28 (`epic-28-um-complete`) from-scratch
+/// book ingest, first slice. 144 feat records -- see
+/// `ultimate_magic::feat_tables`'s own doc comment for the catalog.
+fn ultimate_magic_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), um::feat_tables::feat_tables().len() as u32);
+    counts
+}
+
 /// Repo root, derived from the crate's own compile-time manifest
 /// directory (`apps/desktop/src-tauri`) rather than the process's current
 /// working directory, which Tauri does not guarantee.
@@ -479,6 +489,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_combat_counts(),
             &races,
         ),
+        book_status(
+            "ultimate_magic",
+            "src/rules_core/rules_tables/ultimate_magic",
+            ultimate_magic_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -559,7 +575,8 @@ mod tests {
                 "ultimate_intrigue",
                 "ultimate_equipment",
                 "ultimate_wilderness",
-                "ultimate_combat"
+                "ultimate_combat",
+                "ultimate_magic"
             ]
         );
     }
