@@ -129,6 +129,7 @@ use super::crb::feats::{FeatCategory as SharedFeatCategory, FeatTableEntry as Sh
 use super::pathfinder_unchained::feat_tables as pu_feats;
 use super::ultimate_campaign::feat_tables as uca_feats;
 use super::ultimate_intrigue::feat_tables as ui_feats;
+use super::ultimate_combat::feat_tables as uc_feats;
 use super::ultimate_wilderness::feat_tables as uw_feats;
 use super::RuleSetId;
 
@@ -703,6 +704,45 @@ fn map_uw_entry(entry: &uw_feats::UwFeatEntry) -> FeatCatalogRecord {
     }
 }
 
+/// UC's own eight-variant enum. `Style`/`Grit`/`Critical`/`CalledShot`
+/// have no shared-enum equivalent; `Panache` is kept a distinct string
+/// from ACG's own `Panache` category deliberately (UC's corpus carries no
+/// `TYPE:Panache` record today, so the variant is currently unused, but
+/// declared rather than omitted so a future UC record with that facet is
+/// not silently folded onto ACG's own Swashbuckler feats). No record in
+/// this catalog is `deferred-with-reason` (confirmed: every one of UC's
+/// 263 records carries a real `BENEFIT:`).
+fn uc_category_name(category: uc_feats::FeatCategory) -> &'static str {
+    match category {
+        uc_feats::FeatCategory::General => "General",
+        uc_feats::FeatCategory::Combat => "Combat",
+        uc_feats::FeatCategory::ItemCreation => "ItemCreation",
+        uc_feats::FeatCategory::Metamagic => "Metamagic",
+        uc_feats::FeatCategory::Teamwork => "Teamwork",
+        uc_feats::FeatCategory::Style => "Style",
+        uc_feats::FeatCategory::Grit => "Grit",
+        uc_feats::FeatCategory::Panache => "UcPanache",
+        uc_feats::FeatCategory::Critical => "Critical",
+        uc_feats::FeatCategory::CalledShot => "CalledShot",
+    }
+}
+
+fn map_uc_entry(entry: &uc_feats::UcFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: uc_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
 /// Project one book's table once and hand out a `'static` slice of it.
 ///
 /// The projection is a real allocation, so it is cached per book for the
@@ -762,6 +802,11 @@ fn uw_records() -> &'static [FeatCatalogRecord] {
     projected(&CELL, || uw_feats::feat_tables().iter().map(map_uw_entry).collect())
 }
 
+fn uc_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || uc_feats::feat_tables().iter().map(map_uc_entry).collect())
+}
+
 /// Every ingested book's feat catalog, in book order (CRB, APG, ACG,
 /// ARG, PU, UCA, UI, UW).
 ///
@@ -782,6 +827,7 @@ pub fn all_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Uca, entries: uca_records() },
             BookFeatTable { rule_set: RuleSetId::Ui, entries: ui_records() },
             BookFeatTable { rule_set: RuleSetId::Uw, entries: uw_records() },
+            BookFeatTable { rule_set: RuleSetId::Uc, entries: uc_records() },
         ]
     })
 }
@@ -794,7 +840,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = all_feat_tables();
-        assert_eq!(books.len(), 8);
+        assert_eq!(books.len(), 9);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -811,9 +857,15 @@ mod tests {
         assert_eq!(books[6].entries.len(), 104);
         assert_eq!(books[7].rule_set, RuleSetId::Uw);
         assert_eq!(books[7].entries.len(), 135);
+        assert_eq!(books[8].rule_set, RuleSetId::Uc);
+        assert_eq!(books[8].entries.len(), 261);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
-        assert_eq!(total, 952, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW");
+        assert_eq!(
+            total,
+            1213,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC"
+        );
     }
 
     /// The projection must not lose or invent a record: each book's slice
@@ -830,6 +882,7 @@ mod tests {
         assert_eq!(books[5].entries.len(), uca_feats::feat_tables().len());
         assert_eq!(books[6].entries.len(), ui_feats::feat_tables().len());
         assert_eq!(books[7].entries.len(), uw_feats::feat_tables().len());
+        assert_eq!(books[8].entries.len(), uc_feats::feat_tables().len());
     }
 
     #[test]
@@ -914,13 +967,14 @@ mod tests {
         assert_eq!(with_prerequisites(RuleSetId::Uca), 23, "of 23 -- all of them carry PRETEXT:");
         assert_eq!(with_prerequisites(RuleSetId::Ui), 98, "of 104 -- gathered directly at ingest, no backfill table");
         assert_eq!(with_prerequisites(RuleSetId::Uw), 127, "of 135 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Uc), 247, "of 261 -- gathered directly at ingest, no backfill table");
 
         let total: usize = all_feat_tables()
             .iter()
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.prerequisites.is_some())
             .count();
-        assert_eq!(total, 847, "847 of the catalog's 952 records have a prerequisite");
+        assert_eq!(total, 1094, "1094 of the catalog's 1213 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -1065,6 +1119,23 @@ mod tests {
                 ("ItemCreation", 1),
                 ("Metamagic", 2),
                 ("Teamwork", 3),
+            ])
+        );
+        // UC's own new facets: `CalledShot`, `Critical` (its bare
+        // `TYPE:Critical` facet, distinct from `Combat.Critical`, which
+        // folds to `Combat`), and `Style` (its bare `TYPE:Style` facet,
+        // distinct from `Combat.Style`). No UC record carries `TYPE:Grit`'s
+        // sibling `Panache` facet today (`"UcPanache"` never appears).
+        assert_eq!(
+            split(RuleSetId::Uc),
+            BTreeMap::from([
+                ("CalledShot", 2),
+                ("Combat", 181),
+                ("Critical", 1),
+                ("General", 62),
+                ("Grit", 7),
+                ("Style", 1),
+                ("Teamwork", 7),
             ])
         );
     }

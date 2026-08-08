@@ -329,7 +329,7 @@ mod tests {
         // or DESC + the deferral diagnostic for UCA's 2 corrupted records),
         // so all 127 add to `with_description` rather than the no-DESC:
         // bucket.
-        assert_eq!(with_description, 943, "9 of the 952 records carry no DESC: token");
+        assert_eq!(with_description, 1204, "9 of the 1213 records carry no DESC: token");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -342,16 +342,19 @@ mod tests {
         // each for the player, the same treatment CRB's own leaking rows
         // already get.
         changed.sort_unstable();
-        assert_eq!(raw_leaks, 63, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 63, "exactly the leaking records are rewritten");
-        // 28 pre-existing (CRB/UCA/UI) + 35 new UW records. Most of UW's
-        // are `&nl;` PCGen entity escapes (`PCGEN_ENTITIES` in
-        // `pcgen_desc.rs` -- 28 records carry at least one), a shape none
-        // of the earlier books' leaking rows used; a handful also carry
-        // `%N`/raw `|` tails of the same kind CRB/UI already have.
+        assert_eq!(raw_leaks, 137, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 137, "exactly the leaking records are rewritten");
+        // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 new UC records. Every
+        // served description for all 136 is confirmed leak-free by this
+        // same test's per-record `leaked_pcgen_syntax(served) == None`
+        // assertion above -- this is a raw-corpus-shape count (`&nl;`
+        // entity escapes, `%N`/raw `|` tails, all correctly rewritten by
+        // `render_pcgen_desc`), not a new player-visible leak.
         assert_eq!(
             changed,
             vec![
+                "Adder Strike",
+                "Amateur Gunslinger",
                 "Ambush Awareness",
                 "Animal Call",
                 "Aquatic Combatant",
@@ -361,55 +364,127 @@ mod tests {
                 "Beast Hunter",
                 "Beastmaster Style",
                 "Befuddling Strike",
+                "Binding Throw",
+                "Bludgeoner",
                 "Brilliant Planner",
+                "Close-Quarters Thrower",
+                "Clustered Shots",
+                "Combat Style Master",
                 "Conceal Spell",
                 "Cover Tracks",
                 "Crashing Wave Buffet",
                 "Dazing Fist",
+                "Death or Glory",
+                "Deceptive Exchange",
                 "Deep Diver",
+                "Defensive Weapon Training",
+                "Dimensional Dervish",
+                "Djinni Style",
+                "Domain Strike",
+                "Dragon Ferocity",
+                "Dragon Roar",
+                "Dragon Style",
                 "Draining Strike",
+                "Earth Child Binder",
+                "Earth Child Style",
+                "Earth Child Topple",
                 "Eidolon Mount",
                 "Energized Wild Shape",
                 "Expert Cartographer",
+                "Extra Grit",
                 "Eye for Ingredients",
                 "Faerie's Strike",
                 "False Trail",
                 "Feign Curse",
+                "Feral Combat Training",
+                "Field Repair",
+                "Final Embrace",
                 "Frightful Shape",
                 "Grasping Strike",
                 "Greater Beast Hunter",
                 "Greater Hunter's Bond",
                 "Greater Spring Attack",
+                "Greater Whip Mastery",
                 "Gruesome Slaughter",
+                "Gunsmithing",
+                "Harmonic Sage",
+                "Haunted Gnome Shroud",
+                "Hex Strike",
                 "Hide Worker",
+                "Horse Master",
+                "Impact Critical Shot",
                 "Improved Beast Hunter",
+                "Improved Charging Hurler",
                 "Improved Hunter's Bond",
+                "Improved Snap Shot",
                 "Improved Spring Attack",
                 "Indomitable Mountain Peak",
+                "Instant Judgment",
+                "Master Siege Engineer",
+                "Menacing Bane",
+                "Merciful Bane",
+                "Monastic Legacy",
+                "Monkey Moves",
+                "Monkey Shine",
+                "Monkey Style",
+                "Moonlight Stalker Feint",
+                "Moonlight Stalker Master",
                 "Mutated Shape",
                 "Nerve-Racking Negotiator",
+                "Net Adept",
+                "Net and Trident",
+                "Nightmare Weaver",
                 "One Eye Open",
                 "Out of the Sun",
+                "Pack Attack",
                 "Paralyzing Strike",
+                "Passing Trick",
                 "Photosynthetic Healing",
+                "Pinpoint Poisoner",
                 "Planar Wanderer",
+                "Prone Slinger",
+                "Quick Bull Rush",
+                "Quick Dirty Trick",
+                "Quick Drag",
+                "Quick Reposition",
+                "Quick Steal",
                 "Raging Concentration",
+                "Rebuffing Reduction",
                 "Recovered Rage",
+                "Revelation Strike",
                 "River Raider",
+                "School Strike",
                 "Scion of the Land",
+                "Shapeshifting Hunter",
+                "Siege Engineer",
+                "Siege Gunner",
+                "Skilled Driver",
+                "Slayer's Knack",
+                "Sling Flail",
+                "Snake Sidewind",
+                "Snake Style",
+                "Snap Shot",
+                "Sorcerous Strike",
+                "Spinning Throw",
+                "Stage Combatant",
                 "Staggering Fist",
                 "Street Sweep",
                 "Structural Strike",
                 "Stunning Fist",
+                "Style Feat Wildcard",
                 "Subtle Enchantments",
                 "Superior Scryer",
+                "Sword and Pistol",
                 "Thrill of the Hunt",
+                "Tiger Style",
                 "Tree Leaper",
                 "Tribal Hunter",
                 "Twinned Feint",
+                "Two-Handed Thrower",
                 "Unfettered Familiar",
                 "Verdant Spell",
                 "Vigilant Charger",
+                "Whip Mastery",
                 "Wild Growth Hex",
                 "Wilding",
                 "Winter's Strike",
@@ -424,8 +499,8 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            952,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW"
+            1213,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC"
         );
 
         let by_source =
@@ -438,21 +513,22 @@ mod tests {
         assert_eq!(by_source("Uca"), 23);
         assert_eq!(by_source("Ui"), 104);
         assert_eq!(by_source("Uw"), 135);
+        assert_eq!(by_source("Uc"), 261);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
-        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77, and so
-        // on per category.
-        assert_eq!(counts("General"), 444);
-        // CRB + APG + ACG + ARG 52 + UI 46 + UW 41, and so on.
-        assert_eq!(counts("Combat"), 389);
+        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77 + UC 63,
+        // and so on per category.
+        assert_eq!(counts("General"), 506);
+        // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182, and so on.
+        assert_eq!(counts("Combat"), 570);
         // + UW 1.
         assert_eq!(counts("ItemCreation"), 9);
         // + UI 4 + UW 2.
         assert_eq!(counts("Metamagic"), 42);
-        // + UI 2 + UW 3.
-        assert_eq!(counts("Teamwork"), 15);
+        // + UI 2 + UW 3 + UC 7.
+        assert_eq!(counts("Teamwork"), 22);
         assert_eq!(counts("Panache"), 4);
         // PU's three `###Block:`-derived categories; no other book has them.
         assert_eq!(counts("Alignment"), 9);
@@ -464,6 +540,15 @@ mod tests {
         // UW's own new category -- Companion/animal-focused feats. No
         // other book carries this facet.
         assert_eq!(counts("Animal"), 11);
+        // UC's own new categories -- Gunslinger Grit, and its own bare
+        // `Critical`/`Style`/`Called Shot` facets, distinct from the
+        // `Combat.*` sub-facets that fold to `Combat`. `UcPanache` never
+        // appears (0 records; see `ultimate_combat::feat_tables`'s own
+        // doc comment).
+        assert_eq!(counts("Grit"), 7);
+        assert_eq!(counts("CalledShot"), 2);
+        assert_eq!(counts("Critical"), 1);
+        assert_eq!(counts("Style"), 1);
 
         let categorised: usize = [
             "General",
@@ -477,6 +562,10 @@ mod tests {
             "WoundThreshold",
             "Story",
             "Animal",
+            "Grit",
+            "CalledShot",
+            "Critical",
+            "Style",
         ]
         .iter()
         .map(|category| counts(category))

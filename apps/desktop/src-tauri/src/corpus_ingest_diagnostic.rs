@@ -100,6 +100,7 @@ use codex::rules_core::rules_tables::crb::{
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::ultimate_equipment as ue;
+use codex::rules_core::rules_tables::ultimate_combat as uc;
 use codex::rules_core::rules_tables::ultimate_wilderness as uw;
 use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 
@@ -346,11 +347,20 @@ fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
 }
 
 /// Ultimate Wilderness: SD-28 Epic 26 (`epic-26-uw-complete`) from-scratch
-/// book ingest, first slice. 136 feat records -- see
+/// book ingest, first slice. 135 feat records -- see
 /// `ultimate_wilderness::feat_tables`'s own doc comment for the catalog.
 fn ultimate_wilderness_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), uw::feat_tables::feat_tables().len() as u32);
+    counts
+}
+
+/// Ultimate Combat: SD-28 Epic 27 (`epic-27-uc-complete`) from-scratch
+/// book ingest, first slice. 263 feat records -- see
+/// `ultimate_combat::feat_tables`'s own doc comment for the catalog.
+fn ultimate_combat_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), uc::feat_tables::feat_tables().len() as u32);
     counts
 }
 
@@ -463,6 +473,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_wilderness_counts(),
             &races,
         ),
+        book_status(
+            "ultimate_combat",
+            "src/rules_core/rules_tables/ultimate_combat",
+            ultimate_combat_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -542,7 +558,8 @@ mod tests {
                 "ultimate_campaign",
                 "ultimate_intrigue",
                 "ultimate_equipment",
-                "ultimate_wilderness"
+                "ultimate_wilderness",
+                "ultimate_combat"
             ]
         );
     }

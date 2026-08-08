@@ -327,6 +327,11 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // UCA's/UI's own types exist. Same family ("feats") as every other
     // book's feat table.
     ("UwFeatEntry", "feats"),
+    // Ultimate Combat's own record type (SD28-E27) -- own category enum
+    // (Style/Grit/Panache/Critical/CalledShot have no shared-enum
+    // equivalent, or are kept deliberately distinct). Same family
+    // ("feats") as every other book's feat table.
+    ("UcFeatEntry", "feats"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -689,6 +694,10 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // (General/Combat/ItemCreation/Metamagic/Teamwork/Animal/Mount),
         // so `feats_reach`'s own check is satisfied for all 136.
         ("ultimate_wilderness", "feats") => Some(feats_reach(RuleSetId::Uw, "Uw")),
+        // SD28-E27 slice 1: UC joined `feats_all::all_feat_tables()` under
+        // the `Uc` wire source. Every record carries a non-empty category,
+        // so `feats_reach`'s own check is satisfied for all 263.
+        ("ultimate_combat", "feats") => Some(feats_reach(RuleSetId::Uc, "Uc")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell

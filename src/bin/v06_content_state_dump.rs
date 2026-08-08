@@ -56,6 +56,7 @@ use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::ultimate_equipment as ue;
+use codex::rules_core::rules_tables::ultimate_combat as uc;
 use codex::rules_core::rules_tables::ultimate_wilderness as uw;
 use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 use codex::rules_core::rules_tables::RuleSetId;
@@ -319,6 +320,22 @@ fn uw_content() -> BookContent {
             KindCount { kind: "spells", ingested: 0 },
             KindCount { kind: "equipment", ingested: 0 },
             KindCount { kind: "feats", ingested: uw::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E27. Same hand-listed-roster shape the sibling `*_content()`
+/// functions above warn about. First slice: feats only.
+fn uc_content() -> BookContent {
+    BookContent {
+        id: "ultimate_combat",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount { kind: "equipment", ingested: 0 },
+            KindCount { kind: "feats", ingested: uc::feat_tables::feat_tables().len() as u32 },
             KindCount { kind: "monsters", ingested: 0 },
         ],
     }
@@ -626,6 +643,7 @@ fn main() {
         ui_content(),
         ue_content(),
         uw_content(),
+        uc_content(),
     ];
     let monsters = monster_states(&repo_root);
     let races = race_states(&fixture);
@@ -739,6 +757,7 @@ fn main() {
             // `all_feat_tables()` never yields a `Ue` table.
             RuleSetId::Ue => "ultimate_equipment",
             RuleSetId::Uw => "ultimate_wilderness",
+            RuleSetId::Uc => "ultimate_combat",
         };
         let records = table.entries.len();
         let wired_here = table

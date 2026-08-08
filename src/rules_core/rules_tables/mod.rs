@@ -19,6 +19,7 @@ pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
 pub mod ultimate_equipment;
 pub mod ultimate_intrigue;
+pub mod ultimate_combat;
 pub mod ultimate_wilderness;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
@@ -38,5 +39,7 @@ pub enum RuleSetId {
     Ue,
     /// Ultimate Wilderness. SD-28 Epic 26 -- first record family (feats).
     Uw,
+    /// Ultimate Combat. SD-28 Epic 27 -- first record family (feats).
+    Uc,
     // future: Um, ...
 }
