@@ -179,48 +179,47 @@ fn every_pre_kind_in_the_catalog_is_either_modelled_or_declared_unmodelled() {
 #[test]
 fn the_pre_kind_census_is_the_real_one() {
     let expected: BTreeMap<String, usize> = [
-        ("PREABILITY", 564),
-        ("!PREABILITY", 18),
-        ("PREVARGTEQ", 285),
-        ("PREFACT", 185),
-        ("PREMULT", 180),
-        ("PRETOTALAB", 161),
+        ("PREABILITY", 659),
+        ("!PREABILITY", 19),
+        ("PREVARGTEQ", 344),
+        ("PREFACT", 196),
+        ("PREMULT", 189),
+        ("PRETOTALAB", 194),
         ("PRESTAT", 93),
-        ("PRESKILL", 121),
-        ("PRECLASS", 67),
-        ("PRERACE", 29),
-        ("PRELEVEL", 25),
-        // 23 (ARG's 3 "channel energy" rows + PU's 4 Combat
-        // Stamina/Signature Skill rows... the pre-UCA total) + 23 more from
-        // every one of UCA's 23 Story Feats, all of which carry only a
-        // `PRETEXT:` prose prerequisite (`feats_all::UCA_FEAT_PREREQUISITES`,
-        // SD28-E13, 2026-08-03). UI's 104 feats carry their `PRETEXT:` as
-        // real display prose alongside real `PRE`-family tokens (SD28-E24),
-        // not in place of them, so this count is unchanged by UI.
+        ("PRESKILL", 167),
+        ("PRECLASS", 81),
+        ("PRERACE", 33),
+        ("PRELEVEL", 31),
+        // UI's 104 feats carry their `PRETEXT:` as real display prose
+        // alongside real `PRE`-family tokens (SD28-E24), not in place of
+        // them, and UW carries no `PRETEXT:` tokens at all (its own
+        // prerequisites are entirely formal `PRE`-family tokens), so this
+        // count is unchanged by either book.
         ("PRETEXT", 46),
-        ("PREALIGN", 10),
+        ("PREALIGN", 11),
         ("PREHD", 9),
         ("PREPROFWITHSHIELD", 7),
         ("PRESPELL", 7),
-        ("PREVAREQ", 8),
+        ("PREVAREQ", 10),
         ("PREPCLEVEL", 5),
         ("PREWEAPONPROF", 5),
         ("PREPROFWITHARMOR", 4),
         ("PRESIZELTEQ", 6),
-        ("PRESPELLTYPE", 4),
-        ("PREVARGT", 3),
+        ("PRESPELLTYPE", 6),
+        ("PREVARGT", 8),
         ("PRESPELLCAST", 3),
-        ("!PREALIGN", 3),
+        ("!PREALIGN", 6),
         ("PRECHECKBASE", 2),
-        ("PREDOMAIN", 2),
+        ("PREDOMAIN", 5),
         ("PRESPELLDESCRIPTOR", 2),
         ("PREVARLT", 2),
         ("PREVISION", 2),
-        // UI's own new PRE kind (`Superior Scryer`'s
-        // `PRESPELLSCHOOLSUB:1,Scrying=1`) -- unmodelled, same treatment as
-        // `PRESPELLTYPE` (see `pre_tokens::UNMODELLED_KINDS`).
         ("PRESPELLSCHOOLSUB", 1),
         ("PREDEITYALIGN", 1),
+        // UW's own new PRE kind (one record's `PREMOVE:` clause) --
+        // unmodelled, same treatment as `PREWEAPONPROF` (see
+        // `pre_tokens::UNMODELLED_KINDS`).
+        ("PREMOVE", 1),
     ]
     .into_iter()
     .map(|(kind, count)| (kind.to_owned(), count))
@@ -228,23 +227,22 @@ fn the_pre_kind_census_is_the_real_one() {
 
     assert_eq!(catalog_kind_census(), expected);
 
-    // 1,860 prerequisite clauses across 32 distinct kinds (was 1,615 before
-    // SD28-E24's 104 UI feats). 1,751 of them are of a kind with a real
-    // evaluation arm, 46 (unchanged -- UI's `PRETEXT:` rows carry it
-    // alongside real tokens, not instead of them) are `PRETEXT:` display
-    // prose -- its own third category, deliberately outside both
-    // `MODELLED_KINDS` and `UNMODELLED_KINDS`; see `pre_tokens.rs`'s own
-    // `ClauseOutcome::Informational` arm -- and the rest are of a kind
-    // deliberately reported as unmodelled -- see `UNMODELLED_KINDS` for the
-    // per-kind reason.
+    // Prerequisite clauses across 33 distinct kinds (was 1,860/32 before
+    // SD28-E26's 135 UW feats). The kind-by-kind values above are pinned
+    // as-observed; see `MODELLED_KINDS`/`UNMODELLED_KINDS` for which of
+    // them carry a real evaluation arm versus a named reason for staying
+    // unmodelled, and `pre_tokens.rs`'s own `ClauseOutcome::Informational`
+    // arm for `PRETEXT:`'s own third category. Total computed from the
+    // map itself, not hand-summed (decisions.md §43's own lesson: a
+    // hand-summed total was wrong once already this session).
     let total: usize = expected.values().sum();
-    assert_eq!(total, 1860);
+    assert_eq!(total, 2155);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
         .map(|(_, count)| *count)
         .sum();
-    assert_eq!(modelled, 1751);
+    assert_eq!(modelled, 2034);
 }
 
 /// 599 of the catalog's 690 records carry at least one prerequisite -- the
@@ -260,7 +258,7 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     // `PRETEXT:` prerequisite entry -- see `feats_all::UCA_FEAT_PREREQUISITES`)
     // + 98 of UI's 104 records (real `PRE`-family tokens, gathered directly
     // at ingest -- see `ultimate_intrigue::feat_tables`'s own doc comment).
-    assert_eq!(with_any, 720, "of 817");
+    assert_eq!(with_any, 847, "of 952");
 }
 
 // ---------------------------------------------------------------------------
@@ -457,7 +455,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 817);
+        assert_eq!(reports.len(), 952);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);

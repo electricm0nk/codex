@@ -329,6 +329,7 @@ pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     ("PREVARLT", "the referenced PCGen variable is not modelled"),
     ("PREVISION", "racial vision modes are not modelled"),
     ("PREWEAPONPROF", "weapon proficiency is not modelled"),
+    ("PREMOVE", "movement-type prerequisites are not modelled"),
 ];
 
 /// Evaluates one top-level `PRE`-family token against `facts`.

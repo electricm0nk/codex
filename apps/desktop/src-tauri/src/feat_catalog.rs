@@ -329,7 +329,7 @@ mod tests {
         // or DESC + the deferral diagnostic for UCA's 2 corrupted records),
         // so all 127 add to `with_description` rather than the no-DESC:
         // bucket.
-        assert_eq!(with_description, 808, "9 of the 817 records carry no DESC: token");
+        assert_eq!(with_description, 943, "9 of the 952 records carry no DESC: token");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -341,39 +341,80 @@ mod tests {
         // as the corpus spells it -- `render_pcgen_desc` correctly rewrites
         // each for the player, the same treatment CRB's own leaking rows
         // already get.
-        assert_eq!(raw_leaks, 28, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 28, "exactly the leaking records are rewritten");
+        changed.sort_unstable();
+        assert_eq!(raw_leaks, 63, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 63, "exactly the leaking records are rewritten");
+        // 28 pre-existing (CRB/UCA/UI) + 35 new UW records. Most of UW's
+        // are `&nl;` PCGen entity escapes (`PCGEN_ENTITIES` in
+        // `pcgen_desc.rs` -- 28 records carry at least one), a shape none
+        // of the earlier books' leaking rows used; a handful also carry
+        // `%N`/raw `|` tails of the same kind CRB/UI already have.
         assert_eq!(
             changed,
             vec![
+                "Ambush Awareness",
+                "Animal Call",
+                "Aquatic Combatant",
                 "Arcane Strike",
-                "Stunning Fist",
-                "Unfettered Familiar",
                 "Battle Cry",
-                "Befuddling Strike",
-                "Dazing Fist",
-                "Draining Strike",
-                "Faerie's Strike",
-                "Grasping Strike",
-                "Gruesome Slaughter",
-                "Paralyzing Strike",
-                "Raging Concentration",
-                "Recovered Rage",
-                "Staggering Fist",
-                "Twinned Feint",
-                "Winter's Strike",
-                "Wounded Paw Gambit",
                 "Battlefield Healer",
+                "Beast Hunter",
+                "Beastmaster Style",
+                "Befuddling Strike",
                 "Brilliant Planner",
                 "Conceal Spell",
+                "Cover Tracks",
+                "Crashing Wave Buffet",
+                "Dazing Fist",
+                "Deep Diver",
+                "Draining Strike",
+                "Eidolon Mount",
+                "Energized Wild Shape",
+                "Expert Cartographer",
                 "Eye for Ingredients",
+                "Faerie's Strike",
+                "False Trail",
                 "Feign Curse",
+                "Frightful Shape",
+                "Grasping Strike",
+                "Greater Beast Hunter",
+                "Greater Hunter's Bond",
+                "Greater Spring Attack",
+                "Gruesome Slaughter",
+                "Hide Worker",
+                "Improved Beast Hunter",
+                "Improved Hunter's Bond",
+                "Improved Spring Attack",
+                "Indomitable Mountain Peak",
+                "Mutated Shape",
                 "Nerve-Racking Negotiator",
+                "One Eye Open",
+                "Out of the Sun",
+                "Paralyzing Strike",
+                "Photosynthetic Healing",
                 "Planar Wanderer",
+                "Raging Concentration",
+                "Recovered Rage",
+                "River Raider",
+                "Scion of the Land",
+                "Staggering Fist",
                 "Street Sweep",
                 "Structural Strike",
+                "Stunning Fist",
                 "Subtle Enchantments",
                 "Superior Scryer",
+                "Thrill of the Hunt",
+                "Tree Leaper",
+                "Tribal Hunter",
+                "Twinned Feint",
+                "Unfettered Familiar",
+                "Verdant Spell",
+                "Vigilant Charger",
+                "Wild Growth Hex",
+                "Wilding",
+                "Winter's Strike",
+                "Wood Crafter",
+                "Wounded Paw Gambit",
             ]
         );
     }
@@ -383,8 +424,8 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            817,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI"
+            952,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW"
         );
 
         let by_source =
@@ -396,20 +437,22 @@ mod tests {
         assert_eq!(by_source("Pu"), 17);
         assert_eq!(by_source("Uca"), 23);
         assert_eq!(by_source("Ui"), 104);
+        assert_eq!(by_source("Uw"), 135);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
-        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52, and so on per
-        // category.
-        assert_eq!(counts("General"), 367);
-        // CRB + APG + ACG + ARG 52 + UI 46, and so on.
-        assert_eq!(counts("Combat"), 348);
-        assert_eq!(counts("ItemCreation"), 8);
-        // + UI 4.
-        assert_eq!(counts("Metamagic"), 40);
-        // + UI 2.
-        assert_eq!(counts("Teamwork"), 12);
+        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77, and so
+        // on per category.
+        assert_eq!(counts("General"), 444);
+        // CRB + APG + ACG + ARG 52 + UI 46 + UW 41, and so on.
+        assert_eq!(counts("Combat"), 389);
+        // + UW 1.
+        assert_eq!(counts("ItemCreation"), 9);
+        // + UI 4 + UW 2.
+        assert_eq!(counts("Metamagic"), 42);
+        // + UI 2 + UW 3.
+        assert_eq!(counts("Teamwork"), 15);
         assert_eq!(counts("Panache"), 4);
         // PU's three `###Block:`-derived categories; no other book has them.
         assert_eq!(counts("Alignment"), 9);
@@ -418,6 +461,9 @@ mod tests {
         // UCA's single corpus-derived category -- all 23 records are
         // `TYPE:Story`.
         assert_eq!(counts("Story"), 23);
+        // UW's own new category -- Companion/animal-focused feats. No
+        // other book carries this facet.
+        assert_eq!(counts("Animal"), 11);
 
         let categorised: usize = [
             "General",
@@ -430,6 +476,7 @@ mod tests {
             "CombatStamina",
             "WoundThreshold",
             "Story",
+            "Animal",
         ]
         .iter()
         .map(|category| counts(category))
@@ -601,9 +648,9 @@ mod tests {
             source: None,
         });
 
-        // 17 CRB + 19 APG + 4 UI; ACG, ARG, PU and UCA have no Metamagic
-        // feat records.
-        assert_eq!(response.entries.len(), 40);
+        // 17 CRB + 19 APG + 4 UI + 2 UW; ACG, ARG, PU and UCA have no
+        // Metamagic feat records.
+        assert_eq!(response.entries.len(), 42);
         for entry in &response.entries {
             assert_eq!(entry.category, "Metamagic");
         }

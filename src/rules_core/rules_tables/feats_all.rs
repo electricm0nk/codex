@@ -129,6 +129,7 @@ use super::crb::feats::{FeatCategory as SharedFeatCategory, FeatTableEntry as Sh
 use super::pathfinder_unchained::feat_tables as pu_feats;
 use super::ultimate_campaign::feat_tables as uca_feats;
 use super::ultimate_intrigue::feat_tables as ui_feats;
+use super::ultimate_wilderness::feat_tables as uw_feats;
 use super::RuleSetId;
 
 /// One feat record, projected out of whichever per-book table it came
@@ -668,6 +669,40 @@ fn map_ui_entry(entry: &ui_feats::UiFeatEntry) -> FeatCatalogRecord {
     }
 }
 
+/// UW's own five-shared-plus-two-new-variant enum. Unlike UI, UW carries
+/// two facets (`Animal`, `Mount`) with no shared-enum equivalent -- see
+/// `ultimate_wilderness::feat_tables`'s own doc comment for why folding
+/// them onto an existing variant would be a classification the corpus
+/// never made. No record in this catalog is `deferred-with-reason` either
+/// (confirmed: every one of UW's 136 records carries a real `BENEFIT:`).
+fn uw_category_name(category: uw_feats::FeatCategory) -> &'static str {
+    match category {
+        uw_feats::FeatCategory::General => "General",
+        uw_feats::FeatCategory::Combat => "Combat",
+        uw_feats::FeatCategory::ItemCreation => "ItemCreation",
+        uw_feats::FeatCategory::Metamagic => "Metamagic",
+        uw_feats::FeatCategory::Teamwork => "Teamwork",
+        uw_feats::FeatCategory::Animal => "Animal",
+        uw_feats::FeatCategory::Mount => "Mount",
+    }
+}
+
+fn map_uw_entry(entry: &uw_feats::UwFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: uw_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
 /// Project one book's table once and hand out a `'static` slice of it.
 ///
 /// The projection is a real allocation, so it is cached per book for the
@@ -722,14 +757,19 @@ fn ui_records() -> &'static [FeatCatalogRecord] {
     projected(&CELL, || ui_feats::feat_tables().iter().map(map_ui_entry).collect())
 }
 
+fn uw_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || uw_feats::feat_tables().iter().map(map_uw_entry).collect())
+}
+
 /// Every ingested book's feat catalog, in book order (CRB, APG, ACG,
-/// ARG, PU, UCA, UI).
+/// ARG, PU, UCA, UI, UW).
 ///
-/// 817 records total: 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23
-/// UCA + 104 UI. Built once and cached for the process lifetime, over the
-/// seven per-book `feat_tables()` functions -- this never re-derives or
-/// re-filters their contents, only projects each record onto
-/// [`FeatCatalogRecord`].
+/// 952 records total: 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23
+/// UCA + 104 UI + 135 UW. Built once and cached for the process lifetime,
+/// over the eight per-book `feat_tables()` functions -- this never
+/// re-derives or re-filters their contents, only projects each record
+/// onto [`FeatCatalogRecord`].
 pub fn all_feat_tables() -> &'static [BookFeatTable] {
     static TABLES: std::sync::OnceLock<Vec<BookFeatTable>> = std::sync::OnceLock::new();
     TABLES.get_or_init(|| {
@@ -741,6 +781,7 @@ pub fn all_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Pu, entries: pu_records() },
             BookFeatTable { rule_set: RuleSetId::Uca, entries: uca_records() },
             BookFeatTable { rule_set: RuleSetId::Ui, entries: ui_records() },
+            BookFeatTable { rule_set: RuleSetId::Uw, entries: uw_records() },
         ]
     })
 }
@@ -753,7 +794,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = all_feat_tables();
-        assert_eq!(books.len(), 7);
+        assert_eq!(books.len(), 8);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -768,9 +809,11 @@ mod tests {
         assert_eq!(books[5].entries.len(), 23);
         assert_eq!(books[6].rule_set, RuleSetId::Ui);
         assert_eq!(books[6].entries.len(), 104);
+        assert_eq!(books[7].rule_set, RuleSetId::Uw);
+        assert_eq!(books[7].entries.len(), 135);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
-        assert_eq!(total, 817, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI");
+        assert_eq!(total, 952, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW");
     }
 
     /// The projection must not lose or invent a record: each book's slice
@@ -786,6 +829,7 @@ mod tests {
         assert_eq!(books[4].entries.len(), pu_feats::feat_tables().len());
         assert_eq!(books[5].entries.len(), uca_feats::feat_tables().len());
         assert_eq!(books[6].entries.len(), ui_feats::feat_tables().len());
+        assert_eq!(books[7].entries.len(), uw_feats::feat_tables().len());
     }
 
     #[test]
@@ -869,13 +913,14 @@ mod tests {
         assert_eq!(with_prerequisites(RuleSetId::Pu), 14, "of 17");
         assert_eq!(with_prerequisites(RuleSetId::Uca), 23, "of 23 -- all of them carry PRETEXT:");
         assert_eq!(with_prerequisites(RuleSetId::Ui), 98, "of 104 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Uw), 127, "of 135 -- gathered directly at ingest, no backfill table");
 
         let total: usize = all_feat_tables()
             .iter()
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.prerequisites.is_some())
             .count();
-        assert_eq!(total, 720, "720 of the catalog's 817 records have a prerequisite");
+        assert_eq!(total, 847, "847 of the catalog's 952 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -1005,6 +1050,22 @@ mod tests {
         assert_eq!(
             split(RuleSetId::Ui),
             BTreeMap::from([("Combat", 46), ("General", 52), ("Metamagic", 4), ("Teamwork", 2)])
+        );
+        // UW's own two new facets -- Animal (Companion-focused feats) and
+        // Mount -- have no shared-enum equivalent. `Mount` carries zero
+        // real feat records in this corpus: the only `TYPE:Mount` row
+        // (`Samurai ~ Mount.MOD`) is a `CATEGORY:Special Ability` row, not
+        // a feat at all, and was never a candidate.
+        assert_eq!(
+            split(RuleSetId::Uw),
+            BTreeMap::from([
+                ("Animal", 11),
+                ("Combat", 41),
+                ("General", 77),
+                ("ItemCreation", 1),
+                ("Metamagic", 2),
+                ("Teamwork", 3),
+            ])
         );
     }
 

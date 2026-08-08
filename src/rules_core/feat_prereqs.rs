@@ -480,18 +480,17 @@ mod sd27_prerequisite_tests {
     ///
     /// The pinned number is the real one, derived by running this: a Human
     /// Fighter 1 with Str 14 / Dex 13 / Int 10, no feats and no allocated
-    /// skill ranks qualifies for **242 of 817** (was 234 of 713 before
-    /// SD28-E24 added Ultimate Intrigue's 104 feats -- unlike UCA, UI
-    /// carries real mechanically-evaluable `PRE`-family tokens, so its
-    /// records are checked genuinely rather than universally admitted:
-    /// only 8 of the 104 pass a starting Fighter's build, mostly the
-    /// unconditionally-open records with no `PRE` token at all). That is
-    /// not over-blocking, it is PF1: the two dominant blockers among the
-    /// remaining denials are 284 clauses requiring another feat the
-    /// character has not taken (`Cleave` needs `Power Attack`, `Mobility`
-    /// needs `Dodge`) and 196 race gates, 183 of which are ARG feats
-    /// belonging to races other than Human. Spot-checked against the
-    /// published rulebook for 25 well-known feats in
+    /// skill ranks qualifies for **274 of 952** (was 242 of 817 before
+    /// SD28-E26 added Ultimate Wilderness's 135 feats -- UW, like UI,
+    /// carries real mechanically-evaluable `PRE`-family tokens, checked
+    /// genuinely: 32 of the 135 pass a starting Fighter's build, including
+    /// `Wilding`'s own `PRELEVEL:MAX=1` early-level-only gate, which a
+    /// level-1 Fighter satisfies). The two dominant blockers among the
+    /// remaining denials are clauses requiring another feat the character
+    /// has not taken (`Cleave` needs `Power Attack`, `Mobility` needs
+    /// `Dodge`) and race gates, most of which are ARG feats belonging to
+    /// races other than Human. Spot-checked against the published
+    /// rulebook for 25 well-known feats in
     /// `tests/sd27_feat_prerequisite_enforcement.rs`.
     #[test]
     fn a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why() {
@@ -499,7 +498,7 @@ mod sd27_prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        assert_eq!(reports.len(), 817);
+        assert_eq!(reports.len(), 952);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
@@ -508,7 +507,7 @@ mod sd27_prerequisite_tests {
         // `unmet`, exactly the same non-blocking treatment PU's own
         // `PRETEXT:` rows already get. Re-derived with this test after
         // SD28-E13 landed the UCA catalog (2026-08-03).
-        assert_eq!(eligible, 242, "a starting Fighter's real eligible-feat count");
+        assert_eq!(eligible, 274, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();
@@ -543,10 +542,26 @@ mod sd27_prerequisite_tests {
 
         let weak_keys = eligible_keys(&weak_facts);
         let strong_keys = eligible_keys(&strong_facts);
-        let lost: Vec<&String> = weak_keys.difference(&strong_keys).collect();
+        // `Wilding` (uw_feats.lst:112) carries a real, deliberate PF1
+        // ceiling -- `PRELEVEL:MAX=1`, "you were touched by nature at an
+        // early age" -- available only to a 1st-level character. This is
+        // not a sign error the way this test otherwise guards against: a
+        // stronger (higher-level) build genuinely loses access to an
+        // early-level-only feat, the one real exception to "more
+        // prerequisites open strictly more feats" in the whole catalog.
+        // Named explicitly rather than silently excluded from the
+        // comparison, so a second such exception fails here instead of
+        // being absorbed.
+        let known_level_ceiling_exceptions: std::collections::BTreeSet<&str> =
+            ["Wilding"].into_iter().collect();
+        let lost: Vec<&String> = weak_keys
+            .difference(&strong_keys)
+            .filter(|key| !known_level_ceiling_exceptions.contains(key.as_str()))
+            .collect();
         assert!(
             lost.is_empty(),
-            "a stronger build lost access to feats the weaker one had: {lost:?}"
+            "a stronger build lost access to feats the weaker one had (beyond the known \
+             PRELEVEL:MAX exceptions): {lost:?}"
         );
         assert!(
             strong_keys.len() > weak_keys.len(),

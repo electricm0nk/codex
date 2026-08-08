@@ -100,6 +100,7 @@ use codex::rules_core::rules_tables::crb::{
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::ultimate_equipment as ue;
+use codex::rules_core::rules_tables::ultimate_wilderness as uw;
 use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 
 use crate::race_catalog::{book_code, build_race_catalog, RACE_CORPUS_BOOKS};
@@ -332,7 +333,7 @@ fn ultimate_intrigue_counts() -> BTreeMap<String, u32> {
 }
 
 /// Ultimate Equipment: SD-28 Epic 25 (`epic-25-ue-complete`) from-scratch
-/// book ingest, first slice. 1,380 equipment + 180 equipment-modifier
+/// book ingest, first slice. 1,369 equipment + 180 equipment-modifier
 /// records -- see `ultimate_equipment::equipment_tables`'s own doc
 /// comment for the catalog and its collision-exclusion ruling.
 fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
@@ -341,6 +342,15 @@ fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
         "equipment".to_string(),
         (ue::equipment_tables::equipment_tables().len() + ue::equipment_tables::equipmod_tables().len()) as u32,
     );
+    counts
+}
+
+/// Ultimate Wilderness: SD-28 Epic 26 (`epic-26-uw-complete`) from-scratch
+/// book ingest, first slice. 136 feat records -- see
+/// `ultimate_wilderness::feat_tables`'s own doc comment for the catalog.
+fn ultimate_wilderness_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), uw::feat_tables::feat_tables().len() as u32);
     counts
 }
 
@@ -447,6 +457,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_equipment_counts(),
             &races,
         ),
+        book_status(
+            "ultimate_wilderness",
+            "src/rules_core/rules_tables/ultimate_wilderness",
+            ultimate_wilderness_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -525,7 +541,8 @@ mod tests {
                 "pathfinder_unchained",
                 "ultimate_campaign",
                 "ultimate_intrigue",
-                "ultimate_equipment"
+                "ultimate_equipment",
+                "ultimate_wilderness"
             ]
         );
     }

@@ -113,7 +113,7 @@ use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_equipment as ue, ultimate_intrigue as ui, RuleSetId,
+    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_wilderness as uw, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -322,6 +322,11 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // reason UCA's `StoryFeatEntry` above declares its own. Same family
     // (`"feats"`) as every other book's feat table.
     ("UiFeatEntry", "feats"),
+    // Ultimate Wilderness's own record type (SD28-E26) -- own category
+    // enum (Animal/Mount have no shared-enum equivalent), same reason
+    // UCA's/UI's own types exist. Same family ("feats") as every other
+    // book's feat table.
+    ("UwFeatEntry", "feats"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -679,6 +684,11 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // record carries a non-empty `category` (General/Combat/Metamagic/
         // Teamwork) so `feats_reach`'s own check is satisfied for all 104.
         ("ultimate_intrigue", "feats") => Some(feats_reach(RuleSetId::Ui, "Ui")),
+        // SD28-E26 slice 1: UW joined `feats_all::all_feat_tables()` under
+        // the `Uw` wire source. Every record carries a non-empty category
+        // (General/Combat/ItemCreation/Metamagic/Teamwork/Animal/Mount),
+        // so `feats_reach`'s own check is satisfied for all 136.
+        ("ultimate_wilderness", "feats") => Some(feats_reach(RuleSetId::Uw, "Uw")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell
