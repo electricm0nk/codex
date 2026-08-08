@@ -2379,3 +2379,83 @@ Two findings worth stating explicitly rather than rounding away:
 ### Kanban
 
 `epic-24-ui-complete` → `IN-FLIGHT`, `Claimed-by: epic-24-ultimate-intrigue`, `Cycle-id: SD28-E24-F1-001`. Not moved to `COMPLETE` — 1,115 of 1,258 units remain. Next cycle against this card should pick its slice by shape from the table above (class_feature is by far the largest remaining kind at 884 units) and re-derive the corpus/engine numbers fresh again rather than trust this receipt's snapshot.
+
+## Cycle `SD28-E24-F2-001` / `SD28-E24-F3-001` — Card `epic-24-ui-complete` (Ultimate Intrigue slice 2: spell/equipment redirect; classifier fix)
+
+### Cost-model refinement (the most useful output of this cycle)
+
+Slice 1's model (`SD28-E24-F1-001`): the fixed book-onboarding tax is dominated by the number of files that pin an aggregate count (7, constant regardless of record count), and once `RuleSetId::Ui` and those 7 files were paid, later slices of the same book should run close to content-only.
+
+**Slice 2 mostly confirmed that, but with a real exception the model did not predict — corrected here, not footnoted.** Landing `spell` and `equipment` was cheaper than slice 1 (no new `RuleSetId`, no new hand-maintained roster arm), but it exposed **two aggregation-divergence bugs** slice 1's single-kind (feats-only) scope never touched:
+
+1. `src/rules_core/equipment_resolver.rs` — a second, independent per-book chain behind the Gear tab's Attach Modifier gate, duplicating `equipment_catalog.rs`'s own chain. Wiring UI into the catalog alone would have let UI's 7 equipmods **recognize in the picker and refuse on attach** — a half-working feature, not an absent one (`decisions.md §42`'s addendum, instance 17 of `§36`'s pattern).
+2. `apps/desktop/src-tauri/src/reach_gate.rs`'s exhaustiveness gate (`every_ingested_family_is_accounted_for`, `unsurfaced_families_are_exactly_the_recorded_findings`) — needed new `("ultimate_intrigue", "spells"/"equipment")` claims, one per kind.
+
+**Refined model: the fixed tax is per-file *per record kind*, not per book.** `RuleSetId::Ui` bought the book-level registration exactly once, but `equipment` carries its own aggregation pair and `spell` its own catalog chain — each new *kind* a book uses surfaces its own set of hand-maintained lists that must independently agree. Cost converges toward content-only only once every kind a book uses has been onboarded at least once, not after the book's first slice. This sizes the remaining six Ultimate books more accurately than slice 1's model alone: expect one small aggregation-divergence check per new kind, not zero.
+
+**Both divergence bugs were caught by pre-existing tests, not by reading code** — `the_catalog_and_the_resolver_agree_on_the_book_set` and the two `reach_gate` exhaustiveness assertions all fired on the first full desktop-suite run. Against the seventeen instances `decisions.md §36`/`§42` catalogue of "a hand-maintained pair silently drifts, nothing fails," these three are the rare counter-examples: a guard existed, and it worked in minutes rather than requiring a symptom traced back after the fact. They are the model the other fourteen should follow, not an exception to shrug off.
+
+### What landed (slice 2: spell + equipment redirect)
+
+- `ultimate_intrigue::spell_list` (101 records, `ui_spells.lst`'s real `SCHOOL:`+`CLASSES:`-bearing rows, `.MOD` blurb rows excluded) joined `spell_catalog.rs` under `BOOK_UI`, mirroring `advanced_race_guide::spell_list`'s own shape exactly (own `Pf1SchoolId` enum, non-optional school/level/description).
+- `ultimate_intrigue::equipment_tables` (91 equipment records across `General`/`ArmsArmor`/`MagicItems`, including one genuine new item recovered from a `.COPY=`/`.MOD` pair — `Thieves' Tools (Concealable)` — that the base non-`.MOD` parse alone would have missed; re-derived against `docs/work-inventory.json`'s own 91, not assumed) joined `equipment_catalog.rs` and `equipment_resolver.rs` under `BOOK_UI`/`EQUIPMENT_BOOK_UI`.
+- 7 real equipment-modifier records from `ui_equipmods.lst` — **not** the 14 `work-inventory.json` reports. That 14 is itself an over-count: the file declares each of the 7 real modifiers twice, once under its real name and once as a `VISIBLE:NO` `.COPY=` alias row, and the classifier does not know about `VISIBLE:NO` — the same exclusion `advanced_race_guide::equipment_tables` already documents for its own corpus's "Old KEYs" block. Stated as a finding, not chased as a gap.
+- `race_trait` (10 declared units) traced and found **not closable this slice**: all 10 are either Vigilante favored-class-bonus rows (blocked on the same missing Vigilante chassis named below) or Unchained Summoner Eidolon subtype content in `support/ui_abilities_race_pu.lst` — not playable-race alternate traits at all. 0 real closable units, the same "always re-derive the label" outcome `decisions.md §39` reached for APG.
+- Two DoD items checked and marked N/A-with-reason rather than silently skipped, per team-lead's explicit standard: `enrich_equipment_raw_tokens`/PI-screening round-trip do not apply — UI's equipment is a compiled `&'static` Rust table (the ARG/PU/UCA pattern), not a `data/corpus/` JSON writer (`enrich_equipment_raw_tokens` operates on-disk; no `data/corpus/ultimate_intrigue/` directory exists, matching UCA's own precedent). This book's open-content status is established once at the book level (`OGL.txt` on disk, confirmed in `epic-6-ui`'s own receipt), the protection every compiled-table book in this program already relies on — not a gap, a different and already-adequate check for this ingest shape.
+- Full count sweep across every pinned assertion these two aggregations touch (`spell_catalog.rs`, `equipment_catalog.rs`, `equipment_resolver.rs`, `character_hub.rs`, `tests/sd27_known_spells_must_be_on_the_class_spell_list.rs`), each re-derived from a real test failure.
+
+### What landed (classifier fix: `decisions.md §43`)
+
+Authorized by team-lead on the evidence this slice's own recon surfaced (`decisions.md §42`): `classify()`'s `Kind::ClassFeature` owner-found branch granted `text-complete` on a class-name substring match plus zero magnitude, with no holds-check — the same defect `decisions.md §40` already fixed in the branch's sibling a few lines above, never completed here until now.
+
+**The program's `proven` figure corrects from 3,242 to 1,381 — a 57% reduction, because 1,861 units were counted as proven while unreachable by any player. This is a correction, not lost work**, and is stated in exactly those terms so it is not misread as a regression.
+
+| Book | Units moved `text-complete` → `not-ingested` |
+|---|---:|
+| `advanced_class_guide` | 821 |
+| `advanced_players_guide` | 477 |
+| `core_rulebook` | 439 |
+| `advanced_race_guide` | 51 |
+| `ultimate_intrigue` | 47 |
+| `pathfinder_unchained` | 26 |
+| **Total** | **1,861** |
+
+All six books that carry `class_feature` content were affected uniformly — ACG's 821 (the number in hand when authorization was sought) only looked special because it was the one book anyone had counted; APG (477) and CRB (439) are comparable in size.
+
+**A self-caught bug is part of this receipt, not smoothed over.** The first patch attempt replaced the whole branch tail with one unconditional verdict, which silently renamed a second, previously-correct 572-unit ACG population's evidence string along with the 1,861 genuinely wrong ones -- measured as 3,194 units moving, not the ~1,861 predicted. Caught by an id-keyed per-unit before/after diff (not a count comparison, which would not have distinguished the two populations), rewritten to a two-arm fix mirroring `§40`'s exact shape, re-measured at exactly 1,861 with zero other transitions anywhere in the corpus.
+
+Sample-verified one unit per affected book against every consumer file (`apps/desktop/src-tauri/src/*.rs`, `src/rules_core/*.rs`) — zero reach a player in any of the six, including the one case with a grep hit (`pathfinder_unchained`'s `Barbarian ~ Unchained Class Full`, confirmed to be an internal bookkeeping field name in `shape_b_v1.rs`, not a render of the record's own text).
+
+### Two engine blockers, named as candidate epics with real unit counts (`decisions.md §42`)
+
+- **Vigilante class chassis** — 108 `class_feature` units directly attributed to `vigilante`, plus the great majority of a further ~651-unit "no owner" pool (talent trees: `Refined Education` 119, `Social Grace` 84, `Social Talent` 7, ~2 dozen archetype-named singles). No Vigilante base-class chassis, talent-tree chooser, or holding table exists anywhere in the engine. Class-onboarding work of the same shape CRB/APG/ACG's original class ingests were, not a book-content slice.
+- **Archetype-swap mechanism** — 47 `class_feature` units (`Gray Paladin`/`Faith Hunter`/`Courtly Hunter`/`Investigator ~ Conspirator Expanded Inspiration`, plus the Ranger Combat Style/Rogue Talent named-option sub-population). No archetype-swap mechanism exists anywhere in the engine, for any book — pre-existing and cross-book, not UI-specific.
+
+Both are cross-cutting engine work reserved for an explicit scope decision, not something a single-book epic builds unilaterally — the same standard this epic already applied to declining a unilateral `RuleSetId` addition.
+
+### Verification (every exit code read from its own log, never inferred)
+
+- `cargo test --test v06_work_inventory --locked`: 16 passed, 0 failed, 1 ignored.
+- `cargo test --lib --locked` (repo root, post-classifier-fix): 1502 passed, 0 failed, 3 ignored.
+- Full desktop-crate suite (`apps/desktop/src-tauri`, own scratch build): 413 passed, 0 failed (both before and after the classifier fix).
+- **`./scripts/verify.sh` (full, `run_in_background: true`, exit code read from the log file):**
+  ```
+  SUMMARY
+    passed:  10  preflight-disk root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump
+  RESULT: PASS
+  EXIT_CODE=0
+  ```
+  Against HEAD `767ac695`. Baseline-drift notes (not failures): `BASELINE_ROOT_LIB_TESTS` 1488→1502, `BASELINE_ROOT_FULL_TESTS` 5996→6019, `BASELINE_ROOT_TEST_BINARIES` 536→537 in `scripts/verify-baselines.env`, left unresolved (not this card's file-touch scope).
+
+### Commits, pushed and confirmed (`git rev-parse HEAD origin/tranche/8` matched both SHAs after every push)
+
+- `1f232d55` — spell/equipment ingest + the two aggregation-divergence fixes + full count sweep.
+- `767ac695` — classifier fix + `decisions.md §43` + retro corrections.
+
+### Retro events
+
+Two `correction` events emitted to `docs/retro/events/epic-24-ultimate-intrigue.jsonl`: one against `7c86f58a`'s superseded 47-unit claim, one against this cycle's own first over-broad classifier patch (3,194 claimed-would-move vs. 1,861 actual).
+
+### Kanban
+
+`epic-24-ui-complete` remains `IN-FLIGHT`. This cycle's totals: 104 feats + 101 spells + 98 equipment (91 + 7) landed across two slices, no deferrals, no fabricated data; `race_trait` traced to 0 real closable units; 1,861-unit classifier correction landed program-wide (not book-scoped); two engine blockers named with unit counts for a future scope decision. Remaining Ultimate Intrigue scope (re-derive fresh before the next cycle, do not trust this snapshot): `class_feature` (884, minus the portions now correctly attributed to the two named blockers), plus whatever the classifier fix's `class_feature` re-shuffle changes about the true remaining-work shape for this book specifically. Standing by for a fresh assignment per team-lead's direction — not starting a third slice or another book this cycle.
