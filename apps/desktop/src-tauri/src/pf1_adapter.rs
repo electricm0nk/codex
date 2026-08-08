@@ -1132,7 +1132,7 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 // (`artifacts/e14-harness-widening.md`'s "F1 -- what
                 // actually happened" section) -- `spellbook::compute_spellbook_coverage`
                 // was a real, magnitude-bearing computation
-                // (`SpellEffect.level` -> `spell_save_dc`/`slots_total`)
+                // (`SpellEffect.level` -> `spell_save_dc`)
                 // wired only into `contract::PilotReceipt`, a struct no
                 // desktop command ever calls. This is the first call site
                 // that reaches a `PilotSnapshot` the desktop app actually
@@ -2467,7 +2467,10 @@ mod tests {
     /// epic-31-spell-wiring: `resolve_unified_pilot_snapshot` -- the
     /// function the desktop app actually gates its sheet on -- must now
     /// surface `spellbook::compute_spellbook_coverage`'s real magnitude
-    /// (`spell_save_dc`/`slots_total`), not merely spell *resolution*.
+    /// (`spell_save_dc`), not merely spell *resolution*. `slots_total` is
+    /// deliberately not part of this surface at all -- see `decisions.md`
+    /// Decision 37 (populating it would have duplicated the already-real
+    /// `class_spell.*.total_spells_per_day.*` chassis computation).
     /// Uses "Alarm" (Abjuration, Wizard level 1 per
     /// `rules_tables::crb::spell_list::SPELL_LIST`) because it is one of
     /// the two spells `corpus_fixtures::SPELL_FIXTURES` actually loads
@@ -2481,7 +2484,7 @@ mod tests {
     /// `10 + 1 + 0 = 11` -- the same `10 + spell level + ability modifier`
     /// formula `spellbook.rs`'s own doc comment names.
     #[test]
-    fn resolve_unified_pilot_snapshot_surfaces_a_real_spell_save_dc_and_slot_total() {
+    fn resolve_unified_pilot_snapshot_surfaces_a_real_spell_save_dc() {
         let mut character_input =
             compose_character_input(&wizard_request_for("wizard-spellbook-dc", 1));
         character_input.chosen.spells_selected.push(SpellSelection {

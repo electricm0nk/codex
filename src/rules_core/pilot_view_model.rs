@@ -5,8 +5,6 @@
 //! posture plus diagnostics when computation is blocked. This adapter adds no UI,
 //! no transport, and no new rules truth.
 
-use std::collections::BTreeMap;
-
 use super::pilot_compute::{
     AbilityModifiers, BaseSaves, ComputationDiagnostic, ComputationExplanation,
     HeadlessReceiptStatus, PilotHeadlessReceipt, SelectedSkillModifiers,
@@ -39,11 +37,22 @@ pub struct PilotSnapshot {
     /// one -- `None` for every class that does not, never an empty or
     /// zeroed stat block. See `PilotCompanionViewModel`.
     pub companion: Option<PilotCompanionViewModel>,
-    /// The character's spellbook coverage (spell save DCs, slots
-    /// total/used), when `spellbook::compute_spellbook_coverage` grounded
-    /// at least one spell slot or save DC for this build -- `None` for a
-    /// non-caster or a build with no resolved spells, never a zeroed
-    /// block.
+    /// The character's spellbook coverage (spell save DCs), when
+    /// `spellbook::compute_spellbook_coverage` grounded at least one save
+    /// DC for this build -- `None` for a non-caster or a build with no
+    /// resolved spells, never a zeroed block.
+    ///
+    /// Does NOT carry slot totals/used counts: that would duplicate the
+    /// already-real, already-tested `class_spell.*.total_spells_per_day.*`
+    /// chassis computation (`pilot_compute.rs`'s per-class base-spells
+    /// tables + ability-bonus-spell tables, e.g. `arcanist_base_spells_per_day`,
+    /// `witch_total_spells_per_day`), which the desktop "Spells per day"
+    /// section already renders via `spellsPerDayModel.ts`. See
+    /// `spellbook::SpellbookCoverage`'s doc comment and `decisions.md`
+    /// Decision 37 for why `slots_total`/`slots_used` were deleted rather
+    /// than populated (epic-31-spell-wiring gap closure, 2026-08-07) --
+    /// Decision 36's "hand-maintained structure beside its real source"
+    /// pattern, instance nine.
     ///
     /// `None` unconditionally for `PilotSnapshot::from_receipt` below: the
     /// merged headless receipt carries no `SourcePackageContent`, and
@@ -58,8 +67,8 @@ pub struct PilotSnapshot {
 }
 
 /// One resolved spell's magnitude, projected for display: its own level
-/// (the figure the save DC and slot cost are both attributable to) and its
-/// own save DC when that spell's class grounds one.
+/// (the figure the save DC is attributable to) and its own save DC when
+/// that spell's class grounds one.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PilotSpellSaveDc {
     pub class_id: String,
@@ -69,18 +78,14 @@ pub struct PilotSpellSaveDc {
 /// Bounded spellbook surface for the pilot view model
 /// (epic-31-spell-wiring). Projects `spellbook::SpellbookCoverage` --
 /// already a real, magnitude-bearing computation (`SpellEffect.level` read
-/// from the canonical spell-list table, `slots_total`/`slots_used`/
-/// `spell_save_dc` derived from it) -- into a display-ready surface. Adds
-/// no rules truth of its own; every value here comes from the engine's own
-/// `compute_spellbook_coverage`.
+/// from the canonical spell-list table, `spell_save_dc` derived from it) --
+/// into a display-ready surface. Adds no rules truth of its own; every
+/// value here comes from the engine's own `compute_spellbook_coverage`.
+///
+/// Deliberately has NO `slots_total`/`slots_used` fields -- see
+/// `PilotSnapshot::spellbook`'s doc comment and `decisions.md` Decision 37.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct PilotSpellbookViewModel {
-    /// Total spell slots per spell level (0-9), from class table plus
-    /// ability-score bonus slots. Only levels the character's class(es)
-    /// actually grant appear.
-    pub slots_total: BTreeMap<u8, u8>,
-    /// Spell slots already filled by a prepared or known spell, per level.
-    pub slots_used: BTreeMap<u8, u8>,
     /// The saving-throw DC for the highest-level spell of that class
     /// present in the character's spellbook (`10 + spell level + casting
     /// ability modifier`), keyed by the granting class id.
@@ -88,21 +93,16 @@ pub struct PilotSpellbookViewModel {
 }
 
 impl PilotSpellbookViewModel {
-    /// `None` when the coverage carries no slot or save-DC magnitude at
-    /// all (a non-caster, or a caster with no spell yet resolved against
-    /// the corpus) -- never an empty-but-present block, matching the
+    /// `None` when the coverage carries no save-DC magnitude at all (a
+    /// non-caster, or a caster with no spell yet resolved against the
+    /// corpus) -- never an empty-but-present block, matching the
     /// `damage_reduction`/`companion` "absent, not zeroed" convention
     /// already established on this struct.
     pub fn from_coverage(coverage: &SpellbookCoverage) -> Option<Self> {
-        if coverage.slots_total.is_empty()
-            && coverage.slots_used.is_empty()
-            && coverage.spell_save_dc.is_empty()
-        {
+        if coverage.spell_save_dc.is_empty() {
             return None;
         }
         Some(Self {
-            slots_total: coverage.slots_total.clone(),
-            slots_used: coverage.slots_used.clone(),
             spell_save_dc: coverage
                 .spell_save_dc
                 .iter()

@@ -22,26 +22,22 @@
 //!     `sheet.spellbook.*` cells -- not a fabricated placeholder cell.
 //!
 //! Per `adaptive-squishing-mccarthy.md`'s "Not every epic output becomes
-//! a sheet cell" design decision, only `slots_total`, `slots_used`, and
-//! `spell_save_dc` become `sheet.spellbook.*` cells (one dynamic cell per
-//! present `BTreeMap` key: `sheet.spellbook.slots_total.<level>`,
-//! `sheet.spellbook.slots_used.<level>`, `sheet.spellbook.spell_save_dc.<class_id>`).
-//! `spells_prepared`, `spells_known`, and `school_specialization` do not
-//! reduce to `PrintedSheetCellValue::Number(i16) | Blocked` cleanly and
-//! stay reachable via `receipt.spellbook` directly.
+//! a sheet cell" design decision, only `spell_save_dc` becomes
+//! `sheet.spellbook.*` cells (one dynamic cell per present `BTreeMap` key:
+//! `sheet.spellbook.spell_save_dc.<class_id>`). `spells_prepared`,
+//! `spells_known`, and `school_specialization` do not reduce to
+//! `PrintedSheetCellValue::Number(i16) | Blocked` cleanly and stay
+//! reachable via `receipt.spellbook` directly.
 //!
-//! **Slot math is not landed yet**: reading `spellbook.rs`'s
-//! `compute_spellbook_coverage` confirms `slots_total`/`slots_used` are
-//! never written anywhere in that function -- they stay at their
-//! `SpellbookCoverage::default()` empty `BTreeMap`s for every character,
-//! caster or not. So this file's parity test can only prove the
-//! currently-true empty case for those two fields (plus the genuinely
-//! populated `spell_save_dc`) -- it does not fabricate slot data to force
-//! a non-empty `slots_total`/`slots_used` cell. The cell-generation code
-//! below is still correct and ready for when slot math lands: it derives
-//! one cell per present key, so it will start emitting real
-//! `sheet.spellbook.slots_total.*`/`slots_used.*` cells the moment a
-//! future cycle populates those maps, with no further change needed here.
+//! **`slots_total`/`slots_used` were removed from `SpellbookCoverage`
+//! entirely** (epic-31-spell-wiring gap closure, 2026-08-07, `decisions.md`
+//! Decision 37): they were declared but never populated by
+//! `compute_spellbook_coverage`; populating them would have duplicated the already-real,
+//! already-tested `class_spell.*.total_spells_per_day.*` chassis
+//! computation (`pilot_compute.rs`) that the desktop app's "Spells per
+//! day" section already renders via `spellsPerDayModel.ts`. The fields
+//! were deleted rather than filled -- see that decision for the full
+//! reasoning.
 
 use codex::pcgen_import::ir_converter::convert_spell_record;
 use codex::pcgen_import::lst_parser::spell::parse_lst_spell_row;
@@ -172,12 +168,6 @@ fn pilot_receipt_spellbook_field_matches_a_direct_compute_spellbook_coverage_cal
         Some(14),
         "10 + spell level 1 + INT mod (+3 for a 17) = 14"
     );
-
-    // Honest as-of-today state: slot math has not landed (confirmed by
-    // reading spellbook.rs before writing this test) -- both maps are
-    // still empty even for this real caster.
-    assert!(direct.slots_total.is_empty());
-    assert!(direct.slots_used.is_empty());
 }
 
 #[test]
@@ -194,22 +184,6 @@ fn spell_save_dc_cell_exists_and_sources_from_spellbook_spell_save_dc() {
         .expect("sheet.spellbook.spell_save_dc.class:wizard cell must exist for this caster");
 
     assert_eq!(dc_cell.value, PrintedSheetCellValue::Number(14));
-
-    // No slots_total/slots_used cells for this character either: the
-    // maps are genuinely empty (slot math not landed), so zero cells of
-    // those kinds must be generated -- not a fabricated placeholder.
-    assert!(
-        !cells
-            .iter()
-            .any(|cell| cell.cell_id.starts_with("sheet.spellbook.slots_total.")),
-        "no slots_total cells must exist while compute_spellbook_coverage never populates that map"
-    );
-    assert!(
-        !cells
-            .iter()
-            .any(|cell| cell.cell_id.starts_with("sheet.spellbook.slots_used.")),
-        "no slots_used cells must exist while compute_spellbook_coverage never populates that map"
-    );
 }
 
 #[test]

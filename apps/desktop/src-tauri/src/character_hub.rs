@@ -138,7 +138,8 @@ pub struct PilotSnapshotDto {
     /// non-caster or a build with no spell yet resolved against the
     /// corpus -- same discipline as `damage_reduction`/`companion` above.
     /// See `PilotSpellbookViewModel`'s own doc comment for the twin
-    /// problem this closes.
+    /// problem this closes and Decision 37 for why it carries no slot
+    /// totals.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub spellbook: Option<PilotSpellbookDto>,
 }
@@ -151,16 +152,13 @@ pub struct SpellSaveDcDto {
     pub dc: u8,
 }
 
-/// Wire form of `pilot_view_model::PilotSpellbookViewModel`.
+/// Wire form of `pilot_view_model::PilotSpellbookViewModel`. Deliberately
+/// has no `slots_total`/`slots_used` fields -- see
+/// `PilotSpellbookViewModel`'s doc comment and `decisions.md` Decision 37
+/// (epic-31-spell-wiring gap closure, 2026-08-07).
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct PilotSpellbookDto {
-    /// Total spell slots per level, keyed by level as a string (`"1"`,
-    /// `"2"`, ...) since JSON object keys are always strings — matching
-    /// the existing `sheet.spellbook.slots_total.<level>` cell convention
-    /// `contract.rs` established.
-    pub slots_total: std::collections::BTreeMap<String, u8>,
-    pub slots_used: std::collections::BTreeMap<String, u8>,
     pub spell_save_dc: Vec<SpellSaveDcDto>,
 }
 
@@ -836,16 +834,6 @@ pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
 
 fn map_pilot_spellbook_dto(spellbook: &PilotSpellbookViewModel) -> PilotSpellbookDto {
     PilotSpellbookDto {
-        slots_total: spellbook
-            .slots_total
-            .iter()
-            .map(|(&level, &slots)| (level.to_string(), slots))
-            .collect(),
-        slots_used: spellbook
-            .slots_used
-            .iter()
-            .map(|(&level, &slots)| (level.to_string(), slots))
-            .collect(),
         spell_save_dc: spellbook
             .spell_save_dc
             .iter()

@@ -1076,26 +1076,6 @@ function SpellsTab(props: {
               </div>
             ))
           )}
-
-          {Object.keys(spellbook.slotsTotal).length === 0 ? null : (
-            <>
-              <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0.75rem 0 0.4rem', textTransform: 'uppercase' }}>
-                Spell slots
-              </p>
-              {Object.keys(spellbook.slotsTotal)
-                .sort((a, b) => Number(a) - Number(b))
-                .map((level) => (
-                  <div key={level} style={{ padding: '0.2rem 0' }}>
-                    <span style={{ color: 'var(--color-text)', fontSize: '0.85rem' }}>
-                      {level === '0' ? 'Cantrips' : `Level ${level}`}
-                    </span>
-                    <span style={{ color: 'var(--color-accent)', fontSize: '0.85rem', fontWeight: 800, marginLeft: '0.5rem' }}>
-                      {spellbook.slotsUsed[level] ?? 0} / {spellbook.slotsTotal[level]}
-                    </span>
-                  </div>
-                ))}
-            </>
-          )}
         </div>
       )}
 
