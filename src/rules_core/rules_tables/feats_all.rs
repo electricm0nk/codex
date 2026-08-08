@@ -128,6 +128,7 @@ use super::advanced_race_guide::feats as arg_feats;
 use super::crb::feats::{FeatCategory as SharedFeatCategory, FeatTableEntry as SharedFeatTableEntry};
 use super::pathfinder_unchained::feat_tables as pu_feats;
 use super::ultimate_campaign::feat_tables as uca_feats;
+use super::ultimate_intrigue::feat_tables as ui_feats;
 use super::RuleSetId;
 
 /// One feat record, projected out of whichever per-book table it came
@@ -636,6 +637,37 @@ fn map_uca_entry(entry: &uca_feats::StoryFeatEntry) -> FeatCatalogRecord {
     }
 }
 
+/// UI's own record type reuses the shared `FeatCategory` enum directly
+/// (see `ultimate_intrigue::feat_tables`'s own module doc comment for why
+/// -- unlike UCA/ARG/PU, no new category set or fallback derivation was
+/// needed), and it already gathers `prerequisites` itself at ingest time
+/// (no separate `UI_FEAT_PREREQUISITES` backfill table is needed, unlike
+/// ARG/PU whose own tables never gathered `PRE` tokens). `description` and
+/// `benefit` are joined the same way `map_uca_entry` joins them -- one
+/// free-text field on `FeatCatalogRecord`, two on the book's own type. No
+/// record in this catalog is `deferred-with-reason` (see the module doc),
+/// so the `[DEFERRED-WITH-REASON: ...]` branch `map_uca_entry` needs never
+/// triggers here, but the join stays honest about the corpus shape rather
+/// than assuming `benefit` is always `Some`.
+fn map_ui_entry(entry: &ui_feats::UiFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: shared_category_name(entry.category),
+        name: entry.name,
+        // Leaked as `'static` deliberately -- same rationale as
+        // `map_uca_entry`'s own leak: computed once, cached for the
+        // process lifetime by `ui_records()` below.
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
 /// Project one book's table once and hand out a `'static` slice of it.
 ///
 /// The projection is a real allocation, so it is cached per book for the
@@ -685,12 +717,17 @@ fn uca_records() -> &'static [FeatCatalogRecord] {
     projected(&CELL, || uca_feats::feat_tables().iter().map(map_uca_entry).collect())
 }
 
+fn ui_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || ui_feats::feat_tables().iter().map(map_ui_entry).collect())
+}
+
 /// Every ingested book's feat catalog, in book order (CRB, APG, ACG,
-/// ARG, PU, UCA).
+/// ARG, PU, UCA, UI).
 ///
-/// 713 records total: 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23
-/// UCA. Built once and cached for the process lifetime, over the six
-/// per-book `feat_tables()` functions -- this never re-derives or
+/// 817 records total: 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23
+/// UCA + 104 UI. Built once and cached for the process lifetime, over the
+/// seven per-book `feat_tables()` functions -- this never re-derives or
 /// re-filters their contents, only projects each record onto
 /// [`FeatCatalogRecord`].
 pub fn all_feat_tables() -> &'static [BookFeatTable] {
@@ -703,6 +740,7 @@ pub fn all_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Arg, entries: arg_records() },
             BookFeatTable { rule_set: RuleSetId::Pu, entries: pu_records() },
             BookFeatTable { rule_set: RuleSetId::Uca, entries: uca_records() },
+            BookFeatTable { rule_set: RuleSetId::Ui, entries: ui_records() },
         ]
     })
 }
@@ -715,7 +753,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = all_feat_tables();
-        assert_eq!(books.len(), 6);
+        assert_eq!(books.len(), 7);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -728,9 +766,11 @@ mod tests {
         assert_eq!(books[4].entries.len(), 17);
         assert_eq!(books[5].rule_set, RuleSetId::Uca);
         assert_eq!(books[5].entries.len(), 23);
+        assert_eq!(books[6].rule_set, RuleSetId::Ui);
+        assert_eq!(books[6].entries.len(), 104);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
-        assert_eq!(total, 713, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA");
+        assert_eq!(total, 817, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI");
     }
 
     /// The projection must not lose or invent a record: each book's slice
@@ -745,6 +785,7 @@ mod tests {
         assert_eq!(books[3].entries.len(), arg_feats::feat_tables().len());
         assert_eq!(books[4].entries.len(), pu_feats::feat_tables().len());
         assert_eq!(books[5].entries.len(), uca_feats::feat_tables().len());
+        assert_eq!(books[6].entries.len(), ui_feats::feat_tables().len());
     }
 
     #[test]
@@ -827,13 +868,14 @@ mod tests {
         assert_eq!(with_prerequisites(RuleSetId::Arg), 187, "of 187 -- all of them");
         assert_eq!(with_prerequisites(RuleSetId::Pu), 14, "of 17");
         assert_eq!(with_prerequisites(RuleSetId::Uca), 23, "of 23 -- all of them carry PRETEXT:");
+        assert_eq!(with_prerequisites(RuleSetId::Ui), 98, "of 104 -- gathered directly at ingest, no backfill table");
 
         let total: usize = all_feat_tables()
             .iter()
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.prerequisites.is_some())
             .count();
-        assert_eq!(total, 622, "622 of the catalog's 713 records have a prerequisite");
+        assert_eq!(total, 720, "720 of the catalog's 817 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -958,6 +1000,12 @@ mod tests {
         // record lands in the single "Story" category rather than
         // inventing a split the corpus doesn't support.
         assert_eq!(split(RuleSetId::Uca), BTreeMap::from([("Story", 23)]));
+        // UI reuses the shared `FeatCategory` enum -- General/Combat
+        // (folding the Combat.* sub-facets) / Metamagic / Teamwork.
+        assert_eq!(
+            split(RuleSetId::Ui),
+            BTreeMap::from([("Combat", 46), ("General", 52), ("Metamagic", 4), ("Teamwork", 2)])
+        );
     }
 
     /// The point of widening the aggregate: real ARG and PU feats are in
@@ -1059,6 +1107,43 @@ mod tests {
             .filter(|entry| !entry.description.unwrap_or_default().contains("DEFERRED-WITH-REASON"))
             .count();
         assert_eq!(complete_count, 21, "21 of 23 UCA records are text-complete, not deferred");
+    }
+
+    /// UI's 104 records all carry both `DESC:` and `BENEFIT:` (see
+    /// `ultimate_intrigue::feat_tables`'s own module doc comment -- no
+    /// upstream splice/truncation defect found), so every joined
+    /// description carries both, unlike UCA's two deferred rows.
+    #[test]
+    fn ui_records_join_desc_and_benefit_with_no_deferrals() {
+        let find = |key: &str| {
+            all_feat_tables()
+                .iter()
+                .filter(|book| book.rule_set == RuleSetId::Ui)
+                .flat_map(|book| book.entries.iter())
+                .find(|entry| entry.key == key)
+                .unwrap_or_else(|| panic!("'{key}' must be in the UI aggregate"))
+        };
+
+        let acrobatic = find("Acrobatic Spellcaster");
+        assert_eq!(acrobatic.category, "Combat");
+        let desc = acrobatic.description.expect("Acrobatic Spellcaster must have a joined description");
+        assert!(desc.starts_with("Your skillful movements prevent foes from disrupting your spells."));
+        assert!(
+            desc.contains("creatures denied attacks of opportunity by your Acrobatics check"),
+            "Acrobatic Spellcaster's joined description must carry the real BENEFIT text, not just DESC:"
+        );
+        assert!(
+            acrobatic.prerequisites.unwrap()[0].starts_with("PREABILITY:2,CATEGORY=FEAT,Combat Casting"),
+            "Acrobatic Spellcaster must carry its real PREABILITY: token"
+        );
+
+        let no_deferrals = all_feat_tables()
+            .iter()
+            .filter(|book| book.rule_set == RuleSetId::Ui)
+            .flat_map(|book| book.entries.iter())
+            .filter(|entry| entry.description.unwrap_or_default().contains("DEFERRED-WITH-REASON"))
+            .count();
+        assert_eq!(no_deferrals, 0, "no UI feat record is deferred-with-reason");
     }
 
     /// Feat keys were globally unique across CRB/APG/ACG and are not

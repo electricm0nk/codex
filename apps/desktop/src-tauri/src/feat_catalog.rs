@@ -324,20 +324,25 @@ mod tests {
             );
         }
 
-        // 9 of the original 690 carry no DESC: token; UCA's 23 records all
-        // carry a joined description (DESC + BENEFIT, or DESC + the
-        // deferral diagnostic for the 3 corrupted records), so all 23 add
-        // to `with_description` rather than the no-DESC: bucket.
-        assert_eq!(with_description, 704, "9 of the 713 records carry no DESC: token");
-        // 17 of the original 690 + UCA's `Battlefield Healer`, whose real
-        // `.MOD BENEFIT:` row carries a literal `%%` escape ("reduce the
-        // damage taken by 50%% for the purposes of..."), joined verbatim
-        // into `feats_all::map_uca_entry`'s description exactly as the
-        // corpus spells it -- `render_pcgen_desc` correctly collapses it to
-        // one `%` for the player, the same treatment CRB's own `%%`-bearing
-        // rows already get.
-        assert_eq!(raw_leaks, 18, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 18, "exactly the leaking records are rewritten");
+        // 9 of the original 690 carry no DESC: token; UCA's 23 records and
+        // UI's 104 records all carry a joined description (DESC + BENEFIT,
+        // or DESC + the deferral diagnostic for UCA's 2 corrupted records),
+        // so all 127 add to `with_description` rather than the no-DESC:
+        // bucket.
+        assert_eq!(with_description, 808, "9 of the 817 records carry no DESC: token");
+        // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
+        // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
+        // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
+        // `Superior Scryer`) and 5 carry an unsubstituted `%N` argument
+        // reference plus a raw non-whitespace-bounded `|` (`Brilliant
+        // Planner`, `Conceal Spell`, `Feign Curse`, `Nerve-Racking
+        // Negotiator`, `Street Sweep`), joined verbatim into
+        // `feats_all::map_uca_entry`/`map_ui_entry`'s description exactly
+        // as the corpus spells it -- `render_pcgen_desc` correctly rewrites
+        // each for the player, the same treatment CRB's own leaking rows
+        // already get.
+        assert_eq!(raw_leaks, 28, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 28, "exactly the leaking records are rewritten");
         assert_eq!(
             changed,
             vec![
@@ -359,6 +364,16 @@ mod tests {
                 "Winter's Strike",
                 "Wounded Paw Gambit",
                 "Battlefield Healer",
+                "Brilliant Planner",
+                "Conceal Spell",
+                "Eye for Ingredients",
+                "Feign Curse",
+                "Nerve-Racking Negotiator",
+                "Planar Wanderer",
+                "Street Sweep",
+                "Structural Strike",
+                "Subtle Enchantments",
+                "Superior Scryer",
             ]
         );
     }
@@ -368,8 +383,8 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            713,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA"
+            817,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI"
         );
 
         let by_source =
@@ -380,16 +395,21 @@ mod tests {
         assert_eq!(by_source("Arg"), 187);
         assert_eq!(by_source("Pu"), 17);
         assert_eq!(by_source("Uca"), 23);
+        assert_eq!(by_source("Ui"), 104);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
-        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2, and so on per category.
-        assert_eq!(counts("General"), 315);
-        assert_eq!(counts("Combat"), 302);
+        // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52, and so on per
+        // category.
+        assert_eq!(counts("General"), 367);
+        // CRB + APG + ACG + ARG 52 + UI 46, and so on.
+        assert_eq!(counts("Combat"), 348);
         assert_eq!(counts("ItemCreation"), 8);
-        assert_eq!(counts("Metamagic"), 36);
-        assert_eq!(counts("Teamwork"), 10);
+        // + UI 4.
+        assert_eq!(counts("Metamagic"), 40);
+        // + UI 2.
+        assert_eq!(counts("Teamwork"), 12);
         assert_eq!(counts("Panache"), 4);
         // PU's three `###Block:`-derived categories; no other book has them.
         assert_eq!(counts("Alignment"), 9);
@@ -581,8 +601,9 @@ mod tests {
             source: None,
         });
 
-        // 17 CRB + 19 APG; ACG, ARG and PU have no Metamagic feat records.
-        assert_eq!(response.entries.len(), 36);
+        // 17 CRB + 19 APG + 4 UI; ACG, ARG, PU and UCA have no Metamagic
+        // feat records.
+        assert_eq!(response.entries.len(), 40);
         for entry in &response.entries {
             assert_eq!(entry.category, "Metamagic");
         }

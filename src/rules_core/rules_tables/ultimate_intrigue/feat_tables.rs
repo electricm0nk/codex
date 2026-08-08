@@ -1,0 +1,1255 @@
+//! Ultimate Intrigue (UI) feat catalog. SD-28 Epic 24
+//! (`docs/release/SD-28-ultimate-book-content-ingestion/epic-breakdown.md`
+//! §"Epic 24 (SD28-E24) -- Ultimate Intrigue, full-size-book ingest") --
+//! first record family of a from-scratch book ingest, following the fixed
+//! cost `epic-13-calibration` paid for `ultimate_campaign`
+//! (`docs/release/SD-28-ultimate-book-content-ingestion/artifacts/e13-cost-calibration.md`).
+//!
+//! **Full corpus coverage.** `ui_feats.lst` has exactly 104 top-level
+//! `CATEGORY:FEAT` records (re-derived: `grep -c 'CATEGORY:FEAT'
+//! ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/ultimate_intrigue/ui_feats.lst`
+//! -> 104). Every one carries a real `DESC:`, `BENEFIT:` and `TYPE:` token
+//! -- no `[Not Implemented]`-only records and no upstream splice/truncation
+//! defects found (checked: every record's `DESC:`/`BENEFIT:` text is a
+//! complete sentence terminating in its own row, unlike
+//! `ultimate_campaign`'s two confirmed splices). All 104 are
+//! **text-complete**, none `deferred-with-reason`.
+//!
+//! **No `KEY:` token on any record** (`grep -c 'KEY:'
+//! .../ui_feats.lst` -> 0), so `key == name` for every entry, mirroring
+//! `ultimate_campaign::feat_tables::StoryFeatEntry.key`'s own documented
+//! fallback.
+//!
+//! **`category` reuses the shared `crb::feats::FeatCategory` enum**,
+//! unlike `ultimate_campaign` and unlike ARG/PU (see `feats_all.rs`'s
+//! module doc for why those two declared their own types). UI's `TYPE:`
+//! facets are exactly `General`, `Combat` (including the `Combat.Critical`
+//! / `Combat.Panache` / `Combat.Style` / `Combat.Teamwork` sub-facets, all
+//! folded to the `Combat` variant -- the shared enum has no sub-facet
+//! granularity, matching how ACG's `Combat.*` records already fold),
+//! `Metamagic` and `Teamwork` -- all four already exist on `FeatCategory`,
+//! so no new variant is needed and no facet is invented.
+//!
+//! **`prerequisites` carries every top-level `PRE`-family token verbatim
+//! and unparsed**, in source order, `None` when the corpus row has none --
+//! the same convention `feats_all::ARG_FEAT_PREREQUISITES` established for
+//! ARG/PU. Deliberately raw strings, not a parsed prerequisite AST or a
+//! resolved `BONUS:` effect: this slice ingests the book's own `PRETEXT:`
+//! and `PRE*` prose/tokens honestly, and defers structured `effect`
+//! (`BONUS:` formula) parsing to a later cycle rather than inventing a
+//! projection this table does not yet carry -- text-complete, not
+//! engine-computed, the same tier `ultimate_campaign`'s catalog shipped at.
+//!
+//! Every field below is copied verbatim from the real corpus row (source:
+//! `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/
+//! ultimate_intrigue/ui_feats.lst`), generated programmatically by a
+//! one-off extraction script (not hand-transcribed) at this catalog's
+//! scale (104 records), then spot-checked against the raw file for the
+//! first, last and five random records. Each entry's doc comment below
+//! cites its own source line.
+
+use super::super::crb::feats::FeatCategory;
+
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct UiFeatEntry {
+    /// The corpus record identity. No record in this catalog carries a
+    /// distinct `KEY:` token, so `key == name` for every entry.
+    pub key: &'static str,
+    pub category: FeatCategory,
+    pub name: &'static str,
+    /// The corpus `DESC:` token, verbatim.
+    pub description: Option<&'static str>,
+    /// The corpus `PRETEXT:` token, verbatim display prerequisite prose --
+    /// `None` when the row carries no `PRETEXT:`.
+    pub pretext: Option<&'static str>,
+    pub source_page: Option<&'static str>,
+    /// The corpus `BENEFIT:` token, verbatim -- the actual mechanical text.
+    pub benefit: Option<&'static str>,
+    /// Every top-level `PRE`-family token the corpus record carries,
+    /// verbatim and unparsed, in source order. `None` when the row has no
+    /// `PRE`-family token -- see this module's own doc comment.
+    pub prerequisites: Option<&'static [&'static str]>,
+}
+
+/// Full UI feat catalog: all 104 real, distinct corpus records, in source
+/// order. Built once and cached for the process lifetime.
+pub fn feat_tables() -> &'static [UiFeatEntry] {
+    static TABLE: std::sync::OnceLock<Vec<UiFeatEntry>> = std::sync::OnceLock::new();
+    TABLE.get_or_init(|| {
+        vec![
+            // Acrobatic Spellcaster -- ui_feats.lst:12
+            UiFeatEntry {
+                key: "Acrobatic Spellcaster",
+                category: FeatCategory::Combat,
+                name: "Acrobatic Spellcaster",
+                description: Some("Your skillful movements prevent foes from disrupting your spells."),
+                pretext: Some("Combat Casting, Skill Focus (Acrobatics)."),
+                source_page: Some("p.75"),
+                benefit: Some("When you succeed at an Acrobatics check to move through a threatened square without provoking attacks of opportunity or to move through an enemy's space, creatures denied attacks of opportunity by your Acrobatics check also cannot make attacks of opportunity against you when you cast spells for the remainder of your turn. [Normal] Casting a spell within an enemy's reach provokes attacks of opportunity even after you succeed at an Acrobatics check to move through a threatened square."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Combat Casting,Skill Focus (Acrobatics)"]),
+            },
+            // Agent of Fear -- ui_feats.lst:13
+            UiFeatEntry {
+                key: "Agent of Fear",
+                category: FeatCategory::General,
+                name: "Agent of Fear",
+                description: Some("You inspire fear so powerful that it's hard to shake off."),
+                pretext: Some("Persuasive, frightening appearance class feature."),
+                source_page: Some("p.75"),
+                benefit: Some("When you target a creature with your frightening appearance or stunning appearance class feature, it does not become immune to the effects of those features for 24 hours, but does gain a +2 bonus on the saving throws against those class features for 24 hours. This bonus stacks with itself if you use those abilities against the same creature multiple times in the same 24-hour period. Because these abilities alert the creature to your presence, you still can't use them on the creature again until after the end of that specific combat. [Normal] A creature targeted by frightening appearance or stunning appearance becomes immune to the feature's effect for 24 hours."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Persuasive", "PREABILITY:1,CATEGORY=Special Ability,Vigilante ~ Frightening Appearance"]),
+            },
+            // Betrayal Sense -- ui_feats.lst:14
+            UiFeatEntry {
+                key: "Betrayal Sense",
+                category: FeatCategory::Combat,
+                name: "Betrayal Sense",
+                description: Some("You can sense betrayal and intrigue as well as physical traps."),
+                pretext: Some("Wis 13, rogue level 3rd, trap sense class feature."),
+                source_page: Some("p.75"),
+                benefit: Some("You gain a bonus on Perception checks to pierce another creature's disguise and Sense Motive checks to avoid being surprised by an attack. These bonuses are equal to the bonus you gain from trap sense."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Trap Sense", "PRECLASS:1,Rogue=3", "PREVARGTEQ:PreStatScore_WIS,13"]),
+            },
+            // Blustering Bluff -- ui_feats.lst:15
+            UiFeatEntry {
+                key: "Blustering Bluff",
+                category: FeatCategory::General,
+                name: "Blustering Bluff",
+                description: Some("You can verbally bully others into believing unlikely or outrageous lies."),
+                pretext: Some("Cha 13, Bluff 1 rank, Intimidate 1 rank."),
+                source_page: Some("p.75"),
+                benefit: Some("When using Bluff to fool a foe, you can bully that person to reduce the penalty for telling an unlikely or far-fetched lie by 5. If you do so and your check would not have succeeded otherwise, after 1d6x10 minutes, the person you fooled realizes you bullied him into believing a lie, treats you as unfriendly, and might report you or take other actions against you. [Normal] The penalty for telling unlikely lies is -5, and the penalty for telling far-fetched lies is -10."),
+                prerequisites: Some(&["PRESKILL:2,Bluff=1,Intimidate=1", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Brilliant Planner -- ui_feats.lst:16
+            UiFeatEntry {
+                key: "Brilliant Planner",
+                category: FeatCategory::General,
+                name: "Brilliant Planner",
+                description: Some("Your experience and intellect enable you to create prescient plans and contingencies."),
+                pretext: Some("Int 13, character level 5th."),
+                source_page: Some("p.75"),
+                benefit: Some("You can prepare for future contingencies without defining what those preparations are until they are relevant. As a part of this preparation, while in a settlement for at least 24 hours, you can take 8 hours and spend up to %1 gp, which becomes your brilliant plan fund. While you have a brilliant plan pending, you are always treated as carrying 20 additional pounds of weight, even before you define your brilliant plan. Once per day, you can take 10 minutes to enact a brilliant plan, withdrawing an item that would have been available in a settlement you visited or procuring a mundane service that your character planned ahead of time. Once you enact the plan, subtract the price of the item or service from this feat's fund. Any item procured must weigh 10 pounds or less. Likewise, the GM must approve any nonmagical service you gain by using this feat as being appropriate for the location selected. Once you have spent all the money in your brilliant plan fund or procured 20 pounds of objects with this feat, you cannot use the feat again until you replenish your brilliant plan fund.|TL*50"),
+                prerequisites: Some(&["PRELEVEL:MIN=5", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Brilliant Spell Preparation -- ui_feats.lst:17
+            UiFeatEntry {
+                key: "Brilliant Spell Preparation",
+                category: FeatCategory::General,
+                name: "Brilliant Spell Preparation",
+                description: Some("You have the foresight to prepare just the right spell for the troubles you face."),
+                pretext: Some("Int 13, ability to prepare 3rd-level spells."),
+                source_page: Some("p.79"),
+                benefit: Some("Select one class for which you prepare spells of 3rd level or higher. Once you select a class, it can't be changed. When you prepare spells for that class, you can leave one spell slot open as a special slot. The slot must be at least 2 levels lower than the highest-level spell you can cast. You can then prepare a spell in this special open slot as a standard action instead of it taking 15 minutes. [Special] You can take this feat multiple times. Each time you do, you can leave an additional special slot open."),
+                prerequisites: Some(&["PRESPELLCAST:MEMORIZE=Y", "PRESPELLTYPE:1,ANY=3", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // But a Scratch -- ui_feats.lst:18
+            UiFeatEntry {
+                key: "But a Scratch",
+                category: FeatCategory::Combat,
+                name: "But a Scratch",
+                description: Some("Your bravado convinces your enemies that their deadliest attacks are mere trifles, making you seem nigh invulnerable."),
+                pretext: Some("Cha 13, Bluff 4 ranks."),
+                source_page: Some("p.79"),
+                benefit: Some("When an opponent confirms a critical hit against you with a melee weapon, you can attempt a special Bluff check against that opponent as an immediate action. The DC of this check is the same as the DC to demoralize the opponent with the Intimidate skill. If you are successful, the attacking opponent is shaken for 1 round as if you had successfully demoralized it with Intimidate. Exceeding the DC by 5 or more does not add to the shaken condition's duration. If you fail the special Bluff check granted by this feat, you can attempt it against opponents who saw you attempt the earlier check and fail, but you take a -2 cumulative penalty on that Bluff check and any subsequent Bluff checks attempted in conjunction with this feat against those opponents for 24 hours."),
+                prerequisites: Some(&["PRESKILL:1,Bluff=4", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Call Truce -- ui_feats.lst:19
+            UiFeatEntry {
+                key: "Call Truce",
+                category: FeatCategory::General,
+                name: "Call Truce",
+                description: Some("You can passionately entreat your enemies with the aim of making combat unnecessary."),
+                pretext: Some("Cha 15, Persuasive, Diplomacy 5 ranks."),
+                source_page: Some("p.79"),
+                benefit: Some("While in combat, as a 1-round action (as if it were a spell with a 1-round casting time), you can call for a truce with any creatures that have an Intelligence score of 4 or greater and can understand you. When doing so, you can't be wielding a weapon or threatening implement, such as a charged spell, wand, or anything else the creatures you are entreating might consider threatening. You must also be in plain sight of most of the creatures you are entreating. Once you've called for a truce, if any of your allies attack or take any threatening action against those you are entreating before the start of your next turn, your call is unsuccessful. At the start of your next turn, attempt a single Diplomacy check (DC = 30 + the Charisma modifier of the creature with the highest Charisma modifier in the opposing group). If you are successful, combat ceases for 1 minute, or until any creature in the opposing group is threatened or attacked. If you fail the check by 5 or more, you cannot use Diplomacy again with any creature you attempted to entreat for 1d4 hours. If anyone in your group instead plans to use the parley to gain a combat advantage, the opponents can attempt a Sense Motive check against each such member of your group to get a hunch, with a DC equal to either 20 or the result of that character's Bluff check, whichever is higher. [Special] If the parley would inherently result in the opponents surrendering or losing, if the opponents are mind-controlled or fanatics, or if there are other appropriate circumstances at the GM's discretion, you might not be able to use this feat. For instance, if the opponents' main advantage over your group comes from a short-duration spell that would end during a parley (see Calling for a Cease-Fire on page 186), you cannot use this feat. Circumstances could potentially increase the check's DC by 5, 10, or even up to 20."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Persuasive", "PRESKILL:1,Diplomacy=5", "PREVARGTEQ:PreStatScore_CHA,15"]),
+            },
+            // Careful Flyer -- ui_feats.lst:20
+            UiFeatEntry {
+                key: "Careful Flyer",
+                category: FeatCategory::General,
+                name: "Careful Flyer",
+                description: Some("You move with ease when you fly at a slower rate."),
+                pretext: Some("Acrobatic, Fly 5 ranks."),
+                source_page: Some("p.79"),
+                benefit: Some("As long as you take a move action to fly, even when moving less than half your speed, you do not need to succeed at a Fly check to continue flying. When moving less than half your speed in a round, you also gain a +2 bonus on Acrobatics checks to avoid attacks of opportunity and a +2 bonus to your AC against attacks of opportunity you provoke because of movement. [Normal] You must succeed at a Fly check to continue flying unless you move at least half your speed."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Acrobatic", "PRESKILL:1,Fly=5"]),
+            },
+            // Careful Sneak -- ui_feats.lst:21
+            UiFeatEntry {
+                key: "Careful Sneak",
+                category: FeatCategory::General,
+                name: "Careful Sneak",
+                description: Some("By taking your time, you negate penalties while sneaking in most armor."),
+                pretext: Some("Dex 13, Stealth 3 ranks."),
+                source_page: Some("p.79"),
+                benefit: Some("You do not apply the armor check penalty for light and medium armor on Stealth skill checks as long as you move half your speed or less. You still cannot run or charge while using Stealth in this way."),
+                prerequisites: Some(&["PRESKILL:1,Stealth=3", "PREVARGTEQ:PreStatScore_DEX,13"]),
+            },
+            // Cartogramancer -- ui_feats.lst:22
+            UiFeatEntry {
+                key: "Cartogramancer",
+                category: FeatCategory::General,
+                name: "Cartogramancer",
+                description: Some("You combine your knowledge of geography with the art of teleportation."),
+                pretext: Some("Knowledge (geography) 10 ranks, ability to cast greater teleport."),
+                source_page: Some("p.79"),
+                benefit: Some("If you cast greater teleport-or similar teleportation effects that require a reliable description of the location-but do not have a reliable description of the destination, you can attempt a DC 25 Knowledge (geography) check prior to casting the spell to gain a reliable description of some location within 100 miles of the destination. If you exceed the DC by 10, you gain a description of some location within 50 miles, and if you succeed the DC by 20, you gain a description of some location within 25 miles. Once you have attempted such a check for a specific location, you cannot attempt it again, and if you attempt to use greater teleport elsewhere in the same general area, the result is the same. For instance, if you don't know the location of the villain's castle, you also don't know a location within 100 miles of the stables next to the villain's castle, or within 100 miles of the town half a mile away from the villain's castle."),
+                prerequisites: Some(&["PRESKILL:1,Knowledge (geography)=10", "PRESPELL:1,Teleport (Greater)"]),
+            },
+            // Cat and Mouse -- ui_feats.lst:23
+            UiFeatEntry {
+                key: "Cat and Mouse",
+                category: FeatCategory::Combat,
+                name: "Cat and Mouse",
+                description: Some("You can forgo an obvious counterstrike against an opponent to better spot breaches in its defenses."),
+                pretext: Some("Bluff 5 ranks, Sense Motive 5 ranks, opportune parry and riposte deed."),
+                source_page: Some("p.80"),
+                benefit: Some("When you use the opportune parry and riposte deed to successfully parry an opponent's attack, if you have your immediate action available and choose not to attempt a riposte, you gain a +1 dodge bonus to your AC and a +2 bonus on all combat maneuver checks against the opponent you successfully parried for 1 round."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Swashbuckler ~ Opportune Parry and Riposte", "PRESKILL:2,Bluff=5,Sense Motive=5"]),
+            },
+            // Cat's Fall -- ui_feats.lst:24
+            UiFeatEntry {
+                key: "Cat's Fall",
+                category: FeatCategory::General,
+                name: "Cat's Fall",
+                description: Some("Much like a cat, you can instantly shift your balance when you fall and roll with the impact, avoiding serious injury and landing on your feet."),
+                pretext: Some("Dex 13, Acrobatics 1 rank."),
+                source_page: Some("p.80"),
+                benefit: Some("When you succeed at a DC 15 Acrobatics skill check to soften a fall, you ignore the first 20 feet of that fall and convert the damage from the next 10 feet of the fall to nonlethal damage. You land on your feet as long as you take less than 20 points of damage from the fall. [Normal] A successful DC 15 Acrobatics check allows you to ignore the first 10 feet fallen, and you fall prone if you take any falling damage."),
+                prerequisites: Some(&["PRESKILL:1,Acrobatics=4", "PREVARGTEQ:PreStatScore_DEX,13"]),
+            },
+            // Circuitous Shot -- ui_feats.lst:25
+            UiFeatEntry {
+                key: "Circuitous Shot",
+                category: FeatCategory::Combat,
+                name: "Circuitous Shot",
+                description: Some("You can bounce ranged attacks off objects to obscure their point of origin and surprise foes."),
+                pretext: Some("Dex 19, Blind-Fight, Improved Precise Shot, Point-Blank Shot, Precise Shot, base attack bonus +11."),
+                source_page: Some("p.80"),
+                benefit: Some("You can choose to take a -2 penalty on a ranged weapon attack to ricochet it off a stone or metal surface and resolve the attack as if it originated from the chosen ricochet point for the purpose of determining cover (but not for determining concealment). Add the entire distance the weapon or ammunition traveled to determine range penalties for the attack. Bouncing a shot this way can potentially enable you to make ranged attacks against foes who have total cover against you by going around obstacles, but such a foe still has total concealment against your attack."),
+                prerequisites: Some(&["PREABILITY:4,CATEGORY=FEAT,Blind-Fight,Improved Precise Shot,Point-Blank Shot,Precise Shot", "PRETOTALAB:11", "PREVARGTEQ:PreStatScore_DEX,19"]),
+            },
+            // City Sprinter -- ui_feats.lst:26
+            UiFeatEntry {
+                key: "City Sprinter",
+                category: FeatCategory::General,
+                name: "City Sprinter",
+                description: Some("You are skilled at moving quickly through forbidding parts of cities."),
+                pretext: Some("Street Smarts."),
+                source_page: Some("p.80"),
+                benefit: Some("You do not treat crowds as difficult terrain. You also gain an additional +2 bonus on Acrobatics checks to move along rooftops and on slippery sections of city streets and sewers."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Street Smarts"]),
+            },
+            // Clambering Escape -- ui_feats.lst:27
+            UiFeatEntry {
+                key: "Clambering Escape",
+                category: FeatCategory::Combat,
+                name: "Clambering Escape",
+                description: Some("You can escape an area effect by throwing an enemy in its path to shield yourself."),
+                pretext: Some("Int 13, Combat Expertise, Improved Reposition, evasion class feature."),
+                source_page: Some("p.80"),
+                benefit: Some("When you successfully use your evasion class feature to avoid taking damage from an effect that allows a Reflex saving throw, you can attempt a special reposition combat maneuver check against any one foe within reach as an immediate action. If successful, you switch positions with the target of your combat maneuver. If your foe was not initially within range of the effect that you evaded, it must save against the effect as if it had been within the area of effect."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Combat Expertise,Improved Reposition", "PREABILITY:1,CATEGORY=Special Ability,Evasion", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Conceal Spell -- ui_feats.lst:28
+            UiFeatEntry {
+                key: "Conceal Spell",
+                category: FeatCategory::General,
+                name: "Conceal Spell",
+                description: Some("You can hide the evidence of spells you cast."),
+                pretext: Some("Deceitful, Bluff 1 rank, Disguise 1 rank, Sleight of Hand 1 rank."),
+                source_page: Some("p.80"),
+                benefit: Some("When you cast a spell or use a spell-like ability, you can attempt to conceal verbal and somatic components among other speech and gestures, and to conceal the manifestation of casting the spell, so others don't realize you're casting a spell or using a spell-like ability until it is too late. The attempt to hide the spell slows your casting slightly, such that spells that normally take a standard action to cast now take a full-round action, and spells that normally take longer than a standard action take twice as long. (Swift action spells still take a swift action.) To discover your ruse, a creature must succeed at a Perception, Sense Motive, or Spellcraft check (the creature receives an automatic check with whichever of those skills has the highest bonus) against a DC %1; the creature gains a bonus on its check equal to the level of the spell or spell-like ability you are concealing. If your spell has a somatic component, any creature that can see you receives a Perception or Spellcraft check (whichever has the highest bonus) against a DC %2; the creature gains a bonus on its check equal to the level of the spell or spell-like ability you are concealing. Since you are concealing the spell's manifestation through other actions, others observing you realize you're doing something, even if they don't realize you're casting a spell. If there is a verbal component, they still hear your loud, clear voice but don't notice the spell woven within. If an opponent fails its check, your casting also does not provoke attacks of opportunity, and an opponent that fails its check can't use readied actions that depend on realizing that you're casting a spell or using a spell-like ability, or readied actions such as counterspelling that require identifying the spell you're casting. Spells such as fireball that create an additional obvious effect (aside from the manifestation of casting that all spells and spell-like abilities share) still create that effect, though it might not be obvious who cast the spell unless it emanates from you. If a character interacts with you long enough to attempt a Sense Motive check without realizing you have been casting spells, that character can use Sense Motive to gain a hunch that you're behaving unusually.|15+max(skillinfo(\"TOTALRANK\", \"Bluff\"),skillinfo(\"TOTALRANK\", \"Disguise\"))+CHA|15+skillinfo(\"TOTALRANK\", \"Sleight of Hand\")+DEX"),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Deceitful", "PRESKILL:3,Bluff=1,Disguise=1,Sleight of Hand=1"]),
+            },
+            // Confabulist -- ui_feats.lst:29
+            UiFeatEntry {
+                key: "Confabulist",
+                category: FeatCategory::General,
+                name: "Confabulist",
+                description: Some("Sometimes your second attempt at a deception does the trick."),
+                pretext: Some("Bluff 9 ranks, Sense Motive 9 ranks."),
+                source_page: Some("p.81"),
+                benefit: Some("When you fail to deceive someone with a Bluff check, you can immediately attempt another version of the same basic deception against that creature at a -5 penalty by downplaying the failed Bluff and quickly moving on to another one. You cannot use this ability if the first Bluff was so egregious that further checks would have been impossible (as per the Bluff skill). If you fail the second attempt, you cannot retry the Bluff check and all further attempts to perpetrate that particular deception are impossible. [Normal] When you fail a Bluff check against a creature, that creature is innately suspicious. You take a -10 penalty on future attempts to deceive that creature, or at the GM's discretion, such attempts may be impossible."),
+                prerequisites: Some(&["PRESKILL:2,Bluff=9,Sense Motive=9"]),
+            },
+            // Cooperative Disabling -- ui_feats.lst:30
+            UiFeatEntry {
+                key: "Cooperative Disabling",
+                category: FeatCategory::Teamwork,
+                name: "Cooperative Disabling",
+                description: Some("You are skilled at working with an ally to disable traps."),
+                pretext: Some("Disable Device 1 rank, trapfinding class feature."),
+                source_page: Some("p.81"),
+                benefit: Some("When you use the Disable Device skill and fail the check against a trap, a single adjacent ally with this feat who is also within reach of the trap can attempt a Disable Device check against the same device as an immediate action. The ally must have remained adjacent throughout the process of disabling the device and must have either aided your Disable Device check or taken no other action. If your ally succeeds at the check, your attempt is considered to be successful. If your ally fails, your attempt is considered to have failed by 5 or more, even if the original check failed by 4 or less."),
+                prerequisites: Some(&["PREMULT:1,[PREVARGTEQ:TrapfindingLVL,1],[PREABILITY:1,CATEGORY=Special Ability,TYPE=.Trapfinding]", "PRESKILL:1,Disable Device=1"]),
+            },
+            // Criminal Reputation -- ui_feats.lst:31
+            UiFeatEntry {
+                key: "Criminal Reputation",
+                category: FeatCategory::General,
+                name: "Criminal Reputation",
+                description: Some("Your acts of audacious larceny have endeared you to the criminal underworld."),
+                pretext: Some("Diplomacy 5 ranks, Intimidate 5 ranks."),
+                source_page: Some("p.81"),
+                benefit: Some("You gain a +2 bonus on any influence check against criminals, not just Diplomacy or Intimidate checks, whether they're individual thieves and cutpurses or criminal organizations. If you have 10 or more ranks in the skill used, the bonus increases to +4 for that skill. These bonuses do not stack with those granted by Persuasive, but this feat counts as Persuasive for the purposes of feats and other rules elements with Persuasive as a prerequisite. You also need 1 fewer influence per rank to reach a new influence threshold with a criminal organization (either positive or negative)."),
+                prerequisites: Some(&["PRESKILL:2,Diplomacy=5,Intimidate=5"]),
+            },
+            // Cunning Intuition -- ui_feats.lst:32
+            UiFeatEntry {
+                key: "Cunning Intuition",
+                category: FeatCategory::Combat,
+                name: "Cunning Intuition",
+                description: Some("You can read your foe's body language to gauge your foe and gain an edge in combat."),
+                pretext: Some("Alertness, Improved Initiative, Lightning Reflexes, Quick Draw, Ready for Anything, base attack bonus +13 or rogue level 13th, Sense Motive 13 ranks."),
+                source_page: Some("p.81"),
+                benefit: Some("When you ready an action, you do not need to declare what action you will take, only the trigger for that action and an action type (either standard, move, swift, or free). If you choose the standard action type, you can take a move action instead when your readied action triggers. When the condition triggers, you can choose a specific action of the appropriate type to take."),
+                prerequisites: Some(&["PREABILITY:5,CATEGORY=FEAT,Alertness,Improved Initiative,Lightning Reflexes,Quick Draw,Ready for Anything", "PREMULT:1,[PRETOTALAB:13],[PRECLASS:1,Rogue=13]", "PRESKILL:1,Sense Motive=13"]),
+            },
+            // Cutting Humiliation -- ui_feats.lst:33
+            UiFeatEntry {
+                key: "Cutting Humiliation",
+                category: FeatCategory::General,
+                name: "Cutting Humiliation",
+                description: Some("You know how to cut a foe deeply with humiliation."),
+                pretext: Some("Persuasive, Intimidate 5 ranks."),
+                source_page: Some("p.81"),
+                benefit: Some("When you successfully demoralize a target by using a verbal Intimidate check in a social situation (rather than an Intimidate check you can make via an ability such as Dazzling Display or Enforcer), you can instead humiliate the target, causing it to take a -2 penalty on Charisma-based skill checks and Charisma ability checks for 1 hour + 1 additional hour for every 5 by which the result of your check exceeds the DC. The target can remove the effect early by taking 10 minutes to compose herself. If you fail this check, any creature who witnessed the failure is immune to your humiliation from this feat for 24 hours. If you fail by 5 or more, you become humiliated for 1 hour instead of your target."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Persuasive", "PRESKILL:1,Intimidate=5"]),
+            },
+            // Darkness Trick -- ui_feats.lst:34
+            UiFeatEntry {
+                key: "Darkness Trick",
+                category: FeatCategory::General,
+                name: "Darkness Trick",
+                description: Some("You can manipulate the luminescence of magic weapons."),
+                pretext: Some("Use Magic Device 5 ranks, ability to cast darkness."),
+                source_page: Some("p.81"),
+                benefit: Some("When wielding a magic weapon that sheds light or that features a luminescent quality, such as a flaming or brilliant energy weapon, you can deactivate that illumination as a swift action. You can reignite the illumination at any time as a free action. Any intrinsic magic properties that would force the weapon to shed light, such as the extra damage of a flaming weapon, do not function while the illumination is deactivated, and the \"significant portion\" of a brilliant energy weapon that is normally made of light ceases to exist. If a weapon affected by this ability ever leaves your possession (for instance, if you drop the weapon or pass it to another creature), its illumination and related abilities instantly return."),
+                prerequisites: Some(&["PRESKILL:1,Use Magic Device=5", "PRESPELL:1,Darkness"]),
+            },
+            // Deft Catcher -- ui_feats.lst:35
+            UiFeatEntry {
+                key: "Deft Catcher",
+                category: FeatCategory::General,
+                name: "Deft Catcher",
+                description: Some("You possess a preternatural skill for catching items that slip from your grasp."),
+                pretext: Some("Skill Focus (Sleight of Hand)."),
+                source_page: Some("p.82"),
+                benefit: Some("Whenever you drop or are forced to drop an item you possess (other than by an effect that disarms or steals the item), you can attempt a DC 20 Sleight of Hand check as an immediate action to catch the item before it falls away. If you are targeted by an effect that would disarm or steal an item you're holding, such as a disarm or steal combat maneuver or the effects of a spell like telekinesis, you can also attempt a Sleight of Hand check as an immediate action to maintain possession of the errant item (DC = 10 + the combat maneuver check result if there was a combat maneuver check, or 20 + the DC of the spell if there was no combat maneuver check). In either case, if you fail the Sleight of Hand check by 10 or more, you fall prone."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Skill Focus (Sleight of Hand)"]),
+            },
+            // Drunkard's Recovery -- ui_feats.lst:36
+            UiFeatEntry {
+                key: "Drunkard's Recovery",
+                category: FeatCategory::General,
+                name: "Drunkard's Recovery",
+                description: Some("You need only a swallow of strong drink to bring you back from the brink of death."),
+                pretext: Some("Con 13."),
+                source_page: Some("p.82"),
+                benefit: Some("If you are dying and a creature gives you at least a sip of alcohol (a standard action for an adjacent creature), you immediately stabilize."),
+                prerequisites: Some(&["PREVARGTEQ:PreStatScore_CON,13"]),
+            },
+            // Enrage Opponent -- ui_feats.lst:37
+            UiFeatEntry {
+                key: "Enrage Opponent",
+                category: FeatCategory::Combat,
+                name: "Enrage Opponent",
+                description: Some("With a quip or a suggestive gesture, you send your enemy into a tizzy."),
+                pretext: Some("Cha 13, Amateur Swashbuckler or panache class feature, Persuasive."),
+                source_page: Some("p.82"),
+                benefit: Some("As a swift action, you can spend 1 panache point to enrage a creature with an Intelligence of 4 or more within 60 feet that can see or hear you. Attempt an Intimidate check as if to demoralize the creature. If you succeed, the creature takes a -2 penalty to its AC until it has made at least one attack against you (including area effects that include you) or until it can no longer see or hear you. You can have only one opponent enraged at you with this feat at a time, and once you've enraged a creature, you can't enrage it again for 24 hours."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Persuasive", "PREMULT:1,[PREABILITY:1,CATEGORY=FEAT,Amateur Swashbuckler],[PREABILITY:1,CATEGORY=Special Ability,TYPE.Panache]", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Entreating Critical -- ui_feats.lst:38
+            UiFeatEntry {
+                key: "Entreating Critical",
+                category: FeatCategory::Combat,
+                name: "Entreating Critical",
+                description: Some("Your critical hit allows you a chance to make your foes briefly see reason."),
+                pretext: Some("Cha 15, Call Truce, Critical Focus, Persuasive, base attack bonus +11, Diplomacy 5 ranks."),
+                source_page: Some("p.82"),
+                benefit: Some("Whenever you confirm a critical hit, the shock of the attack momentarily opens an opportunity to end hostilities with a quick entreaty. As an immediate action immediately after confirming the critical hit, you can attempt a Diplomacy check to improve the target's attitude as though you had spent 1 full round using the Call Truce feat. All other conditions and limitations of the Call Truce feat apply."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Call Truce,Critical Focus,Persuasive", "PRESKILL:1,Diplomacy=5", "PRETOTALAB:11", "PREVARGTEQ:PreStatScore_CHA,15"]),
+            },
+            // Expeditious Sleuth -- ui_feats.lst:39
+            UiFeatEntry {
+                key: "Expeditious Sleuth",
+                category: FeatCategory::General,
+                name: "Expeditious Sleuth",
+                description: Some("Your mind is meticulous and sharp, making it easy for you to thoroughly search an area."),
+                pretext: Some("Perception 3 ranks, inspiration or lore master class feature."),
+                source_page: Some("p.82"),
+                benefit: Some("You can take 20 on a Perception check in only 10 times the usual amount of time, and gain a +2 bonus on Perception checks when you take 20. [Normal] It takes 20 times as long to take 20 on a skill check."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Investigator ~ Inspiration,Skald ~ Lore Master,Bard ~ Lore Master", "PRESKILL:1,Perception=3"]),
+            },
+            // Exquisite Sneak -- ui_feats.lst:40
+            UiFeatEntry {
+                key: "Exquisite Sneak",
+                category: FeatCategory::General,
+                name: "Exquisite Sneak",
+                description: Some("You know how to move silently even while wearing some forms of armor."),
+                pretext: Some("Dex 15, Careful Sneak, Stealth 6 ranks."),
+                source_page: Some("p.82"),
+                benefit: Some("You do not apply the armor check penalty for light and medium armor on Stealth skill checks no matter how fast you move. You still cannot use Stealth while running or charging."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Careful Sneak", "PRESKILL:1,Stealth=6", "PREVARGTEQ:PreStatScore_DEX,15"]),
+            },
+            // Extra Contingency -- ui_feats.lst:41
+            UiFeatEntry {
+                key: "Extra Contingency",
+                category: FeatCategory::General,
+                name: "Extra Contingency",
+                description: Some("You can manage multiple contingency effects."),
+                pretext: Some("Character level 19th."),
+                source_page: Some("p.82"),
+                benefit: Some("You can have two contingency effects active at one time. If they would both trigger on the same round, one (chosen randomly) does not trigger until 1 round later. [Normal] You can benefit from only a single contingency active at a time."),
+                prerequisites: Some(&["PRELEVEL:MIN=19"]),
+            },
+            // Eye for Ingredients -- ui_feats.lst:42
+            UiFeatEntry {
+                key: "Eye for Ingredients",
+                category: FeatCategory::General,
+                name: "Eye for Ingredients",
+                description: Some("Your keen eyes help you find better deals on magical components for your spells."),
+                pretext: Some("Eschew Materials, Appraise 6 ranks, Spellcraft 6 ranks."),
+                source_page: Some("p.82"),
+                benefit: Some("When in a large city or larger settlement, you can search the markets carefully for 4 hours in order to purchase material components for your spells at a 10%% discount. You can purchase up to 1,000 gp worth of material components (which costs you 900 gp) each day. These cheaper components work perfectly well for their spells, but their resale value is also 10%% less."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Eschew Materials", "PRESKILL:2,Appraise=6,Spellcraft=6"]),
+            },
+            // Feign Curse -- ui_feats.lst:43
+            UiFeatEntry {
+                key: "Feign Curse",
+                category: FeatCategory::General,
+                name: "Feign Curse",
+                description: Some("You can fool others into believing you have ensorcelled them."),
+                pretext: Some("Deceitful, Bluff 5 ranks, Spellcraft 1 rank."),
+                source_page: Some("p.82"),
+                benefit: Some("As a standard action, you can feign placing a curse on a target. The target must attempt a Sense Motive or Spellcraft check (whichever skill that target has a higher bonus with) against a DC %1, with a bonus on his skill check equal to any conditional bonus he has on saving throws against hexes or curses (like from the spell hex ward). If he fails, he becomes plagued by self-doubt and second-guesses himself. For his next %2 attack rolls, saving throws, skill checks, or ability checks, he rolls twice and takes the lower result. This is a mind-affecting effect, and it doesn't work if the target is immune to curses. Once you attempt to feign putting a curse on a creature, you cannot do so again against the same creature for 24 hours, and if the target succeeds at detecting your ruse, he gains a +10 bonus against future attempts. Only creatues with an intelligecne score of 3 or higher can be affected by Feign Curse.|15+skillinfo(\"TOTALRANK\", \"Bluff\")+CHA|2+((skillinfo(\"TOTALRANK\", \"Bluff\"))-5)/5"),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Deceitful", "PRESKILL:2,Bluff=5,Spellcraft=1"]),
+            },
+            // Fencing Grace -- ui_feats.lst:44
+            UiFeatEntry {
+                key: "Fencing Grace",
+                category: FeatCategory::Combat,
+                name: "Fencing Grace",
+                description: Some("Your dashing style and fluid rapier forms allow you to use agility rather than brute force to fell your foes."),
+                pretext: Some("Dex 13, Weapon Finesse, Weapon Focus (rapier)."),
+                source_page: Some("p.83"),
+                benefit: Some("When wielding a rapier one-handed, you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The rapier must be one appropriate for your size. You do not gain this benefit while fighting with two weapons or using flurry of blows, or anytime another hand is otherwise occupied. In addition, if you have the panache class feature, you gain a +2 bonus to your CMD against attempts to disarm you of your rapier while you have at least 1 panache point."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Weapon Focus (rapier)", "PREVAREQ:HasWeaponFinesseFeat,1", "PREVARGTEQ:PreStatScore_DEX,13"]),
+            },
+            // Fey Spell Lore -- ui_feats.lst:45
+            UiFeatEntry {
+                key: "Fey Spell Lore",
+                category: FeatCategory::General,
+                name: "Fey Spell Lore",
+                description: Some("You have learned the treacherous spells employed by the fey."),
+                pretext: Some("Cha 13, Spellcraft 1 rank, ability to cast druid spells."),
+                source_page: Some("p.83"),
+                benefit: Some("Add the following spells to your druid spell list at the indicated levels: 0-Dancing Lights, 1st-lesser confusion, 2nd-charm person, 3rd-invisibility, 4th-bestow curse, 5th-charm monster, 6th-major curse, 7th-cloak of dreams, 8th-insanity, 9th-irresistible dance."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Hunter ~ Orisons,Druid ~ Orisons", "PRESKILL:1,Spellcraft=1", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Fey Spell Versatility -- ui_feats.lst:46
+            UiFeatEntry {
+                key: "Fey Spell Versatility",
+                category: FeatCategory::General,
+                name: "Fey Spell Versatility",
+                description: Some("You have learned magical secrets from the fey."),
+                pretext: Some("Cha 13, Spellcraft 1 rank, ability to cast ranger spells."),
+                source_page: Some("p.83"),
+                benefit: Some("[NOT IMPLEMENTED] Choose a 1st-level spell, a 2nd-level spell, a 3rd-level spell, and a 4th-level spell from the bard, sorcerer/wizard, or witch spell list that is either from the enchantment or illusion school or a spell with the curse descriptor. Add those spells to your ranger spell list. Once chosen, these spells cannot be changed."),
+                prerequisites: Some(&["PRESKILL:1,Spellcraft=1", "PRESPELLCAST:TYPE=Divine", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Fleeting Spell -- ui_feats.lst:47
+            UiFeatEntry {
+                key: "Fleeting Spell",
+                category: FeatCategory::Metamagic,
+                name: "Fleeting Spell",
+                description: Some("Your spells vanish with unusual speed."),
+                pretext: None,
+                source_page: Some("p.83"),
+                benefit: Some("A fleeting spell's duration becomes dismissible, if it is not already. You can dismiss your own fleeting spell as a swift action. When you dismiss a fleeting spell, its lingering aura cannot be detected by magic unless the caster succeeds at a caster level check against a DC equal to 11 + your caster level. The DC of dispel checks to counter a fleeting spell is reduced by 2, and once active, dispel magic removes a fleeting spell without a caster level check. A fleeting spell has half its normal duration (with an extended fleeting spell, these duration adjustments cancel out). Only spells with a duration of at least 2 rounds can be made fleeting, and instantaneous or permanent spells cannot be fleeting spells. A fleeting spell does not use up a higher-level spell slot than the spell's actual level. [Normal] It is a standard action to dismiss a dismissible spell, and only spells whose Duration entry is marked with a D are dismissible."),
+                prerequisites: None,
+            },
+            // Fool Magic -- ui_feats.lst:48
+            UiFeatEntry {
+                key: "Fool Magic",
+                category: FeatCategory::General,
+                name: "Fool Magic",
+                description: Some("You can mislead magic items by virtue of your disguise."),
+                pretext: Some("Deceitful, Disguise 1 rank, Use Magic Device 1 rank."),
+                source_page: Some("p.83"),
+                benefit: Some("When you are in disguise as a member of a particular race or a person of a particular alignment, you can use your Disguise bonus instead of your Use Magic Device bonus to emulate that race and alignment for the purpose of attempting to activate a magic item."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Deceitful", "PRESKILL:2,Disguise=1,Use Magic Device=1"]),
+            },
+            // Fox Insight -- ui_feats.lst:49
+            UiFeatEntry {
+                key: "Fox Insight",
+                category: FeatCategory::Combat,
+                name: "Fox Insight",
+                description: Some("Your foxlike movements protect you from your opponents' attempts to manipulate you."),
+                pretext: Some("Int 13, Fox Style."),
+                source_page: Some("p.84"),
+                benefit: Some("While using Fox Style, you can use your base attack bonus in place of your ranks in Sense Motive to determine your Sense Motive skill bonus when foes attempt to feint against you, and creatures attempting to demoralize you don't gain a bonus for being bigger than you (though they still take a penalty for being smaller). If your Intelligence score is at least 19, the DC to demoralize or feint you increases by 4."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Fox Style", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Fox Style -- ui_feats.lst:50
+            UiFeatEntry {
+                key: "Fox Style",
+                category: FeatCategory::Combat,
+                name: "Fox Style",
+                description: Some("Your martial training helps you manipulate foes."),
+                pretext: Some("Int 13."),
+                source_page: Some("p.84"),
+                benefit: Some("While using this style, you can use your base attack bonus in place of your ranks in Bluff on Bluff checks to feint in combat and to create a distraction to hide. If your Intelligence is at least 19, you gain a +4 bonus on such Bluff checks when adding your Charisma modifier."),
+                prerequisites: Some(&["PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Fox Trickery -- ui_feats.lst:51
+            UiFeatEntry {
+                key: "Fox Trickery",
+                category: FeatCategory::Combat,
+                name: "Fox Trickery",
+                description: Some("Whenever a foes drops his guard, you can make him suffer with a dirty trick."),
+                pretext: Some("Int 13, Combat Expertise, Fox Insight, Fox Style, Improved Dirty Trick."),
+                source_page: Some("p.84"),
+                benefit: Some("While using Fox Style, you can perform dirty trick combat maneuvers as attacks of opportunity. If your Intelligence is at least 19, you gain a +4 bonus on dirty trick combat maneuver checks."),
+                prerequisites: Some(&["PREABILITY:4,CATEGORY=FEAT,Combat Expertise,Fox Insight,Fox Style,Improved Dirty Trick", "PREMULT:1,[PREVARGTEQ:PreStatScore_INT,13],[PREVARGTEQ:CombatFeatIntRequirement,13],[PREVARGTEQ:DirtyTricksterIntQualify,1]"]),
+            },
+            // Graceful Steal -- ui_feats.lst:52
+            UiFeatEntry {
+                key: "Graceful Steal",
+                category: FeatCategory::Combat,
+                name: "Graceful Steal",
+                description: Some("You can steal with surprising subtlety."),
+                pretext: Some("Dex 13, Agile Maneuvers, Improved Steal, Sleight of Hand 3 ranks."),
+                source_page: Some("p.84"),
+                benefit: Some("When attempting Sleight of Hand checks to lift or palm objects, you can use your Combat Maneuver Bonus for a steal combat maneuver in place of your Sleight of Hand modifier, though if you do so, you must use your Dexterity modifier and not your Strength modifier. You can steal items with the steal combat maneuver even if they are hidden in a bag or pack (provided you can reach the item within), but the opponent gains at least a +5 bonus to its CMD (as for a fastened object) in this case."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Agile Maneuvers,Improved Steal", "PRESKILL:1,Sleight of Hand=3", "PREVARGTEQ:PreStatScore_DEX,13"]),
+            },
+            // Improved Bravery -- ui_feats.lst:53
+            UiFeatEntry {
+                key: "Improved Bravery",
+                category: FeatCategory::Combat,
+                name: "Improved Bravery",
+                description: Some("Your bravery protects you from more than just fear."),
+                pretext: Some("Cha 13, bravery class feature."),
+                source_page: Some("p.84"),
+                benefit: Some("Add your bravery bonus against all mind-affecting effects instead of just against fear."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Fighter ~ Bravery", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Improved Conceal Spell -- ui_feats.lst:54
+            UiFeatEntry {
+                key: "Improved Conceal Spell",
+                category: FeatCategory::General,
+                name: "Improved Conceal Spell",
+                description: Some("You can conceal the mightiest spells in the subtlest fashions."),
+                pretext: Some("Conceal Spell, Deceitful, Bluff 5 ranks, Disguise 5 ranks, Sleight of Hand 10 ranks, ability to cast 3rd-level spells or use a 3rd-level spell-like ability."),
+                source_page: Some("p.84"),
+                benefit: Some("When you use Conceal Spell, creatures no longer gain a bonus equal to the level of the spell or spell-like ability on their checks to notice the hidden spell. [Normal] Creatures attempting to notice a spell hidden with Conceal Spell gain a bonus equal to the level of the spell or spell-like ability on their Perception, Sense Motive, and Spellcraft checks"),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Conceal Spell,Deceitful", "PRESKILL:3,Bluff=5,Disguise=5,Sleight of Hand=10", "PRESPELLTYPE:1,ANY=3"]),
+            },
+            // Improved Sabotaging Sunder -- ui_feats.lst:55
+            UiFeatEntry {
+                key: "Improved Sabotaging Sunder",
+                category: FeatCategory::Combat,
+                name: "Improved Sabotaging Sunder",
+                description: Some("You become further adept at sabotaging your foes' items."),
+                pretext: Some("Str 13, Improved Sunder, Power Attack, Sabotaging Sunder, Disable Device 9 ranks."),
+                source_page: Some("p.85"),
+                benefit: Some("You do not provoke an attack of opportunity when performing the special sunder combat maneuver from the Sabotaging Sunder feat. In addition, you can attempt to use that maneuver on items held by the target, but you still cannot do so against items hidden in a bag, a pack, or another container."),
+                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Improved Sunder,Power Attack,Sabotaging Sunder", "PRESKILL:1,Disable Device=9", "PREVARGTEQ:PreStatScore_STR,13"]),
+            },
+            // Incite Paranoia -- ui_feats.lst:56
+            UiFeatEntry {
+                key: "Incite Paranoia",
+                category: FeatCategory::Combat,
+                name: "Incite Paranoia",
+                description: Some("You can convince anyone of her allies' ill intent."),
+                pretext: Some("Int 13, Combat Expertise, Deceitful, Greater Feint, Improved Feint, base attack bonus +6."),
+                source_page: Some("p.85"),
+                benefit: Some("When you successfully feint in combat, if you succeed by 5 or more, the target no longer provides flanking to its allies and no longer gains or grants the benefits of teamwork feats until the beginning of your next turn. In addition, when you attempt a Bluff check to lie and the lie implies that one or more of the target's allies have betrayed her or are secretly against her, your lie is one step more believable than normal, from far-fetched to unlikely and from unlikely to believable (if the lie was already less believable than far-fetched, this feat has no effect)."),
+                prerequisites: Some(&["PREABILITY:4,CATEGORY=FEAT,Combat Expertise,Deceitful,Greater Feint,Improved Feint", "PRETOTALAB:6", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Insightful Advice -- ui_feats.lst:57
+            UiFeatEntry {
+                key: "Insightful Advice",
+                category: FeatCategory::General,
+                name: "Insightful Advice",
+                description: Some("You teach others how to make the most of their skills."),
+                pretext: Some("Perform (oratory) 3 ranks."),
+                source_page: Some("p.85"),
+                benefit: Some("You can attempt a skill check to aid an ally within 30 feet with a skill in which you are trained. This takes 1 minute, and during that time, you need only speak and be heard by your chosen ally to offer this aid. The bonus you grant is +2, regardless of any other effects that would alter your aid another bonus. This bonus applies to all checks the ally attempts with that skill for 1 day and does not stack with any other aid another bonus. Whether you succeed at or fail the skill check to aid another, you can attempt to use this ability only once per day for each ally."),
+                prerequisites: Some(&["PRESKILL:1,Perform (oratory)=3"]),
+            },
+            // Inspiring Bravery -- ui_feats.lst:58
+            UiFeatEntry {
+                key: "Inspiring Bravery",
+                category: FeatCategory::Combat,
+                name: "Inspiring Bravery",
+                description: Some("Your bravery inspires bravery in others."),
+                pretext: Some("Cha 13, bravery class feature."),
+                source_page: Some("p.85"),
+                benefit: Some("As long as you are conscious and not stunned, dazed, or confused, allies within 30 feet who can see and hear you gain your bravery bonus on saving throws against fear. If you have Improved Bravery, they gain your bravery bonus on saving throws against all mind-affecting effects. If you have Social Bravery, your bravery bonus is added to the DC of checks to demoralize them, feint against them, change their attitude, or convince them to perform a request."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Fighter ~ Bravery", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Inspiring Mentor -- ui_feats.lst:59
+            UiFeatEntry {
+                key: "Inspiring Mentor",
+                category: FeatCategory::General,
+                name: "Inspiring Mentor",
+                description: Some("Others listen to your words of encouragement and perform acts above and beyond as a result."),
+                pretext: Some("Cha 13, inspire competence bardic performance."),
+                source_page: Some("p.85"),
+                benefit: Some("Inspire competence now affects all allies within 30 feet who can hear your performance, as long as they are attempting the skill you've selected. [Normal] Inspire competence only affects one ally."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Bardic Performance ~ Inspire Competence", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Intoxicating Flattery -- ui_feats.lst:60
+            UiFeatEntry {
+                key: "Intoxicating Flattery",
+                category: FeatCategory::General,
+                name: "Intoxicating Flattery",
+                description: Some("You know how to compromise a target's judgment with lies."),
+                pretext: Some("Deceitful, Bluff 5 ranks."),
+                source_page: Some("p.85"),
+                benefit: Some("You can flatter a creature in a protracted interaction (taking at least 1 minute) to bestow in them an inflated sense of self worth that muddles their judgment. At the end of the tirade of flattery, attempt a Bluff check against a DC equal to 10 + the creature's HD + the creature's Wisdom modifier or equal to 10 + the creature's Sense Motive modifier, whichever is higher. If you succeed, the target takes a -2 penalty on Will saving throws, Wisdom-based skill checks, and Wisdom ability checks for 1 hour plus an additional hour for every 5 by which your result exceeds the DC. The target can remove the effect early by taking 10 minutes to compose herself. If you fail this check, any creature who witnesses the failure is immune to your flattery from this feat for 24 hours. If you fail by 5 or more, the target's attitude toward you decreases by 1 step."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Deceitful", "PRESKILL:1,Bluff=5"]),
+            },
+            // Ironclad Logic -- ui_feats.lst:61
+            UiFeatEntry {
+                key: "Ironclad Logic",
+                category: FeatCategory::General,
+                name: "Ironclad Logic",
+                description: Some("You appeal to sound reasoning and fact, rather than to emotion, when attempting to sway others."),
+                pretext: Some("Int 19, Diplomacy 3 ranks."),
+                source_page: Some("p.85"),
+                benefit: Some("[NOT FULLY IMPLEMENTED] You gain a +4 bonus on Diplomacy checks whenever you add your Charisma modifier on those checks. If you have at least 10 ranks in Diplomacy and an Intelligence score of 27 or more, this bonus increases to +8. This bonus doesn't stack with the bonus from Skill Focus (Diplomacy), but this feat counts as Skill Focus (Diplomacy) for the purpose of feats and other elements with Skill Focus (Diplomacy) as a prerequisite. In verbal duels, when using tactics to which you assigned an Intelligence-based skill, you can add your Intelligence modifier instead of your Charisma modifier to the associated skill check."),
+                prerequisites: Some(&["PRESKILL:1,Diplomacy=3", "PREVARGTEQ:PreStatScore_INT,19"]),
+            },
+            // Lightning Draw -- ui_feats.lst:62
+            UiFeatEntry {
+                key: "Lightning Draw",
+                category: FeatCategory::Combat,
+                name: "Lightning Draw",
+                description: Some("You can draw your weapon with startling speed."),
+                pretext: Some("Quick Draw, swashbuckler initiative deed, swashbuckler level 7th."),
+                source_page: Some("p.86"),
+                benefit: Some("You can spend 1 panache point to draw one or more light or one-handed piercing weapons, whether hidden or not, when you roll initiative, even at the start of a surprise round in which you can't act. Drawing these weapons does not take an action. If you have the instant unveil deed, it doesn't cost any panache to use the ability as described as long as you have at least 1 point of panache, and you can spend 1 panache point to draw a single light or one-handed piercing weapon, hidden or not, as an immediate action whenever a creature attacks you."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Quick Draw", "PREABILITY:1,CATEGORY=Special Ability,Swashbuckler ~ Swashbuckler Initiative", "PRECLASS:1,Swashbuckler=7"]),
+            },
+            // Manipulative Agility -- ui_feats.lst:63
+            UiFeatEntry {
+                key: "Manipulative Agility",
+                category: FeatCategory::General,
+                name: "Manipulative Agility",
+                description: Some("You can use your agility to manipulate people as well as small objects."),
+                pretext: Some("Bluff 1 rank, Sleight of Hand 1 rank."),
+                source_page: Some("p.86"),
+                benefit: Some("You can use Sleight of Hand in place of Bluff for checks to feint in combat, as well as for checks to pass secret messages without being noticed (by using gestures and body language). In both cases, the effects become visual and don't work if the target or recipient is blind or cannot see you. In the case of secret messages, the limitations of hand gestures and body language might impact what sorts of messages you can pass, at the GM's discretion."),
+                prerequisites: Some(&["PRESKILL:2,Bluff=1,Sleight of Hand=1"]),
+            },
+            // Martial Dominance -- ui_feats.lst:64
+            UiFeatEntry {
+                key: "Martial Dominance",
+                category: FeatCategory::Combat,
+                name: "Martial Dominance",
+                description: Some("Your skill at arms intimidates your foes."),
+                pretext: Some("Base attack bonus +5, Intimidate 1 rank."),
+                source_page: Some("p.86"),
+                benefit: Some("You can use your base attack bonus in place of your ranks in Intimidate to determine your Intimidate skill bonus. When you confirm a critical hit against a creature, you can attempt an Intimidate check to demoralize that creature as an immediate action."),
+                prerequisites: Some(&["PRESKILL:1,Intimidate=1", "PRETOTALAB:5"]),
+            },
+            // Measure Foe -- ui_feats.lst:65
+            UiFeatEntry {
+                key: "Measure Foe",
+                category: FeatCategory::Combat,
+                name: "Measure Foe",
+                description: Some("You can read a foe's martial skill from its body language."),
+                pretext: Some("Street Smarts, base attack bonus +1."),
+                source_page: Some("p.86"),
+                benefit: Some("You can attempt a Sense Motive check as a free action to deduce a foe's martial training after observing the foe's movements for at least 1 minute or observing the foe's attacks for at least 2 rounds. You take a -10 penalty on your check if you are observing movements, rather than attacks. The DC equals 20 + the creature's base attack bonus or 10 + the creature's Bluff or Disguise modifier, whichever is higher. If you succeed, you learn the foe's base attack bonus and one combat feat it has, and you learn an additional combat feat it has for every 5 points by which you exceed the DC. You also gain a +1 insight bonus on attack rolls against that foe and to your AC against that foe until the foe gains a level or otherwise improves its abilities. If you fail this check against a particular foe, you can't try again against that foe until you gain more ranks in Sense Motive."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Street Smarts", "PRETOTALAB:1"]),
+            },
+            // Misdirection Attack -- ui_feats.lst:66
+            UiFeatEntry {
+                key: "Misdirection Attack",
+                category: FeatCategory::Combat,
+                name: "Misdirection Attack",
+                description: Some("After misdirecting your opponent's weapon attack, you leave your opponent open to further violence."),
+                pretext: Some("Int 13, Combat Expertise, Deceitful, Misdirection Redirection, Misdirection Tactics, Bluff 10 ranks."),
+                source_page: Some("p.87"),
+                benefit: Some("When you successfully use the Misdirection Tactics feat to negate a melee weapon attack, the opponent whose attack you negated provokes an attack of opportunity from you, even though you normally can't take attacks of opportunity while using the total defense action. This effect is in addition to the effect gained from Misdirection Redirection."),
+                prerequisites: Some(&["PREABILITY:4,CATEGORY=FEAT,Combat Expertise,Deceitful,Misdirection Redirection,Misdirection Tactics", "PRESKILL:1,Bluff=10", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Misdirection Redirection -- ui_feats.lst:67
+            UiFeatEntry {
+                key: "Misdirection Redirection",
+                category: FeatCategory::Combat,
+                name: "Misdirection Redirection",
+                description: Some("After misdirecting your opponent's weapon attack, you trick it into striking someone else."),
+                pretext: Some("Int 13, Combat Expertise, Misdirection Tactics, Deceitful, Bluff 10 ranks."),
+                source_page: Some("p.87"),
+                benefit: Some("When you successfully use the Misdirection Tactics feat to negate a melee weapon attack, you redirect your foe's attack and trick your foe into striking another creature of your choice within the foe's melee reach. To resolve this attack, your foe must make a new attack roll against the new target."),
+                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Combat Expertise,Misdirection Tactics,Deceitful", "PRESKILL:1,Bluff=10", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Misdirection Tactics -- ui_feats.lst:68
+            UiFeatEntry {
+                key: "Misdirection Tactics",
+                category: FeatCategory::Combat,
+                name: "Misdirection Tactics",
+                description: Some("You have learned to use deception and trickery to misdirect your opponent's weapon attack."),
+                pretext: Some("Int 13, Combat Expertise, Deceitful, Bluff 4 ranks."),
+                source_page: Some("p.87"),
+                benefit: Some("While you are using the total defense action, if a melee attack would still hit your AC, you can attempt a Bluff check with a DC equal to the foe's attack roll as an immediate action. If you succeed at the check, you negate the attack (treat it as a miss). If the attack still hits, you cannot use this feat against the same opponent for 24 hours."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Combat Expertise,Deceitful", "PRESKILL:1,Bluff=4", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // My Blade Is Yours -- ui_feats.lst:69
+            UiFeatEntry {
+                key: "My Blade Is Yours",
+                category: FeatCategory::Combat,
+                name: "My Blade Is Yours",
+                description: Some("You fight with seamless grace alongside your allies, complementing the inherent strengths of your weaponry."),
+                pretext: Some("Int 13, Combat Expertise, Sense Motive 3 ranks."),
+                source_page: Some("p.87"),
+                benefit: Some("When adjacent to an ally with this feat who is wielding a weapon with the blocking, disarm, distracting, or trip weapon special feature, you can treat your own weapon as if it also had that feature. If your ally's weapon has more than one of those features, you choose one feature to emulate at the start of your turn."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Combat Expertise", "PRESKILL:1,Sense Motive=3", "PREVARGTEQ:PreStatScore_INT,13"]),
+            },
+            // Nerve-Racking Negotiator -- ui_feats.lst:70
+            UiFeatEntry {
+                key: "Nerve-Racking Negotiator",
+                category: FeatCategory::General,
+                name: "Nerve-Racking Negotiator",
+                description: Some("You've mastered the art of intimidation to get what you want without suffering unwanted repercussions."),
+                pretext: Some("Persuasive."),
+                source_page: Some("p.87"),
+                benefit: Some("When you successfully use the Intimidate skill to force an opponent to act friendly toward you, the target must attempt a Will save (DC %1)once the intimidation wears off. If the target fails this save, after the intimidation period expires, the target counts as having the same attitude toward you as it initially did (usually indifferent) and will not report you to the authorities for intimidating it. [Normal] The target of a successful Intimidate check is unfriendly to you and potentially reports you to the authorities after the duration ends.|10+skillinfo(\"TOTALRANK\", \"Intimidate\")"),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Persuasive"]),
+            },
+            // Notorious Vigilante -- ui_feats.lst:71
+            UiFeatEntry {
+                key: "Notorious Vigilante",
+                category: FeatCategory::Combat,
+                name: "Notorious Vigilante",
+                description: Some("You are widely known as dangerous and fearsome."),
+                pretext: Some("Dazzling Display, Weapon Focus, any nongood alignment, great renown social talent, proficiency with chosen weapon."),
+                source_page: Some("p.87"),
+                benefit: Some("Your presence can act as a fast and effective Dazzling Display. As a standard action, you use the benefit of Dazzling Display even when you are not wielding a weapon in which you have Weapon Focus. If you are wielding such a weapon, you gain a +2 bonus on the Intimidate check."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Dazzling Display,Weapon Focus", "PREABILITY:1,CATEGORY=Special Ability,Social Talent ~ Great Renown", "!PREALIGN:LG,NG,CG"]),
+            },
+            // Omnipresent Mentor -- ui_feats.lst:72
+            UiFeatEntry {
+                key: "Omnipresent Mentor",
+                category: FeatCategory::General,
+                name: "Omnipresent Mentor",
+                description: Some("You're able to impart your guidance to a single ally, regardless of location."),
+                pretext: Some("Cha 17, Inspiring Mentor, inspire competence bardic performance."),
+                source_page: Some("p.87"),
+                benefit: Some("By expending 4 rounds of your bardic performance at the start of the day, you can instill one ally with your inspiring words. Select one skill in which you possess ranks. Your ally gains the benefits of your inspire competence bardic performance, regardless of distance, until the next time you replenish rounds of bardic performance. This doesn't count as an active performance, so the effects don't end if you start another performance. Only one ally can be affected by this ability at a time; if you use this ability again before the duration expires, the ally currently affected loses the bonuses from this feat."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Inspiring Mentor", "PREABILITY:1,CATEGORY=Special Ability,Bardic Performance ~ Inspire Competence", "PREVARGTEQ:PreStatScore_CHA,17"]),
+            },
+            // Ostentatious Rager -- ui_feats.lst:73
+            UiFeatEntry {
+                key: "Ostentatious Rager",
+                category: FeatCategory::Combat,
+                name: "Ostentatious Rager",
+                description: Some("You can enthrall onlookers with a show of ferocious might or compel enemies to regard you as a crucial threat."),
+                pretext: Some("Intimidate 5 ranks, rage class feature."),
+                source_page: Some("p.87"),
+                benefit: Some("You can earn money with Intimidate by performing feats of strength and intimidation, exactly as if you were doing so with the Perform skill. Additionally, while you're raging, if a foe would be demoralized by your Intimidate skill and the foe is not currently shaken by your intimidation, you can instead distract that foe until the beginning of your next turn. During that time, the foe takes a -5 penalty on Perception checks that don't involve you and takes a -2 penalty to its AC against any creature other than you. These effects end early if a creature other than you attacks the foe or if you demoralize the foe and apply the shaken condition."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,TYPE.Rage", "PRESKILL:1,Intimidate=5"]),
+            },
+            // Owl Dive -- ui_feats.lst:74
+            UiFeatEntry {
+                key: "Owl Dive",
+                category: FeatCategory::Combat,
+                name: "Owl Dive",
+                description: Some("Your martial training helps you fly and charge through others' spaces."),
+                pretext: Some("Dex 17, Owl Style, Owl Swoop, Skill Focus (Stealth), base attack bonus +7 or monk level 5th, Acrobatics 1 rank, Fly 1 rank, Stealth 1 rank."),
+                source_page: Some("p.88"),
+                benefit: Some("While using Owl Style, you can use your base attack bonus in place of your ranks in Fly to determine your Fly skill bonus. You can charge through other creatures' spaces, but you must make a successful Acrobatics check to move through enemy spaces, as normal. If you fail an Acrobatics check to move through an enemy's space during a charge, your charge stops just before you enter that enemy's space; if you threaten that foe, you can make your charge attack against that foe."),
+                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Owl Style,Owl Swoop,Skill Focus (Stealth)", "PREMULT:1,[PRETOTALAB:7],[PRECLASS:1,Monk=5]", "PRESKILL:3,Acrobatics=1,Fly=1,Stealth=1", "PREVARGTEQ:PreStatScore_DEX,17"]),
+            },
+            // Owl Style -- ui_feats.lst:75
+            UiFeatEntry {
+                key: "Owl Style",
+                category: FeatCategory::Combat,
+                name: "Owl Style",
+                description: Some("You can move with the quiet grace of an owl."),
+                pretext: Some("Dex 13, Skill Focus (Stealth), Stealth 1 rank."),
+                source_page: Some("p.88"),
+                benefit: Some("While using this style, you can use your base attack bonus in place of your ranks in Stealth to determine your Stealth skill modifier (as usual, this does not replace your ranks for other purposes, such as determining the effects of Skill Focus). While in this stance and using Stealth, you can charge at a -10 penalty beyond the penalty you take for using Stealth at full speed (which is typically -5). Foes that fail their Perception checks and don't otherwise notice you (for instance, with an ability like blindsight) are denied their Dexterity bonuses to AC against all attacks you make against them during or at the end of that charge instead of just against the first attack."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Skill Focus (Stealth)", "PRESKILL:1,Stealth=1", "PREVARGTEQ:PreStatScore_DEX,13"]),
+            },
+            // Owl Swoop -- ui_feats.lst:76
+            UiFeatEntry {
+                key: "Owl Swoop",
+                category: FeatCategory::Combat,
+                name: "Owl Swoop",
+                description: Some("Your martial training helps you move with acrobatic poise."),
+                pretext: Some("Dex 15, Owl Style, Skill Focus (Stealth), Acrobatics 1 rank, Stealth 1 rank."),
+                source_page: Some("p.88"),
+                benefit: Some("While using Owl Style, you can use your base attack bonus in place of your ranks in Acrobatics to determine your Acrobatics skill bonus. You can attempt Acrobatics checks to move on narrow or slick surfaces and to avoid attacks of opportunity while charging, incurring the same penalties and increased DCs that you usually would apply for moving at full speed."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Owl Style,Skill Focus (Stealth)", "PRESKILL:2,Acrobatics=1,Stealth=1", "PREVARGTEQ:PreStatScore_DEX,15"]),
+            },
+            // Persuasive Bribery -- ui_feats.lst:77
+            UiFeatEntry {
+                key: "Persuasive Bribery",
+                category: FeatCategory::General,
+                name: "Persuasive Bribery",
+                description: Some("You know how to get the most out of bribes."),
+                pretext: Some("Persuasive."),
+                source_page: Some("p.88"),
+                benefit: Some("You gain a +2 bonus on Diplomacy checks when attempting to bribe someone and on Diplomacy or Charisma checks to bargain with a conjured creature (such as with planar ally or planar binding), in addition to any bonus granted by the bribe itself. The first time someone refuses a bribe you offer, that person's attitude toward you doesn't worsen, even if the offer would normally offend the person."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Persuasive"]),
+            },
+            // Piercing Grapple -- ui_feats.lst:78
+            UiFeatEntry {
+                key: "Piercing Grapple",
+                category: FeatCategory::Combat,
+                name: "Piercing Grapple",
+                description: Some("You can use small but deadly weapons to restrain a foe, forcing it to choose between pain and capitulation."),
+                pretext: Some("Dex 13, Improved Grapple, Improved Unarmed Strike, Quick Draw, Intimidate 7 ranks."),
+                source_page: Some("p.88"),
+                benefit: Some("You can draw a light or one-handed piercing weapon and stab your opponent with it when you initiate a grapple. You take a -2 penalty on your combat maneuver check to initiate the grapple, but since you pull the weapon out as part of the grapple, you don't take the usual -4 penalty. If you succeed, you grapple your opponent as normal, and the weapon doesn't count as being in your hand either for the purposes of the -4 penalty or for dealing damage while maintaining a grapple. If your opponent successfully breaks the grapple, it takes an amount of damage equal to the base weapon damage of the weapon you used to initiate the grapple plus an additional 1d4 points of bleed damage. A successful DC 15 Heal check or any magical healing ends the bleed effect. If you choose to end the grapple, you can opt to not deal the bleed damage, but either way, your opponent still takes the base weapon damage. While maintaining this grapple, you gain a +2 circumstance bonus on all Intimidate checks made against your opponent."),
+                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Improved Grapple,Improved Unarmed Strike,Quick Draw", "PRESKILL:1,Intimidate=7", "PREVARGTEQ:PreStatScore_DEX,13"]),
+            },
+            // Planar Wanderer -- ui_feats.lst:79
+            UiFeatEntry {
+                key: "Planar Wanderer",
+                category: FeatCategory::General,
+                name: "Planar Wanderer",
+                description: Some("Your knowledge of the planes and teleportation allows you to travel with more precision."),
+                pretext: Some("Cartogramancer, Knowledge (geography) 10 ranks, Knowledge (planes) 10 ranks, ability to cast greater teleport and plane shift."),
+                source_page: Some("p.88"),
+                benefit: Some("When researching a plane to which you intend to plane shift, you can attempt a DC 25 Knowledge (planes) check as you cast the spell. If you succeed at the check, you're able to more precisely target your planar transport, allowing you to arrive 5d20 miles away from your intended destination instead of 5d%% miles away. If you exceed the DC by 10 or more, you arrive 5d10 miles away instead, and if you exceed the DC by 20 or more, you arrive 5d6 miles away."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Cartogramancer", "PRESKILL:2,Knowledge (geography)=10,Knowledge (planes)=10", "PRESPELL:2,Teleport (Greater),Plane Shift"]),
+            },
+            // Play to the Crowd -- ui_feats.lst:80
+            UiFeatEntry {
+                key: "Play to the Crowd",
+                category: FeatCategory::General,
+                name: "Play to the Crowd",
+                description: Some("You can glean the interests of others and use that information to strengthen your rhetoric."),
+                pretext: Some("Int 19, Ironclad Logic, Diplomacy 5 ranks, Sense Motive 5 ranks."),
+                source_page: Some("p.88"),
+                benefit: Some("When you use Diplomacy to change the attitude of a character, you can first attempt a Sense Motive check against that NPC to get a hunch to determine whether the character is under the influence of an enchantment, to use Sense Assumptions, or to determine biases for a verbal duel. If you succeed at the Sense Motive check, you gain a +2 bonus on the Diplomacy check, and if you learned any biases for a verbal duel, you learn one additional bias of your choice. You do not worsen an NPC's attitude if you fail a Diplomacy check by 5 or more."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Ironclad Logic", "PRESKILL:2,Diplomacy=5,Sense Motive=5", "PREVARGTEQ:PreStatScore_INT,19"]),
+            },
+            // Quick Favor -- ui_feats.lst:81
+            UiFeatEntry {
+                key: "Quick Favor",
+                category: FeatCategory::General,
+                name: "Quick Favor",
+                description: Some("You can quickly take advantage of your charm."),
+                pretext: Some("Persuasive."),
+                source_page: Some("p.89"),
+                benefit: Some("Once per day, you can decrease the time required for a Diplomacy check to gather information to 4d10 minutes when you use Diplomacy to gather information again just after you previously gathered information there (whether or not the previous attempt was successful). [Normal] You must spend 1d4 hours to gather information using Diplomacy."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Persuasive"]),
+            },
+            // Quick Study -- ui_feats.lst:82
+            UiFeatEntry {
+                key: "Quick Study",
+                category: FeatCategory::Combat,
+                name: "Quick Study",
+                description: Some("You can learn quickly, although you do not always retain what you learn long."),
+                pretext: Some("Int 13, bravery +3 class feature, fighter level 10th."),
+                source_page: Some("p.89"),
+                benefit: Some("Once per day, you can train with someone who has a combat feat you do not possess to gain that feat. You must train with that person for 8 hours and must meet the feat's prerequisites to gain it this way. You gain this feat until you learn another one using this feat."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Fighter ~ Bravery", "PRECLASS:1,Fighter=10", "PREVARGTEQ:PreStatScore_INT,13", "PREVARGTEQ:Bravery,3"]),
+            },
+            // Quiet Death -- ui_feats.lst:83
+            UiFeatEntry {
+                key: "Quiet Death",
+                category: FeatCategory::Combat,
+                name: "Quiet Death",
+                description: Some("You have learned to dispatch your enemies with the silence and grace of an accomplished assassin."),
+                pretext: Some("Dex 19, Stealth 10 ranks, rogue level 10th."),
+                source_page: Some("p.89"),
+                benefit: Some("When you ambush an enemy or enemies that are unaware of your presence, you can roll a Stealth check with a -5 penalty. The result indicates the Perception DC to hear your attacks (rather than the normal DC of -10 to hear pitched combat) until an opponent's first action, when the DC returns to -10. Other enemies present can still see the attack; Quiet Death only prevents the sounds of battle from alerting further enemies."),
+                prerequisites: Some(&["PRECLASS:1,Rogue=10", "PRESKILL:1,Stealth=10", "PREVARGTEQ:PreStatScore_DEX,19"]),
+            },
+            // Ranged Disable -- ui_feats.lst:84
+            UiFeatEntry {
+                key: "Ranged Disable",
+                category: FeatCategory::General,
+                name: "Ranged Disable",
+                description: Some("You can disable devices with ranged weapons."),
+                pretext: Some("Far Shot, Point-Blank Shot, Weapon Focus, Disable Device 9 ranks."),
+                source_page: Some("p.89"),
+                benefit: Some("As a full-round action, you can attempt a Disable Device check with a ranged weapon you have chosen with Weapon Focus. You can use this ability against only a simple device (one that would normally take a full-round action to disable), and you can't use it if the device has any cover or concealment. This use of the ranged weapon deals no damage to the device, but it allows you to attempt a Disable Device check instead. You treat the ranged attack as if you were using tools inappropriate for the job, taking a -4 penalty on your Disable Device check. You also apply any range penalty for the weapon to the Disable Device check, but you do not gain any bonuses that would normally apply on attack rolls on the Disable Device check."),
+                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Far Shot,Point-Blank Shot,Weapon Focus", "PRESKILL:1,Disable Device=9"]),
+            },
+            // Ranged Feint -- ui_feats.lst:85
+            UiFeatEntry {
+                key: "Ranged Feint",
+                category: FeatCategory::Combat,
+                name: "Ranged Feint",
+                description: Some("You can mislead foes about your aim with ranged attacks."),
+                pretext: Some("Base attack bonus +2, Bluff 3 ranks."),
+                source_page: Some("p.89"),
+                benefit: Some("You can feint with a ranged weapon by throwing a thrown weapon or firing one arrow, bolt, bullet, or other piece of ammunition; this feint takes the same action as normal to feint, but depending on your weapon, you might have to reload or draw another weapon afterward. When you successfully use a ranged feint, you deny that enemy its Dexterity bonus to AC against your ranged attacks as well as your melee attacks for the same duration as normal. If your feints normally deny a foe its Dexterity bonus to AC against attacks other than your own, this applies only against others' melee attacks. [Normal] You can feint only with a melee weapon, and only against a creature you threaten with that weapon."),
+                prerequisites: Some(&["PRESKILL:1,Bluff=3", "PRETOTALAB:2"]),
+            },
+            // Read Spell Traces -- ui_feats.lst:86
+            UiFeatEntry {
+                key: "Read Spell Traces",
+                category: FeatCategory::General,
+                name: "Read Spell Traces",
+                description: Some("You can identify spells by the lingering traces they leave."),
+                pretext: None,
+                source_page: Some("p.90"),
+                benefit: Some("When using identify or any spell of a higher level that normally allows you to detect the school and aura strength of an active spell, if you exceed the DC by 10 or more, you also learn the exact spell. If the spell you are using would already allow you to learn the exact spell from its aura, you can attempt to identify the spell from the traces in a lingering aura, though you take a -10 penalty on such an attempt. When using greater detect magic to attempt to identify unique magical signatures, you receive a +2 bonus on your Knowledge (arcana) checks. In addition, you gain a +2 bonus on saving throws against magic aura and other spells and effects that conceal a spell's true aura unless you succeed at a saving throw."),
+                prerequisites: None,
+            },
+            // Ready for Anything -- ui_feats.lst:87
+            UiFeatEntry {
+                key: "Ready for Anything",
+                category: FeatCategory::Combat,
+                name: "Ready for Anything",
+                description: Some("You never let down your guard."),
+                pretext: Some("Alertness, Improved Initiative, Lightning Reflexes, Quick Draw, base attack bonus +6 or uncanny dodge class feature."),
+                source_page: Some("p.90"),
+                benefit: Some("You can always act in the surprise round even if you fail a Perception check to notice foes, but you are still considered flat-footed until you take an action."),
+                prerequisites: Some(&["PREABILITY:4,CATEGORY=FEAT,Alertness,Improved Initiative,Lightning Reflexes,Quick Draw", "PREMULT:1,[PRETOTALAB:6],[PREABILITY:1,CATEGORY=Special Ability,Uncanny Dodge]"]),
+            },
+            // Sabotage Magic Item -- ui_feats.lst:88
+            UiFeatEntry {
+                key: "Sabotage Magic Item",
+                category: FeatCategory::General,
+                name: "Sabotage Magic Item",
+                description: Some("You can cause magic items to suffer mishaps."),
+                pretext: Some("Magical Aptitude, Disable Device 5 ranks, Use Magic Device 5 ranks."),
+                source_page: Some("p.90"),
+                benefit: Some("You can attempt a Use Magic Device check to sabotage a magic item rather than to activate it, with the same DC as activating it blindly. If you succeed at the check, you define a condition under which the magic item will suffer a mishap, either dealing 2d6 points of damage to the creature attempting to use the magic item and failing to perform its desired function or else affecting the wrong target. The condition must be either an audible or a visual trigger, as defined by the magic mouth spell. If you fail the check, you suffer a mishap instead, just as if you had failed to activate the item blindly by 10 or more."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Magical Aptitude", "PRESKILL:2,Disable Device=5,Use Magic Device=5"]),
+            },
+            // Sabotage Specialist -- ui_feats.lst:89
+            UiFeatEntry {
+                key: "Sabotage Specialist",
+                category: FeatCategory::General,
+                name: "Sabotage Specialist",
+                description: Some("You have an amazing knack for sabotaging devices."),
+                pretext: Some("Deft Hands, Disable Device 5 ranks."),
+                source_page: Some("p.90"),
+                benefit: Some("When you use the Disable Device skill to rig simple or tricky devices (such as a saddle or wagon wheel) to work normally for a while and then fail or fall off some time later, you can designate the time the device will fail, up to 60 minutes after you successfully sabotaged it. The device fails 1d6-3 rounds after the designated time (a result of -1 or -2 means it fails 1 round or 2 rounds before the designated time). [Normal] You can use the Disable Device skill to rig simple devices such as saddles or wagon wheels to work normally for a while and then fail or fall off some time later (usually after 1d4 rounds or minutes of use)."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Deft Hands", "PRESKILL:1,Disable Device=5"]),
+            },
+            // Sabotaging Sunder -- ui_feats.lst:90
+            UiFeatEntry {
+                key: "Sabotaging Sunder",
+                category: FeatCategory::Combat,
+                name: "Sabotaging Sunder",
+                description: Some("You can quickly sabotage a foe's worn or carried equipment."),
+                pretext: Some("Str 13, Improved Sunder, Power Attack, Disable Device 7 ranks."),
+                source_page: Some("p.90"),
+                benefit: Some("As a standard action, you can sabotage an item worn by a foe with a special sunder combat maneuver. You use this maneuver in melee to sabotage an item that is neither held nor hidden in a bag, pack, or other container. You must have at least one hand free to perform this combat maneuver, and doing so provokes an attack of opportunity from the creature against whom you are performing the maneuver, even though you have the Improved Sunder feat. When attempting the combat maneuver check, use your ranks in Disable Device in place of your base attack bonus and your Dexterity modifier in place of your Strength modifier. Any bonuses on combat maneuver checks specifically to sunder (such as the bonus granted by Improved Sunder) also apply to this maneuver, and any bonuses your target gains to CMD against sundering attempts also protect her from this maneuver. If you succeed at the check, instead of dealing damage, you sabotage the chosen item, causing it to gain the broken condition. If the item was already broken, you instead destroy the item or cause it to fall off. Items immune to sunder are also immune to this special combat maneuver, and this still can't destroy or remove an item such as an artifact that can normally be destroyed or removed only by specific means. [Normal] A successful sunder attempt deals weapon damage to the sundered item."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Improved Sunder,Power Attack", "PRESKILL:1,Disable Device=7", "PREVARGTEQ:PreStatScore_STR,13"]),
+            },
+            // Sense Assumptions -- ui_feats.lst:91
+            UiFeatEntry {
+                key: "Sense Assumptions",
+                category: FeatCategory::General,
+                name: "Sense Assumptions",
+                description: Some("You can easily intuit an opponent's preconceptions."),
+                pretext: Some("Sense Motive 3 ranks."),
+                source_page: Some("p.91"),
+                benefit: Some("You can attempt a Sense Motive check to intuit some of another person's assumptions after 1 minute of conversation. The DC equals 20, or 10 + the target's Bluff modifier, whichever is higher. If you succeed, you learn whether or not a falsehood of your choice related to the topic of conversation would impose a penalty on Bluff checks to convince the target of that falsehood's truth. If you fail by 4 or less, you learn nothing. If you fail by 5 or more, the target realizes you are trying to glean information from it. You can retry this check, but the DC increases by 5 for each previous failure on this check against that target."),
+                prerequisites: Some(&["PRESKILL:1,Sense Motive=3"]),
+            },
+            // Sense Relationships -- ui_feats.lst:92
+            UiFeatEntry {
+                key: "Sense Relationships",
+                category: FeatCategory::General,
+                name: "Sense Relationships",
+                description: Some("You can quickly sense relationships between others and use that knowledge to manipulate them."),
+                pretext: Some("Street Smarts."),
+                source_page: Some("p.91"),
+                benefit: Some("After 1 minute or more of interaction or observation, you can attempt a DC 20 Sense Motive check to get a hunch in order to intuit the relationship between any two creatures interacting with one another. If you don't understand the language they are speaking, you take a -5 penalty on the check, and if the creatures are a different type than you, you take an additional -5 penalty on the check. If you succeed at this check by 5 or more, for the next hour, you gain a +2 bonus on Bluff checks to lie about one of the creatures to the other and on Diplomacy checks to request that one act against the other. If you fail the check, you cannot attempt this ability on the same creatures again until you gain an additional rank in Sense Motive."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Street Smarts"]),
+            },
+            // Shadows of Fear -- ui_feats.lst:93
+            UiFeatEntry {
+                key: "Shadows of Fear",
+                category: FeatCategory::Combat,
+                name: "Shadows of Fear",
+                description: Some("Your enemies' fear causes them to jump at shadows, diverting their attention."),
+                pretext: Some("Hidden strike +2d8 or sneak attack +2d6."),
+                source_page: Some("p.91"),
+                benefit: Some("The first time each round that you hit a creature suffering from a fear effect, you can deal hidden strike or sneak attack damage as if you were flanking that creature (improved uncanny dodge and other effects that prevent flanking also prevent a hidden strike or sneak attack from this feat)."),
+                prerequisites: Some(&["PREMULT:1,[PREVARGTEQ:SneakAttackDice,2],[PREVARGTEQ:HiddenStrikeDiceCount,2]"]),
+            },
+            // Sliding Dash -- ui_feats.lst:94
+            UiFeatEntry {
+                key: "Sliding Dash",
+                category: FeatCategory::Combat,
+                name: "Sliding Dash",
+                description: Some("Your seemingly reckless advance becomes an agile strike at the last moment."),
+                pretext: Some("Dex 15, Acrobatics 10 ranks or acrobatic charge class feature, Bluff 3 ranks."),
+                source_page: Some("p.91"),
+                benefit: Some("When charging, instead of moving to the closest space from which you can attack your target, you can move to the space adjacent to your target and on the other side of it, as long as you move through the closest space from which you can attack the target and through the target's space to get there. When you move through the target's space, you must attempt an Acrobatics check with a DC equal to 10 + your opponent's CMD. Success allows you to move through the target's space without provoking an attack of opportunity from that target, and when you arrive in the destination space and make your attack, the target is considered flanked for that attack (or the first attack if you have more than one attack on a charge). On a failed check, you instead provoke an attack of opportunity and complete the charge as normal. Whether or not you succeed at the Acrobatics check, you take a -4 penalty to your AC until the start of your turn, instead of the normal -2 penalty. [Normal] When charging, you must end the movement part of a charge in the closest space in which you can attack your target."),
+                prerequisites: Some(&["PREMULT:1,[PRESKILL:1,Acrobatics=10],[PREABILITY:1,CATEGORY=Special Ability,Duelist ~ Acrobatic Charge]", "PRESKILL:1,Bluff=3", "PREVARGTEQ:PreStatScore_DEX,15"]),
+            },
+            // Social Bravery -- ui_feats.lst:95
+            UiFeatEntry {
+                key: "Social Bravery",
+                category: FeatCategory::Combat,
+                name: "Social Bravery",
+                description: Some("Even the most stressful social situations don't daunt you, and you weather them as easily as a battle with a dragon."),
+                pretext: Some("Cha 13, bravery class feature."),
+                source_page: Some("p.92"),
+                benefit: Some("In social situations, your bravado protects you and makes you harder to read. Add your bravery bonus to the DCs of checks to demoralize you, feint against you, change your attitude, or convince you to perform a request (this also applies against Cutting Humiliation and Intoxicating Flattery). Additionally, add a morale bonus equal to your bravery bonus on Bluff and Intimidate checks."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Fighter ~ Bravery", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+            // Starry Grace -- ui_feats.lst:96
+            UiFeatEntry {
+                key: "Starry Grace",
+                category: FeatCategory::Combat,
+                name: "Starry Grace",
+                description: Some("Your quick and free starknife motions allow you to make deadly dexterous attacks."),
+                pretext: Some("Dex 13, Weapon Finesse, Weapon Focus (starknife)."),
+                source_page: Some("p.92"),
+                benefit: Some("When wielding a starknife, you can add your Dexterity modifier instead of your Strength modifier to that weapon's damage. The starknife must be one appropriate for your size. You do not gain this benefit while fighting with two weapons or using flurry of blows, or any time another hand is otherwise occupied. In addition, if you have the panache class feature, as long as you have at least 1 panache point, you gain a +5 bonus to your movement speed on your move action after taking an attack action with a starknife or on your Spring Attack or charge with a starknife."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Weapon Focus (starknife)", "PREVAREQ:HasWeaponFinesseFeat,1", "PREVARGTEQ:PreStatScore_DEX,13"]),
+            },
+            // Startling Getaway -- ui_feats.lst:97
+            UiFeatEntry {
+                key: "Startling Getaway",
+                category: FeatCategory::Combat,
+                name: "Startling Getaway",
+                description: Some("You strike with surprise and then run circles around your foe."),
+                pretext: Some("Startling appearance class feature."),
+                source_page: Some("p.92"),
+                benefit: Some("During a surprise round, after taking an attack action to attack a creature unaware of your presence, you can take a move action to move. If you are already capable of taking both a standard and a move action in the surprise round, this feat does not grant you any additional actions. [Normal] You can take only a single standard or move action during a surprise round."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Vigilante ~ Startling Appearance"]),
+            },
+            // Street Carnage -- ui_feats.lst:98
+            UiFeatEntry {
+                key: "Street Carnage",
+                category: FeatCategory::Combat,
+                name: "Street Carnage",
+                description: Some("For you, the urban environment becomes another brutal weapon you can use to shred flesh and break bones."),
+                pretext: Some("Str 15, Improved Bull Rush, Improved Unarmed Strike, Power Attack, Street Style, Street Sweep, base attack bonus +8 or monk level 7th."),
+                source_page: Some("p.92"),
+                benefit: Some("While using Street Style, the critical multiplier of your unarmed strikes becomes x3, instead of x2."),
+                prerequisites: Some(&["PREABILITY:5,CATEGORY=FEAT,Improved Bull Rush,Improved Unarmed Strike,Power Attack,Street Style,Street Sweep", "PREMULT:1,[PRETOTALAB:8],[PRECLASS:1,Monk=7]", "PREVARGTEQ:PreStatScore_STR,15"]),
+            },
+            // Street Smarts -- ui_feats.lst:99
+            UiFeatEntry {
+                key: "Street Smarts",
+                category: FeatCategory::General,
+                name: "Street Smarts",
+                description: Some("You are able to navigate the streets and personalities of whatever locale you run across."),
+                pretext: None,
+                source_page: Some("p.92"),
+                benefit: Some("You get a +2 bonus on Knowledge (local) and Sense Motive checks, and Knowledge (local) is always a class skill for you. If you have 10 or more ranks in one of these skills, the bonus increases to +4 for that skill. The bonus on Sense Motive checks doesn't stack with Alertness."),
+                prerequisites: None,
+            },
+            // Street Style -- ui_feats.lst:100
+            UiFeatEntry {
+                key: "Street Style",
+                category: FeatCategory::Combat,
+                name: "Street Style",
+                description: Some("You use the urban environment to your advantage, thrashing and bashing your foe and driving it back."),
+                pretext: Some("Str 15, Improved Bull Rush, Improved Unarmed Strike, Power Attack, base attack bonus +4 or monk level 3rd."),
+                source_page: Some("p.92"),
+                benefit: Some("While using this style, once per round as a swift action when you hit a target with an unarmed strike, you can deal an extra 1d6 points of damage and attempt a bull rush combat maneuver against that target. [Special] You can enter the style stance for street style only while in urban terrain, and the stance ends immediately if you cease to be in urban terrain."),
+                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Improved Bull Rush,Improved Unarmed Strike,Power Attack", "PREMULT:1,[PRETOTALAB:4],[PRECLASS:1,Monk=3]", "PREVARGTEQ:PreStatScore_STR,15"]),
+            },
+            // Street Sweep -- ui_feats.lst:101
+            UiFeatEntry {
+                key: "Street Sweep",
+                category: FeatCategory::Combat,
+                name: "Street Sweep",
+                description: Some("After driving your foe back, you can quickly knock it to the ground and slow it down."),
+                pretext: Some("Str 15, Improved Bull Rush, Improved Unarmed Strike, Power Attack, Street Style, base attack bonus +6 or monk level 5th."),
+                source_page: Some("p.92"),
+                benefit: Some("While using Street Style, the first time each round that you deal damage with an unarmed strike to a foe that you bull rushed with Street Style since the beginning of your last turn, that foe must succeed at a Fortitude save (DC %1) or be knocked prone and staggered for 1 round.|10+BASEAB"),
+                prerequisites: Some(&["PREABILITY:4,CATEGORY=FEAT,Improved Bull Rush,Improved Unarmed Strike,Power Attack,Street Style", "PREMULT:1,[PRETOTALAB:6],[PRECLASS:1,Monk=5]", "PREVARGTEQ:PreStatScore_STR,15"]),
+            },
+            // Structural Strike -- ui_feats.lst:102
+            UiFeatEntry {
+                key: "Structural Strike",
+                category: FeatCategory::Combat,
+                name: "Structural Strike",
+                description: Some("You use your knowledge of how things fit together to find ways to punch through the defenses of any foe."),
+                pretext: Some("Knowledge (engineering) 5 ranks, precise strike class feature or precise strike deed."),
+                source_page: Some("p.92"),
+                benefit: Some("When using the duelist's or swashbuckler's precise strike, you can make a single strike as a standard action against an opponent that would be otherwise immune to your precise strike damage. If you hit, you deal your precise strike damage as normal against this enemy. When using the swashbuckler's precise strike deed, you can spend 1 panache point as a swift action to deal your regular precise strike damage on a single attack against an opponent that would typically be immune. If you have both class features, you can use either option in order to apply the full damage from both versions of precise strike. Additionally, against opponents with a chance of immunity to your precise strike (such as an opponent wearing armor with the fortification special ability), this feat reduces their chance of negating your precise strikes by 10%%."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=Special Ability,Swashbuckler ~ Precise Strike,Duelist ~ Precise Strike", "PRESKILL:1,Knowledge (engineering)=5"]),
+            },
+            // Studied Spell -- ui_feats.lst:103
+            UiFeatEntry {
+                key: "Studied Spell",
+                category: FeatCategory::Metamagic,
+                name: "Studied Spell",
+                description: Some("You use your knowledge about the target to bypass its resistances and damage reduction."),
+                pretext: None,
+                source_page: Some("p.93"),
+                benefit: Some("When casting a studied spell, designate one target affected by the spell. Attempt an appropriate Knowledge check based on that target's creature type as you cast the spell. The DC for this check is equal to 20 + the creature's CR based on its race and not including any class levels or template (a creature that is defined by class levels has an effective CR of 0 for this ability). If you succeed, your studied spell ignores any energy resistance or damage reduction the target has because of its race as well as any bonuses on saving throws against the spell granted by the target's race (such as the bonus from a dwarf's hardy ability or a halfling's halfling luck ability). Your studied spell doesn't ignore energy resistance, damage reduction, or saving throw bonuses granted by other spells and effects. If you fail the Knowledge check, the spell still has its normal effects. A studied spell uses up a spell slot 2 levels higher than the spell's actual level."),
+                prerequisites: None,
+            },
+            // Stylized Spell -- ui_feats.lst:104
+            UiFeatEntry {
+                key: "Stylized Spell",
+                category: FeatCategory::Metamagic,
+                name: "Stylized Spell",
+                description: Some("You cast a spell in a distinctive manner."),
+                pretext: Some("Bluff 5 ranks, Spellcraft 5 ranks."),
+                source_page: Some("p.93"),
+                benefit: Some("A stylized spell has slightly different verbal and somatic components than normal, and the spell effect appears noticeably different. The Spellcraft DC to identify a stylized spell as it is being cast is 10 higher than normal. The Knowledge (arcana) DC to identify a stylized spell, its effects, or the materials it creates is 10 higher than normal, as is the DC to recognize your magical signature with greater detect magic. When you apply this feat to a spell, you can attempt to disguise your stylized spell as another spell of the same school and subschool with the same descriptors. The other spell must be either the same spell level as the stylized spell (before applying the metamagic adjustment) or 1 spell level higher. If you do so, the stylized spell gains the ruse descriptor and takes on some superficial aspects of the other spell. As usual for a spell with the ruse descriptor, identification attempts that fail by 10 or less mistakenly identify it as the chosen spell (those that fail by more can't identify it at all). A stylized spell uses up a spell slot 1 level higher than the spell's actual level."),
+                prerequisites: Some(&["PRESKILL:2,Bluff=5,Spellcraft=5"]),
+            },
+            // Subtle Enchantments -- ui_feats.lst:105
+            UiFeatEntry {
+                key: "Subtle Enchantments",
+                category: FeatCategory::General,
+                name: "Subtle Enchantments",
+                description: Some("Your enchantments influence targets in more subtle ways and are harder to notice."),
+                pretext: Some("Deceitful, Spell Focus (enchantment)."),
+                source_page: Some("p.93"),
+                benefit: Some("When you cast an enchantment spell or use an enchantment spell-like ability to influence a creature's successful Will save, she has a 50%% chance not to notice that she just succeeded at a saving throw (she still can attempt to identify your spell or spell-like ability as normal). If the foe fails the saving throw or is otherwise affected by the spell, the Sense Motive DC to notice she is under the effects of an enchantment increases by 5. [Normal] Anyone who successfully saves against a spell notices the mental intrusion automatically."),
+                prerequisites: Some(&["PREABILITY:2,CATEGORY=FEAT,Deceitful,Spell Focus (enchantment)"]),
+            },
+            // Superior Scryer -- ui_feats.lst:106
+            UiFeatEntry {
+                key: "Superior Scryer",
+                category: FeatCategory::General,
+                name: "Superior Scryer",
+                description: Some("You are adept at seeing more when scrying."),
+                pretext: Some("Spell Focus (divination), the ability to cast at least one spell of the scrying subschool."),
+                source_page: Some("p.94"),
+                benefit: Some("When casting a scrying spell, you see through the spell's sensor with darkvision 60 feet, whether or not you possess darkvision normally and whether or not the spell normally allows you to see with darkvision. If the spell sends back sensory information only within 10 feet of the sensor (such as with scrying and greater scrying), this feat doesn't increase that range. You receive a +2 bonus on Perception checks to notice things through a scrying sensor, and your prying eyes and insect spies also receive a +2 bonus on Perception checks. When you use the scrying or greater scrying spell, you have a 10%% increase to the chance of using spells through the sensor."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Spell Focus (divination)", "PRESPELLSCHOOLSUB:1,Scrying=1"]),
+            },
+            // Swipe and Stash -- ui_feats.lst:107
+            UiFeatEntry {
+                key: "Swipe and Stash",
+                category: FeatCategory::Combat,
+                name: "Swipe and Stash",
+                description: Some("Your fast fingers allow you to deftly deposit an item on someone else."),
+                pretext: Some("Sleight of Hand 5 ranks."),
+                source_page: Some("p.94"),
+                benefit: Some("As a standard action, you can attempt a DC 20 Sleight of Hand check to plant a small object on a creature. The target is entitled to a Perception check opposed by your Sleight of Hand check to notice you planting the item. This does not force the creature to wear, wield, or otherwise use the item; you simply plant it on the creature's person. The DC increases to 30 if the target is not wearing clothing, armor, tack and harness (if an animal or similar creature), or some other equivalent accoutrements in which you can hide the item. In combat, you must succeed at a steal combat maneuver in order to plant an item on a creature while attempting a Sleight of Hand check opposed by the target's Perception check to do so without the target noticing. You are automatically unnoticed if you succeed and have the Greater Steal feat. If you steal an object with a successful Sleight of Hand check or steal combat maneuver check, you can use this feat as a swift action to plant it on another creature within reach before the end of your turn. {Special} If you have Walking Sleight, you can take either or both of your actions with Swipe and Stash at any point during your movement in the same round, moving both before and after both snatching and planting the object if you wish to do so and have enough movement."),
+                prerequisites: Some(&["PRESKILL:1,Sleight of Hand=5"]),
+            },
+            // Telepathy Tap -- ui_feats.lst:108
+            UiFeatEntry {
+                key: "Telepathy Tap",
+                category: FeatCategory::General,
+                name: "Telepathy Tap",
+                description: Some("You are able to notice, intercept, and interpret telepathic communication around you."),
+                pretext: Some("Sense Motive 10 ranks, ability to cast detect thoughts or telepathy as a spell or spell-like ability or telepathy supernatural ability."),
+                source_page: Some("p.94"),
+                benefit: Some("When a creature within range of your telepathy (or within 60 feet if you are using detect thoughts) uses telepathy to communicate, including when that creature sends or receives a magical message such as dream or sending, you can notice the attempt with a successful DC 30 Sense Motive check. At this point, you can either use your telepathy ability or spend a use or casting of detect thoughts as an immediate action. If you do so, for every 5 points by which your check exceeds the DC, you glean one fragment of information about the communication, such as the identity of its source; its general nature; the emotional state of the sender or the recipient; or a specific person, place, or thing mentioned in the message. In addition, the creature must attempt a saving throw (with a DC equal to that of the spell if you spent a use of detect thoughts or are using telepathy, or 10 + 1/2 your racial HD + your Charisma modifier if you are using a racial telepathy ability). If the target fails its save, you can listen to both sides of the telepathic or magical communication as long as you continue to concentrate each round as a standard action."),
+                prerequisites: Some(&["PREMULT:1,[PRESPELL:1,Detect Thoughts,Telepathy],[PREABILITY:1,CATEGORY=Special Ability,Telepathy]", "PRESKILL:1,Sense Motive=10"]),
+            },
+            // Tenacious Spell -- ui_feats.lst:109
+            UiFeatEntry {
+                key: "Tenacious Spell",
+                category: FeatCategory::Metamagic,
+                name: "Tenacious Spell",
+                description: Some("Your magic is difficult to unravel."),
+                pretext: None,
+                source_page: Some("p.94"),
+                benefit: Some("Increase the DC of caster level checks to counter or dispel a tenacious spell by 2. If a tenacious spell is dispelled or dismissed, it lasts for 1d4 further rounds (to a maximum of the spell's normal duration) before ending (this does not occur if antimagic field or a similar spell or effect suppresses or ends the spell's effect without dispelling or dismissing it). The lingering auras of tenacious spells detectable with detect magic last for twice as long as usual after the spells end. A tenacious spell uses up a spell slot 1 level higher than the spell's actual level."),
+                prerequisites: None,
+            },
+            // Threatening Negotiator -- ui_feats.lst:110
+            UiFeatEntry {
+                key: "Threatening Negotiator",
+                category: FeatCategory::General,
+                name: "Threatening Negotiator",
+                description: Some("Those who you intimidate know that you'll go through with your threats."),
+                pretext: Some("Nerve-Racking Negotiator, Persuasive, Skill Focus (Intimidate)."),
+                source_page: Some("p.94"),
+                benefit: Some("When you successfully use the Intimidate skill to force an opponent to act friendly toward you, the duration of the attitude change lasts 2d6 hours. [Normal] Changing an opponent's attitude with Intimidate normally changes the foe's attitude to friendly for 1d6x10 minutes."),
+                prerequisites: Some(&["PREABILITY:3,CATEGORY=FEAT,Nerve-Racking Negotiator,Persuasive,Skill Focus (Intimidate)"]),
+            },
+            // Timely Coordination -- ui_feats.lst:111
+            UiFeatEntry {
+                key: "Timely Coordination",
+                category: FeatCategory::Teamwork,
+                name: "Timely Coordination",
+                description: Some("You can precisely time your teamwork."),
+                pretext: None,
+                source_page: Some("p.94"),
+                benefit: Some("You gain a +1 bonus on attack rolls and skill checks made as part of readied actions triggered by one of your allies who also has this feat. When you and an ally who also has this feat are attempting to overcome separate simultaneous obstacles as part of a heist or infiltration, you also gain this +1 bonus on attack rolls and skill checks."),
+                prerequisites: None,
+            },
+            // True Deception -- ui_feats.lst:112
+            UiFeatEntry {
+                key: "True Deception",
+                category: FeatCategory::General,
+                name: "True Deception",
+                description: Some("Time spent learning the mystic arts of disguise has given you insight into the anonymity of the everyday."),
+                pretext: Some("Cha 17, Disguise 17 ranks, master disguise master ninja trick or master of disguise advanced rogue talent, ninja level 10th or rogue level 10th."),
+                source_page: Some("p.95"),
+                benefit: Some("When using the master disguise master ninja trick or master of disguise advanced rogue talent to take on the appearance of a specific individual, you can fool divination magic and effects designed to locate the subject of your disguise as per the vigilante's any guise social talent. In addition, you gain a +10 bonus on Bluff checks to act like that individual."),
+                prerequisites: Some(&["PREMULT:1,[PREABILITY:1,CATEGORY=Special Ability,Ninja Trick ~ Master Disguise],[PREABILITY:1,CATEGORY=Special Ability,Rogue Talent ~ Master of Disguise]", "PREMULT:1,[PRECLASS:1,Rogue=10],[PRECLASS:1,Rogue=10]", "PRESKILL:1,Disguise=17", "PREVARGTEQ:PreStatScore_CHA,17"]),
+            },
+            // Unimpeachable Honor -- ui_feats.lst:113
+            UiFeatEntry {
+                key: "Unimpeachable Honor",
+                category: FeatCategory::General,
+                name: "Unimpeachable Honor",
+                description: Some("Your devotion to your principles and your allies makes acting against them unthinkable."),
+                pretext: Some("Iron Will."),
+                source_page: Some("p.95"),
+                benefit: Some("Whenever you are under the effects of a charm or compulsion effect and would be compelled to take an action that violates your fundamental nature, explicitly violates the strictures of your religion, or would be an act of an alignment that directly opposes your own (for instance, a chaotic or evil act if you are lawful good), you gain a +4 bonus on any saving throw or opposed Charisma check to resist that command or break free from the effect. Whenever you are compelled to attack an ally, you take a -4 penalty on your attack rolls and damage rolls."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Iron Will"]),
+            },
+            // Walking Sleight -- ui_feats.lst:114
+            UiFeatEntry {
+                key: "Walking Sleight",
+                category: FeatCategory::General,
+                name: "Walking Sleight",
+                description: Some("You've developed your skills at picking up items while on the move."),
+                pretext: Some("Deft Hands, Sleight of Hand 5 ranks."),
+                source_page: Some("p.95"),
+                benefit: Some("You no longer take the -20 penalty for attempting a Sleight of Hand check as a move action. You can attempt a Sleight of Hand check as a standard action in the middle of your move action. [Normal] You can attempt a Sleight of Hand check as a move action only by taking a -20 penalty on the check."),
+                prerequisites: Some(&["PREABILITY:1,CATEGORY=FEAT,Deft Hands", "PRESKILL:1,Sleight of Hand=5"]),
+            },
+            // Willing Accomplice -- ui_feats.lst:115
+            UiFeatEntry {
+                key: "Willing Accomplice",
+                category: FeatCategory::General,
+                name: "Willing Accomplice",
+                description: Some("Your well-placed support can aid friends and allies in maintaining their most precious secrets."),
+                pretext: Some("Cha 13, Bluff 3 ranks, Sense Motive 1 rank."),
+                source_page: Some("p.95"),
+                benefit: Some("As a standard action, you can attempt a Bluff check to aid another's Disguise check. In addition, when attempting such a check to aid a vigilante ally in maintaining that ally's social identity, a successful check grants that ally a +5 bonus instead of the normal +2."),
+                prerequisites: Some(&["PRESKILL:2,Bluff=3,Sense Motive=1", "PREVARGTEQ:PreStatScore_CHA,13"]),
+            },
+        ]
+    })
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn catalog_has_104_records() {
+        assert_eq!(feat_tables().len(), 104);
+    }
+
+    #[test]
+    fn every_record_carries_desc_and_benefit() {
+        for e in feat_tables() {
+            assert!(e.description.is_some(), "{} has no DESC:", e.key);
+            assert!(e.benefit.is_some(), "{} has no BENEFIT:", e.key);
+        }
+    }
+
+    #[test]
+    fn no_record_is_deferred() {
+        assert_eq!(feat_tables().iter().filter(|e| e.benefit.is_none()).count(), 0);
+    }
+
+    #[test]
+    fn keys_are_unique_within_book() {
+        let keys: std::collections::BTreeSet<&str> = feat_tables().iter().map(|e| e.key).collect();
+        assert_eq!(keys.len(), feat_tables().len());
+    }
+}

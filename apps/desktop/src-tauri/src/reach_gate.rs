@@ -315,6 +315,12 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // own doc comment for why it declares its own type. Same family
     // (`"feats"`) as every other book's feat table.
     ("StoryFeatEntry", "feats"),
+    // Ultimate Intrigue's own record type (SD28-E24) -- reuses the shared
+    // `crb::feats::FeatCategory` enum but declares its own struct because
+    // it also carries `pretext`/`benefit` as separate fields, the same
+    // reason UCA's `StoryFeatEntry` above declares its own. Same family
+    // (`"feats"`) as every other book's feat table.
+    ("UiFeatEntry", "feats"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -666,6 +672,12 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // which still carry real flavor text plus the deferral diagnostic
         // in `description`, not a bare identity.
         ("ultimate_campaign", "feats") => Some(feats_reach(RuleSetId::Uca, "Uca")),
+        // SD28-E24: Ultimate Intrigue's 104 feats joined
+        // `feats_all::all_feat_tables()` under the `Ui` wire source, the
+        // first record family of this book's from-scratch ingest. Every
+        // record carries a non-empty `category` (General/Combat/Metamagic/
+        // Teamwork) so `feats_reach`'s own check is satisfied for all 104.
+        ("ultimate_intrigue", "feats") => Some(feats_reach(RuleSetId::Ui, "Ui")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell

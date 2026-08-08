@@ -99,6 +99,7 @@ use codex::rules_core::rules_tables::crb::{
 };
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
 use codex::rules_core::rules_tables::ultimate_campaign as uca;
+use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 
 use crate::race_catalog::{book_code, build_race_catalog, RACE_CORPUS_BOOKS};
 
@@ -310,6 +311,18 @@ fn ultimate_campaign_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Ultimate Intrigue: SD-28 Epic 24 (`epic-24-ui-complete`) from-scratch
+/// book ingest, first slice. 104 real corpus records, all `feats` -- see
+/// `ultimate_intrigue::feat_tables`'s own doc comment for the catalog.
+/// Remaining record families (classes, equipment, races, etc.) are not yet
+/// ingested and are honestly absent from this map rather than reported as
+/// a fabricated zero.
+fn ultimate_intrigue_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), ui::feat_tables::feat_tables().len() as u32);
+    counts
+}
+
 /// Repo root, derived from the crate's own compile-time manifest
 /// directory (`apps/desktop/src-tauri`) rather than the process's current
 /// working directory, which Tauri does not guarantee.
@@ -401,6 +414,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_campaign_counts(),
             &races,
         ),
+        book_status(
+            "ultimate_intrigue",
+            "src/rules_core/rules_tables/ultimate_intrigue",
+            ultimate_intrigue_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -477,7 +496,8 @@ mod tests {
                 "beastiary1",
                 "advanced_race_guide",
                 "pathfinder_unchained",
-                "ultimate_campaign"
+                "ultimate_campaign",
+                "ultimate_intrigue"
             ]
         );
     }

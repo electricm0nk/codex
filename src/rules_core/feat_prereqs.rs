@@ -480,11 +480,13 @@ mod sd27_prerequisite_tests {
     ///
     /// The pinned number is the real one, derived by running this: a Human
     /// Fighter 1 with Str 14 / Dex 13 / Int 10, no feats and no allocated
-    /// skill ranks qualifies for **234 of 713** (was 211 of 690 before
-    /// SD28-E13 added Ultimate Campaign's 23 Story Feats -- all 23 carry
-    /// only a `PRETEXT:` prose prerequisite, which cannot mechanically
-    /// block, so all 23 land in the eligible set). That is not
-    /// over-blocking, it is PF1: the two dominant blockers among the
+    /// skill ranks qualifies for **242 of 817** (was 234 of 713 before
+    /// SD28-E24 added Ultimate Intrigue's 104 feats -- unlike UCA, UI
+    /// carries real mechanically-evaluable `PRE`-family tokens, so its
+    /// records are checked genuinely rather than universally admitted:
+    /// only 8 of the 104 pass a starting Fighter's build, mostly the
+    /// unconditionally-open records with no `PRE` token at all). That is
+    /// not over-blocking, it is PF1: the two dominant blockers among the
     /// remaining denials are 284 clauses requiring another feat the
     /// character has not taken (`Cleave` needs `Power Attack`, `Mobility`
     /// needs `Dodge`) and 196 race gates, 183 of which are ARG feats
@@ -497,7 +499,7 @@ mod sd27_prerequisite_tests {
         let facts = character_prereq_facts(&input, 1);
         let reports = evaluate_every_catalog_feat(&facts);
 
-        assert_eq!(reports.len(), 713);
+        assert_eq!(reports.len(), 817);
         let eligible = reports.iter().filter(|report| report.is_eligible).count();
         // 211 (of the original 690) + all 23 UCA Story Feats: every one of
         // UCA's records carries only a `PRETEXT:` prose prerequisite, which
@@ -506,7 +508,7 @@ mod sd27_prerequisite_tests {
         // `unmet`, exactly the same non-blocking treatment PU's own
         // `PRETEXT:` rows already get. Re-derived with this test after
         // SD28-E13 landed the UCA catalog (2026-08-03).
-        assert_eq!(eligible, 234, "a starting Fighter's real eligible-feat count");
+        assert_eq!(eligible, 242, "a starting Fighter's real eligible-feat count");
 
         for report in reports.iter().filter(|report| !report.is_eligible) {
             let reason = report.unavailable_reason().unwrap_or_default();

@@ -320,6 +320,10 @@ pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     ("PRESPELL", "known/prepared spell prerequisites are not modelled"),
     ("PRESPELLCAST", "spellcasting-style prerequisites are not modelled"),
     ("PRESPELLDESCRIPTOR", "spell-descriptor prerequisites are not modelled"),
+    (
+        "PRESPELLSCHOOLSUB",
+        "spell-subschool prerequisites are not modelled",
+    ),
     ("PRESPELLTYPE", "spell-type prerequisites are not modelled"),
     ("PREVAREQ", "the referenced PCGen variable is not modelled"),
     ("PREVARLT", "the referenced PCGen variable is not modelled"),
