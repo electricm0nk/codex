@@ -3011,7 +3011,7 @@ UPsi's agreement rate has been reported 27% → 13% → 33% across three derivat
 
 ### Commit, pushed and confirmed
 
-`<pending>`.
+`dc513a56` -- Ultimate Magic archetype-swap table, SD28-E30 tier-1 table 4 (3 files, +1167). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### Next
 
