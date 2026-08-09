@@ -4,4 +4,5 @@
 //! own-category-enum ruling (UW's `Animal`/`Mount` facets have no shared
 //! `crb::feats::FeatCategory` equivalent).
 
+pub mod archetype_tables;
 pub mod feat_tables;

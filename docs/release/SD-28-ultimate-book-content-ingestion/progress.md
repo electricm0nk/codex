@@ -3089,3 +3089,49 @@ ARG's own rate (14%, 8/59) is the lowest yet. Six books, six distinct values -- 
 ### Next
 
 `ultimate_wilderness` (30) -- the last tier-1 table. Its own `.MOD`-injection share is 1 row (of 1,282), so its floor caveat will be near-vacuous -- stating that plainly rather than reusing the standard wording, per team-lead's explicit instruction.
+
+## Cycle `SD28-E30-F7-001` — Card `epic-32-archetype-swap` (tier-1 table 7: Ultimate Wilderness, 30 records) -- LAST tier-1 table, closing the set
+
+### The subject-generic design proved live, not just theoretical
+
+All 30 of UW's own archetype-swap records are `Companion`- or `Familiar`-subject (16 + 14), not class-subject at all -- the first (and, across all seven tier-1 tables, only) book where this is true. Confirmed structurally: the records live in a wholly separate file (`uw_abilities_companion.lst`) from this book's own class-feature content. The `ArchetypeSwapEntry.subject: &'static str` design (not a class-specific enum) was built to support exactly this from the first table (UPsi's own doc comment named the possibility); this is the live proof it was the right call, not a hypothetical one.
+
+### Seventh and closing data point: no convergence across the whole tier-1 set
+
+```
+UPsi 33%   ACG 33%   APG 52%   UM 27%   UC 22%   ARG 14%   UW 30%
+```
+
+UW's own rate (30%, 9/30) is the closest any book has come to equal `TYPE:`/`ABILITY:` totals (120 replaced vs 121 granted, a 1-record program-wide gap) -- but still 21 of 30 individual records disagree. Seven books, seven distinct values. The durable claim (`decisions.md §51`) closes here: `TYPE:` and `ABILITY:` are two different lists in every book measured, disagreeing in the majority of records, at a book-dependent rate with no single number to converge on.
+
+104 of 121 sub-feature grants (86%) resolved to real text. No new grant-taxonomy shape found -- the taxonomy stays at 6 recurring shapes plus UC's one addition, still open per the standing correction, not newly closed by this book either.
+
+**UW's own `.MOD`-injection share is 1 row -- the smallest of any book, effectively nil.** Stated plainly in the table's own doc comment rather than reusing the standard floor-caveat wording every other table carries, per team-lead's explicit instruction that a caveat which doesn't apply should say so rather than read as boilerplate.
+
+### Verification
+
+- `cargo build --locked --bins`: clean (checked proactively this cycle after ARG's own `sd27_gen_book_cache` build break).
+- `cargo test --lib --locked archetype_tables`: 48/48 pass (7 UPsi + 6 ACG + 6 APG + 7 UM + 7 UC + 7 ARG + 8 UW).
+- `cargo test --lib --locked` (full lib): 1572 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: `uw_arch_clippy.log` 75 warnings, EXIT_CODE=0 -- at ceiling (75), not breached.
+
+### Commit, pushed and confirmed
+
+`<pending>`.
+
+### Closing the tier-1 set: what shipped, what is blocked, what is counted-but-deferred
+
+**Shipped:** seven tables, 464 tier-1 archetype-swap records total (15 UPsi + 87 ACG + 80 APG + 67 UM + 65 UC + 59 ARG + 30 UW), across every in-SD-28-scope book that carries archetype-swap content. Every table verified (lib tests + full suite + clippy at ceiling), every commit SHA-confirmed on HEAD/origin, every corpus-shape finding named individually rather than silently absorbed. Three self-caught defects in this epic alone (a parser gap missing two grant shapes, a category-inclusion gap counting bookkeeping as content, a build break in a duplicated bin crate), each found, fixed, and regression-guarded before the next table landed.
+
+**Blocked, on an explicit decision outside this epic:** `pilot_compute.rs` integration (the chooser + swap-resolution half of this mechanism) is blocked on `forward-scope-register.md §C4.8`'s scope decision -- reversing task #67's own deliberate v0.6 boundary ("archetypes are out of scope for base-class chassis") is a cross-cutting call this epic does not make unilaterally.
+
+**Counted but deliberately not attempted:** two populations neither this epic's tables nor its scope permit closing --
+```
+4,550  tier-2 sub-feature records (the actual granted mechanics, one level deeper than these tables)
+1,282  .MOD-injected grant rows (grants living on a row other than the archetype's own master row)
+```
+Both sized by a real corpus-wide command, both named with their own per-book breakdowns in `decisions.md §51`, neither silently rounded into any table's own `grants` figure. Every landed table's `grants` field is a floor bounded by these two populations, stated in that table's own doc comment.
+
+### Kanban
+
+`epic-32-archetype-swap` stays `IN-FLIGHT` -- tier-1 data ingestion (piece 1) is complete; pieces 2/3 (`pilot_compute.rs` integration) remain blocked on `forward-scope-register.md §C4.8`. Standing by for a fresh assignment. Not proceeding to `pilot_compute.rs` integration, a second tier of data, or any other epic without one.
