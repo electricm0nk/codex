@@ -34,9 +34,12 @@
 //! an unrelated, pre-existing feature, gated by `PREABILITY:1,
 //! CATEGORY=Archetype,Druid Archetype ~ Cave Druid`. This table's own
 //! `grants` field does **not** include this grant -- it is invisible to
-//! a scan of Cave Druid's own row, the same structural limitation named
-//! in the UPsi table's own doc comment, not yet closed by any table
-//! landed so far.
+//! a scan of Cave Druid's own row, the same floor named in the UPsi
+//! table's own doc comment. This book's own share of the 1,282-row
+//! corpus-wide `.MOD`-injection population (`decisions.md §51`'s own
+//! addendum) is 231 rows, the second-largest of any book -- this
+//! table's `grants` figure is bounded below by that count, not closed
+//! by it.
 //!
 //! **9 of this book's 12 Rogue archetype master records have no `DESC:`
 //! at all -- a whole-subfamily gap, confirmed genuine on the raw corpus

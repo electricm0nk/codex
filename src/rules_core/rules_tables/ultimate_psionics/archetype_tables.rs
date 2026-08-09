@@ -47,23 +47,30 @@
 //!   (one instance, cross-book) -- **included**, real content, just
 //!   pointing at a feat rather than a class-feature row.
 //!
-//! **A related, larger, and NOT-yet-closed hazard found while tracing
-//! this grammar: a grant can live on a row other than the archetype's
-//! own master row entirely.** Confirmed on APG's `Druid Archetype ~
-//! Cave Druid`: its `Druid Domain` grant is not on Cave Druid's own row
-//! at all -- it lives on `CATEGORY=Archetype|Nature's Bond ~ Druid
-//! Domain.MOD` (a `.MOD` row modifying an unrelated, pre-existing
-//! feature), gated by `PREABILITY:1,CATEGORY=Archetype,Druid Archetype
-//! ~ Cave Druid`. A parser scanning only the archetype's own row cannot
-//! find this class of grant at all; finding every instance requires a
-//! corpus-wide scan for `.MOD` rows gated on each archetype's own key,
-//! not attempted in this table. **This table's `grants` field is
-//! therefore a floor** (a `.MOD`-scoped verified scan, run for this
-//! book specifically, found 18 rows total referencing these 15
-//! archetypes -- all on the archetypes' own master rows, no `.MOD`-
-//! injected instance in this particular book -- but the mechanism
-//! itself is real and confirmed present in at least APG, so the
-//! possibility is not closed for any book by this table alone).
+//! **This table's `grants` field is a floor, bounded below by two named,
+//! counted populations neither this table nor its siblings close.**
+//! First: the tier-2 sub-feature population (`decisions.md §51`'s own
+//! earlier addendum), 4,550 rows program-wide, sized as a floor itself.
+//! Second, found while tracing this grammar: a grant can live on a row
+//! other than the archetype's own master row entirely -- confirmed on
+//! APG's `Druid Archetype ~ Cave Druid`, whose `Druid Domain` grant
+//! lives on `CATEGORY=Archetype|Nature's Bond ~ Druid Domain.MOD` (a
+//! `.MOD` row modifying an unrelated, pre-existing feature), gated by
+//! `PREABILITY:1,CATEGORY=Archetype,Druid Archetype ~ Cave Druid`. A
+//! parser scanning only the archetype's own row cannot find this class
+//! of grant. **Sized, not left unsized:** a corpus-wide scan for every
+//! `.MOD` row carrying `PREABILITY:...,CATEGORY=Archetype,...` anywhere
+//! in any book finds **1,282 rows total** (ACG 251, APG 231, CRB 199,
+//! UC 147, UM 129, ARG 72, UPsi 23, PU 21, OA 18, PsiX 16, UE 11, CE 11,
+//! HA 8, AG 2, UI 1, UW 1 -- `decisions.md §51`'s own addendum records
+//! the full table and the discovery command). This book's own separate,
+//! narrower scan (rows anywhere in the file gated specifically on one of
+//! these 15 archetypes, 18 rows found) turned up no `.MOD`-injected
+//! instance in this particular book -- but the mechanism itself is real
+//! and confirmed present in APG, and the corpus-wide 23-row UPsi share
+//! of the 1,282 total suggests this book's own population is not fully
+//! zero, so a table's own `grants` field never closes this population,
+//! only bounds it.
 //!
 //! **The `TYPE:` slot list and the `ABILITY:` grant list are NOT two
 //! views of one list -- confirmed by counting both across all 15

@@ -1226,3 +1226,36 @@ UPsi moved twice, in opposite directions (undercounted, then overcounted, now cl
 **Every table's own generated tests now pin a regression guard against the specific defect found** (`no_internal_category_bookkeeping_grant_is_present` on UPsi, naming `Armor Aptitude 7th Level` explicitly), not only the corrected totals.
 
 **This is the epic's third self-caught defect found by a confirmatory check that was expected to come back clean.** Team-lead's own instrument failed twice while chasing this (a shell word-split, rewritten in Python) -- worth recording alongside the finding itself: every one of this epic's own numbers that looked internally consistent has, so far, been wrong, and the fix has never been to trust the next internally-consistent number more, only to keep checking it against the raw row a second, independent way.
+
+**The `ABILITY:` grant grammar, reusable, recorded once rather than rediscovered per shape.** Enumerated across all archetype master rows in the three landed books:
+
+```
+(category, grant type, name-list arity, gate-token kind): count, ruling
+<Class> Class Feature | AUTOMATIC | 1-name  | PRECLASS      -- 723, INCLUDE (real content)
+Special Ability         | AUTOMATIC | 1-name  | PRECLASS      --  41, INCLUDE (same naming shape as class-feature grants)
+<Class> Class Feature | AUTOMATIC | 1-name  | PREVARGTEQ     --  10, INCLUDE (alternate level-gate shape)
+<Class> Class Feature | AUTOMATIC | 1-name  | none (implicit L1) --  8, INCLUDE
+Internal                 | AUTOMATIC | 1-name  | PRECLASS      --   7, EXCLUDE (bookkeeping -- see below)
+Special Ability         | AUTOMATIC | 4+ names | PRECLASS      --   5, INCLUDE (5 sibling Shaman-totem archetypes' shared grants)
+Divine Bond               | NORMAL    | 1-name  | PRECLASS      --   2, EXCLUDE (player-chosen, not an automatic swap)
+Special Ability         | AUTOMATIC | 1-name  | none           --   2, INCLUDE
+Internal                 | AUTOMATIC | 1-name  | none           --   1, EXCLUDE
+FEAT                      | AUTOMATIC | 1-name  | PRECLASS      --   1, INCLUDE (real content, cross-references a base feat)
+<Class> Class Feature | AUTOMATIC | 3-names | none               --   1, INCLUDE (Cave Druid's own multi-name token)
+<Class> Class Feature | AUTOMATIC | 4+ names | PRECLASS          --   1, INCLUDE (Inspired Chemist)
+```
+
+**`Internal`-category ruling, evidenced not assumed:** `Thoughtsinger ~ Wild Talent`'s own row (`up_abilities_class.lst:2431`) is `KEY:Thoughtsinger ~ Wild Talent|CATEGORY:Internal|ABILITY:FEAT|AUTOMATIC|Wild Talent` -- a pure auto-grant wrapper, the same shape UC's own `Gundarme Bonus Feat` exclusion already established; `Armor Aptitude 7th Level` (the record this defect was caught on) is the same pattern. Excluded on evidence.
+
+**A third grant-location population, sized, not left unsized: `.MOD` rows carrying `PREABILITY:...,CATEGORY=Archetype,<archetype key>` inject grants onto records other than the archetype's own master row.** One corpus-wide command, run across every book (not only the three landed): **1,282 rows total**.
+
+```
+ACG 251 · APG 231 · CRB 199 · UC 147 · UM 129 · ARG 72 · UPsi 23 · PU 21 · OA 18 ·
+PsiX 16 · UE 11 · CE 11 · HA 8 · AG 2 · UI 1 · UW 1
+```
+
+`core_rulebook` at 199 is the largest surprise: archetype-gated grants from *other* books are being injected onto base CRB features at roughly two hundred times the scale of `§47`'s own single-record APG `Deadly Aim` finding -- the same `.MOD` cross-book injection pattern, not a new one, now measured rather than sampled. `ultimate_magic`'s own 129 makes it the third-largest population in this list -- its own table's receipt needs the same floor caveat this decision names.
+
+**Disposition: ship the floor, with the floor's own known-and-counted exclusions stated, not silently rounded off.** Every `grants` figure landed by this epic's tables is bounded below by two named, counted populations neither table attempts to close: the 4,550-row tier-2 sub-feature population (`§51`'s own earlier addendum) and this 1,282-row `.MOD`-injection population. A floor whose missing pieces are named and counted is an honest number; the same figure without that sentence is not -- the distinction `§47`'s single-record APG finding and this 1,282-row measurement both illustrate, at two very different scales.
+
+**Fourth instrument mismatch of the day, resolved by scope not by either side being wrong.** Team-lead's own "ACG's largest category is Special Ability at 76" and this decision's own "34, tied with two others" both measured real things -- team-lead's scan matched every row containing `Archetype ~ ` (sweeping in tier-2 sub-feature rows too), this decision's scan was scoped to archetype master rows only. Neither instrument was broken; they answered different questions. Recorded as the fourth occurrence of this session's own running lesson: state which population a count is scoped to, every time, not only when two numbers disagree.
