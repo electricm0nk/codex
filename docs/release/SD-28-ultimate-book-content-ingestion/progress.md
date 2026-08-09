@@ -2817,3 +2817,53 @@ total records this session:                                                     
 ### Kanban
 
 `epic-24-ui-complete` through `epic-28-um-complete` remain `IN-FLIGHT`, unchanged this cycle. `epic-29-upsi-complete` moves `READY` → `IN-FLIGHT` (slice 1 landed, last Ultimate book). Standing by for a fresh assignment. Not starting any book's remaining kinds (spell/equipment/race_trait etc.) without one.
+
+## Cycle `SD28-E30-F1-001` — Card `epic-30-archetype-swap` (piece 1: archetype-swap data ingestion, UPsi proof table)
+
+### Scope arc, every figure superseded in turn
+
+```
+~759 Vigilante-chassis units (inherited)        -> 129 (live, 6x too low in the brief)
+ ~47 archetype-swap units (inherited)            -> 937 (live) -> 930 (corpus-key re-derivation)
+930 tier-1-only                                  -> 440 (reachability-filtered)
+440 (TYPE:-based screening)                       -> 930 tier-1 + 4,550 tier-2 (KEY:-based re-derivation,
+                                                     task #67's own durable rule)
+```
+
+Full reasoning and every re-derivation command: `decisions.md §51`.
+
+### Two populations, not one
+
+```
+930   tier-1  archetype master/selection records   KEY:<Class> Archetype ~ <Name>
+4,550 tier-2  archetype sub-feature records          KEY:<ArchetypeName> ~ <Feature>
+```
+
+Tier-2 is 4.9x tier-1 and carries the real mechanical text; it is a floor (only counts sub-features of an already-known tier-1 master). Vigilante's own 112 units overlap tier-1 by only 10 -- the two epics are largely independent, not nested.
+
+### `pilot_compute.rs` integration blocked, recorded not decided here
+
+Task #67 (`docs/release/v0.6/risks-and-open-questions.md` items 82/84) is a time-boxed audit that deliberately scoped archetypes out of base-class grounding claims -- not a permanent law, but at least a dozen "provably vacuous, archetype-gated" correctness comments across 7 classes in `pilot_compute.rs` currently depend on that boundary. Landing compute support reverses it. Recorded as `forward-scope-register.md §C4.8`, requiring an explicit scope decision outside this epic -- the same discipline this bundle applied to the `classify()` fix and the `RuleSetId` additions.
+
+### Piece 1 landed: UPsi's 15 tier-1 records, proof table
+
+`src/rules_core/rules_tables/ultimate_psionics/archetype_tables.rs`. Two design corrections made on real data, not assumed from one example:
+
+- **`replaces`/`grants` kept as two separate lists**, not paired 1:1 -- `TYPE:`'s replaced-slot count (68 total across 15 records) and `ABILITY:`'s granted-feature count (76 total) disagree in 11 of 15 records; only 4 happen to match.
+- **65 of 76 granted sub-features resolved to real `DESC:`/`BENEFIT:` text** -- 8 unresolved `KEY:` lookups, 3 resolved rows with neither token, named individually rather than fabricated.
+
+The `§46`/`§48`/`§49` text-shape triad, run on non-feat content for the first time: `Barbarian Archetype ~ Raging Beast.MOD` carries no prose at all (a pure `FACT:`-setter row) -- clean, none of the three hazards applied.
+
+### Verification
+
+- `cargo test --lib --locked ultimate_psionics::archetype_tables`: 6/6 pass.
+- `cargo test --lib --locked` (full lib): 1530 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: `arch_clippy.log` 75 warnings, `EXIT_CODE=0` -- at ceiling (75), not breached.
+
+### Commit, pushed and confirmed
+
+`<pending>` -- UPsi archetype-swap proof table, SD28-E30 piece 1.
+
+### Kanban
+
+`epic-32-archetype-swap` moves onto the board `IN-FLIGHT` (piece 1 landed; pieces 2/3 blocked on `forward-scope-register.md §C4.8`'s scope decision). Renumbered from the "epic-30" this card was called informally during scoping -- `epic-30-integrity` (the Completion Integrity Gate, row 29) already held that id; caught before the register entry, not after. Standing by. Not proceeding to `pilot_compute.rs` integration or a second book's table without a fresh assignment/decision.

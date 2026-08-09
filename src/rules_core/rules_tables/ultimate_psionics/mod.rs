@@ -8,4 +8,5 @@
 //! Combat, one corpus typo corrected and documented, and this book's own
 //! DESC:-is-complete convention distinguished from a stub).
 
+pub mod archetype_tables;
 pub mod feat_tables;

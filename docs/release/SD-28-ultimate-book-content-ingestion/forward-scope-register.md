@@ -238,7 +238,103 @@ the audit red is carried as a DoD item 6 shortfall rather than as a reason
 to write nothing. All seven cycles' step 0/0b/1b shape findings are already
 recorded in `progress.md` and are reusable as the starting shape.
 
-### C4.8 — Epic 11's lockfile sweep (`progress.md` F7)
+### C4.8 — `epic-30-archetype-swap`: `pilot_compute.rs` integration is blocked on an explicit scope decision, not a design gap
+
+**Severity:** high — the epic's own second half cannot proceed without an operator/team-lead ruling that reverses a prior, deliberate architectural boundary.
+
+**Owner:** whoever is granted the scope decision below; `epic-30-archetype-swap` itself only landed piece 1 (data ingestion).
+
+**What:** `pilot_compute.rs` (65,592 lines) carries a deliberate, documented
+architectural boundary from an earlier v0.6 task: **"archetypes are out of
+scope for base-class chassis, per task #67"** (`pilot_compute.rs:21824`).
+That boundary is not incidental -- at least a dozen "provably vacuous"
+correctness arguments across Cavalier, Alchemist, Witch, Slayer,
+Swashbuckler, Magus, and Bloodrager currently *depend on it being true* (each
+one reads "this archetype-gated check can be skipped because this codebase
+ingests no archetype content, provably vacuous"). Landing archetype-swap
+compute support makes every one of those arguments false, not merely
+additive -- whatever logic those checks currently skip has to actually run.
+
+Task #67 itself (`docs/release/v0.6/risks-and-open-questions.md` items 82/84,
+`SWARM_REPORT.md:32`) was a time-boxed **audit**, not a permanent design law:
+it verified a backlog of class-credit claims and closed clean, deliberately
+scoping archetypes out so base-class grounding claims stayed verifiable in
+that cycle. Extending that boundary is therefore a legitimate question to
+ask, not a violation to avoid -- but it is a cross-cutting reversal of a
+standing decision, exactly the class of change this bundle's own discipline
+(the `classify()` owner-found-branch fix, the unilateral `RuleSetId`
+additions) has repeatedly declined to make from inside a single epic.
+
+**Two populations, sized independently, not one:**
+
+```
+tier-1  archetype master/selection records      930   (KEY:<Class> Archetype ~ <Name>)
+tier-2  archetype sub-feature records          4,550   (KEY:<ArchetypeName> ~ <Feature>,
+                                                          the actual swapped-in mechanics)
+```
+
+Tier-2 is **4.9× tier-1** and is where the real mechanical text lives (per
+`Raging Beast ~ Raging Beast Manifesting`'s own real `BONUS:VAR` formulas,
+traced directly against `ultimate_psionics/up_abilities_class.lst`). It is a
+**floor, not a ceiling**: the derivation keys off tier-1's own 821 named
+archetypes, so any archetype with no tier-1 master row is still invisible to
+this count. 867 of the 4,550 already carry the classifier's own independent
+`class_feature_group_names_no_class_at_all` diagnosis -- a *third*
+instrument (name-prefix-matches-no-known-class) that suspected this
+population correctly while both the TYPE-facet screen and the KEY-shape
+screen used to size tier-1 missed it entirely.
+
+**A prior instrument was found unreliable mid-cycle, and it mattered less
+than expected.** Task #67 itself documented (item 84) that screening
+archetype-vs-base-class content by `TYPE:` facet has a confirmed
+false-negative rate -- `KEY:Sacred Servant ~ Spells` is real Paladin
+archetype content typed identically to base Paladin content. Every count in
+this entry uses `KEY:`-prefix shape (the rule #67 itself recorded as
+durable), not `TYPE:`, for exactly this reason.
+
+**Every sizing estimate in this epic moved, several by an order of
+magnitude, all in different directions:** the inherited planning figures
+(~759 Vigilante-chassis units, ~47 archetype-swap units) were replaced by a
+live re-derivation (129 Vigilante, 937 archetype-shaped) which was itself
+then refined twice more (930 clean-corpus-key, 440 reachable-and-clean,
+finally the tier-1/tier-2 split above). Not one inherited or
+self-derived figure in this epic survived contact with the next check. This
+is now the single most reliable finding of SD-28's whole seven-book-plus-
+mechanism arc and should shape how the *next* epic is scoped, not only how
+this one closed: no number in a planning document, and no number derived
+from a single classifier field, should be trusted without an independent
+re-derivation against the live corpus or a second field.
+
+**What landed:** `src/rules_core/rules_tables/ultimate_psionics/
+archetype_tables.rs` -- 15 tier-1 records for UPsi (the smallest in-scope
+book), with a corrected two-list struct (`replaces`/`grants` kept separate,
+not paired 1:1 -- confirmed on real data that `TYPE:`'s replaced-slot count
+and `ABILITY:`'s granted-feature count disagree in 11 of 15 records; only 4
+happen to match). 65 of 76 granted sub-features resolved to real
+`DESC:`/`BENEFIT:` text from their own corpus row; 11 did not (8 unresolved
+`KEY:` lookups, 3 resolved rows with neither token), each named individually
+rather than fabricated or silently dropped. The `§46`/`§48`/`§49` text-shape
+triad was run against this book's own archetype `.MOD` row and found clean
+(no prose at all -- it is a pure `FACT:`-setter row, plausibly the real
+referent behind `pilot_compute.rs`'s "archetype-suppression flag" comments,
+not yet wired to any compute code).
+
+**What did not land, and why:** `pilot_compute.rs` integration (tier-1
+chooser + tier-2 swap resolution feeding into each modelled class's own
+hand-written feature code). No generic feature-slot abstraction exists in
+that file to hook into -- confirmed by grep, zero hits for
+`FEATURE_SLOT|feature_slots|class_feature_table|SlotId` across 65,592
+lines -- so a real implementation touches each of ~15+ modelled classes'
+own code individually. Combined with the task #67 reversal question above,
+this is not a single-epic decision.
+
+**Required before this epic's second half can proceed:** an explicit
+scope ruling on whether extending task #67's boundary is authorized, from
+whoever holds that authority (not decided inside `epic-30` itself), plus a
+plan for re-auditing or updating the ~dozen "provably vacuous" comments
+task #67's own boundary currently justifies.
+
+### C4.9 — Epic 11's lockfile sweep (`progress.md` F7)
 
 **Severity:** low — a refresh, not a defect.
 
