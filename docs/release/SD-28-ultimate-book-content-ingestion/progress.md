@@ -2975,7 +2975,7 @@ UPsi moved twice (undercounted, then overcounted, now closer to true); ACG moved
 
 ### Commit, pushed and confirmed
 
-`<pending>` -- second correction of UPsi/ACG/APG's tables, category ruling applied, `.MOD`-injected-grant hazard documented as an open floor.
+`63e8b6d2` -- second correction of UPsi/ACG/APG's tables, category ruling applied, `.MOD`-injected-grant hazard documented as an open floor (5 files, +184/-114). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### Next
 
