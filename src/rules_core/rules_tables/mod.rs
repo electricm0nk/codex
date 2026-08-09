@@ -11,6 +11,7 @@
 pub mod acg;
 pub mod advanced_race_guide;
 pub mod apg;
+pub mod archetype_swap;
 pub mod beastiary1;
 pub mod class_spell_levels;
 pub mod crb;

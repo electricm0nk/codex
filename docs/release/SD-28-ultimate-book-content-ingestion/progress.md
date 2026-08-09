@@ -2867,3 +2867,38 @@ The `§46`/`§48`/`§49` text-shape triad, run on non-feat content for the first
 ### Kanban
 
 `epic-32-archetype-swap` moves onto the board `IN-FLIGHT` (piece 1 landed; pieces 2/3 blocked on `forward-scope-register.md §C4.8`'s scope decision). Renumbered from the "epic-30" this card was called informally during scoping -- `epic-30-integrity` (the Completion Integrity Gate, row 29) already held that id; caught before the register entry, not after. Standing by. Not proceeding to `pilot_compute.rs` integration or a second book's table without a fresh assignment/decision.
+
+## Cycle `SD28-E30-F2-001` — Card `epic-32-archetype-swap` (tier-1 table 2: Advanced Class Guide, 87 records)
+
+### Shared-struct refactor, done up front rather than retrofitted
+
+`ArchetypeGrant`/`ArchetypeSwapEntry` moved out of `ultimate_psionics::archetype_tables` into a new `rules_tables::archetype_swap` module, shared by both UPsi's and ACG's own per-book tables. Deliberate choice, not incidental cleanup: the feat catalogs went per-book-type from the start and paid for it repeatedly (seven near-identical `FeatTableEntry` shapes, and ARG/CRB/APG/ACG lacking a `benefit` field entirely -- only discovered while chasing UW's orphaned-tail leak). Doing the shared-struct move once, on the second table rather than the seventh, is the retrofit this program's own feat-table history argues for.
+
+**Migration verified non-regressive on UPsi's own table before committing**, per the explicit caution that a shared-struct migration can silently loosen the first table's guarantees while a green build hides it: re-ran `ultimate_psionics::archetype_tables`'s own 6 tests post-migration -- all pass, including `the_type_and_ability_lists_genuinely_disagree`, which still pins the original 4/15 (27%) figure unchanged.
+
+### The 27% finding generalizes -- confirmed on 87 records, not assumed from 15
+
+```
+UPsi (15 records):  4 of 15 equal TYPE:/ABILITY: counts   (27%)
+ACG  (87 records):  28 of 87 equal TYPE:/ABILITY: counts  (32%)
+```
+
+378 total `TYPE:`-replaced slots vs 325 total `ABILITY:`-granted features across ACG's 87 records. Close enough to UPsi's own rate to call this a real corpus-wide shape rather than a UPsi-specific artifact -- the two-list struct correction from piece 1 was the right call, now proven on a 5.8x-larger sample.
+
+322 of 325 sub-feature grants (99%) resolved to real `DESC:`/`BENEFIT:` text -- cleaner than UPsi's 86% (65/76). All 3 shortfalls are the "found but textless" kind, named individually: `Mutagenic Mauler ~ Discovery`, `Snakebite Striker ~ Sneak Attack`, `Snakebite Striker ~ Maneuver Training`.
+
+Triad spot-checked against two ACG archetype `.MOD` rows directly (`Alchemist Archetype ~ Inspired Chemist.MOD`, `Arcanist Archetype ~ Blade Adept.MOD`): same clean shape as UPsi -- pure `FACT:`-setter rows, no prose, none of the three hazards applied.
+
+### Verification
+
+- `cargo test --lib --locked archetype_tables`: 12/12 pass (6 UPsi + 6 ACG).
+- `cargo test --lib --locked` (full lib): 1536 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: `acg_clippy.log` 75 warnings, `EXIT_CODE=0` -- at ceiling (75), not breached. Root now has zero headroom remaining with this module in the tree.
+
+### Commit, pushed and confirmed
+
+`<pending>` -- ACG archetype-swap table + shared `archetype_swap` module, SD28-E30 tier-1 table 2.
+
+### Next
+
+`advanced_players_guide` (80), `ultimate_magic` (67), `ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain, per team-lead's ordering. Not starting the next table without reporting this one first.

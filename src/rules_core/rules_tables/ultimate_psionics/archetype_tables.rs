@@ -77,51 +77,7 @@
 //! ultimate_psionics/up_abilities_class.lst`), generated programmatically
 //! by a one-off extraction script, not hand-transcribed.
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct ArchetypeGrant {
-    /// The named sub-feature's own corpus `KEY:` (e.g. `"Raging Beast ~
-    /// Raging Beast Manifesting"`), verbatim.
-    pub grants_feature_key: &'static str,
-    /// The class level this grant's own `PRECLASS:1,<Class>=<Level>`
-    /// token names, verbatim.
-    pub at_level: u8,
-    /// The named sub-feature's own corpus `DESC:` token, resolved from
-    /// its separate row. `None` when the row has no `DESC:`, or when
-    /// this extraction could not find the row at all (see this module's
-    /// own doc comment's "68 of 76" paragraph) -- the two cases are not
-    /// distinguished here; both are honestly `None`, never fabricated.
-    pub description: Option<&'static str>,
-    /// The named sub-feature's own corpus `BENEFIT:` token, resolved the
-    /// same way. `None` when absent or unresolved.
-    pub benefit: Option<&'static str>,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct ArchetypeSwapEntry {
-    /// The master/selection row's own corpus `KEY:`, verbatim (e.g.
-    /// `"Barbarian Archetype ~ Raging Beast"`).
-    pub key: &'static str,
-    /// The base class (or other subject -- `"Companion"`/`"Familiar"` in
-    /// other books, per this mechanism's own subject-generic design)
-    /// this archetype replaces features of.
-    pub subject: &'static str,
-    pub archetype_name: &'static str,
-    /// The master row's own corpus `DESC:` token, verbatim -- the
-    /// archetype's flavour text, not any specific feature's mechanic.
-    pub description: Option<&'static str>,
-    pub source_page: Option<&'static str>,
-    /// Every top-level `PRE`-family token the master row carries,
-    /// verbatim and unparsed, in source order.
-    pub prerequisites: Option<&'static [&'static str]>,
-    /// The base-class feature-slot IDs this archetype's own `TYPE:`
-    /// facet names as replaced, verbatim, in source order. **Not
-    /// paired 1:1 with `grants`** -- see this module's own doc comment.
-    pub replaces: Option<&'static [&'static str]>,
-    /// Every feature this archetype's own `ABILITY:...AUTOMATIC` tokens
-    /// grant, each with its real level gate and (where resolved) its
-    /// own real mechanical text.
-    pub grants: &'static [ArchetypeGrant],
-}
+use super::super::archetype_swap::{ArchetypeGrant, ArchetypeSwapEntry};
 
 /// Full UPsi archetype-swap catalog: 15 real, distinct master records
 /// (Barbarian/Bard/Druid/Fighter/Monk/Paladin/Ranger/Rogue archetypes),
