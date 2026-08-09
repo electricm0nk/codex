@@ -3347,4 +3347,26 @@ Docs-only (`decisions.md §56`, this entry, kanban). Committed `a115eb96`, pushe
 
 ### Commit
 
-`src/rules_core/rules_tables/ultimate_psionics/equipment_tables.rs` (new), `src/rules_core/rules_tables/ultimate_psionics/mod.rs`, `src/rules_core/equipment_resolver.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §58`, kanban. To be committed and pushed with SHA confirmation.
+`src/rules_core/rules_tables/ultimate_psionics/equipment_tables.rs` (new), `src/rules_core/rules_tables/ultimate_psionics/mod.rs`, `src/rules_core/equipment_resolver.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §58`, kanban. Committed `2c43ce74`, pushed, SHA-confirmed on HEAD/origin.
+
+## SD28-C4.8-001 -- `archetype_claims_slot` primitive, proven end-to-end on Alchemist (2026-08-09)
+
+**Assignment:** operator unblocked `§C4.8` (wire archetypes now, audit vacuity comments after). Vacuity inventory captured first (`§59`, `ded8fc82`), then built the generic primitive.
+
+**`archetype_resolver.rs` (new):** aggregates all 7 `§51` tier-1 archetype tables into one lookup, `archetype_claims_slot(input, subject, slot_id)` checking whether a genuinely selected archetype's own `replaces` list claims a base-class slot. New selection-input convention (`ARCHETYPE_CHOICE_ID`, `selection_id` = the archetype's real corpus `KEY:`) -- none existed before this.
+
+**First real consumer: Alchemist's Poison Resistance.** ARG's Plague Bringer (real catalog row) names `AlchemistPoisonResistance` in its own `replaces` list. Base APG progression no longer computes unconditionally once a real archetype claims the slot -- closes the vacuity for real, doesn't fabricate a replacement number.
+
+**Reachability proven per `§43`, through the real compute path.** 3 new tests in `pilot_compute.rs` driving `build_pilot_headless_receipt` (bare Alchemist unaffected; Plague Bringer supersedes with the archetype named in the explanation; an unrelated archetype leaves grounding unchanged) + 5 resolver-level unit tests.
+
+**Explicitly not an audit close.** None of `§59`'s 7 classes/13 citations are touched -- Alchemist was never one of them (its archetypes were already ingested, unlike the 7). That backlog stays fully open.
+
+**No status changed beyond the real compute-output behavior described above.** Full detail: `decisions.md §60`.
+
+### Verification
+
+`cargo build --locked --lib`: clean. `cargo test --lib --locked archetype_resolver`: 5/5. `cargo test --lib --locked alchemist_archetype_slot_reachability`: 3/3. `cargo test --locked --no-fail-fast`: run twice independently, both green (538 targets, 0 failures each). `cargo build --locked --bins`: clean.
+
+### Commit
+
+`src/rules_core/archetype_resolver.rs` (new), `src/rules_core/mod.rs`, `src/rules_core/pilot_compute.rs`, this receipt, `decisions.md §60`, kanban. Committed `7c956a54`, pushed, SHA-confirmed on HEAD/origin.
