@@ -3160,3 +3160,27 @@ No engine code was touched this cycle -- read-only analysis over `docs/work-inve
 ### Commit
 
 Docs-only change (`decisions.md §52`, this `progress.md` entry, kanban). To be committed and pushed with SHA confirmation alongside the kanban update below.
+
+## SD28-E15-002 -- `epic-15-unknown-sweep`: clustering and threshold-checking the 1,746-unit remainder (2026-08-09)
+
+**Assignment:** close epic-15's own open items before starting anything new. First the 1,772-unit unclustered remainder: cluster by owning chooser, deep-check only families at or above a stated threshold (20+ chosen), report the tail below threshold as a counted population rather than investigating each prefix. Expect a new shape in the tail, not a repeat of `§52`'s three canonical-narrowing families.
+
+**Re-derived against `work-inventory.json` directly:** 1,746 units across 751 distinct `KEY:` prefixes remain after removing archetype tier-2 matches (438) and the three already-deep-checked families re-matched by keyword (806 combined -- a broader substring match than `§52`'s exact-scope totals, both real, differently scoped, named as such rather than silently reconciled).
+
+**12 prefixes clear the 20-unit threshold (443 units, 25% of the remainder), deep-checked by the same 4-step method. Result: three distinct dispositions, not a fourth canonical-narrowing family:**
+- **Mis-clustered, real archetype content (85 units):** Skinshaper (30, `ultimate_intrigue`) is a genuine Druid archetype excluded from `§51`'s catalog only because UI was never one of the seven tier-1 books -- the Skinshaper reconciliation flagged earlier this epic, now resolved. Fused Eidolon Skills (55, `ultimate_magic`) is Synthesist archetype's own skill table, missed by `§52`'s tier-2 KEY-prefix matcher because the sub-feature's name diverges from its master's name.
+- **New shape -- universal-formula, not narrowed (40 units):** Packmaster Boon Companion (20, ACG) and Beastmaster (20, APG) are level-variant rows that all resolve through one shared table, `ANIMAL_COMPANION_HIT_DICE_BY_MASTER_LEVEL` (`pilot_compute.rs:5946-5957`) -- every option potentially reachable via the same formula, not one canonical option with the rest blocked. Reported as a strong positive signal, not added to the candidate list pending unit-level verification.
+- **Confirmed-absent chooser (303 units):** Refined Education + Social Grace (203, Vigilante's talent tree, already-known gap) and Insight/Terror/Blade Skill/Path Power (100, Ultimate Psionics discipline talent trees, newly confirmed) have zero chooser code anywhere in `pilot_compute.rs` -- genuinely unreachable, not proposal material, would need net-new code rather than a status flip.
+- **Folds into `§52`'s Bloodline family (15 units):** Wildblooded (UM) is a Sorcerer bloodline variant caught by the existing blanket `class_feature.sorcerer.arcane_bond_and_bloodline_progression.unsupported` diagnostic; a clustering-keyword gap, not a new disposition.
+
+**Below-threshold tail: 739 prefixes, 1,303 units, counted and named, not investigated.** No extrapolation of the three shapes above onto the tail -- the 12-family sample already produced three different shapes plus two mis-clustering corrections, so extrapolating further would repeat the blended-figure mistake `§52`'s coverage statement exists to avoid.
+
+**No unit's status changed.** Full detail, table, and per-prefix evidence: `decisions.md §53`.
+
+### Verification
+
+Read-only analysis over `docs/work-inventory.json`, `pilot_compute.rs`, and the raw PCGen corpus rows (`ui_abilities_class.lst`, `um_abilities_class.lst`, `apg_abilities_class.lst`) to confirm the two mis-clustering findings against source. No engine code touched; no new build/test/clippy run required.
+
+### Commit
+
+Docs-only change (`decisions.md §53`, this entry). To be committed and pushed with SHA confirmation, then reported to team-lead before starting the 307-unit feat-side bucket.
