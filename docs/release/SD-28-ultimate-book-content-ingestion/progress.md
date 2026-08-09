@@ -3210,3 +3210,51 @@ Read-only analysis over `docs/work-inventory.json` and the named 9-file set (lit
 ### Commit
 
 Docs-only change (`decisions.md §54` rewritten, this entry, kanban). To be committed and pushed with SHA confirmation.
+
+## SD28-E15-005 -- `epic-15-unknown-sweep`: the `pilot_compute.rs`/`pilot_compute_corpus.rs` twin check on the 31 feat candidates (2026-08-09)
+
+**Assignment:** per `decisions.md §29.1` ("a magnitude is not wired until it moves on the twin the player reads"), verify the 31 confirmed feat-side candidates against `pilot_compute_corpus.rs` (the corpus receipt the desktop sheet actually reads), not only `pilot_compute.rs`/`build_pilot_headless_receipt` (what the original checks used).
+
+**A first re-grep of `pilot_compute_corpus.rs` for the 5 candidate-grade feat names found 0/5 -- not trustworthy, and not used.** It repeats the exact fifth-instrument-failure shape `§54` already names: a display-name match against one file, when `pilot_compute_corpus.rs::compute_pilot_with_corpus` inherits `pilot_compute.rs`'s own computation via a direct, unmodified assignment (`let mut base = compute_pilot_base_chassis(input);`) rather than re-implementing feats by name.
+
+**Decisive test instead of a further grep: two structurally different candidates (`Extra Reservoir`, the one candidate whose reach-path had an unclosed dispatch hop; `Armor of the Pit`, reached via a direct call) exercised live through `compute_pilot_with_corpus`, asserted against `receipt.base.explanations`, then discarded (not committed).** Both surfaced with the exact expected value (+3 for Extra Reservoir, matching `EXTRA_RESERVOIR_POINTS`; a present/absent record for Armor of the Pit gated correctly on the feat). Combined with `Extra Performance`/`Extra Lay On Hands` (+6/+2) live-tested in an earlier probe this session, **4 of the 31 candidates are now confirmed through the actual twin the player reads**, the highest evidence grade this epic has produced for any unit.
+
+**§29.1's own scope is narrower than "the chassis is duplicated," on inspection of the actual code:** the documented gap traces to `compute_combat_baseline` (fixed-posture, per-weapon-loadout) vs its corpus-aware supplement -- a self-documented seam, not a blanket duplicate. None of the 4 live-tested candidates fall in that narrow risk zone.
+
+**Not yet live-tested:** Weapon Finesse (changed something under a bare probe, not isolated), Bestow Luck/Extra Hex/Push the Limits (the other 3 candidate-grade units), and the 26 non-candidate-grade units. Structurally argued to likely survive (same shared root function), not proven -- stated as such, not rounded up.
+
+**No unit's status changed.** `decisions.md §54` amended in place with this finding, title updated. Full detail: `§54`.
+
+### Verification
+
+Two temporary `#[test]` probes added to `pilot_compute_corpus.rs`'s own test module, run via `cargo test --lib probe_temp_... -- --nocapture`, output captured, then `git checkout`ed to discard -- confirmed via `git status --porcelain` that the file is clean before this commit. No test code committed; no engine code touched.
+
+### Commit
+
+Docs-only change (`decisions.md §54` amended, this entry, kanban). Reported to team-lead before committing, per their explicit instruction.
+
+## SD28-E15-006 -- `epic-15-unknown-sweep`: extending the live twin probe to 12 of 31 candidates (2026-08-09)
+
+**Assignment:** extend the live `compute_pilot_with_corpus` probe from 4 to all 31 feat-side candidates; isolate Weapon Finesse's specific field; record Power Attack/Dodge's non-response as its own, separate finding; amend `§54` around the probe results.
+
+**8 more candidates live-tested, all 8 correct:** Extra Bombs (+2, matches `EXTRA_BOMBS_USES`), Extra Inspiration (+3, matches `EXTRA_INSPIRATION_USES` -- this probe's own initial guess of +2 was wrong and corrected against the real constant, not left standing), Extra Martial Flexibility (+3, matches `EXTRA_MARTIAL_FLEXIBILITY_USES`, same correction), Bestow Luck (+1, matches an existing proven test exactly), Improved Channel (+2, matches an existing proven test exactly), Extra Stamina (+3, once Combat Stamina -- its real prerequisite -- was correctly included in the base case), Push the Limits (secondary pool appears only once the feat is added), Greater Spell Focus (1 -> 2, matches the "total not increment" doc comment exactly). Combined with the earlier 4, **12/31 candidates are individually live-tested through the actual corpus-receipt twin, every one correct.**
+
+**Weapon Finesse: the earlier "explanations_changed=true" signal did not reproduce** on a careful field-by-field diff -- no value or count difference found. Corrected in `§54` rather than left standing next to confirmed candidates.
+
+**Power Attack and Dodge: confirmed no change under bare feat-selection, through both `build_pilot_headless_receipt` and `compute_pilot_with_corpus` identically** -- named as its own finding (not twin-divergence; the same posture/active-state limitation this decision already documents for the original probe) rather than blurred into the twin question.
+
+**Adaptive Fortune, Fortunate One, Great Hatred, Extra Hex are not part of `compute_pilot_base_chassis`'s explanations at all** -- traced their real call sites to `race_trait_picker.rs` and `description_completion.rs`, genuinely different consumers. Testing them against `receipt.base.explanations` would have been the wrong check; not attempted this round, stated explicitly rather than force-fit.
+
+**Remaining 13 of 31** (Combat Reflexes, Improved Unarmed Strike, Extended Animal Focus, the 8-unit Ranger combat-style family, Throw Anything) need a choice-based setup not constructed this round -- real code verified in `pilot_compute.rs`, no live twin-confirmation yet.
+
+**Named a follow-on, not undertaken:** this live-probe method is a materially better instrument than the fixed-posture sweep that produced the 307-unit bucket in the first place. Running it across the full 307 could settle the bucket definitively. Rough estimate from this round's own pace (~10-15 min/case once the harness existed): a multi-session effort, not foldable into this cycle.
+
+**No unit's status changed.** `decisions.md §54` amended in place, title updated to reflect 12/31 live-tested.
+
+### Verification
+
+One temporary `#[test]` added to `pilot_compute_corpus.rs`'s own test module, run via `cargo test --lib probe_temp_extended_31 -- --nocapture`, output captured, then `git checkout`ed -- confirmed clean via `git status --porcelain` before this commit. No test code committed; no engine code touched.
+
+### Commit
+
+Docs-only change (`decisions.md §54` amended again, this entry, kanban). Reporting before committing, per the same standing instruction.
