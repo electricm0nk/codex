@@ -173,7 +173,7 @@ mod tests {
                 }
             }
         }
-        assert_eq!(checked, 1357, "the whole ingested feat catalog must be checked");
+        assert_eq!(checked, 1578, "the whole ingested feat catalog must be checked");
     }
 
     /// A longer feat whose name merely begins with a grounded key must not

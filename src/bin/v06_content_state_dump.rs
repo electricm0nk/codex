@@ -58,6 +58,7 @@ use codex::rules_core::rules_tables::ultimate_campaign as uca;
 use codex::rules_core::rules_tables::ultimate_equipment as ue;
 use codex::rules_core::rules_tables::ultimate_combat as uc;
 use codex::rules_core::rules_tables::ultimate_magic as um;
+use codex::rules_core::rules_tables::ultimate_psionics as upsi;
 use codex::rules_core::rules_tables::ultimate_wilderness as uw;
 use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 use codex::rules_core::rules_tables::RuleSetId;
@@ -353,6 +354,22 @@ fn um_content() -> BookContent {
             KindCount { kind: "spells", ingested: 0 },
             KindCount { kind: "equipment", ingested: 0 },
             KindCount { kind: "feats", ingested: um::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E29. Same hand-listed-roster shape the sibling `*_content()`
+/// functions above warn about. First slice: feats only.
+fn upsi_content() -> BookContent {
+    BookContent {
+        id: "ultimate_psionics",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount { kind: "equipment", ingested: 0 },
+            KindCount { kind: "feats", ingested: upsi::feat_tables::feat_tables().len() as u32 },
             KindCount { kind: "monsters", ingested: 0 },
         ],
     }
@@ -662,6 +679,7 @@ fn main() {
         uw_content(),
         uc_content(),
         um_content(),
+        upsi_content(),
     ];
     let monsters = monster_states(&repo_root);
     let races = race_states(&fixture);
@@ -777,6 +795,7 @@ fn main() {
             RuleSetId::Uw => "ultimate_wilderness",
             RuleSetId::Uc => "ultimate_combat",
             RuleSetId::Um => "ultimate_magic",
+            RuleSetId::Upsi => "ultimate_psionics",
         };
         let records = table.entries.len();
         let wired_here = table

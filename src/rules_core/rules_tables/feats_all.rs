@@ -131,6 +131,7 @@ use super::ultimate_campaign::feat_tables as uca_feats;
 use super::ultimate_intrigue::feat_tables as ui_feats;
 use super::ultimate_combat::feat_tables as uc_feats;
 use super::ultimate_magic::feat_tables as um_feats;
+use super::ultimate_psionics::feat_tables as upsi_feats;
 use super::ultimate_wilderness::feat_tables as uw_feats;
 use super::RuleSetId;
 
@@ -793,6 +794,41 @@ fn map_um_entry(entry: &um_feats::UmFeatEntry) -> FeatCatalogRecord {
     }
 }
 
+/// UPsi's own five-variant enum. `Psionic`/`Metapsionic` have no shared-
+/// enum equivalent -- see `ultimate_psionics::feat_tables`'s own module
+/// doc comment for why they stay UPsi-specific facets.
+fn upsi_category_name(category: upsi_feats::FeatCategory) -> &'static str {
+    match category {
+        upsi_feats::FeatCategory::General => "General",
+        upsi_feats::FeatCategory::Combat => "Combat",
+        upsi_feats::FeatCategory::ItemCreation => "ItemCreation",
+        upsi_feats::FeatCategory::Psionic => "Psionic",
+        upsi_feats::FeatCategory::Metapsionic => "Metapsionic",
+    }
+}
+
+/// Joins UPsi's two prose fields (`description`, `benefit`) exactly as
+/// every other book's own mapper does. No `effect` field on this book's
+/// own `UpsiFeatEntry` -- unlike UM, every one of UPsi's 221 records
+/// carries real `DESC:`/`BENEFIT:` prose (`ultimate_psionics::feat_tables`'s
+/// own module doc comment: this book's `DESC:`-is-complete convention
+/// means there is no textless-but-real-mechanic category to find here).
+fn map_upsi_entry(entry: &upsi_feats::UpsiFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: upsi_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
 /// Project one book's table once and hand out a `'static` slice of it.
 ///
 /// The projection is a real allocation, so it is cached per book for the
@@ -862,6 +898,11 @@ fn um_records() -> &'static [FeatCatalogRecord] {
     projected(&CELL, || um_feats::feat_tables().iter().map(map_um_entry).collect())
 }
 
+fn upsi_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || upsi_feats::feat_tables().iter().map(map_upsi_entry).collect())
+}
+
 /// Every ingested book's feat catalog, in book order (CRB, APG, ACG,
 /// ARG, PU, UCA, UI, UW).
 ///
@@ -884,6 +925,7 @@ pub fn all_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Uw, entries: uw_records() },
             BookFeatTable { rule_set: RuleSetId::Uc, entries: uc_records() },
             BookFeatTable { rule_set: RuleSetId::Um, entries: um_records() },
+            BookFeatTable { rule_set: RuleSetId::Upsi, entries: upsi_records() },
         ]
     })
 }
@@ -896,7 +938,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = all_feat_tables();
-        assert_eq!(books.len(), 10);
+        assert_eq!(books.len(), 11);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -917,12 +959,14 @@ mod tests {
         assert_eq!(books[8].entries.len(), 261);
         assert_eq!(books[9].rule_set, RuleSetId::Um);
         assert_eq!(books[9].entries.len(), 144);
+        assert_eq!(books[10].rule_set, RuleSetId::Upsi);
+        assert_eq!(books[10].entries.len(), 221);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
         assert_eq!(
             total,
-            1357,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM"
+            1578,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi"
         );
     }
 
@@ -942,6 +986,7 @@ mod tests {
         assert_eq!(books[7].entries.len(), uw_feats::feat_tables().len());
         assert_eq!(books[8].entries.len(), uc_feats::feat_tables().len());
         assert_eq!(books[9].entries.len(), um_feats::feat_tables().len());
+        assert_eq!(books[10].entries.len(), upsi_feats::feat_tables().len());
     }
 
     #[test]
@@ -1028,13 +1073,14 @@ mod tests {
         assert_eq!(with_prerequisites(RuleSetId::Uw), 127, "of 135 -- gathered directly at ingest, no backfill table");
         assert_eq!(with_prerequisites(RuleSetId::Uc), 247, "of 261 -- gathered directly at ingest, no backfill table");
         assert_eq!(with_prerequisites(RuleSetId::Um), 135, "of 144 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Upsi), 200, "of 221 -- gathered directly at ingest, no backfill table");
 
         let total: usize = all_feat_tables()
             .iter()
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.prerequisites.is_some())
             .count();
-        assert_eq!(total, 1229, "1229 of the catalog's 1357 records have a prerequisite");
+        assert_eq!(total, 1429, "1429 of the catalog's 1578 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -1212,6 +1258,19 @@ mod tests {
                 ("Masterpiece", 15),
                 ("Metamagic", 9),
                 ("Teamwork", 1),
+            ])
+        );
+        // UPsi's own new facets: `Psionic` (this book's dominant facet)
+        // and `Metapsionic` (its metamagic equivalent) -- no shared-enum
+        // equivalent for either. No UPsi record carries `TYPE:Teamwork`.
+        assert_eq!(
+            split(RuleSetId::Upsi),
+            BTreeMap::from([
+                ("Combat", 9),
+                ("General", 21),
+                ("ItemCreation", 3),
+                ("Metapsionic", 35),
+                ("Psionic", 153),
             ])
         );
     }

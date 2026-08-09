@@ -767,6 +767,7 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Uw,
     RuleSetId::Uc,
     RuleSetId::Um,
+    RuleSetId::Upsi,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -787,6 +788,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uw => "ultimate_wilderness",
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
+        RuleSetId::Upsi => "ultimate_psionics",
     }
 }
 
@@ -819,6 +821,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uw => "ultimate_wilderness",
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
+        RuleSetId::Upsi => "ultimate_psionics",
     }
 }
 
@@ -2705,7 +2708,11 @@ mod rule_set_mapping_tests {
     /// A book the engine has not compiled must still report honestly.
     #[test]
     fn uncompiled_books_stay_none() {
-        assert_eq!(rule_set_for("ultimate_psionics"), None);
+        // `ultimate_psionics` moved from uncompiled to compiled in SD28-E29
+        // (`epic-29-upsi-complete`) -- `rule_set_for` now correctly returns
+        // `Some(RuleSetId::Upsi)` for it, so it is no longer a valid
+        // uncompiled example. `inner_sea_gods` remains genuinely
+        // uncompiled (SD-30's own book set, out of this bundle).
         assert_eq!(rule_set_for("inner_sea_gods"), None);
     }
 }

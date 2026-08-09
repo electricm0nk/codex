@@ -2743,3 +2743,66 @@ Four background-verification results sat unread this cycle before being read: UW
 ### Kanban
 
 `epic-24-ui-complete`, `epic-25-ue-complete`, `epic-26-uw-complete` remain `IN-FLIGHT`, unchanged. `epic-27-uc-complete` remains `IN-FLIGHT`, unchanged this cycle. `epic-28-um-complete` moves `READY` → `IN-FLIGHT` (slice 1 landed). Standing by for a fresh assignment. Not starting UPsi, and not starting UM's remaining kinds (spell/equipment/race_trait etc.), without one.
+
+## Cycle `SD28-E29-F1-001` — Card `epic-29-upsi-complete` (Ultimate Psionics, slice 1: feat catalog) -- the seventh and final Ultimate book
+
+### License posture, checked before ingesting
+
+Dreamscarred Press, not Paizo -- the first non-Paizo book in this program. `ultimate_psionics.pcc` declares `ISOGL:YES` and carries **no `#EXTRAFILE:OGL.txt` directive at all**; a real, complete `OGL.txt` (90 lines, genuine OGL v1.0a text) sits on disk regardless. No licensing anomaly -- structurally cleaner than UC's own case (`decisions.md §46`), where the directive was declared but the file was missing.
+
+### Reconciliation
+
+```
+223  raw CATEGORY:FEAT rows declared in up_feats.lst
+     (re-derive with: grep -c $'\tCATEGORY:FEAT\t' up_feats.lst -- the naive
+      line-anchored `grep -c '^CATEGORY:FEAT'` returns 0, the same
+      not-line-anchored trap decisions.md §46/§49 already documented,
+      recurring a third time)
+ -1  source-disabled record (#Network Power, up_feats.lst:217 -- the
+      PCGen data team's own preceding-line comment: "I believe Network
+      Power was removed on purpose.")
+ -1  cross-book collision (Feral Combat Training -- verbatim republish of
+      ultimate_combat's own uc_feats.lst:117; identical DESC:/BENEFIT:/
+      SOURCEPAGE:/prerequisite)
+----
+221  final
+```
+
+Zero intra-book duplicate keys. Collision confirmed at runtime against every other book's real feat key set (a scratch `#[test]` dump of `feats_all::all_feat_tables()`, `decisions.md §44`'s lesson applied from the start, removed before commit).
+
+### The `§49` triad, run against this book's own `.MOD` rows before writing the mapper -- all three checked, none found
+
+`up_feats.lst`'s 30 `.MOD` rows and `up_feats_apg.lst`'s 3 carry zero `DESC:`/`BENEFIT:` tokens between them. No unconditional-recovery case, no conditional-variant case, no never-join case -- `UpsiFeatEntry` needed no `effect` field the way `UmFeatEntry` did, because every one of this book's 221 kept records already carries real prose.
+
+### The corpus-shape finding: a book-wide DESC:-is-complete convention, not a stub
+
+216 of 221 kept records carry `DESC:` alone with no `BENEFIT:` token anywhere -- Dreamscarred Press's own `DESC:` token *is* the complete rules text (e.g. `Psionic Body`: `"+2 hit points for each psionic feat you have"`), unlike the Paizo convention where `BENEFIT:` carries the real mechanic. Only 5 records carry both tokens (`Piranha Strike`, `Psionic Shot`, `Psionic Talent`, `Unwilling Participant`, `Urban Tracking`), each checked individually. **Zero records carry neither token** -- this book's convention leaves no textless-stub category to find at all, unlike UC's 2 or UM's 3 auto-grant wrappers.
+
+One corpus typo corrected and documented: `Thundering Power` declares `TYPE:Metasionic` (every sibling metapsionic feat declares `TYPE:Metapsionic`); folded into `Metapsionic` (35 total) rather than kept as its own unattributed one-record category.
+
+**No new unmodelled `PRE`-family kind** -- the first Ultimate book to break the "every book adds one" streak (UC: `PREDR`/`PRERULE`; UM: `PREDEITY`/`PREVARLTEQ`). Checked directly against the full census.
+
+### A real self-caught defect: a stale test assumption, not a mapping bug
+
+`v06_work_inventory.rs`'s `uncompiled_books_stay_none` asserted `rule_set_for("ultimate_psionics") == None` -- true before this cycle, false after it, since UPsi now has a compiled catalog. Confirmed the failure's real mechanism before touching the assertion (`left: Some(Upsi), right: None` -- the mapping itself returned the correct new value, not a wrong one) per team-lead's explicit caution not to assume which of the two possible causes applied. Fixed by removing the now-invalid `ultimate_psionics` example, keeping `inner_sea_gods` (genuinely still uncompiled, SD-30's own book set) as the test's live proof. This is the same category as re-deriving a stale pinned count, not a `decisions.md §32` gaming case: the assertion's own claim stays intact.
+
+### Verification (every exit code read from its own completed log)
+
+- `cargo test --lib --locked` (targeted): `rules_tables::feats_all` (13/13), `feat_identity`, `a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why`, `rule_set_mapping_tests::uncompiled_books_stay_none` -- all pass after the fix.
+- `cargo test --locked --test sd27_feat_prerequisite_enforcement`: 9 passed, 0 failed.
+- `cargo test --locked --test v06_apg_acg_feat_catalog`: 9 passed, 0 failed.
+- Desktop crate (`cargo test --locked`, backgrounded to a completed log): first run 412/1, the single failure `uncompiled_books_stay_none`'s sibling case did not appear here (that one lives in the root binary's own test suite, not desktop) -- the desktop crate's own single failure was §34's expected git-timestamp case, cleared on commit as always.
+- **Full `cargo test --locked --no-fail-fast`, first run:** `EXIT_CODE=101`, 6040 passed, 1 failed -- read carefully rather than treated as "blocked": the failure was `rule_set_mapping_tests::uncompiled_books_stay_none`, diagnosed and fixed as above (not `decisions.md §34`'s git-timestamp case, a different, genuine test-staleness finding). Second run pending confirmation before commit.
+- **Clippy, both crates, gate's own method:** `clippy_root.log` 75 warnings/EXIT_CODE=0 (at ceiling 75, not breached); `clippy_desktop.log` 7 warnings/EXIT_CODE=0 (at ceiling 7, not breached). Neither ceiling moved despite this cycle's desktop-file edits.
+
+### Commit, pushed and confirmed
+
+`<pending>` -- Ultimate Psionics feat catalog ingest, SD28-E29 slice 1.
+
+### This program's seventh and final Ultimate book -- session cumulative
+
+Ultimate Intrigue (`epic-24`), Ultimate Equipment (`epic-25`), Ultimate Wilderness (`epic-26`), Ultimate Combat (`epic-27`), Ultimate Magic (`epic-28`), Ultimate Psionics (`epic-29`) -- six from-scratch Ultimate-book ingests this session, plus this program's earlier Ultimate Campaign work. UPsi closes the set: the first non-Paizo book, checked for a licensing anomaly and found clean, the first book whose own corpus convention (DESC:-is-complete) required no textless-stub exclusions at all, and the first to break the "every book adds a new unmodelled PRE kind" streak. The aggregate feat catalog now spans 11 books, 1578 real records, zero fabricated data, every cross-book collision found at runtime and excluded rather than assumed.
+
+### Kanban
+
+`epic-24-ui-complete` through `epic-28-um-complete` remain `IN-FLIGHT`, unchanged this cycle. `epic-29-upsi-complete` moves `READY` → `IN-FLIGHT` (slice 1 landed, last Ultimate book). Standing by for a fresh assignment. Not starting any book's remaining kinds (spell/equipment/race_trait etc.) without one.

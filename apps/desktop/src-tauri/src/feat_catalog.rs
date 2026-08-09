@@ -329,7 +329,7 @@ mod tests {
         // or DESC + the deferral diagnostic for UCA's 2 corrupted records),
         // so all 127 add to `with_description` rather than the no-DESC:
         // bucket.
-        assert_eq!(with_description, 1344, "13 of the 1357 records carry no served description");
+        assert_eq!(with_description, 1565, "13 of the 1578 records carry no served description -- unchanged by UPsi, whose 221 records all carry real DESC:/BENEFIT: text");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -342,18 +342,31 @@ mod tests {
         // each for the player, the same treatment CRB's own leaking rows
         // already get.
         changed.sort_unstable();
-        assert_eq!(raw_leaks, 151, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 151, "exactly the leaking records are rewritten");
-        // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 new UM records.
-        // Every served description for all 151 is confirmed leak-free by
-        // this same test's per-record `leaked_pcgen_syntax(served) == None`
-        // assertion above -- this is a raw-corpus-shape count (`&nl;`
-        // entity escapes, `%N`/raw `|` tails, all correctly rewritten by
-        // `render_pcgen_desc`), not a new player-visible leak.
+        assert_eq!(raw_leaks, 185, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 185, "exactly the leaking records are rewritten");
+        // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 UM + 34 new
+        // UPsi records. Every served description for all 185 is
+        // confirmed leak-free by this same test's per-record
+        // `leaked_pcgen_syntax(served) == None` assertion above -- this
+        // is a raw-corpus-shape count (`&nl;` entity escapes, `%N`/raw
+        // `|` tails, all correctly rewritten by `render_pcgen_desc`),
+        // not a new player-visible leak.
         assert_eq!(
             changed,
             vec![
+                "Access Psionic Talent",
                 "Adder Strike",
+                "Advanced Archer Path",
+                "Advanced Ascetic Path",
+                "Advanced Assassin Path",
+                "Advanced Brawling Path",
+                "Advanced Dervish Path",
+                "Advanced Feral Path",
+                "Advanced Infiltrator Path",
+                "Advanced Interceptor Path",
+                "Advanced Mind Knight Path",
+                "Advanced Survivor Path",
+                "Advanced Weaponmaster Path",
                 "Amateur Gunslinger",
                 "Ambush Awareness",
                 "Animal Call",
@@ -392,6 +405,7 @@ mod tests {
                 "Earth Child Style",
                 "Earth Child Topple",
                 "Eidolon Mount",
+                "Empower Power",
                 "Energized Wild Shape",
                 "Expert Cartographer",
                 "Extended Bane",
@@ -399,6 +413,7 @@ mod tests {
                 "Eye for Ingredients",
                 "Faerie's Strike",
                 "False Trail",
+                "Fear's Reach",
                 "Feign Curse",
                 "Feral Combat Training",
                 "Field Repair",
@@ -407,12 +422,15 @@ mod tests {
                 "Grasping Strike",
                 "Greater Beast Hunter",
                 "Greater Hunter's Bond",
+                "Greater Intuitive Shot",
                 "Greater Spring Attack",
                 "Greater Whip Mastery",
                 "Gruesome Slaughter",
                 "Gunsmithing",
+                "Harmonic Resonance",
                 "Harmonic Sage",
                 "Haunted Gnome Shroud",
+                "Hawkeye",
                 "Hex Strike",
                 "Hide Worker",
                 "Horse Master",
@@ -425,11 +443,13 @@ mod tests {
                 "Improved Spring Attack",
                 "Indomitable Mountain Peak",
                 "Instant Judgment",
+                "Intuitive Shot",
                 "Learn Ranger Trap",
                 "Life Lure",
                 "Master Siege Engineer",
                 "Menacing Bane",
                 "Merciful Bane",
+                "Modified Blast",
                 "Monastic Legacy",
                 "Monkey Moves",
                 "Monkey Shine",
@@ -442,6 +462,7 @@ mod tests {
                 "Net and Trident",
                 "Nightmare Weaver",
                 "One Eye Open",
+                "Open Door",
                 "Out of the Sun",
                 "Pack Attack",
                 "Painful Anchor",
@@ -449,9 +470,17 @@ mod tests {
                 "Passing Trick",
                 "Photosynthetic Healing",
                 "Pinpoint Poisoner",
+                "Piranha Strike",
                 "Planar Wanderer",
                 "Prone Slinger",
                 "Prophetic Visionary",
+                "Psionic Bull Rush",
+                "Psionic Disarm",
+                "Psionic Overrun",
+                "Psionic Shield Bash",
+                "Psionic Sunder",
+                "Psionic Talent",
+                "Psionic Trip",
                 "Quick Bull Rush",
                 "Quick Dirty Trick",
                 "Quick Drag",
@@ -459,15 +488,18 @@ mod tests {
                 "Quick Steal",
                 "Radiant Charge",
                 "Raging Concentration",
+                "Rapid Draw",
                 "Rebuffing Reduction",
                 "Recovered Rage",
                 "Remote Bomb",
                 "Resilient Eidolon",
                 "Revelation Strike",
                 "Reward of Life",
+                "Ricochet",
                 "River Raider",
                 "School Strike",
                 "Scion of the Land",
+                "Selective Power",
                 "Shapeshifting Hunter",
                 "Siege Engineer",
                 "Siege Gunner",
@@ -490,11 +522,14 @@ mod tests {
                 "Sword and Pistol",
                 "Thrill of the Hunt",
                 "Tiger Style",
+                "Toughened Suit",
                 "Tree Leaper",
                 "Tribal Hunter",
                 "Twinned Feint",
                 "Two-Handed Thrower",
                 "Unfettered Familiar",
+                "Unwilling Participant",
+                "Urban Tracking",
                 "Verdant Spell",
                 "Versatile Channeler",
                 "Vigilant Charger",
@@ -513,8 +548,8 @@ mod tests {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            1357,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM"
+            1578,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi"
         );
 
         let by_source =
@@ -529,17 +564,19 @@ mod tests {
         assert_eq!(by_source("Uw"), 135);
         assert_eq!(by_source("Uc"), 261);
         assert_eq!(by_source("Um"), 144);
+        assert_eq!(by_source("Upsi"), 221);
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
         // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77 + UC 63
-        // + UM 100, and so on per category.
-        assert_eq!(counts("General"), 606);
-        // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182 + UM 3, and so on.
-        assert_eq!(counts("Combat"), 573);
-        // + UW 1 + UM 2.
-        assert_eq!(counts("ItemCreation"), 11);
+        // + UM 100 + UPsi 21, and so on per category.
+        assert_eq!(counts("General"), 627);
+        // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182 + UM 3 + UPsi 9,
+        // and so on.
+        assert_eq!(counts("Combat"), 582);
+        // + UW 1 + UM 2 + UPsi 3.
+        assert_eq!(counts("ItemCreation"), 14);
         // + UI 4 + UW 2 + UM 9.
         assert_eq!(counts("Metamagic"), 51);
         // + UI 2 + UW 3 + UC 7 + UM 1.
@@ -570,6 +607,11 @@ mod tests {
         // either facet.
         assert_eq!(counts("Masterpiece"), 15);
         assert_eq!(counts("Discovery"), 11);
+        // UPsi's own new categories -- `Psionic` (this book's dominant
+        // facet) and `Metapsionic` (its metamagic equivalent). No other
+        // book carries either facet.
+        assert_eq!(counts("Psionic"), 153);
+        assert_eq!(counts("Metapsionic"), 35);
 
         let categorised: usize = [
             "General",
@@ -589,6 +631,8 @@ mod tests {
             "Style",
             "Masterpiece",
             "Discovery",
+            "Psionic",
+            "Metapsionic",
         ]
         .iter()
         .map(|category| counts(category))

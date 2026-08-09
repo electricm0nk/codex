@@ -21,6 +21,7 @@ pub mod ultimate_equipment;
 pub mod ultimate_intrigue;
 pub mod ultimate_combat;
 pub mod ultimate_magic;
+pub mod ultimate_psionics;
 pub mod ultimate_wilderness;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
@@ -44,5 +45,7 @@ pub enum RuleSetId {
     Uc,
     /// Ultimate Magic. SD-28 Epic 28 -- first record family (feats).
     Um,
-    // future: UPsi, ...
+    /// Ultimate Psionics. SD-28 Epic 29 -- first record family (feats).
+    /// Dreamscarred Press, not Paizo -- the last Ultimate book.
+    Upsi,
 }
