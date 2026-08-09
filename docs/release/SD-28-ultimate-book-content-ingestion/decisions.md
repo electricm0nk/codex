@@ -1680,4 +1680,13 @@ book_of_the_damned_volume_1             37                 1               36
 
 **Verification:** `cargo build --locked --bin v06_work_inventory`: clean, no exhaustiveness errors from the new `Kind` variant (both `match kind` sites checked -- one already carried a wildcard `_ =>` arm, the other required and received an explicit `Kind::MonsterAbility` arm). `cargo test --locked --no-fail-fast`: full suite, 538 targets, 0 failures. `cargo clippy --locked --tests`: 75 (gate ceiling, not breached, after the separate lifetime-elision fix -- see the commit immediately preceding this one). Regenerated `docs/work-inventory.json` from the real local corpus.
 
-**Disposition: a measurement correction, not content progress. `Kind::Monster`'s own meaning preserved by design. Both acid-test populations land under `Kind::MonsterAbility`, verified by count, not assumed. One self-caught correction to my own preliminary estimate before it was reported as final. `ClassLevelAdjustment*` excluded on stated token evidence, not defaulted. A residual population (Bestiary 1's template-specific facets) named as deliberately unaddressed rather than folded in without the same evidentiary bar.**
+**The single most misreadable number this correction produces, stated so nobody reads it backwards:**
+
+```
+proven count     2,362  ->  2,248   (-114)
+proven percent     5.4% ->    5.8%  (+0.4)
+```
+
+**The percentage rose only because the denominator shrank by 4,889 units. The absolute count of proven units actually FELL by 114** -- some units that were previously counted as `proven` were themselves reclassified (into `monster_ability`, where no engine table exists, or excluded outright as `ClassLevelAdjustment*`) and no longer qualify. Read in isolation, "5.4% -> 5.8%" looks like progress; it is the opposite -- fourteen fewer real, working units, against a denominator that got more honest. Both numbers belong together, always, for exactly this reason.
+
+**Disposition: a measurement correction, not content progress. `Kind::Monster`'s own meaning preserved by design. Both acid-test populations land under `Kind::MonsterAbility`, verified by count, not assumed. One self-caught correction to my own preliminary estimate before it was reported as final. `ClassLevelAdjustment*` excluded on stated token evidence, not defaulted. A residual population (Bestiary 1's template-specific facets) named as deliberately unaddressed rather than folded in without the same evidentiary bar. The proven count fell while the proven percentage rose -- both stated together, not the flattering one alone.**
