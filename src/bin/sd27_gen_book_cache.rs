@@ -102,6 +102,17 @@ fn wiring_class_for_source(
 // second, duplicate compilation of it into this binary crate.
 use codex::rules_core::rules_tables::pathfinder_unchained;
 
+// SD28-E30 (`epic-32-archetype-swap`): `advanced_race_guide::archetype_tables`
+// now depends on `rules_tables::archetype_swap`'s shared
+// `ArchetypeGrant`/`ArchetypeSwapEntry` struct. Since `advanced_race_guide`
+// is duplicated into this binary crate via `#[path]` rather than reached
+// through the library crate (see this file's own doc comment above), its
+// new dependency has to be duplicated the same way, or the `super::super::`
+// path inside `archetype_tables.rs` resolves against this binary's own
+// crate root (where `advanced_race_guide` sits directly, not under a
+// `rules_tables` parent) and fails to find it.
+#[path = "../rules_core/rules_tables/archetype_swap.rs"]
+mod archetype_swap;
 #[path = "../rules_core/rules_tables/advanced_race_guide/mod.rs"]
 mod advanced_race_guide;
 

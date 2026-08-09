@@ -3057,3 +3057,35 @@ The 9 "Weapon and Armor Proficiency" grants are a new shape -- plausibly impleme
 ### Next
 
 `advanced_race_guide` (59), `ultimate_wilderness` (30) remain -- the last two tier-1 tables.
+
+## Cycle `SD28-E30-F6-001` — Card `epic-32-archetype-swap` (tier-1 table 6: Advanced Race Guide, 59 records)
+
+### Sixth data point, still no convergence; a claim retracted rather than left standing
+
+```
+UPsi 33%   ACG 33%   APG 52%   UM 27%   UC 22%   ARG 14%
+```
+
+ARG's own rate (14%, 8/59) is the lowest yet. Six books, six distinct values -- the durable claim from `decisions.md §51` continues to hold without needing any single number to confirm it.
+
+**Correcting a claim made after UM: "the unresolved-grant tail has stopped producing new shapes" was premature, not wrong-then-right.** UC's own `Weapon and Armor Proficiency` shape (previous cycle) retracted it after four clean books. ARG adds no new shape of its own (all 3 unresolved grants are individual failed lookups, two carrying a trailing space in their own token name -- a plausible corpus typo, not confirmed), but that is one more book's worth of evidence, not closure. The honest count at six books: five recurring shapes plus one new one found in book five (UC). The taxonomy stays open until stated otherwise, and "stopped producing new shapes" is not a claim this program licenses again without saying so explicitly.
+
+### The cleanest resolution rate of any table so far
+
+343 of 346 sub-feature grants (99%) resolved to real `DESC:`/`BENEFIT:` text -- ahead of ACG's own 99%. Consistent with ARG's overall shape across this whole session: a well-converted book with few corpus-shape surprises (unlike UC, which has now produced findings at every stage it's been touched -- three during feat ingest, `_pfs/`+`support/`, missing `OGL.txt`, and the widest unresolved spread here).
+
+**ARG's own `.MOD`-injection share: 72 rows** (`decisions.md §51`'s own addendum) -- stated explicitly in the table's own doc comment.
+
+### Verification
+
+- `cargo test --lib --locked archetype_tables`: 40/40 pass (7 UPsi + 6 ACG + 6 APG + 7 UM + 7 UC + 7 ARG).
+- `cargo test --lib --locked` (full lib): 1564 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: first run `EXIT_CODE=101` (build failure in a separate bin, `sd27_gen_book_cache`, that duplicates `advanced_race_guide` via #[path] outside the library crate and had no path to the new shared `archetype_swap` module -- fixed by adding the same #[path] include); second run `arg_arch_clippy2.log` 75 warnings, EXIT_CODE=0 -- at ceiling (75), not breached.
+
+### Commit, pushed and confirmed
+
+`<pending>`.
+
+### Next
+
+`ultimate_wilderness` (30) -- the last tier-1 table. Its own `.MOD`-injection share is 1 row (of 1,282), so its floor caveat will be near-vacuous -- stating that plainly rather than reusing the standard wording, per team-lead's explicit instruction.
