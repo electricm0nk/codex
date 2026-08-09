@@ -3258,3 +3258,31 @@ One temporary `#[test]` added to `pilot_compute_corpus.rs`'s own test module, ru
 ### Commit
 
 Docs-only change (`decisions.md §54` amended again, this entry, kanban). Reporting before committing, per the same standing instruction.
+
+## SD28-E15-007 -- `epic-15-unknown-sweep`: `v06_work_inventory.rs`'s equipment-classifier map fixed structurally, ~1,650 already-landed units recovered (2026-08-09)
+
+**Trigger:** `ultimate_equipment` reading 0% proven despite `epic-25-ue-complete`'s own 1,549-record receipt. Traced rather than explained away.
+
+**Root cause:** `equipment_resolver.rs::equipment_catalog_rows()` (the real engine consumer) chains 8 books; `v06_work_inventory.rs`'s own separate `equipment_keys` map only ever inserted 4. ARG/PU/UI/UE equipment was unconditionally `not-ingested` regardless of real content -- Decision 36's pattern, in a classifier mechanism separate from `race_trait`'s filename-typing, at the largest scale found this epic.
+
+**Fix, structural per team-lead's instruction:** `equipment_keys` now derives directly from `equipment_catalog_rows()` via a new `equipment_book_slug_for` translation, not a parallel hand-maintained list -- a ninth book populates the map automatically, an unmapped code panics loudly. Two new tests guard it (`equipment_book_slug_for_covers_every_catalog_book`, `ultimate_equipment_key_is_reachable_through_the_derived_map`, pinning the `Abjurant Salt` defect specifically).
+
+**Hand-verified per book (promoted sample + genuine-residue sample, both confirmed against the real table), per the two guards (no criterion loosened; sample includes a unit expected to STAY not-ingested):**
+- UE: 1,549/1,614 (matches the closure receipt exactly). Promoted: `Abjurant Salt`. Residue: `Aklys` (genuinely absent).
+- UI: 98/105. Promoted: `Accent Pill`.
+- PU: 42/42 (full coverage).
+- ARG: 200/215. Promoted: `Alchemical Coal (Blinding Cinders)`. Residue: `Rending Claw Blades` (genuinely absent, checked across the module and its equipment_data submodule).
+
+**Regression found and diagnosed to its real cause, not assumed:** `tests/v06_work_inventory.rs`'s UPsi "not-started book" test broke on regeneration. Confirmed via `git diff`/`git log -p` this fix's own diff never touches `COMPILED_RULE_SETS` or class-kind classification -- the real cause is `RuleSetId::Upsi` entering `COMPILED_RULE_SETS` when UPsi's feat catalog (`§50`) and archetype table (`§51`) landed in earlier cycles; this regeneration was simply the first to exercise the now-stale assertion. Renamed the test, inverted the assertion to the correct side of the boundary, added a positive assertion pinning the feat catalog's real progress -- strengthened, not relaxed (`§32`).
+
+**Cost of the divergence:** ~1,650 already-landed units invisible to every dashboard and per-book table produced since, including the entirety of a book (`epic-25-ue-complete`) this program closed and celebrated the same day.
+
+Full detail: `decisions.md §55`.
+
+### Verification
+
+`cargo build --locked --bins`: clean. `cargo test --lib --locked`: 1,572 passed, 0 failed, 3 ignored. `cargo test --locked --no-fail-fast`: full suite green, 0 failures across every target (independently confirmed by team-lead's own run at 04:26). Regenerated `docs/work-inventory.json` via `cargo run --locked --bin v06_work_inventory`.
+
+### Commit
+
+`src/bin/v06_work_inventory.rs`, `tests/v06_work_inventory.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §55`, kanban. To be committed and pushed with SHA confirmation, clippy still to run.

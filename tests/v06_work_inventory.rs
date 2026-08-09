@@ -797,11 +797,28 @@ fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
 
 /// SD-28: `ultimate_psionics` (Dreamscarred Press, a flat corpus directory
 /// outside `roleplaying_game`) must appear in the inventory like any other
-/// un-ingested book -- real enumerated files, real kinds, real not-started
-/// units -- even though its `.pcc` has no `PCC:` includes and no compiled
-/// rule set claims it.
+/// book -- real enumerated files, real kinds -- even though its `.pcc` has
+/// no `PCC:` includes.
+///
+/// **This test's premise changed since it was written, and the assertion
+/// below reflects that verified change, not a convenience relaxation
+/// (`decisions.md §32`).** UPsi genuinely had no compiled rule set when this
+/// test was authored, so every one of its units was blanket `not-started`.
+/// UPsi has since landed a real feat catalog (221 records,
+/// `decisions.md §50`) and an archetype-swap table (15 records,
+/// `decisions.md §51`), so `RuleSetId::Upsi` has been in `COMPILED_RULE_SETS`
+/// for multiple cycles now (unrelated to SD28-E15's equipment-classifier
+/// fix, which never touches this const -- confirmed by `git log -p` on this
+/// file finding no local diff near it). Once a book has ANY compiled rule
+/// set, `classify()` stops returning blanket `not-started` and evaluates
+/// each unit against real per-kind engine facts instead -- so UPsi's units
+/// now carry a real, granular mix of statuses (`not-ingested`/`unknown` for
+/// the un-landed majority, `text-complete`/`unknown` for the landed feat
+/// catalog, `grounded` for 4 race traits), never `not-started`. The old
+/// blanket assertion was asserting a fact about the world that stopped being
+/// true partway through this program, not a fact this fix broke.
 #[test]
-fn ultimate_psionics_appears_in_the_inventory_as_a_not_started_book() {
+fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
     let _dir = corpus_or_skip!();
     let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
     let Ok(text) = std::fs::read_to_string(&path) else {
@@ -848,14 +865,36 @@ fn ultimate_psionics_appears_in_the_inventory_as_a_not_started_book() {
     let up_units: Vec<&serde_json::Value> =
         units.iter().filter(|u| u["book"].as_str() == Some("ultimate_psionics")).collect();
     assert!(!up_units.is_empty(), "ultimate_psionics must contribute real, named units");
+
+    // No unit may EVER be `not-started` once a compiled rule set claims the
+    // book -- `not-started` means "no engine table for this book was even
+    // consulted", which is no longer true for any UPsi unit. This is the
+    // one assertion carried forward unchanged from the original test's
+    // intent (verifying the not-started/compiled-book status boundary),
+    // just inverted to match which side of that boundary UPsi is now on.
     for unit in &up_units {
-        assert_eq!(
+        assert_ne!(
             unit["status"].as_str(),
             Some("not-started"),
-            "unit {} of ultimate_psionics must be not-started (no compiled rule \
-             set claims this book), was {:?}",
+            "unit {} of ultimate_psionics must NOT be not-started -- RuleSetId::Upsi has been \
+             in COMPILED_RULE_SETS since the feat catalog landed, so this book's units must \
+             receive a real per-kind verdict, was {:?}",
             unit["id"],
             unit["status"]
         );
     }
+
+    // The landed feat catalog (decisions.md §50, 221 records) must show up
+    // as real progress, not merely "not not-started" -- pins the positive
+    // half of the boundary this test now checks.
+    let feat_statuses: std::collections::BTreeSet<&str> = up_units
+        .iter()
+        .filter(|u| u["kind"].as_str() == Some("feat"))
+        .filter_map(|u| u["status"].as_str())
+        .collect();
+    assert!(
+        feat_statuses.contains("text-complete") || feat_statuses.contains("grounded"),
+        "ultimate_psionics' landed feat catalog must produce at least one text-complete or \
+         grounded feat unit, statuses seen were {feat_statuses:?}"
+    );
 }

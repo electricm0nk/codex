@@ -51,6 +51,7 @@ use codex::rules_core::character_input::{
 };
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
+use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
@@ -825,6 +826,32 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
     }
 }
 
+/// Translates one `equipment_resolver::EQUIPMENT_BOOK_*` short code to the
+/// same book-directory slug `equipment_keys`'s map is keyed by elsewhere in
+/// this file (`rule_set_id`'s own output). Panics on an unrecognized code
+/// rather than silently dropping the book from the equipment classifier --
+/// the failure mode this whole fix exists to replace. See
+/// `equipment_book_slug_for_covers_every_catalog_book` for the guard that
+/// exercises this against the resolver's own live output.
+fn equipment_book_slug_for(short_code: &str) -> &'static str {
+    match short_code {
+        "CRB" => "core_rulebook",
+        "APG" => "advanced_players_guide",
+        "ACG" => "advanced_class_guide",
+        "B1" => "bestiary_1",
+        "ARG" => "advanced_race_guide",
+        "PU" => "pathfinder_unchained",
+        "UI" => "ultimate_intrigue",
+        "UE" => "ultimate_equipment",
+        other => panic!(
+            "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
+             {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \
+             not silently drop the book (this is exactly the SD-28-E15 defect this function \
+             replaces)"
+        ),
+    }
+}
+
 /// Which other book directories a book's `.pcc` files include. Read from the
 /// real `PCC:` lines so the `core_essentials` relationship is *derived* — that
 /// is what proves the seven CRB races, whose bases live in
@@ -1336,35 +1363,24 @@ fn gather_engine_facts(
             .collect(),
     );
 
+    // SD-28-E15: this map used to be four hand-maintained `.insert()` calls
+    // (core_rulebook/apg/acg/bestiary_1 only) sitting beside
+    // `equipment_resolver::equipment_catalog_rows()`, which already chains
+    // EIGHT books (adding arg/pu/ui/ue). The two never being reconciled
+    // silently misreported ~1,650 already-landed UE/UI/PU units as
+    // `not-ingested` -- Decision 36's pattern, at the largest scale this
+    // program has found it. Derived directly from `equipment_catalog_rows()`
+    // now, so there is no second list left to diverge: adding a ninth book
+    // to the resolver populates this map automatically, and an unmapped
+    // `EQUIPMENT_BOOK_*` code panics loudly here rather than silently
+    // vanishing (see `equipment_book_slug_for` and its own test below).
     let mut equipment_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
-    equipment_keys.insert(
-        "core_rulebook",
-        crb_equipment_tables::equipment_tables()
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
-    equipment_keys.insert(
-        "advanced_players_guide",
-        apg::equipment_tables::EQUIPMENT_TABLE
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
-    equipment_keys.insert(
-        "advanced_class_guide",
-        acg::equipment_tables::equipment_tables()
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
-    equipment_keys.insert(
-        "bestiary_1",
-        beastiary1::equipment_tables::EQUIPMENT_TABLE
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
+    for row in equipment_resolver::equipment_catalog_rows() {
+        equipment_keys
+            .entry(equipment_book_slug_for(row.book))
+            .or_default()
+            .insert(row.key.to_string());
+    }
 
     let monster_names: BTreeSet<String> = MonsterId::ALL
         .iter()
@@ -2832,4 +2848,47 @@ mod e14_harness_tests {
     // is the remedy, and it is engine work outside this harness-widening
     // epic's scope -- see `artifacts/e14-harness-widening.md`. All 1,067
     // targeted spell units stay `ingested-magnitude`.
+}
+
+#[cfg(test)]
+mod equipment_book_slug_tests {
+    use super::*;
+
+    /// SD-28-E15's own regression guard: `equipment_keys` is now derived
+    /// directly from `equipment_resolver::equipment_catalog_rows()` rather
+    /// than a hand-maintained parallel list, closing the divergence that
+    /// silently misreported ~1,650 landed UE/UI/PU equipment units as
+    /// `not-ingested`. This test exercises `equipment_book_slug_for`
+    /// against every book code the resolver ACTUALLY returns today, so a
+    /// ninth book added to the resolver without a matching arm here fails
+    /// this test immediately (a panic on `cargo test`) instead of silently
+    /// dropping that book's units from the inventory the way the old
+    /// four-`.insert()`-call list did.
+    #[test]
+    fn equipment_book_slug_for_covers_every_catalog_book() {
+        let codes: std::collections::BTreeSet<&'static str> =
+            equipment_resolver::equipment_catalog_rows().iter().map(|row| row.book).collect();
+        assert!(!codes.is_empty(), "the resolver must carry at least one book's rows");
+        for code in codes {
+            // Panics (failing this test) if `equipment_book_slug_for` does
+            // not recognize `code` -- the exact failure mode this fix
+            // replaces a silent one with.
+            let slug = equipment_book_slug_for(code);
+            assert!(!slug.is_empty(), "{code} resolved to an empty slug");
+        }
+    }
+
+    /// The specific defect this fix closes, pinned so it cannot regress:
+    /// UE's real corpus key `Abjurant Salt` (`ue_equip_magic_items.lst:954`,
+    /// verified present in `ultimate_equipment::equipment_tables()`) must
+    /// resolve into the `ultimate_equipment` bucket of the derived map.
+    #[test]
+    fn ultimate_equipment_key_is_reachable_through_the_derived_map() {
+        let rows = equipment_resolver::equipment_catalog_rows();
+        let found = rows
+            .iter()
+            .any(|row| row.book == "UE" && row.key == "Abjurant Salt");
+        assert!(found, "Abjurant Salt must be a real UE row in equipment_catalog_rows()");
+        assert_eq!(equipment_book_slug_for("UE"), "ultimate_equipment");
+    }
 }
