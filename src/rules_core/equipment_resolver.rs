@@ -21,7 +21,7 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
 use crate::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_equipment as ue, ultimate_intrigue as ui, RuleSetId,
+    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_magic as um, RuleSetId,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -110,6 +110,7 @@ pub const EQUIPMENT_BOOK_ARG: &str = "ARG";
 pub const EQUIPMENT_BOOK_PU: &str = "PU";
 pub const EQUIPMENT_BOOK_UI: &str = "UI";
 pub const EQUIPMENT_BOOK_UE: &str = "UE";
+pub const EQUIPMENT_BOOK_UM: &str = "UM";
 
 /// One book's equipment row, projected onto the three fields every
 /// *headless* (no-corpus) caller needs: which book it came from, its corpus
@@ -240,6 +241,21 @@ pub fn equipment_catalog_rows() -> &'static [EquipmentCatalogRow] {
                 cost_gp: entry.cost_gp,
             });
 
+        // UM (SD28-E15): 26 records -- 24 General (pregenerated spellbooks)
+        // + 2 ArmsArmor (Scrollmaster Gear). No equipment-modifier file
+        // exists for this book (`um::equipment_tables::equipmod_tables()`
+        // is a real, permanently-empty slice, not an omission -- see that
+        // module's own doc comment).
+        let um_rows = um::equipment_tables::equipment_tables()
+            .iter()
+            .chain(um::equipment_tables::equipmod_tables())
+            .map(|entry| EquipmentCatalogRow {
+                book: EQUIPMENT_BOOK_UM,
+                key: entry.key,
+                name: entry.name,
+                cost_gp: entry.cost_gp,
+            });
+
         crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -248,6 +264,7 @@ pub fn equipment_catalog_rows() -> &'static [EquipmentCatalogRow] {
             .chain(pu_rows)
             .chain(ui_rows)
             .chain(ue_rows)
+            .chain(um_rows)
             .collect()
     })
 }
@@ -529,7 +546,12 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
         assert_eq!(count(EQUIPMENT_BOOK_PU), 42);
         assert_eq!(count(EQUIPMENT_BOOK_UI), 98);
         assert_eq!(count(EQUIPMENT_BOOK_UE), 1_549);
-        assert_eq!(rows.len(), 5_477);
+        // SD28-E15: UM's 26-record equipment table (24 General + 2
+        // ArmsArmor). Re-derived from the catalog itself, not by hand-adding
+        // 26 to the old 5,477 total -- also independently confirmed the 26
+        // UM keys are unique within the book (no internal duplicate).
+        assert_eq!(count(EQUIPMENT_BOOK_UM), 26);
+        assert_eq!(rows.len(), 5_503);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.

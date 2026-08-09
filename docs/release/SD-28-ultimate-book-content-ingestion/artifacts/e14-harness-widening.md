@@ -275,6 +275,33 @@ consumer, so this is real engine + corpus-schema work for a future epic,
 not a probe-design gap `v06_work_inventory.rs` can close by itself.
 Disposition unchanged: all 1,067 spell units stay `ingested-magnitude`.
 
+### Equipment reachability: three parallel hand-maintained book chains, two now diverging from the third (found 2026-08-09, SD28-E15's UM equipment slice)
+
+**Found while deliberately declining to wire a `reach_gate` entry for UM's new equipment table** -- the right call at the time (adding a reach check against a catalog that does not yet serve UM would fabricate a false "0% reachable" signal), but tracing *why* it would be false surfaced a larger, pre-existing gap.
+
+**There are three separate, independently hand-maintained lists of "which books have equipment," not one:**
+
+```
+1. equipment_resolver::equipment_catalog_rows()      -- the real engine resolution chain
+     8 books: CRB, APG, ACG, B1, ARG, PU, UI, UE, (+ UM, added this cycle)
+     Fixed structurally in `decisions.md §55` -- this is now the SOURCE OF TRUTH
+     v06_work_inventory.rs's classifier (equipment_keys) derives from THIS one.
+
+2. v06_work_inventory.rs's equipment_keys map          -- the classifier/dashboard's own view
+     Now DERIVED from #1 (§55's fix) -- no longer a separate list, cannot diverge from #1 again.
+
+3. apps/desktop/src-tauri/src/equipment_catalog.rs's EQUIPMENT_CATALOG_BOOKS
+   + build_equipment_catalog()                          -- what the desktop equipment PICKER UI actually serves
+     7 books: CRB, APG, ACG, B1, ARG, PU, UI
+     Independent of #1 and #2 -- its own hand-built `.chain(...)` call, own hardcoded book-code list.
+```
+
+**List #3 is missing `ultimate_equipment` (UE) entirely, and now also `ultimate_magic` (UM).** UE is not a small omission -- it is the 1,551-record book `epic-25-ue-complete` closed and `decisions.md §55` spent an entire cycle making visible to the classifier. The dashboard now correctly reports UE's equipment as `ingested-magnitude`/`text-complete` (real, engine-held content) -- but a player opening the desktop equipment catalog screen sees **zero** UE items. That is exactly the "engine holds it, player cannot reach it" distinction `decisions.md §43` exists to prevent from being reported as good news without the caveat, and this cycle would have shipped the good news alone if the reach-gate question hadn't been asked first.
+
+**Not fixed in this cycle, deliberately.** Two structurally different asks: (a) UM's 26 records entering a picker UI list is a small, mechanical addition matching this cycle's own count-sweep shape; (b) UE's 1,551 records entering the same UI is a real feature addition (new picker rows, category/book filter behavior, at minimum the same `map_<book>_entry` + pinned-count-test work every existing book in list #3 already required) -- out of scope for a slice already carrying six touched files. Recorded here rather than fixed opportunistically, per this program's own standing discipline (`§32`) against expanding a slice's scope past what it was assigned.
+
+**Remedy for whoever picks this up:** either (a) add UE (and UM) to `EQUIPMENT_CATALOG_BOOKS`/`build_equipment_catalog()`'s chain with their own mapper functions and updated pinned-count tests (the `5,477`-shaped assertions in `equipment_catalog.rs`'s own test module), following the exact pattern list #3's other 7 books already establish, or (b) derive list #3 from list #1 the same way `§55` derived list #2 -- structurally closing this gap the same way, rather than adding a 9th/10th hand-maintained entry that can drift again. Option (b) is the more durable fix and the one this program's own night has repeatedly favored once a third instance of the same defect shape appears.
+
 ## Anti-gaming (F3) evidence
 
 - **Status/predicate untouched.** No change to `unit.magnitude_token_count == 0`

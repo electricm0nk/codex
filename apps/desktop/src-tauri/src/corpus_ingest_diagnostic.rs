@@ -367,11 +367,14 @@ fn ultimate_combat_counts() -> BTreeMap<String, u32> {
 }
 
 /// Ultimate Magic: SD-28 Epic 28 (`epic-28-um-complete`) from-scratch
-/// book ingest, first slice. 144 feat records -- see
-/// `ultimate_magic::feat_tables`'s own doc comment for the catalog.
+/// book ingest. 144 feat records -- see `ultimate_magic::feat_tables`'s
+/// own doc comment for the catalog. SD-28-E15's second slice adds 26
+/// equipment records (24 General + 2 ArmsArmor) -- see
+/// `ultimate_magic::equipment_tables`'s own doc comment.
 fn ultimate_magic_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), um::feat_tables::feat_tables().len() as u32);
+    counts.insert("equipment".to_string(), um::equipment_tables::equipment_tables().len() as u32);
     counts
 }
 

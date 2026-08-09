@@ -3299,4 +3299,26 @@ Full detail: `decisions.md §56`.
 
 ### Commit
 
-Docs-only (`decisions.md §56`, this entry, kanban). To be committed alongside or ahead of the UM equipment slice.
+Docs-only (`decisions.md §56`, this entry, kanban). Committed `a115eb96`, pushed, SHA-confirmed on HEAD/origin.
+
+## SD28-E28-F2-001 -- `epic-28-um-complete`: Ultimate Magic slice 2 -- 26-record equipment catalog (2026-08-09)
+
+**Assignment:** UM equipment (26 units), redirected from the blocked UPsi `race_trait` slice per team-lead's call.
+
+**Reconciled 26 declared against the raw corpus** (`um_equip_general.lst`, `um_equip_arms_armor.lst`): 24 real `Spellbook.COPY=` records (General) + 2 Scrollmaster Gear records (ArmsArmor) = 26, exact match, zero double-count. Traced `_pfs/pfs_um_equip_general.lst` before extraction (this program's own recurring lesson applied proactively): 17 rows there are PFS-legality-flag overlays on already-declared spellbooks, not a second population -- pinned with a dedicated regression test. No `.MOD`/collision hazards (26/26 checked against every other book, zero hits). Field coverage: 26/26 real cost, 13/26 real weight, 24/26 real SPROP-sourced description (Scrollmaster Gear genuinely has none). `equipmod_tables()` documented as a real, permanently-empty slice (no `um_equipmods.lst` exists) -- §44's both-halves discipline.
+
+**Wired structurally, extending `§55`'s fix rather than reintroducing a hand list:** `EQUIPMENT_BOOK_UM` + chain in `equipment_resolver.rs`, one new match arm in `v06_work_inventory.rs`'s `equipment_book_slug_for` -- sufficient for the classifier to see it, no parallel map to maintain.
+
+**Aggregate pin re-derived by counting** (`5,503`, via a temporary probe, removed before commit; independently confirmed 26 unique UM keys, no internal duplicate) rather than hand-added to the old `5,477`. Count sweep: `corpus_ingest_diagnostic.rs`, `v06_content_state_dump.rs` -- both now `.len()`-derived, not hardcoded.
+
+**Deliberately did NOT wire a `reach_gate` entry.** Found a THIRD independent hand-maintained equipment-book chain (`apps/desktop/src-tauri/src/equipment_catalog.rs`'s `EQUIPMENT_CATALOG_BOOKS`/`build_equipment_catalog()`) missing both UM and -- more consequentially -- `ultimate_equipment` (the 1,551-record book `epic-25-ue-complete` closed). Adding a reach-gate check against a catalog that doesn't serve these books would have manufactured a false "0% reachable" signal. Recorded as its own `OPEN_FINDINGS` entry in `artifacts/e14-harness-widening.md` rather than fixed here -- UE's addition to the desktop picker is a real feature addition, not a count-sweep, out of scope for this cycle.
+
+**No status fabricated, no unit double-counted.** Full detail: `decisions.md §57`.
+
+### Verification
+
+`cargo build --locked --bins` (root) and `cargo build --locked` (desktop, checked separately): both clean. `cargo test --lib --locked ultimate_magic::equipment_tables`: 6/6 pass. `cargo test --locked --no-fail-fast`: 538 targets, 0 failures. `cargo clippy --locked --tests`: 75 (gate ceiling, not breached), `EXIT_CODE=0`. Regenerated `docs/work-inventory.json`: UM equipment now 17 `text-complete` + 9 `ingested-magnitude`, 0 `not-ingested`.
+
+### Commit
+
+`src/rules_core/rules_tables/ultimate_magic/equipment_tables.rs` (new), `src/rules_core/rules_tables/ultimate_magic/mod.rs`, `src/rules_core/equipment_resolver.rs`, `src/bin/v06_work_inventory.rs`, `src/bin/v06_content_state_dump.rs`, `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`, `docs/work-inventory.json`, `artifacts/e14-harness-widening.md`, this receipt, `decisions.md §57`, kanban. To be committed and pushed with SHA confirmation.

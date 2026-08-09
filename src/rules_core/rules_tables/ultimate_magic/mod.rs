@@ -6,4 +6,5 @@
 //! corpus prose kept with a dedicated `effect` field rather than dropped).
 
 pub mod archetype_tables;
+pub mod equipment_tables;
 pub mod feat_tables;
