@@ -2980,3 +2980,39 @@ UPsi moved twice (undercounted, then overcounted, now closer to true); ACG moved
 ### Next
 
 `ultimate_magic` (67), `ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain. Not starting without team-lead's confirmation this second correction is accepted, given the pattern of this table needing repeated correction.
+
+## Cycle `SD28-E30-F4-001` — Card `epic-32-archetype-swap` (tier-1 table 4: Ultimate Magic, 67 records)
+
+### Reconciliation-scope mismatch resolved before this table started
+
+Team-lead's own "29 categories / 44 Internal" figure and this epic's own "11 categories / 7 Internal" both measured real things -- team-lead scanned all 82 of UPsi's archetype master rows (every archetype in the book), this epic scoped to the 15 in-scope archetypes (modelled base class + clean facet) that are actually landed in the table. Confirmed by exact command exchange, not assumption. The 67 out-of-scope UPsi archetypes carry proportionally more `Internal` bookkeeping (37 of 44) than the 15 in-scope ones (7) -- worth remembering if the unmodelled-class blocker (Vigilante's own 102 units, and others) is ever lifted: that population needs the same category ruling applied fresh, not assumed clean.
+
+### The correction history stated plainly, since this table's own figures are the third derivation, not the first
+
+UPsi's agreement rate has been reported 27% → 13% → 33% across three derivations; ACG's 32% → 34% → 33%. **The current, correct figures are 33% (UPsi), 33% (ACG), 52% (APG), 27% (UM) -- all four tables built by the same, already-corrected extractor.** The two earlier UPsi/ACG passes were superseded by two named defects (a parser gap missing two grant shapes, then a category-inclusion gap counting `Internal` bookkeeping as real content), both fixed and regression-guarded before this table was generated. UPsi and ACG converging on ~33% from opposite directions (13%→33% and 34%→33%) is itself mild evidence the current pass is right, not proof on its own.
+
+### UM's own figures, built with the corrected extractor from the start -- not itself corrected after the fact
+
+```
+233 total TYPE:-replaced slots, 204 total ABILITY:-granted features (ruling applied)
+18 of 67 records with equal counts (27%)
+177 of 204 sub-feature grants (87%) resolved to real DESC:/BENEFIT: text
+```
+
+27 unresolved grants, same shapes prior tables already named: 15 shared unresolved names across 3 sibling Druid Shaman-totem archetypes, 3 real cross-book feat references (`Scribe Scroll` ×2, `Command Undead` -- same `FEAT`-category shape as APG's `Improved Counterspell`), 9 bare-marker rows.
+
+**UM's own `.MOD`-injection share is 129 rows -- the third-largest of the 1,282-row corpus-wide population** (`decisions.md §51`'s own addendum). This table's `grants` field states that floor explicitly in its own doc comment, per team-lead's standing instruction that every table's floor caveat is not boilerplate.
+
+### Verification
+
+- `cargo test --lib --locked archetype_tables`: 26/26 pass (7 UPsi + 6 ACG + 6 APG + 7 UM).
+- `cargo test --lib --locked` (full lib): 1550 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: `um_arch_clippy.log` 75 warnings, EXIT_CODE=0 -- at ceiling (75), not breached.
+
+### Commit, pushed and confirmed
+
+`<pending>`.
+
+### Next
+
+`ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain.

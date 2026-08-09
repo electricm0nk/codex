@@ -5,4 +5,5 @@
 //! auto-grant wrappers excluded, four real feats with a mechanic but no
 //! corpus prose kept with a dedicated `effect` field rather than dropped).
 
+pub mod archetype_tables;
 pub mod feat_tables;
