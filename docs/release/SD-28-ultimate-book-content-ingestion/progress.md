@@ -2897,7 +2897,7 @@ Triad spot-checked against two ACG archetype `.MOD` rows directly (`Alchemist Ar
 
 ### Commit, pushed and confirmed
 
-`<pending>` -- ACG archetype-swap table + shared `archetype_swap` module, SD28-E30 tier-1 table 2.
+`9394e54a` -- ACG archetype-swap table + shared `archetype_swap` module, SD28-E30 tier-1 table 2 (7 files, +1596/-45). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### Next
 
