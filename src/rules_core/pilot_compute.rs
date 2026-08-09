@@ -53793,9 +53793,9 @@ mod alchemist_archetype_slot_reachability_tests {
         input
     }
 
-    fn poison_resistance_explanation<'a>(
-        receipt: &'a crate::rules_core::pilot_compute::PilotHeadlessReceipt,
-    ) -> &'a crate::rules_core::pilot_compute::ComputationExplanation {
+    fn poison_resistance_explanation(
+        receipt: &crate::rules_core::pilot_compute::PilotHeadlessReceipt,
+    ) -> &crate::rules_core::pilot_compute::ComputationExplanation {
         receipt
             .computation
             .explanations
