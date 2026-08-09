@@ -3369,4 +3369,26 @@ Docs-only (`decisions.md §56`, this entry, kanban). Committed `a115eb96`, pushe
 
 ### Commit
 
-`src/rules_core/archetype_resolver.rs` (new), `src/rules_core/mod.rs`, `src/rules_core/pilot_compute.rs`, this receipt, `decisions.md §60`, kanban. Committed `7c956a54`, pushed, SHA-confirmed on HEAD/origin.
+`src/rules_core/archetype_resolver.rs` (new), `src/rules_core/mod.rs`, `src/rules_core/pilot_compute.rs`, this receipt, `decisions.md §60`, kanban. Committed `7c956a54`, pushed, SHA-confirmed on HEAD/origin. Lifetime-elision clippy fix against this commit: `b52ec794`, pushed, SHA-confirmed.
+
+## SD28-E15-009 -- `epic-15-unknown-sweep`: `file_kind()` row-content classification (2026-08-09)
+
+**Assignment (operator-reordered ahead of archetype wiring and the dashboard):** fix the filename-substring `file_kind()` defect at its source, per `§53`/`§55`/`§56`'s repeated deferral.
+
+**Added `Kind::MonsterAbility`** (escalated the `Kind::Monster`-vs-new-variant question before implementing; operator ruled: new variant, preserve `Kind::Monster`'s own meaning). Row-content rule in `refine_kind`: `TYPE:` first segment in `{NaturalAttack, SpecialAttack, SpecialQuality, Universal Monster Rule}` -> `MonsterAbility`; `ClassLevelAdjustment*` -> excluded outright (new trap `race_trait_class_level_adjustment_row`). `internal_namespace` widened to check every field, not just the first (found while fixing the acid tests -- effect: 1,794 -> 6,822 hits, program-wide, spot-verified real).
+
+**Self-caught correction before reporting:** initial CE monster-ability estimate (1,155, raw TYPE-facet count) corrected to 380 after discovering all 776 `NaturalAttack` rows there also carry `CATEGORY:Internal` (bookkeeping, not content) -- verified by running the actual classifier, not trusted from the grep.
+
+**Program-wide diff:** `race_trait` 8,600 -> 3,456 (-5,144: +3,107 to `monster_ability`, 19 excluded, remainder from the widened `internal_namespace`). `class_feature`/`companion`/`feat` also moved (all from `internal_namespace`, not the reclassification). `Kind::Monster` and every untouched kind read identically before/after.
+
+**Both acid tests confirmed landing, not vanishing:** Bestiary 1 620 -> 21 `race_trait` + **523** `monster_ability`. Core Essentials 2,174 -> 884 `race_trait` + **380** `monster_ability`. Confirmed program-wide, not book-specific: every Bestiary book (2/3/4/5) and several campaign-setting books carry the identical shape.
+
+**Framed as a correction, not progress**, per the operator's own standard. Full detail, per-book table: `decisions.md §61`.
+
+### Verification
+
+`cargo build --locked --bin v06_work_inventory`: clean (both `Kind` match-exhaustiveness sites checked). `cargo test --locked --no-fail-fast`: 538 targets, 0 failures. `cargo clippy --locked --tests`: 75 (ceiling, not breached, after the separate lifetime fix). Regenerated `docs/work-inventory.json`.
+
+### Commit
+
+`src/bin/v06_work_inventory.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §61`, kanban. To be committed and pushed with SHA confirmation.

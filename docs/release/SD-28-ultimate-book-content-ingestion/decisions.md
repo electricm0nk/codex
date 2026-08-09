@@ -1591,3 +1591,93 @@ grep -oP 'key: "[^"]*\.COPY=[^"]*"' <table file>
 **Verification:** `cargo build --locked --lib`: clean. `cargo test --lib --locked archetype_resolver`: 5/5 pass. `cargo test --lib --locked alchemist_archetype_slot_reachability`: 3/3 pass. `cargo test --locked --no-fail-fast` (full suite, run twice independently across the session): both green, 538 targets, 0 failures each. `cargo build --locked --bins`: clean.
 
 **Disposition: primitive landed and proven, first real consumer wired and reachability-tested end-to-end, `§59`'s audit backlog untouched and still fully open.**
+
+## Decision 61 — SD28-E15: `file_kind()` row-content classification -- a correction, not progress, moving thousands of units across the whole program (2026-08-09)
+
+**This decision is a MEASUREMENT CORRECTION, not content landing.** No new content was ingested. Every number below is the difference between a wrong count and a right one. Framed as such throughout, per the operator's own standard.
+
+**Root cause.** `file_kind()` typed a whole `.lst` file by filename substring (`_abilities_race` -> `Kind::RaceTrait` for the entire file, regardless of what any individual row actually was). This is the third, fourth, fifth, and sixth confirmed instance of the same defect this program has found (ARG 979->0, Bestiary 1 620->0, UPsi 310->~145 across `§53`/`§55`/`§56`) -- deferred each time as "known, not yet fixed at the source." This decision is that fix, applied at the source (`refine_kind`, the same function that already does per-row `Race`->`Monster` refinement via `CR:` tokens) rather than book-by-book.
+
+**Two real content shapes were hiding inside every `_abilities_race.lst`-typed file, confirmed against raw corpus rows before ruling, not assumed:**
+
+1. **Monster sub-abilities** (natural attacks, special qualities, special attacks, universal monster rules) -- real content, but a monster's own feature, not a player's racial trait.
+2. **`ClassLevelAdjustment*` rows** (Core Essentials' own `+2/+4 Charisma ~ Class Level`, `-2 Charisma ~ Class Level`) -- real content, but neither a racial trait nor a monster ability. Confirmed genuinely disconnected from both: `TYPE:ClassLevelAdjustmentPlus2/Plus4/Minus2`, distinct from every monster-ability facet and every real racial-trait facet surveyed.
+
+**The design decision (`Kind::Monster` vs. a new `Kind::MonsterAbility`), escalated before implementing, not defaulted.** Broadening `Kind::Monster` to absorb sub-abilities would have corrupted an already-correct metric (a count of `Kind::Monster` would stop meaning "stat blocks") to avoid a one-time schema cost -- the operator's own standing rule ("I need that dashboard to be accurate") rules this out. **`Kind::MonsterAbility` added as a new variant.** `Kind::Monster`'s own count (1,270) is untouched by this decision -- confirmed in the diff table below.
+
+**The classification rule, defensible from the row's own tokens per `§32`, not a convenient default:**
+
+```rust
+const MONSTER_ABILITY_TYPE_FACETS: &[&str] =
+    &["NaturalAttack", "SpecialAttack", "SpecialQuality", "Universal Monster Rule"];
+const RACE_TRAIT_EXCLUDED_TYPE_PREFIX: &str = "ClassLevelAdjustment";
+```
+
+Confirmed against two real files before ruling, not assumed from one: Core Essentials' `ce_abilities_race.lst` (live rows only, `#`-comment-disabled rows excluded first) -- 776 `NaturalAttack` + 247 `SpecialQuality` + 104 `SpecialAttack` + 28 `Universal Monster Rule`; Bestiary 1's `b1_abilities_race.lst` -- 273 `SpecialAttack` + 250 `SpecialQuality` + 1 `NaturalAttack`, in a book with zero playable races. `Universal Monster Rule` is PF1's own Bestiary section name, not this tool's invention.
+
+**Deliberately NOT reclassified this pass, named rather than silently absorbed:** a handful of monster-template-specific facets in Bestiary 1 (`HalfDragonType`, `UnicornRacialTrait`, `TreantRacialTrait`, `GiantSpiderType`, ~17 rows total) -- real content, likely also monster-shaped, but lacking the same cross-book-repeated evidence the four ruled facets have. Left as `RaceTrait` for now rather than force-classified without the same standard of evidence.
+
+**Self-caught correction to my own initial estimate, before it shipped.** A first pass estimated Core Essentials' monster-ability population at ~1,155 (summing all four facets' raw grep counts). Running the actual classifier found only 380. Traced the gap before reporting it as a discrepancy: **all 776 of CE's `NaturalAttack` rows also carry `CATEGORY:Internal`** -- confirmed by direct grep (`grep "TYPE:NaturalAttack" | grep -c "CATEGORY:Internal"` = 776, exactly matching the row count). These are internal PCGen bookkeeping variants (per-size/per-form auto-calculated attack entries), not player-facing monster-ability content -- correctly excluded by the (also-fixed, see below) `internal_namespace` trap before ever reaching the `MonsterAbility` classification. CE's real monster-ability population is `SpecialQuality`(247) + `SpecialAttack`(104) + `Universal Monster Rule`(28) = 379, matching the observed 380 almost exactly. The same "verify by running the classifier, not by trusting a raw grep count" discipline this program has required all night, applied to my own number before anyone else had to catch it.
+
+**`internal_namespace` under-fire, fixed in the same pass, and far larger in scope than either of us anticipated.** The trap previously matched only a first-field literal `CATEGORY=Internal|...` (a directive-line shape); a normal record row carrying `CATEGORY:Internal` as an ordinary field (e.g. `Blue Psion FC handler`, confirmed earlier this session) slipped through entirely. Widened to check every field, not just the first. **Effect measured, not assumed: 1,794 -> 6,822 hits (+5,028), spread across nearly every book, not concentrated in `_abilities_race.lst` files.** Spot-verified a sample from `core_rulebook` (the largest new contributor, 997 hits): `Intelligence Lock Tracker`/`Lock Int ~ N` in `cr_abilities_companion.lst` -- genuine PCGen bookkeeping (companion Intelligence-score clamping helpers), confirmed real, not a false exclusion.
+
+**Full before/after diff, program-wide, by kind:**
+
+```
+kind                    before     after     delta
+class                      185       185         0
+class_feature            18057     15472     -2585
+companion                 1915      1683      -232
+equipment                 6227      6227         0
+equipment_modifier        1580      1580         0
+feat                      2645      2610       -35
+monster                   1270      1270         0
+monster_ability              0      3107     +3107
+race                       103       103         0
+race_trait                8600      3456     -5144
+spell                     2843      2843         0
+total                    43425     38536     -4889
+```
+
+`class_feature`(-2585)/`companion`(-232)/`feat`(-35) moves are entirely from the `internal_namespace` widening (a program-wide fix, not scoped to `_abilities_race.lst`), not from the `MonsterAbility` reclassification. `race_trait`'s -5,144 splits three ways: +3,107 reclassified to `monster_ability`, 19 excluded as `ClassLevelAdjustment*`, the remainder from `internal_namespace` catching rows inside `_abilities_race.lst` files specifically (the exact shape `§56` first found on UPsi's `Blue Psion FC handler`, now confirmed program-wide rather than book-specific). `Kind::Monster` and every other untouched kind read identically before and after, confirming this was a targeted correction, not a wholesale re-derivation.
+
+**Both acid tests confirmed landing under the new kind, not vanishing:**
+
+| Book | `race_trait` before | `race_trait` after | `monster_ability` after |
+|---|---|---|---|
+| Bestiary 1 | 620 | 21 | **523** |
+| Core Essentials | 2,174 | 884 | **380** |
+
+Bestiary 1's real monster-special-ability content is real and now correctly counted (523 of the ~541 first cited -- the gap is the named-but-unaddressed `HalfDragonType`-family facets above). Core Essentials' own figure moved from an initial over-estimate (1,155, based on raw TYPE-facet counting) to a verified 380 once the classifier's own `internal_namespace` exclusion was applied -- the lower, more honest number, not the higher, more dramatic one.
+
+**Per-book `race_trait` diff, top 20 by original size (full table in the regenerated `docs/work-inventory.json`):**
+
+```
+book                      race_trait before  race_trait after  monster_ability
+core_essentials                     2174               884              380
+bestiary_4                          1104                86              768
+bestiary_3                          1099               799               40
+bestiary_2                           632               162              466
+bestiary                             620                21              523
+advanced_race_guide                  609               323                1
+ultimate_psionics                    314               159               79
+pathfinder_unchained                 229               127               72
+inner_sea_gods                       228                28              161
+inner_sea_bestiary                   194                 4              190
+mythic_adventures                    186               118               21
+horror_adventures                    184                92               71
+inner_sea_races                      143               142                0
+advanced_class_guide                  141                31              106
+core_rulebook                         130               130                0
+advanced_players_guide                120               108                0
+bestiary_5                            119                63               39
+ultimate_wilderness                    95                41               52
+occult_adventures                      89                73                3
+book_of_the_damned_volume_1             37                 1               36
+```
+
+**Confirms this defect was never Bestiary-1-specific or UPsi-specific -- every Bestiary book (2/3/4/5) carries the identical shape at comparable or larger scale**, and several campaign-setting books (`inner_sea_gods`, `inner_sea_bestiary`) are dominated by it too.
+
+**Verification:** `cargo build --locked --bin v06_work_inventory`: clean, no exhaustiveness errors from the new `Kind` variant (both `match kind` sites checked -- one already carried a wildcard `_ =>` arm, the other required and received an explicit `Kind::MonsterAbility` arm). `cargo test --locked --no-fail-fast`: full suite, 538 targets, 0 failures. `cargo clippy --locked --tests`: 75 (gate ceiling, not breached, after the separate lifetime-elision fix -- see the commit immediately preceding this one). Regenerated `docs/work-inventory.json` from the real local corpus.
+
+**Disposition: a measurement correction, not content progress. `Kind::Monster`'s own meaning preserved by design. Both acid-test populations land under `Kind::MonsterAbility`, verified by count, not assumed. One self-caught correction to my own preliminary estimate before it was reported as final. `ClassLevelAdjustment*` excluded on stated token evidence, not defaulted. A residual population (Bestiary 1's template-specific facets) named as deliberately unaddressed rather than folded in without the same evidentiary bar.**

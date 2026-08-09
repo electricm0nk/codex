@@ -152,6 +152,15 @@ enum Kind {
     Equipment,
     EquipmentModifier,
     Monster,
+    /// SD28-E15 (2026-08-09): a monster's own natural attack/special
+    /// quality/special attack/universal-monster-rule sub-record, DISTINCT
+    /// from `Kind::Monster` (the top-level stat-block record itself).
+    /// Introduced rather than folding this content into `Kind::Monster`
+    /// specifically so `Kind::Monster`'s own count keeps meaning "stat
+    /// blocks" -- see `refine_kind`'s own doc comment for the row-content
+    /// rule that produces it, and `decisions.md §61` for the corpus
+    /// evidence this variant exists to fix.
+    MonsterAbility,
     Companion,
 }
 
@@ -167,6 +176,7 @@ impl Kind {
             Kind::Equipment => "equipment",
             Kind::EquipmentModifier => "equipment_modifier",
             Kind::Monster => "monster",
+            Kind::MonsterAbility => "monster_ability",
             Kind::Companion => "companion",
         }
     }
@@ -183,6 +193,7 @@ impl Kind {
         Kind::Equipment,
         Kind::EquipmentModifier,
         Kind::Monster,
+        Kind::MonsterAbility,
         Kind::Companion,
     ];
 }
@@ -295,8 +306,11 @@ const TRAP_RULES: &[TrapRule] = &[
     TrapRule {
         id: "internal_namespace",
         description:
-            "A record whose first field is `CATEGORY=Internal|...`. PCGen export-engine \
-             plumbing in a namespace no player ever sees. Never a unit.",
+            "A record whose first field is `CATEGORY=Internal|...`, OR whose fields carry a \
+             plain `CATEGORY:Internal` token anywhere (widened SD28-E15, 2026-08-09 -- the \
+             directive-line-only check missed this second, normal-record shape, e.g. `Blue \
+             Psion FC handler`). PCGen export-engine plumbing in a namespace no player ever \
+             sees. Never a unit.",
     },
     TrapRule {
         id: "invisible_record",
@@ -365,6 +379,15 @@ const TRAP_RULES: &[TrapRule] = &[
              independent racial trait -- every already-ingested ARG alternate trait carries \
              `CATEGORY:Special Ability`, none carry `CATEGORY:Choice`. Counting it double-counts \
              the parent. See `decisions.md §35`.",
+    },
+    TrapRule {
+        id: "race_trait_class_level_adjustment_row",
+        description:
+            "SD28-E15 (2026-08-09). A `_abilities_race.lst` row whose `TYPE:` first segment \
+             starts with `ClassLevelAdjustment` (e.g. Core Essentials' `+2 Charisma ~ Class \
+             Level`). A real, level-based ability-score-adjustment record, but neither a racial \
+             trait nor a monster ability -- excluded outright rather than forced into either \
+             kind. See `decisions.md §61`.",
     },
 ];
 
@@ -490,15 +513,75 @@ fn slug(name: &str) -> String {
     out
 }
 
+/// SD28-E15 (2026-08-09): `_abilities_race.lst`'s own `TYPE:` first-segment
+/// vocabulary that names a monster's own sub-ability rather than a player
+/// racial trait -- PF1's own Bestiary terminology (`NaturalAttack`,
+/// `SpecialAttack`, `SpecialQuality`, `Universal Monster Rule`), not this
+/// tool's invention. Confirmed against two real files before ruling: Core
+/// Essentials' `ce_abilities_race.lst` (776 `NaturalAttack` + 247
+/// `SpecialQuality` + 104 `SpecialAttack` + 28 `Universal Monster Rule` =
+/// 1,155 real, non-comment rows) and Bestiary 1's `b1_abilities_race.lst`
+/// (273 `SpecialAttack` + 250 `SpecialQuality` + 1 `NaturalAttack` = 524,
+/// in a book with zero playable races). See `decisions.md §61` for the
+/// full survey, including the facets deliberately left unaddressed this
+/// pass (a handful of monster-template-specific facets like
+/// `HalfDragonType`/`UnicornRacialTrait` -- real content, likely also
+/// monster-shaped, not reclassified here for lack of the same
+/// cross-book-repeated evidence the four facets below have).
+const MONSTER_ABILITY_TYPE_FACETS: &[&str] =
+    &["NaturalAttack", "SpecialAttack", "SpecialQuality", "Universal Monster Rule"];
+
+/// SD28-E15 (2026-08-09): `_abilities_race.lst`'s own `ClassLevelAdjustment*`
+/// `TYPE:` facets (`ce_abilities_race.lst`'s own `+2/+4 Charisma ~ Class
+/// Level`, `-2 Charisma ~ Class Level`) are level-based ability-score
+/// adjustment records -- neither a racial trait nor a monster ability, and
+/// forcing them into either kind would be the "convenient kind for an
+/// ambiguous row" failure `§32` guards against. Excluded outright (this
+/// tool's own established shape: named, counted, not silently kept as
+/// `RaceTrait`), the same disposition the `race_favored_class_bonus_row`/
+/// `race_choice_suboption_row` traps already established for other
+/// `_abilities_race.lst` rows that are real content in the wrong bucket.
+const RACE_TRAIT_EXCLUDED_TYPE_PREFIX: &str = "ClassLevelAdjustment";
+
 /// A record's kind, refined from the file-level guess by what the record
-/// itself says. A `*_races.lst` row carrying a `CR:` token is a monster: that
-/// is the corpus's own discriminator (`cr_races.lst` carries zero `CR:`
-/// tokens across its seven playable races; `b1_races.lst` carries 351).
+/// itself says.
+///
+/// - A `*_races.lst` row carrying a `CR:` token is a monster: that is the
+///   corpus's own discriminator (`cr_races.lst` carries zero `CR:` tokens
+///   across its seven playable races; `b1_races.lst` carries 351).
+/// - A `*_abilities_race.lst` row whose `TYPE:` first segment names a real
+///   monster-ability shape (`MONSTER_ABILITY_TYPE_FACETS`) is a monster's
+///   own sub-ability, not a racial trait -- `file_kind`'s own whole-file
+///   `_abilities_race` -> `Kind::RaceTrait` guess was always a file-level
+///   approximation; this is the row-content correction `§55`/`§56` already
+///   proved necessary for `race_trait`'s own declared counts.
 fn refine_kind(file_kind: Kind, fields: &[&str]) -> Kind {
     match file_kind {
         Kind::Race if has_token(fields, "CR:") => Kind::Monster,
+        Kind::RaceTrait => {
+            let type_first_segment = token_value(fields, "TYPE:")
+                .and_then(|t| t.split('.').next())
+                .unwrap_or("");
+            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment) {
+                Kind::MonsterAbility
+            } else {
+                Kind::RaceTrait
+            }
+        }
         other => other,
     }
+}
+
+/// True when a `Kind::RaceTrait`-guessed row's own `TYPE:` first segment
+/// names the `ClassLevelAdjustment*` shape -- real content, but neither a
+/// racial trait nor (unlike `MONSTER_ABILITY_TYPE_FACETS`) a monster
+/// ability either. See `RACE_TRAIT_EXCLUDED_TYPE_PREFIX`'s own doc comment.
+fn is_excluded_race_trait_row(file_kind: Kind, fields: &[&str]) -> bool {
+    file_kind == Kind::RaceTrait
+        && token_value(fields, "TYPE:")
+            .and_then(|t| t.split('.').next())
+            .map(|first| first.starts_with(RACE_TRAIT_EXCLUDED_TYPE_PREFIX))
+            .unwrap_or(false)
 }
 
 /// Whether a record of this kind carries the token that proves it is an
@@ -547,7 +630,19 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             continue;
         }
 
-        if first.starts_with("CATEGORY=Internal|") {
+        // SD28-E15 (2026-08-09): widened from `first.starts_with("CATEGORY=Internal|")`
+        // alone, which only matched the directive-line shape. A normal
+        // record row also carries `CATEGORY:Internal` as an ordinary field
+        // (e.g. `Blue Psion FC handler`, `up_abilities_race.lst:382`:
+        // `CATEGORY:Internal TYPE:SaveBonus VISIBLE:NO`), and that shape
+        // slipped through this trap entirely -- confirmed by the same
+        // `Internal`-category bookkeeping pattern `§51`'s archetype-swap
+        // tables already excluded (`Armor Aptitude 7th Level`,
+        // `Thoughtsinger ~ Wild Talent`), found independently a second
+        // time via a different check.
+        let is_internal_category = first.starts_with("CATEGORY=Internal|")
+            || fields.iter().any(|f| f.trim() == "CATEGORY:Internal");
+        if is_internal_category {
             *out.trap_hits.entry("internal_namespace").or_default() += 1;
             continue;
         }
@@ -640,6 +735,11 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
         } else {
             (first.to_string(), Origin::Declared)
         };
+
+        if is_excluded_race_trait_row(kind, &fields) {
+            *out.trap_hits.entry("race_trait_class_level_adjustment_row").or_default() += 1;
+            continue;
+        }
 
         let record_kind = refine_kind(kind, &fields);
         if !has_classifying_token(record_kind, &fields) {
@@ -1880,6 +1980,14 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
         }
         Kind::Companion => not_ingested("companion_content_has_no_engine_table"),
+        // SD28-E15 (2026-08-09): no engine table exists for monster
+        // sub-abilities (natural attacks, special qualities/attacks,
+        // universal monster rules) yet -- this kind is new precisely to
+        // make that real, uningested population visible under its own
+        // correct name, not to claim it is already reachable. Real content
+        // in the wrong kind before this cycle; real content with no
+        // engine table now, honestly reported as such.
+        Kind::MonsterAbility => not_ingested("monster_ability_has_no_engine_table"),
     }
 }
 
