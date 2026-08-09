@@ -3391,4 +3391,22 @@ Docs-only (`decisions.md §56`, this entry, kanban). Committed `a115eb96`, pushe
 
 ### Commit
 
-`src/bin/v06_work_inventory.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §61`, kanban. To be committed and pushed with SHA confirmation.
+`src/bin/v06_work_inventory.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §61`, kanban. Committed `0318f448`, pushed, SHA-confirmed on HEAD/origin. Addendum (the proven-count-fell-while-percent-rose correction, team-lead's own catch): `0d4b1d2b`, pushed, SHA-confirmed.
+
+## SD28-E15-010 -- dashboard justification table: "100% complete" argued per kind, not observed (2026-08-09)
+
+**Assignment:** operator's corrected standard -- a kind's completion state must be argued from evidence, not whichever status it happens to have reached. Deliverable: kind -> completion state -> why no further work is possible, written down, before any producer change.
+
+**Per-kind ruling** (full table in `decisions.md §62`): `class`/`race`/`monster`/`race_trait` terminal at `grounded` only; `feat` also counts `text-complete` (zero-magnitude, pre-existing v0.6 ruling); `class_feature` excludes `deferred-with-reason` (a named block is not terminal, its own diagnostic states what would unblock it); `monster_ability`/`companion` have no terminal state at all (no engine table exists, honestly 0%).
+
+**Two `ingested-magnitude` exclusions with different evidence grades, recorded separately:** `equipment`/`equipment_modifier` -- PROVEN non-terminal (133 equipment units of the identical content shape ARE `grounded` via a real working probe in 2 books, direct counterexample). `spell` -- INFERRED non-terminal (`§41`'s own argument, zero counterexamples, no spell has ever reached `grounded`).
+
+**Sanity check corrected mid-check, not reverse-fitted:** UM equipment was expected to read 100%; under the rigorous rule it reads 65% (17/26 text-complete, 9/26 ingested-magnitude, 0 grounded) -- the expectation predated the operator's own correction and doesn't survive it. Reported as the honest answer.
+
+**Cross-check:** the table's mechanical rule reconstructs the program's own already-verified `proven` metric (2,248/38,536, 5.83%) exactly for every kind except `equipment`/`equipment_modifier`, which it corrects on PROVEN evidence.
+
+Full per-kind percentage table: `decisions.md §62`.
+
+### Commit
+
+Docs-only (`decisions.md §62`, this entry). To be committed ahead of the producer change (Territory B).

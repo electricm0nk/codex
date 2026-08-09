@@ -1690,3 +1690,51 @@ proven percent     5.4% ->    5.8%  (+0.4)
 **The percentage rose only because the denominator shrank by 4,889 units. The absolute count of proven units actually FELL by 114** -- some units that were previously counted as `proven` were themselves reclassified (into `monster_ability`, where no engine table exists, or excluded outright as `ClassLevelAdjustment*`) and no longer qualify. Read in isolation, "5.4% -> 5.8%" looks like progress; it is the opposite -- fourteen fewer real, working units, against a denominator that got more honest. Both numbers belong together, always, for exactly this reason.
 
 **Disposition: a measurement correction, not content progress. `Kind::Monster`'s own meaning preserved by design. Both acid-test populations land under `Kind::MonsterAbility`, verified by count, not assumed. One self-caught correction to my own preliminary estimate before it was reported as final. `ClassLevelAdjustment*` excluded on stated token evidence, not defaulted. A residual population (Bestiary 1's template-specific facets) named as deliberately unaddressed rather than folded in without the same evidentiary bar. The proven count fell while the proven percentage rose -- both stated together, not the flattering one alone.**
+
+## Decision 62 — SD28-E15: the dashboard justification table -- "100% complete" argued per kind, not observed from whichever status happened to be highest (2026-08-09)
+
+**The operator's own standard, verbatim, and the one this decision is built to satisfy exactly:** *"I need that dashboard to be accurate. If 100% is unattainable, then the measurement is incorrect. 100% means 100% complete -- no further work needed."* An earlier framing this program held ("each kind's terminal status is whichever one it happens to have reached") was rejected by the operator as self-justifying -- it would have declared `companion` complete by inventing a terminal status for a kind with zero real progress. The corrected standard: a kind's completion state must be **argued from evidence**, per kind, and written down; where no argument holds, the honest output is `unknown`, not `complete`.
+
+**Method: for each kind, determine which status(es) mean "no further work is possible or needed," with the evidence for why -- not which status is most common or most flattering.**
+
+| Kind | Terminal states | Justification |
+|---|---|---|
+| `class` | `grounded` only | Full compute pipeline verified per unit; no probe limitation exists for this kind |
+| `race` | `grounded` only | Same |
+| `monster` | `grounded` only | Same |
+| `race_trait` | `grounded` only | Same, with a standing caveat: 6 of the 44 `grounded` units are `§56`'s own confirmed name-coincidence false positives (real content, wrong evidence) -- not corrected here, named so a reader of this table knows the 44 itself is not fully clean |
+| `feat` | `grounded` + `text-complete` | `text-complete` means zero magnitude tokens -- nothing exists to compute. This is the pre-existing v0.6-era ruling (`text-only features are complete`), not invented for this table |
+| `class_feature` | `grounded` only | `deferred-with-reason` is a NAMED, evidenced block -- but its own diagnostic states what would unblock it, meaning real further work exists. Evidenced is not the same as terminal |
+| `equipment`, `equipment_modifier` | `grounded` + `text-complete` | `ingested-magnitude` is NOT terminal -- see the PROVEN case below |
+| `spell` | `text-complete` only | `ingested-magnitude` is NOT terminal -- see the INFERRED case below |
+| `monster_ability` | none | No engine table exists for this kind at all (confirmed: `Kind::MonsterAbility` was added this same cycle, `§61`) -- honestly 0% |
+| `companion` | none | No engine table exists for this kind at all -- 1,683 units, zero `grounded`, zero `ingested-magnitude`. Honestly 0%, not a terminal status invented to avoid saying so |
+
+**Two `ingested-magnitude` exclusions, same conclusion (not terminal), different evidence grade -- recorded separately per team-lead's own distinction, since one could be overturned by a single future counterexample and the other already has 133:**
+
+- **`equipment`/`equipment_modifier`: PROVEN non-terminal.** `equipment`'s `ingested-magnitude` bucket is 4,453 units carrying evidence `equipment_table_entry_with_corpus_magnitude` -- a real corpus magnitude token exists, unread. **133 equipment units of the identical content shape (a real `BONUS:` token) ARE `grounded`**, via a live, working probe (`equipment_effect_probe_observed_computed_delta`, confirmed against two books: `core_rulebook` 116, `advanced_class_guide` 17). Same shape of content, two different outcomes, purely because the probe has not been extended to every book. That is a demonstrated, positive counterexample -- direct proof the gap is closable, not an argument that it might be.
+- **`spell`: INFERRED non-terminal.** No spell has ever reached `grounded` -- zero counterexamples exist. The non-terminal ruling rests entirely on `§41`'s own argument: `spell_save_dc` (the one real, wired, player-facing spell consumer) reads only `spell_effect.level` uniformly for every resolvable spell, unable to distinguish a save-requiring spell from a pure-utility one (empirically confirmed against Detect Magic/Light/Mage Hand vs. Fireball, `§41`). The remedy -- structured per-spell mechanical parsing (save type, damage dice, duration, range) -- is real, named, and does not exist yet in either the table store or any consumer. A sound argument, but an argument, not a demonstration. The conservative ruling (non-terminal) is the correct default in the absence of a counterexample, per this program's own standing "no positive claim without evidence" discipline -- but a future cycle that lands even one spell at `grounded` would need to revisit whether the argument still holds for the rest.
+
+**Sanity check against a kind "known cold," corrected mid-check rather than reverse-fitted.** UM's own equipment (26 units: 17 `text-complete`, 9 `ingested-magnitude`, 0 `grounded`) was expected to read 100% before this table's rule was finalized. Under the rigorous rule above it reads **65%** (17/26), not 100% -- the earlier expectation was stated before the operator's own correction to the "terminal = whichever status is observed" framing landed, and does not survive that correction. Reported as the honest answer rather than adjusted to match the stale expectation. `companion` (0%, 0/1,683) matches the other stated sanity check exactly.
+
+**Program-wide per-kind completion, argued not observed, with the two evidence grades stated inline:**
+
+```
+class                14.6%   (27/185)          grounded only
+race                  6.8%   (7/103)           grounded only
+monster                3.6%  (46/1270)          grounded only
+race_trait             1.3%  (44/3456)          grounded only -- 6 known false positives inside the 44
+feat                 48.3%   (1260/2610)        grounded + text-complete
+class_feature          0.7%  (109/15472)        grounded only
+equipment               6.8% (426/6227)         grounded + text-complete -- ingested-magnitude PROVEN non-terminal
+equipment_modifier    19.4%  (307/1580)         grounded + text-complete -- same PROVEN basis
+spell                   0.8% (22/2843)          text-complete only -- ingested-magnitude INFERRED non-terminal
+monster_ability         0.0% (0/3107)           no engine table
+companion               0.0% (0/1683)           no engine table
+
+program-wide           5.83%  (2,248 / 38,536)  -- reproduces the existing verified `proven` metric exactly
+```
+
+**Cross-check: this table is not a new measurement, it is the existing one made explicit and then corrected where the evidence demands.** The per-kind terminal-state rule above, applied mechanically, reconstructs the program's own already-verified `proven` count (2,248/38,536, `§61`) to the unit for every kind except `equipment`/`equipment_modifier` -- which this table corrects, on the PROVEN evidence above, from what would otherwise have been counted as terminal.
+
+**Disposition: the justification table is the deliverable this decision records. The producer change (Territory B, `pf1e_dashboard_producer.py` and its separate one-minute-renderer sibling) follows this table, not the reverse -- implemented and verified in the same cycle, reported separately once both paths are confirmed to reflect it.**
