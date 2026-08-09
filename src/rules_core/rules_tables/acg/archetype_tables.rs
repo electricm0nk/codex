@@ -4,21 +4,21 @@
 //! that table's shape and TYPE-vs-ABILITY disagreement rate generalize.
 //! See `ultimate_psionics::archetype_tables`'s own module doc comment
 //! for the full struct rationale (two-tier record shape, `replaces`/
-//! `grants` kept as separate lists, the `ABILITY:` grant-token shapes
-//! this extraction handles, the `§46`/`§48`/`§49` text-shape triad).
+//! `grants` kept as separate lists, the exhaustively-enumerated
+//! `ABILITY:` grant grammar and its per-family inclusion ruling, the
+//! `.MOD`-injected-grant hazard, the `§46`/`§48`/`§49` text-shape triad).
 //!
 //! **UPsi's TYPE/ABILITY-disagreement finding generalizes.** 87 master
-//! records, 378 total `TYPE:`-replaced slots vs 337 total `ABILITY:`-
-//! granted features -- equal counts in only 30 of 87 (34%), the same
-//! direction as UPsi's own corrected rate (13%, 2 of 15) though not the
-//! same magnitude -- the exact rate is book-dependent, confirmed across
-//! two books, not assumed to be a fixed constant.
+//! records, 378 total `TYPE:`-replaced slots vs 336 total `ABILITY:`-
+//! granted features (after the same category ruling: `Internal`/
+//! `NORMAL` excluded) -- equal counts in only 29 of 87 (33%), close to
+//! UPsi's own twice-corrected rate (33%, 5 of 15) -- the same shape,
+//! not a UPsi-specific artifact, now confirmed after both correction
+//! passes rather than before.
 //!
-//! **333 of 337 sub-feature grants (99%) resolved to real `DESC:`/
-//! `BENEFIT:` text.** All 4 shortfalls are the "found but textless"
-//! kind, named individually: `Mutagenic Mauler ~ Discovery`,
-//! `Snakebite Striker ~ Sneak Attack`, `Snakebite Striker ~ Maneuver
-//! Training`, `Divine Hunter ~ Class Skills`.
+//! **333 of 336 sub-feature grants (99%) resolved to real `DESC:`/
+//! `BENEFIT:` text.** The 3 shortfalls are named individually in the
+//! generated tests rather than counted only in aggregate.
 //!
 //! **The `§46`/`§48`/`§49` text-shape triad, run against this book's own
 //! archetype `.MOD` rows.** Sampled several master archetypes' own
@@ -550,7 +550,6 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             prerequisites: Some(&["PRECLASS:1,Hunter=1", "PREMULT:1,[PREMULT:2,[PREDEITYALIGN:LE],[PREALIGN:LE,LN,NE]],[PREMULT:2,[PREDEITYALIGN:LN],[PREALIGN:LN,LE,LG,TN]],[PREMULT:2,[PREDEITYALIGN:LG],[PREALIGN:LG,NG,LN]],[PREMULT:2,[PREDEITYALIGN:NE],[PREALIGN:NE,LE,CE,TN]],[PREMULT:2,[PREDEITYALIGN:TN],[PREALIGN:TN,LN,CN,NG,NE]],[PREMULT:2,[PREDEITYALIGN:NG],[PREALIGN:NG,TN,LG,CG]],[PREMULT:2,[PREDEITYALIGN:CE],[PREALIGN:CE,NE,CN]],[PREMULT:2,[PREDEITYALIGN:CN],[PREALIGN:CN,TN,CG,CE]],[PREMULT:2,[PREDEITYALIGN:CG],[PREALIGN:CG,CN,NG]]", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Divine Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterClassSkills,TYPE.HunterTeamworkFeats,TYPE.HunterHunterTactics]"]),
             replaces: Some(&["HunterClassSkills", "HunterTeamworkFeats", "HunterHunterTactics"]),
             grants: &[
-                ArchetypeGrant { grants_feature_key: "Divine Hunter ~ Class Skills", at_level: 1, description: None, benefit: None },
                 ArchetypeGrant { grants_feature_key: "Divine Hunter ~ Domain", at_level: 3, description: Some("[PARTIALLY IMPLEMENTED] A divine hunter learns to call upon the power of her deity. The divine hunter must select one domain from those available to her deity. She gains the granted powers of this domain, using her hunter level - 2 as her cleric level for determining when the powers are gained and what effects they have. Once she chooses this domain, it cannot be changed. If the divine hunter selects the animal domain, she does not gain a second animal companion upon reaching an effective cleric level of 4th. When the divine hunter would gain that ability, her animal companion instead gains two ability score increases (gaining +1 to two different ability scores or +2 to one ability score). If her animal companion dies or is released, when she gains a new one, it benefits from this ability score increase. In addition, the divine hunter adds the 1st-level domain spell from her domain to her list of spells known. She adds the 2nd-level domain spell at 6th level, the 3rd-level domain spell at 9th level, the 4th-level domain spell at 12th level, the 5th-level domain spell at 15th level, and the 6th-level domain spell at 18th level."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Divine Hunter ~ Otherworldly Companion", at_level: 3, description: Some("A hunter's companion takes on otherworldly features. If the divine hunter is good (or worships a good deity), the animal companion gains the celestial template. If the hunter is evil (or worships an evil deity), the animal companion gains the fiendish template. If the hunter is neutral and worships a neutral deity, she must choose either the celestial or fiendish template; once this choice is made, it cannot be changed. The companion's CR is considered to be equal to its Hit Dice for the purpose of the celestial or fiendish template."), benefit: None },
             ],
@@ -1449,22 +1448,22 @@ mod tests {
     }
 
     /// The finding this table exists to check: does UPsi's own
-    /// TYPE/ABILITY disagreement generalize? Confirmed: 34% here vs
-    /// UPsi's corrected 13% -- same direction, book-dependent magnitude.
+    /// TYPE/ABILITY disagreement generalize? Confirmed: 33% here vs
+    /// UPsi's twice-corrected 33% -- essentially the same rate.
     #[test]
     fn the_type_and_ability_lists_genuinely_disagree() {
         let total_replaces: usize =
             archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
         let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
         assert_eq!(total_replaces, 378, "total TYPE: replaced-slot count across all 87 records");
-        assert_eq!(total_grants, 337, "total ABILITY: granted-feature count across all 87 records");
+        assert_eq!(total_grants, 336, "total ABILITY: granted-feature count across all 87 records, after the category ruling");
         assert_ne!(total_replaces, total_grants);
 
         let equal_count_records = archetype_swap_tables()
             .iter()
             .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
             .count();
-        assert_eq!(equal_count_records, 30, "of 87 (34%) -- corrected figure, see this module's own doc comment");
+        assert_eq!(equal_count_records, 29, "of 87 (33%) -- twice-corrected figure, see this module's own doc comment");
     }
 
     #[test]
@@ -1484,6 +1483,6 @@ mod tests {
             .flat_map(|e| e.grants.iter())
             .filter(|g| g.description.is_some() || g.benefit.is_some())
             .count();
-        assert_eq!(resolved, 333, "333 of 337 grants carry real DESC:/BENEFIT: text -- see this module's own doc comment for the 4 that did not");
+        assert_eq!(resolved, 333, "333 of 336 grants carry real DESC:/BENEFIT: text");
     }
 }

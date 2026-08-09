@@ -2950,6 +2950,33 @@ All three tables' Rust source, doc comments, and generated tests were regenerate
 
 `94ac35c0` -- corrects UPsi's and ACG's already-pushed tables (`ec73d0cd`/`9394e54a`) and lands APG's own table in the same, corrected form (6 files, +1690/-70). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push. Nothing silently left wrong.
 
+## Cycle `SD28-E30-F3-002` — second correction pass, same three tables, before `ultimate_magic` was allowed to start
+
+Team-lead's own check on the just-corrected UPsi table found `Armor Aptitude 7th Level` sitting in `grants` -- a `CATEGORY:Internal` bookkeeping row (`UNENCUMBEREDMOVE:HeavyArmor`, no player-facing text), confirmed directly against the raw row. The first correction pass fixed *how many* `ABILITY:` tokens the parser found; it never ruled on *which categories* of token count as real content, so it included every one indiscriminately.
+
+**Exhaustively enumerated the `ABILITY:` grant grammar across all three books before touching the extractor again**, per the explicit instruction not to patch shape-by-shape a third time. Ruled per family: `<Class> Class Feature`/`Special Ability` -- real, included. `Internal` -- bookkeeping, excluded (same disposition every feat catalog's own auto-grant wrappers already get). Grant type `NORMAL` (e.g. `Divine Bond`) -- player-chosen, not an automatic swap, excluded. `FEAT` -- real content, included.
+
+**A larger, still-open hazard surfaced tracing team-lead's own `Cave Druid` example directly**: its `PREABILITY:`-gated `Druid Domain` grant lives on a separate `.MOD` row modifying an unrelated feature (`apg_abilities_class.lst:1950`), not on Cave Druid's own master row at all -- invisible to any row-scoped scan. `grants` is now a documented floor in every table's own doc comment, not silently understated.
+
+```
+              grants (v1 -> v2 parser-gap fix -> v3 category ruling)   agreement (v1 -> v2 -> v3)
+UPsi (15):     76 -> 82 -> 75                                            27% -> 13% -> 33%
+ACG  (87):    325 -> 337 -> 336                                          32% -> 34% -> 33%
+APG  (80):    343 -> 392 -> 392                                          55% -> 52% -> 52%
+```
+
+UPsi moved twice (undercounted, then overcounted, now closer to true); ACG moved a rounding amount; APG did not move on this pass at all (zero `Internal` grants in its own master rows). A regression guard (`no_internal_category_bookkeeping_grant_is_present`) now pins the specific defect by name on UPsi's own table. Full detail: `decisions.md §51` addendum 3.
+
+### Verification (second correction pass)
+
+- `cargo test --lib --locked archetype_tables`: 19/19 pass (7 UPsi including the new regression guard + 6 ACG + 6 APG).
+- `cargo test --lib --locked` (full lib): 1543 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: `final2_clippy.log` 75 warnings, EXIT_CODE=0 -- at ceiling (75), not breached.
+
+### Commit, pushed and confirmed
+
+`<pending>` -- second correction of UPsi/ACG/APG's tables, category ruling applied, `.MOD`-injected-grant hazard documented as an open floor.
+
 ### Next
 
-`ultimate_magic` (67), `ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain.
+`ultimate_magic` (67), `ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain. Not starting without team-lead's confirmation this second correction is accepted, given the pattern of this table needing repeated correction.

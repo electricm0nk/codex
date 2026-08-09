@@ -1,43 +1,42 @@
 //! Advanced Player's Guide (APG) archetype-swap catalog. SD28-E30
 //! (`epic-32-archetype-swap`) tier-1 table 3. See
 //! `ultimate_psionics::archetype_tables`'s own module doc comment for
-//! the full struct rationale, and `rules_tables::archetype_swap` for
-//! the shared struct all three tables landed so far use.
+//! the full struct rationale, the exhaustively-enumerated `ABILITY:`
+//! grant grammar and its per-family inclusion ruling, and the
+//! `.MOD`-injected-grant hazard this book's own `Cave Druid` archetype
+//! is the confirmed live example of.
 //!
 //! **The TYPE:/ABILITY: agreement rate is book-dependent, not a fixed
-//! constant -- confirmed on a third book.** UPsi 13% (2/15, corrected),
-//! ACG 34% (30/87), **APG 52% (42/80)** -- APG's own archetypes disagree
-//! less than either prior book: 333 total `TYPE:`-replaced slots vs 392
-//! total `ABILITY:`-granted features. The two-list struct stays correct
-//! regardless -- it was never sized to a specific disagreement rate,
-//! only to the fact that one exists.
+//! constant -- confirmed on a third book, after both correction
+//! passes.** UPsi 33% (5/15), ACG 33% (29/87), **APG 52% (42/80)** --
+//! APG's own archetypes disagree less than either prior book: 333 total
+//! `TYPE:`-replaced slots vs 392 total `ABILITY:`-granted features (this
+//! book has zero `Internal`-categorized grants among its master rows,
+//! so the category ruling did not move its own totals).
 //!
 //! **364 of 392 sub-feature grants (93%) resolved to real `DESC:`/
-//! `BENEFIT:` text.** The 28 shortfalls cluster into two real, distinct
-//! causes, not a grab-bag: **1 failed `KEY:` lookup** (`Improved
-//! Counterspell`, plausibly a cross-reference to a CRB-owned feat rather
-//! than a class-feature row); **25 shared names across 5 sibling Druid
-//! Shaman-totem archetypes** (`Bear`/`Eagle`/`Lion`/`Serpent`/`Wolf
-//! Shaman`, each independently referencing the same 5 unresolved names
-//! -- `Druid ~ Wild Shape`, `Shaman Druid Wild Shape`, `Shaman Druid
-//! Wild Shape Progression`, `Shaman Druid Wild Shape Times`, `Shaman
-//! Wild Shape` -- none of which is declared as its own row anywhere in
-//! this book's file, confirmed by checking all 5 archetypes reference
-//! the identical name set, not a per-archetype extraction miss); **2
-//! `No Spellcasting ~ Paladin`/`No Spellcasting ~ Ranger` grants**
-//! resolve to a real row with neither `DESC:` nor `BENEFIT:` (a bare
-//! marker, the same shape UPsi's own `Purifier ~ No Spellcasting`
-//! carries).
+//! `BENEFIT:` text.** The 28 shortfalls cluster into three real,
+//! distinct causes: **1 failed `KEY:` lookup** (`Improved
+//! Counterspell`, confirmed a real cross-reference to a CRB-owned feat,
+//! not a class-feature row -- this book's only `FEAT`-categorized grant);
+//! **25 shared names across 5 sibling Druid Shaman-totem archetypes**
+//! (`Bear`/`Eagle`/`Lion`/`Serpent`/`Wolf Shaman`, each independently
+//! referencing the same 5 unresolved names, none of which is declared
+//! as its own row anywhere in this book's file); **2 bare-marker rows**
+//! (`No Spellcasting ~ Paladin`/`No Spellcasting ~ Ranger`, real rows
+//! with neither `DESC:` nor `BENEFIT:`).
 //!
-//! **A parser-side finding, corrected before this table shipped rather
-//! than after:** the extraction script's first pass treated any
-//! non-level-gate `PRE`-shaped token inside an `ABILITY:` grant as a
-//! *name* rather than skipping it -- caught on this book (several
-//! Rogue-shaped archetypes carry a second `PREVARGTEQ:Rogue_CFP_Level,N`
-//! token per grant, a class-specific tracking variable, not a
-//! `<Class>LVL`-shaped level gate the extraction already recognised).
-//! Fixed to skip every `PRE`-prefixed token from `grants`' own name list
-//! regardless of whether it matches a known level-gate shape.
+//! **`Cave Druid` is the confirmed live example of the `.MOD`-injected-
+//! grant hazard `ultimate_psionics::archetype_tables`'s own doc comment
+//! names.** Its `Druid Domain` grant is not on its own master row at
+//! all -- it lives on `CATEGORY=Archetype|Nature's Bond ~ Druid
+//! Domain.MOD` (`apg_abilities_class.lst:1950`), a `.MOD` row modifying
+//! an unrelated, pre-existing feature, gated by `PREABILITY:1,
+//! CATEGORY=Archetype,Druid Archetype ~ Cave Druid`. This table's own
+//! `grants` field does **not** include this grant -- it is invisible to
+//! a scan of Cave Druid's own row, the same structural limitation named
+//! in the UPsi table's own doc comment, not yet closed by any table
+//! landed so far.
 //!
 //! **9 of this book's 12 Rogue archetype master records have no `DESC:`
 //! at all -- a whole-subfamily gap, confirmed genuine on the raw corpus
@@ -1480,8 +1479,8 @@ mod tests {
         assert_eq!(without_desc, ROGUE_MASTERS_WITHOUT_DESC.len(), "exactly the named Rogue exceptions, nothing else");
     }
 
-    /// APG's own rate: 52% (42/80) -- higher than UPsi's corrected 13%
-    /// and ACG's 34%, confirming the rate is book-dependent.
+    /// APG's own rate: 52% (42/80) -- higher than UPsi's/ACG's own 33%,
+    /// confirming the rate is book-dependent.
     #[test]
     fn the_type_and_ability_lists_genuinely_disagree() {
         let total_replaces: usize =
@@ -1495,7 +1494,7 @@ mod tests {
             .iter()
             .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
             .count();
-        assert_eq!(equal_count_records, 42, "of 80 (52%) -- APG's own rate, higher than UPsi's 13% or ACG's 34%");
+        assert_eq!(equal_count_records, 42, "of 80 (52%) -- APG's own rate, higher than UPsi's/ACG's 33%");
     }
 
     #[test]
