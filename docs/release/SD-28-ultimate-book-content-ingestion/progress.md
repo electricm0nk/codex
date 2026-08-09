@@ -2801,7 +2801,18 @@ One corpus typo corrected and documented: `Thundering Power` declares `TYPE:Meta
 
 ### This program's seventh and final Ultimate book -- session cumulative
 
-Ultimate Intrigue (`epic-24`), Ultimate Equipment (`epic-25`), Ultimate Wilderness (`epic-26`), Ultimate Combat (`epic-27`), Ultimate Magic (`epic-28`), Ultimate Psionics (`epic-29`) -- six from-scratch Ultimate-book ingests this session, plus this program's earlier Ultimate Campaign work. UPsi closes the set: the first non-Paizo book, checked for a licensing anomaly and found clean, the first book whose own corpus convention (DESC:-is-complete) required no textless-stub exclusions at all, and the first to break the "every book adds a new unmodelled PRE kind" streak. The aggregate feat catalog now spans 11 books, 1578 real records, zero fabricated data, every cross-book collision found at runtime and excluded rather than assumed.
+Ultimate Intrigue (`epic-24`), Ultimate Equipment (`epic-25`), Ultimate Wilderness (`epic-26`), Ultimate Combat (`epic-27`), Ultimate Magic (`epic-28`), Ultimate Psionics (`epic-29`) -- six from-scratch Ultimate-book ingests this session, plus this program's earlier Ultimate Campaign work. UPsi closes the set: the first non-Paizo book, checked for a licensing anomaly and found clean, the first book whose own corpus convention (DESC:-is-complete) required no textless-stub exclusions at all, and the first to break the "every book adds a new unmodelled PRE kind" streak.
+
+**Session totals, by real kind, not blended into one wrong label:**
+
+```
+feat records this session:    104 (UI) + 135 (UW) + 261 (UC) + 144 (UM) + 221 (UPsi) =   865
+equipment records this session (UE):                                                 = 1,549
+----------------------------------------------------------------------------------------------
+total records this session:                                                            2,414
+```
+
+**Falsifiable check against the live aggregate:** the feat catalog spans 11 books, 1,578 real records, and this session added 865 of them -- so the pre-session feat total was 1,578 − 865 = **713**, and `713 + 865 = 1,578` closes exactly against `feats_all.rs`'s own pinned total. Equipment is a separate aggregate this receipt does not re-derive here; UE's own `1,549` is `decisions.md §44`'s own figure, not re-summed into the feat catalog.
 
 ### Kanban
 
