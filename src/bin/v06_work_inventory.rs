@@ -844,6 +844,7 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         "UI" => "ultimate_intrigue",
         "UE" => "ultimate_equipment",
         "UM" => "ultimate_magic",
+        "UPSI" => "ultimate_psionics",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \

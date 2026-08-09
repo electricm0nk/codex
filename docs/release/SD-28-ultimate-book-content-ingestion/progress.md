@@ -3321,4 +3321,30 @@ Docs-only (`decisions.md §56`, this entry, kanban). Committed `a115eb96`, pushe
 
 ### Commit
 
-`src/rules_core/rules_tables/ultimate_magic/equipment_tables.rs` (new), `src/rules_core/rules_tables/ultimate_magic/mod.rs`, `src/rules_core/equipment_resolver.rs`, `src/bin/v06_work_inventory.rs`, `src/bin/v06_content_state_dump.rs`, `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`, `docs/work-inventory.json`, `artifacts/e14-harness-widening.md`, this receipt, `decisions.md §57`, kanban. To be committed and pushed with SHA confirmation.
+`src/rules_core/rules_tables/ultimate_magic/equipment_tables.rs` (new), `src/rules_core/rules_tables/ultimate_magic/mod.rs`, `src/rules_core/equipment_resolver.rs`, `src/bin/v06_work_inventory.rs`, `src/bin/v06_content_state_dump.rs`, `apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`, `docs/work-inventory.json`, `artifacts/e14-harness-widening.md`, this receipt, `decisions.md §57`, kanban. Committed `b31e11db`, pushed, SHA-confirmed on HEAD/origin.
+
+## SD28-E29-F2-001 -- `epic-29-upsi-complete`: Ultimate Psionics slice 2 -- 439-record equipment catalog, `.COPY=` legacy-alias hazard self-caught and corrected (2026-08-09)
+
+**Assignment:** UPsi equipment (552 declared: 326 equipment + 226 equipment_modifier), the largest genuine equipment gap left. Both halves pulled unprompted, correcting the 326-only briefing.
+
+**Row-kind check run before extraction** (explicit warning: UPsi's own `race_trait` file mixed four wrong kinds). Traced every `TYPE:` first segment and `###Block:` header in `up_equipment.lst` -- all genuinely equipment-shaped, no mixing found. A real negative result, not assumed.
+
+**First pass matched the declared count exactly (326 + 226 = 552)** -- landed, wired, aggregate pin re-derived (6,055), full suite green, clippy at ceiling.
+
+**Self-caught before shipping: regenerating `work-inventory.json` as a final check found 113 units still not-ingested.** Traced to `up_equipmods.lst`'s **113 `.COPY=<SHORTCODE>` rows** the first pass's `.MOD`-only filter never handled -- confirmed via the residue's own named short codes and a corpus-wide reference check (none appear anywhere else). **First fix attempt got the disposition backwards**: split each into its own near-empty table entry to make the count resolve. **Corrected before commit**, matching the established shape `ultimate_intrigue`/`advanced_race_guide` already establish for identical `VISIBLE:NO .COPY=` rows -- excluded as legacy aliases, named explicitly in a new `EXCLUDED_LEGACY_ALIAS_SHORT_CODES` constant, regression-tested both directions.
+
+**Final: 326 + 113 = 439 real records.** The 113-unit gap to the 552 declared is real, is classifier over-counting, and is named -- not a shortfall.
+
+**Cross-book sweep at team-lead's request:** checked UE/UI/ARG/CRB's committed tables for the same mis-keyed `.COPY=` literal, scoped precisely to `key: "..."` string literals rather than a whole-file text match. **Zero hits in all four.** Every `.COPY=` occurrence in those files is inside a doc comment documenting correct handling already done. A whole-file grep (matching doc-comment citations) would have reproduced the same false-positive shape this epic has named repeatedly -- reported as a real, useful negative.
+
+**`.COPY=` aliasing added to `§49`'s triad as a fourth text-shape hazard**, now a checklist: `.MOD` unconditional recovery, `.MOD` conditional variant, `.COPY=` genuine new item, `.COPY=` legacy alias.
+
+**No unit's status fabricated.** Full detail: `decisions.md §58`.
+
+### Verification
+
+`cargo build --locked --bins` (root) and `cargo build --locked` (desktop): both clean. `cargo test --lib --locked ultimate_psionics::equipment_tables`: 7/7 pass. `cargo test --locked --no-fail-fast`: full suite green (re-run after the correction). `cargo clippy --locked --tests`: 75 (gate ceiling, not breached), `EXIT_CODE=0` (re-run after the correction, zero new warnings). Regenerated `docs/work-inventory.json`: UPsi equipment/equipment_modifier now 389 `ingested-magnitude` + 50 `text-complete` = 439 landed, 113 `not-ingested` residue matching the named exclusion exactly.
+
+### Commit
+
+`src/rules_core/rules_tables/ultimate_psionics/equipment_tables.rs` (new), `src/rules_core/rules_tables/ultimate_psionics/mod.rs`, `src/rules_core/equipment_resolver.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §58`, kanban. To be committed and pushed with SHA confirmation.

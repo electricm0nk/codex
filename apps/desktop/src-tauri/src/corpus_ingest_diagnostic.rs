@@ -379,12 +379,19 @@ fn ultimate_magic_counts() -> BTreeMap<String, u32> {
 }
 
 /// Ultimate Psionics: SD-28 Epic 29 (`epic-29-upsi-complete`) from-scratch
-/// book ingest, first slice, and the last Ultimate book. 221 feat
-/// records -- see `ultimate_psionics::feat_tables`'s own doc comment for
-/// the catalog and the license-posture check.
+/// book ingest, and the last Ultimate book. 221 feat records -- see
+/// `ultimate_psionics::feat_tables`'s own doc comment for the catalog and
+/// the license-posture check. SD-28-E15's second slice adds 552 equipment
+/// records (326 equipment + 226 equipmods) -- see
+/// `ultimate_psionics::equipment_tables`'s own doc comment.
 fn ultimate_psionics_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), upsi::feat_tables::feat_tables().len() as u32);
+    counts.insert(
+        "equipment".to_string(),
+        (upsi::equipment_tables::equipment_tables().len()
+            + upsi::equipment_tables::equipmod_tables().len()) as u32,
+    );
     counts
 }
 

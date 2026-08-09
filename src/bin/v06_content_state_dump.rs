@@ -363,8 +363,10 @@ fn um_content() -> BookContent {
     }
 }
 
-/// SD28-E29. Same hand-listed-roster shape the sibling `*_content()`
-/// functions above warn about. First slice: feats only.
+/// SD28-E29/E15. Same hand-listed-roster shape the sibling `*_content()`
+/// functions above warn about. SD28-E15 adds the equipment slice (552
+/// records: 326 equipment + 226 equipmods) alongside the earlier feat
+/// catalog.
 fn upsi_content() -> BookContent {
     BookContent {
         id: "ultimate_psionics",
@@ -372,7 +374,12 @@ fn upsi_content() -> BookContent {
             KindCount { kind: "races", ingested: 0 },
             KindCount { kind: "classes", ingested: 0 },
             KindCount { kind: "spells", ingested: 0 },
-            KindCount { kind: "equipment", ingested: 0 },
+            KindCount {
+                kind: "equipment",
+                ingested: (upsi::equipment_tables::equipment_tables().len()
+                    + upsi::equipment_tables::equipmod_tables().len())
+                    as u32,
+            },
             KindCount { kind: "feats", ingested: upsi::feat_tables::feat_tables().len() as u32 },
             KindCount { kind: "monsters", ingested: 0 },
         ],

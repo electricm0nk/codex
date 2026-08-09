@@ -9,4 +9,5 @@
 //! DESC:-is-complete convention distinguished from a stub).
 
 pub mod archetype_tables;
+pub mod equipment_tables;
 pub mod feat_tables;
