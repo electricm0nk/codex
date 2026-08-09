@@ -3052,7 +3052,7 @@ The 9 "Weapon and Armor Proficiency" grants are a new shape -- plausibly impleme
 
 ### Commit, pushed and confirmed
 
-`<pending>`.
+`027ef578` -- Ultimate Combat archetype-swap table, SD28-E30 tier-1 table 5 (3 files, +1313). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### Next
 
