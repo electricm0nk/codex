@@ -3084,7 +3084,7 @@ ARG's own rate (14%, 8/59) is the lowest yet. Six books, six distinct values -- 
 
 ### Commit, pushed and confirmed
 
-`<pending>`.
+`8b45fec7` -- ARG archetype-swap table + sd27_gen_book_cache build fix, SD28-E30 tier-1 table 6 (4 files, +1226). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### Next
 
