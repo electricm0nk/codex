@@ -2948,7 +2948,7 @@ All three tables' Rust source, doc comments, and generated tests were regenerate
 
 ### Commit, pushed and confirmed
 
-`<pending>` -- corrects UPsi's and ACG's already-pushed tables (`ec73d0cd`/`9394e54a`) and lands APG's own table in the same, corrected form. Nothing silently left wrong.
+`94ac35c0` -- corrects UPsi's and ACG's already-pushed tables (`ec73d0cd`/`9394e54a`) and lands APG's own table in the same, corrected form (6 files, +1690/-70). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push. Nothing silently left wrong.
 
 ### Next
 
