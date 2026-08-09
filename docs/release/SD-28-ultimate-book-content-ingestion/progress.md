@@ -2797,7 +2797,7 @@ One corpus typo corrected and documented: `Thundering Power` declares `TYPE:Meta
 
 ### Commit, pushed and confirmed
 
-`<pending>` -- Ultimate Psionics feat catalog ingest, SD28-E29 slice 1.
+`35e9d09b` -- Ultimate Psionics feat catalog ingest, SD28-E29 slice 1 (17 files, +3002/-56, including new `rules_tables/ultimate_psionics/` module). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### This program's seventh and final Ultimate book -- session cumulative
 
