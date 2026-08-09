@@ -3189,20 +3189,24 @@ Docs-only change (`decisions.md §53`, this entry). To be committed and pushed w
 
 **Assignment:** the deferred `in_catalog_with_corpus_magnitude_but_no_observed_consumer` feat bucket, using the `Touch of Good` reachability template -- an ingested record with a real consumer is reachable; one without is not, and "no observed consumer" is a claim about the probe's observation, not necessarily about the code.
 
-**Different evidence shape from the option-pool families:** 307 independent feats, no single chooser to anchor a check on, so the method scans for a real consumer per unit. Two proxies: literal display-name string match (22/307) and slug/id-style match (28/307 combined) -- the slug pass was necessary, proven by `Power Attack` itself (grounded via `POWER_ATTACK_ITEM_ID`, never the literal string).
+**First pass, scoped to `pilot_compute.rs` only, produced a false negative on `Power Attack`** -- a foundational feat with six real references (id constants, two call sites, a test, a module doc comment), none of them the literal display string the first scan searched for. That is not an undercount, it is a broken instrument, and it invalidated every number the first pass produced until the cause was found.
 
-**Individual walk on all 28 hits caught 4 false positives** from the slug scan's loose substring matching (`Stalwart` matched a doc comment; `Discovery (Opposition Research)`/`(Split Slot)` matched nothing real; `Toughness (Vigor/Wounds)` matched the base `Toughness` feat's own test, a different corpus record) -- corrected before reporting rather than left in the count.
+**Root cause: feat wiring is spread across several files, not concentrated in `pilot_compute.rs`.** `src/rules_core/feat_effects.rs` (5,064 lines, 274 functions) is dedicated entirely to feat effects and was never scanned. Widened to a named, bounded 9-file set (`pilot_compute.rs`, `feat_effects.rs`, `feat_prereqs.rs`, `feat_prereqs/pre_tokens.rs`, `pilot_compute_corpus.rs`, `character_input.rs`, `description_completion.rs`, `support_state_matrix.rs`, plus the two desktop-adapter files that are real consumer boundaries).
 
-**24/307 (8%) confirmed reachable** with real code and call sites, spot-checked against surrounding context, not the string hit alone -- including `Extra Stamina`, found only by reading code near a false-positive-adjacent hit, referenced by neither proxy's own name match. 2 of the 24 (Extra Performance, Extra Lay On Hands) are already at full candidate-grade evidence (a real test proving the exact corpus magnitude); the other 22 have real wired code but no live-consumer confirmation yet.
+**Literal+slug scan across all 9 files found 35 hits; individual walk confirmed 31, rejected the same 4 false positives a second time** (`Stalwart`, `Discovery (Opposition Research)`, `Discovery (Split Slot)`, `Toughness (Vigor/Wounds)` -- the widened scan still found no real code for any of them; `Toughness (Vigor/Wounds)`'s every hit is the base `Toughness` record, never the variant -- the same pattern as UC's `Deathless Master (Vigor/Wounds)` textless-variant finding).
 
-**~283 units have no hit under either proxy and no code found on inspection.** Not extrapolated as confirmed-unreachable -- both proxies already missed two real grounding functions once each (Power Attack, Extra Stamina) before being corrected for -- but no further naming-convention hunt attempted past these two passes; that stopping point is stated explicitly.
+**31/307 (10%) confirmed reachable**, each spot-checked against real code, not the string hit alone. 5 (Extra Performance, Extra Lay On Hands, Bestow Luck, Extra Hex, Push the Limits) at full `§52`-candidate grade with a real test including a negative case; the other 26 have real wired code but no confirmed live-consumer test yet.
 
-**No unit's status changed.** Full detail and the 24-unit table: `decisions.md §54`.
+**~276 units have no hit under the 9-file scan.** Framed by method reach, not claimed absence: "no grounding found by this scan," not "no chooser/consumer exists" -- two proxy passes plus a named, bounded file-set widening is the stated floor; no further naming-convention hunt attempted.
+
+**The fifth instrument failure of this epic, recorded as the transferable lesson:** `TYPE:`-vs-`KEY:` screening, grep hit-count-as-coverage, the clippy warning-count method, the diagnostics-file scope mismatch, and now single-file display-name matching -- five proxies, each measuring a naming/reporting convention rather than the wiring itself. This codebase wires content through normalised identifiers spread across several files, so a single-file, display-name-keyed check under-reports twice over.
+
+**No unit's status changed.** Full detail and the corrected 31-unit table: `decisions.md §54`.
 
 ### Verification
 
-Read-only analysis over `docs/work-inventory.json` and `pilot_compute.rs` (literal-string scan, slug scan, and individual context reads on every hit). No engine code touched; no new build/test/clippy run required.
+Read-only analysis over `docs/work-inventory.json` and the named 9-file set (literal-string scan, slug scan, and individual context reads on every hit). No engine code touched; no new build/test/clippy run required.
 
 ### Commit
 
-Docs-only change (`decisions.md §54`, this entry, kanban). To be committed and pushed with SHA confirmation.
+Docs-only change (`decisions.md §54` rewritten, this entry, kanban). To be committed and pushed with SHA confirmation.
