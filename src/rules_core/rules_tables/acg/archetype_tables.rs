@@ -4,21 +4,21 @@
 //! that table's shape and TYPE-vs-ABILITY disagreement rate generalize.
 //! See `ultimate_psionics::archetype_tables`'s own module doc comment
 //! for the full struct rationale (two-tier record shape, `replaces`/
-//! `grants` kept as separate lists, the `§46`/`§48`/`§49` text-shape
-//! triad).
+//! `grants` kept as separate lists, the `ABILITY:` grant-token shapes
+//! this extraction handles, the `§46`/`§48`/`§49` text-shape triad).
 //!
-//! **UPsi's 27% TYPE/ABILITY-agreement finding generalizes, on a much
-//! larger sample.** 87 master records, 378 total `TYPE:`-replaced slots
-//! vs 325 total `ABILITY:`-granted features -- equal counts in only 28
-//! of 87 (32%), close to UPsi's 27% (4 of 15). Confirms this is a real
-//! corpus-wide shape, not a UPsi-specific artifact.
+//! **UPsi's TYPE/ABILITY-disagreement finding generalizes.** 87 master
+//! records, 378 total `TYPE:`-replaced slots vs 337 total `ABILITY:`-
+//! granted features -- equal counts in only 30 of 87 (34%), the same
+//! direction as UPsi's own corrected rate (13%, 2 of 15) though not the
+//! same magnitude -- the exact rate is book-dependent, confirmed across
+//! two books, not assumed to be a fixed constant.
 //!
-//! **322 of 325 sub-feature grants (99%) resolved to real `DESC:`/
-//! `BENEFIT:` text** -- a much cleaner resolution rate than UPsi's 86%
-//! (65 of 76). All 3 shortfalls here are the second kind UPsi's own doc
-//! comment distinguishes (a real row found, carrying neither token, not
-//! a failed `KEY:` lookup): `Mutagenic Mauler ~ Discovery`, `Snakebite
-//! Striker ~ Sneak Attack`, `Snakebite Striker ~ Maneuver Training`.
+//! **333 of 337 sub-feature grants (99%) resolved to real `DESC:`/
+//! `BENEFIT:` text.** All 4 shortfalls are the "found but textless"
+//! kind, named individually: `Mutagenic Mauler ~ Discovery`,
+//! `Snakebite Striker ~ Sneak Attack`, `Snakebite Striker ~ Maneuver
+//! Training`, `Divine Hunter ~ Class Skills`.
 //!
 //! **The `§46`/`§48`/`§49` text-shape triad, run against this book's own
 //! archetype `.MOD` rows.** Sampled several master archetypes' own
@@ -52,7 +52,12 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             source_page: Some("p.75"),
             prerequisites: Some(&["PRECLASS:1,Alchemist=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Alchemist Archetype ~ Inspired Chemist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.AlchemistMutagen]"]),
             replaces: Some(&["AlchemistMutagen"]),
-            grants: &[],
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Inspired Chemist ~ Bonus Feats", at_level: 1, description: Some("An inspired chemist can select Skill Focus (Disable Device, Disguise, Heal, any Knowledge skill, Sense Motive, Spellcraft, or Use Magic Device) in place of a discovery."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Inspired Chemist ~ Bonus Investigator Talents", at_level: 1, description: Some("An inspired chemist can select any two investigator talents in place of a discovery, but can only use these talents while under the effect of an inspiring cognatogen."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Inspired Chemist ~ Inspiring Cognatogen", at_level: 1, description: Some("At 1st level, an inspired chemist learns how to create an inspiring cognatogen, as the inspiring cognatogen discovery. This ability replaces the mutagen class ability. (This means that an inspired chemist cannot create mutagens unless he selects the mutagen discovery)."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Inspired Chemist ~ Bonus Languages", at_level: 1, description: Some("An inspired chemist can learn three languages in place of a discovery."), benefit: None },
+            ],
         },
         // Arcanist Archetype ~ Blade Adept -- acg_abilities_class.lst:2373
         ArchetypeSwapEntry {
@@ -545,6 +550,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             prerequisites: Some(&["PRECLASS:1,Hunter=1", "PREMULT:1,[PREMULT:2,[PREDEITYALIGN:LE],[PREALIGN:LE,LN,NE]],[PREMULT:2,[PREDEITYALIGN:LN],[PREALIGN:LN,LE,LG,TN]],[PREMULT:2,[PREDEITYALIGN:LG],[PREALIGN:LG,NG,LN]],[PREMULT:2,[PREDEITYALIGN:NE],[PREALIGN:NE,LE,CE,TN]],[PREMULT:2,[PREDEITYALIGN:TN],[PREALIGN:TN,LN,CN,NG,NE]],[PREMULT:2,[PREDEITYALIGN:NG],[PREALIGN:NG,TN,LG,CG]],[PREMULT:2,[PREDEITYALIGN:CE],[PREALIGN:CE,NE,CN]],[PREMULT:2,[PREDEITYALIGN:CN],[PREALIGN:CN,TN,CG,CE]],[PREMULT:2,[PREDEITYALIGN:CG],[PREALIGN:CG,CN,NG]]", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Divine Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterClassSkills,TYPE.HunterTeamworkFeats,TYPE.HunterHunterTactics]"]),
             replaces: Some(&["HunterClassSkills", "HunterTeamworkFeats", "HunterHunterTactics"]),
             grants: &[
+                ArchetypeGrant { grants_feature_key: "Divine Hunter ~ Class Skills", at_level: 1, description: None, benefit: None },
                 ArchetypeGrant { grants_feature_key: "Divine Hunter ~ Domain", at_level: 3, description: Some("[PARTIALLY IMPLEMENTED] A divine hunter learns to call upon the power of her deity. The divine hunter must select one domain from those available to her deity. She gains the granted powers of this domain, using her hunter level - 2 as her cleric level for determining when the powers are gained and what effects they have. Once she chooses this domain, it cannot be changed. If the divine hunter selects the animal domain, she does not gain a second animal companion upon reaching an effective cleric level of 4th. When the divine hunter would gain that ability, her animal companion instead gains two ability score increases (gaining +1 to two different ability scores or +2 to one ability score). If her animal companion dies or is released, when she gains a new one, it benefits from this ability score increase. In addition, the divine hunter adds the 1st-level domain spell from her domain to her list of spells known. She adds the 2nd-level domain spell at 6th level, the 3rd-level domain spell at 9th level, the 4th-level domain spell at 12th level, the 5th-level domain spell at 15th level, and the 6th-level domain spell at 18th level."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Divine Hunter ~ Otherworldly Companion", at_level: 3, description: Some("A hunter's companion takes on otherworldly features. If the divine hunter is good (or worships a good deity), the animal companion gains the celestial template. If the hunter is evil (or worships an evil deity), the animal companion gains the fiendish template. If the hunter is neutral and worships a neutral deity, she must choose either the celestial or fiendish template; once this choice is made, it cannot be changed. The companion's CR is considered to be equal to its Hit Dice for the purpose of the celestial or fiendish template."), benefit: None },
             ],
@@ -559,6 +565,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             prerequisites: Some(&["PRECLASS:1,Hunter=1", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Hunter Archetype ~ Feral Hunter],[!PREABILITY:1,CATEGORY=Archetype,TYPE.HunterAnimalCompanion,TYPE.HunterAnimalFocus,TYPE.HunterHunterTactics,TYPE.HunterSpeakWithMaster,TYPE.HunterPreciseCompanion,TYPE.HunterBonusTricks,TYPE.HunterImprovedEmpatheticLink,TYPE.HunterGreaterEmpatheticLink,TYPE.HunterMasterOfTheWild,TYPE.HunterRaiseAnimalCompanion,TYPE.HunterTeamworkFeat6,TYPE.HunterTeamworkFeat9,TYPE.HunterTeamworkFeat12,TYPE.HunterTeamworkFeat15,TYPE.HunterTeamworkFeat18]"]),
             replaces: Some(&["HunterAnimalCompanion", "HunterAnimalFocus", "HunterHunterTactics", "HunterSpeakWithMaster", "HunterPreciseCompanion", "HunterBonusTricks", "HunterImprovedEmpatheticLink", "HunterGreaterEmpatheticLink", "HunterMasterOfTheWild", "HunterRaiseAnimalCompanion", "HunterTeamworkFeat6", "HunterTeamworkFeat9", "HunterTeamworkFeat12", "HunterTeamworkFeat15", "HunterTeamworkFeat18"]),
             grants: &[
+                ArchetypeGrant { grants_feature_key: "Feral Hunter ~ Solitary", at_level: 1, description: Some("Unlike most hunters, a feral hunter does not gain an animal companion."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Feral Hunter ~ Feral Focus", at_level: 1, description: Some("A feral hunter gains a limited ability to change her shape into hybrid animal forms. This functions as the animal focus class feature, except that the hunter always applies the animal aspect to herself, and there is no limit to this ability's duration. She can end this ability as a free action. When a feral hunter uses this ability, her body takes on cosmetic aspects of an animal, such as furry skin, longer nails, elongated teeth, and oddly colored eyes; these changes do not grant her any abilities other than what is stated in the animal focus, and end when she takes on a different aspect or ends the ability. This physical change is a polymorph effect, though the effects of the animal focus are not."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Feral Hunter ~ Precise Summoned Animal", at_level: 2, description: Some("This functions like the precise companion class ability, except the hunter grants all her teamwork feats to all animals she summons with summon nature's ally."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Feral Hunter ~ Wild Shape", at_level: 4, description: Some("A feral hunter gains the ability to change shape. This ability functions like the druid wild shape ability, except the hunter can take only animal forms (not elemental or plant forms). The hunter's effective druid level is equal to her class level."), benefit: None },
@@ -914,7 +921,11 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             source_page: Some("p.109"),
             prerequisites: Some(&["PREMULT:1,[PRECLASS:1,Rogue=1],[PREFACT:1,ABILITIES,ActAsClass_Rogue=true]", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Counterfeit Mage],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueTrapfinding,TYPE.RogueTalent4]"]),
             replaces: Some(&["RogueTrapfinding", "RogueTalent4"]),
-            grants: &[],
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Counterfeit Mage ~ Magical Expertise", at_level: 1, description: Some("A counterfeit mage adds +%1 his level to Disable Device checks to disarm magical traps, Perception checks to find magical traps, and Use Magic Device checks to activate scrolls and wands. A counterfeit mage can use Disable Device to disarm magic traps.|floor(RogueLVL/2)"), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Counterfeit Mage ~ Signature Wand", at_level: 1, description: Some("A counterfeit mage can spend 1 hour practicing with a wand to designate it as his signature wand. He can draw that wand as a free action, and can activate it without having to succeed at a Use Magic Device check. He can change his signature wand once per day."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Counterfeit Mage ~ Wand Adept", at_level: 1, description: Some("A counterfeit mage can use his Dexterity modifier in place of his Charisma modifier when attempting Use Magic Device checks to activate wands."), benefit: None },
+            ],
         },
         // Rogue Archetype ~ Underground Chemist -- acg_abilities_class.lst:3559
         ArchetypeSwapEntry {
@@ -925,7 +936,11 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
             source_page: Some("p.109"),
             prerequisites: Some(&["PREMULT:1,[PRECLASS:1,Rogue=1],[PREFACT:1,ABILITIES,ActAsClass_Rogue=true]", "PREMULT:1,[PREABILITY:1,CATEGORY=Archetype,Rogue Archetype ~ Underground Chemist],[!PREABILITY:1,CATEGORY=Archetype,TYPE.RogueEvasion,TYPE.RogueTalent4,TYPE.RogueAdvancedTalents]"]),
             replaces: Some(&["RogueEvasion", "RogueTalent4", "RogueAdvancedTalents"]),
-            grants: &[],
+            grants: &[
+                ArchetypeGrant { grants_feature_key: "Underground Chemist ~ Chemical Weapons", at_level: 1, description: Some("An underground chemist is able to retrieve an alchemical item as if drawing a weapon. She adds her Intelligence modifier to damage dealt with splash weapons, including any splash damage. She adds +%1 to Craft (alchemy) checks.|floor(RogueLVL/2)"), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Underground Chemist ~ Precise Splash Weapons", at_level: 1, description: Some("An underground chemist can deal sneak attack damage with splash weapons. The attack must be her first attack that round, qualify for dealing sneak attack damage (such as against a flat-footed target), and be directed at a creature rather than a square."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Underground Chemist ~ Discovery", at_level: 1, description: Some("An underground chemist can select one of the following alchemist discoveries (APG p.28) in place of a rogue talent: concentrate poison, dilution, enhance potion, extend potion, mummification, nauseating flesh, poison conversion, preserve organs, spontaneous healing, or sticky poison. She uses her rogue level as her alchemist level for determining the effects of her discoveries and whether she is able to select one."), benefit: None },
+            ],
         },
         // Shaman Archetype ~ Animist -- acg_abilities_class.lst:3586
         ArchetypeSwapEntry {
@@ -1433,22 +1448,23 @@ mod tests {
         }
     }
 
-    /// The finding this table exists to check: does UPsi's TYPE/ABILITY
-    /// disagreement generalize? Confirmed: 32% here vs UPsi's 27%.
+    /// The finding this table exists to check: does UPsi's own
+    /// TYPE/ABILITY disagreement generalize? Confirmed: 34% here vs
+    /// UPsi's corrected 13% -- same direction, book-dependent magnitude.
     #[test]
     fn the_type_and_ability_lists_genuinely_disagree() {
         let total_replaces: usize =
             archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
         let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
         assert_eq!(total_replaces, 378, "total TYPE: replaced-slot count across all 87 records");
-        assert_eq!(total_grants, 325, "total ABILITY: granted-feature count across all 87 records");
+        assert_eq!(total_grants, 337, "total ABILITY: granted-feature count across all 87 records");
         assert_ne!(total_replaces, total_grants);
 
         let equal_count_records = archetype_swap_tables()
             .iter()
             .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
             .count();
-        assert_eq!(equal_count_records, 28, "of 87 -- confirms UPsi's 27% (4 of 15) generalizes (32% here)");
+        assert_eq!(equal_count_records, 30, "of 87 (34%) -- corrected figure, see this module's own doc comment");
     }
 
     #[test]
@@ -1468,6 +1484,6 @@ mod tests {
             .flat_map(|e| e.grants.iter())
             .filter(|g| g.description.is_some() || g.benefit.is_some())
             .count();
-        assert_eq!(resolved, 322, "322 of 325 grants carry real DESC:/BENEFIT: text -- see this module's own doc comment for the 3 that did not");
+        assert_eq!(resolved, 333, "333 of 337 grants carry real DESC:/BENEFIT: text -- see this module's own doc comment for the 4 that did not");
     }
 }

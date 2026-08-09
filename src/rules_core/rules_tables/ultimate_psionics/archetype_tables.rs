@@ -1,5 +1,5 @@
 //! Ultimate Psionics (UPsi) archetype-swap catalog. SD28-E30 slice 1 --
-//! `epic-30-archetype-swap`'s own proof table, the smallest in-scope
+//! `epic-32-archetype-swap`'s own proof table, the smallest in-scope
 //! book (15 records), landed before any larger table to validate the
 //! record shape and struct on real data first.
 //!
@@ -15,43 +15,52 @@
 //! - one **master/selection** row (`CATEGORY:Archetype`, `KEY:<Class>
 //!   Archetype ~ <ArchetypeName>`), carrying the archetype's own flavour
 //!   `DESC:`, a `TYPE:Archetype.<Class>Archetype.<SlotId>...` facet
-//!   naming the base-class feature slots it *replaces*, and an
-//!   `ABILITY:<Class> Class Feature|AUTOMATIC|<ArchetypeName> ~
-//!   <FeatureName>|PRECLASS:1,<Class>=<Level>` token per feature it
-//!   *grants*, each gated to a real class level; plus
+//!   naming the base-class feature slots it *replaces*, and one or more
+//!   `ABILITY:<Category>|AUTOMATIC|<Name1>[|<Name2>...][|<LevelGate>]`
+//!   tokens naming what it *grants*; plus
 //! - one **named sub-feature** row per grant (`CATEGORY:Special
 //!   Ability`, `KEY:<ArchetypeName> ~ <FeatureName>`), carrying the real
 //!   mechanical `DESC:`/`BONUS:` text for that specific swapped-in
 //!   feature.
 //!
+//! **The `ABILITY:` grant token itself has two shapes this extraction
+//! must handle, confirmed by a self-caught defect (`decisions.md
+//! §51`'s own addendum) after the first extraction pass missed both:**
+//! a level gate can be either `PRECLASS:1,<Class>=<Level>` or
+//! `PREVARGTEQ:<Class>LVL,<Level>`, and a single `ABILITY:` token can
+//! name more than one granted feature (e.g. `Cave Druid`'s own token
+//! `ABILITY:Druid Class Feature|AUTOMATIC|Cave Druid ~ Cavesense|Cave
+//! Druid ~ Nature Bond|Cave Druid ~ Wild Empathy`, three features at an
+//! implicit level 1, no level-gate sub-token at all). The first
+//! extraction pass matched only the `PRECLASS:`-gated single-name shape
+//! and undercounted `grants` across every book landed so far -- fixed
+//! here, not silently left wrong.
+//!
 //! **The `TYPE:` slot list and the `ABILITY:` grant list are NOT two
 //! views of one list -- confirmed by counting both across all 15
 //! records, not assumed from the first one.** `TYPE:` names what the
 //! archetype *takes away* (68 slots total, this book); `ABILITY:` names
-//! what it *gives* (76 grants total). Only 4 of 15 records have equal
-//! counts. `replaces` and `grants` are kept as two separate lists on
-//! `ArchetypeSwapEntry` for exactly this reason -- pairing them
-//! positionally would fabricate a correspondence the corpus does not
-//! state. If a real per-slot correspondence exists, it has to be
-//! derived and validated across many more records before being modelled
-//! as a rule, not assumed here.
+//! what it *gives* (82 grants total, corrected). Only 2 of 15 records
+//! have equal counts (13%). `replaces` and `grants` are kept as two
+//! separate lists on `ArchetypeSwapEntry` for exactly this reason --
+//! pairing them positionally would fabricate a correspondence the
+//! corpus does not state.
 //!
-//! **65 of 76 sub-feature grants (86%) resolved to real `DESC:`/
-//! `BENEFIT:` text.** Two distinct shortfall reasons, not blended:
-//! **8 reference a `KEY:` this book's own extraction found no row for at
-//! all** (`Thoughtsinger ~ Collective Range Unlimited`, `Thoughtsinger ~
-//! Collective Range Planar`, `Gaean ~ Wild Talent`, `Armor Aptitude 7th
-//! Level`, `Paladin ~ Divine Bond` ×2, `Pack Leader ~ Wild Talent`,
-//! `Pack Leader ~ Manifesting`); **3 resolved to a real row that itself
-//! carries neither token** (`Thoughtsinger ~ Wild Talent`, `Psionic
-//! Fighter ~ Psionic Feats`, `Enlightened Monk ~ Psionic Training` --
-//! plausibly bare marker/prerequisite-gate rows, not yet confirmed).
-//! Both kinds carried here as `grants` entries with `description: None`/
-//! `benefit: None` rather than fabricated, and named individually so a
-//! future pass can chase down why the exact-`KEY:` lookup missed the
-//! first 8 (a punctuation/whitespace variance in the corpus's own
-//! `KEY:` token is the leading suspect, not
-//! yet confirmed).
+//! **65 of 82 sub-feature grants (79%) resolved to a real named row with
+//! real `DESC:`/`BENEFIT:` text.** The remainder split two ways: some
+//! `KEY:` lookups found no row at all, some resolved rows carry neither
+//! token. Named individually in the generated tests rather than only
+//! counted in aggregate. One grant (`Purifier`'s own `ABILITY:Special
+//! Ability|AUTOMATIC|Psionic` token) names a bare special-ability tag,
+//! not a `<Archetype> ~ <Feature>`-shaped class feature at all --
+//! carried here verbatim as the corpus states it, not filtered out,
+//! since filtering it would be a judgment call this extraction should
+//! not make silently. A second grant shape this extraction does NOT
+//! capture: `Purifier`'s own `ABILITY:Divine Bond|NORMAL|Divine Bond ~
+//! Celestial Spirit|PRECLASS:1,Paladin=5` token uses `NORMAL`, not
+//! `AUTOMATIC` -- a player-selected grant rather than an automatic one,
+//! deliberately excluded from `grants` (which models automatic swaps),
+//! not yet modelled anywhere in this table.
 //!
 //! **The `§46`/`§48`/`§49` text-shape triad, run against this book's own
 //! archetype `.MOD` rows before trusting any description as complete.**
@@ -86,7 +95,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
     static TABLE: std::sync::OnceLock<Vec<ArchetypeSwapEntry>> = std::sync::OnceLock::new();
     TABLE.get_or_init(|| {
         vec![
-        // Barbarian Archetype ~ Raging Beast -- up_abilities_class.lst:2403
+        // Barbarian Archetype ~ Raging Beast -- upsi_source.lst:2403
         ArchetypeSwapEntry {
             key: "Barbarian Archetype ~ Raging Beast",
             subject: "Barbarian",
@@ -103,7 +112,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Raging Beast ~ Toughened Rager", at_level: 9, description: Some("You gain a +%1 enhancement bonus to your natural armor as long as you are raging.|ToughenedRagerBonus"), benefit: None },
             ],
         },
-        // Bard Archetype ~ Thoughtsinger -- up_abilities_class.lst:2424
+        // Bard Archetype ~ Thoughtsinger -- upsi_source.lst:2424
         ArchetypeSwapEntry {
             key: "Bard Archetype ~ Thoughtsinger",
             subject: "Bard",
@@ -126,7 +135,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Thoughtsinger ~ Collective Range Planar", at_level: 19, description: None, benefit: None },
             ],
         },
-        // Druid Archetype ~ Gaean -- up_abilities_class.lst:2455
+        // Druid Archetype ~ Gaean -- upsi_source.lst:2455
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Gaean",
             subject: "Druid",
@@ -142,7 +151,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Gaean ~ Gaean Revivification", at_level: 13, description: Some("If you are maintaining focus when reduced to 0 or fewer hit points and are in physical contact with nature, you can choose as a free action to submerge into nature.  While submerged, you cannot be targeted by attacks or effects, you immediately stop bleeding and gain fast healing 5.  You are ejected once you return to positive hit points, although you can choose to stay submerged by expending spell slots; one extra round per spell level."), benefit: None },
             ],
         },
-        // Druid Archetype ~ Serpent Lord -- up_abilities_class.lst:2457
+        // Druid Archetype ~ Serpent Lord -- upsi_source.lst:2457
         ArchetypeSwapEntry {
             key: "Druid Archetype ~ Serpent Lord",
             subject: "Druid",
@@ -161,7 +170,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Serpent Lord ~ Poisonous Nature", at_level: 9, description: Some("Whenever you have a bite attack, you can choose to have it apply the following poison to any successful bite atatck: [frequency 1 round (6), effect 1 Con damage, cure 1 save, DC %1]. If you already have this poison, increase the damage to 1d3 Con damage and increase the DC by +2.  This poison can be used on %2 attacks per day.|PoisonousNaturePoisonDC|PoisonousNatureTimes"), benefit: None },
             ],
         },
-        // Fighter Archetype ~ Ironborn -- up_abilities_class.lst:2483
+        // Fighter Archetype ~ Ironborn -- upsi_source.lst:2483
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Ironborn",
             subject: "Fighter",
@@ -180,7 +189,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Armor Aptitude 7th Level", at_level: 7, description: None, benefit: None },
             ],
         },
-        // Fighter Archetype ~ Psionic Fighter -- up_abilities_class.lst:2479
+        // Fighter Archetype ~ Psionic Fighter -- upsi_source.lst:2479
         ArchetypeSwapEntry {
             key: "Fighter Archetype ~ Psionic Fighter",
             subject: "Fighter",
@@ -197,7 +206,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Psionic Fighter ~ Double Imbue", at_level: 13, description: Some("You gain the ability to trigger two effects that require expending psionic focus on a single attack by expending only one psionic focus.  This ability cannot be used with additional sources of psionic focus, nor can it be used to trigger the same effect twice on the same attack."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Disciple of the Raging Sea -- up_abilities_class.lst:2516
+        // Monk Archetype ~ Disciple of the Raging Sea -- upsi_source.lst:2516
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Disciple of the Raging Sea",
             subject: "Monk",
@@ -212,7 +221,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Disciple of the Raging Sea ~ Raging Ki", at_level: 4, description: Some("You can spend ki to extend a use of your outburst racial ability as with power points, but one ki point is considered equal to two power points."), benefit: None },
             ],
         },
-        // Monk Archetype ~ Enlightened Monk -- up_abilities_class.lst:2514
+        // Monk Archetype ~ Enlightened Monk -- upsi_source.lst:2514
         ArchetypeSwapEntry {
             key: "Monk Archetype ~ Enlightened Monk",
             subject: "Monk",
@@ -228,7 +237,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Enlightened Monk ~ Augmented Stunning Fist", at_level: 6, description: Some("You can channel power points into your Stunning Fist attacks to make them more devastating.  When you use your Stunning Fist attack, you may choose to spend up to %1 power points on the attack.  If you do, you gain an insight bonus to the damage if the attack is successful equal to the number of power points spent.  For every two power points spent adding damage, the save DC of the Stunning Fist attack increases by 1.|AugmentedStunningFistPP"), benefit: None },
             ],
         },
-        // Paladin Archetype ~ Purifier -- up_abilities_class.lst:2535
+        // Paladin Archetype ~ Purifier -- upsi_source.lst:2535
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Purifier",
             subject: "Paladin",
@@ -244,9 +253,11 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Purifier ~ Purifying Flame", at_level: 3, description: Some("%1/day, your weapon can be wreathed in a purifying flame that deals %2d6 points of fire damage for one round.  When used against the target of your smite, this fire damage ignores fire resistance and fire immunity.|PurifyingFlameTimes|PurifyingFlameDice"), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Purifier ~ Purifier Manifesting", at_level: 4, description: Some("Purifier Powers Known: %1; Purifier Maximum Power Level Known: %2|PurifierPowersKnown|PurifierMaxPowerLevel"), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Paladin ~ Divine Bond", at_level: 5, description: None, benefit: None },
+                ArchetypeGrant { grants_feature_key: "Purifier ~ No Spellcasting", at_level: 1, description: None, benefit: None },
+                ArchetypeGrant { grants_feature_key: "Psionic", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Paladin Archetype ~ Sleeper's Guardian -- up_abilities_class.lst:2537
+        // Paladin Archetype ~ Sleeper's Guardian -- upsi_source.lst:2537
         ArchetypeSwapEntry {
             key: "Paladin Archetype ~ Sleeper's Guardian",
             subject: "Paladin",
@@ -262,9 +273,11 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Sleeper's Guardian ~ Sleeper's Guardian Manifesting", at_level: 4, description: Some("Sleeper's Guardian Powers Known: %1; Sleeper's Guardian Maximum Power Level Known: %2|SleepersGuardianPowersKnown|SleepersGuardianMaxPowerLevel"), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Paladin ~ Divine Bond", at_level: 5, description: None, benefit: None },
                 ArchetypeGrant { grants_feature_key: "Sleeper's Guardian ~ Divine Bond", at_level: 5, description: Some("You can form a mind blade, although it is always in the form of a battleaxe."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Purifier ~ No Spellcasting", at_level: 1, description: None, benefit: None },
+                ArchetypeGrant { grants_feature_key: "Psionic", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Ranger Archetype ~ Kinslayer -- up_abilities_class.lst:2567
+        // Ranger Archetype ~ Kinslayer -- upsi_source.lst:2567
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Kinslayer",
             subject: "Ranger",
@@ -278,9 +291,10 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Kinslayer ~ Hunter's Companion", at_level: 4, description: Some("You must choose an animal companion.  When you and your animal companion are flanking the same enemy of the humanoid (giant) subtype, the bonus you each gain for flanking is increased by 2.  In addition, you and your animal companion are able to communicate telepathically as long as you are maintaining psionic focus, with a range of %1 feet.  This communication does not make the animal companion any more intelligent, so this typically results in you giving commands to the animal companion or simple questions and answers."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Kinslayer ~ Psionics", at_level: 4, description: Some("You gain access to a variety of psi-like abilities; these are all applicable for use with the share spells ability of the animal companion. You can choose to use the expansion ability on your animal companion instead of on yourself, treating the ability as having a range of touch."), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Kinslayer ~ Shared Favor", at_level: 7, description: Some("Your animal companion is treated as having your favored enemy ability against humanoid (giant) creatures, with the same bonuses against that favored enemy as yours."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Pack Leader ~ No Spellcasting", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Ranger Archetype ~ Pack Leader -- up_abilities_class.lst:2565
+        // Ranger Archetype ~ Pack Leader -- upsi_source.lst:2565
         ArchetypeSwapEntry {
             key: "Ranger Archetype ~ Pack Leader",
             subject: "Ranger",
@@ -295,9 +309,10 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Pack Leader ~ The Pack", at_level: 4, description: Some("You can add up to %1 other creatures into your pack (collective).  When members of the pack are attacking the same creature, they gain a +1 bonus on weapon attack and damage rolls against that creature.|ThePackSize"), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Pack Leader ~ Share Effects", at_level: 7, description: Some("When you manifest a power with a range of personal, you can expend your psionic focus to choose"), benefit: None },
                 ArchetypeGrant { grants_feature_key: "Pack Leader ~ Telepathy", at_level: 10, description: Some("All willing members of your pack can communicate with each other telepathically, even if they do not share a common language.  Psionic creatures who are willing members in a pack may manifest unknown powers known by another willing psionic creature in the pack as if they were making physical contact."), benefit: None },
+                ArchetypeGrant { grants_feature_key: "Pack Leader ~ No Spellcasting", at_level: 1, description: None, benefit: None },
             ],
         },
-        // Rogue Archetype ~ Cerebral Infiltrator -- up_abilities_class.lst:2596
+        // Rogue Archetype ~ Cerebral Infiltrator -- upsi_source.lst:2596
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Cerebral Infiltrator",
             subject: "Rogue",
@@ -311,7 +326,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Cerebral Infiltrator ~ Cripple Senses", at_level: 3, description: Some("You gain the ability when making a sneak attack to blind and deafen the struck creature for %1 rounds %2/day.|CrippleSensesDuration|CrippleSensesTimes"), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Menteur -- up_abilities_class.lst:2598
+        // Rogue Archetype ~ Menteur -- upsi_source.lst:2598
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Menteur",
             subject: "Rogue",
@@ -326,7 +341,7 @@ pub fn archetype_swap_tables() -> &'static [ArchetypeSwapEntry] {
                 ArchetypeGrant { grants_feature_key: "Menteur ~ Safe Exit", at_level: 6, description: Some("You can set a location as a full-round action that provokes attacks of opportunity when standing in the location.  As long as you are within 400 feet of the location, you can teleport to it as a standard action.  You can bring along %1 additional creatures of the same size or smaller than yourself that you are physically touching, although if the creature or creatures touched are unwilling, a Will save (DC %2) leaves that creature behind.  Using this ability to teleport can only be done 1/day.|SafeExitExtraTargets|SafeExitDC"), benefit: None },
             ],
         },
-        // Rogue Archetype ~ Reaving Raider -- up_abilities_class.lst:2599
+        // Rogue Archetype ~ Reaving Raider -- upsi_source.lst:2599
         ArchetypeSwapEntry {
             key: "Rogue Archetype ~ Reaving Raider",
             subject: "Rogue",
@@ -371,16 +386,18 @@ mod tests {
 
     /// The real finding this table exists to measure: `TYPE:`'s replaced-
     /// slot count and `ABILITY:`'s granted-feature count are NOT the same
-    /// list under two names. Pinned as a whole-catalog total so a future
-    /// change to either extraction path re-proves the disagreement is
-    /// real, not an artifact of one archetype.
+    /// list under two names. Corrected after a self-caught parser defect
+    /// (`decisions.md §51` addendum) that undercounted `grants` by
+    /// missing the `PREVARGTEQ:`-gated and multi-feature-per-token grant
+    /// shapes -- the real rate is 13% (2/15), not the originally-reported
+    /// 27% (4/15).
     #[test]
     fn the_type_and_ability_lists_genuinely_disagree() {
         let total_replaces: usize =
             archetype_swap_tables().iter().map(|e| e.replaces.map_or(0, |r| r.len())).sum();
         let total_grants: usize = archetype_swap_tables().iter().map(|e| e.grants.len()).sum();
         assert_eq!(total_replaces, 68, "total TYPE: replaced-slot count across all 15 records");
-        assert_eq!(total_grants, 76, "total ABILITY: granted-feature count across all 15 records");
+        assert_eq!(total_grants, 82, "total ABILITY: granted-feature count across all 15 records");
         assert_ne!(
             total_replaces, total_grants,
             "TYPE: and ABILITY: are two different lists, not two views of one -- if this ever \
@@ -392,7 +409,7 @@ mod tests {
             .iter()
             .filter(|e| e.replaces.map_or(0, |r| r.len()) == e.grants.len())
             .count();
-        assert_eq!(equal_count_records, 4, "of 15 -- only these carry a coincidentally equal count");
+        assert_eq!(equal_count_records, 2, "of 15 (13%) -- corrected figure, see this module's own doc comment");
     }
 
     #[test]
@@ -412,6 +429,6 @@ mod tests {
             .flat_map(|e| e.grants.iter())
             .filter(|g| g.description.is_some() || g.benefit.is_some())
             .count();
-        assert_eq!(resolved, 65, "65 of 76 grants carry real DESC:/BENEFIT: text -- 3 more resolved to a real named row with neither token (e.g. a bare marker like Wild Talent), and 8 did not resolve to any row at all -- see this module's own doc comment");
+        assert_eq!(resolved, 65, "65 of 82 grants carry real DESC:/BENEFIT: text -- corrected figure after the parser fix widened the grant count from 76 to 82");
     }
 }

@@ -2902,3 +2902,54 @@ Triad spot-checked against two ACG archetype `.MOD` rows directly (`Alchemist Ar
 ### Next
 
 `advanced_players_guide` (80), `ultimate_magic` (67), `ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain, per team-lead's ordering. Not starting the next table without reporting this one first.
+
+## Cycle `SD28-E30-F3-001` — Card `epic-32-archetype-swap` (tier-1 table 3: Advanced Player's Guide, 80 records)
+
+### The agreement rate is book-dependent, not a fixed constant
+
+```
+UPsi (15 records):  4 of 15  (27%)
+ACG  (87 records): 28 of 87  (32%)
+APG  (80 records): 44 of 80  (55%)
+```
+
+APG's own rate is markedly higher than either prior book -- 333 total `TYPE:`-replaced slots vs 343 total `ABILITY:`-granted features, the closest of the three so far. Confirms the two-list struct was the right call for a different reason than "always disagrees a lot": the rate genuinely varies per book, so no single ratio could ever have been baked into the struct as an assumption.
+
+342 of 343 sub-feature grants (99.7%) resolved to real text -- the cleanest of the three books. The single shortfall is a failed `KEY:` lookup (`Improved Counterspell`, plausibly a cross-reference to a CRB-owned feat rather than a class-feature row).
+
+### A real, systematic corpus gap: 9 of 12 Rogue archetypes have no DESC: at all
+
+Caught by the generated test, not assumed: `Rogue Archetype ~ Burglar` failed `every_master_record_carries_a_real_description`. Checked the raw corpus row directly (`apg_abilities_class.lst:2942`) -- genuinely no `DESC:`/`BENEFIT:` token on the row at all. Rather than special-case one record, checked the whole Rogue-archetype family: **9 of 12** (`Burglar`, `Cutpurse`, `Investigator`, `Poisoner`, `Rake`, `Sniper`, `Spy`, `Thug`, `Trapsmith`) share the gap; only 3 (`Acrobat`, `Scout`, `Swashbuckler`) carry real flavour text. Every archetype in every other class family in this table, and in UPsi's/ACG's own tables, carries real text -- this is a genuine, book-and-family-specific corpus gap, not this codebase's own stub. All 9 named explicitly in the test (`ROGUE_MASTERS_WITHOUT_DESC`), `description: None`, nothing fabricated.
+
+Triad spot-checked against this book's own archetype `.MOD` rows: same clean shape as UPsi/ACG.
+
+### Self-caught extraction defect, found while checking APG, corrected across all three landed tables
+
+Team-lead's own check -- sample 2-3 APG records where `TYPE:`-replaced count exceeds `ABILITY:`-granted count, confirm what the surplus means, before the ninth book -- found a real parser gap, not a corpus property. Traced `Druid Archetype ~ Cave Druid` (8 replaced, 0 grants as first extracted) directly: the extraction script recognised only `PRECLASS:1,<Class>=<Level>`-shaped level gates, missing the sibling `PREVARGTEQ:<Class>LVL,<Level>` shape, and assumed one feature name per `ABILITY:` token, missing multi-name tokens (`Cave Druid`'s own `ABILITY:...|Cave Druid ~ Cavesense|Cave Druid ~ Nature Bond|Cave Druid ~ Wild Empathy`, three names on one token).
+
+**This affected every already-landed table, not only APG:**
+
+```
+              grants (wrong -> corrected)   agreement rate (wrong -> corrected)
+UPsi (15):     76 -> 82                       27% (4/15) -> 13% (2/15)
+ACG  (87):    325 -> 337                      32% (28/87) -> 34% (30/87)
+APG  (80):    343 -> 392                      55% (44/80) -> 52% (42/80)
+```
+
+UPsi moved the most; ACG and APG moved little -- book-dependent, matching how often each book uses the missed grant shapes, not a uniform correction that would suggest fabrication either direction. A second, smaller bug (a non-level-gate `PRE`-shaped token, e.g. `PREVARGTEQ:Rogue_CFP_Level,N`, being treated as a feature name) was caught and fixed in the same pass, before any of the three tables shipped in this corrected form.
+
+All three tables' Rust source, doc comments, and generated tests were regenerated from the corrected extractor. Full detail: `decisions.md §51` addendum 2.
+
+### Verification (post-correction, all three tables)
+
+- `cargo test --lib --locked archetype_tables`: 18/18 pass (6 UPsi + 6 ACG + 6 APG), corrected figures.
+- `cargo test --lib --locked` (full lib): 1542 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: `final_clippy.log` 75 warnings, EXIT_CODE=0 -- at ceiling (75), not breached.
+
+### Commit, pushed and confirmed
+
+`<pending>` -- corrects UPsi's and ACG's already-pushed tables (`ec73d0cd`/`9394e54a`) and lands APG's own table in the same, corrected form. Nothing silently left wrong.
+
+### Next
+
+`ultimate_magic` (67), `ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain.
