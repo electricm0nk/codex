@@ -3016,3 +3016,44 @@ UPsi's agreement rate has been reported 27% → 13% → 33% across three derivat
 ### Next
 
 `ultimate_combat` (65), `advanced_race_guide` (59), `ultimate_wilderness` (30) remain.
+
+## Cycle `SD28-E30-F5-001` — Card `epic-32-archetype-swap` (tier-1 table 5: Ultimate Combat, 65 records)
+
+### No convergence, confirmed the fifth way
+
+```
+UPsi 33%   ACG 33%   APG 52%   UM 27%   UC 22%
+```
+
+Per team-lead's own framing, this is the conclusion, not a pending question: **`TYPE:`/`ABILITY:` disagree in the majority of records in every book measured, at a book-dependent rate roughly between a fifth and a half.** No further book changes that durable claim; five distinct values across five books is the finding, not noise to average away.
+
+### The lowest text-resolution rate of any table so far, and why
+
+294 of 354 sub-feature grants (83%) resolved to real text -- lower than every prior table. 60 unresolved, broken into named causes rather than left as a blob:
+
+```
+ 9  "Weapon and Armor Proficiency"-named grants, no separate row anywhere in this book
+15  shared unresolved names, 3 sibling Druid Shaman-totem archetypes (same pattern APG/UM found)
+ 2  real cross-book feat references (Armor Proficiency (Light), Improved Unarmed Strike)
+ 3  "No Cantrips ~ Wizard" bare markers
+ 2  found rows with neither DESC:/BENEFIT:
+29  individual failed KEY: lookups, not clustered
+```
+
+The 9 "Weapon and Armor Proficiency" grants are a new shape -- plausibly implemented via bare `WEAPONPROF:`/`ARMORPROF:` tokens on another row rather than a named class-feature row, not yet confirmed. Named in the module doc comment as an open question rather than guessed at.
+
+**UC's own `.MOD`-injection share: 147 rows, second-largest of the 1,282-row population** (behind only ACG's 251) -- stated explicitly per team-lead's standing instruction that this caveat is not boilerplate.
+
+### Verification
+
+- `cargo test --lib --locked archetype_tables`: 33/33 pass (7 UPsi + 6 ACG + 6 APG + 7 UM + 7 UC).
+- `cargo test --lib --locked` (full lib): 1557 passed, 0 failed, 3 ignored.
+- Clippy, gate's own method: `uc_arch_clippy.log` 75 warnings, EXIT_CODE=0 -- at ceiling (75), not breached.
+
+### Commit, pushed and confirmed
+
+`<pending>`.
+
+### Next
+
+`advanced_race_guide` (59), `ultimate_wilderness` (30) remain -- the last two tier-1 tables.
