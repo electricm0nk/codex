@@ -3135,3 +3135,28 @@ Both sized by a real corpus-wide command, both named with their own per-book bre
 ### Kanban
 
 `epic-32-archetype-swap` stays `IN-FLIGHT` -- tier-1 data ingestion (piece 1) is complete; pieces 2/3 (`pilot_compute.rs` integration) remain blocked on `forward-scope-register.md §C4.8`. Standing by for a fresh assignment. Not proceeding to `pilot_compute.rs` integration, a second tier of data, or any other epic without one.
+
+## SD28-E15-001 -- `epic-15-unknown-sweep`: characterising the `unknown`-status bucket's option-pool majority (2026-08-09)
+
+**Assignment:** determine what the 3,734-unit `unknown` classifier bucket contains, using the archetype-swap tables from `epic-32` as a tool. Constraints: screen by `KEY:` prefix not `TYPE:`; expect the archetype-attributable count to move once screened correctly; leave the 307-unit feat-side bucket for later; report composition before changing any classifier behaviour; do not move any unit's status until team-lead has seen and approved the evidence.
+
+**Composition:** 3,427 `class_feature_group_names_no_class_at_all` + 307 `in_catalog_with_corpus_magnitude_but_no_observed_consumer` (deferred). Of the 3,427, matching against `epic-32`'s 403 tier-1 archetype names accounts for 438 (13%) as real archetype tier-2 content. The remaining 2,989 (87%) is class-native option-pool content (Domain, Bloodline, Favored Enemy/Terrain, Discovery, Inquisition, Rage Power, Performance, Rogue Talent, Maneuver Training, Mystery, Eidolon evolutions) plus Vigilante's own 233 unmodelled talent-tree units -- a population that trips the same `KEY:`-prefix classifier trigger as archetype sub-features but is structurally different (class-native choosers, not archetype swaps).
+
+**Method developed and applied to three families** (the deliverable, not just the answer): (1) grep the family's choice-set id and per-option constants to confirm the chooser is real; (2) read for an explicit `ComputationDiagnostic`/`unsupported` message -- this codebase names its own gaps inline, stronger evidence than any grep hit-count; (3) a high hit-count is not coverage (Domain: 166 hits, 1 real candidate); (4) only a named positive grounding function, confirmed via a real consumer (test, live adapter, or a wired compute-pipeline call site with real formula inputs), counts as reachable.
+
+**Per-family results, individually, not blended:**
+- Domain: 166 total, 1 candidate (0.6%) -- `Touch of Good`, reach-checked live via `tests/sd13_cleric_domain_powers.rs` (6/6, positive + negative case) and `pf1_adapter.rs`'s `active_touch_of_good_bonus`.
+- Oracle Mystery: 134 total (corrected from an initial 58-unit estimate by re-querying `work-inventory.json` directly), 2 candidates (1.5%) -- Life Mystery's Healing Hands and Channel (`ground_or_block_oracle_mystery`, `pilot_compute.rs:13223`; Channel's three formulas wired into the compute flow at 13570-13605).
+- Sorcerer/Bloodrager Bloodline: 152 total, ~10 candidates (6.6%) -- self-caught mid-analysis that the family is mostly Bloodrager's bloodlines (a different class), not Sorcerer's, despite the shared name; Bloodrager has a real computed exception (`ground_bloodrager_arcane_bloodline`) where Sorcerer is blanket-blocked.
+
+**Headline finding:** canonical-narrowing -- one chooser, one-to-few genuinely computed options, everything else named-and-blocked by an in-code diagnostic -- holds independently across all three families, reported as a durable engine-design pattern, not a per-family accident. Per team-lead's own stopping criterion (three families, stop regardless of outcome), family-by-family work stops here. Full evidence and the per-family table: `decisions.md §52`.
+
+**No unit's status was changed.** The still-unclustered 1,772-unit remainder (908 distinct low-count prefixes) and the deferred 307-unit feat-side bucket remain open, out of this cycle's scope.
+
+### Verification
+
+No engine code was touched this cycle -- read-only analysis over `docs/work-inventory.json`, `pilot_compute.rs`, `pf1_adapter.rs`, and existing tests. No new build/test/clippy run required; relying on the existing green state confirmed at the close of `epic-32`.
+
+### Commit
+
+Docs-only change (`decisions.md §52`, this `progress.md` entry, kanban). To be committed and pushed with SHA confirmation alongside the kanban update below.
