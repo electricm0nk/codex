@@ -3184,3 +3184,25 @@ Read-only analysis over `docs/work-inventory.json`, `pilot_compute.rs`, and the 
 ### Commit
 
 Docs-only change (`decisions.md §53`, this entry). To be committed and pushed with SHA confirmation, then reported to team-lead before starting the 307-unit feat-side bucket.
+
+## SD28-E15-003 -- `epic-15-unknown-sweep`: the 307-unit feat-side bucket, reachability method (2026-08-09)
+
+**Assignment:** the deferred `in_catalog_with_corpus_magnitude_but_no_observed_consumer` feat bucket, using the `Touch of Good` reachability template -- an ingested record with a real consumer is reachable; one without is not, and "no observed consumer" is a claim about the probe's observation, not necessarily about the code.
+
+**Different evidence shape from the option-pool families:** 307 independent feats, no single chooser to anchor a check on, so the method scans for a real consumer per unit. Two proxies: literal display-name string match (22/307) and slug/id-style match (28/307 combined) -- the slug pass was necessary, proven by `Power Attack` itself (grounded via `POWER_ATTACK_ITEM_ID`, never the literal string).
+
+**Individual walk on all 28 hits caught 4 false positives** from the slug scan's loose substring matching (`Stalwart` matched a doc comment; `Discovery (Opposition Research)`/`(Split Slot)` matched nothing real; `Toughness (Vigor/Wounds)` matched the base `Toughness` feat's own test, a different corpus record) -- corrected before reporting rather than left in the count.
+
+**24/307 (8%) confirmed reachable** with real code and call sites, spot-checked against surrounding context, not the string hit alone -- including `Extra Stamina`, found only by reading code near a false-positive-adjacent hit, referenced by neither proxy's own name match. 2 of the 24 (Extra Performance, Extra Lay On Hands) are already at full candidate-grade evidence (a real test proving the exact corpus magnitude); the other 22 have real wired code but no live-consumer confirmation yet.
+
+**~283 units have no hit under either proxy and no code found on inspection.** Not extrapolated as confirmed-unreachable -- both proxies already missed two real grounding functions once each (Power Attack, Extra Stamina) before being corrected for -- but no further naming-convention hunt attempted past these two passes; that stopping point is stated explicitly.
+
+**No unit's status changed.** Full detail and the 24-unit table: `decisions.md §54`.
+
+### Verification
+
+Read-only analysis over `docs/work-inventory.json` and `pilot_compute.rs` (literal-string scan, slug scan, and individual context reads on every hit). No engine code touched; no new build/test/clippy run required.
+
+### Commit
+
+Docs-only change (`decisions.md §54`, this entry, kanban). To be committed and pushed with SHA confirmation.
