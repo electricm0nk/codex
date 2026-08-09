@@ -3117,7 +3117,7 @@ UW's own rate (30%, 9/30) is the closest any book has come to equal `TYPE:`/`ABI
 
 ### Commit, pushed and confirmed
 
-`<pending>`.
+`a91883ae` -- Ultimate Wilderness archetype-swap table, SD28-E30 tier-1 table 7 (final), (3 files, +694). Confirmed by `git rev-parse HEAD origin/tranche/8` matching after push.
 
 ### Closing the tier-1 set: what shipped, what is blocked, what is counted-but-deferred
 
