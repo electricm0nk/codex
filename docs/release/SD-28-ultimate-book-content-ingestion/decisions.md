@@ -1466,3 +1466,30 @@ ultimate_wilderness    NO equipment_tables.rs file   (genuinely nothing landed)
 **Verification:** `cargo build --locked --bins`: clean. `cargo test --lib --locked`: 1,572 passed, 0 failed, 3 ignored. `cargo test --locked --no-fail-fast` (full suite, including the corrected `tests/v06_work_inventory.rs`): all green, 0 failures across every target. Regenerated `docs/work-inventory.json` via `cargo run --locked --bin v06_work_inventory` against the real local PCGen checkout.
 
 **Disposition: fixed structurally, verified against real content in both directions (promoted and residue), test regression diagnosed to its real cause and strengthened rather than papered over. No unit's status was fabricated -- every promoted unit's real table row was independently confirmed present; every residue unit's absence was independently confirmed real.**
+
+## Decision 56 — SD28-E15: `classify()`'s `Kind::RaceTrait` arm matches by trait name only, unscoped to book or race -- 6 of the program's 45 `grounded` race traits are name-coincidence false positives, and no book but CRB has a real race-trait ingest path at all (2026-08-09)
+
+**Found while scoping the UPsi `race_trait` slice, not by design.** Attempting to plan a "~145-unit real closable UPsi race_trait ingest slice" (`§53`'s own re-derivation) surfaced that this program has never built a per-book race-trait data table for ANY book -- confirmed by search: `rules_tables/` carries a `race_traits()` function in exactly one place, `crb::race_tables.rs`. Every other book's `race_trait`-kind corpus units have no table to be ingested into.
+
+**Root cause, traced in `v06_work_inventory.rs`.** `classify()`'s `Kind::RaceTrait` arm (`:1744-1758`) and its supporting fact `race_trait_ids` (`:1404`, built solely from `crb::race_tables::race_traits()`) together implement exactly one check: for a candidate unit named `<trait>`, is `<race>.<slug(trait)>` present in `race_trait_ids` for **any** CRB race `r`, regardless of which race the corpus unit itself actually belongs to and regardless of which book it came from? The match is on trait **name alone** -- there is no book-scope gate and no race-identity gate on this arm (contrast `Kind::Race`/`Kind::Monster`, both of which DO gate on `book ==` the owning book, a few lines above this same match block).
+
+**Sized program-wide:** 8,600 `race_trait` units total, 45 `grounded`. 39 are `core_essentials` (CRB's own book -- a real, in-scope match by construction). **6 are outside CRB, and are name-coincidence false positives, not real grounding:**
+
+```
+ultimate_psionics    Blue ~ Keen Senses        -- matches Elf's own CRB "Keen Senses"; Blue is not an Elf
+ultimate_psionics    DuergarDSP ~ Hardy        -- matches Dwarf's own CRB "Hardy"; Duergar is not the CRB Dwarf record
+ultimate_psionics    DuergarDSP ~ Stability    -- matches Dwarf's own CRB "Stability"; same
+ultimate_psionics    Forgeborn ~ Fearless      -- matches Halfling's own CRB "Fearless"; Forgeborn is not a Halfling
+bestiary             Mite ~ Hatred             -- matches Gnome's own CRB "Hatred"; Mite is a monstrous humanoid, not a Gnome
+advanced_race_guide  Saltbeard ~ Dwarf ~ Greed -- matches Dwarf's own CRB "Greed"; NOTE this one names "Dwarf" inside its own
+                                                   corpus key, so it may be RAW-intentional (a Dwarf ethnicity/heritage variant
+                                                   reusing the parent race's trait) rather than pure coincidence -- flagged as
+                                                   the one ambiguous case among the six, not folded into the same bucket without
+                                                   comment
+```
+
+**Why this matters beyond the six units.** The underlying mechanism -- name match standing in for an identity check -- is the same defect family `§54` already found on `Toughness (Vigor/Wounds)` matching plain `Toughness` (a different feat entirely, matched only because the display-name proxy could not distinguish a variant from its base record). This is the **seventh** instrument failure this epic has surfaced, and the first to be a false POSITIVE in the program's own classifier (`grounded` claimed where no real per-book grounding exists) rather than a false negative in a measurement proxy. Any of these 6 units, if read at face value from the dashboard, would be reported as a real, working, book-specific race-trait computation -- it is not; it is an accident of two unrelated races happening to share a trait's display name.
+
+**No status changed.** This decision is a finding for whoever scopes the real per-book race-trait mechanism next, not a fix landed here -- consistent with `§43`'s standard (reachability requires the engine to hold the record AND a real consumer to observe it; a name coincidence is neither). The real remedy is a genuine per-book, per-race-scoped race-trait ingest path (the `epic-15` blocker reported before this decision), which is real engine-design work, not a data-table slice this epic can pick up incidentally.
+
+**Cross-reference:** `§53` (the UPsi 310->~145 re-derivation that led here), `§54` (the sixth instrument failure, same name-vs-identity shape), `§55` (the equipment-classifier structural fix landed the same cycle, a different mechanism producing the same shape of defect).

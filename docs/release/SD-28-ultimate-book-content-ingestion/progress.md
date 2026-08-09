@@ -3285,4 +3285,18 @@ Full detail: `decisions.md §55`.
 
 ### Commit
 
-`src/bin/v06_work_inventory.rs`, `tests/v06_work_inventory.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §55`, kanban. To be committed and pushed with SHA confirmation, clippy still to run.
+`src/bin/v06_work_inventory.rs`, `tests/v06_work_inventory.rs`, `docs/work-inventory.json`, this receipt, `decisions.md §55`, kanban. Committed `646aea2b`, pushed, SHA-confirmed on HEAD/origin. `cargo clippy --locked --tests`: 75 warnings (gate ceiling, not breached), `EXIT_CODE=0`.
+
+## SD28-E15-008 -- `epic-15-unknown-sweep`: `race_trait` name-coincidence false positives, found while scoping the UPsi slice (2026-08-09)
+
+**Found while attempting to scope the ~145-unit UPsi `race_trait` ingest slice** (`§53`): this program has never built a per-book race-trait data table for any book but CRB, and `classify()`'s `Kind::RaceTrait` arm matches by trait NAME alone -- no book scope, no race-identity scope. Program-wide: 45 `grounded` race_trait units, 39 real (`core_essentials`), **6 outside CRB are name-coincidence false positives** (UPsi's `Blue ~ Keen Senses`/`DuergarDSP ~ Hardy`/`~ Stability`/`Forgeborn ~ Fearless`, Bestiary's `Mite ~ Hatred`, ARG's `Saltbeard ~ Dwarf ~ Greed` -- the last flagged as possibly RAW-intentional since it names "Dwarf" in its own key, not folded into the same bucket without comment).
+
+Same defect family as `§54`'s `Toughness (Vigor/Wounds)` finding (name match standing in for identity) -- the seventh instrument failure this epic has surfaced, and the first false POSITIVE rather than false negative.
+
+**No status changed.** This is a finding for whoever scopes a real per-book race-trait mechanism, not a fix landed here -- redirecting to `ultimate_magic` equipment (26 units, existing table pattern, genuinely open) per team-lead's call rather than building a first-of-its-kind engine mechanism unscoped.
+
+Full detail: `decisions.md §56`.
+
+### Commit
+
+Docs-only (`decisions.md §56`, this entry, kanban). To be committed alongside or ahead of the UM equipment slice.
