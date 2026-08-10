@@ -127,7 +127,7 @@ use codex::rules_core::contract::to_pilot_receipt;
 use codex::rules_core::pilot_compute_corpus::compute_pilot_with_corpus;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 /// The exact GE-06 deterministic posture's equipment records (Longsword +
 /// Chain Shirt, `WT:4`/`WT:25` — the real weights PCGen's own export
@@ -212,6 +212,33 @@ fn pilot_case_pcg_fixture() -> PathBuf {
     repo_root().join(PILOT_PCG_FIXTURE_PATH)
 }
 
+fn default_pcgen_repo_dir() -> PathBuf {
+    if let Ok(configured) = std::env::var("PCGEN_REPO_DIR") {
+        return PathBuf::from(configured);
+    }
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen repo checkout");
+    PathBuf::from(home).join("workspace/repos/pcgen")
+}
+
+fn pcgen_gradle_wrapper_is_runnable(pcgen_repo_dir: &Path) -> bool {
+    let gradlew = pcgen_repo_dir.join("gradlew");
+    if !gradlew.is_file() {
+        return false;
+    }
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        return std::fs::metadata(&gradlew)
+            .map(|meta| (meta.permissions().mode() & 0o111) != 0)
+            .unwrap_or(false);
+    }
+    #[cfg(not(unix))]
+    {
+        true
+    }
+}
+
 /// Fail loudly on a swapped fixture rather than reporting parity numbers
 /// computed from content nobody verified.
 fn assert_pilot_pcg_fixture_is_pinned(path: &std::path::Path) {
@@ -245,6 +272,46 @@ fn golden_fixture_starts_this_cycle_at_not_yet_grounded() {
     assert_eq!(fixture.current_claim_status, ClaimTier::NotYetGrounded);
 }
 
+#[test]
+fn gradle_wrapper_runnable_check_requires_executable_gradlew() {
+    let temp = std::env::temp_dir().join(format!(
+        "sd26-pilot-case-verification-{}-{}",
+        std::process::id(),
+        std::time::SystemTime::now()
+            .duration_since(std::time::UNIX_EPOCH)
+            .expect("system time should be after epoch")
+            .as_nanos()
+    ));
+    std::fs::create_dir_all(&temp).expect("temp directory should be creatable");
+    assert!(
+        !pcgen_gradle_wrapper_is_runnable(&temp),
+        "missing gradlew must be treated as not runnable"
+    );
+
+    let gradlew = temp.join("gradlew");
+    std::fs::write(&gradlew, "#!/usr/bin/env bash\n").expect("gradlew placeholder should write");
+
+    #[cfg(unix)]
+    {
+        use std::os::unix::fs::PermissionsExt;
+        std::fs::set_permissions(&gradlew, std::fs::Permissions::from_mode(0o644))
+            .expect("permissions should update");
+        assert!(
+            !pcgen_gradle_wrapper_is_runnable(&temp),
+            "non-executable gradlew must be treated as not runnable"
+        );
+
+        std::fs::set_permissions(&gradlew, std::fs::Permissions::from_mode(0o755))
+            .expect("permissions should update");
+    }
+
+    assert!(
+        pcgen_gradle_wrapper_is_runnable(&temp),
+        "present executable gradlew should be treated as runnable"
+    );
+    std::fs::remove_dir_all(&temp).expect("temp directory should be removable");
+}
+
 /// The full pipeline proof this criterion names: pcgen_runner (2.4) ->
 /// comparator (2.1) -> parity_report (2.3), run for real against the pilot
 /// case's real Codex-computed dimensions and a real PCGen engine invocation
@@ -258,6 +325,17 @@ fn golden_fixture_starts_this_cycle_at_not_yet_grounded() {
 /// at `not_yet_grounded` rather than being force-upgraded.
 #[test]
 fn full_pipeline_runs_end_to_end_and_finds_one_genuine_attack_bonus_mismatch() {
+    let pcgen_repo_dir = default_pcgen_repo_dir();
+    if !pcgen_gradle_wrapper_is_runnable(&pcgen_repo_dir) {
+        eprintln!(
+            "[skip] sd26_pilot_case_verification: real PCGen Gradle wrapper not found/executable at {} \
+             (set $PCGEN_REPO_DIR to a checked-out PCGen repo to run this end-to-end; \
+             GitHub Actions runners do not check out the companion PCGen repo)",
+            pcgen_repo_dir.join("gradlew").display()
+        );
+        return;
+    }
+
     // --- Codex side: real, computed selected parity dimensions, via the
     // corpus-aware PilotReceipt (from_pilot_receipt) so durability/encumbrance
     // are genuinely compared against PCGen rather than left MissingFromCodex. ---
