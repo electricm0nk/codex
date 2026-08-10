@@ -280,3 +280,167 @@ touched; working tree was clean before and after, no concurrent writers observed
 ---
 
 (c) Per-cycle receipts append below this line as cycles fire.
+
+---
+
+## SD29-E1-F1-001 — Epic 1, Code-Side Identifier Cleanup — COMPLETE
+
+**Card:** `epic-1-identifier` (kanban.md Order 1). **Actor:** `sd29-e1-identifier`.
+**Branch:** `tranche/9`. **Branch tip at claim:** `a8bb6716`. **Cycle date:** 2026-08-10.
+**Mode:** unattended (no operator questions asked; no `clarify` call).
+
+### Outcome
+
+Epic 1's three SD29-E1-F1 acceptance criteria and SD29-E1-F2 are met, and the audit that
+*asserts* them was found to be under-powered and repaired. The cycle's substance is that
+repair — not a clean grep, which was already true on arrival.
+
+### Re-derived figures (every number below carries the command that produced it)
+
+- **`sd29_`/`SD29_`/`Sd29` identifiers in shipping source: 0.** Three `sd29`-shaped hits exist
+  and all three are prose (`SD-29` in a comment), not identifiers:
+  `grep -rniE 'sd[-_]?29' --include='*.rs' --include='*.ts' --include='*.tsx' src apps/desktop/src apps/desktop/src-tauri/src | wc -l`
+  → **3** (`apps/desktop/src/sd21/buildVersionTriple.test.ts:71`,
+  `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts:43`,
+  `apps/desktop/src-tauri/src/reach_gate.rs:1565`).
+- **`t_<hex8+>` kanban tokens in shipping source: 0.**
+  `grep -rnE '\bt_[0-9a-f]{8,}\b' --include='*.rs' --include='*.ts' --include='*.tsx' src apps/desktop/src apps/desktop/src-tauri/src | wc -l`
+  → **0**. Nine hits exist repo-wide, all in `tests/sd13_*.rs` doc comments naming the matrix
+  slice each test covers — which the audit excludes by design and doctrine permits.
+- **`src/rules_core/rules_tables/` book directories that exist today: 14** (plus 3 loose `.rs`
+  files and `mod.rs`): `ls src/rules_core/rules_tables/`. The acceptance criterion's "every
+  `<book>/` directory a lane writes (all 37 in-scope books)" is forward-looking — 23 of the 37
+  have no directory yet because no lane has run. Audited what exists; the audit is diff-scoped,
+  so each lane's own cycle re-audits what it adds.
+- **Epic-label citations in shipping source: 777.**
+  `grep -rnE '\b[Ss][Dd][0-9]+-[A-Za-z0-9][A-Za-z0-9-]*\b' --include='*.rs' --include='*.ts' --include='*.tsx' src apps/desktop/src apps/desktop/src-tauri/src | wc -l`
+  → **777**. This figure is load-bearing: it is why the new hyphen pattern requires a lowercase
+  letter after the hyphen (see below).
+
+### The defect this cycle actually fixed
+
+`epic-breakdown.md` SD29-E1-F1 names **four** patterns: `sd29_*`, `SD29_*`, `Sd29*`, `sd29-*`.
+`scripts/identifier-discipline-audit.sh` implemented **three**. A hyphenated bundle tag — the
+form a CSS class, `data-testid`, or string key naturally takes, e.g. `"sd29-monster-row"` —
+passed the gate clean. Epic 1's own acceptance criterion is "identifier-discipline audit script
+returns 0 findings", and Epic 10 re-runs the same script at bundle scope, so the gap sat under
+both of this bundle's identifier checkpoints.
+
+TDD, per `AGENTS.md`: the failing case was written first and observed RED for the intended
+reason (`hyphen bundle tag (sd29-)`: expected exit 1, got 0), then the regex gained an
+`[Ss][Dd][0-9]+-[a-z][A-Za-z0-9-]*` branch and it went GREEN.
+
+**Judgment call, recorded per "Stop vs. press on":** the first fix used
+`[Ss][Dd][0-9]+-[A-Za-z0-9]...`, which matches all 777 epic-label citations above and would have
+turned the gate into noise the moment any lane wrote `// SD29-E5-F1: ...` in shipping source.
+Narrowed to require a **lowercase** letter after the hyphen — citations are `SD28-E14-F1`
+(uppercase), identifiers are `sd29-monster-row` (lowercase). Two non-detection cases now pin
+this. The doc slug `SD-29-...` cannot match either form: its hyphen precedes the digits.
+
+### Files changed
+
+- `scripts/identifier-discipline-audit.sh` — fourth pattern added, with the reasoning and the
+  777 figure recorded inline so the next editor does not re-widen it.
+- `scripts/tests/test_identifier_discipline_audit.sh` — **new.** 13 cases: 7 that must be caught
+  (all four named patterns, the `t_<hex>` token, plus the two escapes the script's own header
+  records as having happened live — a tag in top-level `src/lib.rs`, and one in the separate
+  tauri crate) and 6 that must stay clean (doc slugs, epic citations, tests, ordinary code).
+  Each case builds a throwaway git repo under `mktemp`; nothing touches this checkout.
+- `scripts/verify.sh` — new `audit-selftest` stage in **both** `ALL_STAGES` and `QUICK_STAGES`,
+  placed second (after `preflight-disk`, before any build). It fails on a non-zero self-test
+  **and** on zero cases discovered — the same "a gate running zero tests asserts nothing" guard
+  the `reach` stage already carries. No build, no baseline, seconds to run.
+- `docs/release/SD-29-corpus-wide-catch-up-lanes/kanban.md` — card claim, then COMPLETE.
+
+Rationale for wiring the stage rather than leaving a script: the audit script's header records
+two occasions when this gate passed clean over a real planted tag. Both were caught by hand,
+neither by a test. A self-test nobody runs would have been a third instance of the same pattern.
+
+### Verification
+
+- **`./scripts/verify.sh` (FULL, not `--quick`) → exit `0`.** Captured directly
+  (`echo "VERIFY_EXIT=$?"`, never through a pipe): `VERIFY_EXIT=0`. Log:
+  `/tmp/codex-verify-PgWBo6`. All **11** stages passed —
+  `preflight-disk audit-selftest root-lib root-full desktop reach frontend-install frontend-test
+  frontend-typecheck clippy class-dump`.
+  - `audit-selftest` **13 passed, 0 failed** (the new stage, green on its first gated run).
+  - `root-full` **6128 passed across 537 suites, all 521 `tests/*.rs` suites executed** — the
+    `comm -23` never-ran check (Decision 40) reports zero missing suites.
+  - `reach` **16 passed** — non-zero, so DoD item 2's "0 matched tests is a hard failure" is
+    satisfied. This card ingests nothing and adds no record family, so it makes no new reach
+    claim; the gate is cited here as unbroken, not as evidence of new coverage.
+  - `desktop` 413, `frontend-test` 98/98 files, `frontend-typecheck` clean,
+    `clippy` root:54 desktop:7 warnings / 0 errors, `class-dump` 31/31 computing.
+- **Dual-audit (SD29-E1-F2), both green post-fix:**
+  `bash scripts/identifier-discipline-audit.sh` → `OK_NO_BUNDLE_TAGS`, exit **0**;
+  `bash scripts/wired-integration-audit.sh` → all four checks clean
+  (`OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`), exit **0**.
+- **DoD item 3:** `cargo run --locked --bin v06_corpus_trap_report -- --audit` → exit **0**,
+  "No defects: every ingested record's citation agrees with the line it names" (259 mod-record
+  traps, 0 defects).
+- **DoD item 5** (four-check wired-integration audit): clean, as above.
+
+### DoD items recorded N/A, with reason
+
+The Definition of done is written "**per book-ingest cycle**". This card ingests no corpus
+records and adds no record family.
+
+- **Item 4 (`v06_work_inventory` regeneration, units leave `not-started`):** N/A — no book's
+  units move. Deliberately did not regenerate `docs/work-inventory.json`, which would have
+  produced a diff of `generated_at` alone and put a shared artifact into a commit that has no
+  claim on it. Epic 2 (`epic-2-prelaunch`) owns the corpus-wide shape pass.
+- **Item 6 (`OPEN_FINDINGS`):** unchanged. The eight standing entries (`beastiary1/race_traits`
+  + seven `<book>/archetypes`) are left exactly as-is per `loop-instruction.md` DoD item 6.
+- **Item 7 (baseline movements):** none made. `verify.sh` reported four baselines drifting
+  (`BASELINE_ROOT_LIB_TESTS` 1488→1600, `BASELINE_ROOT_FULL_TESTS` 5996→6128,
+  `BASELINE_ROOT_TEST_BINARIES` 536→537, `BASELINE_CLIPPY_WARNINGS_ROOT` ceiling 75 vs 54
+  measured). These are **notes, not failures**, they pre-date this cycle (SD-28's landing), and
+  item 7 requires a *separate reviewable commit carrying `--show-actuals` output*. Safer default
+  under unattended mode: left alone and handed forward rather than folded into an identifier
+  commit. **Followup for Epic 9 or Epic 10.**
+- **Item 8 (on-screen desktop verification):** N/A — this cycle surfaces no player-visible record
+  family. Nothing it changed is reachable from the character sheet; the entire diff is two shell
+  scripts and one new shell test. `RUN_DESKTOP_AGENT` was therefore never needed and
+  `driver.sh` was not invoked. Driving the app here would have produced a screenshot proving
+  nothing, which is the ceremony `decisions.md`'s twin-trap guidance exists to prevent, not an
+  instance of it. **Every content lane (Epics 4-7) still owes this item in full.**
+
+### Findings handed forward (not fixed here — out of this bundle's diff scope)
+
+1. **Two bundle-tagged directories live in shipping source:** `apps/desktop/src/sd16/`
+   (9 non-test modules under `feedback/` and `update/`, imported by `App.tsx` and
+   `boundary/loadUpdateAction.ts`) and `apps/desktop/src/sd21/` (2 test files). Both pre-date
+   SD-29. SD-28 established the naming precedent by adding `apps/desktop/src/releaseChecks/`.
+   Not renamed here: the audit is diff-scoped by design, and `AGENTS.md` rule 3 forbids
+   unrelated renames. Emitted as a `deferral` event. Note this is a *path* tag — the audit's
+   regex is identifier-shaped and does not flag directory names, so no gate catches this class.
+2. **`scripts/verify-baselines.env` declares three keys twice** (`BASELINE_ROOT_FULL_TESTS`,
+   `BASELINE_ROOT_TEST_BINARIES`, `BASELINE_DESKTOP_TESTS`); the file is sourced, so the last
+   assignment silently wins. Harmless today, a trap the moment someone edits the first
+   occurrence and sees nothing change. Followup for Epic 10.
+
+### Concurrency (recorded, per shared-checkout discipline)
+
+Up to **four** `./scripts/verify.sh` runs were live in this same checkout during this cycle.
+Two used the default `CARGO_TARGET_DIR` and two their own. No artifact cross-feed (target dirs
+differ where it matters, and `verify.sh` mutates no tracked source), but the ~490-binary build
+was CPU-starved for ~40 minutes and *looked* hung — `target/debug/deps/*.d` frozen at 2167 with
+the log unchanged. Diagnosed live, not assumed:
+`pgrep -fa "verify.sh|cargo test"` showed the sibling runs and `ps` showed rustc still burning
+CPU. Emitted as an `incident` (`--recurrence-key concurrent-verify-same-checkout`).
+`git status --porcelain` was re-run before every git write. Two files in the working tree at
+commit time belong to other sessions and were **deliberately left uncommitted**:
+`docs/retro/events/codex.jsonl` (a sibling's full-sweep event — different `log_dir`
+`/tmp/codex-verify-XrQvq0`, and no `audit-selftest` stage, so provably not this cycle's) and
+`docs/retro/events/sd29-preflight.jsonl` (untracked, not this actor's shard).
+
+### Retro events emitted (`docs/retro/events/sd29-e1-identifier.jsonl`)
+
+`correction` (the audit's missing fourth pattern, `--verified-by` the RED→GREEN self-test case),
+`deferral` (the two bundle-tagged directories), `incident` (concurrent verify sweeps), plus
+three auto-emitted `verification` events from `verify.sh` itself (two `--only`, one full).
+
+### Gate for the rest of the bundle
+
+Epic 1 is **COMPLETE**, which unblocks `epic-2-prelaunch` (Order 2) and `epic-9-version`
+(Order 13). No other epic ran or was touched by this cycle.

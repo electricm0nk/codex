@@ -46,6 +46,20 @@ echo "===== Identifier-discipline audit — bundle tags in shipping code ====="
 
 # Patterns, per the identifier-discipline doctrine:
 #   sd<N>_ / SD<N>_ / Sd<N>  — bundle-tagged source identifiers
+#   sd<N>-                   — bundle-tagged hyphenated names (CSS classes,
+#                              data-testids, string keys). Named by SD-29
+#                              epic-breakdown.md SD29-E1-F1 alongside the other
+#                              three, but absent from this regex until
+#                              2026-08-10; the gate passed `"sd29-monster-row"`
+#                              clean. NOT the same as the doc slug `SD-29-`
+#                              (hyphen BEFORE the digits), which source comments
+#                              legitimately cite and this pattern cannot match.
+#                              The segment after the hyphen must start with a
+#                              LOWERCASE letter: this repo's doc comments cite
+#                              epic labels (`SD13-E3`, `SD28-E14-F1`) 777 times
+#                              in shipping source (re-derived 2026-08-10), and
+#                              those are citations, not identifiers. Uppercase
+#                              after the hyphen ⇒ citation ⇒ not flagged.
 #   t_<hex8+>                — kanban card tokens
 #
 # The trailing `\b` must sit at the END of the full identifier, not right after
@@ -61,7 +75,7 @@ echo "===== Identifier-discipline audit — bundle tags in shipping code ====="
 if git diff --unified=0 "${BASE_BRANCH}...HEAD" -- \
     ':(glob)apps/desktop/**/*.ts*' ':(glob)apps/desktop/src-tauri/**/*.rs' ':(glob)src/**/*.rs' \
     ':(exclude,glob)**/__tests__/**' ':(exclude,glob)**/*.test.*' \
-    | grep -nE '\b(sd[0-9]+_[A-Za-z0-9_]+|SD[0-9]+_[A-Za-z0-9_]+|Sd[0-9]+[A-Za-z0-9_]*|t_[0-9a-f]{8,})\b'; then
+    | grep -nE '\b(sd[0-9]+_[A-Za-z0-9_]+|SD[0-9]+_[A-Za-z0-9_]+|Sd[0-9]+[A-Za-z0-9_]*|[Ss][Dd][0-9]+-[a-z][A-Za-z0-9-]*|t_[0-9a-f]{8,})\b'; then
   echo >&2
   echo "FAIL: bundle identifier(s) above leaked into shipping code." >&2
   echo "AUDIT FAILED. Cycle cannot mark complete." >&2

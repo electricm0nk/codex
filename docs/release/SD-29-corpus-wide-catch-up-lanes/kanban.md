@@ -30,7 +30,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 
 | Order | ID | Status | Lane / Scope | Cycle-type | Depends-on | Claimed-by | Claimed-at | Cycle-id |
 |---|----|--------|------|-----------|------------|------------|------------|----------|
-| 1 | `epic-1-identifier` | READY | Identifier Cleanup | identifier-discipline audit pass | none | — | — | — |
+| 1 | `epic-1-identifier` | COMPLETE | Identifier Cleanup | identifier-discipline audit pass | none | sd29-e1-identifier | 2026-08-10T00:00:00Z | SD29-E1-F1-001 |
 | 2 | `epic-2-prelaunch` | READY | Operator Pre-Launch | corpus-wide (37-book) cycle-0 trap-report + work-inventory | `epic-1-identifier` | — | — | — |
 | 3 | `epic-3-provenance` | READY | Provenance Gate | PI-screening wired into each lane's extraction step; license-matrix citation for OGL/attribution, corpus-wide | `epic-2-prelaunch` | — | — | — |
 | 4 | `epic-4-proven-equip-mod` | READY | Proven-Path Lanes — equipment + equipment_modifier | corpus-wide, 1,163 + 812 remaining units | `epic-3-provenance` | — | — | — |
