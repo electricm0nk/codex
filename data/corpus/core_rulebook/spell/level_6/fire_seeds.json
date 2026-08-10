@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
     "key": "Fire Seeds",
     "school": "Conjuration",
@@ -15,6 +15,11 @@
     "line": 989,
     "record_key": "Fire Seeds.MOD"
   },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

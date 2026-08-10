@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
     "id": "beastiary1:monster:cave_fisher",
     "name": "Cave Fisher",
@@ -29,9 +29,6 @@
     "line": 59,
     "record_key": "Cave Fisher"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "field_provenance": [
     {
       "field": "natural_attacks[1].damage_dice",
@@ -48,5 +45,12 @@
         "identity_match_basis": "name + CR 2 + Medium vermin + Bestiary pg. 41 (matches the cached chassis's own source_page); all sources place Filament on the Ranged line, matching the real row's own NATURALATTACKS:Filament,...Ranged... token"
       }
     }
-  ]
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

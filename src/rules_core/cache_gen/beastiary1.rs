@@ -39,9 +39,10 @@
 //! `monster/` and `equipment/` directories.
 //!
 //! ## Real, measured coverage ceilings this cycle re-verified
-//! (`decisions.md §11.4`)
+//! (`decisions.md §11.4`; raised from 41/41 to 46/46 by SD28-E16 subset
+//! 09, 2026-08-07)
 //!
-//! - **Monsters: 41/41** real, corrected-roster stat blocks
+//! - **Monsters: 46/46** real, corrected-roster stat blocks
 //!   (`MonsterId::ALL`), each with the full set of fields this book's
 //!   `MonsterStatBlock` schema tracks (name/CR/size/speed/race
 //!   type+subtype/source page/natural attacks -- AC/HP/saves are
@@ -67,6 +68,8 @@ use std::process::Command;
 
 use serde::Serialize;
 
+use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::beastiary1::equipment_tables::EquipmentTableEntry;
 use crate::rules_core::rules_tables::beastiary1::natural_attack_provenance::{
     self, AttackSource as ProvenanceSource,
@@ -195,6 +198,16 @@ pub struct CacheRecord<T: Serialize> {
     /// corpus-transcribed monsters are byte-identical to before.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub field_provenance: Option<Vec<FieldProvenance>>,
+    /// GE-01: what kind of evidence would prove this record done, from
+    /// `codex::rules_core::wiring_class`'s real corpus token closure --
+    /// see `cache_gen::acg::CacheRecord::wiring_class`'s doc comment.
+    pub wiring_class: String,
+    pub wiring_class_signals: Vec<String>,
+    /// `"OGL" | "PI" | "PI-REDACTED"` -- see
+    /// `cache_gen::acg::CacheRecord::license`'s doc comment.
+    pub license: crate::rules_core::shape_b_v1::License,
+    pub pi_field: Option<String>,
+    pub pi_marker: Option<String>,
 }
 
 // ---------------------------------------------------------------------
@@ -237,6 +250,10 @@ pub struct EquipmentData {
 // ---------------------------------------------------------------------
 
 const BOOK_DIR: &str = "pathfinder/paizo/roleplaying_game/bestiary";
+/// `wiring_class`'s corpus-wide book id for Bestiary 1 -- the directory
+/// basename of `BOOK_DIR`, matching `v06_work_inventory`'s own book id for
+/// this book (its `RuleSetId` is `bestiary_1`, a different namespace).
+const WIRING_CLASS_BOOK_ID: &str = "bestiary";
 const MONSTERS_FILE: &str = "b1_races.lst";
 /// Carries the `Crocodile ~ Tail Slap` record, the one cross-file
 /// `NATURALATTACKS:` token this book's grounded attacks recover from the
@@ -338,6 +355,8 @@ fn generate_monsters(
     let path = book_dir(corpus_root).join(MONSTERS_FILE);
     let sha256 = sha256_file(&path)?;
     let monster_dir = out_dir.join("monster");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     // Hashed once up front: only the Crocodile Tail Slap provenance row
     // cites it, but the citation must carry a real, checkable sha256
@@ -349,14 +368,15 @@ fn generate_monsters(
         let stat_block: MonsterStatBlock = beastiary1::monster_resolve(monster_id, RuleSetId::Bestiary1)
             .unwrap_or_else(|| panic!("{monster_id:?}: MonsterId::ALL must resolve for RuleSetId::Bestiary1"));
 
-        let source = match find_exact_first_column(&path, &stat_block.name) {
-            Ok(Some(line)) => Source::LstToken {
+        let resolved_line = find_exact_first_column(&path, &stat_block.name).ok().flatten();
+        let source = match resolved_line {
+            Some(line) => Source::LstToken {
                 path: format!("{BOOK_DIR}/{MONSTERS_FILE}"),
                 sha256: sha256.clone(),
                 line,
                 record_key: stat_block.name.clone(),
             },
-            _ => {
+            None => {
                 report.unresolved_citations.push(format!("monster:{}", stat_block.name));
                 Source::LstToken {
                     path: format!("{BOOK_DIR}/{MONSTERS_FILE}"),
@@ -366,6 +386,13 @@ fn generate_monsters(
                 }
             }
         };
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            MONSTERS_FILE,
+            resolved_line.unwrap_or(0),
+            &stat_block.name,
+            &stat_block.name,
+        );
 
         let slug = slugify(&stat_block.name);
         let natural_attacks: Vec<NaturalAttackData> = stat_block
@@ -416,6 +443,7 @@ fn generate_monsters(
             )
         };
 
+        let (license, pi_field, pi_marker) = pi_screening::blanket_ogl();
         let record = CacheRecord {
             population: Population::InScope,
             completeness: Completeness::ChassisOnly,
@@ -433,6 +461,11 @@ fn generate_monsters(
             },
             source,
             field_provenance,
+            wiring_class,
+            wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         write_json(&monster_dir, &slug, &record)?;
         report.monsters_written += 1;
@@ -495,14 +528,32 @@ fn generate_equipment(
     report: &mut GenerationReport,
 ) -> Result<(), GenerationError> {
     let equipment_dir = out_dir.join("equipment");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for entry in beastiary1::equipment_tables::EQUIPMENT_TABLE {
         let category_file = entry.category.corpus_file_name();
         let sha256 = sha256_file(&book_dir(corpus_root).join(category_file))?;
 
         let source = equipment_source(corpus_root, entry, &sha256, fetched_at_web, &mut report.unresolved_citations);
+        // Same rationale as `apg::generate_equipment`: `wiring_class` reads
+        // the corpus record's own row independent of whether `source`
+        // (above) is web-second-sourced (`Rag Armor (Dark Creeper)`).
+        let wiring_line = find_exact_first_column(&book_dir(corpus_root).join(category_file), entry.key)
+            .ok()
+            .flatten()
+            .unwrap_or(0);
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            category_file,
+            wiring_line,
+            entry.key,
+            entry.key,
+        );
         let completeness = if entry.description.is_some() { Completeness::Full } else { Completeness::ChassisOnly };
 
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field("description", entry.description);
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
@@ -513,13 +564,18 @@ fn generate_equipment(
                 name: entry.name.to_string(),
                 cost_gp: entry.cost_gp,
                 weight: entry.weight_lbs,
-                description: entry.description.map(|d| d.to_string()),
+                description: stored_desc,
             },
             source,
             // Equipment provenance is fully expressible at record level
             // (each record's description has exactly one source), so no
             // record here needs the per-field narrowing.
             field_provenance: None,
+            wiring_class,
+            wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(entry.key);
         write_json(&equipment_dir, &slug, &record)?;

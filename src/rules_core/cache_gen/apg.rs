@@ -62,8 +62,13 @@ use std::process::Command;
 
 use serde::Serialize;
 
+use crate::rules_core::cache_gen::WiringClassIndex;
+use crate::rules_core::pi_screening;
 use crate::rules_core::rules_tables::apg::equipment_tables::EquipmentCategory;
 use crate::rules_core::rules_tables::apg::{self, ApgClassId};
+
+/// `wiring_class`'s corpus-wide book id for APG.
+const WIRING_CLASS_BOOK_ID: &str = "advanced_players_guide";
 
 // ---------------------------------------------------------------------
 // Shape B schema (decisions.md §7, corrected §11.1/§11.2)
@@ -116,6 +121,16 @@ pub struct CacheRecord<T: Serialize> {
     pub ingested_at: String,
     pub data: T,
     pub source: Source,
+    /// GE-01: what kind of evidence would prove this record done, from
+    /// `codex::rules_core::wiring_class`'s real corpus token closure --
+    /// see `cache_gen::acg::CacheRecord::wiring_class`'s doc comment.
+    pub wiring_class: String,
+    pub wiring_class_signals: Vec<String>,
+    /// `"OGL" | "PI" | "PI-REDACTED"` -- see
+    /// `cache_gen::acg::CacheRecord::license`'s doc comment.
+    pub license: crate::rules_core::shape_b_v1::License,
+    pub pi_field: Option<String>,
+    pub pi_marker: Option<String>,
 }
 
 // ---------------------------------------------------------------------
@@ -205,6 +220,35 @@ fn find_exact_first_column(lst_path: &Path, record_name: &str) -> std::io::Resul
     Ok(None)
 }
 
+/// Like [`find_exact_first_column`], but only returns a line that ALSO
+/// carries a real `DESC:` token.
+///
+/// **Why this exists.** `resolve_citation`'s `prefer_mod` path exists so
+/// a `full_text: true` record cites the `.MOD` row its rich text actually
+/// came from -- but a record can have MORE than one `.MOD` row (e.g.
+/// bookkeeping rows like `CLASSES:.CLEARALL` or `DOMAINS:...` that modify
+/// the same name for an unrelated reason), and the first one by line
+/// order is not necessarily the one carrying the description. GE-01's
+/// 2026-08-03 regeneration surfaced exactly this: `apg_spells.lst`'s
+/// `Beast Shape I (Animals Only)` has two `.MOD` rows (line 1059
+/// `CLASSES:.CLEARALL`, line 1103 `DOMAINS:Fur Subdomain=3`), NEITHER
+/// carrying `DESC:`, so the old unconditional "first `.MOD` row by name"
+/// match cited whichever came first by accident of file order -- a
+/// content-free bookkeeping row, strictly worse provenance than the
+/// `.COPY=`-inherited declaration it replaced. This function requires the
+/// matched row to actually carry the content `prefer_mod` exists to cite.
+fn find_mod_with_desc(lst_path: &Path, record_name: &str) -> std::io::Result<Option<u32>> {
+    let content = std::fs::read_to_string(lst_path)?;
+    for (idx, line) in content.lines().enumerate() {
+        let mut fields = line.split('\t');
+        let first_col = fields.next().unwrap_or("");
+        if first_col == record_name && fields.any(|f| f.starts_with("DESC:")) {
+            return Ok(Some((idx + 1) as u32));
+        }
+    }
+    Ok(None)
+}
+
 /// Finds a `.COPY=<record_name>` variant line's first column
 /// (`<base>.COPY=<record_name>`) in `lst_path`.
 fn find_copy_variant(lst_path: &Path, record_name: &str) -> std::io::Result<Option<u32>> {
@@ -219,14 +263,37 @@ fn find_copy_variant(lst_path: &Path, record_name: &str) -> std::io::Result<Opti
     Ok(None)
 }
 
-/// Resolves a real citation for `record_name`, trying (in order): the
-/// exact base-record line, a `<record_name>.MOD` line (when
-/// `prefer_mod` -- the record's rich text came from a `.MOD` stanza), a
-/// `.COPY=<record_name>` variant line, and finally every other `*.lst`
-/// file directly under the book directory (a small number of records,
-/// e.g. `Formula Book`, live in a sibling file like `apg_templates.lst`
-/// rather than the category file the record's Rust category would
-/// suggest).
+/// Finds a line carrying the exact tab-delimited field `KEY:<record_key>`
+/// in `lst_path` -- mirrors `cache_gen::acg`'s own `find_by_key_field`.
+/// Required for the 9 APG Summoner `Summon Monster I`-`IX` spells: their
+/// first column is the display name (`Summon Monster I`), but their real
+/// corpus identity is `KEY:Summoner Summon Monster I` -- a first-column
+/// match finds nothing (`entry.key` is the KEY-qualified identity), so
+/// `resolve_citation` reported "no resolvable LST citation" for all 9
+/// even though each has a real, single-line declaration
+/// (`apg_spells.lst:649`-`657`). Same defect shape as the ACG Naturalist
+/// fix (`053cfd51`): identity is `KEY:`, not field 0, and a resolver that
+/// only checks field 0 either finds nothing or the wrong record.
+fn find_by_key_field(lst_path: &Path, record_key: &str) -> std::io::Result<Option<u32>> {
+    let content = std::fs::read_to_string(lst_path)?;
+    let needle = format!("KEY:{record_key}");
+    for (idx, line) in content.lines().enumerate() {
+        if line.split('\t').any(|field| field == needle) {
+            return Ok(Some((idx + 1) as u32));
+        }
+    }
+    Ok(None)
+}
+
+/// Resolves a real citation for `record_name`, trying (in order): a
+/// `KEY:<record_name>` field match (the record's real corpus identity,
+/// when it differs from field 0 -- see `find_by_key_field`), the exact
+/// base-record line, a `<record_name>.MOD` line (when `prefer_mod` -- the
+/// record's rich text came from a `.MOD` stanza), a `.COPY=<record_name>`
+/// variant line, and finally every other `*.lst` file directly under the
+/// book directory (a small number of records, e.g. `Formula Book`, live
+/// in a sibling file like `apg_templates.lst` rather than the category
+/// file the record's Rust category would suggest).
 fn resolve_citation(
     corpus_root: &Path,
     primary_file: &str,
@@ -238,7 +305,7 @@ fn resolve_citation(
 
     if prefer_mod {
         let mod_name = format!("{record_name}.MOD");
-        if let Some(line) = find_exact_first_column(&primary_path, &mod_name)? {
+        if let Some(line) = find_mod_with_desc(&primary_path, &mod_name)? {
             return Ok(Some(Citation {
                 file_name: primary_file.to_string(),
                 line,
@@ -252,6 +319,18 @@ fn resolve_citation(
         }));
     }
     if let Some(line) = find_copy_variant(&primary_path, record_name)? {
+        return Ok(Some(Citation {
+            file_name: primary_file.to_string(),
+            line,
+        }));
+    }
+    // A record whose real identity is `KEY:<record_name>` rather than its
+    // field-0 display name (the 9 Summoner `Summon Monster I`-`IX`
+    // records). Tried after the field-0-based checks above, not before:
+    // those already correctly resolve every other APG spell, and a KEY:
+    // field is comparatively rare on a spell row, so this only ever fires
+    // for the records field-0 matching genuinely cannot find.
+    if let Some(line) = find_by_key_field(&primary_path, record_name)? {
         return Ok(Some(Citation {
             file_name: primary_file.to_string(),
             line,
@@ -382,6 +461,8 @@ fn generate_classes(
     let sha256 = sha256_file(&path)?;
     let mut used = BTreeSet::new();
     let class_dir = out_dir.join("class");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for &class_id in ApgClassId::ALL {
         let rows: Vec<ClassChassisRow> = match class_id {
@@ -402,7 +483,16 @@ fn generate_classes(
         })
         .collect();
         let maxlevel = rows.last().map(|r| r.level).unwrap_or(0);
+        let line = class_line(class_id);
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            classes_file,
+            line,
+            class_capitalized_name(class_id),
+            class_capitalized_name(class_id),
+        );
 
+        let (license, pi_field, pi_marker) = pi_screening::blanket_ogl();
         let record = CacheRecord {
             population: Population::InScope,
             completeness: Completeness::ChassisOnly,
@@ -415,9 +505,14 @@ fn generate_classes(
             source: Source::LstToken {
                 path: format!("{APG_DIR}/{classes_file}"),
                 sha256: sha256.clone(),
-                line: class_line(class_id),
+                line,
                 record_key: format!("CLASS:{}", class_capitalized_name(class_id)),
             },
+            wiring_class,
+            wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(class_id.name(), &mut used);
         write_json(&class_dir, &slug, &record)?;
@@ -554,6 +649,8 @@ fn generate_spells(
     let sha256 = sha256_file(&path)?;
     let mut used = BTreeSet::new();
     let spell_dir = out_dir.join("spell");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for entry in apg::spell_list::SPELL_LIST {
         let source = spell_source(
@@ -564,11 +661,28 @@ fn generate_spells(
             fetched_at_web,
             &mut report.unresolved_citations,
         );
+        // `wiring_class` describes the CORPUS RECORD's own row shape, which
+        // exists independent of where `source` (above) sourced the
+        // record's DESCRIPTION prose from -- a web-second-sourced or
+        // same-book-fallback spell still has a real base `.lst` row.
+        // Resolved separately from `source` so a citation this record
+        // does not use for its description is still used for wiring_class.
+        let wiring_citation = resolve_citation(corpus_root, spell_file, entry.key, entry.full_text)
+            .ok()
+            .flatten();
+        let (wiring_file, wiring_line) = match &wiring_citation {
+            Some(c) => (c.file_name.as_str(), c.line),
+            None => (spell_file, 0),
+        };
+        let (wiring_class, wiring_class_signals) =
+            wiring_index.wiring_class_for(&mut wiring_lines, wiring_file, wiring_line, entry.key, entry.key);
         let completeness = if entry.description.is_some() {
             Completeness::Full
         } else {
             Completeness::ChassisOnly
         };
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field("description", entry.description);
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
@@ -577,10 +691,15 @@ fn generate_spells(
                 key: entry.key.to_string(),
                 school: entry.school.map(|s| format!("{s:?}")),
                 level: entry.level,
-                description: entry.description.map(|d| d.to_string()),
+                description: stored_desc,
                 full_text: entry.full_text,
             },
             source,
+            wiring_class,
+            wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&spell_dir, &slug, &record)?;
@@ -753,6 +872,8 @@ fn generate_equipment(
     }
     let mut used = BTreeSet::new();
     let equipment_dir = out_dir.join("equipment");
+    let wiring_index = WiringClassIndex::build(WIRING_CLASS_BOOK_ID, &book_dir(corpus_root));
+    let mut wiring_lines = wiring_index.lines();
 
     for entry in apg::equipment_tables::EQUIPMENT_TABLE {
         let source = equipment_source(
@@ -762,11 +883,30 @@ fn generate_equipment(
             fetched_at_web,
             &mut report.unresolved_citations,
         );
+        // Same rationale as `generate_spells`: `wiring_class` reads the
+        // corpus record's own row, resolved independently of whether
+        // `source` (above) ended up web-second-sourced for its
+        // description prose.
+        let category_file = equipment_category_file(entry.category);
+        let wiring_citation = resolve_citation(corpus_root, category_file, entry.key, false).ok().flatten();
+        let (wiring_file, wiring_line) = match &wiring_citation {
+            Some(c) => (c.file_name.as_str(), c.line),
+            None => (category_file, 0),
+        };
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            wiring_file,
+            wiring_line,
+            entry.key,
+            entry.key,
+        );
         let completeness = if entry.description.is_some() {
             Completeness::Full
         } else {
             Completeness::ChassisOnly
         };
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field("description", entry.description);
         let record = CacheRecord {
             population: Population::InScope,
             completeness,
@@ -777,9 +917,14 @@ fn generate_equipment(
                 name: entry.name.to_string(),
                 cost_gp: entry.cost_gp,
                 weight: entry.weight,
-                description: entry.description.map(|d| d.to_string()),
+                description: stored_desc,
             },
             source,
+            wiring_class,
+            wiring_class_signals,
+            license,
+            pi_field,
+            pi_marker,
         };
         let slug = slugify(entry.key, &mut used);
         write_json(&equipment_dir, &slug, &record)?;

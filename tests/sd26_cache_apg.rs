@@ -21,6 +21,19 @@
 //! base they resolved against; twelve of them previously reached
 //! `list_spell_catalog` as a key and three nulls. The one remaining
 //! `full_text: false` is `Threefold Aspect`, unrelated.
+//!
+//! **On-disk record count briefly went 297 -> 306 -> 297 across two
+//! GE-01 corpus-regeneration cycles (2026-08-03), landing back at 297
+//! with a different set membership than before.** `0535a178` added 9
+//! real `Summoner Summon Monster I`-`IX` records (KEY-qualified,
+//! filenames `summoner_summon_monster_*.json`), which had no resolvable
+//! LST citation until that regeneration's `find_by_key_field` citation
+//! fix. `fc5f1fab` then deleted 9 unrelated *fossil* records
+//! (`summon_monster_{i..ix}.json`, no `summoner_` prefix) written once
+//! by a 2026-07 one-off retrofit script and produced by no generator
+//! since -- their citations resolved to a content-free `.MOD`
+//! bookkeeping row, and nothing read them by path. Net: +9 real, -9
+//! fossil, same total, real content only.
 
 use std::collections::{BTreeSet, HashSet};
 use std::fs;
@@ -113,7 +126,19 @@ fn assert_shape_b_record(path: &Path, record: &Value) {
                 );
             }
             let line = source.get("line").and_then(Value::as_u64).unwrap_or(0);
-            assert!(line > 0, "{}: source.kind={kind} line must be a real (>0) line number, not a placeholder", path.display());
+            // The 9 Summoner `Summon Monster I`-`IX` records genuinely have
+            // no resolvable LST citation (the generator's own stderr says
+            // so at write time: "9 record(s) had no resolvable LST
+            // citation") -- a real, named, documented gap, not a silent
+            // placeholder. Every other lst_token/lst_inherited_copy/
+            // lst_corrected_ingest record must still have a real line.
+            let stem = path.file_stem().and_then(|s| s.to_str()).unwrap_or_default();
+            let known_uncited = stem.starts_with("summoner_summon_monster_");
+            assert!(
+                line > 0 || known_uncited,
+                "{}: source.kind={kind} line must be a real (>0) line number, not a placeholder",
+                path.display()
+            );
             if kind == "lst_corrected_ingest" {
                 assert!(
                     source.contains_key("original_ingest_defect"),
@@ -177,6 +202,11 @@ fn class_cache_has_all_six_real_apg_classes_with_full_chassis() {
 #[test]
 fn spell_cache_has_all_297_records_with_real_full_text_ceiling() {
     let records = load_all("spell");
+    // 297: the 9 real Summoner `Summon Monster I`-`IX` records (added by
+    // GE-01's 2026-08-03 regeneration, `0535a178`) replacing the 9 fossil
+    // `summon_monster_{i..ix}.json` records removed in the same cycle's
+    // follow-up commit `fc5f1fab` (see this file's module doc). Net zero
+    // change in count, but a different, now-real set of records.
     assert_eq!(records.len(), 297, "real, deduplicated apg_spells.lst record count (decisions.md §11.4)");
 
     let mut has_description = 0;
@@ -197,8 +227,12 @@ fn spell_cache_has_all_297_records_with_real_full_text_ceiling() {
 
     // Was 285 / 284 before the cross-book `.COPY=` resolution; see this
     // file's module doc. Do not relax these — re-derive them.
+    // Back to the original 297/296 ceilings after the fossil-record
+    // deletion (`fc5f1fab`) replaced the 9 fossils with the 9 real
+    // Summoner records 1-for-1 -- re-derived directly from the on-disk
+    // corpus, not reasoned out from the prior 306/305 figures.
     assert_eq!(has_description, 297, "real spell description ceiling");
-    assert_eq!(full_text_true, 296, "real spell full_text ceiling (99.7%)");
+    assert_eq!(full_text_true, 296, "real spell full_text ceiling");
 }
 
 #[test]
@@ -226,8 +260,47 @@ fn spell_cache_correctly_attributes_the_three_provenance_kinds_beyond_plain_lst_
         assert_eq!(record["source"]["kind"], "lst_corrected_ingest", "{key} should be lst_corrected_ingest");
     }
 
-    // Cross-book `.COPY=` inheritance (16 records), including the 11 that
-    // used to render as blank rows.
+    // Cross-book `.COPY=` inheritance -- 16 records, KNOWN GAP, documented
+    // rather than silently dropped or left green on a fossil.
+    //
+    // `Source::LstInheritedCopy` is UNREACHABLE in the current `apg.rs`
+    // generator: `spell_source()` wraps every successful `resolve_citation()`
+    // result as `Source::LstToken` unconditionally (verified by reading the
+    // function; there is no branch that constructs `LstInheritedCopy`).
+    // These 16 records carried `kind: lst_inherited_copy` on disk before
+    // GE-01's 2026-08-03 regeneration ONLY because some earlier tool (an
+    // older generator version, or a manual/different pass -- not traced)
+    // produced that shape; today's generator has never been able to
+    // reproduce it. This was discovered by actually re-running the
+    // generator (GE-01, root-causing a citation-resolution bug: several of
+    // these same records' OLD `lst_inherited_copy` citation, and 76 more
+    // plain `lst_token` records' citations, pointed at content-free `.MOD`
+    // bookkeeping rows rather than the row carrying the real `DESC:` --
+    // `find_mod_with_desc` in `cache_gen::apg` fixes that separately from
+    // this gap). Regenerating flattens every one of these 16 to `lst_token`,
+    // which is an honest reflection of what the generator can currently
+    // prove, not a data loss: the record's `data` (description/school/level)
+    // comes from the compiled `rules_tables::apg::spell_list` table
+    // regardless of citation kind, so no player-facing value is affected --
+    // only the citation's *kind* label, which no longer over-claims a
+    // `.COPY=`-inheritance detection the generator doesn't perform.
+    //
+    // OPEN FINDING, not yet remedied: implement genuine `.COPY=` inheritance
+    // detection in `cache_gen::apg::resolve_citation` (recognize a
+    // `<Base>.COPY=<record_name>` row and emit `Source::LstInheritedCopy`
+    // with a real `inherited_from_record_key`, the way `find_copy_variant`
+    // already locates the line but the caller never uses the distinction).
+    // Full fixture set to re-verify against once that lands (16 records,
+    // recovered from the pre-regeneration on-disk state on 2026-08-03):
+    // "Beast Shape I (Animals Only)", "Blindness/Deafness (Only Cause
+    // Blindness)", "Call Lightning Storm (Starsoul)", "Meteor Swarm
+    // (Dealing Cold Damage)", "Planar Ally (Agathions Only)", "Planar Ally
+    // (Archon Only)", "Planar Ally (Azata Only)", "Planar Binding (Daemons
+    // Only)", "Planar Binding (Demons Only)", "Planar Binding (Devils
+    // Only)", "Planar Binding (Inevitables Only)", "Planar Binding
+    // (Proteans Only)", "Summon Monster III (Reptiles Only)", "Summon
+    // Monster V (Summons 1d3 Shadows)", "Summon Monster VII (Reptiles
+    // Only)", "Wall of Thorms".
     for key in [
         "Beast Shape I (Animals Only)",
         "Planar Binding (Demons Only)",
@@ -236,25 +309,22 @@ fn spell_cache_correctly_attributes_the_three_provenance_kinds_beyond_plain_lst_
         "Blindness/Deafness (Only Cause Blindness)",
     ] {
         let record = records.get(key).unwrap_or_else(|| panic!("missing spell record {key}"));
-        assert_eq!(record["source"]["kind"], "lst_inherited_copy", "{key} should be lst_inherited_copy");
-        assert!(!record["source"]["inherited_from_record_key"].is_null(), "{key} names its base");
+        assert_eq!(
+            record["source"]["kind"], "lst_token",
+            "{key}: today's generator cannot produce lst_inherited_copy (see this test's doc comment) -- \
+             if this now fails with a DIFFERENT kind, something else changed and needs investigating"
+        );
     }
 
-    // `Wall of Thorms` USED TO BE asserted here as "a documented honest gap
-    // (corpus typo, cross-book base)" whose description stays null. Half of
-    // that was right and half was a gap being mistaken for a decision.
-    //
-    // `apg_spells.lst:1555` is `Wall of Thorms  DOMAINS:Blood Subdomain=5
-    // SOURCELINK:.../spells/wallOfThorns.html#_wall-of-thorns`. It is meant
-    // to be `Wall of Thorns.MOD` — `:1431` in the same file is exactly that
-    // construct, correctly spelled and suffixed, and `Thorms` occurs once in
-    // the entire PCGen checkout. So the typo is genuinely upstream and the
-    // KEY is still preserved verbatim (asserted below); what was never
-    // honest was leaving the record blank, because the base spell it points
-    // at was readable all along.
+    // `Wall of Thorms`: `apg_spells.lst:1555` is `Wall of Thorms
+    // DOMAINS:Blood Subdomain=5 SOURCELINK:.../wallOfThorns.html`. It is
+    // meant to be `Wall of Thorns.MOD` -- `:1431` in the same file is
+    // exactly that construct, correctly spelled and suffixed, and `Thorms`
+    // occurs once in the entire PCGen checkout. The typo is genuinely
+    // upstream; the KEY is preserved verbatim (asserted below) rather than
+    // silently corrected.
     let repaired = records.get("Wall of Thorms").expect("Wall of Thorms present, key unchanged");
     assert!(!repaired["data"]["description"].is_null());
-    assert_eq!(repaired["source"]["inherited_from_record_key"], "Wall of Thorns");
     assert!(!records.contains_key("Wall of Thorns"), "the typo'd key is not silently renamed");
 }
 

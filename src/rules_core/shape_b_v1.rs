@@ -164,6 +164,16 @@ pub struct CorpusRecordV1<T> {
     /// its value replaced with [`REDACTED_PI_MARKER`].
     #[serde(default)]
     pub pi_marker: Option<String>,
+    /// GE-01: what kind of evidence would prove this record done, from
+    /// `codex::rules_core::wiring_class`'s real corpus token closure.
+    /// `#[serde(default)]` following this struct's own versioning
+    /// convention (see `license`'s doc comment above): a pre-GE-01
+    /// record deserializes with this defaulting to empty rather than a
+    /// hard parse failure.
+    #[serde(default)]
+    pub wiring_class: String,
+    #[serde(default)]
+    pub wiring_class_signals: Vec<String>,
 }
 
 /// A v1-record validation defect (`decisions.md §17`'s "Validation: every
@@ -634,6 +644,8 @@ mod tests {
             license: Some(License::PiRedacted),
             pi_field: Some("deity_name".to_string()),
             pi_marker: Some(PI_MARKER_REDACTED.to_string()),
+wiring_class: String::new(),
+        wiring_class_signals: Vec::new(),
         };
 
         let json = serde_json::to_value(&record).expect("v1 record must serialize");
@@ -673,6 +685,8 @@ mod tests {
             license: Some(License::Pi),
             pi_field: None,
             pi_marker: None,
+wiring_class: String::new(),
+        wiring_class_signals: Vec::new(),
         };
         assert_eq!(validate_license(&record), Err(LicenseValidationError::MissingPiField));
     }
@@ -688,6 +702,8 @@ mod tests {
             license: Some(License::PiRedacted),
             pi_field: Some("deity_name".to_string()),
             pi_marker: Some("not-quite-right".to_string()),
+wiring_class: String::new(),
+        wiring_class_signals: Vec::new(),
         };
         assert_eq!(validate_license(&record), Err(LicenseValidationError::MissingRedactionMarker));
     }
@@ -703,6 +719,8 @@ mod tests {
             license: Some(License::Ogl),
             pi_field: None,
             pi_marker: None,
+wiring_class: String::new(),
+        wiring_class_signals: Vec::new(),
         };
         assert_eq!(validate_license(&record), Ok(()));
     }

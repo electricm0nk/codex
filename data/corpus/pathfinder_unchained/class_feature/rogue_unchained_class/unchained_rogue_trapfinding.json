@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-31T18:21:39Z",
+  "ingested_at": "2026-08-03T17:43:07Z",
   "data": {
     "key": "Unchained Rogue ~ Trapfinding",
     "name": "Trapfinding",
@@ -93,5 +93,9 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
 }

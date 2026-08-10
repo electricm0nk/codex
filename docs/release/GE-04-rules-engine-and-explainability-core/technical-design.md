@@ -161,5 +161,15 @@ For every pilot output under test, a future implementation must be able to answe
 ## Design non-goals
 This design does not choose final Rust module layout, final expression evaluator, final serialized schemas, importer logic, PCGen oracle comparison, UI presentation, full Pathfinder stacking, spells, archetypes, multiclassing, or plugin behavior.
 
+## Design Addendum — 2026-08-02 — the scalar-derived magnitude evaluator
+
+**Decision.** GE-04 owns a **scalar-derived magnitude evaluator** as a named engine component, specified in `artifacts/expression-language-runtime-requirements.md` §"Scalar-derived magnitude evaluation". It evaluates the magnitude of records GE-01 classifies `derived` — magnitudes that are deterministic functions of scalars the engine already holds — and returns a value with declared dependencies and provenance.
+
+**Why this is a design decision and not an implementation detail.** Without it, every record whose magnitude scales with level is held to the bespoke-wiring bar and can never be proven, because no observable consumer delta exists for it. 1,224 of the 9,828 corpus units the engine currently holds are `derived`; 898 of those sit stalled in `ingested-magnitude` today, and a further 260 units state a scaling magnitude only in English prose and must be resolved in the corpus before any evaluator can touch them (re-derive: `python3 docs/release/GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.py HELD` and `… ingested-magnitude`, against `docs/work-inventory.json` `generated_at 2026-08-02T04:02:12Z`).
+
+**Non-goal, restated so it is not read as a licence.** This is not a general LST expression interpreter and does not reopen that question. It is scoped to the `derived` class only; `computed` records keep the observed-consumer-delta bar unchanged. The class vocabulary is GE-01's (`../GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`) and is cited, not restated. Evaluator technology selection remains open per the `Candidate-selection boundary`.
+
+**Input-surface constraint.** The evaluator's input surface MUST include PCGen's prose fields (`DESC:`, `DURATION:`, `TARGETAREA:`, `SPROP:`, `RANGE:`, `SPECIALS:`), because that is where the corpus actually carries scaling expressions — *Fireball*'s damage is `DESC:…(min(10,CASTERLEVEL))d6…`, not a `BONUS:` token. An evaluator wired only to the magnitude tokens sees no scaling spell in the corpus at all.
+
 ## Design review triggers
 Reopen this design if GE-02 changes model boundaries, GE-03 implementation produces incompatible canonical content/diagnostics, GE-05 requires comparison outputs not represented here, GE-06 fixes pilot selections that change fixture requirements, or an ADR selects evaluator/stacking/circular-dependency policy.

@@ -1,7 +1,7 @@
 # Corpus Ingest
 
 > Scope: how real PCGen corpus files (`.pcc` entry files + `.lst` data files) are parsed and projected into the canonical source-IR the rules engine consumes.
-> Last verified: 2026-07-20 against ef9012bf5de8
+> Last verified: 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle) — parsing-pipeline sections (Stage 1-6) re-verified structurally only; the cache-layer additions are documented in [rules-data-tables.md](./rules-data-tables.md)
 > Maintenance: updated at SD closure — see [README.md](./README.md) §Maintenance contract
 
 ## Purpose
@@ -294,7 +294,14 @@ order:
 
 See [rules-data-tables.md](./rules-data-tables.md) for what happens
 downstream once a corpus record is projected: transcribing its values
-into the hand-authored `rules_tables` book modules. See
+into the hand-authored `rules_tables` book modules, and — new as of the
+wiring_class/PI-screening convergence cycle — the GE-01 `wiring_class`
+taxonomy every corpus record now carries (`src/rules_core/wiring_class.rs`,
+determined from a unit's full token closure, not the base row alone),
+`Trap::WiringClassMismatch` (`src/pcgen_import/corpus_traps.rs`) which
+guards that stamp against drift, and the shared PI-screening pass
+(`src/rules_core/pi_screening.rs`) every JSON-cache writer now runs
+through. See
 [rules-engine.md](./rules-engine.md) for how the rules engine consumes
 `SourcePackageContent` once corpus content is wired into compute, and
 [testing.md](./testing.md) for the corpus-gated test conventions beyond

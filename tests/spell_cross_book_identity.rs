@@ -169,3 +169,42 @@ fn no_archetype_display_name_shadows_another_record_in_its_own_book() {
     let apg_keys: Vec<&str> = apg::spell_list::SPELL_LIST.iter().map(|e| e.key).collect();
     check("APG", apg::spell_list::ARCHETYPE_QUALIFIED_KEYS, &apg_keys);
 }
+
+/// The `SPELL_LIST` table above is only half the pipeline: the on-disk
+/// JSON cache (`data/corpus/advanced_class_guide/spell/*.json`), produced
+/// by `codex::rules_core::cache_gen::acg::generate()` and consulted by
+/// `v06_corpus_trap_report --audit`, is the actual artifact ingest ships.
+/// A prior generation run stamped `data.key` as the *display* name for the
+/// 9 Naturalist rows (pre-dating the `SPELL_LIST` KEY:-token fix above),
+/// so the shipped cache silently clobbered the base CRB `Summon Nature's
+/// Ally <roman>` identity even after the table itself was corrected. This
+/// test guards the regenerated cache directly: the base spell's identity
+/// must never appear as the `data.key` of the ACG Naturalist record, and
+/// the real archetype-qualified `KEY:` must be what's stored instead.
+#[test]
+fn the_acg_naturalist_json_cache_stores_the_archetype_qualified_key_not_the_display_name() {
+    let cache_dir = std::path::PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+        .join("data/corpus/advanced_class_guide/spell");
+    let mut seen_keys: std::collections::BTreeSet<String> = std::collections::BTreeSet::new();
+    for entry in std::fs::read_dir(&cache_dir)
+        .unwrap_or_else(|e| panic!("read_dir {}: {e}", cache_dir.display()))
+    {
+        let path = entry.unwrap().path();
+        if path.extension().map(|e| e == "json").unwrap_or(false) {
+            let text = std::fs::read_to_string(&path).unwrap();
+            let value: serde_json::Value = serde_json::from_str(&text).unwrap();
+            let key = value["data"]["key"].as_str().unwrap().to_string();
+            seen_keys.insert(key);
+        }
+    }
+
+    for numeral in ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"] {
+        let archetype_key = format!("Naturalist Summon Nature's Ally {numeral}");
+        assert!(
+            seen_keys.contains(&archetype_key),
+            "ACG spell cache is missing the archetype-qualified identity {archetype_key:?}; \
+             the ingest must file the Naturalist variant under its own KEY:, not the base \
+             spell's display name (data.key currently: {seen_keys:?})"
+        );
+    }
+}

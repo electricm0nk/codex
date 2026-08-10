@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
     "id": "beastiary1:monster:vargouille",
     "name": "Vargouille",
@@ -25,9 +25,6 @@
     "line": 401,
     "record_key": "Vargouille"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
   "field_provenance": [
     {
       "field": "natural_attacks[0].damage_dice",
@@ -44,5 +41,12 @@
         "identity_match_basis": "name + CR 2 + Small outsider (evil, extraplanar) + Bestiary pg. 272 (matches the cached chassis's own source_page and RACESUBTYPE); 'kiss' and 'shriek' appear only under Special Attacks with no damage dice in any source, so neither is recorded as a natural attack"
       }
     }
-  ]
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
 }

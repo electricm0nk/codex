@@ -112,7 +112,9 @@ use codex::rules_core::rules_tables::crb::race_tables::RaceId;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
 use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
 use codex::rules_core::rules_tables::{
-    acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu, RuleSetId,
+    acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
+    ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
+    ultimate_magic as um, ultimate_psionics as upsi, ultimate_wilderness as uw, RuleSetId,
 };
 
 use crate::corpus_ingest_diagnostic::build_corpus_ingest_diagnostic;
@@ -310,6 +312,35 @@ fn repo_root() -> PathBuf {
 /// name the ingest diagnostic uses.
 const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     ("FeatTableEntry", "feats"),
+    // Ultimate Campaign's own record type (SD28-E13) -- not
+    // `crb::feats::FeatTableEntry`, see `ultimate_campaign::feat_tables`'s
+    // own doc comment for why it declares its own type. Same family
+    // (`"feats"`) as every other book's feat table.
+    ("StoryFeatEntry", "feats"),
+    // Ultimate Intrigue's own record type (SD28-E24) -- reuses the shared
+    // `crb::feats::FeatCategory` enum but declares its own struct because
+    // it also carries `pretext`/`benefit` as separate fields, the same
+    // reason UCA's `StoryFeatEntry` above declares its own. Same family
+    // (`"feats"`) as every other book's feat table.
+    ("UiFeatEntry", "feats"),
+    // Ultimate Wilderness's own record type (SD28-E26) -- own category
+    // enum (Animal/Mount have no shared-enum equivalent), same reason
+    // UCA's/UI's own types exist. Same family ("feats") as every other
+    // book's feat table.
+    ("UwFeatEntry", "feats"),
+    // Ultimate Combat's own record type (SD28-E27) -- own category enum
+    // (Style/Grit/Panache/Critical/CalledShot have no shared-enum
+    // equivalent, or are kept deliberately distinct). Same family
+    // ("feats") as every other book's feat table.
+    ("UcFeatEntry", "feats"),
+    // Ultimate Magic's own record type (SD28-E28) -- own category enum
+    // (Critical/Masterpiece/Discovery have no shared-enum equivalent).
+    // Same family ("feats") as every other book's feat table.
+    ("UmFeatEntry", "feats"),
+    // Ultimate Psionics' own record type (SD28-E29) -- own category
+    // enum (Psionic/Metapsionic have no shared-enum equivalent). Same
+    // family ("feats") as every other book's feat table.
+    ("UpsiFeatEntry", "feats"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -320,6 +351,13 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // record slice — the family is discovered anyway, three ways over.
     ("UnchainedBarbarianFeature", "class_features"),
     ("UnchainedMonkFeature", "class_features"),
+    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
+    // across 7 books (acg, advanced_race_guide, apg, ultimate_combat,
+    // ultimate_magic, ultimate_psionics, ultimate_wilderness). Its own
+    // record family, not a facet of `class_feature` -- an archetype is
+    // itself a selectable thing (`ARCHETYPE_CHOICE_ID`), not provenance
+    // attached to another record.
+    ("ArchetypeSwapEntry", "archetypes"),
 ];
 
 /// Element types that are real ingested data but are **not** an independent
@@ -653,6 +691,38 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // PU joined `feats_all::all_feat_tables()` alongside ARG; the same
         // command carries its 17 records under the `Pu` wire source.
         ("pathfinder_unchained", "feats") => Some(feats_reach(RuleSetId::Pu, "Pu")),
+        // SD28-E13: Ultimate Campaign's 23 Story Feats joined
+        // `feats_all::all_feat_tables()` under the `Uca` wire source. All 23
+        // records carry `category: "Story"`, so every one of them has a
+        // payload per `feats_reach`'s own check (a non-empty category is
+        // sufficient) -- including the 3 `deferred-with-reason` records,
+        // which still carry real flavor text plus the deferral diagnostic
+        // in `description`, not a bare identity.
+        ("ultimate_campaign", "feats") => Some(feats_reach(RuleSetId::Uca, "Uca")),
+        // SD28-E24: Ultimate Intrigue's 104 feats joined
+        // `feats_all::all_feat_tables()` under the `Ui` wire source, the
+        // first record family of this book's from-scratch ingest. Every
+        // record carries a non-empty `category` (General/Combat/Metamagic/
+        // Teamwork) so `feats_reach`'s own check is satisfied for all 104.
+        ("ultimate_intrigue", "feats") => Some(feats_reach(RuleSetId::Ui, "Ui")),
+        // SD28-E26 slice 1: UW joined `feats_all::all_feat_tables()` under
+        // the `Uw` wire source. Every record carries a non-empty category
+        // (General/Combat/ItemCreation/Metamagic/Teamwork/Animal/Mount),
+        // so `feats_reach`'s own check is satisfied for all 136.
+        ("ultimate_wilderness", "feats") => Some(feats_reach(RuleSetId::Uw, "Uw")),
+        // SD28-E27 slice 1: UC joined `feats_all::all_feat_tables()` under
+        // the `Uc` wire source. Every record carries a non-empty category,
+        // so `feats_reach`'s own check is satisfied for all 263.
+        ("ultimate_combat", "feats") => Some(feats_reach(RuleSetId::Uc, "Uc")),
+        // SD28-E28 slice 1: UM joined `feats_all::all_feat_tables()` under
+        // the `Um` wire source. Every record carries a non-empty category,
+        // so `feats_reach`'s own check is satisfied for all 144.
+        ("ultimate_magic", "feats") => Some(feats_reach(RuleSetId::Um, "Um")),
+        // SD28-E29 slice 1: UPsi joined `feats_all::all_feat_tables()`
+        // under the `Upsi` wire source. Every record carries a
+        // non-empty category, so `feats_reach`'s own check is
+        // satisfied for all 221.
+        ("ultimate_psionics", "feats") => Some(feats_reach(RuleSetId::Upsi, "Upsi")),
 
         // Spells: `list_spell_catalog` serves all books. The Spell Catalog
         // screen renders school/level/description; the sheet's Add Spell
@@ -688,6 +758,15 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("advanced_race_guide", "spells") => Some(spells_reach(
             "ARG",
             arg::spell_list::SPELL_LIST
+                .iter()
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD28-E24 slice 2: UI joined `build_spell_catalog` the same way ARG
+        // did -- same command, same unfiltered "All books" render path.
+        ("ultimate_intrigue", "spells") => Some(spells_reach(
+            "UI",
+            ui::spell_list::SPELL_LIST
                 .iter()
                 .map(|entry| entry.key.to_owned())
                 .collect(),
@@ -741,6 +820,64 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD28-E24 slice 2: UI joined `build_equipment_catalog` under the
+        // `UI` book code -- both `equipment_tables()` (91) and
+        // `equipmod_tables()` (7) are served by that one code, mirroring
+        // how every other book's equipment and equipment-modifier rows
+        // share one book code rather than a separate one.
+        ("ultimate_intrigue", "equipment") => Some(equipment_reach(
+            "UI",
+            ui::equipment_tables::equipment_tables()
+                .iter()
+                .chain(ui::equipment_tables::equipmod_tables())
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD28-E25 slice 1: UE joined `build_equipment_catalog` under the
+        // `UE` book code, both `equipment_tables()` (1,380) and
+        // `equipmod_tables()` (180) served by that one code.
+        ("ultimate_equipment", "equipment") => Some(equipment_reach(
+            "UE",
+            ue::equipment_tables::equipment_tables()
+                .iter()
+                .chain(ue::equipment_tables::equipmod_tables())
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD28 item 5: UM and UPsi joined `build_equipment_catalog` under
+        // their own `UM`/`UPSI` book codes -- previously absent from this
+        // third, independent hand-maintained book chain even though
+        // `equipment_resolver.rs`'s headless pricing/recognition chain
+        // already carried both (`§55`, extended for UM/UPsi). Both books'
+        // `equipment_tables()` and `equipmod_tables()` are served under one
+        // code each, mirroring UI/UE.
+        ("ultimate_magic", "equipment") => Some(equipment_reach(
+            "UM",
+            um::equipment_tables::equipment_tables()
+                .iter()
+                .chain(um::equipment_tables::equipmod_tables())
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        ("ultimate_psionics", "equipment") => Some(equipment_reach(
+            "UPSI",
+            upsi::equipment_tables::equipment_tables()
+                .iter()
+                .chain(upsi::equipment_tables::equipmod_tables())
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
+        // SD28-C4.9: UC joined `build_equipment_catalog` under the `UC`
+        // book code, both `equipment_tables()` (185) and `equipmod_tables()`
+        // (19) served by that one code.
+        ("ultimate_combat", "equipment") => Some(equipment_reach(
+            "UC",
+            uc::equipment_tables::equipment_tables()
+                .iter()
+                .chain(uc::equipment_tables::equipmod_tables())
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
@@ -784,6 +921,15 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("advanced_race_guide", "race_traits") => {
             Some(race_traits_reach("ARG", "advanced_race_guide"))
         }
+        // SD28-E16 (2026-08-08, decisions.md §39, correcting §37's first
+        // estimate of 50): APG's 1 genuinely new alternate racial trait
+        // (Half-Orc ~ Plagueborn) -- 49 of the original 50 collided with
+        // already-ingested ARG keys and were excluded at ingest time. Same
+        // shape as ARG -- served through
+        // `race_trait_picker::build_alternate_racial_traits`, not a compiled
+        // table -- now that `advanced_players_guide` is in
+        // `race_catalog::RACE_CORPUS_BOOKS`.
+        ("apg", "race_traits") => Some(race_traits_reach("APG", "advanced_players_guide")),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -858,7 +1004,72 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // module's guess.
         ("pathfinder_unchained", "class_features") => Some(pu_class_features_reach()),
 
+        // Archetypes: SD28-C4.8/§60/§63's tier-1 archetype-swap catalog.
+        // Honestly `NotSurfaced` for every book today, not a stub omission
+        // -- the same disposition `§62` used for `companion` (0% where the
+        // mechanism is genuinely absent). `archetype_resolver` reads a
+        // real `SelectedChoice { choice_set_id: ARCHETYPE_CHOICE_ID, .. }`
+        // and the engine grounds the swap correctly for the wired slots
+        // (Alchemist's three, Fighter's Bravery), proven end-to-end by
+        // `build_pilot_headless_receipt` in the reachability tests -- but
+        // there is no desktop command or picker anywhere that lets a
+        // player make that selection (no `archetype_catalog.rs`, no
+        // choice-set surface on the character sheet). §43's engine-holds
+        // vs player-reaches boundary is exactly this case: the engine
+        // holds it, the product does not yet let anyone reach it.
+        ("acg", "archetypes") => Some(archetypes_reach(
+            "acg",
+            acg::archetype_tables::archetype_swap_tables(),
+        )),
+        ("advanced_race_guide", "archetypes") => Some(archetypes_reach(
+            "advanced_race_guide",
+            arg::archetype_tables::archetype_swap_tables(),
+        )),
+        ("apg", "archetypes") => Some(archetypes_reach(
+            "apg",
+            apg::archetype_tables::archetype_swap_tables(),
+        )),
+        ("ultimate_combat", "archetypes") => Some(archetypes_reach(
+            "ultimate_combat",
+            uc::archetype_tables::archetype_swap_tables(),
+        )),
+        ("ultimate_magic", "archetypes") => Some(archetypes_reach(
+            "ultimate_magic",
+            um::archetype_tables::archetype_swap_tables(),
+        )),
+        ("ultimate_psionics", "archetypes") => Some(archetypes_reach(
+            "ultimate_psionics",
+            upsi::archetype_tables::archetype_swap_tables(),
+        )),
+        ("ultimate_wilderness", "archetypes") => Some(archetypes_reach(
+            "ultimate_wilderness",
+            uw::archetype_tables::archetype_swap_tables(),
+        )),
+
         _ => None,
+    }
+}
+
+/// The shared, honest verdict for every book's archetype-swap table -- see
+/// the doc comment on the `reach_of` arms above for why this is
+/// `NotSurfaced` rather than a claim of reach. `missing` carries every
+/// ingested key, because none of them reach the player through any
+/// existing desktop surface, not merely some.
+fn archetypes_reach(
+    book: &str,
+    entries: &[codex::rules_core::rules_tables::archetype_swap::ArchetypeSwapEntry],
+) -> Reach {
+    let missing: BTreeSet<String> = entries.iter().map(|entry| entry.key.to_owned()).collect();
+    Reach::NotSurfaced {
+        why: format!(
+            "{book}'s {} archetype-swap records are ingested but not surfaced -- no desktop \
+             command or picker exists yet to let a player select an archetype at all, so none \
+             of this book's records reach anyone regardless of what the engine can already \
+             compute for a hand-constructed selection (see OPEN_FINDINGS for this family's \
+             per-book detail)",
+            entries.len()
+        ),
+        missing,
     }
 }
 
@@ -1363,6 +1574,74 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          how this entry closes. Do NOT close it by hiding the record — a record on disk that no \
          selection can reach is exactly what this gate is for.",
     ),
+    // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
+    // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
+    // the swap correctly in compute output for the wired slots (Alchemist's
+    // Mutagen/Discovery/Poison Resistance, Fighter's Bravery -- proven via
+    // `build_pilot_headless_receipt` in each book's own reachability test
+    // module), but that is an engine capability exercised by a
+    // hand-constructed `SelectedChoice`, not a player-reachable one: no
+    // desktop command or picker (`archetype_catalog.rs`, a choice-set
+    // surface on the character sheet) exists to let anyone actually pick an
+    // archetype. Remedy: build that surface, then delete these seven
+    // entries as their books gain a real claim (mirroring how the
+    // equipment/feat/spell catalogs each closed their own OPEN_FINDINGS
+    // entry when their picker landed).
+    (
+        "acg",
+        "archetypes",
+        "Gap: 87 ACG archetype-swap records are ingested and the engine can already ground a \
+         selected one's slot-swap correctly, but zero reach a player -- no archetype-selection \
+         surface exists anywhere in the desktop app. Remedy: build an archetype picker \
+         (archetype_catalog.rs plus a choice-set surface on the character sheet, the same shape \
+         equipment/feat/spell catalogs already use) and wire the per-slot supersession for this \
+         book's classes; delete this entry once ACG's archetypes reach the picker.",
+    ),
+    (
+        "advanced_race_guide",
+        "archetypes",
+        "Gap: 59 ARG archetype-swap records are ingested; the engine already grounds one of \
+         them correctly (Plague Bringer's supersession of Alchemist's Poison Resistance, the \
+         proof-of-concept for `archetype_claiming_slot`), but no picker exists to let a player \
+         select ANY archetype, so even that one does not reach a player yet. Remedy: same as \
+         ACG above -- an archetype picker plus per-slot wiring; delete once ARG's archetypes \
+         reach the picker.",
+    ),
+    (
+        "apg",
+        "archetypes",
+        "Gap: 80 APG archetype-swap records are ingested; the engine already grounds one of \
+         them correctly (Archer's supersession of Fighter's Bravery, the second class this \
+         epic's archetype-swap measurement wired), but no picker exists to let a player select \
+         ANY archetype, so even that one does not reach a player yet. Remedy: same as ACG \
+         above; delete once APG's archetypes reach the picker.",
+    ),
+    (
+        "ultimate_combat",
+        "archetypes",
+        "Gap: 65 Ultimate Combat archetype-swap records are ingested with no archetype-selection \
+         surface to reach a player through. Remedy: same as ACG above; delete once landed.",
+    ),
+    (
+        "ultimate_magic",
+        "archetypes",
+        "Gap: 67 Ultimate Magic archetype-swap records are ingested with no archetype-selection \
+         surface to reach a player through. Remedy: same as ACG above; delete once landed.",
+    ),
+    (
+        "ultimate_psionics",
+        "archetypes",
+        "Gap: 15 Ultimate Psionics archetype-swap records are ingested with no \
+         archetype-selection surface to reach a player through. Remedy: same as ACG above; \
+         delete once landed.",
+    ),
+    (
+        "ultimate_wilderness",
+        "archetypes",
+        "Gap: 30 Ultimate Wilderness archetype-swap records are ingested with no \
+         archetype-selection surface to reach a player through. Remedy: same as ACG above; \
+         delete once landed.",
+    ),
 ];
 
 /// Records that reach a real surface carrying nothing but their own key.
@@ -1420,6 +1699,455 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // Gated on `Duergar_ReplaceSLAEnlargePerson`, which nothing in any
         // ingested book sets; its only setter is in Monster Codex.
         &["Duergar ~ Spell-Like Ability ~ Invisibility"],
+    ),
+    // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
+    // every key, because none reaches a player through any surface today
+    // (no picker exists at all, see OPEN_FINDINGS). This is the "whole
+    // family unreached" shape, not a partial shortfall.
+    (
+        "acg",
+        "archetypes",
+        &[
+            "Alchemist Archetype ~ Inspired Chemist",
+            "Arcanist Archetype ~ Blade Adept",
+            "Arcanist Archetype ~ Blood Arcanist",
+            "Arcanist Archetype ~ Brown-Fur Transmuter",
+            "Arcanist Archetype ~ Eldritch Font",
+            "Arcanist Archetype ~ Elemental Master",
+            "Arcanist Archetype ~ Occultist",
+            "Arcanist Archetype ~ School Savant",
+            "Arcanist Archetype ~ Spell Specialist",
+            "Arcanist Archetype ~ White Mage",
+            "Bard Archetype ~ Flame Dancer",
+            "Bard Archetype ~ Voice of the Wild",
+            "Bloodrager Archetype ~ Blood Conduit",
+            "Bloodrager Archetype ~ Bloodrider",
+            "Bloodrager Archetype ~ Greenrager",
+            "Bloodrager Archetype ~ Metamagic Rager",
+            "Bloodrager Archetype ~ Rageshaper",
+            "Bloodrager Archetype ~ Spelleater",
+            "Bloodrager Archetype ~ Steelblood",
+            "Brawler Archetype ~ Exemplar",
+            "Brawler Archetype ~ Mutagenic Mauler",
+            "Brawler Archetype ~ Shield Champion",
+            "Brawler Archetype ~ Snakebite Striker",
+            "Brawler Archetype ~ Steel-Breaker",
+            "Brawler Archetype ~ Strangler",
+            "Brawler Archetype ~ Wild Child",
+            "Cavalier Archetype ~ Daring Champion",
+            "Cleric Archetype ~ Ecclesitheurge",
+            "Druid Archetype ~ Feral Shifter",
+            "Druid Archetype ~ Nature Fang",
+            "Druid Archetype ~ Wild Whisperer",
+            "Fighter Archetype ~ Martial Master",
+            "Fighter Archetype ~ Mutation Warrior",
+            "Hunter Archetype ~ Divine Hunter",
+            "Hunter Archetype ~ Feral Hunter",
+            "Hunter Archetype ~ Packmaster",
+            "Hunter Archetype ~ Primal Companion Hunter",
+            "Hunter Archetype ~ Verminous Hunter",
+            "Inquisitor Archetype ~ Sacred Huntsmaster",
+            "Inquisitor Archetype ~ Sanctified Slayer",
+            "Investigator Archetype ~ Empiricist",
+            "Investigator Archetype ~ Infiltrator",
+            "Investigator Archetype ~ Mastermind",
+            "Investigator Archetype ~ Sleuth",
+            "Investigator Archetype ~ Spiritualist",
+            "Investigator Archetype ~ Steel Hound",
+            "Monk Archetype ~ Kata Master",
+            "Monk Archetype ~ Wildcat",
+            "Oracle Archetype ~ Psychic Searcher",
+            "Oracle Archetype ~ Spirit Guide",
+            "Oracle Archetype ~ Warsighted",
+            "Paladin Archetype ~ Holy Guide",
+            "Paladin Archetype ~ Temple Champion",
+            "Ranger Archetype ~ Divine Tracker",
+            "Ranger Archetype ~ Hooded Champion",
+            "Ranger Archetype ~ Wild Hunter",
+            "Rogue Archetype ~ Counterfeit Mage",
+            "Rogue Archetype ~ Underground Chemist",
+            "Shaman Archetype ~ Animist",
+            "Shaman Archetype ~ Possessed Shaman",
+            "Shaman Archetype ~ Speaker for the Past",
+            "Shaman Archetype ~ Spirit Warden",
+            "Shaman Archetype ~ Unsworn Shaman",
+            "Shaman Archetype ~ Visionary",
+            "Shaman Archetype ~ Witch Doctor",
+            "Skald Archetype ~ Fated Champion",
+            "Skald Archetype ~ Herald of the Horn",
+            "Skald Archetype ~ Spell Warrior",
+            "Skald Archetype ~ Totemic Skald",
+            "Sorcerer Archetype ~ Eldritch Scrapper",
+            "Sorcerer Archetype ~ Mongrel Mage",
+            "Summoner Archetype ~ Naturalist",
+            "Swashbuckler Archetype ~ Daring Infiltrator",
+            "Swashbuckler Archetype ~ Flying Blade",
+            "Swashbuckler Archetype ~ Inspired Blade",
+            "Swashbuckler Archetype ~ Mouser",
+            "Swashbuckler Archetype ~ Musketeer",
+            "Swashbuckler Archetype ~ Mysterious Avenger",
+            "Swashbuckler Archetype ~ Picaroon",
+            "Warpriest Archetype ~ Champion of the Faith",
+            "Warpriest Archetype ~ Cult Leader",
+            "Warpriest Archetype ~ Disenchanter",
+            "Warpriest Archetype ~ Divine Commander",
+            "Warpriest Archetype ~ Forgepriest",
+            "Warpriest Archetype ~ Sacred Fist",
+            "Witch Archetype ~ Hex Channeler",
+            "Witch Archetype ~ Mountain Witch",
+        ],
+    ),
+    (
+        "advanced_race_guide",
+        "archetypes",
+        &[
+            "Alchemist Archetype ~ Bogborn Alchemist",
+            "Alchemist Archetype ~ Bramble Brewer",
+            "Alchemist Archetype ~ Deep Bomber",
+            "Alchemist Archetype ~ Fire Bomber",
+            "Alchemist Archetype ~ Plague Bringer",
+            "Alchemist Archetype ~ Saboteur",
+            "Barbarian Archetype ~ Feral Gnasher",
+            "Barbarian Archetype ~ Hateful Rager",
+            "Bard Archetype ~ Prankster",
+            "Bard Archetype ~ Shadow Puppeteer",
+            "Bard Archetype ~ Watersinger",
+            "Cleric Archetype ~ Demonic Apostle",
+            "Cleric Archetype ~ Fiendish Vessel",
+            "Cleric Archetype ~ Forgemaster",
+            "Druid Archetype ~ Feral Child",
+            "Druid Archetype ~ Naga Aspirant",
+            "Druid Archetype ~ Sky Druid",
+            "Druid Archetype ~ Treesinger",
+            "Druid Archetype ~ Undine Adept",
+            "Fighter Archetype ~ Airborne Ambusher",
+            "Fighter Archetype ~ Cavern Sniper",
+            "Fighter Archetype ~ Dirty Fighter",
+            "Fighter Archetype ~ Foehammer",
+            "Inquisitor Archetype ~ Exarch",
+            "Inquisitor Archetype ~ Immolator",
+            "Inquisitor Archetype ~ Kinslayer",
+            "Monk Archetype ~ Gray Disciple",
+            "Monk Archetype ~ Ironskin Monk",
+            "Monk Archetype ~ Nimble Guardian",
+            "Monk Archetype ~ Student of Stone",
+            "Monk Archetype ~ Treetop Monk",
+            "Monk Archetype ~ Underfoot Adept",
+            "Monk Archetype ~ Wanderer",
+            "Oracle Archetype ~ Ancient Lorekeeper",
+            "Oracle Archetype ~ Community Guardian",
+            "Oracle Archetype ~ Purifier",
+            "Oracle Archetype ~ Reincarnated Oracle",
+            "Oracle Archetype ~ Shigenjo",
+            "Paladin Archetype ~ Redeemer",
+            "Paladin Archetype ~ Stonelord",
+            "Paladin Archetype ~ Tranquil Guardian",
+            "Ranger Archetype ~ Dusk Stalker",
+            "Ranger Archetype ~ Wave Warden",
+            "Ranger Archetype ~ Wild Shadow",
+            "Rogue Archetype ~ Cat Burglar",
+            "Rogue Archetype ~ Deadly Courtesan",
+            "Rogue Archetype ~ Eldritch Raider",
+            "Rogue Archetype ~ Filcher",
+            "Rogue Archetype ~ Kitsune Trickster",
+            "Rogue Archetype ~ Skulking Slayer",
+            "Rogue Archetype ~ Swordmaster",
+            "Summoner Archetype ~ Blood God Disciple",
+            "Summoner Archetype ~ Shaitan Binder",
+            "Witch Archetype ~ Bonded Witch",
+            "Witch Archetype ~ Dreamweaver",
+            "Witch Archetype ~ Scarred Witch Doctor",
+            "Wizard Archetype ~ Cruoromancer",
+            "Wizard Archetype ~ Spellbinder",
+            "Wizard Archetype ~ Wind Listener",
+        ],
+    ),
+    (
+        "apg",
+        "archetypes",
+        &[
+            "Barbarian Archetype ~ Breaker",
+            "Barbarian Archetype ~ Brutal Pugilist",
+            "Barbarian Archetype ~ Drunken Brute",
+            "Barbarian Archetype ~ Elemental Kin",
+            "Barbarian Archetype ~ Hurler",
+            "Barbarian Archetype ~ Invulnerable Rager",
+            "Barbarian Archetype ~ Mounted Fury",
+            "Barbarian Archetype ~ Savage Barbarian",
+            "Barbarian Archetype ~ Superstitious",
+            "Bard Archetype ~ Arcane Duelist",
+            "Bard Archetype ~ Archivist",
+            "Bard Archetype ~ Court Bard",
+            "Bard Archetype ~ Detective",
+            "Bard Archetype ~ Magician",
+            "Bard Archetype ~ Sandman",
+            "Bard Archetype ~ Savage Skald",
+            "Bard Archetype ~ Sea Singer",
+            "Bard Archetype ~ Street Performer",
+            "Druid Archetype ~ Aquatic Druid",
+            "Druid Archetype ~ Arctic Druid",
+            "Druid Archetype ~ Bear Shaman",
+            "Druid Archetype ~ Blight Druid",
+            "Druid Archetype ~ Cave Druid",
+            "Druid Archetype ~ Desert Druid",
+            "Druid Archetype ~ Eagle Shaman",
+            "Druid Archetype ~ Jungle Druid",
+            "Druid Archetype ~ Lion Shaman",
+            "Druid Archetype ~ Mountain Druid",
+            "Druid Archetype ~ Plains Druid",
+            "Druid Archetype ~ Serpent Shaman",
+            "Druid Archetype ~ Swamp Druid",
+            "Druid Archetype ~ Urban Druid",
+            "Druid Archetype ~ Wolf Shaman",
+            "Fighter Archetype ~ Archer",
+            "Fighter Archetype ~ Crossbowman",
+            "Fighter Archetype ~ Free Hand Fighter",
+            "Fighter Archetype ~ Mobile Fighter",
+            "Fighter Archetype ~ Phalanx Soldier",
+            "Fighter Archetype ~ Polearm Master",
+            "Fighter Archetype ~ Roughrider",
+            "Fighter Archetype ~ Savage Warrior",
+            "Fighter Archetype ~ Shielded Fighter",
+            "Fighter Archetype ~ Two-Handed Fighter",
+            "Fighter Archetype ~ Two-Weapon Warrior",
+            "Fighter Archetype ~ Weapon Master",
+            "Monk Archetype ~ Drunken Master",
+            "Monk Archetype ~ Hungry Ghost Monk",
+            "Monk Archetype ~ Ki Mystic",
+            "Monk Archetype ~ Monk of the Empty Hand",
+            "Monk Archetype ~ Monk of the Four Winds",
+            "Monk Archetype ~ Monk of the Healing Hand",
+            "Monk Archetype ~ Monk of the Lotus",
+            "Monk Archetype ~ Monk of the Sacred Mountain",
+            "Monk Archetype ~ Weapon Adept",
+            "Paladin Archetype ~ Divine Defender",
+            "Paladin Archetype ~ Hospitaler",
+            "Paladin Archetype ~ Sacred Servant",
+            "Paladin Archetype ~ Shining Knight",
+            "Paladin Archetype ~ Undead Scourge",
+            "Paladin Archetype ~ Warrior of the Holy Light",
+            "Ranger Archetype ~ Beast Master",
+            "Ranger Archetype ~ Guide",
+            "Ranger Archetype ~ Horse Lord",
+            "Ranger Archetype ~ Infiltrator",
+            "Ranger Archetype ~ Shapeshifter",
+            "Ranger Archetype ~ Skirmisher",
+            "Ranger Archetype ~ Spirit Ranger",
+            "Ranger Archetype ~ Urban Ranger",
+            "Rogue Archetype ~ Acrobat",
+            "Rogue Archetype ~ Burglar",
+            "Rogue Archetype ~ Cutpurse",
+            "Rogue Archetype ~ Investigator",
+            "Rogue Archetype ~ Poisoner",
+            "Rogue Archetype ~ Rake",
+            "Rogue Archetype ~ Scout",
+            "Rogue Archetype ~ Sniper",
+            "Rogue Archetype ~ Spy",
+            "Rogue Archetype ~ Swashbuckler",
+            "Rogue Archetype ~ Thug",
+            "Rogue Archetype ~ Trapsmith",
+        ],
+    ),
+    (
+        "ultimate_combat",
+        "archetypes",
+        &[
+            "Alchemist Archetype ~ Beastmorph",
+            "Alchemist Archetype ~ Ragechemist",
+            "Barbarian Archetype ~ Armored Hulk",
+            "Barbarian Archetype ~ Scarred Rager",
+            "Barbarian Archetype ~ Sea Reaver",
+            "Barbarian Archetype ~ Titan Mauler",
+            "Barbarian Archetype ~ True Primitive",
+            "Barbarian Archetype ~ Urban Barbarian",
+            "Barbarian Archetype ~ Wild Rager",
+            "Bard Archetype ~ Archaeologist",
+            "Bard Archetype ~ Daredevil",
+            "Bard Archetype ~ Dervish Dancer",
+            "Cavalier Archetype ~ Beast Rider",
+            "Cavalier Archetype ~ Emissary",
+            "Cavalier Archetype ~ Gendarme",
+            "Cavalier Archetype ~ Honor Guard",
+            "Cavalier Archetype ~ Luring Cavalier",
+            "Cavalier Archetype ~ Musketeer",
+            "Cavalier Archetype ~ Standard Bearer",
+            "Cavalier Archetype ~ Strategist",
+            "Cleric Archetype ~ Crusader",
+            "Cleric Archetype ~ Divine Strategist",
+            "Cleric Archetype ~ Evangelist",
+            "Cleric Archetype ~ Merciful Healer",
+            "Druid Archetype ~ Ape Shaman",
+            "Druid Archetype ~ Bat Shaman",
+            "Druid Archetype ~ Boar Shaman",
+            "Druid Archetype ~ World Walker",
+            "Fighter Archetype ~ Armor Master",
+            "Fighter Archetype ~ Brawler",
+            "Fighter Archetype ~ Cad",
+            "Fighter Archetype ~ Dragoon",
+            "Fighter Archetype ~ Gladiator",
+            "Fighter Archetype ~ Tactician",
+            "Fighter Archetype ~ Thunderstriker",
+            "Fighter Archetype ~ Tower Shield Specialist",
+            "Fighter Archetype ~ Unarmed Fighter",
+            "Fighter Archetype ~ Unbreakable",
+            "Inquisitor Archetype ~ Iconoclast",
+            "Inquisitor Archetype ~ Spellbreaker",
+            "Inquisitor Archetype ~ Witch Hunter",
+            "Paladin Archetype ~ Divine Hunter",
+            "Paladin Archetype ~ Empyreal Knight",
+            "Paladin Archetype ~ Holy Gun",
+            "Paladin Archetype ~ Holy Tactician",
+            "Paladin Archetype ~ Knight Of The Sepulcher",
+            "Paladin Archetype ~ Sacred Shield",
+            "Ranger Archetype ~ Battle Scout",
+            "Ranger Archetype ~ Deep Walker",
+            "Ranger Archetype ~ Falconer",
+            "Ranger Archetype ~ Trophy Hunter",
+            "Ranger Archetype ~ Warden",
+            "Ranger Archetype ~ Wild Stalker",
+            "Rogue Archetype ~ Bandit",
+            "Rogue Archetype ~ Chameleon",
+            "Rogue Archetype ~ Charlatan",
+            "Rogue Archetype ~ Driver",
+            "Rogue Archetype ~ Knife Master",
+            "Rogue Archetype ~ Pirate",
+            "Rogue Archetype ~ Roof Runner",
+            "Rogue Archetype ~ Sanctified Rogue",
+            "Rogue Archetype ~ Survivalist",
+            "Wizard Archetype ~ Arcane Bomber",
+            "Wizard Archetype ~ Siege Mage",
+            "Wizard Archetype ~ Spellslinger",
+        ],
+    ),
+    (
+        "ultimate_magic",
+        "archetypes",
+        &[
+            "Alchemist Archetype ~ Chirurgeon",
+            "Alchemist Archetype ~ Clone Master",
+            "Alchemist Archetype ~ Internal Alchemist",
+            "Alchemist Archetype ~ Mindchemist",
+            "Alchemist Archetype ~ Preservationist",
+            "Alchemist Archetype ~ Psychonaut",
+            "Alchemist Archetype ~ Reanimator",
+            "Alchemist Archetype ~ Vivisectionist",
+            "Bard Archetype ~ Animal Speaker",
+            "Bard Archetype ~ Celebrity",
+            "Bard Archetype ~ Demagogue",
+            "Bard Archetype ~ Dirge Bard",
+            "Bard Archetype ~ Geisha",
+            "Bard Archetype ~ Songhealer",
+            "Bard Archetype ~ Sound Striker",
+            "Cleric Archetype ~ Cloistered Cleric",
+            "Cleric Archetype ~ Separatist",
+            "Cleric Archetype ~ Theologian",
+            "Cleric Archetype ~ Undead Lord",
+            "Druid Archetype ~ Dragon Shaman",
+            "Druid Archetype ~ Menhir Savant",
+            "Druid Archetype ~ Mooncaller",
+            "Druid Archetype ~ Pack Lord",
+            "Druid Archetype ~ Reincarnated Druid",
+            "Druid Archetype ~ Saurian Shaman",
+            "Druid Archetype ~ Shark Shaman",
+            "Druid Archetype ~ Storm Druid",
+            "Inquisitor Archetype ~ Exorcist",
+            "Inquisitor Archetype ~ Heretic",
+            "Inquisitor Archetype ~ Infiltrator",
+            "Inquisitor Archetype ~ Preacher",
+            "Inquisitor Archetype ~ Sin Eater",
+            "Monk Archetype ~ Qinggong Monk Abundant Step",
+            "Monk Archetype ~ Qinggong Monk Diamond Body",
+            "Monk Archetype ~ Qinggong Monk Diamond Soul",
+            "Monk Archetype ~ Qinggong Monk Empty Body",
+            "Monk Archetype ~ Qinggong Monk High Jump",
+            "Monk Archetype ~ Qinggong Monk Perfect Self",
+            "Monk Archetype ~ Qinggong Monk Quivering Palm",
+            "Monk Archetype ~ Qinggong Monk Slow Fall",
+            "Monk Archetype ~ Qinggong Monk Timeless Body",
+            "Monk Archetype ~ Qinggong Monk Tongue of the Sun and Moon",
+            "Monk Archetype ~ Qinggong Monk Wholeness of Body",
+            "Monk Archetype ~ Vow Monk",
+            "Oracle Archetype ~ Dual-Cursed Oracle",
+            "Oracle Archetype ~ Enlightened Philosopher",
+            "Oracle Archetype ~ Planar Oracle",
+            "Oracle Archetype ~ Possessed Oracle",
+            "Oracle Archetype ~ Seer",
+            "Paladin Archetype ~ Oath against Corruption",
+            "Paladin Archetype ~ Oath against Fiends",
+            "Paladin Archetype ~ Oath against Savagery",
+            "Paladin Archetype ~ Oath against Undeath",
+            "Paladin Archetype ~ Oath against the Wyrm",
+            "Paladin Archetype ~ Oath of Charity",
+            "Paladin Archetype ~ Oath of Chastity",
+            "Paladin Archetype ~ Oath of Loyalty",
+            "Paladin Archetype ~ Oath of Vengeance",
+            "Ranger Archetype ~ Trapper",
+            "Summoner Archetype ~ Broodmaster",
+            "Summoner Archetype ~ Evolutionist",
+            "Summoner Archetype ~ Master Summoner",
+            "Witch Archetype ~ Beast-Bonded",
+            "Witch Archetype ~ Gravewalker",
+            "Witch Archetype ~ Hedge Witch",
+            "Witch Archetype ~ Sea Witch",
+            "Wizard Archetype ~ Scrollmaster",
+        ],
+    ),
+    (
+        "ultimate_psionics",
+        "archetypes",
+        &[
+            "Barbarian Archetype ~ Raging Beast",
+            "Bard Archetype ~ Thoughtsinger",
+            "Druid Archetype ~ Gaean",
+            "Druid Archetype ~ Serpent Lord",
+            "Fighter Archetype ~ Ironborn",
+            "Fighter Archetype ~ Psionic Fighter",
+            "Monk Archetype ~ Disciple of the Raging Sea",
+            "Monk Archetype ~ Enlightened Monk",
+            "Paladin Archetype ~ Purifier",
+            "Paladin Archetype ~ Sleeper's Guardian",
+            "Ranger Archetype ~ Kinslayer",
+            "Ranger Archetype ~ Pack Leader",
+            "Rogue Archetype ~ Cerebral Infiltrator",
+            "Rogue Archetype ~ Menteur",
+            "Rogue Archetype ~ Reaving Raider",
+        ],
+    ),
+    (
+        "ultimate_wilderness",
+        "archetypes",
+        &[
+            "Companion Archetype ~ Aberrant Companion",
+            "Companion Archetype ~ Ambusher",
+            "Companion Archetype ~ Augmented Companion",
+            "Companion Archetype ~ Auspice",
+            "Companion Archetype ~ Bodyguard",
+            "Companion Archetype ~ Bully",
+            "Companion Archetype ~ Daredevil",
+            "Companion Archetype ~ Deathtouched Companion",
+            "Companion Archetype ~ Draconic Companion",
+            "Companion Archetype ~ Feytouched Companion",
+            "Companion Archetype ~ Precocious Companion",
+            "Companion Archetype ~ Racer",
+            "Companion Archetype ~ Totem Guide",
+            "Companion Archetype ~ Tracker",
+            "Companion Archetype ~ Verdant Companion",
+            "Companion Archetype ~ Wrecker",
+            "Familiar Archetype ~ Ambassador",
+            "Familiar Archetype ~ Animal Exemplar",
+            "Familiar Archetype ~ Egotist",
+            "Familiar Archetype ~ Emissary",
+            "Familiar Archetype ~ Figment",
+            "Familiar Archetype ~ Infiltrator",
+            "Familiar Archetype ~ Mascot",
+            "Familiar Archetype ~ Mauler",
+            "Familiar Archetype ~ Pilferer",
+            "Familiar Archetype ~ Prankster",
+            "Familiar Archetype ~ Protector",
+            "Familiar Archetype ~ Sage",
+            "Familiar Archetype ~ Soulbound Familiar",
+            "Familiar Archetype ~ Valet",
+        ],
     ),
 ];
 
@@ -1568,6 +2296,18 @@ mod tests {
             other => panic!("every ARG race-trait record must reach a player, got {other:?}"),
         }
     }
+
+    // APG's own reach test is deliberately not added yet: `decisions.md §37`'s
+    // first estimate of 50 real alternates corrected to 1 genuinely new key
+    // (`Half-Orc ~ Plagueborn`, `decisions.md §39`), and that 1 key is not
+    // ingested this cycle -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`
+    // table (`§36` instance 15) does not recognize it, and shipping the
+    // corpus record without updating that table would offer it in the picker
+    // and refuse it at character-save time, a stub. The
+    // `("apg", "race_traits") => race_traits_reach(...)` match arm above is
+    // landed now (harmless and forward-compatible with 0 records today) so
+    // Plagueborn's follow-up only needs to add the corpus record and this
+    // test, not touch `reach_of` again.
 
     /// The other half of the same blind spot: `pathfinder_unchained` hid
     /// behind accessor functions, so a `pub const`-only scanner reported an
@@ -1878,8 +2618,9 @@ mod tests {
         let ingested = corpus_record_ids("beastiary", "monster");
         assert_eq!(
             ingested.len(),
-            41,
-            "Bestiary 1's 41 ingested monster records, counted on disk"
+            46,
+            "Bestiary 1's 46 ingested monster records, counted on disk (SD28-E16 subset 09 \
+             raised this from 41)"
         );
 
         let served: BTreeSet<String> = crate::monster_catalog::build_monster_catalog()
@@ -1893,8 +2634,8 @@ mod tests {
         );
 
         match reach_of(&Family::new("beastiary1", "monsters")).expect("a claim is declared") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 41),
-            other => panic!("expected all 41 to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 46),
+            other => panic!("expected all 46 to reach, got {other:?}"),
         }
     }
 

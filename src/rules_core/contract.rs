@@ -138,16 +138,17 @@ pub struct PilotReceipt {
     /// (`spellbook::compute_spellbook_coverage`), wired in by the
     /// `contract:spellbook_wiring` cycle (`adaptive-squishing-mccarthy.md`).
     /// Per that cycle's "Not every epic output becomes a sheet cell"
-    /// design decision, only `slots_total`, `slots_used`, and
-    /// `spell_save_dc` are flattened into `printed_sheet_cell_map` cells
-    /// (one dynamic cell per present `BTreeMap` key); `spells_prepared`,
-    /// `spells_known`, and `school_specialization` do not reduce to
+    /// design decision, only `spell_save_dc` is flattened into
+    /// `printed_sheet_cell_map` cells (one dynamic cell per present
+    /// `BTreeMap` key); `spells_prepared`, `spells_known`, and
+    /// `school_specialization` do not reduce to
     /// `PrintedSheetCellValue::Number(i16) | Blocked` cleanly and stay
-    /// reachable only via this field directly. As of this cycle,
-    /// `slots_total`/`slots_used` are always empty `BTreeMap`s for every
-    /// character (confirmed by reading `spellbook.rs`: no slot-math code
-    /// exists yet) -- cell generation below is still correct and ready
-    /// for when that lands.
+    /// reachable only via this field directly. `SpellbookCoverage` never
+    /// carried `slots_total`/`slots_used` fields at all (epic-31-spell-wiring
+    /// gap closure, `decisions.md` Decision 37 -- populating them would
+    /// have duplicated the already-real, already-tested
+    /// `class_spell.*.total_spells_per_day.*` chassis computation the
+    /// desktop app's "Spells per day" section already renders).
     pub spellbook: SpellbookCoverage,
     /// Epic 3's real feat prerequisite eligibility + effects
     /// (`feat_prereqs::{evaluate_feat_prerequisites, compute_feat_effects}`),
@@ -612,16 +613,13 @@ fn diagnostic_blocking(receipt: &PilotReceipt, diagnostic_id: &str) -> bool {
 /// fabricated `Number(0)`.
 ///
 /// The `sheet.spellbook.*` cells (as of the `contract:spellbook_wiring`
-/// cycle) are a third, dynamic case: `receipt.spellbook.slots_total`,
-/// `.slots_used`, and `.spell_save_dc` are each `BTreeMap`s keyed by
-/// spell level (`u8`) or class id (`String`), not fixed single fields, so
+/// cycle) are a third, dynamic case: `receipt.spellbook.spell_save_dc` is a
+/// `BTreeMap` keyed by class id (`String`), not a fixed single field, so
 /// this function emits one cell per *present* key
-/// (`sheet.spellbook.slots_total.<level>`,
-/// `sheet.spellbook.slots_used.<level>`,
-/// `sheet.spellbook.spell_save_dc.<class_id>`) rather than a fixed set of
-/// cell ids. A non-caster (or any character with an empty map for one of
-/// these fields) naturally produces zero cells of that kind — never a
-/// fabricated placeholder cell for a key that is not present.
+/// (`sheet.spellbook.spell_save_dc.<class_id>`) rather than a fixed set of
+/// cell ids. A non-caster (or any character with an empty `spell_save_dc`
+/// map) naturally produces zero cells of that kind — never a fabricated
+/// placeholder cell for a key that is not present.
 /// `compute_spellbook_coverage` pushes no diagnostics at all (`spellbook.rs`
 /// has no `claim_blocking` machinery), so none of these cells is ever
 /// `Blocked`; absence is expressed purely by the cell not existing in the
@@ -630,7 +628,9 @@ fn diagnostic_blocking(receipt: &PilotReceipt, diagnostic_id: &str) -> bool {
 /// `spells_known`, and `school_specialization` are deliberately NOT
 /// flattened into cells here — they don't reduce to
 /// `PrintedSheetCellValue::Number(i16) | Blocked` cleanly and stay
-/// reachable via `receipt.spellbook` directly.
+/// reachable via `receipt.spellbook` directly. `SpellbookCoverage` never
+/// carried `slots_total`/`slots_used` fields at all -- see `decisions.md`
+/// Decision 37 (epic-31-spell-wiring gap closure).
 ///
 /// The two `sheet.equipment.*` cells (as of the `contract:equipment_wiring`
 /// cycle) follow a fourth, distinct discipline: `armor_class_delta` is a
@@ -787,24 +787,9 @@ pub fn printed_sheet_cell_map(receipt: &PilotReceipt) -> Vec<PrintedSheetCell> {
         ),
     ];
 
-    // See this function's doc comment for why these three families are
-    // dynamic (one cell per present BTreeMap key) rather than a fixed set
-    // of cell ids, and why an empty map naturally yields zero cells of
-    // that kind.
-    for (&level, &slots) in &receipt.spellbook.slots_total {
-        cells.push(independent_cell(
-            &format!("sheet.spellbook.slots_total.{level}"),
-            &format!("spellbook.slots_total.{level}"),
-            slots as i16,
-        ));
-    }
-    for (&level, &slots) in &receipt.spellbook.slots_used {
-        cells.push(independent_cell(
-            &format!("sheet.spellbook.slots_used.{level}"),
-            &format!("spellbook.slots_used.{level}"),
-            slots as i16,
-        ));
-    }
+    // See this function's doc comment for why this family is dynamic (one
+    // cell per present BTreeMap key) rather than a fixed set of cell ids,
+    // and why an empty map naturally yields zero cells of that kind.
     for (class_id, &dc) in &receipt.spellbook.spell_save_dc {
         cells.push(independent_cell(
             &format!("sheet.spellbook.spell_save_dc.{class_id}"),

@@ -37,8 +37,9 @@
 //! `PCGEN_CORPUS_ROOT` overrides the corpus location, defaulting to the
 //! same `$HOME/workspace/repos/pcgen/data` the cache-generator
 //! binaries (`gen_cache_acg` and siblings) already use. A book argument
-//! may be a bare directory name under
-//! `pathfinder/paizo/roleplaying_game` or an absolute path.
+//! may be a bare directory name -- looked up across the known corpus
+//! subtrees ([`BOOK_SUBTREES`]: `roleplaying_game`, `campaign_setting`,
+//! `player_companion`, `dreamscarred_press`) -- or an absolute path.
 //!
 //! # Exit codes
 //!
@@ -63,6 +64,17 @@ use codex::pcgen_import::corpus_traps::{
 /// between machines, so this is correct on every box.
 const DEFAULT_CORPUS_ROOT_REL: &str = "workspace/repos/pcgen/data";
 const BOOKS_SUBDIR: &str = "pathfinder/paizo/roleplaying_game";
+/// Every corpus subtree a bare book name is looked up in, in precedence
+/// order. `roleplaying_game` stays first so existing invocations keep their
+/// meaning; `campaign_setting` carries twelve of SD-30's sixteen books;
+/// `player_companion` carries the operator-deferred candidates;
+/// `dreamscarred_press` carries SD-28's Ultimate Psionics.
+const BOOK_SUBTREES: &[&str] = &[
+    BOOKS_SUBDIR,
+    "pathfinder/paizo/campaign_setting",
+    "pathfinder/paizo/player_companion",
+    "pathfinder/dreamscarred_press",
+];
 const DEFAULT_EXAMPLES: usize = 3;
 
 /// Every trap the report renders, in the order the catalogue numbers them.
@@ -137,7 +149,8 @@ fn usage() -> String {
             v06_corpus_trap_report --census <string> [--json]\n\
             v06_corpus_trap_report --audit [--json]\n\
      \n\
-     <book>  directory name under pathfinder/paizo/roleplaying_game, or an\n\
+     <book>  directory name under any known corpus subtree (roleplaying_game,\n\
+             campaign_setting, player_companion, dreamscarred_press), or an\n\
              absolute path. PCGEN_CORPUS_ROOT overrides the corpus location."
         .to_string()
 }
@@ -154,10 +167,17 @@ fn corpus_root() -> PathBuf {
 fn resolve_book(root: &Path, book: &str) -> PathBuf {
     let candidate = PathBuf::from(book);
     if candidate.is_absolute() {
-        candidate
-    } else {
-        root.join(BOOKS_SUBDIR).join(book)
+        return candidate;
     }
+    for subtree in BOOK_SUBTREES {
+        let path = root.join(subtree).join(book);
+        if path.is_dir() {
+            return path;
+        }
+    }
+    // Nothing on disk matched: fall back to the historical location so the
+    // caller's "not a directory" error names the primary subtree.
+    root.join(BOOKS_SUBDIR).join(book)
 }
 
 fn main() -> ExitCode {
@@ -445,6 +465,33 @@ mod tests {
             resolve_book(&root, "ultimate_combat"),
             PathBuf::from("/corpus/pathfinder/paizo/roleplaying_game/ultimate_combat")
         );
+    }
+
+    /// SD-30: twelve of the sixteen in-scope books live under
+    /// `pathfinder/paizo/campaign_setting`, not `roleplaying_game`, and the
+    /// two operator-deferred candidates live under `player_companion`. A bare
+    /// name must resolve wherever the book really is, so an unattended cycle
+    /// can run `v06_corpus_trap_report -- inner_sea_gods` without knowing the
+    /// corpus layout. Probes the real corpus; skips cleanly without one.
+    #[test]
+    fn a_bare_book_name_resolves_across_the_known_corpus_subtrees() {
+        let root = corpus_root();
+        if !root.is_dir() {
+            println!("SKIP: no PCGen corpus at PCGEN_CORPUS_ROOT");
+            return;
+        }
+        for (book, subtree) in [
+            ("inner_sea_gods", "pathfinder/paizo/campaign_setting"),
+            ("book_of_the_damned_volume_1", "pathfinder/paizo/campaign_setting"),
+            ("occult_origins", "pathfinder/paizo/player_companion"),
+            ("occult_adventures", "pathfinder/paizo/roleplaying_game"),
+        ] {
+            assert_eq!(
+                resolve_book(&root, book),
+                root.join(subtree).join(book),
+                "`{book}` must resolve under `{subtree}`"
+            );
+        }
     }
 
     #[test]

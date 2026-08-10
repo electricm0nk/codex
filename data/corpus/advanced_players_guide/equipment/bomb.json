@@ -52,7 +52,7 @@
     ],
     "weight": null
   },
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -63,5 +63,9 @@
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_arms_armor.lst",
     "record_key": "Bomb",
     "sha256": "f3e6aea97309b4c0e3746245c112d0880f014ae69077be5b3deba0567aeb8468"
-  }
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
 }

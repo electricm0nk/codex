@@ -59,7 +59,7 @@
     ],
     "weight_lbs": 20.0
   },
-  "ingested_at": "2026-07-27T21:26:32Z",
+  "ingested_at": "2026-08-03T19:41:45Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -70,5 +70,9 @@
     "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
     "record_key": "Longhammer (Dwarven)",
     "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
-  }
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

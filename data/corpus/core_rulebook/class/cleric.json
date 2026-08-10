@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
     "class_id": "Cleric",
     "maxlevel": 20,
@@ -17,6 +17,11 @@
     "line": 55,
     "record_key": "CLASS:Cleric"
   },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

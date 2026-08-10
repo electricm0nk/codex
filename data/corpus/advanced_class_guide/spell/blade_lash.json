@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
+  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
     "key": "Blade Lash",
     "school": "Transmutation",
@@ -16,6 +16,10 @@
     "line": 27,
     "record_key": "Blade Lash"
   },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

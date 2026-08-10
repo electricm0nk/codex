@@ -127,6 +127,12 @@
 use super::advanced_race_guide::feats as arg_feats;
 use super::crb::feats::{FeatCategory as SharedFeatCategory, FeatTableEntry as SharedFeatTableEntry};
 use super::pathfinder_unchained::feat_tables as pu_feats;
+use super::ultimate_campaign::feat_tables as uca_feats;
+use super::ultimate_intrigue::feat_tables as ui_feats;
+use super::ultimate_combat::feat_tables as uc_feats;
+use super::ultimate_magic::feat_tables as um_feats;
+use super::ultimate_psionics::feat_tables as upsi_feats;
+use super::ultimate_wilderness::feat_tables as uw_feats;
 use super::RuleSetId;
 
 /// One feat record, projected out of whichever per-book table it came
@@ -448,6 +454,44 @@ pub const PU_FEAT_PREREQUISITES: &[(&str, &[&str])] = &[
     ("Signature Skill", &["PRESKILL:1,TYPE.Base=5", "PRETEXT:Prerequisite: 5 ranks in the chosen skill.", "PREVAREQ:CannotUseSignatureSkill,0"]),
 ];
 
+/// Ultimate Campaign: all 23 records from `uca_feats.lst`, in
+/// `ultimate_campaign::feat_tables::feat_tables()` order. Unlike ARG and
+/// PU, every single UCA Story Feat carries a `PRETEXT:` prose prerequisite
+/// rather than a formal `PRE`-family token -- so unlike those two books'
+/// gather tables, this one is not filling a gap the book's own table left
+/// (there is no formal token to gather), it is carrying the corpus's own
+/// display text through as a `PRETEXT:` prerequisite entry, exactly the
+/// way PU's own `Combat Stamina`/`Extra Stamina`/`Push the Limits`/
+/// `Signature Skill` rows above already do. See `decisions.md`'s dated
+/// entry for this cycle (SD28-E13): `PRETEXT:` is carried, never
+/// synthesised into a formal `PRE` token from prose, and that is
+/// established precedent in this file, not a fresh ruling.
+pub const UCA_FEAT_PREREQUISITES: &[(&str, &[&str])] = &[
+    ("Accursed", &["PRETEXT:Prerequisite:You must carry a curse that can be lifted only by a quest or similar great undertaking, or have the Cursed Birth background."]),
+    ("Arisen", &["PRETEXT:Prerequisite:You must have been slain and brought back from the dead, or have the Left to Die or Cursed Birth background."]),
+    ("Battlefield Healer", &["PRETEXT:Prerequisite:You must successfully cast a conjuration (healing) spell on an ally after being hit by an attack of opportunity, or have the Battle, Chaplain, or Healed background."]),
+    ("Champion", &["PRETEXT:Prerequisite:You must have defeated a single challenging foe without any aid from another, or have the Champion of a God, Champion of the People, Competition Champion, or Gladiator background."]),
+    ("Damned", &["PRETEXT:Prerequisite:You must have had friendly contact with an evil-aligned outsider that would qualify as a challenging foe, have a fiend-related sorcerous bloodline such as abyssal or infernal, have direct fiendish ancestry (such as being a tiefling or half-fiend), or have the Fiend Raised or The Fiend background."]),
+    ("Deny the Reaper", &["PRETEXT:Prerequisite:You must have witnessed the death of a close companion in battle-a death that could have been prevented, such as from bleeding, failure to stabilize, or ongoing poison damage-or have the Death in the Family or The War background."]),
+    ("Eldritch Researcher", &["PRETEXT:Prerequisite:You must have created a new spell, or have The Way Things Work background."]),
+    ("Fearless Zeal", &["PRETEXT:Prerequisite:You must be ordained as a sacred (or profane) champion of your faith by a high-ranking member of its clergy, or have the Devoted, Faith-Bringer, or Moral Debt background. Such an honor goes above and beyond the normal oaths required of a cleric or paladin."]),
+    ("Feral Heart", &["PRETEXT:Prerequisite:You must have reverted to savage behavior through a traumatic event or extended period in the wilderness, or have the Raised by Beasts background."]),
+    ("Foeslayer", &["PRETEXT:Prerequisite:You must have been defeated and robbed of at least half your possessions by a particular group of humanoids or monstrous humanoids, or have the An Eye for an Eye, Hated Foe, Raiders, or Vengeance background. You may choose a specific race, such as duergar, or a broader group, such as goblinoids. At the GM's option, you may instead choose residents of a particular country, settlement, or tribe."]),
+    ("Forgotten Past", &["PRETEXT:Prerequisite:You must have suffered permanent memory loss or have the Reincarnated background."]),
+    ("Glimpse Beyond", &["PRETEXT:Prerequisite:You must have faced an undead, evil outsider, or aberration with a CR greater than your level +4, or have the Raised Among the Dead or The Dead One background."]),
+    ("Innocent Blood", &["PRETEXT:Prerequisite:You must slay at least 50 intelligent noncombatants for either your own personal gain or for no cause at all, or have the Bloodthirsty, First Kill, or The Kill background."]),
+    ("Liberator", &["PRETEXT:Prerequisite:You must have been enslaved for at least 6 months, or have the Imprisoned or Kidnapped background."]),
+    ("Lost Legacy", &["PRETEXT:Prerequisite:Your family must have claim to an inherited title or position that no longer belongs to them, or have the Dishonored Family background. You can take this feat even if you have no knowledge of this lost family title."]),
+    ("Magnum Opus", &["PRETEXT:Prerequisite:You must either have sold five or more self-created works of art worth a total of at least 5,000 gp, have performed at least five performances for audiences of 50 or more while achieving a great performance result or better on your Perform check, or have the Virtuoso background."]),
+    ("Shamed", &["PRETEXT:Prerequisite:You must have been publicly embarrassed, or must have the Bastard Born background. If the embarrassment didn't cause significant harm to your personal honor or social standing, it does not qualify for the feat prerequisites. The humiliation doesn't need to have been unjustified."]),
+    ("Stronghold", &["PRETEXT:Prerequisites:You must have the Leadership feat and must lead at least 10 combat-capable followers (such as fighters or rangers)."]),
+    ("Thief of Legend", &["PRETEXT:Prerequisites:You must have stolen at least 1,000 gp worth of treasure without being caught and kept mementos of these thefts worth at least 500 gp, or have the Greed background."]),
+    ("Town Tamer", &["PRETEXT:Prerequisites:You must have 5 ranks in Intimidate and a personal motivation to clean up a particular town (such as an old friend calling in a favor, or seeking a place to settle down), or you must have the Bounty Hunter or Champion of the People background."]),
+    ("True Love", &["PRETEXT:Prerequisite:You must have found love with a person you can't be with, have a current lover, or have the Current Lover, For Love, or The Lover background. Possible complications include distance, your love being with another, your feelings being unrequited, or your relationship being forbidden."]),
+    ("Unforgotten", &["PRETEXT:Prerequisite:You must have a close relative, spouse, or other person dear to your heart who never returned from a journey, was captured, or otherwise vanished with little trace, or you have the Major Disaster background."]),
+    ("Vengeance", &["PRETEXT:Prerequisite:You must have a close family member or other loved one slain by a specific challenging foe or that foe's minions, or have the Raiders or Vengeance background."]),
+];
+
 /// The gathered tokens for `key` in `table`, or `None` when the table has
 /// no row for it.
 ///
@@ -556,6 +600,235 @@ fn map_pu_entry(entry: &pu_feats::FeatTableEntry) -> FeatCatalogRecord {
     }
 }
 
+/// UCA's own record type carries `description` (the corpus `DESC:`
+/// flavor line) and `benefit` (the corpus `.MOD BENEFIT:` mechanical
+/// text) as two separate fields -- see `ultimate_campaign::feat_tables`'s
+/// own module doc comment for why both are required to avoid the stub
+/// doctrine. `FeatCatalogRecord` has only one free-text `description`
+/// field, the one the desktop picker actually renders
+/// (`apps/desktop/src-tauri/src/feat_catalog.rs`), so both pieces are
+/// joined into it here rather than dropping the mechanical text on the
+/// floor.
+///
+/// For the 2 `deferred-with-reason` records, `benefit` is `None` and the
+/// corpus is corrupted -- the joined `description` carries the flavor
+/// text plus the engine's own verbatim diagnostic (from
+/// `ultimate_campaign::feat_tables::DEFERRED_WITH_REASON`) instead of any
+/// mechanical text, so a consumer sees why the record has no benefit
+/// rather than either a stub placeholder or invented prose.
+fn map_uca_entry(entry: &uca_feats::StoryFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match entry.benefit {
+        Some(benefit) => entry.description.map(|desc| format!("{desc} {benefit}")),
+        None => {
+            let diagnostic = uca_feats::DEFERRED_WITH_REASON
+                .iter()
+                .find(|(key, _)| *key == entry.key)
+                .map(|(_, reason)| *reason)
+                .unwrap_or("deferred: reason not recorded");
+            entry.description.map(|desc| format!("{desc} [DEFERRED-WITH-REASON: {diagnostic}]"))
+        }
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: "Story",
+        name: entry.name,
+        // Leaked as `'static` deliberately: the join is computed once and
+        // cached for the process lifetime by `uca_records()` below, the
+        // same lifetime every other book's `'static` catalog slice
+        // already has -- this never re-allocates per request.
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: gathered(UCA_FEAT_PREREQUISITES, entry.key),
+    }
+}
+
+/// UI's own record type reuses the shared `FeatCategory` enum directly
+/// (see `ultimate_intrigue::feat_tables`'s own module doc comment for why
+/// -- unlike UCA/ARG/PU, no new category set or fallback derivation was
+/// needed), and it already gathers `prerequisites` itself at ingest time
+/// (no separate `UI_FEAT_PREREQUISITES` backfill table is needed, unlike
+/// ARG/PU whose own tables never gathered `PRE` tokens). `description` and
+/// `benefit` are joined the same way `map_uca_entry` joins them -- one
+/// free-text field on `FeatCatalogRecord`, two on the book's own type. No
+/// record in this catalog is `deferred-with-reason` (see the module doc),
+/// so the `[DEFERRED-WITH-REASON: ...]` branch `map_uca_entry` needs never
+/// triggers here, but the join stays honest about the corpus shape rather
+/// than assuming `benefit` is always `Some`.
+fn map_ui_entry(entry: &ui_feats::UiFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: shared_category_name(entry.category),
+        name: entry.name,
+        // Leaked as `'static` deliberately -- same rationale as
+        // `map_uca_entry`'s own leak: computed once, cached for the
+        // process lifetime by `ui_records()` below.
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
+/// UW's own five-shared-plus-two-new-variant enum. Unlike UI, UW carries
+/// two facets (`Animal`, `Mount`) with no shared-enum equivalent -- see
+/// `ultimate_wilderness::feat_tables`'s own doc comment for why folding
+/// them onto an existing variant would be a classification the corpus
+/// never made. No record in this catalog is `deferred-with-reason` either
+/// (confirmed: every one of UW's 136 records carries a real `BENEFIT:`).
+fn uw_category_name(category: uw_feats::FeatCategory) -> &'static str {
+    match category {
+        uw_feats::FeatCategory::General => "General",
+        uw_feats::FeatCategory::Combat => "Combat",
+        uw_feats::FeatCategory::ItemCreation => "ItemCreation",
+        uw_feats::FeatCategory::Metamagic => "Metamagic",
+        uw_feats::FeatCategory::Teamwork => "Teamwork",
+        uw_feats::FeatCategory::Animal => "Animal",
+        uw_feats::FeatCategory::Mount => "Mount",
+    }
+}
+
+fn map_uw_entry(entry: &uw_feats::UwFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: uw_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
+/// UC's own eight-variant enum. `Style`/`Grit`/`Critical`/`CalledShot`
+/// have no shared-enum equivalent; `Panache` is kept a distinct string
+/// from ACG's own `Panache` category deliberately (UC's corpus carries no
+/// `TYPE:Panache` record today, so the variant is currently unused, but
+/// declared rather than omitted so a future UC record with that facet is
+/// not silently folded onto ACG's own Swashbuckler feats). No record in
+/// this catalog is `deferred-with-reason` (confirmed: every one of UC's
+/// 263 records carries a real `BENEFIT:`).
+fn uc_category_name(category: uc_feats::FeatCategory) -> &'static str {
+    match category {
+        uc_feats::FeatCategory::General => "General",
+        uc_feats::FeatCategory::Combat => "Combat",
+        uc_feats::FeatCategory::ItemCreation => "ItemCreation",
+        uc_feats::FeatCategory::Metamagic => "Metamagic",
+        uc_feats::FeatCategory::Teamwork => "Teamwork",
+        uc_feats::FeatCategory::Style => "Style",
+        uc_feats::FeatCategory::Grit => "Grit",
+        uc_feats::FeatCategory::Panache => "UcPanache",
+        uc_feats::FeatCategory::Critical => "Critical",
+        uc_feats::FeatCategory::CalledShot => "CalledShot",
+    }
+}
+
+fn map_uc_entry(entry: &uc_feats::UcFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: uc_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
+/// UM's own eight-variant enum. `Critical`/`Masterpiece`/`Discovery` have
+/// no shared-enum equivalent -- see `ultimate_magic::feat_tables`'s own
+/// module doc comment for why `Masterpiece`/`Discovery` are UM-specific
+/// facets, not folded onto any other book's category.
+fn um_category_name(category: um_feats::FeatCategory) -> &'static str {
+    match category {
+        um_feats::FeatCategory::General => "General",
+        um_feats::FeatCategory::Combat => "Combat",
+        um_feats::FeatCategory::ItemCreation => "ItemCreation",
+        um_feats::FeatCategory::Metamagic => "Metamagic",
+        um_feats::FeatCategory::Teamwork => "Teamwork",
+        um_feats::FeatCategory::Critical => "Critical",
+        um_feats::FeatCategory::Masterpiece => "Masterpiece",
+        um_feats::FeatCategory::Discovery => "Discovery",
+    }
+}
+
+/// Joins UM's two prose fields (`description`, `benefit`) exactly as
+/// UC's own `map_uc_entry` does. **Deliberately does not join `effect`
+/// into the served description** -- `entry.effect` carries raw,
+/// unrendered PCGen `BONUS:`/`DEFINE:` formula tokens (e.g.
+/// `BONUS:SPELLKNOWN|CLASS=%LIST;LEVEL=0|2`), and serving those verbatim
+/// to a player would leak raw corpus syntax exactly as
+/// `feat_descriptions_are_rendered_and_otherwise_byte_identical` and
+/// `no_catalog_serves_a_description_carrying_raw_pcgen_syntax` exist to
+/// catch (and did, on first attempt at this join). This mirrors CRB's
+/// own established rule: `crb::feats::FeatTableEntry`'s `effect` field is
+/// never joined into `description` either (`map_shared_entry` passes
+/// `description` straight through, ignoring `effect` entirely) -- the
+/// four UM records whose only corpus content is a `BONUS:` mechanic
+/// (this book's own module doc comment) correctly serve `description:
+/// None` here, the same honest treatment CRB's 8 "Heighten Spell +N"
+/// tiers already get, not a raw-syntax leak dressed up as content.
+fn map_um_entry(entry: &um_feats::UmFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: um_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
+/// UPsi's own five-variant enum. `Psionic`/`Metapsionic` have no shared-
+/// enum equivalent -- see `ultimate_psionics::feat_tables`'s own module
+/// doc comment for why they stay UPsi-specific facets.
+fn upsi_category_name(category: upsi_feats::FeatCategory) -> &'static str {
+    match category {
+        upsi_feats::FeatCategory::General => "General",
+        upsi_feats::FeatCategory::Combat => "Combat",
+        upsi_feats::FeatCategory::ItemCreation => "ItemCreation",
+        upsi_feats::FeatCategory::Psionic => "Psionic",
+        upsi_feats::FeatCategory::Metapsionic => "Metapsionic",
+    }
+}
+
+/// Joins UPsi's two prose fields (`description`, `benefit`) exactly as
+/// every other book's own mapper does. No `effect` field on this book's
+/// own `UpsiFeatEntry` -- unlike UM, every one of UPsi's 221 records
+/// carries real `DESC:`/`BENEFIT:` prose (`ultimate_psionics::feat_tables`'s
+/// own module doc comment: this book's `DESC:`-is-complete convention
+/// means there is no textless-but-real-mechanic category to find here).
+fn map_upsi_entry(entry: &upsi_feats::UpsiFeatEntry) -> FeatCatalogRecord {
+    let joined_description = match (entry.description, entry.benefit) {
+        (Some(desc), Some(benefit)) => Some(format!("{desc} {benefit}")),
+        (Some(desc), None) => Some(desc.to_string()),
+        (None, Some(benefit)) => Some(benefit.to_string()),
+        (None, None) => None,
+    };
+    FeatCatalogRecord {
+        key: entry.key,
+        category: upsi_category_name(entry.category),
+        name: entry.name,
+        description: joined_description.map(|s| Box::leak(s.into_boxed_str()) as &'static str),
+        prerequisites: entry.prerequisites,
+    }
+}
+
 /// Project one book's table once and hand out a `'static` slice of it.
 ///
 /// The projection is a real allocation, so it is cached per book for the
@@ -600,14 +873,44 @@ fn pu_records() -> &'static [FeatCatalogRecord] {
     projected(&CELL, || pu_feats::feat_tables().iter().map(map_pu_entry).collect())
 }
 
+fn uca_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || uca_feats::feat_tables().iter().map(map_uca_entry).collect())
+}
+
+fn ui_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || ui_feats::feat_tables().iter().map(map_ui_entry).collect())
+}
+
+fn uw_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || uw_feats::feat_tables().iter().map(map_uw_entry).collect())
+}
+
+fn uc_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || uc_feats::feat_tables().iter().map(map_uc_entry).collect())
+}
+
+fn um_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || um_feats::feat_tables().iter().map(map_um_entry).collect())
+}
+
+fn upsi_records() -> &'static [FeatCatalogRecord] {
+    static CELL: std::sync::OnceLock<Vec<FeatCatalogRecord>> = std::sync::OnceLock::new();
+    projected(&CELL, || upsi_feats::feat_tables().iter().map(map_upsi_entry).collect())
+}
+
 /// Every ingested book's feat catalog, in book order (CRB, APG, ACG,
-/// ARG, PU).
+/// ARG, PU, UCA, UI, UW).
 ///
-/// 690 records total: 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU.
-/// Built once and cached for the process lifetime, over the five
-/// per-book `feat_tables()` functions -- this never re-derives or
-/// re-filters their contents, only projects each record onto
-/// [`FeatCatalogRecord`].
+/// 952 records total: 185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23
+/// UCA + 104 UI + 135 UW. Built once and cached for the process lifetime,
+/// over the eight per-book `feat_tables()` functions -- this never
+/// re-derives or re-filters their contents, only projects each record
+/// onto [`FeatCatalogRecord`].
 pub fn all_feat_tables() -> &'static [BookFeatTable] {
     static TABLES: std::sync::OnceLock<Vec<BookFeatTable>> = std::sync::OnceLock::new();
     TABLES.get_or_init(|| {
@@ -617,6 +920,12 @@ pub fn all_feat_tables() -> &'static [BookFeatTable] {
             BookFeatTable { rule_set: RuleSetId::Acg, entries: acg_records() },
             BookFeatTable { rule_set: RuleSetId::Arg, entries: arg_records() },
             BookFeatTable { rule_set: RuleSetId::Pu, entries: pu_records() },
+            BookFeatTable { rule_set: RuleSetId::Uca, entries: uca_records() },
+            BookFeatTable { rule_set: RuleSetId::Ui, entries: ui_records() },
+            BookFeatTable { rule_set: RuleSetId::Uw, entries: uw_records() },
+            BookFeatTable { rule_set: RuleSetId::Uc, entries: uc_records() },
+            BookFeatTable { rule_set: RuleSetId::Um, entries: um_records() },
+            BookFeatTable { rule_set: RuleSetId::Upsi, entries: upsi_records() },
         ]
     })
 }
@@ -629,7 +938,7 @@ mod tests {
     #[test]
     fn spans_every_ingested_book_with_their_real_counts() {
         let books = all_feat_tables();
-        assert_eq!(books.len(), 5);
+        assert_eq!(books.len(), 11);
         assert_eq!(books[0].rule_set, RuleSetId::Crb);
         assert_eq!(books[0].entries.len(), 185);
         assert_eq!(books[1].rule_set, RuleSetId::Apg);
@@ -640,9 +949,25 @@ mod tests {
         assert_eq!(books[3].entries.len(), 187);
         assert_eq!(books[4].rule_set, RuleSetId::Pu);
         assert_eq!(books[4].entries.len(), 17);
+        assert_eq!(books[5].rule_set, RuleSetId::Uca);
+        assert_eq!(books[5].entries.len(), 23);
+        assert_eq!(books[6].rule_set, RuleSetId::Ui);
+        assert_eq!(books[6].entries.len(), 104);
+        assert_eq!(books[7].rule_set, RuleSetId::Uw);
+        assert_eq!(books[7].entries.len(), 135);
+        assert_eq!(books[8].rule_set, RuleSetId::Uc);
+        assert_eq!(books[8].entries.len(), 261);
+        assert_eq!(books[9].rule_set, RuleSetId::Um);
+        assert_eq!(books[9].entries.len(), 144);
+        assert_eq!(books[10].rule_set, RuleSetId::Upsi);
+        assert_eq!(books[10].entries.len(), 221);
 
         let total: usize = books.iter().map(|book| book.entries.len()).sum();
-        assert_eq!(total, 690, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU");
+        assert_eq!(
+            total,
+            1578,
+            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi"
+        );
     }
 
     /// The projection must not lose or invent a record: each book's slice
@@ -656,6 +981,12 @@ mod tests {
         assert_eq!(books[2].entries.len(), super::super::acg::feats::feat_tables().len());
         assert_eq!(books[3].entries.len(), arg_feats::feat_tables().len());
         assert_eq!(books[4].entries.len(), pu_feats::feat_tables().len());
+        assert_eq!(books[5].entries.len(), uca_feats::feat_tables().len());
+        assert_eq!(books[6].entries.len(), ui_feats::feat_tables().len());
+        assert_eq!(books[7].entries.len(), uw_feats::feat_tables().len());
+        assert_eq!(books[8].entries.len(), uc_feats::feat_tables().len());
+        assert_eq!(books[9].entries.len(), um_feats::feat_tables().len());
+        assert_eq!(books[10].entries.len(), upsi_feats::feat_tables().len());
     }
 
     #[test]
@@ -704,8 +1035,16 @@ mod tests {
                 entry.key
             );
         }
+        for entry in uca_feats::feat_tables() {
+            assert!(
+                gathered_prerequisites(UCA_FEAT_PREREQUISITES, entry.key).is_some(),
+                "UCA feat '{}' has no row in UCA_FEAT_PREREQUISITES",
+                entry.key
+            );
+        }
         assert_eq!(ARG_FEAT_PREREQUISITES.len(), arg_feats::feat_tables().len());
         assert_eq!(PU_FEAT_PREREQUISITES.len(), pu_feats::feat_tables().len());
+        assert_eq!(UCA_FEAT_PREREQUISITES.len(), uca_feats::feat_tables().len());
     }
 
     /// The real per-book prerequisite coverage, derived from the live
@@ -729,13 +1068,19 @@ mod tests {
         assert_eq!(with_prerequisites(RuleSetId::Acg), 125, "of 129");
         assert_eq!(with_prerequisites(RuleSetId::Arg), 187, "of 187 -- all of them");
         assert_eq!(with_prerequisites(RuleSetId::Pu), 14, "of 17");
+        assert_eq!(with_prerequisites(RuleSetId::Uca), 23, "of 23 -- all of them carry PRETEXT:");
+        assert_eq!(with_prerequisites(RuleSetId::Ui), 98, "of 104 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Uw), 127, "of 135 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Uc), 247, "of 261 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Um), 135, "of 144 -- gathered directly at ingest, no backfill table");
+        assert_eq!(with_prerequisites(RuleSetId::Upsi), 200, "of 221 -- gathered directly at ingest, no backfill table");
 
         let total: usize = all_feat_tables()
             .iter()
             .flat_map(|book| book.entries.iter())
             .filter(|entry| entry.prerequisites.is_some())
             .count();
-        assert_eq!(total, 599, "599 of the catalog's 690 records have a prerequisite");
+        assert_eq!(total, 1429, "1429 of the catalog's 1578 records have a prerequisite");
     }
 
     /// `Some(&[])` must never reach a consumer: an empty slice would read
@@ -855,6 +1200,79 @@ mod tests {
                 ("WoundThreshold", 3),
             ])
         );
+        // UCA's corpus carries no `###Block:`/`TYPE:` category facet at
+        // all -- every one of its 23 records is `TYPE:Story`, so every
+        // record lands in the single "Story" category rather than
+        // inventing a split the corpus doesn't support.
+        assert_eq!(split(RuleSetId::Uca), BTreeMap::from([("Story", 23)]));
+        // UI reuses the shared `FeatCategory` enum -- General/Combat
+        // (folding the Combat.* sub-facets) / Metamagic / Teamwork.
+        assert_eq!(
+            split(RuleSetId::Ui),
+            BTreeMap::from([("Combat", 46), ("General", 52), ("Metamagic", 4), ("Teamwork", 2)])
+        );
+        // UW's own two new facets -- Animal (Companion-focused feats) and
+        // Mount -- have no shared-enum equivalent. `Mount` carries zero
+        // real feat records in this corpus: the only `TYPE:Mount` row
+        // (`Samurai ~ Mount.MOD`) is a `CATEGORY:Special Ability` row, not
+        // a feat at all, and was never a candidate.
+        assert_eq!(
+            split(RuleSetId::Uw),
+            BTreeMap::from([
+                ("Animal", 11),
+                ("Combat", 41),
+                ("General", 77),
+                ("ItemCreation", 1),
+                ("Metamagic", 2),
+                ("Teamwork", 3),
+            ])
+        );
+        // UC's own new facets: `CalledShot`, `Critical` (its bare
+        // `TYPE:Critical` facet, distinct from `Combat.Critical`, which
+        // folds to `Combat`), and `Style` (its bare `TYPE:Style` facet,
+        // distinct from `Combat.Style`). No UC record carries `TYPE:Grit`'s
+        // sibling `Panache` facet today (`"UcPanache"` never appears).
+        assert_eq!(
+            split(RuleSetId::Uc),
+            BTreeMap::from([
+                ("CalledShot", 2),
+                ("Combat", 181),
+                ("Critical", 1),
+                ("General", 62),
+                ("Grit", 7),
+                ("Style", 1),
+                ("Teamwork", 7),
+            ])
+        );
+        // UM's own new facets: `Masterpiece` (Bard performance feats) and
+        // `Discovery` (Wizard bonus-discovery-as-feat records). No UM
+        // record carries `TYPE:Style`/`Grit`/`Panache`/`CalledShot`.
+        assert_eq!(
+            split(RuleSetId::Um),
+            BTreeMap::from([
+                ("Combat", 3),
+                ("Critical", 3),
+                ("Discovery", 11),
+                ("General", 100),
+                ("ItemCreation", 2),
+                ("Masterpiece", 15),
+                ("Metamagic", 9),
+                ("Teamwork", 1),
+            ])
+        );
+        // UPsi's own new facets: `Psionic` (this book's dominant facet)
+        // and `Metapsionic` (its metamagic equivalent) -- no shared-enum
+        // equivalent for either. No UPsi record carries `TYPE:Teamwork`.
+        assert_eq!(
+            split(RuleSetId::Upsi),
+            BTreeMap::from([
+                ("Combat", 9),
+                ("General", 21),
+                ("ItemCreation", 3),
+                ("Metapsionic", 35),
+                ("Psionic", 153),
+            ])
+        );
     }
 
     /// The point of widening the aggregate: real ARG and PU feats are in
@@ -885,6 +1303,114 @@ mod tests {
         let (book, stamina) = find("Combat Stamina");
         assert_eq!(book, RuleSetId::Pu);
         assert_eq!(stamina.category, "CombatStamina");
+    }
+
+    /// UCA's 21 text-complete records surface both the corpus `DESC:`
+    /// flavor text and the `.MOD BENEFIT:` mechanical text, joined --
+    /// showing only `DESC:` (`"[Not Implemented] ..."`) would be a stub
+    /// by `docs/governance/no-stub-mvp-doctrine.md`. Its 2
+    /// `deferred-with-reason` records surface the flavor text plus the
+    /// engine's own verbatim diagnostic instead of the corrupted upstream
+    /// benefit text. (`Stronghold` was deferred in this module's first
+    /// pass and is now text-complete -- its own text is genuinely
+    /// complete; see `ultimate_campaign::feat_tables`'s own doc comment
+    /// for the correction.)
+    #[test]
+    fn uca_records_join_desc_and_benefit_and_defer_the_two_corrupted_rows() {
+        let find = |key: &str| {
+            all_feat_tables()
+                .iter()
+                .filter(|book| book.rule_set == RuleSetId::Uca)
+                .flat_map(|book| book.entries.iter())
+                .find(|entry| entry.key == key)
+                .unwrap_or_else(|| panic!("'{key}' must be in the UCA aggregate"))
+        };
+
+        let accursed = find("Accursed");
+        assert_eq!(accursed.category, "Story");
+        let desc = accursed.description.expect("Accursed must have a joined description");
+        assert!(desc.starts_with("[Not Implemented] Your curse weighs down your soul"));
+        assert!(
+            desc.contains("You gain spell resistance equal to 5 + your character level"),
+            "Accursed's joined description must carry the real BENEFIT text, not just DESC:"
+        );
+        assert!(
+            accursed.prerequisites.unwrap()[0].starts_with("PRETEXT:Prerequisite:You must carry a curse"),
+            "Accursed must carry its PRETEXT: prerequisite, not a synthesised PRE token"
+        );
+
+        for key in ["Fearless Zeal", "Magnum Opus"] {
+            let entry = find(key);
+            let desc = entry.description.unwrap_or_else(|| panic!("{key} must still have a description"));
+            assert!(
+                desc.contains("DEFERRED-WITH-REASON"),
+                "{key}'s joined description must carry the deferral diagnostic, not just flavor text"
+            );
+            assert!(
+                desc.contains("uca_feats.lst:"),
+                "{key}'s deferral diagnostic must cite a file:line, not a vague reason"
+            );
+        }
+
+        let stronghold = find("Stronghold");
+        let stronghold_desc = stronghold.description.expect("Stronghold must have a joined description");
+        assert!(
+            !stronghold_desc.contains("DEFERRED-WITH-REASON"),
+            "Stronghold's own text is complete and must not carry the deferral diagnostic"
+        );
+        assert!(
+            stronghold_desc.contains("gains a +2 bonus to AC."),
+            "Stronghold's joined description must carry its own real BENEFIT text"
+        );
+        assert!(
+            !stronghold_desc.contains("reroll a failed saving throw"),
+            "Stronghold's joined description must not carry Magnum Opus's foreign trailing sentence"
+        );
+
+        let complete_count = all_feat_tables()
+            .iter()
+            .filter(|book| book.rule_set == RuleSetId::Uca)
+            .flat_map(|book| book.entries.iter())
+            .filter(|entry| !entry.description.unwrap_or_default().contains("DEFERRED-WITH-REASON"))
+            .count();
+        assert_eq!(complete_count, 21, "21 of 23 UCA records are text-complete, not deferred");
+    }
+
+    /// UI's 104 records all carry both `DESC:` and `BENEFIT:` (see
+    /// `ultimate_intrigue::feat_tables`'s own module doc comment -- no
+    /// upstream splice/truncation defect found), so every joined
+    /// description carries both, unlike UCA's two deferred rows.
+    #[test]
+    fn ui_records_join_desc_and_benefit_with_no_deferrals() {
+        let find = |key: &str| {
+            all_feat_tables()
+                .iter()
+                .filter(|book| book.rule_set == RuleSetId::Ui)
+                .flat_map(|book| book.entries.iter())
+                .find(|entry| entry.key == key)
+                .unwrap_or_else(|| panic!("'{key}' must be in the UI aggregate"))
+        };
+
+        let acrobatic = find("Acrobatic Spellcaster");
+        assert_eq!(acrobatic.category, "Combat");
+        let desc = acrobatic.description.expect("Acrobatic Spellcaster must have a joined description");
+        assert!(desc.starts_with("Your skillful movements prevent foes from disrupting your spells."));
+        assert!(
+            desc.contains("creatures denied attacks of opportunity by your Acrobatics check"),
+            "Acrobatic Spellcaster's joined description must carry the real BENEFIT text, not just DESC:"
+        );
+        assert!(
+            acrobatic.prerequisites.unwrap()[0].starts_with("PREABILITY:2,CATEGORY=FEAT,Combat Casting"),
+            "Acrobatic Spellcaster must carry its real PREABILITY: token"
+        );
+
+        let no_deferrals = all_feat_tables()
+            .iter()
+            .filter(|book| book.rule_set == RuleSetId::Ui)
+            .flat_map(|book| book.entries.iter())
+            .filter(|entry| entry.description.unwrap_or_default().contains("DEFERRED-WITH-REASON"))
+            .count();
+        assert_eq!(no_deferrals, 0, "no UI feat record is deferred-with-reason");
     }
 
     /// Feat keys were globally unique across CRB/APG/ACG and are not

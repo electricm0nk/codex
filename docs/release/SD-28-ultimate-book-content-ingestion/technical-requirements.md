@@ -29,7 +29,7 @@ Cycle writes are bounded to:
 - `src/rules_core/rules_tables/ultimate_<paizo-book>/` (one book per cycle).
 - `src/rules_core/rules_tables/ultimate_psionics/` (Dreamscarred Press tier).
 - `data/corpus/<book>/` (Shape B cache for the active book).
-- `src/bin/sd28_*` (new) and `tests/sd28_*` (new) if the cycle requires them.
+- new bins under `src/bin/` and new tests under `tests/` named per the identifier-discipline doctrine (no `sd28_` prefix).
 - `docs/release/SD-28-.../` (the bundle's own docs — published; landed source removed by move-not-copy).
 
 Cycle writes MUST NOT touch:
@@ -118,7 +118,7 @@ Per `decisions.md §18`:
 ## TR-28-011 — Move-not-copy publish
 
 Source-of-record `programs/codex/requirements/SD-28-.../` MUST be removed
-on the publish commit per `decisions.md §6`. The canonical
+on the publish commit per `decisions.md §22`. The canonical
 repo-resident home is `docs/release/SD-28-ultimate-book-content-ingestion/`.
 
 ## TR-28-012 — Local-file work-queue dispatch

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
     "key": "Cup of Dust",
     "school": "Transmutation",
@@ -16,6 +16,10 @@
     "line": 1908,
     "record_key": "Cup of Dust"
   },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

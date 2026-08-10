@@ -1,5 +1,6 @@
 //! Headless rules-core surfaces.
 
+pub mod archetype_resolver;
 pub mod cache_gen;
 pub mod character_input;
 pub mod composed_input;
@@ -19,6 +20,7 @@ pub mod level_up;
 pub mod money;
 pub mod party_cr;
 pub mod pcgen_desc;
+pub mod pi_screening;
 pub mod pilot_compute;
 pub mod pilot_compute_corpus;
 pub mod pilot_failure;
@@ -30,5 +32,6 @@ pub mod size;
 pub mod skill_allocation;
 pub mod source_content;
 pub mod spell_resolver;
+pub mod wiring_class;
 pub mod spellbook;
 pub mod support_state_matrix;

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
     "key": "Vest of the Cockroach",
     "category": "MagicItems",
@@ -17,6 +17,10 @@
     "identity_match_basis": "name+cost",
     "citation_precision": "category_aggregate_page"
   },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

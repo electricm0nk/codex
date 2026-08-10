@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:12:38Z",
+  "ingested_at": "2026-08-03T19:41:44Z",
   "data": {
     "key": "Champion of Tyranny",
     "category": "Alignment",
@@ -18,5 +18,9 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

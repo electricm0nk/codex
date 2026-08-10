@@ -14,6 +14,7 @@
 //! `decisions.md §1` explicitly excludes from SD-22.
 
 pub mod alchemist_spell_list;
+pub mod archetype_tables;
 pub mod inquisitor_spell_list;
 pub mod witch_spell_list;
 pub mod class_alchemist;

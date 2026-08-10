@@ -1,10 +1,10 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
     "class_id": "Monk",
-    "maxlevel": 12,
+    "maxlevel": 20,
     "bab": "level*3/4",
     "save_fort": "level/2+2",
     "save_ref": "level/2+2",
@@ -17,6 +17,10 @@
     "line": 147,
     "record_key": "CLASS:Monk"
   },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

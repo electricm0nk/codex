@@ -27,7 +27,7 @@
     ],
     "weight": null
   },
-  "ingested_at": "2026-07-23T00:03:45Z",
+  "ingested_at": "2026-08-03T17:41:57Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -38,5 +38,9 @@
     "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
     "record_key": "Runestone of Power (7th Level)",
     "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
-  }
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

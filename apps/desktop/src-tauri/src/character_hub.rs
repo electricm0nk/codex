@@ -37,7 +37,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_compute_corpus::{
     compute_pilot_with_corpus, CorpusDerivedSection, ResolvedEquipment,
 };
-use codex::rules_core::pilot_view_model::PilotSnapshot;
+use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel};
 
 use crate::corpus_fixtures::corpus_fixture_bundle;
 use codex::saved_character::local_store::SavedCharacterStore;
@@ -132,6 +132,34 @@ pub struct PilotSnapshotDto {
     /// through into an empty stat block.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub companion: Option<AnimalCompanionDto>,
+    /// epic-31-spell-wiring: the character's real spellbook coverage
+    /// (spell save DCs, slots total/used), from
+    /// `spellbook::compute_spellbook_coverage`. Absent, not zeroed, for a
+    /// non-caster or a build with no spell yet resolved against the
+    /// corpus -- same discipline as `damage_reduction`/`companion` above.
+    /// See `PilotSpellbookViewModel`'s own doc comment for the twin
+    /// problem this closes and Decision 37 for why it carries no slot
+    /// totals.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub spellbook: Option<PilotSpellbookDto>,
+}
+
+/// Wire form of `pilot_view_model::PilotSpellSaveDc`.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct SpellSaveDcDto {
+    pub class_id: String,
+    pub dc: u8,
+}
+
+/// Wire form of `pilot_view_model::PilotSpellbookViewModel`. Deliberately
+/// has no `slots_total`/`slots_used` fields -- see
+/// `PilotSpellbookViewModel`'s doc comment and `decisions.md` Decision 37
+/// (epic-31-spell-wiring gap closure, 2026-08-07).
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct PilotSpellbookDto {
+    pub spell_save_dc: Vec<SpellSaveDcDto>,
 }
 
 /// Wire form of `pilot_view_model::PilotCompanionStat` -- one grounded
@@ -800,6 +828,17 @@ pub(crate) fn map_snapshot_dto(snapshot: &PilotSnapshot) -> PilotSnapshotDto {
         ),
         damage_reduction: snapshot.defense.damage_reduction,
         companion: snapshot.companion.as_ref().map(map_animal_companion_dto),
+        spellbook: snapshot.spellbook.as_ref().map(map_pilot_spellbook_dto),
+    }
+}
+
+fn map_pilot_spellbook_dto(spellbook: &PilotSpellbookViewModel) -> PilotSpellbookDto {
+    PilotSpellbookDto {
+        spell_save_dc: spellbook
+            .spell_save_dc
+            .iter()
+            .map(|entry| SpellSaveDcDto { class_id: entry.class_id.clone(), dc: entry.dc })
+            .collect(),
     }
 }
 
@@ -6185,6 +6224,7 @@ mod tests {
                 },
                 damage_reduction: None,
                 companion: None,
+                spellbook: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),
@@ -6245,7 +6285,15 @@ mod tests {
     #[test]
     fn every_equipmods_row_the_picker_offers_is_recognized_by_the_attach_gate() {
         let offered = offered_modifier_rows();
-        assert_eq!(offered.len(), 763, "the picker's real offered-row count");
+        // 950 + UPsi's 113 real, alias-excluded equipmods (SD28 item 5 --
+        // `up_equipmods.lst`'s `EQUIPMODS_TABLE`, already the corrected
+        // count with the 113 `VISIBLE:NO` `.COPY=` legacy aliases excluded
+        // at the table's own source; UM contributes 0, it has no
+        // equipment-modifier file at all) + UC's 19 real, alias-excluded
+        // equipmods (39 raw `uc_equipmods.lst` lines minus 20 VISIBLE:NO
+        // .COPY= legacy aliases, the identical hazard UPsi's own table
+        // found).
+        assert_eq!(offered.len(), 1082, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()
@@ -6272,7 +6320,7 @@ mod tests {
     /// honest refusal it replaces. This pins that **every** newly reachable
     /// row charges exactly the price the picker displayed for it.
     ///
-    /// It also pins, rather than hides, the one place that is *not* true.
+    /// It also pins, rather than hides, the places that are *not* true.
     /// Two CRB rows -- `Holy Symbol (Wooden)` and `Holy Symbol (Silver)` --
     /// carry the same `KEY:` in two different categories, so the row the
     /// `Equipmods` picker displays (1 gp / 25 gp) is not the first row in
@@ -6283,6 +6331,19 @@ mod tests {
     /// a real, separate defect in `crb::equipment_tables`'s 316 duplicate
     /// keys, not fixable from this file -- disambiguating it means changing
     /// the `key` the catalog puts on the wire.
+    ///
+    /// SD28-E25 adds a third, of the identical shape: `Masterwork Tool` is
+    /// both a real purchasable item (`ultimate_equipment::equipment_tables`'s
+    /// own `General` category, 50 gp) and a real equipment modifier
+    /// (`Equipmods`, no flat cost -- a `%CHOICE circumstance Bonus`),
+    /// sharing a `KEY:`. `equipment_catalog_rows()` chains UE's equipment
+    /// before its equipmods, so the resolver's first match is the 50 gp
+    /// item, not the free modifier the picker displays -- the same
+    /// first-match-wins divergence CRB's Holy Symbol pair already
+    /// demonstrates, from a genuine same-book same-key collision this
+    /// widening did not create (`equipment_catalog.rs`'s own
+    /// `keys_do_not_collide_across_books_and_crbs_own_duplicates_are_pinned`
+    /// pins the same fact).
     #[test]
     fn every_offered_modifier_row_charges_the_price_the_picker_displayed() {
         let offered = offered_modifier_rows();
@@ -6314,18 +6375,28 @@ mod tests {
         divergent.dedup();
         assert_eq!(
             divergent,
-            vec![("CRB", "Holy Symbol (Silver)"), ("CRB", "Holy Symbol (Wooden)")],
-            "the display-vs-charge divergence set must stay exactly these two pre-existing CRB \
-             duplicate-key rows"
+            vec![
+                ("CRB", "Holy Symbol (Silver)"),
+                ("CRB", "Holy Symbol (Wooden)"),
+                ("UE", "Masterwork Tool"),
+            ],
+            "the display-vs-charge divergence set must stay exactly these three same-book \
+             same-key rows -- named explicitly so a fourth arriving silently fails here"
         );
         assert!(
-            divergent.iter().all(|(book, _)| *book == "CRB"),
-            "the widening must not add a single new display-vs-charge divergence"
+            divergent.iter().all(|(book, _)| *book == "CRB" || *book == "UE"),
+            "the widening must not add a display-vs-charge divergence outside the two named books"
         );
         assert_eq!(
-            priced_non_crb, 20,
-            "the 20 newly-reachable rows carrying a real non-zero price (ACG 11 + ARG 9) are \
-             exactly the rows a recognition-only fix would have attached for free"
+            priced_non_crb, 116,
+            "the 20 rows from the ACG/ARG widening (ACG 11 + ARG 9), plus 69 real non-zero-priced \
+             UE equipmods (75 UE equipmod rows carry a real cost, 6 of them Some(0.0) and so \
+             excluded here), plus 1 more: `Masterwork Tool`'s own resolved row is UE's 50 gp \
+             General item, not its free Equipmods row -- see this test's own doc comment -- plus \
+             24 real non-zero-priced UPsi equipmods (of 113, the rest are `None` or `Some(0.0)`; \
+             UM contributes none, it has no equipment-modifier file), plus 2 real non-zero-priced \
+             UC equipmods (Dry Load COST:30, Throwing Shield COST:50; of 19, the rest are `None` \
+             or `Some(0.0)`), every one a row a recognition-only fix would have attached for free"
         );
     }
 
@@ -6338,7 +6409,7 @@ mod tests {
         let resolver_books: std::collections::BTreeSet<&str> =
             equipment_catalog_rows().iter().map(|row| row.book).collect();
         let catalog_books: std::collections::BTreeSet<&str> =
-            crate::equipment_catalog::EQUIPMENT_CATALOG_BOOKS.iter().copied().collect();
+            crate::equipment_catalog::equipment_catalog_books().into_iter().collect();
         assert_eq!(resolver_books, catalog_books);
     }
 
@@ -7039,7 +7110,7 @@ mod tests {
             list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
                 .expect("listing should succeed");
 
-        assert_eq!(response.entries.len(), 690, "no record may be filtered away");
+        assert_eq!(response.entries.len(), 1578, "no record may be filtered away");
         for entry in &response.entries {
             let eligibility = entry
                 .eligibility
@@ -7084,7 +7155,7 @@ mod tests {
     #[test]
     fn the_character_less_catalog_sends_no_eligibility_key() {
         let response = crate::feat_catalog::build_feat_catalog();
-        assert_eq!(response.entries.len(), 690);
+        assert_eq!(response.entries.len(), 1578);
         assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
         let json = serde_json::to_string(&response.entries[0]).expect("serialises");
         assert!(!json.contains("eligibility"), "{json}");
@@ -7693,6 +7764,7 @@ mod tests {
                 },
                 damage_reduction: None,
                 companion: None,
+                spellbook: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),
@@ -7893,6 +7965,7 @@ mod tests {
                 },
                 damage_reduction: None,
                 companion: None,
+                spellbook: None,
             },
             corpus_derived: CorpusDerivedDto {
                 school_coverage: Vec::new(),

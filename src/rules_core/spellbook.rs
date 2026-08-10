@@ -103,8 +103,6 @@ pub struct KnownSpell {
 pub struct SpellbookCoverage {
     pub spells_prepared: Vec<PreparedSpell>,
     pub spells_known: Vec<KnownSpell>,
-    pub slots_total: BTreeMap<u8, u8>,
-    pub slots_used: BTreeMap<u8, u8>,
     /// The saving-throw DC for the highest-level spell of that class
     /// present in `spells_prepared`/`spells_known` this call
     /// (`10 + spell level + casting-ability modifier`, the same formula

@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-27T21:26:32Z",
+  "ingested_at": "2026-08-03T19:41:45Z",
   "data": {
     "key": "Murmurs of Earth",
     "category": "general",
@@ -18,5 +18,9 @@
   },
   "license": "OGL",
   "pi_field": null,
-  "pi_marker": null
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

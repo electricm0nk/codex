@@ -399,12 +399,35 @@ fn decode_pcgen_entities(text: &str) -> String {
 /// actually references, so a `|` inside the prose itself (a rulebook table
 /// separator) is rejoined rather than mistaken for an argument boundary. A
 /// token whose prose references no argument is returned whole and untouched.
+/// A trailing PCGen bonus/variable tag with no `%N` argument reference
+/// anywhere in the prose to justify the split (e.g. UPsi's
+/// `up_equipment.lst` `"...up to +5|DisruptorShieldBonus"` -- a real,
+/// corpus-genuine tag, not a fabricated case). `leaked_pcgen_syntax` already
+/// distinguishes a *tight* `|` (no whitespace on either side, real PCGen
+/// separator) from a loose one that could appear in ordinary prose; this
+/// reuses that same boundary on the LAST `|` so a tag like this is still
+/// stripped even when there is no `%N` reference consuming it.
+fn strip_trailing_tight_pipe_tag(raw: &str) -> Option<String> {
+    let chars: Vec<char> = raw.chars().collect();
+    let idx = chars.iter().rposition(|&c| c == '|')?;
+    let left_tight = idx > 0 && !chars[idx - 1].is_whitespace();
+    let right_tight = idx + 1 < chars.len() && !chars[idx + 1].is_whitespace();
+    if left_tight && right_tight {
+        Some(chars[..idx].iter().collect())
+    } else {
+        None
+    }
+}
+
 fn split_prose_and_args(raw: &str) -> (String, Vec<String>) {
     let (raw, _gates) = strip_trailing_qualifiers(raw);
     let raw = raw.as_str();
     let max = max_arg_reference(raw);
     if max == 0 {
-        return (raw.to_string(), Vec::new());
+        return match strip_trailing_tight_pipe_tag(raw) {
+            Some(prose) => (prose, Vec::new()),
+            None => (raw.to_string(), Vec::new()),
+        };
     }
     let segments: Vec<&str> = raw.split('|').collect();
     if segments.len() <= max {

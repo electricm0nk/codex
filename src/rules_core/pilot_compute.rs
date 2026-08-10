@@ -133,6 +133,7 @@ use super::rules_tables::pathfinder_unchained::class_chassis::{self as pu_class_
 use super::rules_tables::pathfinder_unchained::{
     barbarian_features, monk_features, rogue_features, summoner_features,
 };
+use crate::rules_core::archetype_resolver;
 use crate::rules_core::durability::FamiliarSpecies;
 use crate::rules_core::feat_identity;
 use crate::rules_core::pcgen_desc::{
@@ -10874,6 +10875,7 @@ fn compute_apg_class_chassis(
         let alchemist_intelligence_modifier =
             ability_modifier(input.chosen.ability_scores.intelligence);
         ground_alchemist_bomb_and_poison_resistance(
+            input,
             level,
             alchemist_intelligence_modifier,
             &input.chosen.selected_feats,
@@ -11390,7 +11392,17 @@ fn alchemist_is_poison_immune(level: u8) -> bool {
 /// facts (no choice or activation gate, unlike Mutagen), so this never
 /// claim-blocks. Called unconditionally from `compute_apg_class_chassis`'s
 /// Alchemist branch, independent of Mutagen's own state.
+///
+/// SD28-C4.8: the Poison Resistance branch below is the first real
+/// consumer of `archetype_resolver::archetype_claims_slot`
+/// (`decisions.md §59`/`§60`). Before this, the base APG progression
+/// computed unconditionally for every Alchemist regardless of archetype
+/// selection -- the exact "provably vacuous... this repo ingests no
+/// Alchemist archetype" shape `§59` catalogued for six other classes, now
+/// closed here for real rather than left vacuous, because Alchemist
+/// archetypes ARE ingested (`§51`'s ACG/ARG tables).
 fn ground_alchemist_bomb_and_poison_resistance(
+    input: &CharacterInput,
     level: u8,
     intelligence_modifier: i16,
     selected_feats: &[String],
@@ -11433,6 +11445,32 @@ fn ground_alchemist_bomb_and_poison_resistance(
         ),
     });
 
+    if let Some(archetype_name) =
+        archetype_resolver::archetype_claiming_slot(input, "Alchemist", "AlchemistPoisonResistance")
+    {
+        // SD28-C4.8: the base APG Poison Resistance progression no longer
+        // grounds unconditionally once a real, selected archetype has
+        // claimed this slot (e.g. ARG's Plague Bringer, whose own
+        // `replaces` list names this slot alongside its poison-resistance
+        // tiers and Mutagen -- confirmed against the real catalog row,
+        // `archetype_resolver.rs`'s own test). This does not compute the
+        // archetype's OWN replacement mechanic (that is a separate,
+        // not-yet-modelled feature this table's `grants` list names but
+        // does not itself ground), so the value stays 0 and the message
+        // says plainly that the base progression is superseded, not that
+        // it fires -- the same "name the gap, do not fabricate a number
+        // for it" discipline this codebase applies everywhere else.
+        explanations.push(ComputationExplanation {
+            id: "class_feature.apg.alchemist.poison_resistance_bonus".to_owned(),
+            value: 0,
+            detail: format!(
+                "Alchemist level {level} Poison Resistance: superseded by the selected {archetype_name} \
+                 archetype, which replaces this base-class slot -- the base APG progression \
+                 does not apply. {archetype_name}'s own replacement feature (if any) is not \
+                 separately computed here"
+            ),
+        });
+    } else {
     match alchemist_poison_resistance_bonus(level) {
         None => {
             explanations.push(ComputationExplanation {
@@ -11470,6 +11508,7 @@ fn ground_alchemist_bomb_and_poison_resistance(
                 ),
             });
         }
+    }
     }
 }
 
@@ -26507,21 +26546,44 @@ fn explain_fighter_class_features(
         return;
     };
 
-    let bravery_bonus = fighter_bravery_bonus(level);
-    if bravery_bonus > 0 {
+    // SD28-C4.8, class two: Fighter's own `FighterBravery` slot is named as
+    // replaced by several real, ingested APG archetypes (Archer, Free Hand
+    // Fighter, Mobile Fighter, Phalanx Soldier, Polearm Master, Roughrider,
+    // Savage Warrior, and others -- confirmed against the real catalog rows,
+    // not assumed from one). Bravery previously computed unconditionally for
+    // every Fighter; a genuinely selected archetype that claims this slot
+    // now supersedes it, the same disposition Alchemist's Poison Resistance
+    // already established for `archetype_claims_slot`'s first consumer.
+    if let Some(archetype_name) =
+        archetype_resolver::archetype_claiming_slot(input, "Fighter", "FighterBravery")
+    {
         explanations.push(ComputationExplanation {
             id: "class_feature.fighter.bravery".to_owned(),
-            value: bravery_bonus,
+            value: 0,
             detail: format!(
-                "Fighter level {FIGHTER_BRAVERY_LEVEL} Bravery (cr_abilities_class.lst Fighter; \
-                 +1 at level {FIGHTER_BRAVERY_LEVEL} and another +1 every \
-                 {FIGHTER_BRAVERY_RANK_LEVEL_STRIDE} Fighter levels thereafter): grants \
-                 +{bravery_bonus} to Will saves against fear. This is a flat, non-fabricated \
-                 bonus magnitude only — no fear-condition or Will-save-resolution engine exists \
-                 anywhere in this codebase, so this bonus is never folded into the unconditional \
-                 Will save total"
+                "Fighter level {level} Bravery: superseded by the selected {archetype_name} \
+                 archetype, which replaces this base-class slot -- the base Will-vs-fear \
+                 progression does not apply. {archetype_name}'s own replacement feature (if \
+                 any) is not separately computed here"
             ),
         });
+    } else {
+        let bravery_bonus = fighter_bravery_bonus(level);
+        if bravery_bonus > 0 {
+            explanations.push(ComputationExplanation {
+                id: "class_feature.fighter.bravery".to_owned(),
+                value: bravery_bonus,
+                detail: format!(
+                    "Fighter level {FIGHTER_BRAVERY_LEVEL} Bravery (cr_abilities_class.lst Fighter; \
+                     +1 at level {FIGHTER_BRAVERY_LEVEL} and another +1 every \
+                     {FIGHTER_BRAVERY_RANK_LEVEL_STRIDE} Fighter levels thereafter): grants \
+                     +{bravery_bonus} to Will saves against fear. This is a flat, non-fabricated \
+                     bonus magnitude only — no fear-condition or Will-save-resolution engine exists \
+                     anywhere in this codebase, so this bonus is never folded into the unconditional \
+                     Will save total"
+                ),
+            });
+        }
     }
 
     if level >= 2
@@ -53725,6 +53787,215 @@ mod alchemist_dispatch_widening_safety_tests {
             "Fighter's own golden path must be unaffected by a stray Alchemist extract entry: \
              {:?}",
             receipt.computation.diagnostics
+        );
+    }
+}
+
+/// SD28-C4.8: `archetype_resolver::archetype_claims_slot`'s first
+/// real-compute-output consumer (`decisions.md §59`/`§60`). Reachability
+/// proof per `§43`: a character who genuinely selects ARG's Plague
+/// Bringer archetype must see the base Poison Resistance explanation
+/// change in the actual compute output, not merely in a unit test over
+/// the resolver alone.
+#[cfg(test)]
+mod alchemist_archetype_slot_reachability_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, ALCHEMIST_CLASS_ID};
+    use crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_alchemist_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: ALCHEMIST_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn poison_resistance_explanation(
+        receipt: &crate::rules_core::pilot_compute::PilotHeadlessReceipt,
+    ) -> &crate::rules_core::pilot_compute::ComputationExplanation {
+        receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.apg.alchemist.poison_resistance_bonus")
+            .expect("Poison Resistance must always ground an explanation, archetype or not")
+    }
+
+    /// The base case, unaffected: a level-5 Alchemist with NO archetype
+    /// selected grounds the real APG progression (+4 at level 5).
+    #[test]
+    fn a_bare_alchemist_grounds_the_real_poison_resistance_progression() {
+        let input = human_alchemist_input(5);
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = poison_resistance_explanation(&receipt);
+        assert_eq!(explanation.value, 4, "level 5 Poison Resistance is +4: {explanation:?}");
+        assert!(
+            !explanation.detail.contains("superseded"),
+            "a bare Alchemist's own explanation must not mention an archetype supersession: \
+             {explanation:?}"
+        );
+    }
+
+    /// The reachability proof: the SAME level-5 Alchemist, with Plague
+    /// Bringer genuinely selected via the real `ARCHETYPE_CHOICE_ID`
+    /// choice-set, must see the base progression superseded in the
+    /// ACTUAL compute output -- not a resolver-only unit test, the real
+    /// end-to-end path a player's own selection would take.
+    #[test]
+    fn a_plague_bringer_alchemist_supersedes_the_base_poison_resistance_in_real_compute_output() {
+        let mut input = human_alchemist_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Alchemist Archetype ~ Plague Bringer".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = poison_resistance_explanation(&receipt);
+        assert_eq!(
+            explanation.value, 0,
+            "Plague Bringer supersedes the base progression -- the base +4 must not appear: \
+             {explanation:?}"
+        );
+        assert!(
+            explanation.detail.contains("Plague Bringer"),
+            "the explanation must name the actual superseding archetype, not a generic message: \
+             {explanation:?}"
+        );
+        assert!(
+            explanation.detail.contains("superseded"),
+            "the explanation must say plainly that the base progression does not apply: \
+             {explanation:?}"
+        );
+    }
+
+    /// The negative-adjacent proof: selecting a DIFFERENT Alchemist
+    /// archetype that does NOT touch Poison Resistance (Bramble Brewer,
+    /// which only replaces the Discovery slot) must leave the base
+    /// progression grounding exactly as if no archetype were selected --
+    /// proves the wiring is scoped to the real claimed slot, not "any
+    /// archetype selected turns this off."
+    #[test]
+    fn an_unrelated_alchemist_archetype_leaves_poison_resistance_grounding_unchanged() {
+        let mut input = human_alchemist_input(5);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Alchemist Archetype ~ Bramble Brewer".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = poison_resistance_explanation(&receipt);
+        assert_eq!(
+            explanation.value, 4,
+            "Bramble Brewer does not touch Poison Resistance -- the real +4 must still ground: \
+             {explanation:?}"
+        );
+    }
+}
+
+/// SD28-C4.8, class two: `archetype_resolver::archetype_claiming_slot`'s second
+/// real-compute-output consumer, on a structurally different (non-resource-pool)
+/// class than Alchemist. Reachability proof per `§43`: a character who genuinely
+/// selects one of the real APG Fighter archetypes that names `FighterBravery` in
+/// its own `replaces` list must see the base Bravery explanation change in the
+/// actual compute output.
+#[cfg(test)]
+mod fighter_archetype_slot_reachability_tests {
+    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput, FIGHTER_CLASS_ID};
+    use crate::rules_core::archetype_resolver::ARCHETYPE_CHOICE_ID;
+    use crate::rules_core::character_input::{load_character_input_fixture, SelectedChoice};
+
+    const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
+        "../../tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
+    );
+
+    fn human_fighter_input(level: u8) -> CharacterInput {
+        let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
+        assert!(result.diagnostics.is_empty());
+        let mut input = result.character_input.expect("valid fixture");
+        input.chosen.class_levels =
+            vec![CharacterClassLevel { class_id: FIGHTER_CLASS_ID.to_owned(), level }];
+        input
+    }
+
+    fn bravery_explanation(
+        receipt: &crate::rules_core::pilot_compute::PilotHeadlessReceipt,
+    ) -> &crate::rules_core::pilot_compute::ComputationExplanation {
+        receipt
+            .computation
+            .explanations
+            .iter()
+            .find(|e| e.id == "class_feature.fighter.bravery")
+            .expect("Bravery must always ground an explanation, archetype or not")
+    }
+
+    /// The base case, unaffected: a level-2 Fighter with NO archetype
+    /// selected grounds the real +1 Bravery.
+    #[test]
+    fn a_bare_fighter_grounds_the_real_bravery_progression() {
+        let input = human_fighter_input(2);
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = bravery_explanation(&receipt);
+        assert_eq!(explanation.value, 1, "level 2 Bravery is +1: {explanation:?}");
+        assert!(
+            !explanation.detail.contains("superseded"),
+            "a bare Fighter's own explanation must not mention an archetype supersession: \
+             {explanation:?}"
+        );
+    }
+
+    /// The reachability proof: the SAME level-2 Fighter, with Archer
+    /// genuinely selected via the real `ARCHETYPE_CHOICE_ID` choice-set,
+    /// must see the base progression superseded in the ACTUAL compute
+    /// output -- not a resolver-only unit test, the real end-to-end path a
+    /// player's own selection would take.
+    #[test]
+    fn an_archer_fighter_supersedes_the_base_bravery_in_real_compute_output() {
+        let mut input = human_fighter_input(2);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Fighter Archetype ~ Archer".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = bravery_explanation(&receipt);
+        assert_eq!(
+            explanation.value, 0,
+            "Archer supersedes the base progression -- the base +1 must not appear: \
+             {explanation:?}"
+        );
+        assert!(
+            explanation.detail.contains("Archer"),
+            "the explanation must name the actual superseding archetype, not a generic message: \
+             {explanation:?}"
+        );
+        assert!(
+            explanation.detail.contains("superseded"),
+            "the explanation must say plainly that the base progression does not apply: \
+             {explanation:?}"
+        );
+    }
+
+    /// The negative-adjacent proof: selecting a DIFFERENT Fighter archetype
+    /// that does NOT touch Bravery (Crossbowman, whose `replaces` list
+    /// omits `FighterBravery`) must leave the base progression grounding
+    /// exactly as if no archetype were selected -- proves the wiring is
+    /// scoped to the real claimed slot, not "any archetype selected turns
+    /// this off."
+    #[test]
+    fn an_unrelated_fighter_archetype_leaves_bravery_grounding_unchanged() {
+        let mut input = human_fighter_input(2);
+        input.chosen.selected_choices.push(SelectedChoice {
+            choice_set_id: ARCHETYPE_CHOICE_ID.to_owned(),
+            selection_id: "Fighter Archetype ~ Crossbowman".to_owned(),
+        });
+        let receipt = build_pilot_headless_receipt(&input);
+        let explanation = bravery_explanation(&receipt);
+        assert_eq!(
+            explanation.value, 1,
+            "Crossbowman does not touch Bravery -- the real +1 must still ground: {explanation:?}"
         );
     }
 }

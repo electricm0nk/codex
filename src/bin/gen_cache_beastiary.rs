@@ -11,7 +11,7 @@
 //! `decisions.md §11.3`, the cache dumps that module's current state; it
 //! does not run at app runtime).
 
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::process::Command;
 
 use codex::rules_core::cache_gen::beastiary1;
@@ -25,6 +25,68 @@ fn real_now_iso8601() -> String {
         .expect("date output is valid UTF-8")
         .trim()
         .to_string()
+}
+
+/// The book's real, on-disk licensed-content record count -- every `.json`
+/// file under `book_dir` except `LICENSE.json` itself and anything under a
+/// `_`-prefixed directory (`_parity/` etc., test fixtures, not licensed
+/// content). Identical logic to `sd27_gen_book_cache.rs`'s own
+/// `count_on_disk_records`, duplicated here rather than shared across two
+/// separate `src/bin/` binaries -- see this book's `LICENSE.json`'s
+/// `records_processed` field, which this function now derives instead of
+/// leaving hand-maintained (SD28-E16, `decisions.md §36` instance 8: this
+/// book's `LICENSE.json` predates any generator owning it -- `cache_gen::
+/// beastiary1` only ever wrote `monster/`+`equipment/`, while `race/` and
+/// `race_trait/` are written by the separate `ingest_races.rs`, so no
+/// single writer's own count was ever the whole book's count, exactly the
+/// gap `sd27_gen_book_cache.rs`'s own doc comment already named for ARG/PU
+/// before this fix closed it for Bestiary 1 too).
+fn count_on_disk_records(book_dir: &Path) -> usize {
+    fn walk(dir: &Path, count: &mut usize) {
+        let Ok(entries) = std::fs::read_dir(dir) else { return };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                let is_internal = path.file_name().and_then(|f| f.to_str()).is_some_and(|n| n.starts_with('_'));
+                if !is_internal {
+                    walk(&path, count);
+                }
+            } else if path.extension().and_then(|e| e.to_str()) == Some("json")
+                && path.file_name().and_then(|f| f.to_str()) != Some("LICENSE.json")
+            {
+                *count += 1;
+            }
+        }
+    }
+    let mut count = 0;
+    walk(book_dir, &mut count);
+    count
+}
+
+/// Rewrites `LICENSE.json`'s `records_processed` field from the real
+/// on-disk count, operating on raw `serde_json::Value` (never a typed
+/// struct -- `enrich_equipment_raw_tokens.rs`'s own doc comment names why:
+/// deserializing into a struct that doesn't know every field silently
+/// drops the fields it doesn't know about) so every other field --
+/// `license_declaration`, `redaction_policy`, `screening_method_note`,
+/// everything -- survives untouched.
+fn resync_license_record_count(out_dir: &Path, book_dir: &Path) {
+    let license_path = out_dir.join("LICENSE.json");
+    let text = std::fs::read_to_string(&license_path)
+        .unwrap_or_else(|e| panic!("failed to read {license_path:?}: {e}"));
+    let mut value: serde_json::Value =
+        serde_json::from_str(&text).unwrap_or_else(|e| panic!("{license_path:?} is not valid JSON: {e}"));
+    let real_count = count_on_disk_records(book_dir);
+    let stated = value["records_processed"].as_u64().map(|n| n as usize);
+    if stated == Some(real_count) {
+        return;
+    }
+    println!(
+        "LICENSE.json records_processed: stated {stated:?}, real on-disk count {real_count} -- resyncing"
+    );
+    value["records_processed"] = serde_json::json!(real_count);
+    let json = serde_json::to_string_pretty(&value).expect("LICENSE.json value must serialize");
+    std::fs::write(&license_path, json + "\n").unwrap_or_else(|e| panic!("failed to write {license_path:?}: {e}"));
 }
 
 fn main() {
@@ -65,6 +127,7 @@ fn main() {
                 );
                 std::process::exit(1);
             }
+            resync_license_record_count(&out_dir, &out_dir);
         }
         Err(e) => {
             eprintln!("Bestiary 1 cache generation failed: {e:?}");

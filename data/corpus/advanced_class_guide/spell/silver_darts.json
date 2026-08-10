@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
+  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
     "key": "Silver Darts",
     "school": "Conjuration",
@@ -16,6 +16,11 @@
     "line": 108,
     "record_key": "Silver Darts"
   },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "static:literal_magnitudes_only"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

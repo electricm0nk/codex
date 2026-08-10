@@ -334,6 +334,37 @@ someone who was not there.
    its remedy — and that is recorded as a cycle shortfall, not a pass.
 8. Baseline movements in `scripts/verify-baselines.env`, if any, are a separate
    reviewable commit.
+9. **If the cycle regenerated (or wrote for the first time) any book's
+   `equipment/*.json` records, `cargo run --locked --bin
+   enrich_equipment_raw_tokens` was re-run afterward, over the whole
+   corpus, as a mandatory post-step — not a maybe.** Every book-specific
+   equipment codegen pipeline diverged independently (`enrich_equipment_raw_tokens.rs`'s
+   own module doc comment) and `raw_tokens`/`raw_bonus_chains` are not
+   fields any generator populates itself; they exist on disk only because
+   that tool adds them afterward, operating on raw `serde_json::Value` so
+   it never drops a book-specific field a typed struct wouldn't recognize
+   (a real, once-reverted defect: see that file's own history for why a
+   typed-struct convergence was tried and abandoned). A generator run that
+   is not followed by this step silently reverts every equipment record's
+   `raw_tokens`/`raw_bonus_chains` to absent — this was found and fixed
+   for `wiring_class`/license (GE-01, 2026-08-03) after regenerating
+   through the generator dropped fields the generator itself has never
+   known about; the same failure mode applies here and this item exists
+   so it is never rediscovered the hard way for this field pair too.
+10. **Any change to the *quantity* of anything triggers a count sweep, not
+    just a build.** This repo pins derived counts — record totals, `.len()`
+    ceilings, `has_description`/`full_text_true` tallies, class/book
+    census numbers — in many places at once, and the compiler protects
+    none of them: a deletion or addition that changes a record count can
+    leave every source file compiling clean while a test elsewhere still
+    asserts the old figure, landing a red tree with no build error to
+    catch it. (Real instance: GE-01's 2026-08-03 fossil-record deletion,
+    `fc5f1fab`, compiled fine and passed its own new test, but left
+    `tests/sd26_cache_apg.rs`'s `306`/`305` spell-count assertions
+    red — fixed in `92df2c9b`.) Before committing any change that adds or
+    removes records, `grep` for the old and new counts across `tests/`,
+    `src/`, and `apps/`, the same way any other cycle sweeps a moved
+    number (§6 below) — do this before the failure surfaces, not after.
 
 ---
 

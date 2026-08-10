@@ -130,6 +130,7 @@ pub mod monster_subset_05;
 pub mod monster_subset_06;
 pub mod monster_subset_07;
 pub mod monster_subset_08;
+pub mod monster_subset_09;
 
 use crate::rules_core::rules_tables::RuleSetId;
 
@@ -219,6 +220,11 @@ pub enum MonsterId {
     Ettercap,
     GelatinousCube,
     HellHound,
+    Lion,
+    Ogre,
+    Pegasus,
+    RustMonster,
+    Shadow,
 }
 
 impl MonsterId {
@@ -276,6 +282,11 @@ impl MonsterId {
         MonsterId::Ettercap,
         MonsterId::GelatinousCube,
         MonsterId::HellHound,
+        MonsterId::Lion,
+        MonsterId::Ogre,
+        MonsterId::Pegasus,
+        MonsterId::RustMonster,
+        MonsterId::Shadow,
     ];
 }
 
@@ -329,57 +340,59 @@ pub fn monster_resolve(monster_id: MonsterId, rule_set: RuleSetId) -> Option<Mon
         MonsterId::Ettercap => monster_subset_08::ettercap(),
         MonsterId::GelatinousCube => monster_subset_08::gelatinous_cube(),
         MonsterId::HellHound => monster_subset_08::hell_hound(),
+        MonsterId::Lion => monster_subset_09::lion(),
+        MonsterId::Ogre => monster_subset_09::ogre(),
+        MonsterId::Pegasus => monster_subset_09::pegasus(),
+        MonsterId::RustMonster => monster_subset_09::rust_monster(),
+        MonsterId::Shadow => monster_subset_09::shadow(),
     })
+}
+
+/// The canonical `beastiary1:monster:<slug>` key for a resolved stat block:
+/// lowercase the display name, spaces to underscores.
+///
+/// The single source of truth for this derivation (SD28-E16, `decisions.md`
+/// §36 instance 9, caught while fixing instance 6): `apps/desktop/
+/// src-tauri/src/monster_catalog.rs`'s own key-building used to be a
+/// second, independent copy of this exact formula in a different crate --
+/// harmless only because nothing had yet exercised a name the two
+/// implementations would disagree on, which is precisely how instances 1-8
+/// went unnoticed too. `monster_catalog.rs` now calls this function
+/// directly instead of re-implementing it. No name in this book's roster
+/// carries a character this simple derivation mishandles (an apostrophe, a
+/// hyphen colliding with the `_` separator) -- checked, not assumed, by
+/// `no_monster_name_carries_a_character_the_key_derivation_cannot_handle`
+/// below.
+pub fn monster_key(name: &str) -> String {
+    format!("beastiary1:monster:{}", name.to_lowercase().replace(' ', "_"))
 }
 
 /// Key-based resolution, mirroring `corpus-source-inventory.md` §3.2's
 /// `beastiary1:monster:<lowercase-name>` key shape.
+///
+/// SD28-E16 (`decisions.md` §36 instance 6): this used to be a hand-written
+/// `match key { "beastiary1:monster:ghoul" => MonsterId::Ghoul, ... }` block,
+/// one arm per monster -- a second, silent copy of `MonsterId::ALL` that the
+/// compiler could not flag on drift, because its wildcard `_ => return None`
+/// arm makes the match total regardless of whether every variant has its own
+/// arm. Adding subset 09's five monsters to `MonsterId`/`MonsterId::ALL`/
+/// `monster_resolve` compiled clean while this function silently kept
+/// returning `None` for the five new keys, caught only by
+/// `monster_catalog.rs`'s `every_served_key_resolves_back_to_its_record`
+/// test. Derived from `MonsterId::ALL` instead: a new variant is resolvable
+/// by key the moment it exists, with no second list to remember to update.
 pub fn monster_key_resolve(key: &str, rule_set: RuleSetId) -> Option<MonsterStatBlock> {
-    let monster_id = match key {
-        "beastiary1:monster:ghoul" => MonsterId::Ghoul,
-        "beastiary1:monster:gnoll" => MonsterId::Gnoll,
-        "beastiary1:monster:goblin_dog" => MonsterId::GoblinDog,
-        "beastiary1:monster:lizardfolk" => MonsterId::Lizardfolk,
-        "beastiary1:monster:wolf" => MonsterId::Wolf,
-        "beastiary1:monster:darkmantle" => MonsterId::Darkmantle,
-        "beastiary1:monster:horse" => MonsterId::Horse,
-        "beastiary1:monster:hyena" => MonsterId::Hyena,
-        "beastiary1:monster:octopus" => MonsterId::Octopus,
-        "beastiary1:monster:spider_swarm" => MonsterId::SpiderSwarm,
-        "beastiary1:monster:bat_swarm" => MonsterId::BatSwarm,
-        "beastiary1:monster:boar" => MonsterId::Boar,
-        "beastiary1:monster:boggard" => MonsterId::Boggard,
-        "beastiary1:monster:bugbear" => MonsterId::Bugbear,
-        "beastiary1:monster:cave_fisher" => MonsterId::CaveFisher,
-        "beastiary1:monster:choker" => MonsterId::Choker,
-        "beastiary1:monster:crocodile" => MonsterId::Crocodile,
-        "beastiary1:monster:dark_creeper" => MonsterId::DarkCreeper,
-        "beastiary1:monster:iron_cobra" => MonsterId::IronCobra,
-        "beastiary1:monster:morlock" => MonsterId::Morlock,
-        "beastiary1:monster:rat_swarm" => MonsterId::RatSwarm,
-        "beastiary1:monster:sahuagin" => MonsterId::Sahuagin,
-        "beastiary1:monster:shark" => MonsterId::Shark,
-        "beastiary1:monster:shocker_lizard" => MonsterId::ShockerLizard,
-        "beastiary1:monster:skum" => MonsterId::Skum,
-        "beastiary1:monster:squid" => MonsterId::Squid,
-        "beastiary1:monster:troglodyte" => MonsterId::Troglodyte,
-        "beastiary1:monster:vargouille" => MonsterId::Vargouille,
-        "beastiary1:monster:wolverine" => MonsterId::Wolverine,
-        "beastiary1:monster:worg" => MonsterId::Worg,
-        "beastiary1:monster:yellow_musk_creeper" => MonsterId::YellowMuskCreeper,
-        "beastiary1:monster:ankheg" => MonsterId::Ankheg,
-        "beastiary1:monster:assassin_vine" => MonsterId::AssassinVine,
-        "beastiary1:monster:centaur" => MonsterId::Centaur,
-        "beastiary1:monster:cockatrice" => MonsterId::Cockatrice,
-        "beastiary1:monster:derro" => MonsterId::Derro,
-        "beastiary1:monster:doppelganger" => MonsterId::Doppelganger,
-        "beastiary1:monster:dryad" => MonsterId::Dryad,
-        "beastiary1:monster:ettercap" => MonsterId::Ettercap,
-        "beastiary1:monster:gelatinous_cube" => MonsterId::GelatinousCube,
-        "beastiary1:monster:hell_hound" => MonsterId::HellHound,
-        _ => return None,
-    };
-    monster_resolve(monster_id, rule_set)
+    for &id in MonsterId::ALL {
+        // Resolve unconditionally (not gated on `rule_set` first) so a
+        // `rule_set` mismatch on a real key still returns `None` via
+        // `monster_resolve`'s own gate, rather than this loop silently
+        // skipping every candidate for the wrong rule set.
+        let Some(block) = monster_resolve(id, rule_set) else { continue };
+        if monster_key(&block.name) == key {
+            return Some(block);
+        }
+    }
+    None
 }
 
 #[cfg(test)]
@@ -388,16 +401,53 @@ mod tests {
     use std::collections::HashSet;
 
     #[test]
-    fn all_has_exactly_the_41_real_monsters_with_no_duplicates() {
-        assert_eq!(MonsterId::ALL.len(), 41, "real, corrected roster across subsets 01-08 (this module's doc comment)");
+    fn all_has_exactly_the_46_real_monsters_with_no_duplicates() {
+        assert_eq!(MonsterId::ALL.len(), 46, "real, corrected roster across subsets 01-09 (this module's doc comment)");
         let unique: HashSet<MonsterId> = MonsterId::ALL.iter().copied().collect();
-        assert_eq!(unique.len(), 41, "MonsterId::ALL must not repeat any variant");
+        assert_eq!(unique.len(), 46, "MonsterId::ALL must not repeat any variant");
     }
 
     #[test]
     fn every_all_entry_resolves_a_real_stat_block_for_bestiary1() {
         for &id in MonsterId::ALL {
             assert!(monster_resolve(id, RuleSetId::Bestiary1).is_some(), "{id:?} must resolve for RuleSetId::Bestiary1");
+        }
+    }
+
+    /// SD28-E16 (`decisions.md` §36 instance 6): `monster_key_resolve` is
+    /// now derived from `MonsterId::ALL` rather than hand-written, so this
+    /// is the test that makes a future roster addition self-verifying --
+    /// every variant must round-trip through its own derived key, with no
+    /// second list for a future subset to remember to update.
+    #[test]
+    fn every_monster_id_all_variant_round_trips_through_monster_key_resolve() {
+        for &id in MonsterId::ALL {
+            let block = monster_resolve(id, RuleSetId::Bestiary1).unwrap_or_else(|| panic!("{id:?} must resolve"));
+            let key = monster_key(&block.name);
+            let resolved = monster_key_resolve(&key, RuleSetId::Bestiary1)
+                .unwrap_or_else(|| panic!("{id:?}'s own derived key {key:?} must resolve back via monster_key_resolve"));
+            assert_eq!(resolved.name, block.name, "{key:?} resolved to a different monster than {id:?}");
+        }
+    }
+
+    /// The derivation `monster_key` uses (lowercase, spaces to underscores)
+    /// only round-trips cleanly if no monster's display name carries a
+    /// character the slug would need to escape (an apostrophe, a hyphen
+    /// colliding with the `_` separator, etc.) -- asserted directly rather
+    /// than assumed, since `monster_catalog.rs`'s own `monster_key` uses
+    /// the identical derivation and both must keep agreeing as the roster
+    /// grows.
+    #[test]
+    fn no_monster_name_carries_a_character_the_key_derivation_cannot_handle() {
+        for &id in MonsterId::ALL {
+            let block = monster_resolve(id, RuleSetId::Bestiary1).unwrap_or_else(|| panic!("{id:?} must resolve"));
+            assert!(
+                block.name.chars().all(|c| c.is_ascii_alphanumeric() || c == ' '),
+                "{:?}: name {:?} carries a character other than ASCII letters/digits/spaces, which \
+                 monster_key's simple lowercase+underscore derivation does not handle",
+                id,
+                block.name
+            );
         }
     }
 }

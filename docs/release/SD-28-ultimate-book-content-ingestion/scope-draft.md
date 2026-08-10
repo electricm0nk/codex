@@ -67,15 +67,15 @@ else — so its "per-equipment-entry cycles" plan is well matched. `ultimate_com
 chooser-shaped content; see the playbook §7.5 on canonical narrowing before
 committing to per-class cycles that attempt a whole option family.
 
-**Operator questions to confirm when reviewing on a real computer:**
+**Operator questions to confirm when reviewing on a real computer** (all three ANSWERED 2026-08-01 — see the 2026-08-01 pins at §"Next step" below):
 
-1. Are Ultimate Combat + Ultimate Magic + Ultimate Equipment + Ultimate Intrigue the four books in scope, or is the bundle a different cut of the Ultimate line (e.g., drop something, add Ultimate Wilderness)? For reference: `ultimate_wilderness` and `ultimate_campaign` both exist as corpus directories and both currently sit at `not-started` in the generated inventory; neither is claimed by SD-29 or SD-30.
-2. Per-book ingest pattern is "per-class cycles" for Ultimate Combat (gunslinger, ninja, samurai, etc.), Ultimate Magic (new casting variants), Ultimate Intrigue (class options like the vigilante, the medium, the occultist if not in SD-30); "per-monster-block cycles" if any of the Ultimate books have monster appendices; "per-equipment-entry cycles" for Ultimate Equipment. Confirm the cycle pattern per book.
-3. Cross-book class overlap (e.g., the Occultist appears in both Ultimate Intrigue and Occult Adventures): how should the SD-28 / SD-30 boundary handle classes that appear in both? Doctrine proposal: the class grant + level-up mechanics live in whichever bundle owns the book's full class definition, and the other bundle only references the canonical class id.
+1. **ANSWERED.** Are Ultimate Combat + Ultimate Magic + Ultimate Equipment + Ultimate Intrigue the four books in scope, or is the bundle a different cut of the Ultimate line (e.g., drop something, add Ultimate Wilderness)? Neither dropped — the bundle is seven books: the four named here plus Ultimate Campaign, Ultimate Wilderness, and Ultimate Psionics. Confirmed at `decisions.md §13`; see the §"Book list" table above.
+2. **ANSWERED.** Per-book ingest pattern is "per-class cycles" for Ultimate Combat (gunslinger, ninja, samurai, etc.), Ultimate Magic (new casting variants), Ultimate Intrigue (class options like the vigilante, the medium, the occultist if not in SD-30); "per-monster-block cycles" if any of the Ultimate books have monster appendices; "per-equipment-entry cycles" for Ultimate Equipment. Confirmed per book at `decisions.md §13` ("Ingest subtype per book").
+3. **ANSWERED.** Cross-book class overlap (e.g., the Occultist appears in both Ultimate Intrigue and Occult Adventures): how should the SD-28 / SD-30 boundary handle classes that appear in both? Confirmed: the class grant + level-up mechanics live in whichever bundle owns the book's full class definition, and the other bundle only references the canonical class id — `decisions.md §5`, refined for record-level (non-class-grant) conflicts by `decisions.md §16`.
 
 ## Scope
 
-- **In scope:** End-to-end content-source ingest for the four Ultimate books enumerated above. Per-book ingest cycles produce per-class / per-monster-block / per-equipment-entry artifacts that match the SD-22 corpus-source-inventory doctrine-of-record (one canonical type per book, one ingest path per type, one cycle per entity). **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 10.
+- **In scope:** End-to-end content-source ingest for the seven Ultimate books enumerated above. Per-book ingest cycles produce per-class / per-monster-block / per-equipment-entry artifacts that match the SD-22 corpus-source-inventory doctrine-of-record (one canonical type per book, one ingest path per type, one cycle per entity). **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 10.
 - **Out of scope:** SD-17 PCGen LST parser work (separate, on `codex-tranche-2-7`). SD-22 closure-epilogue work (already closed). SD-29 bestiary (separate bundle). SD-30 occult (separate bundle). Code-side identifier cleanup is in scope (Epic 1 governance base requirement) but only for new code this bundle introduces, not for retroactive renames in adjacent bundles.
 - **Boundary with SD-30:** Classes that appear in both Ultimate Intrigue and Occult Adventures (Occultist, Spiritualist, Medium, Mesmerist) live canonically in SD-30 (Occult Adventures is the primary hardcover defining those classes). SD-28 may reference those class ids but does not redefine them.
 
@@ -118,25 +118,30 @@ bundle-specific process. The full procedure is
 | Reach gate | `./scripts/verify.sh --only reach` | Definition-of-done condition |
 | Citation audit | `cargo run --locked --bin v06_corpus_trap_report -- --audit` | Definition-of-done condition |
 
-## Epic structure (proposed)
+## Epic structure — SUPERSEDED, see `epic-breakdown.md`
 
-| Epic | Title | Fires | Notes |
-|------|-------|-------|-------|
-| 1 | Code-Side Identifier Cleanup | FIRST | Governance base requirement. Per SD-22 Epic 1 pattern. |
-| 2 | Operator Pre-Launch | Gating | Pre-launch checklist verification. |
-| 3 | Ultimate Combat content-source ingest | After Epic 2 | Per-class cycles. |
-| 4 | Ultimate Magic content-source ingest | After Epic 2 | Per-class + per-spell-subsystem cycles. |
-| 5 | Ultimate Equipment content-source ingest | After Epic 2 | Per-equipment-entry cycles. |
-| 6 | Ultimate Intrigue content-source ingest | After Epic 2 | Per-class + per-social-rule cycles. |
-| 7 | Closure Epilogue | LAST | Tranche promotion version increment (`0.6.<build>` → `0.7.0` if SD-29 ships on `tranche/6-1`; otherwise `0.6.<last_build>`). |
-| 8 | Build Version Numbering | After Epic 1, before Epic 7 | First concrete value `0.6.<build>`. |
+The 8-epic / 4-book table this section previously carried (dated to the
+2026-07-28 stub, before the book list widened to seven and the epic count
+to twelve) is superseded in full by `epic-breakdown.md`'s 12-epic
+structure and `decisions.md §15`'s `0.8.<build>` version target. Do not
+maintain a duplicate epic table here; `epic-breakdown.md` is the
+canonical source. Summary: Epic 1 (Identifier Cleanup, fires first) →
+Epic 2 (Operator Pre-Launch, gating) → Epics 3-9 (per-book content-source
+ingest: UC, UM, UE, UI, UCam, UW, UPsi) → Epic 11 (Build Version
+Numbering, after Epic 1, before Epic 10) → Epic 12 (Bundle Code Review,
+after Epic 11 and Epics 3-9, before Epic 10) → Epic 10 (Closure Epilogue,
+fires last). See `epic-breakdown.md`'s "Recommended sequencing" for the
+full dependency diagram.
 
-**Acceptance criteria stub:** 30 criteria, 8 epics (matches SD-22 shape). Per-criterion detail deferred until book list is operator-pinned.
+**Acceptance criteria:** ~36 criteria across 12 epics (~3 per epic) — see
+`epic-breakdown.md:13`. The 30-criteria/8-epic figure this section
+previously carried was a stub estimate against the superseded 4-book cut
+and is retired along with it.
 
 ## What is operator-pinned vs. doctrine
 
-- **Operator-pinned (NOT yet confirmed):** Book list (4 books), per-book path locations, per-book ingest subtype, epic count, criterion count, branch name, board name, build version target.
-- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline (PascalCase / camelCase, no `sd<N>_*` patterns). Build-version scheme `<major>.<tranche-base>.<build>` (major stays at 0 until first main-publish; tranche-base is the active working tranche's base digit; build is monotonic never-resets). `Workflow`-tool operating form (`decisions.md §22`, supersedes the prior `/loop /batch /goal` form at §7). Per-bundle progress file at `~/workspace/programs/codex/requirements/SD-28-ultimate-book-content-ingestion/progress.md`.
+- **Operator-pinned, confirmed 2026-08-01:** Book list (7 books), per-book path locations, per-book ingest subtype, epic count, criterion count, branch name, board name, build version target. See `decisions.md §§13, 14, 15, 17` and the "Next step" section below.
+- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline (PascalCase / camelCase, no `sd<N>_*` patterns). Build-version scheme `<major>.<tranche-base>.<build>` (major stays at 0 until first main-publish; tranche-base is the active working tranche's base digit; build is monotonic never-resets). `Workflow`-tool operating form (`decisions.md §22`, supersedes the prior `/loop /batch /goal` form at §7). Per-bundle progress file at `docs/release/SD-28-ultimate-book-content-ingestion/progress.md`.
 
 ## Next step (operator-pinned CONFIRMED 2026-08-01)
 

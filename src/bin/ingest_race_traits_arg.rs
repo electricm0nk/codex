@@ -67,8 +67,10 @@ use std::path::{Path, PathBuf};
 
 use sha2::{Digest, Sha256};
 
+use codex::rules_core::cache_gen::WiringClassIndex;
+use codex::rules_core::pi_screening;
 use codex::rules_core::shape_b_v1::{
-    Completeness, CorpusRecordV1, CorpusSource, License, Population, RaceTraitCacheData, RawBonusChain, RawToken,
+    Completeness, CorpusRecordV1, CorpusSource, Population, RaceTraitCacheData, RawBonusChain, RawToken,
 };
 
 /// The one source file this binary ingests, relative to the PCGen `data/` root.
@@ -599,6 +601,10 @@ fn main() {
 
     let out_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_race_guide/race_trait");
     let ingested_at = ingested_at_now();
+    let arg_book_dir = data_root.join("pathfinder/paizo/roleplaying_game/advanced_race_guide");
+    let wiring_index = WiringClassIndex::build("advanced_race_guide", &arg_book_dir);
+    let mut wiring_lines = wiring_index.lines();
+    let lst_basename = LST_RELATIVE.rsplit('/').next().unwrap_or(LST_RELATIVE);
 
     let in_scope: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
 
@@ -660,6 +666,21 @@ fn main() {
         *per_race.entry(row.race_key.clone()).or_default() += 1;
         *per_race_flags.entry(row.race_key.clone()).or_default() += row.sets_replace_flags.len();
 
+        let (wiring_class, wiring_class_signals) = wiring_index.wiring_class_for(
+            &mut wiring_lines,
+            lst_basename,
+            row.line_number,
+            &row.key,
+            &row.key,
+        );
+        // Closes a documented open finding (`data/corpus/advanced_race_guide/
+        // LICENSE.json`'s own note): this binary previously classified every
+        // record `OGL` WITHOUT running the term scan -- correct by luck
+        // (re-verified externally on 2026-07-31 with 0 hits across all 156
+        // records) but not by construction. It now runs the same screen
+        // every other unscreened writer in this cycle gained.
+        let (license, pi_field, pi_marker, stored_desc) =
+            pi_screening::classify_optional_field("description", row.description.as_deref());
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::Full,
@@ -673,7 +694,7 @@ fn main() {
                 is_racial_default: row.is_racial_default,
                 suppressed_by_flag: row.suppressed_by_flag.clone(),
                 sets_replace_flags: row.sets_replace_flags.clone(),
-                description: row.description.clone(),
+                description: stored_desc,
                 source_page: row.source_page.clone(),
                 raw_tokens: row.raw_tokens.clone(),
                 raw_bonus_chains: row.raw_bonus_chains.clone(),
@@ -684,9 +705,11 @@ fn main() {
                 line: row.line_number,
                 record_key: row.key.clone(),
             },
-            license: Some(License::Ogl),
-            pi_field: None,
-            pi_marker: None,
+            license: Some(license),
+            pi_field,
+            pi_marker,
+            wiring_class,
+            wiring_class_signals,
         };
 
         let path = out_root.join(slugify(&row.race_key)).join(format!("{}.json", slugify(&row.key)));

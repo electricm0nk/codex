@@ -136,6 +136,32 @@ export interface PilotSnapshotDto {
    * zeroed stat block.
    */
   companion?: AnimalCompanionDto;
+  /**
+   * The character's real spellbook coverage (spell save DCs) — mirrors
+   * `PilotSpellbookDto` in `character_hub.rs`, projected from
+   * `spellbook::compute_spellbook_coverage`. Absent (not zeroed), same
+   * `skip_serializing_if` discipline as `damageReduction`/`companion`, for
+   * a non-caster or a build with no spell yet resolved against the corpus.
+   * Carries no slot totals/used counts — those would duplicate the
+   * already-real `spellsPerDayModel.ts` surface (`decisions.md` Decision
+   * 37, epic-31-spell-wiring gap closure, 2026-08-07).
+   */
+  spellbook?: PilotSpellbookDto;
+}
+
+/** One class's spell save DC — mirrors `SpellSaveDcDto` in `character_hub.rs`. */
+export interface SpellSaveDcDto {
+  classId: string;
+  dc: number;
+}
+
+/**
+ * The character's real spellbook coverage — mirrors `PilotSpellbookDto` in
+ * `character_hub.rs`. No `slotsTotal`/`slotsUsed` fields — see
+ * `spellbook?`'s doc comment above.
+ */
+export interface PilotSpellbookDto {
+  spellSaveDc: SpellSaveDcDto[];
 }
 
 export interface DiagnosticDto {

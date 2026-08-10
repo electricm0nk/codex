@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "data": {
+    "key": "Naturalist Summon Nature's Ally VI",
+    "school": "Conjuration",
+    "level": 6,
+    "description": "This spell functions like summon Nature's Ally I, except that you can summon one creature from the 6th-level list, 1d3 creatures of the same kind from the 5th-level list, or 1d4+1 creatures of the same kind from a lower-level list.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 790,
+    "record_key": "Naturalist Summon Nature's Ally VI"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

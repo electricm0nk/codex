@@ -1,9 +1,0 @@
-# graphify run 2026-07-21T03:38:33Z
-# cmd: /home/ubuntu/.local/bin/graphify cluster-only /home/ubuntu/workspace/repos/codex --budget 500000 --exclude node_modules,target,dist,build,.git,out,dist-ssr,.next,coverage
-# exit: 1
-
---- stdout ---
-
---- stderr ---
-error: no graph found at /home/ubuntu/workspace/repos/codex/graphify-out/graph.json — run /graphify first
-

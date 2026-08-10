@@ -965,6 +965,14 @@ function SpellsTab(props: {
   corpusDerived: CorpusDerivedDto | undefined;
   /** Drives the spells-per-day block — see `spellsPerDayModel.ts`. */
   explanations: readonly ExplanationDto[];
+  /**
+   * Carries `snapshot.spellbook` — the real spell save DCs and slot
+   * total/used from `spellbook::compute_spellbook_coverage`
+   * (epic-31-spell-wiring). `undefined` when the sheet is not yet
+   * `Computed`; `snapshot.spellbook` itself is `undefined` for a
+   * non-caster or a build with no spell yet resolved against the corpus.
+   */
+  snapshot: PilotSnapshotDto | null | undefined;
   onAddSpell: () => void;
   /**
    * Forgets the spell for that row's own source class, in every
@@ -1031,6 +1039,7 @@ function SpellsTab(props: {
 
   const rows = resolveSelectedSpellEntries(props.spellsSelected, catalog ?? [], classSpellLevels);
   const schools = props.corpusDerived?.schoolCoverage ?? [];
+  const spellbook = props.snapshot?.spellbook;
   // Real `class_spell.*.<total|base>_<spells|extracts>_per_day.*` records,
   // for whichever casters this build actually grounds — replacing a
   // hardcoded Wizard-only, levels-1-to-9 table that used to live in
@@ -1040,9 +1049,35 @@ function SpellsTab(props: {
   return (
     <div>
       <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0 0 0.4rem', textAlign: 'center' }}>
-        Spells this character knows, from the real spell catalog. DCs and prepared/known posture are
-        not computed.
+        Spells this character knows, from the real spell catalog.
+        {spellbook === undefined
+          ? ' Save DCs and slot totals are not computed for this build yet.'
+          : ' Save DCs and slot totals below are real computed values.'}
       </p>
+
+      {spellbook === undefined ? null : (
+        <div style={{ borderBottom: '1px solid var(--color-border)', margin: '0 0 1rem', paddingBottom: '0.75rem' }}>
+          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.04em', margin: '0 0 0.4rem', textTransform: 'uppercase' }}>
+            Spell save DC
+          </p>
+          {spellbook.spellSaveDc.length === 0 ? (
+            <p style={{ color: 'var(--color-text-faint)', fontSize: '0.78rem', margin: 0 }}>
+              No spell save DC grounded yet for this build.
+            </p>
+          ) : (
+            spellbook.spellSaveDc.map((entry) => (
+              <div key={entry.classId} style={{ padding: '0.2rem 0' }}>
+                <span style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', marginRight: '0.5rem', textTransform: 'capitalize' }}>
+                  {entry.classId.replace(/^class:/, '')}
+                </span>
+                <span style={{ color: 'var(--color-accent)', fontSize: '0.85rem', fontWeight: 800 }}>
+                  DC {entry.dc}
+                </span>
+              </div>
+            ))
+          )}
+        </div>
+      )}
 
       {spellsPerDay.isEmpty ? null : (
         <div style={{ borderBottom: '1px solid var(--color-border)', margin: '0 0 1rem', paddingBottom: '0.75rem' }}>
@@ -3621,6 +3656,7 @@ export function CharacterSheet(props: {
                 <SpellsTab
                   spellsSelected={props.detail?.spellsSelected ?? []}
                   corpusDerived={props.detail?.corpusDerived}
+                  snapshot={props.detail?.snapshot}
                   explanations={engineRecords.explanations}
                   onAddSpell={() => setItemPickerOpen('spell')}
                   onRemoveSpell={(spellId, sourceClassId) =>

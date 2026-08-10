@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-23T00:03:45Z",
+  "ingested_at": "2026-08-03T17:41:57Z",
   "data": {
     "key": "Chameleon Stride (Greater)",
     "school": "Illusion",
@@ -16,6 +16,10 @@
     "line": 37,
     "record_key": "Chameleon Stride (Greater)"
   },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

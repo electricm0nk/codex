@@ -73,6 +73,14 @@ jobs:
       # release actually contained. SD-28/29/30 follow the same
       # one-advance-per-tranche-cut rule (v0.8.0 / v0.9.0 / v0.10.0).
       #
+      # tranche/8: bumped 0.6 -> 0.8 for the SD-28 bundle cut per operator
+      # directive 2026-08-01. The tranche/8 branch is the live branch for SD-28,
+      # and the repo version files moved to 0.8.0 with it. The stamp's tranche
+      # digit must always equal the repo version files' tranche digit; the two
+      # are kept in lockstep by src/sd21/buildVersionTriple.test.ts, which
+      # parses this line and compares the relationship rather than two
+      # independent literals (the previous form asserted each side's prefix
+      # separately and so blessed mismatches).
       #
       # Only the tranche prefix is written here. The build number is always
       # ${GITHUB_RUN_NUMBER} — never hardcode one.
@@ -81,7 +89,7 @@ jobs:
         working-directory: apps/desktop
         run: |
           set -euo pipefail
-          VERSION="0.7.${GITHUB_RUN_NUMBER}"
+          VERSION="0.8.${GITHUB_RUN_NUMBER}"
           node - "$VERSION" <<'EOF'
           const fs = require('fs');
           const version = process.argv[2];

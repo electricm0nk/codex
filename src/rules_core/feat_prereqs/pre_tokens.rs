@@ -313,6 +313,7 @@ pub const MODELLED_KINDS: &[&str] = &[
 pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     ("PREALIGN", "the character record carries no alignment"),
     ("PRECHECKBASE", "base saving-throw prerequisites are not modelled"),
+    ("PREDEITY", "the character record carries no deity"),
     ("PREDEITYALIGN", "the character record carries no deity"),
     ("PREDOMAIN", "cleric domains are not modelled"),
     ("PREPROFWITHARMOR", "armor proficiency is not modelled"),
@@ -320,11 +321,19 @@ pub const UNMODELLED_KINDS: &[(&str, &str)] = &[
     ("PRESPELL", "known/prepared spell prerequisites are not modelled"),
     ("PRESPELLCAST", "spellcasting-style prerequisites are not modelled"),
     ("PRESPELLDESCRIPTOR", "spell-descriptor prerequisites are not modelled"),
+    (
+        "PRESPELLSCHOOLSUB",
+        "spell-subschool prerequisites are not modelled",
+    ),
     ("PRESPELLTYPE", "spell-type prerequisites are not modelled"),
     ("PREVAREQ", "the referenced PCGen variable is not modelled"),
     ("PREVARLT", "the referenced PCGen variable is not modelled"),
+    ("PREVARLTEQ", "the referenced PCGen variable is not modelled"),
     ("PREVISION", "racial vision modes are not modelled"),
     ("PREWEAPONPROF", "weapon proficiency is not modelled"),
+    ("PREMOVE", "movement-type prerequisites are not modelled"),
+    ("PREDR", "damage-reduction prerequisites are not modelled"),
+    ("PRERULE", "PCGen house-rule-flag prerequisites are not modelled"),
 ];
 
 /// Evaluates one top-level `PRE`-family token against `facts`.

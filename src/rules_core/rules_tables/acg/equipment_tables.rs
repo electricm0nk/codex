@@ -95,7 +95,7 @@ pub struct EquipmentFieldCoverage {
     pub total_records: u32,
     /// Real, active (non-`.MOD`) record count: `acg_equip.lst` (221:
     /// 60 General + 20 Arms/Armor + 141 Magic Items, `TYPE:`-disambiguated)
-    /// + `acg_equipmods.lst` (48 `KEY:`-bearing modifier records,
+    /// \+ `acg_equipmods.lst` (48 `KEY:`-bearing modifier records,
     /// excluding the file's own trailing "Old KEYs" `.COPY=`-only block).
     /// SD-24 criterion 6.1 originally cited 221 for equipment (not
     /// counting `acg_equipmods.lst` at all, unlike CRB's four-category

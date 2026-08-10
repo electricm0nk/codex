@@ -47,7 +47,7 @@
     ],
     "weight_lbs": 12.0
   },
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -58,5 +58,9 @@
     "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
     "record_key": "Improvised Weapon (1d12)",
     "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a"
-  }
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
 }

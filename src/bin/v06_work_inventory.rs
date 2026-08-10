@@ -20,10 +20,13 @@
 //!
 //! 1. *Corpus enumeration* (`enumerate_corpus`) walks every `.lst` file under
 //!    `PCGEN_CORPUS_ROOT`'s `pathfinder/paizo/roleplaying_game/`, for **all**
-//!    books including the ones no code has ever read. "What exists" is the
-//!    completeness guarantee, so a book the engine knows nothing about still
-//!    contributes real, named units — at `not-started` — rather than being
-//!    silently skipped.
+//!    books including the ones no code has ever read, plus each extra root
+//!    named in [`EXTRA_BOOK_DIRS`] (books that live outside `roleplaying_game`
+//!    entirely: Dreamscarred Press's `ultimate_psionics` for SD-28, and the
+//!    twelve Paizo `campaign_setting` books for SD-30). "What exists" is the
+//!    completeness guarantee, so a
+//!    book the engine knows nothing about still contributes real, named units
+//!    — at `not-started` — rather than being silently skipped.
 //! 2. *Engine cross-reference* (`EngineFacts`) asks the compiled tables and the
 //!    real compute pipeline what is actually done, and assigns each unit a
 //!    status **derived from the engine**, never from prose.
@@ -43,9 +46,12 @@ use std::path::{Path, PathBuf};
 use std::process::Command;
 
 use codex::rules_core::character_input::{
-    AcquisitionMode, CharacterClassLevel, CharacterInput, SelectedChoice, SpellSelection,
-    load_character_input_fixture,
+    AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, EquipmentSelection,
+    SelectedChoice, SpellSelection, load_character_input_fixture,
 };
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
+use codex::rules_core::equipment_effects::compute_equipment_effects;
+use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
     PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
@@ -59,6 +65,8 @@ use codex::rules_core::rules_tables::crb::{
     spell_list as crb_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
+use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
 /// Read at runtime rather than `include_str!`ed, exactly as
@@ -72,6 +80,28 @@ const OUTPUT_RELATIVE_PATH: &str = "docs/work-inventory.json";
 
 /// The corpus subtree every PF1 book lives under, relative to `PCGEN_CORPUS_ROOT`.
 const BOOKS_RELATIVE: &str = "pathfinder/paizo/roleplaying_game";
+
+/// Books in scope that live outside `roleplaying_game/`: SD-28's non-Paizo
+/// Ultimate Psionics, and SD-30's twelve Paizo campaign_setting books
+/// (Book of the Damned ×2, Inner Sea World Guide + nine Inner Sea modules).
+/// Paths are relative to the corpus root; the book id is the directory
+/// basename. Every entry must exist -- a missing one is a hard failure at
+/// startup, never a silent skip.
+const EXTRA_BOOK_DIRS: &[&str] = &[
+    "pathfinder/dreamscarred_press/ultimate_psionics",
+    "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
+    "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
+    "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
+    "pathfinder/paizo/campaign_setting/inner_sea_combat",
+    "pathfinder/paizo/campaign_setting/inner_sea_faiths",
+    "pathfinder/paizo/campaign_setting/inner_sea_gods",
+    "pathfinder/paizo/campaign_setting/inner_sea_magic",
+    "pathfinder/paizo/campaign_setting/inner_sea_races",
+    "pathfinder/paizo/campaign_setting/inner_sea_temples",
+    "pathfinder/paizo/campaign_setting/inner_sea_taverns",
+    "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
+    "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
+];
 
 /// The levels the engine-fact sweeps evaluate. Level 1 is the creation posture
 /// most operator questions are about; 5/10/15/20 reach the level-gated class
@@ -122,6 +152,15 @@ enum Kind {
     Equipment,
     EquipmentModifier,
     Monster,
+    /// SD28-E15 (2026-08-09): a monster's own natural attack/special
+    /// quality/special attack/universal-monster-rule sub-record, DISTINCT
+    /// from `Kind::Monster` (the top-level stat-block record itself).
+    /// Introduced rather than folding this content into `Kind::Monster`
+    /// specifically so `Kind::Monster`'s own count keeps meaning "stat
+    /// blocks" -- see `refine_kind`'s own doc comment for the row-content
+    /// rule that produces it, and `decisions.md §61` for the corpus
+    /// evidence this variant exists to fix.
+    MonsterAbility,
     Companion,
 }
 
@@ -137,6 +176,7 @@ impl Kind {
             Kind::Equipment => "equipment",
             Kind::EquipmentModifier => "equipment_modifier",
             Kind::Monster => "monster",
+            Kind::MonsterAbility => "monster_ability",
             Kind::Companion => "companion",
         }
     }
@@ -153,6 +193,7 @@ impl Kind {
         Kind::Equipment,
         Kind::EquipmentModifier,
         Kind::Monster,
+        Kind::MonsterAbility,
         Kind::Companion,
     ];
 }
@@ -265,8 +306,11 @@ const TRAP_RULES: &[TrapRule] = &[
     TrapRule {
         id: "internal_namespace",
         description:
-            "A record whose first field is `CATEGORY=Internal|...`. PCGen export-engine \
-             plumbing in a namespace no player ever sees. Never a unit.",
+            "A record whose first field is `CATEGORY=Internal|...`, OR whose fields carry a \
+             plain `CATEGORY:Internal` token anywhere (widened SD28-E15, 2026-08-09 -- the \
+             directive-line-only check missed this second, normal-record shape, e.g. `Blue \
+             Psion FC handler`). PCGen export-engine plumbing in a namespace no player ever \
+             sees. Never a unit.",
     },
     TrapRule {
         id: "invisible_record",
@@ -316,33 +360,43 @@ const TRAP_RULES: &[TrapRule] = &[
              per-book figure can never be read as corpus-wide. A '27 hexes' figure was APG-only \
              where the corpus holds 53 across four books.",
     },
+    TrapRule {
+        id: "race_favored_class_bonus_row",
+        description:
+            "SD28-E16 (2026-08-07). A row in a `_abilities_race.lst` file whose `TYPE:` field \
+             carries a `FavoredClassBonus` dot-component. `file_kind` buckets the whole file as \
+             `Kind::RaceTrait`, but a Favored Class Bonus row is a different mechanic (one row \
+             per race x class) that can never appear in `race_trait_ids`. Counting it inflated \
+             ARG's race_trait `not-ingested` figure by 291 units that no amount of ingestion \
+             could ever close. See `decisions.md §35`.",
+    },
+    TrapRule {
+        id: "race_choice_suboption_row",
+        description:
+            "SD28-E16 (2026-08-07). A `_abilities_race.lst` row carrying `CATEGORY:Choice`. This \
+             is a `CHOOSE:` sub-option belonging to an already-counted parent trait (e.g. \
+             `Elf ~ Elemental Resistance`'s Acid/Cold/Electricity/Fire choices), never itself an \
+             independent racial trait -- every already-ingested ARG alternate trait carries \
+             `CATEGORY:Special Ability`, none carry `CATEGORY:Choice`. Counting it double-counts \
+             the parent. See `decisions.md §35`.",
+    },
+    TrapRule {
+        id: "race_trait_class_level_adjustment_row",
+        description:
+            "SD28-E15 (2026-08-09). A `_abilities_race.lst` row whose `TYPE:` first segment \
+             starts with `ClassLevelAdjustment` (e.g. Core Essentials' `+2 Charisma ~ Class \
+             Level`). A real, level-based ability-score-adjustment record, but neither a racial \
+             trait nor a monster ability -- excluded outright rather than forced into either \
+             kind. See `decisions.md §61`.",
+    },
 ];
 
-/// Tab-field prefixes that carry a real numeric magnitude. A record with none
-/// of these has no number for the engine to compute, which is the corpus half
-/// of the `text-complete` ruling.
-const MAGNITUDE_TOKENS: &[&str] = &[
-    "BONUS:",
-    "TEMPBONUS:",
-    "DEFINE:",
-    "COST:",
-    "WT:",
-    "CR:",
-    "AC:",
-    "ACCHECK:",
-    "DAMAGE:",
-    "CRITMULT:",
-    "CRITRANGE:",
-    "RANGE:",
-    "REACH:",
-    "MOVE:",
-    "HITDIE:",
-    "LEVELADJUSTMENT:",
-    "SR:",
-    "DR:",
-    "SPELLFAILURE:",
-    "STAT:",
-];
+// `MAGNITUDE_TOKENS` -- the tab-field prefixes that carry a real numeric
+// magnitude -- is imported from `codex::rules_core::wiring_class` above.
+// `wiring-class-determination.md` "Magnitude-bearing fields" is explicit
+// that the determinator MUST NOT fork this list: a second copy here would
+// drift from the one the generator itself uses to select magnitude fields,
+// and the two would disagree about which records even have a magnitude.
 
 // ---------------------------------------------------------------------------
 // Corpus records
@@ -415,6 +469,13 @@ fn tab_fields(line: &str) -> Vec<&str> {
     line.trim_end_matches(['\n', '\r']).split('\t').collect()
 }
 
+// `mod_base_name` (resolving a `.MOD` row's base record name) lives in
+// `codex::rules_core::wiring_class` -- imported below -- and is shared by
+// this file's `mod_only_rescue` path and `wiring_class`'s own token-closure
+// index, so the two always agree about which record a `.MOD` row belongs
+// to (the same resolution `wiring-class-determination.py`'s `mod_index()`
+// performs).
+
 /// The value of the first field with the given `TOKEN:` prefix, if any.
 fn token_value<'a>(fields: &[&'a str], prefix: &str) -> Option<&'a str> {
     fields
@@ -452,15 +513,75 @@ fn slug(name: &str) -> String {
     out
 }
 
+/// SD28-E15 (2026-08-09): `_abilities_race.lst`'s own `TYPE:` first-segment
+/// vocabulary that names a monster's own sub-ability rather than a player
+/// racial trait -- PF1's own Bestiary terminology (`NaturalAttack`,
+/// `SpecialAttack`, `SpecialQuality`, `Universal Monster Rule`), not this
+/// tool's invention. Confirmed against two real files before ruling: Core
+/// Essentials' `ce_abilities_race.lst` (776 `NaturalAttack` + 247
+/// `SpecialQuality` + 104 `SpecialAttack` + 28 `Universal Monster Rule` =
+/// 1,155 real, non-comment rows) and Bestiary 1's `b1_abilities_race.lst`
+/// (273 `SpecialAttack` + 250 `SpecialQuality` + 1 `NaturalAttack` = 524,
+/// in a book with zero playable races). See `decisions.md §61` for the
+/// full survey, including the facets deliberately left unaddressed this
+/// pass (a handful of monster-template-specific facets like
+/// `HalfDragonType`/`UnicornRacialTrait` -- real content, likely also
+/// monster-shaped, not reclassified here for lack of the same
+/// cross-book-repeated evidence the four facets below have).
+const MONSTER_ABILITY_TYPE_FACETS: &[&str] =
+    &["NaturalAttack", "SpecialAttack", "SpecialQuality", "Universal Monster Rule"];
+
+/// SD28-E15 (2026-08-09): `_abilities_race.lst`'s own `ClassLevelAdjustment*`
+/// `TYPE:` facets (`ce_abilities_race.lst`'s own `+2/+4 Charisma ~ Class
+/// Level`, `-2 Charisma ~ Class Level`) are level-based ability-score
+/// adjustment records -- neither a racial trait nor a monster ability, and
+/// forcing them into either kind would be the "convenient kind for an
+/// ambiguous row" failure `§32` guards against. Excluded outright (this
+/// tool's own established shape: named, counted, not silently kept as
+/// `RaceTrait`), the same disposition the `race_favored_class_bonus_row`/
+/// `race_choice_suboption_row` traps already established for other
+/// `_abilities_race.lst` rows that are real content in the wrong bucket.
+const RACE_TRAIT_EXCLUDED_TYPE_PREFIX: &str = "ClassLevelAdjustment";
+
 /// A record's kind, refined from the file-level guess by what the record
-/// itself says. A `*_races.lst` row carrying a `CR:` token is a monster: that
-/// is the corpus's own discriminator (`cr_races.lst` carries zero `CR:`
-/// tokens across its seven playable races; `b1_races.lst` carries 351).
+/// itself says.
+///
+/// - A `*_races.lst` row carrying a `CR:` token is a monster: that is the
+///   corpus's own discriminator (`cr_races.lst` carries zero `CR:` tokens
+///   across its seven playable races; `b1_races.lst` carries 351).
+/// - A `*_abilities_race.lst` row whose `TYPE:` first segment names a real
+///   monster-ability shape (`MONSTER_ABILITY_TYPE_FACETS`) is a monster's
+///   own sub-ability, not a racial trait -- `file_kind`'s own whole-file
+///   `_abilities_race` -> `Kind::RaceTrait` guess was always a file-level
+///   approximation; this is the row-content correction `§55`/`§56` already
+///   proved necessary for `race_trait`'s own declared counts.
 fn refine_kind(file_kind: Kind, fields: &[&str]) -> Kind {
     match file_kind {
         Kind::Race if has_token(fields, "CR:") => Kind::Monster,
+        Kind::RaceTrait => {
+            let type_first_segment = token_value(fields, "TYPE:")
+                .and_then(|t| t.split('.').next())
+                .unwrap_or("");
+            if MONSTER_ABILITY_TYPE_FACETS.contains(&type_first_segment) {
+                Kind::MonsterAbility
+            } else {
+                Kind::RaceTrait
+            }
+        }
         other => other,
     }
+}
+
+/// True when a `Kind::RaceTrait`-guessed row's own `TYPE:` first segment
+/// names the `ClassLevelAdjustment*` shape -- real content, but neither a
+/// racial trait nor (unlike `MONSTER_ABILITY_TYPE_FACETS`) a monster
+/// ability either. See `RACE_TRAIT_EXCLUDED_TYPE_PREFIX`'s own doc comment.
+fn is_excluded_race_trait_row(file_kind: Kind, fields: &[&str]) -> bool {
+    file_kind == Kind::RaceTrait
+        && token_value(fields, "TYPE:")
+            .and_then(|t| t.split('.').next())
+            .map(|first| first.starts_with(RACE_TRAIT_EXCLUDED_TYPE_PREFIX))
+            .unwrap_or(false)
 }
 
 /// Whether a record of this kind carries the token that proves it is an
@@ -509,7 +630,19 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             continue;
         }
 
-        if first.starts_with("CATEGORY=Internal|") {
+        // SD28-E15 (2026-08-09): widened from `first.starts_with("CATEGORY=Internal|")`
+        // alone, which only matched the directive-line shape. A normal
+        // record row also carries `CATEGORY:Internal` as an ordinary field
+        // (e.g. `Blue Psion FC handler`, `up_abilities_race.lst:382`:
+        // `CATEGORY:Internal TYPE:SaveBonus VISIBLE:NO`), and that shape
+        // slipped through this trap entirely -- confirmed by the same
+        // `Internal`-category bookkeeping pattern `§51`'s archetype-swap
+        // tables already excluded (`Armor Aptitude 7th Level`,
+        // `Thoughtsinger ~ Wild Talent`), found independently a second
+        // time via a different check.
+        let is_internal_category = first.starts_with("CATEGORY=Internal|")
+            || fields.iter().any(|f| f.trim() == "CATEGORY:Internal");
+        if is_internal_category {
             *out.trap_hits.entry("internal_namespace").or_default() += 1;
             continue;
         }
@@ -520,22 +653,7 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
 
         // `.MOD` is resolved corpus-wide after enumeration; stash it.
         if let Some(mod_at) = first.find(".MOD") {
-            let mut base = first[..mod_at].to_string();
-            if let Some(rest) = base
-                .strip_prefix("CATEGORY=")
-                .and_then(|r| r.split_once('|'))
-                .map(|(_, rest)| rest.to_string())
-            {
-                // `CATEGORY=Special Ability|Foo.MOD` -> `Foo`
-                base = rest;
-            }
-            // `CLASS:Bard.MOD` names the base class `Bard`, not a record
-            // called `CLASS:Bard`. Without this, the name never matches the
-            // declared set and the rescue invents a second Bard in every book
-            // that merely modifies the Core Rulebook's one.
-            if let Some(rest) = base.strip_prefix("CLASS:") {
-                base = rest.to_string();
-            }
+            let base = mod_base_name(&first[..mod_at]);
             *out.trap_hits.entry("mod_record").or_default() += 1;
             let magnitudes = MAGNITUDE_TOKENS
                 .iter()
@@ -557,6 +675,48 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
             continue;
         }
 
+        // `_abilities_race.lst` is classified whole-file as `Kind::RaceTrait`
+        // by `file_kind`, but it carries at least two other row shapes that
+        // are real content in the wrong bucket, not racial traits:
+        //
+        // - A `TYPE:` field with a `FavoredClassBonus` dot-component is a
+        //   Favored Class Bonus row (one per race x class), e.g.
+        //   `TYPE:SpecialQuality.FavoredClassBonus.FavoredClassSorcerer`
+        //   (`arg_abilities_race.lst`). `race_trait_ids` is keyed on
+        //   `<race>.<trait-slug>` pairs and can never hold an FCB identity,
+        //   so counting these as `race_trait` units reports them
+        //   `not-ingested` forever regardless of ingestion effort.
+        // - A `CATEGORY:Choice` row is a `CHOOSE:` sub-option belonging to an
+        //   already-counted parent trait, e.g. `Elf ~ Elemental Resistance`
+        //   (CATEGORY:Special Ability, already a unit) offers 4
+        //   `CATEGORY:Choice` rows (Acid/Cold/Electricity/Fire) as its menu.
+        //   Every one of the 156 already-ingested ARG alternate racial
+        //   traits (`data/corpus/advanced_race_guide/race_trait/*/*.json`)
+        //   carries `CATEGORY:Special Ability`, never `CATEGORY:Choice` --
+        //   re-derived 2026-08-07 with a full scan of that corpus tree.
+        //   Counting the sub-option as a second, independent unit
+        //   double-counts the parent trait's own content.
+        //
+        // Neither is a unit for this inventory's purposes; both are recorded
+        // as trap hits (never silently dropped) rather than reclassified
+        // into a new `Kind`, since neither is itself the kind of standalone
+        // content this inventory tracks elsewhere (`decisions.md §35`).
+        if kind == Kind::RaceTrait {
+            let is_fcb = fields
+                .iter()
+                .filter_map(|f| f.trim_start().strip_prefix("TYPE:"))
+                .any(|value| value.split('.').any(|c| c == "FavoredClassBonus"));
+            if is_fcb {
+                *out.trap_hits.entry("race_favored_class_bonus_row").or_default() += 1;
+                continue;
+            }
+            let is_choice_suboption = fields.iter().any(|f| f.trim() == "CATEGORY:Choice");
+            if is_choice_suboption {
+                *out.trap_hits.entry("race_choice_suboption_row").or_default() += 1;
+                continue;
+            }
+        }
+
         let (display_name, origin) = if let Some((_, variant)) = first.split_once(".COPY=") {
             *out.trap_hits.entry("copy_record").or_default() += 1;
             (variant.to_string(), Origin::Copy)
@@ -575,6 +735,11 @@ fn enumerate_file(path: &Path, book: &str, kind: Kind, text: &str, out: &mut Boo
         } else {
             (first.to_string(), Origin::Declared)
         };
+
+        if is_excluded_race_trait_row(kind, &fields) {
+            *out.trap_hits.entry("race_trait_class_level_adjustment_row").or_default() += 1;
+            continue;
+        }
 
         let record_kind = refine_kind(kind, &fields);
         if !has_classifying_token(record_kind, &fields) {
@@ -646,6 +811,16 @@ fn enumerate_book(book_dir: &Path, book: &str) -> BookEnumeration {
     out
 }
 
+// `build_mod_index`, `CorpusLines`, and `token_closure_rows` -- the shared
+// GE-01 token-closure machinery -- live in `codex::rules_core::wiring_class`
+// so `cache_gen::*`'s per-book generators can build the same closure a
+// `.MOD` row belongs to without a second implementation. Only
+// `mod_base_name` stays local: it is also the `mod_only_rescue` path's own
+// base-name resolver, imported by name below.
+use codex::rules_core::wiring_class::{
+    CorpusLines, build_mod_index, mod_base_name, token_closure_rows,
+};
+
 // ---------------------------------------------------------------------------
 // Book roster
 // ---------------------------------------------------------------------------
@@ -665,17 +840,67 @@ struct BookMeta {
     pcc_includes: BTreeSet<String>,
 }
 
-/// The engine's book id for a corpus directory. Only the four ingested books
-/// have one; everything else is `None`, which is what makes the rest of the
-/// corpus land at `not-started` honestly rather than by omission.
-fn rule_set_for(book_dir: &str) -> Option<RuleSetId> {
-    match book_dir {
-        "core_rulebook" => Some(RuleSetId::Crb),
-        "advanced_players_guide" => Some(RuleSetId::Apg),
-        "advanced_class_guide" => Some(RuleSetId::Acg),
-        "bestiary" => Some(RuleSetId::Bestiary1),
-        _ => None,
+/// Every rule set the engine compiles.
+///
+/// This list and `corpus_dir_for` together replace what used to be a
+/// `match book_dir { ... _ => None }`. That wildcard was silent breakage: when
+/// SD-27 added `RuleSetId::Arg` and `RuleSetId::Pu`, the *exhaustive*
+/// `rule_set_id` below was forced by the compiler to grow two arms, but the
+/// wildcard here absorbed both books without a word. The result was that
+/// 2,269 ARG and 882 PU corpus units reported `no_compiled_rule_set_for_book`
+/// -> `not-started` -> `scope: future_state` -> 0% proven, while the engine
+/// was in fact shipping their feat tables, class chassis and reach gating.
+/// Eleven days of delivered work read as untouched on the dashboard.
+///
+/// Adding a variant to `RuleSetId` now breaks `corpus_dir_for`'s match until
+/// the corpus directory is declared, so the next book cannot go unmeasured
+/// the same way.
+const COMPILED_RULE_SETS: &[RuleSetId] = &[
+    RuleSetId::Crb,
+    RuleSetId::Apg,
+    RuleSetId::Acg,
+    RuleSetId::Bestiary1,
+    RuleSetId::Arg,
+    RuleSetId::Pu,
+    RuleSetId::Uca,
+    RuleSetId::Ui,
+    RuleSetId::Ue,
+    RuleSetId::Uw,
+    RuleSetId::Uc,
+    RuleSetId::Um,
+    RuleSetId::Upsi,
+];
+
+/// The corpus directory whose records a rule set is compiled from. Exhaustive
+/// on purpose — see `COMPILED_RULE_SETS`.
+fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
+    match rule_set {
+        RuleSetId::Crb => "core_rulebook",
+        RuleSetId::Apg => "advanced_players_guide",
+        RuleSetId::Acg => "advanced_class_guide",
+        // The only id that is not spelled like its directory: the engine calls
+        // it `bestiary_1`, the corpus directory is `bestiary`.
+        RuleSetId::Bestiary1 => "bestiary",
+        RuleSetId::Arg => "advanced_race_guide",
+        RuleSetId::Pu => "pathfinder_unchained",
+        RuleSetId::Uca => "ultimate_campaign",
+        RuleSetId::Ui => "ultimate_intrigue",
+        RuleSetId::Ue => "ultimate_equipment",
+        RuleSetId::Uw => "ultimate_wilderness",
+        RuleSetId::Uc => "ultimate_combat",
+        RuleSetId::Um => "ultimate_magic",
+        RuleSetId::Upsi => "ultimate_psionics",
     }
+}
+
+/// The engine's rule set for a corpus directory, or `None` when the engine has
+/// not compiled that book at all — which is what makes the rest of the corpus
+/// land at `not-started` honestly rather than by omission.
+fn rule_set_for(book_dir: &str) -> Option<RuleSetId> {
+    COMPILED_RULE_SETS
+        .iter()
+        .copied()
+        .find(|&rs| corpus_dir_for(rs) == book_dir)
 }
 
 fn rule_set_id(rule_set: RuleSetId) -> &'static str {
@@ -691,6 +916,42 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         // whole root-crate bin set, this generator included, fails to compile.
         RuleSetId::Arg => "advanced_race_guide",
         RuleSetId::Pu => "pathfinder_unchained",
+        RuleSetId::Uca => "ultimate_campaign",
+        RuleSetId::Ui => "ultimate_intrigue",
+        RuleSetId::Ue => "ultimate_equipment",
+        RuleSetId::Uw => "ultimate_wilderness",
+        RuleSetId::Uc => "ultimate_combat",
+        RuleSetId::Um => "ultimate_magic",
+        RuleSetId::Upsi => "ultimate_psionics",
+    }
+}
+
+/// Translates one `equipment_resolver::EQUIPMENT_BOOK_*` short code to the
+/// same book-directory slug `equipment_keys`'s map is keyed by elsewhere in
+/// this file (`rule_set_id`'s own output). Panics on an unrecognized code
+/// rather than silently dropping the book from the equipment classifier --
+/// the failure mode this whole fix exists to replace. See
+/// `equipment_book_slug_for_covers_every_catalog_book` for the guard that
+/// exercises this against the resolver's own live output.
+fn equipment_book_slug_for(short_code: &str) -> &'static str {
+    match short_code {
+        "CRB" => "core_rulebook",
+        "APG" => "advanced_players_guide",
+        "ACG" => "advanced_class_guide",
+        "B1" => "bestiary_1",
+        "ARG" => "advanced_race_guide",
+        "PU" => "pathfinder_unchained",
+        "UI" => "ultimate_intrigue",
+        "UE" => "ultimate_equipment",
+        "UM" => "ultimate_magic",
+        "UPSI" => "ultimate_psionics",
+        "UC" => "ultimate_combat",
+        other => panic!(
+            "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
+             {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \
+             not silently drop the book (this is exactly the SD-28-E15 defect this function \
+             replaces)"
+        ),
     }
 }
 
@@ -735,6 +996,14 @@ struct EngineFacts {
     /// Feat keys whose presence genuinely changes a computed number, observed
     /// by running the real compute pipeline twice per feat.
     feat_effect_wired: BTreeSet<String>,
+    /// SD28-E14-F2: equipment/equipment-modifier keys whose real on-disk
+    /// corpus record was observed reaching
+    /// `equipment_effects::compute_equipment_effects` and producing a real,
+    /// non-`None` per-item stat effect. Populated by
+    /// [`probe_equipment_effect_wiring`]. A lower bound in the same
+    /// documented direction as `feat_effect_wired`: gated on a real
+    /// on-disk JSON record existing under `data/corpus/<book>/equipment/`.
+    equipment_effect_wired: BTreeSet<String>,
     /// Every feat key the catalog holds, per book.
     feat_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every spell key the catalog holds, per book, with whether the engine
@@ -1017,6 +1286,121 @@ fn probe_feat_effect_wiring(fixture: &CharacterInput) -> BTreeSet<String> {
     wired
 }
 
+/// Book roots the on-disk `data/corpus/<book>/` loader can currently reach
+/// (`corpus_loader.rs`'s own doc comment: equipment content-kind first, now
+/// joined by spell). This is exactly the set `data/corpus/` holds today --
+/// re-derive with `ls data/corpus/` before trusting it if that changes.
+const OBSERVABLE_BOOK_DIRS: &[&str] = &[
+    "core_rulebook",
+    "advanced_players_guide",
+    "advanced_class_guide",
+    "beastiary",
+    "advanced_race_guide",
+    "pathfinder_unchained",
+];
+
+fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {
+    OBSERVABLE_BOOK_DIRS.iter().map(|b| repo_root.join("data/corpus").join(b)).collect()
+}
+
+// SD28-E14-F1: **NOT implemented as a promoting probe.** An earlier version
+// of this cycle probed `pilot_compute_corpus::compute_pilot_with_corpus`'s
+// `school_coverage` map and promoted any spell that landed in it. Corrected
+// after independent review (team-lead, 2026-08-06): `school_coverage` is
+// populated purely by resolving the spell and reading its `school` string
+// (`pilot_compute_corpus.rs:189-205`) -- no spell magnitude (level, DC,
+// duration, ...) is read into any field a consumer produces. The predicate
+// reduced to "this spell resolves against the on-disk corpus", which is a
+// restatement of `ingested-magnitude`'s own existing evidence
+// (`spell_list_entry_with_resolved_level`) through a compute call, not an
+// observation of a delta. Confirmed by the 100% promotion rate (1,067 of
+// 1,067) the wrong version produced -- a discriminating probe over real
+// content does not do that; compare F2's 173-of-2,983 (5.8%).
+//
+// A genuine spell-magnitude consumer exists in this repo --
+// `spellbook::compute_spellbook_coverage` reads each resolved spell's real
+// `level` into `SpellEffect.level`, and from it computes `spell_save_dc`/
+// `slots_total`/`slots_used`, wired into `contract::PilotReceipt.spellbook`
+// (`contract.rs:397`) and from there into `sheet.spellbook.*` cells
+// (`contract.rs:794-810`). But `contract::build_pilot_receipt` is never
+// called by `apps/desktop/src-tauri/src/pf1_adapter.rs` or `character_hub.rs`
+// (confirmed: `grep -rn build_pilot_receipt apps/desktop/src-tauri/src`
+// returns nothing) -- it is exactly the "twin problem" `decisions.md §29.1`/
+// `§29.2` already names: a real computation that never reaches the surface
+// `pf1_adapter::resolve_unified_pilot_snapshot` gates on, i.e. not the twin
+// the player reads. So there is currently no wired spell-magnitude consumer
+// to observe at all, in either direction -- not a harness gap this cycle can
+// close, an engine-wiring gap the next cycle that touches `contract.rs`/
+// `pf1_adapter.rs` would have to close first. See
+// `artifacts/e14-harness-widening.md` for the full finding; every targeted
+// spell unit stays `ingested-magnitude`.
+
+/// SD28-E14-F2: observes a real computed delta for an equipment (or
+/// equipment-modifier) item -- the same `equipment_effects::compute_equipment_effects`
+/// pipeline `pilot_compute_corpus::compute_pilot_with_corpus` (the twin the
+/// player reads) already calls -- rather than the mere presence of an
+/// equipment-table entry carrying a corpus magnitude
+/// (`classify()`'s old `Kind::Equipment`/`Kind::EquipmentModifier` stop
+/// point). An item that resolves against the real on-disk corpus but whose
+/// record carries none of the mechanical tokens `compute_equipment_effects`
+/// reads (armor/max-dex/spell-failure/armor-check-penalty/skill/ability/
+/// weapon-enhancement) produces an all-`None` per-item effect and correctly
+/// stays unwired -- see
+/// `equipment_effect_probe_never_promotes_a_text_only_item_with_no_mechanical_tokens`.
+fn probe_equipment_effect_wiring(repo_root: &Path) -> BTreeSet<String> {
+    let mut wired = BTreeSet::new();
+    let book_dirs: Vec<PathBuf> = book_corpus_roots(repo_root);
+    let roots: Vec<BookCorpusRoot> = OBSERVABLE_BOOK_DIRS
+        .iter()
+        .zip(book_dirs.iter())
+        .map(|(id, dir)| BookCorpusRoot { book_id: id, dir })
+        .collect();
+    let corpus = load_equipment_corpus(&roots);
+    if corpus.is_empty() {
+        return wired;
+    }
+
+    let mut keys: BTreeSet<&'static str> = BTreeSet::new();
+    keys.extend(crb_equipment_tables::equipment_tables().iter().map(|e| e.key));
+    keys.extend(apg::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+    keys.extend(acg::equipment_tables::equipment_tables().iter().map(|e| e.key));
+    keys.extend(beastiary1::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+
+    for &key in &keys {
+        if equipment_key_is_wired(key, &corpus) {
+            wired.insert(key.to_string());
+        }
+    }
+    wired
+}
+
+/// Whether equipping exactly this item, alone, against the real corpus
+/// produces at least one non-`None` mechanical stat effect. Split out from
+/// [`probe_equipment_effect_wiring`] as its own pure function so the
+/// negative test can call it directly against a hand-built corpus, the same
+/// shape `equipment_effects.rs`'s own tests already use.
+fn equipment_key_is_wired(
+    key: &str,
+    corpus: &codex::rules_core::source_content::SourcePackageContent,
+) -> bool {
+    let selection =
+        vec![EquipmentSelection {
+            item_id: key.to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }];
+    let effects = compute_equipment_effects(&selection, corpus);
+    let Some(item) = effects.per_item.first() else { return false };
+    item.armor_class_bonus.is_some()
+        || item.max_dex.is_some()
+        || item.spell_failure.is_some()
+        || item.armor_check_penalty.is_some()
+        || item.skill_bonus.is_some()
+        || item.ability_bonus.is_some()
+        || item.weapon_enhancement_bonus.is_some()
+}
+
 fn crb_class_name(class_id: ClassId) -> &'static str {
     match class_id {
         ClassId::Barbarian => "barbarian",
@@ -1048,6 +1432,7 @@ fn race_name(race: RaceId) -> &'static str {
 fn gather_engine_facts(
     fixture: &CharacterInput,
     corpus_class_names: BTreeSet<String>,
+    repo_root: &Path,
 ) -> EngineFacts {
     let mut feat_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
     for table in all_feat_tables() {
@@ -1081,35 +1466,24 @@ fn gather_engine_facts(
             .collect(),
     );
 
+    // SD-28-E15: this map used to be four hand-maintained `.insert()` calls
+    // (core_rulebook/apg/acg/bestiary_1 only) sitting beside
+    // `equipment_resolver::equipment_catalog_rows()`, which already chains
+    // EIGHT books (adding arg/pu/ui/ue). The two never being reconciled
+    // silently misreported ~1,650 already-landed UE/UI/PU units as
+    // `not-ingested` -- Decision 36's pattern, at the largest scale this
+    // program has found it. Derived directly from `equipment_catalog_rows()`
+    // now, so there is no second list left to diverge: adding a ninth book
+    // to the resolver populates this map automatically, and an unmapped
+    // `EQUIPMENT_BOOK_*` code panics loudly here rather than silently
+    // vanishing (see `equipment_book_slug_for` and its own test below).
     let mut equipment_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
-    equipment_keys.insert(
-        "core_rulebook",
-        crb_equipment_tables::equipment_tables()
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
-    equipment_keys.insert(
-        "advanced_players_guide",
-        apg::equipment_tables::EQUIPMENT_TABLE
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
-    equipment_keys.insert(
-        "advanced_class_guide",
-        acg::equipment_tables::equipment_tables()
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
-    equipment_keys.insert(
-        "bestiary_1",
-        beastiary1::equipment_tables::EQUIPMENT_TABLE
-            .iter()
-            .map(|e| e.key.to_string())
-            .collect(),
-    );
+    for row in equipment_resolver::equipment_catalog_rows() {
+        equipment_keys
+            .entry(equipment_book_slug_for(row.book))
+            .or_default()
+            .insert(row.key.to_string());
+    }
 
     let monster_names: BTreeSet<String> = MonsterId::ALL
         .iter()
@@ -1164,6 +1538,7 @@ fn gather_engine_facts(
 
     EngineFacts {
         feat_effect_wired: probe_feat_effect_wiring(fixture),
+        equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
         feat_keys,
         spell_levels,
         equipment_keys,
@@ -1341,6 +1716,26 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     engine_book: engine_book_field,
                 };
             }
+            // SD28-E13: the only book with a feat-scoped engine diagnostic
+            // today. `ultimate_campaign::feat_tables::DEFERRED_WITH_REASON`
+            // names the 2 UCA feats whose own corpus `.MOD BENEFIT:` row is
+            // a confirmed upstream splice (see that module's own doc
+            // comment) -- quoted verbatim here rather than re-narrated, the
+            // same rule `Kind::ClassFeature`'s diagnostic lookup above
+            // follows.
+            if engine_book.as_str() == "ultimate_campaign"
+                && let Some((_, diagnostic)) = uca_feat_tables::DEFERRED_WITH_REASON
+                    .iter()
+                    .find(|(key, _)| *key == unit.key || *key == unit.name)
+            {
+                return Verdict {
+                    status: "deferred-with-reason",
+                    evidence: "engine_diagnostic:ultimate_campaign::feat_tables::DEFERRED_WITH_REASON"
+                        .to_string(),
+                    reason: Some((*diagnostic).to_string()),
+                    engine_book: engine_book_field,
+                };
+            }
             if text_only {
                 return Verdict {
                     status: "text-complete",
@@ -1371,6 +1766,12 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             });
             match level_known {
                 None => not_ingested("spell_key_absent_from_spell_list"),
+                // SD28-E14-F1: NOT promoted. See the doc comment above
+                // `probe_equipment_effect_wiring` (the removed
+                // `probe_spell_effect_wiring`'s replacement note) -- no
+                // currently-wired consumer reads a spell's magnitude, so
+                // every resolved-level spell stays `ingested-magnitude`
+                // exactly as before this epic touched this arm.
                 Some(true) => Verdict {
                     status: "ingested-magnitude",
                     evidence: "spell_list_entry_with_resolved_level".to_string(),
@@ -1399,6 +1800,16 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     status: "text-complete",
                     evidence: "in_equipment_tables_and_corpus_record_carries_no_magnitude_token"
                         .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            if facts.equipment_effect_wired.contains(&unit.key)
+                || facts.equipment_effect_wired.contains(&unit.name)
+            {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "equipment_effect_probe_observed_computed_delta".to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
@@ -1483,6 +1894,34 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                         engine_book: engine_book_field,
                     };
                 }
+                // SD28-E15: `text-complete` requires the engine to HOLD the
+                // record (status_vocabulary's own definition), not merely
+                // that the corpus record carries no magnitude token -- a
+                // check first drafted here mirrored Kind::Feat's `text_only`
+                // check without confirming that second precondition, and was
+                // corrected before landing (decisions.md §40 amendment).
+                // Direct search of rules_core and the desktop app found no
+                // table, picker, or corpus JSON cache holding individual
+                // option-pool records by name for any of the sampled
+                // unowned groups (Rage Power, Discovery, ...) -- only a
+                // handful of pools have a wired SLOT-COUNT mechanism (e.g.
+                // barbarian_features::rage_powers_known), which counts how
+                // many picks a character gets, never what any specific pick
+                // is. Even pilot_compute.rs's own documented canonical
+                // grounding example (`Discovery ~ Feral Mutagen`) does not
+                // reach `grounded` through this code path. So for the
+                // zero-magnitude subset sampled and confirmed here, the
+                // engine genuinely holds none of these records -- a real,
+                // correctly-reported gap, not text already served to a
+                // player. Scoped deliberately to `text_only`: whether the
+                // same "not held anywhere" finding generalizes to the
+                // remaining magnitude>0 group-prefix units (856 distinct
+                // pools, only a handful spot-checked) is a hypothesis, not
+                // yet evidence at that scale -- left `unknown` below,
+                // pending the per-group trace.
+                if text_only {
+                    return not_ingested("class_feature_option_pool_record_not_held_by_engine");
+                }
                 return Verdict {
                     status: "unknown",
                     evidence: "class_feature_group_names_no_class_at_all".to_string(),
@@ -1524,17 +1963,32 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     engine_book: engine_book_field,
                 };
             }
+            // SD28-E24 (decisions.md §42, completing §40's fix in its sibling
+            // branch): a class-name substring match on `owner` is not a
+            // holds-check. This branch used to grant `text-complete` to any
+            // zero-magnitude record whose group prefix matched a modelled
+            // class's name, without confirming any table or picker actually
+            // serves that specific record -- the same defect §40 already
+            // fixed a few lines above, in the "no owner" branch, for exactly
+            // the same reason (`class_feature_option_pool_record_not_held_by_engine`).
+            // Never fixed here until now. text_only alone is not sufficient;
+            // absent a real holds-check (no generic class_feature catalog
+            // exists anywhere in this engine, unlike feat/spell/equipment),
+            // this branch can no longer manufacture `text-complete` either.
             if text_only {
-                return Verdict {
-                    status: "text-complete",
-                    evidence: "corpus_record_carries_no_magnitude_token".to_string(),
-                    reason: None,
-                    engine_book: engine_book_field,
-                };
+                return not_ingested("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
             }
             not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
         }
         Kind::Companion => not_ingested("companion_content_has_no_engine_table"),
+        // SD28-E15 (2026-08-09): no engine table exists for monster
+        // sub-abilities (natural attacks, special qualities/attacks,
+        // universal monster rules) yet -- this kind is new precisely to
+        // make that real, uningested population visible under its own
+        // correct name, not to claim it is already reachable. Real content
+        // in the wrong kind before this cycle; real content with no
+        // engine table now, honestly reported as such.
+        Kind::MonsterAbility => not_ingested("monster_ability_has_no_engine_table"),
     }
 }
 
@@ -1646,6 +2100,12 @@ struct InventoryUnit {
     id: String,
     unit: CorpusUnit,
     verdict: Verdict,
+    /// GE-01: what kind of evidence would prove this unit done, determined
+    /// from the unit's token closure (`wiring_class::determine_closure`).
+    /// Orthogonal to `verdict.status` -- never derived from it.
+    wiring_class: wiring_class::WiringClass,
+    wiring_class_reason: String,
+    wiring_class_signals: BTreeSet<String>,
 }
 
 fn main() {
@@ -1689,14 +2149,31 @@ fn main() {
     };
 
     // --- book roster, from the corpus itself ------------------------------
-    let mut book_dirs: Vec<String> = std::fs::read_dir(&books_dir)
+    // `book_paths` maps a book id (directory basename) to its real directory,
+    // whether that directory lives under `roleplaying_game/` or is one of the
+    // `EXTRA_BOOK_DIRS` roots elsewhere in the corpus (SD-28). Every later
+    // lookup goes through this map so an extra book's real, different path is
+    // never silently reconstructed as `books_dir.join(id)`.
+    let mut book_paths: BTreeMap<String, PathBuf> = std::fs::read_dir(&books_dir)
         .expect("corpus books directory is readable")
         .flatten()
         .filter(|e| e.path().is_dir())
-        .map(|e| e.file_name().to_string_lossy().into_owned())
+        .map(|e| (e.file_name().to_string_lossy().into_owned(), e.path()))
         .collect();
-    book_dirs.sort();
-    let known_books: BTreeSet<String> = book_dirs.iter().cloned().collect();
+    for extra in EXTRA_BOOK_DIRS {
+        let path = corpus_root.join(extra);
+        if !path.is_dir() {
+            eprintln!("extra book directory not found at {} -- EXTRA_BOOK_DIRS entry `{extra}` must exist", path.display());
+            std::process::exit(1);
+        }
+        let id = path
+            .file_name()
+            .map(|n| n.to_string_lossy().into_owned())
+            .unwrap_or_else(|| panic!("EXTRA_BOOK_DIRS entry `{extra}` has no basename"));
+        book_paths.insert(id, path);
+    }
+    let book_dirs: Vec<String> = book_paths.keys().cloned().collect();
+    let known_books: BTreeSet<String> = book_paths.keys().cloned().collect();
 
     // Which books the repository has registered as future-state stubs, read
     // from `data/stubs/` rather than from a list in this file.
@@ -1720,8 +2197,8 @@ fn main() {
 
     let mut books: Vec<BookMeta> = Vec::new();
     for id in &book_dirs {
-        let dir = books_dir.join(id);
-        let includes = pcc_includes(&dir, &known_books);
+        let dir = &book_paths[id];
+        let includes = pcc_includes(dir, &known_books);
         let rule_set = rule_set_for(id);
         // A directory that no book's `.pcc` stands alone for and that other
         // books pull in is a shared library, not a book. Derived from the real
@@ -1751,7 +2228,7 @@ fn main() {
     // --- enumerate ---------------------------------------------------------
     let mut enumerations: BTreeMap<String, BookEnumeration> = BTreeMap::new();
     for book in &books {
-        enumerations.insert(book.id.clone(), enumerate_book(&books_dir.join(&book.id), &book.id));
+        enumerations.insert(book.id.clone(), enumerate_book(&book_paths[&book.id], &book.id));
     }
 
     // `mod_only_rescue`: a `.MOD` row whose base name appears nowhere in the
@@ -1826,7 +2303,13 @@ fn main() {
         .filter(|u| u.kind == Kind::Class)
         .map(|u| u.name.to_lowercase())
         .collect();
-    let facts = gather_engine_facts(&fixture, corpus_class_names);
+    let facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
+
+    // --- wiring_class (GE-01) -----------------------------------------------
+    // Built once, corpus-wide: the token closure index and a raw-line cache
+    // shared by every unit's determination.
+    let mod_index = build_mod_index(&book_paths);
+    let mut corpus_lines = CorpusLines::new(&book_paths);
 
     // --- classify ----------------------------------------------------------
     let empty: BTreeSet<String> = BTreeSet::new();
@@ -1836,10 +2319,24 @@ fn main() {
         let hosts = included_by.get(&book.id).unwrap_or(&empty);
         for unit in &enumeration.units {
             let verdict = classify(unit, &facts, hosts);
+            let rows = token_closure_rows(
+                &mut corpus_lines,
+                &mod_index,
+                &unit.book,
+                &unit.provenance.file,
+                unit.provenance.line,
+                &unit.name,
+                &unit.key,
+            );
+            let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
+            let (wc_class, wc_reason, wc_signals) = wiring_class::determine_closure(&row_refs);
             inventory.push(InventoryUnit {
                 id: format!("{}:{}:{}", book.id, unit.kind.id(), slug(&unit.key)),
                 unit: unit.clone(),
                 verdict,
+                wiring_class: wc_class,
+                wiring_class_reason: wc_reason,
+                wiring_class_signals: wc_signals,
             });
         }
     }
@@ -1904,6 +2401,14 @@ fn main() {
     out.push_str(&format!(
         "  \"corpus_root\": {},\n",
         q(&books_dir.to_string_lossy())
+    ));
+    out.push_str(&format!(
+        "  \"additional_book_dirs\": [{}],\n",
+        EXTRA_BOOK_DIRS
+            .iter()
+            .map(|extra| q(&corpus_root.join(extra).to_string_lossy()))
+            .collect::<Vec<_>>()
+            .join(", ")
     ));
     out.push_str(
         "  \"contract\": \"Every field below is derived from the corpus or observed from the \
@@ -2098,11 +2603,16 @@ fn main() {
     // line-by-line so a bad entry shows up as one changed line.
     out.push_str("  \"units\": [\n");
     for (i, item) in inventory.iter().enumerate() {
+        let wc_signals = format!(
+            "[{}]",
+            item.wiring_class_signals.iter().map(|s| q(s)).collect::<Vec<_>>().join(", ")
+        );
         out.push_str(&format!(
             "    {{\"id\": {}, \"book\": {}, \"engine_book\": {}, \"kind\": {}, \"name\": {}, \
              \"corpus_key\": {}, \"origin\": {}, \"visible\": {}, \"type_facet\": {}, \
              \"source_file\": {}, \"source_line\": {}, \"magnitude_token_count\": {}, \
-             \"status\": {}, \"evidence\": {}, \"reason\": {}}}",
+             \"status\": {}, \"evidence\": {}, \"reason\": {}, \"wiring_class\": {}, \
+             \"wiring_class_reason\": {}, \"wiring_class_signals\": {}}}",
             q(&item.id),
             q(&item.unit.book),
             opt_q(&item.verdict.engine_book),
@@ -2118,6 +2628,9 @@ fn main() {
             q(item.verdict.status),
             q(&item.verdict.evidence),
             opt_q(&item.verdict.reason),
+            q(item.wiring_class.id()),
+            q(&item.wiring_class_reason),
+            wc_signals,
         ));
         out.push_str(if i + 1 < inventory.len() { ",\n" } else { "\n" });
     }
@@ -2138,4 +2651,355 @@ fn main() {
         std::process::exit(1);
     }
     print!("{out}");
+}
+
+#[cfg(test)]
+mod wiring_class_wiring_tests {
+    use super::*;
+
+    /// A scratch corpus directory, cleaned up on drop, so these tests never
+    /// touch the real PCGen checkout `PCGEN_CORPUS_ROOT` would point at.
+    struct ScratchBook {
+        root: PathBuf,
+    }
+
+    impl ScratchBook {
+        fn new(name: &str) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_wiring_class_test_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            std::fs::create_dir_all(&root).unwrap();
+            ScratchBook { root }
+        }
+
+        fn write(&self, filename: &str, contents: &str) {
+            std::fs::write(self.root.join(filename), contents).unwrap();
+        }
+    }
+
+    impl Drop for ScratchBook {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    #[test]
+    fn mod_base_name_strips_category_and_class_qualifiers() {
+        assert_eq!(mod_base_name("Foo"), "Foo");
+        assert_eq!(mod_base_name("CATEGORY=Special Ability|Foo"), "Foo");
+        assert_eq!(mod_base_name("CLASS:Bard"), "Bard");
+    }
+
+    #[test]
+    fn build_mod_index_finds_a_mod_row_regardless_of_file_kind_recognition() {
+        let book = ScratchBook::new("modindex");
+        // `weird_file.lst` matches no `file_kind` the generator recognises,
+        // but `build_mod_index` must still find its `.MOD` row -- it walks
+        // the whole corpus tree independent of kind recognition, exactly
+        // like the reference determinator's own `mod_index()`.
+        book.write(
+            "weird_file.lst",
+            "Accursed.MOD\tBONUS:SAVE|Fortitude|CASTERLEVEL/2\n",
+        );
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+
+        let index = build_mod_index(&book_paths);
+        let rows = index.get(&("test_book".to_string(), "Accursed".to_string()));
+        assert!(rows.is_some(), "expected a .MOD row indexed under the base name");
+        assert_eq!(rows.unwrap().len(), 1);
+        assert!(rows.unwrap()[0].contains("CASTERLEVEL/2"));
+    }
+
+    #[test]
+    fn token_closure_rows_unions_base_row_and_mod_rows() {
+        let book = ScratchBook::new("closure");
+        book.write("cr_feats.lst", "Accursed\tTYPE:General\tDESC:You are marked by a curse.\n");
+        book.write("cr_feats_extra.lst", "Accursed.MOD\tBONUS:SAVE|Fortitude|CASTERLEVEL/2\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+
+        let mod_index = build_mod_index(&book_paths);
+        let mut lines = CorpusLines::new(&book_paths);
+        let unit = CorpusUnit {
+            book: "test_book".to_string(),
+            kind: Kind::Feat,
+            key: "Accursed".to_string(),
+            name: "Accursed".to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "cr_feats.lst".to_string(), line: 1 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+
+        let rows = token_closure_rows(
+            &mut lines,
+            &mod_index,
+            &unit.book,
+            &unit.provenance.file,
+            unit.provenance.line,
+            &unit.name,
+            &unit.key,
+        );
+        assert_eq!(rows.len(), 2, "base row plus one .MOD row");
+        let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
+        let (class, _, sigs) = wiring_class::determine_closure(&row_refs);
+        // The base row alone (no magnitude token) would be `display`; the
+        // `.MOD` row's `BONUS:` promotes the unit to `derived` -- proves the
+        // closure is really unioned, not just the base row re-read.
+        assert_eq!(class, wiring_class::WiringClass::Derived);
+        assert!(sigs.iter().any(|s| s.starts_with("derived:")));
+    }
+
+    #[test]
+    fn token_closure_rows_is_none_for_a_line_past_end_of_file() {
+        let book = ScratchBook::new("nolinerow");
+        book.write("cr_feats.lst", "Only Line\tTYPE:General\n");
+        let mut book_paths = BTreeMap::new();
+        book_paths.insert("test_book".to_string(), book.root.clone());
+        let mod_index: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
+        let mut lines = CorpusLines::new(&book_paths);
+        let unit = CorpusUnit {
+            book: "test_book".to_string(),
+            kind: Kind::Feat,
+            key: "Ghost".to_string(),
+            name: "Ghost".to_string(),
+            origin: Origin::Declared,
+            // Line 99 does not exist in a 1-line file.
+            provenance: Provenance { file: "cr_feats.lst".to_string(), line: 99 },
+            magnitude_token_count: 0,
+            type_facet: None,
+            visible: true,
+        };
+        let rows = token_closure_rows(
+            &mut lines,
+            &mod_index,
+            &unit.book,
+            &unit.provenance.file,
+            unit.provenance.line,
+            &unit.name,
+            &unit.key,
+        );
+        assert_eq!(rows, vec![None]);
+        let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
+        let (class, reason, _) = wiring_class::determine_closure(&row_refs);
+        assert_eq!(class, wiring_class::WiringClass::Ambiguous);
+        assert_eq!(reason, "no_corpus_line");
+    }
+}
+
+#[cfg(test)]
+mod rule_set_mapping_tests {
+    use super::*;
+
+    /// Regression guard for the wildcard bug. SD-27 shipped ARG and PU into the
+    /// engine — feat tables, class chassis, reach gating — but `rule_set_for`
+    /// ended in `_ => None`, so the inventory reported both books as
+    /// `not-started` / `future_state` / 0% proven. The compiler could not catch
+    /// it because a wildcard arm absorbs new variants silently.
+    #[test]
+    fn every_compiled_rule_set_round_trips_through_its_corpus_dir() {
+        for &rs in COMPILED_RULE_SETS {
+            let dir = corpus_dir_for(rs);
+            assert_eq!(
+                rule_set_for(dir),
+                Some(rs),
+                "{dir} must map back to the rule set it was compiled from",
+            );
+        }
+    }
+
+    #[test]
+    fn sd27_books_are_measurable() {
+        assert_eq!(rule_set_for("advanced_race_guide"), Some(RuleSetId::Arg));
+        assert_eq!(rule_set_for("pathfinder_unchained"), Some(RuleSetId::Pu));
+    }
+
+    /// The engine id and the corpus directory disagree for exactly one book.
+    #[test]
+    fn bestiary_directory_maps_despite_the_id_rename() {
+        assert_eq!(rule_set_for("bestiary"), Some(RuleSetId::Bestiary1));
+        assert_eq!(rule_set_id(RuleSetId::Bestiary1), "bestiary_1");
+    }
+
+    #[test]
+    fn corpus_dirs_are_distinct() {
+        let mut seen = std::collections::BTreeSet::new();
+        for &rs in COMPILED_RULE_SETS {
+            assert!(seen.insert(corpus_dir_for(rs)), "duplicate corpus dir for {rs:?}");
+        }
+        assert_eq!(seen.len(), COMPILED_RULE_SETS.len());
+    }
+
+    /// A book the engine has not compiled must still report honestly.
+    #[test]
+    fn uncompiled_books_stay_none() {
+        // `ultimate_psionics` moved from uncompiled to compiled in SD28-E29
+        // (`epic-29-upsi-complete`) -- `rule_set_for` now correctly returns
+        // `Some(RuleSetId::Upsi)` for it, so it is no longer a valid
+        // uncompiled example. `inner_sea_gods` remains genuinely
+        // uncompiled (SD-30's own book set, out of this bundle).
+        assert_eq!(rule_set_for("inner_sea_gods"), None);
+    }
+}
+
+/// SD28-E14: observation-harness widening tests. F2 (equipment probe) with
+/// a positive proof against the real on-disk corpus and negative proofs
+/// that the probe does NOT promote a unit the engine genuinely does not
+/// wire (F3's anti-gaming binding). F1 (spell probe) is deliberately absent
+/// -- see the doc comment at the bottom of this module for why.
+#[cfg(test)]
+mod e14_harness_tests {
+    use super::*;
+    use codex::pcgen_import::ir_converter::convert_equipment_record;
+    use codex::pcgen_import::lst_parser::equipment::parse_equipment_entries;
+    use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn equipment_corpus_from(text: &str) -> SourcePackageContent<'static> {
+        let result = parse_equipment_entries("test.lst", text);
+        let source_ref = SourceRef { lst_file: "test.lst".to_string(), line: 1 };
+        let mut corpus = SourcePackageContent::empty("test", source_ref);
+        for record in result.entries {
+            let record: &'static _ = Box::leak(Box::new(record));
+            corpus.push(convert_equipment_record(record));
+        }
+        corpus
+    }
+
+    // ----- F2: equipment probe -----
+
+    /// Positive: CRB's real, on-disk Padded Armor (Base) carries real
+    /// AC/max-dex/spell-failure/ACP tokens, resolves against the real
+    /// corpus, and the probe's own wiring check observes them.
+    #[test]
+    fn equipment_probe_promotes_a_real_armor_item_with_real_ac_tokens() {
+        let roots = [BookCorpusRoot {
+            book_id: "core_rulebook",
+            dir: &repo_root().join("data/corpus/core_rulebook"),
+        }];
+        let corpus = load_equipment_corpus(&roots);
+        assert!(equipment_key_is_wired("Padded Armor (Base)", &corpus));
+    }
+
+    /// Negative (F3's anti-gaming binding): a real corpus record that
+    /// carries NO mechanical token at all -- no BONUS chain, no ACCHECK, no
+    /// COST-derived enhancement, nothing `compute_equipment_effects` reads
+    /// -- resolves (it is a genuine record) but must NOT be promoted. A
+    /// probe that returns `true` for every resolvable item, permissive
+    /// rather than observing a real delta, is exactly the failure mode this
+    /// pins.
+    #[test]
+    fn equipment_probe_never_promotes_a_text_only_item_with_no_mechanical_tokens() {
+        let text = "Plain Sack\tTYPE:Container\tCOST:0\n";
+        let corpus = equipment_corpus_from(text);
+        assert!(
+            !equipment_key_is_wired("Plain Sack", &corpus),
+            "an item with no armor/skill/ability/weapon-enhancement token must stay unwired"
+        );
+
+        // Control: proves the harness above is actually exercising the
+        // record (it resolves), not merely failing to find it at all --
+        // otherwise the negative result above would be meaningless.
+        let selection = vec![EquipmentSelection {
+            item_id: "Plain Sack".to_string(),
+            equipped_or_active: true,
+            active_state: ActiveState::EquippedActive,
+            applied_modifiers: Vec::new(),
+        }];
+        let effects = compute_equipment_effects(&selection, &corpus);
+        assert_eq!(effects.per_item.len(), 1, "the plain item must still resolve and appear per-item");
+    }
+
+    /// An item absent from the corpus entirely (never ingested) must also
+    /// stay unwired -- distinct failure path from "resolves but inert".
+    #[test]
+    fn equipment_probe_never_promotes_an_item_absent_from_the_corpus() {
+        let corpus = equipment_corpus_from("Something Else\tTYPE:Container\tCOST:0\n");
+        assert!(!equipment_key_is_wired("Nonexistent Item Nobody Ingested", &corpus));
+    }
+
+    // ----- F1: spell probe -- NOT implemented, and this is the finding -----
+    //
+    // An earlier version of this cycle probed
+    // `pilot_compute_corpus::compute_pilot_with_corpus`'s `school_coverage`
+    // map (a spell lands there once it resolves and its `school` string
+    // parses -- `pilot_compute_corpus.rs:189-205`). Independent review
+    // (team-lead, 2026-08-06) correctly identified that this observes
+    // resolution, not a magnitude: no spell field (level, DC, duration, ...)
+    // is read into any computed number on that path. The 100% promotion
+    // rate the wrong version produced (1,067 of 1,067) was the tell -- a
+    // discriminating probe over real content does not do that (contrast
+    // F2's 173-of-2,983, 5.8%).
+    //
+    // Per the dispatching brief's own instruction ("strengthen the negative
+    // test to pin a present-but-non-mechanical spell as not promoted; if no
+    // such test can be written because nothing distinguishes them, that is
+    // itself the finding") -- no such test can be written. Every spell that
+    // resolves against the on-disk corpus and has a recognized school
+    // string lands in `school_coverage` identically; there is no field on
+    // that path that varies between a spell with real mechanical content
+    // and one without. That absence of a discriminating signal, not a
+    // missing test, is the finding: **no currently-wired consumer reads a
+    // spell's magnitude at all.** `spellbook::compute_spellbook_coverage`
+    // does read a real magnitude (`SpellEffect.level`, feeding
+    // `spell_save_dc`/slot math) and is wired into
+    // `contract::PilotReceipt.spellbook` (`contract.rs:397`), but
+    // `contract::build_pilot_receipt` is never called from
+    // `apps/desktop/src-tauri/src/pf1_adapter.rs` or `character_hub.rs` --
+    // confirmed by `grep -rn build_pilot_receipt apps/desktop/src-tauri/src`
+    // returning nothing. That is exactly the "twin problem"
+    // `decisions.md §29.1`/`§29.2` already names: a real computation that
+    // never reaches the surface `pf1_adapter::resolve_unified_pilot_snapshot`
+    // gates on. Wiring `contract.rs`'s spellbook output into that surface
+    // is the remedy, and it is engine work outside this harness-widening
+    // epic's scope -- see `artifacts/e14-harness-widening.md`. All 1,067
+    // targeted spell units stay `ingested-magnitude`.
+}
+
+#[cfg(test)]
+mod equipment_book_slug_tests {
+    use super::*;
+
+    /// SD-28-E15's own regression guard: `equipment_keys` is now derived
+    /// directly from `equipment_resolver::equipment_catalog_rows()` rather
+    /// than a hand-maintained parallel list, closing the divergence that
+    /// silently misreported ~1,650 landed UE/UI/PU equipment units as
+    /// `not-ingested`. This test exercises `equipment_book_slug_for`
+    /// against every book code the resolver ACTUALLY returns today, so a
+    /// ninth book added to the resolver without a matching arm here fails
+    /// this test immediately (a panic on `cargo test`) instead of silently
+    /// dropping that book's units from the inventory the way the old
+    /// four-`.insert()`-call list did.
+    #[test]
+    fn equipment_book_slug_for_covers_every_catalog_book() {
+        let codes: std::collections::BTreeSet<&'static str> =
+            equipment_resolver::equipment_catalog_rows().iter().map(|row| row.book).collect();
+        assert!(!codes.is_empty(), "the resolver must carry at least one book's rows");
+        for code in codes {
+            // Panics (failing this test) if `equipment_book_slug_for` does
+            // not recognize `code` -- the exact failure mode this fix
+            // replaces a silent one with.
+            let slug = equipment_book_slug_for(code);
+            assert!(!slug.is_empty(), "{code} resolved to an empty slug");
+        }
+    }
+
+    /// The specific defect this fix closes, pinned so it cannot regress:
+    /// UE's real corpus key `Abjurant Salt` (`ue_equip_magic_items.lst:954`,
+    /// verified present in `ultimate_equipment::equipment_tables()`) must
+    /// resolve into the `ultimate_equipment` bucket of the derived map.
+    #[test]
+    fn ultimate_equipment_key_is_reachable_through_the_derived_map() {
+        let rows = equipment_resolver::equipment_catalog_rows();
+        let found = rows
+            .iter()
+            .any(|row| row.book == "UE" && row.key == "Abjurant Salt");
+        assert!(found, "Abjurant Salt must be a real UE row in equipment_catalog_rows()");
+        assert_eq!(equipment_book_slug_for("UE"), "ultimate_equipment");
+    }
 }

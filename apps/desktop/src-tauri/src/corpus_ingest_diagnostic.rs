@@ -98,6 +98,13 @@ use codex::rules_core::rules_tables::crb::{
     race_tables::RaceId, spell_list as crb_spell_list,
 };
 use codex::rules_core::rules_tables::pathfinder_unchained as pu;
+use codex::rules_core::rules_tables::ultimate_campaign as uca;
+use codex::rules_core::rules_tables::ultimate_equipment as ue;
+use codex::rules_core::rules_tables::ultimate_combat as uc;
+use codex::rules_core::rules_tables::ultimate_magic as um;
+use codex::rules_core::rules_tables::ultimate_psionics as upsi;
+use codex::rules_core::rules_tables::ultimate_wilderness as uw;
+use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 
 use crate::race_catalog::{book_code, build_race_catalog, RACE_CORPUS_BOOKS};
 
@@ -298,6 +305,96 @@ fn pathfinder_unchained_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Ultimate Campaign: SD-28 Epic 13 (`epic-13-calibration`) cost
+/// calibration book. 23 real corpus records, all `feats` -- see
+/// `ultimate_campaign::feat_tables`'s own doc comment for the catalog and
+/// its 3 `deferred-with-reason` records (still counted here: they are real
+/// ingested rows, not stubs -- see that module's own doc comment).
+fn ultimate_campaign_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), uca::feat_tables::feat_tables().len() as u32);
+    counts
+}
+
+/// Ultimate Intrigue: SD-28 Epic 24 (`epic-24-ui-complete`) from-scratch
+/// book ingest, slices 1-2. 104 feats, 101 spells, 98 equipment (91 + 7
+/// equipmods) -- see `ultimate_intrigue::{feat_tables,spell_list,
+/// equipment_tables}`'s own doc comments for each catalog. Remaining
+/// record families (`class_feature`, races, etc.) are not yet ingested
+/// and are honestly absent from this map rather than reported as a
+/// fabricated zero. (Caught while wiring UE: this map was never updated
+/// when slice 2 landed spell/equipment -- fixed here.)
+fn ultimate_intrigue_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), ui::feat_tables::feat_tables().len() as u32);
+    counts.insert("spells".to_string(), ui::spell_list::SPELL_LIST.len() as u32);
+    counts.insert(
+        "equipment".to_string(),
+        (ui::equipment_tables::equipment_tables().len() + ui::equipment_tables::equipmod_tables().len()) as u32,
+    );
+    counts
+}
+
+/// Ultimate Equipment: SD-28 Epic 25 (`epic-25-ue-complete`) from-scratch
+/// book ingest, first slice. 1,369 equipment + 180 equipment-modifier
+/// records -- see `ultimate_equipment::equipment_tables`'s own doc
+/// comment for the catalog and its collision-exclusion ruling.
+fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert(
+        "equipment".to_string(),
+        (ue::equipment_tables::equipment_tables().len() + ue::equipment_tables::equipmod_tables().len()) as u32,
+    );
+    counts
+}
+
+/// Ultimate Wilderness: SD-28 Epic 26 (`epic-26-uw-complete`) from-scratch
+/// book ingest, first slice. 135 feat records -- see
+/// `ultimate_wilderness::feat_tables`'s own doc comment for the catalog.
+fn ultimate_wilderness_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), uw::feat_tables::feat_tables().len() as u32);
+    counts
+}
+
+/// Ultimate Combat: SD-28 Epic 27 (`epic-27-uc-complete`) from-scratch
+/// book ingest, first slice. 263 feat records -- see
+/// `ultimate_combat::feat_tables`'s own doc comment for the catalog.
+fn ultimate_combat_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), uc::feat_tables::feat_tables().len() as u32);
+    counts
+}
+
+/// Ultimate Magic: SD-28 Epic 28 (`epic-28-um-complete`) from-scratch
+/// book ingest. 144 feat records -- see `ultimate_magic::feat_tables`'s
+/// own doc comment for the catalog. SD-28-E15's second slice adds 26
+/// equipment records (24 General + 2 ArmsArmor) -- see
+/// `ultimate_magic::equipment_tables`'s own doc comment.
+fn ultimate_magic_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), um::feat_tables::feat_tables().len() as u32);
+    counts.insert("equipment".to_string(), um::equipment_tables::equipment_tables().len() as u32);
+    counts
+}
+
+/// Ultimate Psionics: SD-28 Epic 29 (`epic-29-upsi-complete`) from-scratch
+/// book ingest, and the last Ultimate book. 221 feat records -- see
+/// `ultimate_psionics::feat_tables`'s own doc comment for the catalog and
+/// the license-posture check. SD-28-E15's second slice adds 552 equipment
+/// records (326 equipment + 226 equipmods) -- see
+/// `ultimate_psionics::equipment_tables`'s own doc comment.
+fn ultimate_psionics_counts() -> BTreeMap<String, u32> {
+    let mut counts = BTreeMap::new();
+    counts.insert("feats".to_string(), upsi::feat_tables::feat_tables().len() as u32);
+    counts.insert(
+        "equipment".to_string(),
+        (upsi::equipment_tables::equipment_tables().len()
+            + upsi::equipment_tables::equipmod_tables().len()) as u32,
+    );
+    counts
+}
+
 /// Repo root, derived from the crate's own compile-time manifest
 /// directory (`apps/desktop/src-tauri`) rather than the process's current
 /// working directory, which Tauri does not guarantee.
@@ -383,6 +480,48 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             pathfinder_unchained_counts(),
             &races,
         ),
+        book_status(
+            "ultimate_campaign",
+            "src/rules_core/rules_tables/ultimate_campaign",
+            ultimate_campaign_counts(),
+            &races,
+        ),
+        book_status(
+            "ultimate_intrigue",
+            "src/rules_core/rules_tables/ultimate_intrigue",
+            ultimate_intrigue_counts(),
+            &races,
+        ),
+        book_status(
+            "ultimate_equipment",
+            "src/rules_core/rules_tables/ultimate_equipment",
+            ultimate_equipment_counts(),
+            &races,
+        ),
+        book_status(
+            "ultimate_wilderness",
+            "src/rules_core/rules_tables/ultimate_wilderness",
+            ultimate_wilderness_counts(),
+            &races,
+        ),
+        book_status(
+            "ultimate_combat",
+            "src/rules_core/rules_tables/ultimate_combat",
+            ultimate_combat_counts(),
+            &races,
+        ),
+        book_status(
+            "ultimate_magic",
+            "src/rules_core/rules_tables/ultimate_magic",
+            ultimate_magic_counts(),
+            &races,
+        ),
+        book_status(
+            "ultimate_psionics",
+            "src/rules_core/rules_tables/ultimate_psionics",
+            ultimate_psionics_counts(),
+            &races,
+        ),
     ]
 }
 
@@ -458,7 +597,14 @@ mod tests {
                 "acg",
                 "beastiary1",
                 "advanced_race_guide",
-                "pathfinder_unchained"
+                "pathfinder_unchained",
+                "ultimate_campaign",
+                "ultimate_intrigue",
+                "ultimate_equipment",
+                "ultimate_wilderness",
+                "ultimate_combat",
+                "ultimate_magic",
+                "ultimate_psionics"
             ]
         );
     }
@@ -654,14 +800,19 @@ mod tests {
 
     #[test]
     fn beastiary1_monster_count_matches_the_documented_real_total() {
-        // docs/architecture/rules-data-tables.md: "41 monsters total as of
-        // this verification" (mod.rs's own subset roster doc comments).
+        // SD28-E16 subset 09 (2026-08-07) raised this from 41 to 46
+        // (Lion, Ogre, Pegasus, Rust Monster, Shadow —
+        // `beastiary1::mod.rs`'s own subset roster doc comments carry the
+        // current count; `docs/architecture/rules-data-tables.md`'s "41
+        // monsters" figure predates this subset and is stale, flagged here
+        // rather than edited -- that doc is outside this cycle's write
+        // scope).
         let response = build_corpus_ingest_diagnostic();
         let bestiary = response
             .iter()
             .find(|b| b.book_id == "beastiary1")
             .expect("beastiary1 present");
-        assert_eq!(bestiary.content_kind_counts["monsters"], 41);
+        assert_eq!(bestiary.content_kind_counts["monsters"], 46);
     }
 
     #[test]
@@ -765,7 +916,7 @@ mod tests {
             !status.content_kind_counts.contains_key("races"),
             "an unreachable corpus must omit the row, never report a fabricated zero"
         );
-        assert_eq!(status.content_kind_counts["monsters"], 41);
+        assert_eq!(status.content_kind_counts["monsters"], 46);
     }
 
     #[test]

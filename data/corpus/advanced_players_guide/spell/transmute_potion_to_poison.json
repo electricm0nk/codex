@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "data": {
     "key": "Transmute Potion to Poison",
     "school": "Transmutation",
@@ -17,6 +17,10 @@
     "record_key": "Transmute Potion to Poison",
     "original_ingest_defect": "same-line .MOD-stanza concatenation (with Transmogrify.MOD); prior parser did not recognize this record's DESC: text as its own full-text source"
   },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

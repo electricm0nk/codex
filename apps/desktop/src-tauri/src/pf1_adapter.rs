@@ -64,8 +64,9 @@ use codex::rules_core::pilot_compute_corpus::{
 };
 use codex::rules_core::pilot_view_model::{
     PilotCombatViewModel, PilotCompanionViewModel, PilotDefenseViewModel, PilotSkillViewModel,
-    PilotSnapshot,
+    PilotSnapshot, PilotSpellbookViewModel,
 };
+use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::source_content::SourcePackageContent;
 use codex::saved_character::local_store::SavedCharacterStore;
 
@@ -1126,6 +1127,21 @@ pub(crate) fn resolve_unified_pilot_snapshot(
                 // companion projection is exactly how the DR extraction
                 // just above ended up duplicated.
                 companion: PilotCompanionViewModel::from_receipt(&receipt),
+                // epic-31-spell-wiring: closes the "third, disconnected
+                // twin" finding from `epic-14-harness`
+                // (`artifacts/e14-harness-widening.md`'s "F1 -- what
+                // actually happened" section) -- `spellbook::compute_spellbook_coverage`
+                // was a real, magnitude-bearing computation
+                // (`SpellEffect.level` -> `spell_save_dc`)
+                // wired only into `contract::PilotReceipt`, a struct no
+                // desktop command ever calls. This is the first call site
+                // that reaches a `PilotSnapshot` the desktop app actually
+                // renders (`character_hub::map_snapshot_dto` ->
+                // `PilotSnapshotDto` -> `CharacterSheet.tsx`'s Spells tab).
+                spellbook: PilotSpellbookViewModel::from_coverage(&compute_spellbook_coverage(
+                    character_input,
+                    corpus,
+                )),
             };
             // SD-27, decisions.md §28 defect 1 (2026-07-31): touch AC, CMB and
             // CMD travel to the sheet on the explanation channel
@@ -2445,6 +2461,70 @@ mod tests {
             "Wizard level 1 with the canonical school seeded and one real spell \
              recorded+prepared within budget must reach Computed, got diagnostics: {:?}",
             receipt.computation.diagnostics
+        );
+    }
+
+    /// epic-31-spell-wiring: `resolve_unified_pilot_snapshot` -- the
+    /// function the desktop app actually gates its sheet on -- must now
+    /// surface `spellbook::compute_spellbook_coverage`'s real magnitude
+    /// (`spell_save_dc`), not merely spell *resolution*. `slots_total` is
+    /// deliberately not part of this surface at all -- see `decisions.md`
+    /// Decision 37 (populating it would have duplicated the already-real
+    /// `class_spell.*.total_spells_per_day.*` chassis computation).
+    /// Uses "Alarm" (Abjuration, Wizard level 1 per
+    /// `rules_tables::crb::spell_list::SPELL_LIST`) because it is one of
+    /// the two spells `corpus_fixtures::SPELL_FIXTURES` actually loads
+    /// (`spell_abjuration.txt`) -- `spellbook::compute_spellbook_coverage`
+    /// resolves against the real on-disk corpus, unlike
+    /// `build_pilot_headless_receipt` above, so an unfixtured spell id
+    /// would silently resolve to nothing here.
+    ///
+    /// Hand-computed expectation: `wizard_request_for` fixes Intelligence
+    /// at 10 (modifier `(10/2)-5 = 0`), so a level-1 spell's save DC is
+    /// `10 + 1 + 0 = 11` -- the same `10 + spell level + ability modifier`
+    /// formula `spellbook.rs`'s own doc comment names.
+    #[test]
+    fn resolve_unified_pilot_snapshot_surfaces_a_real_spell_save_dc() {
+        let mut character_input =
+            compose_character_input(&wizard_request_for("wizard-spellbook-dc", 1));
+        character_input.chosen.spells_selected.push(SpellSelection {
+            spell_id: "Alarm".to_owned(),
+            source_class_id: WIZARD_CLASS_ID.to_owned(),
+            acquisition_mode: AcquisitionMode::Known,
+        });
+
+        let (snapshot, _corpus_receipt) =
+            resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle())
+                .expect("a Wizard 1 with a resolvable spell must reach Computed");
+
+        let spellbook = snapshot
+            .spellbook
+            .as_ref()
+            .expect("a Wizard holding a real resolved spell must surface spellbook coverage");
+        assert_eq!(
+            spellbook.spell_save_dc.iter().find(|dc| dc.class_id == WIZARD_CLASS_ID).map(|dc| dc.dc),
+            Some(11),
+            "10 + spell level 1 + INT modifier 0 = 11; got {:?}",
+            spellbook.spell_save_dc
+        );
+    }
+
+    /// Negative companion to the test above: a build with no resolved
+    /// spell at all must surface no spellbook block -- "absent, not
+    /// zeroed", the same convention `damage_reduction`/`companion` already
+    /// established on `PilotSnapshot`.
+    #[test]
+    fn resolve_unified_pilot_snapshot_surfaces_no_spellbook_for_a_non_caster() {
+        let character_input = compose_character_input(&request_for("fighter-no-spells", 1));
+
+        let (snapshot, _corpus_receipt) =
+            resolve_unified_pilot_snapshot(&character_input, corpus_fixture_bundle())
+                .expect("a plain Fighter 1 must reach Computed");
+
+        assert!(
+            snapshot.spellbook.is_none(),
+            "a non-caster with no resolved spell must carry no spellbook block: {:?}",
+            snapshot.spellbook
         );
     }
 

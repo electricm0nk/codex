@@ -10,7 +10,7 @@
     "raw_tokens": [],
     "weight": null
   },
-  "ingested_at": "2026-07-22T23:37:02Z",
+  "ingested_at": "2026-08-03T18:18:56Z",
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null,
@@ -21,5 +21,9 @@
     "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_general.lst",
     "record_key": "Formula Book",
     "sha256": "1b5b3aed553824d296a75513db68c9a8a8f7b44990b7e0eec4953a532ae5dbbd"
-  }
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
 }

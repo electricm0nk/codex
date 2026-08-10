@@ -20,7 +20,7 @@ When the cycle writes files.
 
 Then:
 
-- Files written under `src/rules_core/rules_tables/<book>/`, `data/corpus/<book>/`, `src/bin/sd28_*`, `tests/sd28_*`, or `docs/release/SD-28-.../`.
+- Files written under `src/rules_core/rules_tables/<book>/`, `data/corpus/<book>/`, new bins under `src/bin/`, new tests under `tests/` (named per identifier-discipline doctrine; no `sd28_` prefix), or `docs/release/SD-28-.../`.
 - No file written under `src/rules_core/pilot_compute.rs`, `src/rules_core/rules_tables/<other_book>/`, `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
 
 Evidence: per-cycle receipt carries the audit command and the captured exit code.
@@ -48,6 +48,19 @@ Then:
 - `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>` has been run.
 - The output is recorded in `artifacts/<book>-trap-report.md`.
 - The cycle receipt cites the trap-report file.
+
+## AT-28-003a — Per-book trap-report audit gate
+
+Given a per-book cycle (Epic 3-9) at the Definition of done.
+
+When the cycle runs `cargo run --locked --bin v06_corpus_trap_report -- --audit`.
+
+Then:
+
+- The audit exit code is `0` **for all defects in this book's own records**.
+- A pre-existing defect in another bundle's content (e.g., ACG data referenced as a cross-bundle dependency) is recorded as a cross-bundle blocker against that bundle via this cycle's progress receipt, not against this book.
+- The scope of "this book's own records" means records filed under the book's corpus directory; cross-bundle dependencies are out of scope for this book's gate.
+- **Rationale (Decision 31):** As originally written, the gate was repo-wide, so a single out-of-scope defect anywhere halted all seven books at once (Run 1, 2026-08-02). This narrowing permits each book to proceed once its own records are clean, while documenting cross-bundle blockers for later remediation by the responsible bundle.
 
 ## AT-28-004 — Definition-of-done audit
 

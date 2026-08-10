@@ -3,14 +3,11 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { assertEqual, assert } from '../testSupport/asserts';
 
-// SD-22 E8.27: package.json, tauri.conf.json, and Cargo.toml must all carry
-// the same `<major>.<tranche>.<build>` version triple, anchored to tranche/7
-// (per decisions.md §2 + epic-breakdown.md criterion 27). Mirrors SD-21
-// E5.25's buildVersionTriple.test.ts and the SD-21 counterpart at
-// src/sd21/buildVersionTriple.test.ts (which is anchored one tranche ahead
-// as the canonical source), re-anchored from tranche=6 to tranche=7 to
-// match the SD-27 bundle closure that landed in this commit (the v0.6.120
-// publish at 5c432a1b missed this advance).
+// SD-28 Epic 11 (Build Version Numbering): package.json, tauri.conf.json, and
+// Cargo.toml must all carry the same `<major>.<tranche>.<build>` version triple,
+// anchored to tranche/8 per Decision 15 (operator-pinned 2026-08-01). Mirrors
+// SD-21 E5.25's buildVersionTriple.test.ts, updated from tranche/6 anchor to
+// tranche/8 per the new branch cut.
 
 const appRoot = join(dirname(fileURLToPath(import.meta.url)), '..', '..');
 
@@ -42,16 +39,13 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: tranche moves to 7 (SD-27 bundle closure on tranche/7, which
-  // is the same advance the v0.6.120 publish at 5c432a1b missed). Major
-  // stays 0 until first main-publish, per decisions.md §2's build-version
-  // responsibility note. The tranche digit only advances when a new
-  // tranche/N branch is cut for the next bundle — not automatically at a
-  // bundle's own closure while still on the same tranche branch (an
-  // earlier Epic 7 closure-epilogue cycle bumped this to tranche=6 in
-  // error and it was reverted; this time the bump is intentional, driven
-  // by the SD-27 closure landing on tranche/7).
-  assert(pkg.startsWith('0.7.'), `version "${pkg}" must move to major=0, tranche=7 on tranche/7`);
+  // Anchor: tranche moves to 8 (tranche/8 is the SD-28 bundle's active branch,
+  // cut per operator directive 2026-08-01 to keep SD-29 on tranche/6-1 and
+  // SD-30 on tranche/6-2) and major stays 0 until first main-publish, per
+  // Decision 15's build-version specification. The tranche digit only advances
+  // when a new tranche/N branch is cut for the next bundle — not automatically
+  // at a bundle's own closure while still on the same tranche branch.
+  assert(pkg.startsWith('0.8.'), `version "${pkg}" must keep major=0, tranche=8 on tranche/8`);
 }
 
 verifiesAllThreeVersionFilesAgreeAndFollowTripleShape();

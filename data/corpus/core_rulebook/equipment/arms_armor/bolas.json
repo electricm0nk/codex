@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
     "key": "Bolas",
     "category": "arms_armor",
@@ -18,6 +18,10 @@
     "record_key": "Bolas",
     "inherited_from_record_key": "Bolas (Base)"
   },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

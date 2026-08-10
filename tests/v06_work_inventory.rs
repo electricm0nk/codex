@@ -388,6 +388,68 @@ fn hex_records_span_more_than_one_book() {
     );
 }
 
+/// `race_favored_class_bonus_row` + `race_choice_suboption_row` (SD28-E16,
+/// `decisions.md §35`). `_abilities_race.lst` is classified whole-file as
+/// `Kind::RaceTrait`, but carries Favored Class Bonus rows (a different
+/// mechanic; `race_trait_ids` can never hold an FCB identity) and
+/// `CATEGORY:Choice` sub-option rows (menu options of an already-counted
+/// parent trait) that must not be double-counted as independent racial
+/// traits. Pinned against `arg_abilities_race.lst` directly, independent of
+/// the generator under test, per this file's own re-implementation
+/// philosophy.
+#[test]
+fn arg_race_file_carries_favored_class_bonus_and_choice_suboption_rows_not_traits() {
+    let dir = corpus_or_skip!();
+    let text = read(&dir, "advanced_race_guide", "arg_abilities_race.lst");
+    let rows = base_rows(&text);
+
+    let is_fcb = |r: &&Row| {
+        r.fields
+            .iter()
+            .any(|f| f.starts_with("TYPE:") && f[5..].split('.').any(|c| c == "FavoredClassBonus"))
+    };
+    let fcb_count = rows.iter().filter(is_fcb).count();
+    assert_eq!(
+        fcb_count, 291,
+        "arg_abilities_race.lst's Favored Class Bonus rows (TYPE:...FavoredClassBonus...) -- \
+         a different mechanic from a racial trait, one row per race x class"
+    );
+
+    let choice_count = rows.iter().filter(|r| !is_fcb(r) && r.fields.contains(&"CATEGORY:Choice")).count();
+    assert_eq!(
+        choice_count, 82,
+        "arg_abilities_race.lst's CATEGORY:Choice sub-option rows -- CHOOSE: menu options of an \
+         already-counted parent trait (e.g. Elf ~ Elemental Resistance's Acid/Cold/Electricity/Fire \
+         choices), never independent racial traits"
+    );
+
+    // The already-shipped ARG corpus never uses CATEGORY:Choice for a real
+    // trait -- the discriminator's other side, so a future trait added with
+    // CATEGORY:Choice would be a real regression this test would catch.
+    let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+    let trait_root = manifest.join("data/corpus/advanced_race_guide/race_trait");
+    let mut checked = 0usize;
+    let mut race_dirs: Vec<PathBuf> =
+        std::fs::read_dir(&trait_root).expect("race_trait dir must exist").filter_map(Result::ok).map(|e| e.path()).collect();
+    race_dirs.sort();
+    for race_dir in race_dirs {
+        let mut files: Vec<PathBuf> =
+            std::fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
+        files.sort();
+        for path in files {
+            let text = std::fs::read_to_string(&path).unwrap();
+            let value: serde_json::Value = serde_json::from_str(&text).unwrap();
+            checked += 1;
+            assert_eq!(
+                value["data"]["category"], "Special Ability",
+                "{path:?}: every already-ingested ARG alternate racial trait carries \
+                 CATEGORY:Special Ability, never CATEGORY:Choice"
+            );
+        }
+    }
+    assert_eq!(checked, 156, "156 already-ingested ARG alternate racial trait records");
+}
+
 // ---------------------------------------------------------------------------
 // Generator contract
 // ---------------------------------------------------------------------------
@@ -533,6 +595,66 @@ fn the_committed_inventory_is_well_formed_and_uses_only_declared_statuses() {
     );
 }
 
+/// SD28-E15: a `class_feature` record from an unowned option pool (Rage
+/// Power, Discovery, Domain Power, ...) that carries no magnitude token AND
+/// is confirmed absent from every engine table, corpus JSON cache, and
+/// picker this program has (verified by direct search, not inferred from
+/// the magnitude check alone) must land `not-ingested` -- a real, honestly
+/// reported gap -- never `unknown`, which implies a mystery rather than a
+/// confirmed absence. `text-complete` was tried and rejected here: it
+/// requires the engine to HOLD the record per `status_vocabulary`'s own
+/// definition, and it does not (decisions.md §40's amendment). Before this
+/// fix `classify()`'s `Kind::ClassFeature` "group names no class" branch
+/// returned `unknown` unconditionally, misclassifying 2,275 of the epic's
+/// 4,172 `unknown` units as an open mystery rather than a confirmed gap.
+#[test]
+fn zero_magnitude_option_pool_class_features_are_not_ingested_not_unknown() {
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        println!("SKIP: docs/work-inventory.json has not been generated yet");
+        return;
+    };
+    let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
+    let units = doc["units"].as_array().expect("units is an array");
+
+    // Real, verified-by-hand-trace units: zero-magnitude Rage Power records
+    // from acg_abilities_class.lst:2658,2660. Confirmed absent from every
+    // engine table this program has (rules_core, apps/desktop) -- only a
+    // slot-COUNT mechanism (barbarian_features::rage_powers_known) is
+    // wired, never a catalog of the individual named options.
+    for id in [
+        "advanced_class_guide:class_feature:rage_power_abyssal_blood",
+        "advanced_class_guide:class_feature:rage_power_abyssal_blood_lesser",
+    ] {
+        let unit = units.iter().find(|u| u["id"] == id).unwrap_or_else(|| panic!("{id} missing from inventory"));
+        assert_eq!(unit["magnitude_token_count"], 0, "{id}: fixture assumption changed, re-check");
+        assert_eq!(
+            unit["status"], "not-ingested",
+            "{id}: zero-magnitude option-pool class_feature confirmed unheld by the engine must be not-ingested, not unknown or text-complete"
+        );
+        assert_eq!(
+            unit["evidence"],
+            "class_feature_option_pool_record_not_held_by_engine"
+        );
+    }
+
+    // No unknown class_feature may carry magnitude_token_count == 0 -- that
+    // combination is now unreachable by construction (it either finds an
+    // owner and grounds/defers through the existing paths, or falls to the
+    // text_only check above and lands not-ingested).
+    let mut violations = 0usize;
+    for unit in units {
+        if unit["status"] == "unknown"
+            && unit["kind"] == "class_feature"
+            && unit["magnitude_token_count"] == 0
+        {
+            violations += 1;
+            eprintln!("VIOLATION: {} is unknown with magnitude_token_count 0", unit["id"]);
+        }
+    }
+    assert_eq!(violations, 0, "found {violations} unknown class_feature units with no magnitude token");
+}
+
 /// The inventory must cover EVERY corpus book, including the ones no code has
 /// read — that is the completeness guarantee, and it is what makes a
 /// full-corpus run viable. A book that vanishes from the roster is a silent
@@ -566,7 +688,25 @@ fn every_corpus_book_appears_in_the_inventory() {
              is not listed is a book whose work is invisible"
         );
     }
-    assert_eq!(listed.len(), on_disk.len());
+    // Every on-disk roleplaying_game book must be listed, and the only
+    // entries the inventory may carry beyond that set are the books
+    // enumerated from their own corpus roots via `EXTRA_BOOK_DIRS`:
+    // `ultimate_psionics` (SD-28, dreamscarred_press) and the twelve SD-30
+    // campaign_setting books.
+    let on_disk_set: std::collections::HashSet<String> = on_disk.iter().cloned().collect();
+    let extra: std::collections::HashSet<String> =
+        listed.difference(&on_disk_set).cloned().collect();
+    let expected: std::collections::HashSet<String> = ["ultimate_psionics"]
+        .into_iter()
+        .chain(SD30_CAMPAIGN_SETTING_BOOKS.iter().copied())
+        .map(str::to_string)
+        .collect();
+    assert_eq!(
+        extra, expected,
+        "the inventory must list exactly the on-disk roleplaying_game books plus \
+         the EXTRA_BOOK_DIRS roster (ultimate_psionics + the twelve SD-30 \
+         campaign_setting books)"
+    );
 
     // And every un-ingested book must contribute real, named units rather than
     // being skipped: that is what makes `not-started` a measurement.
@@ -582,5 +722,179 @@ fn every_corpus_book_appears_in_the_inventory() {
         "expected the large majority of un-ingested books to contribute \
          not-started units, saw {}",
         unstarted_books.len()
+    );
+}
+
+/// SD-30: the twelve campaign_setting books (Book of the Damned ×2, Inner Sea
+/// World Guide + nine Inner Sea modules). Kept in one place so the roster
+/// assertions above and the per-book assertions below can never disagree
+/// about which books SD-30 added.
+const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
+    "book_of_the_damned_volume_1",
+    "book_of_the_damned_volume_2",
+    "inner_sea_world_guide",
+    "inner_sea_combat",
+    "inner_sea_faiths",
+    "inner_sea_gods",
+    "inner_sea_magic",
+    "inner_sea_races",
+    "inner_sea_temples",
+    "inner_sea_taverns",
+    "inner_sea_bestiary",
+    "inner_sea_intrigue",
+];
+
+/// SD-30: every campaign_setting book on the pinned sixteen-book list must
+/// appear in the inventory like any other un-ingested book -- a real books[]
+/// entry registered `future_state`, real corpus files seen, and every unit it
+/// contributes at `not-started` (no compiled rule set claims any of them).
+/// Without this, cycle step 0 and definition-of-done item 4 are unexecutable
+/// for twelve of SD-30's sixteen books.
+#[test]
+fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
+    let _dir = corpus_or_skip!();
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        println!("SKIP: docs/work-inventory.json has not been generated yet");
+        return;
+    };
+    let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
+    let books = doc["books"].as_array().expect("books array");
+    let units = doc["units"].as_array().expect("units array");
+
+    for id in SD30_CAMPAIGN_SETTING_BOOKS {
+        let book = books
+            .iter()
+            .find(|b| b["id"].as_str() == Some(id))
+            .unwrap_or_else(|| panic!("{id} must appear in the inventory's books list"));
+        assert_eq!(
+            book["scope"].as_str(),
+            Some("future_state"),
+            "{id} must be registered as future_state (data/stubs/{id}.json), got {:?}",
+            book["scope"]
+        );
+        let enumerated = book["files_enumerated"].as_u64().unwrap_or(0);
+        let not_enumerated = book["files_not_enumerated"]
+            .as_array()
+            .map(|a| a.len() as u64)
+            .unwrap_or(0);
+        assert!(
+            enumerated + not_enumerated > 0,
+            "{id} must see real corpus files (enumerated or explicitly not), got none"
+        );
+        for unit in units.iter().filter(|u| u["book"].as_str() == Some(id)) {
+            assert_eq!(
+                unit["status"].as_str(),
+                Some("not-started"),
+                "unit {} of {id} must be not-started (no compiled rule set claims \
+                 this book), was {:?}",
+                unit["id"],
+                unit["status"]
+            );
+        }
+    }
+}
+
+/// SD-28: `ultimate_psionics` (Dreamscarred Press, a flat corpus directory
+/// outside `roleplaying_game`) must appear in the inventory like any other
+/// book -- real enumerated files, real kinds -- even though its `.pcc` has
+/// no `PCC:` includes.
+///
+/// **This test's premise changed since it was written, and the assertion
+/// below reflects that verified change, not a convenience relaxation
+/// (`decisions.md §32`).** UPsi genuinely had no compiled rule set when this
+/// test was authored, so every one of its units was blanket `not-started`.
+/// UPsi has since landed a real feat catalog (221 records,
+/// `decisions.md §50`) and an archetype-swap table (15 records,
+/// `decisions.md §51`), so `RuleSetId::Upsi` has been in `COMPILED_RULE_SETS`
+/// for multiple cycles now (unrelated to SD28-E15's equipment-classifier
+/// fix, which never touches this const -- confirmed by `git log -p` on this
+/// file finding no local diff near it). Once a book has ANY compiled rule
+/// set, `classify()` stops returning blanket `not-started` and evaluates
+/// each unit against real per-kind engine facts instead -- so UPsi's units
+/// now carry a real, granular mix of statuses (`not-ingested`/`unknown` for
+/// the un-landed majority, `text-complete`/`unknown` for the landed feat
+/// catalog, `grounded` for 4 race traits), never `not-started`. The old
+/// blanket assertion was asserting a fact about the world that stopped being
+/// true partway through this program, not a fact this fix broke.
+#[test]
+fn ultimate_psionics_appears_in_the_inventory_with_real_per_kind_status() {
+    let _dir = corpus_or_skip!();
+    let path = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("docs/work-inventory.json");
+    let Ok(text) = std::fs::read_to_string(&path) else {
+        println!("SKIP: docs/work-inventory.json has not been generated yet");
+        return;
+    };
+    let doc: serde_json::Value = serde_json::from_str(&text).expect("inventory is valid JSON");
+
+    let books = doc["books"].as_array().expect("books array");
+    let book = books
+        .iter()
+        .find(|b| b["id"].as_str() == Some("ultimate_psionics"))
+        .expect("ultimate_psionics must appear in the inventory's books list");
+
+    assert!(
+        book["files_enumerated"].as_u64().unwrap_or(0) > 0,
+        "ultimate_psionics must enumerate at least one real .lst file, got {:?}",
+        book["files_enumerated"]
+    );
+
+    let not_enumerated: Vec<String> = book["files_not_enumerated"]
+        .as_array()
+        .expect("files_not_enumerated array")
+        .iter()
+        .filter_map(|v| v.as_str().map(|s| s.to_string()))
+        .collect();
+    assert!(
+        not_enumerated.iter().any(|f| f == "up_powers.lst"),
+        "up_powers.lst must land in files_not_enumerated -- mapping it to Spell \
+         is deliberately deferred to Epic 9. Saw: {not_enumerated:?}"
+    );
+
+    let kinds = book["kinds"].as_object().expect("kinds object");
+    for expected in ["class", "race", "feat", "equipment"] {
+        assert!(
+            kinds.contains_key(expected),
+            "ultimate_psionics must contribute at least a {expected} unit; kinds \
+             seen were {:?}",
+            kinds.keys().collect::<Vec<_>>()
+        );
+    }
+
+    let units = doc["units"].as_array().expect("units array");
+    let up_units: Vec<&serde_json::Value> =
+        units.iter().filter(|u| u["book"].as_str() == Some("ultimate_psionics")).collect();
+    assert!(!up_units.is_empty(), "ultimate_psionics must contribute real, named units");
+
+    // No unit may EVER be `not-started` once a compiled rule set claims the
+    // book -- `not-started` means "no engine table for this book was even
+    // consulted", which is no longer true for any UPsi unit. This is the
+    // one assertion carried forward unchanged from the original test's
+    // intent (verifying the not-started/compiled-book status boundary),
+    // just inverted to match which side of that boundary UPsi is now on.
+    for unit in &up_units {
+        assert_ne!(
+            unit["status"].as_str(),
+            Some("not-started"),
+            "unit {} of ultimate_psionics must NOT be not-started -- RuleSetId::Upsi has been \
+             in COMPILED_RULE_SETS since the feat catalog landed, so this book's units must \
+             receive a real per-kind verdict, was {:?}",
+            unit["id"],
+            unit["status"]
+        );
+    }
+
+    // The landed feat catalog (decisions.md §50, 221 records) must show up
+    // as real progress, not merely "not not-started" -- pins the positive
+    // half of the boundary this test now checks.
+    let feat_statuses: std::collections::BTreeSet<&str> = up_units
+        .iter()
+        .filter(|u| u["kind"].as_str() == Some("feat"))
+        .filter_map(|u| u["status"].as_str())
+        .collect();
+    assert!(
+        feat_statuses.contains("text-complete") || feat_statuses.contains("grounded"),
+        "ultimate_psionics' landed feat catalog must produce at least one text-complete or \
+         grounded feat unit, statuses seen were {feat_statuses:?}"
     );
 }

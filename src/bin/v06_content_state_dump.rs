@@ -50,7 +50,17 @@ use codex::rules_core::rules_tables::crb::{
     race_tables::{RaceId, race_id_from_token, race_traits},
     spell_list as crb_spell_list,
 };
+use codex::rules_core::rules_tables::advanced_race_guide as arg;
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::rules_tables::pathfinder_unchained as pu;
+use codex::rules_core::rules_tables::pathfinder_unchained::class_chassis::PuClassId;
+use codex::rules_core::rules_tables::ultimate_campaign as uca;
+use codex::rules_core::rules_tables::ultimate_equipment as ue;
+use codex::rules_core::rules_tables::ultimate_combat as uc;
+use codex::rules_core::rules_tables::ultimate_magic as um;
+use codex::rules_core::rules_tables::ultimate_psionics as upsi;
+use codex::rules_core::rules_tables::ultimate_wilderness as uw;
+use codex::rules_core::rules_tables::ultimate_intrigue as ui;
 use codex::rules_core::rules_tables::RuleSetId;
 
 /// The shared deterministic pilot input fixture, relative to the crate root.
@@ -183,6 +193,194 @@ fn acg_content() -> BookContent {
                 ingested: acg::equipment_tables::equipment_tables().len() as u32,
             },
             KindCount { kind: "feats", ingested: acg::feats::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD-27. These two were missing from the emitted list even though the engine
+/// has compiled their tables since SD-27 landed, so every consumer of this
+/// dump — the dashboard included — reported four books and silently omitted
+/// two. Same defect shape as `v06_work_inventory::rule_set_for`: the
+/// `RuleSetId` match below is exhaustive and was forced to grow, but this
+/// hand-listed roster was not, and nothing failed.
+fn arg_content() -> BookContent {
+    BookContent {
+        id: "advanced_race_guide",
+        kinds: vec![
+            // ARG declares zero races and zero racial defaults
+            // (`decisions.md §25`) — a measured zero, asserted by
+            // `race_catalog.rs`. Its race work is 153 alternate racial traits,
+            // which are deliberately not race rows.
+            KindCount { kind: "races", ingested: 0 },
+            KindCount {
+                kind: "classes",
+                ingested: arg::class_spell_levels::ARG_CLASS_SPELL_LEVELS.len() as u32,
+            },
+            KindCount { kind: "spells", ingested: arg::spell_list::SPELL_LIST.len() as u32 },
+            KindCount {
+                kind: "equipment",
+                ingested: arg::equipment_tables::equipment_tables().len() as u32,
+            },
+            KindCount { kind: "feats", ingested: arg::feats::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+fn pu_content() -> BookContent {
+    BookContent {
+        id: "pathfinder_unchained",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: PuClassId::ALL.len() as u32 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount {
+                kind: "equipment",
+                ingested: pu::equipment_tables::equipment_tables().len() as u32,
+            },
+            KindCount { kind: "feats", ingested: pu::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E13. Same hand-listed-roster shape `arg_content()`/`pu_content()`'s
+/// own doc comment warns about: the `RuleSetId` match below is exhaustive
+/// and was forced to grow a `Uca` arm, but this roster is not
+/// compiler-enforced, so it is added explicitly here rather than trusted to
+/// follow automatically.
+fn uca_content() -> BookContent {
+    BookContent {
+        id: "ultimate_campaign",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount { kind: "equipment", ingested: 0 },
+            KindCount { kind: "feats", ingested: uca::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E24. Same hand-listed-roster shape `uca_content()`'s own doc
+/// comment warns about -- the `RuleSetId` match below is exhaustive and
+/// was forced to grow a `Ui` arm, but this roster is not
+/// compiler-enforced, so it is added explicitly here rather than trusted
+/// to follow automatically. Slices 1-2: feats, spells, equipment. (Caught
+/// while wiring UE: this roster was never updated when slice 2 landed
+/// spell/equipment -- fixed here.) `class_feature`/races/classes remain
+/// real, verified zeros, not yet ingested.
+fn ui_content() -> BookContent {
+    BookContent {
+        id: "ultimate_intrigue",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: ui::spell_list::SPELL_LIST.len() as u32 },
+            KindCount {
+                kind: "equipment",
+                ingested: (ui::equipment_tables::equipment_tables().len()
+                    + ui::equipment_tables::equipmod_tables().len()) as u32,
+            },
+            KindCount { kind: "feats", ingested: ui::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E25. Same hand-listed-roster shape `ui_content()` above warns
+/// about. First slice: equipment only (no feats file exists in this
+/// book -- see `ultimate_equipment::equipment_tables`'s own doc comment).
+fn ue_content() -> BookContent {
+    BookContent {
+        id: "ultimate_equipment",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount {
+                kind: "equipment",
+                ingested: (ue::equipment_tables::equipment_tables().len()
+                    + ue::equipment_tables::equipmod_tables().len()) as u32,
+            },
+            KindCount { kind: "feats", ingested: 0 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E26. Same hand-listed-roster shape the sibling `*_content()`
+/// functions above warn about. First slice: feats only.
+fn uw_content() -> BookContent {
+    BookContent {
+        id: "ultimate_wilderness",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount { kind: "equipment", ingested: 0 },
+            KindCount { kind: "feats", ingested: uw::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E27. Same hand-listed-roster shape the sibling `*_content()`
+/// functions above warn about. First slice: feats only.
+fn uc_content() -> BookContent {
+    BookContent {
+        id: "ultimate_combat",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount { kind: "equipment", ingested: 0 },
+            KindCount { kind: "feats", ingested: uc::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E28/E15. Same hand-listed-roster shape the sibling `*_content()`
+/// functions above warn about. SD28-E15 adds the equipment slice (26
+/// records: 24 General + 2 ArmsArmor) alongside the earlier feat catalog.
+fn um_content() -> BookContent {
+    BookContent {
+        id: "ultimate_magic",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount {
+                kind: "equipment",
+                ingested: um::equipment_tables::equipment_tables().len() as u32,
+            },
+            KindCount { kind: "feats", ingested: um::feat_tables::feat_tables().len() as u32 },
+            KindCount { kind: "monsters", ingested: 0 },
+        ],
+    }
+}
+
+/// SD28-E29/E15. Same hand-listed-roster shape the sibling `*_content()`
+/// functions above warn about. SD28-E15 adds the equipment slice (552
+/// records: 326 equipment + 226 equipmods) alongside the earlier feat
+/// catalog.
+fn upsi_content() -> BookContent {
+    BookContent {
+        id: "ultimate_psionics",
+        kinds: vec![
+            KindCount { kind: "races", ingested: 0 },
+            KindCount { kind: "classes", ingested: 0 },
+            KindCount { kind: "spells", ingested: 0 },
+            KindCount {
+                kind: "equipment",
+                ingested: (upsi::equipment_tables::equipment_tables().len()
+                    + upsi::equipment_tables::equipmod_tables().len())
+                    as u32,
+            },
+            KindCount { kind: "feats", ingested: upsi::feat_tables::feat_tables().len() as u32 },
             KindCount { kind: "monsters", ingested: 0 },
         ],
     }
@@ -479,7 +677,21 @@ fn main() {
         }
     };
 
-    let books = [crb_content(), apg_content(), acg_content(), bestiary1_content()];
+    let books = [
+        crb_content(),
+        apg_content(),
+        acg_content(),
+        bestiary1_content(),
+        arg_content(),
+        pu_content(),
+        uca_content(),
+        ui_content(),
+        ue_content(),
+        uw_content(),
+        uc_content(),
+        um_content(),
+        upsi_content(),
+    ];
     let monsters = monster_states(&repo_root);
     let races = race_states(&fixture);
     let wired = probe_feat_effect_wiring(&fixture);
@@ -585,6 +797,16 @@ fn main() {
             // SD-27: `all_feat_tables()` now yields ARG and PU tables too.
             RuleSetId::Arg => "advanced_race_guide",
             RuleSetId::Pu => "pathfinder_unchained",
+            RuleSetId::Uca => "ultimate_campaign",
+            RuleSetId::Ui => "ultimate_intrigue",
+            // UE has no feats file at all (`decisions.md`/`epic-25`'s own
+            // corpus-shape note) -- this arm exists only for exhaustiveness;
+            // `all_feat_tables()` never yields a `Ue` table.
+            RuleSetId::Ue => "ultimate_equipment",
+            RuleSetId::Uw => "ultimate_wilderness",
+            RuleSetId::Uc => "ultimate_combat",
+            RuleSetId::Um => "ultimate_magic",
+            RuleSetId::Upsi => "ultimate_psionics",
         };
         let records = table.entries.len();
         let wired_here = table

@@ -11,11 +11,19 @@
 pub mod acg;
 pub mod advanced_race_guide;
 pub mod apg;
+pub mod archetype_swap;
 pub mod beastiary1;
 pub mod class_spell_levels;
 pub mod crb;
 pub mod feats_all;
 pub mod pathfinder_unchained;
+pub mod ultimate_campaign;
+pub mod ultimate_equipment;
+pub mod ultimate_intrigue;
+pub mod ultimate_combat;
+pub mod ultimate_magic;
+pub mod ultimate_psionics;
+pub mod ultimate_wilderness;
 
 /// Identifies which Paizo rule book a table cell or resolved corpus
 /// record belongs to.
@@ -27,5 +35,18 @@ pub enum RuleSetId {
     Bestiary1,
     Arg,
     Pu,
-    // future: Um, ...
+    Uca,
+    /// Ultimate Intrigue. SD-28 Epic 24 -- first record family (feats).
+    Ui,
+    /// Ultimate Equipment. SD-28 Epic 25 -- first record family (equipment).
+    Ue,
+    /// Ultimate Wilderness. SD-28 Epic 26 -- first record family (feats).
+    Uw,
+    /// Ultimate Combat. SD-28 Epic 27 -- first record family (feats).
+    Uc,
+    /// Ultimate Magic. SD-28 Epic 28 -- first record family (feats).
+    Um,
+    /// Ultimate Psionics. SD-28 Epic 29 -- first record family (feats).
+    /// Dreamscarred Press, not Paizo -- the last Ultimate book.
+    Upsi,
 }

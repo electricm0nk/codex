@@ -311,6 +311,8 @@ The high-pressure inputs from GE-01 map into GE-02 as follows:
 - Effects, prerequisites, formulas, and choices are first-class structures, not prose notes.
 - Imported content must preserve source lineage and diagnostic posture.
 - Authored source content and compiled runtime IR are separate authority surfaces.
+- **(2026-08-02)** Every imported rule record carries `wiring_class` and `wiring_class_signals`, per `artifacts/canonical-model-specification.md` §"Required field: `wiring_class`". The class vocabulary and its determination rules are GE-01's, at `../GE-01-legacy-corpus-and-conversion-matrix/artifacts/wiring-class-determination.md`, and are cited rather than restated here. A record whose class is `ambiguous` MUST mint a `Diagnostic`; an unclassifiable record is an unresolved construct, not a default.
+- **(2026-08-02)** The class is determined from a record's **token closure** — its base row plus every `.MOD` row targeting it — never from the base row alone; 8,234 corpus `.MOD` rows carry a magnitude token that would otherwise be invisible. Records also carry `upstream_implementation_marker`, which reports PCGen's own `[Not Implemented]` admission and MUST NOT feed `wiring_class` in either direction.
 
 ## Deferred design decisions
 - exact stable ID syntax and namespace delimiter

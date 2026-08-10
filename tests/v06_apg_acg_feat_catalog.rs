@@ -250,7 +250,7 @@ fn cross_book_feat_key_repeats_are_exactly_the_known_set() {
 #[test]
 fn the_aggregate_catalog_spans_every_ingested_book() {
     let books = all_feat_tables();
-    assert_eq!(books.len(), 5);
+    assert_eq!(books.len(), 11);
 
     let entries_for = |rule_set: RuleSetId| {
         books
@@ -265,9 +265,15 @@ fn the_aggregate_catalog_spans_every_ingested_book() {
     assert_eq!(entries_for(RuleSetId::Acg), 129);
     assert_eq!(entries_for(RuleSetId::Arg), 187);
     assert_eq!(entries_for(RuleSetId::Pu), 17);
+    assert_eq!(entries_for(RuleSetId::Uca), 23);
+    assert_eq!(entries_for(RuleSetId::Ui), 104);
+    assert_eq!(entries_for(RuleSetId::Uw), 135);
+    assert_eq!(entries_for(RuleSetId::Uc), 261);
+    assert_eq!(entries_for(RuleSetId::Um), 144);
+    assert_eq!(entries_for(RuleSetId::Upsi), 221);
 
     let total: usize = books.iter().map(|b| b.entries.len()).sum();
-    assert_eq!(total, 690, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU");
+    assert_eq!(total, 1578, "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi");
 }
 
 #[test]

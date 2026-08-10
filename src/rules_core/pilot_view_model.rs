@@ -10,6 +10,7 @@ use super::pilot_compute::{
     HeadlessReceiptStatus, PilotHeadlessReceipt, SelectedSkillModifiers,
 };
 use super::pilot_failure::{FailureClassifier, PrimaryOwner};
+use super::spellbook::SpellbookCoverage;
 
 /// Bounded GE-06 pilot view model derived from the merged headless receipt.
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -36,6 +37,82 @@ pub struct PilotSnapshot {
     /// one -- `None` for every class that does not, never an empty or
     /// zeroed stat block. See `PilotCompanionViewModel`.
     pub companion: Option<PilotCompanionViewModel>,
+    /// The character's spellbook coverage (spell save DCs), when
+    /// `spellbook::compute_spellbook_coverage` grounded at least one save
+    /// DC for this build -- `None` for a non-caster or a build with no
+    /// resolved spells, never a zeroed block.
+    ///
+    /// Does NOT carry slot totals/used counts: that would duplicate the
+    /// already-real, already-tested `class_spell.*.total_spells_per_day.*`
+    /// chassis computation (`pilot_compute.rs`'s per-class base-spells
+    /// tables + ability-bonus-spell tables, e.g. `arcanist_base_spells_per_day`,
+    /// `witch_total_spells_per_day`), which the desktop "Spells per day"
+    /// section already renders via `spellsPerDayModel.ts`. See
+    /// `spellbook::SpellbookCoverage`'s doc comment and `decisions.md`
+    /// Decision 37 for why `slots_total`/`slots_used` were deleted rather
+    /// than populated (epic-31-spell-wiring gap closure, 2026-08-07) --
+    /// Decision 36's "hand-maintained structure beside its real source"
+    /// pattern, instance nine.
+    ///
+    /// `None` unconditionally for `PilotSnapshot::from_receipt` below: the
+    /// merged headless receipt carries no `SourcePackageContent`, and
+    /// `compute_spellbook_coverage` requires the corpus to resolve a
+    /// spell's school/level. The one production call site with a real
+    /// corpus is `pf1_adapter::resolve_unified_pilot_snapshot`, which
+    /// builds this field itself via `PilotSpellbookViewModel::from_coverage`
+    /// (epic-31-spell-wiring; see that function's doc comment for the
+    /// "twin problem" this closes -- `decisions.md §29.1`/§29.2`,
+    /// `docs/release/SD-28-ultimate-book-content-ingestion/artifacts/e14-harness-widening.md`).
+    pub spellbook: Option<PilotSpellbookViewModel>,
+}
+
+/// One resolved spell's magnitude, projected for display: its own level
+/// (the figure the save DC is attributable to) and its own save DC when
+/// that spell's class grounds one.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PilotSpellSaveDc {
+    pub class_id: String,
+    pub dc: u8,
+}
+
+/// Bounded spellbook surface for the pilot view model
+/// (epic-31-spell-wiring). Projects `spellbook::SpellbookCoverage` --
+/// already a real, magnitude-bearing computation (`SpellEffect.level` read
+/// from the canonical spell-list table, `spell_save_dc` derived from it) --
+/// into a display-ready surface. Adds no rules truth of its own; every
+/// value here comes from the engine's own `compute_spellbook_coverage`.
+///
+/// Deliberately has NO `slots_total`/`slots_used` fields -- see
+/// `PilotSnapshot::spellbook`'s doc comment and `decisions.md` Decision 37.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct PilotSpellbookViewModel {
+    /// The saving-throw DC for the highest-level spell of that class
+    /// present in the character's spellbook (`10 + spell level + casting
+    /// ability modifier`), keyed by the granting class id.
+    pub spell_save_dc: Vec<PilotSpellSaveDc>,
+}
+
+impl PilotSpellbookViewModel {
+    /// `None` when the coverage carries no save-DC magnitude at all (a
+    /// non-caster, or a caster with no spell yet resolved against the
+    /// corpus) -- never an empty-but-present block, matching the
+    /// `damage_reduction`/`companion` "absent, not zeroed" convention
+    /// already established on this struct.
+    pub fn from_coverage(coverage: &SpellbookCoverage) -> Option<Self> {
+        if coverage.spell_save_dc.is_empty() {
+            return None;
+        }
+        Some(Self {
+            spell_save_dc: coverage
+                .spell_save_dc
+                .iter()
+                .map(|(class_id, &dc)| PilotSpellSaveDc {
+                    class_id: class_id.clone(),
+                    dc,
+                })
+                .collect(),
+        })
+    }
 }
 
 /// One grounded companion statistic, projected from its own
@@ -311,6 +388,7 @@ impl PilotSnapshot {
                 selected_modifier: receipt.computation.selected_skill_modifiers,
             },
             companion: PilotCompanionViewModel::from_receipt(receipt),
+            spellbook: None,
         }
     }
 }

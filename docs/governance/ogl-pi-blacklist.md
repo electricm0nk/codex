@@ -149,7 +149,24 @@ not silently diverge from this shared file:
   <OGL | PI> because <reason>.
 ```
 
-No entries yet — cycles 2.0.6-2.0.9 (CRB, APG, ACG, Bestiary 1 retro-fits)
+### Per-book override: Advanced Class Guide (added by cycle GE-01 wiring_class/PI-screening convergence, 2026-08-03)
+
+- New term discovered not in §2 above: `Jarn` — classified PI (personal
+  name; "creatures characters ... personas" per OGL §1(e)) because ACG's
+  own E2.0.8 retrofit found this example NPC name embedded in
+  `advanced_class_guide/spell/discern_next_of_kin.json`'s flavor text
+  while sampling the book's real description text (recorded in that
+  retrofit's own method note, but never folded back into this file or
+  into `src/rules_core/pi_screening.rs`'s shared `PI_BLACKLIST_TERMS` —
+  the gap this entry closes). Folded into the SHARED term list (not kept
+  ACG-only), per this section's own instruction, so a future book
+  carrying the same name is also caught. Verified before folding it in:
+  `Jarn` occurs nowhere else in `data/corpus` or the PCGen source corpus,
+  and no other blacklist term is a substring of it or vice versa, so
+  adding it does not widen redaction anywhere beyond this one already-
+  redacted record. `PI_BLACKLIST_TERMS` is now 55 terms (54 + this one).
+
+No other entries yet — cycles 2.0.6-2.0.9 (CRB, APG, ACG, Bestiary 1 retro-fits)
 append here as they run.
 
 ## 5. Per-book `LICENSE.json` template

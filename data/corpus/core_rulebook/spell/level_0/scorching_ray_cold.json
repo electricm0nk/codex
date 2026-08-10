@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-07-22T23:36:36Z",
+  "ingested_at": "2026-08-03T17:42:22Z",
   "data": {
     "key": "Scorching Ray (Cold)",
     "school": "Evocation",
@@ -15,6 +15,11 @@
     "line": 1462,
     "record_key": "Scorching Ray (Cold)"
   },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null

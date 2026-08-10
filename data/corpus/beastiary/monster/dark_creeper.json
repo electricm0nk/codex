@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-07-30T00:05:00Z",
+  "ingested_at": "2026-08-07T20:21:41Z",
   "data": {
     "id": "beastiary1:monster:dark_creeper",
     "name": "Dark Creeper",
@@ -20,6 +20,10 @@
     "line": 89,
     "record_key": "Dark Creeper"
   },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
   "license": "OGL",
   "pi_field": null,
   "pi_marker": null
