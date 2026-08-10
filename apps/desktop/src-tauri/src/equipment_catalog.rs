@@ -53,10 +53,12 @@
 
 use serde::{Deserialize, Serialize};
 
+use codex::rules_core::equipment_resolver::equipment_catalog_rows;
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_equipment as ue, ultimate_intrigue as ui,
+    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_magic as um,
+    ultimate_psionics as upsi,
 };
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -70,12 +72,35 @@ const BOOK_ARG: &str = "ARG";
 const BOOK_PU: &str = "PU";
 const BOOK_UI: &str = "UI";
 const BOOK_UE: &str = "UE";
+const BOOK_UM: &str = "UM";
+const BOOK_UPSI: &str = "UPSI";
 
 /// Every book code this catalog can emit, in the order
 /// `build_equipment_catalog` emits them.
-pub const EQUIPMENT_CATALOG_BOOKS: &[&str] = &[
-    BOOK_CRB, BOOK_APG, BOOK_ACG, BOOK_B1, BOOK_ARG, BOOK_PU, BOOK_UI, BOOK_UE,
-];
+///
+/// **Derived, not restated.** This used to be a hand-maintained literal
+/// array — the exact shape that let UE (then UM, then UPsi) go on
+/// serving real, priced rows through `equipment_resolver`'s
+/// `equipment_catalog_rows()` while remaining invisible to the picker,
+/// three separate times, because nobody remembered to append the new
+/// code to this second, independent list. Deriving it from the
+/// resolver's own row set — the identical structural fix `646aea2b`
+/// applied to `v06_work_inventory.rs`'s `equipment_keys` — makes a
+/// fourth divergence impossible rather than merely caught by a test:
+/// a book landing in the resolver chain appears here automatically, with
+/// no second edit to remember. Order is first-appearance in the
+/// resolver's own row order, which is the same book order
+/// `build_equipment_catalog` below chains in.
+pub fn equipment_catalog_books() -> Vec<&'static str> {
+    let mut seen = std::collections::BTreeSet::new();
+    let mut books = Vec::new();
+    for row in equipment_catalog_rows() {
+        if seen.insert(row.book) {
+            books.push(row.book);
+        }
+    }
+    books
+}
 
 /// The category name used for every `pathfinder_unchained` record — see
 /// this module's doc comment.
@@ -95,7 +120,7 @@ pub struct EquipmentCatalogEntryDto {
     pub name: String,
     pub cost_gp: Option<f64>,
     /// Which ingested book this record came from: one of
-    /// [`EQUIPMENT_CATALOG_BOOKS`]. Additive field — a consumer that does
+    /// [`equipment_catalog_books`]. Additive field — a consumer that does
     /// not read it is unaffected, and one that does can label or filter
     /// by book the way the Spell Catalog screen already does.
     pub book: String,
@@ -239,6 +264,46 @@ fn map_ue_entry(entry: &ue::equipment_tables::EquipmentTableEntry) -> EquipmentC
     }
 }
 
+/// UM's entry type reuses UE/UI's own shape exactly (own `EquipmentCategory`
+/// enum, `description` sourced the same way). `equipment_tables()` (24
+/// General pregenerated spellbooks + 2 ArmsArmor Scrollmaster Gear rows =
+/// 26 records) and `equipmod_tables()` (a real, permanently-empty slice --
+/// no equipment-modifier file exists for this book, see that module's own
+/// doc comment) are both chained under `BOOK_UM`, mirroring UI/UE's own
+/// choice to serve equipment and equipmods under one book code. Structural
+/// gap this closes: `equipment_resolver.rs`'s headless pricing/recognition
+/// chain (`§55`, extended in the UM/UPsi landing decisions) already carried
+/// this book; the picker's own independent, hand-maintained book chain had
+/// not, so a genuinely purchasable-by-price item was still absent from the
+/// Add Equipment / Equipment Catalog screens.
+fn map_um_entry(entry: &um::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
+    EquipmentCatalogEntryDto {
+        key: entry.key.to_string(),
+        category: format!("{:?}", entry.category),
+        name: entry.name.to_string(),
+        cost_gp: entry.cost_gp,
+        book: BOOK_UM.to_string(),
+        description: entry.description.map(serve_description),
+    }
+}
+
+/// UPsi's entry type reuses UE/UI's own shape exactly. `equipment_tables()`
+/// (326 records) and `equipmod_tables()` (113 records -- the correct,
+/// `VISIBLE:NO` `.COPY=` legacy-alias-excluded count; see
+/// `ultimate_psionics::equipment_tables`'s own doc comment for the
+/// reconciliation) are both chained under `BOOK_UPSI`, same reasoning as
+/// UM above.
+fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
+    EquipmentCatalogEntryDto {
+        key: entry.key.to_string(),
+        category: format!("{:?}", entry.category),
+        name: entry.name.to_string(),
+        cost_gp: entry.cost_gp,
+        book: BOOK_UPSI.to_string(),
+        description: entry.description.map(serve_description),
+    }
+}
+
 /// Build the full catalog response across every ingested book. A thin,
 /// testable wrapper behind the Tauri command below (mirroring this
 /// codebase's other command/pure-fn split, e.g.
@@ -260,6 +325,10 @@ pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
         .chain(ui::equipment_tables::equipmod_tables().iter().map(map_ui_entry))
         .chain(ue::equipment_tables::equipment_tables().iter().map(map_ue_entry))
         .chain(ue::equipment_tables::equipmod_tables().iter().map(map_ue_entry))
+        .chain(um::equipment_tables::equipment_tables().iter().map(map_um_entry))
+        .chain(um::equipment_tables::equipmod_tables().iter().map(map_um_entry))
+        .chain(upsi::equipment_tables::equipment_tables().iter().map(map_upsi_entry))
+        .chain(upsi::equipment_tables::equipmod_tables().iter().map(map_upsi_entry))
         .collect();
 
     EquipmentCatalogResponse { entries }
@@ -284,7 +353,7 @@ pub struct EquipmentCatalogFilter {
     /// Exact match against the `EquipmentCategory` variant name verbatim
     /// (e.g. "ArmsArmor"), as projected onto `EquipmentCatalogEntryDto::category`.
     pub category: Option<String>,
-    /// Exact match against a book code in [`EQUIPMENT_CATALOG_BOOKS`]
+    /// Exact match against a book code in [`equipment_catalog_books`]
     /// (e.g. "APG"). Omitted/`None` spans every book, so an existing
     /// caller that never sends this field is unaffected — the same
     /// additive shape `SpellCatalogFilter::book` already uses.
@@ -575,9 +644,14 @@ mod tests {
         assert_eq!(with_description("PU"), 42);
         assert_eq!(with_description("UI"), 41);
         assert_eq!(with_description("UE"), 435);
+        // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
+        // `DESC:` token; all 24 General spellbooks do).
+        assert_eq!(with_description("UM"), 24);
+        // 216 of UPsi's 326 equipment + 95 of its 113 equipmods = 311.
+        assert_eq!(with_description("UPSI"), 311);
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            3332
+            3667
         );
     }
 
@@ -627,17 +701,25 @@ mod tests {
         // dupe - 55 cross-book collisions = 1,369; 190 raw - 10 collisions
         // = 180).
         assert_eq!(count_by_book(&response, "UE"), 1549);
+        // 24 General (pregenerated spellbooks) + 2 ArmsArmor (Scrollmaster
+        // Gear); no `um_equipmods.lst` file exists for this book. Matches
+        // `equipment_resolver::EQUIPMENT_BOOK_UM`'s own pinned 26.
+        assert_eq!(count_by_book(&response, "UM"), 26);
+        // 326 equipment + 113 equipmods (the `VISIBLE:NO` `.COPY=`
+        // legacy-alias-excluded count). Matches
+        // `equipment_resolver::EQUIPMENT_BOOK_UPSI`'s own pinned 439.
+        assert_eq!(count_by_book(&response, "UPSI"), 439);
 
-        // 2977 + 338 + 269 + 4 + 200 + 42 + 98 + 1549. Pinned as a total as
-        // well as per book so that a book silently dropping out of the
-        // chain cannot be masked by another book growing.
-        assert_eq!(response.entries.len(), 5477);
+        // 2977 + 338 + 269 + 4 + 200 + 42 + 98 + 1549 + 26 + 439. Pinned as
+        // a total as well as per book so that a book silently dropping out
+        // of the chain cannot be masked by another book growing.
+        assert_eq!(response.entries.len(), 5942);
     }
 
     #[test]
     fn every_book_code_is_a_declared_one_and_every_declared_code_is_present() {
         let response = build_equipment_catalog();
-        let declared: BTreeSet<&str> = EQUIPMENT_CATALOG_BOOKS.iter().copied().collect();
+        let declared: BTreeSet<&str> = equipment_catalog_books().into_iter().collect();
         let seen: BTreeSet<&str> = response.entries.iter().map(|e| e.book.as_str()).collect();
         assert_eq!(
             seen,
@@ -800,8 +882,9 @@ mod tests {
             book: None,
         });
 
-        // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU + 14 UI + 269 UE.
-        assert_eq!(response.entries.len(), 718);
+        // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU + 14 UI + 269 UE
+        // + 2 UM + 52 UPSI.
+        assert_eq!(response.entries.len(), 772);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }
@@ -831,10 +914,14 @@ mod tests {
 
     #[test]
     fn filter_equipment_catalog_with_an_unknown_book_matches_nothing() {
+        // "UM" used to be this test's sentinel -- it stopped being unknown
+        // the moment UM joined the catalog, so a genuinely unassigned code
+        // is needed instead ("ZZ" is not, and never has been, declared by
+        // `equipment_catalog_books`).
         let response = filter_equipment_catalog(&EquipmentCatalogFilter {
             name_contains: None,
             category: None,
-            book: Some("UM".to_owned()),
+            book: Some("ZZ".to_owned()),
         });
         assert!(response.entries.is_empty());
     }

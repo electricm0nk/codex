@@ -6285,7 +6285,12 @@ mod tests {
     #[test]
     fn every_equipmods_row_the_picker_offers_is_recognized_by_the_attach_gate() {
         let offered = offered_modifier_rows();
-        assert_eq!(offered.len(), 950, "the picker's real offered-row count");
+        // 950 + UPsi's 113 real, alias-excluded equipmods (SD28 item 5 --
+        // `up_equipmods.lst`'s `EQUIPMODS_TABLE`, already the corrected
+        // count with the 113 `VISIBLE:NO` `.COPY=` legacy aliases excluded
+        // at the table's own source; UM contributes 0, it has no
+        // equipment-modifier file at all).
+        assert_eq!(offered.len(), 1063, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()
@@ -6380,12 +6385,14 @@ mod tests {
             "the widening must not add a display-vs-charge divergence outside the two named books"
         );
         assert_eq!(
-            priced_non_crb, 90,
+            priced_non_crb, 114,
             "the 20 rows from the ACG/ARG widening (ACG 11 + ARG 9), plus 69 real non-zero-priced \
              UE equipmods (75 UE equipmod rows carry a real cost, 6 of them Some(0.0) and so \
              excluded here), plus 1 more: `Masterwork Tool`'s own resolved row is UE's 50 gp \
-             General item, not its free Equipmods row -- see this test's own doc comment -- \
-             every one a row a recognition-only fix would have attached for free"
+             General item, not its free Equipmods row -- see this test's own doc comment -- plus \
+             24 real non-zero-priced UPsi equipmods (of 113, the rest are `None` or `Some(0.0)`; \
+             UM contributes none, it has no equipment-modifier file), every one a row a \
+             recognition-only fix would have attached for free"
         );
     }
 
@@ -6398,7 +6405,7 @@ mod tests {
         let resolver_books: std::collections::BTreeSet<&str> =
             equipment_catalog_rows().iter().map(|row| row.book).collect();
         let catalog_books: std::collections::BTreeSet<&str> =
-            crate::equipment_catalog::EQUIPMENT_CATALOG_BOOKS.iter().copied().collect();
+            crate::equipment_catalog::equipment_catalog_books().into_iter().collect();
         assert_eq!(resolver_books, catalog_books);
     }
 
