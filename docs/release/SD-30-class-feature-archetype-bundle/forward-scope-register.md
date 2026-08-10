@@ -1,14 +1,18 @@
 # Forward-Scope Register — SD-30
 
-This register captures work downstream of SD-30. SD-30 ships the final
-content-ingest slot on the post-2026-08-01 trio (SD-28, SD-29, SD-30).
-SD-30's successor bundles would consume SD-30's outputs, but the next
-post-tranche bundle isn't yet named; it's recorded here as **Class 1**.
-Bundles that depend on the four deferred books (NPC Codex and Planar
-Adventures, absent from the corpus; Occult Origins and Haunted Heroes
-Handbook, present but deferred by operator choice 2026-08-01) live in
-**Class 2** as deferred.
-SD-30-specific retrofits land in **Class 3**.
+**Re-scoped 2026-08-10 (`decisions.md §33-38`).** SD-30 is no longer the
+sixteen-book content bundle this register was written for — it is now the
+`class_feature`/archetype bundle, corpus-wide across 23 books. The book-list
+entries below (Class 2's C2.1-C2.4, Class 3's C3.1-C3.3) are **retired as
+moot**, not merely stale: they deferred specific *books* from a book-scoped
+bundle that no longer has a book list. Retained inline, marked RETIRED, so
+the reasoning is not lost. A new C1.3 records SD-30's own inheritance as the
+`class_feature`/archetype successor `corpus-work-channels.md §9.1` funded.
+
+This register captures work downstream of SD-30. SD-30's successor bundles
+would consume SD-30's outputs, but the next post-tranche bundle isn't yet
+named; it's recorded here as **Class 1**. SD-30-specific retrofits land in
+**Class 3**.
 
 ## Class 0 — Doctrinal anchors (always-on)
 
@@ -37,7 +41,8 @@ opens.
 
 ### C1.2 — Class-grant overlap with SD-28
 
-**Owner:** SD-30.
+**Owner:** SD-30. **Unchanged by the 2026-08-10 re-scope** — this is a class-identity join, not a
+book-list item.
 
 **What depends on SD-30:** SD-30 owns canonical class definitions for the
 four shared classes (Occultist, Spiritualist, Medium, Mesmerist) that
@@ -45,89 +50,108 @@ appear in both Ultimate Intrigue (SD-28's territory) and Occult
 Adventures (SD-30's territory). SD-28's Epic 6 references the canonical
 class id from SD-30's progress; SD-30 does not redefine.
 
-## Class 2 — Future-acquired (deferred)
+### C1.3 — `class_feature`/archetype: SD-30 is the named successor `corpus-work-channels.md §9.1` funded (2026-08-10)
 
-### C2.1 — NPC Codex
+**Owner:** SD-30 itself (this bundle) — recorded for cross-reference, mirroring
+`SD-29-corpus-wide-catch-up-lanes/successor-forward-scope-register.md C1.3`, which named
+`class_feature`'s owner as "whichever bundle executes `corpus-work-channels.md §9.1`", SD number
+unassigned at the time it was written (SD-29's `decisions.md §38.4`, same wording).
+
+**What SD-30 inherits:** the full `class_feature` population (15,472 units, 23 books,
+`decisions.md §33`) and SD-28's already-landed measurement (`§60`/`§63`/`§64` — 25/28 classes
+hand-verified, 175 mechanisms, two wiring shapes; `decisions.md §34` verifies this directly against
+the SD-28 decisions, not the commit message alone). Not a cold start.
+
+**Cross-bundle doc:** `SD-29-corpus-wide-catch-up-lanes/successor-forward-scope-register.md C1.3`
+should be read alongside this entry; both name the same funded effort from opposite sides.
+
+## Class 2 — RETIRED 2026-08-10 (book-list deferrals, moot under the `class_feature` re-scope)
+
+**The four book-specific deferrals below (C2.1-C2.4) are retired, not merely stale.** They deferred
+whole *books* from a book-scoped bundle. SD-30 no longer has a book list — see `decisions.md §35`.
+NPC Codex and Planar Adventures were already confirmed absent from the whole corpus (Decision §32's
+re-verification), so nothing changes for them regardless of scope shape. Occult Origins and Haunted
+Heroes Handbook are real corpus directories; if either ever carries `class_feature` units, SD-30
+picks them up automatically as part of its corpus-wide `class_feature` scope — no separate deferral
+decision is needed, and none is recorded here. If either carries only non-`class_feature` content,
+SD-29's corpus-wide lanes own it. Retained below, verbatim, for the audit trail.
+
+### C2.1 — NPC Codex (RETIRED — moot, book-list scope no longer exists)
 
 The NPC Codex is a real Paizo product; the corpus directory is not
 under `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/`
-as of 2026-08-01. Per the 2026-08-01 absent-book rule, NPC Codex drops
-from scope. A future bundle (or runtime operator directive) may acquire
-the LST data and bring it in.
+as of 2026-08-01 (re-confirmed 2026-08-02, `decisions.md §32`). Per the 2026-08-01 absent-book rule,
+NPC Codex dropped from the old book-scoped scope. Under the `class_feature` re-scope this is moot —
+SD-30 has no book list to defer it from; if the book is ever acquired and carries `class_feature`
+units, it is in scope automatically.
 
-### C2.2 — Planar Adventures
+### C2.2 — Planar Adventures (RETIRED — moot, book-list scope no longer exists)
 
 Same disposition as C2.1 — Planar Adventures is a real Paizo product
-without a `planar_adventures/` corpus directory. Deferred.
+without a `planar_adventures/` corpus directory. Retired as moot under the re-scope.
 
-### C2.3 — Occult Origins
+### C2.3 — Occult Origins (RETIRED — moot, book-list scope no longer exists)
 
 **Present in the corpus** at
 `~/workspace/repos/pcgen/data/pathfinder/paizo/player_companion/occult_origins/`
-(7 `.lst`, `_occult_origins.pcc`; verified 2026-08-01). The 07-30 stub's
-"not present" finding searched only `roleplaying_game/`. Deferred from SD-30
-by explicit operator choice 2026-08-01 — no acquisition needed; a future
-bundle picks it up directly.
+(7 `.lst`, `_occult_origins.pcc`; verified 2026-08-01). Previously deferred from SD-30's old
+sixteen-book scope by explicit operator choice. Retired as moot under the re-scope — SD-30 now picks
+up whatever `class_feature` content this book carries automatically, as one of the 23 in-scope books
+(if any; not confirmed present in the 23-book table at `decisions.md §33`, re-check at Epic 4-F1's
+class inventory). Any non-`class_feature` content is SD-29's corpus-wide territory.
 
-### C2.4 — Haunted Heroes Handbook
+### C2.4 — Haunted Heroes Handbook (RETIRED — moot, book-list scope no longer exists)
 
 **Present in the corpus** at
 `~/workspace/repos/pcgen/data/pathfinder/paizo/player_companion/haunted_heroes_handbook/`
-(14 `.lst`, `_haunted_heroes_handbook.pcc`; verified 2026-08-01). The 07-30
-stub searched the bare stem `haunted_heroes` and the wrong subtree. Deferred
-from SD-30 by explicit operator choice 2026-08-01 — no acquisition needed; a
-future bundle picks it up directly.
+(14 `.lst`, `_haunted_heroes_handbook.pcc`; verified 2026-08-01). Same disposition as C2.3 — retired
+as moot under the re-scope.
 
 ## Class 3 — Retrofit (operator-on-request)
 
-### C3.1 — Mythic Adventures reach-surface prerequisite
+### C3.1 — Mythic Adventures reach-surface prerequisite (RETIRED as book-wide; narrowed to `class_feature` tier features only)
 
-Mythic Adventures' reach surfaces are existential (the mythic path
-mechanics + tier features + monster stat blocks all require consumer
-integration). Per `decisions.md §18` reach-gate = DoD, cycles pause on
-`decision-blocked` if no consumer surface reaches the gate.
+**Narrowed, not fully retired**, unlike C2.1-C2.4 — Mythic Adventures' *mythic-path tier features* are
+`class_feature`-shaped and stay in SD-30's scope; its monster stat blocks and non-`class_feature`
+mechanics do not (SD-29's territory now). Per `decisions.md §18` reach-gate = DoD, Epic 6 cycles pause
+on `decision-blocked` if no consumer surface reaches the gate for a mythic-path tier feature.
 
-The remedy is either (a) a campaign-tool consumer epic inside SD-30, or
-(b) a separate bundle that consumes Mythic Adventures' records. The
+The remedy is either (a) a campaign-tool consumer epic inside SD-30, or (b) a separate bundle. The
 operator decides per cycle — when attended.
 
-**Unattended safe default (2026-08-01, per `loop-instruction.md` UNATTENDED
-MODE):** never invent a surface and never add an epic on the cycle's own
-authority. Classify each record family into `RECORD_TYPE_KINDS` (with the
-surface that really renders it) or `SUPPORTING_RECORD_TYPES` (with why it is
-a facet of an existing family) only where honestly justifiable; otherwise
-record an `OPEN_FINDINGS` entry naming the remedy, count it as a cycle
-shortfall (Definition-of-done items 2 and 6), record `decision-blocked` in
-`progress.md` with the reason, and continue to the next ready card. The
-operator rules on (a)-vs-(b) after return.
+**Unattended safe default (2026-08-01, per `loop-instruction.md` UNATTENDED MODE):** never invent a
+surface and never add an epic on the cycle's own authority. Classify each record family into
+`RECORD_TYPE_KINDS` or `SUPPORTING_RECORD_TYPES` only where honestly justifiable; otherwise record an
+`OPEN_FINDINGS` entry naming the remedy, count it as a cycle shortfall, record `decision-blocked` in
+`progress.md`, and continue to the next ready card.
 
-### C3.2 — Occult Adventures psychic-discipline consumer surface
+### C3.2 — Occult Adventures psychic-discipline consumer surface (RETIRED as book-wide; narrowed to `class_feature` scope)
 
-Occult Adventures' psychic-discipline mechanics (`psychic_discipline_*`
-records) require a class-feature consumer surface to satisfy reach.
-`reach_gate.rs OPEN_FINDINGS` flags missing surfaces per the per-cycle
-audit.
+**Narrowed, not fully retired** — Occult Adventures' psychic-discipline mechanics are
+`class_feature`-shaped (per-class chooser content, same family as archetype/discovery/mystery pools
+per `decisions.md §38`) and stay in scope for Epic 4/6's characterization. Non-`class_feature` Occult
+Adventures content (spells, equipment) is SD-29's.
 
-**Unattended safe default (2026-08-01):** same rule as C3.1 — classify into
-an existing family via `SUPPORTING_RECORD_TYPES` only where the discipline
-genuinely surfaces as a class feature the sheet already renders; otherwise
-`OPEN_FINDINGS` + recorded shortfall + `decision-blocked`, and move on. Do
-not build a new consumer surface on the cycle's own authority.
+**Unattended safe default (2026-08-01):** same rule as C3.1 — classify into an existing family via
+`SUPPORTING_RECORD_TYPES` only where the discipline genuinely surfaces as a class feature the sheet
+already renders; otherwise `OPEN_FINDINGS` + recorded shortfall + `decision-blocked`, and move on.
 
-### C3.3 — Inner Sea series campaign-tool surface
+### C3.3 — Inner Sea series campaign-tool surface (RETIRED — moot, no non-`class_feature` Inner Sea content is SD-30's)
 
-The Inner Sea series (×9 modules) is primarily campaign-setting data
-(traits, regions, factions). Per-book ingest produces canonical records;
-the cycle's reach gate may flag missing consumer integration (e.g.,
-a campaign-setup wizard surface). Per-cycle gap filing.
+The Inner Sea series (×9 modules) is primarily campaign-setting data (traits, regions, factions) —
+none of that is `class_feature`-shaped. **Fully retired under the re-scope**: SD-29's corpus-wide
+lanes own every Inner Sea kind except `class_feature`, and Inner Sea's `class_feature` population is
+small (`inner_sea_combat` 314, `inner_sea_magic` 218, `inner_sea_world_guide` 171, `inner_sea_intrigue`
+169, per `decisions.md §33`'s table — likely per-class archetype content, tracked inside Epic 4/6 like
+any other book, not a standalone campaign-tool-surface risk).
 
-**Unattended safe default (2026-08-01):** same rule as C3.1 — ingest the
-record families whose surfaces exist (traits and feats the sheet renders);
-for campaign-tool-only families, `OPEN_FINDINGS` + recorded shortfall +
-`decision-blocked`, and move on. No campaign-setup wizard is built on the
-cycle's own authority.
+## Class 4 — Measured inheritance from tranche/7 (SD-30-specific, derived 2026-08-01; re-scope caveat 2026-08-10)
 
-## Class 4 — Measured inheritance from tranche/7 (SD-30-specific, derived 2026-08-01)
+**Caveat added 2026-08-10:** the four findings below (C4.1-C4.5) were derived against the old
+sixteen-book scope. Under the re-scope, SD-30 only ingests `class_feature` content from these books;
+where a finding is about a different kind (a spell list, a monster count), it is now informational —
+SD-29 owns the ingest that would trigger it. Where a finding is about `class_feature` content
+specifically (C4.2's Shaman Spirits, keyed to class features), it remains live and unchanged.
 
 Findings that are **about this bundle specifically**. Zero tranche/7 deferrals route to SD-30 — the
 register says so rather than filling the table. Its real inheritance was found instead by grepping
@@ -213,10 +237,12 @@ Reopen SD-30's forward-scope register when:
 
 - A successor bundle reaches into SD-30's outputs.
 - A class-grant resolution fires for the four shared classes.
-- Operator authorizes NPC Codex / Planar Adventures / Occult Origins /
-  Haunted Heroes retrofit.
-- A missing-surface gap is recorded in `reach_gate.rs OPEN_FINDINGS`
-  for Occult / Mythic / Inner Sea records.
+- A missing-surface gap is recorded in `reach_gate.rs OPEN_FINDINGS` for a `class_feature` record
+  (Mythic tier features, Occult psychic disciplines, or any other class's chooser content).
+- Epic 4 names a successor for the remainder of the per-class measurement, or funds the
+  chooser-interaction primitive design for Oracle/Arcanist/Sorcerer.
+- The 303-unit genuinely-unreachable `unknown` subset or the 1,772-unit unclustered remainder
+  (`decisions.md §38`) gets an operator ruling on net-new engine work.
 - The post-`tranche/10` consumer is operator-named.
 
 Closed-form: the bundle closes when the Closure Epilogue fires.

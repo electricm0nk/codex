@@ -314,7 +314,7 @@ boundary):
   mechanic); SD-27 (closed, Shape B schema); SD-28 (sequential-before, per `decisions.md §34`);
   `docs/governance/license-matrix.md` (commit `314a7ad9`, provenance evidence Epic 3 cites, all 37
   books).
-- **Collides with:** SD-30 (`docs/release/SD-30-occult-and-companion-content-ingestion/`) — its
+- **Collides with:** SD-30 (`docs/release/SD-30-class-feature-archetype-bundle/`) — its
   sixteen-book list is now a subset of SD-29's corpus-wide lane scope. Flagged, not resolved — see
   `decisions.md §38.5`, `risks-and-open-questions.md`.
 - **Blocks:** None in-cycle; `class_feature`'s successor owner (unassigned SD number, see "Out of

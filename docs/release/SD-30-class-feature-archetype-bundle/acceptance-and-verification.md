@@ -12,18 +12,45 @@ build_version_target: 0.10.<build>
 Tests are Given/When/Then format, paired with the technical requirements
 in `technical-requirements.md` and the epics in `epic-breakdown.md`.
 
+**Re-scoped 2026-08-10** (`decisions.md §33-38`). "Sixteen in-scope corpus dirs" below is retired
+language — read as "the 23 `class_feature`-bearing corpus dirs, `decisions.md §33`" throughout this
+file unless a criterion explicitly says otherwise. AT-30-001 is updated inline for the Epic
+5-mechanism exception to the `pilot_compute.rs` touch restriction; a new AT-30-012 covers the
+per-class measurement gate.
+
 ## AT-30-001 — Per-cycle file-touch partition
 
-Given a per-book ingest cycle for `<book>` where `<book>` ∈ sixteen in-scope corpus dirs.
+Given an Epic 6 chassis-sweep cycle for `<book>` where `<book>` ∈ the 23 `class_feature`-bearing
+corpus dirs (`decisions.md §33`), or an Epic 5 mechanism cycle for `<class>`.
 
 When the cycle writes files.
 
 Then:
 
-- Files written under `src/rules_core/rules_tables/<book>/`, `data/corpus/<book>/`, `src/bin/sd30_*`, `tests/sd30_*`, or `docs/release/SD-30-.../`.
-- No file written under `src/rules_core/pilot_compute.rs`, `src/rules_core/rules_tables/<other_book>/`, `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
+- Epic 6: files written under `src/rules_core/rules_tables/<book>/`, `data/corpus/<book>/`,
+  `src/bin/sd30_*`, `tests/sd30_*`, or `docs/release/SD-30-.../`. No file written under
+  `src/rules_core/pilot_compute.rs`, `src/rules_core/rules_tables/<other_book>/`,
+  `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
+- Epic 5 (the one exception): files may be written under `src/rules_core/pilot_compute.rs` and
+  `src/rules_core/archetype_resolver.rs`, scoped to the target class's own supersession/chooser
+  branch only — verified by diff review, not just a path check.
 
 Evidence: per-cycle receipt carries the audit command and the captured exit code.
+
+## AT-30-012 — Per-class measurement gate (NEW, 2026-08-10)
+
+Given an Epic 5 or Epic 6 cycle claiming a class-scoped card.
+
+When the cycle claims the card in `kanban.md`.
+
+Then:
+
+- The cycle's receipt in `progress.md` cites that class's Epic 4 measurement receipt
+  (`wired-able / named`, direct evidence, no proxy).
+- A cycle that claims a class with no such receipt is a protocol violation, recorded as a finding at
+  the next Bundle Code Review (Epic 8) if not caught earlier.
+
+Evidence: `progress.md` receipt cross-reference; `kanban.md` claim log.
 
 ## AT-30-002 — Reach-gate claim (PRIME RULE)
 
@@ -143,7 +170,7 @@ When the publish commit fires (fired 2026-08-01).
 Then:
 
 - The source-of-record directory (`programs/codex/requirements/SD-30-.../`) is removed.
-- The canonical repo-resident home (`docs/release/SD-30-occult-and-companion-content-ingestion/`) carries the 13+ file chassis.
+- The canonical repo-resident home (`docs/release/SD-30-class-feature-archetype-bundle/`) carries the 13+ file chassis.
 
 ## AT-30-012 — Local-file work-queue dispatch
 

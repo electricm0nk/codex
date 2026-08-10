@@ -22,7 +22,7 @@ corpus-wide lane scope, and this package's write scope does not extend to resolv
 | R-29-006 | Trap-report finds new trap patterns (e.g., a monster with overlay metadata only present in B5 not B2) | Cycle records the trap; trap catalog needs extension | Trap catalog extension is per-cycle operator-pinned; cycle records new pattern and moves to next ready card |
 | R-29-007 | Bestiary 5 records overlap with prior books (Adventurer's Guide races, etc.) | Cycle records the overlap; operator decides which bundle owns the canonical record | Trap-report surfaces the overlap in cycle-0; operator-pinned per-record which bundle owns the canonical definition |
 | R-29-008 | A lane's Pipeline-B content (`rules_tables/*.rs`) ships a Product-Identity leak, the same shape as the three real leaks `docs/governance/license-matrix.md` already found in other bundles' tables | Unredacted PI content in committed source | Epic 3's per-lane PI-blacklist sweep is a hard gate on every lane's first content commit per book (AT-29-003a); a hit is a stop, not a routed-around finding |
-| R-29-009 | SD-30 (`docs/release/SD-30-occult-and-companion-content-ingestion/decisions.md §1`) owns a planning-ready sixteen-book list, dispatched per-book, not re-cut by this package's corpus-wide re-scope (`decisions.md §38.5`). Every one of those sixteen books carries units of SD-29's now-corpus-wide lanes — the same (kind, book) cells. Two writers (an SD-29 lane cycle and an SD-30 per-book cycle) can land on the same table file for the same book | Duplicate or conflicting canonical records for the same content; wasted cycle time; possible silent overwrite | **Not mitigated within this package** — flagged as an open item for the operator (OQ-29-004). SD-29's own write scope does not extend to re-scoping SD-30. Until the operator resolves it, dispatch discipline (this package's own kanban, and whoever dispatches SD-30's) must manually avoid double-claiming the same (kind, book) cell |
+| R-29-009 | **RESOLVED 2026-08-10** — SD-30 (`docs/release/SD-30-occult-and-companion-content-ingestion/decisions.md §1`) owned a planning-ready sixteen-book list, dispatched per-book, not re-cut by this package's corpus-wide re-scope (`decisions.md §38.5`). Every one of those sixteen books carried units of SD-29's now-corpus-wide lanes — the same (kind, book) cells. Two writers (an SD-29 lane cycle and an SD-30 per-book cycle) could land on the same table file for the same book | Duplicate or conflicting canonical records for the same content; wasted cycle time; possible silent overwrite | **Resolved structurally, not by dispatch discipline.** Operator directive 2026-08-10 re-scoped SD-30 to the `class_feature` bundle (the one kind lane this package's `§38.4` leaves out); SD-30's sixteen-book list dissolved outright. No (kind, book) cell is now claimed by both packages — SD-29 claims every kind except `class_feature` corpus-wide, SD-30 claims only `class_feature` corpus-wide. See `docs/release/SD-30-class-feature-archetype-bundle/decisions.md §33-35` (renamed from `SD-30-occult-and-companion-content-ingestion` via `git mv`) and this package's own `decisions.md §38.5` resolution note. |
 
 ## Open questions
 
@@ -51,20 +51,23 @@ per-book epic to gate or swap. Bestiary 5's units are simply distributed across 
 originally seven) books each lane already covers. Preserved here as a historical record of a
 question the old structure needed and the new one does not.
 
-### OQ-29-004 — SD-30 collision: does SD-30 need to be re-scoped or retired? (2026-08-10)
+### OQ-29-004 — CLOSED 2026-08-10 — SD-30 collision: does SD-30 need to be re-scoped or retired?
 
 **Question:** SD-29's re-scope to corpus-wide lanes (`decisions.md §38`) makes SD-30's sixteen-book
 list a subset of SD-29's scope. What should SD-30 become — retired outright, folded into SD-29's
 lanes, or narrowed to the content SD-29's lanes genuinely do not reach (if any remains after the
 overlap is mapped)?
 
-**Not answered here — explicitly out of this package's write scope.** The brief that produced this
-decision was explicit: flag, do not resolve, and do not re-scope SD-30 from SD-29's package. See
-`decisions.md §38.5` for the collision as measured (every one of SD-30's sixteen books carries units
-of SD-29's now-corpus-wide lanes) and R-29-009 above for the dispatch-collision consequence if both
-packages run cycles unmodified.
+**Answer: re-scoped, not retired or folded in.** Operator directive 2026-08-10: SD-30 becomes the
+`class_feature` bundle — the one kind lane this package's own `§38.4` names as staying out of SD-29's
+scope, funded through `corpus-work-channels.md §9.1` and previously unassigned to any SD number
+(`successor-forward-scope-register.md C1.3`). SD-30's sixteen-book list dissolves outright, not
+narrowed to a subset of those sixteen books — see `docs/release/SD-30-class-feature-archetype-bundle/decisions.md
+§33-35` for the full resolution (renamed from `SD-30-occult-and-companion-content-ingestion` via
+`git mv`, this package's own `decisions.md §38.5` cross-references it). R-29-009 above is resolved by
+the same directive.
 
-**Owner:** operator. This is the single largest open item this re-scope produces.
+**Owner:** resolved by operator directive 2026-08-10. No further action from this package.
 
 ### OQ-29-003 — Operator action on Hermes-board references in pre-SD-29 doctrine
 
@@ -91,6 +94,7 @@ Reopen SD-29's risk register when:
 - The cross-bundle monster-record join (SD-22 Bestiary 1 ∪ SD-29's corpus-wide lane scope) breaks.
 - The trap-report catalog gains a new pattern that affects more than one book.
 - Operator authorizes a bulk-modification retrofit.
-- A successor bundle is named (including `class_feature`'s successor, OQ tracked in `decisions.md §38.4`).
-- The operator resolves the SD-30 collision (OQ-29-004) — this register's mitigation for R-29-009
-  needs updating once that happens, whichever way it resolves.
+- A successor bundle is named (`class_feature`'s successor is now SD-30, resolved 2026-08-10 —
+  `decisions.md §38.4`/OQ-29-004 no longer open).
+- **CLOSED 2026-08-10:** the operator resolved the SD-30 collision (OQ-29-004) — SD-30 became the
+  `class_feature` bundle; R-29-009's mitigation is updated in place above, not left pending.

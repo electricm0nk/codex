@@ -36,7 +36,7 @@ documented shape, not as a code dependency.
 
 ### C1.2 — Cross-bundle class overlap (SD-30)
 
-**Owner:** SD-30 (`./../SD-30-occult-and-companion-content-ingestion/` — repo-resident canonical home; workspace source-of-record removed on publish per move-not-copy doctrine).
+**Owner:** SD-30 (`./../SD-30-class-feature-archetype-bundle/` — repo-resident canonical home; workspace source-of-record removed on publish per move-not-copy doctrine).
 
 **What depends on SD-28:** Classes shared between Ultimate Intrigue and
 Occult Adventures (Occultist, Spiritualist, Medium, Mesmerist) have their
@@ -175,7 +175,7 @@ dispatches first pays it; the others re-verify rather than re-implement.**
 
 ### C4.5 — The `.MOD` schema question is resolved; SD-28 inherits Ruling B
 
-`../SD-30-occult-and-companion-content-ingestion/decisions.md §29` resolves the `.MOD` schema question
+`../SD-30-class-feature-archetype-bundle/decisions.md §29` resolves the `.MOD` schema question
 pre-dispatch, and it binds SD-28 because **Ultimate Magic carries 538 `.MOD` spell rows and Ultimate
 Combat 159**.
 

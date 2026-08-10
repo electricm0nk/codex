@@ -576,7 +576,7 @@ Then the predicate is a set membership test — exact, reproducible, and identic
 
 **This is SD-27 `decisions.md §27.1` recurring one layer up** — *625 mentions vs 271 settings; the arithmetic was never the defect, the label was.* There the label was ambiguous between two readings of one file; here it is ambiguous between four readings of one tree.
 
-**Authority:** operator directive 2026-08-01; evidence in `docs/retro/tranche-7-retrospective.md` and `forward-scope-register.md §7.5`; cross-referenced from `../SD-28-ultimate-book-content-ingestion/forward-scope-register.md §C4.3` and `../SD-30-occult-and-companion-content-ingestion/forward-scope-register.md §C4.5`.
+**Authority:** operator directive 2026-08-01; evidence in `docs/retro/tranche-7-retrospective.md` and `forward-scope-register.md §7.5`; cross-referenced from `../SD-28-ultimate-book-content-ingestion/forward-scope-register.md §C4.3` and `../SD-30-class-feature-archetype-bundle/forward-scope-register.md §C4.5` (renamed 2026-08-10 from `SD-30-occult-and-companion-content-ingestion`).
 
 ## Decision 32 — The "only writer" premise was false, and it lived in SD-27, not here (2026-08-01)
 
@@ -1166,6 +1166,21 @@ now claim. **This is a live collision, not a hypothetical one:** if both package
 against the same book's same kind, two writers land on the same table file. Recorded as an explicit
 open item for the operator in `risks-and-open-questions.md` — not resolved here, per the brief's
 explicit instruction not to re-scope SD-30 from this package.
+
+**RESOLVED 2026-08-10, from SD-30's side, recorded here by cross-reference (reference-and-resolution
+only, per that change's write-scope authorization — SD-29's own scope/epics are untouched by this
+addition).** Operator directive: SD-30 becomes the `class_feature` bundle — the one kind lane this
+package's `§38.4` explicitly leaves out. SD-30's sixteen-book list dissolves outright (not narrowed to
+a `class_feature`-only subset of those sixteen books — SD-30's real `class_feature` population spans
+23 books, most of them books this sixteen-book list never named, e.g. `advanced_class_guide` at 2,396
+units alone exceeds the old list's ten Inner Sea modules combined). Full detail:
+`docs/release/SD-30-class-feature-archetype-bundle/decisions.md §33-35` (renamed via `git mv` from
+`SD-30-occult-and-companion-content-ingestion`, history preserved).
+
+**Collision closed structurally, not by dispatch discipline.** After SD-30's re-scope, no kind is
+claimed by both packages in any book: SD-29 claims every kind except `class_feature`, corpus-wide
+(this package's own `§38`); SD-30 claims only `class_feature`, corpus-wide. The two-writer risk this
+section flagged required a shared (kind, book) cell, and none remains.
 
 ### 38.6 What does not change
 

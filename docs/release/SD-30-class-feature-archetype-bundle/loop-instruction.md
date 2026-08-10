@@ -182,12 +182,17 @@ All of the following, each checkable by someone who was not present:
 
 ## Epic ordering
 
+**Re-cut 2026-08-10** (`decisions.md §33-38`, `epic-breakdown.md`). The sixteen-per-book-epic
+ordering this section previously described is retired; the current 9-epic dependency chain is:
+
 - **Epic 1 (Identifier Cleanup)** fires FIRST. No other epic may start until Epic 1 is closed.
 - **Epic 2 (Operator Pre-Launch)** is the pre-launch gate. Pre-launch checklist verifies before any other epic starts.
-- **Epics 3-N+ (per-book content-source ingest: occult + mythic + Monster Codex + Inner Sea + Book of the Damned ×2, sixteen books total)** may run in any order per the file-touch partition. Per-book epics may group Inner Sea's nine modules into one shared epic or split per book; epic-boundary decision is at Cycle 2's inventory gate.
-- **Closure Epilogue** fires LAST. Tranche promotion PR fires only after all other epics close.
-- **Build Version Numbering** fires after Epic 1, before Closure. First concrete value `0.10.<build>` per `decisions.md §15`.
-- **Epic 21 (Bundle Code Review)** fires after Build Version Numbering and every content-ingest epic, before Closure. Reviews the whole bundle's diff against its branch point, not the closing cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per `decisions.md §26`.
+- **Epic 3 (PI-Screening Provenance Gate)** fires after Epic 2; stands as a standing gate re-invoked by every Epic 6 cycle after that, not a one-time epic.
+- **Epic 4 (Per-Class Archetype Measurement)** runs continuously from after Epic 2 onward, clearing classes one at a time; never fully "completes" in the sense of blocking dispatch.
+- **Epic 5 (Archetype Mechanism)** and **Epic 6 (Per-Class Chassis Sweep)** dispatch per class, each gated on that class's Epic 4 clearance (Epic 6 additionally gated on Epic 5 for that class). Different classes' Epic 5/6 cycles may run in any order per the file-touch partition, file-disjoint by class and by `rules_tables/<book>/` path.
+- **Closure Epilogue (Epic 9)** fires LAST. Tranche promotion PR fires only after all other epics close.
+- **Build Version Numbering (Epic 7)** fires after Epic 1, before Closure. First concrete value `0.10.<build>` per `decisions.md §15`.
+- **Bundle Code Review (Epic 8)** fires after Build Version Numbering and Epics 5/6's cycles for that pass, before Closure. Reviews the whole bundle's diff against its branch point, not the closing cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per `decisions.md §26`.
 
 ## Hard stops
 
@@ -272,4 +277,4 @@ See `decisions.md` for the running decision record. Each decision is dated, name
 
 ## Per-bundle progress file
 
-`docs/release/SD-30-occult-and-companion-content-ingestion/progress.md` — this package's own directory, where the move-not-copy publish landed it — carries the per-cycle receipt. (Corrected 2026-08-01: an earlier revision pointed at `~/workspace/programs/codex/requirements/SD-30-.../progress.md`, a directory that does not exist.) Do not use a shared chassis-lane progress file; each bundle's progress is its own.
+`docs/release/SD-30-class-feature-archetype-bundle/progress.md` — this package's own directory, where the move-not-copy publish landed it — carries the per-cycle receipt. (Corrected 2026-08-01: an earlier revision pointed at `~/workspace/programs/codex/requirements/SD-30-.../progress.md`, a directory that does not exist.) Do not use a shared chassis-lane progress file; each bundle's progress is its own.

@@ -58,10 +58,13 @@ not wait for every lane.
 
 ### C1.3 — `class_feature` (15,472 units corpus-wide) inherits `corpus-work-channels.md §9.1`'s per-class archetype funding
 
-**Owner:** whichever bundle executes `../corpus-work-channels.md §9.1`'s funded per-class
-hand-verification — not yet assigned an SD number. Not SD-29. **Widened from 90 units to 15,472
-units by the 2026-08-10 corpus-wide re-scope** (`decisions.md §38.4`); originally added by the
-kind-lane re-cut (`decisions.md §37.4`) at the retired seven-book, 90-unit figure.
+**Owner: ASSIGNED 2026-08-10 — SD-30** (`docs/release/SD-30-class-feature-archetype-bundle/`, renamed
+via `git mv` from `SD-30-occult-and-companion-content-ingestion` the same day). Not SD-29. Previously
+recorded as "not yet assigned an SD number"; the operator's 2026-08-10 directive closed that gap by
+re-scoping SD-30 (whose old sixteen-book list this same directive dissolved, see OQ-29-004/R-29-009
+above) into the `class_feature` bundle — the exact assignment this entry anticipated. **Widened from
+90 units to 15,472 units by the 2026-08-10 corpus-wide re-scope** (`decisions.md §38.4`); originally
+added by the kind-lane re-cut (`decisions.md §37.4`) at the retired seven-book, 90-unit figure.
 
 **What depends on SD-29:** nothing — this is the reverse relationship. `class_feature` (15,472
 units, 40.2% of the corpus) is Channel D per `../corpus-work-channels.md §3`/`§5.4`: blocked behind

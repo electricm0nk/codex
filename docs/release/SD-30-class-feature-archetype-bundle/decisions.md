@@ -613,3 +613,298 @@ find ~/workspace/repos/pcgen/data -iname "*planar*"
 **Authority:** `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory` section, `generated_at: 2026-08-02T12:40:01Z`; `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/occult_adventures/` directory listing (2026-08-02); `docs/release/SD-28-ultimate-book-content-ingestion/decisions.md` (E13-E30, Epic 14 harness decision, commit `3eb11a18`); `SD-29-corpus-wide-catch-up-lanes/decisions.md §35` (parallel reconciliation; directory renamed
 2026-08-10 from `SD-29-bestiary-line-book-ingestion` when SD-29 was re-scoped corpus-wide,
 `decisions.md §38` in that package).
+
+---
+
+# Decisions from the 2026-08-10 re-scope onward
+
+**Everything above this line (Decisions 1-32) is the record of the sixteen-book content-bundle era
+and is retained as history, not deleted.** Where a decision above conflicts with a decision below,
+the decision below governs — the re-scope is later in time and higher in authority (a direct operator
+directive). Branch (`tranche/10`), build-version scheme, Hermes-board retirement, reach-gate-as-DoD,
+the `Workflow`-tool operating form, and the cross-bundle class-grant rule for Occultist/Spiritualist/
+Medium/Mesmerist (§5) are **not** touched by the re-scope and continue to apply exactly as decided
+above.
+
+## Decision 33 — SD-30 becomes the `class_feature` bundle; every figure re-derived, one correction made (2026-08-10)
+
+**Status:** New. Operator directive 2026-08-10, following SD-29's corpus-wide re-scope
+(`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`, commit `472acb4f`), which claims every kind
+corpus-wide except `class_feature` and flags-but-does-not-resolve the resulting collision with
+SD-30's sixteen-book list (`§38.5`, `risks-and-open-questions.md` R-29-009/OQ-29-004). The operator
+has now ruled directly: **SD-30 becomes the `class_feature` bundle.** Its book list dissolves; its
+scope becomes the one lane SD-29 cannot take.
+
+**Every figure re-derived independently, not transcribed from the brief that requested this
+decision** — the brief's author flagged that its last three briefs on this work each carried at
+least one wrong figure.
+
+```bash
+cd ~/workspace/repos/codex
+python3 - <<'PY'
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+U = d['units']
+cf = [u for u in U if u['kind']=='class_feature']
+print('total class_feature units', len(cf))
+print('books', len(set(u['book'] for u in cf)))
+c = collections.Counter(u.get('status') for u in cf)
+for k,v in sorted(c.items(), key=lambda x:-x[1]): print(k, v)
+print('sum', sum(c.values()))
+PY
+```
+
+Result: **15,472 `class_feature` units, 23 books.** By status: `not-ingested` 9,078, `not-started`
+3,293, `unknown` 2,958, `grounded` 109, `deferred-with-reason` 34 (sums exactly to 15,472). This
+matches the brief's figures **exactly** — 15,472 / 23 / 40.2% (`15,472 / 38,536` from
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §38.1`'s corpus total) / 9,078 / 3,293 / 2,958 / 109 /
+34, with no correction needed this time. Grounded is **109 of 15,472 = 0.7%**, confirmed.
+
+**The 23 books, by unit count** (re-derived, not carried over from the sixteen-book list — the old
+list and the real `class_feature` book population diverge substantially):
+
+```
+2,396 advanced_class_guide       866 ultimate_wilderness        68 monster_codex
+2,055 advanced_players_guide     777 ultimate_intrigue          18 bestiary_6
+1,422 ultimate_psionics          700 adventurers_guide          11 inner_sea_taverns
+1,412 ultimate_combat            645 advanced_race_guide        10 book_of_the_damned_volume_1
+1,070 ultimate_magic             577 pathfinder_unchained         4 bestiary_4
+  979 occult_adventures          419 horror_adventures
+  959 core_rulebook              314 inner_sea_combat
+                                  218 inner_sea_magic
+                                  212 book_of_the_damned_volume_2
+                                  171 inner_sea_world_guide
+                                  169 inner_sea_intrigue
+```
+
+**Consequence for the old sixteen-book list:** it named the *books*, not the *kind*, and most of its
+sixteen books' `class_feature` populations are small relative to books it never named
+(`advanced_class_guide` alone carries more `class_feature` units, 2,396, than the old scope's ten
+Inner Sea modules combined, 2,155). The book list was never a good proxy for `class_feature` scope
+and dissolving it (Decision §35) is a correction, not just a re-alignment with SD-29.
+
+**Authority:** operator directive 2026-08-10 (verbatim in the brief driving this decision);
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §38, §38.4, §38.5`; `docs/work-inventory.json`.
+
+## Decision 34 — Inheritance from SD-28 `§60`/`§63`/`§64`: verified, not assumed (2026-08-10)
+
+**Status:** New. `class_feature`'s status as a bundle rather than a lane rests entirely on SD-28's
+`§63` finding, and SD-30 inherits real, already-landed groundwork from `§60` and `§64`. Both are
+verified here by reading the decisions directly, not by trusting the brief's or the commit
+messages' summary of them.
+
+**`§60` (2026-08-09): the primitive.** `archetype_resolver::archetype_claims_slot` landed end-to-end
+on Alchemist's Poison Resistance — a real "is this slot claimed by the character's archetype, and if
+so does the archetype's own substitute compute" supersession check, proven reachable per `§43`'s
+standard (a headless pilot receipt test, not a unit test on the resolver alone).
+
+**`§63` (2026-08-10): the sample-size proof.** A second, structurally different class (Fighter,
+non-resource-pool, unlike Alchemist) confirmed the primitive generalizes with zero changes to
+`archetype_resolver.rs` itself, but the *wireable fraction* did not generalize: Fighter 1/22 (5%),
+Alchemist 3/26 (12%), Paladin 16/33 (48%), Bard 23/33 (70%) — a 14x spread with no shared ratio and
+no predictor found (not class type, not slot count, not total real-id count). This is the finding
+that makes `class_feature` unschedulable by extrapolation and forces the bundle shape.
+
+**`§64` (2026-08-10, operator-funded in direct response to `§63`): 25 of 28 archetype-bearing
+classes hand-verified by direct evidence, no automated proxy** (three id-scan proxy iterations had
+already failed on three different naming assumptions per `§63` itself):
+
+```
+TOTAL: 263 wired-able slots / 475 named slots -> 175 real mechanisms (collapsing duplicate
+slot-tier names that supersede one shared computation, e.g. ChannelEnergy1..10 -> one
+channel_energy_dice mechanism) x ~33 lines/mechanism = ~5,775 lines of production wiring.
+```
+
+Per-class spread confirmed by direct re-read of the decision (0% Companion to 100% Skald,
+non-uniform, no blended ratio reported anywhere in `§64` by design). **Two named wiring shapes:**
+
+1. **Supersession** (`archetype_claims_slot`) — 25 classes, 175 mechanisms, ~5,775 lines, a real
+   floor. Proven end-to-end on Alchemist and Fighter.
+2. **Chooser-interaction** — 3 classes excluded from the 175-mechanism total (Oracle, Arcanist,
+   Sorcerer), because their archetype slots name "the thing picked at level N" (a mystery
+   revelation, an exploit, a bloodline power), not one static computation. Real partial grounding
+   exists for each (Oracle: 5 revelations across 5 mysteries; Arcanist: Metamagic Knowledge exploit;
+   Sorcerer: 2+ bloodlines) but no slot-to-mechanism table can represent them honestly. **This shape
+   has no primitive yet** — `archetype_claims_slot` answers a supersession question; these three
+   classes need a "which options remain choosable, and does the substitute grant compute" chooser
+   question, unproven by anything landed in SD-28.
+
+`§64` also found **eleven unmodelled base-class features** incidentally (Druid wild shape, Barbarian
+rage powers, Cavalier banner/charge/mount, Hunter 15/21 slots, Witch patron spells, Shaman
+hex/spirit-magic, Cleric+Druid spontaneous casting, Wizard arcane bond/cantrips, Companion's entire
+advancement subsystem) — engine gaps in core classes' signature mechanics, not archetype problems,
+recorded here so SD-30 does not rediscover them as if new.
+
+**Inherited whole into SD-30:** the primitive, both measurements, the 25-class/175-mechanism/two-
+shape sizing, and the eleven-feature gap list. SD-30's Epic 4 (per-class measurement) extends
+`§63`/`§64`'s method to the classes SD-28 did not reach (all `class_feature`-bearing classes outside
+the 28 archetype-bearing ones `§64` enumerated — e.g. Occultist, Spiritualist, Medium, Mesmerist from
+Occult Adventures, and any Inner Sea/Mythic class content) and to designing the chooser-interaction
+primitive for the 3 excluded classes. SD-30's Epic 5 (archetype mechanism) builds out the measured
+175-mechanism supersession shape.
+
+**Authority:** `SD-28-ultimate-book-content-ingestion/decisions.md §59, §60, §63, §64` (read in full,
+not summarized from commit `9b871bd0`'s message alone, though that commit — "25 of 28 archetype
+classes hand-verified, 175 mechanisms (~5,775 lines), two wiring shapes named" — matches the decision
+text exactly).
+
+## Decision 35 — Collision with SD-29 closed: the sixteen-book list dissolves (2026-08-10)
+
+**Status:** New, resolves `SD-29-corpus-wide-catch-up-lanes/decisions.md §38.5` and that package's
+R-29-009/OQ-29-004 (recorded on both sides — see the mirrored resolution entries added to those
+files in this same change).
+
+**The collision, restated.** SD-29's re-scope made every one of SD-30's sixteen books' non-
+`class_feature` kinds (spell, equipment, monster, monster_ability, race_trait, companion,
+equipment_modifier, feat) part of SD-29's corpus-wide lanes — the same (kind, book) cells SD-30's old
+per-book epics would have dispatched against. Two writers could have landed on the same table file.
+
+**Resolution: SD-30's book list is retired outright, not narrowed.** SD-30 does not keep a reduced
+book list scoped to "whatever `class_feature` content those sixteen books carry" — that would still
+be a book-shaped scope competing conceptually with SD-29's kind-shaped scope, and Decision §33 above
+already shows the sixteen-book list was a poor proxy for `class_feature`'s real 23-book population
+(`advanced_class_guide` alone outweighs the old scope's ten Inner Sea modules combined). SD-30's
+scope is now **the kind, corpus-wide, not the book list, not even narrowed.**
+
+**What this means concretely:**
+
+- Every one of the old sixteen books' non-`class_feature` kinds is SD-29's, full stop — SD-30 issues
+  no cycles against `spell`/`equipment`/`monster`/`monster_ability`/`race_trait`/`companion`/
+  `equipment_modifier`/`feat` in any book, including the four occult/mythic/Inner Sea books it used
+  to consider its own territory.
+- Every book (not just the old sixteen) that carries `class_feature` units is SD-30's, including
+  eleven books the old scope never named (`advanced_class_guide`, `advanced_players_guide`,
+  `ultimate_psionics`, `ultimate_combat`, `ultimate_magic`, `core_rulebook`, `ultimate_wilderness`,
+  `ultimate_intrigue`, `adventurers_guide`, `advanced_race_guide`, `pathfinder_unchained`,
+  `bestiary_6`, `bestiary_4` — thirteen, not eleven; recounted directly from Decision §33's table).
+- The four deferred books from the old scope (NPC Codex, Planar Adventures, Occult Origins, Haunted
+  Heroes Handbook) are no longer SD-30's to defer — they are SD-29's corpus-wide territory for
+  whatever non-`class_feature` kinds they carry (NPC Codex and Planar Adventures remain genuinely
+  absent from the corpus per Decision §32's re-verification, so this is moot for them regardless; if
+  either is ever acquired, SD-29's corpus-wide lanes pick it up automatically, and SD-30 picks up
+  only its `class_feature` units if any exist). `forward-scope-register.md`'s book-specific C2.x
+  entries are retired accordingly — see that file.
+- The class-grant boundary with SD-28 (Occultist/Spiritualist/Medium/Mesmerist canonical in SD-30,
+  Decision §5) is **unchanged** — it was never book-scoped, it is class-identity-scoped, and it
+  survives the re-scope untouched.
+
+**No writer collision remains.** SD-29 never touches `class_feature` (its own `§38.4`); SD-30 never
+touches anything else. The (kind, book) cell overlap that produced R-29-009 required both packages to
+claim the same kind in the same book; after this decision, no kind is claimed by both packages in any
+book.
+
+**Authority:** operator directive 2026-08-10; `SD-29-corpus-wide-catch-up-lanes/decisions.md §38.4,
+§38.5`; `risks-and-open-questions.md` R-29-009/OQ-29-004 in that package (mirrored resolution added).
+
+## Decision 36 — Epic 14's harness widening does not move to SD-30 (2026-08-10)
+
+**Status:** New. The brief driving this decision asked whether SD-28 Epic 14 (observation-harness
+widening — making `spell` and `equipment` magnitudes observable reaching a real consumer, so the
+4,050 units parked at `ingested-magnitude` can reach `grounded`) is an orphan SD-30 should absorb.
+
+**Checked directly against Epic 14's own text** (`SD-28-ultimate-book-content-ingestion/epic-breakdown.md`
+"Epic 14 (SD28-E14) — Observation-harness widening (spell + equipment consumers)"): Epic 14 is scoped
+to `Kind::Spell` and `Kind::Equipment`/`Kind::EquipmentModifier` exclusively. It has no `class_feature`
+surface at all — `classify()`'s `Kind::ClassFeature` arm is a completely separate code path from the
+`Kind::Spell`/`Kind::Equipment` arms Epic 14 patches.
+
+**Disposition: SD-30 does NOT absorb Epic 14.** `spell` and `equipment` are SD-29's kinds corpus-wide
+per `SD-29-corpus-wide-catch-up-lanes/decisions.md §38`. Epic 14's natural home, by kind, is SD-29's
+territory, not SD-30's — but this package's write scope does not extend to re-scoping SD-29 (the
+brief's own hard constraint), so this decision records the finding and stops there: **Epic 14 stays
+where it is (SD-28) until whoever owns spell/equipment corpus-wide formally claims it.** This is
+recorded as an open item for the operator, not silently resolved by either package.
+
+**Authority:** `SD-28-ultimate-book-content-ingestion/epic-breakdown.md` "Epic 14" (read in full);
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §38` (kind ownership).
+
+## Decision 37 — Launch order: dependency-gated on measurement, not merely sequenced (2026-08-10)
+
+**Status:** New.
+
+SD-30 does not launch its per-class chassis sweep (Epic 6) the way the old per-book epics could have
+launched — book-parallel, day one. `§63`'s finding is load-bearing here too: **no chassis-sweep cycle
+can be honestly sized until Epic 4's measurement has covered the class it targets.** A cycle that
+ingests `class_feature` records for an unmeasured class risks producing records with no wireable
+archetype path at all (Companion: 0/7, per `§64`) or, conversely, under-provisioning a class whose
+real wireable fraction turns out high (Skald: 100%).
+
+**What must be true before SD-30's content epics (5, 6) can start:**
+
+1. Epic 1 (identifier cleanup) and Epic 2 (operator pre-launch, including cycle-0 trap-report and
+   work-inventory validation across the 23 books) complete — unchanged prerequisite from the old
+   scope.
+2. Epic 3 (PI-screening provenance gate) is wired in — a hard gate on every lane's first content
+   commit per book, mirroring SD-29 Epic 3 exactly (same `rules_tables/*.rs` pipeline, same zero-
+   PI-screening starting state, same three-leak precedent from `docs/governance/license-matrix.md`).
+3. Epic 4 (per-class measurement) has produced a per-class `wired-able / named` figure — hand-
+   verified, never proxied — for the class a given Epic 6 cycle targets, before that cycle is
+   scheduled. Epic 4 does not need to be 100% complete corpus-wide before Epic 6 starts; it needs to
+   be complete **for the specific class(es) the next Epic 6 cycle-batch claims.** This is a per-class
+   gate, not a bundle-wide gate — the same shape SD-28's own dispatch used once `§64` landed.
+4. Epic 5 (archetype mechanism) has landed the supersession primitive's wiring for a measured class
+   before Epic 6 ingests that class's records as "reach-gate satisfied via archetype supersession" —
+   ingestion and wiring are sequenced per class, not decoupled.
+
+**Sequential position relative to SD-28/SD-29 restated:** SD-30 launches after SD-28 (source of the
+inherited measurement and primitive) and after SD-29's re-scope (source of the now-closed collision).
+Both are satisfied — SD-28 is published, SD-29's re-scope is published (`472acb4f`) and its collision
+is closed by Decision §35 above. **The remaining precondition is internal to SD-30**, not cross-
+bundle: Epic 4 must clear its own gate before Epic 6 can schedule the class it targets.
+
+**Authority:** `SD-28-ultimate-book-content-ingestion/decisions.md §63, §64`; `epic-breakdown.md`
+(this package, revised below).
+
+## Decision 38 — `unknown` (2,958 units) is a classification/design question, not a raw ingest gap; owned by Epic 4 (2026-08-10)
+
+**Status:** New. The brief flagged the 2,958-unit `unknown` bucket (~19% of `class_feature`'s
+current-corpus population) as needing characterization before scoping, since `status_vocabulary`
+defines `unknown` as *"Could not be classified. `reason` says why."* — distinct from `not-ingested`
+(book started, this record not found) and `not-started` (book never touched).
+
+**Characterized by reading SD-28's own prior work on this exact bucket, not re-derived from
+scratch** — SD-28 Epic 15 spent multiple decisions (`§52`-`§56`, `§61`, `§62`) on precisely this
+question for `class_feature`'s `unknown` population, at various points in the corpus's evolution
+(the bucket's size moved as classifier defects were found and fixed: 4,172 -> 1,897 via the
+zero-magnitude option-pool fix in the "SD28-E15" decision at line 780; then a later snapshot
+characterized 2,989 as option-pool-dominated in `§52`). The current corpus-wide figure (2,958,
+Decision §33 above) is a later snapshot of the same bucket, shaped by the same dynamics.
+
+**What `unknown` actually means for `class_feature`, per SD-28's direct findings:**
+
+- **The dominant shape (SD-28 `§52`, ~87% of the bucket at that snapshot) is option-pool sub-choice
+  content** — named options inside a class-native chooser (Cleric/Inquisitor Domain, Sorcerer/
+  Bloodrager Bloodline, Ranger Favored Enemy/Terrain, Alchemist Discovery, Barbarian Rage Power, Bard
+  Performance, Rogue Talent, Oracle Mystery, Summoner Eidolon evolutions, and ~850 other named pools).
+  This is **not an ingest gap** — the chooser mechanism itself is frequently real and wired (e.g.
+  `choice:alchemist_discovery`); what's `unknown` is whether each *specific named option inside the
+  pool* has its own magnitude computed. SD-28's own standing design ruling (`§52`, restated
+  explicitly as NOT closing any unit's status) is that the engine's real design intent for these
+  families is to ground one representative, well-evidenced option per chooser and defer the rest with
+  a named diagnostic — **not** to eventually compute every option. Whether the remaining bulk should
+  ever move to a status meaning "known, deliberately deferred" rather than "unclassified" is exactly
+  the classifier-taxonomy question the brief anticipated, and SD-28 explicitly left it to whoever
+  owns the classifier next.
+- **A smaller, genuinely-unreachable subset needs new engine code, not reclassification** (`§53`):
+  Vigilante's Social Grace/Refined Education (203 units) and Ultimate Psionics' discipline talent
+  trees (Insight/Terror/Blade Skill/Path Power, 100 units) have **no chooser code at all** — 303
+  units confirmed unreachable by the same reach-check standard used throughout SD-28, needing net-new
+  chooser/grounding code to ever leave `unknown`.
+- **A separate, smaller feat-side `unknown` bucket** (307 units at SD-28's snapshot) is `kind:feat`,
+  not `kind:class_feature` — out of SD-30's scope entirely (SD-29's `feat` lane per Decision §35).
+- **A residual unclustered remainder** (1,772 units at SD-28's snapshot, 908 distinct low-count `KEY:`
+  prefixes) was left open, uncharacterized, by SD-28 — SD-30 inherits this as unfinished
+  characterization work, not a closed question.
+
+**Disposition: owned by Epic 4 (per-class measurement), not Epic 6 (chassis sweep).** The distinction
+the brief asked for: `unknown`'s dominant shape is a *classification/design* question ("does this
+option-pool family's engine design intend per-option grounding, and if not, what status name reflects
+that honestly") answered by the same per-class, hand-verified, no-automated-proxy method Epic 4 already
+uses for archetype-slot measurement — not a raw per-record ingest task Epic 6's per-book sweep is
+shaped for. Epic 4's per-class measurement pass, when it reaches a class with option-pool `unknown`
+units, characterizes that class's pools using SD-28's already-proven method before Epic 6 schedules
+any ingest cycle against them. The 303-unit genuinely-unreachable subset and the 1,772-unit
+unclustered remainder are recorded as Epic 4 backlog items, not silently dropped.
+
+**Authority:** `SD-28-ultimate-book-content-ingestion/decisions.md` "SD28-E15" unknown-status decision
+(line 780, 4,172->1,897 fix), `§52`-`§56`, `§61`, `§62`; `docs/work-inventory.json` `status_vocabulary`.

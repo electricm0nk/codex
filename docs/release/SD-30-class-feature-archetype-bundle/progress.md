@@ -187,3 +187,55 @@ fixed; every figure below carries its command.
 ---
 
 (c) Per-cycle receipts append below this line as cycles fire.
+
+## Cycle R.0 — Re-scope: `class_feature`/archetype bundle (operator directive 2026-08-10)
+
+**Date:** 2026-08-10
+**Cycle ID:** `SD30-RESCOPE-1`
+**Operator:** Todd Hintzmann
+**Surface:** this directory, renamed `docs/release/SD-30-class-feature-archetype-bundle/` (`git mv`
+from `SD-30-occult-and-companion-content-ingestion`, history preserved)
+
+### What landed
+
+SD-29's re-scope to corpus-wide kind lanes (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`,
+commit `472acb4f`) claimed every kind except `class_feature`, flagging a live collision with SD-30's
+sixteen-book list (`§38.5`, R-29-009/OQ-29-004) without resolving it. Operator directive 2026-08-10:
+**SD-30 becomes the `class_feature` bundle.**
+
+- Directory renamed via `git mv`.
+- `decisions.md §33-38` added: figures re-derived (15,472 units, 23 books, 40.2%, 109 grounded/0.7%,
+  all confirmed exactly against the operator's own brief — no correction needed this pass, unlike the
+  prior three briefs the operator flagged); `§34` verifies the SD-28 `§60`/`§63`/`§64` inheritance
+  directly; `§35` closes the SD-29 collision by dissolving the book list outright; `§36` finds Epic
+  14's harness widening is spell/equipment-shaped, not `class_feature`-shaped, and does NOT move to
+  SD-30; `§37` states the per-class measurement-gated launch order; `§38` characterizes the
+  2,958-unit `unknown` bucket as a classification/design question owned by the new Epic 4, citing
+  SD-28's own prior Epic 15 findings on the same bucket.
+- `epic-breakdown.md` and `kanban.md` re-cut from 21 book-shaped cards to 9 dependency-shaped epics:
+  Identifier Cleanup, Operator Pre-Launch, PI-Screening Provenance Gate (new — mirrors SD-29 Epic 3),
+  Per-Class Archetype Measurement (gates the rest), Archetype Mechanism, Per-Class Chassis Sweep,
+  Build Version Numbering, Bundle Code Review, Closure.
+- `forward-scope-register.md`: book-specific C2.1-C2.4 retired as moot; C3.1-C3.3 narrowed or retired
+  to their `class_feature` shape only; new C1.3 records the `corpus-work-channels.md §9.1` successor
+  assignment.
+- `risks-and-open-questions.md`: book-shaped risks retired/narrowed; new R-30-010/011/012 cover the
+  per-class gate, `unknown`-bucket characterization discipline, and the closed collision; OQ-30-004
+  records the collision's closure.
+- Mirrored resolution written into SD-29's own `decisions.md §38.5` and `risks-and-open-questions.md`
+  (R-29-009/OQ-29-004) — reference-and-resolution only, SD-29's scope/epics untouched, per this
+  change's write-scope authorization.
+
+### What did NOT change
+
+Branch `tranche/10`, build version `0.10.<build>`, Hermes-board retirement, reach-gate-as-DoD, the
+`Workflow`-tool operating form, and the class-grant boundary with SD-28 (Occultist/Spiritualist/
+Medium/Mesmerist, `decisions.md §5`) — none of these were book-scoped, all survive the re-scope
+unchanged.
+
+### Next cycle
+
+Epic 1 (identifier cleanup) and Epic 2 (operator pre-launch, re-derived for the 23-book
+`class_feature` population) fire first, unchanged in shape from before the re-scope. Epic 4's
+class-inventory feature seed (SD30-E4-F1) is the first genuinely new work: enumerate which
+`class_feature`-bearing classes remain unmeasured beyond SD-28's 28-class/25-verified set.

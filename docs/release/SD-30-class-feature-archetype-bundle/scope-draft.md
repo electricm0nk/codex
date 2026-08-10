@@ -1,6 +1,12 @@
-# SD-30 — Occult + Companion Content Ingestion
+# SD-30 — `class_feature` / Archetype Bundle
 
-**Status:** Planning-ready (operator directives 2026-08-01; canonical chassis landing this cycle).
+**Re-scoped 2026-08-10** (`decisions.md §33-38`, operator directive). This document's "Book list" and
+"Scope" sections below describe the retired sixteen-book-content era; both are superseded by the
+"Re-scoped `class_feature` scope" section that follows them. Everything else in this file (branch,
+board, build version, operating method, per-cycle tooling) is unchanged by the re-scope and still
+governs.
+
+**Status:** Planning-ready (operator directives 2026-08-01; re-scoped 2026-08-10, canonical chassis unchanged).
 **Operator pin:** 2026-08-01 (refines 2026-07-28 stub)
 **Branch:** `tranche/10` (operator-pinned 2026-08-01; SD-30 takes its own tranche parallel to SD-28's `tranche/8` and SD-29's `tranche/9`, deliberately off the `tranche/6` family used by SD-22's Bestiary 1 baseline).
 **Board:** Local-file only. The Hermes board is retired per operator directive 2026-08-01. The work-queue artifact is `kanban.md` paired with `progress.md` inside this directory. There is no `codex-tranche-10` Hermes board; the slug is reserved-as-form, not as-instance.
@@ -106,11 +112,39 @@ cross-bundle class canon lives in SD-30 for Occultist / Spiritualist /
 Medium / Mesmerist (question 3, `decisions.md §5`); monster canon lives in
 the first-introducing book (question 4, `decisions.md §6`).
 
-## Scope
+## Scope (RETIRED SECTION — superseded by "Re-scoped `class_feature` scope" below)
 
 - **In scope:** End-to-end content-source ingest for the sixteen books enumerated above. Per-class / per-monster-block / per-discipline cycles produce canonical entries that match the SD-22 corpus-source-inventory doctrine-of-record. **"End-to-end" now includes the player surface** — see §"Ingest and surfacing are one unit of work" below and `decisions.md` Decision 11.
 - **Out of scope:** Bestiary 1 (closed in SD-22). Ultimate books (separate bundle, SD-28). Bestiary 2-5 (separate bundle, SD-29). Update-UI bug remediation (lifecycle-routed from SD-16, separate).
 - **Boundary with SD-28:** Classes that appear in both Ultimate Intrigue and Occult Adventures (Occultist, Spiritualist, Medium, Mesmerist) live canonically in SD-30. SD-28 references the canonical class id only.
+
+## Re-scoped `class_feature` scope (operator directive 2026-08-10, `decisions.md §33-38`)
+
+**This section is the operative scope statement; the "Book list" and "Scope" sections above are
+retired history.**
+
+- **In scope:** `class_feature`, corpus-wide — 15,472 units across 23 books, 40.2% of the 38,536-unit
+  corpus, 109 grounded (0.7%). Books: `advanced_class_guide` (2,396), `advanced_players_guide`
+  (2,055), `ultimate_psionics` (1,422), `ultimate_combat` (1,412), `ultimate_magic` (1,070),
+  `occult_adventures` (979), `core_rulebook` (959), `ultimate_wilderness` (866), `ultimate_intrigue`
+  (777), `adventurers_guide` (700), `advanced_race_guide` (645), `pathfinder_unchained` (577),
+  `horror_adventures` (419), `inner_sea_combat` (314), `inner_sea_magic` (218),
+  `book_of_the_damned_volume_2` (212), `inner_sea_world_guide` (171), `inner_sea_intrigue` (169),
+  `monster_codex` (68), `bestiary_6` (18), `inner_sea_taverns` (11), `book_of_the_damned_volume_1`
+  (10), `bestiary_4` (4). Re-derive at each cycle-0 per `technical-requirements.md TR-30-012` — this
+  table is a snapshot (`decisions.md §33`), not a hand-maintained constant.
+- **Also in scope:** the archetype-swap primitive (`archetype_resolver::archetype_claims_slot`) and
+  both its wiring shapes, inherited whole from SD-28 `§60`/`§63`/`§64`; the 2,958-unit `unknown`
+  bucket's per-class characterization; the class-grant boundary with SD-28 for Occultist/
+  Spiritualist/Medium/Mesmerist (unchanged, `decisions.md §5`).
+- **Out of scope:** every other kind, in every book — SD-29's corpus-wide lanes own them
+  (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`). The old sixteen-book list's non-`class_feature`
+  content. Epic 14's harness widening (`spell`/`equipment`-shaped, `decisions.md §36`). Bestiary 1
+  (closed in SD-22). Update-UI bug remediation (lifecycle-routed from SD-16, separate).
+- **Gating relationship, not just sequencing:** Epic 4 (per-class measurement) must clear a specific
+  class before Epic 5 (mechanism) or Epic 6 (chassis sweep) can schedule a cycle against that class —
+  `decisions.md §37`. This replaces the old scope's "sixteen books, dispatch in any order post-Epic 2"
+  shape entirely.
 
 ## Ingest and surfacing are one unit of work
 
@@ -169,29 +203,48 @@ as absence.
 
 ## Epic structure
 
-The authoritative epic structure lives in `epic-breakdown.md` and `kanban.md`
-(21 cards: Epic 1 Identifier Cleanup first, Epic 2 Operator Pre-Launch, one
-per-book epic per pinned book (epics 3-18), Build Version Numbering (epic 20,
-first concrete value `0.10.<build>` per `decisions.md §15`), Bundle Code
-Review (epic 21, `decisions.md §26`), Closure Epilogue (epic 19, fires last).
-An earlier revision of this section carried the superseded 07-30 four-book
-epic table with a `0.6.<build>` version target; both were stale — do not cite
-this file for epic structure.
+**Re-cut 2026-08-10.** The authoritative epic structure lives in `epic-breakdown.md` and `kanban.md`
+(9 cards, dependency-ordered: Epic 1 Identifier Cleanup, Epic 2 Operator Pre-Launch, Epic 3
+PI-Screening Provenance Gate, Epic 4 Per-Class Archetype Measurement (gates 5/6 per class), Epic 5
+Archetype Mechanism, Epic 6 Per-Class Chassis Sweep, Epic 7 Build Version Numbering (`0.10.<build>`
+per `decisions.md §15`), Epic 8 Bundle Code Review (`decisions.md §26`), Epic 9 Closure Epilogue,
+fires last). The prior 21-card, sixteen-per-book-epic structure this section described is retired —
+`kanban.md`'s "Retired cards" table resolves old references. An earlier revision of this section also
+carried the superseded 07-30 four-book epic table with a `0.6.<build>` version target; neither that
+nor the 21-card structure is current — do not cite either for epic structure.
 
 ## What is operator-pinned vs. doctrine
 
-- **Operator-pinned (CONFIRMED 2026-08-01):** Book list (sixteen books: occult + mythic + Monster Codex + Inner Sea series + Book of the Damned ×2; NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes deferred to forward-scope-register). Per-book path locations confirmed. Per-book ingest subtype confirmed. Epic structure (one epic per book group) confirmed. Branch `tranche/10`. No Hermes board; local-file dispatch. Build version `0.10.<build>`. Cross-book conflict rule. Reach-gate DoD doctrine.
-- **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme (`<major>.<tranche-base>.<build>`). `Workflow`-tool operating form (`decisions.md §22`, supersedes the prior `/loop /batch /goal` form at §8). Per-bundle progress file. Reach-gate = definition of done. Engine policy (real-time forbidden; rules-data in scope only when strictly necessary).
+- **Operator-pinned (CONFIRMED 2026-08-10, supersedes the 2026-08-01 book-list pin):** Scope is
+  `class_feature` corpus-wide, 23 books (`decisions.md §33`). Epic structure is the 9-epic
+  dependency chain above (`decisions.md §37`). Branch `tranche/10` unchanged. No Hermes board;
+  local-file dispatch, unchanged. Build version `0.10.<build>`, unchanged. Cross-book conflict rule,
+  unchanged. Reach-gate DoD doctrine, unchanged. The PI-screening provenance gate is new (Epic 3,
+  mirrors SD-29 Epic 3).
+- **Doctrine-of-record (already established, unaffected by the re-scope):** Epic 1 = Code-Side
+  Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme
+  (`<major>.<tranche-base>.<build>`). `Workflow`-tool operating form (`decisions.md §22`, supersedes
+  the prior `/loop /batch /goal` form at §8). Per-bundle progress file. Reach-gate = definition of
+  done. Engine policy (real-time forbidden; rules-data in scope only when strictly necessary).
 
-## Next step (operator-pinned CONFIRMED 2026-08-01)
+## Next step (operator-pinned CONFIRMED 2026-08-10, supersedes the 2026-08-01 book-list confirmation)
 
-All six operator-pinned items are now confirmed:
+Six items were confirmed 2026-08-01 under the old book-list scope; the re-scope confirms a new set:
 
-1. **Book list confirmed** — sixteen books in scope (occult + mythic + Monster Codex + Inner Sea series + Book of the Damned ×2); four books deferred (NPC Codex and Planar Adventures absent from the corpus; Occult Origins and Haunted Heroes Handbook present but deferred by operator choice).
-2. **Per-book path locations confirmed** — `src/rules_core/rules_tables/<book>/` for each.
-3. **Branch name + board name** — `tranche/10` branch; Hermes board retired in favor of local-file `kanban.md` + `progress.md`.
-4. **Build version target** — `0.10.<build>` per `<major>.<tranche-base>.<build>` scheme.
-5. **Book ingest subtype per book** — per-class / per-monster-block / per-psychic-discipline / per-haunt / per-corruption-mechanic / per-mythic-path / per-tactic / per-trait / per-feat / per-region / per-deity / per-domain / per-spell / per-race / per-temple / per-event / per-rule / per-faction.
-6. **Packaging decision** — promote this source-of-record to `docs/release/SD-30-occult-and-companion-content-ingestion/` in the repo as a planning-ready publication. The move-not-copy publish has landed: this package is repo-resident and the workspace source tree is gone.
+1. **Scope confirmed** — `class_feature`, corpus-wide, 23 books, 15,472 units, 40.2% of the corpus,
+   109 grounded (`decisions.md §33`). The old sixteen-book list is retired (`decisions.md §35`).
+2. **Per-book path locations** — `src/rules_core/rules_tables/<book>/` for each of the 23 books,
+   same convention as before, wider set.
+3. **Branch name + board name** — unchanged: `tranche/10` branch; Hermes board retired in favor of
+   local-file `kanban.md` + `progress.md`.
+4. **Build version target** — unchanged: `0.10.<build>` per `<major>.<tranche-base>.<build>` scheme.
+5. **Epic/dependency structure confirmed** — measurement (Epic 4) gates mechanism (Epic 5) and
+   chassis sweep (Epic 6), per class, not per book (`decisions.md §37`).
+6. **Packaging decision** — this source-of-record was renamed `docs/release/SD-30-class-feature-archetype-bundle/`
+   (`git mv`, 2026-08-10) in the repo; the move-not-copy publish landed under the old name 2026-08-01
+   and is not re-run by the rename.
 
-The bundle is no longer a stub; it is a planning-ready package. Pre-launch checklist remains: `kanban.md`, branch `tranche/10` pushed, OAuth valid, working tree clean, cycle-0 trap-report + work-inventory validation run against all sixteen books in scope.
+The bundle remains a planning-ready package, re-scoped rather than restarted. Pre-launch checklist
+remains: `kanban.md`, branch `tranche/10` pushed, OAuth valid, working tree clean, cycle-0
+trap-report + work-inventory validation re-run against the 23 `class_feature`-bearing books (not the
+old sixteen).

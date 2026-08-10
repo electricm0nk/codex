@@ -618,7 +618,7 @@ spend arguing about their own numbers.**
 ## 7.6 Shared ownership with SD-28 and SD-30 — pay §2 once
 
 `docs/release/SD-28-ultimate-book-content-ingestion/` and
-`docs/release/SD-30-occult-and-companion-content-ingestion/` are the operator's canonical sibling packages,
+`docs/release/SD-30-class-feature-archetype-bundle/` are the operator's canonical sibling packages,
 landed on `tranche/8` (`6452ef0d`, `26b5155c`, `721c2949`). This amendment defers to their slugs and
 scope. Both **claim** §2.1–§2.7 rather than restating it, and both defer to
 this register as the canonical statement.
@@ -662,7 +662,7 @@ condition.
   on why the ~39 unrouted engine/UI deferrals must not be distributed across book bundles.
 - `../SD-28-ultimate-book-content-ingestion/forward-scope-register.md` §1.2 — the derived 46-spell gap
   confirming §4.1.
-- `../SD-30-occult-and-companion-content-ingestion/forward-scope-register.md` §1.2 — three shipped-code
+- `../SD-30-class-feature-archetype-bundle/forward-scope-register.md` §1.2 — three shipped-code
   citations found by grepping source for book names; **SD-29 should run the same grep for its own
   seven books before concluding §3 is complete.**
 - `docs/retro/events/deferral-mining.jsonl`, `docs/retro/events/tranche7-retro-synthesis.jsonl` —
