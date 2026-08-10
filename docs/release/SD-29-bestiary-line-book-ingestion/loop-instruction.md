@@ -18,7 +18,7 @@
 > 1. **Default-and-flag, not ask.** When the cycle needs a decision, pick the safer default, capture it in the cycle's `progress.md` receipt, and continue. The operator reviews the receipts after return.
 > 2. **No `clarify` tool calls.** Cycles must not invoke the operator clarification tool under any circumstance; this is a hard ban during unattended mode.
 > 3. **Blockers are recorded, not raised.** If a cycle hits a true hard-block (auth failed, branch can't be created, identity conflict on disk), record the blocker in `progress.md` with the command and exit code, then attempt the next ready card per `kanban.md`. Do not halt the bundle.
-> 4. **`decision-blocked` IS allowed.** Where the playbook calls for an operator decision (Epic 7 DM Toolkit extension in-scope-vs-separate), record `decision-blocked` in `progress.md` with the recorded reason and proceed on the safe default per `successor-forward-scope-register.md C3.1` retrofit. Do not wait. See also "Stop vs. press on" below for the general rule this instance follows.
+> 4. **`decision-blocked` IS allowed.** Where the playbook calls for an operator decision (Epic 8 DM Toolkit extension in-scope-vs-separate), record `decision-blocked` in `progress.md` with the recorded reason and proceed on the safe default per `successor-forward-scope-register.md C3.1` retrofit. Do not wait. See also "Stop vs. press on" below for the general rule this instance follows.
 > 5. **Closure is a goal, not a stop signal.** The bundle runs to closure under the Workflow tool's own dispatch loop, not a human re-invoking a slash command per cycle. The operator's review happens after return; cycles do not pause for operator review.
 > 6. **Operator's verbatim:** "include instructions to all 3 that indicate they will be running in unnattended mode since i will be out of town while this runs. They may not stop to ask questions - it might be days before i notice."
 
@@ -115,7 +115,8 @@ each book.
 
 ## Corpus shape notes (re-derived 2026-08-02)
 
-Operational guidance for Epics 3-6 and 11-13, re-derived directly against
+Operational guidance for Epics 4-7 (kind lanes, re-cut 2026-08-10 per `decisions.md §37`; the
+prior "Epics 3-6 and 11-13" per-book numbering this section referenced is retired), re-derived directly against
 the corpus rather than transcribed. Re-check before relying on any of these
 if the corpus tree has moved since 2026-08-02.
 
@@ -205,8 +206,9 @@ All of the following, each checkable by someone who was not present:
    catalog.** The surviving `beastiary1/race_traits` entry (the Duergar
    Spell-Like Ability ~ Invisibility record, upstream-blocked on
    `monster_codex/mc_abilities_race.lst`) is expected to be **retired by
-   Epic 13** now that Monster Codex is in scope — a closure receipt that
-   leaves it standing must say why.
+   Epic 5's Monster Codex cycle-batch** (Race-Trait Lane; was Epic 13 under
+   the retired per-book numbering) now that Monster Codex is in scope — a
+   closure receipt that leaves it standing must say why.
 7. Baseline movements in `scripts/verify-baselines.env`, if any, are a separate
    reviewable commit carrying `--show-actuals` output.
 8. **On-screen verification for any record family whose reach claim is
@@ -229,13 +231,42 @@ All of the following, each checkable by someone who was not present:
 
 ## Epic ordering
 
+**Re-cut 2026-08-10 (`decisions.md §37`).** SD-29 is partitioned by kind lane, not by book epic.
+The prior "Epics 3-6 and 11-13, per-book" structure is retired; see `epic-breakdown.md` for the
+full 11-epic structure this section now reflects.
+
 - **Epic 1 (Identifier Cleanup)** fires FIRST. No other epic may start until Epic 1 is closed.
-- **Epic 2 (Operator Pre-Launch)** is the pre-launch gate. Pre-launch checklist verifies before any other epic starts.
-- **Epics 3-6 and 11-13 (per-book content-source ingest: B2, B3, B4, B5, B6, Bonus Bestiary, Monster Codex)** may run in any order, but each book is a single cycle-batch. Epics 11-13 added per decisions.md §34 (7-book scope, operator directive 2026-08-02). Epic 6 (B5) and Epic 11 (B6) are player-options cycle-batches (zero monsters); Epic 13 (Monster Codex) is per-record-family.
-- **Epic 7 (DM Toolkit extension to consume Bestiary 2-5)** is optional-but-proposed. Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles need the consumer surface to satisfy reach) or surfaces as a Class 3 retrofit (C3.1) in `successor-forward-scope-register.md`. Operator-pinned per-cycle at the closure of Epics 5 and 6.
-- **Epic 8 (Closure Epilogue)** fires LAST. Tranche promotion PR fires only after all other epics are closed.
-- **Epic 9 (Build Version Numbering)** fires after Epic 1, before Epic 8. First concrete value `0.9.<build>` per the 2026-08-01 amendment.
-- **Epic 10 (Bundle Code Review)** fires after Epic 9 and every content-ingest epic (3-6, 11-13, plus Epic 7 if in scope), before Epic 8. Reviews the whole bundle's diff against its branch point, not the closing cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per `decisions.md §27`.
+- **Epic 2 (Operator Pre-Launch)** is the pre-launch gate, corpus-wide (all 7 books' shape derived
+  in one pass, not per-book). Pre-launch checklist verifies before any other epic starts.
+- **Epic 3 (Provenance Gate — PI-Screening for Kind-Lane Ingestion)** fires after Epic 2, before any
+  content lane. Wires a PI-blacklist sweep into each lane's extraction step; cites
+  `docs/governance/license-matrix.md` for OGL/attribution (already satisfied for all 7 books).
+  Blocking per `../corpus-work-channels.md §6` and `decisions.md §37.3`.
+- **Epics 4-7 (kind lanes)** may run in any order after Epic 3, file-disjoint by kind:
+  - **Epic 4 (Monster / Monster-Ability Chassis Lane)** — merged per
+    `../corpus-work-channels.md §9.2`; 2,159 units. **Pilot-then-extend:** Bonus Bestiary (34 units)
+    runs end-to-end first; the remaining six books' cycle-batches (Bestiary 2, 3, 4, 5, 6, Monster
+    Codex) dispatch only after the pilot lands and its per-unit cost is recorded.
+  - **Epic 5 (Race-Trait Lane)** — 1,124 units; fixes the `classify()` name-coincidence defect
+    alongside the per-book ingest, per `../corpus-work-channels.md §9.3`.
+  - **Epic 6 (Companion Lane)** — 275 units; new mechanism, no corpus-wide precedent.
+  - **Epic 7 (Residual Proven-Path Content Lane)** — 203 units (spell/equipment/feat/race/
+    equipment_modifier/class) using the settled per-book method. `class_feature` (90 units) is
+    excluded — see `decisions.md §37.4`.
+- **Epic 8 (DM Toolkit extension, consuming Epic 4's monster records)** is optional-but-proposed.
+  Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles
+  need the consumer surface to satisfy reach) or surfaces as a Class 3 retrofit (C3.1) in
+  `successor-forward-scope-register.md`. Operator-pinned per-cycle at the closure of Epic 4's pilot
+  cycle-batch (not all seven books — the toolkit can consume monster records incrementally as
+  Epic 4's cycle-batches land).
+- **Epic 9 (Build Version Numbering)** fires after Epic 1, before Epic 11. First concrete value
+  `0.9.<build>` per the 2026-08-01 amendment.
+- **Epic 10 (Bundle Code Review)** fires after Epic 9 and every lane epic (4-7, plus Epic 8 if in
+  scope), before Epic 11. Reviews the whole bundle's diff against its branch point, not the closing
+  cycle alone; `./scripts/verify.sh` passing is a precondition, not the review itself. Per
+  `decisions.md §27`.
+- **Epic 11 (Closure Epilogue)** fires LAST. Tranche promotion PR fires only after all other epics
+  are closed.
 
 ## Hard stops
 

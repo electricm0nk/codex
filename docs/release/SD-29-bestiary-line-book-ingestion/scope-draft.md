@@ -8,6 +8,13 @@
 **Owner:** Todd Hintzmann
 **Scope:** universal
 
+> **Re-cut 2026-08-10 (`decisions.md §37`, executing §36).** SD-29 dispatches by **kind lane**
+> (Epics 4-7: Monster/Monster-Ability chassis, Race-Trait, Companion, Residual proven-path), not
+> by per-book epic. The seven-book list below is unchanged — this section still names the correct
+> books, publishers, and physical write paths — but the epic/cycle-batch structure it points to is
+> `epic-breakdown.md`'s 11-epic lane cut, not the retired 13-epic per-book cut. See
+> `epic-breakdown.md` and `decisions.md §37` for the lane sizes and sequencing.
+
 > ⚠️ **OPERATING METHOD — REQUIRED FOR THIS BUNDLE**
 > This bundle is operated via the in-harness `Workflow` tool driven from a live session, NOT via `/loop`/`/batch` and NOT via ad-hoc single-task invocations — see `loop-instruction.md`'s OPERATING METHOD callout and `decisions.md §23` for the full mechanism (supersedes Decision §7 above).
 >
@@ -152,18 +159,19 @@ player.** The gate's sole surviving finding is unrelated to the quote above:
 `beastiary1/race_traits` — the Duergar `Spell-Like Ability ~ Invisibility`
 record, upstream-blocked on `monster_codex` (`forward-scope-register.md
 §1.2`). `monster_codex` is in scope for this bundle per `decisions.md §34`,
-and Epic 13 (`epic-breakdown.md`) is expected to retire that finding as part
+and Epic 5's Monster Codex cycle-batch (Race-Trait Lane; was Epic 13 under the
+retired per-book numbering, `epic-breakdown.md`) is expected to retire that finding as part
 of its bounded work.
 
 **The "open operator question" below is resolved and preserved as historical
 record.** SD-29's epic structure at the time contained no surface-building
 epic; the operator resolved this by the monster catalog shipping outside a
 dedicated SD-29 epic (above), which independently satisfies the gate's
-Bestiary-1-monster-surface prerequisite regardless of whether Epic 7 (DM
-Toolkit extension) lands in-bundle. Original text: SD-29's epic structure
+Bestiary-1-monster-surface prerequisite regardless of whether Epic 8 (DM
+Toolkit extension; was Epic 7) lands in-bundle. Original text: SD-29's epic structure
 contains no surface-building epic. Either the monster catalog command and
 browser land inside SD-29, or they are a named prerequisite outside it —
-possibly folded into the proposed Epic 7 (DM Toolkit extension), which is
+possibly folded into the proposed Epic 8 (DM Toolkit extension; was Epic 7), which is
 the nearest existing consumer of monster data. **The operator picks; this
 package does not add an epic on its own authority.** Skipping it is not
 available.
@@ -191,28 +199,27 @@ to search under.
 
 ## Epic structure — SUPERSEDED, see `epic-breakdown.md`
 
-The 9-epic / 4-book table this section previously carried (dated to the
-2026-07-28 stub, before the book list widened to seven and the epic count
-to thirteen) is superseded in full by `epic-breakdown.md`'s 13-epic
-structure and `decisions.md §14`'s `0.9.<build>` version target. Do not
-maintain a duplicate epic table here; `epic-breakdown.md` is the
-canonical source. Summary: Epic 1 (Identifier Cleanup, fires first) →
-Epic 2 (Operator Pre-Launch, gating) → Epics 3-6, 11-13 (per-book
-content-source ingest: B2, B3, B4, B5, B6, Bonus Bestiary, Monster
-Codex) → Epic 9 (Build Version Numbering, after Epic 1, before Epic 10)
-→ Epic 10 (Bundle Code Review, after Epic 9 and Epics 3-6/11-13, plus
-Epic 7 if in scope, before Epic 8) → Epic 8 (Closure Epilogue, fires
-last). See `epic-breakdown.md`'s "Recommended sequencing" for the full
-dependency diagram.
+The 13-epic per-book table this section previously pointed to is itself superseded, 2026-08-10
+(`decisions.md §37`, executing §36): SD-29 dispatches by **kind lane**, not by book. Do not maintain
+a duplicate epic table here; `epic-breakdown.md` is the canonical source. Summary: Epic 1
+(Identifier Cleanup, fires first) → Epic 2 (Operator Pre-Launch, corpus-wide gating) → Epic 3
+(Provenance Gate — PI-screening wired into each lane, blocking per `../corpus-work-channels.md §6`)
+→ Epics 4-7 (kind lanes: Monster/Monster-Ability chassis [2,159 units, pilot-then-extend], Race-Trait
+[1,124 units, defect-fix-alongside], Companion [275 units, new mechanism], Residual proven-path
+content [203 units — spell/equipment/feat/race/equipment_modifier/class; `class_feature`'s 90 units
+excluded, Channel D, see `decisions.md §37.4`]) → Epic 8 (DM Toolkit extension, gated on Epic 4's
+pilot) → Epic 9 (Build Version Numbering, after Epic 1, before Epic 11) → Epic 10 (Bundle Code
+Review, after Epic 9 and Epics 4-7, plus Epic 8 if in scope, before Epic 11) → Epic 11 (Closure
+Epilogue, fires last). See `epic-breakdown.md`'s "Recommended sequencing" for the full dependency
+diagram.
 
-**Acceptance criteria:** ~46 criteria across 13 epics (~3-4 per epic) —
-see `epic-breakdown.md:13`. The 30-criteria/9-epic figure this section
-previously carried was a stub estimate against the superseded four-book
-cut and is retired along with it.
+**Acceptance criteria:** ~40 criteria across 11 epics (~3-4 per epic) —
+see `epic-breakdown.md`. The ~46-criteria/13-epic figure this section
+previously carried was against the retired per-book cut and is retired along with it.
 
 ## What is operator-pinned vs. doctrine
 
-- **Operator-pinned, confirmed 2026-08-01/02:** Book list (7 books, per `decisions.md §34`), epics 3-6 and 11-13 per-book paths, per-book entity count, Epic 7 in-scope vs. separate-bundle decision, branch name, board name, build version target. See `decisions.md §§13, 14, 15, 34` and the "Next step" section below.
+- **Operator-pinned, confirmed 2026-08-01/02, re-cut 2026-08-10:** Book list (7 books, per `decisions.md §34`), kind-lane structure and lane sizes (`decisions.md §37`), Epic 8 in-scope vs. separate-bundle decision, branch name, board name, build version target. See `decisions.md §§13, 14, 15, 34, 37` and the "Next step" section below.
 - **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme. `Workflow`-tool operating form (`decisions.md §23`, supersedes the prior `/loop /batch /goal` form at §7). Per-bundle progress file.
 
 ## Next step (operator-pinned, confirmed 2026-08-01/02)
@@ -221,7 +228,7 @@ All operator-pinned items are now confirmed:
 
 1. **Book list confirmed** — seven books (Bestiary 2, 3, 4, 5, 6, Bonus Bestiary, Monster Codex), 2026-08-02 per `decisions.md §34`.
 2. **Per-book path locations confirmed** — `src/rules_core/rules_tables/<book>/` for each of the seven books, per the §"Book list" table above.
-3. **Epic 7 (DM Toolkit extension)** remains operator-pinned whether in scope, per-cycle at Epics 5 and 6 closure (`decisions.md §19`); its safe default absent an explicit call is the Class 3 (C3.1) retrofit per `successor-forward-scope-register.md C3.1`.
+3. **Epic 8 (DM Toolkit extension; was Epic 7)** remains operator-pinned whether in scope, per-cycle at Epic 4's pilot cycle-batch closure (`decisions.md §19`, `§37`); its safe default absent an explicit call is the Class 3 (C3.1) retrofit per `successor-forward-scope-register.md C3.1`.
 4. **Branch name + board name confirmed** — `tranche/9` branch (cut from the post-SD-28 tip per `decisions.md §34`); Hermes board retired in favor of local-file `kanban.md` + `progress.md`, 2026-08-01 per `decisions.md §13`/§14a.
 5. **Build version target confirmed** — `0.9.<build>` per `<major>.<tranche-base>.<build>` scheme, 2026-08-01 per `decisions.md §14`.
 6. **Packaging decision confirmed** — the canonical repo-resident home is `docs/release/SD-29-bestiary-line-book-ingestion/`, with the chassis planning-ready at seven-book width per `decisions.md §34`.

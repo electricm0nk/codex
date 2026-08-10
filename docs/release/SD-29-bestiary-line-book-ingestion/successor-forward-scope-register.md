@@ -39,15 +39,29 @@ SD-29-specific retrofits land in **Class 3**.
 but doesn't need it as a cycle dependency — Bestiary 1 records are
 already canonical.
 
-### C1.2 — DM Toolkit extension (consume Bestiary 2-5)
+### C1.2 — DM Toolkit extension (consume SD-29's monster records)
 
-**Owner:** SD-29 itself (Epic 7).
+**Owner:** SD-29 itself (Epic 8; was Epic 7 under the retired per-book numbering — `decisions.md §37`).
 
-**What depends on SD-29:** the extension consumes Epic 3-6's monster
-records for the encounter builder + party-CR math. Cycles do not
-interleave with Epic 7 until Epic 3-6 close.
+**What depends on SD-29:** the extension consumes Epic 4's monster/monster-ability chassis records
+for the encounter builder + party-CR math. Epic 8 is gated on Epic 4's pilot cycle-batch
+(Bonus Bestiary) landing, and can consume the remaining books incrementally as Epic 4's extension
+cycle-batches close — it does not wait for every lane.
 
-**Status:** Epic 7 is optional, operator-pinned; absent an explicit call it takes the safe default of a Class 3 (C3.1) retrofit per §C3.1 below, per `decisions.md §19`.
+**Status:** Epic 8 is optional, operator-pinned; absent an explicit call it takes the safe default of a Class 3 (C3.1) retrofit per §C3.1 below, per `decisions.md §19`.
+
+### C1.3 — `class_feature` (90 units) inherits SD-28's per-class archetype funding
+
+**Owner:** SD-28 (or a named successor), not SD-29. New item, added by the 2026-08-10 kind-lane
+re-cut (`decisions.md §37.4`).
+
+**What depends on SD-29:** nothing — this is the reverse relationship. SD-29's 90 `class_feature`
+units (across its seven books) are Channel D per `../corpus-work-channels.md §3`/`§5.4`: blocked
+behind the archetype mechanism and per-class chassis (SD-28 `§60`/`§63`), corpus-wide sizing funded
+(`§9.1`) but not yet measured for the specific classes these 90 units belong to. Explicitly
+excluded from every SD-29 lane (Epic 7's residual lane scopes only the settled-method kinds).
+Ingests once SD-28's per-class measurement reaches the relevant classes — tracked here so it is not
+silently dropped, and not silently folded into a lane whose method does not fit it.
 
 ## Class 2 — Future-acquired (deferred)
 
@@ -56,8 +70,11 @@ interleave with Epic 7 until Epic 3-6 close.
 **Superseded.** Bestiary 6 and Bonus Bestiary are no longer contingent
 swap-in candidates for Bestiary 5 — `decisions.md §34` (operator directive
 2026-08-02) commits all seven books, including these two, as in-scope
-alongside Bestiary 5, not as a replacement for it. See `epic-breakdown.md`
-Epics 11 (Bestiary 6) and 12 (Bonus Bestiary).
+alongside Bestiary 5, not as a replacement for it. **Further superseded,
+2026-08-10 (`decisions.md §37`):** the "Epics 11/12" per-book epics this
+note pointed to are themselves retired. Bestiary 6's and Bonus Bestiary's
+units are now distributed across the kind lanes (`epic-breakdown.md`
+Epics 4-7) the same as every other book's.
 
 **Original text, preserved as historical record:** The 07-30 scope-draft
 flagged that Bestiary 5 has no `monster` records (player-options dataset).
@@ -80,9 +97,10 @@ named no longer exists as an open item.
 The surviving related item is the `beastiary1/race_traits` Duergar
 `Spell-Like Ability ~ Invisibility` record — the sole remaining
 `OPEN_FINDINGS` entry, upstream-blocked on `monster_codex`. That record is
-now expected to be addressed by Epic 13 (`monster_codex` is in scope per
-`decisions.md §34`) — see `epic-breakdown.md` Epic 13 and
-`forward-scope-register.md §1.2`.
+now expected to be addressed by Epic 5's Monster Codex cycle-batch
+(Race-Trait Lane; was Epic 13 under the retired per-book numbering —
+`decisions.md §37`; `monster_codex` is in scope per `decisions.md §34`) —
+see `epic-breakdown.md` Epic 5 and `forward-scope-register.md §1.2`.
 
 ### C2.3 — Bulk-modification retrofit
 
@@ -95,16 +113,20 @@ discipline.
 
 ### C3.1 — DM Toolkit extension as retrofit
 
-If Epic 7 (DM Toolkit extension) does not land inside SD-29, it
-surfaces as a Class 3 retrofit: separate bundle that consumes
-`beastiary<N>/` slices. Operator-pinned per-cycle at Epics 5 and 6 closure.
+If Epic 8 (DM Toolkit extension; was Epic 7) does not land inside SD-29,
+it surfaces as a Class 3 retrofit: separate bundle that consumes
+`<book>/` monster slices. Operator-pinned per-cycle at Epic 4's pilot
+cycle-batch closure (was "Epics 5 and 6" under the retired per-book
+numbering).
 
 ### C3.2 — Bestiary 6 + Bonus Bestiary ingestion [SUPERSEDED — decisions.md §34, 2026-08-02]
 
 **Superseded.** This is no longer an operator-on-request retrofit —
 `decisions.md §34` commits Bestiary 6 and Bonus Bestiary as in-scope
-content epics (`epic-breakdown.md` Epics 11 and 12) inside SD-29 itself,
-not a separate bundle.
+content inside SD-29 itself, not a separate bundle. **Further superseded,
+2026-08-10:** their units land via the kind lanes (`epic-breakdown.md`
+Epics 4-7), not the "Epics 11/12" per-book epics this note previously
+named.
 
 **Original text, preserved as historical record:** If operator prefers
 Bestiary 6 + Bonus Bestiary over Bestiary 5 (per `decisions.md §18`), a
@@ -120,5 +142,7 @@ Reopen SD-29's forward-scope register when:
 - The bulk-modification retrofit is operator-authorized.
 - The post-`tranche/9` consumer is operator-named.
 - Operator requests Class 3.x retrofits.
+- SD-28's per-class archetype measurement (`§9.1`) reaches the classes behind SD-29's deferred
+  `class_feature` units (C1.3).
 
-Closed-form: the bundle closes when Epic 8 (Closure Epilogue) fires.
+Closed-form: the bundle closes when Epic 11 (Closure Epilogue) fires.

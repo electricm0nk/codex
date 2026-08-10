@@ -668,3 +668,321 @@ Both directories contain only companion/PC-race, feat, spell, deity/domain, and 
 **Launch-readiness assessment.** This package's chassis (scope, epics, decisions) is internally accurate and was already planning-ready per Decision §34. It is **not launch-ready in the sense of "the dependency it builds on is a finished base"** — it depends on a Bestiary 1 foundation that is 96% unproven by the same measure this bundle will itself be judged by, and its own spell/equipment-bearing books (Monster Codex) cannot reach 100% proven until SD-28 Epic 14 lands. Sequential launch order after SD-28 (Decision §34) is the correct mitigation already in place; this decision makes the reason explicit rather than assumed.
 
 **Authority:** `/home/ubuntu/swarm-observer/PF1e-dashboard.json` `work_inventory` section, `generated_at: 2026-08-02T12:40:01Z`; `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_5/` and `bestiary_6/` directory listings (2026-08-02); `docs/release/SD-28-ultimate-book-content-ingestion/decisions.md` (E13-E30 completion epics, Epic 14 harness-widening decision, commit `3eb11a18`).
+
+## Decision 36 — SD-29 is partitioned by *kind*, not by *book*; and `file_kind()`'s correction invalidates this package's `race_trait` figures (2026-08-10)
+
+**Status:** New. Written on `tranche/8` from SD-28's session findings, at operator request
+("build that into the sd-29 package"). Two coupled changes: a partitioning change (this
+decision) and a data correction that forces it (below).
+
+### 0. Reproduce every figure here
+
+```bash
+cd ~/workspace/repos/codex
+python3 - <<'PY'
+import json, collections
+U = json.load(open('docs/work-inventory.json'))['units']
+for b in ['bestiary','bestiary_2','bestiary_3','bestiary_4','bestiary_5',
+          'bestiary_6','bonus_bestiary','monster_codex']:
+    us = [u for u in U if u.get('book') == b]
+    if us: print(f'{b:16}', len(us), dict(collections.Counter(u.get('kind') for u in us)))
+PY
+```
+
+### 1. The data correction that forces this
+
+SD-28 `§61` replaced `v06_work_inventory.rs`'s `file_kind()` filename-substring typing with
+row-content classification, and added `Kind::MonsterAbility`. **Every `race_trait` figure in this
+package predates that and is wrong.** Bestiary 1 went `620 race_trait` → **21 `race_trait` +
+523 `monster_ability`**; the `_abilities_race.lst` files are monster special-ability libraries,
+not racial traits. `§35`'s 4.1%-proven measurement of Bestiary 1 also predates the change.
+
+Live per-book, per-kind state for this package's seven books:
+
+| book | units | monster | monster_ability | race_trait | companion | other |
+|---|---|---|---|---|---|---|
+| bestiary (B1) | 951 | 330 | 523 | 21 | 59 | 18 |
+| bestiary_2 | 974 | 316 | 466 | 162 | 16 | 14 |
+| bestiary_3 | 1,194 | 261 | 40 | 799 | 85 | 9 |
+| bestiary_4 | 1,218 | 220 | 768 | 86 | 76 | 68 |
+| bestiary_5 | 165 | **0** | 39 | 63 | 57 | 6 |
+| bestiary_6 | 59 | **0** | 13 | 0 | 26 | 20 |
+| bonus_bestiary | 34 | 14 | 17 | 0 | 0 | 3 |
+| monster_codex | 207 | **2** | 3 | 14 | 15 | 173 |
+
+**Epics 3-6 and 11-13 are sized per book on assumptions this table contradicts.** Monster Codex
+has 2 monsters and 68 `class_feature` units; Bestiary 5 and 6 have no monsters at all (`§34`'s
+zero-monster finding, now visible as a kind distribution rather than a footnote); Bestiary 3 is
+799 `race_trait` while Bestiary 4 is 768 `monster_ability`. There is no representative book.
+
+### 2. Why kind is a better partition than book
+
+Measured in SD-28: the per-book ingest tax is **per-file per-kind and constant regardless of
+record count** — UM's 26 equipment records paid the same fixed sweep cost as UPsi's 439. Across
+seven books a per-book partition pays that tax up to seven times per kind; per kind, once.
+
+Book was never a real territory either. Each book has its own data table, but the contested
+resource is the shared sweep files — so two workers on different books collide on the same
+seventh file. The file structure already partitions by kind almost cleanly:
+
+```
+KIND-SCOPED (disjoint lanes)   feat_*.rs · equipment_resolver.rs + */equipment_tables.rs
+                               */race_tables.rs · */[class]_spell_list.rs
+SHARED (chokepoints, 4 files)  v06_work_inventory.rs · reach_gate.rs
+                               corpus_ingest_diagnostic.rs · v06_content_state_dump.rs
+```
+
+Corpus hazards also transfer by kind, not by book — `.MOD` unconditional recovery (SD-28 `§46`),
+`.MOD` conditional variant (`§48`), never-join (`§49`), `.COPY=` aliasing in two sub-shapes
+(`§58`). Each was discovered in one kind and *rediscovered* in the next. A per-kind pass
+front-loads that discovery once per kind rather than per book.
+
+### 3. The chokepoint, measured — and smaller than first claimed in one half, larger in the other
+
+```bash
+for f in src/bin/v06_work_inventory.rs src/bin/v06_content_state_dump.rs \
+         apps/desktop/src-tauri/src/reach_gate.rs \
+         apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs; do
+  printf '%-42s pins=%s book-literals=%s\n' "$(basename $f)" \
+    "$(grep -cE 'assert_eq!\([^,]+, *[0-9]{2,}|== *[0-9]{3,}|: *[0-9]{3,}' $f)" \
+    "$(grep -coE '"(core_rulebook|advanced_players_guide|advanced_class_guide|ultimate_[a-z]+|bestiary|pathfinder_unchained)"' $f)"
+done
+```
+
+| file | count-pins | book-name literals |
+|---|---|---|
+| v06_work_inventory.rs | 7 | 59 |
+| v06_content_state_dump.rs | 1 | 22 |
+| reach_gate.rs | 7 | 42 |
+| corpus_ingest_diagnostic.rs | 12 | 20 |
+| **total** | **27** | **143** |
+
+The original framing (hardcoded *counts* are the chokepoint) was wrong. Counts are 27 assertions
+and demonstrably cheap to derive — SD-28 landed two such derivations in one sitting each
+(`equipment_keys` in `646aea2b`, `equipment_catalog_books()` in `a68a4538`), and both caught a real
+regression automatically within the hour. **The roster is the real work: 143 book-name literals,
+load-bearing in `match` arms and dispatch tables, not merely assertions.**
+
+### 4. Ruling
+
+SD-29 runs as **kind lanes**, not book epics, with the prerequisite explicitly *not* bundled in:
+
+1. **Lane structure.** One writer per kind lane; lanes run concurrently. Within a lane, fan out
+   per-book extraction and serialize only the table landing and sweep. This needs no refactor and
+   can start immediately.
+2. **Derive the 27 count-pins** as a follow-on (small, proven twice).
+3. **The 143-literal roster derivation is NOT a prerequisite** and must be scoped on its own
+   evidence. It touches `reach_gate.rs` and the classifier — the two files most likely to produce a
+   long tail — and calling it a prerequisite would smuggle a real project into a planning note.
+4. **Run a grammar/hazard pass at the head of each lane** before ingestion, producing the
+   enumeration up front (SD-28 `§49`, `§58`).
+
+### 5. Open questions, not resolved here
+
+- **Provenance.** Per-book receipts currently carry the OGL/licensing story. Kind lanes need a
+  different provenance record, and licensing is not a place to improvise. **Blocking for lane 1.**
+- **Cross-book KEY collisions** become easier to catch (all books in one kind examined together)
+  but the check must move out of the per-book slice. It caught real duplication in three SD-28
+  books; do not lose it in the move.
+- **Epics 3-6 and 11-13 need re-cutting** along lanes, and `§35`'s Bestiary 1 baseline needs
+  re-measuring post-`§61`. Neither is done here.
+- `monster_ability` (1,869 units across these seven books) has **no ingest path and no engine
+  table** — it is a new kind as of SD-28 `§61`, not an existing one with a gap.
+
+## Decision 37 — The kind-lane re-cut, executed (operator directive 2026-08-10, supersedes the `corpus-work-channels.md §9.4` deferral)
+
+**Status:** New. Operator directive, verbatim (2026-08-10): *"The SDs are our bodies of work. If
+our plan for SD-29 needs to be completely rescoped to address something else, then that is where
+we need to make those updates. After the PR is merged, we will start SD-29 in tranche/9. That
+needs to be defined and recorded."*
+
+**This decision executes `§36`** (SD-29 is partitioned by kind, not by book) and **supersedes the
+deferral recorded in `../corpus-work-channels.md §9.4`**, which held the re-cut back pending 9.1–9.3
+settling. The operator's directive above is the settling: re-cut now, in the package itself, not in
+a further analysis document.
+
+### 37.0 Every figure re-derived, not transcribed
+
+```bash
+cd ~/workspace/repos/codex
+python3 - <<'PY'
+import json, collections
+U = json.load(open('docs/work-inventory.json'))['units']
+books = ['bestiary_2','bestiary_3','bestiary_4','bestiary_5','bestiary_6','bonus_bestiary','monster_codex']
+tot = collections.Counter()
+for b in books:
+    for u in (x for x in U if x.get('book') == b):
+        tot[u.get('kind')] += 1
+for k, c in tot.most_common(): print(k, c)
+print('total', sum(tot.values()))
+PY
+```
+
+Result — SD-29's seven books (Bestiary 2-6, Bonus Bestiary, Monster Codex; **Bestiary 1 excluded,
+it is SD-22's**), by kind:
+
+| kind | units | share |
+|---|---:|---:|
+| monster_ability | 1,346 | 35.0% |
+| race_trait | 1,124 | 29.2% |
+| monster | 813 | 21.1% |
+| companion | 275 | 7.1% |
+| class_feature | 90 | 2.3% |
+| spell | 82 | 2.1% |
+| equipment | 65 | 1.7% |
+| feat | 32 | 0.8% |
+| race | 12 | 0.3% |
+| equipment_modifier | 9 | 0.2% |
+| class | 3 | 0.1% |
+| **total** | **3,851** | |
+
+Every one of these 3,851 units is `not-started` — SD-29's own seven books have zero ingested
+content of any kind (verified by the same query, adding `u.get('status')` to the counter; omitted
+above for brevity, re-run with that addition to reproduce). This matters for Decision 36's
+"monster is Channel B" framing below: the "path exercised" evidence is corpus-wide, from Bestiary
+1 (SD-22's book, not SD-29's) — within SD-29's own scope, monster is exactly as unstarted as
+`monster_ability`.
+
+### 37.0.1 Correcting `corpus-work-channels.md §4`'s own arithmetic
+
+That document's "SD-29's 7 books" table (§4) reads `monster_ability 1,869`, `monster 1,143`,
+`race_trait 1,145`, `companion 334`. **Those four numbers are the *eight*-book sum, including
+Bestiary 1**, not the seven-book sum:
+
+```bash
+python3 -c "
+import json, collections
+U = json.load(open('docs/work-inventory.json'))['units']
+books8 = ['bestiary','bestiary_2','bestiary_3','bestiary_4','bestiary_5','bestiary_6','bonus_bestiary','monster_codex']
+tot = collections.Counter()
+for b in books8:
+    for u in (x for x in U if x.get('book') == b): tot[u.get('kind')] += 1
+for k in ['monster_ability','monster','race_trait','companion']: print(k, tot[k])
+"
+# → monster_ability 1869, monster 1143, race_trait 1145, companion 334 — matches §4 exactly
+```
+
+Bestiary 1 is not one of SD-29's seven books (`decisions.md §"Boundary with SD-22"`, `§34`); it is
+referenced only for canonical monster ids. The corrected, in-scope figures are the ones in §37.0
+above (`monster_ability` 1,346, not 1,869; `monster` 813, not 1,143; `race_trait` 1,124, not 1,145;
+`companion` 275, not 334). This does not change any of `corpus-work-channels.md`'s rulings — the
+channel assignments, the merge ruling (§9.2), and the defect-fix-alongside ruling (§9.3) are about
+*kind*, not about a specific book count — but every lane size in this decision uses the corrected
+seven-book number, cited by the command above, not the analysis document's number.
+
+### 37.1 The re-cut: kind lanes replace book epics
+
+Epics 3-6 and 11-13 (Bestiary 2, 3, 4, 5, 6, Bonus Bestiary, Monster Codex as seven separate
+per-book epics) are **retired**. `epic-breakdown.md` is rewritten in full with an 11-epic
+structure. New epic numbering (full detail in `epic-breakdown.md`):
+
+| Epic | Name | Basis |
+|---|---|---|
+| 1 | Code-Side Identifier Cleanup | unchanged |
+| 2 | Operator Pre-Launch | unchanged, corpus-wide (not per-4-book) cycle-0 shape gate |
+| 3 | **Provenance Gate — PI-Screening for Kind-Lane Ingestion** | **new — see §37.3** |
+| 4 | **Monster / Monster-Ability Chassis Lane** | merged per `corpus-work-channels.md §9.2`; 2,159 units (813 monster + 1,346 monster_ability); pilot-then-extend, see §37.2 |
+| 5 | **Race-Trait Lane** | mechanism-build + defect-fix-alongside per `corpus-work-channels.md §9.3`; 1,124 units |
+| 6 | **Companion Lane** | mechanism-build, no path anywhere in the corpus; 275 units |
+| 7 | **Residual Proven-Path Content Lane** | Channel A/B kinds with a settled method: spell (82), equipment (65), feat (32), race (12), equipment_modifier (9), class (3) = 203 units. `class_feature` (90 units) is **excluded from this lane** — see §37.4 |
+| 8 | DM Toolkit extension | was Epic 7; gated on Epic 4's pilot + extension landing, not on all lanes |
+| 9 | Build Version Numbering | was Epic 9 |
+| 10 | Bundle Code Review | was Epic 10 |
+| 11 | Closure Epilogue | was Epic 8; **fires LAST**, unchanged position, renumbered |
+
+Sequencing: `E1 → E2 → E3 → {E4, E5, E6, E7} (file-disjoint per kind, run concurrently) → E8 (gated) → E9 → E10 → E11`.
+
+### 37.2 Monster + monster_ability: pilot-then-extend, not seven parallel books
+
+Per `corpus-work-channels.md §5.3` and this brief's own instruction: extend the monster path
+**deliberately** — one book end-to-end before committing to the rest, to get a real per-book cost
+the way SD-28 got the archetype class-two delta (`§63`). Applied to SD-29's own seven books (all
+of which are `not-started` — §37.0):
+
+**Pilot book: Bonus Bestiary.** Smallest total footprint of any monster-bearing SD-29 book — 34
+units (14 monster + 17 monster_ability + 3 class), verified above. Epic 4's first cycle-batch runs
+the full chassis-plus-features build against Bonus Bestiary alone, reach-gated, before Epic 4's
+remaining cycle-batches (Bestiary 2: 316 monster + 466 monster_ability; Bestiary 3: 261 + 40;
+Bestiary 4: 220 + 768; Monster Codex: 2 + 3) are dispatched. Bestiary 5 (0 monster, 39
+monster_ability) and Bestiary 6 (0 monster, 13 monster_ability) carry `monster_ability` with no
+`monster` chassis in the same book — the lane still owns their `monster_ability` units; they are
+scheduled after the pilot confirms the mechanism, same as the monster-bearing books.
+
+**No representative book — verified, not assumed:**
+
+```bash
+python3 -c "
+import json, collections
+U = json.load(open('docs/work-inventory.json'))['units']
+for b in ['bestiary_2','bestiary_3','bestiary_4','bestiary_5','bestiary_6','bonus_bestiary','monster_codex']:
+    us=[u for u in U if u.get('book')==b]
+    print(b, 'monster=', sum(1 for u in us if u['kind']=='monster'), 'monster_ability=', sum(1 for u in us if u['kind']=='monster_ability'), 'race_trait=', sum(1 for u in us if u['kind']=='race_trait'))
+"
+```
+
+Confirms: Monster Codex has **2** monsters (of 207 total units — its weight is `class_feature`/
+`feat`/`spell`/`equipment`); Bestiary 5 and 6 have **0** monsters; Bestiary 3 is 799 `race_trait`
+of 1,194 units (mostly race-trait, not monster); Bestiary 4 is 768 `monster_ability` of 1,218
+(mostly monster-ability). No book stands in for the other six.
+
+### 37.3 Provenance — resolved for OGL/attribution, gated for PI-screening
+
+`corpus-work-channels.md §6` marked provenance **"Blocking before the first channel runs."** The
+license matrix (`docs/governance/license-matrix.md`, commit `314a7ad9`, 37 books, operator-
+authorized 2026-08-10 explicitly "ahead of the move from book-scoped to kind-scoped ingestion
+packages") is checked against that blocker rather than assumed to satisfy it:
+
+**OGL / attribution / publisher provenance — satisfied for all seven SD-29 books.** Every one of
+Bestiary 2, 3, 4, 5, 6, Bonus Bestiary and Monster Codex has, per the matrix's per-book table: a
+real `OGL.txt`, an active `.pcc` `COPYRIGHT:` block, `ISOGL:YES`, and section-15 attribution
+recoverable from `OGL.txt`. All seven are Paizo Inc., no Ultimate-Combat-shaped missing-file case
+among them. **This closes the per-book-receipt half of the provenance question the old book-epic
+structure carried implicitly** — a lane-scoped cycle can cite the matrix once for a book's
+OGL/attribution status instead of re-discovering it per cycle.
+
+**PI-screening — NOT satisfied, and this is the part that gates the first lane.** The matrix's
+central finding is that `rules_tables/*.rs` (**Pipeline B — the exact pipeline every SD-29 kind
+lane writes into**) has **zero files anywhere in the repo that call `pi_screening`,
+`PI_BLACKLIST_TERMS`, or `classify_field`**, and a direct sweep already found three real, unredacted
+Product-Identity hits reaching committed source in Pipeline B tables from other bundles (`Sarenrae`
+in ACG's archetype table, `Asmodeus` in ARG's, a `Jarn` re-leak in ACG's spell list). All seven of
+SD-29's books are marked **`unscreened`** for Pipeline B in the matrix's per-book table. This is not
+a theoretical risk for a kind-scoped SD-29: `monster_ability` alone (1,346 units) is exactly the
+kind of prose-bearing content (special-attack/special-quality descriptive text) most likely to
+carry an unredacted deity name or NPC name, the same shape as the three leaks already found.
+
+**Ruling: a new Epic 3 (Provenance Gate — PI-Screening for Kind-Lane Ingestion) gates every content
+lane.** Epic 3 does not re-litigate OGL/attribution (closed, cite the matrix) and does not fix the
+pre-existing Pipeline B leaks in other bundles' tables (out of this package's write scope — SD-28
+and SD-30 own those books). It requires, before Epic 4/5/6/7's first content commit: (a) a
+per-lane PI-blacklist sweep (`pi_screening.rs`'s 55-term list, or its `classify_field` call wired
+into the lane's extraction step) run against that lane's own newly-generated content before it
+lands in `rules_tables/`; (b) the sweep's output recorded in the lane's first cycle receipt; (c) any
+hit treated as a hard stop for that record (per `loop-instruction.md` "Stop vs. press on" — a
+gate failing for a real content finding is a STOP, not a thing to route around). See
+`epic-breakdown.md` Epic 3 for the acceptance criteria and `acceptance-and-verification.md`
+AT-29-003a.
+
+### 37.4 `class_feature` — the one kind explicitly not folded into a lane
+
+SD-29's 90 `class_feature` units are Channel D per `corpus-work-channels.md §3`/`§5.4`: blocked
+behind the archetype mechanism and per-class chassis (SD-28 `§60`/`§63`), sizing funded corpus-wide
+(`§9.1`) but not yet measured for **these specific classes**. Folding them into the Epic 7 residual
+lane (which is scoped to kinds with a *settled, proven* method) would misrepresent 90 units as
+ready-to-ingest content when they are not. **Disposition: excluded from every SD-29 lane, tracked
+in `successor-forward-scope-register.md` as inheriting SD-28's per-class archetype-measurement
+funding (`§9.1`) once it reaches the classes these 90 units belong to.** Not a silent drop — see
+`epic-breakdown.md` Epic 7's scope note and the successor register entry.
+
+### 37.5 What does not change
+
+The seven-book list (`§34`), `canonical_branch: tranche/9`, `build_version_target: 0.9.<build>`,
+sequential launch after SD-28 (`§34`), unattended-mode operating protocol (`§22`), and every
+decision `§1`-`§36` not explicitly named above are unaffected by this re-cut. This decision changes
+**partitioning** (kind lanes, not book epics) and **provenance gating** (a new Epic 3); it does not
+change scope, branch, version scheme, or launch order.
+
+**Authority:** operator directive 2026-08-10 (verbatim above); `decisions.md §36` (the partitioning
+ruling this executes); `../corpus-work-channels.md` §§3-10 (channel analysis, superseded-as-deferral
+only at §9.4); `docs/governance/license-matrix.md` (commit `314a7ad9`, provenance evidence);
+`docs/work-inventory.json` (all figures re-derived above, commands included).

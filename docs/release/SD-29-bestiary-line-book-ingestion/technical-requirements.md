@@ -10,10 +10,16 @@ companion_to: ./scope-draft.md, ./decisions.md, ./epic-breakdown.md
 
 # SD-29 Technical Requirements
 
+**Re-cut 2026-08-10 (`decisions.md §37`).** Requirements below are re-scoped from four/per-book
+framing to the 11-epic kind-lane structure in `epic-breakdown.md`. `beastiary<N>` below ranges over
+all seven in-scope books, not the retired `{2,3,4,5}` set, and TR-29-001's file-touch partition is
+per-book-within-a-lane (a lane cycle-batch still writes to exactly one book's tree at a time).
+
 ## Objective
 
-Per-cycle, ingest one canonical record from one bestiary into
-`src/rules_core/rules_tables/beastiary<N>/`, satisfy the reach gate, and
+Per lane cycle-batch, ingest one canonical record for one kind (monster+monster_ability chassis,
+race_trait, companion, or a residual proven-path kind) from one book into
+`src/rules_core/rules_tables/<book>/`, satisfy the reach gate, pass the Epic 3 provenance gate, and
 observe the file-touch partition.
 
 ## Normative language
@@ -26,15 +32,17 @@ observe the file-touch partition.
 
 Cycle writes are bounded to:
 
-- `src/rules_core/rules_tables/beastiary<N>/` (one bestiary per cycle).
-- `data/corpus/beastiary<N>/` (Shape B cache for the active bestiary).
+- `src/rules_core/rules_tables/<book>/` (one book per cycle, within the lane's assigned kind — e.g.
+  Epic 4's Bonus Bestiary pilot cycle writes only Bonus Bestiary's monster/monster_ability records).
+- `data/corpus/<book>/` (Shape B cache for the active book).
 - new bins under `src/bin/` and new tests under `tests/` named per the identifier-discipline doctrine (no `sd29_` prefix).
 - `docs/release/SD-29-.../` (the bundle's own docs — published; landed source removed by move-not-copy).
 
 Cycle writes MUST NOT touch:
 
 - `src/rules_core/pilot_compute.rs`.
-- `src/rules_core/rules_tables/<other_bestiary>/`.
+- `src/rules_core/rules_tables/<other_book>/`.
+- another lane's kind within the same book (e.g. an Epic 4 cycle on Bestiary 2 MUST NOT write Epic 5's `race_trait` records for the same book).
 - `docs/release/v0.6/`.
 - `src/oracle_validation/`.
 - `src/pcgen_import/corpus_traps.rs` (read-only).
@@ -86,13 +94,19 @@ The class-grant overlap rule (canonical class definition lives in the
 bundle that owns the book's primary class definition) is the only
 exception.
 
-## TR-29-008 — Bestiary 5 shape-resolution gate
+## TR-29-008 — Provenance gate: PI-screening wired into every lane's extraction step
 
-Bestiary 5 is gated on cycle-0 trap-report + work-inventory output. If the
-inventory surfaces zero `monster` units, Epic 6's cycle runs the
-per-race / per-feat / per-companion-mod cycles against Bestiary 5's
-`b5_*` LST files instead of the monster-block cycle shape applied to
-Bestiary 2-4.
+**Retired shape (pre-2026-08-10):** a per-book shape-resolution gate for Bestiary 5. Superseded —
+Bestiary 5 has no `monster` epic to gate; its `monster_ability`/`race_trait`/`companion` units are
+each the affected lane's ordinary per-book cycle-batch, per `decisions.md §37`.
+
+Per `decisions.md §37.3` and Epic 3 (`epic-breakdown.md`): before any lane (Epic 4, 5, 6, or 7)
+lands its first content commit for a book, `pi_screening::classify_field` (or the 55-term
+blacklist sweep it implements) MUST run against that lane's own newly-generated content, and the
+sweep's output MUST be recorded in the cycle receipt. `docs/governance/license-matrix.md` (commit
+`314a7ad9`) found zero PI-screening anywhere in `rules_tables/*.rs` — the pipeline every SD-29
+lane writes into — and three real, unredacted leaks in other bundles' tables of the same pipeline.
+A hit is a hard stop for that record, per `loop-instruction.md` "Stop vs. press on."
 
 ## TR-29-009 — Per-entity counts are generated
 
@@ -124,18 +138,18 @@ enforced by the supervisor reading one card at a time.
 
 ## Produced artifacts
 
-- 15-file canonical chassis at `docs/release/SD-29-bestiary-line-book-ingestion/` (after the move-not-copy publish lands).
-- `src/rules_core/rules_tables/beastiary{2,3,4,5}/` — four bestiaries' canonical records.
-- `data/corpus/beastiary{2,3,4,5}/` — Shape B cache per book.
-- Per-cycle artifacts under `artifacts/` — trap-reports, cycle-0 inventory findings, progress receipts.
-- `release-notes.md` populated at closure.
+- 14-file canonical chassis at `docs/release/SD-29-bestiary-line-book-ingestion/` (after the move-not-copy publish lands).
+- `src/rules_core/rules_tables/{beastiary2,beastiary3,beastiary4,beastiary5,beastiary6,bonus_bestiary,monster_codex}/` — all seven books' canonical records, populated lane by lane (Epic 4's monster+monster_ability chassis, Epic 5's race-trait, Epic 6's companion, Epic 7's residual kinds).
+- `data/corpus/{bestiary_2,bestiary_3,bestiary_4,bestiary_5,bestiary_6,bonus_bestiary,monster_codex}/` — Shape B cache per book.
+- Per-cycle artifacts under `artifacts/` — trap-reports (one per book, corpus-wide pre-flight), per-lane PI-screening sweep outputs, progress receipts.
+- `release-notes.md` populated at closure, rolled up by lane.
 
 ## Success definition
 
 The bundle closes when:
 
-1. All four bestiaries' per-monster-block (or per-race / per-feat / per-companion-mod for B5) cycles have reached the gate.
-2. Epic 7 (DM Toolkit extension) lands (in scope) or surfaces as a Class 1/3 retrofit.
-3. Epic 8 (Closure Epilogue) has opened and merged the tranche promotion PR.
+1. All four content lanes (Epic 4 monster+monster_ability chassis, Epic 5 race-trait, Epic 6 companion, Epic 7 residual) have reached the gate for every book carrying units of that lane's kind, with Epic 3's provenance gate cleared per book per lane.
+2. Epic 8 (DM Toolkit extension) lands (in scope) or surfaces as a Class 1/3 retrofit.
+3. Epic 11 (Closure Epilogue) has opened and merged the tranche promotion PR.
 4. The workspace tree has been removed on the publish commit.
-5. The canonical 15-file chassis lives at `docs/release/SD-29-bestiary-line-book-ingestion/`.
+5. The canonical 14-file chassis lives at `docs/release/SD-29-bestiary-line-book-ingestion/`.

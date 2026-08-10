@@ -12,22 +12,30 @@ build_version_target: 0.9.<build>
 Tests are Given/When/Then format, paired with the technical requirements
 in `technical-requirements.md` and the epics in `epic-breakdown.md`.
 
+**Re-cut 2026-08-10 (`decisions.md §37`).** SD-29 dispatches by kind lane
+(Epics 4-7), not per-book epic. `<bestiary>` below ranges over all seven
+in-scope books (`bestiary_2`-`bestiary_6`, `bonus_bestiary`, `monster_codex`)
+rather than the retired four-book `{2, 3, 4, 5}` set. AT-29-003a is new,
+gating provenance.
+
 ## AT-29-001 — Per-cycle file-touch partition
 
-Given a per-book ingest cycle for `<bestiary>` where `<bestiary>` ∈ `{2, 3, 4, 5}`.
+Given a lane cycle-batch for `<bestiary>` where `<bestiary>` ∈ `{2, 3, 4, 5, 6, bonus, monster_codex}`.
 
 When the cycle writes files.
 
 Then:
 
-- Files written under `src/rules_core/rules_tables/beastiary<bestiary>/`, `data/corpus/beastiary<bestiary>/`, new bins under `src/bin/`, new tests under `tests/` (named per identifier-discipline doctrine; no `sd29_` prefix), or `docs/release/SD-29-.../`.
-- No file written under `src/rules_core/pilot_compute.rs`, `src/rules_core/rules_tables/beastiary<other>/`, `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
+- Files written under `src/rules_core/rules_tables/beastiary<bestiary>/` (or `bonus_bestiary/`, `monster_codex/`), `data/corpus/<book>/`, new bins under `src/bin/`, new tests under `tests/` (named per identifier-discipline doctrine; no `sd29_` prefix), or `docs/release/SD-29-.../`.
+- No file written under `src/rules_core/pilot_compute.rs`, another book's `rules_tables/<other_book>/` tree, `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
 
 Evidence: per-cycle receipt carries the audit command and the captured exit code.
 
 ## AT-29-002 — Reach-gate claim
 
-Given a per-book record at `src/rules_core/rules_tables/beastiary<bestiary>/<record>.rs`.
+Given a lane record at `src/rules_core/rules_tables/<book>/<record>.rs`, for any of Epic 4's
+(monster chassis + monster-ability features), Epic 5's (race-trait), Epic 6's (companion), or
+Epic 7's (residual: spell/equipment/feat/race/equipment_modifier/class) records.
 
 When the cycle's reach gate runs.
 
@@ -39,7 +47,7 @@ Then:
 
 ## AT-29-003 — Pre-cycle trap-report
 
-Given a per-book cycle (Epic 3-6).
+Given a lane cycle-batch (Epic 4, 5, 6, or 7) for a specific book.
 
 When the cycle starts.
 
@@ -48,6 +56,25 @@ Then:
 - `cargo run --locked --bin v06_corpus_trap_report -- <book_dir>` has been run.
 - The output is recorded in `artifacts/<book>-trap-report.md`.
 - The cycle receipt cites the trap-report file.
+
+## AT-29-003a — Provenance gate: PI-screening wired into the lane's extraction step (new, Epic 3)
+
+Given a lane's (Epic 4, 5, 6, or 7) first content commit for any book.
+
+When the lane's extraction/table-generation step runs.
+
+Then:
+
+- `pi_screening::classify_field` (or the 55-term blacklist sweep it implements) has run against the
+  lane's own newly-generated content before it lands in `rules_tables/`.
+- The sweep's output (clean, or hits found and their disposition) is recorded in the lane's first
+  cycle receipt for that book.
+- A hit is a hard stop for that record — not routed around, not silently redacted without a
+  retro-logged `correction` event.
+- The cycle receipt cites `docs/governance/license-matrix.md`'s row for the book's OGL/attribution
+  status rather than re-deriving it.
+
+Evidence: `docs/governance/license-matrix.md` (commit `314a7ad9`); `decisions.md §37.3`.
 
 ## AT-29-004 — Definition-of-done audit
 
@@ -64,7 +91,7 @@ Then:
 
 Given the bundle's first concrete build.
 
-When the closure Epic 8 fires.
+When the closure Epic 11 fires.
 
 Then:
 
@@ -97,17 +124,26 @@ Then:
 Exception: class-grant overlap (per `decisions.md §5`) follows the
 class-grant rule; SD-30 owns canonical class definitions.
 
-## AT-29-008 — Bestiary 5 shape-resolution
+## AT-29-008 — Zero-monster books route to the correct lane, not a skipped cycle
 
-Given Epic 6's pre-flight (cycle-0 trap-report + work-inventory output).
+**Retired shape (pre-2026-08-10):** "Epic 6 (Bestiary 5) cycle picks per-race/per-feat/
+per-companion-mod cycles if `monster` units = 0." Superseded — Bestiary 5 and Bestiary 6 are no
+longer their own epics; their units are distributed across Epic 4 (monster_ability only — 39 and 13
+units respectively, zero monster chassis), Epic 5 (race_trait — 63 and 0), Epic 6 (companion — 57
+and 26), and Epic 7 has none from either book.
 
-When the cycle runs `cargo run --locked --bin v06_work_inventory`.
+Given Epic 2's corpus-wide pre-flight (cycle-0 trap-report + work-inventory output, all 7 books).
+
+When a lane epic (4, 5, 6, or 7) reads a book's `kinds` field for its own kind.
 
 Then:
 
-- The `beastiary5` entry's `kinds` field is inspected.
-- If `monster` units = 0, Epic 6's cycle runs per-race / per-feat / per-companion-mod cycles instead of per-monster-block.
-- The cycle receipt records the shape finding.
+- A book carrying zero units of a lane's kind (e.g., Bestiary 5/6 carry zero `monster`) is simply
+  absent from that lane's per-book cycle-batch list — not a skipped cycle, not a `decision-blocked`
+  entry, because the lane structure means "zero of this kind in this book" is an ordinary shape
+  fact, not an exception requiring a fallback cycle type.
+- The cycle receipt records the per-book, per-kind counts it read, citing the re-derivation command
+  (`decisions.md §37.0`), not a transcribed figure.
 
 ## AT-29-009 — Per-entity counts generated
 
@@ -122,7 +158,7 @@ Then:
 
 ## AT-29-010 — Rules-as-data, no real-time engines
 
-Given a per-book cycle.
+Given a lane cycle (Epic 4, 5, 6, or 7) for a specific book.
 
 When the cycle writes a numerical effect.
 
@@ -134,14 +170,14 @@ Then:
 
 ## AT-29-011 — Move-not-copy publish
 
-Given Epic 8 (Closure Epilogue).
+Given Epic 11 (Closure Epilogue).
 
 When the publish commit fires.
 
 Then:
 
 - The source-of-record directory (`programs/codex/requirements/SD-29-.../`) is removed.
-- The canonical repo-resident home (`docs/release/SD-29-bestiary-line-book-ingestion/`) carries the 15-file chassis.
+- The canonical repo-resident home (`docs/release/SD-29-bestiary-line-book-ingestion/`) carries the 14-file chassis.
 
 ## AT-29-012 — Local-file work-queue dispatch
 
@@ -160,7 +196,7 @@ No Hermes-board interaction is required.
 
 ## AT-29-013 — Bundle code review (final epic)
 
-Given Epic 10 (Bundle Code Review), firing after all content-ingest epics (3-6, plus Epic 7 if in scope) and Epic 9 (Build Version Numbering) are closed, before Epic 8 (Closure Epilogue).
+Given Epic 10 (Bundle Code Review), firing after all content lanes (Epics 4-7, plus Epic 8 if in scope) and Epic 9 (Build Version Numbering) are closed, before Epic 11 (Closure Epilogue).
 
 When the review runs.
 
@@ -169,20 +205,21 @@ Then:
 - `./scripts/verify.sh` has a recorded green run — a precondition to the review, not the review itself.
 - The diff scope reviewed is the whole bundle against its branch point (`git diff origin/develop...HEAD`), not the closing cycle alone.
 - `scripts/identifier-discipline-audit.sh` and `scripts/wired-integration-audit.sh` are re-run at bundle scope.
-- The review covers, at minimum: rules-logic correctness sampled against the corpus; no stubs/fixture-only data in production paths (`docs/governance/no-stub-mvp-doctrine.md`); records reaching a player surface per `reach_gate.rs`; test quality per `docs/governance/book-ingestion-playbook.md §7.4`; no hand-authored rules data under `apps/desktop/src/`.
+- The review covers, at minimum: rules-logic correctness sampled against the corpus; no stubs/fixture-only data in production paths (`docs/governance/no-stub-mvp-doctrine.md`); records reaching a player surface per `reach_gate.rs`; every lane's PI-screening sweep (AT-29-003a); test quality per `docs/governance/book-ingestion-playbook.md §7.4`; no hand-authored rules data under `apps/desktop/src/`.
 - Every finding records a disposition: `fixed-in-bundle` or `deferred` with a named owner. No finding is silently dropped.
-- Real defects are fixed in-bundle before Epic 8 fires.
+- Real defects are fixed in-bundle before Epic 11 fires.
 
 ## Exit gate checklist
 
-- [ ] All Epic 3-6 cycles complete with reach-gate claims.
-- [ ] All trap-reports recorded.
-- [ ] AT-29-008 Bestiary 5 shape-resolution recorded (Epic 6-F1 receipt).
+- [ ] All Epic 4-7 lane cycle-batches complete with reach-gate claims, for every book carrying units of that lane's kind.
+- [ ] All trap-reports recorded (Epic 2's corpus-wide pre-flight).
+- [ ] AT-29-003a provenance gate (Epic 3) recorded for every lane's first content commit per book.
+- [ ] AT-29-008 zero-of-kind books correctly absent from the affected lane's cycle-batch list, not skipped as an exception.
 - [ ] AT-29-005 build version reads `0.9.<build>`.
-- [ ] AT-29-006 identifier discipline exits 0 across the four bestiaries' surface code.
-- [ ] AT-29-010 rules-as-data verified across the four bestiaries' numerical effects.
+- [ ] AT-29-006 identifier discipline exits 0 across all seven books' surface code.
+- [ ] AT-29-010 rules-as-data verified across all seven books' numerical effects.
 - [ ] AT-29-011 move-not-copy publish landed.
-- [ ] AT-29-012 local-file dispatch verified by Epic 2's pre-flight + Epic 8's closure.
+- [ ] AT-29-012 local-file dispatch verified by Epic 2's pre-flight + Epic 11's closure.
 - [ ] AT-29-013 bundle code review (Epic 10) closed; all findings triaged with named owners for deferrals.
-- [ ] `release-notes.md` populated.
-- [ ] `successor-forward-scope-register.md` reviewed for successor work.
+- [ ] `release-notes.md` populated with a per-lane rollup.
+- [ ] `successor-forward-scope-register.md` reviewed for successor work, including the `class_feature` (90-unit) Channel D deferral per `decisions.md §37.4`.
