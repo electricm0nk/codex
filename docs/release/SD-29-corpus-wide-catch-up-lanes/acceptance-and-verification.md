@@ -18,6 +18,14 @@ in-scope books (`bestiary_2`-`bestiary_6`, `bonus_bestiary`, `monster_codex`)
 rather than the retired four-book `{2, 3, 4, 5}` set. AT-29-003a is new,
 gating provenance.
 
+**RE-SCOPED CORPUS-WIDE, 2026-08-10 (`decisions.md §38`).** `<bestiary>`/`<book>` below now ranges
+over all 37 in-scope books (`../corpus-work-channels.md §10.2`), not the seven named above — the
+seven-book set is preserved as the historical origin of these criteria's shape, not their current
+boundary. Epic numbering also shifted: Epic 4 is now the corpus-wide proven-path lane (was the
+Monster/Monster-Ability lane); Monster/Monster-Ability is now Epic 5, Race-Trait Epic 6, Companion
+Epic 7. Read every `Epic 4`/`Epic 5`/`Epic 6`/`Epic 7` reference below against `epic-breakdown.md`'s
+current numbering, not this file's pre-§38 authoring.
+
 ## AT-29-001 — Per-cycle file-touch partition
 
 Given a lane cycle-batch for `<bestiary>` where `<bestiary>` ∈ `{2, 3, 4, 5, 6, bonus, monster_codex}`.
@@ -177,7 +185,7 @@ When the publish commit fires.
 Then:
 
 - The source-of-record directory (`programs/codex/requirements/SD-29-.../`) is removed.
-- The canonical repo-resident home (`docs/release/SD-29-bestiary-line-book-ingestion/`) carries the 14-file chassis.
+- The canonical repo-resident home (`docs/release/SD-29-corpus-wide-catch-up-lanes/`) carries the 14-file chassis.
 
 ## AT-29-012 — Local-file work-queue dispatch
 

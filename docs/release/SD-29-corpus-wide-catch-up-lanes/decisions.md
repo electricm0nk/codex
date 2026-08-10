@@ -986,3 +986,199 @@ change scope, branch, version scheme, or launch order.
 ruling this executes); `../corpus-work-channels.md` §§3-10 (channel analysis, superseded-as-deferral
 only at §9.4); `docs/governance/license-matrix.md` (commit `314a7ad9`, provenance evidence);
 `docs/work-inventory.json` (all figures re-derived above, commands included).
+
+## Decision 38 — SD-29 becomes the corpus-wide lane bundle; the seven-book boundary is retired (operator directive 2026-08-10)
+
+**Status:** New. Supersedes the seven-book boundary set by `§34` and carried through `§36`/`§37`,
+and supersedes the deferral recorded at `../corpus-work-channels.md §9.4` a second time (§37 already
+superseded it for the *partitioning* question; this decision supersedes it for the *book-list*
+question `§9.4` also deferred). Operator directive, verbatim: *"What I'm really after is
+establishing lanes that we can use to rapidly catch up all the books in parallel — both those we
+have touched and those we have not touched."*
+
+**What changes.** `§37` re-cut SD-29 into kind lanes but kept lane scope pinned to the seven
+bestiary-line books (`§37.5`: "The seven-book list (`§34`) ... unaffected by this re-cut"). That
+seven-book boundary was a constraint imposed while re-cutting the *partitioning*, not a ruling the
+operator made about the *book list*. The operator has now ruled directly: SD-29's lanes run
+**corpus-wide** — every book that carries units of a lane's kind, whether that book has ever been
+touched by any prior bundle or not. The directory is renamed
+(`docs/release/SD-29-corpus-wide-catch-up-lanes/`, via `git mv`, history preserved) to stop the
+package's own name from re-asserting the retired boundary.
+
+### 38.0 Every figure re-derived here, not transcribed from the brief that requested this decision
+
+The brief driving this decision arrived with its own corpus totals and per-kind figures, flagged as
+"my derivation, to be verified and corrected" — the brief's author noted the last two SD-29 briefs
+both carried wrong figures. Re-derived independently below; discrepancies from the brief are called
+out, not silently absorbed.
+
+```bash
+cd ~/workspace/repos/codex
+python3 - <<'PY'
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+U = d['units']
+HELD = {'grounded','text-complete','ingested-magnitude'}
+PROVEN = {'grounded','text-complete'}
+total = len(U)
+held = sum(1 for u in U if u.get('status') in HELD)
+proven = sum(1 for u in U if u.get('status') in PROVEN)
+print('corpus total', total, 'books', len(set(u['book'] for u in U)))
+print('held (grounded+text-complete+ingested-magnitude)', held, round(100*held/total,1),'%')
+print('proven (grounded+text-complete only)', proven)
+print('untouched (total-held)', total - held)
+PY
+```
+
+**Result: 38,536 units, 38 books.** Held (`grounded`+`text-complete`+`ingested-magnitude`) = **8,414
+= 21.8%**. Proven (`grounded`+`text-complete` only) = 2,253. Untouched (total − held) = **30,122**.
+The brief's corpus-wide figures (38,536 / 8,414 / 21.8% / 30,122) check out exactly.
+
+**The measurement caveat the brief names is real and re-verified.** `equipment` and `spell` have
+zero `grounded` units relative to their `ingested-magnitude` population is false as stated —
+`equipment` does have 133 `grounded` — but the *shape* is correct: both kinds are held almost
+entirely at `ingested-magnitude` (equipment 4,638 of 5,064 held; spell 1,067 of 1,089 held), because
+the generator observes no consumer delta for these kinds per `status_vocabulary.ingested-magnitude`
+in `work-inventory.json` itself. Reporting `proven` alone for these two kinds would understate
+progress by roughly 38x (equipment) and 49x (spell). Every figure below states which measure
+(`held` or `proven`) it is using.
+
+### 38.1 Per-kind figures, re-derived — corrections to the brief
+
+```bash
+python3 - <<'PY'
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+U = d['units']
+HELD = {'grounded','text-complete','ingested-magnitude'}
+byk = collections.defaultdict(collections.Counter)
+for u in U: byk[u['kind']][u.get('status')] += 1
+for k in ['equipment','feat','spell','equipment_modifier','monster_ability','companion','race_trait','monster','class_feature']:
+    c = byk[k]; tot = sum(c.values()); held = sum(c[s] for s in HELD)
+    print(k, 'total', tot, 'held', held, 'remaining', tot-held)
+PY
+```
+
+| kind | total | held | remaining |
+|---|---:|---:|---:|
+| equipment | 6,227 | 5,064 | 1,163 |
+| feat | 2,610 | 1,260 | **1,350** |
+| spell | 2,843 | 1,089 | 1,754 |
+| equipment_modifier | 1,580 | 768 | 812 |
+| monster_ability | 3,107 | 0 | 3,107 |
+| companion | 1,683 | 0 | 1,683 |
+| race_trait | 3,456 | 44 | 3,412 |
+| monster | 1,270 | 46 | 1,224 |
+| class_feature | 15,472 | 109 | 15,363 |
+
+**One correction to the brief: `feat` remaining is 1,350, not 1,348.** The brief's 1,348 is the
+count of `not-ingested` + `not-started` feat units only; it silently drops 2 `feat` units sitting at
+`deferred-with-reason` (a real, distinct status per `status_vocabulary` — a claim-blocking engine
+diagnostic named these two units, not an absence of any attempt). `1,163`/`1,754`/`812` (equipment,
+spell, equipment_modifier remaining) and the 44/1,270 (monster held/total) and 0/1,683 (companion)
+and 0/3,107 (monster_ability) all check out exactly against the brief.
+
+**`class_feature`: 15,472 units confirmed, 40.2% of the 38,536-unit corpus** (the brief said "40%",
+correct to one significant figure). 109 held, 15,363 remaining. Stays out of scope — §38.4 below.
+
+### 38.2 Bestiary 1 — confirmed in scope, no longer owned by anyone
+
+```bash
+python3 -c "
+import json, collections
+U = json.load(open('docs/work-inventory.json'))['units']
+us = [u for u in U if u['book']=='bestiary']
+print(len(us), collections.Counter(u.get('status') for u in us))
+"
+# → 951 {'not-ingested': 901, 'grounded': 46, 'ingested-magnitude': 4}, proven = 46/951 = 4.8%
+```
+
+**Confirmed exactly: 951 units, 46 proven (4.8%), 901 `not-ingested`.** Bestiary 1 was `§37`'s
+explicit exclusion ("Bestiary 1 excluded, it is SD-22's") because the seven-book cut only ever
+covered Bestiary 2 onward. SD-22 is closed; no bundle currently owns Bestiary 1's remaining work.
+Under corpus-wide lanes this ceases to be a question — Bestiary 1 is simply one more book with units
+of `monster` (284 remaining), `monster_ability` (523 remaining), `race_trait` (21 remaining, per
+SD-28 `§61`'s `file_kind()` correction already applied to this figure) and `companion` (59
+remaining), and each lane picks it up the same way it picks up any other book that carries units of
+that lane's kind. No separate epic, no separate receipt track, no book-boundary decision required.
+
+### 38.3 The lane structure — corpus-wide, three tiers
+
+**Tier 1 — proven-path, day-one parallel, no mechanism needed.** Method is settled (SD-28 landed
+seven books of feats and four of equipment through it); every book with remaining units of these
+kinds — touched or untouched — can run today:
+
+| lane | held | remaining | books w/ remaining units |
+|---|---:|---:|---:|
+| equipment | 5,064 | 1,163 | re-derive at cycle-0 per book |
+| feat | 1,260 | 1,350 | ″ |
+| spell | 1,089 | 1,754 | ″ |
+| equipment_modifier | 768 | 812 | ″ |
+
+**Tier 2 — mechanism-build-then-sweep.** No working ingest path exists yet corpus-wide for these
+kinds (or the existing path is defective); each needs its mechanism built once, then swept across
+every book that carries the kind — pilot-then-extend per `../corpus-work-channels.md §5.3`, not
+seven-book-parallel and not corpus-wide-parallel from cycle one:
+
+- **Monster / Monster-Ability chassis** (merged per `../corpus-work-channels.md §9.2` — monsters are
+  playable, so chassis + features is one system, the `race`/`race_trait` shape): `monster` 46 held /
+  1,224 remaining across 14 books with remaining units; `monster_ability` 0 held / 3,107 remaining
+  across 24 books. Combined 4,331 remaining units. **Pilot: Bonus Bestiary** (14 monster + 17
+  monster_ability = 31 units, carried forward from `§37.2`'s reasoning — the smallest *non-degenerate*
+  combination, i.e. neither count near zero). Corpus-wide, two smaller pairs exist —
+  `occult_adventures` (1 monster + 3 monster_ability) and `monster_codex` (2 + 3) — but both are too
+  thin to prove a chassis-plus-features mechanism; `book_of_the_damned_volume_2` (4 + 17 = 21) is a
+  viable smaller alternative if the operator wants a cheaper pilot than Bonus Bestiary. Recorded, not
+  substituted — Bonus Bestiary stays the pilot of record unless the operator says otherwise.
+- **Race-Trait**: 44 held / 3,412 remaining across 27 books; defect-fix-alongside per
+  `../corpus-work-channels.md §9.3` — `classify()`'s only grounding source is CRB's own hardcoded
+  table, so a non-CRB trait grounds today only by name coincidence (SD-28 `§56`). **Pilot:
+  `inner_sea_intrigue`** (9 remaining units, smallest non-degenerate book — `book_of_the_damned_volume_1/2`
+  at 1 unit each are too thin to prove the fix).
+- **Companion**: 0 held / 1,683 remaining across 17 books; no path anywhere in the corpus. **Pilot:
+  `inner_sea_combat`** (10 remaining units, smallest non-degenerate book — `horror_adventures` and
+  `inner_sea_intrigue` at 2 units each are too thin).
+
+**Tier 3 — blocked, out of scope.** `class_feature`: 15,472 units, 40.2% of the corpus, 109 held /
+15,363 remaining. Stays out — see §38.4.
+
+### 38.4 `class_feature` stays out — `§63`'s reason, restated at corpus scale, with a named successor
+
+SD-28 `§63` established that per-class archetype-slot sizing cannot be extrapolated: four
+hand-verified classes spanned 5%–70% of named slots wire-able, with no formula connecting sample to
+population. `../corpus-work-channels.md §9.1` funds the per-class hand-verification for the
+remaining ~24 classes as its own effort, separate from any book-ingest bundle. That funded effort —
+not SD-29, not SD-30 — is `class_feature`'s successor owner. It has not yet been assigned an SD
+number; whoever picks up `../corpus-work-channels.md §9.1`'s funded measurement inherits these
+15,472 units (up from the 90 units SD-29's prior seven-book scope tracked in
+`successor-forward-scope-register.md` C1.3, now widened to the full corpus-wide count). Recorded as
+an open item in `risks-and-open-questions.md`, not silently assigned.
+
+### 38.5 SD-30 collision — flagged, not resolved
+
+`docs/release/SD-30-occult-and-companion-content-ingestion/decisions.md §1` pins a sixteen-book list
+(Occult Adventures, Mythic Adventures, the eight-book Inner Sea line, Book of the Damned vol. 1/2,
+Occult Origins, Haunted Heroes Handbook, and others) dispatched **per-book**, planning-ready, not
+re-cut by this decision or by `§36`/`§37` — this decision's write scope is SD-29 only, per the brief
+driving it. Every one of those sixteen books carries units of SD-29's now-corpus-wide lanes (spell,
+equipment, monster_ability, race_trait, companion, etc.) — the same (kind, book) cells SD-29's lanes
+now claim. **This is a live collision, not a hypothetical one:** if both packages dispatch cycles
+against the same book's same kind, two writers land on the same table file. Recorded as an explicit
+open item for the operator in `risks-and-open-questions.md` — not resolved here, per the brief's
+explicit instruction not to re-scope SD-30 from this package.
+
+### 38.6 What does not change
+
+`canonical_branch: tranche/9` and `build_version_target: 0.9.<build>` (`§34`, restated `§37.5`);
+sequential launch after SD-28; unattended-mode operating protocol (`§22`); Epic 3's PI-screening
+gate, now stated corpus-wide rather than seven-book (`epic-breakdown.md` Epic 3); the reach gate as
+definition-of-done (`§19`); every decision `§1`-`§37` not explicitly named above. This decision
+changes **book-list scope** (corpus-wide, not seven books) and **lane sizing** (re-derived at
+corpus scale); it does not change branch, version scheme, launch order, or the kind-lane
+partitioning `§36`/`§37` already established.
+
+**Authority:** operator directive 2026-08-10 (verbatim above, distinct from and later than the
+directive `§37` executed); `decisions.md §§36-37` (partitioning, not superseded by this decision);
+`../corpus-work-channels.md` (channel analysis, §9.4's deferral now superseded twice — once for
+partitioning at `§37`, once for book-list scope here); `docs/work-inventory.json` (all figures
+re-derived above, commands included).

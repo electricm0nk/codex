@@ -202,7 +202,9 @@ comparable to SD-28's, SD-29's or SD-27's until an optional `source_record` land
 `ComputationExplanation`.
 
 **Ownership rule agreed across all three registers: whichever bundle dispatches first pays it; the
-others re-verify rather than re-implement.** See `../SD-29-bestiary-line-book-ingestion/forward-scope-register.md §7.4`
+others re-verify rather than re-implement.** See `../SD-29-corpus-wide-catch-up-lanes/forward-scope-register.md §7.4`
+(directory renamed 2026-08-10 from `SD-29-bestiary-line-book-ingestion` when SD-29 was re-scoped
+corpus-wide, `decisions.md §38` in that package)
 and `§7.6`, and `../SD-28-ultimate-book-content-ingestion/forward-scope-register.md §C4.3`–`§C4.4`.
 
 ## Review trigger

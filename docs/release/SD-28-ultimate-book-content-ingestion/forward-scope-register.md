@@ -111,7 +111,9 @@ records the dropped records as cycle findings, not blockers.
 
 Three findings from the tranche/7 retrospective that are **about this bundle specifically**, each
 derived by command rather than routed by assumption. Sources: `docs/retro/tranche-7-retrospective.md`,
-`../SD-29-bestiary-line-book-ingestion/forward-scope-register.md §7`.
+`../SD-29-corpus-wide-catch-up-lanes/forward-scope-register.md §7` (directory renamed 2026-08-10
+from `SD-29-bestiary-line-book-ingestion` when SD-29 was re-scoped corpus-wide, `decisions.md §38`
+in that package).
 
 ### C4.1 — SD-28 is likely LARGER than SD-27, not smaller
 

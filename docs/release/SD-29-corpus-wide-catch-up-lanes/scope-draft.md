@@ -8,6 +8,15 @@
 **Owner:** Todd Hintzmann
 **Scope:** universal
 
+> **RE-SCOPED CORPUS-WIDE, 2026-08-10 (`decisions.md §38`).** The book list below is now the
+> **historical seven-book confirmation only** — accurate for what it documents (the 2026-08-02
+> per-book path/publisher pins for Bestiary 2-6, Bonus Bestiary, Monster Codex), but **no longer
+> SD-29's scope boundary**. SD-29's lanes now run across all 37 in-scope books
+> (`../corpus-work-channels.md §10.2`), touched or untouched, per the operator directive quoted in
+> `decisions.md §38`. Do not read this section as "the books SD-29 covers" — see `decisions.md §38`
+> and `epic-breakdown.md` for the corpus-wide lane structure and per-book path pattern
+> (`src/rules_core/rules_tables/<book>/`, generalized from the seven paths below).
+
 > **Re-cut 2026-08-10 (`decisions.md §37`, executing §36).** SD-29 dispatches by **kind lane**
 > (Epics 4-7: Monster/Monster-Ability chassis, Race-Trait, Companion, Residual proven-path), not
 > by per-book epic. The seven-book list below is unchanged — this section still names the correct
@@ -219,16 +228,33 @@ previously carried was against the retired per-book cut and is retired along wit
 
 ## What is operator-pinned vs. doctrine
 
-- **Operator-pinned, confirmed 2026-08-01/02, re-cut 2026-08-10:** Book list (7 books, per `decisions.md §34`), kind-lane structure and lane sizes (`decisions.md §37`), Epic 8 in-scope vs. separate-bundle decision, branch name, board name, build version target. See `decisions.md §§13, 14, 15, 34, 37` and the "Next step" section below.
+- **Operator-pinned, confirmed 2026-08-01/02, re-cut 2026-08-10, re-scoped corpus-wide 2026-08-10:**
+  Book list (37 in-scope books, corpus-wide, per `decisions.md §38`, superseding the 7-book pin
+  `§34` set), kind-lane structure and lane sizes (`decisions.md §37`/`§38`), Epic 8 in-scope vs.
+  separate-bundle decision, branch name, board name, build version target. See
+  `decisions.md §§13, 14, 15, 34, 37, 38` and the "Next step" section below.
 - **Doctrine-of-record (already established):** Epic 1 = Code-Side Identifier Cleanup. Operator Pre-Launch gates. Identifier discipline. Build-version scheme. `Workflow`-tool operating form (`decisions.md §23`, supersedes the prior `/loop /batch /goal` form at §7). Per-bundle progress file.
 
-## Next step (operator-pinned, confirmed 2026-08-01/02)
+## Next step (operator-pinned, confirmed 2026-08-01/02, corpus-wide re-scope 2026-08-10)
 
 All operator-pinned items are now confirmed:
 
-1. **Book list confirmed** — seven books (Bestiary 2, 3, 4, 5, 6, Bonus Bestiary, Monster Codex), 2026-08-02 per `decisions.md §34`.
-2. **Per-book path locations confirmed** — `src/rules_core/rules_tables/<book>/` for each of the seven books, per the §"Book list" table above.
-3. **Epic 8 (DM Toolkit extension; was Epic 7)** remains operator-pinned whether in scope, per-cycle at Epic 4's pilot cycle-batch closure (`decisions.md §19`, `§37`); its safe default absent an explicit call is the Class 3 (C3.1) retrofit per `successor-forward-scope-register.md C3.1`.
+1. **Book list: corpus-wide, 37 books** (`../corpus-work-channels.md §10.2`; `beginner_box`
+   excluded), per `decisions.md §38`, 2026-08-10 — supersedes the seven-book confirmation (Bestiary
+   2, 3, 4, 5, 6, Bonus Bestiary, Monster Codex) `decisions.md §34` set 2026-08-02, which is
+   preserved above as the historical origin of this package's per-book path pattern.
+2. **Per-book path locations** — `src/rules_core/rules_tables/<book>/`, generalized corpus-wide from
+   the seven-book §"Book list" table above (which remains the source for those seven books'
+   specific paths).
+3. **Epic 8 (DM Toolkit extension)** remains operator-pinned whether in scope, per-cycle at Epic 5's
+   pilot cycle-batch closure (`decisions.md §19`, `§37`, `§38` — Epic 5 is the current number for
+   the Monster/Monster-Ability lane, renumbered from Epic 4 by the corpus-wide re-scope); its safe
+   default absent an explicit call is the Class 3 (C3.1) retrofit per
+   `successor-forward-scope-register.md C3.1`.
 4. **Branch name + board name confirmed** — `tranche/9` branch (cut from the post-SD-28 tip per `decisions.md §34`); Hermes board retired in favor of local-file `kanban.md` + `progress.md`, 2026-08-01 per `decisions.md §13`/§14a.
 5. **Build version target confirmed** — `0.9.<build>` per `<major>.<tranche-base>.<build>` scheme, 2026-08-01 per `decisions.md §14`.
-6. **Packaging decision confirmed** — the canonical repo-resident home is `docs/release/SD-29-bestiary-line-book-ingestion/`, with the chassis planning-ready at seven-book width per `decisions.md §34`.
+6. **Packaging decision confirmed** — the canonical repo-resident home is
+   `docs/release/SD-29-corpus-wide-catch-up-lanes/` (renamed 2026-08-10 from
+   `SD-29-bestiary-line-book-ingestion`, `decisions.md §38`), with the chassis planning-ready at
+   corpus-wide (37-book) scope per `decisions.md §38`, superseding the seven-book width
+   `decisions.md §34` originally pinned.

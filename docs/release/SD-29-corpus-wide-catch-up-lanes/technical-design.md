@@ -15,6 +15,13 @@ companion_to: ./technical-requirements.md, ./decisions.md
 owns which write, and a new provenance stage. Cycles now dispatch by **kind lane** across all seven
 books, not by per-book epic against a four-or-seven-book list.
 
+**RE-SCOPED CORPUS-WIDE, 2026-08-10 (`decisions.md §38`).** "All seven books" above is now "all 37
+in-scope books" (`../corpus-work-channels.md §10.2`) — the mechanics (trap-report → Shape B cache →
+`rules_tables/<book>/` → reach gate) are unaffected, since the architecture was already
+book-parameterized; only the range of `<book>` widens. Epic numbers below shifted: Epic 4 is now
+the corpus-wide proven-path lane; the Monster/Monster-Ability chassis lane (this file's primary
+subject in several sections) is now Epic 5, not Epic 4.
+
 ## Architecture overview
 
 SD-29 extends the per-book ingest pipeline established by SD-22 (Bestiary

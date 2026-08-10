@@ -16,6 +16,11 @@ This register captures work downstream of SD-29. SD-29's successor bundle
 on SD-29's bestiary outputs but aren't yet named land in **Class 2**.
 SD-29-specific retrofits land in **Class 3**.
 
+> **Note, 2026-08-10 (`decisions.md §38.5`).** The "successor" framing above predates the
+> corpus-wide re-scope. SD-30 is no longer cleanly downstream of SD-29's output — its sixteen-book
+> list is now a *subset* of SD-29's corpus-wide lane scope, a collision rather than a
+> dependency. See `risks-and-open-questions.md` R-29-009/OQ-29-004; not resolved here.
+
 ## Class 0 — Doctrinal anchors (always-on)
 
 | Anchor | Path | Note |
@@ -43,25 +48,28 @@ already canonical.
 
 **Owner:** SD-29 itself (Epic 8; was Epic 7 under the retired per-book numbering — `decisions.md §37`).
 
-**What depends on SD-29:** the extension consumes Epic 4's monster/monster-ability chassis records
-for the encounter builder + party-CR math. Epic 8 is gated on Epic 4's pilot cycle-batch
-(Bonus Bestiary) landing, and can consume the remaining books incrementally as Epic 4's extension
-cycle-batches close — it does not wait for every lane.
+**What depends on SD-29:** the extension consumes Epic 5's monster/monster-ability chassis records
+(was Epic 4 before the 2026-08-10 corpus-wide re-scope, `decisions.md §38`) for the encounter
+builder + party-CR math. Epic 8 is gated on Epic 5's pilot cycle-batch (Bonus Bestiary) landing, and
+can consume the remaining books incrementally as Epic 5's extension cycle-batches close — it does
+not wait for every lane.
 
 **Status:** Epic 8 is optional, operator-pinned; absent an explicit call it takes the safe default of a Class 3 (C3.1) retrofit per §C3.1 below, per `decisions.md §19`.
 
-### C1.3 — `class_feature` (90 units) inherits SD-28's per-class archetype funding
+### C1.3 — `class_feature` (15,472 units corpus-wide) inherits `corpus-work-channels.md §9.1`'s per-class archetype funding
 
-**Owner:** SD-28 (or a named successor), not SD-29. New item, added by the 2026-08-10 kind-lane
-re-cut (`decisions.md §37.4`).
+**Owner:** whichever bundle executes `../corpus-work-channels.md §9.1`'s funded per-class
+hand-verification — not yet assigned an SD number. Not SD-29. **Widened from 90 units to 15,472
+units by the 2026-08-10 corpus-wide re-scope** (`decisions.md §38.4`); originally added by the
+kind-lane re-cut (`decisions.md §37.4`) at the retired seven-book, 90-unit figure.
 
-**What depends on SD-29:** nothing — this is the reverse relationship. SD-29's 90 `class_feature`
-units (across its seven books) are Channel D per `../corpus-work-channels.md §3`/`§5.4`: blocked
-behind the archetype mechanism and per-class chassis (SD-28 `§60`/`§63`), corpus-wide sizing funded
-(`§9.1`) but not yet measured for the specific classes these 90 units belong to. Explicitly
-excluded from every SD-29 lane (Epic 7's residual lane scopes only the settled-method kinds).
-Ingests once SD-28's per-class measurement reaches the relevant classes — tracked here so it is not
-silently dropped, and not silently folded into a lane whose method does not fit it.
+**What depends on SD-29:** nothing — this is the reverse relationship. `class_feature` (15,472
+units, 40.2% of the corpus) is Channel D per `../corpus-work-channels.md §3`/`§5.4`: blocked behind
+the archetype mechanism and per-class chassis (SD-28 `§60`/`§63`), corpus-wide sizing funded
+(`§9.1`) but not yet measured per-class. Explicitly excluded from every SD-29 lane, including the
+now-corpus-wide Epic 4 (proven-path lane scopes only the settled-method kinds). Ingests once the
+`§9.1` measurement reaches the relevant classes — tracked here so it is not silently dropped, and
+not silently folded into a lane whose method does not fit it.
 
 ## Class 2 — Future-acquired (deferred)
 
@@ -115,8 +123,9 @@ discipline.
 
 If Epic 8 (DM Toolkit extension; was Epic 7) does not land inside SD-29,
 it surfaces as a Class 3 retrofit: separate bundle that consumes
-`<book>/` monster slices. Operator-pinned per-cycle at Epic 4's pilot
-cycle-batch closure (was "Epics 5 and 6" under the retired per-book
+`<book>/` monster slices. Operator-pinned per-cycle at Epic 5's pilot
+cycle-batch closure (was Epic 4's under the retired seven-book kind-lane
+numbering, `decisions.md §38`; was "Epics 5 and 6" under the retired per-book
 numbering).
 
 ### C3.2 — Bestiary 6 + Bonus Bestiary ingestion [SUPERSEDED — decisions.md §34, 2026-08-02]

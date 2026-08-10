@@ -235,30 +235,41 @@ All of the following, each checkable by someone who was not present:
 The prior "Epics 3-6 and 11-13, per-book" structure is retired; see `epic-breakdown.md` for the
 full 11-epic structure this section now reflects.
 
+**RE-SCOPED CORPUS-WIDE, 2026-08-10 (`decisions.md §38`).** Every "all 7 books"/"seven books"
+mention below is now all 37 in-scope books (`../corpus-work-channels.md §10.2`). Epic numbers
+shifted: Epic 4 below (Monster/Monster-Ability) is now **Epic 5**; the new Epic 4 is the
+corpus-wide proven-path lane (equipment, feat, spell, equipment_modifier, race, class). Race-Trait
+moved from Epic 5 to **Epic 6**; Companion from Epic 6 to **Epic 7**. The bullets below are kept as
+authored (historical numbering) and corrected inline where the shift matters for dispatch.
+
 - **Epic 1 (Identifier Cleanup)** fires FIRST. No other epic may start until Epic 1 is closed.
-- **Epic 2 (Operator Pre-Launch)** is the pre-launch gate, corpus-wide (all 7 books' shape derived
+- **Epic 2 (Operator Pre-Launch)** is the pre-launch gate, corpus-wide (all 37 books' shape derived
   in one pass, not per-book). Pre-launch checklist verifies before any other epic starts.
 - **Epic 3 (Provenance Gate — PI-Screening for Kind-Lane Ingestion)** fires after Epic 2, before any
   content lane. Wires a PI-blacklist sweep into each lane's extraction step; cites
-  `docs/governance/license-matrix.md` for OGL/attribution (already satisfied for all 7 books).
+  `docs/governance/license-matrix.md` for OGL/attribution (satisfied for all 37 in-scope books).
   Blocking per `../corpus-work-channels.md §6` and `decisions.md §37.3`.
-- **Epics 4-7 (kind lanes)** may run in any order after Epic 3, file-disjoint by kind:
-  - **Epic 4 (Monster / Monster-Ability Chassis Lane)** — merged per
-    `../corpus-work-channels.md §9.2`; 2,159 units. **Pilot-then-extend:** Bonus Bestiary (34 units)
-    runs end-to-end first; the remaining six books' cycle-batches (Bestiary 2, 3, 4, 5, 6, Monster
-    Codex) dispatch only after the pilot lands and its per-unit cost is recorded.
-  - **Epic 5 (Race-Trait Lane)** — 1,124 units; fixes the `classify()` name-coincidence defect
-    alongside the per-book ingest, per `../corpus-work-channels.md §9.3`.
-  - **Epic 6 (Companion Lane)** — 275 units; new mechanism, no corpus-wide precedent.
-  - **Epic 7 (Residual Proven-Path Content Lane)** — 203 units (spell/equipment/feat/race/
-    equipment_modifier/class) using the settled per-book method. `class_feature` (90 units) is
-    excluded — see `decisions.md §37.4`.
-- **Epic 8 (DM Toolkit extension, consuming Epic 4's monster records)** is optional-but-proposed.
+- **Epic 4 (Proven-Path Content Lanes, current numbering)** — equipment, feat, spell,
+  equipment_modifier, race, class, corpus-wide. No mechanism needed; day-one parallel once Epic 3
+  clears. See `decisions.md §38.3`.
+- **Epics 5-7 (mechanism-gated kind lanes, current numbering)** may run in any order after Epic 3,
+  file-disjoint by kind, each pilot-then-extend:
+  - **Epic 5 (Monster / Monster-Ability Chassis Lane, was Epic 4)** — merged per
+    `../corpus-work-channels.md §9.2`; corpus-wide (1,224 monster + 3,107 monster_ability
+    remaining). **Pilot-then-extend:** Bonus Bestiary (31 remaining units) runs end-to-end first;
+    remaining books' cycle-batches dispatch only after the pilot lands and its per-unit cost is
+    recorded.
+  - **Epic 6 (Race-Trait Lane, was Epic 5)** — 3,412 remaining units, corpus-wide; fixes the
+    `classify()` name-coincidence defect alongside the per-book ingest, per
+    `../corpus-work-channels.md §9.3`. Pilot: `inner_sea_intrigue` (9 units).
+  - **Epic 7 (Companion Lane, was Epic 6)** — 1,683 remaining units, corpus-wide; new mechanism, no
+    corpus-wide precedent. Pilot: `inner_sea_combat` (10 units).
+- **Epic 8 (DM Toolkit extension, consuming Epic 5's monster records)** is optional-but-proposed.
   Per reach-gate doctrine of 2026-08-01, the toolkit extension either lands inside SD-29 (if cycles
   need the consumer surface to satisfy reach) or surfaces as a Class 3 retrofit (C3.1) in
-  `successor-forward-scope-register.md`. Operator-pinned per-cycle at the closure of Epic 4's pilot
-  cycle-batch (not all seven books — the toolkit can consume monster records incrementally as
-  Epic 4's cycle-batches land).
+  `successor-forward-scope-register.md`. Operator-pinned per-cycle at the closure of Epic 5's pilot
+  cycle-batch (not every book — the toolkit can consume monster records incrementally as Epic 5's
+  cycle-batches land).
 - **Epic 9 (Build Version Numbering)** fires after Epic 1, before Epic 11. First concrete value
   `0.9.<build>` per the 2026-08-01 amendment.
 - **Epic 10 (Bundle Code Review)** fires after Epic 9 and every lane epic (4-7, plus Epic 8 if in
@@ -351,7 +362,7 @@ See `decisions.md` for the running decision record. Each decision is dated, name
 
 ## Per-bundle progress file
 
-`docs/release/SD-29-bestiary-line-book-ingestion/progress.md` (this
+`docs/release/SD-29-corpus-wide-catch-up-lanes/progress.md` (this
 directory) carries the per-cycle receipt — it is the sole receipt file for
 this bundle. The prior workspace-lane path
 (`~/workspace/programs/codex/requirements/SD-29-bestiary-2-3-4-5-content-ingestion/progress.md`)

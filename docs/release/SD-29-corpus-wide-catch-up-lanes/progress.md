@@ -148,6 +148,73 @@ Epic 1 (Identifier Cleanup) is still the first cycle to fire once SD-29 launches
 (cut from the post-SD-28 tip, per `decisions.md §34`). This re-cut is a docs-only change; no
 tranche/9 branch exists yet and no lane cycle has run.
 
+## Cycle 0.0+3 — Corpus-wide re-scope (operator directive 2026-08-10)
+
+**Date:** 2026-08-10
+**Cycle ID:** `SD29-LAND-4`
+**Operator:** Todd Hintzmann (directive: "What I'm really after is establishing lanes that we can
+use to rapidly catch up all the books in parallel — both those we have touched and those we have
+not touched.")
+**Surface:** this directory (renamed `docs/release/SD-29-bestiary-line-book-ingestion/` →
+`docs/release/SD-29-corpus-wide-catch-up-lanes/`, via `git mv`) and
+`docs/release/corpus-work-channels.md`.
+
+### What landed
+
+`decisions.md §37` (same day, prior cycle) re-cut SD-29 into kind lanes but kept the lane scope
+pinned to the retired seven-book set. This cycle supersedes that boundary — `decisions.md §38` is
+the corpus-wide re-scope:
+
+- Directory renamed via `git mv` (history preserved); every internal cross-reference and every
+  outside-package reference to the old path updated.
+- `decisions.md §38` added: every corpus figure re-derived independently from
+  `docs/work-inventory.json` (commands included), not transcribed from the driving brief. One
+  correction found: the brief's `feat` remaining figure (1,348) undercounted by 2 — it silently
+  excluded 2 `deferred-with-reason` units; the correct figure is 1,350. All other brief figures
+  (corpus totals, per-kind held/remaining, Bestiary 1's 4.8%) checked out exactly.
+- `epic-breakdown.md` rewritten: Epic 4 is now the corpus-wide Proven-Path Content Lanes tier
+  (equipment, feat, spell, equipment_modifier, race, class — day-one parallel, no mechanism);
+  Monster/Monster-Ability moved Epic 4→5, Race-Trait Epic 5→6, Companion Epic 6→7, each now
+  corpus-wide with a named pilot book. Epics 1-3, 8-11 renumbering-adjacent text updated
+  (Epic 8's gate is now Epic 5's pilot, not Epic 4's).
+- `kanban.md` cards rewritten to the new numbering; Epic 4 split into three proven-path cards
+  (equipment+equipment_modifier, spell, feat+race+class); Epics 5-7 each split into pilot/extend
+  cards.
+- `README.md`, `scope-draft.md`, `risks-and-open-questions.md`,
+  `successor-forward-scope-register.md`, `forward-scope-register.md`, `technical-design.md`,
+  `technical-requirements.md`, `acceptance-and-verification.md`, `loop-instruction.md`: banners
+  and cross-references added/updated pointing at `decisions.md §38`'s corpus-wide scope and the
+  Epic 4→5/5→6/6→7 renumbering; seven-book history preserved, not deleted.
+- `risks-and-open-questions.md`: new R-29-009 and OQ-29-004 record the SD-30 collision — SD-30's
+  sixteen-book list is now a subset of SD-29's corpus-wide lane scope. **Flagged, not resolved** —
+  SD-30's own package was not touched, per explicit brief instruction.
+- `corpus-work-channels.md §9.4`'s deferral marked superseded a second time (once by `§37` for
+  partitioning, once by `§38` here for book-list scope).
+- `class_feature` (15,472 units corpus-wide, up from the 90-unit seven-book figure) stays out of
+  every lane; successor owner named as whichever bundle executes
+  `corpus-work-channels.md §9.1`'s funded per-class archetype measurement (not yet assigned an SD
+  number).
+- Bestiary 1 (951 units, 4.8% proven, 901 `not-ingested`) confirmed simply in scope under the
+  corpus-wide lanes — no separate epic, no separate receipt track, no operator decision required.
+
+### Verification
+
+- Every figure re-derived independently via `python3` against `docs/work-inventory.json`; commands
+  included inline in `decisions.md §38`.
+- `git status --porcelain` checked before staging; only explicit SD-29-package and
+  `corpus-work-channels.md` paths touched (docs-only). The ~15 uncommitted files from the
+  concurrent SD-28 session on this branch were left untouched — none staged, none read as part of
+  this cycle's edits beyond the initial `git status` scan.
+- No `git add -A`/`git add .` used; no `git stash` used.
+
+### Next cycle
+
+Same as Cycle 0.0+2's: Epic 1 (Identifier Cleanup) is still the first cycle to fire once SD-29
+launches on `tranche/9`. This re-scope is docs-only; no `tranche/9` branch exists yet and no lane
+cycle has run. The SD-30 collision (OQ-29-004) is an open item for the operator to resolve before
+or during launch — this package does not block on it, but dispatch discipline must avoid
+double-claiming the same (kind, book) cell until it is.
+
 ## Pre-launch readiness audit (2026-08-02)
 
 **2026-08-02 pre-launch readiness pass (operator-side):** branch tip at audit: b63cda4e on tranche/8 (tranche/9 cut deferred to SD-29 launch per decisions.md §34). Scope operator-pinned to the 7-book cut (adds bestiary_6, bonus_bestiary, monster_codex — Epics 11–13). Launch-readiness fixes applied across the package; decisions §21–§34 landed. Sequential launch after SD-28 closure.

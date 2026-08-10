@@ -359,7 +359,16 @@ the whole 36-book product.**
 "Alongside" is the right call: building a per-book race-trait path while leaving the name-match
 grounding in place would produce a path whose own success criterion is untrustworthy.
 
-### 9.4 SD-29 / SD-30 re-cut — deferred
+### 9.4 SD-29 / SD-30 re-cut — deferred [SUPERSEDED TWICE — see SD-29 `decisions.md §37` and `§38`]
+
+**Superseded, 2026-08-10, twice.** First by `SD-29/decisions.md §37` (the kind-lane partitioning
+re-cut, executed the same day as this deferral was written) and second by `SD-29/decisions.md §38`
+(the corpus-wide re-scope, retiring SD-29's seven-book boundary entirely — "both those we have
+touched and those we have not touched," operator directive 2026-08-10). SD-30 is untouched by
+either supersession; `§38.5` records the resulting SD-29/SD-30 book-list collision as an open item
+for the operator, not resolved by either supersession.
+
+**Original deferral, preserved below as historical record:**
 
 Explicitly deferred until 9.1–9.3 are settled, as its own conversation. Neither package is to be
 re-cut yet. `SD-29/decisions.md §36` and `epic-breakdown.md`'s superseded-in-part note stand as

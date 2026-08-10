@@ -533,7 +533,8 @@ own finding is worth nothing.
 ## 9. Where the forward work went
 
 The 83 deferrals are routed in `docs/release/SD-28-ultimate-book-content-ingestion/forward-scope-register.md`,
-`docs/release/SD-29-bestiary-line-book-ingestion/forward-scope-register.md` §7, and
+`docs/release/SD-29-corpus-wide-catch-up-lanes/forward-scope-register.md` §7 (directory renamed
+2026-08-10 from `SD-29-bestiary-line-book-ingestion`), and
 `docs/release/SD-30-occult-and-companion-content-ingestion/forward-scope-register.md`. The headline of that
 routing, stated here because it is a retrospective finding rather than a scoping one:
 

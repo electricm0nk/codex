@@ -10,7 +10,23 @@ mirror_of: ./scope-draft.md
 build_version_target: 0.9.<build>
 ---
 
-# SD-29 — Bestiary-Line Book Ingestion
+# SD-29 — Corpus-Wide Catch-Up Lanes
+
+> **RE-SCOPED CORPUS-WIDE, 2026-08-10 (`decisions.md §38`).** SD-29 is no longer the bestiary
+> line. Operator directive, verbatim: *"What I'm really after is establishing lanes that we can use
+> to rapidly catch up all the books in parallel — both those we have touched and those we have not
+> touched."* Every lane in `epic-breakdown.md` now runs across all 37 in-scope books
+> (`../corpus-work-channels.md §10.2`; `beginner_box` is the sole exclusion), touched or untouched,
+> superseding the seven-book pin `§34` set and `§37.5` carried forward. The directory itself is
+> renamed from `SD-29-bestiary-line-book-ingestion` (via `git mv`, history preserved) so the
+> package's own name stops re-asserting the retired boundary. Lanes are grouped in three tiers:
+> **Tier 1 — proven-path, day-one parallel** (equipment, feat, spell, equipment_modifier, race,
+> class — no mechanism needed, Epic 4); **Tier 2 — mechanism-build-then-sweep, pilot-then-extend**
+> (monster+monster_ability chassis, race-trait, companion — Epics 5-7); **Tier 3 — blocked, out of
+> scope** (`class_feature`, 40.2% of the corpus, behind the archetype engine — `decisions.md §38.4`).
+> See `decisions.md §38` for every re-derived figure and the command behind each one, and
+> `risks-and-open-questions.md` for the SD-30 book-list collision this re-scope surfaces but does
+> not resolve.
 
 > **RE-CUT, 2026-08-10 (`decisions.md §37`, executing §36).** SD-29 now dispatches by **kind
 > lane**, not by per-book epic. `../corpus-work-channels.md`'s channel analysis (three of SD-29's
@@ -164,12 +180,16 @@ load-bearing for their respective source packages' internal cross-references.
 
 ## Purpose
 
-End-to-end content-source ingest for the bestiary-line books (four per Package
-A's committed scope-draft, seven per Package B's register — see "Unresolved:
-scope width" above). Per-bestiary ingest cycles produce canonical monster (or
-player-options, or racial-options for `monster_codex`) records that satisfy the
-reach gate (`apps/desktop/src-tauri/src/reach_gate.rs`) — a record is not done
-until it reaches a player surface.
+**Current purpose (2026-08-10, `decisions.md §38`):** corpus-wide catch-up, by kind lane, across
+all 37 in-scope books — touched and untouched alike. Each lane cycle produces canonical records for
+its kind (equipment, feat, spell, equipment_modifier, race, class in Tier 1; monster +
+monster_ability chassis, race_trait, companion in Tier 2) that satisfy the reach gate
+(`apps/desktop/src-tauri/src/reach_gate.rs`) — a record is not done until it reaches a player
+surface. `class_feature` is explicitly out of scope (`decisions.md §38.4`).
+
+**Historical purpose (superseded), preserved for record:** end-to-end content-source ingest for the
+bestiary-line books (four per Package A's committed scope-draft, seven per Package B's register —
+see "Unresolved: scope width" above).
 
 ## Source STC contents (consolidated, 14 files)
 
@@ -185,13 +205,13 @@ until it reaches a player surface.
   successor work depending on SD-29's output.
 - `epic-breakdown.md` — **11 epics** × ~3-4 criteria = ~40 criteria (re-cut
   2026-08-10, `decisions.md §37`: Epic 3 provenance gate + Epics 4-7 kind
-  lanes replace the retired per-book Epics 3-6/11-13); Closure Epilogue
-  (Epic 11) fires LAST.
+  lanes replace the retired per-book Epics 3-6/11-13; re-scoped corpus-wide
+  2026-08-10, `decisions.md §38`); Closure Epilogue (Epic 11) fires LAST.
 - `technical-requirements.md` — pre-loop prerequisites + normative requirements +
   out-of-scope.
-- `technical-design.md` — architectural surface for all seven books, organized
-  by kind lane (monster/monster-ability chassis, race-trait, companion,
-  residual) rather than per-book.
+- `technical-design.md` — architectural surface for all 37 in-scope books, organized
+  by kind lane (Tier 1 proven-path; Tier 2 monster/monster-ability chassis, race-trait,
+  companion) rather than per-book.
 - `acceptance-and-verification.md` — Given/When/Then per criterion.
 - `progress.md` — per-cycle receipt log.
 - `release-notes.md` — release-notes template; populated at closure.
@@ -203,16 +223,18 @@ until it reaches a player surface.
 
 Canonical (repo-resident) home:
 
-`docs/release/SD-29-bestiary-line-book-ingestion/` (this directory, post-
-consolidation, replacing `docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/`
-which is removed as part of the consolidation commit). See "Unresolved:
-planning-readiness" above for the live contradiction over whether this package
-is actually ready to execute from.
+`docs/release/SD-29-corpus-wide-catch-up-lanes/` (renamed 2026-08-10 via `git mv` from
+`SD-29-bestiary-line-book-ingestion`, `decisions.md §38`; that directory was itself a
+post-consolidation rename from `docs/release/SD-29-bestiary-2-3-4-5-content-ingestion/` — the
+consolidation commit removed that name). See "Unresolved: planning-readiness" above for the live
+historical contradiction over whether this package was ready to execute from at consolidation time
+(now moot — see `decisions.md §34` for the resolution).
 
 ## Objective
 
-**Superseded by the 2026-08-10 kind-lane re-cut** (`decisions.md §37`) — preserved below as
-historical record of the consolidation's original per-book framing, current structure follows.
+**Superseded by the 2026-08-10 corpus-wide re-scope** (`decisions.md §38`, executing over the
+2026-08-10 kind-lane re-cut, `decisions.md §37`) — preserved below as historical record of the
+consolidation's original per-book framing, current structure follows.
 
 Per-cycle, ingest one canonical record from one bestiary-line book, with the
 record reaching a player surface via the reach gate. Package A's epics name
@@ -221,46 +243,51 @@ cycles for Bestiary 5 (operator-pinned per cycle-0 trap-report output); Package
 B's register additionally scopes `bestiary_6`, `bonus_bestiary`, and
 `monster_codex` — see "Unresolved: scope width" above.
 
-**Current objective (2026-08-10):** per lane cycle-batch, ingest one canonical record of one kind
-(monster+monster_ability chassis, race_trait, companion, or a residual proven-path kind) from one
-of the seven in-scope books, with the record reaching a player surface via the reach gate and
-clearing the Epic 3 provenance gate. See `epic-breakdown.md` for the full lane structure.
+**Current objective (2026-08-10, `decisions.md §38`):** per lane cycle-batch, ingest one canonical
+record of one kind (Tier 1 proven-path: equipment, feat, spell, equipment_modifier, race, class;
+Tier 2 mechanism-build-then-sweep: monster+monster_ability chassis, race_trait, companion) from any
+of the 37 in-scope books that carries units of that kind — touched or untouched by any prior
+bundle — with the record reaching a player surface via the reach gate and clearing the Epic 3
+provenance gate. See `epic-breakdown.md` for the full lane structure.
 
 ## In scope
 
-**Re-derived per-kind, per `decisions.md §37.0`** (supersedes the per-book unit counts below,
-which used monster-count-by-races.lst-row as the sizing unit rather than the actual kind
-distribution):
+**Re-derived per-kind, per `decisions.md §38.1`/`§38.3`** (supersedes both the per-book unit counts
+below and the seven-book kind counts in `§37.0`, which sized these lanes to the retired seven-book
+boundary):
 
-- **Epic 4 — Monster / Monster-Ability Chassis Lane** — 2,159 units (813 `monster` + 1,346
-  `monster_ability`) across all seven books. Pilot: Bonus Bestiary (34 units), then extend.
-- **Epic 5 — Race-Trait Lane** — 1,124 `race_trait` units across all seven books; fixes the
-  `classify()` name-coincidence defect alongside the build (`../corpus-work-channels.md §9.3`).
-- **Epic 6 — Companion Lane** — 275 `companion` units across all seven books; no path exists
-  anywhere in the corpus.
-- **Epic 7 — Residual Proven-Path Content Lane** — 203 units (`spell` 82, `equipment` 65, `feat`
-  32, `race` 12, `equipment_modifier` 9, `class` 3) using the settled per-book method.
-  `class_feature` (90 units) is explicitly excluded — Channel D, see `decisions.md §37.4`.
+- **Epic 4 — Proven-Path Content Lanes (Tier 1, day-one parallel)** — equipment (5,064 held / 1,163
+  remaining), feat (1,260 / 1,350), spell (1,089 / 1,754), equipment_modifier (768 / 812), race (7 /
+  96), class (27 / 158) — corpus-wide, no mechanism needed.
+- **Epic 5 — Monster / Monster-Ability Chassis Lane (Tier 2)** — monster (46 held / 1,224 remaining,
+  14 books) + monster_ability (0 held / 3,107 remaining, 24 books), merged per
+  `../corpus-work-channels.md §9.2`. Pilot: Bonus Bestiary (31 remaining units), then extend
+  corpus-wide.
+- **Epic 6 — Race-Trait Lane (Tier 2)** — 44 held / 3,412 remaining `race_trait` units across 27
+  books; fixes the `classify()` name-coincidence defect alongside the build
+  (`../corpus-work-channels.md §9.3`). Pilot: `inner_sea_intrigue` (9 remaining units).
+- **Epic 7 — Companion Lane (Tier 2)** — 0 held / 1,683 remaining `companion` units across 17
+  books; no path exists anywhere in the corpus. Pilot: `inner_sea_combat` (10 remaining units).
+- **Tier 3, out of scope:** `class_feature` — 15,472 units, 40.2% of the corpus, 109 held / 15,363
+  remaining, blocked behind the archetype engine (SD-28 `§60`/`§63`). See "Out of scope" below.
 - Reach-gate satisfaction for every record ingested (the reach gate is the
   definition of done per `decisions.md §19`).
 - Epic 3's PI-screening sweep, wired into each lane's extraction step, before that lane's first
-  content commit for any book (`decisions.md §37.3`).
+  content commit for any book, corpus-wide (`decisions.md §37.3`, widened `§38.6`).
 - Cross-book conflict resolution per `decisions.md §16` (newer book = doctrine,
   older book = errata).
 - `monster_codex` is the sole source of the flag that grants
   `Duergar ~ Spell-Like Ability ~ Invisibility`, the project's last open reach
-  finding — now Epic 5's Monster Codex cycle-batch's to retire (see `forward-scope-register.md` §1.2).
+  finding — Epic 5's Monster Codex cycle-batch's to retire (see `forward-scope-register.md` §1.2).
 
 ## Out of scope
 
-- Bestiary 1 (closed in SD-22 procedurally; **4.1% proven, 42/1,027 units** as measured 2026-08-02 — `decisions.md §35`, not a finished content foundation).
-  **STALE as of 2026-08-10** — this figure predates SD-28 `§61`'s `file_kind()` correction, which
-  moved Bestiary 1 from 620 `race_trait` to 21 `race_trait` + 523 `monster_ability` and changed its
-  unit total from 1,027 to 951. Re-measure before use; see `decisions.md §36`.
-- SD-28's Ultimate books (separate bundle).
-- SD-30's Occult + companions (separate bundle).
-- Mythic monster appendices (not in any current SD).
-- NPC codex (not in any current SD).
+- **`class_feature`** — 15,472 units, 40.2% of the corpus. Blocked behind the archetype mechanism
+  and per-class chassis (SD-28 `§60`/`§63`: sizing cannot be extrapolated from a sample). Successor
+  owner: whichever bundle executes `../corpus-work-channels.md §9.1`'s funded per-class
+  hand-verification — not yet assigned an SD number. See `decisions.md §38.4`.
+- **`beginner_box`** — 19 units, the sole book excluded from the 37-book product per
+  `../corpus-work-channels.md §10.2`.
 - Real-time execution engines (RNG, opponent state, turn sequencing). Per
   `decisions.md §19`, real-time engines remain out of scope; rules-data engines
   are in scope only when strictly necessary.
@@ -268,35 +295,37 @@ distribution):
   dispatches via local file.
 - The ~40 unrouted engine/UI deferrals in `docs/retro/events/` — real, but not
   SD-29's by any documentary authority (`forward-scope-register.md` Class 3).
+- **Not out of scope, flagged instead:** SD-30's sixteen-book list is a live collision with SD-29's
+  now-corpus-wide lanes, not a clean boundary — see `risks-and-open-questions.md` and
+  `decisions.md §38.5`. This package does not resolve it; the operator does.
 
 ## Produced artifacts
 
-- `src/rules_core/rules_tables/{beastiary2,beastiary3,beastiary4,beastiary5,beastiary6,bonus_bestiary,monster_codex}/`
-  — all seven books' canonical records, populated lane by lane: Epic 4's monster/monster-ability
-  chassis records, Epic 5's race-trait records, Epic 6's companion records, Epic 7's residual-kind
-  records (spell/equipment/feat/race/equipment_modifier/class).
-- `data/corpus/{bestiary_2,bestiary_3,bestiary_4,bestiary_5,bestiary_6,bonus_bestiary,monster_codex}/`
-  — Shape B cache per book.
-- A per-lane PI-screening sweep record per book, per `decisions.md §37.3` (Epic 3).
+- `src/rules_core/rules_tables/<book>/` for every one of the 37 in-scope books — canonical records
+  populated lane by lane: Epic 4's proven-path records (equipment, feat, spell,
+  equipment_modifier, race, class), Epic 5's monster/monster-ability chassis records, Epic 6's
+  race-trait records, Epic 7's companion records.
+- `data/corpus/<book>/` — Shape B cache per book, corpus-wide.
+- A per-lane PI-screening sweep record per book, per `decisions.md §37.3`/`§38.6` (Epic 3).
 
 ## Dependency position
 
 - **Depends on:** SD-22 (closed, Bestiary 1 ingest pipeline; reach-gate
-  mechanic — but the pipeline's *output* is 4.1% proven, `decisions.md §35`); SD-27 (closed, Shape B schema);
-  `docs/governance/license-matrix.md` (commit `314a7ad9`, provenance evidence Epic 3 cites).
-- **Unblocks:** SD-30 (separate bundle, no SD-29 dependency; SD-30 should be scoped from the same
-  channel table per `../corpus-work-channels.md §4`, not re-derived independently).
-- **Blocks:** None in-cycle; the post-tranche consumer is whatever bundle picks
-  up after SD-30.
+  mechanic); SD-27 (closed, Shape B schema); SD-28 (sequential-before, per `decisions.md §34`);
+  `docs/governance/license-matrix.md` (commit `314a7ad9`, provenance evidence Epic 3 cites, all 37
+  books).
+- **Collides with:** SD-30 (`docs/release/SD-30-occult-and-companion-content-ingestion/`) — its
+  sixteen-book list is now a subset of SD-29's corpus-wide lane scope. Flagged, not resolved — see
+  `decisions.md §38.5`, `risks-and-open-questions.md`.
+- **Blocks:** None in-cycle; `class_feature`'s successor owner (unassigned SD number, see "Out of
+  scope") is the only downstream dependency this package names.
 
 ## Exit statement
 
-SD-29 is complete when each of the seven in-scope books' records reach a
+SD-29 is complete when every one of the 37 in-scope books' records reach a
 player surface (via reach gate) across every kind lane (Epic 4-7) that book
-carries units of, the Closure Epilogue (Epic 11) fires, and `0.9.<last_build>`
-is the post-closure value. **Scope width (seven books) was resolved
-2026-08-02** (`decisions.md §34` — see "RESOLVED: scope width" above); what
-was outstanding as of this file's last major revision was the **partitioning**
-of that seven-book scope, resolved 2026-08-10 by the kind-lane re-cut
-(`decisions.md §37`, see the banner at the top of this file). No cycle work
+carries remaining units of, the Closure Epilogue (Epic 11) fires, and `0.9.<last_build>`
+is the post-closure value. **Book-list scope is corpus-wide, resolved 2026-08-10**
+(`decisions.md §38`, superseding the seven-book pin `§34` set and `§37.5` carried forward). The
+kind-lane partitioning itself (`decisions.md §37`) is unchanged by this re-scope. No cycle work
 has run yet.

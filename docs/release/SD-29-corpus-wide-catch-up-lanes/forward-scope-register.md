@@ -1,5 +1,11 @@
 # SD-29 — Forward-Scope Register
 
+> **RE-SCOPED CORPUS-WIDE, 2026-08-10 (`decisions.md §38`).** This register's seven-book scope
+> (§0/§1.1) is preserved below as the historical predecessor-deferral analysis it performed — it
+> remains the authoritative source for the seven-book figures it derived (§1.3). It is **no longer
+> SD-29's current book-list boundary**: SD-29's lanes now run corpus-wide, across all 37 in-scope
+> books (`../corpus-work-channels.md §10.2`), per `decisions.md §38`.
+>
 > **Status:** scope pass, **signed off 2026-08-02**. The operator pinned this register's own §0/§1.1 seven-book scope (`decisions.md §34`); loader may proceed per that decision.
 > Nothing downstream (`scope-draft.md`, epics, criteria) exists yet, deliberately — per
 > `spec-domain-bundle-authoring` v1.2.0 and SD-27's own recorded pitfall, the register is the

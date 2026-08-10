@@ -15,6 +15,13 @@ framing to the 11-epic kind-lane structure in `epic-breakdown.md`. `beastiary<N>
 all seven in-scope books, not the retired `{2,3,4,5}` set, and TR-29-001's file-touch partition is
 per-book-within-a-lane (a lane cycle-batch still writes to exactly one book's tree at a time).
 
+**RE-SCOPED CORPUS-WIDE, 2026-08-10 (`decisions.md §38`).** `beastiary<N>`/`<book>` below now
+ranges over all 37 in-scope books (`../corpus-work-channels.md §10.2`), not the seven named above.
+TR-29-001's per-book-within-a-lane partition is unaffected — it already generalizes to any book
+count. Epic numbers referenced below shifted per `decisions.md §38`/`epic-breakdown.md`: Epic 4 is
+now the corpus-wide proven-path lane; Monster/Monster-Ability moved to Epic 5, Race-Trait to Epic 6,
+Companion to Epic 7.
+
 ## Objective
 
 Per lane cycle-batch, ingest one canonical record for one kind (monster+monster_ability chassis,
@@ -127,7 +134,7 @@ Per `decisions.md §19`:
 
 Source-of-record `programs/codex/requirements/SD-29-.../` MUST be removed
 on the publish commit per `decisions.md §13`. The canonical
-repo-resident home is `docs/release/SD-29-bestiary-line-book-ingestion/`.
+repo-resident home is `docs/release/SD-29-corpus-wide-catch-up-lanes/`.
 
 ## TR-29-012 — Local-file work-queue dispatch
 
@@ -138,7 +145,7 @@ enforced by the supervisor reading one card at a time.
 
 ## Produced artifacts
 
-- 14-file canonical chassis at `docs/release/SD-29-bestiary-line-book-ingestion/` (after the move-not-copy publish lands).
+- 14-file canonical chassis at `docs/release/SD-29-corpus-wide-catch-up-lanes/` (after the move-not-copy publish lands).
 - `src/rules_core/rules_tables/{beastiary2,beastiary3,beastiary4,beastiary5,beastiary6,bonus_bestiary,monster_codex}/` — all seven books' canonical records, populated lane by lane (Epic 4's monster+monster_ability chassis, Epic 5's race-trait, Epic 6's companion, Epic 7's residual kinds).
 - `data/corpus/{bestiary_2,bestiary_3,bestiary_4,bestiary_5,bestiary_6,bonus_bestiary,monster_codex}/` — Shape B cache per book.
 - Per-cycle artifacts under `artifacts/` — trap-reports (one per book, corpus-wide pre-flight), per-lane PI-screening sweep outputs, progress receipts.
@@ -152,4 +159,4 @@ The bundle closes when:
 2. Epic 8 (DM Toolkit extension) lands (in scope) or surfaces as a Class 1/3 retrofit.
 3. Epic 11 (Closure Epilogue) has opened and merged the tranche promotion PR.
 4. The workspace tree has been removed on the publish commit.
-5. The canonical 14-file chassis lives at `docs/release/SD-29-bestiary-line-book-ingestion/`.
+5. The canonical 14-file chassis lives at `docs/release/SD-29-corpus-wide-catch-up-lanes/`.
