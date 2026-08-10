@@ -3410,3 +3410,70 @@ Full per-kind percentage table: `decisions.md §62`.
 ### Commit
 
 Docs-only (`decisions.md §62`, this entry). To be committed ahead of the producer change (Territory B).
+
+## SD28-C4.9-001 -- operator queue items 4-6: Fighter archetype class-two, equipment picker widening, dashboard status finding (2026-08-09/10)
+
+**Item 4 -- archetype-swap class-two measurement.** `archetype_claiming_slot`'s second real consumer, Fighter's Bravery (structurally different, non-resource-pool class from Alchemist), reachability-proven end-to-end via `build_pilot_headless_receipt`. Measured, not estimated: `49d07a5f`, +137/-10, decomposed by hunk to 33 lines production wiring / 104 lines test scaffolding. Team-lead's correction accepted: 33 lines buys one *feature slot*, not one class. Three automated id-string proxy passes to find the true per-class wiring ratio all broke on unvalidated naming assumptions (one retracted outright after being reported); abandoned in favor of hand verification. Four hand-verified classes settle the question: Fighter 1/22 (5%), Alchemist 3/26 (12%), Paladin 16/33 (48%), Bard 23/33 (70%) -- **no shared ratio, cannot be extrapolated from this sample.** Full reasoning, evidence per class, and the three failed proxy iterations: `decisions.md §63`.
+
+**Item 5 -- equipment picker widened to UM/UPsi, book list derived structurally.** UE's already-landed 1,551 + UM's 26 + UPsi's 439 real records now reach the desktop Equipment Catalog/Add Equipment picker, not just `equipment_resolver`'s headless chain. `EQUIPMENT_CATALOG_BOOKS`'s hand-maintained literal array replaced with `equipment_catalog_books()`, derived from `equipment_resolver::equipment_catalog_rows()` -- the same structural fix `646aea2b` applied to `v06_work_inventory.rs`'s `equipment_keys`, closing the equipment-domain instance of the pattern for good. Fixed a real leaked-syntax defect the widening's guard tests caught (a trailing PCGen bonus-tag with no `%N` reference to justify stripping it, `pcgen_desc.rs`, confirmed zero blast radius on other books' rendering). Classified the tier-1 archetype catalog's reach honestly: 403 records across 7 books, `Reach::NotSurfaced`, `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS` entries with gap and remedy each -- pre-existing gap, surfaced by running a fuller suite, not caused by this widening. `a68a4538`, four files, root 538/538, desktop 413/413, clippy 75/75.
+
+**Item 6 -- dashboard "unassigned" status traced to a producer bug, not a kanban gap.** `pf1e_dashboard_producer.py`'s `status` field ignores `channel` and only recognizes the literal string `"v0.6"` as owned -- 19 of 23 books read `unassigned` despite carrying a real, active SD-N channel (confirmed against the script's own docstring contract, which the code violates). Diff drafted (`equipment_catalog_books()`-style derivation, three-state `unassigned`/`planned`/`in-progress`, two flagged frontend consumer risks) but not applied in this cycle -- outside this repo's write scope, operator-authorized for a later pass.
+
+### Verification
+
+Root 538/538, desktop 413/413, clippy 75/75 throughout. `git status`/`git add` scoped to exact file lists every commit; no other agent's files touched.
+
+### Commit
+
+`49d07a5f` (Fighter), `a68a4538` (picker widening), `347dcf3c` (§63 decision record). SHA-confirmed on HEAD/origin after each push.
+
+## SD28-C4.9-002 -- Ultimate Combat equipment (204 records) (2026-08-10)
+
+**Assignment (operator, content-first, no scoping decision needed):** UC and UW were the last two Ultimate books with no `equipment_tables.rs`. Same proven path as UM/UPsi.
+
+**Equipment: 185, matches the declared work-inventory figure exactly.** `uc_equip_general.lst` (27 raw, 1 `.MOD`), `uc_equip_magic_items.lst` (10 raw, 0 `.MOD`), `uc_equip_arms_armor.lst` (209 raw, 60 live `.MOD` + 4 comment-disabled `.MOD` lines that were never real content). Every live `.MOD` target checked individually: same-file self-retag of an already-counted record, or a cross-book base this book does not own -- neither a second distinct record.
+
+**Equipmods: real count 19, not the declared 39 -- the §58 `.COPY=`-legacy-alias hazard found again, on a book nobody had flagged.** 20 of 39 raw lines are a `#Old KEYs` block, every one `VISIBLE:NO`, every one a real-key `.COPY=SHORT_CODE` alias. Excluded per §58's ruling. **Real total: 204 (185 + 19), not 224.**
+
+**Found and fixed a real gap in the cross-book collision guard, not a UC defect.** UC introduces 136 genuine key collisions with Ultimate Equipment -- a reprint-consolidation book that republishes large parts of earlier books' weapon/armor catalogs verbatim (spot-checked `Bo Staff`/`Gladius` directly against both source files, identical cost/weight, confirmed reprints not coincidence). The prior test asserted zero cross-book collisions; widened to pin the exact 136-key set, so a genuinely new collision still fails.
+
+**`equipment_book_slug_for` caught its own first real regression within a day of being built.** `d2cdaad6` wired UC into `equipment_resolver`'s chain; the classifier's own guard (`646aea2b`) immediately panicked on the unmapped `"UC"` code rather than silently reporting all 204 records `not-ingested`. Fixed (`"UC"` -> `"ultimate_combat"`), regenerated `docs/work-inventory.json`: 199 of UC's 224 declared units now `ingested-magnitude`, 5 `text-complete` (the 204 real records), 20 permanently `not-ingested` (the excluded aliases, same disposition as UPsi's 113). Strongest evidence yet for the structural-derivation approach over the additive one: the guard fired in minutes, not a full bundle later.
+
+**UW deferred.** Operator sequencing decision: land UC, then close SD-28 and raise the PR rather than start a third book mid-closure. UW (127 declared, expected to shrink on the same `.COPY=` census pattern -- 2 rows) is real, scoped, Channel A work that can land at any time and is not blocked.
+
+### Verification
+
+Root 75/75 (equipment-scoped filter) then full suite green, desktop 413/413 (collision-pin fix), clippy 75/75, `equipment_book_slug_for_covers_every_catalog_book` green after the fix, `docs/work-inventory.json` regenerated and confirmed.
+
+### Commit
+
+`d2cdaad6` (UC table + wiring), `d0402a19` (classifier slug fix + regenerated inventory). SHA-confirmed on HEAD/origin.
+
+## SD-28 bundle closure (2026-08-10)
+
+**Operator decision: close SD-28 at this state.** UW and any further book-equipment slices are deferred to a later cycle (Channel A, unblocked, known cost) rather than folded into this closure.
+
+**This bundle's largest wins were corrections, not additions -- state that plainly rather than let the unit counts imply otherwise:**
+
+- Seven Ultimate books' feat catalogs (865 records total) + UE/UM/UPsi/UC equipment (185+1,549+26+439+204... see per-book decisions for exact figures) landed across the bundle.
+- `file_kind()` row-content classification (`§61`): `race_trait` 8,600 -> 3,456, new `Kind::MonsterAbility` (3,107 units), ~2,750 phantom units removed program-wide. A correction, not progress, per the operator's own standard.
+- The equipment classifier structural fix (`§55`): ~1,450 units of already-finished work made visible, root cause of a book (UE) reading 0% the day it was celebrated as closed.
+- Tier-1 archetype ingestion (403 records across 7 books) + the `archetype_claims_slot` primitive, proven end-to-end on two structurally different classes (Alchemist, Fighter) -- and, per `§63`, proven NOT to extrapolate to a program-wide size estimate (4 hand-verified classes span 5%-70%, no shared ratio).
+- Three independent, hand-maintained equipment-book lists (the resolver's own chain, the classifier's map, the desktop picker's array) collapsed to one derivation each, closing the "hand list beside a derivable one" pattern this bundle catalogued (Decision 36's shape) for the equipment domain specifically.
+- **`proven` fell from 2,362 to 2,248 while the percentage rose**, because `file_kind()`'s correction shrank the denominator more than it shrank the numerator. State this explicitly in any summary -- it is the single most misreadable number in the bundle, and reads backwards without the denominator context.
+
+**Standing caveats to carry into any downstream scoping (SD-29/SD-30), not resolved here:**
+
+- `§63`: the archetype-swap epic's true size cannot be estimated from any sample this small (5%-70% across 4 classes). Sizing the remaining ~24 archetype-bearing classes requires the same hand verification, not a formula.
+- Seven archetype `Reach::NotSurfaced` findings (`reach_gate.rs` `OPEN_FINDINGS`): the tier-1 catalog is ingested and, for the wired slots, engine-grounded, but zero reaches a player -- no archetype-selection surface exists anywhere in the desktop app.
+- The dashboard producer status-field fix: drafted as a reviewable diff, not applied (outside this repo, operator-authorized for a later pass).
+- `monster_ability` (3,107 units, 24 books) and `companion` (1,683 units, 17 books): zero ingested units, no engine table family exists for either. `monster_ability` is new-and-unpathed (created by `§61`'s own classification fix), not a gap in existing coverage -- the largest single piece of net-new mechanism work the corpus now carries.
+- Denominator note for whoever reads this bundle's percentages against a later one: SD-28's own figures throughout this document predate the operator's later 36-book product-scope ruling (`core_essentials`/`beginner_box` excluded, 36,907-unit denominator) and use the pre-ruling 38,536. Both are correct for their own scope; they are not interchangeable.
+
+### Final verification
+
+Root suite green (538+ targets), desktop suite green (413+), root clippy at the 75-warning ceiling throughout, never breached. `docs/work-inventory.json` regenerated and current as of `d0402a19`.
+
+### Closure
+
+Kanban and this progress log reflect the bundle's final state as of `d0402a19`. PR raised for `tranche/8` -> `develop` following this entry.
