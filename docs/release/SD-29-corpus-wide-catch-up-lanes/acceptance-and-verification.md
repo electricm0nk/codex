@@ -28,13 +28,15 @@ current numbering, not this file's pre-§38 authoring.
 
 ## AT-29-001 — Per-cycle file-touch partition
 
-Given a lane cycle-batch for `<bestiary>` where `<bestiary>` ∈ `{2, 3, 4, 5, 6, bonus, monster_codex}`.
+Given a lane cycle-batch for `<book>`, where `<book>` ranges over all 37 in-scope books
+(`../corpus-work-channels.md §10.2`; generalized 2026-08-10 from the retired
+`{2, 3, 4, 5, 6, bonus, monster_codex}` enumeration per `decisions.md §38`).
 
 When the cycle writes files.
 
 Then:
 
-- Files written under `src/rules_core/rules_tables/beastiary<bestiary>/` (or `bonus_bestiary/`, `monster_codex/`), `data/corpus/<book>/`, new bins under `src/bin/`, new tests under `tests/` (named per identifier-discipline doctrine; no `sd29_` prefix), or `docs/release/SD-29-.../`.
+- Files written under `src/rules_core/rules_tables/<book>/`, `data/corpus/<book>/`, new bins under `src/bin/`, new tests under `tests/` (named per identifier-discipline doctrine; no `sd29_` prefix), or `docs/release/SD-29-.../`.
 - No file written under `src/rules_core/pilot_compute.rs`, another book's `rules_tables/<other_book>/` tree, `docs/release/v0.6/`, `src/oracle_validation/`, or `src/pcgen_import/corpus_traps.rs`.
 
 Evidence: per-cycle receipt carries the audit command and the captured exit code.
@@ -42,8 +44,9 @@ Evidence: per-cycle receipt carries the audit command and the captured exit code
 ## AT-29-002 — Reach-gate claim
 
 Given a lane record at `src/rules_core/rules_tables/<book>/<record>.rs`, for any of Epic 4's
-(monster chassis + monster-ability features), Epic 5's (race-trait), Epic 6's (companion), or
-Epic 7's (residual: spell/equipment/feat/race/equipment_modifier/class) records.
+(proven-path: spell/equipment/feat/race/equipment_modifier/class), Epic 5's (monster chassis +
+monster-ability features), Epic 6's (race-trait), or Epic 7's (companion) records. *(Epic
+mapping corrected 2026-08-10 to the `decisions.md §38` numbering.)*
 
 When the cycle's reach gate runs.
 
@@ -136,11 +139,13 @@ class-grant rule; SD-30 owns canonical class definitions.
 
 **Retired shape (pre-2026-08-10):** "Epic 6 (Bestiary 5) cycle picks per-race/per-feat/
 per-companion-mod cycles if `monster` units = 0." Superseded — Bestiary 5 and Bestiary 6 are no
-longer their own epics; their units are distributed across Epic 4 (monster_ability only — 39 and 13
-units respectively, zero monster chassis), Epic 5 (race_trait — 63 and 0), Epic 6 (companion — 57
-and 26), and Epic 7 has none from either book.
+longer their own epics; their units are distributed across Epic 5 (monster_ability only — 39 and 13
+units respectively, zero monster chassis), Epic 6 (race_trait — 63 and 0), Epic 7 (companion — 57
+and 26), and Epic 4 (proven-path kinds) has none from either book. *(Epic mapping corrected
+2026-08-10 to the `decisions.md §38` numbering.)*
 
-Given Epic 2's corpus-wide pre-flight (cycle-0 trap-report + work-inventory output, all 7 books).
+Given Epic 2's corpus-wide pre-flight (cycle-0 trap-report + work-inventory output, all 37
+in-scope books per `decisions.md §38`).
 
 When a lane epic (4, 5, 6, or 7) reads a book's `kinds` field for its own kind.
 
@@ -224,10 +229,10 @@ Then:
 - [ ] AT-29-003a provenance gate (Epic 3) recorded for every lane's first content commit per book.
 - [ ] AT-29-008 zero-of-kind books correctly absent from the affected lane's cycle-batch list, not skipped as an exception.
 - [ ] AT-29-005 build version reads `0.9.<build>`.
-- [ ] AT-29-006 identifier discipline exits 0 across all seven books' surface code.
-- [ ] AT-29-010 rules-as-data verified across all seven books' numerical effects.
+- [ ] AT-29-006 identifier discipline exits 0 across all 37 in-scope books' surface code.
+- [ ] AT-29-010 rules-as-data verified across all 37 in-scope books' numerical effects.
 - [ ] AT-29-011 move-not-copy publish landed.
 - [ ] AT-29-012 local-file dispatch verified by Epic 2's pre-flight + Epic 11's closure.
 - [ ] AT-29-013 bundle code review (Epic 10) closed; all findings triaged with named owners for deferrals.
 - [ ] `release-notes.md` populated with a per-lane rollup.
-- [ ] `successor-forward-scope-register.md` reviewed for successor work, including the `class_feature` (90-unit) Channel D deferral per `decisions.md §37.4`.
+- [ ] `successor-forward-scope-register.md` reviewed for successor work, including the `class_feature` (15,472-unit corpus-wide per `decisions.md §38.4`; was 90-unit under the seven-book cut's `§37.4`) deferral, owned by SD-30's class_feature/archetype bundle.

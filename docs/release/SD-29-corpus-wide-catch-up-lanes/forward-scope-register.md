@@ -397,7 +397,7 @@ named non-SD-29 owner · `CLOSED` verified resolved at HEAD.
 | 35 | `pu-classmate-barb-monk` | BONUS:VAR\|FAB_7\|FAB (pu_abilities_class.lst:503) is transcribed in the doc table but flurry_iterative… | **C3** |
 | 36 | `pu-classmate-barb-monk` | Archetype suppression (PREVAREQ:<Class>_CF_<Feature>,0 gates on every progression row, plus the nine… | **C3** |
 | 37 | `pu-rogue-summoner-features` | summoner_spell_list.rs -- the 202-spell Unchained Summoner spell list from pu_abilities_class.lst:269… | **SD-28** |
-| 38 | `pu-rogue-summoner-features` | tests/sd27_pu_class_features.rs -- a PCGEN_CORPUS_ROOT-gated test pinning both modules' formulas agai… | **ELSEWHERE** |
+| 38 | `pu-rogue-summoner-features` | tests/sd27_pu_class_features.rs \[landed as `tests/sd27_pu_class_features_reach_by_corpus_key.rs` — filename corrected 2026-08-10\] -- a PCGEN_CORPUS_ROOT-gated test pinning both modules' formulas agai… | **ELSEWHERE** |
 | 39 | `race-creation-widening-agent` | Widen character creation from 7 races to all 18 corpus races, corpus-driven | **C3** |
 | 40 | `race-creation-widening` | PF1 size modifiers to AC, attack rolls, CMB/CMD and Stealth for Small races (Gnome, Halfling, Goblin,… | **CLOSED** |
 | 41 | `race-creation-widening` | height/weight profiles for the 11 Bestiary 1 races now creatable | **C2** |

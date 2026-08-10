@@ -62,19 +62,34 @@ provenance stage inserted before the table lands (`decisions.md §37.3`):
 
 ## Cycle paths — by kind lane, fanning out per book
 
+*(Section rewritten 2026-08-10 to the `decisions.md §38` corpus-wide lane mapping; the previous
+body enumerated the retired seven-book cut under the pre-§37 epic numbering.)*
+
 Each lane epic's cycle-batch writes to **one book's tree, for that lane's kind only**:
 
-- **Epic 4 (Monster / Monster-Ability Chassis Lane)** — pilot: `src/rules_core/rules_tables/bonus_bestiary/` (14 monster + 17 monster_ability); then `beastiary2/`, `beastiary3/`, `beastiary4/`, `beastiary5/` (monster_ability only), `beastiary6/` (monster_ability only), `monster_codex/`.
-- **Epic 5 (Race-Trait Lane)** — all seven books' `race_trait` share: `beastiary2/` (162), `beastiary3/` (799), `beastiary4/` (86), `beastiary5/` (63), `beastiary6/` (0), `bonus_bestiary/` (17), `monster_codex/` (14).
-- **Epic 6 (Companion Lane)** — all seven books' `companion` share: `beastiary2/` (16), `beastiary3/` (85), `beastiary4/` (76), `beastiary5/` (57), `beastiary6/` (26), `bonus_bestiary/` (0), `monster_codex/` (15).
-- **Epic 7 (Residual Proven-Path Content Lane)** — spell/equipment/feat/race/equipment_modifier/class, wherever each book carries them (Monster Codex carries the largest residual share: 24 spell + 45 equipment + 4 equipment_modifier + 32 feat).
+- **Epic 4 (Proven-Path Content Lanes — day-one, corpus-wide)** — equipment (1,163 remaining),
+  feat (1,350), spell (1,754), equipment_modifier (812), race (96), class (158): settled
+  per-book table method, every book in the 37-book product with remaining units.
+- **Epic 5 (Monster / Monster-Ability Chassis Lane)** — `monster` (1,224 remaining, 14 books) +
+  `monster_ability` (3,107 remaining, 24 books) as one chassis-plus-features build; pilot:
+  `src/rules_core/rules_tables/bonus_bestiary/` (14 monster + 17 monster_ability), then every
+  remaining monster/monster_ability-bearing book.
+- **Epic 6 (Race-Trait Lane)** — `race_trait` (3,412 remaining, 27 books); the classifier's
+  name-coincidence grounding defect is fixed alongside the build; pilot: `inner_sea_intrigue`
+  (9 units), then corpus-wide.
+- **Epic 7 (Companion Lane)** — `companion` (1,683 remaining, 17 books; no ingest path exists
+  anywhere in the corpus); pilot: `inner_sea_combat` (10 units), then corpus-wide.
+
+Per-kind figures are `decisions.md §38.1`'s 2026-08-10 snapshot; every cycle-batch re-derives its
+own live counts from `docs/work-inventory.json` before sizing — the snapshot is not a dispatch
+list.
 
 A lane's per-book cycle-batches are file-disjoint from each other (different books) and from other
 lanes touching the *same* book (different kind-scoped modules within that book's tree — TR-29-001).
 They can run in parallel. Within a single book-and-lane cycle-batch, cycles are sequential (one
 cycle per file at a time).
 
-## Monster / monster-ability lane — pilot-then-extend (was "Bestiary 5 shape-resolution")
+## Monster / monster-ability lane — pilot-then-extend (Epic 5; was "Bestiary 5 shape-resolution")
 
 **Retired shape.** The old "Epic 6 gates on zero-monster inventory, falls back to per-race/per-feat
 cycles" design assumed one epic per book. Under kind lanes this collapses: a book with zero
@@ -83,13 +98,15 @@ cycles" design assumed one epic per book. Under kind lanes this collapses: a boo
 same as every other book. No fallback cycle type is needed because the lane structure already
 routes each unit to the lane that owns its kind.
 
-**What replaces it.** Per `decisions.md §37.2`: Epic 4 pilots the merged monster-chassis +
-monster-ability mechanism against **Bonus Bestiary** (34 units total, the smallest monster-bearing
-book) before extending to the other six books. Bestiary 5's corpus
+**What replaces it.** Per `decisions.md §37.2` (now corpus-wide per `§38.3`): Epic 5 pilots the
+merged monster-chassis + monster-ability mechanism against **Bonus Bestiary** (14 monster + 17
+monster_ability = 31 remaining units, the smallest non-degenerate monster-bearing book) before
+extending to every remaining monster/monster_ability-bearing book (14 `monster` books, 24
+`monster_ability` books per `decisions.md §38.1`). Bestiary 5's corpus
 (`~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_5/`) still contains
 `b5_races_pc.lst`, `b5_races_companion.lst`, `b5_abilities_race*.lst`, `b5_feats.lst`,
 `b5_companionmods.lst`, `_bestiary_5_for_players.pcc` — the generator reports zero `monster` units
-and 39 `monster_ability` units for it; Epic 4's extension phase includes Bestiary 5's
+and 39 `monster_ability` units for it; Epic 5's extension phase includes Bestiary 5's
 `monster_ability` share once the pilot lands, same as it includes Bestiary 6's 13.
 
 ## Local-file dispatch (no Hermes board)

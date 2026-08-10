@@ -39,7 +39,7 @@ each across every book in the 37-book product that carries units of that lane's 
 
 Acceptance:
 
-- No `sd29_*`, `SD29_*`, `Sd29*`, `sd29-*` patterns in this bundle's surface code (`src/rules_core/rules_tables/{beastiary2,beastiary3,beastiary4,beastiary5,beastiary6,bonus_bestiary,monster_codex}/` plus any kind-scoped module a lane epic adds).
+- No `sd29_*`, `SD29_*`, `Sd29*`, `sd29-*` patterns in this bundle's surface code — audited across every `src/rules_core/rules_tables/<book>/` directory a lane writes (all 37 in-scope books per `decisions.md §38`, superseding the retired seven-book dir enumeration) plus any kind-scoped module a lane epic adds.
 - No `t_<hex>` kanban tokens in source files.
 - Identifier-discipline audit script returns 0 findings.
 

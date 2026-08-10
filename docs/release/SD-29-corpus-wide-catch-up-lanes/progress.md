@@ -213,11 +213,69 @@ Same as Cycle 0.0+2's: Epic 1 (Identifier Cleanup) is still the first cycle to f
 launches on `tranche/9`. This re-scope is docs-only; no `tranche/9` branch exists yet and no lane
 cycle has run. The SD-30 collision (OQ-29-004) is an open item for the operator to resolve before
 or during launch — this package does not block on it, but dispatch discipline must avoid
-double-claiming the same (kind, book) cell until it is.
+double-claiming the same (kind, book) cell until it is. *[Resolved later the same day, 2026-08-10:
+SD-30 re-scoped to the class_feature/archetype bundle (`bc8f5fac`); OQ-29-004 CLOSED, R-29-009
+RESOLVED — see `decisions.md §38.5`'s resolution note.]*
 
 ## Pre-launch readiness audit (2026-08-02)
 
 **2026-08-02 pre-launch readiness pass (operator-side):** branch tip at audit: b63cda4e on tranche/8 (tranche/9 cut deferred to SD-29 launch per decisions.md §34). Scope operator-pinned to the 7-book cut (adds bestiary_6, bonus_bestiary, monster_codex — Epics 11–13). Launch-readiness fixes applied across the package; decisions §21–§34 landed. Sequential launch after SD-28 closure.
+
+## Pre-launch readiness audit (2026-08-10, post-re-scope)
+
+**Branch tip at audit: 462c40bc on tranche/8.** First full-package audit since the 2026-08-10
+re-cut (`a8cac700`, `decisions.md §37`) and corpus-wide re-scope (`472acb4f`, `§38`). Every path
+cited by the package's 14 docs was re-verified on disk; remediation landed in this commit.
+
+**Verdict: NOT GO yet — sequencing-blocked on operator actions; the package itself is
+launch-capable after this remediation.** Blockers outside this package's write scope:
+
+1. **SD-28's promotion PR #359 (`tranche/8` → `develop`) is OPEN.** `decisions.md §34` requires
+   `tranche/9` be cut from `develop` *after* that PR merges; `develop` is 137 commits behind
+   `tranche/8`. (Note: `loop-instruction.md` item 5 uses the weaker "closure receipt exists"
+   test, which IS satisfied — SD-28's closure receipt is dated 2026-08-10. The §34 branch-cut
+   rule remains the binding gate.)
+2. **`tranche/9` does not exist** — correct per §34 (the SD-29 launch session cuts+pushes it
+   post-merge). `tranche/10` (SD-30 prep, cut 2026-08-01 from an early tranche/8 tip) already
+   exists, so tranche numbering will land out of chronological order; recorded, not fixed.
+3. **SD-28 closed by operator decision at state `d0402a19`**, with its `epic-30-integrity` and
+   `epic-10-closure` cards never claimed and 8 cards in-flight — its closure receipt says so
+   explicitly. SD-29 inherits SD-28's standing caveats: 8 `OPEN_FINDINGS` entries in
+   `reach_gate.rs` (`beastiary1/race_traits` + seven `<book>/archetypes`, the latter SD-30's).
+4. **`docs/retro/kind-lane-refactor-proposal.md`** (2026-08-09, "proposal, not a decision")
+   names a prerequisite refactor (§4) it says per-kind parallelism depends on — review before
+   the first parallel lane dispatch.
+
+**Package remediation applied in this commit (docs-only):**
+
+- `artifacts/` directory created with README — the trap-report sink TR-29-003/AT-29-003 cite
+  did not exist.
+- Stale `reach_gate.rs:840` line pins re-pointed to `:986` (with dated notes) in
+  `scope-draft.md`, `loop-instruction.md` (×2), `decisions.md` (§10 supersession note, §19),
+  `successor-forward-scope-register.md`; `monsters_reach()` span re-pinned to `:1300`.
+- "Sole surviving `OPEN_FINDINGS` entry" corrected to eight entries (dated corrections) in
+  `scope-draft.md`, `successor-forward-scope-register.md`, `decisions.md §10`;
+  `loop-instruction.md` DoD item 6 now tells cycles to leave the seven archetype entries
+  standing (SD-30's).
+- Seven-book residue in live text rewritten corpus-wide: `epic-breakdown.md` Epic 1 audit
+  scope; `technical-design.md` "Cycle paths" + monster-lane sections (pre-§38 epic mapping);
+  `technical-requirements.md` TR-29-001 example, produced-artifacts list, success definition;
+  `acceptance-and-verification.md` AT-29-001/-002/-008 and exit-checklist items (incl. the
+  `class_feature` figure 90 → 15,472 per §38.4).
+- §38.0 denominator note added (tables run over 38 books/38,536 units incl. `beginner_box`;
+  product scope is 37/38,517).
+- SD-30-collision resolution propagated to the three spots still saying "unresolved"
+  (`README.md`, `decisions.md §38.5` heading, the SD29-LAND-4 receipt above).
+- `tests/sd27_pu_class_features.rs` ledger citation corrected to
+  `tests/sd27_pu_class_features_reach_by_corpus_key.rs`.
+- Outside the package: SD-28 `forward-scope-register.md` C1.1 owner path (two renames stale)
+  re-pointed to `SD-29-corpus-wide-catch-up-lanes/`.
+- Checked and left alone: `decisions.md §14`'s `scripts/workflow-dispatch.sh` mention is a
+  deliberate negative reference (names what SD-29 does *not* use); README §"Two SD-29
+  packages" seven-book text is preserved-as-authored consolidation history.
+
+Verify.sh not re-run: diff is markdown-only (plus one new README), no Rust/test surface
+touched; working tree was clean before and after, no concurrent writers observed.
 
 ---
 

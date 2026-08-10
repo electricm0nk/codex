@@ -40,7 +40,7 @@ observe the file-touch partition.
 Cycle writes are bounded to:
 
 - `src/rules_core/rules_tables/<book>/` (one book per cycle, within the lane's assigned kind — e.g.
-  Epic 4's Bonus Bestiary pilot cycle writes only Bonus Bestiary's monster/monster_ability records).
+  Epic 5's Bonus Bestiary pilot cycle writes only Bonus Bestiary's monster/monster_ability records).
 - `data/corpus/<book>/` (Shape B cache for the active book).
 - new bins under `src/bin/` and new tests under `tests/` named per the identifier-discipline doctrine (no `sd29_` prefix).
 - `docs/release/SD-29-.../` (the bundle's own docs — published; landed source removed by move-not-copy).
@@ -146,8 +146,12 @@ enforced by the supervisor reading one card at a time.
 ## Produced artifacts
 
 - 14-file canonical chassis at `docs/release/SD-29-corpus-wide-catch-up-lanes/` (after the move-not-copy publish lands).
-- `src/rules_core/rules_tables/{beastiary2,beastiary3,beastiary4,beastiary5,beastiary6,bonus_bestiary,monster_codex}/` — all seven books' canonical records, populated lane by lane (Epic 4's monster+monster_ability chassis, Epic 5's race-trait, Epic 6's companion, Epic 7's residual kinds).
-- `data/corpus/{bestiary_2,bestiary_3,bestiary_4,bestiary_5,bestiary_6,bonus_bestiary,monster_codex}/` — Shape B cache per book.
+- `src/rules_core/rules_tables/<book>/` for every one of the 37 in-scope books with remaining
+  units — canonical records populated lane by lane (Epic 4's proven-path kinds, Epic 5's
+  monster+monster_ability chassis, Epic 6's race-trait, Epic 7's companion). *(Rewritten
+  2026-08-10 per `decisions.md §38`; previously enumerated the retired seven-book dir set with
+  the pre-§38 epic mapping.)*
+- `data/corpus/<book>/` — Shape B cache per book touched by a lane.
 - Per-cycle artifacts under `artifacts/` — trap-reports (one per book, corpus-wide pre-flight), per-lane PI-screening sweep outputs, progress receipts.
 - `release-notes.md` populated at closure, rolled up by lane.
 
@@ -155,7 +159,7 @@ enforced by the supervisor reading one card at a time.
 
 The bundle closes when:
 
-1. All four content lanes (Epic 4 monster+monster_ability chassis, Epic 5 race-trait, Epic 6 companion, Epic 7 residual) have reached the gate for every book carrying units of that lane's kind, with Epic 3's provenance gate cleared per book per lane.
+1. All four content lanes (Epic 4 proven-path kinds, Epic 5 monster+monster_ability chassis, Epic 6 race-trait, Epic 7 companion) have reached the gate for every book carrying units of that lane's kind, with Epic 3's provenance gate cleared per book per lane.
 2. Epic 8 (DM Toolkit extension) lands (in scope) or surfaces as a Class 1/3 retrofit.
 3. Epic 11 (Closure Epilogue) has opened and merged the tranche promotion PR.
 4. The workspace tree has been removed on the publish commit.

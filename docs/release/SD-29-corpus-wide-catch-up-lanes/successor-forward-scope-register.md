@@ -97,8 +97,9 @@ player-options cycles.
 ### C2.2 — Monster catalog command and browser [RETIRED — 2026-08-01]
 
 **Retired.** The monster catalog command and browser this item deferred
-have shipped: `reach_gate.rs:840` carries an executed reach claim for
-`("beastiary1", "monsters")` in place of the old `OPEN_FINDINGS` entry;
+have shipped: the `("beastiary1", "monsters")` arm of `reach_gate.rs`
+(`:986` as of 2026-08-10; was `:840`) carries an executed reach claim
+in place of the old `OPEN_FINDINGS` entry;
 `apps/desktop/src-tauri/src/monster_catalog.rs`'s `list_monster_catalog`
 command is registered (`main.rs:57,197`); `MonsterCatalogScreen.tsx` is
 routed via `CharacterHubPage.tsx:104-105`, reachable from a "Browse Monster
@@ -106,8 +107,11 @@ Catalog" button at `LandingScreen.tsx:353`. The deferred work this item
 named no longer exists as an open item.
 
 The surviving related item is the `beastiary1/race_traits` Duergar
-`Spell-Like Ability ~ Invisibility` record — the sole remaining
-`OPEN_FINDINGS` entry, upstream-blocked on `monster_codex`. That record is
+`Spell-Like Ability ~ Invisibility` record — upstream-blocked on
+`monster_codex`. *(Corrected 2026-08-10: it is no longer the sole
+`OPEN_FINDINGS` entry — seven `<book>/archetypes` gaps recorded at SD-28
+closure sit alongside it (SD-28 `decisions.md §60`/`§63`); those belong to
+SD-30's class_feature/archetype bundle.)* That record is
 now expected to be addressed by Epic 5's Monster Codex cycle-batch
 (Race-Trait Lane; was Epic 13 under the retired per-book numbering —
 `decisions.md §37`; `monster_codex` is in scope per `decisions.md §34`) —
