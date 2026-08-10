@@ -867,6 +867,17 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // SD28-C4.9: UC joined `build_equipment_catalog` under the `UC`
+        // book code, both `equipment_tables()` (185) and `equipmod_tables()`
+        // (19) served by that one code.
+        ("ultimate_combat", "equipment") => Some(equipment_reach(
+            "UC",
+            uc::equipment_tables::equipment_tables()
+                .iter()
+                .chain(uc::equipment_tables::equipmod_tables())
+                .map(|entry| entry.key.to_owned())
+                .collect(),
+        )),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by

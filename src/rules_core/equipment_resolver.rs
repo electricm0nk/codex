@@ -21,8 +21,8 @@ use crate::rules_core::pilot_compute_corpus::TableCellRef;
 use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
 use crate::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_magic as um,
-    ultimate_psionics as upsi, RuleSetId,
+    ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
+    ultimate_magic as um, ultimate_psionics as upsi, RuleSetId,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -113,6 +113,7 @@ pub const EQUIPMENT_BOOK_UI: &str = "UI";
 pub const EQUIPMENT_BOOK_UE: &str = "UE";
 pub const EQUIPMENT_BOOK_UM: &str = "UM";
 pub const EQUIPMENT_BOOK_UPSI: &str = "UPSI";
+pub const EQUIPMENT_BOOK_UC: &str = "UC";
 
 /// One book's equipment row, projected onto the three fields every
 /// *headless* (no-corpus) caller needs: which book it came from, its corpus
@@ -272,6 +273,20 @@ pub fn equipment_catalog_rows() -> &'static [EquipmentCatalogRow] {
                 cost_gp: entry.cost_gp,
             });
 
+        // UC (SD28-C4.9): 204 records -- 185 equipment + 19 equipmods (39
+        // raw equipmods lines minus 20 `VISIBLE:NO` `.COPY=` legacy-alias
+        // rows, the same exclusion shape UPsi's own table established --
+        // see `ultimate_combat::equipment_tables`'s own doc comment).
+        let uc_rows = uc::equipment_tables::equipment_tables()
+            .iter()
+            .chain(uc::equipment_tables::equipmod_tables())
+            .map(|entry| EquipmentCatalogRow {
+                book: EQUIPMENT_BOOK_UC,
+                key: entry.key,
+                name: entry.name,
+                cost_gp: entry.cost_gp,
+            });
+
         crb_rows
             .chain(apg_rows)
             .chain(acg_rows)
@@ -282,6 +297,7 @@ pub fn equipment_catalog_rows() -> &'static [EquipmentCatalogRow] {
             .chain(ue_rows)
             .chain(um_rows)
             .chain(upsi_rows)
+            .chain(uc_rows)
             .collect()
     })
 }
@@ -579,7 +595,15 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
         // old 5,503 total -- also independently confirmed the 439 UPsi keys
         // are unique within the book.
         assert_eq!(count(EQUIPMENT_BOOK_UPSI), 439);
-        assert_eq!(rows.len(), 5_942);
+        // SD28-C4.9: UC's 204-record equipment table (185 equipment + 19
+        // equipmods). The declared work-inventory equipment figure (185)
+        // matches this table's own derivation exactly; the equipmods
+        // figure (39) does not -- it is the raw content-line count
+        // including 20 VISIBLE:NO .COPY= legacy aliases, the same hazard
+        // UPsi's own table found. Real count: 19. See
+        // `ultimate_combat::equipment_tables`'s own doc comment.
+        assert_eq!(count(EQUIPMENT_BOOK_UC), 204);
+        assert_eq!(rows.len(), 6_146);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.

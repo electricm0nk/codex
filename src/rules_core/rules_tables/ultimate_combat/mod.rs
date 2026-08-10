@@ -6,4 +6,5 @@
 //! equivalent, or are kept deliberately distinct from a same-named one).
 
 pub mod archetype_tables;
+pub mod equipment_tables;
 pub mod feat_tables;

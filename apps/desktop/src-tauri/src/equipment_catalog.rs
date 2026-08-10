@@ -57,8 +57,8 @@ use codex::rules_core::equipment_resolver::equipment_catalog_rows;
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
-    ultimate_equipment as ue, ultimate_intrigue as ui, ultimate_magic as um,
-    ultimate_psionics as upsi,
+    ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
+    ultimate_magic as um, ultimate_psionics as upsi,
 };
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -74,6 +74,7 @@ const BOOK_UI: &str = "UI";
 const BOOK_UE: &str = "UE";
 const BOOK_UM: &str = "UM";
 const BOOK_UPSI: &str = "UPSI";
+const BOOK_UC: &str = "UC";
 
 /// Every book code this catalog can emit, in the order
 /// `build_equipment_catalog` emits them.
@@ -304,6 +305,23 @@ fn map_upsi_entry(entry: &upsi::equipment_tables::EquipmentTableEntry) -> Equipm
     }
 }
 
+/// UC's entry type reuses UE/UI/UM/UPsi's own shape exactly.
+/// `equipment_tables()` (185 records: General + MagicItems + ArmsArmor)
+/// and `equipmod_tables()` (19 records -- the correct, `VISIBLE:NO`
+/// `.COPY=` legacy-alias-excluded count, the same reconciliation UPsi's
+/// own table required; see `ultimate_combat::equipment_tables`'s own doc
+/// comment) are both chained under `BOOK_UC`.
+fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentCatalogEntryDto {
+    EquipmentCatalogEntryDto {
+        key: entry.key.to_string(),
+        category: format!("{:?}", entry.category),
+        name: entry.name.to_string(),
+        cost_gp: entry.cost_gp,
+        book: BOOK_UC.to_string(),
+        description: entry.description.map(serve_description),
+    }
+}
+
 /// Build the full catalog response across every ingested book. A thin,
 /// testable wrapper behind the Tauri command below (mirroring this
 /// codebase's other command/pure-fn split, e.g.
@@ -329,6 +347,8 @@ pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
         .chain(um::equipment_tables::equipmod_tables().iter().map(map_um_entry))
         .chain(upsi::equipment_tables::equipment_tables().iter().map(map_upsi_entry))
         .chain(upsi::equipment_tables::equipmod_tables().iter().map(map_upsi_entry))
+        .chain(uc::equipment_tables::equipment_tables().iter().map(map_uc_entry))
+        .chain(uc::equipment_tables::equipmod_tables().iter().map(map_uc_entry))
         .collect();
 
     EquipmentCatalogResponse { entries }
@@ -649,9 +669,14 @@ mod tests {
         assert_eq!(with_description("UM"), 24);
         // 216 of UPsi's 326 equipment + 95 of its 113 equipmods = 311.
         assert_eq!(with_description("UPSI"), 311);
+        // 88 of UC's 204 (149 ArmsArmor + 26 General + 19 Equipmods + 10
+        // MagicItems) -- most ArmsArmor rows (ammunition, armor, plain
+        // weapons) carry no `SPROP:` token at all, matching every other
+        // book's own weapon-heavy shortfall.
+        assert_eq!(with_description("UC"), 88);
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            3667
+            3755
         );
     }
 
@@ -709,11 +734,17 @@ mod tests {
         // legacy-alias-excluded count). Matches
         // `equipment_resolver::EQUIPMENT_BOOK_UPSI`'s own pinned 439.
         assert_eq!(count_by_book(&response, "UPSI"), 439);
+        // 185 equipment (26 General + 10 MagicItems + 149 ArmsArmor) + 19
+        // equipmods (39 raw lines minus 20 VISIBLE:NO .COPY= legacy
+        // aliases). Matches `equipment_resolver::EQUIPMENT_BOOK_UC`'s own
+        // pinned 204.
+        assert_eq!(count_by_book(&response, "UC"), 204);
 
-        // 2977 + 338 + 269 + 4 + 200 + 42 + 98 + 1549 + 26 + 439. Pinned as
-        // a total as well as per book so that a book silently dropping out
-        // of the chain cannot be masked by another book growing.
-        assert_eq!(response.entries.len(), 5942);
+        // 2977 + 338 + 269 + 4 + 200 + 42 + 98 + 1549 + 26 + 439 + 204.
+        // Pinned as a total as well as per book so that a book silently
+        // dropping out of the chain cannot be masked by another book
+        // growing.
+        assert_eq!(response.entries.len(), 6146);
     }
 
     #[test]
@@ -811,15 +842,167 @@ mod tests {
                 .or_default() += 1;
         }
 
-        let cross_book: Vec<&&str> = books_per_key
+        let cross_book: BTreeSet<&str> = books_per_key
             .iter()
             .filter(|(_, books)| books.len() > 1)
-            .map(|(key, _)| key)
+            .map(|(key, _)| *key)
             .collect();
-        assert!(
-            cross_book.is_empty(),
-            "no equipment key is shared between two books today; first offenders: {:?}",
-            &cross_book.iter().take(5).collect::<Vec<_>>()
+        // SD28-C4.9: UC joining the catalog introduced 136 real cross-book
+        // key collisions with UE, none of it a defect. Ultimate Equipment
+        // is a consolidation reprint of earlier books' weapon/armor
+        // catalogs, and UC is one of the books it consolidates -- spot
+        // checked directly against both source files: `Bo Staff`
+        // (`uc_equip_arms_armor.lst:63`, cost 1gp/weight 3lb) and UE's own
+        // copy (`ue_equip_arms_armor.lst:365`, identical cost/weight);
+        // `Gladius` the same shape (15gp/3lb, both books). Every one of the
+        // 136 is UC<->UE only -- confirmed no third book is ever involved
+        // in any of them. Pinned by exact set, not by count, so a new,
+        // unrelated collision still fails here rather than silently
+        // hiding behind this one's growth.
+        let expected_cross_book: BTreeSet<&str> = [
+            "Alchemical Cartridge (Dragon's Breath)",
+            "Alchemical Cartridge (Entangling Shot)",
+            "Alchemical Cartridge (Flare)",
+            "Alchemical Cartridge (Paper/Bullet)",
+            "Alchemical Cartridge (Paper/Pellet)",
+            "Alchemical Cartridge (Salt Shot)",
+            "Amulet of Bullet Protection +1",
+            "Amulet of Bullet Protection +2",
+            "Amulet of Bullet Protection +3",
+            "Amulet of Bullet Protection +4",
+            "Amulet of Bullet Protection +5",
+            "Atlatl",
+            "Atlatl Dart",
+            "Black Powder (Dose)",
+            "Blunderbuss",
+            "Bo Staff",
+            "Broadsword (Nine Ring)",
+            "Buckler Gun",
+            "Bullet (Firearm)",
+            "Bullet (Firearm/30)",
+            "Bullet (Firearm/Pitted)",
+            "Butterfly Sword",
+            "Culverin",
+            "Dan Bong",
+            "Do-maru",
+            "Double Chicken Saber",
+            "Double Hackbut",
+            "Dry Load Powder Horn",
+            "Emei Piercer",
+            "Far-Reaching Sight",
+            "Fighting Fan",
+            "Figurine of Wondrous Power (Slate Spider)",
+            "Fire Lance",
+            "Flying Blade",
+            "Four-mirror Armor",
+            "Gladius",
+            "Gunsmith's Kit",
+            "Haramaki",
+            "Harpoon",
+            "Hooked Axe",
+            "Hooked Lance",
+            "Iron Brush",
+            "Jutte",
+            "Kama (Double-Chained)",
+            "Katana",
+            "Katana (Double Walking Stick)",
+            "Kerambit",
+            "Kestros",
+            "Kestros Dart (10)",
+            "Kikko Armor",
+            "Knuckle Axe",
+            "Kusari Gusoku",
+            "Kusarigama (Sickle and Chain)",
+            "Kyoketsu Shoge",
+            "Lamellar (Horn)",
+            "Lamellar (Iron)",
+            "Lamellar (Leather)",
+            "Lamellar (Steel)",
+            "Lamellar (Stone)",
+            "Lamellar Cuirass",
+            "Lungchuan Tamo",
+            "Madu (Leather)",
+            "Madu (Steel)",
+            "Material ~ Bone",
+            "Material ~ Bronze",
+            "Material ~ Gold",
+            "Material ~ Obsidian",
+            "Material ~ Stone",
+            "Mattock",
+            "Mere Club",
+            "Metal Cartridge",
+            "Meteor Hammer",
+            "Monk's Spade",
+            "Mountain Pattern Armor",
+            "Musket",
+            "Musket (Axe)",
+            "Musket (Double-Barreled)",
+            "Musket (Warhammer)",
+            "Naginata",
+            "Nine-Section Whip",
+            "Nodachi",
+            "O-yoroi",
+            "Oil (Of Silence)",
+            "Pata",
+            "Pellets (Handful)",
+            "Pellets (Handful/30)",
+            "Pepperbox",
+            "Pistol",
+            "Pistol (Coat)",
+            "Pistol (Dagger)",
+            "Pistol (Double-Barreled)",
+            "Pistol (Dragon)",
+            "Pistol (Sword Cane)",
+            "Poisoned Sand Tube",
+            "Powder Horn",
+            "Powder Keg",
+            "Quadrens",
+            "Revolver",
+            "Rhomphaia",
+            "Rifle",
+            "Rifle (Pepperbox)",
+            "Rope Dart",
+            "Sansetsukon",
+            "Scizore",
+            "Scorpion Whip",
+            "Shang Gou",
+            "Shotel",
+            "Shotgun",
+            "Shotgun (Double-Barreled)",
+            "Sibat",
+            "Sica",
+            "Silken Ceremonial Armor",
+            "Special Ability ~ Dry Load ~ Firearm / Ammunition",
+            "Special Ability ~ Lucky / Greater ~ Firearm",
+            "Special Ability ~ Lucky ~ Firearm",
+            "Special Ability ~ Reliable / Greater ~ Firearm",
+            "Special Ability ~ Reliable ~ Firearm",
+            "Special Quality ~ Fragile",
+            "Special Quality ~ Performance",
+            "Special Quality ~ Scatter ~ Firearm",
+            "Sword (Seven-Branched)",
+            "Sword (Tri-Point Double-Edged)",
+            "Taiaha",
+            "Tatami-do",
+            "Tekko-Kagi (Iron Claw)",
+            "Tepoztopilli",
+            "Terbutje",
+            "Terbutje (Great)",
+            "Tetsubo",
+            "Throwing Shield",
+            "Tiger Fork",
+            "Tonfa",
+            "Tube Arrow Shooter",
+            "Urumi",
+            "Wahaika",
+            "Wakizashi",
+        ]
+        .into_iter()
+        .collect();
+        assert_eq!(
+            cross_book, expected_cross_book,
+            "cross-book equipment key collisions changed -- every UC/UE reprint pair is named \
+             above; a key outside that set is a new, unreviewed collision"
         );
 
         // 316 keys appear twice within CRB alone (e.g. `Holy Symbol
@@ -883,8 +1066,8 @@ mod tests {
         });
 
         // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU + 14 UI + 269 UE
-        // + 2 UM + 52 UPSI.
-        assert_eq!(response.entries.len(), 772);
+        // + 2 UM + 52 UPSI + 149 UC.
+        assert_eq!(response.entries.len(), 921);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }
