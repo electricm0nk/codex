@@ -1,0 +1,46 @@
+{
+  "channel": "alpha",
+  "eligibility": {
+    "appimage_install": true,
+    "min_supported_version": "0.0.0",
+    "required_install_kind": "appimage"
+  },
+  "linux_appimage": {
+    "name": "Codex_0.8.0_amd64.AppImage",
+    "sha256": "b0d9c600027757f7013b410aa052844a4e3b7ba44770fc63dec8a4d557642cae",
+    "size_bytes": 82221560,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.8.122-a1295856/Codex_0.8.0_amd64.AppImage"
+  },
+  "macos_dmg": {
+    "name": "Codex_0.8.0_aarch64.dmg",
+    "sha256": "8e79bd115e9013cd8acca5bf1ef78872e30757b262f74c586b6ac439b4575839",
+    "size_bytes": 7316612,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.8.122-a1295856/Codex_0.8.0_aarch64.dmg"
+  },
+  "promotion_lineage": {
+    "promoted_at": "2026-08-10T22:51:12Z",
+    "source_branch": "develop",
+    "source_commit": "a129585674e2c6fc17cd7d762ba1d4098de907f4"
+  },
+  "release_notes_hash": "e6f06d36870f67d5201084ff616f347c25f4eaa103bfb36e35818a0cda86e77c",
+  "release_notes_path": "docs/release/v0.7/release-notes.md",
+  "release_notes_url": "https://github.com/electricm0nk/codex/releases/tag/alpha-v0.8.122-a1295856",
+  "schema_version": "1.1.0",
+  "signature": null,
+  "source_branch": "develop",
+  "source_commit": "a129585674e2c6fc17cd7d762ba1d4098de907f4",
+  "tag": "alpha/v0.8.122-a1295856",
+  "tranche_id": "STC-CODEX-SD-16",
+  "version": "0.8.122",
+  "windows_msi": {
+    "name": "Codex_0.8.0_x64_en-US.msi",
+    "sha256": "7df4cf68b8aece274d3fd8ba05631cc96d8581f0729f8ee8ede3b236ddc289ec",
+    "size_bytes": 6897664,
+    "url": "https://github.com/electricm0nk/codex/releases/download/alpha-v0.8.122-a1295856/Codex_0.8.0_x64_en-US.msi"
+  },
+  "workflow_provenance": {
+    "run_attempt": 1,
+    "run_id": "31439053267",
+    "workflow": ".github/workflows/publish-tester-release.yml"
+  }
+}
