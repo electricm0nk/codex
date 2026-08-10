@@ -39,7 +39,7 @@
 use codex::rules_core::rules_tables::{acg, apg, beastiary1, crb};
 
 /// CRB's equipment corpus (`cr_equip_arms_armor.lst` + `cr_equip_general.lst`
-/// + `cr_equip_magic_items.lst` + `cr_equipmods.lst`) is **fully record-ingested**
+/// \+ `cr_equip_magic_items.lst` + `cr_equipmods.lst`) is **fully record-ingested**
 /// -- each per-category module's own doc comment already documents an
 /// exact post-SD-17-merge-fix record count (310 + 453 + 1556 + 658 =
 /// 2977), matching this test's independently-computed total. The
@@ -90,7 +90,7 @@ fn equipment_table_entry_weight_and_description_field_coverage_for_crb() {
 }
 
 /// APG's equipment corpus (`apg_equip_general.lst` + `apg_equip_arms_armor.lst`
-/// + `apg_equip_magic_items.lst`) is **fully record-ingested** as of the
+/// \+ `apg_equip_magic_items.lst`) is **fully record-ingested** as of the
 /// criterion 6.2/6.3/6.4 cycle -- 338 real, active records (corrected
 /// from the criterion 6.1 audit's originally-documented 341: each of the
 /// three corpus files carries exactly one `SOURCELONG:` header line the
