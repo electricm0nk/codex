@@ -1772,3 +1772,97 @@ A 14x spread across four classes settles the question rather than leaving it ope
 **Disposition: the true wiring cost of the archetype-swap epic cannot be sized by ratio from any sample this size, and a mean across four 5%-70% points would have been authoritative-looking and meaningless.** Sizing the remaining ~24 classes requires the same per-class hand verification run here on all four, not a formula. That is real, bounded, but non-trivial work -- roughly the same shape and cost as the four verifications in this decision, multiplied by however many of the remaining classes the operator chooses to fund. Recorded as an open scoping question for the operator, not resolved here: whether to fund full per-class verification before SD-29/SD-30 planning, size a subset, or defer the archetype epic's own bound until a later cycle. This decision closes the *measurement* the operator's queue item 4 asked for; it does not and cannot close the epic's total size.
 
 **Cross-reference:** `§59` (audit backlog untouched by this class), `§60` (the primitive and its first consumer), `§43` (reachability as the acceptance test), the operator's queue items 4-6 all closing in this session (`49d07a5f`, `a68a4538`, and the dashboard-status finding reported without a code change).
+
+## Decision 64 — SD28-C4.9/operator-funded: 25 of 28 archetype-bearing classes hand-verified -- 175 mechanisms, ~5,775 lines, and the epic's true wiring shape splits in two (2026-08-10)
+
+**Funded by the operator directly, in response to `§63`'s "cannot be extrapolated" finding**, rather than accept an unschedulable epic: hand-verify the remaining archetype-bearing classes by the exact method proven on Fighter, Alchemist, Paladin, Bard -- find each named slot's base computation in `pilot_compute.rs`, confirm it is unconditional (level-gated only, not archetype-gated), confirm the slot name maps to a real id. No automated proxy. Report per class, never blended. A near-miss slot name is not evidence.
+
+**25 of 28 classes measured, by direct evidence, none fabricated:**
+
+```
+Fighter       1/22  (5%)      Cavalier      8/18  (44%)     Bloodrager    6/9   (67%)
+Alchemist     3/26  (12%)     Witch         8/17  (47%)     Wizard        2/9   (22%)
+Ranger       26/32  (81%)     Shaman        1/16  (6%)      Investigator  5/12  (42%)
+Cleric       13/20  (65%)     Warpriest    14/16  (88%)     Brawler      11/13  (85%)
+Druid        10/16  (63%)     Summoner      6/14  (43%)     Swashbuckler 24/28  (86%)
+Rogue        17/19  (89%)     Skald        10/10  (100%)    Familiar      1/14  (7%)
+Monk         21/22  (95%)     Barbarian    17/25  (68%)     Companion     0/7   (0%)
+Paladin      16/33  (48%)     Inquisitor   14/23  (61%)
+Bard         23/33  (70%)     Hunter        6/21  (29%)
+
+TOTAL: 263 wired-able slots / 475 named slots
+```
+
+**No blended percentage is reported anywhere in this decision, deliberately.** The spread runs 0% (Companion) to 100% (Skald), confirming `§63`'s finding rather than superseding it: there is no shared ratio, and the predictor is class-specific pre-existing engine coverage, not class type or slot count.
+
+**The true unit of engine cost is not the slot, and getting this wrong once, mid-decision, is itself part of the record.** `263 slots x ~33 lines/slot = 8,679 lines` was the first total computed and reported to the operator -- and it double-counts. Several classes' archetype tables name many level-tier slots (`ChannelEnergy1`...`ChannelEnergy10`, `TrapSense`+6 tiers, `Judgements`/`FinalJudgment`/`SecondJudgment`/etc.) that all supersede the exact same real, single, level-parameterized computation (`channel_energy_dice`, `trap_sense`, `judgment_execution`) -- one `if let` wraps the whole thing regardless of how many archetype-table slot names point at it. Re-derived per class, by hand, from the base ids each row's evidence already named:
+
+```
+class         slots  mechanisms   collapse
+Fighter         1        1        none
+Alchemist       3        3        none
+Ranger         26       25        1 (FavoredEnemy base + FavoredEnemy1 name dup)
+Cleric         13        3        channel_energy(11->1), domains, spellcasting
+Druid          10        9        1 (AThousandFaces/ThousandFaces name dup)
+Rogue          17        9        trapfinding(2->1), trap_sense(8->1)
+Monk           21       21        none -- Evasion/ImprovedEvasion are genuinely
+                                   distinct real ids, not a naming duplicate
+Paladin        16        9        aura_of_justice dup(2->1), mercy(7->1)
+Bard           23       13        inspire_competence(7->1), inspire_courage(5->1)
+Barbarian      17        6        damage_reduction/fast_movement/improved_uncanny_dodge/
+                                   uncanny_dodge each (2->1, base + CF-prefixed sibling),
+                                   trap_sense(8->1)
+Inquisitor     14        4        bane(2->1), judgment_execution(10->1)
+Hunter          6        6        none
+Cavalier        8        4        bonus_feat(3->1), tactician(3->1)
+Witch           8        2        hex(7->1)
+Shaman          1        1        none
+Warpriest      14        6        blessings(2->1), bonus_feat(8->1)
+Summoner        6        5        summon_monster(2->1)
+Skald          10        7        {name}_grant covers 4 slots->1
+Bloodrager      6        6        none
+Wizard          2        2        none
+Investigator    5        5        none
+Brawler        11       11        none
+Swashbuckler   24       16        9 deed mechanisms cover 14 slot names (dup naming +
+                                   the paired Opportune Parry/Riposte deed), bonus_feat
+                                   (3->1), weapon_mastery(2->1)
+Familiar        1        1        none
+Companion       0        0        n/a
+
+TOTAL         263      175        1.5:1, non-uniform
+```
+
+**The compression is a structural property of each class, not a statistical artifact, and it is NOT uniform -- a second instrument failure was caught mid-decision by checking it.** An initial pass extrapolated the compressing classes (Cleric 11-to-1, Inquisitor 8-to-1, Witch 7-to-1) into a program-wide ~3:1 ratio and a total near 197 mechanisms -- the identical `§63` error (generalizing from a favorable subset) committed by the reviewer while holding the author to the opposite standard. Checked per class instead: **six of the largest measured classes show zero compression** -- Ranger (26->25), Monk (21->21), Brawler (11->11), Bloodrager, Hunter, Investigator -- because their archetype-named tiers correspond to genuinely distinct real ids (`combat_style_bonus_feat_2/3/4/5_choice`, `favored_enemy_bonus_increase_2/3/4`, each Monk feature grounded under its own name), not one shared formula. The real total is 175 mechanisms, confirmed by direct recomputation, not 197.
+
+**The sized deliverable: 175 mechanisms x ~33 lines/mechanism = ~5,775 lines of production wiring**, the number the operator funded this measurement to produce, replacing both the unmeasurable `§63` state and the incorrect 8,679-line and 197-mechanism intermediate figures -- all reported to the operator in the course of arriving here, per this program's standing discipline of showing the wrong number and its correction rather than only the final one.
+
+**Three classes excluded from the total, named as a distinct category rather than forced through the same method or silently omitted:** Oracle, Arcanist, Sorcerer. All three are choice-based -- the archetype slot names *"the thing picked at level N"* (a mystery revelation, a rogue-style exploit, a bloodline power), and the engine grounds *per specific choice made*, not per generic slot. Real, substantial grounding exists for each (Oracle: 5 revelations across 5 mysteries; Arcanist: the Metamagic Knowledge exploit, `ArcanistMagicalSupremacy` confirmed absent; Sorcerer: 2+ bloodlines including Draconic and Arcane), but no single slot-to-mechanism table can honestly represent them, because a generic slot like `OracleRevelation1` does not correspond to one computation -- it could resolve to any of several differently-grounded (or ungrounded) revelations depending on which mystery the character has. **This has a consequence for wiring design, not just measurement:** `archetype_claims_slot` (proven on Fighter/Alchemist, the primitive underneath every measured class above) answers "is this slot claimed, if so override the computation" -- a supersession question. For choice-based classes the real question is "which options remain choosable, and does the archetype's substitute grant compute" -- a chooser-interaction question, structurally different and unproven by anything landed this session. Sizing these three requires a wiring-design decision first, not a bigger measurement pass.
+
+**Eleven unmodelled base-class features, found incidentally by this measurement, recorded as their own finding separate from archetype sizing -- these are engine gaps in core classes' signature mechanics, not archetype problems:**
+
+```
+Druid         no wild-shape grounding anywhere (the class's signature mechanic)
+Barbarian     no rage-power grounding anywhere (all 5 tiers)
+Cavalier      no banner grounding (Banner/GreaterBanner/CavaliersBanner)
+Cavalier      no Cavalier's Charge grounding (distinct from Challenge, checked separately)
+Cavalier      no mount grounding
+Hunter        15/21 slots absent, incl. all 5 TeamworkFeat tiers, both EmpatheticLink tiers
+Witch         no patron-spell grounding (all 9 tiers)
+Shaman        no hex/manifestation/spirit-magic/spirit-animal/wandering-anything (15/16 absent)
+Cleric+Druid  no spontaneous-casting grounding for either
+Wizard        no arcane-bond or cantrip grounding
+Summoner      shield-ally/aspect/life-link grounded ONLY under pu.unchained_summoner,
+              not the base APG class these archetype tables target -- independently
+              validates the operator's separate ruling that Unchained variants are
+              distinct classes, not replacements, at the data layer
+Companion     no animal-companion advancement subsystem exists anywhere (confirmed by
+              the engine's own doc comments, not an empty grep) -- the sharpest single
+              row measured: 0/7, base companion stat block grounded, every advanced
+              feature (Advancement, AnimalFeats, Devotion, Evasion, Multiattack,
+              ShareSpells) absent by design, not omission
+```
+
+**Disposition: the archetype epic now has two distinct, separately-sized wiring shapes.** The proven shape (supersession, `archetype_claims_slot`) covers 25 classes and is sized: 175 mechanisms, ~5,775 lines, a real floor. The unproven shape (chooser-interaction) covers 3 classes and cannot be sized until its own primitive is designed -- an operator/engineering decision, not a measurement gap. Per operator instruction, the heavier per-archetype method was NOT run on the 3 flagged classes this cycle; 175 mechanisms with the gap named is the funded deliverable. Measurement closed.
+
+**Cross-reference:** `§63` (the sample-size finding this measurement was funded to resolve), `§59`/`§60` (the primitive and its audit backlog), `§43` (reachability as the acceptance test).
