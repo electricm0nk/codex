@@ -94,6 +94,17 @@ each book.
    directly and never through a pipe. Do not compose a substitute command set;
    `cargo test --workspace --locked` from the repo root does not reach
    `apps/desktop/src-tauri` at all. See `decisions.md` Decision 8.
+   **A gate stage that fails twice with the same attribution (same stage,
+   same cited cause — e.g. "environmental fixture") is an incident, not an
+   environment quirk.** It blocks the cycle until the attribution is
+   *proven* — proof means naming which tests did not execute (`comm -23`
+   between the derived expected-suite list and the log's own `Running`
+   lines; `root-full` already runs this check on every invocation, per
+   `decisions.md` Decision 40), not asserting a cause. On the second
+   occurrence, emit `scripts/retro.py incident --recurrence-key
+   <stage>-normalized-red ...` before treating it as environmental — see
+   `decisions.md` Decision 39, which exists because exactly this pattern
+   hid two proof-carrying parity suites from an entire tranche.
 5. **Commit** with a `feat(sd29): ...` or `fix(sd29): ...` prefix.
 6. **Append** the cycle record directly to `progress.md` (no Hermes release —
    the board is retired). The cycle record carries the PR-id, branch-tip,
@@ -294,6 +305,7 @@ authored (historical numbering) and corrected inline where the shift matters for
   - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 10's open question). The monster catalog/browser SHIPPED (`reach_gate.rs:986` as of 2026-08-10; was `:840`); the open instance of this class is any record family with no existing surface analog — e.g. a Monster Codex family the sheet and catalog have no screen for. The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
   - **A figure derived this cycle disagrees with a figure recorded in this package.** Investigate which is wrong and report; do not overwrite either on the assumption that the newer one wins.
   - **A book's derived shape contradicts its recorded ingest subtype** — e.g. a per-monster-block epic against a book the generator reports as carrying zero monsters. The cycle reports; the operator re-pins the book list.
+  - **A `verify.sh` gate stage fails twice in this bundle with the same attribution** (same stage name, same cited cause). Do not accept "environmental" or any other unproven cause a second time — name, by command, which tests did not execute before deciding the failure is not real. Emit the incident per Decision 39/`decisions.md` and record `decision-blocked` rather than re-running past it on the assumption the prior explanation still holds.
 
 ## Stop vs. press on
 

@@ -1209,3 +1209,77 @@ directive `§37` executed); `decisions.md §§36-37` (partitioning, not supersed
 `../corpus-work-channels.md` (channel analysis, §9.4's deferral now superseded twice — once for
 partitioning at `§37`, once for book-list scope here); `docs/work-inventory.json` (all figures
 re-derived above, commands included).
+
+## Decision 39 — A gate stage that fails twice with the same attribution is an incident, not an environment quirk (2026-08-10 retrospective, pre-launch)
+
+**Finding, re-derived before acting (not transcribed from the retro brief that raised it):**
+`python3 scripts/retro.py query --type incident --grep "normalized"` returns the tranche-8 incident
+event (`tranche8-incident-retro`, 2026-08-01): `scripts/verify.sh`'s `root-full` stage was RED on
+**29 of 33** full runs across the whole SD-27 tranche (2026-07-31T05:35 .. 2026-08-01T15:58), every
+time attributed to the same "environmental `/home/ubuntu` fixture" bucket. That normalized red
+concealed `tests/sd27_advanced_race_guide_parity.rs` and `tests/sd27_pathfinder_unchained_parity.rs`
+— the two gates that prove SD-27's own headline claim — which **never executed once for the entire
+tranche**. Both went green minutes after the foreign-home path was made `$HOME`-relative.
+Cross-checked against `scripts/retro.py query --type verification --json` over the 60-day window:
+114 verification runs recorded, 46 FAIL (not "48" as an earlier draft of this finding stated —
+re-derive this number yourself before citing it, see the correction below), 36 of the 46 failures
+are `root-full`. The brief that raised this finding cited "48 failing" for the 60-day window; the
+re-derived count is **46**. Recorded here as a correction to that brief
+(`scripts/retro.py correction --subject "pre-launch retro brief (2026-08-10 four-fixes)" --claimed "114 runs / 48 failing / 36 root-full" --actual "114 runs / 46 failing / 36 root-full" --verified-by "python3 scripts/retro.py query --type verification --json, filtered on result==FAIL"`).
+
+**Rule:** a gate stage that fails **twice** with the **same attribution** (same stage name, same
+cited cause, e.g. "environmental fixture") is an **incident**, not an environment quirk, and it
+blocks the cycle until the attribution is *proven*. Proof means naming — by command, not assertion —
+which tests did not execute (`comm -23` between the derived expected-suite list and the "Running"
+lines a stage's own log actually produced; see `scripts/verify.sh`'s `root-full` stage, which now
+performs exactly this check on every run per Decision 40 below). An attribution is not proof; a
+named list of non-executing tests is.
+
+**Enforcement:** on the SECOND occurrence of the same (stage, attribution) pair within a bundle, the
+cycle emits `scripts/retro.py incident --recurrence-key <stage>-normalized-red --impact "<stage>
+failed twice attributed to <cause> without naming which suites did not execute" --detected-by "<the
+comm -23 / grep command that would prove or disprove the attribution>"` **before** treating the
+failure as environmental. The cycle does not fabricate a pass and does not silently retry past it —
+this is a `decision-blocked` per `loop-instruction.md`'s "Stop vs. press on," not a routine judgment
+call, because "the same excuse twice" is exactly the shape that hid two un-run parity suites for a
+full tranche.
+
+**Wired into `loop-instruction.md`:** Cycle mechanics step 4 (Verify) and the Hard stops section both
+now carry this rule directly, so a cycle hits it at the point it would actually apply rather than
+only in this decision record.
+
+**Authority:** `docs/retro/events/tranche8-incident-retro.jsonl` (`tranche8-incident-retro`
+2026-08-01T19:04:57Z); `scripts/retro.py query --type verification --json` (re-derived 2026-08-10);
+`scripts/verify-baselines.env`'s own "READ THIS FIRST" retraction block (the primary source's own
+record of the same failure mode).
+
+## Decision 40 — Non-execution is checked by name, derived from the filesystem, not by aggregate count (2026-08-10 retrospective, pre-launch)
+
+**Problem:** `scripts/verify.sh`'s `root-full` stage already floors total tests passed and total
+test binaries executed (`BASELINE_ROOT_FULL_TESTS`, `BASELINE_ROOT_TEST_BINARIES`), but a floor on a
+total cannot catch one specific suite silently not running while a different suite starts running in
+the same window — both totals hold steady and the stage reports green. That is the exact shape of
+Decision 39's finding: two suites disappeared from execution for an entire tranche while the
+aggregate "N passed across M suites" line looked unremarkable.
+
+**Mechanism, landed in `scripts/verify.sh`'s `root-full` stage:** `expected_test_suites()` derives
+the set of suites that must run directly from the filesystem — every top-level `tests/*.rs` file is
+one cargo integration-test binary by cargo's own auto-discovery convention (`find "$REPO_ROOT/tests"
+-maxdepth 1 -name '*.rs'`; subdirectories such as `tests/fixtures` and `tests/sd16-e5-f1` are not
+auto-discovered and are correctly excluded by `-maxdepth 1`). `executed_test_suites()` extracts the
+suite name cargo itself prints on its `Running tests/<name>.rs (...)` line for every binary it
+actually ran. `comm -23` between the two names any suite present in `tests/` that produced no
+`Running` line, and the stage fails naming them explicitly — not via a floor on a total. **Derived,
+not hand-listed:** the expected set is recomputed from the current filesystem on every run, so it
+cannot rot the way a hand-maintained "critical suites" list would (the same rot this program's
+roster and allowlist failures already recorded).
+
+**Verified to bite:** `sd24_release_notes_structure` was disabled via a temporary `[[test]] name =
+"sd24_release_notes_structure" test = false` block in `Cargo.toml` (the target still exists on disk
+under `tests/`, but cargo no longer builds or runs it — the same externally-observable shape as a
+suite silently dropped from execution). `scripts/verify.sh --only root-full` FAILED, naming
+`sd24_release_notes_structure` as never-executed. The mutation was reverted and the stage re-run
+green. See the cycle receipt for the verbatim FAIL/PASS output.
+
+**Authority:** Decision 39 (the finding this mechanism closes); `scripts/verify.sh` `root-full`
+stage source, `expected_test_suites`/`executed_test_suites`.

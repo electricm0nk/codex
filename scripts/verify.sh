@@ -325,7 +325,43 @@ run_root_lib() {
 # and the summary still reads like a completed pass. The executed-binary count
 # is checked for the same reason — a run can be green and still have skipped
 # most of the suite.
+#
+# The aggregate counts above (total passed, total binaries) cannot catch one
+# specific suite being silently dropped from execution: a suite disappearing
+# and a different suite appearing in the same run holds both numbers steady.
+# That is exactly what happened for a full tranche
+# (docs/retro/events/tranche8-incident-retro.jsonl, 2026-08-01): root-full was
+# RED on 29 of 33 runs, always attributed to the same "environmental"
+# fixture bucket, and that normalized red concealed two parity suites that
+# never executed once across the whole tranche while the aggregate pass/
+# binary counts looked unremarkable. `expected_test_suites`/
+# `executed_test_suites` below name the gap directly instead of hoping a
+# floor on a total catches it.
+#
+# The expected suite list is DERIVED from the filesystem — every top-level
+# `tests/*.rs` file is one cargo integration-test binary by cargo's own
+# auto-discovery convention (subdirectories like tests/fixtures and
+# tests/sd16-e5-f1 are not auto-discovered, so `-maxdepth 1` already excludes
+# them correctly) — never hand-maintained. A hand-kept list of "critical"
+# suites rots exactly like the roster and allowlist failures already in this
+# log; this one can't drift because it IS the filesystem at check time.
 # ---------------------------------------------------------------------------
+
+expected_test_suites() {
+    find "$REPO_ROOT/tests" -maxdepth 1 -name '*.rs' -printf '%f\n' 2>/dev/null \
+        | sed 's/\.rs$//' | sort
+}
+
+# Cargo prints "     Running tests/<name>.rs (target/.../deps/<name>-<hash>)"
+# for every integration-test binary it actually runs, name included in the
+# line itself (verified against this repo's own cargo output before relying
+# on it). Sorted+uniqued so a suite run under `--test-threads` retries once
+# still diffs cleanly.
+executed_test_suites() {
+    grep -E '^[[:space:]]*Running tests/' "$1" 2>/dev/null \
+        | sed -E 's#^[[:space:]]*Running tests/([^[:space:]]+)\.rs.*#\1#' \
+        | sort -u
+}
 
 run_root_full() {
     stage_start "root-full — cargo test --locked --no-fail-fast -j $JOBS  (repo root)"
@@ -338,6 +374,11 @@ run_root_full() {
     passed=$(count_passed "$log")
     binaries=$(count_running "$log")
 
+    local missing missing_n
+    missing=$(comm -23 <(expected_test_suites) <(executed_test_suites "$log"))
+    missing_n=0
+    [[ -n "$missing" ]] && missing_n=$(printf '%s\n' "$missing" | grep -c .)
+
     if (( status != 0 )); then
         stage_fail root-full "cargo exit $status; $passed passed across $binaries suites — $log"
         return
@@ -346,11 +387,16 @@ run_root_full() {
     local ok=0
     check_floor "root full tests" "$passed" "$BASELINE_ROOT_FULL_TESTS" BASELINE_ROOT_FULL_TESTS || ok=1
     check_floor "root test binaries executed" "$binaries" "$BASELINE_ROOT_TEST_BINARIES" BASELINE_ROOT_TEST_BINARIES || ok=1
+    if (( missing_n > 0 )); then
+        printf '    %s tests/*.rs file(s) present but NEVER EXECUTED (no "Running" line in the log): %s\n' \
+            "$missing_n" "$(printf '%s' "$missing" | tr '\n' ' ')"
+        ok=1
+    fi
     if (( ok != 0 )); then
-        stage_fail root-full "$passed passed across $binaries suites — $log"
+        stage_fail root-full "$passed passed across $binaries suites, $missing_n suite(s) never ran — $log"
         return
     fi
-    stage_pass root-full "$passed passed across $binaries suites"
+    stage_pass root-full "$passed passed across $binaries suites, all $(expected_test_suites | grep -c .) tests/*.rs suites executed"
 }
 
 # ---------------------------------------------------------------------------
