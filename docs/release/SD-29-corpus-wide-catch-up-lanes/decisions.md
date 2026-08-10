@@ -175,18 +175,24 @@ the cycle either way.
 `docs/governance/book-ingestion-playbook.md` §3.
 
 **Supersession note (2026-08-01, dated).** The "open operator question" above is
-answered. `reach_gate.rs:840` now carries an executed reach claim for
-`("beastiary1", "monsters")` in place of the old `OPEN_FINDINGS` entry (comment
-at `:836` records the replacement); `monsters_reach()` (`:1089–1118`) exercises
+answered. The `("beastiary1", "monsters")` arm of `reach_gate.rs` (`:986` as of
+2026-08-10; was `:840` — line pins drift) carries an executed reach claim in
+place of the old `OPEN_FINDINGS` entry (the comment directly above it records
+the replacement); `monsters_reach()` (`:1300` as of 2026-08-10) exercises
 `build_monster_catalog()` for real. The IPC command `list_monster_catalog` is
 registered in `apps/desktop/src-tauri/src/main.rs:57,197`, and
 `MonsterCatalogScreen.tsx` is routed via `CharacterHubPage.tsx:104-105`, reachable
 from a "Browse Monster Catalog" button at `LandingScreen.tsx:353`. The
 2026-08-01 `verify-reach-reissue` retro event records this as a live catalog
 search, not a stub. Bestiary 1's monster-surface question this decision left
-open is therefore closed; the one surviving `OPEN_FINDINGS` entry is unrelated
+open is therefore closed; the surviving `OPEN_FINDINGS` entry related to this
+decision is unrelated to monster surfacing
 (`("beastiary1", "race_traits", ...)`, the Duergar Spell-Like-Ability-Invisibility
-record, upstream-blocked on `monster_codex` — see §34).
+record, upstream-blocked on `monster_codex` — see §34). *(Corrected 2026-08-10:
+"the one surviving entry" is no longer accurate — SD-28 closure added seven
+`<book>/archetypes` entries (SD-28 `decisions.md §60`/`§63`), so `OPEN_FINDINGS`
+now carries eight; the archetype surface belongs to SD-30's
+class_feature/archetype bundle.)*
 
 ## Decision 11 — Per-entity counts are generated, never hand-maintained
 
@@ -305,7 +311,7 @@ This is an in-bundle resolution, not an out-of-bundle deferral — the work is i
 
 **What this changes.** §12's blanket "no engines" rule was too coarse. §19 narrows it to real-time engines. Reach remains the gate; pre-computed values are preferred.
 
-**Bestiary 1 surface gap — closed, 2026-08-01.** Bestiary 1's 41 ingested monsters reached no surface as of this decision's original authoring (per `reach_gate.rs OPEN_FINDINGS`); the monster catalog command and browser have since shipped (see §10's supersession note above — `reach_gate.rs:840`, `monster_catalog.rs`, `MonsterCatalogScreen.tsx` via `LandingScreen.tsx:353`), so the gate's Bestiary-1-monster-surface prerequisite is satisfied independent of Epic 7. The Epic 7 DM Toolkit extension (operator-pinned at Epics 5 and 6 closure) or a Class 3 (C3.1) retrofit per `successor-forward-scope-register.md C3.1` remain live decisions, but neither is a monster-surface prerequisite any longer. Cycles record `decision-blocked` in `progress.md` and move to the next ready card if a genuinely blocking gap is found.
+**Bestiary 1 surface gap — closed, 2026-08-01.** Bestiary 1's 41 ingested monsters reached no surface as of this decision's original authoring (per `reach_gate.rs OPEN_FINDINGS`); the monster catalog command and browser have since shipped (see §10's supersession note above — `reach_gate.rs:986` as of 2026-08-10, was `:840`; `monster_catalog.rs`, `MonsterCatalogScreen.tsx` via `LandingScreen.tsx:353`), so the gate's Bestiary-1-monster-surface prerequisite is satisfied independent of Epic 7. The Epic 7 DM Toolkit extension (operator-pinned at Epics 5 and 6 closure) or a Class 3 (C3.1) retrofit per `successor-forward-scope-register.md C3.1` remain live decisions, but neither is a monster-surface prerequisite any longer. Cycles record `decision-blocked` in `progress.md` and move to the next ready card if a genuinely blocking gap is found.
 
 **Authority:** operator verbatim 2026-08-01: "reach gate is the definition of done, if an engine is required to get there, then we generate the engine — that said, often an engine isn't strictly necessary."
 
@@ -1034,6 +1040,12 @@ PY
 = 21.8%**. Proven (`grounded`+`text-complete` only) = 2,253. Untouched (total − held) = **30,122**.
 The brief's corpus-wide figures (38,536 / 8,414 / 21.8% / 30,122) check out exactly.
 
+*(Denominator note, 2026-08-10 audit: the tables in §38.0–§38.1 run over the full 38-book corpus
+including `beginner_box` (19 units), while the product scope is 37 books / 38,517 units —
+`beginner_box` is the sole exclusion per `../corpus-work-channels.md §10.2`. The 19-unit delta is
+noise at lane scale and no table is re-derived for it; cycle-batches size from live re-derived
+counts over in-scope books, not from this snapshot.)*
+
 **The measurement caveat the brief names is real and re-verified.** `equipment` and `spell` have
 zero `grounded` units relative to their `ingested-magnitude` population is false as stated —
 `equipment` does have 133 `grounded` — but the *shape* is correct: both kinds are held almost
@@ -1154,7 +1166,7 @@ number; whoever picks up `../corpus-work-channels.md §9.1`'s funded measurement
 `successor-forward-scope-register.md` C1.3, now widened to the full corpus-wide count). Recorded as
 an open item in `risks-and-open-questions.md`, not silently assigned.
 
-### 38.5 SD-30 collision — flagged, not resolved
+### 38.5 SD-30 collision — flagged 2026-08-10; RESOLVED the same day (resolution recorded below)
 
 `docs/release/SD-30-class-feature-archetype-bundle/decisions.md §1` pins a sixteen-book list
 (Occult Adventures, Mythic Adventures, the eight-book Inner Sea line, Book of the Damned vol. 1/2,

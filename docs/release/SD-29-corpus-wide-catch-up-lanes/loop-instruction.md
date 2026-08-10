@@ -202,13 +202,18 @@ All of the following, each checkable by someone who was not present:
    claims; a bestiary passing "by absence" (its families simply missing from
    the gate's inventory) is the DoD item 2 failure, not this item.
    **`beastiary1/monsters` is no longer an `OPEN_FINDINGS` entry — it is a
-   live reach claim (`reach_gate.rs:840`), backed by the shipped monster
+   live reach claim (`reach_gate.rs:986` as of 2026-08-10; was `:840`),
+   backed by the shipped monster
    catalog.** The surviving `beastiary1/race_traits` entry (the Duergar
    Spell-Like Ability ~ Invisibility record, upstream-blocked on
    `monster_codex/mc_abilities_race.lst`) is expected to be **retired by
    Epic 5's Monster Codex cycle-batch** (Race-Trait Lane; was Epic 13 under
    the retired per-book numbering) now that Monster Codex is in scope — a
-   closure receipt that leaves it standing must say why.
+   closure receipt that leaves it standing must say why. (Seven
+   `<book>/archetypes` entries recorded at SD-28 closure also stand in
+   `OPEN_FINDINGS`; they belong to the archetype surface work owned by
+   SD-30's class_feature/archetype bundle, not to any SD-29 lane — leave
+   them standing.)
 7. Baseline movements in `scripts/verify-baselines.env`, if any, are a separate
    reviewable commit carrying `--show-actuals` output.
 8. **On-screen verification for any record family whose reach claim is
@@ -286,7 +291,7 @@ authored (historical numbering) and corrected inline where the shift matters for
   - The build crashes in a way that requires a non-book-list fix.
   - A cross-bundle reference yields a missing monster id that the source bundle's progress file shows as not yet landed.
   - The operator-pinned branch / board diverges from the in-flight branch / board.
-  - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 10's open question). The monster catalog/browser SHIPPED (`reach_gate.rs:840`); the open instance of this class is any record family with no existing surface analog — e.g. a Monster Codex family the sheet and catalog have no screen for. The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
+  - **A record family cannot be surfaced without work outside this bundle's epic structure** (Decision 10's open question). The monster catalog/browser SHIPPED (`reach_gate.rs:986` as of 2026-08-10; was `:840`); the open instance of this class is any record family with no existing surface analog — e.g. a Monster Codex family the sheet and catalog have no screen for. The cycle reports the gap; it does not add an epic and it does not ingest without a reach claim.
   - **A figure derived this cycle disagrees with a figure recorded in this package.** Investigate which is wrong and report; do not overwrite either on the assumption that the newer one wins.
   - **A book's derived shape contradicts its recorded ingest subtype** — e.g. a per-monster-block epic against a book the generator reports as carrying zero monsters. The cycle reports; the operator re-pins the book list.
 

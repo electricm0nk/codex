@@ -23,7 +23,7 @@ on SD-28's book-list completion but are not yet named land in **Class 2**
 
 ### C1.1 — Bestiary 2-5 cycle pattern
 
-**Owner:** SD-29 (`./../SD-29-bestiary-2-3-4-5-content-ingestion/` — repo-resident canonical home; workspace source-of-record removed on publish per move-not-copy doctrine).
+**Owner:** SD-29 (`./../SD-29-corpus-wide-catch-up-lanes/` — repo-resident canonical home, twice renamed from `SD-29-bestiary-2-3-4-5-content-ingestion` (path corrected 2026-08-10); workspace source-of-record removed on publish per move-not-copy doctrine).
 
 **What depends on SD-28:** SD-29 inherits SD-28's per-book-ingest pipeline shape.
 The cycle pattern (per-monster-block, reach-gate, trap-report) is established

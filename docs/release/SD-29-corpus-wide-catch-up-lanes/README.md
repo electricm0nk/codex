@@ -295,9 +295,11 @@ boundary):
   dispatches via local file.
 - The ~40 unrouted engine/UI deferrals in `docs/retro/events/` — real, but not
   SD-29's by any documentary authority (`forward-scope-register.md` Class 3).
-- **Not out of scope, flagged instead:** SD-30's sixteen-book list is a live collision with SD-29's
-  now-corpus-wide lanes, not a clean boundary — see `risks-and-open-questions.md` and
-  `decisions.md §38.5`. This package does not resolve it; the operator does.
+- **Resolved 2026-08-10 (was: "flagged, not resolved"):** SD-30's sixteen-book list was a live
+  collision with SD-29's now-corpus-wide lanes; the operator resolved it the same day by
+  re-scoping SD-30 to the class_feature/archetype bundle (`bc8f5fac`) — see
+  `risks-and-open-questions.md` OQ-29-004 (CLOSED) / R-29-009 (RESOLVED) and the resolution
+  note under `decisions.md §38.5`.
 
 ## Produced artifacts
 

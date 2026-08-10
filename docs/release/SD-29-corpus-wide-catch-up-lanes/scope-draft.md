@@ -157,17 +157,24 @@ Bestiary 1's four ingested equipment records were in the same list, for the
 same reason.
 
 **Superseded, 2026-08-01.** The monster catalog command and browser this
-finding called for have shipped: `reach_gate.rs:840` now carries an executed
-reach claim for `("beastiary1", "monsters")` in place of the old
-`OPEN_FINDINGS` entry (comment at `:836` records the replacement);
+finding called for have shipped: the `("beastiary1", "monsters")` arm of
+`reach_gate.rs` (`:986` as of 2026-08-10; was `:840` — line pins drift) now
+carries an executed reach claim in place of the old
+`OPEN_FINDINGS` entry (the comment directly above it records the replacement);
 `apps/desktop/src-tauri/src/monster_catalog.rs`'s `list_monster_catalog`
 command is registered (`main.rs:57,197`); `MonsterCatalogScreen.tsx` is
 routed via `CharacterHubPage.tsx:104-105`, reachable from a "Browse Monster
 Catalog" button at `LandingScreen.tsx:353`. **Monster records now reach a
-player.** The gate's sole surviving finding is unrelated to the quote above:
+player.** The gate's surviving finding relevant to the quote above is
 `beastiary1/race_traits` — the Duergar `Spell-Like Ability ~ Invisibility`
 record, upstream-blocked on `monster_codex` (`forward-scope-register.md
-§1.2`). `monster_codex` is in scope for this bundle per `decisions.md §34`,
+§1.2`). *(Corrected 2026-08-10: "sole surviving finding" is no longer
+accurate — `OPEN_FINDINGS` now carries **eight** entries: this one plus
+seven `<book>/archetypes` gaps recorded at SD-28 closure (SD-28
+`decisions.md §60`/`§63`; no archetype-selection surface exists). None of
+the seven is a monster-surface finding, and the archetype surface belongs
+to SD-30's re-scoped class_feature/archetype bundle, not to an SD-29
+lane.)* `monster_codex` is in scope for this bundle per `decisions.md §34`,
 and Epic 5's Monster Codex cycle-batch (Race-Trait Lane; was Epic 13 under the
 retired per-book numbering, `epic-breakdown.md`) is expected to retire that finding as part
 of its bounded work.
