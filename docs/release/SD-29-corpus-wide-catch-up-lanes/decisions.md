@@ -1156,7 +1156,7 @@ an open item in `risks-and-open-questions.md`, not silently assigned.
 
 ### 38.5 SD-30 collision — flagged, not resolved
 
-`docs/release/SD-30-occult-and-companion-content-ingestion/decisions.md §1` pins a sixteen-book list
+`docs/release/SD-30-class-feature-archetype-bundle/decisions.md §1` pins a sixteen-book list
 (Occult Adventures, Mythic Adventures, the eight-book Inner Sea line, Book of the Damned vol. 1/2,
 Occult Origins, Haunted Heroes Handbook, and others) dispatched **per-book**, planning-ready, not
 re-cut by this decision or by `§36`/`§37` — this decision's write scope is SD-29 only, per the brief
