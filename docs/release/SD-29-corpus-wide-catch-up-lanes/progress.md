@@ -1524,3 +1524,255 @@ Other actors' retro shards left dirty and uncommitted; only this actor's own sha
 `CARGO_TARGET_DIR=/home/ubuntu/workspace/.codex-targets/sd29-e4-spell` (own dir, plus `-aux` for
 concurrent non-gate cargo runs so they did not thrash the dir `verify.sh` was using) — Epic 1's
 build-contention rule.
+
+## Cycle SD29-E4-F2-001 — `epic-4-proven-feat-race-class` (Proven-Path Lane: feat + race + class)
+
+**Actor:** `sd29-e4-frc` · **Branch:** `tranche/9` · **Branch tip at claim:** `cabf9089`
+**Card:** `epic-4-proven-feat-race-class` (kanban Order 6) · **PR-id:** none (direct commit to `tranche/9`, pre-authorized)
+**Cycle-type:** proven-path content lane, corpus-wide
+
+### 0. The headline, stated before the detail: this card's premise was wrong for two of its three kinds
+
+The card says "feat + race + class, corpus-wide … **No new mechanism needed**". That is true for
+**feat** and false for **race** and **class**, and the classifier's own source says so:
+
+```bash
+# src/bin/v06_work_inventory.rs, gather_engine_facts():
+#   feat_keys   <- all_feat_tables()                                   ... a CATALOG
+#   race_names  <- RaceId::ALL.map(race_name)                          ... an ENUM of modelled races
+#   class_books <- ClassId::ALL + ApgClassId::ALL + AcgClassId::ALL    ... an ENUM of modelled classes
+# classify():
+#   Kind::Race  -> not_ingested("race_absent_from_RaceId_ALL")
+#   Kind::Class -> not_ingested("class_absent_from_ClassId_ALL_and_book_class_id_enums")
+```
+
+A `feat` unit becomes ingested when a **table row** exists — the equipment lane's exact shape. A
+`race` or `class` unit becomes ingested only when a new **modelled entity** is added to an enum and
+swept through the real compute pipeline (`RaceId` carries 7 variants today; `ClassId` +
+`ApgClassId` + `AcgClassId` together carry the classes the sweep drives). Closing race's 62 and
+class's 103 `not-ingested` units means **165 new modelled entities**, each with racial
+modifiers/size/speed or a full class chassis. That is a mechanism per record, not a table row, and
+it belongs with the Tier-2 mechanism-gated epics, not in a proven-path lane.
+
+**Per "Stop vs. press on", a wrong premise in this package is a PRESS ON, not a stop.** This cycle
+therefore closed the feat lane in full and did **not** attempt race or class. Both are reported
+below as untouched, with their counts, so the next scoping pass has the real number rather than a
+silent shortfall. Emitted as a `retro.py correction`.
+
+### 1. Re-derived figures (command first, value second — nothing transcribed)
+
+The card said **1,348 + 96 + 158**. Re-derived:
+
+```bash
+python3 -c "
+import json
+from collections import Counter
+U=json.load(open('docs/work-inventory.json'))['units']
+inc=[u for u in U if u['book']!='beginner_box']
+for k in ('feat','race','class'):
+    print(k, dict(Counter(u['status'] for u in inc if u['kind']==k)))"
+# feat  {text-complete 1183, unknown 307, grounded 77, not-ingested 84, not-started 957, deferred-with-reason 2}
+# race  {not-ingested 62, not-started 34, grounded 7}
+# class {grounded 27, not-ingested 103, not-started 55}
+```
+
+| kind | card says | re-derived under `status in {not-started, not-ingested}` |
+|---|---:|---:|
+| feat | 1,348 | **1,041** (957 + 84) |
+| race | 96 | **96** ✓ (34 + 62) |
+| class | 158 | **158** ✓ (55 + 103) |
+
+**The feat difference is a predicate difference, not an arithmetic error, and it is exactly the
+kind's 307 `unknown` units:** 1,041 + 307 = 1,348. Every prior SD-29 lane (see the equipment lane's
+receipt §1) used `{not-started, not-ingested}`; the card's figure additionally counted `unknown`.
+Emitted as a `retro.py correction` rather than silently folded in.
+
+**And, as in the equipment lane, "remaining" splits into two populations needing different work:**
+
+```bash
+python3 -c "
+import json
+from collections import Counter
+U=json.load(open('docs/work-inventory.json'))['units']
+rem=[u for u in U if u['book']!='beginner_box' and u['kind']=='feat'
+     and u['status'] in ('not-started','not-ingested')]
+print(Counter(u['status'] for u in rem))"
+# Counter({'not-started': 957, 'not-ingested': 84})
+```
+
+The 957 `not-started` feat units live in books with **no compiled `RuleSetId` at all** —
+`classify()` returns `not-started` before the feat catalog is ever consulted, so a catalog row for
+them would move no unit and ship a record the engine has no rule set behind. **The proven path is
+84 units wide, not 1,041.**
+
+### 2. What landed
+
+- **`src/bin/gen_feat_gap_tables.rs`** — the codegen, modelled directly on
+  `gen_equipment_gap_tables`. Re-parses the 9 `.lst` files those 84 units come from (paths taken
+  from the inventory's own `source_file` field, never a directory glob) under
+  `v06_work_inventory::enumerate_file`'s **exact** `Kind::Feat` predicate — including its
+  `has_classifying_token` requirement that a feat row carry a `TYPE:` token — and emits only the
+  records the hand-authored tables do not hold. PI-screens the generated text through
+  `pi_table_sweep::screen_generated_table` **before** writing (Epic 3's mandated line 1);
+  `PCGEN_CORPUS_ROOT` is required from the environment with no default and no tilde expansion.
+- **`src/rules_core/rules_tables/feat_gap_tables.rs`** — generated, **83 rows**.
+- **`src/rules_core/rules_tables/feats_all.rs`** — `all_feat_tables()` is now
+  `hand_authored_feat_tables()` (the eleven per-book projections, split out as its own public
+  function so the generator's filter is provably their complement rather than a hand-maintained
+  exclusion list) **with each book's gap rows appended last**, so a first-match key lookup over a
+  book's slice resolves exactly as before.
+- **`src/rules_core/feat_prereqs/pre_tokens.rs`** — `PRESIZEGTEQ:` is now a **modelled** kind
+  (§4), and `PREHANDSGTEQ:` is declared unmodelled with its reason.
+- **`apps/desktop/src-tauri/src/feat_catalog.rs`** — new
+  `catalog_serves_every_corpus_gap_row` test; eleven pinned per-source counts and the category
+  census re-derived (§3).
+- **`tests/feat_gap_tables.rs`** — 6 integration tests.
+- No change was needed in `apps/desktop/src-tauri/src/reach_gate.rs`: `feats_reach` derives its
+  **claim** from `all_feat_tables()`, so the 83 rows entered the claim automatically and the gate
+  asserts on them (DoD item 2, §6).
+
+### 3. Per-book, and the counts that had to move
+
+Generator output, re-derived by `tests/feat_gap_tables.rs` and
+`feat_catalog::catalog_serves_every_corpus_gap_row` against the served catalog rather than copied
+from stdout:
+
+| book | gap rows | source |
+|---|---:|---|
+| `advanced_race_guide` | 48 | `arg_feats.lst` |
+| `core_rulebook` | 16 | `cr_feats.lst` 1 + `core_essentials/ce_feats.lst` 15 |
+| `ultimate_magic` | 12 | `um_feats.lst` 7 + `um_feats_wordsofpower.lst` 5 |
+| `ultimate_intrigue` | 3 | `support/ui_feats_oa.lst` |
+| `ultimate_combat` | 2 | `uc_feats.lst` |
+| `ultimate_psionics` | 1 | `up_feats.lst` |
+| `ultimate_wilderness` | 1 | `uw_feats.lst` (of 2 units — see §5) |
+| **total** | **83** | |
+
+**`core_essentials`' 15 rows are filed under CRB deliberately**, on the equipment lane's own
+precedent: that shared library has no rule set, `core_rulebook.pcc` includes it unconditionally,
+and the inventory reports these units `shared_library_record_held_by_no_ingested_host` precisely
+because no ingested host's table holds them. Filing them under CRB is what lets `classify()`
+attribute them.
+
+**Counts that moved, each re-derived from the live catalog, none guessed:**
+
+| pin | before | after | note |
+|---|---:|---:|---|
+| joined feat catalog total | 1,578 | **1,661** | +83, exactly the lane |
+| desktop `build_feat_catalog()` | 1,578 | **1,661** | the picker's own total |
+| `list_feats_for_character` | 1,578 | **1,661** | the character sheet's own list |
+| served descriptions | 1,565 | **1,630** | +65; 18 gap rows carry neither `DESC:` nor `BENEFIT:` and are served with **no** description rather than a fabricated one |
+| records carrying any prerequisite | 1,429 | **1,492** | +63 of 83 |
+| prerequisite clauses / kinds | 3,805 / 35 | **3,914 / 37** | §4 |
+| a starting Fighter's eligible feats | 509 | **552** | §4 |
+
+**Four per-book assertions were pointed at `hand_authored_feat_tables()` rather than renumbered**
+(`spans_every_ingested_book_with_their_real_counts`, `each_books_slice_is_exactly_its_own_table`,
+`the_per_book_category_split_is_the_real_one`,
+`the_per_book_prerequisite_coverage_is_the_real_one`). Each states a fact about what that book's
+own module authored; pointing them at the joined catalog would have converted a per-book ingest pin
+into a pin on this lane's size. The joined catalog is pinned separately and per book by the new
+`the_joined_catalog_is_the_hand_authored_one_plus_the_corpus_gap_rows`.
+
+### 4. Two real findings the gates produced, neither routed around
+
+**(a) The lane introduced two prerequisite token kinds the evaluator had never seen.**
+`tests/sd27_feat_prerequisite_enforcement.rs::every_pre_kind_in_the_catalog_is_either_modelled_or_declared_unmodelled`
+— the completeness guard — failed with `["PREHANDSGTEQ (1 occurrences)", "PRESIZEGTEQ (2 occurrences)"]`.
+Without that guard those three records' prerequisites would have been **silently ignored** and the
+feats offered to characters who do not qualify. Resolved in the two different, honest ways:
+
+* **`PRESIZEGTEQ:` is now MODELLED**, not declared unmodelled. `PRESIZELTEQ:` was already modelled
+  against `facts.size`, so the fact it needs was already in hand; declaring it unmodelled would
+  have been a fabricated gap. `evaluate_size_lteq` became `evaluate_size_bound(.., at_least)`,
+  test-first (`size_at_least_is_evaluated_against_the_characters_real_size`, confirmed RED with
+  `Unmodelled { token: "PRESIZEGTEQ:L", note: "this prerequisite kind has no landed evaluation
+  path" }` before the change).
+* **`PREHANDSGTEQ:` is declared unmodelled with its reason** — a creature's limb count is a fact
+  this engine holds nowhere; no ingested race records it and no chassis computes it. Guessing "2"
+  would deny or allow on an assumption, which is the exact failure `ClauseOutcome`'s third variant
+  exists to prevent.
+
+**Modelling `PRESIZEGTEQ` then moved a number DOWN, which is the point:** a starting Fighter's
+eligible-feat count is **552, not 553** — `Awesome Blow` (`PRESIZEGTEQ:L`) is now correctly denied
+to a Medium character with a stated reason rather than offered under an unverifiable prerequisite.
+
+**(b) Two new cross-book key collisions, both correct, each checked against the owning record.**
+`cross_book_key_collisions_are_exactly_the_known_set` went from 1 to 3. Per this card's own
+warning that a shared name never implies a shared thing, neither was accepted on the name:
+
+* `Feral Combat Training` (Uc / Upsi) — `up_feats.lst` carries the comment *"Feral Combat Training
+  copied from Ultimate Combat - consider INCLUDEing (and .MODding) it"* immediately above the
+  record. **The corpus states the reprint itself.**
+* `Extended Animal Focus` (Acg / Uw) — one record in `uw_feats.lst`, the same Hunter animal-focus
+  feat ACG prints; UW is the book that expands animal focus.
+
+Following the equipment lane's precedent, the original review was kept intact rather than
+renumbered: the test now asserts `Endurance` is still the **only** collision across the
+hand-authored tables (so a new clash between two books' own ingests fails exactly as before) and
+pins the joined catalog's three exactly, so a **third** collision — which might well be two
+different feats sharing a name — still fails.
+
+### 5. The one unit this lane deliberately does not close
+
+`uw_feats.lst:164` is `CATEGORY=Special Ability|Samurai ~ Mount.MOD	TYPE:Mount`. A `.MOD` row is an
+**overlay onto a record defined elsewhere**, not a new record: `enumerate_file` skips it on the
+normal path and stashes it in `mod_targets` for corpus-wide resolution afterwards, which is the only
+reason it surfaces as a unit at all. Emitting a `RuleSetId::Uw` catalog row for it would ship a UW
+feat the corpus never declared. So the generator emits **83, not 84**, and the unit stays
+`not-ingested` with a named test
+(`the_one_not_ingested_feat_unit_this_lane_deliberately_does_not_close`) carrying the reason.
+
+**Caught by differencing the generator's 83 against the inventory's 84** — the equipment lane's own
+receipt recommended exactly that check, and it is what found this. Emitted as a `retro.py
+correction`.
+
+### 6. Work-inventory movement (DoD item 4)
+
+`cargo run --locked --bin v06_work_inventory` → exit 0:
+
+```bash
+python3 -c "
+import json
+from collections import Counter
+U=json.load(open('docs/work-inventory.json'))['units']
+inc=[u for u in U if u['book']!='beginner_box']
+for k in ('feat','race','class'):
+    print(k, dict(Counter(u['status'] for u in inc if u['kind']==k)))"
+# feat  {text-complete 1240, unknown 333, grounded 77, not-started 957, deferred-with-reason 2, not-ingested 1}
+# race  {not-ingested 62, not-started 34, grounded 7}
+# class {grounded 27, not-ingested 103, not-started 55}
+```
+
+**feat `not-ingested`: 84 → 1** (the documented `.MOD` residual, §5). `text-complete` +57 and
+`unknown` +26 — the split reflects each record's own magnitude tokens, not a shortfall. The 957
+`not-started` units are untouched and belong to books with no compiled rule set (§1).
+
+**race and class are unchanged, and that is reported, not hidden:** 96 and 158 remaining
+respectively, for the reason in §0.
+
+**The standing hazard was not touched:** no generator wrote anything under `data/corpus/`, so no
+`license`/`pi_field`/`raw_tokens` were destroyed.
+
+### 7. Honest reporting of "proven"
+
+`work-inventory`'s `proven` predicate is `{grounded, text-complete}`, and a feat reaches `grounded`
+only when `probe_feat_effect_wiring` observes a computed delta for its key. For the 83 rows:
+
+- **engine-holds (`text-complete` or `unknown`): all 83.** The engine holds each record with its
+  real corpus `DESC:`/`BENEFIT:`/`TYPE:`/`PRE`-family tokens, the desktop catalog serves it, and
+  the prerequisite gate evaluates it.
+- **strictly-proven (`grounded`): 0 of the 83.** No feat-effect producer was written for these
+  keys — this lane adds catalog records, not effect producers, and claiming otherwise would be the
+  fabrication this program's doctrine exists to prevent.
+
+### 8. Git discipline
+
+`git status --porcelain` run before every git write. No `git add -A` — explicit paths only. No
+`git stash`. `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-e4-frc` (plus a separate
+`-desktop` dir for the Tauri crate) — this agent's own directories, never under `/tmp`.
+
+**One environment note worth recording:** this agent's assigned worktree was provisioned at commit
+`7d9f1c4f` (an 80-file tree from PR #23, months of history behind `tranche/9`) with no `docs/`,
+`scripts/` or `data/` at all. It was clean, so it was reset onto `origin/tranche/9` (`cabf9089`)
+before any work began. Nothing of another actor's was touched.
