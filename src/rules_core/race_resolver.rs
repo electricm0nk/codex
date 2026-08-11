@@ -1356,14 +1356,14 @@ fn find_json_files(dir: &Path) -> Vec<PathBuf> {
 mod tests {
     use super::*;
 
+    /// The one test here that deliberately loads a SINGLE book —
+    /// `a_race_resolves_from_its_own_book_alone_without_the_alternate_trait_book`
+    /// — needs a hand-built root, and that is a real property rather than a
+    /// stale scope. Its `arg()`/`b1()` siblings are gone: they existed only to
+    /// feed the hardcoded `all_books()` list that
+    /// [`app_loaded_books`] replaced.
     fn crb() -> BookCorpusRoot<'static> {
         BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }
-    }
-    fn arg() -> BookCorpusRoot<'static> {
-        BookCorpusRoot { book_id: "advanced_race_guide", dir: Path::new("data/corpus/advanced_race_guide") }
-    }
-    fn b1() -> BookCorpusRoot<'static> {
-        BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") }
     }
 
     /// The books the shipped app really loads, read out of its own

@@ -2177,15 +2177,17 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             // FALLBACK: CRB's seven compiled races. Still consulted, because
             // it is a real second opinion for the one book whose race traits
             // are also a compiled table.
-            if let Some(race) = modelled_race_of_race_trait(&unit.key, &facts.race_names) {
-                if facts.race_trait_ids.contains(&format!("{race}.{}", slug(&unit.name))) {
-                    return Verdict {
-                        status: "grounded",
-                        evidence: "race_trait_record_grounded_by_race_traits".to_string(),
-                        reason: None,
-                        engine_book: engine_book_field,
-                    };
-                }
+            let crb_table_grounds = modelled_race_of_race_trait(&unit.key, &facts.race_names)
+                .is_some_and(|race| {
+                    facts.race_trait_ids.contains(&format!("{race}.{}", slug(&unit.name)))
+                });
+            if crb_table_grounds {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "race_trait_record_grounded_by_race_traits".to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
             }
             // The honest middle: the record IS ingested and IS loaded, and
             // still no selection a player can make brings it in. Distinct
