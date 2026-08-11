@@ -355,13 +355,40 @@ fn bonus_bestiary_key(kind: &str, corpus_key: &str) -> String {
     format!("bonus_bestiary:{kind}:{}", collapsed.trim_matches('_'))
 }
 
+/// Renders one ability's `DESC:` token into text a player may read.
+///
+/// **Caught on screen, not by a test** (SD-29 Epic 5, DoD item 8): the first
+/// version served `record.description` verbatim and the catalog printed
+/// *"must succeed on a DC %1 Will save"* — a raw PCGen substitution
+/// placeholder, the same class of defect as the `RACESUBTYPE:` `|` separator
+/// this file already documents. `render_pcgen_desc` owns the treatment
+/// (`decisions.md §24`: a formula `%N` is DROPPED, never guessed, because
+/// there is no formula interpreter and `Babble`'s DC is genuinely
+/// `10+(HD/2)+CHA` — a number this ingest does not compute).
+///
+/// The leak check is the same guard `gen_book_cache.rs`'s own
+/// `render_player_facing_description` carries, kept as a hard panic: a token
+/// shape this renderer cannot handle must stop here rather than reach a
+/// screen.
+fn serve_ability_description(record: &bonus_bestiary::MonsterAbilityRecord) -> Option<String> {
+    let raw = record.description?;
+    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
+    if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
+        panic!(
+            "monster ability {:?}: rendered description still carries {leak}. Raw token: {raw:?}",
+            record.key
+        );
+    }
+    Some(rendered.text)
+}
+
 fn map_bonus_bestiary_ability(record: &bonus_bestiary::MonsterAbilityRecord) -> MonsterAbilityDto {
     MonsterAbilityDto {
         key: bonus_bestiary_key("monster_ability", record.key),
         name: record.name.to_owned(),
         facet: record.facet.corpus_token().to_owned(),
         delivery: record.delivery.map(|d| d.corpus_token().to_owned()),
-        description: record.description.map(str::to_owned),
+        description: serve_ability_description(record),
         source_page: record.source_page.map(str::to_owned),
     }
 }
@@ -520,6 +547,33 @@ mod tests {
             .contains(&"bonus_bestiary:monster_ability:caryatid_column_immunity_to_magic".to_owned()));
         let unique: std::collections::BTreeSet<&String> = served.iter().collect();
         assert_eq!(unique.len(), served.len(), "every served ability key is unique");
+    }
+
+    /// No ability description reaches the wire carrying PCGen substitution
+    /// syntax. This is the defect the on-screen pass caught: `Babble` printed
+    /// "a DC %1 Will save" until `serve_ability_description` was introduced.
+    #[test]
+    fn no_ability_description_serves_raw_pcgen_substitution_syntax() {
+        let mut checked = 0usize;
+        for entry in build_monster_catalog().entries.iter().filter(|e| e.book == BOOK_BB) {
+            for ability in &entry.abilities {
+                let Some(description) = ability.description.as_deref() else { continue };
+                checked += 1;
+                assert!(
+                    !description.contains('%'),
+                    "{}'s description serves a raw substitution placeholder: {description}",
+                    ability.key
+                );
+                assert!(
+                    codex::rules_core::pcgen_desc::leaked_pcgen_syntax(description).is_none(),
+                    "{} leaks PCGen syntax",
+                    ability.key
+                );
+            }
+        }
+        // 16 of the book's 17 ability rows carry `DESC:` text; the 17th
+        // (`Magic Circle against Evil`) carries none at all.
+        assert_eq!(checked, 16);
     }
 
     /// An attack with no corpus dice serves `None` plus the sentence saying why
