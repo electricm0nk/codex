@@ -1084,12 +1084,13 @@ impl EngineFacts {
             // credited to whichever host happened to be tried first.
             Kind::Monster => book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()),
             Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
+            // The record's OWN race gates this, not "any modelled race" --
+            // see `modelled_race_of_race_trait`.
             Kind::RaceTrait => {
                 book == "core_rulebook"
-                    && self
-                        .race_names
-                        .iter()
-                        .any(|r| self.race_trait_ids.contains(&format!("{r}.{}", slug(name))))
+                    && modelled_race_of_race_trait(key, &self.race_names).is_some_and(|race| {
+                        self.race_trait_ids.contains(&format!("{race}.{}", slug(name)))
+                    })
             }
             Kind::Class => self
                 .class_books
@@ -1442,6 +1443,38 @@ fn crb_class_name(class_id: ClassId) -> &'static str {
         ClassId::Sorcerer => "sorcerer",
         ClassId::Wizard => "wizard",
     }
+}
+
+/// The modelled race a `race_trait` record belongs to, or `None` when the
+/// record names no race the engine models.
+///
+/// A race trait's corpus key names its own race in a `~`-qualifier ahead of
+/// the trait name: `Blue ~ Keen Senses` -> `Blue`, and ARG's heritage form
+/// `Saltbeard ~ Dwarf ~ Greed` -> `Dwarf`. Grounding must be keyed on THAT
+/// race and never on "any race the engine models".
+///
+/// This is the fix for the name-coincidence defect
+/// (`docs/release/corpus-work-channels.md` §9.3, SD-28 §56). `race_trait_ids`
+/// is built solely from CRB's hardcoded `race_traits()` table, so the previous
+/// rule -- pair the record's trait slug with *every* name in `race_names` and
+/// ground on any hit -- let a non-CRB record reach `grounded` by coincidental
+/// NAME match alone. Ultimate Psionics' `Blue ~ Keen Senses` scored off the
+/// Elf's `elf.keen_senses`; `DuergarDSP ~ Hardy`, `DuergarDSP ~ Stability` and
+/// `Forgeborn ~ Fearless` did the same. None of those four races is modelled at
+/// all, so none of their traits is grounded by anything.
+///
+/// The TRAILING segment is the trait name, never the race, and is excluded
+/// from the search — otherwise a trait whose name happens to equal a race name
+/// would nominate itself. A key with no `~` separator names no race.
+fn modelled_race_of_race_trait<'a>(
+    key: &str,
+    race_names: &'a BTreeSet<String>,
+) -> Option<&'a String> {
+    let segments: Vec<&str> = key.split(" ~ ").collect();
+    segments[..segments.len().saturating_sub(1)].iter().find_map(|segment| {
+        let segment = segment.trim().to_lowercase();
+        race_names.iter().find(|race| **race == segment)
+    })
 }
 
 fn race_name(race: RaceId) -> &'static str {
@@ -1870,20 +1903,21 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             not_ingested("race_absent_from_RaceId_ALL")
         }
         Kind::RaceTrait => {
-            let candidates: Vec<String> = facts
-                .race_names
-                .iter()
-                .map(|r| format!("{r}.{}", slug(&unit.name)))
-                .collect();
-            if candidates.iter().any(|c| facts.race_trait_ids.contains(c)) {
-                return Verdict {
-                    status: "grounded",
-                    evidence: "race_trait_record_grounded_by_race_traits".to_string(),
-                    reason: None,
-                    engine_book: engine_book_field,
-                };
+            // Ground against the record's OWN race only -- see
+            // `modelled_race_of_race_trait` for the name-coincidence defect
+            // this replaced.
+            if let Some(race) = modelled_race_of_race_trait(&unit.key, &facts.race_names) {
+                if facts.race_trait_ids.contains(&format!("{race}.{}", slug(&unit.name))) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "race_trait_record_grounded_by_race_traits".to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                return not_ingested("race_trait_absent_from_race_traits");
             }
-            not_ingested("race_trait_absent_from_race_traits")
+            not_ingested("race_trait_race_not_modelled")
         }
         Kind::Class => {
             let name = unit.name.to_lowercase();
@@ -3093,5 +3127,75 @@ mod equipment_book_slug_tests {
             .any(|row| row.book == "UE" && row.key == "Abjurant Salt");
         assert!(found, "Abjurant Salt must be a real UE row in equipment_catalog_rows()");
         assert_eq!(equipment_book_slug_for("UE"), "ultimate_equipment");
+    }
+}
+
+#[cfg(test)]
+mod race_trait_grounding_tests {
+    use super::*;
+
+    /// The seven races CRB's `race_traits()` table is keyed on, exactly as
+    /// `gather_engine_facts` builds them (`race_name`, lowercase).
+    fn modelled_races() -> BTreeSet<String> {
+        RaceId::ALL.iter().map(|&r| race_name(r).to_string()).collect()
+    }
+
+    /// The regression this card exists to close
+    /// (`docs/release/corpus-work-channels.md` §9.3, SD-28 §56). Each of these
+    /// records was reported `grounded` by the old rule purely because its
+    /// TRAIT NAME slug collided with a CRB trait's — re-derived from
+    /// `docs/work-inventory.json` on 2026-08-11, where all of them carried
+    /// `race_trait_record_grounded_by_race_traits`. None of these races is
+    /// modelled by the engine at all, so none can ground on anything.
+    #[test]
+    fn a_race_the_engine_does_not_model_grounds_no_trait_however_its_name_collides() {
+        let races = modelled_races();
+        for key in [
+            "Blue ~ Keen Senses",        // collided with elf.keen_senses
+            "DuergarDSP ~ Hardy",        // collided with dwarf.hardy
+            "DuergarDSP ~ Stability",    // collided with dwarf.stability
+            "Forgeborn ~ Fearless",      // collided with halfling.fearless
+            "Aquatic Elf ~ Elven Magic", // "Aquatic Elf" is not "Elf"
+            "Svirfneblin ~ Stonecunning",
+        ] {
+            assert_eq!(
+                modelled_race_of_race_trait(key, &races),
+                None,
+                "{key} names no modelled race and must not ground"
+            );
+        }
+    }
+
+    /// The other half of the ruling: the fix must not throw away the records
+    /// that legitimately ground. A CRB race's own trait still resolves to that
+    /// race, and ARG's heritage form carries its base race as an inner
+    /// qualifier rather than the leading one.
+    #[test]
+    fn a_modelled_race_is_found_in_its_own_key_including_the_inner_heritage_qualifier() {
+        let races = modelled_races();
+        assert_eq!(
+            modelled_race_of_race_trait("Dwarf ~ Greed", &races).map(String::as_str),
+            Some("dwarf")
+        );
+        assert_eq!(
+            modelled_race_of_race_trait("Half-Elf ~ Keen Senses", &races).map(String::as_str),
+            Some("half-elf")
+        );
+        // ARG's `Saltbeard ~ Dwarf ~ Greed`: the leading segment is the
+        // heritage, the base race sits in the middle.
+        assert_eq!(
+            modelled_race_of_race_trait("Saltbeard ~ Dwarf ~ Greed", &races).map(String::as_str),
+            Some("dwarf")
+        );
+    }
+
+    /// The trailing segment is the trait name, never the race. Without this
+    /// exclusion a trait whose NAME equals a race name would nominate itself
+    /// and re-open the very coincidence class this fix closes.
+    #[test]
+    fn the_trailing_trait_name_segment_is_never_read_as_the_race() {
+        let races = modelled_races();
+        assert_eq!(modelled_race_of_race_trait("Dwarf", &races), None);
+        assert_eq!(modelled_race_of_race_trait("Orc ~ Human", &races), None);
     }
 }

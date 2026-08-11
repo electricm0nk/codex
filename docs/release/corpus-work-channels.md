@@ -356,6 +356,28 @@ others). Of the 44 "grounded" race traits corpus-wide, 39 are in the now-exclude
 4 are those false positives, and 1 is ARG — **approximately one legitimate grounded race trait in
 the whole 36-book product.**
 
+> **FIXED 2026-08-11** (SD-29 card `epic-6-race-trait-lane-pilot`, actor `sd29-e6-racetrait-pilot`).
+> `v06_work_inventory`'s `Kind::RaceTrait` arm now grounds a record against **its own race**, parsed
+> from the corpus key's `~`-qualifiers (`modelled_race_of_race_trait`), instead of pairing the trait
+> slug with every race the engine models. The same gate was applied to the twin in
+> `EngineFacts::holds_key`.
+>
+> **The paragraph above undercounts the defect, corrected here rather than silently.** The false
+> positives were **23, not 4**. Grounded race traits corpus-wide went **44 → 21** (re-derived by
+> regenerating `docs/work-inventory.json` and counting `kind == "race_trait" && status ==
+> "grounded"`). The 19 the count above missed were *intra-`core_essentials`* cross-race
+> coincidences, not cross-book ones — `Aquatic Elf ~ Elven Magic` scoring off `elf.elven_magic`,
+> `Svirfneblin ~ Stonecunning` off `dwarf.stonecunning`, `Drow ~ Keen Senses` off `elf.keen_senses`,
+> and so on. §9.3 looked only for the cross-book form.
+>
+> The surviving 21 are 20 genuine `core_essentials` CRB traits plus ARG's `Saltbeard ~ Dwarf ~
+> Greed` (its base race sits in an inner `~`-qualifier) — which does confirm the paragraph's headline
+> claim: **exactly one** legitimate grounded race trait outside `core_essentials`.
+>
+> One further true finding the fix surfaced: `Dwarf ~ Hatred` was previously grounded off
+> `gnome.hatred`. CRB's `race_traits()` table carries `Hatred` for Gnome only, so the Dwarf record
+> now correctly reports `not-ingested` — a real gap in the hardcoded table, not a regression.
+
 "Alongside" is the right call: building a per-book race-trait path while leaving the name-match
 grounding in place would produce a path whose own success criterion is untrustworthy.
 
