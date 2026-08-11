@@ -55,6 +55,27 @@ export function formatBook(code: string): string {
 }
 
 /**
+ * The books the response actually contains, named in first-appearance order and
+ * joined as prose ("Bestiary 1, Bonus Bestiary and Monster Codex").
+ *
+ * Derived from the served rows rather than written into the blurb, because the
+ * hand-written sentence it replaces said "across Bestiary 1 and Bonus Bestiary"
+ * and was already wrong the moment a third book was ingested — a stale sentence
+ * on a screen a player reads, which no test pinned. This cannot go stale: a
+ * book that stops being served stops being named.
+ */
+export function formatServedBooks(entries: Pick<MonsterCatalogEntryDto, 'book'>[]): string {
+  const seen: string[] = [];
+  for (const entry of entries) {
+    if (!seen.includes(entry.book)) seen.push(entry.book);
+  }
+  const names = seen.map(formatBook);
+  if (names.length === 0) return 'no book';
+  if (names.length === 1) return names[0];
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}
+
+/**
  * How each damage-dice provenance reads on screen. Short enough for a chip;
  * the full sentence is the engine's own `groundingNote`, rendered verbatim
  * beneath the attack.
@@ -234,11 +255,11 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
       ) : (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            Every real stat block the engine knows about, across Bestiary 1 and Bonus Bestiary —{' '}
+            Every real stat block the engine knows about, across {formatServedBooks(entries)} —{' '}
             {totalCount} monsters. Armor Class, hit points and saves are not shown because they are
             not ingested: PCGen derives them at runtime from the creature&rsquo;s hit-dice table
             rather than stating them on its corpus row, so the row prints that table&rsquo;s own
-            token instead. Bestiary 1&rsquo;s rows carry the land speed only; Bonus Bestiary&rsquo;s
+            token instead. Bestiary 1&rsquo;s rows carry the land speed only; the other books&rsquo;
             carry every movement mode and their special abilities.
           </p>
 
