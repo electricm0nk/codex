@@ -891,6 +891,15 @@ fn gen_bonus_bestiary() {
     let root = bonus_bestiary_corpus_root();
     let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/bonus_bestiary");
     let ingested_at = ingested_at_now();
+    // The wiring class is COMPUTED from each cited row's own token closure,
+    // never asserted here. A first draft hard-coded `static` for every record
+    // on the reasoning that every field is a verbatim token; `v06_corpus_trap_report
+    // -- --audit` rejected 17 of the 31 records for exactly that
+    // (`wiring-class-mismatch`), because the class describes what the ROW does
+    // -- `Water Naga ~ Poison` carries a `BONUS:VAR` and is `derived`, most
+    // ability rows carry no magnitude token at all and are `display`.
+    let wiring_index = WiringClassIndex::build("bonus_bestiary", &root);
+    let mut wiring_lines = wiring_index.lines();
 
     for sub in ["monster", "monster_ability"] {
         let dir = out_root.join(sub);
@@ -930,6 +939,8 @@ fn gen_bonus_bestiary() {
             line,
             record_key: block.key.to_string(),
         };
+        let (wiring_class, wiring_class_signals) =
+            wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::ChassisOnly,
@@ -939,12 +950,8 @@ fn gen_bonus_bestiary() {
             license: Some(License::Ogl),
             pi_field: None,
             pi_marker: None,
-            // Every field on this record is a literal corpus token, so the
-            // record is exactly as proven as the row it cites: `static` in
-            // `wiring_class`'s vocabulary, not `derived` -- nothing here is
-            // computed from anything.
-            wiring_class: "static".to_string(),
-            wiring_class_signals: vec!["static:verbatim_corpus_token".to_string()],
+            wiring_class,
+            wiring_class_signals,
         };
         write_record(
             &out_root.join("monster").join(format!("{}.json", slugify(block.key))),
@@ -976,6 +983,8 @@ fn gen_bonus_bestiary() {
             line,
             record_key: ability.key.to_string(),
         };
+        let (wiring_class, wiring_class_signals) =
+            wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::Full,
@@ -985,8 +994,8 @@ fn gen_bonus_bestiary() {
             license: Some(License::Ogl),
             pi_field: None,
             pi_marker: None,
-            wiring_class: "static".to_string(),
-            wiring_class_signals: vec!["static:verbatim_corpus_token".to_string()],
+            wiring_class,
+            wiring_class_signals,
         };
         write_record(
             &out_root
