@@ -12,7 +12,9 @@ This is the second retrospective written from the event log. Tranche/7's loudest
 **figures restated from one brief into the next without re-measurement** were its largest source of
 wrong claims. Tranche/9's is different and, if anything, worse: the bundle's dominant cost was not
 wrong numbers at all — those were caught early and cheaply, roughly on schedule — it was **the
-dispatch layer's physical arrangement of the run**. Six concurrent worktree agents on a two-core box
+dispatch layer's physical arrangement of the run**. Six concurrent worktree agents on a four-core box
+(`nproc` → 4; `verify.sh`'s cargo parallelism defaults to `-j 2`, which is where the
+repeatedly-published "two-core" reading came from — **corrected 2026-08-11**)
 filled a disk, and a preflight gate correctly refusing to run on that disk silently cost SD-29 an
 entire kind lane: **1,696 companion units, 0 grounded, no cycle ever started.**
 
@@ -21,21 +23,33 @@ entire kind lane: **1,696 companion units, 0 grounded, no cycle ever started.**
 ## 0. How to reproduce every number in this document
 
 ```bash
-python3 scripts/retro.py validate      # 600 event(s), all valid   (as of 2026-08-11T14:30Z)
+python3 scripts/retro.py validate      # 609 event(s), all valid   (re-run 2026-08-11T16:0xZ)
 python3 scripts/retro.py summary
 python3 scripts/retro.py query --type correction --json
 ```
 
+> **CORRECTED 2026-08-11 (post-publication adversarial verification, actor
+> `sd30-lessons-from-sd29`).** The first published revision of this section printed
+> `600 event(s)` and a selector with **no upper bound**. Both were unreachable from the
+> published tree: this document's own 9 events
+> (`docs/retro/events/tranche-9-retrospective.jsonl`, 8 `correction` + 1 `incident`,
+> `2026-08-11T15:02:49Z`…`15:03:51Z`) were committed in the *same commit* as the document
+> and fall inside its own window. Run today, `validate` returns **609**, and the unbounded
+> selector returns **158 / 20 / 42 corrections**, not 149 / 19 / 34. Every percentage in §2
+> and §3 silently re-derived over the wrong denominator. The selector below now carries the
+> upper bound that makes it self-stable, and §2.1 states both denominators.
+
 ### 0.1 The selector, and why the obvious one is wrong
 
-The log now holds 600 events across every bundle this repo has run. Three candidate selectors for
-"tranche/9" were tested and two of them are wrong:
+The log holds 609 events across every bundle this repo has run (`retro.py validate`, re-run
+2026-08-11 after this document's own shard landed). Three candidate selectors for "tranche/9" were
+tested and two of them are wrong:
 
 | candidate selector | result | verdict |
 |---|---|---|
-| `repo.branch == "tranche/9"` | 73 events | **WRONG — loses 76.** Eight lane agents ran in dispatch worktrees and stamped `worktree-wf_3516060a-756-{6..13}` as their branch. |
+| `repo.branch == "tranche/9"` | 73 events in-window (**82** without the upper bound — this document's own 9 events stamp `tranche/9` too) | **WRONG — loses 76.** Eight lane agents ran in dispatch worktrees and stamped `worktree-wf_3516060a-756-{6..13}` as their branch. |
 | `glob docs/retro/events/sd29*.jsonl` + `operator-prelaunch.jsonl` | 166 events | **WRONG in both directions.** Adds 21 tranche/8-era events (`operator-prelaunch` ×15 and `sd29-scope-and-debt` ×6, all dated 2026-08-01/02 — SD-29 *scoping*, done nine days before the branch existed) and misses 4 (`codex.jsonl`, `verify.sh`'s and `reclaim.sh`'s fallback-actor emissions during the run). |
-| **`ts >= 2026-08-10T22:37:02Z`, all shards** | **149 events** | **CORRECT.** The cut point is the committer date of `a1295856`, the commit `tranche/9` was cut from. |
+| **`CUT <= ts <= END`, all shards** | **149 events** | **CORRECT.** `CUT` is the committer date of `a1295856`, the commit `tranche/9` was cut from. `END` is the last event emitted by the *run* — without it the selector swallows this document's own retro shard and every future one, and the drift grows forever. |
 
 **The selector used throughout this document:**
 
@@ -43,16 +57,21 @@ The log now holds 600 events across every bundle this repo has run. Three candid
 python3 - <<'PY'
 import json,glob,collections
 CUT='2026-08-10T22:37:02Z'   # git log -1 --format=%cI a1295856 -> 2026-08-10T18:37:02-04:00
+END='2026-08-11T14:29:51Z'   # last event emitted BY THE RUN; excludes this document's own shard
 ev=[json.loads(l) for f in glob.glob('docs/retro/events/*.jsonl') for l in open(f) if l.strip()]
-t9=[e for e in ev if e['ts']>=CUT]
+t9=[e for e in ev if CUT<=e['ts']<=END]
 print(len(t9), len({e['actor'] for e in t9}), collections.Counter(e['type'] for e in t9))
 PY
 # -> 149 19 Counter({'verification': 48, 'incident': 44, 'correction': 34,
 #                    'deferral': 18, 'near_miss': 3, 'rework': 2})
+# Drop END and it returns 158 20 Counter({... 'incident': 45, 'correction': 42 ...}).
 ```
 
-**149 events across 19 actor shards.** Nothing in the log distinguishes a tranche/9 event by field;
-only time does. That is itself a finding — see §6, rule **A9**.
+**149 events across 19 actor shards, run-only.** Nothing in the log distinguishes a tranche/9 event
+by field; only time does. That is itself a finding — see §6, rule **A9**. **The `END` bound is not
+cosmetic:** a retrospective that measures a window it is itself inside is not measuring the run, and
+the difference is not neutral — see §2.1, where the eight excluded corrections are exactly the ones
+that would erase this document's two "we improved" claims.
 
 Every count below is derived by a command shown at the point of use. Where a figure could not be
 reproduced, the correction is stated inline and logged as a `correction` event — including
@@ -82,6 +101,15 @@ it actually shipped is mostly *instrument*, not content:
   units, 2 253 proven, derived in one pass with every figure carrying its command, then
   independently re-derived by a second pass against a freshly regenerated inventory (§8 of that
   file, 12 spot-checks, zero disagreements).
+  **CORRECTED 2026-08-11:** those three figures are the `00:18:38Z` snapshot and were **already
+  stale at closure**. Re-running that document's own §1 block against the closure-state inventory
+  (`docs/work-inventory.json`, `generated_at 2026-08-11T10:38:33Z`, committed at `ac217788`) returns
+  **37 books / 38 521 units / 2 893 proven.** The +4 units are the companion mis-classification fix
+  listed two bullets below (9 `race_trait` removed, 13 `companion` added, 09:31Z — *after* the
+  re-derivation pass ran); the +640 proven is this bundle's own equipment/feat/spell/monster
+  grounding. Restating a figure and endorsing it in the same breath, without re-deriving it at the
+  moment of restatement, is the tranche/7 failure mode this document opens by naming — committed
+  here, in this document, in the paragraph that names it.
 - **Three real classifier defects fixed in the measuring instrument itself**, each of which had been
   silently corrupting every figure downstream: the spell two-list divergence (192 units reported
   `not-ingested` while already on screen), the race-trait name-coincidence defect (grounded
@@ -95,10 +123,33 @@ it actually shipped is mostly *instrument*, not content:
   patterns its own epic-breakdown named; Epic 1b found three further whole escape classes. The gate
   went from 0 self-test cases to **28**, wired into `verify.sh` as the new `audit-selftest` stage.
 - **83 corpus feat rows** closing the feat not-ingested gap corpus-wide, and **769** equipment rows.
+  **What this bundle cannot claim about those two, stated here and not only in a table cell at
+  §7.2 and a row at §9.5:** all **852** of those rows are player-visible and **none of them has any
+  on-screen evidence.** By this document's own §3.2 ruling — *"a claim that a value reaches the
+  player is not verified until it has been read off the running app"* — 852 delivered rows are not
+  verified as reaching the player. They are listed above as delivered because they are on the branch
+  and gate-green, which is a different claim.
 
 The gate ended green: `verify.sh` full, exit 0, **all 12 stages PASS**, `root-full` 6 170 passed
 across 543 suites with **all 524 `tests/*.rs` suites executed**, `reach` 17 matched. That is the
-outcome. The rest of this document is the process, and the process is where this tranche's story is.
+outcome.
+
+**Card-level gate coverage, added 2026-08-11 because the first revision never stated it.** That
+green gate is the bundle's *only* green full gate, and it ran on the merged tree at closure. **6 of
+the 16 kanban cards closed without ever obtaining a green gate of their own:**
+`epic-4-proven-feat-race-class` (no exit code ever obtained), `epic-6-race-trait-lane-pilot`
+(`VERIFY_EXIT=1`, `progress.md:2059`), `epic-6-race-trait-lane-extend` (`VERIFY_EXIT=1`, `:2384`),
+`epic-5-monster-lane-extend` (`VERIFY_EXIT=1`, `:2850`), `epic-8-toolkit` ("Gate result — NOT
+OBTAINED", `:3129`), and `epic-7-companion-lane-pilot` (never started). §5.1 reports run-level
+statistics (48 runs, 34 PASS / 14 FAIL); nothing converted that into per-card coverage, and per-card
+coverage is the plainest available statement of what the bundle cannot claim. Note the tension this
+creates with rule **A10** below, which this document authors *from* the
+`epic-4-proven-feat-race-class` incident: that card was flipped to `COMPLETE` retroactively by a
+different actor (`kanban.md` card 6), i.e. the rule "a gate that has not returned is not a gate that
+passed" was satisfied by a status edit plus a later whole-tree gate, not by that card's own gate.
+The later gate does cover its diff; the card-level claim still rests on an edit.
+
+The rest of this document is the process, and the process is where this tranche's story is.
 
 ---
 
@@ -123,6 +174,19 @@ The PACKAGE-INSTRUCTION share is **29.4 %**, against tranche/7's BRIEF share of 
 direction is right but the movement is small and should not be over-read: the denominators differ
 by 3.4× (34 vs 115) and the classification is a judgement.
 
+> **CORRECTED 2026-08-11 — the improvement does not survive including this document's own
+> corrections, and the first revision did not disclose that they were excluded.** The 34-correction
+> set is the run only (`END` bound, §0.1). Drop the bound and the set is **42**, the extra 8 being
+> this document's own `correction` events. Five of those eight name an *instruction* as the wrong
+> party — two the `tranche/9 retro brief` and three the orchestrator's observations 3, 4 and 5
+> (`python3 -c "import json;[print(json.loads(l)['subject']) for l in open('docs/retro/events/tranche-9-retrospective.jsonl')]"`).
+> Classified the same way as the other 34, that is **15 of 42 = 35.7 %** — **identical to
+> tranche/7's 35.7 % to two decimals. There is no measured movement in the package-instruction
+> share.** The 29.4 % figure is correct for the run-only frame and is the right frame for
+> "how did the *bundle* go"; it is the wrong frame for "is this program getting better at briefs,"
+> because the retrospective's own instruction-sourced errors are part of the answer. Both are stated
+> here so neither can be quoted alone.
+
 **What did move, unambiguously, is self-correction.** Tranche/7: 14 of 115 = 12.2 %, and *"the lead
 self-corrected zero times."* Tranche/9: **6 of 34 = 17.6 %**, and three of the six come from one
 agent (`sd29-e5-monster-pilot`) correcting its own first draft three separate times in one cycle —
@@ -146,16 +210,24 @@ about, repeated one line below the warning."*
 ```bash
 python3 - <<'PY'
 import json,glob,collections
-CUT='2026-08-10T22:37:02Z'
+CUT='2026-08-10T22:37:02Z'; END='2026-08-11T14:29:51Z'
 ev=[json.loads(l) for f in glob.glob('docs/retro/events/*.jsonl') for l in open(f) if l.strip()]
-cor=[e for e in ev if e['ts']>=CUT and e['type']=='correction']
+cor=[e for e in ev if CUT<=e['ts']<=END and e['type']=='correction']
 print(collections.Counter(e.get('caught_before') for e in cor))
 print('blast_radius stated:', sum(1 for e in cor if e.get('blast_radius')), 'of', len(cor))
 PY
 # -> Counter({None: 14, 'implementation': 9, 'merge': 7,
 #             'nothing (already shipped)': 3, 'release': 1})
 # -> blast_radius stated: 17 of 34
+# Without END (i.e. including this document's own 8 corrections):
+# -> Counter({None: 14, 'implementation': 11, 'release': 7, 'merge': 7,
+#             'nothing (already shipped)': 3});  blast_radius stated: 22 of 42
 ```
+
+**The `release` cell is the one to read.** Six of this document's own eight corrections were caught
+only at `release` — the latest stage there is. That is the direct counterweight to this section's
+headline: the *run's* corrections were caught earlier than tranche/7's, and the *retrospective's*
+were caught as late as it is possible to catch anything. Both facts are this program's.
 
 **9 of 20 corrections that state the field were caught before implementation began**, against
 tranche/7's 6 of 41 for brief errors. `blast_radius` is stated on **17 of 34 (50 %)** — against
@@ -250,7 +322,12 @@ comparable:
 # probe          : throwaway|temporary (bin|harness|test)|probe\b|one-off (bin|harness)
 # clean tree     : git worktree|detached|git stash|pristine|clean checkout
 # verify.sh      : verify\.sh          git archaeology: git log|git show|git ls-files|git blame|git diff
+# repo binary    : cargo run           clippy         : clippy
 ```
+
+The last two lines were **missing from the first published revision** of this block while their rows
+appeared in the table below it — running the block as printed leaves 12 of 34 unmatched, not the 10
+§3.1 headlines. Added 2026-08-11 so the printed recipe actually produces the printed table.
 
 | rank | mechanism | mentions | % of 34 | SOLE |
 |---:|---|---:|---:|---:|
@@ -305,8 +382,23 @@ depend on the choice.
 **Corrections-only, on-screen driving scores 1/34 (2.9 %) verbatim, 2/34 (5.9 %) amended, against
 tranche/7's 16/115 (14 %).** Taken alone that reads like a collapse. It is not, and the corrections
 denominator is the wrong instrument for this mechanism. Widen it to **corrections + near-misses (37
-events)** and on-screen driving accounts for **3 of 37 = 8.1 %, and is the SOLE named mechanism in
-all three.** Reading the three:
+events)** and on-screen driving accounts for **3 of 37 = 8.1 %.**
+
+> **CORRECTED 2026-08-11 — the first revision said "and is the SOLE named mechanism in all three,"
+> and the three it then enumerated are not all drawn from the 37.** The third enumerated item, the
+> Tauri wire-contract rename, **is not an event in the log at all**
+> (`grep -rl 'authoring_workbench\|Connected to the app backend' docs/retro/events/` → no match); its
+> only record is `progress.md:686` and `:758-759`. Of the 37 events, exactly three carry on-screen
+> evidence: correction #23 (`sd29-e5-monster-pilot`, `driver.sh` screenshot — **sole**), the
+> `sd29-e4-spell` `near_miss` (*"only looking at the running screen found it"* — **sole**), and
+> correction #30 (`sd29-e10-review`, *"opened `e4-spell-catalog-after-ui-chip.png` and read the
+> rendered surface"*) — which under this document's own amended classifier **also** matches git
+> archaeology (`git merge-base`, `git ls-tree`), so it is **not** sole. **The defensible statement is
+> 3 of 37 = 8.1 %, sole in 2 of 3.** The rename episode is real and is narrated below because it is
+> the clearest example of the failure mode; it is evidence, not a member of the denominator. The
+> conclusion does not move: every one of these was invisible to every test in the repo.
+
+Reading the three:
 
 1. **The `%1` raw-token leak** (§2.4) — correction, `sd29-e5-monster-pilot`. Every Rust test green.
 2. **The Spell Catalog chip row** — `near_miss`, `escaped: true`,
@@ -335,10 +427,25 @@ ruling stands verbatim and this tranche supplies fresh, independent evidence for
 > app.**
 
 The share fell for a structural reason worth naming: **most SD-29 cycles surfaced no new
-player-visible record family at all.** Counting DoD-item-8 dispositions in `progress.md`: **3
-PERFORMED**, **2 NOT PERFORMED (recorded as shortfalls)**, and **at least 6 declared a real N/A** —
-classifier fixes, denominator derivations, provenance gating, version stamping and closure, where a
-screenshot would prove nothing. The base rate changed, not the guard.
+player-visible record family at all.** Counting DoD-item-8 dispositions in `progress.md`: **3 NOT
+PERFORMED (recorded as shortfalls)** and **6 declared a real N/A** — classifier fixes, denominator
+derivations, provenance gating, closure, where a screenshot would prove nothing. The base rate
+changed, not the guard.
+
+> **CORRECTED 2026-08-11, two ways.** (a) The first revision said *"3 PERFORMED, 2 NOT PERFORMED …
+> at least 6 N/A."* The 6 N/A reproduce; the 2 does not — there is a **third**
+> (`progress.md:1202`, `:1854`, `:3292`) — and **no cycle records item 8 as PERFORMED anywhere in
+> `progress.md`** (`grep -niE 'item 8.*(PERFORMED|done|satisfied)' | grep -vi 'not performed'` → zero
+> lines). The three on-screen episodes are narrated in receipts, not counted as item-8 dispositions.
+> (b) The third "not performed" is `epic-9-version` at `:3292`, which the first revision filed under
+> the N/A list as *"version stamping … where a screenshot would prove nothing."* **Its own receipt
+> says the opposite**: the version *does* reach the UI
+> (`app.package_info().version` → `formatWorkbenchBuildLabel` → `App.tsx`'s
+> `FeedbackEvidencePanel`), and what stopped it was that proving the rendered string needs a full
+> `tauri dev` build, *"which on this box's disk/CPU contention is exactly the condition that just
+> failed `preflight-disk`. Flagged, not silently skipped."* **That is a third concurrency casualty,
+> not a case with nothing to prove** — filing it as an N/A shrinks the disk bill §4.1 insists on
+> stating in full.
 
 ```bash
 grep -n 'item 8' docs/release/SD-29-corpus-wide-catch-up-lanes/progress.md \
@@ -398,9 +505,10 @@ in this run with no instrument pointed at it, which is precisely why §7 exists.
 | **26** (59 % of all incidents; **9 of the 21 authored**) | **Disk exhaustion from bundle-wide concurrency** | Six worktree agents concurrent on one filesystem, plus a 60 G `target/` in the primary checkout. Recorded `used_percent`, 12 values: **90, 90, 91, 91, 91, 91, 92, 93, 93, 93, 94, 96.** `preflight-disk` is the single largest failing stage in the whole log (**9 failures**, more than every other stage combined). `reclaim.sh --apply` ran 14 times and, at the peak, **reclaimed 0.0 B** — *"every candidate is a live target dir, a worktree with unpushed commits, or a checked-out branch."* The condition was correctly diagnosed as structural by `sd29-e6-racetrait-pilot`: **"Disk pressure is now structural from bundle-wide concurrency, not from reclaimable garbage."** |
 | **6** (receipt-recorded; **only 2 in the event log**) | **Wrong-base dispatch worktrees** | Dispatch worktrees were created at `7d9f1c4f` — **`origin/main`'s tip**, a PR-#23 merge from 2026-06-28 with no `docs/` tree at all, so `docs/release/SD-29-corpus-wide-catch-up-lanes/` did not exist and **none of the card's required reads were present.** Every affected agent detected it as its first action (`git log --oneline -3` + `ls` of the package dir) and recovered with `git fetch && git reset --hard origin/tranche/9`. |
 | **3** | **Shared-checkout collisions between the two non-worktree agents** | Epic 8 and Epic 9 ran concurrently in the *primary* checkout. Consequences: a gate whose result *"certifies the mixture, not either card"*; a `pkill -f 'scripts/verify.sh'` that could have killed a sibling's 45-minute gate (near-miss, caught by `pgrep -af` immediately after); and **five green Epic 9 commits that could not be pushed at all**, because `git pull --rebase` and `git merge` both abort on a sibling's uncommitted retro shard and `git stash` is banned in this tree. |
-| **2** | **`verify.sh` outlasting the turn budget** | Epic 2 run 1 ran out of turn mid-`root-full`, leaving its derivation untracked and its card `IN-FLIGHT` with no receipt (45 min). `epic-4-proven-feat-race-class` did the same and **never obtained an exit code at all** — its receipt states it exactly: *"a gate that has not returned is not a gate that passed."* |
+| **3** (was published as 2) | **`verify.sh` outlasting the turn budget** | Epic 2 run 1 ran out of turn mid-`root-full`, leaving its derivation untracked and its card `IN-FLIGHT` with no receipt (45 min). `epic-4-proven-feat-race-class` did the same and **never obtained an exit code at all** — its receipt states it exactly: *"a gate that has not returned is not a gate that passed."* **Third instance, added 2026-08-11 and absent from the first revision:** `epic-6-race-trait-lane-extend` (`progress.md:2384`) — `VERIFY_EXIT = 1`, `root-full` *"**did not complete** — CPU/lock-starved, not hung; still building ~490 test binaries when this cycle's turn budget expired,"* DoD roll-call item 1 **NO**, items 2 and 3 **NOT REACHED**. It is the harder case, because §1 credits its deliverable — the companion mis-classification fix, `race_trait` 3 456 → 3 447 / `companion` 1 683 → 1 696 — which therefore **shipped on a red gate whose `root-full` never ran.** |
+| **1** | **Cycle-id collision** (recorded on `kanban.md`, absent from the first revision of this document) | `epic-4-proven-equip-mod` and `epic-4-proven-spell` both minted `SD29-E4-F1-001`: *"the two lanes ran concurrently in isolated worktrees and neither could see the other's claim before pushing. The ids are therefore **not** unique in this bundle."* Same root cause as every row above — concurrency without a shared allocator — and it is the one that damages **the receipt trail this document is built from**, since a cycle id no longer identifies a cycle. The kanban records it and proposes the fix (suffix the id at claim time). |
 | 1 | **Harness timeout misread as gate failure** | Epic 8 launched the gate through a backgrounded call with a 10-minute timeout; the harness SIGTERMed it. `verify.sh` exit **143** = 128+15. *"A non-zero exit code with four PASS stages already printed reads exactly like a failing gate."* Symmetrically, the harness's own task notification reported "completed (exit code 0)" — the **wrapper's** status. **Two available summaries pointed in opposite directions and neither was the gate's verdict.** |
-| 1 | **Concurrent full sweeps in one checkout** | Two `verify.sh` full runs in the same tree, separate target dirs, both starved at `-j 2` on a 2-core box. Symptom: a sweep that *looks hung* for 15 minutes. Flagged `silent: true`. AGENTS.md's one-writer rule covers uncommitted work and says nothing about concurrent sweeps. |
+| 1 | **Concurrent full sweeps in one checkout** | Two `verify.sh` full runs in the same tree, separate target dirs, both starved at `-j 2` on a **four**-core box (`nproc` → 4; the `2` is `verify.sh`'s default cargo parallelism, not the core count — **corrected 2026-08-11**). Two sweeps at `-j 2` still oversubscribe once `rustc`'s own threads are counted. Symptom: a sweep that *looks hung* for 15 minutes. Flagged `silent: true`. AGENTS.md's one-writer rule covers uncommitted work and says nothing about concurrent sweeps. |
 
 **Quantifying the concurrency question the orchestrator raised.** Of the 21 *authored* incidents,
 **9 (43 %)** name disk, load, contention, or a gate that did not return. Of all 44, **32 (73 %)**
@@ -454,9 +562,34 @@ recorded figure is not usable** and the real cost is better read off the kanban:
   blocked.
 
 Every one of the five was found by a mechanism the agents themselves ran, and every one was disclosed
-rather than smoothed over. **Agent behaviour in this tranche was not the problem.** The one
-substantive process criticism available against the agents — that three cycles each rediscovered the
-same red pin — is fairer against the dispatch layer, which had no mechanism to route a discovered
+rather than smoothed over. **Agent behaviour was not the dominant cost in this tranche** — the
+dispatch layer's physical arrangement was, by every denominator in §4.1.
+
+**AMENDED 2026-08-11. The first revision said "Agent behaviour in this tranche was not the problem"
+and "The discipline held on every occasion where it was tested." Both are too broad, and this
+document's own body contradicts them twice:**
+
+- **§2.3 chain 1's middle row** — which this document calls *"the sharpest thing in the log"* — is an
+  **agent-authored false impossibility claim** (*"DoD item 8 is currently unsatisfiable for every
+  player-visible lane in this bundle"*, `progress.md:1916`) that **propagated through two further
+  receipts as established fact** while the disproving PNGs sat in their shared git ancestry. Three
+  agents restated a wrong claim without re-testing it. That is a discipline failure, and it is
+  exactly the failure the program's own "re-derive, do not transcribe" rule exists to prevent.
+- **§7.3 records that all three epic-2 attempts `cd`'d outside the granted repo**, and that attempt 2
+  ran `mkdir -p` at `/home/ubuntu/cargo-targets/...`, *"outside both the repo and the scratchpad."*
+  `AGENTS.md` rule 4 is "do not write outside the granted surface." §7.3 rules these *"none of them
+  improper"* without citing that rule, and weakens two of the four candidate triggers with *"done by
+  nearly every cycle in this run and drew no warning"* — which normalises an out-of-scope pattern
+  rather than naming it. (The directory is still on disk today: `du -sh
+  /home/ubuntu/cargo-targets/sd29-e2-prelaunch` → **27G**.)
+
+The accurate summary is narrower and still strongly in the agents' favour: **on every occasion where
+an agent was asked to weaken a gate, claim an unreturned result, edit a sibling's live files, or
+substitute a passing test for a missing screenshot, it refused and said so.** The failures that
+remain are of a different kind — restating an unverified claim, and writing outside the granted
+surface — and they are worth naming precisely because the rest of the record is so good. The one
+process criticism the first revision *did* level at the agents — that three cycles each rediscovered
+the same red pin — is fairer against the dispatch layer, which had no mechanism to route a discovered
 blocker back to its owner.
 
 ### 4.3 The honest summary
@@ -464,7 +597,7 @@ blocker back to its owner.
 **Tranche/7's finding was that 53 % of recorded process failures were emitted by the dispatch layer
 and absorbed by the agents. Tranche/9's is the same finding, sharper.** The dispatch layer:
 
-- placed **six concurrent worktree agents plus two shared-checkout agents** on a two-core box with a
+- placed **six concurrent worktree agents plus two shared-checkout agents** on a four-core box with a
   60 G `target/` already resident, and provided no disk budget, no concurrency cap, and no
   admission control;
 - cut dispatch worktrees from **`origin/main`** — not from the branch the brief named — at least six
@@ -519,7 +652,10 @@ including two that no ad-hoc command would have found, and it is the sole reason
 was ever measured.
 
 **Where it failed.** The red-streak assertion tranche/7 asked for still does not exist
-(`grep -n 'streak\|consecutive\|repeat' scripts/verify.sh` → nothing). `root-full` was red on 6 runs
+(`grep -n 'streak\|consecutive' scripts/verify.sh` → nothing, rc=1; **corrected 2026-08-11** — the
+first revision printed a three-term form including `repeat`, which returns `verify.sh:44` and
+`:231`, both comments, and rc=0. The conclusion is unchanged; the printed command was not the one
+that produces the printed result). `root-full` was red on 6 runs
 across 3 cycles for the same two assertions, and each cycle rediscovered the attribution from
 scratch. The mitigation that made this survivable was *cultural*, not mechanical: AGENTS.md rule A5
 made each agent attribute the failure by content rather than excuse it. **The rule shipped; the guard
@@ -602,7 +738,7 @@ rather than the durable file; it should now be promoted.
 
 | status | risk | evidence |
 |---|---|---|
-| 🔴 | `retro.py summary` still clusters on the exact `recurrence_key` string. One disk condition reads as `disk-full` ×16, `disk-pressure` ×9, `preflight-disk-normalized-red` ×1. | `grep -n recurrence_key scripts/retro.py:667` |
+| 🔴 | `retro.py summary` still clusters on the exact `recurrence_key` string. One disk condition reads as `disk-full` ×16, `disk-pressure` ×9, `preflight-disk-normalized-red` ×1. | `grep -n recurrence_key scripts/retro.py` → `667: recurrence[event.get("recurrence_key") or event.get("summary","?")] += 1` (**corrected 2026-08-11**: the first revision wrote `scripts/retro.py:667` as if it were an argument, which errors with rc=2) |
 | 🔴 | No red-streak assertion in `verify.sh`. A stage red on N consecutive runs is still reported identically to one red once. | `grep -n 'streak\|consecutive' scripts/verify.sh` → nothing |
 | 🔴 | `driver.sh:43` `WINDOW_TITLE="Codex"`; the real `WM_NAME` is `codex-desktop`. `driver.sh screenshot` returns a blank PNG under this container's compositing path. | `sed -n '43p;138,148p' apps/desktop/.claude/skills/run-desktop/driver.sh`; `epic-4-proven-feat-race-class` incident 07:38 |
 | 🔴 | The vite port (1420) is **not** partitioned per agent the way `DISPLAY` is; a second concurrent app run dies with "Port 1420 is already in use", including against one's own orphaned vite. | same incident |
@@ -629,11 +765,11 @@ Logged under `RETRO_ACTOR=tranche-9-retrospective`
 
 | # | claim | verdict |
 |---:|---|---|
-| **1** | One Workflow, 17 agents, 50 402 277 ms, 2 884 281 tokens, 2 543 tool calls; phases Preflight → Foundation → Lanes → Version → Review → Closure | **CONFIRMED exactly**, all five figures and all six phase titles, from the workflow record (`runId wf_3516060a-756`). **One refinement:** 19 agent transcripts exist for 17 labels — the two extra are the discarded Epic 2 attempts (§2). And the Lanes phase ran **8** worktree agents across the run (`wf_3516060a-756-6` … `-13`), of which six were concurrent at peak. |
+| **1** | One Workflow, 17 agents, 50 402 277 ms, 2 884 281 tokens, 2 543 tool calls; phases Preflight → Foundation → Lanes → Version → Review → Closure | **CONFIRMED against the workflow record (`runId wf_3516060a-756`), which is NOT a repository artifact — flagged 2026-08-11 so this row is not read as independently checked.** No workflow record, transcript or journal for that runId exists under the repo tree; the only in-repo traces are the eight worktree branch names stamped in event `repo.branch` fields and `.claude/worktrees/wf_3516060a-756-{6..9}`. The ms/token/tool-call figures and the phase titles are **unverifiable from repository state**; the 8-worktree refinement below **is** independently corroborated by the event log. The same caveat applies to observation 2's per-transcript timings and to §7.3's SECURITY WARNING text. **One refinement:** 19 agent transcripts exist for 17 labels — the two extra are the discarded Epic 2 attempts (§2). And the Lanes phase ran **8** worktree agents across the run (`wf_3516060a-756-6` … `-13`), of which six were concurrent at peak. |
 | **2** | Stopped and resumed twice; (a) run 1 halted at epic-2 on a "blocked" that was a turn-budget expiry, (b) run 2 stopped ~25 min into epic-2 to insert epic-1b | **CONFIRMED.** Three epic-2 transcripts: 23:53:37→00:04:37 (11 min), 00:05:58→00:30:55 (**25 min**), 00:32:05→01:05:08. The incident `verify-full-outlasts-turn-budget` (45 min) was emitted at 00:12:07 by the second. `epic-1b-naming-sweep` is Order **2.5** on the kanban, inserted mid-run. |
-| **3** | Concurrency too aggressive; suspected consequences: epic-4-frc never got an exit code, epic-7 refused at preflight, epic-5 deleted its own 27 G target dir | **CONFIRMED in outcome, with two attributions corrected.** Epic 4-frc's missing exit code is attributed by its own receipt to **turn-budget expiry mid-`root-full`**, not directly to contention (contention lengthened the build; the receipt does not claim causation). Epic 5's target-dir deletion is recorded but the **27 G figure appears nowhere in the log** — the recorded figures are a 60 G `target/` in the primary checkout and a 13 G warm cache; the log cannot support 27 G. Epic 7's refusal is confirmed verbatim. **Quantified as asked: 9 of 21 authored incidents (43 %) and 32 of 44 total (73 %) name disk, load, contention, or a gate that did not return.** |
+| **3** | Concurrency too aggressive; suspected consequences: epic-4-frc never got an exit code, epic-7 refused at preflight, epic-5 deleted its own 27 G target dir | **CONFIRMED in outcome, with two attributions corrected.** Epic 4-frc's missing exit code is attributed by its own receipt to **turn-budget expiry mid-`root-full`**, not directly to contention (contention lengthened the build; the receipt does not claim causation). ~~Epic 5's target-dir deletion is recorded but the **27 G figure appears nowhere in the log** — the recorded figures are a 60 G `target/` in the primary checkout and a 13 G warm cache; the log cannot support 27 G.~~ **THIS "CORRECTION" WAS ITSELF WRONG AND IS WITHDRAWN (2026-08-11). The orchestrator was right.** The `verified_by` behind it was `grep -rn '27G\|27 G' … -> no match` written **without `-E`**, so `\|` was a literal in a basic regular expression and the search could not match. Re-run correctly, `grep -rnE '27G\|27 G' docs/release/SD-29-corpus-wide-catch-up-lanes/progress.md` returns **three** hits: `:2648` — *"this cycle deleted its **own** 27G `CARGO_TARGET_DIR` and re-ran the gate cold from 87%"* (`epic-5-monster-pilot`'s own receipt, i.e. the exact claim); `:1161` — *"two concurrent agents each holding a 27 GB `CARGO_TARGET_DIR`"*; `:1348` — *"Releasing this cycle's own 27G build"*. Physically corroborated on the box today: `du -sh /home/ubuntu/cargo-targets/sd29-e2-prelaunch` → **27G**, still resident. **This is the defect class §3.1 and §7.4 congratulate this document for finding — a classifier error of exactly the class the classifier measures — committed here, uncaught, and used to score an accurate self-report as an "attribution corrected."** It deleted the most concrete number in the concurrency indictment. Epic 7's refusal is confirmed verbatim. **Quantified as asked: 9 of 21 authored incidents (43 %) and 32 of 44 total (73 %) name disk, load, contention, or a gate that did not return.** |
 | **4** | Harness defect recurred "at least 3 times" | **CORRECTED UPWARD — 6.** The event log carries **2** `wrong-base-worktree` incidents; the cycle receipts record the reset for **six** cycles / six worktrees (`-7` spell, `-8` feat-race-class, `-9` monster pilot, `-10` race-trait pilot, `-12` race-trait extend, `-13` monster extend). The event log **under-records its own second-largest orchestration defect by 3×.** `7d9f1c4f` is confirmed as `origin/main`'s tip (`Merge pull request #23`, 2026-06-28). The downstream `unmerged-parent-card` effect is confirmed exactly as described. |
-| **5** | DoD item 8 was **blind for the entire bundle**; on-screen driving caught nothing | **CONTRADICTED BY THE LOG. This is the largest correction in this document.** On-screen driving was performed and was load-bearing in **three** cycles and it caught **three defects, being the sole mechanism in all three**: the `%1` raw-token leak (`sd29-e5-monster-pilot`, correction, `driver.sh screenshot`), the Spell Catalog chip row (`sd29-e4-spell`, `near_miss`, `escaped: true`, **already reached real users**), and the Tauri wire-contract rename (`epic-1b-naming-sweep`, live Developer panel read). `epic-4-proven-spell` committed **two 1920×1200 PNGs** to `docs/release/.../artifacts/` (`git ls-tree -l origin/tranche/9 …` → 243 444 and 242 196 bytes). Item 8 was recorded as an unperformable shortfall in exactly **two** cycles (equip, feat-race-class), and `sd29-e10-review` corrected their generalisation *"unsatisfiable for every player-visible lane in this bundle"* to **"It is satisfiable and was satisfied."** The refusal to substitute the passing desktop test stage is confirmed and is to the agents' credit. **What the bundle therefore cannot claim** is narrower than the observation states but is still real: the *equipment* and *feat* catalog widenings — 769 and 83 player-visible rows — have **no on-screen evidence**, and by this program's own §3.2 ruling they are not verified as reaching the player. |
+| **5** | DoD item 8 was **blind for the entire bundle**; on-screen driving caught nothing | **CONTRADICTED BY THE LOG. This is the largest correction in this document.** On-screen driving was performed and was load-bearing in **three** cycles and it caught **three defects, being the sole mechanism in all three**: the `%1` raw-token leak (`sd29-e5-monster-pilot`, correction, `driver.sh screenshot`), the Spell Catalog chip row (`sd29-e4-spell`, `near_miss`, `escaped: true`, **already reached real users**), and the Tauri wire-contract rename (`epic-1b-naming-sweep`, live Developer panel read). `epic-4-proven-spell` committed **two 1920×1200 PNGs** to `docs/release/.../artifacts/` (`git ls-tree -l origin/tranche/9 …` → 243 444 and 242 196 bytes). Item 8 was recorded as an unperformable shortfall in **three** cycles (**corrected 2026-08-11** from "exactly two": equip `progress.md:1202`, feat-race-class `:1854`, **and `epic-9-version` `:3292`**, which the first revision mis-filed as a "real N/A" — see §3.2's correction; all three cite box conditions, not a tooling impossibility), and `sd29-e10-review` corrected their generalisation *"unsatisfiable for every player-visible lane in this bundle"* to **"It is satisfiable and was satisfied."** The refusal to substitute the passing desktop test stage is confirmed and is to the agents' credit. **What the bundle therefore cannot claim** is narrower than the observation states but is still real: the *equipment* and *feat* catalog widenings — 769 and 83 player-visible rows — have **no on-screen evidence**, and by this program's own §3.2 ruling they are not verified as reaching the player. |
 | **5b** | The diagnosis: "the binary exits before a window appears", reproduced 3× with three env overrides | **PARTLY CORRECTED by the log's own later work.** `sd29-e4-frc` (07:38) refined it: the GTK toplevel **is** created and mapped (`xdotool search --name Codex` finds it, `xwininfo` reports `Map State: IsViewable`, 1600×1000). Two real defects: `driver.sh` searches for `WM_NAME` `Codex` while the actual name is `codex-desktop`; and `import -window <id>` returns `Resource temporarily unavailable` / a 377-byte blank PNG while a root capture at the same moment succeeds. *"So the remedy is not 'wait longer' or 'unload the box' as the prior cycle guessed."* |
 | **6** | epic-6 found its own pilot book wrong; `inner_sea_intrigue` carries zero genuine race traits, all 9 units are construct-companion abilities from `isi_abilities_race_companion.lst` | **CONFIRMED verbatim**, including the file name and the mechanism (`file_kind()` types by basename; `_abilities_race` was tested before the companion/familiar markers). One addition the observation omits: the same cycle found a *second*, larger figure defect — grounded race traits **44 → 21**, because §9.3's "name-coincidence false positives" were 23, not 4, with 19 of them **intra-`core_essentials` cross-race** collisions the doc never enumerated. |
 | **7** | Harness reported a SECURITY WARNING on epic-2-prelaunch with no reason given | **CONFIRMED as reported; inspection found nothing improper.** See §7.3. |
@@ -709,8 +845,11 @@ otherwise it will keep costing an inspection like this one and keep ending here.
 2. **"It reaches the player" is verified on screen or not at all.** The share fell from 14 % to under
    6 %; the unique competence did not move. Three defects this tranche were invisible to every test in
    the repo, and one of them had already shipped — because the frontend test's oracle was a **copy of
-   the constant under test.**
-3. **Concurrency is a resource decision and it has a body count.** Six worktree agents on a two-core
+   the constant under test.** **And this bundle fails its own rule on 852 rows:** the 769 equipment
+   and 83 feat player-visible rows §1 lists as delivered have **no on-screen evidence at all** and are
+   therefore not verified as reaching the player. A rule stated in the summary and broken in the
+   deliverables is not a rule yet.
+3. **Concurrency is a resource decision and it has a body count.** Six worktree agents on a four-core
    box filled a disk; a preflight gate correctly refusing to run on that disk cost SD-29 an entire kind
    lane — 1,696 units, 0 grounded — because **nothing re-queued the card once the condition cleared.**
 4. **A card is done when its work is on the named branch, not when its receipt says so.** A chassis
@@ -729,7 +868,12 @@ oversight**, each with a receipt and a `deferral` event, and each is stated in
 
 ### 9.1 The companion lane — 1,696 units, 0 grounded, never started
 
-**State: READY, unclaimed, unblocked.** `epic-7-companion-lane-pilot` refused at Cycle-mechanics step
+**State at closure: `NOT-STARTED` (settled by `epic-11-closure` 2026-08-11, carried in
+`release-notes.md` §Known issues 1) — unclaimed, and its blocker has cleared.** *(Corrected
+2026-08-11: the first revision bolded "READY, unclaimed, unblocked," which was the state the epic-7
+agent deliberately left the card in **mid-run**, not the card's state at closure. `kanban.md` Order
+11 and 12 both read `NOT-STARTED`. The substance — nobody claimed it, nothing is blocking it now —
+is unchanged.)* `epic-7-companion-lane-pilot` refused at Cycle-mechanics step
 1c: `verify.sh --only preflight-disk` exit 1, **twice** (91 % used / 47 G free), with
 `reclaim.sh --apply` in between which correctly reclaimed ~1 MB. The agent left the card `READY`
 rather than parking it `IN-FLIGHT` under an agent that did no bounded work. Its dependent
@@ -797,12 +941,12 @@ toolkit surface. The DM Toolkit therefore does not land inside SD-29.
 
 | item | state |
 |---|---|
-| **Equipment and feat catalog widenings have no on-screen evidence** (769 + 83 player-visible rows) | §3.2's ruling applies: not verified as reaching the player. Cheapest possible successor task, blocked only on `driver.sh`'s capture defect. |
+| **Equipment and feat catalog widenings have no on-screen evidence** (769 + 83 = **852** player-visible rows) | §3.2's ruling applies: not verified as reaching the player. Cheapest possible successor task. **Corrected 2026-08-11 — it is NOT "blocked only on `driver.sh`'s capture defect."** That attribution is unevidenced and moves the blame off the run's own arrangement. Three sibling cycles drove and captured the app successfully with the same driver in the same bundle (`epic-5-monster-pilot` read the Allip row off a screenshot and caught the `%1` leak, `progress.md:2594-2604`; `epic-4-proven-spell` committed two 1920×1200 PNGs; `epic-1b` read the live Developer panel — and §2.4 credits `driver.sh screenshot` by name). `epic-4-equip`'s own receipt attributes its failure differently: *"the binary then exits before any window appears… Reproduced **three** times… The box was under **load average ~10** from a concurrent sibling agent's full verify throughout"* (`:1213-1222`). `driver.sh` has two real defects (§6.3) **and** the box was saturated; the receipts name the second, not the first. |
 | `class_feature` Tier-3 deferral, **15,472 units** | Deferred by `decisions.md §38.4` / `successor-forward-scope-register.md C1.3`; owned by SD-30's class_feature/archetype bundle. |
 | Spell-list tables for 6 books with a compiled rule set but no `spell_list` table | `ultimate_magic` (269 + 19 `.COPY=`), `ultimate_combat` (147), `core_essentials` (110 + 1), … The lane now starts from a correct **1,561**, not an inflated 1,754. |
-| `reconciliation` empty for **24 of 37** books | The inventory computes it only for the 13 its own `scope` field calls `in_scope`. **A missing `reconciliation` must not be read as "no delta."** Each lane derives its own. |
+| `reconciliation` empty for **23 of the 37** books | **Corrected 2026-08-11** from "24 of 37 … the 13 its own `scope` field calls `in_scope`" — both halves were off by one and they are arithmetic complements (37−23=14). Against the closure inventory: 24 of the **38** book entries have an empty `reconciliation`, but one of them is `beginner_box`, which is out of the 37; `corpus-shape-37-books.md §8`'s own command (`b['id']!='beginner_box' and not b['reconciliation']`) now returns **23**. Exactly **14** books carry `scope=='in_scope'`, and `{scope==in_scope}` is set-identical to `{non-empty reconciliation}` (both 14, symmetric difference empty). **A missing `reconciliation` must not be read as "no delta."** Each lane derives its own. |
 | Three real PI leaks in committed Pipeline B tables | Owned by the bundles that landed them (SD-27/SD-28), not by Epic 3. |
-| 531 tagged `tests/*.rs` filenames; 174 tagged `docs/` paths | Deliberately out of scope — the documented exclusion class (SD-25 1.1). Renaming them obliges rewriting cited prose tree-wide. |
+| **514** tagged `tests/*.rs` filenames; `docs/` figure withdrawn | **Corrected 2026-08-11.** (a) 531 is the **pre-bundle** figure and was published as live forward work at closure — Epic 1b's own naming sweep removed 17 of them *during this bundle*. `progress.md:631` publishes the derivation; running it across refs gives **531 at `a1295856`** (the tranche cut) and **514 at `ac217788`, at `origin/tranche/9`, and at `HEAD`** (`git ls-tree -r --name-only <ref> -- tests/ \| grep -Ec '(^\|/)[a-z_]*(sd\|ge)[-_]?[0-9]{2}'`). (b) The "174 tagged `docs/` paths" figure is **unsourced and does not reproduce** — it appears nowhere in the SD-29 package (`grep -rn '\b174\b' docs/release/SD-29-corpus-wide-catch-up-lanes/*.md` → no match) and no plausible re-derivation lands on it; the analogous command over `docs/` gives 866 at the cut and 887 at closure under one regex and 169/187 under a narrower one. **Withdrawn rather than restated:** a successor must derive its own with a stated command. Both remain deliberately out of scope — the documented exclusion class (SD-25 1.1); renaming them obliges rewriting cited prose tree-wide. |
 | `apps/desktop/src/sd16/`, `src/sd21/` directory names | Pre-existing from SD-16/SD-21; `releaseChecks/` is the naming precedent. Revisit: whichever bundle next owns `apps/desktop/src/` structure. |
-| Duplicate `buildVersionTriple.test.ts` (`src/release/` 120 lines vs `src/releaseChecks/` 51) | Dedupe deferred past Epic 10; the `release/` copy is the fuller original. |
+| Duplicate `buildVersionTriple.test.ts` (`src/release/` **121** lines vs `src/releaseChecks/` 51) | Dedupe deferred past Epic 10; the `release/` copy is the fuller original. (**Corrected 2026-08-11** from 120 — copied verbatim from `progress.md:3288` rather than re-measured; `wc -l` says 121.) |
 | `BASELINE_ROOT_LIB_TESTS` 1604 vs measured 1615 | Headroom, not drift. Flagged so a successor re-pins deliberately in its own `--show-actuals` commit. |
