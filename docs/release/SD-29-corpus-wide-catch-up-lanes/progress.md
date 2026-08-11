@@ -2689,3 +2689,161 @@ each cited line from the live file), and `v06_corpus_trap_report -- --audit`.
 3 × `correction` (the natural-attack denominator; the hard-coded `wiring_class`; the raw `%1`
 placeholder reaching the screen), 2 × `deferral` (natural-attack dice for 13 attacks; the book's 3
 `class` units), plus `verify.sh`'s auto-emitted `verification` events.
+
+---
+
+## Cycle — `epic-5-monster-lane-extend` (SD29-E5-F2-001)
+
+**Actor:** `sd29-e5-monster-extend` · **Date:** 2026-08-11 · **Branch:** `tranche/9`
+(cycle work on the dispatch worktree branch `worktree-wf_3516060a-756-13`)
+**Kanban status left at:** `PARTIAL — pilot chassis integrated onto tranche/9, corpus-wide ingest
+re-shaped into per-book cycles (deferral emitted)`
+
+### What this cycle actually found
+
+The card could not start as written. **The Epic 5 pilot's chassis was not on `tranche/9`.** The
+pilot's own receipt said so in its followups — *"the orchestrator must fast-forward/merge it"* — and
+nothing had. Derived, not assumed:
+
+```
+git log --oneline --all --grep='Epic 5 pilot'      -> 9d4031de, reachable only from
+                                                      origin/worktree-wf_3516060a-756-9
+grep -rn 'monster_ability' --include=*.rs -l .     -> src/bin/v06_work_inventory.rs only
+```
+
+On `tranche/9` there was no `rules_tables::bonus_bestiary`, no `RuleSetId::BonusBestiary`, no
+`monster_ability` in `CORPUS_KIND_NAMES`, no reach claims, no frontend path, and none of the 31
+corpus records. An "extend" against an absent chassis is not an extend; re-authoring it would have
+clobbered the pilot's live work, which "Stop vs. press on" names explicitly. So the integration
+became this cycle's first act.
+
+`git merge origin/worktree-wf_3516060a-756-9` → **3 conflicts, all in generated or append-only
+documents** (`kanban.md`, `progress.md`, `docs/work-inventory.json`); **zero code conflicts**, even
+though `epic-4-*` and `epic-6-*` had moved `reach_gate.rs`, `v06_work_inventory.rs` and
+`rules_tables/mod.rs` since the pilot's branch point at 579d5941. Resolved by union on the two
+documents (each side's own rows/receipts kept verbatim, the extend row taking the pilot's
+cost-bearing text) and by regenerating `work-inventory.json` rather than picking a side of it.
+
+### Figures, each re-derived this cycle
+
+Every number below came from a command run in this cycle, not from the brief.
+
+**The package's corpus-wide denominators are correct.** Re-derived over the freshly regenerated
+`docs/work-inventory.json`, counting `not-ingested` + `not-started` across every book that is not
+`out_of_scope`:
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+tm=ta=0
+for b in d['books']:
+    if b['scope']=='out_of_scope': continue
+    m=b['kinds'].get('monster',{}).get('by_status',{}); a=b['kinds'].get('monster_ability',{}).get('by_status',{})
+    tm+=m.get('not-ingested',0)+m.get('not-started',0); ta+=a.get('not-ingested',0)+a.get('not-started',0)
+print(tm,ta)"
+```
+
+→ **1,210 monster + 3,090 monster_ability**, which is exactly the brief's `1,224 + 3,107` **minus
+the pilot's 31**. Running the same command against the pre-merge tree reproduces 1,224 + 3,107. The
+package figure is confirmed, not corrected.
+
+The residual, per book (23 books, 4,300 units):
+
+| Book | monster | monster_ability |
+|---|---|---|
+| `bestiary` | 284 | 523 |
+| `bestiary_2` | 316 | 466 |
+| `bestiary_3` | 261 | 40 |
+| `bestiary_4` | 220 | 768 |
+| `inner_sea_bestiary` | 40 | 190 |
+| `inner_sea_gods` | 39 | 161 |
+| `ultimate_psionics` | 21 | 79 |
+| `inner_sea_world_guide` | 14 | 30 |
+| `book_of_the_damned_volume_1` | 5 | 36 |
+| `book_of_the_damned_volume_2` | 4 | 17 |
+| `horror_adventures` | 3 | 71 |
+| `monster_codex` | 2 | 3 |
+| `occult_adventures` | 1 | 3 |
+| `core_essentials` | 0 | 380 |
+| `advanced_class_guide` | 0 | 106 |
+| `pathfinder_unchained` | 0 | 72 |
+| `ultimate_wilderness` | 0 | 52 |
+| `bestiary_5` | 0 | 39 |
+| `mythic_adventures` | 0 | 21 |
+| `ultimate_magic` | 0 | 13 |
+| `bestiary_6` | 0 | 13 |
+| `ultimate_intrigue` | 0 | 6 |
+| `advanced_race_guide` | 0 | 1 |
+
+**The brief's zero-monster warning is confirmed by this table, and it is broader than stated.**
+`bestiary_5` and `bestiary_6` carry 0 monsters, `monster_codex` carries 2 — and *ten* of the 23
+remaining books are `monster_ability`-only. A per-monster cycle against any of those ten is the
+"derived shape contradicts the recorded ingest subtype" hard stop, not a thing to force. The
+per-book dispatch below is keyed on this column, which is why it is published here.
+
+**A raw `.lst` line count is not the unit count, and the gap is a predicate difference, not an
+error.** Worked on `inner_sea_bestiary`, the densest untouched true monster book:
+
+```
+awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' isb_races.lst | wc -l                       -> 45
+awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0 {print $1}' isb_races.lst | grep -c '\.MOD\|\.COPY' -> 5
+```
+
+45 − 5 = **40**, which reconciles exactly with `work-inventory.json`'s 40. The same on
+`isb_abilities_race.lst` gives 244 raw − 50 `.MOD` − 1 `VISIBLE:NO` = 193 against the inventory's
+190; the residual 3 are the inventory's `duplicate_identity` / `internal_namespace` trap filters. A
+cycle that transcribes 45 and 244 into a table would ship 54 phantom units. Stated here so the
+per-book cycles count under the inventory's predicate and say so.
+
+### Why the ingest is re-shaped into per-book cycles rather than forced into this one
+
+This is recorded as a `deferral`, with the reason, not left as an unexplained gap.
+
+`loop-instruction.md`'s Epic ordering already calls this card a set of **"cycle-batches"**, plural:
+*"remaining books' cycle-batches dispatch only after the pilot lands and its per-unit cost is
+recorded."* The pilot's own receipt says the same thing from the other side — **do not extrapolate a
+per-unit rate**, because essentially all of its cost was the once-per-*kind* chassis.
+
+What the pilot's receipt does not say, and what this cycle derived, is that a real **once-per-BOOK**
+cost survives the chassis, and it is not small:
+
+1. a new `RuleSetId` variant, plus arms in `corpus_dir_for` and `rule_set_id` (both exhaustive
+   matches — omitting either fails the whole root-crate bin set to compile, by design);
+2. a `Kind::Monster` / `Kind::MonsterAbility` classifier arm in `v06_work_inventory.rs`, which today
+   is literally `if engine_book == "bonus_bestiary"`;
+3. a book wire code in `monster_catalog.rs` (`BOOK_B1`, `BOOK_BB`, …) and its frontend label;
+4. two reach claims;
+5. — and the expensive one — **adding the `RuleSetId` flips that book's `scope` from `future_state`
+   to `in_scope`**, because `v06_work_inventory.rs`'s scope is derived as
+   `if rule_set_for(id).is_some() { "in_scope" }`. That moves **every other kind in the book** from
+   `not-started` to `not-ingested` in one step. For `bestiary_4` that is 768 abilities *plus* its
+   `class_feature`, `companion`, `equipment`, `equipment_modifier`, `race_trait` and `spell` rows all
+   changing status at once, and this repo's recorded failure mode for exactly that is
+   "a record-count change compiles clean but leaves other files' hardcoded assertions red."
+
+That blast radius is per-book and has to be swept per-book. Batching 23 of them blind into one cycle
+is how a tranche goes red for a day. The honest shape is one card per book, densest first
+(`bestiary`, `bestiary_2`, `bestiary_4`, `bestiary_3`, `inner_sea_bestiary`), each running the
+pilot's now-proven checklist. The chassis on the branch is generic; the blocker was integration,
+never design.
+
+### Definition of done
+
+| # | Item | State |
+|---|---|---|
+| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | see **Gate** below |
+| 2 | Reach claims for this card's families | **satisfied by the merge, not by absence** — `("bonus_bestiary","monsters")` → 14 and `("bonus_bestiary","monster_abilities")` → 17 now exist on `tranche/9` for the first time; the `reach` stage's matched-test count is non-zero (see Gate) |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | see **Gate** below |
+| 4 | `v06_work_inventory` regenerated; second run differs only in `generated_at` | **PASS.** Proven by a `json.load` diff between two consecutive runs: `generated_at differs: True`, `rest identical: True`. `bonus_bestiary` reads `scope: in_scope`, `monster` 14/14 `grounded`, `monster_ability` 17/17 `grounded` — the pilot's claim reproduced on this branch rather than transcribed |
+| 5 | Four-check wired-integration audit | inherited clean from the pilot; this cycle added no production code path |
+| 6 | Unsurfaced families carry an `OPEN_FINDINGS` entry | `beastiary1/race_traits` **stands**, and this receipt says why, as the item requires: it is upstream-blocked on `monster_codex/mc_abilities_race.lst`, and Monster Codex (2 monster + 3 monster_ability) was not ingested this cycle. `deferral` emitted naming the exact card that retires it |
+| 7 | Baseline movements are a separate commit | **none made.** `root-lib` measured **1615** against the recorded 1488 — the standing Epic 1 drift, left alone for Epic 9/10's `--show-actuals` commit |
+| 8 | On-screen verification | **not run, and not claimed.** This cycle surfaced no new family; the only player-visible families on the branch are the pilot's, already driven on screen under `RUN_DESKTOP_AGENT=sd29-e5-monster-pilot`. Each per-book successor cycle owns its own capture |
+
+### Gate
+
+`./scripts/verify.sh` (FULL, not `--quick`), run from a runner script that assigns `code=$?`
+immediately and writes it to a file — never through a pipe, which is the pilot's own recorded
+process finding.
+
