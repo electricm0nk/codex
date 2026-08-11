@@ -1759,10 +1759,25 @@ like a bigger obstacle than `shared_library_record_held_by_no_ingested_host`) ra
 | `core_essentials` (subrace files) | 48 | 0 | **0** | 48 | 0 |
 | `bestiary` (`b1_abilities_race.lst`) | 3 | 0 | **0** | 0 | 3 |
 
-Command, run against the PCGen source tree rather than any doc:
-`python3 scratchpad/shape.py isr_abilities_race.lst ha_abilities_race.lst ha_abilities_race_oa.lst aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst b1_abilities_race.lst`
-(the script classifies each row by `TYPE:`, `FACT:...|True`, `PREFACT:`/`PREABILITY:` exactly as
-`race_resolver::classify` does; its output is quoted verbatim in `progress.md`).
+Command, run against the PCGen source tree rather than any doc — and **checked in**, so a successor
+round re-derives this rather than trusting the table:
+
+```bash
+python3 scripts/classify_race_trait_rows.py \
+  isr_abilities_race.lst ha_abilities_race.lst ha_abilities_race_oa.lst \
+  aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst b1_abilities_race.lst
+```
+
+It mirrors `race_resolver::classify`'s predicates and precedence (`<Race> Racial Default` →
+`Default`; `FACT:<Race>_Replace<Trait>|True` → `Alternate`; a *positive* `PREFACT`/`PREABILITY` →
+`FlagGranted`; otherwise `Unclassified`) and `ingest_race_traits::parse_row`'s `.MOD` and
+in-scope-race filters. Its output is quoted verbatim in `progress.md`. **This began as a scratchpad
+one-off and was checked in mid-round after a sibling agent's write clobbered the scratchpad file this
+section had just cited** — an ephemeral path is not a citation, and the derivation that redirected a
+whole round is worth reproducing.
+
+**Run it on a candidate book before committing a round to it.** That single step is what `§44.4`
+skipped, and it costs seconds.
 
 So:
 
