@@ -4615,6 +4615,357 @@ recorded as the extend lane's first task in `decisions.md §43.5`.
 
 ---
 
+## Cycle SD29-E5-F2-002 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 1 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r1` · **Date:** 2026-08-11 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_9029acd8-6b0-5`)
+**Branch-point:** `b265b57c` · **Commit:** `4aa0fb4b`
+**Kanban status left at:** `PARTIAL — round 1 complete; monster_codex ingested, chassis made
+book-generic, 4,295 units remain. Card stays READY for round 2.`
+
+**This receipt does not claim the lane is done, and the numbers below say so.** Run 1 closed this
+bundle with the ingest never dispatched; the correction to that is an honest partial, not a second
+claimed completion.
+
+### 0. Worktree integrity — the predicted failure, hit again
+
+`ls docs/release/SD-29-corpus-wide-catch-up-lanes/` → **No such file or directory**;
+`git merge-base --is-ancestor origin/tranche/9 HEAD` → **false**. The worktree was created on
+`7d9f1c4f`, the same unrelated ancestor three prior cycles hit. Recovered before any other action
+with `git fetch origin && git reset --hard origin/tranche/9` → `b265b57c`. **Recovery was
+required.** `incident` emitted, `--recurrence-key wrong-base-worktree` — this is now the **fourth**
+recorded instance in this bundle and is a harness condition, not an agent error.
+
+### 1b. Every figure re-derived, command first, value second
+
+**The card's denominators are correct, and this cycle says so rather than transcribing them.** Over
+the freshly regenerated `docs/work-inventory.json`, counting `not-ingested` + `not-started` across
+every book that is not `out_of_scope`:
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+tm=ta=0
+for b in d['books']:
+    if b['scope']=='out_of_scope': continue
+    m=b['kinds'].get('monster',{}).get('by_status',{}); a=b['kinds'].get('monster_ability',{}).get('by_status',{})
+    tm+=m.get('not-ingested',0)+m.get('not-started',0); ta+=a.get('not-ingested',0)+a.get('not-started',0)
+print(tm,ta)"
+```
+
+* **Before this cycle:** `1210 3090` — exactly the card's figure, confirmed not corrected.
+* **After this cycle:** `1208 3087` → **4,295 remaining**. `units_ingested` = **5**.
+
+Monster Codex's own two counts, from the inventory's units rather than from a line count over the
+`.lst` (`awk` over `mc_races.lst` counts rows the inventory's trap filters exclude):
+
+```
+python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+print(sum(1 for u in d['units'] if u['book']=='monster_codex' and u['kind']=='monster'),
+      sum(1 for u in d['units'] if u['book']=='monster_codex' and u['kind']=='monster_ability'))"   -> 2 3
+```
+
+**2 monsters is the book's entire monster family**, not a sample of it — `loop-instruction.md`'s own
+corpus-shape note ("Monster Codex carries only 2") is confirmed against the corpus.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` → **PASS** at cycle start (81% used, 96G available) and
+again before the full gate (84% used, 82G). `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r1`,
+deleted at cycle end. No sibling-agent disk pressure this cycle; `nproc` 4, load average reached 7.3
+under a concurrent sibling.
+
+### 2. Why round 1 bought a chassis and a transcriber, not volume
+
+The pilot's receipt said its cost was the once-per-**kind** chassis and that the next book "pays
+only a transcriber pass." Both halves of that turned out to be **half true**, and this is the
+finding round 2 inherits:
+
+* **The transcriber did not exist.** §8 of the pilot's receipt describes a *throwaway* parser,
+  reproducible in prose only. The second book had nothing to run.
+* **The chassis was shaped around one book.** `MonsterStatBlock` and friends lived inside
+  `rules_tables::bonus_bestiary`, and `v06_work_inventory`, `gen_book_cache`, `monster_catalog` and
+  `reach_gate` each named that book by hand. A second book meant importing
+  `bonus_bestiary::MonsterStatBlock` to describe Monster Codex rows, and four hand-written arms.
+
+Both are fixed here, so round 2 pays for records:
+
+* **`scripts/transcribe_monster_tables.py`** — checked in, book-generic. Its unit set is
+  `docs/work-inventory.json`'s own units, so a book cannot ship phantom records. **Proven, not
+  asserted:** regenerating Bonus Bestiary reproduces the pilot's hand-audited table across **all 352
+  field lines, zero diffs** (`/tmp/.../bbcheck.py`, field-by-field compare). The pilot's
+  transcription is therefore reproducible for the first time.
+* **`rules_core::rules_tables::monster_chassis`** — the record types plus a `MONSTER_BOOKS`
+  registry. `bonus_bestiary` re-exports every type, so no path written against the pilot moved.
+  Every consumer now iterates the registry: the inventory classifier, the cache generator, the
+  catalog's wire mapping, the diagnostic's row, and the reach claims.
+
+### 3. What landed, and the four token shapes a second book found
+
+Each was found by *transcribing* a second book, which is the mechanism the loop instruction ranks
+first and which no test could have found:
+
+| Shape | Bonus Bestiary | Monster Codex | Consequence if unhandled |
+|---|---|---|---|
+| ability→monster link | `ABILITY:Special Ability` on the monster row | **the ability's own namespaced `KEY:`** (`Seru ~ Poison` → `Seru`) | all 3 abilities orphaned; a book whose abilities reach no screen |
+| size | `SIZE:M` | **`FACT:BaseSize|S`**, no `SIZE:` token at all | an empty size chip on every row |
+| natural-attack damage | field 4 is a die expression | **Seru's `Venom` spells it `Poison`** | the word "Poison" printed in the damage slot |
+| challenge rating | integers only | **`CR:1/2`** | `map_bonus_bestiary_monster`'s bare `str::parse::<f32>` **panics** on a correct corpus token |
+
+The CR case is the one that would have shipped as a crash: `parse_challenge_rating` now reads the
+corpus's `a/b` spelling, the table keeps the token verbatim, and
+`a_fractional_challenge_rating_reaches_the_wire_as_a_fraction` pins `1/2` → `0.5` on the wire.
+`every_bonus_bestiary_row_states_a_readable_challenge_rating` was replaced by
+`every_chassis_row_states_a_readable_challenge_rating`, which runs the **real** parser over every
+registered book — the old test asserted `cr.parse::<f32>().is_ok()`, a bar Monster Codex's correct
+row fails.
+
+Also corrected, deliberately: `data/corpus/monster_codex/LICENSE.json` is **merged, not clobbered**.
+The race-trait lane wrote it first with a sharper OGL citation (it cites the `.pcc`'s `ISOGL` line
+and `COPYRIGHT` block by line number). The generator now preserves a prior `license_declaration` and
+rewrites only the note, whose `records_processed` reads the real **10** on-disk records across three
+kinds. Without this, `the_screening_note_quotes_the_same_count_the_field_states` would have gone red
+on an artifact that had already been written.
+
+### 4. The per-book link-shape table — the figure round 2 actually needs
+
+Derived this cycle over every book with remaining units, by classifying each ability row against its
+book's monster rows (`/tmp/.../shape_all.py`; "row-named" = named by a monster's
+`ABILITY:Special Ability` token, "prefix" = owner is the first segment of its own `KEY:`, "ORPHAN" =
+neither). **An orphan ability cannot reach the catalog through its monster, so an orphan count is a
+reach-gate cost, not a transcription one.**
+
+| book | mon | abil | row-named | prefix | ORPHAN |
+|---|---|---|---|---|---|
+| `bestiary_4` | 220 | 768 | 0 | 616 | **152** |
+| `bestiary` | 330 | 523 | 375 | 2 | **146** |
+| `bestiary_2` | 316 | 466 | 398 | 4 | **64** |
+| `core_essentials` | 0 | 380 | 0 | 0 | **380** |
+| `bestiary_3` | 261 | 40 | 0 | 27 | **13** |
+| `inner_sea_bestiary` | 40 | 190 | 164 | 0 | **26** |
+| `inner_sea_gods` | 39 | 161 | 0 | 77 | **84** |
+| `advanced_class_guide` | 0 | 106 | 0 | 0 | **106** |
+| `ultimate_psionics` | 21 | 79 | 3 | 10 | **66** |
+| `horror_adventures` | 3 | 71 | 0 | 6 | **65** |
+| `pathfinder_unchained` | 0 | 72 | 0 | 0 | **72** |
+| `ultimate_wilderness` | 0 | 52 | 0 | 0 | **52** |
+| `inner_sea_world_guide` | 14 | 30 | 25 | 0 | **5** |
+| `book_of_the_damned_volume_1` | 5 | 36 | 36 | 0 | **0** |
+| `bestiary_5` | 0 | 39 | 0 | 0 | **39** |
+| `mythic_adventures` | 0 | 21 | 0 | 0 | **21** |
+| `book_of_the_damned_volume_2` | 4 | 17 | 17 | 0 | **0** |
+| `ultimate_magic` | 0 | 13 | 0 | 0 | **13** |
+| `bestiary_6` | 0 | 13 | 0 | 0 | **13** |
+| `ultimate_intrigue` | 0 | 6 | 0 | 0 | **6** |
+| `occult_adventures` | 1 | 3 | 0 | 0 | **3** |
+| `advanced_race_guide` | 0 | 1 | 0 | 0 | **1** |
+
+Three things this table settles that prose had not:
+
+1. **`book_of_the_damned_volume_1` (41 units) and `_volume_2` (21 units) are fully linked, zero
+   orphans** — they are the cheapest complete books in the lane and are the correct round-2 targets,
+   not the densest ones.
+2. **Ten books are `monster_ability`-only with a 100% orphan rate** (`core_essentials` 380,
+   `advanced_class_guide` 106, `pathfinder_unchained` 72, `ultimate_wilderness` 52, `bestiary_5` 39,
+   `mythic_adventures` 21, `ultimate_magic` 13, `bestiary_6` 13, `ultimate_intrigue` 6,
+   `advanced_race_guide` 1 = **703 units**). These have **no monster to hang on** in their own book.
+   A per-monster cycle against them is the recorded hard stop; they need a surface decision, not an
+   ingest.
+3. **`ultimate_psionics` looked like the obvious round-1 target and is not.** It is already
+   `in_scope` (no scope flip) with 100 units, but 66 of its 79 abilities are Astral Construct
+   MenuA/B/C selections carried in the `TYPE:` token — a **third** link shape the chassis does not
+   model. Ingesting them would have produced 66 records reaching no screen. `deferral` emitted.
+
+**A cost round 2 must still budget:** for a `future_state` book, adding its `RuleSetId` flips
+`scope` → `in_scope` and moves every other kind from `not-started` to `not-ingested` in one step.
+Monster Codex and Bonus Bestiary were both already `in_scope`, so **this cycle did not pay that and
+cannot report its size.** `inner_sea_bestiary`'s collateral is small (4 `race_trait` units, derived
+from its `books[]` entry); `bestiary_4`'s is not.
+
+### 5. Definition of done
+
+| # | Item | State |
+|---|---|---|
+| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | see **Gate** below |
+| 2 | Reach claims for this card's families — zero matched tests is a hard failure | **PASS, by claim not by absence.** Two new claims, `("monster_codex","monsters")` → **2 records** and `("monster_codex","monster_abilities")` → **3 records**, both `Reach::Surfaced` on `list_monster_catalog`, asserted per record against the files on disk by `monster_codex_monsters_and_abilities_reach_the_catalog_record_by_record`. `reach_gate` suite: **18 passed**, including `unsurfaced_families_are_exactly_the_recorded_findings`, which computes the unsurfaced set from live behaviour and would fail if these families reached nothing |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **PASS. `AUDIT_EXIT=0`**, 259 trap rows, 0 defects, *"every ingested record's citation agrees with the line it names."* Exit code captured by redirecting to a file and reading `$?` on the next statement — never through a pipe, which is the pilot's own recorded process finding |
+| 4 | `v06_work_inventory` regenerated; the book's units leave `not-started` | **PASS.** `monster_codex` `monster` **2/2 grounded**, `monster_ability` **3/3 grounded** (evidence tokens `monster_codex_monster_resolve_returned_a_real_stat_block` / `..._monster_ability_resolve_returned_a_real_record`, now formatted from the book id rather than hard-coded). `bonus_bestiary` unchanged at 14/14 + 17/17, which is the check that the registry rewrite did not move the pilot |
+| 5 | Four-check wired-integration audit | **Clean.** No stub tokens, no no-op handlers, no fixture-only data, no "would have" strings. The two places a placeholder could have shipped both serve `None` plus the reason: `Venom`'s absent dice, and the size/CR tokens read from their real corpus spellings rather than defaulted |
+| 6 | Unsurfaced families carry an `OPEN_FINDINGS` entry | **`OPEN_FINDINGS` unchanged, and nothing was owed** — both Monster Codex families reach the catalog. **Correction to this card's own DoD text:** it expects Epic 5's Monster Codex batch to retire `beastiary1/race_traits`. That entry was **already retired on 2026-08-11 by Epic 6's race-trait pilot** (`reach_gate.rs`'s own doc comment: *"retired 2026-08-11, SD-29 Epic 6 pilot"*). The entry standing under `monster_codex/race_traits` today is a different finding (`Oversized Goblin`, `TraitRole::Unclassified`) belonging to Epic 6, not to this lane. `correction` emitted with the command as `--verified-by` |
+| 7 | Baseline movements are a separate commit | **None made.** `scripts/verify-baselines.env` untouched; `root-lib` measured **1623** against the recorded baseline — the standing Epic-1 drift plus this cycle's 8 new tests, left for Epic 9/10's `--show-actuals` commit as the prior three cycles did |
+| 8 | On-screen verification for player-visible families | see **On screen** below |
+
+### 6. Retro events (`docs/retro/events/sd29-monster-r1.jsonl`)
+
+2 × `correction` (this package's DoD item 6 expectation about `beastiary1/race_traits`; this cycle's
+own first-draft transcriber reading `Racial Traits ~ Seru` as a natural attack and `Poison` as
+damage dice — caught before it reached a screen, by re-reading the row), 1 × `incident`
+(`wrong-base-worktree`, 4th instance), 2 × `deferral` (the remaining 22 books; `ultimate_psionics`'
+menu-linked abilities), plus `verify.sh`'s auto-emitted `verification` events.
+
+### Gate
+
+`./scripts/verify.sh` (FULL, not `--quick`), run from `gate.sh`, which assigns `code=$?` on the
+statement immediately after the command and writes it to a file — **never through a pipe**.
+
+**`VERIFY_EXIT=0`. `RESULT: PASS`. All 13 stages PASS.**
+
+| Stage | Result |
+|---|---|
+| preflight-disk | PASS (disk budget OK) |
+| pi-sweep | PASS (10 hits / 10 baseline rows) |
+| audit-selftest | PASS (28) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (**1623**) |
+| **root-full** | **PASS — 6181 passed across 543 suites, all 524 `tests/*.rs` suites executed** |
+| desktop | PASS (**423**) |
+| reach | PASS (**18**) — non-zero, and see DoD item 2 |
+| frontend-install | PASS |
+| frontend-test | PASS (98/98 files) |
+| frontend-typecheck | PASS (`tsc --noEmit` clean) |
+| clippy | PASS (root:54 desktop:7 warnings, 0 errors) |
+| class-dump | PASS (31/31 computing) |
+
+**`root-full` is green for the first time in four cycles.** The two
+`tests/v06_apg_acg_feat_catalog.rs` assertions that blocked `sd29-e6-racetrait-pilot`,
+`sd29-e6-racetrait-extend` and `epic-5-monster-lane-extend`'s own first attempt are gone —
+`epic-4-proven-feat-race-class` re-derived its pins, as that cycle's handoff item 1 asked. This
+cycle inherits a green branch rather than paying for that red a fourth time, and says so because
+the incident chain deserves an ending as much as it deserved a start.
+
+**The gate was run twice, and the receipt states why.** The first run (exit 0, table above) covered
+commits `4aa0fb4b`/`92f7abc3`/`897319f0`/`fc7482db`. The on-screen pass below then found a real
+defect, whose fix is commit `3cb9ead6`, so a second full gate was run against the final tree. A
+receipt that published the first run's green for a tree that no longer existed would be exactly the
+"verified something adjacent to what shipped" failure this program keeps paying for.
+
+**Gate run 2, on the final tree — `VERIFY_EXIT=1`, and the attribution is proven rather than
+asserted.** The **only** red stage is `preflight-disk`, the disk-budget check itself. Every
+content-bearing stage is green, at equal or better counts than run 1:
+
+| Stage | Run 2 |
+|---|---|
+| **preflight-disk** | **FAIL** — *"below the disk budget floor"* |
+| pi-sweep | PASS (10/10) |
+| audit-selftest | PASS (28) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (1623) |
+| root-full | PASS (**6181** across **543** suites, **all 524 `tests/*.rs` suites executed**) |
+| desktop | PASS (**424** — one more than run 1: the new grounding-note test) |
+| reach | PASS (18) |
+| frontend-install / frontend-test / frontend-typecheck | PASS / PASS (98/98) / PASS |
+| clippy | PASS (root:54 desktop:7, 0 errors) |
+| class-dump | PASS (31/31) |
+
+Log: `/tmp/codex-verify-hgjeuj`.
+
+`decisions.md` §39 forbids calling a red stage "environmental" without naming, by command, what did
+not execute. Here the proof is direct and this receipt does not ask anyone to take it on trust:
+
+* **Nothing failed to execute.** `root-full` reports *all 524 `tests/*.rs` suites executed* — the
+  `comm -23` check `root-full` runs on every invocation. 6181 tests ran and passed.
+* **The red stage asserts a property of the box, not of the tree.** `preflight-disk` builds nothing
+  and reads no source file; it reads `df`.
+* **The cause was measured and then removed.** `df -h /` read **92%** during the run, with this
+  cycle's own 27G `CARGO_TARGET_DIR` and a concurrent sibling cycle's on the same filesystem;
+  `scripts/reclaim.sh --apply` freed nothing further because every candidate was a live agent's
+  target dir. Deleting this cycle's own target dir at cycle end took the filesystem to **79% used,
+  103G available**, and re-running `./scripts/verify.sh --only preflight-disk` returns
+  **`PREFLIGHT_EXIT=0`, PASS**. The failure was this cycle's own build artifacts plus a sibling's,
+  and it is gone.
+
+So DoD item 1 is **satisfied on content and red on housekeeping**, and the receipt says exactly
+that rather than rounding it to a pass. `incident` emitted, `--recurrence-key
+disk-pressure-concurrent-agents`, `--used-percent 91`.
+
+### Merge to `tranche/9`
+
+`origin/tranche/9` had advanced by 9 commits (the race-trait lane's own round 1) while this cycle
+ran. Merged rather than rebased, per this checkout's shared-branch discipline.
+
+**Two conflicts, both in append-only or generated documents; zero code conflicts** — even though the
+sibling's `4d362e2e` rewrote 489 lines of `src/bin/v06_work_inventory.rs`, the same file this cycle
+made registry-driven. `progress.md` resolved by union (both receipts kept verbatim);
+`docs/work-inventory.json` regenerated rather than resolved by picking a side.
+
+**Re-derived after the merge rather than assumed**, by the §1b command: **monster 1,208 +
+monster_ability 3,087 = 4,295 remaining**, and `monster_codex` reads `monster` 2/2 + `monster_ability`
+3/3 `grounded`, `bonus_bestiary` unchanged at 14/14 + 17/17. Running the same command against
+`origin/tranche/9` *before* the merge returns **4,300** — so the sibling lane's landing did not move
+this lane's denominators, and the 5-unit delta is this cycle's.
+
+**Post-merge verification** (a third full gate was not run; what was run is stated exactly):
+desktop suite **425 passed**, `monster_chassis` **5 passed**,
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`AUDIT_EXIT=0`**, 259 trap rows, 0
+defects, exit code captured directly and never through a pipe.
+
+**Pushed to `origin/tranche/9` at `e57ec02d`.** PR #360 remains open and unmerged, as the card
+requires — the bundle is not done.
+
+### On screen — DoD item 8, and it caught a defect no test did
+
+`RUN_DESKTOP_AGENT=sd29-monster-r1` (unique to this cycle, per the SKILL's concurrent-agent rule;
+it hashed to `:84`, and a sibling cycle was live on its own display throughout).
+`driver.sh launch` → landing screen → *Browse Monster Catalog* → search.
+
+**What the screen confirms, on the captured images:**
+
+* The header reads ***"across Bestiary 1, Bonus Bestiary and Monster Codex — 62 monsters"*** — the
+  derived book list rendering correctly, and 62 = 46 + 14 + 2.
+* **`Seru`** — *Small Magical Beast · CR 3 · Speed 20 ft., fly 40 ft. · Monster Codex p.208 · Hit
+  dice Magical Beast:3*, `Bite 1d6 (corpus row)`, `Venom (no dice in the corpus)`, and both
+  abilities with facet, delivery and full rules text: *Poison — Special Attack (Ex)* and
+  *Spit Venom — Special Attack (Ex)*.
+* **`Sootwing Bat`** — *Tiny Undead · **CR 1/2** · Speed 5 ft., fly 40 ft. · Monster Codex p.88 ·
+  Hit dice Undead:2*, `Bite 1d3 (corpus row)`, *Disease — Special Attack (Su)*. **The fractional CR
+  round-trips to the screen as `1/2`**, which is the whole point of the parser change: the corpus
+  token → `0.5` on the wire → `1/2` rendered.
+  It also confirms `FACT:BaseSize|T` reaching the size chip, since this row carries no `SIZE:` token
+  at all.
+
+**The defect, found only by reading the words.** Seru's `Venom` row printed:
+
+> *"This monster's row names the attack with `ABILITY:Internal|AUTOMATIC|Venom` and the **Bonus
+> Bestiary** corpus carries no die expression for it at any hop."*
+
+Two false statements in one player-visible sentence, on a Monster Codex row: the wrong **book**, and
+a **token shape the row does not use** (Seru's attack is named by
+`NATURALATTACKS:Venom,Natural.Ranged.Touch.Weapon,*1,Poison`). A player reading it would look the
+creature up in the wrong book. Every test in the file passed, because no test read the sentence.
+
+The blast radius was the lane, not the book: the note hard-coded one book's name, so it would have
+been wrong for **all 22 remaining books**. Fixed in `3cb9ead6` — `book_display_name` is exhaustive
+over the chassis registry and panics on an unregistered book, and the note no longer asserts a token
+shape the table does not record. `a_grounding_note_never_names_another_books_corpus` pins it in both
+directions (every note names its own book; no note names a book it did not come from).
+**Re-driven after the fix**: the same row now reads *"…and the **Monster Codex** corpus carries no
+die expression for it at any hop."* `correction` emitted with the screenshot as `--verified-by`.
+
+This is the third time in this bundle that on-screen driving has been the *only* mechanism to catch
+a defect (the pilot's raw `%1` placeholder, its `RACESUBTYPE:` separator, and now this) — the
+tranche/7 retrospective's rank-3 finding reproducing itself exactly.
+
+### Disposition and handoff to round 2
+
+**The lane is NOT done and this receipt does not say it is.** `units_remaining` = **4,295**,
+re-derived by the command in §1b at cycle end. Round 2 starts from these, in this order:
+
+1. **`book_of_the_damned_volume_1` (41 units) and `_volume_2` (21 units)** — the only remaining
+   books with **zero** orphan abilities. Not the densest; the cheapest to finish *completely*, which
+   is what a reach claim needs.
+2. Then `inner_sea_world_guide` (44 units, 5 orphans), then `inner_sea_bestiary` (230 units, 26
+   orphans, and a scope flip whose collateral is only 4 `race_trait` units).
+3. **Do not shape `ultimate_psionics`, or any of the ten `monster_ability`-only books (703 units),
+   as a per-monster cycle.** They need a surface decision for abilities that no monster row owns.
+4. Each new book costs: one line in `scripts/transcribe_monster_tables.py`'s `BOOKS`, one row in
+   `monster_chassis::MONSTER_BOOKS`, one row in `gen_book_cache`'s `MONSTER_BOOK_SPECS`, a wire code
+   + display name in `monster_catalog.rs`, two `reach_gate` match arms, one diagnostic row, one
+   frontend label, and — for a `future_state` book only — a `RuleSetId` and the scope-flip sweep.
+5. **The dispatch worktree will land on `7d9f1c4f` again.** Four instances now. `git fetch origin &&
+   git reset --hard origin/tranche/9` before anything else.
+---
+
 ## Cycle — epic-6-race-trait-lane-extend, ROUND 1 (SD29-E6-F2-002)
 
 **Card:** `epic-6-race-trait-lane-extend` (Order 10), reopened by `epic-12-reopen` per

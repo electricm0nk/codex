@@ -258,16 +258,24 @@ fn acg_counts() -> BTreeMap<String, u32> {
     counts
 }
 
-/// Bonus Bestiary's two record families, read from its own live tables (SD-29
-/// Epic 5). `monster_abilities` is the first time this panel has ever reported
-/// that kind -- Bestiary 1 ingests monsters only.
-fn bonus_bestiary_counts() -> BTreeMap<String, u32> {
-    use codex::rules_core::rules_tables::bonus_bestiary;
+/// One chassis book's two record families, read from its own live tables
+/// (SD-29 Epic 5). `monster_abilities` is a kind this panel first reported
+/// with the Bonus Bestiary pilot -- Bestiary 1 ingests monsters only.
+///
+/// Read through `monster_chassis::monster_book` rather than from a named
+/// module, so a book registered in the chassis but forgotten here fails on
+/// its own row instead of reporting silently absent. The panel's own
+/// fail-closed test already treats an unreported book as an un-ingested one.
+fn chassis_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
+    use codex::rules_core::rules_tables::monster_chassis;
+    let table = monster_chassis::monster_book(corpus_book).unwrap_or_else(|| {
+        panic!("{corpus_book} is not registered in monster_chassis::MONSTER_BOOKS")
+    });
     let mut counts = BTreeMap::new();
-    counts.insert("monsters".to_string(), bonus_bestiary::monsters().len() as u32);
+    counts.insert("monsters".to_string(), table.monsters.len() as u32);
     counts.insert(
         "monster_abilities".to_string(),
-        bonus_bestiary::monster_abilities().len() as u32,
+        table.monster_abilities.len() as u32,
     );
     counts
 }
@@ -485,7 +493,13 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         book_status(
             "bonus_bestiary",
             "src/rules_core/rules_tables/bonus_bestiary",
-            bonus_bestiary_counts(),
+            chassis_book_counts("bonus_bestiary"),
+            &races,
+        ),
+        book_status(
+            "monster_codex",
+            "src/rules_core/rules_tables/monster_codex",
+            chassis_book_counts("monster_codex"),
             &races,
         ),
         book_status(
@@ -619,6 +633,8 @@ mod tests {
                 // SD-29 Epic 5 -- placed next to the other bestiary rather
                 // than appended, so the panel reads in book-family order.
                 "bonus_bestiary",
+                // SD-29 Epic 5 extend round 1, for the same reason.
+                "monster_codex",
                 "advanced_race_guide",
                 "pathfinder_unchained",
                 "ultimate_campaign",

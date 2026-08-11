@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T19:42:15Z",
+  "data": {
+    "ability_keys": [
+      "monster_codex:monster_ability:bat_sootwing_disease"
+    ],
+    "challenge_rating": "1/2",
+    "corpus_key": "Bat (Sootwing)",
+    "external_ability_refs": [],
+    "key": "monster_codex:monster:bat_sootwing",
+    "monster_class": "Undead:2",
+    "name": "Sootwing Bat",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "T",
+    "source_page": "p.88",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races.lst",
+    "sha256": "80f24ceace9f3ad0ac120a959781688b5e9fd072a258b48b1638f79a1cde8800",
+    "line": 6,
+    "record_key": "Bat (Sootwing)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

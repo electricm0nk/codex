@@ -19,6 +19,8 @@ pub mod crb;
 pub mod equipment_gap_tables;
 pub mod feat_gap_tables;
 pub mod feats_all;
+pub mod monster_chassis;
+pub mod monster_codex;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
 pub mod ultimate_equipment;
@@ -55,22 +57,16 @@ pub enum RuleSetId {
     /// Bonus Bestiary. SD-29 Epic 5 pilot -- first book to ingest the merged
     /// `monster` + `monster_ability` chassis (`corpus-work-channels.md §9.2`).
     BonusBestiary,
-    /// Monster Codex. SD-29 Epic 6 pilot -- the race-trait lane
-    /// (`decisions.md §43`).
+    /// Monster Codex. SD-29 Epic 6 pilot (race-trait lane, `decisions.md §43`)
+    /// and Epic 5's second monster book (`rules_tables::monster_codex`, 2
+    /// monsters + 3 monster abilities).
     ///
-    /// **The first variant with no `rules_tables/<book>/` module of its own,
-    /// and that is a property of the kind, not an omission.** A race trait is
-    /// never a compiled table: `race_resolver` reads
-    /// `data/corpus/<book>/race_trait/` off disk at runtime, because
-    /// `decisions.md §24` rules out the formula interpreter a compiled table
-    /// would need. So "the engine has compiled this book" and "the engine
-    /// serves this book's content" come apart here for the first time, and this
-    /// enum tracks the second — which is what its one real consumer,
-    /// `v06_work_inventory`'s `not-started` verdict ("the book has no compiled
-    /// rule set at all; nothing about this unit has been attempted"), is
-    /// actually asking. Withholding the variant would report a book whose
-    /// records a player can select as untouched, which is the exact defect
-    /// `COMPILED_RULE_SETS`' own doc comment records ARG and PU suffering for
-    /// eleven days.
+    /// Its `race_trait` records are still served off disk from
+    /// `data/corpus/monster_codex/race_trait/` rather than from a compiled
+    /// table: `decisions.md §24` rules out the formula interpreter a compiled
+    /// race-trait table would need. So this book is the one place where the two
+    /// halves of "the engine has compiled this book" are visibly different
+    /// kinds of thing -- a compiled monster table and a disk-served race-trait
+    /// family -- and `COMPILED_RULE_SETS` answers for both.
     MonsterCodex,
 }
