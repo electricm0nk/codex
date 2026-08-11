@@ -113,6 +113,39 @@ run_case 'path tag in grand-epic file'     1 apps/desktop/src-tauri/src/ge08_wor
 run_case 'tests/ citation in doc comment'  0 src/gen.rs               '/// Grounded by tests/sd13_fighter_level9_level10_progression.rs.'
 run_case 'tests/ citation string literal'  0 src/gen.rs               'const T: &str = "tests/ge06_pilot_input_contract.rs";'
 run_case 'tests/ path is not a path tag'   0 tests/sd13_progression.rs 'fn t() {}'
+
+# --- Removals: deleting a tagged identifier is the CURE, not the disease. ----
+# The script's own header says it "flags bundle identifiers newly introduced by
+# the cycle". A rename sweep's diff necessarily carries the old tagged name on
+# its `-` lines, and scanning the whole diff flagged exactly that — the gate
+# failed the one cycle whose entire purpose was removing the tags.
+remove_case() {
+  local name="$1" expected="$2" file="$3" before="$4" after="$5"
+  local dir rc
+  dir="$(mktemp -d)"
+  (
+    cd "$dir" || exit 1
+    git init -q -b base; git config user.email t@t.invalid; git config user.name t
+    mkdir -p "$(dirname "$file")"
+    printf 'pub fn ok() {}\n' > src/lib.rs
+    printf '%s\n' "$before" > "$file"
+    git add -A; git commit -qm base; git checkout -qb work
+    printf '%s\n' "$after" > "$file"
+    git add -A; git commit -qm work
+  ) >/dev/null 2>&1
+  ( cd "$dir" && BASE_BRANCH=base bash "$AUDIT" ) >/dev/null 2>&1
+  rc=$?
+  rm -rf "$dir"
+  if [ "$rc" -eq "$expected" ]; then
+    echo "  PASS  $name (exit $rc)"; PASSED=$((PASSED + 1))
+  else
+    echo "  FAIL  $name (expected exit $expected, got $rc)"; FAILED=$((FAILED + 1))
+  fi
+}
+remove_case 'renaming a tagged fn away is clean' 0 src/gen.rs \
+  'pub fn seeded_sd13_e1_f1_current_truth() {}' 'pub fn seeded_current_truth() {}'
+remove_case 'renaming a tagged const away is clean' 0 src/gen.rs \
+  'const GE06_BASE_ARMOR_CLASS: i16 = 16;' 'const BASE_ARMOR_CLASS: i16 = 16;'
 # Doc-style bundle slugs are the normal way source comments cite this bundle's
 # release package; flagging them would make the gate unusable.
 run_case 'doc slug SD-29 in a comment'     0 src/gen.rs               '// See docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md'

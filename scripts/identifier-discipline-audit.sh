@@ -100,7 +100,16 @@ SHIPPING_PATHSPEC=(
 # them is a gate every cycle learns to ignore.
 strip_test_citations() { sed -E 's#\btests/[A-Za-z0-9_./-]*##g'; }
 
+# ADDED lines only. This script's own header says it flags identifiers "newly
+# introduced by the cycle"; a `-` line is a tag being REMOVED, which is the cure,
+# not the disease. Scanning the whole diff made the gate fail the one cycle whose
+# entire purpose was deleting tags (SD-29 `epic-1b-naming-sweep`, 2026-08-11) —
+# every rename it landed reappeared as a violation on its own `-` lines. `+++`
+# file headers are dropped here; path tags get their own check below.
+added_lines_only() { grep -E '^\+' | grep -vE '^\+\+\+'; }
+
 if git diff --unified=0 "${BASE_BRANCH}...HEAD" -- "${SHIPPING_PATHSPEC[@]}" \
+    | added_lines_only \
     | strip_test_citations \
     | grep -nE "$TAG_RE"; then
   echo >&2
