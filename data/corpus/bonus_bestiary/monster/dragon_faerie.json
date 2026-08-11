@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T07:29:51Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:faerie_dragon_breath_weapon"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Dragon (Faerie)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Immunity to Paralysis",
+      "Immunity to Sleep"
+    ],
+    "key": "bonus_bestiary:monster:dragon_faerie",
+    "monster_class": "Faerie Dragon:3",
+    "name": "Dragon (Faerie)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Dragon",
+    "size": "T",
+    "source_page": "p.9",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 12,
+    "record_key": "Dragon (Faerie)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:verbatim_corpus_token"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T07:29:51Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1",
+    "corpus_key": "Nixie",
+    "external_ability_refs": [
+      "Wild Empathy"
+    ],
+    "key": "bonus_bestiary:monster:nixie",
+    "monster_class": "Fey:2",
+    "name": "Nixie",
+    "natural_attacks": [],
+    "race_subtype": "Aquatic",
+    "race_type": "Fey",
+    "size": "S",
+    "source_page": "p.15",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 18,
+    "record_key": "Nixie"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:verbatim_corpus_token"
+  ]
+}

@@ -873,14 +873,231 @@ fn gen_advanced_race_guide() {
     println!("  LICENSE.json written to {}", license_path.display());
 }
 
+/// The Bonus Bestiary corpus cache -- SD-29 Epic 5's pilot, and the first
+/// `monster_ability` records this repo has ever written to disk.
+///
+/// Two kinds, one book directory, per `docs/release/corpus-work-channels.md`
+/// §9.2: `monster/` is the chassis and `monster_ability/` is the features
+/// attached to it, the same shape `race`/`race_trait` already have. Both are
+/// dumped from the compiled `rules_tables::bonus_bestiary` module -- this
+/// generator never re-derives a value from raw LST, exactly as
+/// `gen_pathfinder_unchained`/`gen_advanced_race_guide` above do not. It reads
+/// the live `.lst` only to attach a real `path`/`sha256`/`line` citation, and
+/// the line it cites is the one the table itself recorded at transcription
+/// time, verified against the file rather than trusted.
+fn gen_bonus_bestiary() {
+    use codex::rules_core::rules_tables::bonus_bestiary;
+
+    let root = bonus_bestiary_corpus_root();
+    let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/bonus_bestiary");
+    let ingested_at = ingested_at_now();
+
+    for sub in ["monster", "monster_ability"] {
+        let dir = out_root.join(sub);
+        if dir.exists() {
+            fs::remove_dir_all(&dir).expect("clear stale generated subdir");
+        }
+    }
+
+    let races_file = load_corpus_file_rel(&root, BONUS_BESTIARY_BOOK_RELATIVE, "bb_races.lst");
+    let abilities_file =
+        load_corpus_file_rel(&root, BONUS_BESTIARY_BOOK_RELATIVE, "bb_abilities_race.lst");
+
+    // ---- monsters ----
+    let mut monster_written = 0u32;
+    let mut pi_hits: Vec<String> = Vec::new();
+    for block in bonus_bestiary::monsters() {
+        let line = verified_citation_line(&races_file, block.source_line, block.key);
+        let data = serde_json::json!({
+            "key": format!("bonus_bestiary:monster:{}", slugify(block.key)),
+            "corpus_key": block.key,
+            "name": block.name,
+            "size": block.size,
+            "speeds": block.speeds.iter().map(|s| serde_json::json!({ "mode": s.mode, "feet": s.feet })).collect::<Vec<_>>(),
+            "race_type": block.race_type,
+            "race_subtype": block.race_subtype,
+            "challenge_rating": block.challenge_rating,
+            "monster_class": block.monster_class,
+            "source_page": block.source_page,
+            "natural_attacks": block.natural_attacks.iter().map(|a| serde_json::json!({ "name": a.name, "damage_dice": a.damage_dice })).collect::<Vec<_>>(),
+            "ability_keys": block.ability_keys.iter().map(|k| format!("bonus_bestiary:monster_ability:{}", slugify(k))).collect::<Vec<_>>(),
+            "external_ability_refs": block.external_ability_refs,
+        });
+        pi_hits.extend(bonus_bestiary_pi_hits(block.key, &data.to_string()));
+        let source = CorpusSource::LstToken {
+            path: races_file.relative_path.clone(),
+            sha256: races_file.sha256.clone(),
+            line,
+            record_key: block.key.to_string(),
+        };
+        let record = CorpusRecordV1 {
+            population: Population::InScope,
+            completeness: Completeness::ChassisOnly,
+            ingested_at: ingested_at.clone(),
+            data,
+            source,
+            license: Some(License::Ogl),
+            pi_field: None,
+            pi_marker: None,
+            // Every field on this record is a literal corpus token, so the
+            // record is exactly as proven as the row it cites: `static` in
+            // `wiring_class`'s vocabulary, not `derived` -- nothing here is
+            // computed from anything.
+            wiring_class: "static".to_string(),
+            wiring_class_signals: vec!["static:verbatim_corpus_token".to_string()],
+        };
+        write_record(
+            &out_root.join("monster").join(format!("{}.json", slugify(block.key))),
+            &record,
+        );
+        monster_written += 1;
+    }
+
+    // ---- monster abilities ----
+    let mut ability_written = 0u32;
+    for ability in bonus_bestiary::monster_abilities() {
+        let line = verified_citation_line(&abilities_file, ability.source_line, ability.name);
+        let data = serde_json::json!({
+            "key": format!("bonus_bestiary:monster_ability:{}", slugify(ability.key)),
+            "corpus_key": ability.key,
+            "name": ability.name,
+            "facet": ability.facet.corpus_token(),
+            "delivery": ability.delivery.map(|d| d.corpus_token()),
+            "traits": ability.traits,
+            "description": ability.description,
+            "description_variables": ability.description_variables,
+            "source_page": ability.source_page,
+            "owners": ability.owners.iter().map(|o| format!("bonus_bestiary:monster:{}", slugify(o))).collect::<Vec<_>>(),
+        });
+        pi_hits.extend(bonus_bestiary_pi_hits(ability.key, &data.to_string()));
+        let source = CorpusSource::LstToken {
+            path: abilities_file.relative_path.clone(),
+            sha256: abilities_file.sha256.clone(),
+            line,
+            record_key: ability.key.to_string(),
+        };
+        let record = CorpusRecordV1 {
+            population: Population::InScope,
+            completeness: Completeness::Full,
+            ingested_at: ingested_at.clone(),
+            data,
+            source,
+            license: Some(License::Ogl),
+            pi_field: None,
+            pi_marker: None,
+            wiring_class: "static".to_string(),
+            wiring_class_signals: vec!["static:verbatim_corpus_token".to_string()],
+        };
+        write_record(
+            &out_root
+                .join("monster_ability")
+                .join(format!("{}.json", slugify(ability.key))),
+            &record,
+        );
+        ability_written += 1;
+    }
+
+    // Epic 3's provenance gate, applied to this lane's extraction step: a hit
+    // is a hard stop, not a warning. Nothing is written past this point, and
+    // what was already written is left for inspection rather than silently
+    // shipped -- the operator has to see the hit.
+    if !pi_hits.is_empty() {
+        eprintln!("PI screen FAILED for bonus_bestiary: {pi_hits:?}");
+        std::process::exit(1);
+    }
+
+    let records_processed = count_on_disk_records(&out_root);
+    let license_json = serde_json::json!({
+        "book": "bonus_bestiary",
+        "license_declaration": {
+            "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bonus_bestiary.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+            "product_identity_source": "Paizo Pathfinder Roleplaying Game: Bonus Bestiary, OGL §15 Product Identity section",
+            "product_identity_note": "Named deities, NPCs and unique places are Product Identity; monster stat blocks and their special-ability rules text are Open Game Content."
+        },
+        "redaction_policy": {
+            "marker": "[redacted PI]",
+            "schema_preserving": true,
+            "pi_field_recorded": true,
+            "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
+            "blacklist_version_reviewed": "2026-07-27"
+        },
+        "screening_method_note": format!(
+            "Every field of all {} records written by this run ({monster_written} monsters + {ability_written} monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
+            monster_written + ability_written
+        ),
+        "redistribution_posture": "ogl-notice-attached",
+        "classified_at": ingested_at,
+        "classified_by_cycle": "SD29-E5-F1-001",
+        "records_processed": records_processed,
+        "records_redacted": 0,
+        "operator_sign_off": {
+            "signed_off": false,
+            "signed_off_at": null,
+            "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header."
+        }
+    });
+    let license_path = out_root.join("LICENSE.json");
+    fs::write(&license_path, serde_json::to_string_pretty(&license_json).unwrap() + "\n")
+        .unwrap_or_else(|e| panic!("failed to write {license_path:?}: {e}"));
+    println!(
+        "Bonus Bestiary cache generated: {monster_written} monsters, {ability_written} monster abilities;          LICENSE.json records_processed={records_processed}"
+    );
+}
+
+const BONUS_BESTIARY_BOOK_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/bonus_bestiary";
+
+fn bonus_bestiary_corpus_root() -> PathBuf {
+    if let Ok(v) = std::env::var("PCGEN_CORPUS_ROOT_BONUS_BESTIARY") {
+        return PathBuf::from(v);
+    }
+    let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
+    PathBuf::from(home).join("workspace/repos/pcgen/data").join(BONUS_BESTIARY_BOOK_RELATIVE)
+}
+
+/// The table records the line it was transcribed from; this re-reads that line
+/// out of the live file and requires its first column to still be the record's
+/// display name before citing it.
+///
+/// A citation nobody checked is the failure mode `v06_corpus_trap_report
+/// --audit` exists to catch after the fact; checking it here means the cache is
+/// never written with a stale line number in the first place.
+fn verified_citation_line(file: &CorpusFile, recorded: u32, display_name: &str) -> u32 {
+    let idx = recorded as usize - 1;
+    let line = file
+        .lines
+        .get(idx)
+        .unwrap_or_else(|| panic!("{} has no line {recorded}", file.relative_path));
+    let first_col = line.split('\t').next().unwrap_or_default().trim();
+    assert_eq!(
+        first_col, display_name,
+        "{}:{recorded} names {first_col:?}, not {display_name:?} -- the table's recorded line is \
+         stale and must be re-transcribed, not papered over here",
+        file.relative_path
+    );
+    recorded
+}
+
+/// The same bounded PI screen the two generators above run, applied to a whole
+/// serialized record rather than a single `description` field -- a monster row
+/// can carry a setting proper noun in its name, its subtype or its rules text,
+/// so screening one field would leave the others unscreened.
+fn bonus_bestiary_pi_hits(record_key: &str, serialized: &str) -> Vec<String> {
+    PI_BLACKLIST_TERMS
+        .iter()
+        .filter(|term| serialized.contains(*term))
+        .map(|term| format!("{record_key}: {term}"))
+        .collect()
+}
+
 fn main() {
     let book = std::env::args().nth(1).unwrap_or_else(|| "pathfinder_unchained".to_string());
     match book.as_str() {
         "pathfinder_unchained" => gen_pathfinder_unchained(),
         "advanced_race_guide" => gen_advanced_race_guide(),
+        "bonus_bestiary" => gen_bonus_bestiary(),
         other => panic!(
             "gen_book_cache: no generator wired for book {other:?} yet (only pathfinder_unchained/advanced_race_guide today -- \
-             a future SD-27/SD-28+ cycle extends this match arm for its own book, per this file's own module doc comment)"
+             a future cycle extends this match arm for its own book, per this file's own module doc comment)"
         ),
     }
 }

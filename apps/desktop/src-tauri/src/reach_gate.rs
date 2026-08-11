@@ -341,6 +341,13 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // enum (Psionic/Metapsionic have no shared-enum equivalent). Same
     // family ("feats") as every other book's feat table.
     ("UpsiFeatEntry", "feats"),
+    // SD-29 Epic 5: Bonus Bestiary's merged monster chassis. Two record
+    // types, two families -- deliberately NOT one, per
+    // `corpus-work-channels.md` §9.2: a monster ability is to a monster what a
+    // race trait is to a race, and folding the abilities into `monsters` would
+    // make the chassis count silently absorb the feature count.
+    ("MonsterStatBlock", "monsters"),
+    ("MonsterAbilityRecord", "monster_abilities"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -533,6 +540,9 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("beastiary", "beastiary1"),
     ("advanced_race_guide", "advanced_race_guide"),
     ("pathfinder_unchained", "pathfinder_unchained"),
+    // SD-29 Epic 5 pilot. Directory and book id are spelled the same, like
+    // ARG's and PU's, so no rename is hidden here.
+    ("bonus_bestiary", "bonus_bestiary"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -544,6 +554,10 @@ const CORPUS_KIND_NAMES: &[(&str, &str)] = &[
     ("equipment", "equipment"),
     ("feat", "feats"),
     ("monster", "monsters"),
+    // SD-29 Epic 5 pilot: the features half of the merged monster chassis
+    // (`corpus-work-channels.md` §9.2). Bonus Bestiary is the first book to
+    // ingest it, so this is the entry's first appearance.
+    ("monster_ability", "monster_abilities"),
     ("race", "races"),
     ("race_trait", "race_traits"),
     ("spell", "spells"),
@@ -985,6 +999,20 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // `ground_*_companion_stat_block`, not read from these tables.
         ("beastiary1", "monsters") => Some(monsters_reach()),
 
+        // SD-29 Epic 5 pilot — Bonus Bestiary's two families, both served by
+        // the same `list_monster_catalog` command the Bestiary 1 claim above
+        // already runs, and both rendered by the same
+        // apps/desktop/src/monsterCatalog/MonsterCatalogScreen.tsx.
+        //
+        // The abilities are NOT a second catalog: per
+        // `corpus-work-channels.md` §9.2 a monster ability is to a monster what
+        // a race trait is to a race, so the screen renders each one inside its
+        // owning creature's row. That is why the two claims below judge the same
+        // response from two different denominators — the chassis records and the
+        // feature records are genuinely different populations on disk.
+        ("bonus_bestiary", "monsters") => Some(bonus_bestiary_monsters_reach()),
+        ("bonus_bestiary", "monster_abilities") => Some(bonus_bestiary_monster_abilities_reach()),
+
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
         // carrying that record's own corpus `KEY:` token, and the character
@@ -1326,6 +1354,76 @@ fn monsters_reach() -> Reach {
         &with_payload,
         &identity_only,
     )
+}
+
+/// Bonus Bestiary's monster stat blocks, judged against the real
+/// `list_monster_catalog` response.
+///
+/// The denominator is the record files under `data/corpus/bonus_bestiary/
+/// monster/`, read from disk; the numerator is the served response. Neither
+/// side reads `rules_tables::bonus_bestiary`, so a table that stopped reaching
+/// the wire fails here instead of agreeing with itself.
+fn bonus_bestiary_monsters_reach() -> Reach {
+    let ingested = corpus_record_keys("bonus_bestiary", "monster");
+
+    let response = crate::monster_catalog::build_monster_catalog();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for entry in response.entries.iter().filter(|entry| entry.book == "BB") {
+        // Name and key are identity, so neither counts. A row reaches the
+        // player when it carries something *about* the creature: its creature
+        // type, its size, its source page, its movement, its `MONSTERCLASS:`
+        // token, an attack, or an ability.
+        let has_payload = !entry.race_type.trim().is_empty()
+            || !entry.size.trim().is_empty()
+            || !entry.source_page.trim().is_empty()
+            || !entry.speeds.is_empty()
+            || entry.monster_class.is_some()
+            || !entry.natural_attacks.is_empty()
+            || !entry.abilities.is_empty();
+        if has_payload {
+            with_payload.insert(entry.key.clone());
+        } else {
+            identity_only.insert(entry.key.clone());
+        }
+    }
+
+    assess("list_monster_catalog", &ingested, &with_payload, &identity_only)
+}
+
+/// Bonus Bestiary's `monster_ability` records, judged against the same real
+/// `list_monster_catalog` response — flattened out of the monsters that own
+/// them, which is exactly how the screen renders them.
+///
+/// An ability reaches the player when the row it prints says something beyond
+/// its name: its facet, how it is delivered, its rules text, or its page. One
+/// record in this book (`Magic Circle against Evil`) carries no `DESC:` at all,
+/// so it reaches on facet + delivery alone — a real, checkable corpus fact
+/// rather than a payload this gate invented for it.
+fn bonus_bestiary_monster_abilities_reach() -> Reach {
+    let ingested = corpus_record_keys("bonus_bestiary", "monster_ability");
+
+    let response = crate::monster_catalog::build_monster_catalog();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for ability in response
+        .entries
+        .iter()
+        .filter(|entry| entry.book == "BB")
+        .flat_map(|entry| entry.abilities.iter())
+    {
+        let has_payload = !ability.facet.trim().is_empty()
+            || ability.delivery.is_some()
+            || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
+            || ability.source_page.is_some();
+        if has_payload {
+            with_payload.insert(ability.key.clone());
+        } else {
+            identity_only.insert(ability.key.clone());
+        }
+    }
+
+    assess("list_monster_catalog", &ingested, &with_payload, &identity_only)
 }
 
 /// Pathfinder Unchained's ingested `class_feature` records, judged per record
@@ -2607,6 +2705,54 @@ mod tests {
         }
     }
 
+    /// Bonus Bestiary's two families, per record, against their own corpus
+    /// directories.
+    ///
+    /// Both sides come from genuinely different places -- the record files
+    /// written by `gen_book_cache -- bonus_bestiary`, and the live
+    /// `list_monster_catalog` response the screen renders -- so a table that
+    /// stopped reaching the wire fails here instead of agreeing with itself.
+    #[test]
+    fn bonus_bestiary_monsters_and_abilities_reach_the_catalog_record_by_record() {
+        let monsters = corpus_record_keys("bonus_bestiary", "monster");
+        let abilities = corpus_record_keys("bonus_bestiary", "monster_ability");
+        assert_eq!(monsters.len(), 14, "re-derived on disk this cycle");
+        assert_eq!(abilities.len(), 17, "re-derived on disk this cycle");
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "BB")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "BB")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters);
+        assert_eq!(served_abilities, abilities);
+
+        match reach_of(&Family::new("bonus_bestiary", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 14);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected all 14 to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("bonus_bestiary", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 17);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected all 17 to reach, got {other:?}"),
+        }
+    }
+
     /// The monster claim, per record.
     ///
     /// The denominator is the record files on disk; the numerator is the live
@@ -2623,9 +2769,15 @@ mod tests {
              raised this from 41)"
         );
 
+        // Filtered to this book (SD-29 Epic 5): the catalog now serves Bonus
+        // Bestiary from the same command, and comparing the whole response
+        // against one book's directory would fail for a correct reason and
+        // stop saying anything about Bestiary 1. The Bonus Bestiary half has
+        // its own record-by-record test below, against its own directory.
         let served: BTreeSet<String> = crate::monster_catalog::build_monster_catalog()
             .entries
             .into_iter()
+            .filter(|entry| entry.book == "B1")
             .map(|entry| entry.key)
             .collect();
         assert_eq!(

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T07:29:51Z",
+  "data": {
+    "corpus_key": "Water Naga ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite, Level 7, Save Fortitude DC %1, Frequency 1 round (10), Effect 1 Con damage, Cure 1 save.",
+    "description_variables": [
+      "WaterNagaPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bonus_bestiary:monster_ability:water_naga_poison",
+    "name": "Poison",
+    "owners": [
+      "bonus_bestiary:monster:naga_water"
+    ],
+    "source_page": "p.14",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_abilities_race.lst",
+    "sha256": "57d97e9b0d8e6e002162187ace2c288c558fa9a3f0d333a2ba487a0161f4f82e",
+    "line": 47,
+    "record_key": "Water Naga ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:verbatim_corpus_token"
+  ]
+}

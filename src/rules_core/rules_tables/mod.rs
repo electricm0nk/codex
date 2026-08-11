@@ -13,6 +13,7 @@ pub mod advanced_race_guide;
 pub mod apg;
 pub mod archetype_swap;
 pub mod beastiary1;
+pub mod bonus_bestiary;
 pub mod class_spell_levels;
 pub mod crb;
 pub mod feats_all;
@@ -49,4 +50,7 @@ pub enum RuleSetId {
     /// Ultimate Psionics. SD-28 Epic 29 -- first record family (feats).
     /// Dreamscarred Press, not Paizo -- the last Ultimate book.
     Upsi,
+    /// Bonus Bestiary. SD-29 Epic 5 pilot -- first book to ingest the merged
+    /// `monster` + `monster_ability` chassis (`corpus-work-channels.md §9.2`).
+    BonusBestiary,
 }

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T07:29:51Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:spores"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Ascomoid",
+    "external_ability_refs": [
+      "Resistance to Electricity",
+      "Resistance to Fire",
+      "Trample"
+    ],
+    "key": "bonus_bestiary:monster:ascomoid",
+    "monster_class": "Plant:7",
+    "name": "Ascomoid",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "L",
+    "source_page": "p.6",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 9,
+    "record_key": "Ascomoid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:verbatim_corpus_token"
+  ]
+}

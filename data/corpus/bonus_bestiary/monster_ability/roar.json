@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T07:29:51Z",
+  "data": {
+    "corpus_key": "Roar",
+    "delivery": "Supernatural",
+    "description": "A dragonne can unleash a devastating roar every 1d4 rounds as a standard action. All creatures except dragonnes within 120 feet must succed on a DC %1 Fortitude save or become fatigued. Those within 30 feet who fail their saves are also deafened for 2d4 rounds. This is a sonic effect.",
+    "description_variables": [
+      "RoarDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bonus_bestiary:monster_ability:roar",
+    "name": "Roar",
+    "owners": [
+      "bonus_bestiary:monster:dragonne"
+    ],
+    "source_page": "p.10",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_abilities_race.lst",
+    "sha256": "57d97e9b0d8e6e002162187ace2c288c558fa9a3f0d333a2ba487a0161f4f82e",
+    "line": 34,
+    "record_key": "Roar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:verbatim_corpus_token"
+  ]
+}

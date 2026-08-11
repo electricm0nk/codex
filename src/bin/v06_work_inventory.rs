@@ -59,6 +59,7 @@ use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
+use codex::rules_core::rules_tables::bonus_bestiary;
 use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables,
     race_tables::{RaceId, race_traits},
@@ -869,6 +870,7 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Uc,
     RuleSetId::Um,
     RuleSetId::Upsi,
+    RuleSetId::BonusBestiary,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -890,6 +892,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
         RuleSetId::Upsi => "ultimate_psionics",
+        RuleSetId::BonusBestiary => "bonus_bestiary",
     }
 }
 
@@ -923,6 +926,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
         RuleSetId::Upsi => "ultimate_psionics",
+        RuleSetId::BonusBestiary => "bonus_bestiary",
     }
 }
 
@@ -1013,6 +1017,16 @@ struct EngineFacts {
     equipment_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every Bestiary 1 monster that resolves to a real stat block, by name.
     monster_names: BTreeSet<String>,
+    /// Every Bonus Bestiary monster the engine holds, by lowercase corpus key.
+    /// Kept apart from `monster_names` rather than merged into it: the two
+    /// books' tables are independent, and a merged set would credit one book's
+    /// stat block to the other on a name collision -- the same book-gating
+    /// `holds_key` already applies to races and race traits.
+    bonus_bestiary_monster_keys: BTreeSet<String>,
+    /// Every Bonus Bestiary `monster_ability` the engine holds, by lowercase
+    /// corpus `KEY:` token. The key, never the display name: 6 of the 17 rows
+    /// carry a namespaced key whose leaf is not unique.
+    bonus_bestiary_monster_ability_keys: BTreeSet<String>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
@@ -1055,7 +1069,21 @@ impl EngineFacts {
             // module (`crb::race_tables`, `beastiary1`), so the book gate is
             // part of the fact -- without it a shared-library race would be
             // credited to whichever host happened to be tried first.
-            Kind::Monster => book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()),
+            Kind::Monster => match book {
+                "bestiary_1" => self.monster_names.contains(&name.to_lowercase()),
+                "bonus_bestiary" => self
+                    .bonus_bestiary_monster_keys
+                    .contains(&key.to_lowercase())
+                    || self.bonus_bestiary_monster_keys.contains(&name.to_lowercase()),
+                _ => false,
+            },
+            Kind::MonsterAbility => {
+                book == "bonus_bestiary"
+                    && (self.bonus_bestiary_monster_ability_keys.contains(&key.to_lowercase())
+                        || self
+                            .bonus_bestiary_monster_ability_keys
+                            .contains(&name.to_lowercase()))
+            }
             Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
             Kind::RaceTrait => {
                 book == "core_rulebook"
@@ -1491,6 +1519,15 @@ fn gather_engine_facts(
         .map(|b| b.name.to_lowercase())
         .collect();
 
+    let bonus_bestiary_monster_keys: BTreeSet<String> = bonus_bestiary::monsters()
+        .iter()
+        .map(|m| m.key.to_lowercase())
+        .collect();
+    let bonus_bestiary_monster_ability_keys: BTreeSet<String> = bonus_bestiary::monster_abilities()
+        .iter()
+        .map(|a| a.key.to_lowercase())
+        .collect();
+
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
     for id in ClassId::ALL {
         class_books.insert(crb_class_name(*id).to_string(), "core_rulebook");
@@ -1543,6 +1580,8 @@ fn gather_engine_facts(
         spell_levels,
         equipment_keys,
         monster_names,
+        bonus_bestiary_monster_keys,
+        bonus_bestiary_monster_ability_keys,
         class_books,
         race_names,
         race_trait_ids,
@@ -1820,6 +1859,29 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 reason: None,
                 engine_book: engine_book_field,
             }
+        }
+        Kind::Monster if engine_book == "bonus_bestiary" => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bonus_bestiary_monster_resolve_returned_a_real_stat_block".to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested("monster_absent_from_bonus_bestiary_monsters")
+        }
+        Kind::MonsterAbility if engine_book == "bonus_bestiary" => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bonus_bestiary_monster_ability_resolve_returned_a_real_record"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested("monster_ability_absent_from_bonus_bestiary_monster_abilities")
         }
         Kind::Monster => {
             if facts.monster_names.contains(&unit.name.to_lowercase()) {

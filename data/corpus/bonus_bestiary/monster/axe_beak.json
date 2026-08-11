@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T07:29:51Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:sudden_charge"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Axe Beak",
+    "external_ability_refs": [],
+    "key": "bonus_bestiary:monster:axe_beak",
+    "monster_class": "Animal:3",
+    "name": "Axe Beak",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "size": "L",
+    "source_page": "p.7",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 10,
+    "record_key": "Axe Beak"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:verbatim_corpus_token"
+  ]
+}

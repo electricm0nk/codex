@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T07:29:51Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:caryatid_column_immunity_to_magic",
+      "bonus_bestiary:monster_ability:shatter_weapons",
+      "bonus_bestiary:monster_ability:statue"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Caryatid Column",
+    "external_ability_refs": [],
+    "key": "bonus_bestiary:monster:caryatid_column",
+    "monster_class": "Construct:3",
+    "name": "Caryatid Column",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "M",
+    "source_page": "p.8",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 11,
+    "record_key": "Caryatid Column"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:verbatim_corpus_token"
+  ]
+}

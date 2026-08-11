@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState, type CSSProperties } from 'react';
 import type {
   DamageDiceSourceDto,
+  MonsterAbilityDto,
   MonsterCatalogEntryDto,
   NaturalAttackDto,
 } from '../boundary/loadMonsterCatalog';
@@ -19,10 +20,11 @@ const MAX_RENDERED_ROWS = 200;
  *
  * Every code the served roster actually uses needs an entry: an unmapped code
  * reaches the screen as a bare letter, which names nothing. Derived from the
- * live corpus rather than from the PF1 size ladder in the abstract — the 41
- * ingested records use D (2), T (1), S (9), M (22) and L (7). The two unused
- * PF1 codes (H, G, C) are deliberately absent: adding a label for a code no
- * record carries would be untested text.
+ * live corpus rather than from the PF1 size ladder in the abstract — Bestiary
+ * 1's records use D, T, S, M and L, and Bonus Bestiary's 14 rows add the first
+ * `H` the catalog has ever served (Ant Lion (Mature)). `G` and `C` remain
+ * deliberately absent: a label for a code no record carries would be untested
+ * text.
  */
 export const SIZE_LABELS: Record<string, string> = {
   D: 'Diminutive',
@@ -30,10 +32,25 @@ export const SIZE_LABELS: Record<string, string> = {
   S: 'Small',
   M: 'Medium',
   L: 'Large',
+  H: 'Huge',
 };
 
 /** The size codes the served roster uses, smallest first. */
-export const SIZE_ORDER = ['D', 'T', 'S', 'M', 'L'] as const;
+export const SIZE_ORDER = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
+
+/**
+ * Wire book code -> the book's name. A row that named no book would leave a
+ * reader unable to look the creature up, and the catalog now serves two books.
+ */
+export const BOOK_LABELS: Record<string, string> = {
+  B1: 'Bestiary 1',
+  BB: 'Bonus Bestiary',
+};
+
+/** `'BB'` -> `'Bonus Bestiary'`; an unmapped code falls through as itself. */
+export function formatBook(code: string): string {
+  return BOOK_LABELS[code] ?? code;
+}
 
 /**
  * How each damage-dice provenance reads on screen. Short enough for a chip;
@@ -44,6 +61,7 @@ export const DAMAGE_DICE_SOURCE_LABELS: Record<DamageDiceSourceDto, string> = {
   monsterRowToken: 'corpus row',
   corpusCrossReferenceToken: 'corpus cross-reference',
   publishedText: 'grounded from published text',
+  notInCorpus: 'no dice in the corpus',
 };
 
 /** `'M'` -> `'Medium'`; an unmapped code falls through as itself. */
@@ -83,11 +101,56 @@ export function formatCreatureType(raceType: string, raceSubtype: string | null)
   return raceSubtype ? `${raceType} (${raceSubtype})` : raceType;
 }
 
-/** `'Bite'` + `'2d6'` -> `'Bite 2d6'`; a `"0"` die expression states itself. */
+/**
+ * `'Bite'` + `'2d6'` -> `'Bite 2d6'`; a `"0"` die expression states itself.
+ *
+ * A `null` die expression prints the attack's name alone. That is not the same
+ * as `"0"` and must never render as it: `"0"` is a real attack that deals no
+ * damage, `null` is an attack whose damage the corpus never states.
+ */
 export function formatNaturalAttack(attack: NaturalAttackDto): string {
+  if (attack.damageDice === null) return attack.name;
   return attack.damageDice === '0'
     ? `${attack.name} (no damage)`
     : `${attack.name} ${attack.damageDice}`;
+}
+
+/**
+ * `'Babble'` + `'SpecialAttack'` + `'Supernatural'` -> `'Babble — Special
+ * Attack (Su)'`, the way the book prints it. The delivery abbreviation is the
+ * published one; an unmapped delivery falls through as its own word rather than
+ * being dropped.
+ */
+export const ABILITY_FACET_LABELS: Record<string, string> = {
+  SpecialAttack: 'Special Attack',
+  SpecialQuality: 'Special Quality',
+};
+
+export const ABILITY_DELIVERY_LABELS: Record<string, string> = {
+  Supernatural: 'Su',
+  Extraordinary: 'Ex',
+  SpellLike: 'Sp',
+};
+
+export function formatAbilityHeading(ability: MonsterAbilityDto): string {
+  const facet = ABILITY_FACET_LABELS[ability.facet] ?? ability.facet;
+  if (!ability.delivery) return `${ability.name} — ${facet}`;
+  const delivery = ABILITY_DELIVERY_LABELS[ability.delivery] ?? ability.delivery;
+  return `${ability.name} — ${facet} (${delivery})`;
+}
+
+/**
+ * The whole movement clause from every mode on the row: `'Speed 30 ft., fly 60
+ * ft.'`. Falls back to the land-speed-only clause when the row carries no
+ * modes at all, which is what every Bestiary 1 record looks like.
+ */
+export function formatSpeedClause(entry: MonsterCatalogEntryDto): string {
+  if (entry.speeds.length === 0) return formatLandSpeedClause(entry.speedFt);
+  const walk = entry.speeds.find((speed) => speed.mode === 'Walk');
+  const others = entry.speeds.filter((speed) => speed.mode !== 'Walk');
+  const head = walk ? `Speed ${walk.feet} ft.` : 'No land speed';
+  if (others.length === 0) return head;
+  return `${head}, ${others.map((speed) => `${speed.mode.toLowerCase()} ${speed.feet} ft.`).join(', ')}`;
 }
 
 /**
@@ -169,11 +232,12 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
       ) : (
         <>
           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.8rem', margin: '0 0 1rem' }}>
-            Every real Bestiary 1 stat block the engine knows about — {totalCount} monsters. Armor
-            Class, hit points and saves are not shown because they are not ingested: PCGen derives
-            them at runtime from the creature&rsquo;s hit-dice table rather than stating them on its
-            corpus row. Speed is the land speed only; swim, climb and fly speeds were out of scope
-            for this ingest.
+            Every real stat block the engine knows about, across Bestiary 1 and Bonus Bestiary —{' '}
+            {totalCount} monsters. Armor Class, hit points and saves are not shown because they are
+            not ingested: PCGen derives them at runtime from the creature&rsquo;s hit-dice table
+            rather than stating them on its corpus row, so the row prints that table&rsquo;s own
+            token instead. Bestiary 1&rsquo;s rows carry the land speed only; Bonus Bestiary&rsquo;s
+            carry every movement mode and their special abilities.
           </p>
 
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
@@ -255,7 +319,8 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
                   </span>
                 </div>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
-                  {formatLandSpeedClause(entry.speedFt)} · Bestiary 1 {entry.sourcePage}
+                  {formatSpeedClause(entry)} · {formatBook(entry.book)} {entry.sourcePage}
+                  {entry.monsterClass ? ` · Hit dice ${entry.monsterClass}` : ''}
                 </p>
                 {entry.naturalAttacks.length === 0 ? (
                   <p
@@ -295,6 +360,47 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
                     ))}
                   </div>
                 )}
+                {entry.abilities.length > 0 ? (
+                  <div style={{ margin: '0.4rem 0 0' }}>
+                    {entry.abilities.map((ability) => (
+                      // `key` is the corpus `KEY:` token, which is namespaced
+                      // where the book namespaces it — two creatures' abilities
+                      // that share a display name are still distinct rows.
+                      <div key={ability.key} style={{ margin: '0 0 0.35rem' }}>
+                        <span style={{ fontSize: '0.75rem', fontWeight: 600 }}>
+                          {formatAbilityHeading(ability)}
+                        </span>
+                        {ability.sourcePage ? (
+                          <span style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', marginLeft: '0.4rem' }}>
+                            {ability.sourcePage}
+                          </span>
+                        ) : null}
+                        {ability.description ? (
+                          <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}>
+                            {ability.description}
+                          </p>
+                        ) : (
+                          <p
+                            style={{
+                              color: 'var(--color-text-faint)',
+                              fontSize: '0.7rem',
+                              fontStyle: 'italic',
+                              margin: '0.1rem 0 0',
+                            }}
+                          >
+                            The corpus row states this ability&rsquo;s name and type but carries no
+                            rules text.
+                          </p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+                {entry.externalAbilityRefs.length > 0 ? (
+                  <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.2rem 0 0' }}>
+                    Also has, defined in another book: {entry.externalAbilityRefs.join(', ')}.
+                  </p>
+                ) : null}
               </div>
             ))}
           </div>
