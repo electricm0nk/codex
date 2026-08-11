@@ -4840,6 +4840,69 @@ defect, whose fix is commit `3cb9ead6`, so a second full gate was run against th
 receipt that published the first run's green for a tree that no longer existed would be exactly the
 "verified something adjacent to what shipped" failure this program keeps paying for.
 
+**Gate run 2, on the final tree — `VERIFY_EXIT=1`, and the attribution is proven rather than
+asserted.** The **only** red stage is `preflight-disk`, the disk-budget check itself. Every
+content-bearing stage is green, at equal or better counts than run 1:
+
+| Stage | Run 2 |
+|---|---|
+| **preflight-disk** | **FAIL** — *"below the disk budget floor"* |
+| pi-sweep | PASS (10/10) |
+| audit-selftest | PASS (28) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (1623) |
+| root-full | PASS (**6181** across **543** suites, **all 524 `tests/*.rs` suites executed**) |
+| desktop | PASS (**424** — one more than run 1: the new grounding-note test) |
+| reach | PASS (18) |
+| frontend-install / frontend-test / frontend-typecheck | PASS / PASS (98/98) / PASS |
+| clippy | PASS (root:54 desktop:7, 0 errors) |
+| class-dump | PASS (31/31) |
+
+Log: `/tmp/codex-verify-hgjeuj`.
+
+`decisions.md` §39 forbids calling a red stage "environmental" without naming, by command, what did
+not execute. Here the proof is direct and this receipt does not ask anyone to take it on trust:
+
+* **Nothing failed to execute.** `root-full` reports *all 524 `tests/*.rs` suites executed* — the
+  `comm -23` check `root-full` runs on every invocation. 6181 tests ran and passed.
+* **The red stage asserts a property of the box, not of the tree.** `preflight-disk` builds nothing
+  and reads no source file; it reads `df`.
+* **The cause was measured and then removed.** `df -h /` read **92%** during the run, with this
+  cycle's own 27G `CARGO_TARGET_DIR` and a concurrent sibling cycle's on the same filesystem;
+  `scripts/reclaim.sh --apply` freed nothing further because every candidate was a live agent's
+  target dir. Deleting this cycle's own target dir at cycle end took the filesystem to **79% used,
+  103G available**, and re-running `./scripts/verify.sh --only preflight-disk` returns
+  **`PREFLIGHT_EXIT=0`, PASS**. The failure was this cycle's own build artifacts plus a sibling's,
+  and it is gone.
+
+So DoD item 1 is **satisfied on content and red on housekeeping**, and the receipt says exactly
+that rather than rounding it to a pass. `incident` emitted, `--recurrence-key
+disk-pressure-concurrent-agents`, `--used-percent 91`.
+
+### Merge to `tranche/9`
+
+`origin/tranche/9` had advanced by 9 commits (the race-trait lane's own round 1) while this cycle
+ran. Merged rather than rebased, per this checkout's shared-branch discipline.
+
+**Two conflicts, both in append-only or generated documents; zero code conflicts** — even though the
+sibling's `4d362e2e` rewrote 489 lines of `src/bin/v06_work_inventory.rs`, the same file this cycle
+made registry-driven. `progress.md` resolved by union (both receipts kept verbatim);
+`docs/work-inventory.json` regenerated rather than resolved by picking a side.
+
+**Re-derived after the merge rather than assumed**, by the §1b command: **monster 1,208 +
+monster_ability 3,087 = 4,295 remaining**, and `monster_codex` reads `monster` 2/2 + `monster_ability`
+3/3 `grounded`, `bonus_bestiary` unchanged at 14/14 + 17/17. Running the same command against
+`origin/tranche/9` *before* the merge returns **4,300** — so the sibling lane's landing did not move
+this lane's denominators, and the 5-unit delta is this cycle's.
+
+**Post-merge verification** (a third full gate was not run; what was run is stated exactly):
+desktop suite **425 passed**, `monster_chassis` **5 passed**,
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`AUDIT_EXIT=0`**, 259 trap rows, 0
+defects, exit code captured directly and never through a pipe.
+
+**Pushed to `origin/tranche/9` at `e57ec02d`.** PR #360 remains open and unmerged, as the card
+requires — the bundle is not done.
+
 ### On screen — DoD item 8, and it caught a defect no test did
 
 `RUN_DESKTOP_AGENT=sd29-monster-r1` (unique to this cycle, per the SKILL's concurrent-agent rule;
