@@ -3125,3 +3125,56 @@ outcome on any tree. The gates that bind the merged tree are the lane cycles' ow
 their receipts above. Both audits that *are* diff-scoped were run here and are recorded: the
 identifier-discipline audit (`OK_NO_BUNDLE_TAGS`, exit 0) and the wired-integration four-check
 (§6 item 5).
+
+### 10. Gate result (§7 resolved) — NOT OBTAINED, stated as such
+
+`./scripts/verify.sh` (FULL) did **not** return a valid verdict for this cycle. This is recorded as
+a gap, not dressed as a pass — no stage was weakened, skipped, `#[ignore]`d, or excluded, and no
+green is claimed anywhere in this receipt.
+
+**Run 1 — exit 143, invalid.** 143 = 128+15 = SIGTERM. Four stages had already printed PASS
+(`preflight-disk`, `pi-sweep`, `audit-selftest`, `root-lib` 1604) when the process was killed
+~10 minutes in, mid-`root-full`. Cause was self-inflicted, not environmental: the gate was launched
+from a backgrounded harness call carrying `timeout=600000`, and the harness killed the process
+group at that deadline. Relaunched with `setsid`/`nohup`/`disown` and stdio detached so the run
+outlives the harness task lifecycle. **A non-zero exit is not automatically a red gate** — 143 with
+no `FAIL` line and no `SUMMARY` block is a terminated process, and recording it as "gate red" would
+have manufactured a phantom blocker. The harness's own task summary said the opposite
+("completed exit code 0" — the *wrapper's* status). Neither number was the gate's verdict. Incident
+emitted; this is the same family as Epic 5's "never through a pipe" finding: **the thing that
+reports an exit code is often not the thing you are gating on.**
+
+**Run 2 — `preflight-disk` FAIL, and correctly so.** The relaunched run failed the disk floor at
+**92% used / 42G free**. This is not a flaky gate; it is the gate doing its job under real
+concurrency — the same condition Epic 5's pilot and Epic 7's companion pilot both hit today, and
+the condition `tranche-7-retrospective §4.1` records as producing `ld terminated with signal 7
+[Bus error]`. Four sibling cycles were building concurrently in this shared checkout.
+
+**Why it was not re-run a third time.** This cycle's own `CARGO_TARGET_DIR` had grown to **13G**,
+and with build churn the box was down to 42G free while siblings with *real code diffs* needed
+headroom to gate. Continuing to compete for disk to re-gate a diff of **four Markdown files and one
+append-only retro shard** would have degraded the gates that actually bind code, to certify a diff
+that cannot change any stage's outcome. This cycle's gate was therefore terminated and its target
+dir deleted, returning **22G** (92% → 87% used, 42G → 64G free) to the cycles that need it. That is
+the same reasoning as the ruling this card exists to make: do not spend the bundle's scarce
+resource on work nothing is waiting for.
+
+**What IS proven about this diff, by commands run and recorded:**
+
+- `./scripts/identifier-discipline-audit.sh` → `OK_NO_BUNDLE_TAGS`, **exit 0**.
+- Wired-integration four-check: Checks 2, 3, 4 clean. Check 1's single hit is
+  `placeholder="e.g. GE08 authoring workbench"` — an HTML `placeholder` **attribute**, and
+  `git log -S` attributes it to `8b6dd751` (`epic-1b-naming-sweep`), **not this cycle**;
+  `git diff --name-only` over both of this cycle's commits lists only the five doc/shard files.
+  Identical to the finding Epic 3's receipt already recorded.
+- `preflight-disk`, `pi-sweep` (10/10 baseline rows), `audit-selftest` (28), and `root-lib` (1604
+  passed) all PASSED in run 1 before the SIGTERM.
+- The diff contains **zero lines of Rust, TypeScript, or configuration** — no code path is added,
+  removed, or altered, so no test's behaviour can differ because of it.
+
+**Consequence for the next cycle, stated plainly so nobody re-derives it:** `tranche/9`'s tip
+carries this cycle's docs on top of a tree last gated by the lane cycles below. `epic-10-review`
+and `epic-11-closure` both gate the bundle again; this cycle's docs will be inside that diff and
+will be covered there. If a reviewer wants a gate attributable to this card alone, it is one
+`./scripts/verify.sh` on a quiet box away — but nothing about the diff makes it likely to be
+informative.
