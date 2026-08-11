@@ -1694,3 +1694,25 @@ Within the 553: **336 grounded**, and the honest remainder is
 Two residuals in the 553 are deliberately NOT gap: APG's 49 (same `KEY:` as an already-ingested ARG
 record — republished, not new, `§39`) and Monster Codex's `Oversized Goblin` (mechanism-blocked, its
 `OPEN_FINDINGS` entry names the remedy).
+
+### 44.5 Two more instances of the stale-roots defect, recorded and NOT fixed in this round
+
+Grepping for the §44.2 pattern after fixing it found the same hardcoded three-book corpus loader in
+two integration tests:
+
+* `tests/sd27_alternate_racial_trait_reachability.rs:75-79`
+* `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs:53-57`
+
+Both build `[core_rulebook, beastiary, advanced_race_guide]` by hand and both then assert `153`. They
+are **green today and will stay green** through any number of new books, because they cannot see
+them — which is exactly the property that let §44.2's stub ship.
+
+They were left alone in round 1, deliberately, for two reasons. First, the product-level invariant
+they were implicitly trusted for is now guarded directly and corpus-widely by
+`race_resolver::every_alternate_the_app_offers_is_one_the_engine_can_place`, so the defect **class**
+is closed even with these two still narrow. Second, the full gate was already running against the
+committed tree when they were found, and editing them would have invalidated its result — a real
+gate result on the tree that shipped is worth more than two test-scope widenings landed unverified.
+
+**This is round 2's first item**, ahead of any ingest: widen both to `RACE_CORPUS_BOOKS` and move
+their pins with their reasons, exactly as §44.2 did for the resolver's own module.
