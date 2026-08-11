@@ -444,3 +444,170 @@ three auto-emitted `verification` events from `verify.sh` itself (two `--only`, 
 
 Epic 1 is **COMPLETE**, which unblocks `epic-2-prelaunch` (Order 2) and `epic-9-version`
 (Order 13). No other epic ran or was touched by this cycle.
+
+---
+
+## Cycle `SD29-E2-F1-001` (closing pass) — card `epic-2-prelaunch` → COMPLETE
+
+**Actor:** `sd29-e2-prelaunch`. **Branch:** `tranche/9`. **Date:** 2026-08-11.
+**Epic 2 — Operator Pre-Launch, corpus-wide (all 37 in-scope books, one pass).**
+
+This is the **closing pass** of a cycle whose opening pass did the whole derivation and then ran
+out of turn with `verify.sh` still in `root-full`. Nothing was restarted: the claim was kept, the
+opening pass's untracked derivation (`corpus-shape-37-books.md`) was **re-derived rather than
+trusted**, and this pass owed and paid the gate.
+
+### Gate — DoD item 1
+
+`./scripts/verify.sh` (FULL, not `--quick`), exit code captured directly from the process, never
+through a pipe (`echo "VERIFY_EXIT=$?"` appended to the log by the same shell that ran it):
+
+```
+VERIFY_EXIT=0        RESULT: PASS
+preflight-disk PASS (78% used, 107G avail)   audit-selftest PASS (13 passed, 0 failed)
+root-lib       PASS (1600 passed)            root-full      PASS (6128 passed across 537 suites,
+                                                            all 521 tests/*.rs suites executed)
+desktop        PASS (413 passed)             reach          PASS (16 passed)
+frontend-install PASS  frontend-test PASS (98/98 files)  frontend-typecheck PASS (tsc clean)
+clippy         PASS (root:54 desktop:7 warnings, 0 errors)   class-dump PASS (31/31 computing)
+```
+
+Run under its own `CARGO_TARGET_DIR=/tmp/codex-target-sd29-e2-prelaunch` per the Epic 1
+build-contention incident, launched early in the background so the derivation work ran alongside
+it. It was CPU-shared but never hung — diagnosed live with `pgrep -c rustc` (3-4 live) and a
+rising `ls /tmp/codex-target-sd29-e2-prelaunch/debug/deps/*.d | wc -l` (97 → 108 → 573), per the
+"frozen timestamps mean starved, not hung" rule. **No stage failed even once**, so no
+same-attribution repeat-failure incident arose.
+
+### DoD item 2 — reach
+
+`reach` **PASS with 16 matched tests**, not zero. A gate matching zero tests would be a hard
+failure; it matched 16. This card is a derivation/pre-launch card and **ingests no records**, so
+it introduces no new families of its own — item 2 is satisfied by the gate running non-vacuously
+against the existing inventory, and every content lane (Epics 4-7) still owes its own family
+claims in full.
+
+### DoD item 3 — trap-report audit
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → exit **0**:
+`259 mod-record traps, 0 defects` — "No defects: every ingested record's citation agrees with the
+line it names."
+
+### DoD item 4 — work-inventory regeneration and idempotency
+
+**Proven directly against git, not asserted.** The opening pass wrote the inventory at
+`generated_at: 2026-08-10T23:59:04Z`; this pass regenerated it at `2026-08-11T00:18:38Z`.
+
+```bash
+git diff --stat docs/work-inventory.json
+# -> docs/work-inventory.json | 2 +-   (1 insertion, 1 deletion)
+grep -n generated_at docs/work-inventory.json | head -2
+# -> 2:  "generated_at": "2026-08-11T00:18:38Z",
+```
+
+One changed line, and it is `generated_at`. That is the item-4 second-run property demonstrated by
+the cycle itself. No book's units move (this card ingests nothing), which is the expected shape for
+a pre-launch card.
+
+### Step 1b — every figure re-derived, not transcribed
+
+The opening pass's `corpus-shape-37-books.md` was treated as a prior cycle's output, i.e. as
+something to check. Twelve spot-checks were re-run against a freshly regenerated inventory and the
+live `pcgen` tree; the commands and both passes' results are tabulated in that file's new **§8**.
+
+| spot-check | result |
+|---|---|
+| denominator (37 books / 38,517 units / 2,253 proven) | reproduced ✅ |
+| per-kind remaining, **all ten** lane kinds | reproduced, all ten ✅ |
+| `feat` `deferred-with-reason` = 2 | reproduced ✅ |
+| monster-bearing books = 14, total 1,270 | reproduced ✅ |
+| books with empty `reconciliation` = 24 | reproduced ✅ |
+| space-in-filename pcc (`bestiary_6/_bestiary_6 _for_players.pcc`) | reproduced ✅ |
+| `SOURCESHORT:B1` × 3, third in `bestiary/_pfs/` | reproduced ✅ |
+| `_pfs/` subtrees = 12 | reproduced ✅ |
+| B2 races 322 = 314 + 8 `.COPY=` | reproduced ✅ |
+| zero-byte `.lst` in B1-B4 = 7 | reproduced ✅ |
+| `PRECAMPAIGN` inside the gated `.lst` files = 0 (gate is on the pcc load line) | reproduced ✅ |
+| gated support files | **sharpened — see below** |
+
+**Zero disagreements.** No Hard-stop "a figure derived this cycle disagrees with a figure recorded
+in this package" case arose.
+
+**One sharpening (correction event emitted).** The shape note's command for the conditional
+cross-book support files was `grep -rn '_ma.lst\|_oa.lst' --include='*.pcc' bestiary_4 bestiary_5`,
+which returns **10 lines** for **6 distinct files** (2 `_ma` + 4 `_oa`) — the pcc load line and a
+later reference both match the same file. A lane transcribing "10" as a file count would be wrong.
+Fixed in both `loop-instruction.md` and `corpus-shape-37-books.md` §5/§8 with the distinct-file
+form: `grep -rho '[a-z0-9_/]*_\(ma\|oa\)\.lst' --include='*.pcc' bestiary_4 bestiary_5 | sort -u`
+→ **6**.
+
+### Findings carried from the opening pass (verified, now committed)
+
+All three stand after re-derivation and are now on the branch rather than living untracked:
+
+1. **`equipment` remaining 1,163 → 1,144.** The old figure counted the *excluded* `beginner_box`'s
+   19 units. Fixed in `kanban.md` card `epic-4-proven-equip-mod`.
+2. **`feat` 1,350 → 1,348 + 2 `deferred-with-reason`.** A predicate difference, not an arithmetic
+   error — stated explicitly rather than silently reconciled.
+3. **`inner_sea_bestiary` / `inner_sea_world_guide` are in scope and are not stubs.**
+   `loop-instruction.md` called them out-of-scope adjacents and the former a "pcc+jpg stub"; both
+   halves were wrong after `decisions.md §38`'s corpus-wide re-scope. `inner_sea_bestiary` holds 7
+   `.lst` + a `_pfs/` subtree, 234 units of which **40 are `monster`**, 473 trap hits.
+
+**Dispatch-relevant finding for every downstream lane:** `reconciliation` is empty for **24 of the
+37** books, because the inventory computes it only for books its *own* `scope` field labels
+`in_scope` (13 books, 94 rows). That label is the generator's scope, not SD-29's. Lanes touching
+those 24 must derive their own corpus-vs-engine delta and **must not read a missing
+`reconciliation` as "no delta"**.
+
+### DoD items 5-8
+
+- **Item 5 (four-check wired-integration audit):** clean, vacuously — this cycle adds no code path,
+  no handler, and no production data path. Its entire diff is documentation plus a regenerated
+  generated artifact.
+- **Item 6 (`OPEN_FINDINGS`):** unchanged, deliberately. The eight standing entries
+  (`beastiary1/race_traits` + seven `<book>/archetypes`) are left exactly as-is per DoD item 6;
+  `beastiary1/race_traits` is expected to retire in Epic 5's Monster Codex batch, and the seven
+  archetype entries belong to SD-30.
+- **Item 7 (baseline movements):** **none made, deliberately.** `verify.sh` again reported the four
+  known drifts (`ROOT_LIB_TESTS` 1488→1600, `ROOT_FULL_TESTS` 5996→6128, `ROOT_TEST_BINARIES`
+  536→537, `CLIPPY_WARNINGS_ROOT` ceiling 75 vs 54 measured). These are **notes, not failures**;
+  they pre-date this cycle (SD-28's landing); and item 7 requires a *separate reviewable commit
+  carrying `--show-actuals`*. Per the standing instruction, Epic 9 or Epic 10 owns that commit and
+  every other card leaves them alone. **Left alone. Followup stands.**
+- **Item 8 (on-screen desktop verification):** **N/A, and this is a real N/A rather than a skip.**
+  The item is conditional on a record family *this cycle newly surfaced* that is player-visible.
+  This cycle surfaces none — it ingests nothing and changes no player-reachable path. `driver.sh`
+  was therefore not invoked and `RUN_DESKTOP_AGENT` was not needed. A screenshot here would prove
+  nothing, which is the ceremony the twin-trap guidance exists to prevent, not an instance of it.
+  **Every content lane (Epics 4-7) still owes item 8 in full.**
+
+### Judgment calls taken under unattended mode (default-and-flag, no operator asked)
+
+1. **Kept the opening pass's claim rather than re-claiming.** Resuming, not restarting; the card
+   moved `IN-FLIGHT` → `COMPLETE` by this pass.
+2. **Did not commit two other actors' retro shards** left dirty in the shared checkout:
+   `docs/retro/events/codex.jsonl` and `docs/retro/events/sd29-e1-identifier.jsonl` (both modified
+   by sibling sessions), and untracked `docs/retro/events/sd29-preflight.jsonl` (actor
+   `sd29-preflight`, not this actor). Same call Epic 1 made. Only this actor's own shard is
+   committed. `git status --porcelain` was re-run before every git write; no `git add -A`, no
+   `git stash`.
+3. **Committed the opening pass's derivation as-is plus a §8 verification appendix**, rather than
+   rewriting it — the derivation reproduced exactly, so rewriting would have destroyed the audit
+   trail of two independent passes agreeing.
+
+### Retro events (`docs/retro/events/sd29-e2-prelaunch.jsonl`)
+
+Opening pass: 3 × `correction` (the two shape-note errors + the `equipment` 1,163→1,144 kanban
+figure), 1 × `deferral` (derive reconciliation for the 24 books the inventory does not cover),
+1 × `incident` (ran out of turn mid-`root-full`), 2 × auto-emitted `verification`.
+Closing pass: 1 × `correction` (the 10-lines-vs-6-files sharpening, `--verified-by` both commands
+and both counts), plus auto-emitted `verification` events from the `--only preflight-disk` run and
+the full green gate.
+
+### Gate for the rest of the bundle
+
+**Epic 2 is COMPLETE.** The pre-launch checklist is green and the corpus-wide 37-book shape is
+derived, committed, and independently re-verified. This unblocks `epic-3-provenance` (Order 3),
+which is the sole gate in front of every content lane (Epics 4-7). `epic-9-version` (Order 13) was
+already unblocked by Epic 1.

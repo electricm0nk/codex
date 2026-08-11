@@ -139,7 +139,10 @@ if the corpus tree has moved since 2026-08-02.
   `bestiary_*.pcc` or `_*.pcc` alone.
 - **`SOURCESHORT` is not unique per book:** B1 alone has three pccs carrying
   `SOURCESHORT:B1` (main, `_for_players`, `_pfs`) — key ingest on pcc path or
-  `CAMPAIGN` name, not `SOURCESHORT`.
+  `CAMPAIGN` name, not `SOURCESHORT`. **Sharpened 2026-08-10 (Epic 2):** the
+  third is `bestiary/_pfs/_.pcc`, in a *subdirectory* — a flat `<book>/*.pcc`
+  glob finds only two. 12 books carry a `_pfs/` subtree; recurse or miss it
+  (`grep -rl 'SOURCESHORT:B1' --include='*.pcc' .`).
 - **`*_races_pc.lst` files are `.MOD` overlays** onto races defined in
   Core/ARG — updates to existing records, not new monsters (e.g. B2's entire
   `b2_races_pc.lst` is 7 `.MOD` lines).
@@ -150,7 +153,15 @@ if the corpus tree has moved since 2026-08-02.
 - **Conditional cross-book support files:** `bestiary_4/support/*_ma.lst`
   load only under Mythic Adventures, `bestiary_5/support/*_oa.lst` only
   under Occult Adventures (`PRECAMPAIGN`-gated) — file-by-file ingest pulls
-  them unconditionally and mis-attaches content.
+  them unconditionally and mis-attaches content. **Sharpened 2026-08-10
+  (Epic 2):** the gate is on the **pcc load line**
+  (`ABILITY:support/b5_feats_oa.lst|PRECAMPAIGN:1,Occult Adventures`), not
+  inside the `.lst`. `grep PRECAMPAIGN` over those `.lst` files returns **0**;
+  a lane that checks the file for its own gate concludes, wrongly, that it is
+  ungated. 2 `_ma` + 4 `_oa` files — **count distinct files, not grep lines**:
+  `grep -rho '[a-z0-9_/]*_\(ma\|oa\)\.lst' --include='*.pcc' bestiary_4 bestiary_5 | sort -u`
+  → **6**, whereas `grep -rn '_ma.lst\|_oa.lst' ... | wc -l` → **10** (the pcc
+  load line and a later reference both match the same file).
 - **B3's pcc `INCLUDE` lines reach into** `../ultimate_combat/` and
   `campaign_setting/inner_sea_gods/` — naive pcc-following drags other books
   in.
@@ -164,9 +175,17 @@ if the corpus tree has moved since 2026-08-02.
   monsters, 4 `.lst`); monster_codex is per-record-family (72
   class_features, 32 feats, 24 spells, 45 equipment, 15 companions, 2
   monsters; 18 `.lst` + `support/`).
-- **Out-of-scope adjacents:** `inner_sea_bestiary/` (pcc+jpg stub) and
+- ~~**Out-of-scope adjacents:** `inner_sea_bestiary/` (pcc+jpg stub) and
   `inner_sea_world_guide`'s `iswg_races_bestiary.lst` are NOT in this
-  bundle — do not pull by accident.
+  bundle — do not pull by accident.~~ **CORRECTED 2026-08-10 (Epic 2,
+  `corpus-shape-37-books.md` §4.2).** Both statements were wrong once
+  `decisions.md §38` re-scoped the bundle corpus-wide. (a) **Scope:**
+  `../corpus-work-channels.md §10.2` excludes exactly one book,
+  `beginner_box`; `inner_sea_bestiary` and `inner_sea_world_guide` are both
+  among the 37. (b) **"pcc+jpg stub" is false:** `inner_sea_bestiary/` holds
+  7 `.lst` files plus a `_pfs/` subtree, **234 units of which 40 are
+  `monster`**, and 473 trap hits over 7 files. `inner_sea_world_guide` holds
+  376 units / 14 monsters. Both are Epic 5 lane inputs, not adjacents.
 
 ## Retrospective log
 
