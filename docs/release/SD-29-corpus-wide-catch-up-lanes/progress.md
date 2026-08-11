@@ -1082,3 +1082,162 @@ actor's own shard is committed. `scripts/reclaim.sh --apply` run at cycle end an
 
 1 × `deferral` (the DM Toolkit extension, with the criterion that failed, the revisit condition, and
 the C3.1 tracking pointer), plus `verify.sh`'s auto-emitted `verification` event.
+
+---
+
+## Cycle SD29-E9-F1-001 — `epic-9-version` (Build Version Numbering)
+
+**Actor:** `sd29-e9-version` · **Branch:** `tranche/9` · **Branch tip at claim:** `4d85eb00`
+**Card:** `epic-9-version` (kanban Order 13) · **PR-id:** none (direct commit to `tranche/9`, pre-authorized)
+**Cycle-type:** version stamp — no corpus content, no new record families
+**Commits:** `ebc5c25a` `feat(sd29): stamp the tranche/9 build version 0.9.<build>` ·
+`e14c4307` `chore(sd29): move four verify baselines to the measured actuals` (the separate
+reviewable baseline commit DoD item 7 requires)
+
+### 1. What this card had to produce, and what it actually produced
+
+`decisions.md §14` / `epic-breakdown.md` SD29-E9-F1: the bundle's first concrete build value is
+`0.9.<build>`, major stays `0` until first main-publish, and `<build>` is the monotonic
+`GITHUB_RUN_NUMBER` — never a literal. The standing policy is that a *release* is stamped at
+publish time; the repo carries the tranche's `.0` placeholder, not a bumped build number. The
+tranche digit advances only on a NEW `tranche/N` branch cut — `tranche/9` is exactly that, which is
+what authorizes this advance (and is why SD-22's Epic 7 bump-at-own-closure was reverted).
+
+Landed as one invariant, moved together:
+
+- **Repo version files** `0.8.0 -> 0.9.0`: `apps/desktop/package.json`,
+  `apps/desktop/src-tauri/tauri.conf.json`, `apps/desktop/src-tauri/Cargo.toml`, **and**
+  `apps/desktop/src-tauri/Cargo.lock`'s `codex-desktop` entry. The lock entry is a fourth file the
+  architecture doc never named; leaving it behind breaks every `--locked` build.
+- **Publish stamp** `.github/workflows/publish-tester-release.yml:97` —
+  `VERSION="0.9.${GITHUB_RUN_NUMBER}"`, plus a comment paragraph recording *why* the digit moved.
+  Still exactly one stamp site; the build position still comes from the run counter.
+- **Build-label fixtures** — 7 files / 12 occurrences of `Codex 0.8.0-test` -> `Codex 0.9.0-test`,
+  and `buildLabelFixtureFreshness.test.ts`'s `STALE_LABEL` moved one bump behind to
+  `Codex 0.8.0-test` so it now catches a half-applied *this* bump.
+- **`docs/architecture/release-pipeline.md` §Version stamp** re-derived in full (§4 below).
+
+### 2. TDD — red first, for the intended reason
+
+All three anchors were moved to `0.9` **before** any version file changed:
+
+```
+apps/desktop $ ./node_modules/.bin/tsx src/release/buildVersionTriple.test.ts
+Error: version "0.8.0" must keep major=0, tranche=9 on tranche/9                    # exit 1
+apps/desktop $ ./node_modules/.bin/tsx src/releaseChecks/buildVersionTriple.test.ts
+Error: version "0.8.0" must keep major=0, tranche=9 on tranche/9                    # exit 1
+apps/desktop $ ./node_modules/.bin/tsx src/releaseChecks/buildLabelFixtureFreshness.test.ts
+Error: src/testerWorkbench/loadTesterWorkbenchSurface.test.ts must carry the current
+       tranche's build-label fixture "Codex 0.9.0-test"                             # exit 1
+```
+
+Green after the bump, together with the six other fixture-carrying files (9 files run
+individually, 9 PASS), and then again inside the full gate's `frontend-test` stage (98/98 files).
+
+### 3. Re-derived figures (command first, value second — nothing transcribed)
+
+| Figure | Command | Value |
+|---|---|---|
+| repo version triple, before | `node -p "require('./apps/desktop/package.json').version"`; same for `src-tauri/tauri.conf.json`; `grep -n '^version' apps/desktop/src-tauri/Cargo.toml` | `0.8.0` on all three |
+| 4th file carrying the triple | `grep -n -A1 'name = "codex-desktop"' apps/desktop/src-tauri/Cargo.lock` | `version = "0.8.0"` at `Cargo.lock:479` |
+| workflow stamp, before | `grep -n 'VERSION="0\.' .github/workflows/publish-tester-release.yml` | `0.8.${GITHUB_RUN_NUMBER}`, line 92 pre-edit / 97 post-edit |
+| build counter — the `<build>` in `0.9.<build>` | `gh run list --workflow publish-tester-release.yml --limit 3 --json number,createdAt,displayTitle` | latest run **122** (2026-08-10, "Merge pull request #359 from electricm0nk/tranche/8"). The next publish stamps **`0.9.123`**; the repo stays at the `0.9.0` placeholder. |
+| fixture-literal blast radius | `git grep -l '0\.9\.0-test' -- apps/desktop/src` → 7 files; occurrences cross-checked with `awk '{n+=gsub(/0\.9\.0-test/,"")} END{print n}' $(git grep -l '0\.9\.0-test' -- apps/desktop/src)` → 12 (`grep -o` is not trusted here per `AGENTS.md` §Concurrency and Measurement) | **7 files, 12 occurrences** — the freshness test names only 3 of them |
+| root lib / full / binaries / clippy | `./scripts/verify.sh --show-actuals` MEASURED block | 1604 / 6138 / 539 / root:54 desktop:7 |
+
+### 4. Corrections emitted (`docs/retro/events/sd29-e9-version.jsonl`)
+
+1. **`docs/architecture/release-pipeline.md` §Version stamp** (last verified 2026-07-22 against
+   tranche/5-3) was wrong four ways, each corrected in place: it claimed the three files sat at
+   `0.5.97` (they were at `0.8.0`); cited the stamp at line 71 (it is line 97); cited the guard test
+   as `releaseChecks/...` with `apps/desktop/src/sd21/...` as predecessor (`src/sd21/` no longer
+   exists — SD-29's function-based-naming sweep moved the fuller original to
+   `apps/desktop/src/release/buildVersionTriple.test.ts`); and never named `Cargo.lock`. The doc now
+   also records the tranche-advance history (`0.5 -> 0.7 -> 0.8 -> 0.9`) and the 7-file fixture
+   sweep, so the next bump does not rediscover either.
+2. **This cycle's own dispatch brief** (STANDING BASELINE NOTE) carried `1488->1600`,
+   `5996->6128`, `536->537`. Measured: **1604 / 6138 / 539**. Its clippy figure (54) was right.
+   Re-derived, not transcribed — which is the whole point of Cycle mechanics step 1b.
+
+### 5. Baselines — the separate reviewable commit (DoD item 7)
+
+`e14c4307`, code-free, carrying the `--show-actuals` MEASURED block verbatim. Four moved:
+`BASELINE_ROOT_LIB_TESTS` 1488→1604, `BASELINE_ROOT_FULL_TESTS` 5996→6138,
+`BASELINE_ROOT_TEST_BINARIES` 536→539 (floors, raised) and `BASELINE_CLIPPY_WARNINGS_ROOT` 75→**54**
+(a ceiling, *lowered* — paying down loose lint headroom, the safe direction). The other four
+already matched and were left alone. Epic 9 owns this commit for the bundle; every other card was
+told to leave the baselines standing, and this closes that standing followup.
+
+### 6. Judgment calls taken under unattended mode (default-and-flag, per loop-instruction item 1)
+
+- **`preflight-disk` floor overridden, deliberately and only after `reclaim.sh` was exhausted.**
+  The first full run failed `preflight-disk` (92% used / 41G free against a 90%-max, 20G-min
+  floor). `scripts/reclaim.sh` (dry run) then `--apply` freed nothing: every candidate came back
+  `SKIPPED (too young)`, `SKIPPED (forbidden path)`, `SKIPPED (checked out in a worktree)` or
+  `SKIPPED (unpushed commits)` — the guards were doing their job on a box running four concurrent
+  lane agents. Free space (41G) is **double** the 20G floor; only the percentage ceiling tripped,
+  because the disk is 484G. The gate's own message names
+  `PREFLIGHT_DISK_MIN_FREE_GB` / `PREFLIGHT_DISK_MAX_PERCENT` as the deliberate override, so the
+  re-run set `PREFLIGHT_DISK_MAX_PERCENT=95` with `PREFLIGHT_DISK_MIN_FREE_GB=20` left at the
+  recorded floor. **Evidence the risk did not materialise:** the *failing-preflight* run still
+  completed every other stage green, including `root-full` reporting
+  `all 522 tests/*.rs suites executed` — i.e. no truncated sweep, no `signal 7`. This is a
+  resource-budget guard on a shared box, not a finding about content or scope; it is flagged here
+  for operator review rather than folded in silently.
+- **DoD item 4 (`v06_work_inventory` regeneration) not run.** This card changed no corpus data —
+  its diff is version literals, TS fixture strings and docs — so the inventory cannot move, and
+  regenerating `docs/work-inventory.json` on a shared checkout would collide with the content lanes
+  that own it. Recorded as N/A-with-reason rather than as a pass.
+- **Duplicate guard test left in place, deferred not deduped.**
+  `apps/desktop/src/releaseChecks/buildVersionTriple.test.ts` is a weaker 51-line copy of the
+  120-line `apps/desktop/src/release/buildVersionTriple.test.ts` (it lacks the workflow-stamp
+  relationship checks). Both anchors were moved this cycle so neither can bless a mismatch, but the
+  duplication is a live drift hazard; `deferral` event emitted, revisit condition = Epic 10's
+  full-bundle review.
+- **On-screen driving (DoD item 8) not performed.** Item 8's trigger is "any record family whose
+  reach claim is player-visible"; this card surfaces **zero** record families. The version does
+  reach the UI (`app.package_info().version` → `formatWorkbenchBuildLabel`,
+  `apps/desktop/src/testerWorkbench/status/createWorkbenchStatus.ts:61-73`, rendered by
+  `App.tsx`'s `FeedbackEvidencePanel`), but proving the *rendered* string needs a full `tauri dev`
+  build, which on this box's disk/CPU contention is exactly the condition that just failed
+  `preflight-disk`. Flagged, not silently skipped.
+
+### 7. Gate result
+
+`./scripts/verify.sh --show-actuals` (FULL, exit code captured directly to a file, never through a
+pipe), `CARGO_TARGET_DIR=/home/ubuntu/workspace/.cargo-targets/sd29-e9-version`,
+`RETRO_ACTOR=sd29-e9-version`.
+
+Run 1 (`/tmp/codex-verify-q7vs7x`) — **`RESULT: FAIL`, 11 passed / 1 failed**, the single failure
+being `preflight-disk` per §6:
+
+```
+  passed:  11  pi-sweep audit-selftest root-lib root-full desktop reach
+               frontend-install frontend-test frontend-typecheck clippy class-dump
+  FAILED:  1   preflight-disk
+    PASS  root-lib   (1604 passed)
+    PASS  root-full  (6138 passed across 539 suites, all 522 tests/*.rs suites executed)
+    PASS  desktop    (413 passed)
+    PASS  reach      (16 passed)          <- DoD item 2: non-zero matched tests
+    PASS  frontend-test (98/98 files)
+    PASS  clippy     (root:54 desktop:7 warnings, 0 errors)
+    PASS  class-dump (31/31 computing)
+```
+
+Run 2 (`/tmp/codex-verify-WNb3h9`, same command with the documented disk override) is the
+exit-code-of-record; its result and exit code are recorded in the follow-up entry below.
+
+### 8. Git discipline
+
+`git status` before every git write; only this cycle's own paths staged by name (never `git add
+-A`); no `git stash` at any point. Three sibling agents held uncommitted retro shards in this
+shared checkout for the whole cycle (`docs/retro/events/{codex,sd29-e1-identifier,sd29-e8-toolkit}.jsonl`)
+— untouched. Those unstaged sibling files are also why `git pull --rebase` refused and the push to
+`origin/tranche/9` is pending: rebasing needs a clean tree and `git stash` is banned here. Both
+commits are on the local `tranche/9` and push as soon as the tree is clean.
+
+### Retro events (`docs/retro/events/sd29-e9-version.jsonl`)
+
+2 × `correction` (the architecture doc's stale version-stamp section; this brief's baseline
+figures), 1 × `deferral` (the duplicate `buildVersionTriple.test.ts`), plus `verify.sh`'s
+auto-emitted `verification` events.
