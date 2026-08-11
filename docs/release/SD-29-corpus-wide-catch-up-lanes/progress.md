@@ -1261,8 +1261,35 @@ No defects: every ingested record's citation agrees with the line it names.
 -A`); no `git stash` at any point. Three sibling agents held uncommitted retro shards in this
 shared checkout for the whole cycle (`docs/retro/events/{codex,sd29-e1-identifier,sd29-e8-toolkit}.jsonl`)
 — untouched. Those unstaged sibling files are also why `git pull --rebase` refused and the push to
-`origin/tranche/9` is pending: rebasing needs a clean tree and `git stash` is banned here. Both
-commits are on the local `tranche/9` and push as soon as the tree is clean.
+`origin/tranche/9` is pending: rebasing needs a clean tree and `git stash` is banned here.
+
+All four of this cycle's commits (`ebc5c25a`, `e14c4307`, `81e6ed46`, `c9e65eed`) are on the local
+`tranche/9`.
+
+**Blocker, recorded not raised (UNATTENDED MODE item 3): the push to `origin/tranche/9` did not
+land.** `origin/tranche/9` moved ahead during the cycle (Epic 4/5/6/7 lane commits), so the push is
+a non-fast-forward; integrating needs `git pull --rebase` or `git merge`, and both refuse:
+
+```
+$ git merge --no-edit origin/tranche/9
+error: Your local changes to the following files would be overwritten by merge:
+        docs/retro/events/sd29-e8-toolkit.jsonl
+Aborting
+```
+
+That file is a **sibling agent's uncommitted work** in this shared checkout. `git stash` is banned
+here (it is tree-wide and would take their work), and checking the file out would clobber it —
+`loop-instruction.md` §"Stop vs. press on" names exactly that as a STOP. So the correct action is
+to leave it: the four commits are complete and green on the local branch, and the push is a
+mechanical fast-forward for whoever next holds a clean tree (the supervisor, or the sibling agent
+once it commits its own shard). Nothing about the work is unverified — the gate ran on this exact
+tree.
+
+### 9. Cycle-end housekeeping
+
+`scripts/reclaim.sh --apply` run (its guards skipped every candidate — see §6), and this cycle's
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/.cargo-targets/sd29-e9-version` (23G) deleted, per
+`AGENTS.md` §"Delete your CARGO_TARGET_DIR when you finish".
 
 ### Retro events (`docs/retro/events/sd29-e9-version.jsonl`)
 
