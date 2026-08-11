@@ -6293,7 +6293,14 @@ mod tests {
         // equipmods (39 raw `uc_equipmods.lst` lines minus 20 VISIBLE:NO
         // .COPY= legacy aliases, the identical hazard UPsi's own table
         // found).
-        assert_eq!(offered.len(), 1082, "the picker's real offered-row count");
+        // SD-29 `epic-4-proven-equip-mod`: +584 corpus gap-lane Equipmods rows
+        // (CRB 332 + UPsi 113 + ACG 48 + APG 37 + UC 20 + ARG 14 + UE 10 + UI 7
+        // + UW 3), every one of them an `equipment_modifier` unit
+        // `docs/work-inventory.json` reported `not-ingested` until this cycle.
+        // The point of this test is the assertion BELOW, not this count: an
+        // offered row the attach gate refuses is a dead affordance, and 584
+        // newly offered rows is 584 new chances to ship one.
+        assert_eq!(offered.len(), 1666, "the picker's real offered-row count");
 
         let refused: Vec<&str> = offered
             .iter()
@@ -6388,7 +6395,7 @@ mod tests {
             "the widening must not add a display-vs-charge divergence outside the two named books"
         );
         assert_eq!(
-            priced_non_crb, 116,
+            priced_non_crb, 129,
             "the 20 rows from the ACG/ARG widening (ACG 11 + ARG 9), plus 69 real non-zero-priced \
              UE equipmods (75 UE equipmod rows carry a real cost, 6 of them Some(0.0) and so \
              excluded here), plus 1 more: `Masterwork Tool`'s own resolved row is UE's 50 gp \
@@ -6396,7 +6403,11 @@ mod tests {
              24 real non-zero-priced UPsi equipmods (of 113, the rest are `None` or `Some(0.0)`; \
              UM contributes none, it has no equipment-modifier file), plus 2 real non-zero-priced \
              UC equipmods (Dry Load COST:30, Throwing Shield COST:50; of 19, the rest are `None` \
-             or `Some(0.0)`), every one a row a recognition-only fix would have attached for free"
+             or `Some(0.0)`), every one a row a recognition-only fix would have attached for free, \
+             plus 13 from SD-29's corpus gap lane -- of its 584 newly offered non-CRB Equipmods \
+             rows only 13 carry a real non-zero `COST:` token, the rest being `None` (no COST \
+             token, or a PCGen formula the table does not evaluate) or `Some(0.0)`, which is the \
+             ordinary shape of an equipment MODIFIER and not a gap in the ingest"
         );
     }
 
@@ -7110,7 +7121,10 @@ mod tests {
             list_feats_for_character_at_root(&root, &crate::feat_catalog::FeatCatalogFilter::default())
                 .expect("listing should succeed");
 
-        assert_eq!(response.entries.len(), 1578, "no record may be filtered away");
+        // 1578 hand-authored + the 83 corpus gap rows. This is the character
+        // sheet's own feat list, so this number moving is the evidence that
+        // the gap lane's rows reach a player and not only a table.
+        assert_eq!(response.entries.len(), 1661, "no record may be filtered away");
         for entry in &response.entries {
             let eligibility = entry
                 .eligibility
@@ -7155,7 +7169,7 @@ mod tests {
     #[test]
     fn the_character_less_catalog_sends_no_eligibility_key() {
         let response = crate::feat_catalog::build_feat_catalog();
-        assert_eq!(response.entries.len(), 1578);
+        assert_eq!(response.entries.len(), 1661);
         assert!(response.entries.iter().all(|entry| entry.eligibility.is_none()));
         let json = serde_json::to_string(&response.entries[0]).expect("serialises");
         assert!(!json.contains("eligibility"), "{json}");

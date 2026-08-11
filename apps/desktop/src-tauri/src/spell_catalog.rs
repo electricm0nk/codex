@@ -51,6 +51,7 @@ use serde::{Deserialize, Serialize};
 
 use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{acg, advanced_race_guide, apg, crb, ultimate_intrigue};
+use codex::rules_core::spell_resolver;
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form; the frontend maps them to display labels.
@@ -172,17 +173,25 @@ pub struct SpellCatalogResponse {
 /// testable wrapper behind the Tauri command below (mirroring
 /// `equipment_catalog`'s own command/pure-fn split).
 pub fn build_spell_catalog() -> SpellCatalogResponse {
-    let entries = crb::spell_list::SPELL_LIST
+    // SD-29 Epic 4 (spell lane): the five per-book chains this function used
+    // to spell out inline now live in
+    // `codex::rules_core::spell_resolver::spell_catalog_rows()`, shared with
+    // `v06_work_inventory`'s `spell_levels` map. Those two lists had drifted
+    // (five books here, three there), which reported every shipping ARG and
+    // UI spell as `not-ingested`. Reading one registry is what makes that
+    // divergence unrepresentable; the per-book `map_*_entry` helpers below
+    // are retained as the typed proof that each book's own table supplies
+    // exactly the fields this DTO claims (see their doc comments and the
+    // `mapping_helpers_agree_with_the_registry` test).
+    let entries = spell_resolver::spell_catalog_rows()
         .iter()
-        .map(map_crb_entry)
-        .chain(apg::spell_list::SPELL_LIST.iter().map(map_apg_entry))
-        .chain(acg::spell_list::SPELL_LIST.iter().map(map_acg_entry))
-        .chain(
-            advanced_race_guide::spell_list::SPELL_LIST
-                .iter()
-                .map(map_arg_entry),
-        )
-        .chain(ultimate_intrigue::spell_list::SPELL_LIST.iter().map(map_ui_entry))
+        .map(|row| SpellCatalogEntryDto {
+            key: row.key.to_string(),
+            book: row.book.to_string(),
+            school: row.school.clone(),
+            level: row.level,
+            description: row.description.map(serve_description),
+        })
         .collect();
     SpellCatalogResponse { entries }
 }
@@ -259,6 +268,33 @@ mod tests {
             .into_iter()
             .filter(|entry| entry.book == book)
             .collect()
+    }
+
+    /// The consolidation must be payload-identical to the five hand-chained
+    /// `map_*_entry` calls it replaced. Each helper is still the typed,
+    /// per-book statement of which fields that book genuinely supplies
+    /// (CRB/ACG/ARG/UI non-optional, APG optional); this test asserts the
+    /// registry reproduces all five exactly, so the helpers are the proof
+    /// rather than a second implementation that could drift.
+    #[test]
+    fn mapping_helpers_agree_with_the_registry() {
+        let expected: Vec<SpellCatalogEntryDto> = crb::spell_list::SPELL_LIST
+            .iter()
+            .map(map_crb_entry)
+            .chain(apg::spell_list::SPELL_LIST.iter().map(map_apg_entry))
+            .chain(acg::spell_list::SPELL_LIST.iter().map(map_acg_entry))
+            .chain(advanced_race_guide::spell_list::SPELL_LIST.iter().map(map_arg_entry))
+            .chain(ultimate_intrigue::spell_list::SPELL_LIST.iter().map(map_ui_entry))
+            .collect();
+        let actual = build_spell_catalog().entries;
+        assert_eq!(actual.len(), expected.len());
+        for (a, e) in actual.iter().zip(expected.iter()) {
+            assert_eq!(a.key, e.key);
+            assert_eq!(a.book, e.book);
+            assert_eq!(a.school, e.school);
+            assert_eq!(a.level, e.level);
+            assert_eq!(a.description, e.description);
+        }
     }
 
     #[test]

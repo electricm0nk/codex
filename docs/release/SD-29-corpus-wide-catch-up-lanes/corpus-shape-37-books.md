@@ -118,13 +118,31 @@ PY
 | `monster_ability` | 3,107 | 3,107 | 3,107 | ✅ |
 | `race` | 103 | 96 | 96 | ✅ |
 | `race_trait` | 3,456 | 3,412 | 3,412 | ✅ |
-| `spell` | 2,843 | 1,754 | 1,754 | ✅ |
+| `spell` | 2,843 | ~~1,754~~ **1,561** | 1,754 | ❌ **inflated by 193** |
 
-Two corrections, both fixed in `kanban.md` by this cycle:
+Two corrections were fixed in `kanban.md` by the Epic 2 cycle that authored this table; a third
+(`spell`) was found later, by the lane that consumed the figure, and is listed first because it is
+the one this table itself got wrong rather than the card:
 
 - **`equipment` 1,163 → 1,144.** The 1,163 figure counted `beginner_box`'s 19 `equipment` units,
   which are the *excluded* book. Verified: `beginner_box` carries exactly `{'equipment': (19,
   {'not-started': 19})}` and nothing else, and 1,163 − 1,144 = 19.
+- **`spell` 1,754 → 1,561** (added 2026-08-11 by cycle `SD29-E4-F1-001`, the `epic-4-proven-spell`
+  lane). Not an arithmetic error and not a predicate difference — the inventory itself was wrong.
+  `v06_work_inventory::gather_engine_facts` built its `spell_levels` map from three hand-written
+  `.insert()` calls (`core_rulebook`/`advanced_players_guide`/`advanced_class_guide`) while the
+  shipped desktop `spell_catalog::build_spell_catalog` chained **five** books, adding ARG and UI.
+  So 192 spells that were already ingested *and already served on screen* were counted as remaining
+  work. This is Decision 36's two-lists-one-fact pattern, at the same place SD-28-E15 had already
+  fixed it for `equipment` — the equipment map sits four lines below the spell map in the same
+  function, carrying a doc comment describing this exact defect. Both consumers now read one
+  registry (`spell_resolver::spell_catalog_rows()`). Re-derived by regenerating
+  `docs/work-inventory.json` and diffing per book/kind against `git show HEAD:docs/work-inventory.json`:
+  `advanced_race_guide` spell `{'not-ingested': 93}` → `{'ingested-magnitude': 92, 'not-ingested': 1}`,
+  `ultimate_intrigue` spell `{'not-ingested': 101}` → `{'ingested-magnitude': 101}`, and **no other
+  book/kind pair moved**. The one surviving ARG unit is `Fins to Feet (self only)`
+  (`arg_spells.lst:230`), a `.COPY=` delta row whose `CLASSES:.CLEARALL` leaves the corpus stating
+  no level for it — recorded, not invented.
 - **`feat` 1,350 → 1,348 + 2 `deferred-with-reason`.** Not an error in the total, a predicate
   difference: `feat` is the only kind in the 37 with `deferred-with-reason` units outside
   `class_feature` (2 of them). Stated explicitly rather than silently reconciled.

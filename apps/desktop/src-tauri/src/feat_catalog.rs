@@ -329,7 +329,11 @@ mod tests {
         // or DESC + the deferral diagnostic for UCA's 2 corrupted records),
         // so all 127 add to `with_description` rather than the no-DESC:
         // bucket.
-        assert_eq!(with_description, 1565, "13 of the 1578 records carry no served description -- unchanged by UPsi, whose 221 records all carry real DESC:/BENEFIT: text");
+        // +65 with the 83 corpus gap rows joined on (2026-08-11): 18 of them
+        // carry neither a `DESC:` nor a `BENEFIT:` token in the corpus and
+        // are served with no description rather than a fabricated one, which
+        // is why this moves by 65 and not by 83.
+        assert_eq!(with_description, 1630, "31 of the 1661 records carry no served description -- 13 hand-authored plus the 18 corpus gap rows whose records carry neither DESC: nor BENEFIT:");
         // 17 of the original 690 + UCA's `Battlefield Healer` + 10 UI
         // records: 5 carry a literal `%%` escape (`Eye for Ingredients`,
         // `Planar Wanderer`, `Structural Strike`, `Subtle Enchantments`,
@@ -342,8 +346,16 @@ mod tests {
         // each for the player, the same treatment CRB's own leaking rows
         // already get.
         changed.sort_unstable();
-        assert_eq!(raw_leaks, 185, "the raw tables' own leak count, unchanged by this mapper");
-        assert_eq!(changed.len(), 185, "exactly the leaking records are rewritten");
+        // 185 hand-authored + 5 corpus gap rows whose own `DESC:`/`BENEFIT:`
+        // text carries PCGen syntax (`Empower Spell-Like Ability ~ Ability`
+        // and `~ Spell` and `Hover` carry a literal `%%` escape,
+        // `Mother's Gift ~ Uncanny Resistance` an unsubstituted `%1` plus a
+        // raw `|TL+6` tail, `Feral Combat Training` a raw `|`). Every one is
+        // rewritten by `render_pcgen_desc` and confirmed leak-free by this
+        // same test's per-record assertion above — a raw-corpus-shape count,
+        // not a new player-visible leak.
+        assert_eq!(raw_leaks, 190, "the raw tables' own leak count, unchanged by this mapper");
+        assert_eq!(changed.len(), 190, "exactly the leaking records are rewritten");
         // 28 pre-existing (CRB/UCA/UI) + 35 UW + 74 UC + 14 UM + 34 new
         // UPsi records. Every served description for all 185 is
         // confirmed leak-free by this same test's per-record
@@ -406,6 +418,9 @@ mod tests {
                 "Earth Child Topple",
                 "Eidolon Mount",
                 "Empower Power",
+                // corpus gap rows (core_essentials, via CRB):
+                "Empower Spell-Like Ability ~ Ability",
+                "Empower Spell-Like Ability ~ Spell",
                 "Energized Wild Shape",
                 "Expert Cartographer",
                 "Extended Bane",
@@ -415,6 +430,9 @@ mod tests {
                 "False Trail",
                 "Fear's Reach",
                 "Feign Curse",
+                "Feral Combat Training",
+                // twice: UC's own record, and UPsi's corpus reprint of it
+                // (`up_feats.lst` says so in its own comment).
                 "Feral Combat Training",
                 "Field Repair",
                 "Final Embrace",
@@ -434,6 +452,7 @@ mod tests {
                 "Hex Strike",
                 "Hide Worker",
                 "Horse Master",
+                "Hover",
                 "Impact Critical Shot",
                 "Improved Beast Hunter",
                 "Improved Charging Hurler",
@@ -456,6 +475,7 @@ mod tests {
                 "Monkey Style",
                 "Moonlight Stalker Feint",
                 "Moonlight Stalker Master",
+                "Mother's Gift ~ Uncanny Resistance",
                 "Mutated Shape",
                 "Nerve-Racking Negotiator",
                 "Net Adept",
@@ -543,40 +563,87 @@ mod tests {
         );
     }
 
+    /// Every corpus gap row reaches the served catalog, under its own book's
+    /// wire `source`.
+    ///
+    /// This is the claim the count assertions cannot make on their own: a
+    /// total moving by 83 proves 83 rows arrived somewhere, not that *these*
+    /// 83 arrived, nor that they arrived attributed to the right book. Asserted
+    /// per row against `build_feat_catalog()` — the same function
+    /// `list_feat_catalog` and the sheet's Add Feat picker call — so a row
+    /// that the projection dropped or misfiled fails here by name.
+    #[test]
+    fn catalog_serves_every_corpus_gap_row() {
+        use codex::rules_core::rules_tables::feat_gap_tables::feat_gap_rows_for;
+        use codex::rules_core::rules_tables::feats_all::hand_authored_feat_tables;
+
+        let response = build_feat_catalog();
+        let mut total = 0usize;
+        for book in hand_authored_feat_tables() {
+            let source = format!("{:?}", book.rule_set);
+            let served: std::collections::BTreeSet<&str> = response
+                .entries
+                .iter()
+                .filter(|e| e.source == source)
+                .map(|e| e.key.as_str())
+                .collect();
+            for row in feat_gap_rows_for(book.rule_set) {
+                total += 1;
+                assert!(
+                    served.contains(row.key),
+                    "gap row '{}' is missing from the served catalog under source {source}",
+                    row.key
+                );
+            }
+        }
+        assert_eq!(total, 83, "the feat gap lane is 83 rows");
+    }
+
     #[test]
     fn catalog_spans_every_ingested_book_with_their_real_counts() {
         let response = build_feat_catalog();
         assert_eq!(
             response.entries.len(),
-            1578,
-            "185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi"
+            1661,
+            "1578 hand-authored (185 CRB + 172 APG + 129 ACG + 187 ARG + 17 PU + 23 UCA \
+             + 104 UI + 135 UW + 261 UC + 144 UM + 221 UPsi) + 83 corpus gap rows. \
+             Each per-source count below is that book's hand-authored figure \
+             plus its gap rows; the rows themselves are asserted by key in \
+             `catalog_serves_every_corpus_gap_row`."
         );
 
         let by_source =
             |source: &str| response.entries.iter().filter(|e| e.source == source).count();
-        assert_eq!(by_source("Crb"), 185);
-        assert_eq!(by_source("Apg"), 172);
-        assert_eq!(by_source("Acg"), 129);
-        assert_eq!(by_source("Arg"), 187);
-        assert_eq!(by_source("Pu"), 17);
-        assert_eq!(by_source("Uca"), 23);
-        assert_eq!(by_source("Ui"), 104);
-        assert_eq!(by_source("Uw"), 135);
-        assert_eq!(by_source("Uc"), 261);
-        assert_eq!(by_source("Um"), 144);
-        assert_eq!(by_source("Upsi"), 221);
+        // `<hand-authored> + <corpus gap rows>` per book. CRB's 16 include
+        // the 15 `core_essentials` records: that shared library has no rule
+        // set of its own and `core_rulebook.pcc` includes it unconditionally,
+        // so CRB is the observed host.
+        assert_eq!(by_source("Crb"), 201, "185 + 16");
+        assert_eq!(by_source("Apg"), 172, "172 + 0");
+        assert_eq!(by_source("Acg"), 129, "129 + 0");
+        assert_eq!(by_source("Arg"), 235, "187 + 48");
+        assert_eq!(by_source("Pu"), 17, "17 + 0");
+        assert_eq!(by_source("Uca"), 23, "23 + 0");
+        assert_eq!(by_source("Ui"), 107, "104 + 3");
+        assert_eq!(by_source("Uw"), 136, "135 + 1");
+        assert_eq!(by_source("Uc"), 263, "261 + 2");
+        assert_eq!(by_source("Um"), 156, "144 + 12");
+        assert_eq!(by_source("Upsi"), 222, "221 + 1");
 
         let counts = |category: &str| {
             response.entries.iter().filter(|e| e.category == category).count()
         };
         // CRB 50 + APG 69 + ACG 62 + ARG 132 + PU 2 + UI 52 + UW 77 + UC 63
         // + UM 100 + UPsi 21, and so on per category.
-        assert_eq!(counts("General"), 627);
+        // + 22 corpus gap rows.
+        assert_eq!(counts("General"), 649);
         // CRB + APG + ACG + ARG 52 + UI 46 + UW 41 + UC 182 + UM 3 + UPsi 9,
         // and so on.
-        assert_eq!(counts("Combat"), 582);
+        // + 2 corpus gap rows.
+        assert_eq!(counts("Combat"), 584);
         // + UW 1 + UM 2 + UPsi 3.
-        assert_eq!(counts("ItemCreation"), 14);
+        // + 1 corpus gap row (`Craft Construct`, via core_essentials).
+        assert_eq!(counts("ItemCreation"), 15);
         // + UI 4 + UW 2 + UM 9.
         assert_eq!(counts("Metamagic"), 51);
         // + UI 2 + UW 3 + UC 7 + UM 1.
@@ -613,6 +680,33 @@ mod tests {
         assert_eq!(counts("Psionic"), 153);
         assert_eq!(counts("Metapsionic"), 35);
 
+        // The corpus gap rows' own facets. Unlike every category above,
+        // these are the corpus `TYPE:` token's first dot-segment verbatim
+        // rather than a per-book `FeatCategory` variant name — a gap row has
+        // no per-book table to take a variant from (see `feat_gap_tables`'
+        // module doc). 58 rows across 16 facets; the other 25 gap rows fall
+        // into `General`/`Combat`/`ItemCreation` above.
+        assert_eq!(counts("AngelicFleshOption"), 4);
+        assert_eq!(counts("BloodDrinkerType"), 12);
+        assert_eq!(counts("CatfolkExemplarOption"), 3);
+        assert_eq!(counts("DragonShamanBonus"), 1);
+        assert_eq!(counts("Extraordinary"), 2);
+        assert_eq!(counts("HeavenlyRadianceOption"), 5);
+        // `TYPE:Internal`, not the `CATEGORY:Internal` bookkeeping shape the
+        // enumerator excludes — these are real records carrying an Internal
+        // type facet, and `v06_work_inventory` counts them as units for the
+        // same reason.
+        assert_eq!(counts("Internal"), 2);
+        assert_eq!(counts("Kobold Scale Color"), 5);
+        assert_eq!(counts("MultitalentedMasteryBonus"), 2);
+        assert_eq!(counts("OrcWeaponExpertise"), 6);
+        assert_eq!(counts("SaurianShamanBonus"), 1);
+        assert_eq!(counts("SharkShamanBonus"), 1);
+        assert_eq!(counts("Special"), 1);
+        assert_eq!(counts("SpecialQuality"), 4);
+        assert_eq!(counts("Supernatural"), 6);
+        assert_eq!(counts("Umbral Scion Spell"), 3);
+
         let categorised: usize = [
             "General",
             "Combat",
@@ -633,6 +727,23 @@ mod tests {
             "Discovery",
             "Psionic",
             "Metapsionic",
+            // corpus gap-row facets
+            "AngelicFleshOption",
+            "BloodDrinkerType",
+            "CatfolkExemplarOption",
+            "DragonShamanBonus",
+            "Extraordinary",
+            "HeavenlyRadianceOption",
+            "Internal",
+            "Kobold Scale Color",
+            "MultitalentedMasteryBonus",
+            "OrcWeaponExpertise",
+            "SaurianShamanBonus",
+            "SharkShamanBonus",
+            "Special",
+            "SpecialQuality",
+            "Supernatural",
+            "Umbral Scion Spell",
         ]
         .iter()
         .map(|category| counts(category))

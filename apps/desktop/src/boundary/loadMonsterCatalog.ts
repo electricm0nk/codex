@@ -35,12 +35,18 @@ export type MonsterBookDto = string;
 export type DamageDiceSourceDto =
   | 'monsterRowToken'
   | 'corpusCrossReferenceToken'
-  | 'publishedText';
+  | 'publishedText'
+  | 'notInCorpus';
 
 export interface NaturalAttackDto {
   name: string;
-  /** The die expression only, with no Strength modifier. `"0"` is a real attack that deals no damage. */
-  damageDice: string;
+  /**
+   * The die expression only, with no Strength modifier. `"0"` is a real attack
+   * that deals no damage; `null` means the corpus states no dice at all
+   * (`damageDiceSource === 'notInCorpus'`) and the screen prints the attack's
+   * name alone rather than a stand-in.
+   */
+  damageDice: string | null;
   damageDiceSource: DamageDiceSourceDto;
   /**
    * The engine's own provenance sentence for a grounded attack, rendered
@@ -50,8 +56,33 @@ export interface NaturalAttackDto {
   groundingNote: string | null;
 }
 
+/** One movement mode from the row's `MOVE:` token. */
+export interface SpeedDto {
+  /** `"Walk"`, `"Fly"`, `"Swim"`, ... verbatim. */
+  mode: string;
+  feet: number;
+}
+
+/**
+ * One `monster_ability` record, served attached to the monster that owns it —
+ * the wire form of `corpus-work-channels.md` §9.2's ruling that a monster
+ * ability is to a monster what a race trait is to a race.
+ */
+export interface MonsterAbilityDto {
+  /** The corpus `KEY:` token, namespaced where the book namespaces it. Unique. */
+  key: string;
+  name: string;
+  /** `'SpecialAttack'` or `'SpecialQuality'`, verbatim from the row's `TYPE:`. */
+  facet: string;
+  /** `'Supernatural'` / `'Extraordinary'` / `'SpellLike'`, or `null`. */
+  delivery: string | null;
+  /** The row's rules text, or `null` where the corpus carries none. */
+  description: string | null;
+  sourcePage: string | null;
+}
+
 export interface MonsterCatalogEntryDto {
-  /** Canonical `beastiary1:monster:<slug>` key. Unique, so it is safe as a React list key. */
+  /** Canonical `<book>:monster:<slug>` key. Unique, so it is safe as a React list key. */
   key: string;
   book: MonsterBookDto;
   name: string;
@@ -69,6 +100,19 @@ export interface MonsterCatalogEntryDto {
   raceSubtype: string | null;
   sourcePage: string;
   naturalAttacks: NaturalAttackDto[];
+  /**
+   * Every movement mode on the row. A Bestiary 1 record carries the single
+   * land-speed pair `speedFt` already states (empty when it has none); a Bonus
+   * Bestiary record carries its whole `MOVE:` token, which is what keeps a
+   * fly-only creature from reading as "no speed".
+   */
+  speeds: SpeedDto[];
+  /** The `MONSTERCLASS:` token, or `null` for a book whose ingest did not capture it. */
+  monsterClass: string | null;
+  /** Empty for Bestiary 1, whose abilities are not ingested. */
+  abilities: MonsterAbilityDto[];
+  /** Ability names the row cites that its own book does not define. */
+  externalAbilityRefs: string[];
 }
 
 export interface MonsterCatalogResponse {

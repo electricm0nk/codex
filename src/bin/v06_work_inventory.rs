@@ -59,12 +59,14 @@ use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
+use codex::rules_core::rules_tables::bonus_bestiary;
 use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables,
     race_tables::{RaceId, race_traits},
     spell_list as crb_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::spell_resolver;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
 use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
@@ -217,6 +219,16 @@ fn file_kind(basename: &str) -> Option<Kind> {
         return Some(Kind::ClassFeature);
     }
     if basename.contains("_abilities_race") {
+        // ...but a companion/familiar marker anywhere else in the basename
+        // wins: `isi_abilities_race_companion.lst` and
+        // `b4_abilities_race_ce_companion.lst` hold the racial abilities of
+        // *companion creatures* (Clockwork Spy, Clockwork Familiar), not
+        // racial traits of a player race. Without this narrowing the bare
+        // `_abilities_race` substring claims them for `race_trait` before the
+        // companion checks below are ever reached.
+        if basename.contains("companion") || basename.contains("familiar") {
+            return Some(Kind::Companion);
+        }
         return Some(Kind::RaceTrait);
     }
     if basename.contains("_abilities_companion") || basename.contains("_abilities_familiar") {
@@ -869,6 +881,7 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Uc,
     RuleSetId::Um,
     RuleSetId::Upsi,
+    RuleSetId::BonusBestiary,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -890,6 +903,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
         RuleSetId::Upsi => "ultimate_psionics",
+        RuleSetId::BonusBestiary => "bonus_bestiary",
     }
 }
 
@@ -923,6 +937,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Uc => "ultimate_combat",
         RuleSetId::Um => "ultimate_magic",
         RuleSetId::Upsi => "ultimate_psionics",
+        RuleSetId::BonusBestiary => "bonus_bestiary",
     }
 }
 
@@ -946,11 +961,37 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         "UM" => "ultimate_magic",
         "UPSI" => "ultimate_psionics",
         "UC" => "ultimate_combat",
+        // SD-29 `epic-4-proven-equip-mod`: UW has no hand-authored equipment
+        // table; all 127 of its catalog rows come from
+        // `rules_tables::equipment_gap_tables`.
+        "UW" => "ultimate_wilderness",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \
              not silently drop the book (this is exactly the SD-28-E15 defect this function \
              replaces)"
+        ),
+    }
+}
+
+/// Translates one `spell_resolver::SPELL_BOOK_*` short code to the same
+/// book-directory slug `spell_levels`'s map is keyed by elsewhere in this
+/// file (`rule_set_id`'s own output). Panics on an unrecognized code rather
+/// than silently dropping the book from the spell classifier -- the failure
+/// mode this fix exists to replace, and the same guard shape
+/// `equipment_book_slug_for` above already carries. See
+/// `spell_book_slug_for_covers_every_catalog_book`.
+fn spell_book_slug_for(short_code: &str) -> &'static str {
+    match short_code {
+        "CRB" => "core_rulebook",
+        "APG" => "advanced_players_guide",
+        "ACG" => "advanced_class_guide",
+        "ARG" => "advanced_race_guide",
+        "UI" => "ultimate_intrigue",
+        other => panic!(
+            "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
+             -- add it to spell_book_slug_for so the spell classifier does not silently drop \
+             the book (this is exactly the divergence this function replaces)"
         ),
     }
 }
@@ -1013,6 +1054,16 @@ struct EngineFacts {
     equipment_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every Bestiary 1 monster that resolves to a real stat block, by name.
     monster_names: BTreeSet<String>,
+    /// Every Bonus Bestiary monster the engine holds, by lowercase corpus key.
+    /// Kept apart from `monster_names` rather than merged into it: the two
+    /// books' tables are independent, and a merged set would credit one book's
+    /// stat block to the other on a name collision -- the same book-gating
+    /// `holds_key` already applies to races and race traits.
+    bonus_bestiary_monster_keys: BTreeSet<String>,
+    /// Every Bonus Bestiary `monster_ability` the engine holds, by lowercase
+    /// corpus `KEY:` token. The key, never the display name: 6 of the 17 rows
+    /// carry a namespaced key whose leaf is not unique.
+    bonus_bestiary_monster_ability_keys: BTreeSet<String>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
@@ -1055,14 +1106,29 @@ impl EngineFacts {
             // module (`crb::race_tables`, `beastiary1`), so the book gate is
             // part of the fact -- without it a shared-library race would be
             // credited to whichever host happened to be tried first.
-            Kind::Monster => book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()),
+            Kind::Monster => match book {
+                "bestiary_1" => self.monster_names.contains(&name.to_lowercase()),
+                "bonus_bestiary" => self
+                    .bonus_bestiary_monster_keys
+                    .contains(&key.to_lowercase())
+                    || self.bonus_bestiary_monster_keys.contains(&name.to_lowercase()),
+                _ => false,
+            },
+            Kind::MonsterAbility => {
+                book == "bonus_bestiary"
+                    && (self.bonus_bestiary_monster_ability_keys.contains(&key.to_lowercase())
+                        || self
+                            .bonus_bestiary_monster_ability_keys
+                            .contains(&name.to_lowercase()))
+            }
             Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
+            // The record's OWN race gates this, not "any modelled race" --
+            // see `modelled_race_of_race_trait`.
             Kind::RaceTrait => {
                 book == "core_rulebook"
-                    && self
-                        .race_names
-                        .iter()
-                        .any(|r| self.race_trait_ids.contains(&format!("{r}.{}", slug(name))))
+                    && modelled_race_of_race_trait(key, &self.race_names).is_some_and(|race| {
+                        self.race_trait_ids.contains(&format!("{race}.{}", slug(name)))
+                    })
             }
             Kind::Class => self
                 .class_books
@@ -1417,6 +1483,38 @@ fn crb_class_name(class_id: ClassId) -> &'static str {
     }
 }
 
+/// The modelled race a `race_trait` record belongs to, or `None` when the
+/// record names no race the engine models.
+///
+/// A race trait's corpus key names its own race in a `~`-qualifier ahead of
+/// the trait name: `Blue ~ Keen Senses` -> `Blue`, and ARG's heritage form
+/// `Saltbeard ~ Dwarf ~ Greed` -> `Dwarf`. Grounding must be keyed on THAT
+/// race and never on "any race the engine models".
+///
+/// This is the fix for the name-coincidence defect
+/// (`docs/release/corpus-work-channels.md` §9.3, SD-28 §56). `race_trait_ids`
+/// is built solely from CRB's hardcoded `race_traits()` table, so the previous
+/// rule -- pair the record's trait slug with *every* name in `race_names` and
+/// ground on any hit -- let a non-CRB record reach `grounded` by coincidental
+/// NAME match alone. Ultimate Psionics' `Blue ~ Keen Senses` scored off the
+/// Elf's `elf.keen_senses`; `DuergarDSP ~ Hardy`, `DuergarDSP ~ Stability` and
+/// `Forgeborn ~ Fearless` did the same. None of those four races is modelled at
+/// all, so none of their traits is grounded by anything.
+///
+/// The TRAILING segment is the trait name, never the race, and is excluded
+/// from the search — otherwise a trait whose name happens to equal a race name
+/// would nominate itself. A key with no `~` separator names no race.
+fn modelled_race_of_race_trait<'a>(
+    key: &str,
+    race_names: &'a BTreeSet<String>,
+) -> Option<&'a String> {
+    let segments: Vec<&str> = key.split(" ~ ").collect();
+    segments[..segments.len().saturating_sub(1)].iter().find_map(|segment| {
+        let segment = segment.trim().to_lowercase();
+        race_names.iter().find(|race| **race == segment)
+    })
+}
+
 fn race_name(race: RaceId) -> &'static str {
     match race {
         RaceId::Human => "human",
@@ -1443,28 +1541,26 @@ fn gather_engine_facts(
         }
     }
 
+    // SD-29 Epic 4 (spell lane): this map used to be three hand-maintained
+    // `.insert()` calls (core_rulebook/apg/acg only) sitting beside
+    // `spell_catalog::build_spell_catalog`, which already chained FIVE books
+    // (adding ARG and UI). The two never being reconciled silently
+    // misreported every already-shipping ARG and UI spell as
+    // `not-ingested` -- Decision 36's pattern, the exact defect the
+    // `equipment_keys` map immediately below this one was rebuilt to close
+    // for equipment in SD-28-E15, reproduced one record family over.
+    // Derived directly from `spell_resolver::spell_catalog_rows()` now, so
+    // there is no second list left to diverge: adding a sixth book to the
+    // registry populates this map automatically, and an unmapped
+    // `SPELL_BOOK_*` code panics loudly here rather than silently vanishing
+    // (see `spell_book_slug_for` and its own test below).
     let mut spell_levels: BTreeMap<&'static str, BTreeMap<String, bool>> = BTreeMap::new();
-    spell_levels.insert(
-        "core_rulebook",
-        crb_spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), true))
-            .collect(),
-    );
-    spell_levels.insert(
-        "advanced_players_guide",
-        apg::spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), e.level.is_some()))
-            .collect(),
-    );
-    spell_levels.insert(
-        "advanced_class_guide",
-        acg::spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), true))
-            .collect(),
-    );
+    for row in spell_resolver::spell_catalog_rows() {
+        spell_levels
+            .entry(spell_book_slug_for(row.book))
+            .or_default()
+            .insert(row.key.to_string(), row.level.is_some());
+    }
 
     // SD-28-E15: this map used to be four hand-maintained `.insert()` calls
     // (core_rulebook/apg/acg/bestiary_1 only) sitting beside
@@ -1489,6 +1585,15 @@ fn gather_engine_facts(
         .iter()
         .filter_map(|&id| beastiary1::monster_resolve(id, RuleSetId::Bestiary1))
         .map(|b| b.name.to_lowercase())
+        .collect();
+
+    let bonus_bestiary_monster_keys: BTreeSet<String> = bonus_bestiary::monsters()
+        .iter()
+        .map(|m| m.key.to_lowercase())
+        .collect();
+    let bonus_bestiary_monster_ability_keys: BTreeSet<String> = bonus_bestiary::monster_abilities()
+        .iter()
+        .map(|a| a.key.to_lowercase())
         .collect();
 
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
@@ -1543,6 +1648,8 @@ fn gather_engine_facts(
         spell_levels,
         equipment_keys,
         monster_names,
+        bonus_bestiary_monster_keys,
+        bonus_bestiary_monster_ability_keys,
         class_books,
         race_names,
         race_trait_ids,
@@ -1821,6 +1928,29 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 engine_book: engine_book_field,
             }
         }
+        Kind::Monster if engine_book == "bonus_bestiary" => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bonus_bestiary_monster_resolve_returned_a_real_stat_block".to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested("monster_absent_from_bonus_bestiary_monsters")
+        }
+        Kind::MonsterAbility if engine_book == "bonus_bestiary" => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "bonus_bestiary_monster_ability_resolve_returned_a_real_record"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested("monster_ability_absent_from_bonus_bestiary_monster_abilities")
+        }
         Kind::Monster => {
             if facts.monster_names.contains(&unit.name.to_lowercase()) {
                 return Verdict {
@@ -1845,20 +1975,21 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             not_ingested("race_absent_from_RaceId_ALL")
         }
         Kind::RaceTrait => {
-            let candidates: Vec<String> = facts
-                .race_names
-                .iter()
-                .map(|r| format!("{r}.{}", slug(&unit.name)))
-                .collect();
-            if candidates.iter().any(|c| facts.race_trait_ids.contains(c)) {
-                return Verdict {
-                    status: "grounded",
-                    evidence: "race_trait_record_grounded_by_race_traits".to_string(),
-                    reason: None,
-                    engine_book: engine_book_field,
-                };
+            // Ground against the record's OWN race only -- see
+            // `modelled_race_of_race_trait` for the name-coincidence defect
+            // this replaced.
+            if let Some(race) = modelled_race_of_race_trait(&unit.key, &facts.race_names) {
+                if facts.race_trait_ids.contains(&format!("{race}.{}", slug(&unit.name))) {
+                    return Verdict {
+                        status: "grounded",
+                        evidence: "race_trait_record_grounded_by_race_traits".to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    };
+                }
+                return not_ingested("race_trait_absent_from_race_traits");
             }
-            not_ingested("race_trait_absent_from_race_traits")
+            not_ingested("race_trait_race_not_modelled")
         }
         Kind::Class => {
             let name = unit.name.to_lowercase();
@@ -2989,6 +3120,73 @@ mod equipment_book_slug_tests {
         }
     }
 
+    /// The spell-family twin of `equipment_book_slug_for_covers_every_catalog_book`.
+    /// A sixth book added to `spell_catalog_rows()` without a matching arm in
+    /// `spell_book_slug_for` fails this test immediately (a panic on
+    /// `cargo test`) instead of silently dropping that book's spell units
+    /// from the inventory the way the old three-`.insert()`-call list did.
+    #[test]
+    fn spell_book_slug_for_covers_every_catalog_book() {
+        let codes: std::collections::BTreeSet<&'static str> =
+            spell_resolver::spell_catalog_rows().iter().map(|row| row.book).collect();
+        assert!(!codes.is_empty(), "the registry must carry at least one book's rows");
+        for code in codes {
+            let slug = spell_book_slug_for(code);
+            assert!(!slug.is_empty(), "{code} resolved to an empty slug");
+        }
+    }
+
+    /// The specific defect this fix closes, pinned so it cannot regress.
+    /// Before the consolidation the work inventory's `spell_levels` map held
+    /// three books while the shipped Spell Catalog served five, so every ARG
+    /// and UI spell was reported `not-ingested` despite already being on
+    /// screen. Two real corpus keys, one per newly-joined book, must now be
+    /// reachable through the registry under their own book slug.
+    #[test]
+    fn arg_and_ui_spell_keys_are_reachable_through_the_derived_map() {
+        let rows = spell_resolver::spell_catalog_rows();
+        assert!(
+            rows.iter().any(|r| r.book == "ARG" && r.key == "Aboleth's Lung"),
+            "Aboleth's Lung must be a real ARG row in spell_catalog_rows()"
+        );
+        assert!(
+            rows.iter().any(|r| r.book == "UI" && r.key == "Absolution"),
+            "Absolution must be a real UI row in spell_catalog_rows()"
+        );
+        assert_eq!(spell_book_slug_for("ARG"), "advanced_race_guide");
+        assert_eq!(spell_book_slug_for("UI"), "ultimate_intrigue");
+    }
+
+    /// The consolidation must be a pure widening for the three books that
+    /// were already mapped: every CRB/APG/ACG key the old hand-maintained
+    /// inserts produced, with the same level-known flag, must still be
+    /// present. This is what makes the change safe to land without moving
+    /// any already-`ingested-magnitude` unit.
+    #[test]
+    fn registry_preserves_every_key_the_hand_maintained_map_carried() {
+        let rows = spell_resolver::spell_catalog_rows();
+        let derived = |slug: &str| -> BTreeMap<String, bool> {
+            rows.iter()
+                .filter(|r| spell_book_slug_for(r.book) == slug)
+                .map(|r| (r.key.to_string(), r.level.is_some()))
+                .collect()
+        };
+
+        let crb_expected: BTreeMap<String, bool> =
+            crb_spell_list::SPELL_LIST.iter().map(|e| (e.key.to_string(), true)).collect();
+        assert_eq!(derived("core_rulebook"), crb_expected);
+
+        let apg_expected: BTreeMap<String, bool> = apg::spell_list::SPELL_LIST
+            .iter()
+            .map(|e| (e.key.to_string(), e.level.is_some()))
+            .collect();
+        assert_eq!(derived("advanced_players_guide"), apg_expected);
+
+        let acg_expected: BTreeMap<String, bool> =
+            acg::spell_list::SPELL_LIST.iter().map(|e| (e.key.to_string(), true)).collect();
+        assert_eq!(derived("advanced_class_guide"), acg_expected);
+    }
+
     /// The specific defect this fix closes, pinned so it cannot regress:
     /// UE's real corpus key `Abjurant Salt` (`ue_equip_magic_items.lst:954`,
     /// verified present in `ultimate_equipment::equipment_tables()`) must
@@ -3001,5 +3199,109 @@ mod equipment_book_slug_tests {
             .any(|row| row.book == "UE" && row.key == "Abjurant Salt");
         assert!(found, "Abjurant Salt must be a real UE row in equipment_catalog_rows()");
         assert_eq!(equipment_book_slug_for("UE"), "ultimate_equipment");
+    }
+}
+
+#[cfg(test)]
+mod race_trait_grounding_tests {
+    use super::*;
+
+    /// The seven races CRB's `race_traits()` table is keyed on, exactly as
+    /// `gather_engine_facts` builds them (`race_name`, lowercase).
+    fn modelled_races() -> BTreeSet<String> {
+        RaceId::ALL.iter().map(|&r| race_name(r).to_string()).collect()
+    }
+
+    /// The regression this card exists to close
+    /// (`docs/release/corpus-work-channels.md` §9.3, SD-28 §56). Each of these
+    /// records was reported `grounded` by the old rule purely because its
+    /// TRAIT NAME slug collided with a CRB trait's — re-derived from
+    /// `docs/work-inventory.json` on 2026-08-11, where all of them carried
+    /// `race_trait_record_grounded_by_race_traits`. None of these races is
+    /// modelled by the engine at all, so none can ground on anything.
+    #[test]
+    fn a_race_the_engine_does_not_model_grounds_no_trait_however_its_name_collides() {
+        let races = modelled_races();
+        for key in [
+            "Blue ~ Keen Senses",        // collided with elf.keen_senses
+            "DuergarDSP ~ Hardy",        // collided with dwarf.hardy
+            "DuergarDSP ~ Stability",    // collided with dwarf.stability
+            "Forgeborn ~ Fearless",      // collided with halfling.fearless
+            "Aquatic Elf ~ Elven Magic", // "Aquatic Elf" is not "Elf"
+            "Svirfneblin ~ Stonecunning",
+        ] {
+            assert_eq!(
+                modelled_race_of_race_trait(key, &races),
+                None,
+                "{key} names no modelled race and must not ground"
+            );
+        }
+    }
+
+    /// The other half of the ruling: the fix must not throw away the records
+    /// that legitimately ground. A CRB race's own trait still resolves to that
+    /// race, and ARG's heritage form carries its base race as an inner
+    /// qualifier rather than the leading one.
+    #[test]
+    fn a_modelled_race_is_found_in_its_own_key_including_the_inner_heritage_qualifier() {
+        let races = modelled_races();
+        assert_eq!(
+            modelled_race_of_race_trait("Dwarf ~ Greed", &races).map(String::as_str),
+            Some("dwarf")
+        );
+        assert_eq!(
+            modelled_race_of_race_trait("Half-Elf ~ Keen Senses", &races).map(String::as_str),
+            Some("half-elf")
+        );
+        // ARG's `Saltbeard ~ Dwarf ~ Greed`: the leading segment is the
+        // heritage, the base race sits in the middle.
+        assert_eq!(
+            modelled_race_of_race_trait("Saltbeard ~ Dwarf ~ Greed", &races).map(String::as_str),
+            Some("dwarf")
+        );
+    }
+
+    /// The trailing segment is the trait name, never the race. Without this
+    /// exclusion a trait whose NAME equals a race name would nominate itself
+    /// and re-open the very coincidence class this fix closes.
+    #[test]
+    fn the_trailing_trait_name_segment_is_never_read_as_the_race() {
+        let races = modelled_races();
+        assert_eq!(modelled_race_of_race_trait("Dwarf", &races), None);
+        assert_eq!(modelled_race_of_race_trait("Orc ~ Human", &races), None);
+    }
+}
+
+#[cfg(test)]
+mod companion_ability_file_classification_tests {
+    use super::*;
+
+    /// A file whose basename carries BOTH `_abilities_race` and a
+    /// companion/familiar marker holds abilities of a *companion creature*,
+    /// not racial traits of a player race. Two such files exist corpus-wide
+    /// (re-derived 2026-08-11 from `docs/work-inventory.json`:
+    /// `isi_abilities_race_companion.lst` 9 units,
+    /// `b4_abilities_race_ce_companion.lst` 2 units) and both were typed
+    /// `race_trait` purely because `_abilities_race` is a substring tested
+    /// before the companion markers. `isi_abilities_race_companion.lst`'s
+    /// rows are Clockwork Spy / Clockwork Familiar construct abilities
+    /// (`CATEGORY:Special Ability TYPE:ClockworkSpyRacialAbility...`).
+    #[test]
+    fn an_abilities_race_file_marked_companion_or_familiar_is_a_companion_file() {
+        assert_eq!(file_kind("isi_abilities_race_companion.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("b4_abilities_race_ce_companion.lst"), Some(Kind::Companion));
+    }
+
+    /// The narrowing must not swallow the genuine race-trait files, nor
+    /// disturb the companion files that already classified correctly.
+    #[test]
+    fn plain_abilities_race_files_remain_race_traits() {
+        assert_eq!(file_kind("mc_abilities_race.lst"), Some(Kind::RaceTrait));
+        assert_eq!(file_kind("arg_abilities_race.lst"), Some(Kind::RaceTrait));
+        // `_abilities_familiar_race` never matched `_abilities_race` in the
+        // first place; it must still land on Companion.
+        assert_eq!(file_kind("b2_abilities_familiar_race.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("ce_abilities_familiar_race_cr.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("isi_abilities_companion.lst"), Some(Kind::Companion));
     }
 }

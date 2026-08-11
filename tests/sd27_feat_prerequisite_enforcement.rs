@@ -182,43 +182,45 @@ fn the_pre_kind_census_is_the_real_one() {
         // Full census, re-derived after SD28-E29 added Ultimate Psionics'
         // 221 feats -- no new PRE kind (checked directly, breaking the
         // every-book-adds-one streak UC/UM held).
-        ("!PREABILITY", 30),
+        ("!PREABILITY", 35),
         ("!PREALIGN", 6),
-        ("PREABILITY", 1221),
+        ("PREABILITY", 1272),
         ("PREALIGN", 16),
         ("PRECHECKBASE", 2),
-        ("PRECLASS", 108),
+        ("PRECLASS", 110),
         ("PREDEITY", 1),
         ("PREDEITYALIGN", 2),
         ("PREDOMAIN", 5),
         ("PREDR", 1),
-        ("PREFACT", 206),
+        ("PREFACT", 214),
+        ("PREHANDSGTEQ", 1),
         ("PREHD", 9),
-        ("PRELEVEL", 34),
-        ("PREMOVE", 1),
-        ("PREMULT", 353),
+        ("PRELEVEL", 39),
+        ("PREMOVE", 4),
+        ("PREMULT", 363),
         ("PREPCLEVEL", 6),
         ("PREPROFWITHARMOR", 5),
         ("PREPROFWITHSHIELD", 9),
         ("PRERACE", 36),
-        ("PRERULE", 3),
+        ("PRERULE", 4),
+        ("PRESIZEGTEQ", 2),
         ("PRESIZELTEQ", 7),
-        ("PRESKILL", 287),
+        ("PRESKILL", 288),
         ("PRESPELL", 34),
         ("PRESPELLCAST", 4),
         ("PRESPELLDESCRIPTOR", 2),
         ("PRESPELLSCHOOLSUB", 2),
-        ("PRESPELLTYPE", 10),
-        ("PRESTAT", 218),
-        ("PRETEXT", 52),
-        ("PRETOTALAB", 339),
+        ("PRESPELLTYPE", 11),
+        ("PRESTAT", 221),
+        ("PRETEXT", 59),
+        ("PRETOTALAB", 341),
         ("PREVAREQ", 11),
         ("PREVARGT", 9),
-        ("PREVARGTEQ", 756),
+        ("PREVARGTEQ", 761),
         ("PREVARLT", 3),
         ("PREVARLTEQ", 1),
         ("PREVISION", 2),
-        ("PREWEAPONPROF", 14),
+        ("PREWEAPONPROF", 16),
     ]
     .into_iter()
     .map(|(kind, count)| (kind.to_owned(), count))
@@ -226,8 +228,12 @@ fn the_pre_kind_census_is_the_real_one() {
 
     assert_eq!(catalog_kind_census(), expected);
 
-    // Prerequisite clauses across 35 distinct kinds (was 2,155/33 before
-    // SD28-E27's 263 UC feats). The kind-by-kind values above are pinned
+    // Prerequisite clauses across 37 distinct kinds (was 3,805/35 before the
+    // corpus feat gap lane's 83 rows; 3,713 of them modelled). `PREHANDSGTEQ` and `PRESIZEGTEQ` are
+    // the two kinds those rows introduced: `PRESIZEGTEQ` is now evaluated by
+    // the same arm as `PRESIZELTEQ` (the size fact was already in hand), and
+    // `PREHANDSGTEQ` is declared unmodelled with its reason rather than
+    // guessed at. The kind-by-kind values above are pinned
     // as-observed; see `MODELLED_KINDS`/`UNMODELLED_KINDS` for which of
     // them carry a real evaluation arm versus a named reason for staying
     // unmodelled, and `pre_tokens.rs`'s own `ClauseOutcome::Informational`
@@ -235,13 +241,13 @@ fn the_pre_kind_census_is_the_real_one() {
     // map itself, not hand-summed (decisions.md §43's own lesson: a
     // hand-summed total was wrong once already this session).
     let total: usize = expected.values().sum();
-    assert_eq!(total, 3805);
+    assert_eq!(total, 3914);
     let modelled: usize = expected
         .iter()
         .filter(|(kind, _)| MODELLED_KINDS.contains(&kind.trim_start_matches('!')))
         .map(|(_, count)| *count)
         .sum();
-    assert_eq!(modelled, 3619);
+    assert_eq!(modelled, 3713);
 }
 
 /// 599 of the catalog's 690 records carry at least one prerequisite -- the
@@ -257,7 +263,9 @@ fn the_number_of_records_carrying_any_prerequisite_is_the_real_one() {
     // `PRETEXT:` prerequisite entry -- see `feats_all::UCA_FEAT_PREREQUISITES`)
     // + 98 of UI's 104 records (real `PRE`-family tokens, gathered directly
     // at ingest -- see `ultimate_intrigue::feat_tables`'s own doc comment).
-    assert_eq!(with_any, 1429, "of 1578");
+    // + 63 of the 83 corpus gap rows, whose `PRE`-family tokens the gap
+    // generator carries verbatim off the corpus record.
+    assert_eq!(with_any, 1492, "of 1661");
 }
 
 // ---------------------------------------------------------------------------
@@ -454,7 +462,7 @@ fn every_ineligible_feat_states_a_reason_for_every_build() {
         let level = input.chosen.class_levels[0].level;
         let facts = character_prereq_facts(input, i16::from(level));
         let reports = evaluate_every_catalog_feat(&facts);
-        assert_eq!(reports.len(), 1578);
+        assert_eq!(reports.len(), 1661);
         for report in &reports {
             if report.is_eligible {
                 assert_eq!(report.unavailable_reason(), None);

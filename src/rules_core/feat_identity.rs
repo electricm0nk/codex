@@ -173,7 +173,10 @@ mod tests {
                 }
             }
         }
-        assert_eq!(checked, 1578, "the whole ingested feat catalog must be checked");
+        // 1578 hand-authored records + the 83 corpus gap rows the feat gap
+        // lane joined on (`rules_tables::feat_gap_tables`). Re-derived from
+        // the live catalog, not incremented on faith.
+        assert_eq!(checked, 1661, "the whole ingested feat catalog must be checked");
     }
 
     /// A longer feat whose name merely begins with a grounded key must not
