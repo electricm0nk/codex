@@ -1916,3 +1916,209 @@ screenshot.
 5. **DoD item 8 is currently unsatisfiable for every player-visible lane in this bundle** until the
    three driver defects in §11 are fixed. That is now a diagnosed tooling blocker with named
    remedies, not a mystery.
+
+---
+
+## Cycle SD29-E6-F1-001 — `epic-6-race-trait-lane-pilot` (Race-Trait Lane: pilot)
+
+**Actor:** `sd29-e6-racetrait-pilot` · **Branch:** `tranche/9` · **Base:** `e16c0a02` ·
+**Commit:** `bf08d524` · **Date:** 2026-08-11
+
+**Outcome: SPLIT.** The card carried two deliverables. The **classifier defect fix is COMPLETE**.
+The **`inner_sea_intrigue` pilot ingest is `decision-blocked`** — the pinned pilot book carries zero
+race traits. Neither half was fudged into the other.
+
+### 0. Cycle-start correction: wrong-base worktree
+
+The dispatched worktree was cut from `origin/main` (`7d9f1c4f`, a GE-08-era commit), not `tranche/9`.
+`docs/release/SD-29-corpus-wide-catch-up-lanes/` did not exist in it. Detected by the first
+`ls` of the package directory; resolved with `git fetch origin tranche/9 && git reset --hard
+origin/tranche/9` (clean tree, no work to lose). Recorded here because
+`docs/retro/events/` already carries `wrong-base-worktree` as a named recurring incident class.
+
+### 1. The defect, re-derived before any code changed
+
+`corpus-work-channels.md` §9.3 / SD-28 §56. `v06_work_inventory`'s `Kind::RaceTrait` arm built a
+candidate id for **every** race the engine models and grounded on any hit:
+
+```rust
+let candidates: Vec<String> = facts.race_names.iter()
+    .map(|r| format!("{r}.{}", slug(&unit.name))).collect();
+if candidates.iter().any(|c| facts.race_trait_ids.contains(c)) { /* grounded */ }
+```
+
+`race_trait_ids` is built solely from CRB's hardcoded `race_traits()` table
+(`src/rules_core/rules_tables/crb/race_tables.rs`, 49 rows over 7 races), so **any** book's trait
+reached `grounded` on a trait-name collision alone.
+
+Re-derived pre-fix, command recorded in full:
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); \
+  g=[x for x in d['units'] if x['kind']=='race_trait' and x['status']=='grounded']; \
+  print(len(g), collections.Counter(x['book'] for x in g))"
+```
+
+→ `44 Counter({'core_essentials': 39, 'ultimate_psionics': 4, 'advanced_race_guide': 1})` — matching
+§9.3's stated 44/39/4/1 exactly.
+
+### 2. §9.3 undercounted the defect — corrected in place, not folded silently
+
+§9.3 says 4 false positives. **There were 23.** The 19 it missed are *intra-`core_essentials`
+cross-race* coincidences, not the cross-book form it looked for:
+
+| Record | grounded off | why it is wrong |
+|---|---|---|
+| `Aquatic Elf ~ Elven Magic` | `elf.elven_magic` | "Aquatic Elf" is not "Elf" |
+| `Drow ~ Keen Senses` | `elf.keen_senses` | Drow is not modelled |
+| `Svirfneblin ~ Stonecunning` | `dwarf.stonecunning` | Svirfneblin is not modelled |
+| `Blue ~ Keen Senses` (UPsi) | `elf.keen_senses` | §9.3's own example |
+
+Corrected in `docs/release/corpus-work-channels.md` §9.3 with a dated `FIXED 2026-08-11` block, and
+emitted as a `correction` retro event with `--verified-by` (per "Retrospective log": a correction
+without it is a competing assertion).
+
+§9.3's **headline claim survives intact**: exactly one legitimate grounded race trait outside
+`core_essentials` — ARG's `Saltbeard ~ Dwarf ~ Greed`.
+
+### 3. The fix
+
+New `modelled_race_of_race_trait(key, race_names)` reads the record's own race from its corpus key's
+`~`-qualifiers. Two design points, both load-bearing:
+
+1. **The trailing segment is excluded.** It is the trait name, never the race; without the exclusion
+   a trait named after a race would nominate itself and re-open the same coincidence class.
+2. **All leading qualifiers are searched, not just the first.** ARG's heritage form
+   `Saltbeard ~ Dwarf ~ Greed` carries its base race in the *middle*. A first-segment-only rule
+   would have discarded the one legitimate non-`core_essentials` record.
+
+Applied to **both** sites — the `Kind::RaceTrait` verdict arm and its twin in
+`EngineFacts::holds_key` (which was book-gated but still race-blind). A one-site fix would have left
+the shared-library host-attribution path defective.
+
+TDD: 3 tests written first in a new `race_trait_grounding_tests` module, named for function per the
+2026-08-11 naming directive (no `sd29_`/`SD-NN` tag). They pin the four §9.3 false positives by name,
+the two legitimate forms, and the self-nomination guard.
+
+### 4. Result, re-derived after the fix
+
+Same command as §1 against the regenerated inventory:
+
+→ `21 Counter({'core_essentials': 20, 'advanced_race_guide': 1})`
+
+**44 → 21.** 23 false positives removed; the 21 survivors are 20 genuine CRB traits plus the ARG
+heritage record.
+
+**One true finding surfaced.** `Dwarf ~ Hatred` was grounding off `gnome.hatred`. CRB's
+`race_traits()` table carries `Hatred` for **Gnome only** (`grep -n "Hatred" -B3
+src/rules_core/rules_tables/crb/race_tables.rs` → a single hit, `race_id: RaceId::Gnome`), although
+PF1e gives dwarves Hatred too. The Dwarf record now correctly reports `not-ingested`. This is a real
+gap in the hardcoded table exposed by the fix, **not** a regression — flagged here rather than
+patched, because widening `race_traits()` is CRB chassis work outside this card.
+
+### 5. Why the pilot ingest is `decision-blocked`
+
+The card pinned `inner_sea_intrigue` (9 units). **The count is right; the kind is not.**
+
+```
+python3 -c "import json; d=json.load(open('docs/work-inventory.json')); \
+  [print(x['source_file'],'|',x['corpus_key']) for x in d['units'] \
+   if x['book']=='inner_sea_intrigue' and x['kind']=='race_trait']"
+```
+
+→ all 9 from `isi_abilities_race_companion.lst`: `Clockwork Familiar ~ Electricity`,
+`~ Item Installation`, `~ Potion/Scroll/Wand Installation`, `~ Tinkering`,
+`Clockwork Spy ~ Record Audio`, `~ Self-Destruct`, `~ Tinkering`.
+
+Confirmed **at source**, not from the inventory's own classification:
+`grep -rn "Clockwork Familiar" ~/workspace/repos/pcgen/data/pathfinder/paizo/campaign_setting/inner_sea_intrigue/*.lst`
+→ `CATEGORY:Special Ability  TYPE:ClockworkFamiliarRacialAbility.SpecialQuality.Extraordinary`.
+
+These are **construct-companion abilities** — Epic 7 Companion-Lane shape. They are typed
+`race_trait` only because `file_kind()` types `*_abilities_race*.lst` by **filename**, and this file
+is `..._abilities_race_companion.lst`. `inner_sea_intrigue` has **zero** genuine race traits.
+
+Building the lane mechanism against them would validate it against content of the wrong kind —
+precisely the untrustworthy success criterion §9.3 warns of. This is loop-instruction.md's named hard
+stop: *"a book's derived shape contradicts its recorded ingest subtype — the cycle reports; the
+operator re-pins the book list."* No substitute pilot book was chosen unilaterally.
+
+**Blast radius is small:** corpus-wide only **11** of 3,456 `race_trait` units come from
+`*companion*.lst` (9 here + 2 in `b4_abilities_race_ce_companion.lst`). The **lane** is sound; only
+the **pilot selection** is wrong. Epic 6's 3,412 extend figure is not materially affected.
+
+**Re-pin candidates** (re-derived, `*companion*.lst` excluded): `ultimate_intrigue` (3),
+`ultimate_magic` (3), `inner_sea_bestiary` (4), `ultimate_combat` (4), `monster_codex` (14),
+`bestiary` (21). **Recommended: `monster_codex`** — DoD item 6 already expects it to retire the
+standing `beastiary1/race_traits` `OPEN_FINDINGS` entry, so the pilot and that retirement land
+together.
+
+### 6. Verification
+
+`./scripts/verify.sh` (FULL, exit code captured directly, never through a pipe):
+**`VERIFY_EXIT=1`** — 10 stages passed, 2 failed. **Neither failure is attributable to this card**,
+and neither was routed around.
+
+| Stage | Result |
+|---|---|
+| pi-sweep, audit-selftest, desktop (415), reach (16), frontend-{install,test,typecheck}, clippy (root 55 / desktop 7, 0 errors), class-dump (31/31) | PASS |
+| root-lib | PASS (1606) |
+| **root-full** | **FAIL** — cargo exit 101; 6157 passed / 543 suites |
+| **preflight-disk** | **FAIL** — 94% used |
+
+**`root-full` — pre-existing, proven not mine.** Two failures, both in
+`tests/v06_apg_acg_feat_catalog.rs`: `the_aggregate_catalog_spans_every_ingested_book` (expected
+185, got 201) and `cross_book_feat_key_repeats_are_exactly_the_known_set` (gained
+`Extended Animal Focus (Acg,Uw)`, `Feral Combat Training (Uc,Upsi)`). Both are **feat** assertions
+left stale by `dde9dfc4 feat(sd29): close the feat not-ingested gap corpus-wide (83 rows)`.
+
+Attribution is proven, not asserted: `git diff --name-only` shows this card's only code change is
+`src/bin/v06_work_inventory.rs` — a **binary**. Integration tests link the `codex` **lib** crate and
+cannot observe a bin. `git diff --name-only | grep -c "^src/rules_core\|^src/lib.rs"` → **0**.
+
+**Not fixed here.** `tests/v06_apg_acg_feat_catalog.rs` belongs to `epic-4-proven-feat-race-class`,
+still `IN-FLIGHT` under `sd29-e4-frc`. Editing it would clobber a live agent's work on the shared
+branch — loop-instruction.md's explicit STOP. Emitted as an `incident` with recurrence-key
+`stale-count-assertion-after-record-change`. **Every card dispatched from `tranche/9` after
+`dde9dfc4` inherits this red root-full.**
+
+**`preflight-disk` — environmental, deliberately NOT overridden.** 94% used / 34G free on a box
+running 5 concurrent worktree agents. The floor that tripped is the **percentage** check (max 90%),
+not the 20G free-space check, which passed comfortably. `scripts/reclaim.sh` (dry run) could free
+only **985.7KB** — every other candidate is a live agent's cargo target dir or a worktree with
+uncommitted/unpushed work, all correctly refused by the script's own guards.
+
+`verify.sh` offers `PREFLIGHT_DISK_MAX_PERCENT` as a documented override. **This cycle did not use
+it.** Weakening a gate to obtain green is banned outright by loop-instruction.md, and an
+override would have converted a true capacity signal into a fabricated pass. Emitted as an
+`incident` with recurrence-key `disk-full`.
+
+Build contention was handled per Epic 1's recorded incident: own
+`CARGO_TARGET_DIR=/tmp/codex-target-sd29-e6-racetrait-pilot`, gate launched early in the background
+while the remaining bounded work proceeded.
+
+### 7. Definition of done
+
+| # | Item | Status |
+|---|---|---|
+| 1 | `verify.sh` exits 0 | **NO** — exit 1; both failing stages proven not attributable (§6), neither weakened nor skipped |
+| 2 | `reach` passes with a claim for this card's families | **YES** — `reach` PASS, **16 matched tests, not zero**. `race_traits` is a live family with real claims (`reach_gate.rs:548`, `:924-937` for crb/beastiary1/arg/apg); it does not pass by absence |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **YES** — `TRAP_AUDIT_EXIT=0`, 259 traps / **0 defects** |
+| 4 | `v06_work_inventory` regenerates; second run changes only `generated_at` | **YES** — both runs exit 0; `diff` of both outputs with `generated_at` filtered → **exit 0** |
+| 5 | Four-check wired-integration audit clean | **YES** — no new production path added; the change removes false positives from a reporting instrument. No stub, no fixture-only data, no dead affordance introduced |
+| 6 | Unsurfaceable families carry an `OPEN_FINDINGS` entry | **N/A** — no family was newly surfaced. The standing `beastiary1/race_traits` entry is **left standing**, correctly: it is expected to retire under Epic 5's Monster Codex batch, which this card did not run |
+| 7 | Baseline movements in a separate commit with `--show-actuals` | **N/A — deliberately untouched.** The run reported 3 stale baselines (`ROOT_LIB_TESTS` 1488→1606, `DESKTOP_TESTS` 413→415, `CLIPPY_WARNINGS_ROOT` ceiling 75 vs 55 measured). Per the standing Epic 1 followup these belong to Epic 9/10; **not** folded in |
+| 8 | On-screen verification for player-visible families | **N/A** — this card surfaced **zero** new player-visible families; it corrected a reporting instrument (`docs/work-inventory.json`). Independently, `epic-4-proven-feat-race-class`'s receipt §11-12.5 records DoD item 8 as currently unsatisfiable bundle-wide pending three named `driver.sh` defects |
+
+### 8. What the next lane inherits
+
+1. **The race-trait grounding instrument is now trustworthy.** Any Epic 6 cycle can use
+   `status == "grounded"` as a real success criterion. Before this cycle it could not — which is
+   exactly why §9.3 ruled the fix must land *alongside* the lane rather than after it.
+2. **Pilot-book selection must check unit KIND, not just unit COUNT.** `inner_sea_intrigue` was
+   picked because it had 9 units. All 9 were the wrong kind. `file_kind()` types by filename, so a
+   `*_abilities_race_companion.lst` lands in the `race_trait` bucket — check `source_file` before
+   pinning a pilot.
+3. **`Dwarf ~ Hatred` is a real hole in `crb::race_tables`** (§4), now visible instead of masked.
+4. **`root-full` is red on `tranche/9` for reasons no current card owns** (§6). The next card to run
+   the full gate should expect it and must not attribute it to itself.
