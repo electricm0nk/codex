@@ -48,7 +48,7 @@ use serde::{Deserialize, Serialize};
 use codex::rules_core::rules_tables::beastiary1::{
     self, natural_attack_provenance, MonsterId, MonsterStatBlock,
 };
-use codex::rules_core::rules_tables::bonus_bestiary;
+use codex::rules_core::rules_tables::monster_chassis::{self, MonsterBook};
 use codex::rules_core::rules_tables::RuleSetId;
 
 /// The one book this catalog serves. A wire code rather than a display label,
@@ -60,6 +60,53 @@ const BOOK_B1: &str = "B1";
 /// Its wire code is the book's own `SOURCESHORT:BB`; the frontend maps it to
 /// "Bonus Bestiary".
 const BOOK_BB: &str = "BB";
+
+/// Monster Codex, the third (SD-29 Epic 5 extend, round 1). Its wire code is
+/// the book's own `SOURCESHORT:MC`.
+const BOOK_MC: &str = "MC";
+
+/// Wire code for a chassis book's corpus directory.
+///
+/// A hard panic rather than a fallback: a book registered in
+/// `monster_chassis::MONSTER_BOOKS` with no wire code here would be served to
+/// the frontend under an empty or guessed label, which is exactly the silent
+/// mislabelling this program has paid for before. Adding a book to the registry
+/// and forgetting its label fails loudly on the first call rather than shipping
+/// an unlabelled row.
+fn book_wire_code(corpus_book: &str) -> &'static str {
+    match corpus_book {
+        "bonus_bestiary" => BOOK_BB,
+        "monster_codex" => BOOK_MC,
+        other => panic!(
+            "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
+             display label in the frontend's book map before registering the book."
+        ),
+    }
+}
+
+/// Reads a `CR:` token into the DTO's `f32`.
+///
+/// The corpus spells fractional challenge ratings `1/2`, `1/3`, `1/4`, and
+/// Monster Codex's `Bat (Sootwing)` is the first such row this catalog has ever
+/// served -- every previously ingested monster carried an integer CR, so the
+/// bare `str::parse::<f32>` this function replaces was sufficient and would now
+/// panic on a perfectly correct corpus value. The table keeps the token
+/// verbatim; only this wire projection reads it as a number.
+fn parse_challenge_rating(book: &str, key: &str, token: &str) -> f32 {
+    if let Some((numerator, denominator)) = token.split_once('/') {
+        let numerator: f32 = numerator.trim().parse().unwrap_or_else(|e| {
+            panic!("{book}/{key}: CR: token {token:?} has an unreadable numerator: {e}")
+        });
+        let denominator: f32 = denominator.trim().parse().unwrap_or_else(|e| {
+            panic!("{book}/{key}: CR: token {token:?} has an unreadable denominator: {e}")
+        });
+        assert!(denominator != 0.0, "{book}/{key}: CR: token {token:?} divides by zero");
+        return numerator / denominator;
+    }
+    token.trim().parse().unwrap_or_else(|e| {
+        panic!("{book}/{key}: CR: token {token:?} is not a number: {e}")
+    })
+}
 
 /// Where one natural attack's `damage_dice` came from.
 ///
@@ -339,7 +386,7 @@ fn map_monster(monster_id: MonsterId) -> MonsterCatalogEntryDto {
 /// `<book>:<kind>:<slug>` shape Bestiary 1's monsters already use, so both
 /// books' keys read the same way and `reach_gate`'s corpus denominator joins
 /// them without a translation table.
-fn bonus_bestiary_key(kind: &str, corpus_key: &str) -> String {
+fn chassis_key(book: &str, kind: &str, corpus_key: &str) -> String {
     let lowered: String = corpus_key
         .to_lowercase()
         .chars()
@@ -352,7 +399,7 @@ fn bonus_bestiary_key(kind: &str, corpus_key: &str) -> String {
         }
         collapsed.push(c);
     }
-    format!("bonus_bestiary:{kind}:{}", collapsed.trim_matches('_'))
+    format!("{book}:{kind}:{}", collapsed.trim_matches('_'))
 }
 
 /// Renders one ability's `DESC:` token into text a player may read.
@@ -370,7 +417,7 @@ fn bonus_bestiary_key(kind: &str, corpus_key: &str) -> String {
 /// `render_player_facing_description` carries, kept as a hard panic: a token
 /// shape this renderer cannot handle must stop here rather than reach a
 /// screen.
-fn serve_ability_description(record: &bonus_bestiary::MonsterAbilityRecord) -> Option<String> {
+fn serve_ability_description(record: &monster_chassis::MonsterAbilityRecord) -> Option<String> {
     let raw = record.description?;
     let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
     if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
@@ -382,9 +429,12 @@ fn serve_ability_description(record: &bonus_bestiary::MonsterAbilityRecord) -> O
     Some(rendered.text)
 }
 
-fn map_bonus_bestiary_ability(record: &bonus_bestiary::MonsterAbilityRecord) -> MonsterAbilityDto {
+fn map_chassis_ability(
+    book: &str,
+    record: &monster_chassis::MonsterAbilityRecord,
+) -> MonsterAbilityDto {
     MonsterAbilityDto {
-        key: bonus_bestiary_key("monster_ability", record.key),
+        key: chassis_key(book, "monster_ability", record.key),
         name: record.name.to_owned(),
         facet: record.facet.corpus_token().to_owned(),
         delivery: record.delivery.map(|d| d.corpus_token().to_owned()),
@@ -402,16 +452,22 @@ fn map_bonus_bestiary_ability(record: &bonus_bestiary::MonsterAbilityRecord) -> 
 /// "CR 0" for it would put a wrong number on screen instead of failing.
 /// `every_bonus_bestiary_row_states_a_readable_challenge_rating` exercises all
 /// 14 rows.
-fn map_bonus_bestiary_monster(block: &bonus_bestiary::MonsterStatBlock) -> MonsterCatalogEntryDto {
-    let challenge_rating = block
-        .challenge_rating
-        .unwrap_or_else(|| panic!("{} carries no CR: token", block.key))
-        .parse::<f32>()
-        .unwrap_or_else(|e| panic!("{}'s CR: token is not a number: {e}", block.key));
+fn map_chassis_monster(
+    table: &MonsterBook,
+    block: &monster_chassis::MonsterStatBlock,
+) -> MonsterCatalogEntryDto {
+    let book = table.corpus_book;
+    let challenge_rating = parse_challenge_rating(
+        book,
+        block.key,
+        block
+            .challenge_rating
+            .unwrap_or_else(|| panic!("{book}/{} carries no CR: token", block.key)),
+    );
 
     MonsterCatalogEntryDto {
-        key: bonus_bestiary_key("monster", block.key),
-        book: BOOK_BB.to_owned(),
+        key: chassis_key(book, "monster", block.key),
+        book: book_wire_code(book).to_owned(),
         name: block.name.to_owned(),
         challenge_rating,
         size: block.size.unwrap_or_default().to_owned(),
@@ -451,9 +507,10 @@ fn map_bonus_bestiary_monster(block: &bonus_bestiary::MonsterStatBlock) -> Monst
             .map(|s| SpeedDto { mode: s.mode.to_owned(), feet: s.feet })
             .collect(),
         monster_class: block.monster_class.map(str::to_owned),
-        abilities: bonus_bestiary::abilities_of(block)
+        abilities: table
+            .abilities_of(block)
             .into_iter()
-            .map(map_bonus_bestiary_ability)
+            .map(|ability| map_chassis_ability(book, ability))
             .collect(),
         external_ability_refs: block
             .external_ability_refs
@@ -470,7 +527,9 @@ fn map_bonus_bestiary_monster(block: &bonus_bestiary::MonsterStatBlock) -> Monst
 pub fn build_monster_catalog() -> MonsterCatalogResponse {
     let mut entries: Vec<MonsterCatalogEntryDto> =
         MonsterId::ALL.iter().copied().map(map_monster).collect();
-    entries.extend(bonus_bestiary::monsters().iter().map(map_bonus_bestiary_monster));
+    for table in monster_chassis::MONSTER_BOOKS {
+        entries.extend(table.monsters.iter().map(|block| map_chassis_monster(table, block)));
+    }
     MonsterCatalogResponse { entries }
 }
 
@@ -523,14 +582,38 @@ mod tests {
         }
     }
 
-    /// The `f32` parse in `map_bonus_bestiary_monster` is the one lossy step on
-    /// this book's path; this is the guard that says it is total today.
+    /// `parse_challenge_rating` is the one lossy step on a chassis book's
+    /// path; this is the guard that says it is total across every registered
+    /// book. It runs the real parser, not `str::parse`: the old test asserted
+    /// `cr.parse::<f32>().is_ok()`, which Monster Codex's `CR:1/2` fails while
+    /// being a perfectly correct corpus token.
     #[test]
-    fn every_bonus_bestiary_row_states_a_readable_challenge_rating() {
-        for block in bonus_bestiary::monsters() {
-            let cr = block.challenge_rating.expect("every row carries CR:");
-            assert!(cr.parse::<f32>().is_ok(), "{} has CR {cr:?}", block.key);
+    fn every_chassis_row_states_a_readable_challenge_rating() {
+        for table in monster_chassis::MONSTER_BOOKS {
+            for block in table.monsters {
+                let cr = block.challenge_rating.expect("every row carries CR:");
+                let parsed = parse_challenge_rating(table.corpus_book, block.key, cr);
+                assert!(
+                    parsed > 0.0,
+                    "{}/{} reads CR {cr:?} as {parsed}",
+                    table.corpus_book,
+                    block.key
+                );
+            }
         }
+    }
+
+    /// The fractional spelling itself, pinned on the row that introduced it.
+    /// `1/2` must reach the wire as `0.5`, not as a panic and not as `1.0`.
+    #[test]
+    fn a_fractional_challenge_rating_reaches_the_wire_as_a_fraction() {
+        let bat = build_monster_catalog()
+            .entries
+            .into_iter()
+            .find(|e| e.key == "monster_codex:monster:bat_sootwing")
+            .expect("Monster Codex's Sootwing Bat is served");
+        assert_eq!(bat.challenge_rating, 0.5);
+        assert_eq!(bat.book, BOOK_MC);
     }
 
     /// A served ability key is the corpus `KEY:`, so the 6 namespaced records
@@ -610,19 +693,26 @@ mod tests {
 
         // Bonus Bestiary has no key resolver of its own -- its identity is the
         // corpus `KEY:` token -- so the round trip is the derivation itself:
-        // every served key must be one `bonus_bestiary_key` produces from a
-        // record the table actually holds, and every record must produce one.
-        let served: std::collections::BTreeSet<String> = build_monster_catalog()
-            .entries
-            .iter()
-            .filter(|e| e.book == BOOK_BB)
-            .map(|e| e.key.clone())
-            .collect();
-        let derived: std::collections::BTreeSet<String> = bonus_bestiary::monsters()
-            .iter()
-            .map(|m| bonus_bestiary_key("monster", m.key))
-            .collect();
-        assert_eq!(served, derived);
+        // every served key must be one `chassis_key` produces from a record
+        // the table actually holds, and every record must produce one --
+        // checked per registered book, so a book whose rows never reach the
+        // response fails here rather than passing by being absent.
+        let response = build_monster_catalog();
+        for table in monster_chassis::MONSTER_BOOKS {
+            let wire_code = book_wire_code(table.corpus_book);
+            let served: std::collections::BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|e| e.book == wire_code)
+                .map(|e| e.key.clone())
+                .collect();
+            let derived: std::collections::BTreeSet<String> = table
+                .monsters
+                .iter()
+                .map(|m| chassis_key(table.corpus_book, "monster", m.key))
+                .collect();
+            assert_eq!(served, derived, "{} served keys", table.corpus_book);
+        }
     }
 
     #[test]

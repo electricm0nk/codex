@@ -40,11 +40,13 @@ export const SIZE_ORDER = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 
 /**
  * Wire book code -> the book's name. A row that named no book would leave a
- * reader unable to look the creature up, and the catalog now serves two books.
+ * reader unable to look the creature up, and the catalog now serves three
+ * books.
  */
 export const BOOK_LABELS: Record<string, string> = {
   B1: 'Bestiary 1',
   BB: 'Bonus Bestiary',
+  MC: 'Monster Codex',
 };
 
 /** `'BB'` -> `'Bonus Bestiary'`; an unmapped code falls through as itself. */

@@ -33,7 +33,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
 const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 
 /** The books the catalog serves, as `monster_catalog.rs`'s own wire codes. */
-const SERVED_BOOKS = ['B1', 'BB'] as const;
+const SERVED_BOOKS = ['B1', 'BB', 'MC'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [
@@ -174,6 +174,7 @@ function testEveryServedBookHasARealName() {
     'BOOK_LABELS names exactly the served books'
   );
   assertEqual(formatBook('BB'), 'Bonus Bestiary', 'the wire code is never what a reader sees');
+  assertEqual(formatBook('MC'), 'Monster Codex', 'the wire code is never what a reader sees');
   assertEqual(formatBook('ZZ'), 'ZZ', 'an unserved code falls through as itself');
 }
 

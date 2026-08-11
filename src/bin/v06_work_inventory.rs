@@ -59,7 +59,7 @@ use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
-use codex::rules_core::rules_tables::bonus_bestiary;
+use codex::rules_core::rules_tables::monster_chassis;
 use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables,
     race_tables::{RaceId, race_traits},
@@ -1057,16 +1057,20 @@ struct EngineFacts {
     equipment_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every Bestiary 1 monster that resolves to a real stat block, by name.
     monster_names: BTreeSet<String>,
-    /// Every Bonus Bestiary monster the engine holds, by lowercase corpus key.
-    /// Kept apart from `monster_names` rather than merged into it: the two
-    /// books' tables are independent, and a merged set would credit one book's
-    /// stat block to the other on a name collision -- the same book-gating
-    /// `holds_key` already applies to races and race traits.
-    bonus_bestiary_monster_keys: BTreeSet<String>,
-    /// Every Bonus Bestiary `monster_ability` the engine holds, by lowercase
-    /// corpus `KEY:` token. The key, never the display name: 6 of the 17 rows
-    /// carry a namespaced key whose leaf is not unique.
-    bonus_bestiary_monster_ability_keys: BTreeSet<String>,
+    /// Every chassis-book monster the engine holds, keyed by corpus book then
+    /// by lowercase corpus key.
+    ///
+    /// Kept per book rather than merged into one set: the books' tables are
+    /// independent, and a merged set would credit one book's stat block to
+    /// another on a name collision -- the same book-gating `holds_key` already
+    /// applies to races and race traits. Built by iterating
+    /// `monster_chassis::MONSTER_BOOKS`, so registering a book there is what
+    /// makes its units classify; nothing here names a book.
+    chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// Every chassis-book `monster_ability` the engine holds, same shape. The
+    /// key, never the display name: namespaced keys (`Seru ~ Poison`,
+    /// `Caryatid Column ~ Immunity to Magic`) have leaves that are not unique.
+    chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
@@ -1097,6 +1101,12 @@ impl EngineFacts {
         let hit = |set: Option<&BTreeSet<String>>| {
             set.map(|s| s.contains(key) || s.contains(name)).unwrap_or(false)
         };
+        // The chassis tables are indexed lowercase, because the corpus and the
+        // inventory disagree on case for a handful of rows.
+        let hit_lowercase = |set: Option<&BTreeSet<String>>| {
+            set.map(|s| s.contains(&key.to_lowercase()) || s.contains(&name.to_lowercase()))
+                .unwrap_or(false)
+        };
         match kind {
             Kind::Feat => hit(self.feat_keys.get(book)),
             Kind::Equipment | Kind::EquipmentModifier => hit(self.equipment_keys.get(book)),
@@ -1109,21 +1119,13 @@ impl EngineFacts {
             // module (`crb::race_tables`, `beastiary1`), so the book gate is
             // part of the fact -- without it a shared-library race would be
             // credited to whichever host happened to be tried first.
-            Kind::Monster => match book {
-                "bestiary_1" => self.monster_names.contains(&name.to_lowercase()),
-                "bonus_bestiary" => self
-                    .bonus_bestiary_monster_keys
-                    .contains(&key.to_lowercase())
-                    || self.bonus_bestiary_monster_keys.contains(&name.to_lowercase()),
-                _ => false,
-            },
-            Kind::MonsterAbility => {
-                book == "bonus_bestiary"
-                    && (self.bonus_bestiary_monster_ability_keys.contains(&key.to_lowercase())
-                        || self
-                            .bonus_bestiary_monster_ability_keys
-                            .contains(&name.to_lowercase()))
+            Kind::Monster => {
+                if book == "bestiary_1" {
+                    return self.monster_names.contains(&name.to_lowercase());
+                }
+                hit_lowercase(self.chassis_monster_keys.get(book))
             }
+            Kind::MonsterAbility => hit_lowercase(self.chassis_monster_ability_keys.get(book)),
             Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
             // The record's OWN race gates this, not "any modelled race" --
             // see `modelled_race_of_race_trait`.
@@ -1590,14 +1592,22 @@ fn gather_engine_facts(
         .map(|b| b.name.to_lowercase())
         .collect();
 
-    let bonus_bestiary_monster_keys: BTreeSet<String> = bonus_bestiary::monsters()
-        .iter()
-        .map(|m| m.key.to_lowercase())
-        .collect();
-    let bonus_bestiary_monster_ability_keys: BTreeSet<String> = bonus_bestiary::monster_abilities()
-        .iter()
-        .map(|a| a.key.to_lowercase())
-        .collect();
+    // Registry-driven: every book in `monster_chassis::MONSTER_BOOKS` is
+    // indexed here without being named. Adding a book to that registry is what
+    // moves its `monster`/`monster_ability` units off `not-ingested`.
+    let mut chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
+    let mut chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>> =
+        BTreeMap::new();
+    for book in monster_chassis::MONSTER_BOOKS {
+        chassis_monster_keys.insert(
+            book.corpus_book,
+            book.monsters.iter().map(|m| m.key.to_lowercase()).collect(),
+        );
+        chassis_monster_ability_keys.insert(
+            book.corpus_book,
+            book.monster_abilities.iter().map(|a| a.key.to_lowercase()).collect(),
+        );
+    }
 
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
     for id in ClassId::ALL {
@@ -1651,8 +1661,8 @@ fn gather_engine_facts(
         spell_levels,
         equipment_keys,
         monster_names,
-        bonus_bestiary_monster_keys,
-        bonus_bestiary_monster_ability_keys,
+        chassis_monster_keys,
+        chassis_monster_ability_keys,
         class_books,
         race_names,
         race_trait_ids,
@@ -1805,6 +1815,14 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
         reason: None,
         engine_book: engine_book_field.clone(),
     };
+    // Same verdict, for the registry-driven arms whose evidence token names the
+    // book that answered and so cannot be a `&'static str`.
+    let not_ingested_owned = |evidence: String| Verdict {
+        status: "not-ingested",
+        evidence,
+        reason: None,
+        engine_book: engine_book_field.clone(),
+    };
 
     match unit.kind {
         Kind::Feat => {
@@ -1931,28 +1949,38 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 engine_book: engine_book_field,
             }
         }
-        Kind::Monster if engine_book == "bonus_bestiary" => {
+        // Every registered chassis book, by the registry rather than by name.
+        // The evidence token still carries the book, so a receipt reader sees
+        // which table answered.
+        Kind::Monster if facts.chassis_monster_keys.contains_key(engine_book.as_str()) => {
             if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
                 return Verdict {
                     status: "grounded",
-                    evidence: "bonus_bestiary_monster_resolve_returned_a_real_stat_block".to_string(),
+                    evidence: format!(
+                        "{engine_book}_monster_resolve_returned_a_real_stat_block"
+                    ),
                     reason: None,
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested("monster_absent_from_bonus_bestiary_monsters")
+            not_ingested_owned(format!("monster_absent_from_{engine_book}_monsters"))
         }
-        Kind::MonsterAbility if engine_book == "bonus_bestiary" => {
+        Kind::MonsterAbility
+            if facts.chassis_monster_ability_keys.contains_key(engine_book.as_str()) =>
+        {
             if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
                 return Verdict {
                     status: "grounded",
-                    evidence: "bonus_bestiary_monster_ability_resolve_returned_a_real_record"
-                        .to_string(),
+                    evidence: format!(
+                        "{engine_book}_monster_ability_resolve_returned_a_real_record"
+                    ),
                     reason: None,
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested("monster_ability_absent_from_bonus_bestiary_monster_abilities")
+            not_ingested_owned(format!(
+                "monster_ability_absent_from_{engine_book}_monster_abilities"
+            ))
         }
         Kind::Monster => {
             if facts.monster_names.contains(&unit.name.to_lowercase()) {

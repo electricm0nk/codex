@@ -885,11 +885,14 @@ fn gen_advanced_race_guide() {
 /// the live `.lst` only to attach a real `path`/`sha256`/`line` citation, and
 /// the line it cites is the one the table itself recorded at transcription
 /// time, verified against the file rather than trusted.
-fn gen_bonus_bestiary() {
-    use codex::rules_core::rules_tables::bonus_bestiary;
+fn gen_monster_book(spec: &MonsterBookSpec) {
+    use codex::rules_core::rules_tables::monster_chassis;
 
-    let root = bonus_bestiary_corpus_root();
-    let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus/bonus_bestiary");
+    let book_id = spec.corpus_book;
+    let table = monster_chassis::monster_book(book_id)
+        .unwrap_or_else(|| panic!("{book_id} is not registered in monster_chassis::MONSTER_BOOKS"));
+    let root = monster_book_corpus_root(spec);
+    let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(book_id);
     let ingested_at = ingested_at_now();
     // The wiring class is COMPUTED from each cited row's own token closure,
     // never asserted here. A first draft hard-coded `static` for every record
@@ -898,7 +901,7 @@ fn gen_bonus_bestiary() {
     // (`wiring-class-mismatch`), because the class describes what the ROW does
     // -- `Water Naga ~ Poison` carries a `BONUS:VAR` and is `derived`, most
     // ability rows carry no magnitude token at all and are `display`.
-    let wiring_index = WiringClassIndex::build("bonus_bestiary", &root);
+    let wiring_index = WiringClassIndex::build(book_id, &root);
     let mut wiring_lines = wiring_index.lines();
 
     for sub in ["monster", "monster_ability"] {
@@ -908,17 +911,19 @@ fn gen_bonus_bestiary() {
         }
     }
 
-    let races_file = load_corpus_file_rel(&root, BONUS_BESTIARY_BOOK_RELATIVE, "bb_races.lst");
-    let abilities_file =
-        load_corpus_file_rel(&root, BONUS_BESTIARY_BOOK_RELATIVE, "bb_abilities_race.lst");
+    let races_file = load_corpus_file_rel(&root, spec.book_relative, spec.races_lst);
+    let abilities_file = load_corpus_file_rel(&root, spec.book_relative, spec.abilities_lst);
 
     // ---- monsters ----
     let mut monster_written = 0u32;
     let mut pi_hits: Vec<String> = Vec::new();
-    for block in bonus_bestiary::monsters() {
-        let line = verified_citation_line(&races_file, block.source_line, block.key);
+    for block in table.monsters {
+        // The display name, not the key: the first column of a monster row is
+        // the display name, and Monster Codex is the first book where they
+        // differ (`Sootwing Bat` in column 1, `KEY:Bat (Sootwing)`).
+        let line = verified_citation_line(&races_file, block.source_line, block.name);
         let data = serde_json::json!({
-            "key": format!("bonus_bestiary:monster:{}", slugify(block.key)),
+            "key": format!("{book_id}:monster:{}", slugify(block.key)),
             "corpus_key": block.key,
             "name": block.name,
             "size": block.size,
@@ -929,10 +934,10 @@ fn gen_bonus_bestiary() {
             "monster_class": block.monster_class,
             "source_page": block.source_page,
             "natural_attacks": block.natural_attacks.iter().map(|a| serde_json::json!({ "name": a.name, "damage_dice": a.damage_dice })).collect::<Vec<_>>(),
-            "ability_keys": block.ability_keys.iter().map(|k| format!("bonus_bestiary:monster_ability:{}", slugify(k))).collect::<Vec<_>>(),
+            "ability_keys": block.ability_keys.iter().map(|k| format!("{book_id}:monster_ability:{}", slugify(k))).collect::<Vec<_>>(),
             "external_ability_refs": block.external_ability_refs,
         });
-        pi_hits.extend(bonus_bestiary_pi_hits(block.key, &data.to_string()));
+        pi_hits.extend(monster_record_pi_hits(block.key, &data.to_string()));
         let source = CorpusSource::LstToken {
             path: races_file.relative_path.clone(),
             sha256: races_file.sha256.clone(),
@@ -962,10 +967,10 @@ fn gen_bonus_bestiary() {
 
     // ---- monster abilities ----
     let mut ability_written = 0u32;
-    for ability in bonus_bestiary::monster_abilities() {
+    for ability in table.monster_abilities {
         let line = verified_citation_line(&abilities_file, ability.source_line, ability.name);
         let data = serde_json::json!({
-            "key": format!("bonus_bestiary:monster_ability:{}", slugify(ability.key)),
+            "key": format!("{book_id}:monster_ability:{}", slugify(ability.key)),
             "corpus_key": ability.key,
             "name": ability.name,
             "facet": ability.facet.corpus_token(),
@@ -974,9 +979,9 @@ fn gen_bonus_bestiary() {
             "description": ability.description,
             "description_variables": ability.description_variables,
             "source_page": ability.source_page,
-            "owners": ability.owners.iter().map(|o| format!("bonus_bestiary:monster:{}", slugify(o))).collect::<Vec<_>>(),
+            "owners": ability.owners.iter().map(|o| format!("{book_id}:monster:{}", slugify(o))).collect::<Vec<_>>(),
         });
-        pi_hits.extend(bonus_bestiary_pi_hits(ability.key, &data.to_string()));
+        pi_hits.extend(monster_record_pi_hits(ability.key, &data.to_string()));
         let source = CorpusSource::LstToken {
             path: abilities_file.relative_path.clone(),
             sha256: abilities_file.sha256.clone(),
@@ -1011,18 +1016,36 @@ fn gen_bonus_bestiary() {
     // what was already written is left for inspection rather than silently
     // shipped -- the operator has to see the hit.
     if !pi_hits.is_empty() {
-        eprintln!("PI screen FAILED for bonus_bestiary: {pi_hits:?}");
+        eprintln!("PI screen FAILED for {book_id}: {pi_hits:?}");
         std::process::exit(1);
     }
 
     let records_processed = count_on_disk_records(&out_root);
+    let license_path = out_root.join("LICENSE.json");
+    // A book can be ingested by more than one lane. Monster Codex's
+    // `race_trait/` records were written by `ingest_race_traits.rs` first, and
+    // that binary derived a sharper OGL citation than this spec carries (it
+    // cites the `.pcc`'s ISOGL line and COPYRIGHT block by line number).
+    // Clobbering it would replace a real derivation with a weaker one and would
+    // leave the note describing 5 race-trait records in a directory that now
+    // holds 10 records across three kinds -- which
+    // `the_screening_note_quotes_the_same_count_the_field_states` would catch,
+    // but only after the wrong artifact had been written. The prior
+    // declaration is preserved and the note is rewritten to cover every lane.
+    let prior: Option<serde_json::Value> = fs::read_to_string(&license_path)
+        .ok()
+        .and_then(|raw| serde_json::from_str(&raw).ok());
+    let prior_declaration = prior
+        .as_ref()
+        .and_then(|v| v.get("license_declaration"))
+        .cloned();
     let license_json = serde_json::json!({
-        "book": "bonus_bestiary",
-        "license_declaration": {
-            "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bonus_bestiary.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
-            "product_identity_source": "Paizo Pathfinder Roleplaying Game: Bonus Bestiary, OGL §15 Product Identity section",
+        "book": book_id,
+        "license_declaration": prior_declaration.unwrap_or_else(|| serde_json::json!({
+            "open_game_content": spec.open_game_content,
+            "product_identity_source": spec.product_identity_source,
             "product_identity_note": "Named deities, NPCs and unique places are Product Identity; monster stat blocks and their special-ability rules text are Open Game Content."
-        },
+        })),
         "redaction_policy": {
             "marker": "[redacted PI]",
             "schema_preserving": true,
@@ -1031,12 +1054,12 @@ fn gen_bonus_bestiary() {
             "blacklist_version_reviewed": "2026-07-27"
         },
         "screening_method_note": format!(
-            "Every field of all {} records written by this run ({monster_written} monsters + {ability_written} monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
+            "Every field of the {} records this run wrote ({monster_written} monsters + {ability_written} monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is {records_processed}: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
             monster_written + ability_written
         ),
         "redistribution_posture": "ogl-notice-attached",
         "classified_at": ingested_at,
-        "classified_by_cycle": "SD29-E5-F1-001",
+        "classified_by_cycle": spec.classified_by_cycle,
         "records_processed": records_processed,
         "records_redacted": 0,
         "operator_sign_off": {
@@ -1049,18 +1072,62 @@ fn gen_bonus_bestiary() {
     fs::write(&license_path, serde_json::to_string_pretty(&license_json).unwrap() + "\n")
         .unwrap_or_else(|e| panic!("failed to write {license_path:?}: {e}"));
     println!(
-        "Bonus Bestiary cache generated: {monster_written} monsters, {ability_written} monster abilities;          LICENSE.json records_processed={records_processed}"
+        "{book_id} cache generated: {monster_written} monsters, {ability_written} monster abilities; \
+         LICENSE.json records_processed={records_processed}"
     );
 }
 
-const BONUS_BESTIARY_BOOK_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/bonus_bestiary";
+/// Where one monster book's two `.lst` files live and what its OGL notice
+/// says. Every field is a *location* or a *citation*, never a behaviour: the
+/// parsing, the citation check, the PI screen and the wiring-class computation
+/// are identical across books because they are properties of PCGen's `.lst`
+/// format, not of any one book. Adding a book here plus a row in
+/// `monster_chassis::MONSTER_BOOKS` is the whole generator cost.
+struct MonsterBookSpec {
+    corpus_book: &'static str,
+    book_relative: &'static str,
+    races_lst: &'static str,
+    abilities_lst: &'static str,
+    open_game_content: &'static str,
+    product_identity_source: &'static str,
+    classified_by_cycle: &'static str,
+}
 
-fn bonus_bestiary_corpus_root() -> PathBuf {
-    if let Ok(v) = std::env::var("PCGEN_CORPUS_ROOT_BONUS_BESTIARY") {
+const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
+    MonsterBookSpec {
+        corpus_book: "bonus_bestiary",
+        book_relative: "pathfinder/paizo/roleplaying_game/bonus_bestiary",
+        races_lst: "bb_races.lst",
+        abilities_lst: "bb_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bonus_bestiary.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bonus Bestiary, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E5-F1-001",
+    },
+    MonsterBookSpec {
+        corpus_book: "monster_codex",
+        book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
+        races_lst: "mc_races.lst",
+        abilities_lst: "mc_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _monster_codex.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Monster Codex, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E5-F2-002",
+    },
+];
+
+fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {
+    MONSTER_BOOK_SPECS.iter().find(|s| s.corpus_book == book)
+}
+
+fn monster_book_corpus_root(spec: &MonsterBookSpec) -> PathBuf {
+    let override_var = format!(
+        "PCGEN_CORPUS_ROOT_{}",
+        spec.corpus_book.to_uppercase()
+    );
+    if let Ok(v) = std::env::var(&override_var) {
         return PathBuf::from(v);
     }
     let home = std::env::var("HOME").expect("HOME must be set to locate the default PCGen corpus checkout");
-    PathBuf::from(home).join("workspace/repos/pcgen/data").join(BONUS_BESTIARY_BOOK_RELATIVE)
+    PathBuf::from(home).join("workspace/repos/pcgen/data").join(spec.book_relative)
 }
 
 /// The table records the line it was transcribed from; this re-reads that line
@@ -1090,7 +1157,7 @@ fn verified_citation_line(file: &CorpusFile, recorded: u32, display_name: &str) 
 /// serialized record rather than a single `description` field -- a monster row
 /// can carry a setting proper noun in its name, its subtype or its rules text,
 /// so screening one field would leave the others unscreened.
-fn bonus_bestiary_pi_hits(record_key: &str, serialized: &str) -> Vec<String> {
+fn monster_record_pi_hits(record_key: &str, serialized: &str) -> Vec<String> {
     PI_BLACKLIST_TERMS
         .iter()
         .filter(|term| serialized.contains(*term))
@@ -1103,10 +1170,13 @@ fn main() {
     match book.as_str() {
         "pathfinder_unchained" => gen_pathfinder_unchained(),
         "advanced_race_guide" => gen_advanced_race_guide(),
-        "bonus_bestiary" => gen_bonus_bestiary(),
-        other => panic!(
-            "gen_book_cache: no generator wired for book {other:?} yet (only pathfinder_unchained/advanced_race_guide today -- \
-             a future cycle extends this match arm for its own book, per this file's own module doc comment)"
-        ),
+        other => match monster_book_spec(other) {
+            Some(spec) => gen_monster_book(spec),
+            None => panic!(
+                "gen_book_cache: no generator wired for book {other:?} yet (pathfinder_unchained, \
+                 advanced_race_guide, and every book in MONSTER_BOOK_SPECS today -- a future cycle \
+                 adds its own book, per this file's own module doc comment)"
+            ),
+        },
     }
 }
