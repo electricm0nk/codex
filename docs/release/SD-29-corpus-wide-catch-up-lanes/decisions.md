@@ -1695,7 +1695,23 @@ Two residuals in the 553 are deliberately NOT gap: APG's 49 (same `KEY:` as an a
 record — republished, not new, `§39`) and Monster Codex's `Oversized Goblin` (mechanism-blocked, its
 `OPEN_FINDINGS` entry names the remedy).
 
-### 44.5 Two more instances of the stale-roots defect, recorded and NOT fixed in this round
+### 44.5 Two more instances of the stale-roots defect — deferred, then fixed in the same round
+
+> **SUPERSEDED IN PART, same day, by the gate.** This section was written to defer both files to
+> round 2, with the reasoning below. `root-full` then **failed inside one of them**
+> (`sd27_alternate_racial_trait_reachability.rs`, two assertions reading the pure table), which
+> removed the choice the deferral rested on: the options were no longer "leave them alone or churn",
+> they were "bump two numbers and leave the narrow scoping in a file I am already editing" or "fix
+> it properly". **Both files were widened to the app's own `RACE_CORPUS_BOOKS` in round 1**, four
+> further assertions moved with their reasons, one green assertion correctly went red and was given
+> the same grant-proof rather than an exemption, and three test names carrying `153` were renamed to
+> carry no number. Evidence in `progress.md` §6b. The original reasoning is kept below unedited,
+> because "why this was deferred" and "why the deferral did not survive contact with the gate" are
+> both worth having.
+>
+> **The lesson is the second-order one.** The deferral's logic was sound and its conclusion was
+> wrong, and what made it wrong was information the gate had and the reasoning did not. A deferral
+> taken before the evidence lands is a prediction, not a decision.
 
 Grepping for the §44.2 pattern after fixing it found the same hardcoded three-book corpus loader in
 two integration tests:
@@ -1714,5 +1730,7 @@ is closed even with these two still narrow. Second, the full gate was already ru
 committed tree when they were found, and editing them would have invalidated its result — a real
 gate result on the tree that shipped is worth more than two test-scope widenings landed unverified.
 
-**This is round 2's first item**, ahead of any ingest: widen both to `RACE_CORPUS_BOOKS` and move
-their pins with their reasons, exactly as §44.2 did for the resolver's own module.
+~~**This is round 2's first item**, ahead of any ingest: widen both to `RACE_CORPUS_BOOKS` and move
+their pins with their reasons, exactly as §44.2 did for the resolver's own module.~~ **Done in round
+1** — see the callout at the top of this section. **Round 2's first item is therefore the ingest
+itself**: `core_essentials`' 48 and `bestiary`'s 3, neither of which needs a new mechanism.
