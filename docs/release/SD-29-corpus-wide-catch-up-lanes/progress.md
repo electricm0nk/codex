@@ -4364,7 +4364,7 @@ which covers both the `desktop` and `reach` stages' scope.
 
 ## Cycle — epic-13-desktop-driver-fix (SD29-E13-F1-001)
 
-**Actor:** `sd29-driver-fix` · **Branch:** `tranche/9` · **Commits:** `46c4f6ce`, `<second commit>` ·
+**Actor:** `sd29-driver-fix` · **Branch:** `tranche/9` · **Commits:** `46c4f6ce` (driver fix + gate stage), `a852fddd` (cold-build budget + this receipt), plus the artifacts commit carrying the item-8 screenshots ·
 **PR:** #360 (open, NOT merged) · **Date:** 2026-08-11
 
 ### Worktree integrity
