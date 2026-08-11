@@ -4612,3 +4612,205 @@ still reads 213 — noted rather than rewritten, since the commit is already pus
 honest reading: the pilot's 5 records reach a player (`reach_gate`, and the screen) but report
 `race_trait_race_not_modelled` under `v06_work_inventory`'s CRB-pinned probe — the instrument defect
 recorded as the extend lane's first task in `decisions.md §43.5`.
+
+---
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 1 (SD29-E6-F2-002)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), reopened by `epic-12-reopen` per
+`decisions.md §42`. **Actor:** `sd29-racetrait-r1`. **Branch:** `tranche/9`.
+**Commit:** `4d362e2e` (pushed to `origin/tranche/9`). **PR:** #360, open and NOT merged.
+**Date:** 2026-08-11. **Decision record:** `decisions.md §44`.
+
+**This is round 1 of a loop-until-dry lane. The lane is NOT finished and this receipt does not
+claim it is.** `units_remaining` is re-derived at the bottom with the command that produced it.
+
+### 0. Worktree integrity — RECOVERY WAS REQUIRED
+
+Run as the mandated first action, and it caught run 1's exact failure a fourth time.
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| did HEAD descend from the branch | `git merge-base --is-ancestor origin/tranche/9 HEAD` | **no** |
+| recovery | `git fetch origin && git reset --hard origin/tranche/9` | `b265b57c`, docs present, ancestry OK |
+
+Recorded as a `correction` retro event. Without the reset this cycle would have written against a
+tree with no SD-29 package in it.
+
+### 1. Merged-ness verified by content, not by anyone's say-so
+
+Before relying on the pilot's chassis: `git cat-file -e origin/tranche/9:src/bin/ingest_race_traits.rs`
+→ present; `git ls-tree origin/tranche/9 -- data/corpus/monster_codex/race_trait` → present;
+`git show origin/tranche/9:src/bin/ingest_race_traits.rs | grep -n BOOK_SOURCES` → the
+book-table-driven form, line 126. **The pilot's chassis really is on `origin/tranche/9`.**
+
+### 2. Trap-report (cycle mechanics 0b)
+
+`cargo run --locked --bin v06_corpus_trap_report -- advanced_players_guide` → EXIT 0.
+`apg_abilities_race.lst`: **176 DECLARES / 0 `.COPY=` / 1 `.MOD` / 0 disabled.**
+
+### 3. Re-derivation — every figure below is this cycle's own
+
+**Lane denominators, before this cycle** (the command, not the value):
+
+```bash
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+rt=[u for u in d['units'] if u['kind']=='race_trait']
+print(len(rt), collections.Counter(u['status'] for u in rt))
+print(collections.Counter(u['book'] for u in rt if u['status']=='grounded'))
+"
+```
+
+→ `3447 Counter({'not-ingested': 1827, 'not-started': 1599, 'grounded': 21})`,
+grounded `{'core_essentials': 20, 'advanced_race_guide': 1}`. **Card 10's stated
+"3,447 total / 21 grounded / 3,426 remaining" reproduces exactly.**
+
+**The lane's real shape**, which no figure in this package had stated. Only race traits whose
+`TYPE:` component names one of the 18 races the product models can ever ground — a trait of a race
+with no chassis is unreachable by construction, because `RaceCorpus::resolve` returns `None`
+without one:
+
+```bash
+python3 -c "
+import json,collections
+RACES=['Dwarf','Elf','Gnome','Half-Elf','Half-Orc','Halfling','Human','Aasimar','Drow','Duergar',
+       'Goblin','Hobgoblin','Kobold','Merfolk','Orc','Svirfneblin','Tengu','Tiefling']
+WANT={r+' Racial Trait' for r in RACES}
+d=json.load(open('docs/work-inventory.json'))
+rt=[u for u in d['units'] if u['kind']=='race_trait']
+ins=[u for u in rt if {p.strip() for p in (u.get('type_facet') or '').split('.')} & WANT]
+print(len(ins), 'of', len(rt))
+print(collections.Counter(u['book'] for u in ins))
+"
+```
+
+→ **553 of 3,447.** The other **2,894** need a race chassis, not a race-trait ingest
+(`decisions.md §44.4` carries the per-book table).
+
+### 4. Bounded work (TDD)
+
+**RED first, three times, each failing for its intended reason.**
+
+1. `race_trait_grounding_tests`' four new probe tests: compile failure,
+   `cannot find function 'probe_reachable_race_traits'`.
+2. `race_resolver::every_alternate_the_app_offers_is_one_the_engine_can_place`: FAILED naming the
+   four Monster Codex keys the picker offers and `pilot_compute` refuses.
+3. Widening `race_resolver`'s test-module roots turned **6** further assertions red at once, every
+   one of them a count pin or book-scoped claim that had been silently three-book-scoped.
+
+**GREEN — what landed.**
+
+| # | change | file |
+|---|---|---|
+| 1 | `app_race_corpus_books()` — parses the product's own `RACE_CORPUS_BOOKS`; empty on a failed read, so a broken parse under-claims | `src/bin/v06_work_inventory.rs` |
+| 2 | `probe_race_trait_corpus()` — loads that corpus, records `(lst basename, line) -> book` for records the resolver can APPLY, and every record it saw at all | `src/bin/v06_work_inventory.rs` |
+| 3 | `CORPUS_DIR_ALIASES` + `engine_book_for_corpus_dir()` — the `beastiary`/`bestiary` divergence, stated once and pinned as the only one | `src/bin/v06_work_inventory.rs` |
+| 4 | `EngineFacts::holds_unit` / `race_trait_engine_book` / `race_trait_was_loaded`; `classify`'s `Kind::RaceTrait` arm reordered probe-first, CRB-table-fallback, with the new `race_trait_record_loaded_but_never_applies` evidence | `src/bin/v06_work_inventory.rs` |
+| 5 | 5 new rows in `ALTERNATE_TRAIT_REPLACE_FLAGS` (MC 4 + APG 1), flags read off the corpus records | `src/rules_core/race_resolver.rs` |
+| 6 | test-module roots derived from `RACE_CORPUS_BOOKS`; new invariant test; 6 assertions widened in both directions | `src/rules_core/race_resolver.rs` |
+| 7 | APG's `Half-Orc ~ Plagueborn` ingested (`cargo run --bin ingest_apg_race_traits`, 1 record, `license: OGL`, `pi_field: null`) | `data/corpus/advanced_players_guide/race_trait/half_orc/` |
+| 8 | reach claim `apgs_one_genuinely_new_alternate_racial_trait_reaches_a_player`, replacing the comment that said one was deliberately not added | `apps/desktop/src-tauri/src/reach_gate.rs` |
+| 9 | count pins moved with their reasons: alternates 157→158, HalfOrc 14→15, `(standard, alternates)` (173,157)→(173,158), checked 330→331, creation-accepted 93→94, paged books `{ARG,MC}`→`{APG,ARG,MC}`, roles Alternate 153→158 / Unclassified 0→1 (pinned by key) / total 331→337, distinct flags 74→77 | `race_catalog.rs`, `race_trait_picker.rs`, `character_hub.rs`, `race_resolver.rs` |
+
+**Nothing was relaxed to get green.** The single unclassified row and the two orphan flags are
+pinned by exact key, so a second instance of either fails.
+
+### 5. The two defects this cycle found rather than shipped
+
+**(a) A silent 108-record under-report.** The first regeneration grounded **228**, not the 336 the
+on-disk count predicted. `engine_book_for` keys on `corpus_dir_for`, which spells Bestiary 1
+`bestiary` (the PCGen source tree's directory), while this repo's corpus directory is
+`data/corpus/beastiary`. Every one of B1's 108 loaded, applied, reachable race traits resolved to no
+engine book and stayed `not-ingested`. Caught by re-deriving the join rather than accepting the
+improved number.
+
+**(b) A live stub SD-29's own pilot shipped.** Four Monster Codex alternates were offered by
+`race_trait_picker` and refused by `pilot_compute` with a claim-blocking
+`race.alternate_trait.unknown`. Nothing caught it because `race_resolver`'s test module loaded a
+hardcoded `[crb(), b1(), arg()]` — the identical stale-roots defect the pilot found and fixed one
+file over, surviving here because nobody pointed the same question at this module. Emitted as an
+`incident`, `recurrence-key stale-hardcoded-book-roots`, `--silent`.
+
+**(c) A correction to this cycle's own first reading.** It initially read APG's un-landed ingest as
+an oversight. **The docs were right and this cycle was wrong**: `decisions.md §39` deferred that
+record deliberately, and the named blocker was real. Both halves landed together instead.
+
+### 6. Definition of done
+
+| # | item | evidence |
+|---|---|---|
+| 1 | `verify.sh` exits 0, exit code captured directly | **IN FLIGHT at the time this receipt was first appended** — updated below before cycle end |
+| 2 | the `reach` stage passes with a claim for this book's families | `("apg", "race_traits") => race_traits_reach("APG", "advanced_players_guide")` is a declared `reach_of` arm, and `apgs_one_genuinely_new_alternate_racial_trait_reaches_a_player` executes it against the live builders and asserts `Reach::Surfaced { records: 1 }`. Not a pass-by-absence: the family is in `corpus_inventory()` and in `full_inventory()`, both asserted. Stage result updated below |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | updated below |
+| 4 | `v06_work_inventory` regenerates, units leave `not-started`, second run changes only `generated_at` | **grounded 21 → 336.** Second run diffed line-by-line in Python: identical apart from `generated_at`. `not-started` is unchanged at 1,599 and that is honest — this round added no `RuleSetId` variant, and `not-started` is a statement about compiled rule sets, not about ingest |
+| 5 | four-check wired-integration audit clean | `tests/sd24_wired_integration_audit.rs` inside `root-full`; and §5(b) above is a wired-integration defect this cycle **found and closed** rather than one it introduced |
+| 6 | families that cannot be surfaced have an `OPEN_FINDINGS` entry naming the remedy | `monster_codex/race_traits` (`Oversized Goblin`) stands, unchanged, with its remedy named. **No new entry was needed**: APG's one record reaches. The 7 `<book>/archetypes` entries are SD-30's and were left standing |
+| 7 | baseline movements are a separate reviewable commit | **None made.** `scripts/verify-baselines.env` is untouched. Its test-count floors are stale-low (`BASELINE_ROOT_LIB_TESTS=1604` vs 1616 actual), inherited stale from before this card and explicitly left by `SD29-E13-F1-001` for deliberate treatment; they are floors, so they do not fail, and raising them is its own reviewable commit rather than a rider on this one |
+| 8 | on-screen verification for player-visible families | updated below |
+
+### 7. Round 1 stop — the honest remainder
+
+`units_ingested` this round: **1** new corpus record (`Half-Orc ~ Plagueborn`). The round's real
+weight was the probe repair, which moved **315** units from `not-ingested` to `grounded` without
+ingesting them — they were already ingested and already reaching a player, and the instrument was
+wrong about them. Both numbers are stated because reporting either alone would mislead.
+
+**`units_remaining`, re-derived at cycle end:**
+
+```bash
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+rt=[u for u in d['units'] if u['kind']=='race_trait']
+c=collections.Counter(u['status'] for u in rt)
+print(len(rt), dict(c), 'remaining =', len(rt)-c['grounded'])
+"
+```
+
+→ `3447 {'not-ingested': 1512, 'grounded': 336, 'not-started': 1599} remaining = 3111`.
+
+**But 3,111 is not the lane's workload, and a successor round should not treat it as one**
+(`decisions.md §44.4`): 2,894 of the 3,447 name a race the product does not model, and no race-trait
+ingest can ground them. Within the 553 that can, the genuinely ingestable remainder is **167**:
+
+| book | units | what it needs |
+|---|---|---|
+| `inner_sea_races` | 72 | a `RuleSetId` variant + a `BOOK_SOURCES` entry |
+| `core_essentials` (19 `<race>_abilities_race*.lst`) | 48 | pure ingest; chassis already loaded |
+| `horror_adventures` | 44 | a `RuleSetId` variant; one file is `PRECAMPAIGN`-gated on Occult Adventures |
+| `bestiary` (`b1_abilities_race.lst`) | 3 | pure ingest; chassis already loaded |
+
+Plus 2 residuals that are deliberately not gap: APG's 49 ARG-key collisions (`§39`) and Monster
+Codex's `Oversized Goblin` (mechanism-blocked, finding recorded).
+
+**Round 2 should start with `core_essentials`' 48 and `bestiary`'s 3** — no new mechanism, chassis
+already loaded, and the probe repair means they ground the moment they land.
+
+### 8. Defaults taken under UNATTENDED MODE (no operator asked)
+
+1. **Grounded a race trait on applicability, not on presence on disk.** `Oversized Goblin` is
+   ingested and loaded and still reports `not-ingested`. The alternative — grounding everything on
+   disk — would have contradicted the gate this same repo ships for that record.
+2. **Kept the CRB-table rule as a fallback** rather than deleting it. It is a real second opinion
+   for the one book whose race traits are also a compiled table, and keeping it makes the change
+   incapable of demoting anything.
+3. **Did not touch `scripts/verify-baselines.env`** — see DoD item 7.
+4. **Did not extend `BOOK_SOURCES`** in this round. Every remaining book needs either a `RuleSetId`
+   variant or a whole book's ingest, and a round that also rewrote the grounding probe should not
+   also move the corpus under it.
+
+### 9. Environment
+
+`RETRO_ACTOR=sd29-racetrait-r1`, `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-r1`
+exported for every cargo and `verify.sh` invocation. **One** target dir for both crates —
+`verify.sh` sets none of its own and builds both into the one it inherits, so a second dir is pure
+duplication (the lesson `SD29-E6-F1-002` recorded after losing ~20 G to exactly that).
+`./scripts/verify.sh --only preflight-disk` run before bounded work (EXIT 0, 81% used / 95G) and
+again before the full gate (EXIT 0, 87% / 65G). Target dir deleted at cycle end.
+
+Retro events on this actor's own shard, `docs/retro/events/sd29-racetrait-r1.jsonl`: 3 `correction`,
+1 `incident`, plus `verify.sh`'s auto-emitted `verification` events.
