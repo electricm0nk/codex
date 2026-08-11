@@ -1598,3 +1598,99 @@ finding retirement and its replacement test. The **per-book** cost that remains 
 `BOOK_SOURCES` entry, one `CORPUS_BOOK_IDS` entry, one `reach_of` arm, one `LICENSE.json`, one
 `RuleSetId` variant — and, for any book whose traits belong to races outside the 18, nothing at all
 to write. The dominant real cost for the extend lane is §43.5's probe repair, which is paid once.
+
+---
+
+## Decision 44 — Race-Trait Lane, extend: round 1 (2026-08-11, `sd29-racetrait-r1`, card `epic-6-race-trait-lane-extend`)
+
+Card 10 is a **loop-until-dry** lane. Round 1 delivered §43.5's probe repair, closed one deferral
+and one live stub, and stopped cleanly with a re-derived remainder. It did not finish the lane and
+does not claim to.
+
+### 44.1 The probe repair (§43.5), done — and it was two defects, not one
+
+`v06_work_inventory` now grounds a race trait by asking **the race corpus the desktop app really
+loads** whether it can apply the record to a player, and falls back to CRB's compiled
+`race_traits()` table only when that says nothing.
+
+* Book list is **read from the product**, not duplicated: `app_race_corpus_books()` parses
+  `apps/desktop/src-tauri/src/race_catalog.rs`'s own `RACE_CORPUS_BOOKS`. An unreadable or
+  unparseable declaration yields an EMPTY list, so a broken read under-claims rather than
+  over-claims.
+* The join key is `(<lst basename>, <line>)`, never the name. A race trait's display name is not
+  unique corpus-wide — that is the whole reason `modelled_race_of_race_trait` exists — whereas the
+  source coordinate is an identity the ingest writes verbatim. The join is exact: **337 corpus
+  records ↔ 337 inventory units, 0 orphans on either side.**
+* Grounding is on **applicability**, not presence on disk. `TraitRole::Unclassified` never applies,
+  so `Oversized Goblin` is reported `not-ingested` with its own new evidence token
+  `race_trait_record_loaded_but_never_applies` — the honest middle between "not ingested" and
+  "grounded", and consistent with the `OPEN_FINDINGS` entry the pilot recorded for it.
+
+**The second defect, found because the first one's number was still wrong.** The first regeneration
+grounded **228**, not the 336 the on-disk record count predicted: `core_essentials` showed 67 of its
+175 records grounded. Cause: `engine_book_for` keys on `corpus_dir_for`, which spells Bestiary 1's
+directory `bestiary` — the PCGen **source** tree's name — while this repo's corpus directory is
+`data/corpus/beastiary`. Every one of Bestiary 1's 108 loaded, applied, reachable race traits
+resolved to no engine book and stayed `not-ingested`, silently. Fixed with a one-entry
+`CORPUS_DIR_ALIASES` table, and pinned by
+`every_corpus_book_with_race_traits_resolves_to_an_engine_book`, which also asserts `beastiary` is
+the **only** book needing an alias. `reach_gate::CORPUS_BOOK_IDS` already records the same
+divergence for the same reason; the two now agree.
+
+**Result, re-derived by the command in the receipt:** `race_trait` grounded **21 → 336**.
+
+### 44.2 A live stub the pilot shipped, and the reason nothing caught it
+
+`race_trait_picker` offers every `TraitRole::Alternate` record the loaded corpus holds.
+`pilot_compute::explain_selected_alternate_racial_traits` raises a **claim-blocking**
+`race.alternate_trait.unknown` for any selection `race_resolver::ALTERNATE_TRAIT_REPLACE_FLAGS` does
+not know. The pilot added Monster Codex's 4 alternates to the first set and not the second, so all
+four were affordances a player could tick and `create_character` would refuse.
+
+Nothing caught it because `race_resolver.rs`'s own test module loaded a **hardcoded**
+`[crb(), b1(), arg()]`. Every assertion in that module reading "for every alternate in the corpus"
+was silently scoped to three books while the app loaded five — including the pin test whose stated
+job is that this table cannot drift from the corpus. This is the **identical** stale-hardcoded-roots
+defect the pilot itself found and fixed one file over
+(`tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs`); it survived here because nobody
+pointed the same question at this module.
+
+Fixed by deriving the module's roots from `RACE_CORPUS_BOOKS` and adding
+`every_alternate_the_app_offers_is_one_the_engine_can_place`, which states the invariant directly
+rather than as a count. Widening the roots turned 6 further assertions red at once — all of them
+count pins and book-scoped claims that had been quietly narrow — and each was widened in **both**
+directions rather than relaxed (the one unclassified row pinned by exact key; the orphan-flag list
+pinned by exact flag with the same grant-proof applied to the new one).
+
+### 44.3 APG's `Half-Orc ~ Plagueborn`: a deferral closed, not an oversight found
+
+This cycle first read the un-landed APG race-trait ingest as a shipped binary whose output nobody
+ran. **That reading was wrong and the docs were right** (`decisions.md §39`): the record was held
+back deliberately, because `ALTERNATE_TRAIT_REPLACE_FLAGS` did not know its key and shipping the
+record alone would have produced exactly the stub described in §44.2. Both halves landed together
+here — the corpus record, the table row, the reach claim, and the picker/catalog/creation pins — so
+the affordance is live. `character_hub`'s creation-acceptance sweep now accepts **94** alternates
+for the 7 CRB races, up from 93, which is the assertion that would have caught a half-landing.
+
+### 44.4 The lane's real ceiling, re-derived (this is the successor round's starting point)
+
+Of the corpus's **3,447** `race_trait` units, only **553** carry a `TYPE:<Race> Racial Trait`
+component naming one of the **18** races the product models. The other **2,894** belong to races
+with no chassis — `bestiary_3` 799, `core_essentials` 661, `bestiary_2` 162, `ultimate_psionics` 159
+and so on. **No amount of race-trait ingest grounds those**; `RaceCorpus::resolve` returns `None`
+without a chassis, so they need a race-chassis lane, not this one. That is a scope finding, not a
+blocker: it is recorded so a successor round does not spend itself discovering it.
+
+Within the 553: **336 grounded**, and the honest remainder is
+
+| book | units | note |
+|---|---|---|
+| `inner_sea_races` (`isr_abilities_race.lst`) | 72 | needs a `RuleSetId` variant; currently `not-started` |
+| `core_essentials` (19 `<race>_abilities_race*.lst` files) | 48 | chassis already loaded; pure ingest |
+| `horror_adventures` (`ha_abilities_race*.lst`) | 44 | needs a `RuleSetId` variant; one file is `PRECAMPAIGN`-gated on Occult Adventures |
+| `bestiary` (`b1_abilities_race.lst`) | 3 | chassis already loaded; pure ingest |
+| **total genuinely ingestable next** | **167** | |
+
+Two residuals in the 553 are deliberately NOT gap: APG's 49 (same `KEY:` as an already-ingested ARG
+record — republished, not new, `§39`) and Monster Codex's `Oversized Goblin` (mechanism-blocked, its
+`OPEN_FINDINGS` entry names the remedy).

@@ -516,17 +516,20 @@ mod tests {
     /// so it contributes zero rows even though its corpus directory is loaded.
     /// The alternate traits it *does* declare are not catalog rows — see this
     /// module's doc comment — and are counted here so that gap stays measured
-    /// rather than forgotten. 153, derived: ARG's 156 corpus records are 153
+    /// rather than forgotten. 158, derived: ARG's 156 corpus records are 153
     /// `Alternate` plus 3 the resolver classifies otherwise (its
-    /// `FlagGranted`/`Unclassified` rows). APG contributes 0 alternates as of
-    /// this cycle: `decisions.md §37`'s first estimate of 50 real APG
-    /// alternates corrected to 1 genuinely new key (`decisions.md §39`), and
-    /// that 1 key is deliberately not yet ingested -- `race_resolver.rs`'s
-    /// `ALTERNATE_TRAIT_REPLACE_FLAGS` table (`§36` instance 15) does not
-    /// recognize it, and shipping the corpus record without updating that
-    /// table would offer it here and refuse it at character-save time.
-    /// APG likewise declares no races/defaults of its own, so it contributes
-    /// zero catalog rows either way.
+    /// `FlagGranted`/`Unclassified` rows), Monster Codex's 5 are 4
+    /// `Alternate` plus `Oversized Goblin` (`Unclassified`), and APG's 1 is
+    /// an `Alternate`.
+    ///
+    /// **APG's `Half-Orc ~ Plagueborn` is no longer deferred.** SD-27
+    /// `decisions.md §39` held it back because `race_resolver.rs`'s
+    /// `ALTERNATE_TRAIT_REPLACE_FLAGS` table did not know its key, so
+    /// shipping the corpus record would have offered it here and refused it
+    /// at character-save time. SD-29's race-trait extend lane landed both
+    /// halves together — the record and the table row — so the affordance is
+    /// live rather than a stub. APG declares no races/defaults of its own, so
+    /// it still contributes zero catalog rows.
     #[test]
     fn alternate_only_books_contribute_no_catalog_rows_but_are_loaded_and_counted() {
         let response = build_race_catalog();
@@ -542,11 +545,11 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 157,
+            alternates, 158,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
-             Codex's 4 (SD-29 decisions.md §43). Monster Codex's 5th record, `Oversized Goblin`, \
-             is not an alternate at all -- it sets no replace flag, so `race_resolver::classify` \
-             leaves it `Unclassified`"
+             Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`). Monster \
+             Codex's 5th record, `Oversized Goblin`, is not an alternate at all -- it sets no \
+             replace flag, so `race_resolver::classify` leaves it `Unclassified`"
         );
     }
 

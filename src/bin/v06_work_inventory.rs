@@ -50,6 +50,7 @@ use codex::rules_core::character_input::{
     SelectedChoice, SpellSelection, load_character_input_fixture,
 };
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
+use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
@@ -1072,7 +1073,16 @@ struct EngineFacts {
     /// Every race the engine models, by lowercase name.
     race_names: BTreeSet<String>,
     /// Race trait identities the engine grounds, as `<race>.<trait slug>`.
+    ///
+    /// CRB's seven compiled races only. Kept as the FALLBACK rule beneath
+    /// `reachable_race_traits`, never as the primary one — see
+    /// [`probe_reachable_race_traits`] for why a probe pinned to this table
+    /// under-reports the product by eleven races.
     race_trait_ids: BTreeSet<String>,
+    /// Every race trait the app's loaded race corpus can APPLY to a player,
+    /// by `(<lst basename>, <line>)` -> corpus book, and every record that
+    /// load found at all. See [`probe_race_trait_corpus`].
+    race_trait_probe: RaceTraitProbe,
     /// Explanation ids observed in a real receipt across the class sweep.
     explanation_ids: BTreeSet<String>,
     /// Diagnostics observed in the same sweep: id -> (message, claim_blocking).
@@ -1090,6 +1100,41 @@ struct EngineFacts {
 }
 
 impl EngineFacts {
+    /// The engine book whose ingested race-trait corpus really holds this
+    /// unit, joined on the record's own source coordinates.
+    ///
+    /// Race traits are the one kind whose `.lst` rows are routinely filed
+    /// under a *different* book than the one that ingested them —
+    /// `core_essentials/duergar_abilities_race.lst` is Bestiary 1's content
+    /// living in the shared library — so name matching cannot attribute them
+    /// and the source coordinate is the only identity that can.
+    fn race_trait_engine_book(&self, unit: &CorpusUnit) -> Option<&'static str> {
+        let coordinate = (unit.provenance.file.clone(), unit.provenance.line);
+        engine_book_for_corpus_dir(self.race_trait_probe.reachable.get(&coordinate)?)
+    }
+
+    /// Whether this unit's record was found by the race-corpus load at all,
+    /// applicable or not. `true` with [`Self::race_trait_engine_book`]
+    /// returning `None` is the "ingested, loaded, inert" case.
+    fn race_trait_was_loaded(&self, unit: &CorpusUnit) -> bool {
+        self.race_trait_probe
+            .loaded
+            .contains(&(unit.provenance.file.clone(), unit.provenance.line))
+    }
+
+    /// Whether one book really holds this unit. Delegates to
+    /// [`Self::holds_key`] for every kind whose identity is its name, and
+    /// uses the source-coordinate join for race traits, which is the only
+    /// kind for which the name is not enough.
+    fn holds_unit(&self, book: &str, unit: &CorpusUnit) -> bool {
+        if matches!(unit.kind, Kind::RaceTrait)
+            && self.race_trait_engine_book(unit) == Some(book)
+        {
+            return true;
+        }
+        self.holds_key(book, &unit.kind, &unit.key, &unit.name)
+    }
+
     /// Whether one book's own compiled table holds this unit's identity.
     /// Used to attribute a shared-library record to the book that really
     /// ingested it rather than to an arbitrary one of its hosts.
@@ -1372,6 +1417,143 @@ fn book_corpus_roots(repo_root: &Path) -> Vec<PathBuf> {
     OBSERVABLE_BOOK_DIRS.iter().map(|b| repo_root.join("data/corpus").join(b)).collect()
 }
 
+/// Where the desktop app declares which books' race content it loads.
+const RACE_CATALOG_SOURCE_RELATIVE: &str = "apps/desktop/src-tauri/src/race_catalog.rs";
+
+/// Bestiary 1's `data/corpus/` directory is spelled `beastiary`, and
+/// `corpus_dir_for` spells the same book `bestiary` — that one is the PCGen
+/// SOURCE tree's directory, and the two names have simply never agreed.
+///
+/// `engine_book_for` keys on the source spelling, so a record whose
+/// `book_id` came off disk needs the alias applied first or it resolves to no
+/// engine book at all. `reach_gate::CORPUS_BOOK_IDS` records the same
+/// divergence for the same reason (`("beastiary", "beastiary1")`).
+///
+/// Stated as a one-entry alias rather than papered over with a fuzzy match:
+/// [`every_corpus_book_with_race_traits_resolves_to_an_engine_book`] proves
+/// this is the only book that needs one.
+const CORPUS_DIR_ALIASES: &[(&str, &str)] = &[("beastiary", "bestiary")];
+
+/// [`engine_book_for`], for a `data/corpus/<dir>` directory name.
+fn engine_book_for_corpus_dir(dir: &str) -> Option<&'static str> {
+    let source_dir = CORPUS_DIR_ALIASES
+        .iter()
+        .find(|(corpus, _)| *corpus == dir)
+        .map(|(_, source)| *source)
+        .unwrap_or(dir);
+    engine_book_for(source_dir)
+}
+
+/// The corpus books whose race content the shipped app really loads, read out
+/// of the app's own `RACE_CORPUS_BOOKS` declaration.
+///
+/// Read rather than duplicated, and read from the *product's* source rather
+/// than from a list in this file, because the claim this probe makes is about
+/// the product. A hand-copied list here would keep reporting `grounded` for a
+/// book the app had stopped loading, which is precisely the over-claim this
+/// inventory exists to prevent. `tests/duergar_invisibility_sla_reaches_a_
+/// player_via_monster_codex.rs` already parses the same declaration the same
+/// way for the same reason.
+///
+/// An unreadable or unparseable declaration yields an EMPTY list, never a
+/// guessed one: the probe then observes nothing, every race trait falls back
+/// to the CRB-table rule below, and the inventory under-claims. Under-claiming
+/// on a broken read is the safe direction.
+fn app_race_corpus_books(repo_root: &Path) -> Vec<String> {
+    let Ok(src) = std::fs::read_to_string(repo_root.join(RACE_CATALOG_SOURCE_RELATIVE)) else {
+        return Vec::new();
+    };
+    let Some(decl) = src.split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =").nth(1) else {
+        return Vec::new();
+    };
+    let Some(list) = decl.split(';').next() else {
+        return Vec::new();
+    };
+    list.split('"').skip(1).step_by(2).map(str::to_owned).collect()
+}
+
+/// Every race-trait record the app's loaded race corpus can actually APPLY to
+/// a player, keyed by the record's own source coordinates
+/// (`(<lst basename>, <line>)`) and valued by the corpus book it came from.
+///
+/// # Why this exists (SD-29 `decisions.md §43.5`)
+///
+/// `race_trait_ids` below is built solely from `crb::race_traits()` — CRB's
+/// seven compiled races. The **product** models eighteen, read off disk at
+/// runtime by `race_resolver::load_race_corpus`, which is what
+/// `race_trait_picker` and `list_alternate_racial_traits` serve. So every
+/// ingested race trait belonging to a non-CRB race reported
+/// `race_trait_race_not_modelled` **no matter how reachable it was** — ARG's
+/// 156, Bestiary 1's 108 and Monster Codex's 5 among them, the last of which
+/// `reach_gate` simultaneously carried a passing claim for and SD-29
+/// photographed in the player's own picker. That is the doneness-instrument
+/// hierarchy inverted: the narrower instrument was overruling the one that
+/// executes the real path.
+///
+/// # What it will not do
+///
+/// It does not ground a record for being on disk. A record whose role is
+/// [`TraitRole::Unclassified`] carries no readable gate and is never applied
+/// by `RaceCorpus::resolve`, so it is deliberately absent here — `Oversized
+/// Goblin` is the live instance, and it has a standing `OPEN_FINDINGS` entry
+/// naming its remedy. Nor does it reach a trait whose race has no chassis in
+/// any loaded book: `race_keys()` yields only races that have one, and
+/// `resolve` returns `None` without one. Both exclusions keep this probe's
+/// answer identical to what a player can actually obtain.
+///
+/// The join key is the source coordinate, never the name. A race trait's
+/// display name is not unique corpus-wide — the name-coincidence defect
+/// `modelled_race_of_race_trait` exists to close is the proof — whereas the
+/// `.lst` file and line the ingest records verbatim is an identity.
+fn probe_reachable_race_traits(repo_root: &Path) -> BTreeMap<(String, usize), String> {
+    probe_race_trait_corpus(repo_root).reachable
+}
+
+/// What one load of the app's race corpus tells this generator.
+#[derive(Debug, Default)]
+struct RaceTraitProbe {
+    /// Records the resolver can apply -> the corpus book each came from.
+    reachable: BTreeMap<(String, usize), String>,
+    /// EVERY record the load found, applicable or not. The difference between
+    /// the two sets is the honest middle status: ingested, loaded, and still
+    /// inert. Reporting those as "not ingested" would be a lie in the other
+    /// direction, and reporting them as grounded would be the lie this whole
+    /// generator exists to prevent.
+    loaded: BTreeSet<(String, usize)>,
+}
+
+fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
+    let books = app_race_corpus_books(repo_root);
+    let dirs: Vec<(String, PathBuf)> =
+        books.into_iter().map(|b| (b.clone(), repo_root.join("data/corpus").join(b))).collect();
+    let roots: Vec<BookCorpusRoot<'_>> = dirs
+        .iter()
+        .map(|(book, dir)| BookCorpusRoot { book_id: book.as_str(), dir: dir.as_path() })
+        .collect();
+    let corpus = load_race_corpus(&roots);
+
+    let mut probe = RaceTraitProbe::default();
+    // `race_keys()` yields only races that have a chassis record in some
+    // loaded book. A trait whose race has none is left out of BOTH sets by
+    // construction, which is right: `RaceCorpus::resolve` returns `None`
+    // without a chassis, so no player can obtain it and no ingest of the
+    // trait alone would change that. Monster Codex's six Ratfolk rows are
+    // the live instance -- the pilot skipped writing them for exactly this
+    // reason (SD-29 `decisions.md §43.4`).
+    for race in corpus.race_keys() {
+        for record in corpus.traits_for(race) {
+            let Some(file) = Path::new(&record.source_path).file_name() else { continue };
+            let coordinate = (file.to_string_lossy().into_owned(), record.source_line as usize);
+            probe.loaded.insert(coordinate.clone());
+            if record.role == TraitRole::Unclassified {
+                continue;
+            }
+            probe.reachable.insert(coordinate, record.book_id.clone());
+        }
+    }
+    probe
+}
+
 // SD28-E14-F1: **NOT implemented as a promoting probe.** An earlier version
 // of this cycle probed `pilot_compute_corpus::compute_pilot_with_corpus`'s
 // `school_coverage` map and promoted any spell that landed in it. Corrected
@@ -1616,6 +1798,7 @@ fn gather_engine_facts(
         .iter()
         .map(|t| format!("{}.{}", race_name(t.race_id), slug(t.trait_name)))
         .collect();
+    let race_trait_probe = probe_race_trait_corpus(repo_root);
 
     // Sweep every modelled class at every SWEEP_LEVELS level through the REAL
     // compute pipeline and union what it says. A panic is caught rather than
@@ -1656,6 +1839,7 @@ fn gather_engine_facts(
         class_books,
         race_names,
         race_trait_ids,
+        race_trait_probe,
         explanation_ids,
         diagnostics,
         corpus_class_names,
@@ -1776,10 +1960,7 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             // arbitrary host would put thousands of un-ingested shared records
             // into some ingested book's reconciliation and make that book look
             // far further behind than it is.
-            match hosts
-                .iter()
-                .find(|b| facts.holds_key(b, &unit.kind, &unit.key, &unit.name))
-            {
+            match hosts.iter().find(|b| facts.holds_unit(b, unit)) {
                 Some(b) => b.to_string(),
                 None => {
                     return Verdict {
@@ -1978,9 +2159,24 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             not_ingested("race_absent_from_RaceId_ALL")
         }
         Kind::RaceTrait => {
-            // Ground against the record's OWN race only -- see
-            // `modelled_race_of_race_trait` for the name-coincidence defect
-            // this replaced.
+            // PRIMARY: the race corpus the app really loads applies this
+            // record to a player. This overrules the CRB-table rule below
+            // rather than supplementing it, because it observes the path the
+            // player uses -- see `probe_race_trait_corpus` and SD-29
+            // `decisions.md §43.5`. Order matters: nothing the old rule
+            // grounded can be demoted, because every record it grounds is
+            // also in the loaded corpus.
+            if facts.race_trait_engine_book(unit) == Some(engine_book.as_str()) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "race_trait_applied_by_the_race_corpus_the_app_loads".to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            // FALLBACK: CRB's seven compiled races. Still consulted, because
+            // it is a real second opinion for the one book whose race traits
+            // are also a compiled table.
             if let Some(race) = modelled_race_of_race_trait(&unit.key, &facts.race_names) {
                 if facts.race_trait_ids.contains(&format!("{race}.{}", slug(&unit.name))) {
                     return Verdict {
@@ -1990,6 +2186,15 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                         engine_book: engine_book_field,
                     };
                 }
+            }
+            // The honest middle: the record IS ingested and IS loaded, and
+            // still no selection a player can make brings it in. Distinct
+            // from "the engine holds no record matching this unit" and
+            // reported as its own evidence rather than collapsed into it.
+            if facts.race_trait_was_loaded(unit) {
+                return not_ingested("race_trait_record_loaded_but_never_applies");
+            }
+            if modelled_race_of_race_trait(&unit.key, &facts.race_names).is_some() {
                 return not_ingested("race_trait_absent_from_race_traits");
             }
             not_ingested("race_trait_race_not_modelled")
@@ -3272,6 +3477,144 @@ mod race_trait_grounding_tests {
         let races = modelled_races();
         assert_eq!(modelled_race_of_race_trait("Dwarf", &races), None);
         assert_eq!(modelled_race_of_race_trait("Orc ~ Human", &races), None);
+    }
+
+    // -----------------------------------------------------------------
+    // The probe repair (SD-29 `decisions.md §43.5`).
+    //
+    // Everything above tests the CRB-table probe's *name-coincidence*
+    // guard, and that guard is correct. What it cannot do is ground a
+    // record belonging to a race CRB's compiled table never mentions --
+    // and the product models 18 races off disk, not 7. The tests below
+    // pin the replacement probe, which asks the race corpus the desktop
+    // app actually loads whether it can APPLY the record to a player.
+    // -----------------------------------------------------------------
+
+    fn probe_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// The probe must load exactly the books the app loads. A probe over a
+    /// wider list would ground records no player can reach; a narrower one
+    /// would under-report. Neither list is hand-maintained here -- both are
+    /// read from `race_catalog.rs`, so the pin cannot drift silently.
+    #[test]
+    fn the_probe_loads_exactly_the_books_the_desktop_app_loads() {
+        let books = app_race_corpus_books(&probe_root());
+        assert!(
+            books.contains(&"core_rulebook".to_string())
+                && books.contains(&"beastiary".to_string())
+                && books.contains(&"monster_codex".to_string()),
+            "the app's race corpus book list did not parse: {books:?}"
+        );
+        let src = std::fs::read_to_string(
+            probe_root().join("apps/desktop/src-tauri/src/race_catalog.rs"),
+        )
+        .expect("the desktop race catalog source is readable from the repo root");
+        for book in &books {
+            assert!(
+                src.contains(&format!("\"{book}\"")),
+                "{book} is not named in race_catalog.rs at all"
+            );
+        }
+    }
+
+    /// The point of the repair. `Duergar ~ Ironskinned` belongs to a race
+    /// `crb::race_traits()` has never heard of, so the CRB-table probe
+    /// reports `race_trait_race_not_modelled` for it -- while `reach_gate`
+    /// executes a passing claim against the same record and SD-29's own
+    /// on-screen verification photographed it in the player's picker.
+    #[test]
+    fn a_reachable_trait_of_a_non_crb_race_is_observed_by_the_probe() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        assert_eq!(
+            reachable.get(&("mc_abilities_race.lst".to_string(), 16)).map(String::as_str),
+            Some("monster_codex"),
+            "Duergar ~ Ironskinned reaches a player (reach_gate + on-screen, SD-29 \
+             progress.md) and must be observed as reachable"
+        );
+        // The half the repair must not break: a record the OLD probe already
+        // grounded stays grounded.
+        assert_eq!(
+            reachable.get(&("arg_abilities_race.lst".to_string(), 53)).map(String::as_str),
+            Some("advanced_race_guide"),
+            "Saltbeard ~ Dwarf ~ Greed is `grounded` in the shipped inventory and must stay so"
+        );
+    }
+
+    /// The probe grounds on *applicability*, not on presence on disk.
+    /// `Oversized Goblin` is ingested, loaded, and still unreachable:
+    /// it carries no readable gate, so `race_resolver::classify` leaves it
+    /// `TraitRole::Unclassified`, the role that never applies. It has a
+    /// standing `OPEN_FINDINGS` entry naming its remedy for exactly that
+    /// reason, and a probe that called it grounded would contradict the
+    /// gate the same repo already ships.
+    #[test]
+    fn a_loaded_record_the_resolver_can_never_apply_is_not_observed_as_reachable() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        assert!(
+            !reachable.contains_key(&("mc_abilities_race.lst".to_string(), 31)),
+            "Oversized Goblin never applies (TraitRole::Unclassified) and must not ground"
+        );
+    }
+
+    /// Every book the probe observes must resolve to an engine book, or its
+    /// records ground against nothing however reachable they are.
+    ///
+    /// This is the assertion that would have caught the defect it was written
+    /// for: Bestiary 1's 108 race-trait records were loaded, applied, and
+    /// reachable, and every one of them still reported `not-ingested` —
+    /// silently — because `data/corpus/beastiary` does not spell its book the
+    /// way `corpus_dir_for` does. It also pins that `beastiary` is the ONLY
+    /// book needing the alias, so a second divergence fails here rather than
+    /// being absorbed.
+    #[test]
+    fn every_corpus_book_with_race_traits_resolves_to_an_engine_book() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        let books: BTreeSet<&str> = reachable.values().map(String::as_str).collect();
+        assert!(!books.is_empty(), "the probe observed no books at all");
+        for book in &books {
+            assert!(
+                engine_book_for_corpus_dir(book).is_some(),
+                "corpus book {book} resolves to no engine book, so every one of its reachable \
+                 race traits would report not-ingested"
+            );
+        }
+        let aliased: BTreeSet<&str> =
+            books.iter().copied().filter(|b| engine_book_for(b).is_none()).collect();
+        assert_eq!(
+            aliased,
+            BTreeSet::from(["beastiary"]),
+            "exactly one corpus directory is spelled differently from its PCGen source \
+             directory; a second one is a new divergence, not a thing to absorb"
+        );
+    }
+
+    /// The join is on the record's own source coordinates, never on its
+    /// name. A race trait's display name is not unique corpus-wide -- the
+    /// whole reason the name-coincidence defect above existed -- so the
+    /// probe keys on `(source file basename, source line)`, which is an
+    /// identity the ingest writes verbatim from the `.lst` row.
+    #[test]
+    fn the_probe_keys_on_source_coordinates_so_two_books_sharing_a_trait_name_stay_distinct() {
+        let reachable = probe_reachable_race_traits(&probe_root());
+        let mut books: BTreeSet<&str> = BTreeSet::new();
+        for book in reachable.values() {
+            books.insert(book.as_str());
+        }
+        assert!(
+            books.len() >= 3,
+            "the probe observed reachable records from only {books:?}; the loaded corpus \
+             spans more books than that"
+        );
+        // No two entries share a source coordinate: the map's own key type
+        // guarantees it, so what this asserts is that the probe found a
+        // real population rather than silently collapsing to nothing.
+        assert!(
+            reachable.len() >= 200,
+            "the probe observed only {} reachable race traits; 336 are on disk",
+            reachable.len()
+        );
     }
 }
 

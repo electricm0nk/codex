@@ -928,35 +928,35 @@ mod tests {
     /// The whole point: every alternate from every `RACE_CORPUS_BOOKS` book
     /// reaches a player surface, spread across all 18 in-scope races.
     ///
-    /// `advanced_players_guide` is now in `RACE_CORPUS_BOOKS`
-    /// (`decisions.md §39`), but contributes 0 alternates as of this cycle:
-    /// `decisions.md §37`'s first-pass estimate of 50 real APG alternates
-    /// was corrected to 1 genuinely new key (`Half-Orc ~ Plagueborn`, 49 of
-    /// the 50 collide with already-ingested ARG keys), and that 1 record is
-    /// deliberately **not yet ingested** -- `race_resolver.rs`'s
-    /// `ALTERNATE_TRAIT_REPLACE_FLAGS` (a hand-written, ARG-only table
-    /// `character_hub.rs`'s creation-acceptance path validates against,
-    /// `decisions.md §36` instance 15) does not know Plagueborn's key, so
-    /// shipping the corpus record without updating that table would offer
-    /// it in this picker and then refuse it at character-save time -- a
-    /// stub, not real content. Landing this test's own change (the
-    /// `RACE_CORPUS_BOOKS`/`book_code` dedup, a real fix) does not depend on
-    /// APG contributing any alternates yet; `menu.races.len()` and the total
-    /// stay at ARG's own 18/153 until Plagueborn's follow-up lands.
+    /// `advanced_players_guide` contributes exactly 1 alternate,
+    /// `Half-Orc ~ Plagueborn` — `decisions.md §37`'s first-pass estimate of
+    /// 50 real APG alternates was corrected to 1 genuinely new key, 49 of the
+    /// 50 colliding with already-ingested ARG keys (`decisions.md §39`).
+    ///
+    /// **That record was deferred and is now landed.** The deferral's stated
+    /// blocker was real: `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`
+    /// (the hand-written table `character_hub.rs`'s creation-acceptance path
+    /// validates against, `decisions.md §36` instance 15) did not know
+    /// Plagueborn's key, so shipping the corpus record alone would have
+    /// offered it in this picker and then refused it at character-save time
+    /// -- a stub, not real content. SD-29's race-trait extend lane landed the
+    /// record and the table row in one change, and added
+    /// `race_resolver::every_alternate_the_app_offers_is_one_the_engine_can_place`
+    /// so the two halves cannot separate again.
     #[test]
     fn every_alternate_from_every_race_corpus_book_reaches_the_menu_across_all_eighteen_in_scope_races() {
         let menu = menu();
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 157,
-            "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43). \
-             APG's 1 genuinely new key is still deferred, decisions.md §39"
+            total, 158,
+            "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
+             + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
+             race-trait extend lane)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
-        // `Half-Orc ~ Plagueborn` (would move HalfOrc 14 -> 15) is still
-        // deferred, see the test's own doc comment above. Monster Codex moves
+        // `Half-Orc ~ Plagueborn` moves HalfOrc 14 -> 15. Monster Codex moves
         // exactly two races: Duergar 5 -> 7 (Ironskinned, Twilight-Touched)
         // and Goblin 7 -> 9 (Oversized Goblin ~ Ability Scores, ~ Size).
         // `Oversized Goblin` itself is NOT here and that is deliberate -- it
@@ -974,7 +974,7 @@ mod tests {
             ("Gnome", 12),
             ("Goblin", 9),
             ("HalfElf", 9),
-            ("HalfOrc", 14),
+            ("HalfOrc", 15),
             ("Halfling", 13),
             ("Hobgoblin", 9),
             ("Human", 15),
@@ -988,7 +988,7 @@ mod tests {
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 157);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 158);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1046,7 +1046,7 @@ mod tests {
 
         assert_eq!(
             paged,
-            BTreeSet::from(["ARG", "MC"]),
+            BTreeSet::from(["APG", "ARG", "MC"]),
             "the books whose alternates carry a real page"
         );
         assert_eq!(
@@ -1179,7 +1179,7 @@ mod tests {
                 checked += 1;
             }
         }
-        assert_eq!(checked, 157, "153 ARG + 4 Monster Codex (SD-29 decisions.md §43)");
+        assert_eq!(checked, 158, "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43)");
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
         // Aasimar is the worked case: its nine standard rows now declare the
@@ -1586,17 +1586,18 @@ mod tests {
         // SD28-E16 (2026-08-08, `decisions.md §39`): `§37`'s first-pass
         // estimate of 50 real APG alternates corrected to 1 genuinely new
         // key (`Half-Orc ~ Plagueborn`) -- 49 collided with existing ARG
-        // keys and were excluded, and the 1 real key is deferred pending
+        // keys and were excluded. That 1 key was deferred pending
         // `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` table
-        // (`decisions.md §36` instance 15), so `alternates` stays ARG-only
-        // for now. `standard` is unaffected either way -- APG contributes no
-        // `race/` chassis, so the standard-trait column (sourced from
+        // (`decisions.md §36` instance 15); SD-29's race-trait extend lane
+        // landed the record and the table row together, so `alternates` now
+        // carries it. `standard` is unaffected either way -- APG contributes
+        // no `race/` chassis, so the standard-trait column (sourced from
         // ARG/CRB/Bestiary) never moves.
         let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
         let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        assert_eq!((standard, alternates), (173, 157));
+        assert_eq!((standard, alternates), (173, 158));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 330);
+        assert_eq!(checked, 331);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.
