@@ -790,3 +790,146 @@ plus auto-emitted `verification` events from every `verify.sh` run — including
 actors' retro shards (`codex.jsonl`, `sd29-e1-identifier.jsonl`, untracked `sd29-preflight.jsonl`)
 were left dirty and uncommitted — same call Epic 1 and Epic 2 made. Only this actor's own shard is
 committed.
+
+---
+
+## Cycle SD29-E3-F1-001 — `epic-3-provenance` (Provenance Gate: PI-screening wired into Pipeline B)
+
+**Actor:** `sd29-e3-provenance` · **Branch:** `tranche/9` · **Branch tip at claim:** `a0e1733e`
+**Card:** `epic-3-provenance` (kanban Order 3) · **PR-id:** none (direct commit to `tranche/9`, pre-authorized)
+**Cycle-type:** provenance gate — gates Epics 4-7 corpus-wide
+
+### 1. What this card had to produce, and what it actually produced
+
+`decisions.md §37.3` / `epic-breakdown.md` SD29-E3-F1 / `acceptance-and-verification.md` AT-29-003a
+require the 55-term Product-Identity blacklist to run against a lane's own newly-generated content
+**before it lands in `rules_tables/`**, with a hit treated as a hard stop. Before this cycle,
+`docs/governance/license-matrix.md`'s central finding stood: **zero** files under `rules_tables/`
+called `pi_screening`, `PI_BLACKLIST_TERMS`, or `classify_field`.
+
+Landed — real wiring in the production path, no fixture, no stub:
+
+- **`src/rules_core/pi_table_sweep.rs`** — the screen. Uses the shared
+  `pi_screening::PI_BLACKLIST_TERMS` (it does **not** fork the list; forking is the exact failure
+  `pi_screening.rs`'s own header documents). Two entry points:
+  `screen_generated_table(file, generated) -> Vec<PiSweepHit>` is the lane-facing call an
+  extraction/table-generation step makes on the text it is about to write — a non-empty return is
+  the hard stop; `sweep_dir` + `reconcile` are the standing tree-wide check.
+- **`src/bin/pi_sweep_rules_tables.rs`** — the CLI a lane runs and pastes into its receipt.
+  Exit `0` clean, `1` unbaselined hit **or stale baseline row**, `2` I/O or parse failure.
+- **`docs/governance/pi-sweep-baseline.tsv`** — the 10 pre-existing hits with an explicit
+  `real-leak` / `false-positive` disposition per row. Any other disposition string is a parse
+  **error**, not a silent suppression.
+- **`scripts/verify.sh`** — new `pi-sweep` stage, in **both** `ALL_STAGES` and `QUICK_STAGES`
+  (a lane must not be able to land a leak on a fast loop and find it only on a full sweep). The
+  stage fails on a non-zero exit **and** on an exit-0 run that did not print `CLEAN` — the same
+  0-matched guard `reach` and `audit-selftest` each carry.
+- **`tests/pi_table_sweep.rs`** — 6 integration tests incl. the live-tree gate; 4 further unit
+  tests in the module.
+
+### 2. Re-derived figures (command first, value second — nothing transcribed)
+
+- **Hits in Pipeline B:** `cargo run --locked --bin pi_sweep_rules_tables`
+  → `pi-sweep: 10 hits over src/rules_core/rules_tables, 10 baseline rows` / `CLEAN`.
+  Independently reproduced before writing any Rust, with a throwaway extractor over
+  `pi_screening.rs`'s literal list against `glob('src/rules_core/rules_tables/**/*.rs')`:
+  **137 files, 55 terms, 10 hits** — same 10.
+- **Term count:** 55, not 54 or 56. A first extraction pass read **56** because the list's own
+  trailing comment quotes `"Jarn"` a second time; stripping `//` lines gives 55 (20 deities + 34
+  places + Jarn). Recorded because the surrounding docs quote 54 and 55 in different places.
+- **Negative control (the gate is not vacuous):** a scratch tree
+  (`--repo-root <scratch>` holding one faux table reading `"blessed by Iomedae in Absalom"`)
+  → `2 unbaselined hit(s), 10 stale row(s)`, **exit 1**. The gate fails when it should.
+- **Disk preflight:** `./scripts/verify.sh` stage `preflight-disk` → PASS, 79% used, 105G available.
+
+### 3. The sweep's output, recorded (AT-29-003a's evidence requirement)
+
+10 hits, all accounted for in the baseline: **3 real leaks** —
+`acg/archetype_tables.rs` `Sarenrae`, `acg/spell_list.rs` `Jarn`,
+`advanced_race_guide/archetype_tables.rs` `Asmodeus` — and **7 false positives**:
+`ultimate_magic/equipment_tables.rs` `Geb` inside "Gebr", plus **six** `Nex` matches inside the
+spell name **"Discern Next of Kin"** (`acg/shaman_spell_list.rs`, `acg/spell_list.rs`,
+`apg/witch_spell_list.rs`, `crb/{bard,sorcerer,wizard}_spell_list.rs`).
+
+**Correction against this package's cited authority.** `license-matrix.md` (and, through it,
+`decisions.md §37.3` and `epic-breakdown.md` Epic 3) reports its manual sweep as **3 real + 1 false
+positive = 4 hits**. The real count is **10**; the three real leaks are exactly right, the
+false-positive class was undercounted 1 → 7. Corrected in place via an addendum to
+`license-matrix.md` (the "Not fixed here" section is left standing as authored) and emitted as a
+`correction` retro event with the command as `--verified-by`. No new *real* leak was found.
+
+**The three real leaks are NOT fixed here — deferred, not overlooked.** They live in ACG's and
+ARG's tables, owned by the bundles that landed them; `decisions.md §37.3` explicitly puts them
+outside SD-29's write scope. Each is a `real-leak` baseline row naming its owner, and a `deferral`
+retro event records the revisit condition. This is the safer default taken under UNATTENDED MODE:
+redacting another bundle's committed records unasked would have been the scope expansion.
+
+### 4. OGL / attribution — cited, not re-derived (SD29-E3-F2)
+
+All 37 in-scope books' OGL/attribution status is `docs/governance/license-matrix.md`'s per-book
+table: real `OGL.txt`, active `.pcc` `COPYRIGHT:` block, `ISOGL:YES`, publisher, section-15
+attribution. Two rows a lane must read rather than re-derive: **`ultimate_combat`** declares
+`#EXTRAFILE:OGL.txt` for a file that does not exist — attribution is recoverable from the `.pcc`
+`COPYRIGHT` block only; **`core_essentials`** is the one *unestablished* row, its own declarations
+commented out, practically recoverable only through `core_rulebook.pcc`'s unconditional inclusion.
+No row was found stale this cycle. `beginner_box` is out of scope and needs no citation.
+
+### 5. Definition of done
+
+1. **`./scripts/verify.sh` (FULL) — exit code captured directly, never through a pipe: 0.**
+   Written by `echo $? > verify-e3-run2.exit` on the statement immediately after the command. (Run 1
+   of the same gate on the same tree also reported `RESULT: PASS`, 12 of 12 stages, but its status
+   was never written to a file, so this receipt cites run 2.)
+   Stage results: all **12** PASS — `preflight-disk`, **`pi-sweep` (10 hits / 10 baseline rows, CLEAN — the new stage)**, `audit-selftest` (28 cases), `root-lib` (1604 passed), `root-full` (6138 passed across 539 suites, all 522 `tests/*.rs` suites executed), `desktop` (413), `reach` (16), `frontend-install`, `frontend-test` (98/98 files), `frontend-typecheck`, `clippy` (root:54 desktop:7 warnings, 0 errors), `class-dump` (31/31 computing).
+2. **Reach claims:** the `reach` stage reports **16 matched claims**, not zero. This card ingests no content and adds no record family, so
+   it introduces no new claim and retires none.
+3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 0**: "No defects: every ingested record's citation agrees with the line it names" (259 trap rows, 0 defects, `mod-record`).
+4. **`docs/work-inventory.json` regenerated twice and left unchanged.** `cargo run --locked --bin v06_work_inventory` ×2, both exit 0; a `json.load` diff with `generated_at` popped is **byte-identical** to the committed file, so the second run changed only `generated_at` and the `generated_at`-only churn was reverted (`git checkout -- docs/work-inventory.json`). No units moved out of `not-started`, correctly — this card ingests nothing. The
+   standing hazard (regenerating `data/corpus` destroys `license`/`pi_field`/`raw_tokens`) is not
+   touched: **no generator was run and no file under `data/corpus/` was written this cycle.**
+5. **Wired-integration four-check audit over this cycle's files: clean** —
+   `OK_NO_TOKENS`, `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`.
+   `scripts/wired-integration-audit.sh` (which audits the whole `develop...HEAD` bundle diff, not
+   this cycle's) reports one Check-1 hit —
+   `placeholder="e.g. GE08 authoring workbench"` → `placeholder="e.g. authoring workbench"` — an
+   HTML `placeholder` **attribute** in `epic-1b-naming-sweep`'s own diff, not a stub token and not
+   from this card. Recorded, not folded in.
+6. **`OPEN_FINDINGS` unchanged.** No family became unsurfaceable.
+7. **No baseline movement committed.** `scripts/verify-baselines.env` deliberately untouched per the
+   standing Epic-1 followup: the four SD-28 drifts plus this cycle's own additions
+   (`root-lib` measured **1604**, +4 from `pi_table_sweep`'s unit tests; `root-full` moves by this
+   cycle's 6 new integration tests) are notes, not failures. Epic 9/10 owns the separate reviewable
+   `--show-actuals` commit.
+8. **On-screen desktop verification: N/A, and not a skip.** DoD item 8 binds "any record family
+   whose reach claim is player-visible." This card surfaces **no record family** — it adds a
+   build/CI-time provenance gate whose only outputs are a CLI report and a verify.sh stage. There is
+   no sheet value, no catalog row, and no compute twin to read; a screenshot would photograph an
+   unrelated screen and assert nothing. `RUN_DESKTOP_AGENT` was therefore not consumed, and the
+   `desktop` stage's own result is carried in item 1.
+
+### 6. Git discipline
+
+`git status --porcelain` run before every git write. No `git add -A` (explicit paths only), no
+`git stash`. Other actors' retro shards (`codex.jsonl`, `sd29-e1-identifier.jsonl`, untracked
+`sd29-preflight.jsonl`) left dirty and uncommitted — same call Epics 1, 1b and 2 made. Only this
+actor's own shard is committed. `CARGO_TARGET_DIR=/home/ubuntu/workspace/.codex-targets/sd29-e3-provenance`
+(own dir, never under `/tmp`), removed at cycle end; `scripts/reclaim.sh --apply` run after.
+
+### 7. What every successor lane (Epics 4-7) must now do
+
+Two lines, non-optional, per book cycle-batch:
+
+1. Call `pi_table_sweep::screen_generated_table(<target path>, <generated text>)` in the extraction
+   step **before** writing the table. Non-empty ⇒ hard stop for that record; do not write, do not
+   route around, record the hits in the receipt.
+2. Run `cargo run --locked --bin pi_sweep_rules_tables` after the write and paste its output into
+   the cycle receipt, alongside the `license-matrix.md` row for the book touched.
+
+If a hit is a genuine false positive (the `Nex`/"Next" class), add a `false-positive` baseline row
+with the collision explained — never widen the gate and never edit the blacklist to make it quiet.
+
+### Retro events (`docs/retro/events/sd29-e3-provenance.jsonl`)
+
+1 × `correction` (license-matrix.md's own sweep: 4 hits claimed → 10 actual), 1 × `deferral` (the
+three pre-existing real leaks, owned by other bundles), plus `verify.sh`'s auto-emitted
+`verification` event.

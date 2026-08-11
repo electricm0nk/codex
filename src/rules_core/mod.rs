@@ -21,6 +21,7 @@ pub mod money;
 pub mod party_cr;
 pub mod pcgen_desc;
 pub mod pi_screening;
+pub mod pi_table_sweep;
 pub mod pilot_compute;
 pub mod pilot_compute_corpus;
 pub mod pilot_failure;

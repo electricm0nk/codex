@@ -99,8 +99,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk audit-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk pi-sweep audit-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk pi-sweep audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -661,6 +661,36 @@ run_clippy() {
 # under mktemp, never on this checkout.
 # ---------------------------------------------------------------------------
 
+run_pi_sweep() {
+    stage_start "pi-sweep — Product-Identity blacklist over src/rules_core/rules_tables"
+    local log="$LOG_DIR/pi-sweep.log"
+
+    # The provenance gate for kind-lane ingestion
+    # (docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md §37.3,
+    # AT-29-003a). Cheap — reads ~137 source files, builds one small bin — so
+    # it runs in `quick` too: a lane must not be able to land a PI leak in a
+    # generated table on a fast loop and discover it only on a full sweep.
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin pi_sweep_rules_tables ) >"$log" 2>&1
+    local status=$?
+
+    local summary
+    summary=$(sed -n 's/^pi-sweep: \([0-9]* hits .*\)$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail pi-sweep "unbaselined PI hit or stale baseline row (exit $status) — $log"
+        return
+    fi
+
+    # A sweep that examined nothing asserts nothing — the same 0-matched
+    # failure mode `reach` and `audit-selftest` each guard against.
+    if ! grep -q '^pi-sweep: CLEAN' "$log"; then
+        stage_fail pi-sweep "binary exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    stage_pass pi-sweep "${summary:-clean}"
+}
+
 run_audit_selftest() {
     stage_start "audit-selftest — scripts/tests/test_identifier_discipline_audit.sh"
     local log="$LOG_DIR/audit-selftest.log"
@@ -764,6 +794,7 @@ say "logs:  $LOG_DIR"
 for stage in "${SELECTED[@]}"; do
     case "$stage" in
         preflight-disk)      run_preflight_disk ;;
+        pi-sweep)            run_pi_sweep ;;
         audit-selftest)      run_audit_selftest ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
