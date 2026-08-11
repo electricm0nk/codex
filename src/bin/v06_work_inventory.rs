@@ -65,6 +65,7 @@ use codex::rules_core::rules_tables::crb::{
     spell_list as crb_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
+use codex::rules_core::spell_resolver;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
 use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
@@ -959,6 +960,28 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
     }
 }
 
+/// Translates one `spell_resolver::SPELL_BOOK_*` short code to the same
+/// book-directory slug `spell_levels`'s map is keyed by elsewhere in this
+/// file (`rule_set_id`'s own output). Panics on an unrecognized code rather
+/// than silently dropping the book from the spell classifier -- the failure
+/// mode this fix exists to replace, and the same guard shape
+/// `equipment_book_slug_for` above already carries. See
+/// `spell_book_slug_for_covers_every_catalog_book`.
+fn spell_book_slug_for(short_code: &str) -> &'static str {
+    match short_code {
+        "CRB" => "core_rulebook",
+        "APG" => "advanced_players_guide",
+        "ACG" => "advanced_class_guide",
+        "ARG" => "advanced_race_guide",
+        "UI" => "ultimate_intrigue",
+        other => panic!(
+            "spell_resolver::spell_catalog_rows() now carries an unmapped book code {other:?} \
+             -- add it to spell_book_slug_for so the spell classifier does not silently drop \
+             the book (this is exactly the divergence this function replaces)"
+        ),
+    }
+}
+
 /// Which other book directories a book's `.pcc` files include. Read from the
 /// real `PCC:` lines so the `core_essentials` relationship is *derived* — that
 /// is what proves the seven CRB races, whose bases live in
@@ -1447,28 +1470,26 @@ fn gather_engine_facts(
         }
     }
 
+    // SD-29 Epic 4 (spell lane): this map used to be three hand-maintained
+    // `.insert()` calls (core_rulebook/apg/acg only) sitting beside
+    // `spell_catalog::build_spell_catalog`, which already chained FIVE books
+    // (adding ARG and UI). The two never being reconciled silently
+    // misreported every already-shipping ARG and UI spell as
+    // `not-ingested` -- Decision 36's pattern, the exact defect the
+    // `equipment_keys` map immediately below this one was rebuilt to close
+    // for equipment in SD-28-E15, reproduced one record family over.
+    // Derived directly from `spell_resolver::spell_catalog_rows()` now, so
+    // there is no second list left to diverge: adding a sixth book to the
+    // registry populates this map automatically, and an unmapped
+    // `SPELL_BOOK_*` code panics loudly here rather than silently vanishing
+    // (see `spell_book_slug_for` and its own test below).
     let mut spell_levels: BTreeMap<&'static str, BTreeMap<String, bool>> = BTreeMap::new();
-    spell_levels.insert(
-        "core_rulebook",
-        crb_spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), true))
-            .collect(),
-    );
-    spell_levels.insert(
-        "advanced_players_guide",
-        apg::spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), e.level.is_some()))
-            .collect(),
-    );
-    spell_levels.insert(
-        "advanced_class_guide",
-        acg::spell_list::SPELL_LIST
-            .iter()
-            .map(|e| (e.key.to_string(), true))
-            .collect(),
-    );
+    for row in spell_resolver::spell_catalog_rows() {
+        spell_levels
+            .entry(spell_book_slug_for(row.book))
+            .or_default()
+            .insert(row.key.to_string(), row.level.is_some());
+    }
 
     // SD-28-E15: this map used to be four hand-maintained `.insert()` calls
     // (core_rulebook/apg/acg/bestiary_1 only) sitting beside
@@ -2991,6 +3012,73 @@ mod equipment_book_slug_tests {
             let slug = equipment_book_slug_for(code);
             assert!(!slug.is_empty(), "{code} resolved to an empty slug");
         }
+    }
+
+    /// The spell-family twin of `equipment_book_slug_for_covers_every_catalog_book`.
+    /// A sixth book added to `spell_catalog_rows()` without a matching arm in
+    /// `spell_book_slug_for` fails this test immediately (a panic on
+    /// `cargo test`) instead of silently dropping that book's spell units
+    /// from the inventory the way the old three-`.insert()`-call list did.
+    #[test]
+    fn spell_book_slug_for_covers_every_catalog_book() {
+        let codes: std::collections::BTreeSet<&'static str> =
+            spell_resolver::spell_catalog_rows().iter().map(|row| row.book).collect();
+        assert!(!codes.is_empty(), "the registry must carry at least one book's rows");
+        for code in codes {
+            let slug = spell_book_slug_for(code);
+            assert!(!slug.is_empty(), "{code} resolved to an empty slug");
+        }
+    }
+
+    /// The specific defect this fix closes, pinned so it cannot regress.
+    /// Before the consolidation the work inventory's `spell_levels` map held
+    /// three books while the shipped Spell Catalog served five, so every ARG
+    /// and UI spell was reported `not-ingested` despite already being on
+    /// screen. Two real corpus keys, one per newly-joined book, must now be
+    /// reachable through the registry under their own book slug.
+    #[test]
+    fn arg_and_ui_spell_keys_are_reachable_through_the_derived_map() {
+        let rows = spell_resolver::spell_catalog_rows();
+        assert!(
+            rows.iter().any(|r| r.book == "ARG" && r.key == "Aboleth's Lung"),
+            "Aboleth's Lung must be a real ARG row in spell_catalog_rows()"
+        );
+        assert!(
+            rows.iter().any(|r| r.book == "UI" && r.key == "Absolution"),
+            "Absolution must be a real UI row in spell_catalog_rows()"
+        );
+        assert_eq!(spell_book_slug_for("ARG"), "advanced_race_guide");
+        assert_eq!(spell_book_slug_for("UI"), "ultimate_intrigue");
+    }
+
+    /// The consolidation must be a pure widening for the three books that
+    /// were already mapped: every CRB/APG/ACG key the old hand-maintained
+    /// inserts produced, with the same level-known flag, must still be
+    /// present. This is what makes the change safe to land without moving
+    /// any already-`ingested-magnitude` unit.
+    #[test]
+    fn registry_preserves_every_key_the_hand_maintained_map_carried() {
+        let rows = spell_resolver::spell_catalog_rows();
+        let derived = |slug: &str| -> BTreeMap<String, bool> {
+            rows.iter()
+                .filter(|r| spell_book_slug_for(r.book) == slug)
+                .map(|r| (r.key.to_string(), r.level.is_some()))
+                .collect()
+        };
+
+        let crb_expected: BTreeMap<String, bool> =
+            crb_spell_list::SPELL_LIST.iter().map(|e| (e.key.to_string(), true)).collect();
+        assert_eq!(derived("core_rulebook"), crb_expected);
+
+        let apg_expected: BTreeMap<String, bool> = apg::spell_list::SPELL_LIST
+            .iter()
+            .map(|e| (e.key.to_string(), e.level.is_some()))
+            .collect();
+        assert_eq!(derived("advanced_players_guide"), apg_expected);
+
+        let acg_expected: BTreeMap<String, bool> =
+            acg::spell_list::SPELL_LIST.iter().map(|e| (e.key.to_string(), true)).collect();
+        assert_eq!(derived("advanced_class_guide"), acg_expected);
     }
 
     /// The specific defect this fix closes, pinned so it cannot regress:

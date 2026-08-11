@@ -34,14 +34,23 @@ export const BOOK_LABELS: Record<string, string> = {
   APG: "Advanced Player's Guide",
   ACG: 'Advanced Class Guide',
   ARG: 'Advanced Race Guide',
+  UI: 'Ultimate Intrigue',
 };
 
 /**
  * The served books in the order `spell_catalog.rs`'s `build_spell_catalog`
- * chains them (CRB -> APG -> ACG -> ARG), so the filter row reads in the
+ * chains them (CRB -> APG -> ACG -> ARG -> UI, now via
+ * `spell_resolver::spell_catalog_rows()`), so the filter row reads in the
  * same order the rows themselves arrive.
+ *
+ * **Keep this in step with the Rust chain.** UI was served for a full
+ * bundle before it appeared here: the screen showed 1286 spells under a
+ * filter row whose chips summed to 1185, and named four books in its own
+ * copy while serving five. Nothing failed — the frontend test's oracle was
+ * a copy of this constant rather than a statement about the backend. See
+ * `SpellCatalogScreen.test.ts`'s header.
  */
-export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG'] as const;
+export const BOOK_ORDER = ['CRB', 'APG', 'ACG', 'ARG', 'UI'] as const;
 
 /**
  * Renders book codes as a prose list of their display labels, so the
@@ -56,8 +65,8 @@ export function formatBookList(codes: readonly string[]): string {
 }
 
 /**
- * Full spell catalog browser — every real corpus record across all four
- * ingested books (CRB 652, APG 297, ACG 144, ARG 92; 1185 in total), not a
+ * Full spell catalog browser — every real corpus record across all five
+ * ingested books (CRB 652, APG 297, ACG 144, ARG 92, UI 101; 1286 in total), not a
  * per-character sample. Counts are pinned Rust-side by
  * `the_catalog_serves_every_ingested_book_not_only_crb` in
  * `spell_catalog.rs`. Distinct from the Character Sheet's Spells tab, which
@@ -212,7 +221,7 @@ export function SpellCatalogScreen(props: { onClose: () => void }) {
 
           <div style={{ ...panel, maxHeight: 480, overflowY: 'auto', padding: visible.length ? '0.25rem 1rem' : '1rem' }}>
             {visible.map((entry) => (
-              // `key` is unique across all four books (see
+              // `key` is unique across all five served books (see
               // `tests/spell_cross_book_identity.rs`), so it alone is a
               // safe React key.
               <div
