@@ -2122,3 +2122,129 @@ while the remaining bounded work proceeded.
 3. **`Dwarf ~ Hatred` is a real hole in `crb::race_tables`** (§4), now visible instead of masked.
 4. **`root-full` is red on `tranche/9` for reasons no current card owns** (§6). The next card to run
    the full gate should expect it and must not attribute it to itself.
+---
+
+## Cycle SD29-E7-F1-001 — `epic-7-companion-lane-pilot` — **BLOCKED (not started)**
+
+- **Actor:** `sd29-e7-companion-pilot`
+- **Date:** 2026-08-11
+- **Branch tip at read:** `579d5941` (tranche/9)
+- **Card status left at:** `READY` (deliberately **not** claimed — the cycle never reached
+  Cycle-mechanics step 2, so claiming would have parked the card `IN-FLIGHT` under an agent that
+  did no bounded work)
+- **PR-id:** none (no commit produced)
+
+### 1. Why this cycle did not start
+
+`loop-instruction.md` Cycle mechanics **step 1c** is a refusal gate: *"Refuse to start the bounded
+work below if it fails."* It failed, twice, with the reclaim step in between:
+
+```
+./scripts/verify.sh --only preflight-disk        -> EXIT=1
+    repo filesystem (…/.claude/worktrees/wf_3516060a-756-11, mounted at /): 91% used, 47G available
+    FAIL: disk budget below floor (max 90% used, min 20G free).
+scripts/reclaim.sh                               -> dry run; only stale verify-log dirs eligible
+scripts/reclaim.sh --apply                       -> exit 0, ~1MB reclaimed; df unchanged at 91%
+./scripts/verify.sh --only preflight-disk        -> EXIT=1  (same figures)
+```
+
+`reclaim.sh` behaved correctly and reclaimed nothing meaningful: every `cargo-target`, `worktrees`
+and `branches` candidate was `SKIPPED` as live / unpushed / uncommitted — five sibling SD-29
+worktree agents (`wf_3516060a-756-6…-10`) hold them.
+
+### 2. The gate is right here, not a percentage artifact — re-derived
+
+The tempting judgment call was to press on with the gate's own documented override
+(`PREFLIGHT_DISK_MAX_PERCENT`), on the theory that 47G free clears the 20G free floor by 2.4x and
+only the *percentage* criterion trips because the disk is large. That theory was tested against the
+real cost of a target dir rather than assumed, and it is wrong:
+
+```
+timeout 110 du -s --block-size=1G -x /home/ubuntu/workspace/repos/codex/target   ->  60   (GB)
+df -h /                                                                          ->  48G available
+```
+
+**One cargo target dir for this repo is ~60G; 48G is available.** The BUILD-CONTENTION RULE requires
+this cycle to export its *own* `CARGO_TARGET_DIR`, and a fresh one for a FULL ~490-binary sweep does
+not fit. Starting it would have driven the shared filesystem to 100% under five concurrent agents —
+the exact recorded failure mode (`tranche-7-retrospective.md` §4.1: `/home` at 100%, 0 bytes
+available, "ld terminated with signal 7 [Bus error]"), and it would have taken the siblings down
+with it. Overriding the floor was therefore rejected as *weakening a gate to get green*, which
+"Stop vs. press on" bans outright.
+
+### 3. Decision recorded under UNATTENDED MODE
+
+Per UNATTENDED MODE item 3, the blocker is **recorded, not raised**; no `clarify` call was made and
+nothing was fabricated. This is a resource blocker external to the card, not `decision-blocked` on a
+scope question. **Remedy for the supervisor:** dispatch this card when fewer sibling worktrees are
+in flight, or after their target dirs are reclaimable, or pin it to a checkout on a filesystem with
+≥60G free. Nothing about the card itself is in doubt.
+
+### 4. Re-derived figures the successor cycle can start from (step 1b, done before the gate blocked)
+
+All three re-derived directly, commands recorded verbatim; none transcribed from
+`epic-breakdown.md` or `decisions.md §38.1`.
+
+- **Corpus-wide `companion` remaining = 1,683 across 17 books** — matches the card and
+  `epic-breakdown.md`. Command:
+  `python3 -c "import json;d=json.load(open('docs/work-inventory.json'));print(sum(b['kinds']['companion']['units'] for b in d['books'] if 'companion' in b['kinds']))"` → `1683`
+- **Pilot book `inner_sea_combat` `companion` = 10 units, all `not-started`** — matches the card's
+  "10 units". Command:
+  `python3 -c "import json;d=json.load(open('docs/work-inventory.json'));print([b['kinds']['companion'] for b in d['books'] if b['id']=='inner_sea_combat'])"`
+  → `[{'units': 10, 'by_status': {'not-started': 10}}]`
+- **The 10 units are NOT one flat set — they are 4 chassis + 6 attached abilities, from two
+  different `.lst` files.** This is the finding that answers SD29-E7-F1's acceptance criterion
+  ("chassis or attribute-set, whichever the corpus's companion `.lst` shape actually supports —
+  determined by this epic's own trap-report, not assumed from `race`/`race_trait`'s shape"). Command:
+  `python3 -c "import json,collections;d=json.load(open('docs/work-inventory.json'));print(collections.Counter(u['source_file'] for u in d['units'] if u['kind']=='companion' and u['book']=='inner_sea_combat'))"`
+  → `Counter({'isc_abilities_companion.lst': 6, 'isc_races_companion.lst': 4})`
+  - **4 chassis** (`isc_races_companion.lst`, lines 5-8, `wiring_class: computed`): Companion
+    (Griffon), (Hippocampus), (Hippogriff), (Worg). These are **RACE-shaped rows** —
+    `SIZE:`/`MOVE:`/`BONUS:STAT|…`/`BONUS:VAR|AC_Natural_Armor|…`/`MONSTERCLASS:Companion:2`/
+    `RACETYPE:Magical Beast` — verified by reading
+    `~/workspace/repos/pcgen/data/pathfinder/paizo/campaign_setting/inner_sea_combat/isc_races_companion.lst`.
+  - **6 abilities** (`isc_abilities_companion.lst`): 4 × `Companion Advancement ~ <beast>`
+    (`computed`) + `Unable to carry a rider while flying` and `Worg ~ Mastery` (both `display`).
+  - **Conclusion for the mechanism build: chassis-plus-attached-features, structurally the same
+    shape as `race`/`race_trait` after all** — but that is now an *observed* conclusion with the
+    corpus rows behind it, not the assumption the acceptance criterion warned against.
+
+### 5. Architecture survey completed (no code written)
+
+Recorded so the successor cycle does not repeat it. The companion mechanism needs, at minimum:
+`src/rules_core/shape_b_v1.rs` (a `CompanionCacheData` alongside `RaceCacheData`/`RaceTraitCacheData`);
+a `CompanionCorpus` loader modelled on `src/rules_core/race_resolver.rs`'s `load_race_corpus`
+(chassis dir + feature dir, `link_automatic_grants` post-pass); a desktop surface modelled on
+`apps/desktop/src-tauri/src/race_trait_picker.rs`; and **three** `reach_gate.rs` edits —
+`CORPUS_BOOK_IDS` (add `inner_sea_combat`), `CORPUS_KIND_NAMES` (add `("companion", "companions")`),
+and a `companions_reach()` arm in `reach_of`. Both `CORPUS_BOOK_IDS` and `CORPUS_KIND_NAMES` **fail
+closed** — writing `data/corpus/inner_sea_combat/companion/*.json` without both edits breaks the
+`reach` stage rather than silently exempting the family, so the corpus write and the gate edits must
+land in the same commit.
+
+**Standing hazard flagged for the successor, not folded in:** DoD item 4 ("the book's units leave
+`not-started`") cannot be satisfied for `inner_sea_combat` by a companion ingest alone.
+`v06_work_inventory.rs`'s `classify()` returns `not-started` / `no_compiled_rule_set_for_book` for
+any book absent from `COMPILED_RULE_SETS` (`src/bin/v06_work_inventory.rs:899` `rule_set_for`,
+`:1658`), and `inner_sea_combat` is absent. Adding a `RuleSetId` for it is the ~7-file book-onboarding
+tax and would also move its 314 `class_feature` units from `not-started` to `not-ingested` — a kind
+`decisions.md §38.4` excludes from every lane. That is a real scope question for the pilot to rule
+on in its receipt; it is stated here as a finding, not resolved by an agent that wrote no code.
+
+### 6. Definition of done
+
+**Not met — and not claimed.** No item of the 8 is satisfied; `./scripts/verify.sh` (FULL) was never
+run, so there is no exit code to cite and none is invented. `RUN_DESKTOP_AGENT` was never set and no
+`driver.sh` call was made.
+
+### 7. Git discipline
+
+`git status` run before every git write. No `git add -A`, no `git stash`. **No production file,
+`data/corpus/` file, generator output or baseline was touched.** The only writes are this receipt and
+this actor's own retro shard. No `CARGO_TARGET_DIR` was created — that is the point of the blocker —
+so there is none to clean up; `scripts/reclaim.sh --apply` was nonetheless run (exit 0).
+
+### Retro events (`docs/retro/events/sd29-e7-companion-pilot.jsonl`)
+
+1 × `incident`, `--recurrence-key disk-full`, `--used-percent 91`, `--actors-affected 6`. No
+`verification` event: `verify.sh` FULL never ran.
