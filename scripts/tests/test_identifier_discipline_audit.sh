@@ -82,7 +82,37 @@ run_case 'kanban token (t_<hex8>)'         1 src/gen.rs               '// slice 
 run_case 'tag in top-level src/lib.rs'     1 src/lib.rs               'pub fn sd29_flag() {}'
 run_case 'tag in tauri crate'              1 apps/desktop/src-tauri/src/m.rs 'pub const SD29_GATE: bool = true;'
 
+# --- Grand-epic (GE-NN) tag family. -----------------------------------------
+# Operator directive 2026-08-11 ("references to SD and ge were to be replaced a
+# few tranches ago with function based naming"): the GE-NN family is banned on
+# exactly the same terms as SD-NN. Epic 1's hardened regex covered only SD.
+run_case 'snake grand-epic tag (ge08_)'    1 src/gen.rs               'pub mod ge08_workbench;'
+run_case 'screaming grand-epic tag (GE06_)' 1 src/gen.rs              'const GE06_BASE_ARMOR_CLASS: i16 = 16;'
+run_case 'pascal grand-epic tag (Ge08)'    1 src/gen.rs               'pub struct Ge08AuthoringWorkbenchRequest;'
+run_case 'hyphen grand-epic tag (ge08-)'   1 apps/desktop/src/a.ts    'const cls = "ge08-workbench-row";'
+
+# --- Infix forms: the tag is not at the start of the identifier. -------------
+# `_` is a word character, so `\b(sd|ge)[0-9]+` can never match `kind_is_sd17_b3`
+# — both of the live examples below passed Epic 1's hardened gate clean.
+run_case 'infix bundle tag (kind_is_sd17_b3)' 1 src/gen.rs            'pub fn kind_is_sd17_b3() -> bool { true }'
+run_case 'infix grand-epic tag'            1 src/gen.rs               'fn build_ge08_workbench_snapshot() {}'
+run_case 'infix seeded fixture accessor'   1 src/gen.rs               'pub fn seeded_sd13_e1_f1_current_truth() {}'
+
+# --- PATH tags: file and directory names carry the same ban. ----------------
+# Epic 1 established that the audit regex is identifier-shaped and catches NO
+# path tags at all. A file named src/bin/sd27_gen_book_cache.rs is a bundle tag
+# in exactly the sense the doctrine bans, and every one of these passed clean.
+run_case 'path tag in file name'           1 src/bin/sd27_gen_book_cache.rs 'pub fn main() {}'
+run_case 'path tag in directory name'      1 apps/desktop/src/sd16/update/fetch.ts 'export const x = 1;'
+run_case 'path tag in grand-epic file'     1 apps/desktop/src-tauri/src/ge08_workbench.rs 'pub fn main() {}'
+
 # --- Non-detection cases: each MUST stay clean (exit 0). --------------------
+# Documented exclusion class (identifier-discipline doctrine, SD-25 1.1): a doc
+# comment or string literal citing a REAL tests/... file by name is a
+# test-traceability grounding, not an identifier carrying a bundle tag.
+run_case 'tests/ citation in doc comment'  0 src/gen.rs               '/// Grounded by tests/sd13_fighter_level9_level10_progression.rs.'
+run_case 'tests/ citation string literal'  0 src/gen.rs               'const T: &str = "tests/ge06_pilot_input_contract.rs";'
+run_case 'tests/ path is not a path tag'   0 tests/sd13_progression.rs 'fn t() {}'
 # Doc-style bundle slugs are the normal way source comments cite this bundle's
 # release package; flagging them would make the gate unusable.
 run_case 'doc slug SD-29 in a comment'     0 src/gen.rs               '// See docs/release/SD-29-corpus-wide-catch-up-lanes/decisions.md'

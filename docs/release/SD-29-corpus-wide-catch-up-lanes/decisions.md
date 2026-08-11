@@ -1283,3 +1283,41 @@ green. See the cycle receipt for the verbatim FAIL/PASS output.
 
 **Authority:** Decision 39 (the finding this mechanism closes); `scripts/verify.sh` `root-full`
 stage source, `expected_test_suites`/`executed_test_suites`.
+
+## Decision 41 — Function-based naming is the repo's identifier convention; both SD-NN and GE-NN tag families are banned from file names, directory names, and identifiers (2026-08-11, operator directive)
+
+**Operator directive, verbatim:** "references to SD and ge were to be replaced a few tranches ago
+with function based naming. clean that up while you are at it."
+
+**Ruling.** `docs/doctrine-external/identifier-discipline.md`'s headline — "Source-code identifiers
+describe WHAT the artifact does, NOT which release or spec domain it came from" — binds **two** tag
+families, not one: the SD-NN release-bundle tags and the GE-NN grand-epic tags. It binds the
+**artifact**, not only the symbol: a FILE named `src/bin/sd27_gen_book_cache.rs` and a DIRECTORY
+named `apps/desktop/src/sd16/update/` are the same violation as a struct named
+`Ge08AuthoringWorkbenchRequest`. Landed by card `epic-1b-naming-sweep` (Order 2.5).
+
+**Why it needed its own card rather than Epic 1.** Epic 1 hardened
+`scripts/identifier-discipline-audit.sh`, and this work is what that gate was supposed to have been
+preventing. Three whole classes escaped the hardened gate, each verified live against this repo:
+(a) the GE-NN family was absent from the regex entirely; (b) the infix form is unmatchable by a
+leading `\b` because `_` is a word character, so `kind_is_sd17_b3`,
+`build_ge08_workbench_snapshot`, and `seeded_sd13_e1_f1_current_truth` all passed clean; (c) the
+regex is identifier-shaped and scanned file *content* only, so no path tag was ever detectable.
+All three are now covered by cases in `scripts/tests/test_identifier_discipline_audit.sh`.
+
+**The documented exclusion class still stands** (identifier-discipline doctrine, SD-25 1.1): a doc
+comment or string literal citing a REAL `tests/...` file by name is test-traceability grounding,
+not a violation. The audit now strips such citations before matching rather than relying on cycles
+to ignore the noise — `src/rules_core/support_state_matrix.rs` alone carries 319 tag-shaped hits,
+nearly all of this class. Renaming a *cited* file obliges the citations to move with it; it does
+not license mass-rewriting prose that cites a file nobody renamed, and `tests/` file names
+themselves are out of scope for this card precisely because 531 of them are load-bearing citation
+targets.
+
+**Convention for successor lanes (binding on Epics 3-11).** Any new codegen binary is named for its
+function — `gen_book_cache.rs`, never `sd29_gen_book_cache.rs`. The `src/bin/gen_cache_beastiary.rs`
+precedent is the correct one to copy; `src/bin/sd27_gen_book_cache.rs` was not, and no longer
+exists under that name. Same rule for modules, structs, consts, test module names, and directories.
+
+**Authority:** operator directive 2026-08-11; `docs/doctrine-external/identifier-discipline.md`;
+`scripts/identifier-discipline-audit.sh` + its self-test.

@@ -32,6 +32,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 |---|----|--------|------|-----------|------------|------------|------------|----------|
 | 1 | `epic-1-identifier` | COMPLETE | Identifier Cleanup | identifier-discipline audit pass | none | sd29-e1-identifier | 2026-08-10T00:00:00Z | SD29-E1-F1-001 |
 | 2 | `epic-2-prelaunch` | COMPLETE | Operator Pre-Launch | corpus-wide (37-book) cycle-0 trap-report + work-inventory | `epic-1-identifier` | sd29-e2-prelaunch | 2026-08-10T23:56:00Z | SD29-E2-F1-001 |
+| 2.5 | `epic-1b-naming-sweep` | IN-FLIGHT | Function-Based Naming Sweep | corpus-source rename sweep: SD-NN + GE-NN tags out of file names, directory names, and identifiers (operator directive 2026-08-11) | `epic-1-identifier` | sd29-e1b-naming | 2026-08-11T00:00:00Z | SD29-E1B-F1-001 |
 | 3 | `epic-3-provenance` | READY | Provenance Gate | PI-screening wired into each lane's extraction step; license-matrix citation for OGL/attribution, corpus-wide | `epic-2-prelaunch` | — | — | — |
 | 4 | `epic-4-proven-equip-mod` | READY | Proven-Path Lanes — equipment + equipment_modifier | corpus-wide, 1,144 + 812 remaining units (equipment corrected from 1,163 by Epic 2 — the old figure counted `beginner_box`'s 19 excluded units; see `corpus-shape-37-books.md` §3) | `epic-3-provenance` | — | — | — |
 | 5 | `epic-4-proven-spell` | READY | Proven-Path Lanes — spell | corpus-wide, 1,754 remaining units | `epic-3-provenance` | — | — | — |
