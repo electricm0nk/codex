@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Drow ~ Defensive Training",
+    "name": "Defensive Training",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "SpecialQuality",
+      "Defensive"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Drow_ReplaceDrowImmunities",
+      "Drow_ReplaceKeenSenses",
+      "Drow_ReplacePoisonUse"
+    ],
+    "description": "Many drow cities are frequently beset by attacks from aberrations, prompting the residents train themselves to defend against them. Drow gain a +4 dodge bonus to AC against aberrations. This racial trait replaces drow immunities, keen senses, and poison use.",
+    "source_page": "p.215",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Defensive Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.SpecialQuality.Defensive"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Drow ~ Defensive Training],[!PREFACT:1,ABILITIES,Drow_ReplaceDrowImmunities=True,Drow_ReplaceKeenSenses=True,Drow_ReplacePoisonUse=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Many drow cities are frequently beset by attacks from aberrations, prompting the residents train themselves to defend against them. Drow gain a +4 dodge bonus to AC against aberrations."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces drow immunities, keen senses, and poison use.|!PREABILITY:1,CATEGORY=Special Ability,Drow ~ Defensive Training"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.215"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+4 dodge bonus to AC against aberrations."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+4 dodge bonus to AC vs. aberrations)"
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplaceDrowImmunities|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplaceKeenSenses|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Drow_ReplacePoisonUse|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 545,
+    "record_key": "Drow ~ Defensive Training"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

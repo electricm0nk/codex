@@ -134,6 +134,19 @@ const BOOK_SOURCES: &[BookSource] = &[
         lst_relative: "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
     },
+    // Inner Sea Races, SD-29's race-trait lane round 2. The single largest
+    // alternate-racial-trait contribution after ARG's own: 68 of its 72
+    // in-scope rows set a `<Race>_Replace<Trait>` flag, so they are
+    // `TraitRole::Alternate` and reach a player through the picker that
+    // already serves ARG, APG and Monster Codex. Nothing here is a new
+    // mechanism -- which is the correction this round records against
+    // `decisions.md §44.4`, whose successor queue put this book behind two
+    // that DO need one.
+    BookSource {
+        corpus_book: "inner_sea_races",
+        lst_relative: "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        pcgen_book_relative: "pathfinder/paizo/campaign_setting/inner_sea_races",
+    },
 ];
 
 /// The 18 in-scope races (`decisions.md §25.3`), spelled exactly as the corpus
@@ -1164,42 +1177,84 @@ mod tests {
     }
 
     /// The property the player actually experiences: nothing PCGen-shaped
-    /// survives into a served description. Scoped to the one book this
-    /// binary writes.
+    /// survives into a served description.
+    ///
+    /// **This used to load one hardcoded book root** — `advanced_race_guide` —
+    /// while [`BOOK_SOURCES`] had grown to three. That is the identical
+    /// stale-hardcoded-roots defect SD-29 `decisions.md §44.2` and `§44.5`
+    /// found in `race_resolver`'s test module and in two integration tests: a
+    /// test whose stated job is "no committed record leaks" that cannot see
+    /// two thirds of the committed records, and that stays green through any
+    /// number of new books precisely because it cannot see them. It now
+    /// derives its roots from `BOOK_SOURCES`, so adding a book to that table
+    /// automatically widens this guard instead of silently escaping it.
     #[test]
-    fn no_committed_arg_trait_description_leaks_pcgen_syntax() {
+    fn no_committed_trait_description_leaks_pcgen_syntax_in_any_declared_book() {
         use codex::rules_core::shape_b_v1::CorpusRecordV1;
 
-        let trait_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_race_guide/race_trait");
-        let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
-            .expect("race_trait dir must exist")
-            .filter_map(Result::ok)
-            .map(|e| e.path())
-            .collect();
-        race_dirs.sort();
+        // Per-book expected counts, re-derived on disk by this test itself.
+        // Stated as a table so a book whose ingest silently stops writing
+        // fails here by name rather than by a total that still adds up.
+        let expected: BTreeMap<&str, usize> =
+            [("advanced_race_guide", 156usize), ("monster_codex", 5), ("inner_sea_races", 72)]
+                .into_iter()
+                .collect();
+        assert_eq!(
+            expected.len(),
+            BOOK_SOURCES.len(),
+            "every book this binary writes must be counted here"
+        );
 
-        let mut checked = 0usize;
-        let mut with_description = 0usize;
-        for race_dir in race_dirs {
-            let mut files: Vec<PathBuf> =
-                fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
-            files.sort();
-            for path in files {
-                let record: CorpusRecordV1<RaceTraitCacheData> =
-                    serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
-                checked += 1;
-                let Some(desc) = record.data.description.as_deref() else { continue };
-                with_description += 1;
-                assert_eq!(
-                    leaked_pcgen_syntax(desc),
-                    None,
-                    "{path:?}: served description carries PCGen syntax: {desc}"
-                );
-                assert_eq!(desc.trim(), desc, "{path:?}: served description has stray edge whitespace");
+        let mut total = 0usize;
+        for book in BOOK_SOURCES {
+            let trait_root =
+                PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(book.corpus_book).join("race_trait");
+            let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
+                .unwrap_or_else(|e| panic!("{trait_root:?} must exist for {}: {e}", book.corpus_book))
+                .filter_map(Result::ok)
+                .map(|e| e.path())
+                .collect();
+            race_dirs.sort();
+
+            let mut checked = 0usize;
+            let mut with_description = 0usize;
+            for race_dir in race_dirs {
+                let mut files: Vec<PathBuf> =
+                    fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
+                files.sort();
+                for path in files {
+                    let record: CorpusRecordV1<RaceTraitCacheData> =
+                        serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
+                    checked += 1;
+                    let Some(desc) = record.data.description.as_deref() else { continue };
+                    with_description += 1;
+                    assert_eq!(
+                        leaked_pcgen_syntax(desc),
+                        None,
+                        "{path:?}: served description carries PCGen syntax: {desc}"
+                    );
+                    assert_eq!(desc.trim(), desc, "{path:?}: served description has stray edge whitespace");
+                }
             }
+            assert_eq!(
+                checked,
+                expected[book.corpus_book],
+                "{} record count on disk",
+                book.corpus_book
+            );
+            // Every record carries prose. A redacted one carries the PI marker
+            // rather than nothing, so this holds for Inner Sea Races' 12
+            // redactions too — which is the point of a schema-preserving
+            // redaction and is worth asserting rather than assuming.
+            assert_eq!(
+                with_description,
+                checked,
+                "{}: every record must carry a description",
+                book.corpus_book
+            );
+            total += checked;
         }
-        assert_eq!(checked, 156, "156 ARG alternate racial trait records");
-        assert_eq!(with_description, 156, "every one of them carries a DESC:");
+        assert_eq!(total, 233, "156 ARG + 5 Monster Codex + 72 Inner Sea Races");
     }
 
     #[test]

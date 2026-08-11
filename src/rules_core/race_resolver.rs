@@ -924,10 +924,10 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 /// # What the values are
 ///
 /// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
-/// all 158 records [`RaceCorpus::alternate_traits`] classifies as
+/// all 226 records [`RaceCorpus::alternate_traits`] classifies as
 /// [`TraitRole::Alternate`] across the 18 in-scope races — ARG's 153, Monster
-/// Codex's 4 and the Advanced Player's Guide's 1, the last two landed by
-/// SD-29's race-trait lane. The three records that are *not* standalone
+/// Codex's 4, the Advanced Player's Guide's 1 and Inner Sea Races' 68, the
+/// last three landed by SD-29's race-trait lane. The three records that are *not* standalone
 /// choices — `Feral ~ Languages`, `Scion of Humanity ~ Languages` and
 /// `Saltbeard ~ Dwarf ~ Greed`, all three [`TraitRole::FlagGranted`] — are
 /// deliberately absent: a player never selects them, they are granted by the
@@ -1154,6 +1154,105 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Tiefling ~ Soul Seer", &["Tiefling_ReplaceFiendishSorcery", "Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Vestigial Wings", &["Tiefling_ReplaceSkilled"]),
 
+    // ================= Inner Sea Races =================
+    // SD-29 race-trait lane, round 2. 68 of the book's 72 in-scope rows set
+    // a `<Race>_Replace<Trait>` flag and are therefore `TraitRole::Alternate`;
+    // every value below is `RaceTraitCacheData::sets_replace_flags` read
+    // verbatim off `data/corpus/inner_sea_races/race_trait/`, and
+    // `the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate`
+    // re-derives all 68 from those records rather than trusting this block.
+    // The other 4 rows are deliberately absent: `Junk Tinker ~ Skilled` and
+    // `Secret Magic ~ Merfolk ~ Speed` and `Pass for Human ~ Tiefling ~
+    // Languages` are `TraitRole::FlagGranted` (a player never selects them),
+    // and `Human ~ Tribalistic Languages` is `TraitRole::Unclassified` —
+    // nothing in the upstream corpus grants it, which is recorded as a
+    // shortfall in `reach_gate`'s `OPEN_FINDINGS` rather than smoothed over.
+    // ---- Aasimar ----
+    ("Aasimar ~ Crusading Magic", &["Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Lost Promise", &["Aasimar_ReplaceSpellLikeAbility"]),
+    // ---- Drow ----
+    ("Drow ~ Defensive Training", &["Drow_ReplaceDrowImmunities", "Drow_ReplaceKeenSenses", "Drow_ReplacePoisonUse"]),
+    // ---- Duergar ----
+    ("Duergar ~ Magical Taskmaster", &["Duergar_ReplaceSLAInvisibility"]),
+    // ---- Dwarf ----
+    ("Dwarf ~ Lasting Grudge", &["Dwarf_ReplaceDefensiveTraining", "Dwarf_ReplaceHatred"]),
+    ("Dwarf ~ Siege Survivor", &["Dwarf_ReplaceGreed", "Dwarf_ReplaceHardy", "Dwarf_ReplaceHatred"]),
+    ("Dwarf ~ Slag Child", &["Dwarf_ReplaceDefensiveTraining", "Dwarf_ReplaceHatred"]),
+    ("Dwarf ~ Spell Smasher", &["Dwarf_ReplaceDefensiveTraining", "Dwarf_ReplaceHatred"]),
+    ("Dwarf ~ Spiritual Support", &["Dwarf_ReplaceGreed", "Dwarf_ReplaceHardy"]),
+    ("Dwarf ~ Stoic Negotiator", &["Dwarf_ReplaceDefensiveTraining", "Dwarf_ReplaceHatred", "Dwarf_ReplaceStonecunning"]),
+    ("Dwarf ~ Unstoppable", &["Dwarf_ReplaceHardy"]),
+    // ---- Elf ----
+    ("Elf ~ Ageless Patience", &["Elf_ReplaceElvenMagic", "Elf_ReplaceKeenSenses"]),
+    ("Elf ~ Disinterested Observer", &["Elf_ReplaceElvenMagic", "Elf_ReplaceWeaponFamiliarity"]),
+    ("Elf ~ Elven Arrogance", &["Elf_ReplaceLanguages"]),
+    ("Elf ~ Human-Raised", &["Elf_ReplaceElvenMagic", "Elf_ReplaceWeaponFamiliarity"]),
+    ("Elf ~ Memories Beyond Death", &["Elf_ReplaceElvenImmunities", "Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Overwhelming Magic", &["Elf_ReplaceElvenMagic", "Elf_ReplaceWeaponFamiliarity"]),
+    ("Elf ~ Retreat Magic", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Sovyrian-Born", &["Elf_ReplaceElvenMagic", "Elf_ReplaceKeenSenses"]),
+    // ---- Gnome ----
+    ("Gnome ~ Architectural Ingenuity", &["Gnome_ReplaceKeenSenses", "Gnome_ReplaceObsessive"]),
+    ("Gnome ~ Dirty Trickster", &["Gnome_ReplaceHatred", "Gnome_ReplaceKeenSenses"]),
+    ("Gnome ~ Intrepid Settler", &["Gnome_ReplaceIllusionResistance", "Gnome_ReplaceKeenSenses", "Gnome_ReplaceObsessive"]),
+    ("Gnome ~ Utilitarian Magic", &["Gnome_ReplaceGnomeMagic"]),
+    ("Gnome ~ Vivacious", &["Gnome_ReplaceGnomeMagic", "Gnome_ReplaceKeenSenses"]),
+    ("Gnome ~ Wright", &["Gnome_ReplaceHatred", "Gnome_ReplaceObsessive"]),
+    // ---- Goblin ----
+    ("Goblin ~ Junk Tinker", &["Goblin_ReplaceSkilled"]),
+    // ---- Half-Elf ----
+    ("Half-Elf ~ Elf-Scorned", &["HalfElf_ReplaceElvenImmunities", "HalfElf_ReplaceMultitalented"]),
+    ("Half-Elf ~ Eye for Opportunity", &["HalfElf_ReplaceAdaptability", "HalfElf_ReplaceKeenSenses"]),
+    ("Half-Elf ~ Kindred-Raised", &["HalfElf_ReplaceAbilityScores", "HalfElf_ReplaceAdaptability", "HalfElf_ReplaceElvenImmunities", "HalfElf_ReplaceKeenSenses", "HalfElf_ReplaceMultitalented"]),
+    ("Half-Elf ~ Reflexive Improvisation", &["HalfElf_ReplaceAdaptability", "HalfElf_ReplaceMultitalented"]),
+    ("Half-Elf ~ Sea Legs", &["HalfElf_ReplaceAdaptability"]),
+    ("Half-Elf ~ Sophisticate", &["HalfElf_ReplaceElvenImmunities"]),
+    ("Half-Elf ~ Weapon Familiarity", &["HalfElf_ReplaceAdaptability"]),
+    // ---- Half-Orc ----
+    ("Half-Orc ~ Divided Attention", &["HalfOrc_ReplaceIntimidating", "HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Human-Raised", &["HalfOrc_ReplaceOrcFerocity", "HalfOrc_ReplaceWeaponFamiliarity"]),
+    ("Half-Orc ~ Orc Atavism", &["HalfOrc_ReplaceAbilityScores", "HalfOrc_ReplaceIntimidating", "HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Overlooked Mastermind", &["HalfOrc_ReplaceIntimidating", "HalfOrc_ReplaceOrcFerocity", "HalfOrc_ReplaceWeaponFamiliarity"]),
+    ("Half-Orc ~ Pariah", &["HalfOrc_ReplaceWeaponFamiliarity"]),
+    ("Half-Orc ~ Sea Raider", &["HalfOrc_ReplaceVision"]),
+    ("Half-Orc ~ War-Leader", &["HalfOrc_ReplaceVision", "HalfOrc_ReplaceOrcFerocity"]),
+    // ---- Halfling ----
+    ("Halfling ~ Caretaker", &["Halfling_ReplaceHalflingLuck", "Halfling_ReplaceSureFooted", "Halfling_ReplaceWeaponFamiliarity"]),
+    ("Halfling ~ Driven Worker", &["Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Human Shadow", &["Halfling_ReplaceKeenSenses", "Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Secretive Survivor", &["Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Skulker", &["Halfling_ReplaceFearless", "Halfling_ReplaceWeaponFamiliarity"]),
+    ("Halfling ~ Unfettered", &["Halfling_ReplaceHalflingLuck", "Halfling_ReplaceKeenSenses"]),
+    ("Halfling ~ Unlucky Halfling", &["Halfling_ReplaceHalflingLuck"]),
+    // ---- Hobgoblin ----
+    ("Hobgoblin ~ Authoritative", &["Hobgoblin_ReplaceSneaky"]),
+    // ---- Human ----
+    ("Human ~ Awareness", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Comprehensive Education", &["Human_ReplaceSkilled"]),
+    ("Human ~ Industrious", &["Human_ReplaceSkilled"]),
+    ("Human ~ Innovative", &["Human_ReplaceSkilled"]),
+    ("Human ~ Institutional Memory", &["Human_ReplaceSkilled"]),
+    ("Human ~ Military Tradition", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Practiced Hunter", &["Human_ReplaceSkilled"]),
+    ("Human ~ Self-Made Fate", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Social Ties", &["Human_ReplaceSkilled"]),
+    ("Human ~ Tribalistic", &["Human_ReplaceLanguages"]),
+    ("Human ~ Unstoppable Magic", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Wayfarer", &["Human_ReplaceSkilled"]),
+    // ---- Kobold ----
+    ("Kobold ~ Dragon Affinity", &["Kobold_ReplaceArmor"]),
+    // ---- Merfolk ----
+    ("Merfolk ~ Secret Magic", &["Merfolk_ReplaceArmor", "Merfolk_ReplaceSpeed"]),
+    // ---- Orc ----
+    ("Orc ~ Reckless Climber", &["Orc_ReplaceFerocity"]),
+    // ---- Svirfneblin ----
+    ("Svirfneblin ~ Stalwart Watcher", &["Svirfneblin_ReplaceHatred", "Svirfneblin_ReplaceSkilled"]),
+    // ---- Tengu ----
+    ("Tengu ~ Deft Swords", &["Tengu_ReplaceNaturalWeapon", "Tengu_ReplaceSneaky"]),
+    // ---- Tiefling ----
+    ("Tiefling ~ Bullying", &["Tiefling_ReplaceSkilled"]),
+    ("Tiefling ~ Light from the Darkness", &["Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Pass for Human", &["Tiefling_ReplaceType", "Tiefling_ReplaceLanguages"]),
 ];
 
 /// The `<Race>_Replace<Trait>` flags a set of selected alternate racial traits
@@ -1630,7 +1729,27 @@ mod tests {
         // entries in `reach_gate` naming that remedy (SD-29 `decisions.md
         // §43`), and it is the one alternate deliberately absent from
         // `ALTERNATE_TRAIT_REPLACE_FLAGS`.
-        assert_eq!(unclassified, vec![("Goblin", "Oversized Goblin")]);
+        //
+        // `Human ~ Tribalistic Languages` (Inner Sea Races,
+        // `isr_abilities_race.lst:216`, SD-29 race-trait lane round 2) is the
+        // second, and it is the same *kind* of residue for a different upstream
+        // reason: **nothing upstream grants it at all.** Its own row carries no
+        // `PREFACT`, no `PREABILITY` and no `!PREFACT`, and no other row in the
+        // book names it --
+        // `grep -o 'ABILITY:[^\t]*Tribalistic Languages' isr_abilities_race.lst`
+        // returns nothing, where the same grep for `Junk Tinker ~ Skilled` one
+        // row-family over returns its granter and that row is therefore
+        // `FlagGranted`. The alternate that logically owns it,
+        // `Human ~ Tribalistic` (`:210`), only fires `Human_ReplaceLanguages`,
+        // which *suppresses* the standard `Human ~ Languages` row without
+        // bringing this replacement in. So the record is ingested, visible in
+        // the corpus, and never applies -- an upstream data gap this engine
+        // reports rather than papers over. `reach_gate`'s `OPEN_FINDINGS` names
+        // the remedy.
+        assert_eq!(
+            unclassified,
+            vec![("Human", "Human ~ Tribalistic Languages"), ("Goblin", "Oversized Goblin")]
+        );
 
         // And the two that used to live here still do not auto-apply: they
         // arrive only through the alternate that grants them.
@@ -1657,17 +1776,22 @@ mod tests {
         let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
         assert_eq!(count(TraitRole::Default), 173);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
-        // (`Half-Orc ~ Plagueborn`), both landed by SD-29's race-trait lane.
-        assert_eq!(count(TraitRole::Alternate), 158);
-        assert_eq!(count(TraitRole::FlagGranted), 5);
-        // `Oversized Goblin` -- see
-        // `no_corpus_trait_is_left_without_a_readable_gate`, which pins it by
-        // key and names its remedy.
-        assert_eq!(count(TraitRole::Unclassified), 1);
+        // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 68, all landed by
+        // SD-29's race-trait lane.
+        assert_eq!(count(TraitRole::Alternate), 226);
+        // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
+        // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
+        // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
+        // and `Pass for Human ~ Tiefling ~ Languages`.
+        assert_eq!(count(TraitRole::FlagGranted), 8);
+        // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
+        // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
+        // key and names each one's remedy.
+        assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            337,
-            "175 standard + 156 ARG + 5 Monster Codex + 1 APG"
+            409,
+            "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 72 Inner Sea Races"
         );
     }
 
@@ -1745,16 +1869,30 @@ mod tests {
             "the Aasimar five are closed; a new orphan flag is a new defect"
         );
         assert_eq!(affected_races.iter().copied().collect::<Vec<_>>(), vec!["Duergar"]);
+        // Inner Sea Races' `Duergar ~ Magical Taskmaster` (SD-29 race-trait
+        // lane, round 2) is the third alternate naming this same flag, and it
+        // adds NO new orphan flag — the assertion above is unchanged, which is
+        // the evidence that this is the same schema limit seen from one more
+        // angle rather than a new defect. It gets the same grant-proof below,
+        // not an exemption.
         assert_eq!(
             affected_alternates.iter().copied().collect::<Vec<_>>(),
-            vec!["Duergar ~ Blood Enmity", "Duergar ~ Ironskinned", "Duergar ~ Twilight-Touched"]
+            vec![
+                "Duergar ~ Blood Enmity",
+                "Duergar ~ Ironskinned",
+                "Duergar ~ Magical Taskmaster",
+                "Duergar ~ Twilight-Touched"
+            ]
         );
         // ...and none is a dead affordance, because both flags grant.
         // `Twilight-Touched` fires the same `Duergar_ReplaceSLAInvisibility`
         // `Blood Enmity` does; two alternates may name one flag.
-        for alternate in
-            ["Duergar ~ Blood Enmity", "Duergar ~ Ironskinned", "Duergar ~ Twilight-Touched"]
-        {
+        for alternate in [
+            "Duergar ~ Blood Enmity",
+            "Duergar ~ Ironskinned",
+            "Duergar ~ Magical Taskmaster",
+            "Duergar ~ Twilight-Touched",
+        ] {
             let resolved = corpus.resolve("Duergar", &[alternate]).expect("resolves");
             assert!(resolved.inert_flags.is_empty(), "{alternate}: {:?}", resolved.inert_flags);
         }
@@ -1762,18 +1900,27 @@ mod tests {
         for race in ["Human", "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling"] {
             assert!(!affected_races.contains(race), "no CRB race may be affected, but {race} is");
         }
-        // Total flags in play, derived: 77 distinct, 2 of them unclaimed.
+        // Total flags in play, derived: 90 distinct, 2 of them unclaimed.
         // 74 + Monster Codex's `Duergar_ReplaceSLAEnlargePerson`,
         // `Goblin_ReplaceAbilityScores`, `Goblin_ReplaceSize`. APG's
         // `Half-Orc ~ Plagueborn` fires two flags that ARG already declares,
         // so it adds a row without adding a flag.
+        //
+        // Inner Sea Races' 68 alternates add **13** distinct flags to that 77,
+        // not 68: the great majority of them replace standard traits ARG's
+        // alternates already replace (`Dwarf_ReplaceHatred`,
+        // `Elf_ReplaceElvenMagic`, ...), which is what a second book of
+        // alternates for the same 18 races should look like. The 13 are the
+        // standard traits no previously-ingested alternate had ever replaced.
+        // That every one of the 90 except the two named above is *claimed* by a
+        // real standard row is the assertion above, and it did not move.
         let all_flags: BTreeSet<&str> = corpus
             .traits
             .values()
             .flatten()
             .flat_map(|t| t.data.sets_replace_flags.iter().map(String::as_str))
             .collect();
-        assert_eq!(all_flags.len(), 77);
+        assert_eq!(all_flags.len(), 90);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -1794,7 +1941,7 @@ mod tests {
                 checked += 1;
             }
         }
-        assert_eq!(checked, 158, "153 ARG + 4 Monster Codex + 1 APG");
+        assert_eq!(checked, 226, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races");
     }
 
     /// The runtime machinery that reports an unmatched swap is still under
@@ -2000,7 +2147,11 @@ mod tests {
                 );
             }
         }
-        assert_eq!(corpus_rows.len(), 158, "153 ARG + 4 Monster Codex + 1 APG selectable alternates");
+        assert_eq!(
+            corpus_rows.len(),
+            226,
+            "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races selectable alternates"
+        );
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
         for (key, flags) in ALTERNATE_TRAIT_REPLACE_FLAGS {
             let from_corpus = corpus_rows.get(key).unwrap_or_else(|| panic!("{key} is a real alternate"));
@@ -2040,7 +2191,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 158);
+        assert_eq!(selectable_alternate_trait_keys().len(), 226);
     }
 
     #[test]

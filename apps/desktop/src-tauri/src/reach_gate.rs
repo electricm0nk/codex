@@ -546,6 +546,8 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // SD-29 Epic 6 pilot (race-trait lane). Spelled the same in both columns
     // for the same reason.
     ("monster_codex", "monster_codex"),
+    // SD-29 Epic 6 round 2 (race-trait lane, extend). Same again.
+    ("inner_sea_races", "inner_sea_races"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -969,6 +971,17 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // goes from `NotSurfaced` to a plain pass. See
         // `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`.
         ("monster_codex", "race_traits") => Some(race_traits_reach("MC", "monster_codex")),
+        // SD-29 Epic 6 round 2 (race-trait lane, extend, 2026-08-11,
+        // `decisions.md §45`). Inner Sea Races' 72 in-scope records -- 68 of
+        // them `TraitRole::Alternate`, the largest single contribution after
+        // ARG's own 153 -- served by exactly the two commands ARG's, APG's and
+        // Monster Codex's claims run, now that `inner_sea_races` is in
+        // `race_catalog::RACE_CORPUS_BOOKS`. No new surface and no new
+        // mechanism: the picker is book-agnostic and reads whatever the race
+        // corpus loads, which is precisely why this book was the right one to
+        // take next and why `decisions.md §44.4`'s successor queue -- which put
+        // two mechanism-blocked books ahead of it -- was wrong.
+        ("inner_sea_races", "race_traits") => Some(race_traits_reach("ISR", "inner_sea_races")),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -1729,6 +1742,33 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
          Do NOT close this by deleting the record: the row is real corpus content for a modelled \
          race, and a record on disk that no selection can reach is exactly what this gate is for.",
     ),
+    (
+        "inner_sea_races",
+        "race_traits",
+        "71 of Inner Sea Races' 72 ingested race-trait records reach a player through \
+         `list_alternate_racial_traits` and `resolve_race_alternate_selection`. ONE does not: \
+         `Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`). Derived, not assumed: \
+         the row carries no `FACT:<flag>|True`, no positive `PREFACT`, no `PREABILITY` and no \
+         `!PREFACT`, and no other row in the book names it -- \
+         `grep -o 'ABILITY:[^\\t]*Tribalistic Languages' isr_abilities_race.lst` returns nothing, \
+         where the same grep for `Junk Tinker ~ Skilled` returns its granter and that row is \
+         therefore `TraitRole::FlagGranted`. So `race_resolver::classify` leaves it \
+         `TraitRole::Unclassified`, the role that never applies. \
+         \
+         **This is an upstream data gap, not a wiring gap, and the distinction is evidenced.** \
+         The alternate that logically owns it, `Human ~ Tribalistic` (`:210`), IS reachable and \
+         IS selectable, and selecting it correctly fires `Human_ReplaceLanguages`, which \
+         suppresses the standard `Human ~ Languages` row. Nothing then brings the replacement \
+         in. The player sees a language trait removed and no replacement offered, which is the \
+         visible consequence and is recorded here rather than smoothed over. \
+         \
+         REMEDY: either read `TEMPLATE:`-borne grants (the row's own \
+         `TEMPLATE:Bonus Language ~ Common|...` chain is how upstream delivers its effect), or \
+         model human ethnicities as the `PREABILITY:1,CATEGORY=Background,TYPE.HumanEthnicity` \
+         gate on `:210` implies. Both are new mechanisms, not missing wires. \
+         Do NOT close this by deleting the record: it is real corpus content for a modelled \
+         race, and the same rule the `Oversized Goblin` entry above states applies here.",
+    ),
     // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
     // the swap correctly in compute output for the wired slots (Alchemist's
@@ -1866,6 +1906,19 @@ const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
         // positive gate, so it is `TraitRole::Unclassified` and no selection
         // reaches it. Remedy in OPEN_FINDINGS above.
         &["Oversized Goblin"],
+    ),
+    (
+        "inner_sea_races",
+        "race_traits",
+        // The replacement half of the `Human ~ Tribalistic` alternate. Its own
+        // row (`isr_abilities_race.lst:216`) carries no gate of any kind and no
+        // other row in the book names it, so it is `TraitRole::Unclassified`
+        // and no selection reaches it. This is an upstream data gap, not a
+        // wiring gap: selecting `Human ~ Tribalistic` correctly suppresses the
+        // standard `Human ~ Languages` row, and nothing brings this one in to
+        // take its place. Remedy in OPEN_FINDINGS above. 71 of the book's 72
+        // records reach a player; this is the one.
+        &["Human ~ Tribalistic Languages"],
     ),
     // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
     // every key, because none reaches a player through any surface today
@@ -2497,6 +2550,44 @@ mod tests {
         match reach_of(&apg_traits).expect("APG race traits have a declared claim") {
             Reach::Surfaced { records, .. } => assert_eq!(records, 1),
             other => panic!("APG's race-trait record must reach a player, got {other:?}"),
+        }
+    }
+
+    /// **SD-29 race-trait lane, round 2 (`decisions.md §45`).** Inner Sea
+    /// Races is the biggest single alternate-racial-trait ingest since ARG's
+    /// own, and it needed no new mechanism at all — which is the finding this
+    /// round recorded against `decisions.md §44.4`, whose successor queue
+    /// ranked two mechanism-blocked books ahead of it.
+    ///
+    /// This is the claim DoD item 2 requires for the book's family: it
+    /// executes against the live IPC builders, it is not a pass-by-absence,
+    /// and it accounts for every record — including the one that does not
+    /// reach, which is pinned by exact key in [`UNREACHED_RECORD_FINDINGS`]
+    /// with its remedy in [`OPEN_FINDINGS`] rather than rounded away.
+    #[test]
+    fn inner_sea_races_alternate_racial_traits_reach_a_player() {
+        let isr_traits = Family::new("inner_sea_races", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&isr_traits),
+            "the data/corpus scan must see data/corpus/inner_sea_races/race_trait/"
+        );
+        assert!(full_inventory().contains(&isr_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("inner_sea_races", "race_trait");
+        assert_eq!(ingested.len(), 72, "ISR's 72 ingested race-trait records, counted on disk");
+
+        // 71 of 72 reach. The shortfall is `Human ~ Tribalistic Languages` and
+        // it is pinned by key, both ways, so a SECOND unreached record fails
+        // here and so does this one silently starting to reach.
+        match reach_of(&isr_traits).expect("ISR race traits have a declared claim") {
+            Reach::NotSurfaced { missing, .. } => {
+                assert_eq!(
+                    missing.iter().map(String::as_str).collect::<Vec<_>>(),
+                    vec!["Human ~ Tribalistic Languages"],
+                    "exactly one ISR record is unreached, and it is the one OPEN_FINDINGS names"
+                );
+            }
+            other => panic!("ISR's race-trait shortfall must be reported exactly, got {other:?}"),
         }
     }
 

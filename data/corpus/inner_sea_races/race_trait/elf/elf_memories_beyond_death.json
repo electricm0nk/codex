@@ -1,0 +1,117 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Elf ~ Memories Beyond Death",
+    "name": "Memories Beyond Death",
+    "race_key": "Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Elf_ReplaceElvenImmunities",
+      "Elf_ReplaceElvenMagic"
+    ],
+    "description": "Some elves are born with sensitive souls that absorb insight from others and from the spirits of the deceased. These elves gain a +2 racial bonus on saving throws against fear effects. They also choose two Knowledge skills and always treat those skills as class skills. If they take a class that grants either or both of those skills as class skills, they gain a +1 racial bonus on the overlapping skill or skills. This racial trait replaces elven immunities and elven magic.",
+    "source_page": "p.211",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Memories Beyond Death"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Memories Beyond Death],[!PREFACT:1,ABILITIES,Elf_ReplaceElvenImmunities=true,Elf_ReplaceElvenMagic=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some elves are born with sensitive souls that absorb insight from others and from the spirits of the deceased. These elves gain a +2 racial bonus on saving throws against fear effects. They also choose two Knowledge skills and always treat those skills as class skills. If they take a class that grants either or both of those skills as class skills, they gain a +1 racial bonus on the overlapping skill or skills."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces elven immunities and elven magic.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Memories Beyond Death"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SKILL|TYPE=Knowledge"
+      },
+      {
+        "key": "SELECT",
+        "value": "2"
+      },
+      {
+        "key": "CSKILL",
+        "value": "LIST"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 vs. fear"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+1 racial bonus on skills from a class that overlap with choices from memories beyond death."
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceElvenImmunities|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceElvenMagic|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "%LIST",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 64,
+    "record_key": "Elf ~ Memories Beyond Death"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

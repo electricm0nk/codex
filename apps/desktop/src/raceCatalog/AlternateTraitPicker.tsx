@@ -38,10 +38,12 @@ const muted: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.75
 
 /**
  * The Alternate Racial Traits picker. Book-agnostic: it serves whatever
- * `race_catalog::RACE_CORPUS_BOOKS` loads (ARG, APG, and since SD-29's
- * race-trait lane pilot, Monster Codex), and each row carries its own book code.
+ * `race_catalog::RACE_CORPUS_BOOKS` loads, and each row carries its own book
+ * code. The book list is deliberately not enumerated here — three successive
+ * versions of this comment went stale within one bundle as SD-29's race-trait
+ * lane landed Monster Codex, then APG, then Inner Sea Races.
  *
- * For a chosen race this shows every ARG alternate, the standard trait(s) each
+ * For a chosen race this shows every alternate, the standard trait(s) each
  * one replaces, and — once selected — the standard traits that really were
  * suppressed and the sibling alternates the choice locked out.
  *

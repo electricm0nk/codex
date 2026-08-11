@@ -1,0 +1,109 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Half-Orc ~ Overlooked Mastermind",
+    "name": "Overlooked Mastermind",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfOrc_ReplaceIntimidating",
+      "HalfOrc_ReplaceOrcFerocity",
+      "HalfOrc_ReplaceWeaponFamiliarity"
+    ],
+    "description": "Some half-orcs use half-orcs' brutish stereotypes to their advantage, causing others to underestimate their intelligence and scheming. Such half-orcs gain a +2 racial bonus on Bluff, Diplomacy, and Sense Motive checks. This bonus increases to +4 against other humanoids. They also receive a +2 racial bonus on Bluff checks to feign ignorance and Sense Motive checks to intercept secret messages, and this stacks with the above bonus. This racial trait replaces intimidating, orc ferocity, and weapon familiarity.",
+    "source_page": "p.212",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Overlooked Mastermind"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Overlooked Mastermind],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceIntimidating=true,HalfOrc_ReplaceOrcFerocity=true,HalfOrc_ReplaceWeaponFamiliarity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-orcs use half-orcs' brutish stereotypes to their advantage, causing others to underestimate their intelligence and scheming. Such half-orcs gain a +2 racial bonus on Bluff, Diplomacy, and Sense Motive checks. This bonus increases to +4 against other humanoids. They also receive a +2 racial bonus on Bluff checks to feign ignorance and Sense Motive checks to intercept secret messages, and this stacks with the above bonus."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces intimidating, orc ferocity, and weapon familiarity.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Overlooked Mastermind"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 bonus on Bluff, Diplomacy, and Sense Motive checks against other humanoids."
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceIntimidating|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceOrcFerocity|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceWeaponFamiliarity|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Bluff=to feign ignorance,Sense Motive=to intercept secret messages",
+          "2",
+          "TYPE=Racial.STACK"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Bluff,Diplomacy,Sense Motive",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 153,
+    "record_key": "Half-Orc ~ Overlooked Mastermind"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
