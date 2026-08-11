@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T09:16:36Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:magic_circle_against_evil"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Lammasu",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Pounce",
+      "Rake"
+    ],
+    "key": "bonus_bestiary:monster:lammasu",
+    "monster_class": "Lammasu:9",
+    "name": "Lammasu",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.13",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 16,
+    "record_key": "Lammasu"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

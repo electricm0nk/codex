@@ -807,6 +807,7 @@ fn main() {
             RuleSetId::Uc => "ultimate_combat",
             RuleSetId::Um => "ultimate_magic",
             RuleSetId::Upsi => "ultimate_psionics",
+            RuleSetId::BonusBestiary => "bonus_bestiary",
         };
         let records = table.entries.len();
         let wired_here = table

@@ -258,6 +258,20 @@ fn acg_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// Bonus Bestiary's two record families, read from its own live tables (SD-29
+/// Epic 5). `monster_abilities` is the first time this panel has ever reported
+/// that kind -- Bestiary 1 ingests monsters only.
+fn bonus_bestiary_counts() -> BTreeMap<String, u32> {
+    use codex::rules_core::rules_tables::bonus_bestiary;
+    let mut counts = BTreeMap::new();
+    counts.insert("monsters".to_string(), bonus_bestiary::monsters().len() as u32);
+    counts.insert(
+        "monster_abilities".to_string(),
+        bonus_bestiary::monster_abilities().len() as u32,
+    );
+    counts
+}
+
 fn beastiary1_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("monsters".to_string(), ALL_BESTIARY1_MONSTERS.len() as u32);
@@ -469,6 +483,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             &races,
         ),
         book_status(
+            "bonus_bestiary",
+            "src/rules_core/rules_tables/bonus_bestiary",
+            bonus_bestiary_counts(),
+            &races,
+        ),
+        book_status(
             "advanced_race_guide",
             "src/rules_core/rules_tables/advanced_race_guide",
             advanced_race_guide_counts(),
@@ -596,6 +616,9 @@ mod tests {
                 "apg",
                 "acg",
                 "beastiary1",
+                // SD-29 Epic 5 -- placed next to the other bestiary rather
+                // than appended, so the panel reads in book-family order.
+                "bonus_bestiary",
                 "advanced_race_guide",
                 "pathfinder_unchained",
                 "ultimate_campaign",

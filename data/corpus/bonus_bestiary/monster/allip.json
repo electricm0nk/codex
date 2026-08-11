@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T09:16:36Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:babble",
+      "bonus_bestiary:monster_ability:madness",
+      "bonus_bestiary:monster_ability:touch_of_insanity"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Allip",
+    "external_ability_refs": [
+      "Channel Resistance",
+      "Flight Maneuverability"
+    ],
+    "key": "bonus_bestiary:monster:allip",
+    "monster_class": "Undead:4",
+    "name": "Allip",
+    "natural_attacks": [
+      {
+        "damage_dice": "0",
+        "name": "Incorporeal touch"
+      }
+    ],
+    "race_subtype": "Incorporeal",
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.4",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 6,
+    "record_key": "Allip"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -2449,3 +2449,243 @@ DECISION: 4 emitted by this cycle (2 `correction`, 2 `deferral`), plus verify.sh
    concurrency, not garbage, and it is now a recurring incident rather than an environment quirk.
 3. **Epic 6 pilot re-pin** still outstanding, narrowed as described in §3.
 4. **`beastiary1/race_traits`** stays in `OPEN_FINDINGS` pending Epic 5's Monster Codex ingest.
+---
+
+## Cycle SD29-E5-F1-001 — `epic-5-monster-lane-pilot` (Monster / Monster-Ability Chassis Lane — PILOT)
+
+**Card:** `epic-5-monster-lane-pilot` (Order 7). **Actor:** `sd29-e5-monster-pilot`.
+**Book:** Bonus Bestiary (`SOURCESHORT:BB`). **Branch-point:** `579d5941` (Epic 3's closing commit
+on `tranche/9`). **Commits:** `9d4031de`, `b086abb5`, `38e14e69`, plus this receipt's own.
+**PR-id:** none — the dispatch worktree holds branch `worktree-wf_3516060a-756-9`; see §7.
+
+### 0 / 0b. Shape and trap report
+
+`cargo run --locked --bin v06_work_inventory`, then the book's `books[]` entry: 3 `.lst` files
+enumerated, `bb_kits_race.lst` not enumerated (kits are outside the inventory's unit kinds),
+`trap_hits` = `class_level_line 17, comment_or_disabled 36, directive_line 3, duplicate_identity 6`.
+Pre-cycle status: `class 3 / monster 14 / monster_ability 17`, **all `not-started`**, book scope
+`future_state`.
+
+`cargo run --locked --bin v06_corpus_trap_report -- bonus_bestiary` — the finding that shaped the
+design: **6 `key-differs-from-name` rows**, the same 6 as `namespaced-key`
+(`Caryatid Column ~ Immunity to Magic`, `Faerie Dragon ~ Breath Weapon`, `Huecuva ~ Disease`,
+`Water Naga ~ Poison`, `Shadow Mastiff ~ Bay`, `Shadow Mastiff ~ Shadow Blend`), plus 1
+`governing-token-hidden-by-filter` (`Babble` carries `ASPECT` alongside its `BONUS`/`PRE` tokens).
+Every identity in the tables, on the wire and in the corpus records is therefore the `KEY:` token,
+never the display name; a test proves the bare leaf `Immunity to Magic` resolves to nothing.
+
+### 1b. Re-derived figures — command first, value second
+
+Run in `~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bonus_bestiary/`:
+
+- **Monsters — 14:** `awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' bb_races.lst | wc -l` → `14`
+- **Monster abilities — 17:** `awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' bb_abilities_race.lst | wc -l` → `17`
+
+Both agree with the card brief, with `kanban.md`, and with `loop-instruction.md`'s own corpus-shape
+note. Nothing in this package needed correcting on this book — recorded explicitly, because a
+re-derivation that agrees is still the check that was owed.
+
+Derived in-cycle from the transcribed tables (not from a doc):
+
+- **6** of 17 ability rows carry a `KEY:` differing from the display name.
+- **14** natural attacks are named across the 14 monster rows — 11 rows carry an
+  `ABILITY:Internal|AUTOMATIC|` list naming **13** between them, plus Allip's single
+  `NATURALATTACKS:` token; `Caryatid Column` and `Nixie` name none. **1** carries a die expression
+  (`"0"`, a real no-damage attack); **13** carry none anywhere in the book.
+  *(This figure was first written as 15 and the new unit test caught it — `correction` event
+  emitted, with the re-derivation command as `--verified-by`.)*
+- **1** ability row (`Magic Circle against Evil`) carries no `DESC:` at all.
+- Abilities the rows cite but the book does not define (universal monster rules — `Grab`, `Scent`,
+  `Pounce`, …) are kept separately in `external_ability_refs`, so "17 defined" can never absorb what
+  is merely cited.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` → **PASS**, 84% used, 80G available. (It later failed
+mid-cycle at 91-92% under sibling-agent build load; see §7.)
+
+### 3. What landed
+
+The merged chassis per `../corpus-work-channels.md` §9.2 — `monster` is the chassis kind,
+`monster_ability` the features kind attached to it, the same shape `race`/`race_trait` already have.
+The link lives on the chassis because that is where the corpus carries it: the monster row's
+`ABILITY:Special Ability|AUTOMATIC|<key>|…` token names its abilities and the ability row names no
+owner.
+
+- **`src/rules_core/rules_tables/bonus_bestiary/{mod.rs,monster_data.rs}`** — the types
+  (`MonsterStatBlock`, `MonsterAbilityRecord`, `MonsterAbilityFacet`, `MonsterAbilityDelivery`,
+  `NaturalAttack`, `Speed`), the `monster_resolve` / `monster_ability_resolve` / `abilities_of`
+  accessors, all keyed on the corpus `KEY:`, and the 14 + 17 records with the source line each was
+  read from. 9 unit tests.
+- **`src/bin/gen_book_cache.rs`** — a `bonus_bestiary` arm writing
+  `data/corpus/bonus_bestiary/{monster,monster_ability}/*.json` (Shape B v1) plus `LICENSE.json`. It
+  dumps the compiled module and *verifies* each citation: `verified_citation_line` re-reads the
+  recorded line from the live file and asserts its first column is still the record's name before
+  citing it. Epic 3's provenance gate runs over each whole serialized record (not one field), and a
+  hit is a hard stop.
+- **`apps/desktop/src-tauri/src/monster_catalog.rs`** — Bonus Bestiary joins the existing
+  `list_monster_catalog` rather than getting a second command, abilities riding on their monster's
+  row. New wire fields `speeds`, `monsterClass`, `abilities`, `externalAbilityRefs`; `damageDice`
+  widened to `Option`.
+- **`apps/desktop/src/monsterCatalog/*` + `boundary/loadMonsterCatalog.ts`** — the screen renders
+  the book name, every movement mode, the hit-dice token, and each ability's heading + rules text.
+- **`apps/desktop/src-tauri/src/reach_gate.rs`** — `bonus_bestiary` in `CORPUS_BOOK_IDS`,
+  `monster_ability` → `monster_abilities` in `CORPUS_KIND_NAMES` (**its first appearance anywhere**),
+  `MonsterStatBlock`/`MonsterAbilityRecord` in `RECORD_TYPE_KINDS`, and two claims judged against two
+  genuinely different denominators.
+- **`apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs`** — a `bonus_bestiary` row deriving its
+  two counts from the live tables. (The panel's own fail-closed test demanded it: an unreported book
+  reads to a tester as an un-ingested one.)
+- **`src/bin/v06_work_inventory.rs` / `v06_content_state_dump.rs` / `rules_tables/mod.rs`** —
+  `RuleSetId::BonusBestiary`, and `classify()` arms grounding both kinds through a **book-gated**
+  `holds_key`, so one book's stat block can never be credited to another on a name collision.
+
+**Three absences, each a corpus fact rather than an omission:** AC/HP/saves (not tokens on the row —
+the `MONSTERCLASS:` token is served instead of a fabricated total); damage dice for 13 of the book's
+14 named natural attacks (`deferral` emitted); the book's 3 `class` units, left to Epic 4's lane
+(`deferral` emitted).
+
+### 5. Definition of done
+
+1. **`./scripts/verify.sh` (FULL), exit code captured directly and never through a pipe: see the
+   line below.** Captured by a cycle-local runner assigning `code=$?` on the statement immediately
+   after the command. **Exit `0`.** All **12** stages PASS: `preflight-disk` (87% used, 64G available),
+   `pi-sweep` (10 hits / 10 baseline rows, CLEAN), `audit-selftest` (28 cases), `root-lib` (**1613**
+   passed), `root-full` (**6147** passed across **539** suites, all 522 `tests/*.rs` suites
+   executed), `desktop` (**419** passed), `reach` (**17** tests passed — see item 2),
+   `frontend-install`, `frontend-test` (98/98 files), `frontend-typecheck`, `clippy`
+   (root:54 desktop:7 warnings, 0 errors), `class-dump` (31/31 computing). Log:
+   `/tmp/codex-verify-Y2GOYi`. The run's five BASELINE NOTES are notes, not failures — see item 7.
+2. **Reach claims for this card's families — not zero.** Two new claims,
+   `("bonus_bestiary","monsters")` → **14 records** and `("bonus_bestiary","monster_abilities")` →
+   **17 records**, both `Reach::Surfaced` on surface `list_monster_catalog`, asserted per record by
+   `bonus_bestiary_monsters_and_abilities_reach_the_catalog_record_by_record` against the record
+   files on disk. The pre-existing `beastiary1/monsters` claim was scoped to `book == "B1"` rather
+   than widened — comparing the whole response against one book's directory would have failed for a
+   correct reason and stopped saying anything about Bestiary 1.
+3. **`cargo run --locked --bin v06_corpus_trap_report -- --audit` → exit `0`**, captured directly by
+   a cycle-local runner: "No defects: every ingested record's citation agrees with the line it
+   names" (259 trap rows, 0 defects, `mod-record`). Its **first** run this cycle reported 17
+   `wiring-class-mismatch` defects — see §7.
+4. **`docs/work-inventory.json` regenerated; the book's units left `not-started`.** `bonus_bestiary`
+   moved `future_state` → `in_scope`, and `monster 14/14` + `monster_ability 17/17` moved
+   `not-started` → **`grounded`** (evidence tokens
+   `bonus_bestiary_monster_resolve_returned_a_real_stat_block` /
+   `bonus_bestiary_monster_ability_resolve_returned_a_real_record`). A second run differed **only**
+   in `generated_at` — proven, not asserted:
+   `python3 -c "…; new.pop('generated_at'); old.pop('generated_at'); print(new==old)"` → `True`
+   against `git show HEAD:docs/work-inventory.json`; the `generated_at`-only churn was reverted. The
+   3 `class` units correctly remain `not-ingested`.
+5. **Wired-integration four-check audit over this cycle's files: clean.** No stub tokens, no no-op
+   handlers, no mock leaks, no "would have" strings. The one place this cycle could have shipped a
+   placeholder — a natural attack with no corpus dice — serves `None` plus the sentence saying why,
+   and a test forbids `"0"` there (`"0"` is a real value on another row in the same response).
+6. **`OPEN_FINDINGS` unchanged.** No Bonus Bestiary family failed to reach a surface, so no entry was
+   owed. The surviving `beastiary1/race_traits` entry is upstream-blocked on
+   `monster_codex/mc_abilities_race.lst`, which this book does not contain — DoD item 6 expects
+   **Epic 5's extend card** (the Monster Codex cycle-batch) to retire it, not this pilot. The seven
+   `<book>/archetypes` entries are SD-30's and were left standing.
+7. **No baseline movement committed.** `scripts/verify-baselines.env` untouched, per the standing
+   Epic-1 followup: the four SD-28 drifts plus this cycle's own test additions (`root-lib` measured
+   1613 with the new module's 9 tests; `root-full` moves by the desktop crate's 6 new tests) are
+   notes for Epic 9/10's separate `--show-actuals` commit, not a change this card makes.
+8. **On-screen verification: done, and it caught a defect no test did.** `RUN_DESKTOP_AGENT=sd29-e5-monster-pilot`
+   (unique to this cycle), `driver.sh launch` → landing screen → *Browse Monster Catalog* → search
+   "Allip". The captured screenshot shows the header reading **60 monsters** across both books, a
+   **Huge (1)** size chip (the first `H` the catalog has ever served), and the Allip row rendering
+   *"Medium Undead (Incorporeal) · CR 3 · No land speed, fly 30 ft. · Bonus Bestiary p.4 · Hit dice
+   Undead:4"*, its `Incorporeal touch (no damage)` attack, all three of its monster abilities with
+   facet + delivery + page + rules text, and the external-reference line.
+   **The defect:** the first capture printed *"must succeed on a DC %1 Will save"* — a raw PCGen
+   substitution placeholder reaching a player, the same class of defect as the `RACESUBTYPE:` `|`
+   separator this file already documents, and invisible to every test then in the suite. Fixed by
+   `serve_ability_description` (`render_pcgen_desc` at the display boundary; a formula `%N` is
+   DROPPED, never guessed, per `decisions.md §24` — Babble's DC really is `10+(HD/2)+CHA`, a number
+   this ingest does not compute), pinned by a new test, and re-verified on screen: the row now reads
+   *"on a DC Will save"*. `correction` event emitted.
+
+### 6. Per-unit cost — the figure the extend card depends on
+
+**31 units (14 + 17) in one cycle.** The honest decomposition, because the extend card must not
+multiply the wrong number:
+
+- **Content transcription was nearly free.** The 31 records were transcribed by a parser over the two
+  `.lst` files (§8), not by hand — minutes, and flat in the record count.
+- **Essentially all of the cost was the FIXED, once-per-*kind* chassis**, not per-book and not
+  per-record: a new `RuleSetId`, a new rules-table module, a new generator arm, a widened wire DTO, a
+  new `CORPUS_KIND_NAMES` entry, two new reach claims, a new diagnostic row, a frontend rendering
+  path, and **8 pre-existing whole-catalog assertions that had to be re-scoped to their own book**
+  (`every_served_key_resolves_back_to_its_record`, the land-speed-zero pin, the subtype population,
+  the dice-provenance sum, the record-by-record reach test, plus the diagnostic's book-order and
+  landed-book guards). That last group is the real finding: the catalog had exactly one book for its
+  whole life, so "the whole response" and "Bestiary 1" were the same set everywhere.
+- **Therefore: do NOT extrapolate 31 units → a per-unit rate.** The next book in this lane inherits
+  the entire chassis and pays only (a) a transcriber pass over its `.lst` shapes, (b) its own
+  `.lst`-shape surprises, and (c) the ~7 count-pinning files this program already knows are the
+  constant per-book onboarding tax. The dominant remaining risk is not volume — it is books whose
+  rows carry token shapes this pilot never saw (`SPELLS:Innate`, `.MOD`/`.COPY` monster rows,
+  `PRECAMPAIGN`-gated support files), each of which is a chassis question, not a transcription one.
+- **A concrete widening the extend card should expect to fund:** grounding natural-attack dice. 13 of
+  14 attacks in *this* book have none in the corpus; if that ratio holds corpus-wide, the extend lane
+  either ships mostly dice-less attacks or funds a published-text grounding pass on
+  `beastiary1::natural_attack_provenance`'s pattern.
+
+### 7. Blockers, defaults taken, corrections, and git discipline
+
+**Blocker, recorded not raised (UNATTENDED MODE item 3).** The dispatch worktree
+`.claude/worktrees/wf_3516060a-756-9` was created on branch `worktree-wf_3516060a-756-9` whose tip
+was `7d9f1c4f` — an ancestor from a different line of development with no
+`docs/release/SD-29-corpus-wide-catch-up-lanes/` directory at all, so none of the card's required
+reads existed. `git fetch origin` + `git reset --hard tranche/9` put it on `579d5941` before any
+other action. Safer default: reset the worktree branch and leave the commits on it for the
+orchestrator to fast-forward, rather than force a shared-branch checkout from inside an isolated
+worktree. **At least one sibling cycle hit the same dispatch defect this day** — it is a harness
+condition, not a one-off.
+
+**Disk, mid-cycle.** `preflight-disk` passed at cycle start (84%) and later **failed at 91-92%**
+under concurrent sibling-agent builds. `scripts/reclaim.sh --apply` freed nothing further — every
+candidate was another agent's live worktree or unpushed branch — so this cycle deleted its **own**
+27G `CARGO_TARGET_DIR` and re-ran the gate cold from 87%. Recorded rather than routed around.
+
+**Two corrections against this cycle's own work, both emitted as retro events with the command that
+established the true value:**
+
+1. **The natural-attack denominator** — claimed 15, actual 14 (§1b). Caught by the new unit test.
+2. **`wiring_class`** — the generator first hard-coded `"static"` for all 31 records, reasoning that
+   every field is a verbatim corpus token. `--audit` rejected 17 of them: the class describes what
+   the cited **row** does, not how the field was transcribed (most ability rows carry no magnitude
+   token → `display`; `Water Naga ~ Poison` carries a `BONUS:VAR` → `derived`). Now computed per
+   record via `WiringClassIndex`, like every other generator in that file.
+   **The process lesson is the more valuable half:** the cycle's *first* `--audit` run was read
+   through `| tail`, so the reported exit code was the **pipe's**, not the binary's. It printed `0`
+   while the defects were visible in the very text above it. This is exactly why the loop
+   instruction says the gate's exit code is captured directly and never through a pipe — and the
+   rule applies to *every* exit-code-bearing check in the cycle, not only `verify.sh`. Both
+   subsequent runs used a runner script that assigns `code=$?` and writes it to a file.
+
+**Default taken (no operator asked).** Natural-attack dice: name-only rather than
+published-text-grounded. This is the conservative reading of *"Proceeding would require inventing
+data not present in the corpus"* — the alternative reaches outside the corpus for a value that then
+looks, on screen, identical to a transcribed one.
+
+**Git discipline.** `git status` before every git write; no `git add -A` (explicit paths only); no
+`git stash` at any point. Other actors' retro shards left untouched and uncommitted; only this
+actor's own shard is committed. `CARGO_TARGET_DIR=/home/ubuntu/workspace/.codex-targets/sd29-e5-monster-pilot`
+(own directory, never under `/tmp`), removed at cycle end; `scripts/reclaim.sh --apply` run.
+
+### 8. The authoring transcriber, recorded so the transcription is reproducible
+
+`monster_data.rs` was produced by a throwaway parser over the two `.lst` files rather than typed by
+hand — 31 records × ~12 fields is exactly the volume where hand-transcription introduces the errors
+the trap report exists to catch. It reads first-column identity plus the
+`KEY:`/`TYPE:`/`DESC:`/`SIZE:`/`MOVE:`/`RACETYPE:`/`RACESUBTYPE:`/`CR:`/`MONSTERCLASS:`/
+`SOURCEPAGE:`/`NATURALATTACKS:`/`ABILITY:` tokens and emits the Rust statics; every emitted value is
+a substring of its source row. Its *output* is checked in and its *result* is checked independently
+three ways: the 9 unit tests in `mod.rs`, `verified_citation_line` in the generator (which re-reads
+each cited line from the live file), and `v06_corpus_trap_report -- --audit`.
+
+### Retro events (`docs/retro/events/sd29-e5-monster-pilot.jsonl`)
+
+3 × `correction` (the natural-attack denominator; the hard-coded `wiring_class`; the raw `%1`
+placeholder reaching the screen), 2 × `deferral` (natural-attack dice for 13 attacks; the book's 3
+`class` units), plus `verify.sh`'s auto-emitted `verification` events.
