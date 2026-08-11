@@ -4814,3 +4814,82 @@ again before the full gate (EXIT 0, 87% / 65G). Target dir deleted at cycle end.
 
 Retro events on this actor's own shard, `docs/retro/events/sd29-racetrait-r1.jsonl`: 3 `correction`,
 1 `incident`, plus `verify.sh`'s auto-emitted `verification` events.
+
+### 6b. Verification — the gate went RED first, what it caught, and what happened next
+
+**This section supersedes the four placeholders left in the table above when this receipt was first
+appended mid-gate.** The receipt was landed before the gate finished, deliberately: two run-1 cycles
+died with their gate unfinished and their work unrecorded, and a receipt that exists and is then
+corrected beats one that never lands.
+
+**Gate run 1** — `./scripts/verify.sh -j 2`, exit code captured directly on the next line, never
+through a pipe → **`VERIFY_EXIT=1`**. **11 of 13 stages PASS**, 2 FAILED:
+
+```
+passed: 11  preflight-disk pi-sweep audit-selftest driver-selftest root-lib desktop
+            reach frontend-install frontend-test frontend-typecheck class-dump
+FAILED:  2  root-full clippy
+```
+
+`root-full`: **6,176 passed across 543 suites**, cargo exit 101, **3 failing tests in 2 suites**.
+`desktop`: 422 passed. **`reach`: 18 passed — up from 17, and the +1 is this cycle's APG claim.**
+
+**Every failure attributed, none excused, all three fixed at the source.** All three are one class,
+and it is the class this bundle's own pilot named: *adding a book to a shared corpus list moves count
+pins and book-scoped assertions in files that never mention the book.*
+
+| suite | assertion | why it moved | fix |
+|---|---|---|---|
+| `src/bin/ingest_apg_race_traits.rs` | `checked == 0` committed APG race-trait records | it pinned `decisions.md §39`'s deferral, and this cycle closed the deferral | `== 1`, naming the record |
+| `tests/sd27_alternate_racial_trait_reachability.rs` | `selectable_alternate_trait_keys().len() == 153` (×2) | reads the pure table, which gained 5 rows | see below |
+| `tests/sd27_aasimar_globalvar_gate_...rs` | (green, and that was the problem) | hardcoded 3 roots | see below |
+
+**The second and third are `decisions.md §44.5`'s two files, and the gate forced the better fix.**
+§44.5 recorded them as round-2 work on the reasoning that editing them mid-gate would invalidate the
+run. The gate then failed *in* one of them — so the choice was no longer "leave them or churn", it
+was "bump two numbers and leave the narrow scoping in a file I am already editing" or "fix it". Both
+files now derive their roots from the app's own `RACE_CORPUS_BOOKS`. Widening them moved four more
+assertions (331→337 twice, 153→158 twice) and turned one green assertion red — the aasimar file's
+orphan-flag pin, which gained `Duergar_ReplaceSLAEnlargePerson`: the same truncated multi-flag gate
+seen from its other end, given the same grant-proof rather than an exemption. **Three test names
+carrying `153` were renamed to carry no number at all.**
+
+`clippy`: root **57** warnings against a recorded ceiling of **54** — exactly this lane's 3. Two
+were `arg()`/`b1()` in `race_resolver`'s test module, dead the moment `all_books()` stopped
+hardcoding its roots (deleted; `crb()` stays, because one test deliberately loads a single book and
+that is a real property, not stale scope). The third was a collapsible-`if` in this cycle's own CRB
+fallback, rewritten as `is_some_and`. Re-measured **54**, exactly the ceiling, counted the way
+`verify.sh` counts it: `grep '^warning:' <log> | grep -v 'generated [0-9]* warning' | wc -l`.
+**The ceiling was not raised.**
+
+**Per-suite re-runs proving each fix, before the second full gate:**
+
+| command | result |
+|---|---|
+| `cargo test --locked -j 2 --bin ingest_apg_race_traits` | 8 passed, 0 failed |
+| `cargo test --locked -j 2 --test sd27_alternate_racial_trait_reachability` | 14 passed, 0 failed |
+| `cargo test --locked -j 2 --test sd27_aasimar_globalvar_gate_closes_the_dead_affordance` | 5 passed, 0 failed |
+
+**DoD item 3, run separately and directly:**
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`AUDIT_EXIT=0`**, 259 mod-record
+traps, **0 defects**.
+
+**Baseline notes the gate printed, and what was done about them (DoD item 7).** `verify.sh` reported
+`BASELINE_ROOT_LIB_TESTS` stale (1604 recorded, 1616 measured) and `BASELINE_DESKTOP_TESTS` stale
+(413 recorded, 422 measured). Both are **floors**, so neither fails, and both were already stale
+before this card — `SD29-E13-F1-001` recorded them and left them for deliberate treatment.
+`scripts/verify-baselines.env` is untouched here for the same reason: DoD item 7 requires a baseline
+movement to be its own reviewable commit carrying `--show-actuals`, and riding it along on an ingest
+commit is exactly what that item forbids.
+
+### 6c. A stale surface string, found by reading the surface
+
+`CreateCharacterForm.tsx` headed its picker `Alternate racial traits (Advanced Race Guide)` and its
+empty state read *"The Advanced Race Guide offers no alternate racial traits for X"* — while that
+same picker was rendering Monster Codex rows and, after this cycle, an APG row. The pilot fixed the
+equivalent strings on the *browse* screen; these are the *creation* screen's, a different surface,
+and this cycle made them wronger rather than merely leaving them wrong. Both now name no book.
+`alternateTraitSelection.ts`'s "browses all 153" is now stated without a number, with the reason:
+it read 153, then 157, then 158 across three cycles and nothing failed when it went stale.
+
+No test asserted either string. This is the defect class DoD item 8 exists to catch.
