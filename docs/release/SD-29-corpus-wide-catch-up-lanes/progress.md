@@ -2248,3 +2248,203 @@ so there is none to clean up; `scripts/reclaim.sh --apply` was nonetheless run (
 
 1 × `incident`, `--recurrence-key disk-full`, `--used-percent 91`, `--actors-affected 6`. No
 `verification` event: `verify.sh` FULL never ran.
+
+## Cycle SD29-E6-F2-001 — `epic-6-race-trait-lane-extend` (Race-Trait Lane: extend) — **PARTIAL**
+
+- **Card:** `epic-6-race-trait-lane-extend` (kanban order 10)
+- **Claimed-by:** `sd29-e6-racetrait-extend` · **Claimed-at:** 2026-08-11T09:30:00Z
+- **Branch:** `tranche/9` · **Branch-point:** `24462c4a` · **Worktree:** `wf_3516060a-756-12`
+- **Outcome:** SPLIT. The **companion mis-classification fix is COMPLETE and committed**; the
+  **corpus-wide race-trait ingest is `decision-blocked`** on a race chassis outside this bundle.
+- **PR-id:** none — committed directly to `tranche/9` per the bundle's pre-authorised push rule.
+
+### 0. Cycle-start correction: wrong worktree base
+
+The dispatched worktree was cut from `origin/main` (`7d9f1c4f`, GE-08 era) and contained no
+`docs/release/SD-29-corpus-wide-catch-up-lanes/` at all. Reset to `origin/tranche/9` on a clean tree
+before any work — the same recurring dispatch-harness defect `sd29-e6-racetrait-pilot` recorded.
+
+### 1b. Re-derived figures (every number below carries its command)
+
+The card's scope figure — "27 books / 3,412 remaining units minus the pilot's 9" — is **wrong in
+both terms**, corrected in place here and in `kanban.md`.
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in d['units'] if x['kind']=='race_trait']; print(len(u), len(set(x['book'] for x in u)), collections.Counter(x['status'] for x in u))"
+```
+
+| | units | books | statuses |
+|---|---|---|---|
+| at `24462c4a` (pre-fix) | **3,456** | **27** | not-ingested 1,813 · not-started 1,622 · grounded 21 |
+| after this cycle | **3,447** | **26** | not-ingested 1,813 · not-started 1,613 · grounded 21 |
+
+Evidence breakdown of the 3,447 (same command, keyed on `(status, evidence)`):
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); print(collections.Counter((x['status'],x['evidence']) for x in d['units'] if x['kind']=='race_trait'))"
+```
+
+- 1,613 `not-started` / `no_compiled_rule_set_for_book`
+- 864 `not-ingested` / `shared_library_record_held_by_no_ingested_host`
+- **805 `not-ingested` / `race_trait_race_not_modelled`**
+- **144 `not-ingested` / `race_trait_absent_from_race_traits`**
+- 21 `grounded` / `race_trait_record_grounded_by_race_traits`
+
+### 3. The bounded work that COMPLETED — companion-ability files were typed `race_trait`
+
+`file_kind()` (`src/bin/v06_work_inventory.rs`) tests the `_abilities_race` substring **before** its
+`_abilities_companion` / `_abilities_familiar` markers, so any basename containing both fell to
+`Kind::RaceTrait`. Two such files exist corpus-wide:
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); c=collections.Counter(x.get('source_file') for x in d['units'] if x['kind']=='race_trait'); print([(f,n) for f,n in c.items() if 'companion' in (f or '') or 'familiar' in (f or '')])"
+```
+→ pre-fix `[('b4_abilities_race_ce_companion.lst', 2), ('isi_abilities_race_companion.lst', 9)]`,
+post-fix `[]`.
+
+Confirmed **at source**, not from the inventory:
+
+```
+grep -rn "CATEGORY" --include="isi_abilities_race_companion.lst" --include="b4_abilities_race_ce_companion.lst" ~/workspace/repos/pcgen/data/pathfinder
+```
+→ `CATEGORY:Special Ability TYPE:ClockworkSpyRacialAbility.SpecialQuality.Supernatural`,
+`TYPE:ClockworkFamiliarRacialAbility…` — Clockwork Spy / Clockwork Familiar **construct-companion**
+abilities, plus Bestiary 4's core-essentials companion abilities (`Comprehend Languages ~ Constant`,
+`Grab ~ Medium`, …). Neither file holds a racial trait of any player race.
+
+This is the defect `sd29-e6-racetrait-pilot` *found* and flagged (it correctly refused to build a
+pilot on those 9 units) but did not fix. Fixing it is squarely inside this lane: it is the
+race-trait kind's own classifier.
+
+**TDD.** Two tests written first, in a new function-named module
+`companion_ability_file_classification_tests` (no SD-NN / GE-NN tag, per the 2026-08-11 naming
+directive). RED was the recorded corpus state itself — the same 11 rows appear as `race_trait` in
+`docs/work-inventory.json` at `24462c4a`. Fix: inside the existing `_abilities_race` arm, a basename
+also carrying `companion` or `familiar` returns `Kind::Companion`. The narrowing is provably
+exhaustive — `grep -rl "" --include="*companion*.lst" --include="*familiar*.lst"` over the pcgen
+tree, basenames only, shows exactly two basenames matching both patterns.
+
+**Corpus-wide effect**, measured as an id-level set diff of `docs/work-inventory.json` at `HEAD` vs.
+regenerated (not as a count difference, which would have hidden the `bestiary_4` asymmetry):
+
+```
+python3 -c "import json; old=json.load(open('/tmp/.../old-inv.json')); new=json.load(open('docs/work-inventory.json')); o={x['id'] for x in old['units'] if x['kind']=='race_trait'}; n={x['id'] for x in new['units'] if x['kind']=='race_trait'}; print(len(o-n), len(n-o))"
+```
+→ **9 removed, 0 added** (all nine `inner_sea_intrigue:race_trait:clockwork_*`), and on the
+companion side **13 added, 0 removed**: the same 9 plus 4 `bestiary_4` rows. The asymmetry is real
+and expected — `is_excluded_race_trait_row` had been dropping 4 of the b4 file's 6 rows on the
+race-trait path; the companion path keeps all 6, of which 4 are new ids. Total units 38,536 →
+38,540.
+
+`inner_sea_intrigue` therefore no longer appears as a race-trait book at all (27 → 26 books), which
+is why the pilot's re-pin is now a narrower question than the kanban note stated: it is needed as a
+per-book ingest exemplar, not as a classifier probe.
+
+### 3b. The half that is `decision-blocked` — no race chassis
+
+The extend lane cannot ground a single one of the remaining 3,426 ungrounded units. Grounding a
+race trait requires the record's own race to be modelled (`modelled_race_of_race_trait`, landed by
+the pilot), and `race_trait_ids` comes solely from CRB's hardcoded `race_traits()` — **7 races, 49
+rows**. That is what the 805 `race_trait_race_not_modelled` and 144
+`race_trait_absent_from_race_traits` units are saying directly, and the remaining 2,477 sit behind
+`no_compiled_rule_set_for_book` / `shared_library_record_held_by_no_ingested_host`.
+
+Ingesting them anyway would produce records with no reach claim — precisely what DoD items 2 and 6
+forbid. This is `loop-instruction.md`'s named stop: *"a record family cannot be surfaced without
+work outside this bundle's epic structure … the cycle reports the gap; it does not add an epic and
+it does not ingest without a reach claim."* Recorded as `decision-blocked`, not idled; a race
+chassis card is the remedy.
+
+### 6. `beastiary1/race_traits` OPEN_FINDINGS — LEFT STANDING, with the reason
+
+DoD item 6 expects this lane's Monster Codex batch to retire it. It cannot, and the reason is
+factual rather than a judgement call:
+
+```
+grep -rln "Duergar_ReplaceSLAEnlargePerson" ~/workspace/repos/pcgen/data/pathfinder --include=*.lst
+```
+→ `monster_codex/mc_abilities_race.lst` plus three `core_essentials/races/duergar/` files. The
+gating var's only non-`core_essentials` setter is Monster Codex.
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); mc=[x for x in d['units'] if x['book']=='monster_codex']; print(len(mc), collections.Counter(x['status'] for x in mc))"
+```
+→ `207 Counter({'not-started': 207})`. **Monster Codex is not ingested at all.** Its ingest belongs
+to Epic 5's monster lane, whose pilot card (`epic-5-monster-lane-pilot`) is still `READY` and
+unclaimed. Retiring the entry from this card would have meant ingesting Monster Codex under a
+race-trait card — a scope substitution, not a closure. Entry stands; deferral event emitted.
+
+The seven `<book>/archetypes` entries were not touched (SD-30's).
+
+### 4. Verification
+
+`./scripts/verify.sh` FULL (never `--quick`), own `CARGO_TARGET_DIR=/tmp/codex-target-sd29-e6-racetrait-extend`
+per the Epic 1 build-contention rule, exit code captured directly and never through a pipe.
+
+**VERIFY_EXIT = 1.** The exit is determinate independent of the sweep's remaining stages:
+`preflight-disk` is stage 1 and it FAILED, so `verify.sh` cannot exit `0` on this run. DoD item 1 is
+therefore **NO**.
+
+Stages reached before this cycle's turn budget expired:
+
+| stage | result |
+|---|---|
+| `preflight-disk` | **FAIL** — `/` 91% used (max 90%), 45G free (min 20G, passes). Percentage floor only. |
+| `pi-sweep` | PASS — 10 hits over `src/rules_core/rules_tables`, 10 baseline rows |
+| `audit-selftest` | PASS — 28 passed, 0 failed (this is the stage that would catch an SD-NN/GE-NN tag in the new test module's name; it passed with the module in the tree) |
+| `root-lib` … onwards | **did not complete** — CPU/lock-starved, not hung |
+
+The starvation was diagnosed rather than assumed, per the build-contention rule:
+`ps -eo pid,etime,args | grep cargo` showed a sibling agent's `cargo test --locked --no-fail-fast
+-j 2` running 19m38s while this cycle's `cargo test --locked --lib` sat at 2m22s with
+`pgrep -c rustc` → **0** — blocked on the shared cargo build lock, six worktree agents deep, load
+average 11.7. No stage was weakened, skipped, `#[ignore]`d, or excluded, and
+`PREFLIGHT_DISK_MAX_PERCENT` was not set.
+
+**Narrow verification that DID execute** for the change this cycle actually landed:
+
+```
+cargo test --locked --bin v06_work_inventory companion_ability_file_classification
+```
+→ `2 passed; 0 failed; 20 filtered out`. The change is confined to `src/bin/v06_work_inventory.rs`,
+a **binary** no integration test links, plus the regenerated `docs/work-inventory.json`.
+
+**DoD roll-call.** item 1 **NO** (exit 1, preflight-disk). item 2 **NOT REACHED** — the `reach`
+stage did not run; no new reach claim was declared either, since no family was newly surfaced.
+item 3 **NOT REACHED** — `v06_corpus_trap_report -- --audit` could not run under the same cargo
+lock. item 4 **PARTIAL** — the generator ran and exited `0` and its output is committed, but the
+second confirming run (only `generated_at` may differ) could not execute. item 5 N/A (no production
+path touched — a generator's classifier, not a user-facing affordance). item 6 addressed in §6
+above. item 7 N/A (§7). item 8 N/A (§8).
+
+### 7. Baselines
+
+Untouched. DoD item 7 N/A deliberately — the standing `verify-baselines.env` drift is Epic 9/10's
+separate `--show-actuals` commit, per the standing note every other card leaves alone.
+
+### 8. On-screen desktop verification
+
+N/A: this cycle surfaced **no new player-visible family**. It moved 11 records between two kinds in
+a generator's inventory; no new reach claim was declared, no new value reaches the sheet. `RUN_DESKTOP_AGENT`
+was therefore never needed. (Had the ingest half proceeded, item 8 would have been mandatory — it is
+skipped because the ingest half is blocked, not because the check was waived.)
+
+### Retro events
+
+DECISION: 4 emitted by this cycle (2 `correction`, 2 `deferral`), plus verify.sh's own derived
+`verification` and disk-pressure `incident` events, all in
+`docs/retro/events/sd29-e6-racetrait-extend.jsonl`.
+
+### Blockers carried forward
+
+1. **Race chassis.** 3,426 race-trait units across 26 books cannot ground until the engine models
+   more than 7 races. Needs a `src/rules_core` race-chassis card; no SD-29 epic owns it.
+2. **`preflight-disk` fails structurally**, third consecutive cycle (`sd29-e6-racetrait-pilot`,
+   `sd29-e7-companion-pilot`, this one). `/` at 91% used, 45G free — the **percentage** floor trips,
+   the 20G free-space floor passes. `scripts/reclaim.sh` (dry run) would free **0.0B**: every
+   candidate is a live target dir, a worktree with unpushed commits, or a checked-out branch. Six
+   concurrent worktree agents plus a 60G `target/` in the primary checkout. `PREFLIGHT_DISK_MAX_PERCENT`
+   exists and was **not** used — weakening a gate to get green is banned. This is bundle-wide
+   concurrency, not garbage, and it is now a recurring incident rather than an environment quirk.
+3. **Epic 6 pilot re-pin** still outstanding, narrowed as described in §3.
+4. **`beastiary1/race_traits`** stays in `OPEN_FINDINGS` pending Epic 5's Monster Codex ingest.

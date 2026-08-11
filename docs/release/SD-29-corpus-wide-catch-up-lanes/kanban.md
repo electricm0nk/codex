@@ -40,7 +40,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 7 | `epic-5-monster-lane-pilot` | READY | Monster / Monster-Ability Chassis Lane — pilot | Bonus Bestiary end-to-end (14 monster + 17 monster_ability) | `epic-3-provenance` | — | — | — |
 | 8 | `epic-5-monster-lane-extend` | READY | Monster / Monster-Ability Chassis Lane — extend | corpus-wide, every remaining book (1,224 monster + 3,107 monster_ability minus the pilot's 31) | `epic-5-monster-lane-pilot` | — | — | — |
 | 9 | `epic-6-race-trait-lane-pilot` | PARTIAL — classifier fix COMPLETE, pilot ingest `decision-blocked` | Race-Trait Lane — pilot | classifier defect fix + `inner_sea_intrigue` (9 units) | `epic-3-provenance` | sd29-e6-racetrait-pilot | 2026-08-11T00:00:00Z | SD29-E6-F1-001 |
-| 10 | `epic-6-race-trait-lane-extend` | READY | Race-Trait Lane — extend | corpus-wide, 27 books, 3,412 remaining units minus the pilot's 9 | `epic-6-race-trait-lane-pilot` | — | — | — |
+| 10 | `epic-6-race-trait-lane-extend` | PARTIAL — companion mis-classification fix COMPLETE, corpus-wide ingest `decision-blocked` | Race-Trait Lane — extend | corpus-wide, **26** books, **3,447** remaining units (was "27 books, 3,412 minus the pilot's 9" — both figures corrected in place, see `progress.md`) | `epic-6-race-trait-lane-pilot` | sd29-e6-racetrait-extend | 2026-08-11T09:30:00Z | SD29-E6-F2-001 |
 | 11 | `epic-7-companion-lane-pilot` | READY | Companion Lane — pilot | mechanism-build + `inner_sea_combat` (10 units) | `epic-3-provenance` | — | — | — |
 | 12 | `epic-7-companion-lane-extend` | READY | Companion Lane — extend | corpus-wide, 17 books, 1,683 remaining units minus the pilot's 10 | `epic-7-companion-lane-pilot` | — | — | — |
 | 13 | `epic-9-version` | READY | Build Version Numbering | first concrete value `0.9.<build>` | `epic-1-identifier` | — | — | — |
@@ -76,6 +76,23 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 >
 > Card 10 (`epic-6-race-trait-lane-extend`) stays `READY` but is **not** eligible until the re-pin
 > lands and a real pilot closes.
+>
+> **RESOLVED IN PART, 2026-08-11 (`sd29-e6-racetrait-extend`, card 10).** The re-pin is no longer
+> needed to unblock the *classifier* half: `file_kind()` now types an `_abilities_race*` basename
+> that also carries a `companion`/`familiar` marker as `Companion`, so the 9 Clockwork units left
+> `race_trait` for `companion` where they belong and `inner_sea_intrigue` no longer appears as a
+> race-trait book at all. Corpus-wide the fix moved **9** units (`inner_sea_intrigue`, all 9) and
+> added **13** companion units (`inner_sea_intrigue` 9 + `bestiary_4` 4 from
+> `b4_abilities_race_ce_companion.lst`, whose rows survive the companion path that the race-trait
+> row exclusion had been dropping). The **pilot's re-pin is still outstanding**, but its purpose is
+> now narrower: a per-book ingest exemplar, not a classifier probe.
+>
+> **Card 10's own ingest half is `decision-blocked`** on a chassis outside this bundle — see
+> `progress.md`. Of the 3,447 remaining `race_trait` units, **805** carry
+> `race_trait_race_not_modelled` and **144** `race_trait_absent_from_race_traits`: the engine models
+> exactly **7** races (CRB's hardcoded `race_traits()`), so no book's race traits can ground until a
+> race chassis lands. That is loop-instruction.md's named stop, "a record family cannot be surfaced
+> without work outside this bundle's epic structure."
 
 ## Cycle claims (cycle-supervisor protocol)
 
