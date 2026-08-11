@@ -1359,6 +1359,21 @@ a second implementation free to drift.
    `parse_runs_in_linear_time_on_a_synthetic_large_file` since run 1's red — see the `root-full`
    bullet below.
 
+   **Run 4 — the run this receipt's exit code finally cites, because the tree changed after run 3.**
+   `origin/tranche/9` advanced to `919703e3` (the equipment lane's two commits) while this cycle
+   was verifying, so this lane **rebased** onto it rather than force-pushing over it (see §6.5).
+   The rebased tree is a different tree, so the gate was re-run on it:
+   `verify-final.exit` = **`0`**, `RESULT: PASS`, **12 of 12 stages** —
+   `preflight-disk`, `pi-sweep`, `audit-selftest` (28), `root-lib` (1604),
+   **`root-full` (6148 passed across 541 suites, all 523 `tests/*.rs` suites executed)**,
+   `desktop` (414), `reach` (**16**), `frontend-install`, `frontend-test` (98/98),
+   `frontend-typecheck`, `clippy` (0 errors), `class-dump` (31/31). The counts rise from run 3's
+   6141/539/522 by the equipment lane's own new suite, as expected on a merged tree.
+   An immediately preceding full run on the same rebased tree was 11/12 with only
+   `preflight-disk` red (the box crossed the 90% ceiling again under other agents' builds); a
+   `scripts/reclaim.sh --apply` and the box settling to 88% cleared it, and every content stage
+   was green in **both** of those runs.
+
    All three **run-1** failures are separately accounted for, none accepted as "environmental" on
    assertion — and note that run 2 independently cleared all three:
    - **`frontend-test`** — REAL, and mine: the RED test of §3, caught mid-cycle. Fixed; 98/98 pass.
@@ -1445,10 +1460,26 @@ a second implementation free to drift.
    clean. The safer default: reset a clean scratch branch rather than refuse the card.
 3. **`apps/desktop` `npm ci` was run in this worktree.** It had no `node_modules`, so
    `npx tauri dev` failed with `sh: 1: vite: not found`. Not a code change.
-4. **The three real PI leaks stay standing.** `pi-sweep` passed in run 1 (10 hits / 10 baseline
+4. **The three real PI leaks stay standing.** `pi-sweep` passed in every run (10 hits / 10 baseline
    rows, CLEAN) — unchanged by this cycle, which generated **no** table under `rules_tables/` and
    so had no `screen_generated_table` call to make. Epic 3's two-line obligation is satisfied
    vacuously and stated here rather than silently skipped.
+5. **Rebased onto the equipment lane, never force-pushed over it.** `origin/tranche/9` moved from
+   `579d5941` to `919703e3` mid-cycle — `epic-4-proven-equip-mod` running concurrently in its own
+   worktree. Per "STOP — the work would revert or clobber another session's live work on the
+   shared branch", this lane rebased. Two conflicts, both resolved by keeping **both** lanes'
+   content: `kanban.md` (their card's `IN-FLIGHT` claim + this card's row) and
+   `docs/work-inventory.json`. The inventory was **regenerated**, not side-picked — both lanes
+   change engine facts the generator reads, so either snapshot would have disagreed with the code
+   beside it. The regen moves 14 equipment/equipment_modifier rows (remaining 1,144 → 959 and
+   812 → 228, the equipment lane's own landed result, whose committed snapshot predated its
+   tables) and **zero `spell` rows**: spell remaining stays 1,561, verified by diffing every
+   book/kind pair rather than only the ones expected to move. Commit `33010d8d`.
+6. **Cycle-id collision recorded, not papered over.** Both Epic 4 cards independently minted
+   `SD29-E4-F1-001` — neither worktree could see the other's claim. Rewriting either receipt would
+   desync it from its own commit messages, so the ids stand and `kanban.md` now carries a note
+   saying to disambiguate by card id + `Claimed-by` (both unique), with a lane-suffix convention
+   for the next concurrent split.
 
 ### 7. Disk
 
