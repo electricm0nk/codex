@@ -2393,7 +2393,7 @@ Stages reached before this cycle's turn budget expired:
 | `pi-sweep` | PASS — 10 hits over `src/rules_core/rules_tables`, 10 baseline rows |
 | `audit-selftest` | PASS — 28 passed, 0 failed (this is the stage that would catch an SD-NN/GE-NN tag in the new test module's name; it passed with the module in the tree) |
 | `root-lib` | PASS — 1606 passed (includes this cycle's 2 new tests) |
-| `root-full` … onwards | **did not complete** — CPU/lock-starved, not hung; still building ~490 test binaries when this cycle's turn budget expired |
+| `root-full` … onwards | **did not complete** — CPU/lock-starved, not hung; still building ~490 test binaries when this cycle's turn budget expired. Independently expected RED for a reason owned by another card: `grep -n "185" tests/v06_apg_acg_feat_catalog.rs` → `:263 assert_eq!(entries_for(RuleSetId::Crb), 185);` still stands, the stale assertion `sd29-e6-racetrait-pilot` reported (measured 201) and attributed to `dde9dfc4`'s feat landing. It belongs to `epic-4-proven-feat-race-class`, which is still `IN-FLIGHT` under `sd29-e4-frc`; not touched, to avoid clobbering live work. |
 
 The starvation was diagnosed rather than assumed, per the build-contention rule:
 `ps -eo pid,etime,args | grep cargo` showed a sibling agent's `cargo test --locked --no-fail-fast
