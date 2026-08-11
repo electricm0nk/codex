@@ -21,6 +21,10 @@ each pilot on one small book before extending corpus-wide.
 - `IN-FLIGHT` — claimed by a cycle, in progress. Other cycles must wait.
 - `BLOCKED` — cycle claims the block, captures the gap, surfaces in `progress.md` as a blocker.
 - `COMPLETE` — cycle receipt in `progress.md` closes the card.
+- `DECISION-BLOCKED` — the card required a decision the playbook routes to the operator; under
+  UNATTENDED MODE (`loop-instruction.md` item 4) the cycle ruled it itself, took the safe default,
+  and recorded the ruling and its evidence in `progress.md`. A terminal state, not a wait: the card
+  is closed for this bundle and downstream cards treat it as settled. Do not re-dispatch it.
 
 **Dispatch tiebreak:** next card = lowest `Order` among `READY` cards whose
 every `Depends-on` card is `COMPLETE`. A card whose `Depends-on` is not
@@ -44,7 +48,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 11 | `epic-7-companion-lane-pilot` | READY | Companion Lane — pilot | mechanism-build + `inner_sea_combat` (10 units) | `epic-3-provenance` | — | — | — |
 | 12 | `epic-7-companion-lane-extend` | READY | Companion Lane — extend | corpus-wide, 17 books, 1,683 remaining units minus the pilot's 10 | `epic-7-companion-lane-pilot` | — | — | — |
 | 13 | `epic-9-version` | READY | Build Version Numbering | first concrete value `0.9.<build>` | `epic-1-identifier` | — | — | — |
-| 14 | `epic-8-toolkit` | READY | DM Toolkit extension | consume Epic 5's monster records (optional; safe default retrofit per `successor-forward-scope-register.md C3.1`) | `epic-5-monster-lane-pilot` | — | — | — |
+| 14 | `epic-8-toolkit` | DECISION-BLOCKED | DM Toolkit extension | RULED 2026-08-11 under UNATTENDED MODE item 4: does NOT land inside SD-29; surfaces as the Class 3 retrofit C3.1. Criterion (`epic-breakdown.md` Epic 8 / `loop-instruction.md` "Epic ordering") is "a lane cycle needed the consumer surface to satisfy its reach claim" — unmet: both of Epic 5's pilot reach claims assess the already-shipped `list_monster_catalog`, zero assess a toolkit surface | `epic-5-monster-lane-pilot` | sd29-e8-toolkit | 2026-08-11T00:00:00Z | SD29-E8-F1-001 |
 | 15 | `epic-10-review` | READY | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §27`) | `epic-4-proven-equip-mod`, `epic-4-proven-spell`, `epic-4-proven-feat-race-class`, `epic-5-monster-lane-extend`, `epic-6-race-trait-lane-extend`, `epic-7-companion-lane-extend`, `epic-9-version`, `epic-8-toolkit` (COMPLETE or `decision-blocked`) | — | — | — |
 | 16 | `epic-11-closure` | READY | Closure Epilogue | tranche promotion PR | all cards above (COMPLETE or `decision-blocked`) | — | — | — |
 
