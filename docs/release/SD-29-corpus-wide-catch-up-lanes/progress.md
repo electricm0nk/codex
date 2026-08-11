@@ -3607,9 +3607,56 @@ it licenses skipping a gate. Two later cycles restated it instead. Correction ev
 | 7 | Baseline movements are a separate reviewable commit | **Satisfied by `e14c4307`** (Epic 9), which is separate and carries the verbatim `--show-actuals` MEASURED block. **This card moved no baseline** — see §10 for the headroom note |
 | 8 | On-screen verification for player-visible families | **N/A** — zero new player-visible families. The bundle-wide item-8 claim is corrected in §7, on evidence, not waived |
 
-### 9. Gate
+### 9. Gate — **`./scripts/verify.sh` (FULL) RESULT: PASS, exit code `0`**
 
-*(filled in below from `verify-e10-run2.exit` — the exit code, captured directly)*
+Exit code captured directly, never through a pipe: the run was launched as
+`./scripts/verify.sh > <log> 2>&1; echo $? > verify-e10-run5.exit`, `$?` read on the statement
+immediately after the command. `cat verify-e10-run5.exit` → **`0`**.
+
+```
+SUMMARY
+  passed:  12  preflight-disk pi-sweep audit-selftest root-lib root-full desktop reach
+               frontend-install frontend-test frontend-typecheck clippy class-dump
+RESULT: PASS
+```
+
+| Stage | Result |
+|---|---|
+| preflight-disk | PASS |
+| pi-sweep | PASS (10 hits, 10 baseline rows — §6) |
+| audit-selftest | PASS (28 passed, 0 failed) |
+| root-lib | PASS (1615) |
+| root-full | PASS (**6170 passed across 543 suites, all 524 `tests/*.rs` suites executed**) |
+| desktop | PASS (421) — the separate `apps/desktop/src-tauri` workspace, which a root-only sweep never reaches |
+| **reach** | **PASS (17 matched claims)** — non-zero, so DoD item 2's "a gate running zero tests asserts nothing" is satisfied bundle-wide |
+| frontend-install / -test / -typecheck | PASS (98/98 files; `tsc --noEmit` clean) |
+| clippy | PASS (root:54 desktop:7, 0 errors) |
+| class-dump | PASS (31/31 computing) |
+
+`root-full`'s "all 524 `tests/*.rs` suites executed" is the Decision-40 `comm -23` check, not a
+count: it names any suite file present but never `Running`. Nothing was silently skipped — which is
+the failure mode that once hid two proof-carrying parity gates for an entire tranche.
+
+**Nothing was weakened to get here.** Verified over the whole bundle diff:
+`git diff a1295856...HEAD -- tests/ src/ apps/ | grep '^\+.*#\[ignore'` → **no new ignored tests**;
+`git diff --name-only --diff-filter=D a1295856...HEAD -- 'tests/**'` → **no test file deleted**.
+
+#### 9b. The last red, and why it was paid down rather than re-baselined
+
+The first full run on the merged tree was **exit 1 on `clippy` alone** — `root:55` against a ceiling
+of `54`. Root cause is this bundle's signature defect one more time: `epic-9-version` lowered
+`BASELINE_CLIPPY_WARNINGS_ROOT` from 75 to 54 — a real and welcome paydown — but measured the 54 on
+the same 33-commit-stale checkout described in §0, so it never saw the lane work.
+
+Two ways out, and they are not equivalent. Moving the ceiling 54 → 55 would have been mechanically
+easy and is even a sanctioned mechanism (DoD item 7's separate-commit rule). It was rejected: that
+rule exists for honest drift, not for walking back a deliberate tightening, and a review card whose
+own gate goes green by loosening a gate has reviewed nothing. So the warning was **paid down**
+(`553d2dc9`) — a genuinely unused `CharacterInput` import in a `#[cfg(test)]` module of
+`pilot_compute.rs`, a file already inside this bundle's diff, so not unrelated cleanup either.
+`./scripts/verify.sh --only clippy` → `PASS clippy (root:54 desktop:7 warnings, 0 errors)`.
+
+The ceiling still reads 54. That is the point.
 
 ### 10. Handed to Epic 11 — findings that are real but not this card's to fix
 
@@ -3630,6 +3677,21 @@ it licenses skipping a gate. Two later cycles restated it instead. Correction ev
 5. **Cards `epic-7-companion-lane-pilot` and `-extend` are still `READY`**, never claimed; the
    companion lane never started (its pilot was blocked at `preflight-disk`). Epic 11's closure must
    state the companion kind as unstarted rather than let a `READY` row imply it was attempted.
+6. **Epic 1b's naming sweep is complete where it counts and untouched elsewhere — by design, worth
+   stating so nobody re-opens it.** Bundle-tagged *file* names remaining, by area
+   (`git ls-files <dir> | grep -icE '(^|/)[^/]*(sd|ge)[0-9]{2}[^/]*$'`):
+   `src` **0**, `apps` **0**, `scripts` **0**, `tests` **740**, `docs` **188**. Shipping code is
+   clean, which is why `identifier-discipline-audit.sh a1295856` returns `OK_NO_BUNDLE_TAGS`. The
+   `tests/`+`docs/` remainder is the audit's documented exclusion class, not a miss — but a live
+   example is worth carrying: `pilot_compute.rs` `include_str!`s
+   `tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`. Renaming that
+   class of file is a real cross-cutting change (every `include_str!` call site moves with it), so it
+   is a scoped card for a successor bundle, not a closure-cycle drive-by.
+7. **The eight `worktree-wf_3516060a-756-*` worktrees were removed by this card** after proving all
+   eight branches carry **0 commits** not already in `origin/tranche/9`. Two held uncommitted retro
+   shards; those were harvested into the checkout first (`b1df958c`) rather than destroyed —
+   `scripts/reclaim.sh` correctly refuses to touch worktrees, so this was a deliberate manual step
+   with the merge-proof done first, not a reclaim.
 
 ### Judgment calls taken under unattended mode (default-and-flag, per `loop-instruction.md` item 1)
 
