@@ -1236,3 +1236,260 @@ Equipment Catalog filtered to book `UW` (127 rows, a book that served zero rows 
 the cleanest possible on-screen proof) plus one CRB `Equipmods` row from `cr_equipmods.lst`. If the
 driver still cannot bring up a window, that is a tooling blocker worth its own card: DoD item 8 is
 unsatisfiable for every player-visible lane in this bundle until it is fixed.
+---
+
+## Cycle SD29-E4-F1-001 — `epic-4-proven-spell` (Proven-Path Lane: spell, corpus-wide)
+
+**Actor:** `sd29-e4-spell` · **Branch:** `tranche/9` · **Branch tip at claim:** `579d5941`
+**Card:** `epic-4-proven-spell` (kanban Order 5) · **PR-id:** none (direct commit, pre-authorized)
+**Commit:** `5f85d64e` · **Cycle-type:** proven-path kind lane, no new mechanism
+
+### 1. The card's own figure was wrong, and correcting it WAS the bounded work
+
+The card reads "corpus-wide, 1,754 remaining units". Re-deriving that number before accepting it
+(Cycle mechanics step 1b) is what found the defect.
+
+`v06_work_inventory::gather_engine_facts` built its `spell_levels` map from **three**
+hand-written `.insert()` calls — `core_rulebook`, `advanced_players_guide`,
+`advanced_class_guide` — while the shipped desktop `spell_catalog::build_spell_catalog` chained
+**five**, adding `advanced_race_guide` and `ultimate_intrigue`. Every ARG and UI spell was
+therefore reported `not-ingested` **while already being served to the player on screen**.
+
+This is Decision 36's two-lists-one-fact pattern. It is not a new discovery in this repo: the
+`equipment_keys` map **four lines below** the spell map in the same function was rebuilt by
+SD-28-E15 for exactly this reason, and carries a doc comment describing the failure mode. The
+spell family was left as the last hand-maintained copy.
+
+**Landed:** `spell_resolver::spell_catalog_rows()` — one registry normalizing all five books'
+mutually-incompatible `SpellListEntry`/`Pf1SchoolId` types (each book declares its own). Both
+consumers now read it. `spell_book_slug_for` panics on an unmapped book code rather than
+silently dropping a book, mirroring `equipment_book_slug_for`.
+
+### 2. Re-derived figures — command first, value second, nothing transcribed
+
+- **Spell remaining, before:** `1754`; **after:** `1561`. Command:
+  `cargo run --locked --bin v06_work_inventory`, then a per-book/kind diff of the regenerated
+  `docs/work-inventory.json` against `git show HEAD:docs/work-inventory.json` under the predicate
+  `corpus-shape-37-books.md` §3 uses (`not-started + not-ingested + unknown`, `beginner_box`
+  excluded). Exactly two rows moved:
+  `advanced_race_guide` spell `{'not-ingested': 93}` → `{'ingested-magnitude': 92, 'not-ingested': 1}`;
+  `ultimate_intrigue` spell `{'not-ingested': 101}` → `{'ingested-magnitude': 101}`.
+  **No other book/kind pair in the file changed** — the same diff was run across every kind, not
+  just `spell`, precisely so "surgical" is a measurement rather than a claim.
+- **1,754 was itself correct as a starting total** (26 books carry `spell`, 2,843 units); the card
+  and `corpus-shape-37-books.md` agreed with the file. The *file* was wrong, not the transcription.
+  Both are corrected in place per "PRESS ON — this package's own stated figure turns out wrong".
+- **Per-book base/`.COPY=` record counts** for the books that have a rule set but no spell table,
+  straight from the PCGen oracle
+  (`awk -F'\t' '!/^#/ && !/^SOURCE/ && NF>0 && $1 !~ /\.MOD/ && $1 !~ /\.COPY=/ {print $1}' <book>/*spells*.lst | sort -u | wc -l`):
+  `ultimate_magic` 269+19, `ultimate_combat` 147+0, `core_essentials` 110+1,
+  `ultimate_wilderness` 61+9, `ultimate_equipment` 1+0, `core_rulebook` 662+12.
+  Handed forward so the next cycle-batch does not re-derive from scratch.
+- **Disk preflight:** `./scripts/verify.sh --only preflight-disk` → PASS, 78% used, 106G available.
+
+### 3. The defect the tests could not catch, and the screen did
+
+DoD item 8 is the reason this cycle is not a false pass.
+
+With the registry landed and every Rust and frontend test green, the running Spell Catalog read:
+
+> "**1286** spells across the Core Rulebook, Advanced Player's Guide, Advanced Class Guide and
+> Advanced Race Guide"
+
+above filter chips `CRB (652) APG (297) ACG (144) ARG (92)` — **summing to 1185**. UI's 101 spells
+were in the served payload and in the list, with no chip to filter to them and no player-facing
+text naming their book. A **third** copy of the same list — the frontend's `BOOK_ORDER` /
+`BOOK_LABELS` — had been stuck at four books since UI's spells were ingested.
+
+**The frontend test written to prevent exactly this passed the whole time.** Its oracle,
+`CHAINED_BOOK_CODES`, was a *copy of the constant under test* rather than an independent statement
+of what `build_spell_catalog` chains, so it drifted in lockstep with the defect. Fixed RED-first
+(`Error: BOOK_ORDER matches the Rust adapter chain order: expected CRB,APG,ACG,ARG,UI, got
+CRB,APG,ACG,ARG`), then green: **98/98 frontend test files pass**. The test's header now instructs
+successors to derive that constant from `spell_catalog.rs`'s chain, not from `BOOK_ORDER`.
+
+This is the "validate proxies against known truth" lesson, on a proxy that had been wrong for a
+full bundle while reporting itself healthy.
+
+### 4. Tests added (TDD — RED confirmed for the intended reason in every case)
+
+Rust (`src/bin/v06_work_inventory.rs`):
+`spell_book_slug_for_covers_every_catalog_book`,
+`arg_and_ui_spell_keys_are_reachable_through_the_derived_map`,
+`registry_preserves_every_key_the_hand_maintained_map_carried` (the widening must be pure for the
+three already-mapped books — this is what makes the change safe to land without moving any
+already-`ingested-magnitude` unit).
+Desktop (`spell_catalog.rs`): `mapping_helpers_agree_with_the_registry` — the five per-book
+`map_*_entry` helpers are retained as the typed proof of which fields each book genuinely supplies,
+and this test asserts the registry reproduces all five exactly, so they are proof rather than
+a second implementation free to drift.
+
+### 5. Definition of done
+
+1. **`./scripts/verify.sh` (FULL) — exit code captured directly, never through a pipe**, by
+   `echo "$status" > verify-<run>.exit` on the statement immediately after the command
+   (`run-verify.sh`).
+
+   **Run 2 (on the committed tree, `5f85d64e`): exit 1 — 11 of 12 stages PASS, and the single
+   red stage is `preflight-disk`, not a content stage.**
+   `pi-sweep` (10 hits / 10 baseline rows, CLEAN), `audit-selftest` (28), `root-lib` (1604),
+   **`root-full` (6141 passed across 539 suites, all 522 `tests/*.rs` suites executed)**,
+   `desktop` (414), `reach` (**16**), `frontend-install`, `frontend-test` (98/98 files),
+   `frontend-typecheck` (clean), `clippy` (root:54 desktop:7 warnings, **0 errors**),
+   `class-dump` (31/31 computing). The `all 522 tests/*.rs suites executed` clause is the
+   `comm -23` derived-vs-`Running`-lines check Decision 40 requires — no suite silently skipped.
+   `preflight-disk` failed on the box-wide floor (`max 90% used`): `/` at **90% used, 49G free**,
+   against a 20G-free floor it cleared and a 90%-used ceiling it did not.
+   **Remedy applied exactly as Cycle mechanics step 1c prescribes**, not routed around:
+   `scripts/reclaim.sh` (dry run) → `scripts/reclaim.sh --apply` → re-check. `--apply` reclaimed
+   what it safely could (one abandoned target dir, 1020.7KB) and **correctly declined the rest** —
+   live target dirs, verify-log dirs under 6h, two worktrees with uncommitted changes, two
+   branches checked out elsewhere. Still 90%. The pressure is **other concurrent agents'**
+   `CARGO_TARGET_DIR`s, which this cycle must not delete. Releasing this cycle's own 27G build
+   cache took `/` to **84% used, 79G available** and `preflight-disk` to **PASS** — confirmed by
+   direct re-run.
+
+   **Run 3 (same committed tree, cold build cache): `verify-run3.exit` = `0`. `RESULT: PASS`,
+   all 12 of 12 stages PASS** — `preflight-disk`, `pi-sweep` (10 hits / 10 baseline rows),
+   `audit-selftest` (28), `root-lib` (1604), `root-full` (**6141 passed across 539 suites, all
+   522 `tests/*.rs` suites executed**), `desktop` (414), `reach` (**16**), `frontend-install`,
+   `frontend-test` (98/98 files), `frontend-typecheck`, `clippy` (root:54 desktop:7 warnings,
+   0 errors), `class-dump` (31/31 computing). **This is the run this cycle's DoD item 1 cites.**
+   `root-full` passed here on a cold rebuild too, which is the third independent execution of
+   `parse_runs_in_linear_time_on_a_synthetic_large_file` since run 1's red — see the `root-full`
+   bullet below.
+
+   All three **run-1** failures are separately accounted for, none accepted as "environmental" on
+   assertion — and note that run 2 independently cleared all three:
+   - **`frontend-test`** — REAL, and mine: the RED test of §3, caught mid-cycle. Fixed; 98/98 pass.
+   - **`root-full`** — `parse_runs_in_linear_time_on_a_synthetic_large_file`
+     (`tests/sd17_b5_equipment.rs:463`), a **wall-clock** assertion: "5k equipment records should
+     parse in well under 2s, took 2.778812837s". Attribution **proven by re-execution, not
+     asserted** (Cycle mechanics step 4): re-run 3× → `ok ... finished in 1.10s / 1.10s / 1.13s`,
+     all comfortably inside the 2s bound. The red run overlapped a concurrent 496-crate
+     `npx tauri dev` build for this cycle's own DoD-item-8 driving, on a 4-core box at load
+     **10.59**. Nothing in this cycle touches equipment LST parsing. Annotated as flaky-under-
+     contention per "Self-heal", and **not** re-fired blind — the re-run is the evidence.
+     It then passed inside the full `root-full` stage in **both** run 2 and run 3 (the latter on
+     a cold rebuild), so the assertion has now gone green 5 times against 1 red, and the one red
+     is the only execution that overlapped a concurrent 496-crate build.
+   - **`clippy`** — `desktop: could not count clippy output (errors= warnings=)`. The desktop
+     clippy invocation contended with the same `tauri dev` build for the desktop target dir.
+     Root clippy was clean and countable throughout (`root:54` warnings, **0 errors**).
+   Per Decision 39 this is the **first** occurrence of each attribution; none recurred, so no
+   `--recurrence-key <stage>-normalized-red` incident was warranted. A disk-pressure `incident`
+   WAS auto-emitted by `verify.sh` itself (`/` at 90% used) and is recorded in §7.
+2. **Reach claims — not zero, and this card's own families are among them.** The `reach` stage
+   passed in all three runs (**16 matched claims**, never 0) and the two families this card moved,
+   `advanced_race_guide/spells` and `ultimate_intrigue/spells`, are live claims backed by
+   `spells_reach` over `build_spell_catalog` (`reach_gate.rs:758`, `:767`) — they were already
+   claimed, which is precisely why reporting their units as `not-ingested` was incoherent. This
+   card adds no record family and retires none.
+3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 0** (written to
+   `trap-audit.exit`): "No defects: every ingested record's citation agrees with the line it
+   names" — 259 trap rows, 0 defects, `mod-record`.
+4. **`docs/work-inventory.json` regenerated, and its units moved in the intended direction** —
+   192 spell units left `not-ingested` for `ingested-magnitude`, nothing else moved. Committed.
+   The standing hazard (regenerating `data/corpus` destroys `license`/`pi_field`/`raw_tokens`) is
+   untouched: **no generator ran and no file under `data/corpus/` was written this cycle.**
+5. **Wired-integration four-check over this cycle's files: clean.** No forbidden tokens, no
+   no-op handlers, no mock leaks, no "Would …" strings in the added lines of
+   `spell_resolver.rs`, `v06_work_inventory.rs`, `spell_catalog.rs`,
+   `SpellCatalogScreen.tsx`/`.test.ts`. `scripts/wired-integration-audit.sh` (which audits the
+   whole `develop...HEAD` bundle diff, not this cycle's) still reports the **one** pre-existing
+   Check-1 hit from `epic-1b-naming-sweep`'s own diff —
+   `placeholder="e.g. GE08 authoring workbench"` → `placeholder="e.g. authoring workbench"`, an
+   HTML attribute, not a stub token. Recorded, not folded in — identical call to Epic 3's.
+6. **`OPEN_FINDINGS` unchanged.** No family became unsurfaceable. The `beastiary1/race_traits`
+   entry and the seven `<book>/archetypes` entries are untouched, as their owners require.
+7. **No baseline movement committed.** `scripts/verify-baselines.env` deliberately untouched per
+   the standing Epic-1 followup. Run 1 reported the drift as BASELINE NOTES (not failures):
+   `ROOT_LIB_TESTS` 1488 recorded / **1604** measured, `DESKTOP_TESTS` 413 / **414** (+1 is this
+   cycle's `mapping_helpers_agree_with_the_registry`), `CLIPPY_WARNINGS_ROOT` ceiling 75 / **54**
+   measured. Epic 9/10 owns the separate reviewable `--show-actuals` commit.
+8. **On-screen desktop verification — done, and it is what caught §3.**
+   `RUN_DESKTOP_AGENT=sd29-e4-spell-cycle` (unique to this cycle), driven via
+   `apps/desktop/.claude/skills/run-desktop/driver.sh`: `launch` → `title`
+   (`WM_NAME(STRING) = "Codex"`, confirming our own window per the skill's known readiness gap)
+   → `Browse Spell Catalog`. Both captures are committed beside this receipt.
+   Before (`artifacts/e4-spell-catalog-before-ui-chip.png`) — 1286 served, four chips summing
+   to 1185, four books named. After (`artifacts/e4-spell-catalog-after-ui-chip.png`) — chip row reads
+   `CRB (652) APG (297) ACG (144) ARG (92)` **`UI (101)`**, summing to 1286, and the prose names
+   Ultimate Intrigue. Rendered by the live Vite/Tauri app reading `list_spell_catalog` through
+   the new registry; had the registry dropped a book, the totals would not reconcile.
+   **Driver limitation recorded, not glossed:** `driver.sh click` did not reach the webview at
+   this cycle's 1920×1200 geometry — the "Browse Spell Catalog" link needed a `focus`-then-`click`
+   pair to register, and later chip clicks did not register at all (one produced a white paint
+   artifact over an unrelated chip). The chip-filter interaction is therefore **not** claimed as
+   driven; what is claimed is what the captured images show. A successor driving this screen
+   should re-derive coordinates from a fresh screenshot rather than reuse the skill's documented
+   1280×800 values.
+
+### 6. Judgment calls taken as safe defaults (unattended mode — recorded, not asked)
+
+1. **Scope: the divergence fix, not a six-book table generation sweep.** Extending the widened
+   path to `ultimate_magic`/`ultimate_combat`/`ultimate_wilderness` additionally needs, per book,
+   a `RuleSetId`-bearing table module, a `spell_catalog_rows` arm, a `spell_book_slug_for` arm, a
+   `reach_gate` claim, a frontend label, and its own on-screen verification. Epic 1's budgeting
+   rule ("budget your turn so the gate's exit code, the commit, and the receipt all land") was
+   applied: landing that half-finished beside an unverified gate would have been worse than
+   landing the correction proven. Recorded as a `deferral` with the re-derived per-book counts in
+   §2, not as an omission. **Size was not the reason** — the divergence had to be fixed first
+   regardless, because every subsequent book's ingest would have been silently under-reported by
+   the same map.
+2. **The worktree was reset onto `tranche/9`.** This agent was dispatched into
+   `.claude/worktrees/wf_3516060a-756-7`, which was checked out at `7d9f1c4f` (a GE-08-era commit,
+   PR #23) with **no `docs/` tree at all** — the SD-29 package did not exist in it.
+   `git reset --hard 579d5941` onto `origin/tranche/9` (verified a descendant of the `a1295856`
+   the dispatch brief named, via `git merge-base --is-ancestor`) after confirming the worktree was
+   clean. The safer default: reset a clean scratch branch rather than refuse the card.
+3. **`apps/desktop` `npm ci` was run in this worktree.** It had no `node_modules`, so
+   `npx tauri dev` failed with `sh: 1: vite: not found`. Not a code change.
+4. **The three real PI leaks stay standing.** `pi-sweep` passed in run 1 (10 hits / 10 baseline
+   rows, CLEAN) — unchanged by this cycle, which generated **no** table under `rules_tables/` and
+   so had no `screen_generated_table` call to make. Epic 3's two-line obligation is satisfied
+   vacuously and stated here rather than silently skipped.
+
+### 7. Disk
+
+`verify.sh` auto-emitted a disk-pressure `incident` at `/` **90% used** (51G free) after run 1 —
+this box carries several concurrent agents' `CARGO_TARGET_DIR`s. `scripts/reclaim.sh` (dry run)
+reports **0 items, 0.0B**: every candidate is correctly declined by its own guards — target dirs
+in live use, verify-log dirs younger than 6h, two worktrees with uncommitted changes, two branches
+checked out elsewhere. The guards behaved correctly; there is simply nothing safely reclaimable
+from this cycle's vantage point. `scripts/reclaim.sh --apply` run at cycle end regardless, per
+Cycle mechanics step 8, and this cycle's own two aux target dirs
+(`.codex-targets/sd29-e4-spell`, `.codex-targets/sd29-e4-spell-aux`) removed by hand.
+
+### 8. What the next `epic-4-proven-spell` cycle-batch starts from
+
+**1,561 remaining, not 1,754**, and the residual splits on a line that changes the work:
+
+- **622 units in books that HAVE a compiled rule set** — `ultimate_magic` 291, `ultimate_combat`
+  147, `core_essentials` 109, `ultimate_wilderness` 61, `core_rulebook` 12, `ultimate_equipment` 1,
+  `advanced_race_guide` 1. These are reachable through the proven path: generate the book's
+  `spell_list` table, add one arm to `spell_catalog_rows()`, one to `spell_book_slug_for`, one
+  `BOOK_LABELS`/`BOOK_ORDER` entry, one `reach_gate` claim. The registry means the work inventory
+  and the catalog both widen from that single arm.
+- **939 units in books with NO compiled rule set** (`occult_adventures` 473, `inner_sea_gods` 96,
+  `horror_adventures` 72, `bestiary_4` 56, `adventurers_guide` 49, and 10 more). These classify as
+  `not-started`/`no_compiled_rule_set_for_book`. **A spell table cannot move them** — they need a
+  rule set first. Do not scope them into a spell cycle-batch.
+- `core_rulebook`'s 12 and ARG's 1 are `.COPY=` delta rows; the remedy is the existing
+  `tests/sd27_apg_delta_spell_rows_resolve_against_their_base.rs` precedent, not new table rows.
+
+### Retro events (`docs/retro/events/sd29-e4-spell.jsonl`)
+
+1 × `correction` (the lane's own 1,754 → 1,561, `--verified-by` the regenerate-and-diff command),
+1 × `incident` (`two-lists-one-fact-divergence`, `--silent`), 2 × `deferral` (the 1,561 residual
+split by rule-set presence; the `Fins to Feet (self only)` `.COPY=` row), plus `verify.sh`'s
+auto-emitted `verification` events from every run — including the red one — and its own
+disk-pressure incident.
+
+### Git discipline
+
+`git status` run before every git write. No `git add -A` (nine explicit paths), no `git stash`.
+Other actors' retro shards left dirty and uncommitted; only this actor's own shard is committed.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/.codex-targets/sd29-e4-spell` (own dir, plus `-aux` for
+concurrent non-gate cargo runs so they did not thrash the dir `verify.sh` was using) — Epic 1's
+build-contention rule.

@@ -35,7 +35,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 2.5 | `epic-1b-naming-sweep` | COMPLETE | Function-Based Naming Sweep | corpus-source rename sweep: SD-NN + GE-NN tags out of file names, directory names, and identifiers (operator directive 2026-08-11) | `epic-1-identifier` | sd29-e1b-naming | 2026-08-11T00:00:00Z | SD29-E1B-F1-001 |
 | 3 | `epic-3-provenance` | COMPLETE | Provenance Gate | PI-screening wired into each lane's extraction step; license-matrix citation for OGL/attribution, corpus-wide | `epic-2-prelaunch` | sd29-e3-provenance | 2026-08-11T00:00:00Z | SD29-E3-F1-001 |
 | 4 | `epic-4-proven-equip-mod` | COMPLETE | Proven-Path Lanes — equipment + equipment_modifier | corpus-wide, 1,144 + 812 remaining units (equipment corrected from 1,163 by Epic 2 — the old figure counted `beginner_box`'s 19 excluded units; see `corpus-shape-37-books.md` §3) | `epic-3-provenance` | sd29-e4-equip | 2026-08-11T00:00:00Z | SD29-E4-F1-001 |
-| 5 | `epic-4-proven-spell` | IN-FLIGHT | Proven-Path Lanes — spell | corpus-wide, **1,561** remaining units (was 1,754: 192 ARG+UI units were already ingested AND already on screen, but a two-list divergence between `build_spell_catalog` (5 books) and `v06_work_inventory`'s `spell_levels` (3 books) reported them `not-ingested` — closed by this card's cycle; see `progress.md`). Residual splits 622 in rule-set-bearing books / 939 in books with no compiled rule set | `epic-3-provenance` | sd29-e4-spell | 2026-08-11T00:00:00Z | SD29-E4-F1-001 |
+| 5 | `epic-4-proven-spell` | COMPLETE | Proven-Path Lanes — spell | corpus-wide, **1,561** remaining units (was 1,754: 192 ARG+UI units were already ingested AND already on screen, but a two-list divergence between `build_spell_catalog` (5 books) and `v06_work_inventory`'s `spell_levels` (3 books) reported them `not-ingested` — closed by this card's cycle; see `progress.md`). Residual splits 622 in rule-set-bearing books / 939 in books with no compiled rule set | `epic-3-provenance` | sd29-e4-spell | 2026-08-11T00:00:00Z | SD29-E4-F1-001 |
 | 6 | `epic-4-proven-feat-race-class` | READY | Proven-Path Lanes — feat + race + class | corpus-wide, 1,348 + 96 + 158 remaining units (feat: the prior 1,350 counted the kind's 2 `deferred-with-reason` units as remaining — predicate difference, not an arithmetic error; see `corpus-shape-37-books.md` §3) | `epic-3-provenance` | — | — | — |
 | 7 | `epic-5-monster-lane-pilot` | READY | Monster / Monster-Ability Chassis Lane — pilot | Bonus Bestiary end-to-end (14 monster + 17 monster_ability) | `epic-3-provenance` | — | — | — |
 | 8 | `epic-5-monster-lane-extend` | READY | Monster / Monster-Ability Chassis Lane — extend | corpus-wide, every remaining book (1,224 monster + 3,107 monster_ability minus the pilot's 31) | `epic-5-monster-lane-pilot` | — | — | — |
@@ -47,6 +47,15 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 14 | `epic-8-toolkit` | READY | DM Toolkit extension | consume Epic 5's monster records (optional; safe default retrofit per `successor-forward-scope-register.md C3.1`) | `epic-5-monster-lane-pilot` | — | — | — |
 | 15 | `epic-10-review` | READY | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §27`) | `epic-4-proven-equip-mod`, `epic-4-proven-spell`, `epic-4-proven-feat-race-class`, `epic-5-monster-lane-extend`, `epic-6-race-trait-lane-extend`, `epic-7-companion-lane-extend`, `epic-9-version`, `epic-8-toolkit` (COMPLETE or `decision-blocked`) | — | — | — |
 | 16 | `epic-11-closure` | READY | Closure Epilogue | tranche promotion PR | all cards above (COMPLETE or `decision-blocked`) | — | — | — |
+
+> **Cycle-id collision, recorded not silently fixed (2026-08-11).** Cards `epic-4-proven-equip-mod`
+> and `epic-4-proven-spell` both minted `SD29-E4-F1-001`: the two lanes ran concurrently in
+> isolated worktrees and neither could see the other's claim before pushing. The ids are therefore
+> **not** unique in this bundle — disambiguate a receipt by its card id and `Claimed-by` actor
+> (`sd29-e4-equip` vs `sd29-e4-spell`), both of which are unique, not by cycle-id alone. Neither
+> receipt is rewritten, because the id is already committed in each lane's commit messages and
+> `progress.md` heading. A future concurrent split of one epic should suffix the lane
+> (`SD29-E4-F1-001-equip` / `-spell`) at claim time.
 
 ## Cycle claims (cycle-supervisor protocol)
 
