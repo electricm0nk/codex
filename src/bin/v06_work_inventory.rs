@@ -218,6 +218,16 @@ fn file_kind(basename: &str) -> Option<Kind> {
         return Some(Kind::ClassFeature);
     }
     if basename.contains("_abilities_race") {
+        // ...but a companion/familiar marker anywhere else in the basename
+        // wins: `isi_abilities_race_companion.lst` and
+        // `b4_abilities_race_ce_companion.lst` hold the racial abilities of
+        // *companion creatures* (Clockwork Spy, Clockwork Familiar), not
+        // racial traits of a player race. Without this narrowing the bare
+        // `_abilities_race` substring claims them for `race_trait` before the
+        // companion checks below are ever reached.
+        if basename.contains("companion") || basename.contains("familiar") {
+            return Some(Kind::Companion);
+        }
         return Some(Kind::RaceTrait);
     }
     if basename.contains("_abilities_companion") || basename.contains("_abilities_familiar") {
@@ -3197,5 +3207,39 @@ mod race_trait_grounding_tests {
         let races = modelled_races();
         assert_eq!(modelled_race_of_race_trait("Dwarf", &races), None);
         assert_eq!(modelled_race_of_race_trait("Orc ~ Human", &races), None);
+    }
+}
+
+#[cfg(test)]
+mod companion_ability_file_classification_tests {
+    use super::*;
+
+    /// A file whose basename carries BOTH `_abilities_race` and a
+    /// companion/familiar marker holds abilities of a *companion creature*,
+    /// not racial traits of a player race. Two such files exist corpus-wide
+    /// (re-derived 2026-08-11 from `docs/work-inventory.json`:
+    /// `isi_abilities_race_companion.lst` 9 units,
+    /// `b4_abilities_race_ce_companion.lst` 2 units) and both were typed
+    /// `race_trait` purely because `_abilities_race` is a substring tested
+    /// before the companion markers. `isi_abilities_race_companion.lst`'s
+    /// rows are Clockwork Spy / Clockwork Familiar construct abilities
+    /// (`CATEGORY:Special Ability TYPE:ClockworkSpyRacialAbility...`).
+    #[test]
+    fn an_abilities_race_file_marked_companion_or_familiar_is_a_companion_file() {
+        assert_eq!(file_kind("isi_abilities_race_companion.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("b4_abilities_race_ce_companion.lst"), Some(Kind::Companion));
+    }
+
+    /// The narrowing must not swallow the genuine race-trait files, nor
+    /// disturb the companion files that already classified correctly.
+    #[test]
+    fn plain_abilities_race_files_remain_race_traits() {
+        assert_eq!(file_kind("mc_abilities_race.lst"), Some(Kind::RaceTrait));
+        assert_eq!(file_kind("arg_abilities_race.lst"), Some(Kind::RaceTrait));
+        // `_abilities_familiar_race` never matched `_abilities_race` in the
+        // first place; it must still land on Companion.
+        assert_eq!(file_kind("b2_abilities_familiar_race.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("ce_abilities_familiar_race_cr.lst"), Some(Kind::Companion));
+        assert_eq!(file_kind("isi_abilities_companion.lst"), Some(Kind::Companion));
     }
 }
