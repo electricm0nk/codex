@@ -1,6 +1,23 @@
 # SD-29 Release Notes — Corpus-Wide Catch-Up Lanes
 
-**Populated at closure, 2026-08-11 (Epic 11, Closure Epilogue).** The per-cycle receipts in
+> ## 🔴 THESE NOTES ARE NOT FINAL — THE BUNDLE WAS REOPENED, 2026-08-11
+>
+> **Operator directive, verbatim:** "this is part of sd-29's scope. sd-29 isn't done. let's get
+> after it." Recorded as `decisions.md` **Decision 42**.
+>
+> The closure these notes were written for is **rescinded**. SD-29 was closed with **three lanes
+> unfinished**, and this document disposed of that unfinished work by writing it up as shipped
+> "Known issues" of a released bundle. It was not shipped and it is not a known issue — **it is
+> outstanding work, and it is SD-29's**, not SD-30's and not any successor's.
+>
+> Everything below describes the bundle's state **as of the rescinded closure**. It is retained as
+> an accurate snapshot of that moment, with the two mis-framed §Known issues corrected in place.
+> These notes are re-written by `epic-11-closure` when the bundle reaches *real* closure.
+>
+> **PR #360 (`tranche/9` → `develop`) stays OPEN and unmerged.** The operator merges it at real
+> closure.
+
+**Populated at the (since-rescinded) closure of 2026-08-11 (Epic 11, Closure Epilogue).** The per-cycle receipts in
 `progress.md` are the per-record evidence; this document is the rollup. Every figure below was
 re-derived at closure by the command shown beside it, not transcribed from a receipt.
 
@@ -11,8 +28,8 @@ re-derived at closure by the command shown beside it, not transcribed from a rec
 | Bundle | SD-29 — Corpus-Wide Catch-Up Lanes |
 | Branch | `tranche/9` |
 | Build version | `0.9.<build>` (`0.9.${GITHUB_RUN_NUMBER}`, `.github/workflows/publish-tester-release.yml:97`); repo version files stamped `0.9.0` by Epic 9 (`ebc5c25a`) |
-| Cards | 17 on `kanban.md`: **10 COMPLETE**, **3 PARTIAL** (lane half complete, ingest half `decision-blocked`), **1 DECISION-BLOCKED**, **2 not started** (companion lane), **1** this closure card |
-| Gate at closure | `./scripts/verify.sh` full — exit code recorded in `progress.md`'s closure receipt |
+| Cards | **As re-stated 2026-08-11 after the reopen:** 18 on `kanban.md` — **10 COMPLETE**, **1 DECISION-BLOCKED** (`epic-8-toolkit`, a genuine ruling), **6 READY/reopened** (cards 8-12 lanes + cards 15-16 review/closure), **1 COMPLETE** reopen-correction card (`epic-12-reopen`). The rescinded closure counted the five reopened lane cards as terminal |
+| Gate at rescinded closure | `./scripts/verify.sh` full — exit code recorded in `progress.md`'s closure receipt. **A green gate was never the thing in question**: the bundle's code was verifiable; the lanes were undelivered |
 
 SD-29 was the first bundle to treat the corpus as a whole rather than a book list. It re-cut itself
 twice mid-flight — from per-book epics to **kind lanes** (`decisions.md §37`), then from seven books
@@ -63,8 +80,9 @@ outside this bundle. `race_trait` stands at 3,447 units, 21 grounded.
 
 ### Epic 7 — Companion Lane
 
-**Not started.** All 1,696 `companion` units remain `not-ingested`/`not-started`, 0 grounded. Stated
-plainly rather than implied by a `READY` row — see §Known issues.
+**Not started — and, per the 2026-08-11 reopen, still owed by SD-29.** All 1,696 `companion` units
+remain `not-ingested`/`not-started`, **0** grounded, across 17 books. Stated plainly rather than
+implied by a row status — see §Known issues 1.
 
 ## Operational changes
 
@@ -101,8 +119,10 @@ plainly rather than implied by a `READY` row — see §Known issues.
 
 ## Operational notes
 
-- Tranche promotion PR: `tranche/9` → `develop`, opened by this closure card. **The operator merges
-  it.** Cutting a new tranche branch is explicitly *not* part of this closure.
+- Tranche promotion PR: `tranche/9` → `develop` (**PR #360**), opened by the rescinded closure card.
+  **It stays OPEN and unmerged; the operator merges it at real closure** (`decisions.md §42`).
+  `epic-11-closure`, when it re-runs, must NOT open a second PR. Cutting a new tranche branch is
+  explicitly *not* part of closure.
 - Post-closure version state: repo files at `0.9.0`; publish stamps `0.9.<run_number>`.
 
 ## Verification evidence
@@ -115,17 +135,34 @@ plainly rather than implied by a `READY` row — see §Known issues.
 
 ## Known issues
 
-1. **Companion kind entirely unstarted** — 1,696 units, 0 grounded. The Epic 7 pilot refused at
-   `preflight-disk` (disk at 91%, below the gate's floor) and the card was deliberately left
-   unclaimed. The disk condition has cleared (80% used, 97G free at closure); this is a ready
-   re-dispatch for a successor bundle, not a corpus finding.
+> **Reframed 2026-08-11 (`decisions.md §42`).** Items 1 and 3 below were written as shipped known
+> issues. They are **not** known issues — they are **outstanding SD-29 work**, restored to `READY`
+> on `kanban.md` (cards 8, 11, 12). Items 2, 4, 5, 6, 7 and 8 are genuine findings and stand as
+> written. The distinction: a known issue is something the bundle *decided* about; an outstanding
+> lane is something the bundle *never dispatched*.
+
+1. **🔴 OUTSTANDING SD-29 WORK, NOT A KNOWN ISSUE — the companion lane was never started.** 1,696
+   `companion` units, **0** grounded, across 17 books (re-derived 2026-08-11; see `progress.md`
+   `## Cycle SD29-E12-F1-001` for the exact command). The Epic 7 pilot refused at `preflight-disk`
+   (disk at 91%, below the gate's floor) and the card was correctly left unclaimed. **That refusal
+   was an environmental condition, never a scope ruling** — and nothing re-queued the card when the
+   disk cleared (80% used, 97G free, re-verified 2026-08-11). Both companion cards are back to
+   `READY` and are **SD-29 scope**; the prior text's "a ready re-dispatch for a successor bundle" is
+   rescinded by operator directive.
 2. **Race chassis is the race-trait ceiling.** `crb::race_traits()` models exactly **7** races. Of
    3,447 `race_trait` units, **805** carry `race_trait_race_not_modelled` and **144**
    `race_trait_absent_from_race_traits`. No book's race traits can ground until a real race chassis
    lands — work outside SD-29's epic structure.
-3. **Monster/monster-ability extend is `decision-blocked` per book.** The chassis is proven; the
-   remaining books' ingest is not dispatched. A published-text dice-grounding decision is also
-   outstanding: 13 of the pilot book's 14 named natural attacks carry no dice in the corpus.
+3. **🔴 OUTSTANDING SD-29 WORK, NOT A KNOWN ISSUE — the monster/monster-ability extend ingest was
+   never dispatched.** The chassis is proven and merged; the remaining books' **ingest** is the
+   lane, and a chassis is not a lane. Re-derived 2026-08-11: `monster` 1,270 total / 60 grounded /
+   **1,210 remaining**; `monster_ability` 3,107 total / 17 grounded / **3,090 remaining** (the
+   grounded 60 = `bestiary` 46 from SD-22 + `bonus_bestiary` 14 from this bundle's pilot). Card 8 is
+   back to `READY` and is SD-29 scope. The **race-trait ingest halves** (cards 9 and 10) are
+   likewise outstanding, not shipped — see item 2 for the real structural ceiling underneath them,
+   which SD-29 now owns confronting. A published-text dice-grounding decision is genuinely
+   outstanding within this lane: 13 of the pilot book's 14 named natural attacks carry no dice in
+   the corpus.
 4. **`class_feature` Tier-3 deferral** — 15,472 units corpus-wide, deferred by `decisions.md §38.4`
    / `successor-forward-scope-register.md C1.3`, owned by SD-30's class_feature/archetype bundle.
 5. **DM Toolkit extension (Epic 8) is `decision-blocked` to C3.1** — it does not land inside SD-29.

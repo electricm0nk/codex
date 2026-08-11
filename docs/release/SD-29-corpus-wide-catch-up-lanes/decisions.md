@@ -1321,3 +1321,59 @@ exists under that name. Same rule for modules, structs, consts, test module name
 
 **Authority:** operator directive 2026-08-11; `docs/doctrine-external/identifier-discipline.md`;
 `scripts/identifier-discipline-audit.sh` + its self-test.
+
+## Decision 42 — SD-29 is REOPENED; the companion lane and the monster / race-trait ingest halves are SD-29 scope, not a successor's (2026-08-11, operator directive)
+
+**Operator directive, verbatim:** "this is part of sd-29's scope. sd-29 isn't done. let's get after
+it."
+
+**Ruling.** The bundle's closure of 2026-08-11 (`73f1421f`, `ac217788` — `epic-10-review` and
+`epic-11-closure`) is **rescinded**. SD-29 is not closed. The closure was taken while three lanes
+still had outstanding work, and it disposed of that work by routing it outward — the companion lane
+to "a ready re-dispatch for a successor bundle," the monster extend and race-trait ingest halves to
+`decision-blocked` rows carried as shipped "Known issues." The operator has ruled that disposition
+wrong. The work is **in scope for SD-29** and does not transfer to SD-30, to
+`successor-forward-scope-register.md`, or to any other successor.
+
+**What this decision moves back in scope**, precisely:
+
+1. **`epic-7-companion-lane-pilot`** — never started. Its cycle refused at Cycle-mechanics step 1c
+   (`preflight-disk` EXIT=1 at 91% used) and correctly declined to claim the row. That refusal was
+   an environmental condition, never a scope ruling, and the condition has cleared. SD-29 owes this
+   card.
+2. **`epic-7-companion-lane-extend`** — never eligible, because card 11 never completed. All
+   corpus-wide `companion` units remain ungrounded. SD-29 owes this card.
+3. **`epic-5-monster-lane-extend`** — the once-per-kind chassis is merged and pilot-proven, but the
+   per-book **ingest** was never dispatched. The chassis is not the lane.
+4. **`epic-6-race-trait-lane-pilot`** — the classifier defect fix landed; the per-book pilot
+   **ingest** did not. Its re-pin (the pilot book carries zero true race traits) is SD-29's to make.
+5. **`epic-6-race-trait-lane-extend`** — the companion mis-classification fix landed; the
+   corpus-wide **ingest** did not.
+
+**A `decision-blocked` row is not a completed lane.** This is the durable lesson, and it is the
+reason the premature closure was possible at all: `kanban.md`'s status legend makes
+`DECISION-BLOCKED` "a terminal state, not a wait ... the card is closed for this bundle," and
+`epic-11-closure` applied that legend to rows whose *ingest* half had merely never been dispatched.
+The legend is sound for a card that genuinely needs an operator ruling; it is not a disposal chute
+for undelivered work. Where a card splits into a delivered half and an undelivered half, the
+undelivered half stays `READY` under its own row — it does not inherit the delivered half's status.
+
+**Structural blocks are unaffected by this ruling and remain real.** The race chassis ceiling
+(`crb::race_traits()` models exactly 7 races) is a genuine finding about what the engine can ground,
+not a scheduling excuse. Reopening the lane means SD-29 owns confronting that ceiling; it does not
+mean the ceiling was imaginary or that a cycle may ground a race trait by inventing a race.
+
+**PR #360 (`tranche/9` → `develop`) stays OPEN and unmerged.** It was opened by the rescinded
+closure card. The operator merges it at *real* closure, and real closure now requires the five cards
+above to reach a genuine terminal state.
+
+**`epic-10-review` and `epic-11-closure` are reopened** with the lanes. Both ran against a bundle
+state that is no longer final: a full-bundle diff review and a closure rollup are only meaningful
+against the diff and the state that actually ship.
+
+**Executed by** card `epic-12-reopen` (Order 17 on `kanban.md`), which corrected `kanban.md`,
+`progress.md`, and `release-notes.md` to match this ruling and re-derived the affected denominators
+from `docs/work-inventory.json`.
+
+**Authority:** operator directive 2026-08-11 (verbatim above); supersedes the closure disposition
+recorded in `progress.md` `## Cycle SD29-E11-F1-001` and in `release-notes.md` §Known issues 1 and 3.

@@ -3915,3 +3915,146 @@ Plus `verify.sh`'s auto-emitted `verification` event for the full-gate run above
 `git status` run before every git write; no `git add -A` (every commit staged by explicit path); no
 `git stash` (banned in this checkout). Commits pushed to `tranche/9` as made, per the pre-authorized
 tranche-branch scope.
+
+---
+
+## Cycle SD29-E12-F1-001 — `epic-12-reopen` — 🔴 **CORRECTION: THE BUNDLE WAS CLOSED PREMATURELY**
+
+**Actor:** `sd29-reopen` · **Date:** 2026-08-11 · **Branch:** `tranche/9` · **Card:** `epic-12-reopen`
+(Order 17, added by this cycle) · **Type:** documentation-only — no ingest, no product code.
+
+### 0. Operator ruling — the reason this cycle exists
+
+> "this is part of sd-29's scope. sd-29 isn't done. let's get after it."
+
+The closure recorded two entries above this one — `## Cycle SD29-E10-F1-001` (`epic-10-review`,
+`73f1421f`) and `## Cycle SD29-E11-F1-001` (`epic-11-closure`, `ac217788`) — is **rescinded**. It is
+not deleted and not rewritten: both receipts stand exactly as their cycles wrote them, and this
+entry annotates rather than replaces them. Recorded durably as `decisions.md` **Decision 42**.
+
+### 1. What was actually outstanding at the moment of closure
+
+Five cards, in three lanes. None of these was work that had been *attempted and blocked on a real
+finding*; each was work that had **never been dispatched**, disposed of outward by a status label.
+
+| Card | What HAD landed | What was OUTSTANDING at closure |
+|---|---|---|
+| `epic-5-monster-lane-extend` | the once-per-kind chassis (`RuleSetId`, rules-table module, generator arm, wire DTO, `CORPUS_KIND_NAMES`, reach claims, diagnostic row, frontend path) — merged and pilot-proven | **the per-book ingest, for every remaining monster-bearing book.** Never dispatched. A chassis is not a lane. |
+| `epic-6-race-trait-lane-pilot` | the `classify()` name-coincidence defect fix | **the pilot ingest.** The pinned pilot book turned out to carry zero true race traits, so the book needed a re-pin — and SD-29 never made it. |
+| `epic-6-race-trait-lane-extend` | the companion mis-classification fix in `file_kind()` | **the corpus-wide ingest.** Never dispatched. |
+| `epic-7-companion-lane-pilot` | *nothing* | **the entire card.** Its cycle refused at Cycle-mechanics step 1c (`preflight-disk` EXIT=1, 91% used) and correctly left the row unclaimed. |
+| `epic-7-companion-lane-extend` | *nothing* | **the entire card.** Never eligible, because card 11 never completed. |
+
+**The mechanism of the premature closure**, stated plainly so it is not repeated: `kanban.md`'s
+status legend defined `DECISION-BLOCKED` as "a terminal state, not a wait ... the card is closed for
+this bundle," and the closure applied that legend to rows where only one *half* of the card had been
+delivered. The undelivered half silently inherited the delivered half's terminal status. Two further
+routes carried the same error — `release-notes.md` §Known issues framed undelivered lanes as shipped
+known issues of a released bundle, and the companion lane was labelled "a ready re-dispatch for a
+successor bundle." The operator has ruled all three dispositions wrong.
+
+**The companion lane's disposal is the sharpest instance.** An *environmental* refusal at a disk
+preflight — a correct, disciplined refusal by an agent that rightly declined to claim a card it
+could not work — became, two cycles later, a scope ruling that moved a whole kind lane out of the
+bundle. Nothing re-queued the card when the disk condition cleared. The refusing agent did nothing
+wrong; the closure did.
+
+### 2. Re-derived denominators (Cycle-mechanics step 1b — RE-DERIVE, DO NOT TRANSCRIBE)
+
+The figures carried in my dispatch brief were explicitly flagged as unverified claims. I derived
+them with **two independent implementations** per `AGENTS.md` ("any number that moves a baseline
+needs two independent implementations agreeing"): Method A sums `books[].kinds[].by_status`; Method
+B counts the flat `units[]` array by `kind` + `status`. **Both agreed exactly on all four kinds.**
+
+Exact command (Method B, the flat-array implementation):
+
+```
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+for k in ['companion','monster','monster_ability','race_trait']:
+    tot=sum(1 for u in d['units'] if u['kind']==k)
+    gr=sum(1 for u in d['units'] if u['kind']==k and u['status']=='grounded')
+    print(f'{k}: total {tot}, grounded {gr}, remaining {tot-gr}')"
+```
+
+Against `docs/work-inventory.json` `generated_at 2026-08-11T10:38:33Z`:
+
+| Kind | Total units | Grounded | **Remaining** | Grounded, by book |
+|---|---|---|---|---|
+| `companion` | 1,696 | **0** | **1,696** | — (none) |
+| `monster` | 1,270 | 60 | **1,210** | `bestiary` 46 (SD-22), `bonus_bestiary` 14 (SD-29 pilot) |
+| `monster_ability` | 3,107 | 17 | **3,090** | `bonus_bestiary` 17 (SD-29 pilot) |
+| `race_trait` | 3,447 | 21 | **3,426** | `core_essentials` 20, `advanced_race_guide` 1 |
+
+Book spreads, same source: `companion` 17 books, `monster` 14 books, `race_trait` 26 books.
+
+**Verdict on the brief's claims — three of four were TOTALS presented as REMAINING.** The brief's
+1,696 / 1,270 / 3,107 / 3,447 are all correct as **totals**, and the brief's own stated worry
+(double-counting across books, or missed kind nesting) did **not** materialise. But only `companion`
+is also correct as a *remaining* figure, and only because zero companion units are grounded. The
+other three overstate remaining work by their grounded counts (60, 17, 21).
+
+**`beginner_box` does not perturb any of this.** It is the single `out_of_scope` book, and it
+contributes **0** units in all four kinds — the totals are identical whether or not it is excluded.
+(The inventory's book `scope` values are `in_scope` 14, `future_state` 22, `out_of_scope` 1
+(`beginner_box`), `shared_library` 1 (`core_essentials`); the 37-book lane set is `in_scope` +
+`future_state`.)
+
+**Two stale figures in `kanban.md` corrected in place** (`loop-instruction.md` "PRESS ON": this
+package's own stated figure turning out wrong is corrected, not escalated):
+
+- Card 8 read `1,224 monster` → actual total **1,270**, remaining **1,210**.
+- Card 10 read `3,447 remaining` → 3,447 is the **total**; remaining is **3,426**.
+- Card 12 read `1,683 remaining minus the pilot's 10` → **1,696**, and the delta is explained, not
+  guessed: the Epic 6 companion mis-classification fix *added* 13 companion units (1,683 + 13).
+
+### 3. Work performed (all documentation)
+
+1. **`decisions.md` — Decision 42** appended: the reopen, the operator's verbatim directive, the
+   five cards moved back in scope, the "a `decision-blocked` row is not a completed lane" rule, and
+   the explicit statement that the race-chassis ceiling remains a real structural finding that SD-29
+   now owns confronting rather than a scheduling excuse.
+2. **`kanban.md`** — a reopen banner above the status legend; the `DECISION-BLOCKED` legend entry
+   narrowed so it can no longer serve as a disposal chute; cards **8, 9, 10, 11, 12** reset to
+   `READY` with honest `Depends-on` and re-derived denominators; cards **15** (`epic-10-review`) and
+   **16** (`epic-11-closure`) reset to `READY`; this card added as Order **17**. Every reopened row
+   names the receipt that stands and the half that already landed.
+3. **`release-notes.md`** — reframed from a closure rollup to a **rescinded** one; §Known issues 1
+   and 3 no longer present undelivered lanes as shipped known issues.
+4. **This entry.**
+
+### 4. What was NOT done, deliberately
+
+No lane work, no ingest, no product code, no `reach_gate.rs` edit, no `work-inventory.json`
+regeneration. This card corrects the board so that the next cycle reads a true one; it does not
+start the lanes it reopens. **PR #360 was not touched and remains OPEN** — the operator merges it at
+real closure.
+
+### 5. Verification
+
+- `./scripts/verify.sh --only preflight-disk` → **EXIT 0** (80% used, 97G available) before bounded
+  work, per Cycle-mechanics step 1c.
+- `./scripts/verify.sh` **full** — exit code captured directly, never through a pipe; recorded in
+  §7 below. Launched early in the background per the dispatch's resource discipline. This is a
+  documentation-only card: `ALL_STAGES` in `scripts/verify.sh` contains no documentation stage, so
+  no edit made by this cycle can influence any stage's result — stated because the gate ran
+  concurrently with the edits, and that is only sound given this fact.
+- `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-reopen` for every invocation, deleted
+  at cycle end. Worktree integrity confirmed as the first action: `loop-instruction.md` present, and
+  `git merge-base --is-ancestor origin/tranche/9 HEAD` confirmed HEAD descends from
+  `origin/tranche/9`. **No recovery was needed.**
+- **Merged-ness verified by content, not by commit count**: the monster chassis really is on
+  `origin/tranche/9` (this is why card 8 reopens for its *ingest* half only, not its chassis half),
+  and the grounded counts above — `bonus_bestiary` 14 monster + 17 monster_ability — are read from
+  the committed inventory, not from a prior agent's say-so.
+
+### 6. Retro events
+
+`correction` emitted for the premature closure, `--verified-by` the kanban/progress evidence, per
+the dispatch's item 6 and `AGENTS.md` §Retrospective Logging.
+
+### 7. Git discipline and gate result
+
+`git status` run before every git write; no `git add -A` (staged by explicit path); no `git stash`
+(banned in this checkout).
