@@ -59382,7 +59382,7 @@ mod investigator_dispatch_widening_safety_tests {
 /// The nine non-Life Spirits' base abilities (task #12, stage 3).
 #[cfg(test)]
 mod bloodrager_remaining_features_tests {
-    use super::{build_pilot_headless_receipt, CharacterClassLevel, CharacterInput};
+    use super::{build_pilot_headless_receipt, CharacterClassLevel};
     use crate::rules_core::character_input::load_character_input_fixture;
 
     const FIGHTER_LEVEL_1_FIXTURE: &str = include_str!(
