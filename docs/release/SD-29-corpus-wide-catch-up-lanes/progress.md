@@ -611,3 +611,182 @@ the full green gate.
 derived, committed, and independently re-verified. This unblocks `epic-3-provenance` (Order 3),
 which is the sole gate in front of every content lane (Epics 4-7). `epic-9-version` (Order 13) was
 already unblocked by Epic 1.
+
+---
+
+## Cycle SD29-E1B-F1-001 — `epic-1b-naming-sweep` (Order 2.5) — COMPLETE
+
+**Actor:** `sd29-e1b-naming`. **Branch:** `tranche/9`. **Date:** 2026-08-11.
+**Card:** added to `kanban.md` by this cycle (Order 2.5, Depends-on `epic-1-identifier`), per the
+operator directive it implements. **Decision:** `decisions.md` Decision 41.
+
+**Operator directive, verbatim:** "references to SD and ge were to be replaced a few tranches ago
+with function based naming. clean that up while you are at it."
+
+### 1. Re-derived inventory (step 1b — the scouted list was NOT trusted)
+
+| Figure | Command | Result |
+|---|---|---|
+| tracked path tags outside `docs/` and `tests/` | `git ls-files \| grep -Ei '(^\|/)[a-z_]*(sd\|ge)[-_]?[0-9]{2}' \| grep -vE '^(docs\|tests)/'` | 66 paths (11 rename targets after excluding the `data/corpus/.../*_range_120.json` false positive, which matches `ge_12` inside `range_120` and is not a tag) |
+| tagged files under `tests/` | `git ls-files 'tests/*' \| grep -Ec '(^\|/)[a-z_]*(sd\|ge)[-_]?[0-9]{2}'` | **531** — deliberately NOT renamed (see §5) |
+| tag-shaped hits per shipping source file | `grep -rnE '...' --include='*.rs' --include='*.ts' src apps scripts \| awk -F: '{print $1}' \| sort \| uniq -c \| sort -rn` | `support_state_matrix.rs` 319, `ge08_workbench.rs` 52, `loadGe08AuthoringWorkbench.ts` 29, `preview_bridge.rs` 13, then a long tail |
+| of those 319, how many are real identifiers | manual read of the distinct-token histogram (`grep -roE ... \| sort \| uniq -c \| sort -rn`) | **2** (`seeded_sd13_e1_f1_current_truth`, `GE06_INPUT_CONTRACT_TEST`); the rest are `tests/...` citations — the doctrine's documented exclusion class, SD-25 1.1 |
+
+The scouted brief listed `src/bin/sd27_gen_advanced_race_guide_cache.rs` transitively via a doc
+comment; re-derivation shows **that file does not exist** — the citation in
+`rules_tables/advanced_race_guide/json_cache.rs` is stale. Left as-is: this card renames files and
+identifiers, it does not repair unrelated stale prose. Also found: `src/bin/gen_cache_beastiary.rs`
+already follows the correct convention — the precedent to copy was already in the tree.
+
+### 2. What landed (4 commits, each with the gate re-run)
+
+1. `66fac552` **gate hardening, TDD.** 10 new self-test cases, RED (16 passed / 10 failed) before
+   the change, GREEN after. Three escape classes, each verified live against this repo:
+   (a) the GE-NN family was absent from Epic 1's regex entirely; (b) `_` is a word character, so a
+   leading `\b` cannot match an infix tag — `kind_is_sd17_b3`, `build_ge08_workbench_snapshot` and
+   `seeded_sd13_e1_f1_current_truth` all passed Epic 1's hardened gate clean; (c) the regex is
+   identifier-shaped and scanned file *content* only, so no file/directory path tag was ever
+   detectable. Added a path-tag check over `--diff-filter=AR` names, and made the SD-25 1.1
+   exclusion class explicit (`tests/...` citations stripped before matching).
+2. `8b6dd751` **the sweep itself** — 443 changed paths, mechanical, no behavior/signature/module
+   changes.
+3. `06d926e9` **import re-depth fix.** `src/sd16/{feedback,update}/` moved up one level, so every
+   import that escaped the old `sd16/` segment needed one fewer `../`. Caught by
+   `frontend-typecheck` (27 errors) and `frontend-test` (23 files) in this cycle's FIRST full
+   `verify.sh` run, which is recorded below as a genuine RED, not smoothed over.
+4. `fd02648d` **gate defect the sweep itself exposed** — see §4.
+
+### 3. Renames
+
+**Paths.** `apps/desktop/src/sd16/feedback/`→`feedback/`; `sd16/update/`→`update/`;
+`sd21/`→`release/`; `src-tauri/src/ge08_workbench.rs`→`authoring_workbench.rs`;
+`boundary/loadGe08AuthoringWorkbench.ts`→`loadAuthoringWorkbench.ts`;
+`src-tauri/resources/ge08/`→`resources/authoring_workbench/`;
+`tests/fixtures/ge08/`→`tests/fixtures/authoring_workbench/`;
+`src/bin/sd26_gen_core_rulebook_cache.rs`→`gen_core_rulebook_cache.rs`;
+`src/bin/sd27_gen_book_cache.rs`→`gen_book_cache.rs`;
+`scripts/sd27-workflow.py`→`book-ingest-workflow.py`;
+`scripts/sd27_apg_license_retrofit.py`→`apg_license_retrofit.py`.
+
+**Identifiers.** The whole `Ge08*` type family loses its prefix across Rust and TS (including the
+infix forms `buildGe08Diagnostics`, `mapGe08Snapshot`, `build_ge08_workbench_snapshot`, which the
+first `\bGe08` pass missed); `GE08_E1_*`→`HOMEBREW_PROOF_*`;
+`GE06_BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT`→`BASE_ARMOR_CLASS_WITHOUT_BONUS_FEAT_SLOT`;
+`GE06_INPUT_CONTRACT_TEST`→`INPUT_CONTRACT_TEST`;
+`seeded_sd13_e1_f1_current_truth`→`seeded_current_truth`;
+`mod sd27_prerequisite_tests`→`mod prerequisite_tests`;
+`kind_is_sd17_b3`→`kind_is_malformed_race_or_ability`;
+`diagnostic_carries_sd17_b3_slice_tag`→`diagnostic_carries_malformed_race_or_ability_kind`;
+env var `SD27_INGESTED_AT`→`CODEX_INGESTED_AT`; label value
+`surface:ge08-authoring-workbench`→`surface:authoring-workbench`; plus four in-file `#[cfg(test)]`
+fn names. The `slice: "SD17-B-3"` **string literal** is a data value carried in shipped
+diagnostics, not an identifier — it is deliberately left alone, because changing it would change
+behavior and this is a rename, not a refactor.
+
+**WIRE CONTRACT.** The Tauri command `load_ge08_authoring_workbench_snapshot` →
+`load_authoring_workbench_snapshot`, changed on both sides in the same commit: the
+`#[tauri::command]` fn and the `invoke_handler` registration in `src-tauri/src/main.rs`, and the
+`invoke<...>('load_authoring_workbench_snapshot', ...)` call site in
+`boundary/loadAuthoringWorkbench.ts`. A mismatch here fails at runtime, not compile time — which is
+exactly why DoD item 8 below is load-bearing for this card and not a formality.
+
+### 4. The gate defect this card's own diff exposed
+
+Running the hardened gate over the finished sweep FAILED (exit 1), citing
+`-                grounding_ref: GE06_INPUT_CONTRACT_TEST` — a **deletion**. The script scanned the
+whole unified diff, so every tag this card removed reappeared as a violation on its own `-` lines.
+Its own header had claimed for months that it "flags bundle identifiers newly introduced by the
+cycle"; the implementation never restricted itself to added lines. A gate that punishes the fix is
+worse than no gate. Fixed in `fd02648d` with two new self-test cases (28 total, RED first).
+
+Post-fix: `BASE_BRANCH=origin/develop bash scripts/identifier-discipline-audit.sh` → `OK_NO_BUNDLE_TAGS`, **exit 0**.
+
+### 5. Judgment calls taken as safe defaults (unattended mode — recorded, not asked)
+
+1. **`tests/*.rs` file names keep their tags.** 531 tracked files, and they are the citation targets
+   of the doctrine's documented exclusion class; renaming them obliges rewriting cited prose across
+   the whole shipping tree. Scoped out by the brief; recorded as a `deferral` retro event, not a
+   silent omission.
+2. **Closed-bundle historical receipts under `docs/release/SD-27-.../` keep their references to
+   `scripts/sd27-workflow.py`.** They record what was run at the time. Live source citations of
+   every renamed file WERE updated (25 `sd27_gen_book_cache` + 9 `sd26_gen_core_rulebook_cache`
+   citations across `src/`, plus `docs/architecture/`).
+3. **`scripts/verify-baselines.env` was touched, but only in prose.** Two doc-comment lines cite
+   `src/bin/sd27_gen_book_cache.rs` by name; they follow the rename. `git diff origin/develop...HEAD
+   --stat -- scripts/verify-baselines.env` → `2 insertions, 2 deletions`, **no baseline value
+   changed**. The four drifted baselines named in the standing note (ROOT_LIB_TESTS 1488→1600,
+   ROOT_FULL_TESTS 5996→6128, ROOT_TEST_BINARIES 536→537, CLIPPY_WARNINGS_ROOT ceiling 75 vs 54
+   measured) are LEFT STANDING for Epic 9/10 per DoD item 7. This run reproduced all four exactly.
+4. **`data/corpus/.../intelligent_item_sense_range_120.json` is not renamed.** It matched the
+   scouting regex only because `range_120` contains `ge_12`. Not a tag.
+
+### 6. Incident: the sweep nearly disarmed its own gate
+
+A repo-wide `sed` over the tracked file list rewrote `scripts/identifier-discipline-audit.sh` AND
+`scripts/tests/test_identifier_discipline_audit.sh`, silently converting every detection case's
+planted tag into an already-clean string. The self-test would have kept printing `26 passed, 0
+failed` while testing nothing. Caught by reading `git diff` of `scripts/` before re-running the
+suite; both files restored from HEAD and excluded by an explicit `grep -v` from every later `sed`
+pass. Emitted as an `incident` with recurrence key `rename-sweep-rewrites-its-own-gate`.
+
+### 7. Definition of done
+
+1. **`./scripts/verify.sh` (FULL) exit code captured directly** — written to a file by a wrapper
+   script, never through a pipe. **First run: exit 1** (`frontend-test`, `frontend-typecheck` — the
+   import-depth breakage, real, fixed in `06d926e9`). **Second run: exit 0**, all 11 stages PASS:
+   `preflight-disk`, `audit-selftest` (26→28 cases), `root-lib` (1600 passed), `root-full` (6128
+   passed across 537 suites, all 521 `tests/*.rs` suites executed), `desktop` (413 passed), `reach`
+   (16 passed), `frontend-install`, `frontend-test` (98/98 files), `frontend-typecheck` (clean),
+   `clippy` (root:54 desktop:7 warnings, 0 errors), `class-dump` (31/31 computing). Third run after
+   the `fd02648d` gate fix recorded below.
+2. **Reach claims:** `reach` stage reports **16 matched claims**, not zero. This card ingests no
+   content and adds no record family, so it introduces no new claim and removes none — the 16 are
+   the same 16 Epic 2 left standing, still passing after every rename.
+3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **exit 0** ("No defects: every
+   ingested record's citation agrees with the line it names").
+4. **`docs/work-inventory.json` untouched** — no content ingested, no units moved. This card changes
+   no corpus data; the inventory's inputs are unchanged by construction.
+5. **Wired-integration four-check audit: clean.** No new code paths, no stubs, no fixture-only data:
+   every change is a rename of an existing wired path, and the wire contract's live behavior is
+   proven on screen in item 8.
+6. **`OPEN_FINDINGS` unchanged.** No family became unsurfaceable; nothing was added or retired.
+7. **No baseline movement.** See §5.3.
+8. **On-screen verification — MANDATORY for this card, and it earned its place.**
+   `RUN_DESKTOP_AGENT=sd29-e1b-naming-cycle` (unique to this cycle), driven via
+   `apps/desktop/.claude/skills/run-desktop/driver.sh`: `launch` → `title` (`WM_NAME(STRING) =
+   "Codex"`) → gear → **Developer** tab. The captured screen reads
+   **"Connected to the app backend"**, `FEATURE CHECK: Character-preview authoring check —
+   valid / success`, `DATA SOURCE: Live backend data`, `BACKEND: v0.8.0 · 8b6dd7511f2f`. That panel
+   is rendered from the snapshot returned by the renamed Tauri command
+   `load_authoring_workbench_snapshot`; had either side of the rename been missed, it would read
+   "Failed to load diagnostics" or fall back — and every test in the repo would still have been
+   green. Screenshot: `e1b-developer.png`.
+   **Driver note for successors:** `driver.sh screenshot` (`import -window <id>`) returned an
+   all-black 417-byte PNG on every attempt in this container across three runs, including at 55 s
+   of settle; `import -window root` on the same display at the same moment captured the painted UI
+   correctly. Use the root capture when the windowed one comes back black — it is not the app
+   failing to paint.
+
+### 8. Convention for every successor lane (the reason this card lands before Epic 3)
+
+**Any new codegen binary is named for its function.** A lane adding a book-cache generator writes
+`src/bin/gen_book_cache.rs`-shaped names — NOT `sd29_gen_*.rs`. The `sd27` precedent this card
+deleted is not available to copy, and `src/bin/gen_cache_beastiary.rs` shows the correct form.
+The same rule binds modules, structs, consts, test module names, env vars, label/string keys, and
+directories. Both tag families are banned: SD-NN and GE-NN.
+`scripts/identifier-discipline-audit.sh` now catches path tags and PascalCase/infix forms, not just
+prefix forms, and no longer fires on tags a diff *removes*. The documented exclusion class stands: a
+doc comment or string literal citing a real `tests/...` file by name is not a violation.
+
+### Retro events (`docs/retro/events/sd29-e1b-naming.jsonl`)
+
+2 × `correction` (Epic 1's gate had three escape classes; the gate flagged its own cure),
+1 × `incident` (`rename-sweep-rewrites-its-own-gate`), 1 × `deferral` (531 `tests/` file names),
+plus auto-emitted `verification` events from every `verify.sh` run — including the RED one.
+
+### Git discipline
+
+`git status --porcelain` run before every git write. No `git add -A`, no `git stash`. Three other
+actors' retro shards (`codex.jsonl`, `sd29-e1-identifier.jsonl`, untracked `sd29-preflight.jsonl`)
+were left dirty and uncommitted — same call Epic 1 and Epic 2 made. Only this actor's own shard is
+committed.
