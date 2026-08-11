@@ -45,17 +45,42 @@
 //! reader found nothing. A contradiction would fail `ingest_races` outright.
 
 use std::collections::{BTreeMap, BTreeSet};
-use std::path::Path;
+use std::path::PathBuf;
 
 use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, TraitRole};
 
+/// The books the shipped app really loads, read out of its own
+/// `RACE_CORPUS_BOOKS` declaration rather than duplicated here.
+///
+/// **This was a hardcoded three-book list**, which made every "over every
+/// in-scope race" claim below quietly narrower than it read. See SD-29
+/// `decisions.md §44.2` for what that same hardcoding cost one file over: four
+/// alternates reached a player's picker and were refused by the engine, and
+/// the pin whose job was to notice could not see them.
+fn app_loaded_books() -> Vec<String> {
+    let src = std::fs::read_to_string("apps/desktop/src-tauri/src/race_catalog.rs")
+        .expect("the desktop race catalog source is readable from the repo root");
+    let decl = src
+        .split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =")
+        .nth(1)
+        .expect("RACE_CORPUS_BOOKS is declared in race_catalog.rs");
+    let list = decl.split(';').next().expect("the declaration terminates");
+    list.split('"').skip(1).step_by(2).map(str::to_owned).collect()
+}
+
 fn corpus() -> RaceCorpus {
-    let roots = [
-        BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") },
-        BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") },
-        BookCorpusRoot { book_id: "advanced_race_guide", dir: Path::new("data/corpus/advanced_race_guide") },
-    ];
+    let dirs: Vec<(String, PathBuf)> = app_loaded_books()
+        .into_iter()
+        .map(|book| {
+            let dir = PathBuf::from("data/corpus").join(&book);
+            (book, dir)
+        })
+        .collect();
+    let roots: Vec<BookCorpusRoot<'_>> = dirs
+        .iter()
+        .map(|(book, dir)| BookCorpusRoot { book_id: book.as_str(), dir: dir.as_path() })
+        .collect();
     let corpus = load_race_corpus(&roots);
     assert!(corpus.diagnostics().is_empty(), "clean corpus load: {:?}", corpus.diagnostics());
     corpus
@@ -227,13 +252,23 @@ fn the_only_remaining_orphan_flag_is_the_one_a_single_valued_field_cannot_hold()
             }
         }
     }
+    // Two flags, one cause — the SAME truncated multi-flag gate seen from its
+    // two ends. `Duergar ~ Spell-Like Ability ~ Invisibility`'s row names three
+    // flags and the single-valued `suppressed_by_flag` keeps only the first, so
+    // Monster Codex's `Duergar ~ Ironskinned` fires
+    // `Duergar_ReplaceSLAEnlargePerson` into the same blind spot that
+    // `Duergar ~ Blood Enmity` already fired `Duergar_ReplaceSLAInvisibility`
+    // into. Neither is a dead affordance; both are proved to grant below.
+    // SD-29 `decisions.md §44.2`.
     assert_eq!(
         orphans.into_iter().collect::<Vec<_>>(),
-        vec!["Duergar_ReplaceSLAInvisibility"],
+        vec!["Duergar_ReplaceSLAEnlargePerson", "Duergar_ReplaceSLAInvisibility"],
         "the Aasimar five are closed; a new orphan is a new defect"
     );
 
-    // ...and it is not a dead affordance, because it grants.
+    // ...and neither is a dead affordance, because both grant.
+    let ironskinned = corpus.resolve("Duergar", &["Duergar ~ Ironskinned"]).expect("Duergar resolves");
+    assert!(ironskinned.inert_flags.is_empty(), "{:?}", ironskinned.inert_flags);
     let blood_enmity = corpus.resolve("Duergar", &["Duergar ~ Blood Enmity"]).expect("Duergar resolves");
     assert!(blood_enmity.inert_flags.is_empty(), "{:?}", blood_enmity.inert_flags);
     assert!(blood_enmity
@@ -265,7 +300,10 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
             checked += 1;
         }
     }
-    assert_eq!(checked, 153, "ARG's 153 selectable alternates");
+    assert_eq!(
+        checked, 158,
+        "ARG's 153 + Monster Codex's 4 + APG's 1 selectable alternates (SD-29 decisions.md §44)"
+    );
 }
 
 /// The two gate sources agree wherever both speak, over every in-scope race.

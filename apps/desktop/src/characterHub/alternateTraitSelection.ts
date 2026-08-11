@@ -6,17 +6,22 @@ import type {
 } from '../boundary/loadAlternateRacialTraits';
 
 /**
- * Pure helpers for taking an ARG alternate racial trait *during character
- * creation*.
+ * Pure helpers for taking an alternate racial trait *during character
+ * creation*, from any book the race corpus loads.
  *
- * The Race Traits picker screen (`raceCatalog/`) already browses all 153 and
- * resolves any swap live. This module is the missing half: matching that
- * catalogue up to the creation form's own race identity, and narrowing the
- * menu to the race being created.
+ * The Race Traits picker screen (`raceCatalog/`) already browses every one of
+ * them and resolves any swap live. This module is the missing half: matching
+ * that catalogue up to the creation form's own race identity, and narrowing
+ * the menu to the race being created.
+ *
+ * The total is deliberately not written down here. It read 153 while ARG was
+ * the only contributing book, then 157, then 158; a count in a comment is the
+ * kind that goes stale without anything failing.
  *
  * **Nothing here decides whether a trait applies, or whether two traits may be
  * held together.** Both answers come from the backend — `RaceCorpus::resolve`
- * for the swap, ARG's own `PREMULT` guard (read by `race_trait_picker.rs`) for
+ * for the swap, the record's own `PREMULT` guard (read by
+ * `race_trait_picker.rs`) for
  * the exclusion — and `create_character` re-validates the submitted keys
  * against the corpus before persisting anything. Re-deciding either here would
  * give the form a second, divergent opinion, and the form would be the one the
