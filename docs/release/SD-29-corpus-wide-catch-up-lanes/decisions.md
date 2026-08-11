@@ -1585,7 +1585,7 @@ the whole dashboard and belongs in the extend lane's own reviewable diff.
 
 Added, with `COMPILED_RULE_SETS` / `corpus_dir_for` / `rule_set_id` / `content_state_dump` arms. It
 is the **first variant with no `rules_tables/<book>/` module**, because a race trait is never a
-compiled table. Withholding it would have left all 213 of the book's units at `not-started` —
+compiled table. Withholding it would have left all **207** of the book's units at `not-started` —
 "nothing about this unit has been attempted" — for a book whose records a player can now select,
 which is the exact defect `COMPILED_RULE_SETS`' own doc comment records ARG and PU suffering for
 eleven days. After the change **0** monster_codex units remain `not-started` (DoD item 4).

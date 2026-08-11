@@ -4243,7 +4243,7 @@ byte-identical; the tree was reverted rather than committing timestamp churn.
 ### 5. DoD item 4 — work-inventory
 
 `cargo run --locked --bin v06_work_inventory` regenerated `docs/work-inventory.json`
-(`generated_at 2026-08-11T17:15:38Z`). **`monster_codex` units at `not-started`: 213 → 0.** All 213
+(`generated_at 2026-08-11T17:15:38Z`). **`monster_codex` units at `not-started`: 207 → 0.** All 207
 now classify against a compiled rule set (14 `race_trait`, 72 `class_feature`, 45 `equipment`, 32
 `feat`, 24 `spell`, 15 `companion`, 4 `equipment_modifier`, 3 `monster_ability`, 2 `monster`).
 Corpus-wide `race_trait` `not-started` 1,613 → 1,599.
@@ -4528,7 +4528,7 @@ a gate stage.
 | 1 | `./scripts/verify.sh` exits `0`, exit code captured directly | `VERIFY_EXIT=0`, run in the foreground with `echo "VERIFY_EXIT=$?"` on the next line — never through a pipe. 13/13 stages PASS: `preflight-disk`, `pi-sweep`, `audit-selftest`, `driver-selftest`, `root-lib` (1615), **`root-full` (6173 across 543 suites, all 524 `tests/*.rs` suites executed)**, `desktop` (421), `reach` (17), `frontend-install`, `frontend-test` (98/98), `frontend-typecheck`, `clippy` (0 errors), `class-dump` (31/31 computing) |
 | 2 | the `reach` stage passes **with a claim for this book's families** | `("monster_codex", "race_traits")` is a declared `reach_of` arm executing `race_traits_reach("MC", "monster_codex")` against the live `list_alternate_racial_traits + resolve_race_alternate_selection` responses. **17 matched tests, not 0.** The claim is not a pass-by-absence: the family is in `corpus_inventory()` via its own `CORPUS_BOOK_IDS` entry, and 4 of its 5 records reach |
 | 3 | `v06_corpus_trap_report -- --audit` exits `0` | EXIT 0; 259 mod-record traps, **0 defects** — every ingested record's citation agrees with the line it names |
-| 4 | `v06_work_inventory` regenerates, units leave `not-started`, second run changes only `generated_at` | **monster_codex `not-started`: 213 → 0.** Second run diffed: only `generated_at` moves |
+| 4 | `v06_work_inventory` regenerates, units leave `not-started`, second run changes only `generated_at` | **monster_codex `not-started`: 207 → 0** (186 `not-ingested` + 21 `unknown`). Second run diffed: only `generated_at` moves |
 | 5 | the four-check wired-integration audit is clean | `tests/sd24_wired_integration_audit.rs` 5/5 inside `root-full`. It went RED once on this cycle's own diff and was fixed at the source, not excluded — see §11 |
 | 6 | any family that could not be surfaced has an `OPEN_FINDINGS` entry naming its remedy | **Discharged in both directions.** RETIRED: `beastiary1/race_traits` (the Duergar Invisibility SLA), which this bundle's DoD named explicitly and expected Monster Codex to close. ADDED: `monster_codex/race_traits`, for `Oversized Goblin`, with its remedy named (an ability-pool variant mechanism) — recorded as a cycle shortfall, not a pass |
 | 7 | baseline movements are a separate reviewable commit with `--show-actuals` | **None.** `scripts/verify-baselines.env` is untouched; `pi-sweep` reports 10 hits against 10 baseline rows, unchanged |
@@ -4585,3 +4585,30 @@ place after a shell backtick mangled a field — recorded here rather than left 
 
 `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-repin` deleted (`rm -rf`) and
 `scripts/reclaim.sh --apply` run at cycle end.
+
+### 13. A correction to this receipt, caught by re-deriving at cycle end
+
+This receipt originally said Monster Codex carries **213** units. It carries **207**. The wrong
+figure was **transcribed from this package's own `decisions.md`** rather than derived — the exact
+failure mode `loop-instruction.md` step 1b names as this program's rank-1 defect class, committed
+inside the receipt that cites that rule. It was caught by re-running the derivation at cycle end
+instead of trusting the number already written down:
+
+```bash
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+mc=[u for u in d['units'] if u['book']=='monster_codex']
+print(len(mc), dict(collections.Counter(u['status'] for u in mc)))
+"
+```
+
+→ `207 {'not-ingested': 186, 'unknown': 21}`. Corrected here and in `decisions.md §43.6`; a
+`correction` retro event carries it. The commit message of `fd782e24` predates the correction and
+still reads 213 — noted rather than rewritten, since the commit is already pushed.
+
+**Lane figures re-derived at cycle end, by the same command:** `race_trait` **3,447** total /
+**21** grounded / **3,426** remaining. The 21 grounded are unchanged by this cycle, which is the
+honest reading: the pilot's 5 records reach a player (`reach_gate`, and the screen) but report
+`race_trait_race_not_modelled` under `v06_work_inventory`'s CRB-pinned probe — the instrument defect
+recorded as the extend lane's first task in `decisions.md §43.5`.
