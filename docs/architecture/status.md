@@ -1,7 +1,7 @@
 # Status
 
 > Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
-> Last verified: 2026-08-07 against tranche/8 (wiring_class/PI-screening convergence cycle; some rows partially re-verified — see inline notes)
+> Last verified: 2026-08-11 against tranche/9 (SD-29 closure, Epic 11). The rows re-derived in full this pass are the rule-table catalog count, the JSON-corpus-cache count, and the new §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
 > Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
 
 ## Posture
@@ -32,7 +32,8 @@ level: a stub says so rather than pretending to work.
 | Corpus-ingest pipeline | `.pcc`/`.lst` parsing through canonical `SourcePackageContent` projection, six of seven record kinds fully wired | [corpus-ingest.md](./corpus-ingest.md) |
 | Pilot compute + boundary contract | `compute_pilot_base_chassis` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`, fail-honest throughout | [rules-engine.md](./rules-engine.md) |
 | Per-domain engines | Spellbook (9/9 schools), skill allocation, feat prerequisites (4/4 categories), equipment effects (4/4 categories), damage total, level-up (11/11 classes) | [rules-engine.md](./rules-engine.md) |
-| Rule-table catalogs | **Grown past "four" (correction, 2026-08-07):** CRB (full), APG (6/6 classes), ACG (10/10 classes), Bestiary 1 (41 monsters across 8 subsets, plus its own small equipment table), plus Advanced Race Guide and Pathfinder Unchained (SD-27/28 ingest) and a new `ultimate_campaign` (`Uca`) rule set carrying 23 feats (SD28-E13) — seven `RuleSetId` variants total (`src/rules_core/rules_tables/mod.rs`) | [rules-data-tables.md](./rules-data-tables.md) |
+| Rule-table catalogs | **Grown past "four" (correction, 2026-08-07):** CRB (full), APG (6/6 classes), ACG (10/10 classes), Bestiary 1 (41 monsters across 8 subsets, plus its own small equipment table), plus Advanced Race Guide and Pathfinder Unchained (SD-27/28 ingest) and a new `ultimate_campaign` (`Uca`) rule set carrying 23 feats (SD28-E13) — seven `RuleSetId` variants total (`src/rules_core/rules_tables/mod.rs`). **Corrected 2026-08-11 (SD-29 closure): 14, not seven** — SD-28's six Ultimate books (`Ui`, `Ue`, `Uw`, `Uc`, `Um`, `Upsi`) and SD-29's `BonusBestiary` landed after that count was written. Re-derived with `sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs` | [rules-data-tables.md](./rules-data-tables.md) |
+| Monster + monster_ability chassis | **New in SD-29 (Epic 5 pilot).** The merged `monster`/`monster_ability` kind chassis — `RuleSetId::BonusBestiary`, its rules-table module, generator arm, wire DTO, `CORPUS_KIND_NAMES` entry, reach claims, diagnostic row, and frontend path — is real and proven end-to-end on Bonus Bestiary (**14** monster + **17** monster_ability units, all `grounded`). The chassis is once-per-*kind*, not once-per-book: remaining monster-bearing books inherit it. Corpus-wide ingest beyond the pilot is **not** done — see §"Corpus coverage" below | [rules-data-tables.md](./rules-data-tables.md) §`RuleSetId` |
 | Character Hub | Create, load, clone, portrait upload/load/delete, JSON export, recompute — all real engine compute + real persistence | [desktop-app.md](./desktop-app.md) |
 | Rule-system adapter seam (hub-of-hubs) | `RuleSystemAdapter` trait is the object-safe seam the Character Hub's mutation commands (`append_to_character`/`recompute_character`/`re_save_character`) dispatch through on a `rule_system_id`: `"pf1"` resolves to the real `Pf1Adapter` (wraps the extracted PF1 free functions); any other id resolves to the governed `StubAdapter`, which reports an honest "not yet implemented" diagnostic — never fabricated data (registered exception 0002 in `docs/governance/wired-integration-stubs-registry.md`) | [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam" |
 | Corpus-ingest diagnostic | `corpus_ingest_diagnostic` Tauri command reports the real ingested state (record-kind counts + last-touched git timestamp) of every populated `rules_tables` book, counted from the tables actually compiled into the binary — reachable from the Character Hub landing via the `CorpusIngestDiagnosticPanel`. Sketch-scoped to four fields; SD-26 fans out the full status table | [desktop-app.md](./desktop-app.md) |
@@ -46,8 +47,59 @@ level: a stub says so rather than pretending to work.
 | Homebrew authoring workbench | The Guard Stance proof package's validate/persist/preview round trip, read-only bridged to the desktop tester workbench | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
 | Encounter difficulty / party CR compute | `Encounter::new` and `party_challenge_rating` are real, grounded compute — but see the DM Toolkit UI row below | [rules-engine.md](./rules-engine.md) |
 | Fighter+Wizard multiclass base-chassis dispatch | `compute_multiclass_base_chassis` grounds BAB/save stacking + per-class named-feature explanations for any Fighter+Wizard split, total level 1-10, deterministically proven at every level and both transition directions (SD-24 Epic 5) — but this grounds the base-chassis layer only, not a full `Computed` receipt end-to-end (see the Class/level compute coverage row below) | [rules-engine.md](./rules-engine.md) §"Multiclass base-chassis dispatch" |
-| Repo-resident JSON corpus cache | `data/corpus/<book>/**/*.json` — **six** book directories now, not four: core_rulebook (3326 records), advanced_players_guide (641), advanced_class_guide (423), beastiary (45), plus advanced_race_guide (637 files) and pathfinder_unchained (129 files) added by SD-27/28. Written by **eight** distinct writer binaries/modules (see [rules-data-tables.md](./rules-data-tables.md) §"JSON corpus cache" for the full enumeration); each generator *dumps* the compiled Rust module's runtime state and never re-parses raw LST for values (only for line-number citations). Every writer now runs its output through `rules_core::pi_screening` (a shared 55-term blacklist) and stamps a GE-01 `wiring_class` on every record. Round-trip-tested by `tests/sd26_cache_core_rulebook.rs`/`apg`/`acg`/`beastiary` and `tests/pi_screening_regeneration_round_trip.rs` | [rules-data-tables.md](./rules-data-tables.md) |
+| Repo-resident JSON corpus cache | `data/corpus/<book>/**/*.json` — **seven** book directories as of 2026-08-11 (SD-29 added `bonus_bestiary/`, 32 JSON files, via the existing `gen_book_cache.rs` writer — no new writer); the row below is the 2026-08-07 six-book text, kept for its per-book detail: **six** book directories now, not four: core_rulebook (3326 records), advanced_players_guide (641), advanced_class_guide (423), beastiary (45), plus advanced_race_guide (637 files) and pathfinder_unchained (129 files) added by SD-27/28. Written by **eight** distinct writer binaries/modules (see [rules-data-tables.md](./rules-data-tables.md) §"JSON corpus cache" for the full enumeration); each generator *dumps* the compiled Rust module's runtime state and never re-parses raw LST for values (only for line-number citations). Every writer now runs its output through `rules_core::pi_screening` (a shared 55-term blacklist) and stamps a GE-01 `wiring_class` on every record. Round-trip-tested by `tests/sd26_cache_core_rulebook.rs`/`apg`/`acg`/`beastiary` and `tests/pi_screening_regeneration_round_trip.rs` | [rules-data-tables.md](./rules-data-tables.md) |
 | CRB/APG/ACG/Bestiary 1 equipment + spell record ingestion | 100% record coverage (equipment and spells) across all four books; `weight`/`description` fields on every book's `EquipmentTableEntry`, populated toward each book's honest ceiling. SD-25 Epic 7 raised those ceilings via cited web second-source passes: CRB `description` 2021/2977 (67.9%, was 61.2%); APG `description` 331/338 (was 0% — the APG corpus itself carries no `DESC:` token, every value identity-matched from `aonprd.com`/`d20pfsrd.com`); APG spell full-text 284/297 (was 261); Bestiary 1 equipment newly ingested at 4/4 records with full cost/weight/description. Remaining gaps are honest, undispatched residue, not silently accepted (per-book counts asserted exactly by `tests/sd24_equipment_coverage_audit.rs` / `tests/sd24_equipment_field_completion.rs`) | [rules-data-tables.md](./rules-data-tables.md) §"Equipment/spell content completeness" |
+
+## Corpus coverage, corpus-wide (new section, 2026-08-11 — SD-29 closure)
+
+SD-29 was the first bundle to derive the *whole* corpus's shape in one pass
+rather than book-by-book, so this is the first time this document can state
+repo-wide coverage honestly. All figures below are re-derived from
+`docs/work-inventory.json` (`generated_at` `2026-08-11T10:38:33Z`) with:
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); \
+a=collections.defaultdict(collections.Counter); \
+[a[u['kind']].update([u['status']]) for u in d['units']]; \
+[print(k, dict(a[k])) for k in sorted(a)]"
+```
+
+**38,540 units across 38 book directories** (37 in scope; `beginner_box`'s 19
+units are excluded per `corpus-work-channels.md §10.2`). By status:
+`grounded` **491**, `text-complete` **2,402**, `ingested-magnitude` **6,548**,
+`not-ingested` **14,582**, `not-started` **11,190**, `unknown` **3,291**,
+`deferred-with-reason` **36**.
+
+Per kind (`grounded` / total):
+
+| Kind | Total | Grounded | Note |
+|---|---|---|---|
+| `class_feature` | 15,472 | 109 | Tier-3 deferral, out of SD-29 scope (`decisions.md §38.4`); owned by SD-30 |
+| `equipment` | 6,227 | 133 | 4,817 `ingested-magnitude` — the deepest proven-path kind |
+| `race_trait` | 3,447 | 21 | Blocked on a race chassis: the engine models exactly **7** races |
+| `monster_ability` | 3,107 | 17 | Pilot only (Bonus Bestiary) |
+| `spell` | 2,843 | — | 1,260 `ingested-magnitude`, 22 `text-complete` |
+| `feat` | 2,610 | 77 | 1,240 `text-complete` |
+| `companion` | 1,696 | 0 | **Lane never started** — see below |
+| `equipment_modifier` | 1,580 | 40 | 841 `text-complete` |
+| `monster` | 1,270 | 60 | Pilot only (Bonus Bestiary's 14, plus Bestiary 1's hand-transcribed set) |
+| `class` | 185 | 27 | |
+| `race` | 103 | 7 | The 7 hardcoded CRB races — the ceiling `race_trait` is blocked against |
+
+The two structural ceilings this section exists to name, both surfaced by
+SD-29 and neither fixed by it:
+
+- **Race chassis.** Of 3,447 `race_trait` units, **805** carry
+  `race_trait_race_not_modelled` and **144**
+  `race_trait_absent_from_race_traits`. `crb::race_traits()` hardcodes
+  **7** races, so no book's race traits can ground until a real race chassis
+  lands. This is work outside any SD-29 epic.
+- **Companion kind is unstarted.** All **1,696** `companion` units are
+  `not-ingested`/`not-started` and **0** are grounded. SD-29's companion lane
+  (Epic 7) never began: its pilot cycle refused at the `preflight-disk` gate
+  and the card was left unclaimed rather than falsely marked attempted. The
+  disk condition has since cleared; the lane is a ready re-dispatch, not a
+  finding about the corpus.
 
 ## Stubbed / partially wired / deferred today
 

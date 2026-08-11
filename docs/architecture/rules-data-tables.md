@@ -133,18 +133,36 @@ ingests. Both figures are pinned in `class_spell_levels.rs`'s tests.
 
 ## `RuleSetId` and per-book resolution
 
-`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has four
-populated variants plus a placeholder comment for future books:
+`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has **14**
+populated variants. **Corrected 2026-08-11 (SD-29 Epic 11 closure):** this
+section previously read "four populated variants plus a placeholder comment
+for future books" and quoted a four-arm enum with a `// future: Um, ...`
+comment. That went stale across SD-27 and SD-28; re-derived from the source
+with `sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs`:
 
 ```rust
 pub enum RuleSetId {
-    Crb,
-    Apg,
-    Acg,
-    Bestiary1,
-    // future: Um, ...
+    Crb,            // Core Rulebook
+    Apg,            // Advanced Player's Guide
+    Acg,            // Advanced Class Guide
+    Bestiary1,      // Bestiary 1
+    Arg,            // Advanced Race Guide          (SD-27)
+    Pu,             // Pathfinder Unchained         (SD-27)
+    Uca,            // Ultimate Campaign            (SD-28)
+    Ui,             // Ultimate Intrigue            (SD-28)
+    Ue,             // Ultimate Equipment           (SD-28)
+    Uw,             // Ultimate Wilderness          (SD-28)
+    Uc,             // Ultimate Combat              (SD-28)
+    Um,             // Ultimate Magic               (SD-28)
+    Upsi,           // Ultimate Psionics (Dreamscarred Press, not Paizo)
+    BonusBestiary,  // Bonus Bestiary               (SD-29 Epic 5 pilot)
 }
 ```
+
+`BonusBestiary` is the newest arm and the only one that carries the merged
+`monster` + `monster_ability` chassis (`corpus-work-channels.md §9.2`); it is
+SD-29's Epic 5 pilot book, and every remaining monster-bearing book inherits
+that chassis rather than rebuilding it.
 
 Each book's resolver function takes a book-scoped ID enum plus a
 `RuleSetId` and returns `None` immediately if the `RuleSetId` does not
@@ -269,6 +287,13 @@ book directories — `core_rulebook/`, `advanced_players_guide/`,
 `advanced_class_guide/`, `beastiary/`, plus `advanced_race_guide/` (637 JSON
 files) and `pathfinder_unchained/` (129 JSON files), the latter two added by
 SD-27/SD-28 ingest — and there are **eight** distinct writers, not four.
+
+**Updated 2026-08-11 (SD-29 Epic 11 closure).** `data/corpus/` now holds
+**seven** book directories: SD-29's Epic 5 monster-lane pilot added
+`bonus_bestiary/` (**32** JSON files across `monster/`, `monster_ability/`,
+plus its `LICENSE.json`), written by the existing `src/bin/gen_book_cache.rs`
+— no ninth writer was minted. Re-derived with `ls data/corpus/` and
+`find data/corpus/bonus_bestiary -name '*.json' | wc -l`.
 `ultimate_campaign` (the `Uca` rule set) has no corpus cache directory yet;
 its 23 feat records live only in `rules_tables::ultimate_campaign`.
 
