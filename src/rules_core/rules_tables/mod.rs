@@ -55,4 +55,22 @@ pub enum RuleSetId {
     /// Bonus Bestiary. SD-29 Epic 5 pilot -- first book to ingest the merged
     /// `monster` + `monster_ability` chassis (`corpus-work-channels.md §9.2`).
     BonusBestiary,
+    /// Monster Codex. SD-29 Epic 6 pilot -- the race-trait lane
+    /// (`decisions.md §43`).
+    ///
+    /// **The first variant with no `rules_tables/<book>/` module of its own,
+    /// and that is a property of the kind, not an omission.** A race trait is
+    /// never a compiled table: `race_resolver` reads
+    /// `data/corpus/<book>/race_trait/` off disk at runtime, because
+    /// `decisions.md §24` rules out the formula interpreter a compiled table
+    /// would need. So "the engine has compiled this book" and "the engine
+    /// serves this book's content" come apart here for the first time, and this
+    /// enum tracks the second — which is what its one real consumer,
+    /// `v06_work_inventory`'s `not-started` verdict ("the book has no compiled
+    /// rule set at all; nothing about this unit has been attempted"), is
+    /// actually asking. Withholding the variant would report a book whose
+    /// records a player can select as untouched, which is the exact defect
+    /// `COMPILED_RULE_SETS`' own doc comment records ARG and PU suffering for
+    /// eleven days.
+    MonsterCodex,
 }

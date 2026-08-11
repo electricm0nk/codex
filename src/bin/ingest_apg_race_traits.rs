@@ -29,7 +29,7 @@
 //! the 7 CRB races, re-derived directly against the corpus, not transcribed).
 //!
 //! **The replace-flag protocol, FCB row exclusion, and `DESC:` rendering are
-//! all identical to `src/bin/ingest_race_traits_arg.rs`**, which this binary
+//! all identical to `src/bin/ingest_race_traits.rs`**, which this binary
 //! is deliberately modelled on rather than sharing code with (matching this
 //! program's existing convention of small, independently-readable generator
 //! binaries -- the same convention `gen_cache_beastiary.rs`'s
@@ -81,7 +81,7 @@ fn ingested_at_now() -> String {
     String::from_utf8(output.stdout).expect("date output is valid UTF-8").trim().to_string()
 }
 
-/// Same slug rule `gen_book_cache.rs`/`ingest_race_traits_arg.rs` use.
+/// Same slug rule `gen_book_cache.rs`/`ingest_race_traits.rs` use.
 fn slugify(raw: &str) -> String {
     let mut out = String::new();
     let mut last_was_sep = false;
@@ -151,7 +151,7 @@ fn prefact_flag(clause_value: &str) -> Option<String> {
 }
 
 // ---------------------------------------------------------------------
-// `DESC:` rendering -- identical to `ingest_race_traits_arg.rs`; see that
+// `DESC:` rendering -- identical to `ingest_race_traits.rs`; see that
 // binary's own doc comments for the full rationale.
 // ---------------------------------------------------------------------
 
@@ -719,7 +719,7 @@ mod tests {
     );
 
     /// `apg_abilities_race.lst:1323`-shaped (truncated) -- a favored-class-bonus
-    /// row, the same shape ARG's `ingest_race_traits_arg.rs` proved must never
+    /// row, the same shape ARG's `ingest_race_traits.rs` proved must never
     /// be treated as a racial trait.
     const FCB_ROW: &str = concat!(
         "Bonus Skill Points\t",

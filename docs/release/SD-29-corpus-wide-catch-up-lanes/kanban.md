@@ -66,7 +66,7 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 | 6 | `epic-4-proven-feat-race-class` | COMPLETE — settled by `epic-10-review` 2026-08-11: its actor never obtained an exit code (turn budget ran out mid-`root-full`) and left the row `IN-FLIGHT` with the lane's 83 feat rows landed but two downstream count pins RED. Those pins are fixed (`b4cff429`) and the lane's whole diff is now covered by a green full gate (`verify.sh` exit `0`, `root-full` 6170/543). Not re-dispatched: the work is landed and gate-verified, only the receipt was missing | Proven-Path Lanes — feat + race + class | corpus-wide, 1,348 + 96 + 158 remaining units (feat: the prior 1,350 counted the kind's 2 `deferred-with-reason` units as remaining — predicate difference, not an arithmetic error; see `corpus-shape-37-books.md` §3) | `epic-3-provenance` | sd29-e4-frc | 2026-08-11T02:40:00Z | SD29-E4-F2-001 |
 | 7 | `epic-5-monster-lane-pilot` | COMPLETE | Monster / Monster-Ability Chassis Lane — pilot | Bonus Bestiary end-to-end (14 monster + 17 monster_ability — both re-derived from the corpus, both now `grounded`) | `epic-3-provenance` | sd29-e5-monster-pilot | 2026-08-11T00:00:00Z | SD29-E5-F1-001 |
 | 8 | `epic-5-monster-lane-extend` | **READY** (reopened 2026-08-11 by `epic-12-reopen`, `decisions.md §42`) — the once-per-kind chassis IS merged on `origin/tranche/9` and pilot-proven; the per-book **ingest is outstanding and was never dispatched**. Prior status `PARTIAL/decision-blocked` is superseded: a chassis is not a lane. Receipts for the chassis half stand in `progress.md` `## Cycle — epic-5-monster-lane-extend (SD29-E5-F2-001)` and are not erased | Monster / Monster-Ability Chassis Lane — extend | corpus-wide, every remaining book. **Denominators re-derived 2026-08-11 from `docs/work-inventory.json` (`generated_at 2026-08-11T10:38:33Z`), two independent implementations agreeing: `monster` 1,270 total / 60 grounded / **1,210 remaining**; `monster_ability` 3,107 total / 17 grounded / **3,090 remaining**. The prior "1,224 monster" figure in this row was wrong — corrected to 1,270 total. Grounded monsters are `bestiary` 46 (SD-22) + `bonus_bestiary` 14 (this bundle's pilot); grounded monster_ability is `bonus_bestiary` 17, all pilot.** **Cost, from the pilot's receipt: do NOT extrapolate a per-unit rate** — essentially all of the pilot's cost was the once-per-*kind* chassis (new `RuleSetId`, rules-table module, generator arm, wire DTO, `CORPUS_KIND_NAMES` entry, reach claims, diagnostic row, frontend path, and 8 whole-catalog assertions re-scoped to their own book). The next book inherits all of it. Expect to fund a published-text dice-grounding decision: 13 of the pilot book's 14 named natural attacks carry no dice in the corpus. | `epic-5-monster-lane-pilot` | sd29-e5-monster-extend | 2026-08-11T12:00:00Z | SD29-E5-F2-001 |
-| 9 | `epic-6-race-trait-lane-pilot` | **READY** (reopened 2026-08-11 by `epic-12-reopen`, `decisions.md §42`) — the classifier defect fix IS landed and stays landed; the **pilot ingest is outstanding**. The pilot book re-pin (`inner_sea_intrigue` carries zero true race traits — its 9 units were construct-companion abilities and have since been reclassified `companion`) is SD-29's to make, not a successor's. Re-pin candidates and the `monster_codex` recommendation are in the note below this table. Prior receipts preserved | Race-Trait Lane — pilot | classifier defect fix (DONE) + a re-pinned pilot book's ingest (OUTSTANDING) | `epic-3-provenance` | — (unclaimed; prior actor `sd29-e6-racetrait-pilot` closed the classifier half only) | — | SD29-E6-F1-001 (classifier half) |
+| 9 | `epic-6-race-trait-lane-pilot` | **COMPLETE** (2026-08-11, `decisions.md §43`) — both halves are now delivered. The classifier defect fix stood already; this cycle **re-pinned the pilot book to `monster_codex`** and landed the ingest end-to-end: 5 records at `data/corpus/monster_codex/race_trait/`, a real reach claim `("monster_codex", "race_traits")`, and the retirement of the standing `beastiary1/race_traits` finding from BOTH `OPEN_FINDINGS` and `UNREACHED_RECORD_FINDINGS` (DoD item 6). Prior receipts preserved | Race-Trait Lane — pilot | classifier defect fix (DONE) + `monster_codex` pilot ingest (DONE) | `epic-3-provenance` | sd29-racetrait-repin | 2026-08-11T16:30:00Z | SD29-E6-F1-002 |
 | 10 | `epic-6-race-trait-lane-extend` | **READY** (reopened 2026-08-11 by `epic-12-reopen`, `decisions.md §42`) — the companion mis-classification fix IS landed and stays landed; the **corpus-wide ingest is outstanding**. The race-chassis ceiling (`crb::race_traits()` models exactly 7 races) is a real structural finding and SD-29 now owns confronting it — it is not a licence to close the lane. Prior receipts preserved | Race-Trait Lane — extend | corpus-wide, **26** books. **Denominators re-derived 2026-08-11 from `docs/work-inventory.json`: `race_trait` 3,447 total / 21 grounded / **3,426 remaining**. The prior "3,447 remaining" conflated total with remaining; the 21 grounded are `core_essentials` 20 + `advanced_race_guide` 1** | `epic-6-race-trait-lane-pilot` | — (unclaimed; prior actor `sd29-e6-racetrait-extend` closed the classifier half only) | — | SD29-E6-F2-001 (classifier half) |
 | 11 | `epic-7-companion-lane-pilot` | **READY** (reopened 2026-08-11 by `epic-12-reopen`, `decisions.md §42`) — **never started; SD-29 owes it.** Its cycle refused at Cycle-mechanics step 1c (`preflight-disk` EXIT=1, 91% used / 47G free, twice, with `reclaim.sh --apply` in between) and correctly left the row unclaimed rather than parking it `IN-FLIGHT` under an agent that did no bounded work — that refusal was an **environmental condition, never a scope ruling**. Receipt preserved: `progress.md` `## Cycle SD29-E7-F1-001`. The disk condition has cleared (80% used, 97G available, re-verified 2026-08-11 by `./scripts/verify.sh --only preflight-disk` EXIT=0). NOT deferred to a successor bundle | Companion Lane — pilot | mechanism-build + a pilot book's ingest. **`inner_sea_combat` (10 units) needs re-confirming before dispatch** — the Epic 6 companion mis-classification fix moved 13 units into `companion` corpus-wide, so per-book companion counts have shifted since this row was written | `epic-3-provenance` | — (unclaimed; prior actor `sd29-e7-companion-pilot` refused at preflight and did no bounded work) | — | SD29-E7-F1-001 (refusal receipt only) |
 | 12 | `epic-7-companion-lane-extend` | **READY** (reopened 2026-08-11 by `epic-12-reopen`, `decisions.md §42`) — **never started; SD-29 owes it.** Never eligible, because its `Depends-on` (card 11) never reached COMPLETE. No cycle claimed it and no work was attempted. NOT deferred to a successor bundle | Companion Lane — extend | corpus-wide, **17** books. **Denominators re-derived 2026-08-11 from `docs/work-inventory.json`: `companion` 1,696 total / **0 grounded** / **1,696 remaining** (1,363 `not-ingested` + 333 `not-started`). The prior "1,683 remaining minus the pilot's 10" figure predates the Epic 6 companion mis-classification fix that added 13 units (1,683 + 13 = 1,696)** | `epic-7-companion-lane-pilot` | — | — | — |
@@ -103,8 +103,20 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 > pick — it is the book DoD item 6 already expects to retire the standing
 > `beastiary1/race_traits` `OPEN_FINDINGS` entry, so the pilot and that retirement land together.
 >
-> Card 10 (`epic-6-race-trait-lane-extend`) stays `READY` but is **not** eligible until the re-pin
-> lands and a real pilot closes.
+> **RE-PIN LANDED, 2026-08-11 (`sd29-racetrait-repin`, card 9, `decisions.md §43`).** The pilot
+> book is **`monster_codex`**. The candidate figures above were re-derived independently and
+> reproduce exactly, with two additions the note omitted (`book_of_the_damned_volume_1`/`_2` at
+> **1** unit each, not 2). The decisive reason for the pick is stronger than the one recorded above:
+> reading the candidates' actual unit keys rather than their counts, **five of the six carry the
+> same defect that disqualified `inner_sea_intrigue`** — eidolon rows, `Racial SLA ~ …` rows,
+> favoured-class rows, and monster racial abilities (Drow Noble, Rust Monster, Treant, Unicorn,
+> `Template ~ +2 <Stat>`) under a `_abilities_race` filename. `monster_codex` is the only candidate
+> carrying genuine **player-race** alternate racial traits, so it is not the best pilot but the only
+> viable one. Card 10 is now eligible.
+>
+> The dispatch brief's claim that `inner_sea_bestiary` is out of scope is itself a transcription of
+> a passage `loop-instruction.md` strikes through and corrects; the book is one of the 37. Nothing
+> turned on it — it was not picked — but the correction is recorded (`decisions.md §43.2`).
 >
 > **RESOLVED IN PART, 2026-08-11 (`sd29-e6-racetrait-extend`, card 10).** The re-pin is no longer
 > needed to unblock the *classifier* half: `file_kind()` now types an `_abilities_race*` basename
@@ -116,12 +128,19 @@ fully `COMPLETE` is not eligible regardless of `Order` or `Status`.
 > row exclusion had been dropping). The **pilot's re-pin is still outstanding**, but its purpose is
 > now narrower: a per-book ingest exemplar, not a classifier probe.
 >
-> **Card 10's own ingest half is `decision-blocked`** on a chassis outside this bundle — see
-> `progress.md`. Of the 3,447 remaining `race_trait` units, **805** carry
-> `race_trait_race_not_modelled` and **144** `race_trait_absent_from_race_traits`: the engine models
-> exactly **7** races (CRB's hardcoded `race_traits()`), so no book's race traits can ground until a
-> race chassis lands. That is loop-instruction.md's named stop, "a record family cannot be surfaced
-> without work outside this bundle's epic structure."
+> **Card 10's own ingest half was recorded `decision-blocked` on "the engine models exactly 7 races
+> (CRB's hardcoded `race_traits()`)". CORRECTED 2026-08-11 (`decisions.md §43.5`): that is true of
+> ONE INSTRUMENT and false of the product.** The player surface —
+> `race_resolver::load_race_corpus` → `race_trait_picker` → `list_alternate_racial_traits` — models
+> **18** races read off disk at runtime (CRB 7 + B1 11; re-derived with
+> `ls -d data/corpus/{core_rulebook,beastiary,advanced_race_guide}/race_trait/*/ | xargs -n1 basename | sort -u | wc -l`
+> → 18). Duergar and Goblin are both in it, which is why card 9's pilot records reach a player and
+> carry a passing reach claim. What is pinned to 7 is **`v06_work_inventory`'s grounding probe**:
+> `race_names` from `RaceId::ALL`, `race_trait_ids` solely from `crb::race_traits()`. So ARG's 156,
+> B1's 108, APG's 1 and the pilot's 5 all report `race_trait_race_not_modelled` while reaching a
+> player. **Card 10's real first task is repairing that probe**, not waiting on a race chassis. Its
+> blast radius (several hundred units' status across the dashboard) is why it was recorded with its
+> evidence rather than attempted inside a pilot cycle.
 
 ## Cycle claims (cycle-supervisor protocol)
 

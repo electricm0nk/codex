@@ -261,7 +261,7 @@ fn cskills(row: &LstRow) -> Vec<String> {
 }
 
 // ---------------------------------------------------------------------
-// `DESC:` rendering — ported unchanged from `ingest_race_traits_arg.rs`
+// `DESC:` rendering — ported unchanged from `ingest_race_traits.rs`
 // ---------------------------------------------------------------------
 
 /// Every variable this row defines *and finishes* on its own, with its

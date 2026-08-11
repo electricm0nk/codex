@@ -32,7 +32,7 @@
 //! 2. **The mutual-exclusion guard** ([`exclusion_guard_flags`]): ARG rows carry
 //!    a `PREMULT:1,[PREABILITY:…this ability…],[!PRE…:…<flag>=true]`
 //!    self-exclusion clause — "you may not take a second trait replacing
-//!    something you already replaced". `ingest_race_traits_arg.rs` deliberately
+//!    something you already replaced". `ingest_race_traits.rs` deliberately
 //!    preserves it verbatim in `raw_tokens` rather than laundering it into
 //!    `suppressed_by_flag` (which is reserved for the standalone `!PREFACT`
 //!    shape standard traits use), explicitly leaving it "for downstream

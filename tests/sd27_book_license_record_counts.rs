@@ -13,7 +13,7 @@
 //! wrote* — for Pathfinder Unchained, `feat_written + equipment_written`. A
 //! later cycle ingested the same book's classes and class features through a
 //! *different* binary (`src/bin/ingest_pu_classes.rs`), and ARG's alternate
-//! racial traits through `src/bin/ingest_race_traits_arg.rs`. Those binaries
+//! racial traits through `src/bin/ingest_race_traits.rs`. Those binaries
 //! write real, licence-classified records into the same book directory and do
 //! not touch `LICENSE.json`, so the stated count silently fell behind the
 //! corpus: PU read 59 against 127 real records, ARG 479 against 635.

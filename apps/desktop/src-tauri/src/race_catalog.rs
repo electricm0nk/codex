@@ -65,7 +65,7 @@ use crate::authoring_workbench::codex_repo_root;
 /// that is searched and contributes nothing (ARG), which is a measured zero
 /// rather than an omission.
 pub(crate) const RACE_CORPUS_BOOKS: &[&str] =
-    &["core_rulebook", "beastiary", "advanced_race_guide", "advanced_players_guide"];
+    &["core_rulebook", "beastiary", "advanced_race_guide", "advanced_players_guide", "monster_codex"];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form, identical to the ones `equipment_catalog.rs` and `spell_catalog.rs`
@@ -74,6 +74,11 @@ const BOOK_CRB: &str = "CRB";
 const BOOK_B1: &str = "B1";
 const BOOK_ARG: &str = "ARG";
 const BOOK_APG: &str = "APG";
+/// Monster Codex. Loadable like ARG and APG, and like them it contributes no
+/// *catalog* rows — the catalog serves racial-default traits and this book
+/// declares none. Its five records are all alternates, which reach a player
+/// through `race_trait_picker` instead. See SD-29 `decisions.md §43`.
+const BOOK_MC: &str = "MC";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
@@ -94,6 +99,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "beastiary" => BOOK_B1.to_string(),
         "advanced_race_guide" => BOOK_ARG.to_string(),
         "advanced_players_guide" => BOOK_APG.to_string(),
+        "monster_codex" => BOOK_MC.to_string(),
         other => other.to_string(),
     }
 }

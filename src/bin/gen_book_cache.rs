@@ -248,7 +248,7 @@ fn arg_find_citation_line(index: &ArgLineIndex<'_>, wanted_key: &str) -> Option<
 /// **Why this exists.** `LICENSE.json`'s `records_processed` used to be
 /// set from `feat_written + equipment_written` (this generator's own
 /// count) -- correct only when this generator is the sole writer into the
-/// book directory. `ingest_pu_classes.rs` and `ingest_race_traits_arg.rs`
+/// book directory. `ingest_pu_classes.rs` and `ingest_race_traits.rs`
 /// also write real, licence-classified records into the same directories
 /// and never touch `LICENSE.json` (`tests/sd27_book_license_record_counts.rs`'s
 /// own module doc comment documents this as a known, previously-reported
@@ -342,7 +342,7 @@ fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Op
 /// `%N` substitutes, a formula `%N` is dropped and reported — never guessed,
 /// because `decisions.md §24` rules out a formula interpreter). The
 /// `leaked_pcgen_syntax` panic is the port of the production guard
-/// `src/bin/ingest_races.rs` and `src/bin/ingest_race_traits_arg.rs` already
+/// `src/bin/ingest_races.rs` and `src/bin/ingest_race_traits.rs` already
 /// carry: a future leak stops this generator instead of reaching a screen.
 fn render_player_facing_description(record_key: &str, raw: &str) -> String {
     let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
@@ -837,7 +837,7 @@ fn gen_advanced_race_guide() {
             "blacklist_version_reviewed": "2026-07-27"
         },
         "screening_method_note": format!(
-            "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the same PI_BLACKLIST_TERMS this binary's gen_pathfinder_unchained() also uses -- the 20 canonical core Golarion deities plus a sampled set of known setting place names, matching docs/governance/ogl-pi-blacklist.md's operating cycle for the 4 in-scope books' retro-fit). This generator's own run screened {total} records (spells + equipment + feats), zero PI hits. `records_processed` below is {records_processed}, the full on-disk count derived at write time rather than from this run alone, since `ingest_race_traits_arg.rs` also writes real, separately-screened alternate-racial-trait records into this book's directory. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see."
+            "This pass is a heuristic first-pass screen of every `description` value against a bounded, documented term list (the same PI_BLACKLIST_TERMS this binary's gen_pathfinder_unchained() also uses -- the 20 canonical core Golarion deities plus a sampled set of known setting place names, matching docs/governance/ogl-pi-blacklist.md's operating cycle for the 4 in-scope books' retro-fit). This generator's own run screened {total} records (spells + equipment + feats), zero PI hits. `records_processed` below is {records_processed}, the full on-disk count derived at write time rather than from this run alone, since `ingest_race_traits.rs` also writes real, separately-screened alternate-racial-trait records into this book's directory. This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~54 known names and does not prove the absence of PI beyond what that scan can see."
         ),
         "redistribution_posture": "ogl-notice-attached",
         "classified_at": ingested_at,

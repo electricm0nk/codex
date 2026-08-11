@@ -40,7 +40,7 @@
 //! **The boundary of what this harness proves, stated explicitly so the
 //! next reader does not have to infer it.** It covers CRB, ACG, and APG's
 //! spell/equipment records ONLY -- every writer whose free-text source is
-//! a static compiled `rules_tables` table. `ingest_race_traits_arg.rs`'s
+//! a static compiled `rules_tables` table. `ingest_race_traits.rs`'s
 //! 156 ARG racial-trait records are NOT covered here: that binary's
 //! `description` text comes from live PCGen `.lst` parsing at ingest
 //! time, not a static table this test could call and recompute against

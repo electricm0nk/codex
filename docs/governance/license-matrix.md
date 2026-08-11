@@ -48,7 +48,7 @@ one of them has ever called a Product-Identity screen.**
 v1), written by five generator binaries/modules: `sd26_gen_core_rulebook_cache.rs`
 (CRB), `cache_gen::{acg, apg, beastiary1}` (ACG/APG/Bestiary 1), `sd27_gen_book_cache.rs`
 (ARG, PU — carries its own inline PI-blacklist fork, the third of the three forks
-`pi_screening.rs`'s own doc comment names), and `ingest_race_traits_arg.rs`/
+`pi_screening.rs`'s own doc comment names), and `ingest_race_traits.rs`/
 `ingest_pu_classes.rs`/`ingest_races.rs`. Per `pi_screening.rs`'s own header, **three
 of these five writers originally shipped with no screening at all** (CRB, and the
 ACG/APG/Bestiary-1 trio) — their `license`/`pi_field`/`pi_marker` fields exist today
@@ -93,7 +93,7 @@ patched).
 | advanced_players_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`cache_gen::apg`, retrofit) | none |
 | advanced_class_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`cache_gen::acg`, retrofit) | none — and the one confirmed real leak (`Sarenrae`) lives in this book's Pipeline B archetype table |
 | bestiary | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`cache_gen::beastiary1`, retrofit) | none |
-| advanced_race_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`sd27_gen_book_cache.rs` own fork + `ingest_race_traits_arg.rs`) | none — the second confirmed real leak (`Asmodeus`) lives in this book's Pipeline B archetype table |
+| advanced_race_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`sd27_gen_book_cache.rs` own fork + `ingest_race_traits.rs`, book `advanced_race_guide`) | none — the second confirmed real leak (`Asmodeus`) lives in this book's Pipeline B archetype table |
 | pathfinder_unchained | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **screened** (`sd27_gen_book_cache.rs` own fork + `ingest_pu_classes.rs`) | none |
 | adventurers_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a (never entered Pipeline A) | **unscreened** |
 | bestiary_2 | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
@@ -115,7 +115,7 @@ patched).
 | inner_sea_taverns | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | inner_sea_temples | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | inner_sea_world_guide | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
-| monster_codex | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
+| monster_codex | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | **partially screened** (`ingest_race_traits.rs`, book `monster_codex` — the 5 `race_trait` records of SD-29's race-trait lane pilot, the book's only ingested family; its other 8 kinds have not entered Pipeline A) | none |
 | mythic_adventures | Paizo Publishing LLC | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | occult_adventures | Paizo Inc. | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |
 | ultimate_campaign | Paizo Publishing | yes | yes | YES | recoverable from OGL.txt | n/a | **unscreened** |

@@ -4,7 +4,7 @@
 //! ## Why this exists as a shared module rather than a fourth private copy
 //!
 //! Three ingest binaries already carry their own private copy of this
-//! treatment (`src/bin/ingest_races.rs`, `src/bin/ingest_race_traits_arg.rs`,
+//! treatment (`src/bin/ingest_races.rs`, `src/bin/ingest_race_traits.rs`,
 //! `src/bin/ingest_pu_classes.rs`). Each of those reads a `.lst` row and can
 //! resolve `%N` against that row's own `DEFINE:`/`BONUS:VAR` literals, so the
 //! copies are genuinely row-shaped and are left alone.
@@ -38,7 +38,7 @@
 //!   forbids — taking the `+`/`-` sign that introduced it with it, closing the
 //!   whitespace, and **reporting** the dropped argument rather than guessing a
 //!   value. This is the identical discipline
-//!   `ingest_race_traits_arg::substitute_placeholders` already ships (its
+//!   `ingest_race_traits::substitute_placeholders` already ships (its
 //!   `Halfling ~ Adaptable Luck` record reads "they only gain a bonus" for
 //!   exactly this reason);
 //! * removes the `|`-delimited argument tail in all cases;
@@ -64,7 +64,7 @@
 //!
 //! ## The `|` rule differs from the race-trait binary's, deliberately
 //!
-//! `ingest_race_traits_arg::leaked_pcgen_syntax` treats *any* `|` as a raw
+//! `ingest_race_traits::leaked_pcgen_syntax` treats *any* `|` as a raw
 //! argument tail. That is safe for racial-trait prose and **wrong** for spell
 //! prose: CRB and APG spell text renders rulebook tables inline with ` | `
 //! column separators. Derived over all four spell tables rather than assumed:

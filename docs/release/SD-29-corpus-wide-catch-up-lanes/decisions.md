@@ -1461,3 +1461,140 @@ building at load average 21, where the new diagnostics correctly reported
 `The "beforeDevCommand" terminated with a non-zero status code` and `Killed` rather than blaming the
 binary. **On-screen verification and a full gate must not be run concurrently on this host.** This
 is very likely a second contributor to run 1's driver failures, which ran six agents against 4 cores.
+
+## Decision 43 — the race-trait lane's pilot book is re-pinned to `monster_codex`; and the "engine models exactly 7 races" ceiling is a *work-inventory probe* defect, not an engine limitation (2026-08-11)
+
+**Card:** `epic-6-race-trait-lane-pilot` (Order 9). **Actor:** `sd29-racetrait-repin`.
+
+### 43.1 The re-pin, and why every other candidate was rejected
+
+`loop-instruction.md`'s "Epic ordering" pinned the race-trait pilot to `inner_sea_intrigue` (9
+units). The prior cycle established that book carries **zero** genuine race traits — all 9 of its
+`race_trait`-kinded units are Clockwork Familiar / Clockwork Spy construct-companion abilities that
+`file_kind()` typed by filename — and the classifier fix has since reclassified them `companion`.
+
+The candidate set was **re-derived from scratch this cycle**, not transcribed. Command:
+
+```bash
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+nc=collections.Counter()
+for u in d['units']:
+    if u['kind']!='race_trait': continue
+    if 'companion' not in (u.get('source_file') or '').lower(): nc[u['book']]+=1
+for k,v in sorted(nc.items(), key=lambda x:(x[1],x[0])): print(v,k)
+"
+```
+
+It reproduces the prior cycle's six candidates exactly — `ultimate_intrigue` 3, `ultimate_magic` 3,
+`inner_sea_bestiary` 4, `ultimate_combat` 4, `monster_codex` 14, `bestiary` 21 — and adds two the
+prior cycle did not list, `book_of_the_damned_volume_1` and `_2` at **1** each (its note said "2
+units each"; the current inventory says 1). Both are too thin to pilot either way.
+
+**The recommendation is adopted, but the prior cycle's reason was the weaker one.** It recommended
+`monster_codex` because DoD item 6 expects that book to retire the standing `beastiary1/race_traits`
+finding. True, and it happened (§43.3). The decisive reason is different and was not on the table:
+**`monster_codex` is the only candidate that carries any player-race racial traits at all.** Reading
+the actual unit keys rather than the counts:
+
+| candidate | what its `race_trait`-kinded units really are |
+|---|---|
+| `ultimate_intrigue` (3) | eidolon subtype / base form / unchained evolution rows |
+| `ultimate_magic` (3) | `Racial SLA ~ …` spell-like-ability rows |
+| `ultimate_combat` (4) | `Gunslinger` / `Ninja` / `Samurai` favoured-class rows + one Racial SLA |
+| `bestiary` (21) | monster racial abilities — Drow Noble, Rust Monster, Treant, Unicorn, `Template ~ +2 <Stat>` |
+| `inner_sea_bestiary` (4) | out of scope for the pilot regardless — see §43.2 |
+| **`monster_codex` (14)** | **Duergar 2 + Goblin 4 genuine alternate racial traits**, plus Ratfolk 6, one monster ability and one Racial SLA |
+
+So five of the six candidates carry the *same* defect that disqualified `inner_sea_intrigue` — a
+`_abilities_race` filename over rows that are not racial traits. A pilot on any of them would have
+proven the mechanism against content the mechanism does not serve. **`monster_codex` is not the
+best pilot; it is the only viable one.**
+
+### 43.2 A correction to this cycle's own dispatch brief
+
+The dispatch stated "`inner_sea_bestiary` is explicitly OUT of this bundle's scope per
+`loop-instruction.md`". That is a transcription of a passage `loop-instruction.md` **strikes through
+and corrects**: its "Corpus shape notes" bullet marked `~~Out-of-scope adjacents~~` is annotated
+**CORRECTED 2026-08-10**, and `inner_sea_bestiary` is one of the 37 in-scope books. The book was not
+picked, so nothing turned on it — recorded because a struck-through line was read as live text, and
+that is a repeatable failure mode.
+
+### 43.3 What the pilot landed
+
+* **5 records** at `data/corpus/monster_codex/race_trait/{duergar,goblin}/` — Duergar 2, Goblin 3 —
+  written by `src/bin/ingest_race_traits.rs`, PI-screened (0 hits), `LICENSE.json` at
+  `records_processed: 5`.
+* **`monster_codex` joins `race_catalog::RACE_CORPUS_BOOKS`** and gets a real reach claim,
+  `("monster_codex", "race_traits") => race_traits_reach("MC", "monster_codex")`. **No new surface
+  was built and none was needed**: `race_trait_picker` is book-agnostic and serves whatever the race
+  corpus loads. The per-book cost of this lane is therefore an ingest, not a chassis.
+* **The `beastiary1/race_traits` finding is RETIRED** — removed from both `OPEN_FINDINGS` and
+  `UNREACHED_RECORD_FINDINGS`, satisfying DoD item 6's standing expectation. `Duergar ~ Ironskinned`
+  (`mc_abilities_race.lst:16`) carries the only `FACT:Duergar_ReplaceSLAEnlargePerson|True` token in
+  the upstream corpus, which is the positive `PREFACT` gate on B1's
+  `Duergar ~ Spell-Like Ability ~ Invisibility`. **Fixed by data, not by code**: nothing in
+  `race_resolver` changed. `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`
+  replaces `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs` and holds it closed in both
+  directions.
+* **The predecessor test would not have caught its own closure.** Its `corpus()` helper hardcoded
+  three book roots, so ingesting a *fourth* book left it green while the fact it asserted became
+  false. The replacement re-derives the loaded book list from `race_catalog.rs` itself and pins the
+  two equal.
+* **`src/bin/ingest_race_traits_arg.rs` → `src/bin/ingest_race_traits.rs`**, book-table-driven
+  (`BOOK_SOURCES`). Adding a book is now a 3-field entry. The repo already carried one full copy of
+  this binary (`ingest_apg_race_traits.rs`); it does not need a second. ARG's 156 records regenerate
+  **byte-identical** apart from `ingested_at`, verified by regenerating and diffing.
+* One shared-code change, derived not guessed: `KEY:` is **optional** in PCGen and a row without one
+  is keyed by its display name (`mc_abilities_race.lst:30`/`:31`). The binary used to panic. The
+  default matches the one `v06_work_inventory` already applies to those same two rows.
+
+### 43.4 Six Ratfolk rows are deliberately NOT written
+
+`mc_abilities_race.lst` carries 6 Ratfolk alternates. Ratfolk has no ingested race chassis, no
+default traits and no picker entry. Writing them would create the repo's only Ratfolk content for a
+race that does not exist in it — inventing content to make a count look better. They are counted and
+reported by the ingest run, never emitted, exactly as ARG's out-of-scope races are.
+
+### 43.5 The "race chassis ceiling" is narrower than `kanban.md` records it
+
+Card 10 records the extend lane as blocked because "the engine models exactly **7** races (CRB's
+hardcoded `race_traits()`)". **Re-derived, that is true of one instrument and false of the product.**
+
+* The **player surface** — `race_resolver::load_race_corpus` → `race_trait_picker` →
+  `list_alternate_racial_traits` — models **18** races, read off disk at runtime. Derivation:
+  `ls -d data/corpus/{core_rulebook,beastiary,advanced_race_guide}/race_trait/*/ | xargs -n1 basename | sort -u | wc -l`
+  → 18 (CRB 7 + B1 11; ARG's 18 dirs are the same union). Duergar and Goblin are both in it, which
+  is why this pilot's records reach a player at all.
+* **`v06_work_inventory`'s grounding probe** is the thing pinned to 7: `race_names` is built from
+  `RaceId::ALL` and `race_trait_ids` solely from `crb::race_traits()`
+  (`src/bin/v06_work_inventory.rs`), so every race trait outside CRB's 7 races reports
+  `race_trait_race_not_modelled` **no matter how reachable it is**. All 5 of this pilot's records
+  report that verdict while `reach_gate` executes a passing claim against the same records.
+
+This is the doneness-instrument hierarchy in a live instance: `reach_gate` executes IPC,
+`v06_work_inventory` answers a narrower question. **Card 10's real first task is repairing that
+probe** — grounding a race trait against the corpus-driven resolver the app actually reads, not
+against CRB's compiled table — and its blast radius is large (ARG's 156, B1's 108, APG's 1 and these
+5 all currently read `not-ingested` while reaching a player). It is recorded here with its evidence
+rather than attempted inside a pilot cycle, because it moves several hundred units' status across
+the whole dashboard and belongs in the extend lane's own reviewable diff.
+
+### 43.6 `RuleSetId::MonsterCodex`
+
+Added, with `COMPILED_RULE_SETS` / `corpus_dir_for` / `rule_set_id` / `content_state_dump` arms. It
+is the **first variant with no `rules_tables/<book>/` module**, because a race trait is never a
+compiled table. Withholding it would have left all 213 of the book's units at `not-started` —
+"nothing about this unit has been attempted" — for a book whose records a player can now select,
+which is the exact defect `COMPILED_RULE_SETS`' own doc comment records ARG and PU suffering for
+eleven days. After the change **0** monster_codex units remain `not-started` (DoD item 4).
+
+### 43.7 Per-unit cost, for the extend cycles
+
+**Do not extrapolate a per-record rate.** The pilot's cost was almost entirely once-per-*lane*:
+the binary generalisation, the `RuleSetId` variant, the `RACE_CORPUS_BOOKS`/`book_code` wiring, the
+finding retirement and its replacement test. The **per-book** cost that remains is one
+`BOOK_SOURCES` entry, one `CORPUS_BOOK_IDS` entry, one `reach_of` arm, one `LICENSE.json`, one
+`RuleSetId` variant — and, for any book whose traits belong to races outside the 18, nothing at all
+to write. The dominant real cost for the extend lane is §43.5's probe repair, which is paid once.

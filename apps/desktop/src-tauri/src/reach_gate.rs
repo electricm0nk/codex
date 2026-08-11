@@ -543,6 +543,9 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // SD-29 Epic 5 pilot. Directory and book id are spelled the same, like
     // ARG's and PU's, so no rename is hidden here.
     ("bonus_bestiary", "bonus_bestiary"),
+    // SD-29 Epic 6 pilot (race-trait lane). Spelled the same in both columns
+    // for the same reason.
+    ("monster_codex", "monster_codex"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -949,6 +952,23 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // table -- now that `advanced_players_guide` is in
         // `race_catalog::RACE_CORPUS_BOOKS`.
         ("apg", "race_traits") => Some(race_traits_reach("APG", "advanced_players_guide")),
+        // SD-29 Epic 6 pilot (race-trait lane, 2026-08-11, `decisions.md §43`).
+        // Monster Codex's 5 in-scope alternate racial traits -- Duergar's 2 and
+        // Goblin's 3 -- served by exactly the same two commands ARG's and APG's
+        // claims run, now that `monster_codex` is in
+        // `race_catalog::RACE_CORPUS_BOOKS`. No new surface was built for this
+        // book and none was needed: the picker is book-agnostic and reads
+        // whatever the race corpus loads.
+        //
+        // This is also the claim that retires the `beastiary1/race_traits`
+        // finding. `Duergar ~ Ironskinned` carries the only
+        // `FACT:Duergar_ReplaceSLAEnlargePerson|True` token in the upstream
+        // corpus, which is the positive `PREFACT` gate on Bestiary 1's
+        // `Duergar ~ Spell-Like Ability ~ Invisibility` -- so selecting it
+        // brings that row in as a `flagGranted` trait and the B1 claim above
+        // goes from `NotSurfaced` to a plain pass. See
+        // `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`.
+        ("monster_codex", "race_traits") => Some(race_traits_reach("MC", "monster_codex")),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -1667,30 +1687,6 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 /// Each entry states the remedy, so this reads as a work queue rather than a
 /// permanent exemption.
 const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
-    (
-        "beastiary1",
-        "race_traits",
-        "Read the numbers before the label: 107 of Bestiary 1's 108 ingested race-trait records \
-         reach a player through `list_alternate_racial_traits`' standard-trait column and \
-         `resolve_race_alternate_selection`'s granted rows, and this gate refuses partial credit. \
-         ONE does not: `Duergar ~ Spell-Like Ability ~ Invisibility`, whose positive gate is \
-         `Duergar_ReplaceSLAEnlargePerson`. Derived, not assumed: no record in `data/corpus/` sets \
-         that flag, and `arg_abilities_race.lst` never mentions it (`grep -c \
-         'Duergar_ReplaceSLAEnlargePerson|True'` -> 0). Its only setter anywhere in the PCGen \
-         checkout is `Duergar ~ Ironskinned` in `monster_codex/mc_abilities_race.lst:16` — a book \
-         this project has not registered, audited or ingested, Tier-1 but deferred by \
-         `decisions.md §9` and assigned to SD-29's Bestiary bundle by `epic-breakdown.md:150`. So \
-         this is not a wiring gap and there is nothing to wire: the row is upstream-unreachable \
-         until Monster Codex is in scope. RE-VERIFIED 2026-07-31 rather than inherited: the claim \
-         is now executable, not prose. `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs` \
-         derives the empty setter set from the on-disk corpus, proves no Duergar selection (one \
-         at a time or all at once) reaches the row, and proves the MIRROR row does — \
-         `Duergar ~ Blood Enmity` sets `Duergar_ReplaceSLAInvisibility` and really does grant \
-         `Duergar ~ Spell-Like Ability ~ Enlarge Person` — which is what makes 'blocked' the right \
-         word instead of 'broken'. That test goes RED the day Monster Codex is ingested, which is \
-         how this entry closes. Do NOT close it by hiding the record — a record on disk that no \
-         selection can reach is exactly what this gate is for.",
-    ),
     // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
     // the swap correctly in compute output for the wired slots (Alchemist's
@@ -1791,32 +1787,36 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[];
 ///
 /// A family whose records reach nothing at all has no `reach_of` claim to
 /// declare — there is no response to execute against, which is the whole reason
-/// it is a finding. `beastiary1/race_traits` is a different case. 107 of its 108
-/// records demonstrably reach a live surface, and a claim that executes
-/// against that surface is exactly what stops those 107 from silently falling
-/// off — which is the defect this whole module exists for. Declaring no claim
-/// would trade a caught regression for a tidier table.
+/// it is a finding. A family with a *partial* shortfall is a different case:
+/// the claim is declared, it returns [`Reach::NotSurfaced`], the family stays a
+/// written finding, and the exact shortfall is pinned here. The property that
+/// matters is preserved in both directions:
 ///
-/// So the claim is declared, it returns [`Reach::NotSurfaced`], the family
-/// stays a written finding, and the exact shortfall is pinned here. The
-/// property that matters is preserved in both directions:
-///
-/// * a 2nd B1 record that stops reaching changes this set and fails;
+/// * another record that stops reaching changes this set and fails;
 /// * fixing one of these fails too, until its key is deleted.
 ///
-/// `advanced_race_guide/race_traits` used to be listed here for exactly this
-/// reason, at 154 of 156. Its two stragglers — `Feral ~ Languages` and
-/// `Scion of Humanity ~ Languages` — now arrive through
-/// `race_resolver`'s reading of the `ABILITY:<cat>|AUTOMATIC|<key>` grant
-/// shape, so the family is a plain claim and both entries are gone.
+/// **Two race-trait entries have been retired by being fixed, not
+/// reclassified**, and both are worth recording because they are the two ways
+/// this list is supposed to shrink:
+///
+/// * `advanced_race_guide/race_traits`, at 154 of 156. Its two stragglers —
+///   `Feral ~ Languages` and `Scion of Humanity ~ Languages` — now arrive
+///   through `race_resolver`'s reading of the `ABILITY:<cat>|AUTOMATIC|<key>`
+///   grant shape. Fixed by **code**: the resolver learned a grant shape it had
+///   been ignoring.
+/// * `beastiary1/race_traits`, at 107 of 108 (retired 2026-08-11, SD-29 Epic 6
+///   pilot, `decisions.md §43`). Its one straggler,
+///   `Duergar ~ Spell-Like Ability ~ Invisibility`, is gated on a positive
+///   `PREFACT` naming `Duergar_ReplaceSLAEnlargePerson`, and the only row in
+///   the whole upstream corpus that sets that flag is `Duergar ~ Ironskinned`
+///   in `monster_codex/mc_abilities_race.lst:16`. Fixed by **data**: nothing
+///   about the resolver changed, Monster Codex's racial traits were ingested
+///   and the row became reachable by a selection a player can really make.
+///   That is the shape this list was designed to distinguish from a wiring gap,
+///   and it took an ingest rather than a screen to close.
+///   `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`
+///   holds it closed in both directions.
 const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
-    (
-        "beastiary1",
-        "race_traits",
-        // Gated on `Duergar_ReplaceSLAEnlargePerson`, which nothing in any
-        // ingested book sets; its only setter is in Monster Codex.
-        &["Duergar ~ Spell-Like Ability ~ Invisibility"],
-    ),
     // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
     // every key, because none reaches a player through any surface today
     // (no picker exists at all, see OPEN_FINDINGS). This is the "whole

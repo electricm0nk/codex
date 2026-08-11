@@ -543,7 +543,7 @@ mod tests {
         }
     }
 
-    /// The production guard `src/bin/ingest_race_traits_arg.rs` already
+    /// The production guard `src/bin/ingest_race_traits.rs` already
     /// carries for racial traits, ported to the surface that actually serves
     /// spell text to a player.
     ///

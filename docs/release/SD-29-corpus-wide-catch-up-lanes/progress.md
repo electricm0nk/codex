@@ -4114,3 +4114,185 @@ then `scripts/reclaim.sh --apply`.
 `epic-12-reopen` → **COMPLETE**. The board now tells the truth: five lane cards and the two
 review/closure cards are `READY`, and the next cycle that reads `kanban.md` reads a correct board.
 **This card reopened the bundle; it did not start the lanes it reopened.**
+
+---
+
+## Cycle — epic-6-race-trait-lane-pilot (SD29-E6-F1-002)
+
+**Card:** `epic-6-race-trait-lane-pilot` (Order 9), reopened by `epic-12-reopen` per
+`decisions.md §42`. **Actor:** `sd29-racetrait-repin`. **Branch:** `tranche/9`.
+**Date:** 2026-08-11. **Decision record:** `decisions.md §43`.
+
+**Scope delivered:** the pilot book re-pin, and the pilot ingest end-to-end.
+
+### 0. Worktree integrity — no recovery needed
+
+Ran as the mandated first action. `git rev-parse --abbrev-ref HEAD` → `tranche/9`;
+`git rev-parse HEAD` → `0b23f4f3`; `docs/release/SD-29-corpus-wide-catch-up-lanes/loop-instruction.md`
+present; `git fetch origin && git merge-base --is-ancestor origin/tranche/9 HEAD` → HEAD descends
+from `origin/tranche/9` (it *is* the tip). **No `git reset --hard` was required.** This cycle ran in
+the shared checkout, not a dispatch worktree, so run 1's `7d9f1c4f` wrong-base failure could not
+apply.
+
+### 1. Shape and trap-report (cycle mechanics 0, 0b)
+
+`cargo run --locked --bin v06_corpus_trap_report -- monster_codex`. 21 files, **223 DECLARES**, 6
+`.COPY=`, 11 `.MOD`, 2 disabled. `mc_abilities_race.lst`: 19 declares + 1 `.COPY=` + 1 `.MOD`. The
+`.MOD` is `mc_abilities_race.lst:26` (`Racial Traits ~ Goblin`, modifying a record not declared in
+this file — declares nothing), and the `.COPY=` is `:72`
+(`Universal Monster Rule ~ Paralysis (Supernatural).COPY=Bat (Sootwing) ~ Paralysis`). Both are
+correctly outside this ingest: neither carries a `TYPE:<Race> Racial Trait` component.
+Book-level traps of note: `key-differs-from-name` 98, `namespaced-key` 93,
+`governing-token-hidden-by-filter` 18.
+
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **EXIT 0**
+(259 mod-record traps, 0 defects) — DoD item 3.
+
+### 2. Re-derivation — every figure below is this cycle's own
+
+**Re-pin candidates** (the prior cycle's figures, re-derived not transcribed):
+
+```bash
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+nc=collections.Counter()
+for u in d['units']:
+    if u['kind']!='race_trait': continue
+    if 'companion' not in (u.get('source_file') or '').lower(): nc[u['book']]+=1
+for k,v in sorted(nc.items(), key=lambda x:(x[1],x[0])): print(v,k)
+"
+```
+
+→ reproduces `ultimate_intrigue` 3, `ultimate_magic` 3, `inner_sea_bestiary` 4, `ultimate_combat` 4,
+`monster_codex` 14, `bestiary` 21 **exactly**, and adds `book_of_the_damned_volume_1`/`_2` at **1**
+each (the note said 2 — correction emitted; conclusion unchanged, both too thin).
+
+**Corpus-wide `race_trait`, before this cycle:** 3,447 total / 21 grounded / 1,813 `not-ingested` /
+1,613 `not-started`. Same command, `collections.Counter(u['status'])`.
+
+**Modelled races on the player surface:**
+`ls -d data/corpus/{core_rulebook,beastiary,advanced_race_guide}/race_trait/*/ | xargs -n1 basename | sort -u | wc -l`
+→ **18**. This is the figure that corrects card 10's "exactly 7" (`decisions.md §43.5`).
+
+**The Duergar setter, derived from the upstream tree, not from a comment:**
+`grep -rn "Duergar_ReplaceSLAEnlargePerson" ~/workspace/repos/pcgen/data/` → the only
+`FACT:…|True` (setting) occurrence in the whole PCGen checkout is
+`monster_codex/mc_abilities_race.lst:16`, `Duergar ~ Ironskinned`.
+
+### 3. The re-pin — `inner_sea_intrigue` → `monster_codex`
+
+Adopted the prior cycle's recommendation, **for a stronger reason than it gave**. Reading candidate
+unit *keys* rather than counts, five of the six candidates carry the same defect that disqualified
+`inner_sea_intrigue` — a `_abilities_race` filename over rows that are not racial traits
+(`ultimate_intrigue` eidolon rows, `ultimate_magic` `Racial SLA ~ …` rows, `ultimate_combat`
+favoured-class rows, `bestiary` monster racial abilities: Drow Noble, Rust Monster, Treant, Unicorn,
+`Template ~ +2 <Stat>`). **`monster_codex` is the only candidate carrying genuine player-race
+alternate racial traits.** Full table in `decisions.md §43.1`.
+
+### 4. Bounded work (TDD)
+
+**RED first.** `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs` written before
+any production change: 7 tests, **5 failed** for the intended reasons (no `data/corpus/monster_codex`,
+empty setter set, `Duergar ~ Ironskinned` not among Duergar's selectable alternates, book list drift).
+
+**GREEN.**
+
+1. `git mv src/bin/ingest_race_traits_arg.rs src/bin/ingest_race_traits.rs`, made book-table-driven
+   (`BOOK_SOURCES`: corpus dir + `.lst` path + PCGen book dir). `cargo run --bin ingest_race_traits`
+   ingests every declared book; `-- <book>` ingests one. The repo already carried one full copy of
+   this 1,100-line binary (`ingest_apg_race_traits.rs`); a third copy was the alternative.
+2. One shared-code change, **derived not guessed**: `KEY:` is optional in PCGen and a row without one
+   is keyed by its display name. The binary panicked instead (`line 31: racial-trait row has no
+   KEY: field` — `Oversized Goblin`). The default now matches the one `v06_work_inventory` already
+   applies to those same two rows (`Standard Goblin`, `Oversized Goblin`).
+3. `cargo run --bin ingest_race_traits -- monster_codex` → **5 records emitted**, 2 distinct races
+   (Duergar 2 / Goblin 3), 4 replace-flags, **6 Ratfolk rows skipped and reported, never written**
+   (no ingested Ratfolk chassis — `decisions.md §43.4`), 0 unresolved DESC args, 0 PCGen-syntax leaks.
+4. `data/corpus/monster_codex/LICENSE.json` written, `records_processed: 5` (the real on-disk count;
+   `tests/sd27_book_license_record_counts.rs` derives every book's count from the filesystem).
+   `_monster_codex.pcc` declares `ISOGL:YES` (line 26) with a live COPYRIGHT block (37-43) and a real
+   `OGL.txt`. `docs/governance/license-matrix.md` row moved `unscreened` → `partially screened`, with
+   the qualification that this is 1 of the book's 18 `.lst` files.
+5. `monster_codex` added to `race_catalog::RACE_CORPUS_BOOKS` and `book_code` (`MC`).
+   **No new surface was built and none was needed** — `race_trait_picker` is book-agnostic.
+6. `reach_gate`: `CORPUS_BOOK_IDS` entry + the claim
+   `("monster_codex", "race_traits") => race_traits_reach("MC", "monster_codex")`.
+7. **`beastiary1/race_traits` RETIRED from both `OPEN_FINDINGS` and `UNREACHED_RECORD_FINDINGS`** —
+   DoD item 6's standing expectation, discharged. Fixed **by data, not by code**: nothing in
+   `race_resolver` changed; `Duergar ~ Ironskinned` sets the positive `PREFACT` gate on B1's
+   `Duergar ~ Spell-Like Ability ~ Invisibility`, so a selection a player can really make brings the
+   row in. The `UNREACHED_RECORD_FINDINGS` doc comment now records both retired race-trait entries
+   and the two different ways they closed (a resolver fix; an ingest).
+8. `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs` deleted, replaced by the new file.
+   **Its probe would not have caught its own closure**: `corpus()` hardcoded three book roots, so
+   ingesting a fourth left it green while its asserted fact became false. The replacement re-derives
+   the loaded book list from `race_catalog.rs` itself and pins the two equal.
+9. `RuleSetId::MonsterCodex` added (`rules_tables/mod.rs`, `COMPILED_RULE_SETS`, `corpus_dir_for`,
+   `rule_set_id`, `v06_content_state_dump`). First variant with **no `rules_tables/<book>/` module**,
+   because a race trait is never a compiled table — reasoning in `decisions.md §43.6`.
+10. Renamed-binary prose references updated in 8 files.
+
+**ARG regression check, run deliberately:** regenerating `advanced_race_guide` through the
+generalised binary produces **156 records / 18 races**, and `git diff` shows **156 files changed,
+156 insertions, 156 deletions — every one of them the `ingested_at` line only**. Content
+byte-identical; the tree was reverted rather than committing timestamp churn.
+
+**GREEN result:** 7 passed / 0 failed.
+
+### 5. DoD item 4 — work-inventory
+
+`cargo run --locked --bin v06_work_inventory` regenerated `docs/work-inventory.json`
+(`generated_at 2026-08-11T17:15:38Z`). **`monster_codex` units at `not-started`: 213 → 0.** All 213
+now classify against a compiled rule set (14 `race_trait`, 72 `class_feature`, 45 `equipment`, 32
+`feat`, 24 `spell`, 15 `companion`, 4 `equipment_modifier`, 3 `monster_ability`, 2 `monster`).
+Corpus-wide `race_trait` `not-started` 1,613 → 1,599.
+
+### 6. A finding this cycle records rather than hides
+
+**All 14 `monster_codex` race_trait units — including the 5 this cycle ingested and proved reachable —
+report `race_trait_race_not_modelled` in `docs/work-inventory.json`.** That verdict is the
+instrument's, and the instrument is wrong: `v06_work_inventory` builds `race_names` from
+`RaceId::ALL` and `race_trait_ids` from `crb::race_traits()`, i.e. CRB's 7 races, while the surface a
+player uses reads 18 races off disk. `reach_gate` — the higher instrument in the doneness hierarchy,
+because it executes IPC — carries a passing claim for the same 5 records.
+
+This is card 10's real first task and it is recorded with its evidence in `decisions.md §43.5`
+rather than attempted here: repairing it moves ARG's 156, B1's 108, APG's 1 and these 5 from
+`not-ingested` to grounded, several hundred units of dashboard movement that belongs in the extend
+lane's own reviewable diff, not inside a pilot cycle. **This is a scope decision taken under
+UNATTENDED MODE's default-and-flag rule, not a silent omission.**
+
+### 7. Per-unit cost — for the extend cycles
+
+**Do not extrapolate a per-record rate from 5 records.** Cost breakdown in `decisions.md §43.7`:
+essentially all of it was once-per-*lane* (binary generalisation, `RuleSetId` variant,
+`RACE_CORPUS_BOOKS`/`book_code` wiring, finding retirement, replacement test). The residual
+**per-book** cost is one `BOOK_SOURCES` entry, one `CORPUS_BOOK_IDS` entry, one `reach_of` arm, one
+`LICENSE.json`, one `RuleSetId` variant. The dominant remaining cost for the lane is §43.5's probe
+repair, paid once.
+
+### 8. Environment — the disk incident, and what caused it
+
+`./scripts/verify.sh --only preflight-disk` **FAILED, EXIT=1** at 90% used / 51G free.
+`scripts/reclaim.sh` (dry run) could reclaim **1009 KB**: every other target dir and worktree on the
+box was live under a concurrent agent (`codex-target-sd29-driver-fix` at 23G, 8 unmerged
+`worktree-wf_3516060a-756-*` branches, a live verify run).
+
+**Partly self-inflicted, and worth recording as a rule.** This cycle had opened a *second*
+`CARGO_TARGET_DIR` for `apps/desktop/src-tauri` on the strength of AGENTS.md's "one directory per
+agent **per source tree**". But `scripts/verify.sh` sets no `CARGO_TARGET_DIR` of its own — it builds
+*both* crates into the one it inherits. The second dir was ~20G of pure duplication. It was deleted;
+one dir serves both crates, which is what the gate does anyway.
+
+Proceeded under the script's own documented override, `PREFLIGHT_DISK_MAX_PERCENT=93`. The
+meaningful floor — 20G free — was **never breached** (40-53G free throughout). The percentage floor
+is calibrated for a smaller disk than this 484G one. Recorded as a default-and-flag ruling, with an
+`incident` retro event (`recurrence-key disk-full`).
+
+**Shared checkout, respected:** `git status --porcelain` before every git write. Throughout this
+cycle a concurrent agent held `apps/desktop/.claude/skills/run-desktop/driver.sh`,
+`scripts/verify.sh`, `docs/retro/tranche-9-retrospective.md`,
+`docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md` and
+`docs/retro/events/codex.jsonl` modified. **None was touched.** No `git add -A`, no `git stash`.
+Retro events went to this actor's own shard, `docs/retro/events/sd29-racetrait-repin.jsonl`.
