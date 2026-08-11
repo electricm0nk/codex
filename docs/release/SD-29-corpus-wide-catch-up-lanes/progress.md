@@ -5181,3 +5181,53 @@ and this cycle made them wronger rather than merely leaving them wrong. Both now
 it read 153, then 157, then 158 across three cycles and nothing failed when it went stale.
 
 No test asserted either string. This is the defect class DoD item 8 exists to catch.
+
+### 6d. Verification — gate run 2, on the fixed tree
+
+`./scripts/verify.sh -j 2`, exit code captured directly, never through a pipe → **`VERIFY_EXIT=1`**,
+and the reason is worth stating precisely because it is not a content failure:
+
+```
+passed: 12  pi-sweep audit-selftest driver-selftest root-lib root-full desktop reach
+            frontend-install frontend-test frontend-typecheck clippy class-dump
+FAILED:  1  preflight-disk
+```
+
+**Every content stage passed**, including the two that were red in run 1:
+
+| stage | result |
+|---|---|
+| `root-full` | **6,179 passed across 543 suites, all 524 `tests/*.rs` suites executed** (run 1: FAILED, 6,176/3 failing) |
+| `clippy` | **PASS** — root back at 54, the recorded ceiling, **not raised** (run 1: 57 vs 54) |
+| `desktop` | 422 passed |
+| `reach` | **18 passed** — the +1 over the pre-cycle 17 is this cycle's APG claim, so DoD item 2's "zero matched tests is a hard failure" is answered with a number that moved |
+| `class-dump` | 31/31 computing |
+| `frontend-test` / `frontend-typecheck` | 98/98 files; `tsc --noEmit` clean — these ran **after** `root-full` in the same invocation, so they cover §6c's prose fix |
+
+**The one failure is `preflight-disk`, and it is environmental — stated with the numbers rather than
+asserted.** The stage failed the **percentage** floor (92% used against a 90% floor) while the
+**meaningful** floor was never breached (39G free against a 20G minimum), on a 484G disk carrying
+two concurrent agents' ~22-30G `CARGO_TARGET_DIR`s. The build it was warning about then completed
+**green in full**, which is the direct evidence that the headroom was in fact sufficient. This is
+the same calibration issue `SD29-E6-F1-002` recorded; that cycle proceeded under the script's
+documented `PREFLIGHT_DISK_MAX_PERCENT=93` override, and **this cycle deliberately did not use the
+override** — it deleted its own 30G target dir instead and re-ran the stage clean:
+
+```
+$ rm -rf /home/ubuntu/workspace/codex-target-sd29-racetrait-r1
+$ ./scripts/verify.sh --only preflight-disk ; echo "PREFLIGHT_EXIT=$?"
+    repo filesystem (…, mounted at /): 87% used, 67G available
+    PASS  preflight-disk  (disk budget OK)
+PREFLIGHT_EXIT=0
+```
+
+**So all 13 stages have passed on this tree** — 12 in one invocation, and `preflight-disk` on the
+same commit immediately afterwards once the headroom existed. **`verify.sh` was not weakened, no
+override was set, and no stage was skipped or `#[ignore]`d.** What this receipt does not claim is a
+single invocation returning `0`: that did not happen, and reporting it as though it had is exactly
+the failure this bundle was reopened over.
+
+**Four baseline floors are stale-low** and the gate printed all four as notes rather than failures:
+`BASELINE_ROOT_LIB_TESTS` 1604 vs 1616, `BASELINE_ROOT_FULL_TESTS` 6138 vs 6179,
+`BASELINE_ROOT_TEST_BINARIES` 539 vs 543, `BASELINE_DESKTOP_TESTS` 413 vs 422. All four were
+already stale before this card. Left untouched per DoD item 7 — see the item-7 row above.
