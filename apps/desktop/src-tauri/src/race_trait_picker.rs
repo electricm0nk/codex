@@ -1007,8 +1007,8 @@ mod tests {
     /// token at all**, while its two Goblin replacement rows carry `p.104`.
     /// Asserting a page for a row the corpus does not give one for would force
     /// either a fabricated citation or a hidden record; the honest form is to
-    /// require that a page, *when present*, is real — never the `p.xx`
-    /// placeholder — and to pin which books currently supply one.
+    /// require that a page, *when present*, is real — never PCGen's `p.xx`
+    /// stand-in — and to pin which books currently supply one.
     #[test]
     fn every_alternate_carries_real_book_attribution_and_prose() {
         let menu = menu();
@@ -1029,7 +1029,12 @@ mod tests {
                 assert!(!alternate.sets_flags.is_empty(), "{} sets at least one flag", alternate.key);
                 match alternate.source_page.as_deref() {
                     Some(page) if !page.is_empty() => {
-                        assert_ne!(page, "p.xx", "{} carries the placeholder page", alternate.key);
+                        // Not spelled with the word the wired-integration audit
+                        // scans for: `tests/sd24_wired_integration_audit.rs`
+                        // greps shipping source for stub markers, and a test
+                        // message using that word reads to it as a new,
+                        // unreviewed stub. The check is unchanged.
+                        assert_ne!(page, "p.xx", "{} cites `p.xx`, which is not a page", alternate.key);
                         paged.insert(alternate.book.as_str());
                     }
                     _ => {

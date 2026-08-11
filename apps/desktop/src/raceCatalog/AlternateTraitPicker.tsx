@@ -37,7 +37,9 @@ const panel: CSSProperties = {
 const muted: CSSProperties = { color: 'var(--color-text-muted)', fontSize: '0.75rem' };
 
 /**
- * The Advanced Race Guide's Alternate Racial Traits picker.
+ * The Alternate Racial Traits picker. Book-agnostic: it serves whatever
+ * `race_catalog::RACE_CORPUS_BOOKS` loads (ARG, APG, and since SD-29's
+ * race-trait lane pilot, Monster Codex), and each row carries its own book code.
  *
  * For a chosen race this shows every ARG alternate, the standard trait(s) each
  * one replaces, and — once selected — the standard traits that really were
@@ -183,7 +185,7 @@ export function AlternateTraitPicker() {
   return (
     <>
       <p style={{ ...muted, margin: '0 0 0.75rem' }}>
-        The Advanced Race Guide&apos;s alternate racial traits — {describePicker(menu)}. Choosing one replaces the
+        Alternate racial traits from every ingested book — {describePicker(menu)}. Choosing one replaces the
         standard trait it names; the engine resolves the swap, this screen only shows it.
       </p>
 

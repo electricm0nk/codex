@@ -4520,3 +4520,68 @@ Also recorded (baseline notes, not failures): `BASELINE_ROOT_LIB_TESTS` 1604→1
 
 **Card `epic-13-desktop-driver-fix` → COMPLETE.** Item 8 is satisfiable again and is now defended by
 a gate stage.
+
+### 10. Definition of done — all 8 items, each checkable by someone who was not present
+
+| # | item | evidence |
+|---|---|---|
+| 1 | `./scripts/verify.sh` exits `0`, exit code captured directly | `VERIFY_EXIT=0`, run in the foreground with `echo "VERIFY_EXIT=$?"` on the next line — never through a pipe. 13/13 stages PASS: `preflight-disk`, `pi-sweep`, `audit-selftest`, `driver-selftest`, `root-lib` (1615), **`root-full` (6173 across 543 suites, all 524 `tests/*.rs` suites executed)**, `desktop` (421), `reach` (17), `frontend-install`, `frontend-test` (98/98), `frontend-typecheck`, `clippy` (0 errors), `class-dump` (31/31 computing) |
+| 2 | the `reach` stage passes **with a claim for this book's families** | `("monster_codex", "race_traits")` is a declared `reach_of` arm executing `race_traits_reach("MC", "monster_codex")` against the live `list_alternate_racial_traits + resolve_race_alternate_selection` responses. **17 matched tests, not 0.** The claim is not a pass-by-absence: the family is in `corpus_inventory()` via its own `CORPUS_BOOK_IDS` entry, and 4 of its 5 records reach |
+| 3 | `v06_corpus_trap_report -- --audit` exits `0` | EXIT 0; 259 mod-record traps, **0 defects** — every ingested record's citation agrees with the line it names |
+| 4 | `v06_work_inventory` regenerates, units leave `not-started`, second run changes only `generated_at` | **monster_codex `not-started`: 213 → 0.** Second run diffed: only `generated_at` moves |
+| 5 | the four-check wired-integration audit is clean | `tests/sd24_wired_integration_audit.rs` 5/5 inside `root-full`. It went RED once on this cycle's own diff and was fixed at the source, not excluded — see §11 |
+| 6 | any family that could not be surfaced has an `OPEN_FINDINGS` entry naming its remedy | **Discharged in both directions.** RETIRED: `beastiary1/race_traits` (the Duergar Invisibility SLA), which this bundle's DoD named explicitly and expected Monster Codex to close. ADDED: `monster_codex/race_traits`, for `Oversized Goblin`, with its remedy named (an ability-pool variant mechanism) — recorded as a cycle shortfall, not a pass |
+| 7 | baseline movements are a separate reviewable commit with `--show-actuals` | **None.** `scripts/verify-baselines.env` is untouched; `pi-sweep` reports 10 hits against 10 baseline rows, unchanged |
+| 8 | on-screen verification for player-visible families | done, below |
+
+### 11. On-screen verification (DoD item 8) — the record a player could not reach, reached
+
+`RUN_DESKTOP_AGENT=sd29-racetrait-repin` exported before the first `driver.sh` call (per the skill's
+"Concurrent agents" rule); the driver took `:69`, its own state file and its own logs. Run **after**
+the gate finished, never concurrently — this box has 22 GiB RAM and no swap, and a prior cycle
+recorded the vite dev server being OOM-killed when the two overlap.
+
+Path: landing page → **Browse Race Traits** → **Alternate racial traits** tab → **Duergar (7)**.
+
+**What the screenshots show, in order:**
+
+1. The tab reads **"Alternate racial traits"**, not "(ARG)" — this cycle's label fix, live.
+2. The caption reads **157 alternate racial traits across 18 races** — the pilot's four new
+   alternates, rendered.
+3. The Duergar chip reads **(7)**, up from 5; the Goblin chip reads **(9)**, up from 7.
+4. Scrolling the alternates column: **`Ironskinned`  MC** and **`Twilight-Touched`  MC** — both
+   carrying the **`MC`** book code, real corpus prose, and a `Grants Spell-Like Ability` link. The
+   pilot's records are on a player's screen, attributed to their real book.
+5. **The proof.** Ticking `Ironskinned` moves the standard-trait column from *"10 traits apply"* to
+   *"12 traits apply"* and adds **`Spell-Like Ability`  B1** captioned **"Granted by your
+   selection"** — that is `Duergar ~ Spell-Like Ability ~ Invisibility`, the one Bestiary 1 record
+   that no selection could reach for the entire life of the finding, arriving from a Monster Codex
+   selection a player can really make. The right column updates to *"1 selected. 0 further options
+   locked out."*
+
+Screenshots: `shot5.png` (Race Traits), `shot6.png` (alternates tab, 157/18), `shot8.png` (the two
+MC rows), `shot9.png`/`shot10crop.png` (Ironskinned ticked, the granted B1 row).
+
+**Two stale book-specific UI strings were found by looking at the screen and fixed**, because this
+cycle made each of them wronger rather than merely leaving them wrong: the tab label
+(`Alternate racial traits (ARG)`, stale through *two* prior book additions), the picker caption
+(`The Advanced Race Guide's alternate racial traits — 157 …`, which attributed Monster Codex's rows
+to ARG), and the empty state (`The Advanced Race Guide declares no alternate racial traits for X`).
+None names a book now. This is the class of defect DoD item 8 exists to catch and that no passing
+test can reach.
+
+**One observation recorded, not fixed** (pre-existing, outside this card's diff): with an alternate
+selected, the standard column's sub-heading still reads *"No alternate selected, so nothing is
+replaced"* while the alternates column correctly reads *"1 selected"*. The *"nothing is replaced"*
+half is accurate here — `Ironskinned` grants a row rather than suppressing one — but the *"No
+alternate selected"* half is not. Reported for the extend lane rather than fixed inside a pilot.
+
+### 12. Cycle end
+
+`RETRO_ACTOR=sd29-racetrait-repin`; 8 events on this actor's own shard
+(`docs/retro/events/sd29-racetrait-repin.jsonl`): 4 `correction`, 1 `incident` (`disk-full`),
+1 `rework`, plus `verify.sh`'s own auto-emitted `verification` events. One event was repaired in
+place after a shell backtick mangled a field — recorded here rather than left corrupt.
+
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-repin` deleted (`rm -rf`) and
+`scripts/reclaim.sh --apply` run at cycle end.
