@@ -933,3 +933,306 @@ with the collision explained — never widen the gate and never edit the blackli
 1 × `correction` (license-matrix.md's own sweep: 4 hits claimed → 10 actual), 1 × `deferral` (the
 three pre-existing real leaks, owned by other bundles), plus `verify.sh`'s auto-emitted
 `verification` event.
+
+## Cycle SD29-E4-F1-001 — `epic-4-proven-equip-mod` (Proven-Path Lane: equipment + equipment_modifier)
+
+**Actor:** `sd29-e4-equip` · **Branch:** `tranche/9` · **Branch tip at claim:** `579d5941`
+**Card:** `epic-4-proven-equip-mod` (kanban Order 4) · **PR-id:** none (direct commit to `tranche/9`, pre-authorized)
+**Cycle-type:** proven-path content lane, corpus-wide
+
+### 1. Re-derived figures (command first, value second — nothing transcribed)
+
+The brief said the package records **1,163 + 812** and told me to verify, not transcribe. Re-derived:
+
+```bash
+python3 -c "
+import json
+from collections import Counter
+U=json.load(open('docs/work-inventory.json'))['units']
+inc=[u for u in U if u['book']!='beginner_box']
+for k in ('equipment','equipment_modifier'):
+    ks=[u for u in inc if u['kind']==k]
+    print(k, len(ks), Counter(u['status'] for u in ks))"
+# equipment          6208  {ingested-magnitude 4638, not-started 959, text-complete 293, not-ingested 185, grounded 133}
+# equipment_modifier 1580  {not-ingested 584, ingested-magnitude 456, text-complete 272, not-started 228, grounded 40}
+```
+
+- **equipment remaining = 959 + 185 = 1,144** — `kanban.md`'s corrected figure, not `scope-draft.md`'s 1,163.
+- **equipment_modifier remaining = 228 + 584 = 812** — matches.
+- **The predicate behind "remaining" is stated nowhere in this package and is load-bearing:** it is
+  `status in {not-started, not-ingested}`. Recorded here so the next lane does not have to re-discover it.
+
+**The 1,956 splits into two populations that need completely different work, and only one of them is
+this card's "proven path":**
+
+| population | units | what it needs |
+|---|---:|---|
+| `not-ingested` — book already has a compiled `RuleSetId`, its equipment table just lacks the record | **769** | table rows. No new mechanism. |
+| `not-started` — book has no compiled rule set at all (`inner_sea_gods`, `occult_adventures`, `mythic_adventures`, …, 13 books) | **1,187** | a new `RuleSetId` variant per book, a compiled rule-set module, a corpus cache. Not a table row. |
+
+```bash
+python3 -c "
+import json
+from collections import Counter
+U=json.load(open('docs/work-inventory.json'))['units']
+rem=[u for u in U if u['book']!='beginner_box' and u['kind'] in ('equipment','equipment_modifier')
+     and u['status'] in ('not-started','not-ingested')]
+print(Counter(u['status'] for u in rem))"
+# Counter({'not-started': 1187, 'not-ingested': 769})
+```
+
+**This cycle closed all 769 of the `not-ingested` population and none of the 1,187 `not-started`
+one.** Read `src/bin/v06_work_inventory.rs`'s `classify()`: a book with no compiled rule set returns
+`not-started` *before* the equipment table is ever consulted, so adding catalog rows for those 13
+books would change no unit's status and would ship a row the engine has no rule set behind. That is
+the boundary of "no new mechanism is needed," and it is 769 units wide, not 1,956.
+
+### 2. What landed
+
+- **`src/bin/gen_equipment_gap_tables.rs`** — the codegen. Re-parses the 19 `.lst` files those 769
+  units come from (paths taken from the inventory's own `source_file` field, not a directory glob)
+  under `v06_work_inventory::enumerate_file`'s **exact** record predicate, and emits only the records
+  the hand-authored tables do not hold. PI-screens the generated text through
+  `pi_table_sweep::screen_generated_table` **before** writing — Epic 3's mandated line 1.
+- **`src/rules_core/rules_tables/equipment_gap_tables.rs`** — generated, 769 rows.
+- **`src/rules_core/equipment_resolver.rs`** — `equipment_catalog_rows()` is now
+  `hand_authored_equipment_rows()` (the eleven per-book tables, split out as its own public function
+  so the generator's filter is provably their complement rather than a hand-maintained exclusion
+  list) **chained with the gap rows, last**, so first-match key lookup is unchanged. New
+  `EQUIPMENT_BOOK_UW`.
+- **`apps/desktop/src-tauri/src/equipment_catalog.rs`** — one `map_gap_entry` mapper into
+  `build_equipment_catalog()`, so the rows reach the catalog screen, the sheet's Add Equipment picker
+  and `list_equipment`. Nine pinned count tests re-derived (see §4).
+- **`apps/desktop/src-tauri/src/reach_gate.rs`** — `equipment_reach` unions the book's gap keys into
+  the **claim**, not merely into the surface; new `("ultimate_wilderness", "equipment")` arm.
+- **`src/bin/v06_work_inventory.rs`** — `equipment_book_slug_for` learns `"UW"`.
+- **`tests/equipment_gap_tables.rs`** — 7 integration tests.
+
+### 3. Honest reporting of "proven" (the brief's explicit ask)
+
+`work-inventory`'s `proven` predicate is `{grounded, text-complete}` and **equipment has no probe** —
+`probe_equipment_effect_wiring` observes a computed delta for only a handful of keys, so almost no
+equipment record can ever reach `grounded`. The honest split for what this cycle moved:
+
+- **engine-holds (`ingested-magnitude` or `text-complete`): all 769.** The engine holds the record
+  with its real `COST:`/`WT:` fields, and the desktop catalog serves it.
+- **strictly-proven (`grounded`): 0 of the 769**, and that is a property of the instrument, not of
+  the work — no equipment probe exists for these keys.
+
+### 4. Per-book, and the counts that had to move
+
+Generator output, re-derived by `tests/equipment_gap_tables.rs` against the table rather than copied
+from stdout — each figure equals that book's own `not-ingested` unit count:
+
+| book | gap rows | source |
+|---|---:|---|
+| `core_rulebook` | 335 | `cr_equipmods.lst` 332 + `core_essentials` 3 |
+| `ultimate_wilderness` | 127 | 78 general + 45 magic + 1 arms/armor + 3 equipmods |
+| `ultimate_psionics` | 113 | `up_equipmods.lst` |
+| `ultimate_equipment` | 65 | 39 magic + 12 arms/armor + 4 general + 10 equipmods |
+| `advanced_class_guide` | 50 | 48 equipmods + 2 `_pfs/pfs_acg_equip.lst` |
+| `advanced_players_guide` | 37 | `apg_equipmods.lst` |
+| `ultimate_combat` | 20 | `uc_equipmods.lst` |
+| `advanced_race_guide` | 15 | 14 equipmods + 1 arms/armor |
+| `ultimate_intrigue` | 7 | `ui_equipmods.lst` |
+| **total** | **769** | |
+
+**`core_essentials`' three rows are filed under CRB deliberately.** Their inventory evidence is
+`shared_library_record_held_by_no_ingested_host`; `core_rulebook.pcc` includes that shared library
+unconditionally, so CRB is the observed host, and putting the keys in CRB's set is what lets
+`classify()` attribute them rather than leave them unattributed.
+
+**`ultimate_wilderness` had ZERO equipment rows before this cycle** despite being a compiled rule set
+whose feats and archetypes already reach the player. All 127 of its catalog rows are gap rows; it
+needed a new `EQUIPMENT_BOOK_UW` code, which `equipment_catalog_books()` picks up automatically
+(it derives from the resolver) but which `equipment_book_slug_for` panics on until told — by design.
+
+**Nine pinned desktop counts moved, each re-derived from the live catalog, none guessed.** Catalog
+total **6,146 → 6,915** (+769, exactly the lane). Descriptions **3,755 → 3,844**. `ArmsArmor` filter
+**921 → 937**. CRB `Equipmods` **658 → 990**. ACG `Equipmods` **48 → 96**. APG gains a real
+`Equipmods` category (0 → 37) — the old test comment asserted "no `apg_equipmods.lst` in the corpus",
+which is **false**: the file exists and carries 37 records.
+
+**Cross-book key collisions 136 → 203, and this is the correct answer, not a defect.** A record
+Ultimate Equipment reprints out of the Core Rulebook is a record in *both* books; this lane's
+predicate is "a record this book's own table does not hold". The collision test was rewritten to
+keep the original UC/UE review intact — it now asserts the pinned 136-key set against the
+**hand-authored rows alone** (gap `(book, key)` pairs removed) and separately requires every *new*
+collision to involve a gap row. A new collision between two hand tables still fails.
+
+### 5. Definition of done
+
+**A real shipped-behaviour regression this cycle found and fixed, not routed around.**
+`equipment_cost_gp_headless_resolve`'s precedence is **stage-major, not row-major**: stage 1 matches
+any CRB row by `KEY:` before stage 2 matches any CRB row by display name. Chaining the gap rows last
+is therefore *not* sufficient on its own. CRB's hand table holds a row whose display **name** is
+`Cold Iron` (0 gp); `cr_equipmods.lst` holds a distinct record whose **`KEY:`** is `Cold Iron` and
+which carries no `COST:` token — so the new row won stage 1 and repriced a shipped CRB identity
+`Some(0.0)` → `None`. Caught by `widening_leaves_every_crb_identity_resolving_to_its_original_cost`
+(exhaustive over all 2,977 CRB rows × 3 probes — the reason it is exhaustive rather than sampled).
+Fixed by running the five-stage match over `hand_authored_equipment_rows()` to exhaustion first and
+only then over the full catalog, with the helper returning the matched **row** so "matched a row
+whose price is honestly `None`" stays distinguishable from "matched nothing".
+
+**A second, pre-existing ambiguity class grew from 1 to 36, pinned by name.**
+`the_two_lookups_agree_on_every_catalog_key_but_the_one_pinned_collision` guards keys where
+`equipment_catalog_row_by_key` and the free-form resolver disagree. Every one of the 35 additions is
+the `Cold Iron` shape — a gap row whose `KEY:` equals some hand row's display *name*. Both records
+are real and both belong in the catalog; only the free-form *string* is ambiguous, and the remedy
+that test's own doc comment already prescribes (a caller holding a picker key prices via
+`equipment_catalog_row_by_key`, never the free-form resolver) already covers it. Pinned by name, not
+by count, so a 37th still fails.
+
+### 5. Work-inventory movement (DoD item 4)
+
+`cargo run --locked --bin v06_work_inventory` → exit 0, `docs/work-inventory.json` regenerated:
+
+```bash
+python3 -c "
+import json
+from collections import Counter
+U=json.load(open('docs/work-inventory.json'))['units']
+inc=[u for u in U if u['book']!='beginner_box']
+for k in ('equipment','equipment_modifier'):
+    print(k, Counter(u['status'] for u in inc if u['kind']==k))"
+# equipment          {ingested-magnitude 4817, not-started 959, text-complete 299, grounded 133}
+# equipment_modifier {text-complete 841, ingested-magnitude 471, not-started 228, grounded 40}
+```
+
+**`not-ingested` is now 0 for both kinds** (was 185 + 584 = 769). `ingested-magnitude` +179 for
+equipment and +15 for equipment_modifier; `text-complete` +6 and +569 — the equipmod files are
+mostly magnitude-free `SPROP:`-only records, which is why the bulk landed `text-complete` rather
+than `ingested-magnitude`, and that is the honest classification, not a shortfall. The 959 + 228
+`not-started` units are untouched and belong to the 13 uncompiled books (see §1).
+
+**The standing hazard was not touched:** no generator wrote anything under `data/corpus/`, so no
+`license`/`pi_field`/`raw_tokens` were destroyed.
+
+### 6. Definition of done — status at receipt time
+
+1. **`./scripts/verify.sh` (FULL), exit code captured directly via `echo $? > verify.exit`, never
+   through a pipe.** Two runs this cycle. **Run 1 was RED and correctly so** — `root-lib` failed on
+   the `Cold Iron` repricing regression described above; that is a gate catching a real defect, and
+   it was fixed at source, not routed around. **Run 2, on the fixed tree**, is the one this receipt
+   cites; stage results are recorded in §7.
+2. **Reach claims — this card's families are `<book>/equipment` for nine books.** `equipment_reach`
+   now unions each book's 769 gap keys into the **claim** itself, so the gate asserts on the new
+   rows rather than merely tolerating them, and `("ultimate_wilderness", "equipment")` is a new arm.
+   No family is claimed by absence.
+3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` — see §7.
+4. **`docs/work-inventory.json` regenerated, units moved: `not-ingested` 769 → 0** (§5).
+5. **Wired-integration four-check audit over this cycle's files: clean.** No TODO/FIXME tokens, no
+   no-op handlers, no mock leaks, no "would have" strings. The rows are served by the same
+   `build_equipment_catalog()` the catalog screen, the Add Equipment picker and `list_equipment`
+   already read — a real path, not a parallel one.
+6. **`OPEN_FINDINGS` unchanged.** No family became unsurfaceable; UW's equipment went from
+   unsurfaced-and-unclaimed to surfaced-and-claimed, which retires nothing and adds nothing.
+7. **No baseline movement committed.** `scripts/verify-baselines.env` deliberately untouched per the
+   standing Epic-1 followup; `root-lib` measures **1604** against a 1488 baseline and the other three
+   SD-28 drifts still stand. Epic 9/10 owns that separate `--show-actuals` commit.
+8. **On-screen desktop verification: NOT PERFORMED — recorded as a shortfall in §10, not
+   claimed and not substituted.** This is the one DoD item this cycle does not satisfy.
+
+### 7. Verification results
+
+**`./scripts/verify.sh` (FULL) — RESULT: PASS, exit code `0`.** Captured directly with
+`echo $? > verify.exit` on the statement immediately after the command, never through a pipe.
+All **12** stages PASS:
+
+| stage | result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK) |
+| `pi-sweep` | PASS — 10 hits over `src/rules_core/rules_tables`, 10 baseline rows, **CLEAN**. The 769 new rows added **zero** PI hits; the generator's own pre-write screen also reported `CLEAN (0 hits)`. |
+| `audit-selftest` | PASS (28 cases) |
+| `root-lib` | PASS (**1604** passed) |
+| `root-full` | PASS (**6145** passed across **541** suites; all **523** `tests/*.rs` suites executed) |
+| `desktop` | PASS (413 passed) |
+| `reach` | PASS (**16** matched claims — not zero) |
+| `frontend-install` / `frontend-test` / `frontend-typecheck` | PASS (98/98 files, `tsc` clean) |
+| `clippy` | PASS (root:54 desktop:7 warnings, 0 errors) |
+| `class-dump` | PASS (31/31 computing) |
+
+**Three runs, and the two red ones were the gate doing its job.** Run 1: `root-lib` red on the
+`Cold Iron` repricing regression (§4). Run 2: `root-full` red on `tests/no_foreign_home_paths.rs`
+(the generator baked `/home/ubuntu/...` in as `PCGEN_CORPUS_ROOT`'s default and carried a tilde
+expander — one machine's truth shipped as everyone's; the variable is now required, matching
+`pathfinder_unchained::monk_features`' existing convention) **and** `desktop` red on two
+`character_hub` picker pins. Run 3, on the fixed tree: green. `preflight-disk` was also red on run 2
+at 90% used / 20G free — two concurrent agents each holding a 27 GB `CARGO_TARGET_DIR` — and passed
+on run 3 at 84%. No stage was weakened, skipped or `#[ignore]`d to reach green.
+
+**The desktop failure was the most valuable one, and its fix is not a number.** The Attach Modifier
+picker now offers **1,082 → 1,666** rows, +584 corpus gap-lane Equipmods. Both tests' *load-bearing*
+assertions hold unchanged: **zero** offered rows are refused by the attach gate, and no new
+display-vs-charge divergence appears (still exactly the three pinned same-book same-key rows). So
+none of the 584 newly offered rows is a dead affordance — the exact defect
+`docs/governance/no-stub-mvp-doctrine.md` names and that this picker has shipped before. 13 of the
+584 carry a real non-zero `COST:` (`priced_non_crb` 116 → 129); the rest are honestly `None` or
+`Some(0.0)`, which is the ordinary shape of an equipment *modifier*, not a gap.
+
+**DoD item 3 — `cargo run --locked --bin v06_corpus_trap_report -- --audit` → exit `0`:**
+"No defects: every ingested record's citation agrees with the line it names" (259 trap rows,
+0 defects, `mod-record`).
+
+**DoD item 4 — idempotence proven, not asserted:** `v06_work_inventory` run twice (both exit 0); a
+`json.load` comparison with `generated_at` popped from both reports **True** (identical), and the
+`generated_at`-only churn was reverted with `git checkout -- docs/work-inventory.json`.
+
+### 8. Git discipline
+
+`git status --porcelain` run before every git write. No `git add -A` — explicit paths only. No
+`git stash`. Two commits, both pushed to `tranche/9`:
+`2a35b60f` (the lane) and `919703e3` (the run-2 fixes). Another actor's worktree
+(`wf_3516060a-756-7`, the `epic-4-proven-spell` card) was live on the same box throughout; nothing
+of theirs was touched, and `origin/tranche/9` was re-fetched before each push.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-e4-equip` — this agent's own directory,
+never under `/tmp` — removed at cycle end, `scripts/reclaim.sh --apply` run after.
+
+### 9. What the next lane inherits
+
+1. **The `not-started` half is not this lane's shape.** 1,187 equipment/equipment_modifier units sit
+   in 13 books with no compiled `RuleSetId`. Each needs a rule-set variant and a compiled module
+   before a single catalog row can move a unit. Sizing that as "proven path" would be wrong.
+2. **`gen_equipment_gap_tables` is re-runnable and self-checking.** Adding a book to `BOOK_INPUTS`
+   is the whole change; the already-held filter derives from `hand_authored_equipment_rows()`, so it
+   cannot drift.
+3. **Appending rows to a staged matcher is not order-safe** (§4). Any lane widening a resolver whose
+   precedence is stage-major must run the old row set to exhaustion first.
+
+### 10. DoD item 8 — on-screen desktop verification: **NOT PERFORMED. Recorded as a shortfall, not claimed.**
+
+The equipment catalog is player-visible, so item 8 binds here — this is not an N/A the way Epic 3's
+build-time gate was. It could not be performed:
+
+```bash
+cd apps/desktop
+RUN_DESKTOP_AGENT=sd29-e4-equip-cycle1 ./.claude/skills/run-desktop/driver.sh launch
+# -> "Timed out waiting for launch"
+RUN_DESKTOP_AGENT=sd29-e4-equip-cycle1 ./.claude/skills/run-desktop/driver.sh title
+# -> "No running app — run 'driver.sh launch' first"
+pgrep -af 'codex-desktop$'   # -> nothing
+```
+
+`RUN_DESKTOP_AGENT` was set to a value unique to this cycle, per the skill's concurrency rule (it
+resolved to `DISPLAY=:78`, disjoint from the sibling agent's). The build succeeds and the log reads
+`Finished dev profile ... Running <target>/debug/codex-desktop`; the binary then exits before any
+window appears. The only preceding message is
+`libEGL warning: DRI3 error: Could not get DRI3 device`. Reproduced **three** times, once with
+`WEBKIT_DISABLE_COMPOSITING_MODE=1 WEBKIT_DISABLE_DMABUF_RENDERER=1 LIBGL_ALWAYS_SOFTWARE=1`. The
+box was under load average ~10 from a concurrent sibling agent's full verify throughout. Emitted as
+a `retro.py incident` with recurrence-key `run-desktop-driver-window-never-appears`.
+
+**What is deliberately NOT done here:** the passing `desktop` stage is not offered as a substitute.
+DoD item 8 exists precisely because a passing test cannot prove a player sees a value, and three
+compute twins have each passed a gate while showing nothing on the sheet. The strongest player-path
+evidence this cycle actually has is stated as exactly what it is, and no more: `character_hub`'s
+`every_equipmods_row_the_picker_offers_is_recognized_by_the_attach_gate` proves that **all 584**
+newly-offered Attach Modifier rows are recognized by the attach command and priced at the figure the
+picker displays — zero refusals, zero new display-vs-charge divergences. That is a stronger-than-
+usual code-path claim, and it is still not a screenshot.
+
+**The remedy, for whoever picks this up:** re-run the driver on an unloaded box and screenshot the
+Equipment Catalog filtered to book `UW` (127 rows, a book that served zero rows before this cycle —
+the cleanest possible on-screen proof) plus one CRB `Equipmods` row from `cr_equipmods.lst`. If the
+driver still cannot bring up a window, that is a tooling blocker worth its own card: DoD item 8 is
+unsatisfiable for every player-visible lane in this bundle until it is fixed.
