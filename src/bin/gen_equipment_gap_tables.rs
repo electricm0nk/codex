@@ -32,7 +32,7 @@
 //! Run it with a local PCGen corpus checkout:
 //!
 //! ```text
-//! PCGEN_CORPUS_ROOT=~/workspace/repos/pcgen/data \
+//! PCGEN_CORPUS_ROOT="$HOME/workspace/repos/pcgen/data" \
 //!   cargo run --locked --bin gen_equipment_gap_tables
 //! ```
 
@@ -262,20 +262,19 @@ fn rust_f64(value: Option<f64>) -> String {
     }
 }
 
+/// The corpus checkout, from the environment only.
+///
+/// No default and no tilde expansion: `tests/no_foreign_home_paths.rs` treats
+/// both an absolute `/home/<someone>` literal and an unexpanded `~` default in
+/// Rust source as failures, and it is right to — a baked-in path is one
+/// machine's truth shipped as everyone's. `PCGEN_CORPUS_ROOT` is the same
+/// variable `pathfinder_unchained::monk_features`'s corpus-gated test already
+/// requires, so there is no second convention to learn.
 fn corpus_root() -> PathBuf {
-    let raw = std::env::var("PCGEN_CORPUS_ROOT")
-        .unwrap_or_else(|_| "/home/ubuntu/workspace/repos/pcgen/data".to_string());
-    PathBuf::from(shellexpand_home(&raw))
-}
-
-fn shellexpand_home(raw: &str) -> String {
-    match raw.strip_prefix("~/") {
-        Some(rest) => match std::env::var("HOME") {
-            Ok(home) => format!("{home}/{rest}"),
-            Err(_) => raw.to_string(),
-        },
-        None => raw.to_string(),
-    }
+    PathBuf::from(
+        std::env::var("PCGEN_CORPUS_ROOT")
+            .expect("PCGEN_CORPUS_ROOT must point at a local pcgen/data checkout"),
+    )
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
