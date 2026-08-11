@@ -151,6 +151,48 @@ agent's own name — and export it in the agent's environment before the first
 not only when you know another one is already running: the whole point of
 the mechanism is that agents cannot see each other's assignments in advance.
 
+## On-screen verification (DoD item 8) — `verify-on-screen.sh`
+
+The repeatable entry point for Definition-of-done item 8: prove a record
+family's value actually renders on the player-visible screen, not merely
+that a code path exists. One command per record:
+
+```bash
+export RUN_DESKTOP_AGENT=<your-cycle-id>   # REQUIRED — script refuses 'default'
+./.claude/skills/run-desktop/verify-on-screen.sh \
+  --family race_trait --record "Ironskinned" \
+  --expect "Duergar" --expect "natural armor" \
+  --out docs/release/<bundle>/artifacts/<cycle>/item8
+```
+
+What it does: launch (or reuse this agent's already-running app), click the
+hub's "Browse …" link for the family, filter the catalog via its search box
+to `--record`, screenshot, then **select-all + copy in the webview and read
+the X clipboard back** (`read-clipboard.py`, python3-gi — no xclip in this
+container). The record name, every `--expect` string, and a per-family
+screen marker must all be present in the *rendered text* — a screenshot
+alone can't be machine-checked, and the extraction is what catches the
+"gate green, screen empty" defect class.
+
+- Families: `equipment` · `spell` · `race_trait` · `monster`.
+- **PASS** (exit 0): `<out>/<slug>.png` + `<out>/<slug>.verify.md` — the
+  report carries family/record/expects, UTC time, HEAD, agent id, and the
+  rendered lines that matched. Cite both paths in the cycle receipt.
+- **FAIL** (exit nonzero): artifacts are renamed `<slug>.FAILED.png` /
+  `<slug>.FAILED.verify.md` so they can never be mistaken for passing
+  evidence. Failure paths: launch failure, wrong-screen navigation (marker
+  guard — catches coordinate drift loudly), empty clipboard, record not
+  rendered, expect string missing. Zero `--expect` strings is itself an
+  error: a check that expects nothing verifies nothing.
+- The app is **left running** after each record so a cycle can verify many
+  records cheaply; run `driver.sh stop` once at cycle end. `--fresh` forces
+  a relaunch; `--slug` overrides the derived artifact basename.
+- Do not run concurrently with `scripts/verify.sh` (memory note below).
+- Coordinates in the script's nav table were calibrated on the driver's
+  1920x1200 Xvfb screen; if UI layout changes move a hub link or search
+  box, the marker/record guards fail loudly — recalibrate from a
+  screenshot and update the table in `verify-on-screen.sh`.
+
 ## Run (human path)
 
 From a real graphical Linux session (not headless):

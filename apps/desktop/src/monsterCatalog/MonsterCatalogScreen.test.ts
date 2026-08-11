@@ -5,6 +5,7 @@ import {
   SIZE_ORDER,
   formatAbilityHeading,
   formatBook,
+  formatServedBooks,
   formatChallengeRating,
   formatCreatureType,
   formatLandSpeedClause,
@@ -33,7 +34,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
 const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 
 /** The books the catalog serves, as `monster_catalog.rs`'s own wire codes. */
-const SERVED_BOOKS = ['B1', 'BB'] as const;
+const SERVED_BOOKS = ['B1', 'BB', 'MC'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [
@@ -174,7 +175,34 @@ function testEveryServedBookHasARealName() {
     'BOOK_LABELS names exactly the served books'
   );
   assertEqual(formatBook('BB'), 'Bonus Bestiary', 'the wire code is never what a reader sees');
+  assertEqual(formatBook('MC'), 'Monster Codex', 'the wire code is never what a reader sees');
   assertEqual(formatBook('ZZ'), 'ZZ', 'an unserved code falls through as itself');
+}
+
+/**
+ * The blurb above the catalog names its books. It used to name them in a
+ * hand-written sentence ("across Bestiary 1 and Bonus Bestiary"), which was
+ * already wrong the moment a third book was ingested — stale prose on a screen
+ * a player reads, pinned by nothing. `formatServedBooks` derives the list from
+ * the served rows instead, so this test is about the derivation, not the words.
+ */
+function testTheBlurbNamesTheBooksTheResponseActuallyContains() {
+  assertEqual(formatServedBooks([]), 'no book', 'an empty response names no book');
+  assertEqual(
+    formatServedBooks([{ book: 'B1' }, { book: 'B1' }]),
+    'Bestiary 1',
+    'one book is named without a conjunction'
+  );
+  assertEqual(
+    formatServedBooks([{ book: 'B1' }, { book: 'BB' }, { book: 'B1' }, { book: 'MC' }]),
+    'Bestiary 1, Bonus Bestiary and Monster Codex',
+    'every served book is named once, in first-appearance order'
+  );
+  assertEqual(
+    formatServedBooks([{ book: 'B1' }, { book: 'BB' }]),
+    'Bestiary 1 and Bonus Bestiary',
+    'a book that stops being served stops being named'
+  );
 }
 
 /**
@@ -248,6 +276,7 @@ function main() {
   testEveryDiceProvenanceTheAdapterCanServeHasALabel();
   testEveryMovementModeOnTheRowReachesTheClause();
   testEveryServedBookHasARealName();
+testTheBlurbNamesTheBooksTheResponseActuallyContains();
   testAnAttackWithNoCorpusDicePrintsItsNameAlone();
   testAnAbilityHeadingReadsTheWayTheBookPrintsIt();
 }

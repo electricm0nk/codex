@@ -1035,8 +1035,17 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // owning creature's row. That is why the two claims below judge the same
         // response from two different denominators — the chassis records and the
         // feature records are genuinely different populations on disk.
-        ("bonus_bestiary", "monsters") => Some(bonus_bestiary_monsters_reach()),
-        ("bonus_bestiary", "monster_abilities") => Some(bonus_bestiary_monster_abilities_reach()),
+        ("bonus_bestiary", "monsters") => Some(chassis_monsters_reach("bonus_bestiary", "BB")),
+        ("bonus_bestiary", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bonus_bestiary", "BB"))
+        }
+        // SD-29 Epic 5 extend, round 1. Same two claim functions, a
+        // different book: the judgement is a property of the chassis, not
+        // of Bonus Bestiary, so registering a book is two arms here.
+        ("monster_codex", "monsters") => Some(chassis_monsters_reach("monster_codex", "MC")),
+        ("monster_codex", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("monster_codex", "MC"))
+        }
 
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
@@ -1395,20 +1404,23 @@ fn monsters_reach() -> Reach {
     )
 }
 
-/// Bonus Bestiary's monster stat blocks, judged against the real
+/// One chassis book's monster stat blocks, judged against the real
 /// `list_monster_catalog` response.
 ///
-/// The denominator is the record files under `data/corpus/bonus_bestiary/
-/// monster/`, read from disk; the numerator is the served response. Neither
-/// side reads `rules_tables::bonus_bestiary`, so a table that stopped reaching
-/// the wire fails here instead of agreeing with itself.
-fn bonus_bestiary_monsters_reach() -> Reach {
-    let ingested = corpus_record_keys("bonus_bestiary", "monster");
+/// The denominator is the record files under `data/corpus/<book>/monster/`,
+/// read from disk; the numerator is the served response. Neither side reads
+/// the compiled `rules_tables` module, so a table that stopped reaching the
+/// wire fails here instead of agreeing with itself.
+///
+/// Book-parameterized rather than duplicated per book: the payload rule below
+/// is a property of the chassis DTO, and a copy per book is a copy that drifts.
+fn chassis_monsters_reach(corpus_book: &str, wire_code: &str) -> Reach {
+    let ingested = corpus_record_keys(corpus_book, "monster");
 
     let response = crate::monster_catalog::build_monster_catalog();
     let mut with_payload = BTreeSet::new();
     let mut identity_only = BTreeSet::new();
-    for entry in response.entries.iter().filter(|entry| entry.book == "BB") {
+    for entry in response.entries.iter().filter(|entry| entry.book == wire_code) {
         // Name and key are identity, so neither counts. A row reaches the
         // player when it carries something *about* the creature: its creature
         // type, its size, its source page, its movement, its `MONSTERCLASS:`
@@ -1439,8 +1451,8 @@ fn bonus_bestiary_monsters_reach() -> Reach {
 /// record in this book (`Magic Circle against Evil`) carries no `DESC:` at all,
 /// so it reaches on facet + delivery alone — a real, checkable corpus fact
 /// rather than a payload this gate invented for it.
-fn bonus_bestiary_monster_abilities_reach() -> Reach {
-    let ingested = corpus_record_keys("bonus_bestiary", "monster_ability");
+fn chassis_monster_abilities_reach(corpus_book: &str, wire_code: &str) -> Reach {
+    let ingested = corpus_record_keys(corpus_book, "monster_ability");
 
     let response = crate::monster_catalog::build_monster_catalog();
     let mut with_payload = BTreeSet::new();
@@ -1448,7 +1460,7 @@ fn bonus_bestiary_monster_abilities_reach() -> Reach {
     for ability in response
         .entries
         .iter()
-        .filter(|entry| entry.book == "BB")
+        .filter(|entry| entry.book == wire_code)
         .flat_map(|entry| entry.abilities.iter())
     {
         let has_payload = !ability.facet.trim().is_empty()
@@ -2452,17 +2464,41 @@ mod tests {
         }
     }
 
-    // APG's own reach test is deliberately not added yet: `decisions.md §37`'s
-    // first estimate of 50 real alternates corrected to 1 genuinely new key
-    // (`Half-Orc ~ Plagueborn`, `decisions.md §39`), and that 1 key is not
-    // ingested this cycle -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`
-    // table (`§36` instance 15) does not recognize it, and shipping the
-    // corpus record without updating that table would offer it in the picker
-    // and refuse it at character-save time, a stub. The
-    // `("apg", "race_traits") => race_traits_reach(...)` match arm above is
-    // landed now (harmless and forward-compatible with 0 records today) so
-    // Plagueborn's follow-up only needs to add the corpus record and this
-    // test, not touch `reach_of` again.
+    /// **Plagueborn's follow-up, landed.** `decisions.md §37`'s first estimate
+    /// of 50 real APG alternates corrected to 1 genuinely new key
+    /// (`Half-Orc ~ Plagueborn`, `decisions.md §39`); the other 49 collide
+    /// with already-ingested ARG keys and are excluded at ingest time.
+    ///
+    /// That 1 record was held back — correctly — because
+    /// `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` table did not
+    /// know its key, so shipping the corpus record alone would have offered
+    /// it in the picker and refused it at character-save time. SD-29's
+    /// race-trait extend lane landed both halves, and this test is the
+    /// claim DoD item 2 requires for the book's family: it executes, it is
+    /// not a pass-by-absence, and it accounts for the record.
+    #[test]
+    fn apgs_one_genuinely_new_alternate_racial_trait_reaches_a_player() {
+        // `apg`, not `advanced_players_guide`: `CORPUS_BOOK_IDS` maps the corpus
+        // directory to the book id every claim uses, and APG is one of the
+        // entries where the two spellings differ.
+        let apg_traits = Family::new("apg", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&apg_traits),
+            "the data/corpus scan must see data/corpus/advanced_players_guide/race_trait/"
+        );
+        assert!(full_inventory().contains(&apg_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("advanced_players_guide", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            1,
+            "APG's 1 ingested race-trait record, counted on disk: {ingested:?}"
+        );
+        match reach_of(&apg_traits).expect("APG race traits have a declared claim") {
+            Reach::Surfaced { records, .. } => assert_eq!(records, 1),
+            other => panic!("APG's race-trait record must reach a player, got {other:?}"),
+        }
+    }
 
     /// The other half of the same blind spot: `pathfinder_unchained` hid
     /// behind accessor functions, so a `pub const`-only scanner reported an
@@ -2807,6 +2843,61 @@ mod tests {
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected all 17 to reach, got {other:?}"),
+        }
+    }
+
+    /// Monster Codex's two families, per record, against their own corpus
+    /// directories. Same structure as the Bonus Bestiary test above and the
+    /// same two independent sides, run for the second chassis book.
+    ///
+    /// The counts are re-derived rather than transcribed:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if u['book']=='monster_codex' and
+    /// u['kind']=='monster'))"` -> 2, the same for `monster_ability` -> 3, and
+    /// `ls data/corpus/monster_codex/monster*/ | grep -c json` agrees.
+    ///
+    /// **This is a small book on purpose, not a small ingest.** Monster Codex
+    /// carries 2 monster rows in the whole corpus (`loop-instruction.md`'s
+    /// corpus-shape notes); a cycle that ingested 2 records here has ingested
+    /// the book's entire monster family, not a sample of it.
+    #[test]
+    fn monster_codex_monsters_and_abilities_reach_the_catalog_record_by_record() {
+        let monsters = corpus_record_keys("monster_codex", "monster");
+        let abilities = corpus_record_keys("monster_codex", "monster_ability");
+        assert_eq!(monsters.len(), 2, "re-derived on disk this cycle");
+        assert_eq!(abilities.len(), 3, "re-derived on disk this cycle");
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "MC")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "MC")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters);
+        assert_eq!(served_abilities, abilities);
+
+        match reach_of(&Family::new("monster_codex", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 2);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected both to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("monster_codex", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 3);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected all 3 to reach, got {other:?}"),
         }
     }
 

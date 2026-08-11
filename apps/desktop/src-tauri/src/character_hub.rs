@@ -4790,7 +4790,13 @@ mod tests {
                 accepted += 1;
             }
         }
-        assert_eq!(accepted, 93, "the 7 CRB races' ARG alternates: 17+13+12+9+14+13+15");
+        assert_eq!(
+            accepted, 94,
+            "the 7 CRB races' alternates: 17+13+12+9+15+13+15. Half-Orc is 15 rather than \
+             14 because APG's `Half-Orc ~ Plagueborn` landed with SD-29's race-trait extend \
+             lane -- and this test is exactly the one that would have caught it being \
+             shipped without its `ALTERNATE_TRAIT_REPLACE_FLAGS` row"
+        );
     }
 
     /// **The full end-to-end proof**, through the same `create_character`

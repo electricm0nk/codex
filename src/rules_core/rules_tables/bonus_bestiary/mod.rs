@@ -44,122 +44,32 @@
 
 mod monster_data;
 
-/// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct Speed {
-    pub mode: &'static str,
-    pub feet: u32,
-}
-
-/// A natural attack named by the monster's row.
-///
-/// `damage_dice` is `None` when the corpus names the attack but carries no die
-/// expression for it — see this module's doc comment. It is never a placeholder
-/// string.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct NaturalAttack {
-    pub name: &'static str,
-    pub damage_dice: Option<&'static str>,
-}
-
-/// Which of `monster_ability`'s facets a record is, read from the first segment
-/// of its corpus `TYPE:` token.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum MonsterAbilityFacet {
-    SpecialAttack,
-    SpecialQuality,
-}
-
-impl MonsterAbilityFacet {
-    /// The wire/display token, spelled exactly as the corpus `TYPE:` segment.
-    pub fn corpus_token(self) -> &'static str {
-        match self {
-            MonsterAbilityFacet::SpecialAttack => "SpecialAttack",
-            MonsterAbilityFacet::SpecialQuality => "SpecialQuality",
-        }
-    }
-}
-
-/// How the ability is delivered — the `Supernatural` / `Extraordinary` /
-/// `SpellLike` segment of the same `TYPE:` token. `None` when the row does not
-/// say.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub enum MonsterAbilityDelivery {
-    Supernatural,
-    Extraordinary,
-    SpellLike,
-}
-
-impl MonsterAbilityDelivery {
-    pub fn corpus_token(self) -> &'static str {
-        match self {
-            MonsterAbilityDelivery::Supernatural => "Supernatural",
-            MonsterAbilityDelivery::Extraordinary => "Extraordinary",
-            MonsterAbilityDelivery::SpellLike => "SpellLike",
-        }
-    }
-}
-
-/// One `monster_ability` record.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct MonsterAbilityRecord {
-    /// The corpus `KEY:` token — the identity. Falls back to the display name
-    /// only for the 11 rows that carry no `KEY:`, which is what PCGen itself
-    /// does.
-    pub key: &'static str,
-    pub name: &'static str,
-    pub facet: MonsterAbilityFacet,
-    pub delivery: Option<MonsterAbilityDelivery>,
-    /// Remaining `TYPE:` segments that are neither facet nor delivery
-    /// (`Aura`, `Immunity`), kept verbatim.
-    pub traits: &'static [&'static str],
-    /// The row's `DESC:` text. `None` for the one row that carries none.
-    pub description: Option<&'static str>,
-    /// The `DESC:` token's trailing variable list, which is what the `%1`
-    /// placeholders in `description` refer to.
-    pub description_variables: &'static [&'static str],
-    pub source_page: Option<&'static str>,
-    /// Every monster in this book whose row references this ability's key.
-    pub owners: &'static [&'static str],
-    /// The 1-based `bb_abilities_race.lst` line this record was read from.
-    pub source_line: u32,
-}
-
-/// One monster stat block.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub struct MonsterStatBlock {
-    pub key: &'static str,
-    pub name: &'static str,
-    pub size: Option<&'static str>,
-    pub speeds: &'static [Speed],
-    pub race_type: Option<&'static str>,
-    pub race_subtype: Option<&'static str>,
-    /// The `CR:` token verbatim (`"3"`, `"1"`), not a parsed number — the
-    /// corpus spells fractional CRs as `1/2` and this book has none, so
-    /// parsing would be an unforced assumption about a shape that has not been
-    /// observed here.
-    pub challenge_rating: Option<&'static str>,
-    /// The `MONSTERCLASS:` token (`"Undead:4"`), which is what AC/HP/saves are
-    /// computed from and this ingest deliberately does not compute.
-    pub monster_class: Option<&'static str>,
-    pub source_page: Option<&'static str>,
-    pub natural_attacks: &'static [NaturalAttack],
-    /// Keys into [`monster_abilities`], in row order.
-    pub ability_keys: &'static [&'static str],
-    /// Ability names this row cites that Bonus Bestiary does not define.
-    pub external_ability_refs: &'static [&'static str],
-    /// The 1-based `bb_races.lst` line this record was read from.
-    pub source_line: u32,
-}
+pub use super::monster_chassis::{
+    MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
+    NaturalAttack, Speed,
+};
 
 /// Every monster stat block this book defines, in corpus row order.
-pub fn monsters() -> &'static [MonsterStatBlock] {
+///
+/// `const` so `monster_chassis::MONSTER_BOOKS` can name it in a `const` item;
+/// [`monsters`] is the same value for callers that want a plain function.
+pub const fn monsters_static() -> &'static [MonsterStatBlock] {
     monster_data::MONSTERS
 }
 
 /// Every monster-ability record this book defines, in corpus row order.
-pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
+pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
     monster_data::MONSTER_ABILITIES
+}
+
+/// Every monster stat block this book defines, in corpus row order.
+pub fn monsters() -> &'static [MonsterStatBlock] {
+    monsters_static()
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
+    monster_abilities_static()
 }
 
 /// The stat block with this corpus key, if this book defines one.
