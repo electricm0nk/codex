@@ -66,15 +66,16 @@ function verifiesAllThreeVersionFilesAgreeAndFollowTripleShape() {
   assertEqual(tauri, pkg, 'tauri.conf.json version must match package.json version');
   assertEqual(cargo, pkg, 'Cargo.toml version must match package.json version');
 
-  // Anchor: this branch was promoted from tranche/6 to tranche/8 (SD-28
-  // bundle cut per operator directive 2026-08-01, moving off tranche/6 family
-  // so SD-29 keeps tranche/6-1 and SD-30 keeps tranche/6-2). The tranche
-  // digit only advances when a new tranche/N branch is cut for the next
-  // bundle, not automatically at a bundle's own closure
+  // Anchor: this branch was cut as tranche/9 (SD-29 bundle cut per operator
+  // directive 2026-08-01; the prior anchor was tranche/8 for SD-28, and
+  // tranche/6 before that). The tranche digit only advances when a NEW
+  // tranche/N branch is cut for the next bundle, not automatically at a
+  // bundle's own closure while still on the same tranche branch
   // (../SD-22/decisions.md §2 + ../SD-21/decisions.md §18's tranche-promotion
-  // rule). Each anchor here only holds until the next tranche promotion lands
+  // rule; SD-29 decisions.md §14 pins this bundle's value at `0.9.<build>`).
+  // Each anchor here only holds until the next tranche promotion lands
   // — update alongside the version bump, not as a follow-on fix.
-  assert(pkg.startsWith('0.8.'), `version "${pkg}" must keep major=0, tranche=8 on tranche/8`);
+  assert(pkg.startsWith('0.9.'), `version "${pkg}" must keep major=0, tranche=9 on tranche/9`);
 }
 
 // The invariant is a *relationship*, not two independent literals: the
