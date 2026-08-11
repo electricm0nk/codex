@@ -2811,7 +2811,7 @@ mod rule_set_mapping_tests {
     }
 
     #[test]
-    fn sd27_books_are_measurable() {
+    fn ingested_books_are_measurable() {
         assert_eq!(rule_set_for("advanced_race_guide"), Some(RuleSetId::Arg));
         assert_eq!(rule_set_for("pathfinder_unchained"), Some(RuleSetId::Pu));
     }

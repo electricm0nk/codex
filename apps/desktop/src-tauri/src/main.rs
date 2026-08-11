@@ -12,7 +12,7 @@ mod corpus_full;
 mod corpus_ingest_diagnostic;
 mod equipment_catalog;
 mod feat_catalog;
-mod ge08_workbench;
+mod authoring_workbench;
 mod monster_catalog;
 mod pf1_adapter;
 mod race_catalog;
@@ -63,8 +63,8 @@ use update::transaction::{
     is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
 };
 
-use ge08_workbench::{
-    build_ge08_workbench_snapshot, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
+use authoring_workbench::{
+    build_authoring_workbench_snapshot, AuthoringWorkbenchRequest, AuthoringWorkbenchSnapshot,
 };
 
 #[derive(Serialize)]
@@ -98,10 +98,10 @@ fn load_pilot_shell_snapshot() -> PilotShellSnapshot {
 }
 
 #[tauri::command]
-fn load_ge08_authoring_workbench_snapshot(
-    request: Ge08AuthoringWorkbenchRequest,
-) -> Result<Ge08AuthoringWorkbenchSnapshot, String> {
-    build_ge08_workbench_snapshot(request)
+fn load_authoring_workbench_snapshot(
+    request: AuthoringWorkbenchRequest,
+) -> Result<AuthoringWorkbenchSnapshot, String> {
+    build_authoring_workbench_snapshot(request)
 }
 
 /// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
@@ -144,7 +144,7 @@ fn main() {
         })
         .invoke_handler(tauri::generate_handler![
             load_pilot_shell_snapshot,
-            load_ge08_authoring_workbench_snapshot,
+            load_authoring_workbench_snapshot,
             load_support_state_matrix,
             load_backend_health,
             browser_handoff::handoff_defect_report_to_browser,
@@ -217,15 +217,15 @@ fn main() {
 
 #[cfg(test)]
 mod path_resolution_tests {
-    use crate::ge08_workbench::resolve_package_path;
+    use crate::authoring_workbench::resolve_package_path;
 
     #[test]
     fn resolves_repo_relative_fixture_from_src_tauri_runtime() {
-        let resolved = resolve_package_path("tests/fixtures/ge08/guard-stance-package")
+        let resolved = resolve_package_path("tests/fixtures/authoring_workbench/guard-stance-package")
             .expect("fixture path should resolve from repo root");
 
         assert!(
-            resolved.ends_with("tests/fixtures/ge08/guard-stance-package"),
+            resolved.ends_with("tests/fixtures/authoring_workbench/guard-stance-package"),
             "resolved path should end with the repo fixture path, got {}",
             resolved.display()
         );

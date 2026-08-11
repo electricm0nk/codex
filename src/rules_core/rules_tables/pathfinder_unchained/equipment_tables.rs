@@ -29,10 +29,10 @@
 //! all 42 records.
 //!
 //! Real per-record LST path/sha256/line citations are computed by
-//! `src/bin/sd27_gen_book_cache.rs` at generation time by reading the
+//! `src/bin/gen_book_cache.rs` at generation time by reading the
 //! live corpus file directly (never hand-transcribed here) -- this
 //! module supplies only the compiled data values, matching
-//! `src/bin/sd26_gen_core_rulebook_cache.rs`'s established generation
+//! `src/bin/gen_core_rulebook_cache.rs`'s established generation
 //! discipline.
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]

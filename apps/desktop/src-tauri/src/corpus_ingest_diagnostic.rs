@@ -762,7 +762,7 @@ mod tests {
     /// difference, stated as a number here rather than waved at, so the two
     /// artifacts reconcile exactly.
     #[test]
-    fn the_two_sd27_books_totals_reconcile_with_their_license_artifacts() {
+    fn the_two_ingested_books_totals_reconcile_with_their_license_artifacts() {
         for (book_id, corpus_dir, corpus_only_records) in [
             ("advanced_race_guide", "advanced_race_guide", 156u32),
             ("pathfinder_unchained", "pathfinder_unchained", 0),

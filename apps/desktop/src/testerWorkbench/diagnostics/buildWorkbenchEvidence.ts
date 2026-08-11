@@ -1,8 +1,8 @@
 import type {
-  Ge08Diagnostic,
-  Ge08ExplanationRef,
-  Ge08ProvenanceRef,
-} from '../../boundary/loadGe08AuthoringWorkbench';
+  Diagnostic,
+  ExplanationRef,
+  ProvenanceRef,
+} from '../../boundary/loadAuthoringWorkbench';
 
 export interface WorkbenchDiagnostic {
   classLabel: string;
@@ -19,8 +19,8 @@ export interface WorkbenchReference {
   machineRef: string;
 }
 
-export function buildGe08Diagnostics(
-  diagnostics: Ge08Diagnostic[]
+export function buildDiagnostics(
+  diagnostics: Diagnostic[]
 ): WorkbenchDiagnostic[] {
   return diagnostics.map((diagnostic) => ({
     classLabel: diagnostic.class,
@@ -45,8 +45,8 @@ export function buildFallbackDiagnostics(
   }));
 }
 
-export function buildGe08ExplanationRefs(
-  references: Ge08ExplanationRef[]
+export function buildExplanationRefs(
+  references: ExplanationRef[]
 ): WorkbenchReference[] {
   return references.map((reference) => ({
     label: `${reference.nodeKind}:${reference.refId}`,
@@ -65,8 +65,8 @@ export function buildFallbackExplanationRefs(
   }));
 }
 
-export function buildGe08ProvenanceRefs(
-  references: Ge08ProvenanceRef[]
+export function buildProvenanceRefs(
+  references: ProvenanceRef[]
 ): WorkbenchReference[] {
   return references.map((reference) => ({
     label: reference.stableId,

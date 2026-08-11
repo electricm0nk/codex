@@ -11,7 +11,7 @@
 //! see `loop-instruction.md §6` / `decisions.md §3`.
 //!
 //! **Generation only, not runtime parsing.** Records of this shape are
-//! written by `src/bin/sd26_gen_core_rulebook_cache.rs` (a one-off codegen
+//! written by `src/bin/gen_core_rulebook_cache.rs` (a one-off codegen
 //! tool, matching the existing `equipment_data/`-style "generated, not
 //! hand-authored" precedent) which dumps the *already-completed* Rust
 //! `rules_tables::crb` module state (`decisions.md §11.3` -- never

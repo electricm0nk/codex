@@ -313,7 +313,7 @@ this document:
 
 - `tests/ge06_pilot_base_computation.rs` — proves `compute_pilot_base_chassis` against the deterministic GE-06 Human Fighter level-1 fixture (`tests/fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt`), asserting ability modifiers and base chassis values only.
 - `tests/sd20_tabletop_readiness_integration.rs` — the Epic 8 integration-closure test: runs the full boundary-contract pipeline (`classify_character_input` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`) against a fixture and asserts every defined sheet cell is a real, non-`Blocked` number matching a golden `expected_output`.
-- `tests/sd13_barbarian_level6_progression.rs` (representative of ~400 per-class/per-level widening tests) — imports `support_state_matrix::seeded_sd13_e1_f1_current_truth` alongside chassis assertions, so a class/level widening and its matrix-row transition are proven together, not separately.
+- `tests/sd13_barbarian_level6_progression.rs` (representative of ~400 per-class/per-level widening tests) — imports `support_state_matrix::seeded_current_truth` alongside chassis assertions, so a class/level widening and its matrix-row transition are proven together, not separately.
 
 See [testing.md](./testing.md) for the full test-organization convention.
 

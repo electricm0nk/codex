@@ -37,7 +37,7 @@ Lints the crate including its test targets, failing the build on any warning. Ve
 ```
 cd apps/desktop/src-tauri && cargo test --locked
 ```
-`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — the source files that carry one include `support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1), `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `ge08_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs`, and — added by SD-25 Epic 3/5 — `rule_system_adapter.rs`, `pf1_adapter.rs`, `stub_adapter.rs`, `corpus_ingest_diagnostic.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
+`apps/desktop/src-tauri` is a separate crate (`apps/desktop/src-tauri/Cargo.toml`, name `codex-desktop`) that depends on the root crate via a path dependency (`codex = { path = "../../.." }`). Its tests are **inline `#[cfg(test)]` modules**, not separate `tests/*.rs` files — the source files that carry one include `support_state_matrix_bridge.rs` (renamed from `sd13_support_state_matrix.rs` by SD-25 criterion 1.1), `spell_catalog.rs`, `corpus_fixtures.rs`, `race_catalog.rs`, `equipment_catalog.rs`, `main.rs`, `character_hub.rs`, `browser_handoff.rs`, `campaign_drive.rs`, `authoring_workbench.rs`, `class_catalog.rs`, `update/transaction.rs`, `characterHub/appendToCharacter.rs`, `characterHub/recomputeCharacter.rs`, `characterHub/reSaveCharacter.rs`, and — added by SD-25 Epic 3/5 — `rule_system_adapter.rs`, `pf1_adapter.rs`, `stub_adapter.rs`, `corpus_ingest_diagnostic.rs` (confirmed via `grep -rl "#\[cfg(test)\]" apps/desktop/src-tauri/src/`). SD-24 criterion 1.1 renamed the six `sd16_*`/`sd19_*`-prefixed files in this list to their current bare names (e.g. `sd19_spell_catalog.rs` → `spell_catalog.rs`, `sd16_browser_handoff.rs` → `browser_handoff.rs`); the command names they register (`list_spell_catalog`, `handoff_defect_report_to_browser`, etc.) did not change.
 
 ### Desktop frontend (TypeScript)
 
@@ -47,8 +47,8 @@ cd apps/desktop && npm run typecheck
 Runs `tsc --noEmit` (`apps/desktop/package.json` `scripts.typecheck`) and
 passes cleanly on a fresh `npm ci`. `@types/node` is a declared
 devDependency so the `node:fs`/`node:path`/`node:url` imports in the
-doc-guard test files resolve; `apps/desktop/src/sd16/update/fetch.ts` and
-`apps/desktop/src/sd16/update/index.ts` re-export their shared types
+doc-guard test files resolve; `apps/desktop/src/update/fetch.ts` and
+`apps/desktop/src/update/index.ts` re-export their shared types
 without duplicate declarations.
 
 ```
@@ -241,7 +241,7 @@ Nine files, documented by their own README (`tests/fixtures/update/README.md`): 
 
 Unlike the wire fixtures, these are **not read from disk by any test at run time**. Their two live connections are:
 - `apps/desktop/tsconfig.json`'s `include` array literally globs them (`"../../tests/fixtures/update/**/*.json"`, `apps/desktop/tsconfig.json:23`) — this affects the TypeScript project's compilation/typecheck scope, not test execution.
-- The TS parser tests (`apps/desktop/src/sd16/update/parseChannelIndex.test.ts`, `parseUpdateManifest.test.ts`) inline byte-for-byte copies of these fixtures as JSON string literals rather than reading the files, and document a manual duplication discipline: if you edit a fixture here, the Python lane and the TS lane must both be re-run and their verdicts must agree (`tests/fixtures/update/README.md:24-32`, "Duplication discipline"). This is a documented-but-manual parity contract, not an automated one.
+- The TS parser tests (`apps/desktop/src/update/parseChannelIndex.test.ts`, `parseUpdateManifest.test.ts`) inline byte-for-byte copies of these fixtures as JSON string literals rather than reading the files, and document a manual duplication discipline: if you edit a fixture here, the Python lane and the TS lane must both be re-run and their verdicts must agree (`tests/fixtures/update/README.md:24-32`, "Duplication discipline"). This is a documented-but-manual parity contract, not an automated one.
 
 ## Related docs
 

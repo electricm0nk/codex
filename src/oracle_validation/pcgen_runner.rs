@@ -50,7 +50,7 @@ const NORMALIZER_SCRIPT_REL: &str = "scripts/pcgen-normalize-output.py";
 /// module wraps. `CODEX_REPO_ROOT` (an operator/launcher override) wins when
 /// set; otherwise the compile-time `CARGO_MANIFEST_DIR` (this crate's own
 /// root, which is the repo root) is used — the same order-of-truth
-/// `apps/desktop/src-tauri/src/ge08_workbench.rs::codex_repo_root` already
+/// `apps/desktop/src-tauri/src/authoring_workbench.rs::codex_repo_root` already
 /// establishes elsewhere in this repo.
 fn codex_repo_root() -> PathBuf {
     std::env::var("CODEX_REPO_ROOT")

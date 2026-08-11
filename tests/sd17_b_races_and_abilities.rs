@@ -404,7 +404,7 @@ fn hand_build_malformed_races_and_abilities_produces_malformed_sd17_b3_diagnosti
     // diagnostic carries the SD-17-B-3 tag.
     for diag in &result.diagnostics {
         assert!(
-            diag.message.contains("SD17-B-3") || diag.kind_is_sd17_b3(),
+            diag.message.contains("SD17-B-3") || diag.kind_is_malformed_race_or_ability(),
             "diagnostic must classify as SD17-B-3, got {:?}",
             diag
         );

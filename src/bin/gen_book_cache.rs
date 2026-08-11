@@ -4,7 +4,7 @@
 //! `rules_tables::<book>/` module's compiled state and serializes it to
 //! `data/corpus/<book>/{content_kind}/<id>.json` as Shape B v1
 //! (`src/rules_core/shape_b_v1.rs`) records, mirroring
-//! `src/bin/sd26_gen_core_rulebook_cache.rs`'s established discipline:
+//! `src/bin/gen_core_rulebook_cache.rs`'s established discipline:
 //! it never re-derives a `data` field's *value* from raw LST at
 //! generation time (values come from the compiled Rust module's own
 //! accessors) -- it only reads the live corpus file to compute a real,
@@ -12,7 +12,7 @@
 //!
 //! **Single shared binary name, per book-agnostic design.** The SD-27
 //! partition audit (`loop-instruction.md §6`) allow-lists exactly
-//! `src/bin/sd27_gen_book_cache.rs` -- one file, not a per-book file --
+//! `src/bin/gen_book_cache.rs` -- one file, not a per-book file --
 //! for every per-book pre-build cycle (E2.1 Advanced Race Guide, E2.2
 //! Pathfinder Unchained, and future SD-28+ cycles). This lands the first
 //! book (`pathfinder_unchained`) actually wired; a later cycle authoring
@@ -47,7 +47,7 @@
 //! file-disjoint everywhere except this shared binary and may run in
 //! parallel (`loop-instruction.md §3.3.3`: "File-disjoint with E2.1, so
 //! it may run in parallel"). `main()`'s `match` picks the requested book
-//! by its first CLI argument (`cargo run --bin sd27_gen_book_cache --
+//! by its first CLI argument (`cargo run --bin gen_book_cache --
 //! advanced_race_guide`); PU's own no-argument default is left
 //! unchanged for backward compatibility with any existing invocation.
 
@@ -62,7 +62,7 @@ use codex::rules_core::shape_b_v1::{Completeness, CorpusRecordV1, CorpusSource, 
 
 /// The `(path, line, record_key)` a `CorpusSource` cites, when it cites a
 /// real corpus row at all -- same rationale as
-/// `sd26_gen_core_rulebook_cache.rs`'s own `wiring_citation`.
+/// `gen_core_rulebook_cache.rs`'s own `wiring_citation`.
 /// `WebSecondSource`/`SameBookFallback` carry no citation to read a token
 /// closure from, so `wiring_class` for those lands on
 /// `ambiguous:no_corpus_line` rather than guessing one.
@@ -210,7 +210,7 @@ fn find_line_by_identity(file: &CorpusFile, identity: &str) -> Option<u32> {
 }
 
 /// A KEY:-token-first, identity-fallback line index over one corpus file
-/// -- mirrors `sd26_gen_core_rulebook_cache.rs`'s `LineIndex`/`build_line_index`
+/// -- mirrors `gen_core_rulebook_cache.rs`'s `LineIndex`/`build_line_index`
 /// lookup order (prefer an exact `KEY:` token match; several ARG records,
 /// e.g. every `arg_equipmods.lst` row and the one `Drow ~ Spider Step`
 /// feat, have a `key` that differs from their corpus identity/display
@@ -294,7 +294,7 @@ fn write_record<T: serde::Serialize>(path: &Path, record: &CorpusRecordV1<T>) {
 }
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`), the
-/// same bounded, documented substring scan `scripts/sd27_apg_license_retrofit.py`
+/// same bounded, documented substring scan `scripts/apg_license_retrofit.py`
 /// already applied to the 4 in-scope books: the 20 canonical core
 /// Golarion deities plus a sampled set of known setting proper nouns.
 /// Shared across both of this binary's per-book generators
@@ -879,7 +879,7 @@ fn main() {
         "pathfinder_unchained" => gen_pathfinder_unchained(),
         "advanced_race_guide" => gen_advanced_race_guide(),
         other => panic!(
-            "sd27_gen_book_cache: no generator wired for book {other:?} yet (only pathfinder_unchained/advanced_race_guide today -- \
+            "gen_book_cache: no generator wired for book {other:?} yet (only pathfinder_unchained/advanced_race_guide today -- \
              a future SD-27/SD-28+ cycle extends this match arm for its own book, per this file's own module doc comment)"
         ),
     }

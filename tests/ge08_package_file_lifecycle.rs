@@ -14,7 +14,7 @@ use codex::homebrew_authoring::package_manifest::PackageValidationState;
 use codex::homebrew_authoring::package_store::PackageStore;
 
 fn fixture_root() -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/ge08/guard-stance-package")
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests/fixtures/authoring_workbench/guard-stance-package")
 }
 
 fn fresh_temp_dir(label: &str) -> PathBuf {

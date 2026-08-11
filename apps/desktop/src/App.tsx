@@ -26,16 +26,16 @@ import {
 import {
   runBrowserHandoff,
   type BrowserHandoffOutcome,
-} from './sd16/feedback/browserHandoff';
+} from './feedback/browserHandoff';
 import { CharacterHubPage } from './characterHub/CharacterHubPage';
-import { UpdateUi } from './sd16/update/Ui';
+import { UpdateUi } from './update/Ui';
 import {
   createUpdateControllerDeps,
   loadMountTimeState,
   restorePreviousVersion,
   type MountTimeState,
-} from './sd16/update/controllerAdapter';
-import type { UpdateControllerDeps } from './sd16/update/updateModel';
+} from './update/controllerAdapter';
+import type { UpdateControllerDeps } from './update/updateModel';
 import { SettingsModal, type SettingsTab } from './settings/SettingsModal';
 import { AppearancePanel } from './settings/AppearancePanel';
 import { GoogleDrivePanel } from './settings/GoogleDrivePanel';
@@ -616,7 +616,7 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
       <BugReportField
         label="Affected surface (workbench area, workflow slice, or update/support surface)"
         value={affectedSurface}
-        placeholder="e.g. GE08 authoring workbench"
+        placeholder="e.g. authoring workbench"
         onChange={(value) => setAffectedSurface(value)}
       />
 
@@ -738,7 +738,7 @@ function EnhancementRequestComposer(props: { surface: TesterWorkbenchSurface }) 
 }
 
 /**
- * Character Hub Phase 3 — real `sd16/update` mount. Replaces `UpdateActionPanel`
+ * Character Hub Phase 3 — real `update` mount. Replaces `UpdateActionPanel`
  * now that a genuine controller adapter exists (real check/rollback wiring;
  * install stays honestly disabled pending a future slice). Loads mount-time
  * state via the real, already-tested `verify_relaunch_artifact` command

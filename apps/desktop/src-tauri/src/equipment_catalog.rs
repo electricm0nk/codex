@@ -325,7 +325,7 @@ fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentC
 /// Build the full catalog response across every ingested book. A thin,
 /// testable wrapper behind the Tauri command below (mirroring this
 /// codebase's other command/pure-fn split, e.g.
-/// `ge08_workbench::build_ge08_workbench_snapshot`).
+/// `authoring_workbench::build_authoring_workbench_snapshot`).
 pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
     let entries = crb::equipment_tables::equipment_tables()
         .iter()

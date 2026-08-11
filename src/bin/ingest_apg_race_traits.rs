@@ -81,7 +81,7 @@ fn ingested_at_now() -> String {
     String::from_utf8(output.stdout).expect("date output is valid UTF-8").trim().to_string()
 }
 
-/// Same slug rule `sd27_gen_book_cache.rs`/`ingest_race_traits_arg.rs` use.
+/// Same slug rule `gen_book_cache.rs`/`ingest_race_traits_arg.rs` use.
 fn slugify(raw: &str) -> String {
     let mut out = String::new();
     let mut last_was_sep = false;

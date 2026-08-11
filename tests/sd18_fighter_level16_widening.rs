@@ -43,7 +43,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const FIGHTER_LEVEL15_FIXTURE: &str = include_str!(
@@ -277,7 +277,7 @@ fn multiclass_fighter_level16_is_not_promoted_by_this_slice() {
 
 #[test]
 fn matrix_fighter_row_names_level_16_widening() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let fighter = matrix
         .row("class.fighter.levels_2_10")
         .expect("fighter levels_2_10 row must exist");

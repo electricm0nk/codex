@@ -50,7 +50,7 @@ module.exports = {
       // branch and the manifest URL it points at. We exempt it from
       // the rule's literal-scanner so that the comment strings
       // describing what is forbidden do not trip the rule.
-      files: ['src/sd16/update/fetch.ts'],
+      files: ['src/update/fetch.ts'],
       rules: {
         'no-restricted-syntax': 'off',
       },

@@ -31,7 +31,7 @@
       "dmg"
     ],
     "resources": [
-      "resources/ge08/guard-stance-package/",
+      "resources/authoring_workbench/guard-stance-package/",
       "resources/corpus_fixtures/"
     ],
     "icon": [

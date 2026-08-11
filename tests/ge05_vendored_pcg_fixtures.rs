@@ -12,7 +12,7 @@
 //! build instead of referring to an external source"* — the fixtures are now
 //! committed alongside their own GE-05 receipts and resolved repo-relative.
 //!
-//! Path resolution follows `ge08_workbench::resolve_package_path`'s contract
+//! Path resolution follows `authoring_workbench::resolve_package_path`'s contract
 //! ("repo-relative paths anchor at the codex repo root"). That helper lives
 //! in the separate `codex-desktop` crate and is not reachable from a `codex`
 //! root-crate integration test, so this file uses the identical anchor its

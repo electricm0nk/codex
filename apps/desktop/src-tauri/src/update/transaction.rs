@@ -617,7 +617,7 @@ pub fn verify_relaunch_artifact() -> ReloadVerifyOutcome {
 ///
 /// `CODEX_CONFIG_DIR` overrides the root — the ops/integration-test redirect seam,
 /// following the `CODEX_REPO_ROOT` / `CODEX_DESKTOP_RESOURCE_DIR` env idiom in
-/// `ge08_workbench.rs`. The default is `$HOME/.config`, so the pending record resolves to
+/// `authoring_workbench.rs`. The default is `$HOME/.config`, so the pending record resolves to
 /// `~/.config/codex/update/pending-update.json`.
 fn resolve_config_root() -> PathBuf {
     if let Ok(dir) = std::env::var("CODEX_CONFIG_DIR") {

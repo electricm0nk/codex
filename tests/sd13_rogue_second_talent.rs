@@ -26,7 +26,7 @@
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const ROGUE_LEVEL4_FIXTURE: &str =
@@ -161,7 +161,7 @@ fn multiclass_rogue_does_not_gain_slot_2_recognition() {
 
 #[test]
 fn matrix_rogue_row_names_the_second_talent_grounding() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let rogue = matrix
         .row("class.rogue.bounded_progression")
         .expect("rogue bounded_progression row must exist");

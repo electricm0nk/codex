@@ -29,7 +29,7 @@
 //! out of this cycle's bounded scope, not corner-cutting.
 //!
 //! **Registered in the shared module tree.** Originally landed compiled
-//! only via `#[path]` inclusion into `src/bin/sd27_gen_book_cache.rs`,
+//! only via `#[path]` inclusion into `src/bin/gen_book_cache.rs`,
 //! because SD-27's per-cycle file-touch partition
 //! (`docs/release/SD-27-future-state-book-content-ingestion/loop-instruction.md`
 //! §6) allow-listed `src/rules_core/rules_tables/advanced_race_guide/` but

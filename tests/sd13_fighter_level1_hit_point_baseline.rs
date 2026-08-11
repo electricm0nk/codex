@@ -23,7 +23,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const LEVEL_1_FIXTURE: &str =
@@ -131,7 +131,7 @@ fn fighter_level1_golden_path_still_emits_zero_claim_blocking_diagnostics() {
 
 #[test]
 fn matrix_fighter_level_1_row_moves_hit_points_to_the_proven_surface() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");
@@ -158,7 +158,7 @@ fn matrix_fighter_level_1_row_moves_hit_points_to_the_proven_surface() {
 
 #[test]
 fn matrix_fighter_level_1_row_stays_partial_and_cites_this_proof_surface() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let level_1 = matrix
         .row("class.fighter.level_1_pilot")
         .expect("level-1 pilot row must exist");

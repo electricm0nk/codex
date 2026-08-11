@@ -270,7 +270,7 @@ fn emit_module(by_class: &BTreeMap<String, Vec<(String, u8)>>, record_count: usi
         "/// `(class id, &[(spell key, that class's spell level)])`, classes and\n\
          /// spell keys both sorted. Chained by `rules_tables::class_spell_levels`.\n\
          ///\n\
-         /// The `allow` is for `src/bin/sd27_gen_book_cache.rs`, which still\n\
+         /// The `allow` is for `src/bin/gen_book_cache.rs`, which still\n\
          /// `#[path]`-includes this book's `mod.rs` a second time into its own\n\
          /// crate. That include is stale — the module has since been registered\n\
          /// in `rules_tables/mod.rs` — and nothing in that binary consumes this\n\

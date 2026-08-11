@@ -8,7 +8,7 @@
 //! coverage of a smaller corpus than the one actually on disk.
 //!
 //! **The defect this guard exists to stop, verbatim from the history it was
-//! written against.** `src/bin/sd27_gen_book_cache.rs` writes each book's
+//! written against.** `src/bin/gen_book_cache.rs` writes each book's
 //! `LICENSE.json` and sets `records_processed` to *what that binary itself
 //! wrote* — for Pathfinder Unchained, `feat_written + equipment_written`. A
 //! later cycle ingested the same book's classes and class features through a

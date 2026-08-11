@@ -18,7 +18,7 @@
 use serde::Serialize;
 
 use codex::rules_core::support_state_matrix::{
-    seeded_sd13_e1_f1_current_truth, EvidenceFreshness, EvidenceTier, MatrixSubjectType,
+    seeded_current_truth, EvidenceFreshness, EvidenceTier, MatrixSubjectType,
     SupportState, SupportStateRow,
 };
 
@@ -179,12 +179,12 @@ fn present_row(row: &SupportStateRow) -> SupportStateRowPresentation {
 /// Every seeded row is preserved in order with no filtering, suppression, or
 /// aggregation. This is the single source of truth for the desktop command.
 pub fn build_support_state_matrix_snapshot() -> SupportStateMatrixSnapshot {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let rows = matrix.rows.iter().map(present_row).collect();
 
     SupportStateMatrixSnapshot {
         rows,
-        data_source: "rules_core::support_state_matrix::seeded_sd13_e1_f1_current_truth"
+        data_source: "rules_core::support_state_matrix::seeded_current_truth"
             .to_string(),
         note: "Read-only SD-13 support-state and debt truth presented verbatim for the SD-11 \
                tester workbench: no filtering, promotion, demotion, or recomputation."
@@ -218,7 +218,7 @@ mod tests {
         // and nothing recomputed. Asserting against the carrier itself (instead
         // of duplicating its literals here) keeps this test true when the
         // upstream roster moves, which is exactly when a stale copy would lie.
-        let matrix = seeded_sd13_e1_f1_current_truth();
+        let matrix = seeded_current_truth();
         let snapshot = snapshot();
         assert_eq!(
             snapshot.rows.len(),

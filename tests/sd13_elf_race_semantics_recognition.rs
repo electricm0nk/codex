@@ -24,7 +24,7 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const ELF_FIXTURE: &str =
@@ -304,7 +304,7 @@ fn other_non_human_race_still_gets_the_generic_unverified_diagnostic() {
 
 #[test]
 fn matrix_elf_row_is_partial_computed_and_names_four_recognized_families() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let elf = matrix
         .row("race.elf.bounded_semantics")
         .expect("elf row must exist");
@@ -340,7 +340,7 @@ fn matrix_elf_row_is_partial_computed_and_names_four_recognized_families() {
 
 #[test]
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Human and Dwarf were later promoted to Supported/ProductVisible
     // alongside every other race row by SD-19's Race Trait Catalog browser

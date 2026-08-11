@@ -29,7 +29,7 @@ use codex::rules_core::rules_tables::crb::spell_list::Pf1SchoolId;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 use codex::rules_core::spell_resolver::spell_id_resolve;
 use codex::rules_core::support_state_matrix::{
-    EvidenceTier, MatrixSubjectType, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceTier, MatrixSubjectType, SupportState, seeded_current_truth,
 };
 
 fn corpus_root() -> Option<PathBuf> {
@@ -191,7 +191,7 @@ fn every_necromancy_spell_resolves_and_reaches_school_coverage() {
 
 #[test]
 fn necromancy_matrix_row_reflects_the_grounded_reachability_proof() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let row = matrix
         .rows
         .iter()

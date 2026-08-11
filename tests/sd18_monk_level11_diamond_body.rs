@@ -55,7 +55,7 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const MONK_LEVEL10_FIXTURE: &str =
@@ -338,7 +338,7 @@ fn multiclass_monk_level11_is_not_promoted_by_this_slice() {
 
 #[test]
 fn matrix_monk_row_names_level_11_widening() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let monk = matrix
         .row("class.monk.bounded_progression")
         .expect("monk bounded_progression row must exist");

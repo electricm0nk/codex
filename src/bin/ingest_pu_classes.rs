@@ -5,7 +5,7 @@
 //!
 //! Run with `cargo run --bin ingest_pu_classes`. `PCGEN_CORPUS_ROOT` may
 //! point at a local PCGen `data/` checkout; it defaults to
-//! `$HOME/workspace/repos/pcgen/data`. `SD27_INGESTED_AT` pins the
+//! `$HOME/workspace/repos/pcgen/data`. `CODEX_INGESTED_AT` pins the
 //! `ingested_at` stamp so a run can be reproduced byte-for-byte.
 //!
 //! # Scope finding: PU declares no `CLASS` object at all
@@ -126,7 +126,7 @@ const VARIANTS: &[(&str, VariantSpec)] = &[
 ];
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`), the same
-/// bounded substring scan `ingest_races.rs` and `sd27_gen_book_cache.rs`
+/// bounded substring scan `ingest_races.rs` and `gen_book_cache.rs`
 /// apply. Class features are pure game mechanics, so every record here is
 /// expected to classify `OGL`; the screen exists so that expectation is
 /// checked rather than assumed, and a hit fails the run loudly.
@@ -704,7 +704,7 @@ fn pi_hits(texts: &[&str]) -> Vec<String> {
 }
 
 fn ingested_at() -> String {
-    if let Ok(v) = std::env::var("SD27_INGESTED_AT") {
+    if let Ok(v) = std::env::var("CODEX_INGESTED_AT") {
         return v;
     }
     let output = std::process::Command::new("date")

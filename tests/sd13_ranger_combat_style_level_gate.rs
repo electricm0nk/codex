@@ -30,7 +30,7 @@ use codex::rules_core::character_input::{load_character_input_fixture, Character
 use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis, ComputationExplanation, PilotBaseChassisComputation,
 };
-use codex::rules_core::support_state_matrix::{seeded_sd13_e1_f1_current_truth, SupportState};
+use codex::rules_core::support_state_matrix::{seeded_current_truth, SupportState};
 
 const RANGER_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_ranger_level1_sd13_deterministic_input.txt");
@@ -129,7 +129,7 @@ fn ranger_level1_combat_style_is_grounded_as_a_correct_level_gate_absence_not_a_
 
 #[test]
 fn matrix_ranger_row_note_no_longer_claims_a_level1_combat_style_choice() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let ranger = matrix
         .row("class.ranger.hybrid_chassis_and_spell_burden")
         .expect("ranger hybrid row must exist");

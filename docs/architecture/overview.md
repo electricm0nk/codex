@@ -119,7 +119,7 @@ flowchart TD
         COMP["composed_input.rs: compose() -> ComposedCharacterInput\n(no production caller; exercised by its own tests\nand tests/sd18_preloop_consumer_compose.rs)"]
         HB["homebrew_authoring/: PackageStore, PreviewBridge"]
         OV["oracle_validation/: GoldenCaseFixture, SelectedParityDimensions,\ncomparator/normalization/parity_report/pcgen_runner"]
-        SSM["support_state_matrix.rs: seeded_sd13_e1_f1_current_truth"]
+        SSM["support_state_matrix.rs: seeded_current_truth"]
     end
     SD13B -.reads support truth.-> SSM
 ```

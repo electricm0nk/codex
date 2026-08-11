@@ -30,7 +30,7 @@ fn real_now_iso8601() -> String {
 /// The book's real, on-disk licensed-content record count -- every `.json`
 /// file under `book_dir` except `LICENSE.json` itself and anything under a
 /// `_`-prefixed directory (`_parity/` etc., test fixtures, not licensed
-/// content). Identical logic to `sd27_gen_book_cache.rs`'s own
+/// content). Identical logic to `gen_book_cache.rs`'s own
 /// `count_on_disk_records`, duplicated here rather than shared across two
 /// separate `src/bin/` binaries -- see this book's `LICENSE.json`'s
 /// `records_processed` field, which this function now derives instead of
@@ -39,7 +39,7 @@ fn real_now_iso8601() -> String {
 /// beastiary1` only ever wrote `monster/`+`equipment/`, while `race/` and
 /// `race_trait/` are written by the separate `ingest_races.rs`, so no
 /// single writer's own count was ever the whole book's count, exactly the
-/// gap `sd27_gen_book_cache.rs`'s own doc comment already named for ARG/PU
+/// gap `gen_book_cache.rs`'s own doc comment already named for ARG/PU
 /// before this fix closed it for Bestiary 1 too).
 fn count_on_disk_records(book_dir: &Path) -> usize {
     fn walk(dir: &Path, count: &mut usize) {

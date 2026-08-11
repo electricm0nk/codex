@@ -2,7 +2,7 @@ import { loadTesterWorkbenchSurface } from './loadTesterWorkbenchSurface';
 import { assertEqual } from '../testSupport/asserts';
 
 async function main() {
-  await verifiesRealGe08SnapshotSurface();
+  await verifiesRealSnapshotSurface();
   await verifiesExplicitFallbackSurface();
 }
 
@@ -44,7 +44,7 @@ function noOfficialReleaseTruth() {
   };
 }
 
-async function verifiesRealGe08SnapshotSurface() {
+async function verifiesRealSnapshotSurface() {
   let requestedPackageRoot: string | null = null;
   const model = await loadTesterWorkbenchSurface(
     {
@@ -53,7 +53,7 @@ async function verifiesRealGe08SnapshotSurface() {
     },
     {
       loadReleaseTruth: async () => noOfficialReleaseTruth(),
-      loadGe08AuthoringWorkbench: async (request) => {
+      loadAuthoringWorkbench: async (request) => {
         requestedPackageRoot = request.packageRoot;
         return {
           packageRoot: request.packageRoot,
@@ -121,7 +121,7 @@ async function verifiesRealGe08SnapshotSurface() {
             exportAllowed: true,
             diffMode: 'deferred',
           },
-          dataSource: 'ge08-headless-preview-bridge',
+          dataSource: 'headless-preview-bridge',
           note: 'Real GE08 authoring workbench snapshot from headless substrate.',
         };
       },
@@ -133,7 +133,7 @@ async function verifiesRealGe08SnapshotSurface() {
 
   assertEqual(
     requestedPackageRoot,
-    'resources/ge08/guard-stance-package',
+    'resources/authoring_workbench/guard-stance-package',
     'default GE08 package root uses the packaged resource path instead of source checkout fixtures'
   );
   assertEqual(model.surfaceLabel, 'Developer diagnostics', 'surface label');
@@ -198,7 +198,7 @@ async function verifiesExplicitFallbackSurface() {
     },
     {
       loadReleaseTruth: async () => noOfficialReleaseTruth(),
-      loadGe08AuthoringWorkbench: async () => {
+      loadAuthoringWorkbench: async () => {
         throw new Error('Tauri runtime not available for GE08 authoring workbench');
       },
       loadPilotShellSnapshot: async () => ({

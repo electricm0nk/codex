@@ -37036,7 +37036,7 @@ fn wizard_has_canonical_abjuration_selection(input: &CharacterInput) -> bool {
 /// burdens legible on the runtime path. The matrix file row transition
 /// (Unverified/Observed → Blocked/Computed, then Blocked → Partial once Scribe
 /// Scroll is grounded) is recorded by this proof surface and applied to the
-/// in-source carrier directly (see `seeded_sd13_e1_f1_current_truth`).
+/// in-source carrier directly (see `seeded_current_truth`).
 ///
 /// A further SD13-E5 slice widens the level-1-only gate (`supported_wizard_level`,
 /// 1..=2) and extends every one of the formulas above to level 2 via the same
@@ -45341,7 +45341,7 @@ mod wizard_abjuration_protective_ward_ac_claim_tests {
     /// Human Wizard at level 6 (past Protective Ward's level-1 unlock,
     /// giving a real nonzero deflection bonus of (6/5)+1=2), with the
     /// canonical Abjuration school + opposed-schools selection.
-    fn abjuration_wizard_with_ge06_posture(level: u8) -> CharacterInput {
+    fn abjuration_wizard_with_pilot_posture(level: u8) -> CharacterInput {
         let result = load_character_input_fixture(FIGHTER_LEVEL_1_FIXTURE);
         assert!(result.diagnostics.is_empty(), "fixture should load cleanly");
         let mut input = result.character_input.expect("valid fixture");
@@ -45365,7 +45365,7 @@ mod wizard_abjuration_protective_ward_ac_claim_tests {
     #[test]
     fn protective_ward_detail_no_longer_falsely_claims_no_ac_total_exists() {
         let computation =
-            compute_pilot_base_chassis(&abjuration_wizard_with_ge06_posture(6));
+            compute_pilot_base_chassis(&abjuration_wizard_with_pilot_posture(6));
 
         let deflection = computation
             .explanations
@@ -59620,7 +59620,7 @@ mod per_weapon_attack_total_tests {
     /// Stage 2 is additive: the pre-existing GE-06 baseline total must be
     /// untouched and still present alongside the new record.
     #[test]
-    fn the_existing_ge06_baseline_total_is_left_intact() {
+    fn the_existing_pilot_baseline_total_is_left_intact() {
         let receipt = build_pilot_headless_receipt(&fixture());
         assert!(
             receipt

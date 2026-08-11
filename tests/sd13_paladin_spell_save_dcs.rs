@@ -33,7 +33,7 @@
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const PALADIN_LEVEL3_FIXTURE: &str =
@@ -236,7 +236,7 @@ fn multiclass_paladin_does_not_gain_dc_records() {
 
 #[test]
 fn matrix_paladin_row_names_the_dc_grounding() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let paladin = matrix
         .row("class.paladin.hybrid_chassis_and_spell_burden")
         .expect("paladin hybrid_chassis_and_spell_burden row must exist");

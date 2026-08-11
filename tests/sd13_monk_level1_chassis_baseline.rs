@@ -36,7 +36,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const MONK_FIXTURE: &str =
@@ -525,7 +525,7 @@ fn multiclass_monk_is_not_promoted_by_this_slice() {
 
 #[test]
 fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let monk = matrix
         .row("class.monk.bounded_progression")
         .expect("monk bounded_progression row must exist");
@@ -569,7 +569,7 @@ fn matrix_monk_row_is_partial_computed_and_names_remaining_burdens() {
 
 #[test]
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Fighter, Druid, Barbarian, and Cleric rows were later promoted to
     // Supported/ProductVisible by SD-19's Class Progression Catalog browser

@@ -5,12 +5,12 @@ export type PackageState = 'draft' | 'valid' | 'invalid' | 'deferred';
 export type PreviewStatus = 'success' | 'blocked' | 'unsupported';
 export type BaselineArmorClassKind = 'Computed' | 'Blocked';
 
-export interface Ge08AuthoringWorkbenchRequest {
+export interface AuthoringWorkbenchRequest {
   packageRoot: string;
   activeRecordRef?: string | null;
 }
 
-export interface Ge08PackageManifest {
+export interface PackageManifest {
   packageId: string;
   packageTitle: string;
   packageVersion: string;
@@ -18,7 +18,7 @@ export interface Ge08PackageManifest {
   supportedObjectKinds: string[];
 }
 
-export interface Ge08AuthoredRecord {
+export interface AuthoredRecord {
   stableId: string;
   owningFeatId?: string | null;
   displayName: string;
@@ -29,26 +29,26 @@ export interface Ge08AuthoredRecord {
   predicate?: string | null;
 }
 
-export interface Ge08AuthoredRecords {
-  feat: Ge08AuthoredRecord | null;
-  effect: Ge08AuthoredRecord | null;
-  prerequisite: Ge08AuthoredRecord | null;
+export interface AuthoredRecords {
+  feat: AuthoredRecord | null;
+  effect: AuthoredRecord | null;
+  prerequisite: AuthoredRecord | null;
 }
 
-export interface Ge08SelectedSlotResolution {
+export interface SelectedSlotResolution {
   slot: string;
   removed: string;
   added: string;
   resolvedFeatId: string;
 }
 
-export interface Ge08BaselineArmorClass {
+export interface BaselineArmorClass {
   kind: BaselineArmorClassKind;
   value?: number;
   reason?: string;
 }
 
-export interface Ge08Diagnostic {
+export interface Diagnostic {
   class: string;
   severity: 'Error' | 'Warning';
   message: string;
@@ -56,63 +56,63 @@ export interface Ge08Diagnostic {
   claimBlocking: boolean;
 }
 
-export interface Ge08ProvenanceRef {
+export interface ProvenanceRef {
   stableId: string;
   sourcePackageId: string;
   authoredPath: string;
 }
 
-export interface Ge08ExplanationRef {
+export interface ExplanationRef {
   nodeKind: string;
   refId: string;
   detail: string;
 }
 
-export interface Ge08OracleDimensionStatus {
+export interface OracleDimensionStatus {
   dimension: string;
   status: string;
 }
 
-export interface Ge08LifecycleGateState {
+export interface LifecycleGateState {
   saveAllowed: boolean;
   previewAllowed: boolean;
   exportAllowed: boolean;
   diffMode: string;
 }
 
-export interface Ge08PreviewEnvelope {
+export interface PreviewEnvelope {
   caseId: string;
   previewStatus: PreviewStatus;
-  selectedSlotResolution: Ge08SelectedSlotResolution;
-  baselineArmorClass: Ge08BaselineArmorClass;
-  diagnostics: Ge08Diagnostic[];
-  provenanceRefs: Ge08ProvenanceRef[];
-  explanationRefs: Ge08ExplanationRef[];
-  oracleDimensionStatus: Ge08OracleDimensionStatus[];
+  selectedSlotResolution: SelectedSlotResolution;
+  baselineArmorClass: BaselineArmorClass;
+  diagnostics: Diagnostic[];
+  provenanceRefs: ProvenanceRef[];
+  explanationRefs: ExplanationRef[];
+  oracleDimensionStatus: OracleDimensionStatus[];
   blockedClaims: string[];
 }
 
-export interface Ge08AuthoringWorkbenchSnapshot {
+export interface AuthoringWorkbenchSnapshot {
   packageRoot: string;
   packageState: PackageState;
-  packageManifest: Ge08PackageManifest;
+  packageManifest: PackageManifest;
   activeRecordRef: string | null;
-  authoredRecords: Ge08AuthoredRecords;
-  preview: Ge08PreviewEnvelope;
-  lifecycleGateState: Ge08LifecycleGateState;
-  dataSource: 'ge08-headless-preview-bridge' | 'tauri-unavailable';
+  authoredRecords: AuthoredRecords;
+  preview: PreviewEnvelope;
+  lifecycleGateState: LifecycleGateState;
+  dataSource: 'headless-preview-bridge' | 'tauri-unavailable';
   note: string;
 }
 
-export async function loadGe08AuthoringWorkbench(
-  request: Ge08AuthoringWorkbenchRequest
-): Promise<Ge08AuthoringWorkbenchSnapshot> {
+export async function loadAuthoringWorkbench(
+  request: AuthoringWorkbenchRequest
+): Promise<AuthoringWorkbenchSnapshot> {
   if (!hasTauriRuntime()) {
     throw new Error('Tauri runtime not available for GE08 authoring workbench');
   }
 
   try {
-    return await invoke<Ge08AuthoringWorkbenchSnapshot>('load_ge08_authoring_workbench_snapshot', { request });
+    return await invoke<AuthoringWorkbenchSnapshot>('load_authoring_workbench_snapshot', { request });
   } catch (cause: unknown) {
     throw new Error(`Failed to load GE08 authoring workbench: ${formatError(cause)}`);
   }

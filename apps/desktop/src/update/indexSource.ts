@@ -39,7 +39,7 @@ function isChannelLabel(value: string): value is ChannelLabel {
 export function channelIndexFetchUrl(channel: string): string {
   if (!isChannelLabel(channel)) {
     throw new Error(
-      `sd16/update/indexSource: unsupported channel "${channel}". ` +
+      `update/indexSource: unsupported channel "${channel}". ` +
         `Supported: ${SUPPORTED_CHANNELS.join(', ')}.`,
     );
   }

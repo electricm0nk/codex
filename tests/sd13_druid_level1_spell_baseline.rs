@@ -58,7 +58,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const DRUID_FIXTURE: &str =
@@ -663,7 +663,7 @@ fn druid_level_4_was_later_widened_into_the_supported_tranche() {
 
 #[test]
 fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let druid = matrix
         .row("class.druid.progression_and_spell_burden")
         .expect("druid row must exist");
@@ -708,7 +708,7 @@ fn matrix_druid_row_is_partial_computed_and_names_remaining_burdens() {
 
 #[test]
 fn matrix_preserves_wizard_hybrid_blocked_computed_and_sorcerer_bard_cleric_supported_truth() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Paladin was later promoted to Partial/Computed by its own SD13-E5
     // level-gate slice (lay on hands / divine grace / mercy grounded as
@@ -791,7 +791,7 @@ fn matrix_preserves_wizard_hybrid_blocked_computed_and_sorcerer_bard_cleric_supp
 
 #[test]
 fn matrix_does_not_promote_any_row_to_supported_or_lossy() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     assert!(
         !matrix
             .rows

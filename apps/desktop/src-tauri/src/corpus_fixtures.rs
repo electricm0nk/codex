@@ -25,7 +25,7 @@ use codex::pcgen_import::lst_parser::equipment::parse_equipment_entries;
 use codex::pcgen_import::lst_parser::spell::parse_lst_spell_row;
 use codex::rules_core::source_content::{SourcePackageContent, SourceRef};
 
-use crate::ge08_workbench::resolve_package_path;
+use crate::authoring_workbench::resolve_package_path;
 
 const FIXTURE_RESOURCE_ROOT: &str = "resources/corpus_fixtures";
 const SPELL_FIXTURES: &[&str] = &["spell_abjuration.txt", "spell_illusion.txt"];

@@ -28,7 +28,7 @@
 /// `(class id, &[(spell key, that class's spell level)])`, classes and
 /// spell keys both sorted. Chained by `rules_tables::class_spell_levels`.
 ///
-/// The `allow` is for `src/bin/sd27_gen_book_cache.rs`, which still
+/// The `allow` is for `src/bin/gen_book_cache.rs`, which still
 /// `#[path]`-includes this book's `mod.rs` a second time into its own
 /// crate. That include is stale — the module has since been registered
 /// in `rules_tables/mod.rs` — and nothing in that binary consumes this

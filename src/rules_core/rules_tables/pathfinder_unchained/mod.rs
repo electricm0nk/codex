@@ -16,7 +16,7 @@
 //! `rules_tables/mod.rs` added `pub mod pathfinder_unchained;` and the
 //! `RuleSetId::Pu` variant, so this module is reachable through the
 //! `codex` library's public module tree as well as through
-//! `src/bin/sd27_gen_book_cache.rs`'s `#[path]` include.
+//! `src/bin/gen_book_cache.rs`'s `#[path]` include.
 //!
 //! **Scope, confirmed against the real corpus this cycle (not taken on
 //! faith):** `pu_equipmods.lst` (42 real records, `equipment_tables`)
@@ -39,7 +39,7 @@
 
 // This module tree is now reached ONLY through the library crate.
 //
-// `src/bin/sd27_gen_book_cache.rs` used to pull this `mod.rs` in with
+// `src/bin/gen_book_cache.rs` used to pull this `mod.rs` in with
 // `#[path]`, a workaround from a cycle that could not touch
 // `rules_tables/mod.rs`; that file's own doc comment invited a later cycle
 // to undo it once `pub mod pathfinder_unchained;` existed there. It does,

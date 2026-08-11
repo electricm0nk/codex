@@ -65,7 +65,7 @@ function draftHasEnhancementTypeAndRequiredLabels() {
   );
   // The affected-surface label is derived from the tester-entered affected surface.
   assert(
-    composed.draft.labels.includes('surface:ge08-authoring-workbench'),
+    composed.draft.labels.includes('surface:authoring-workbench'),
     'affected-surface label comes from the tester-entered affected surface'
   );
   assertEqual(new Set(composed.draft.labels).size, composed.draft.labels.length, 'labels are unique');

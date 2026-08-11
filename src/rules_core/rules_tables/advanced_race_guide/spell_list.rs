@@ -179,7 +179,7 @@ pub const SPELL_LIST: &[SpellListEntry] = &[
 
 /// Resolves an ARG spell by name. Unlike `rules_tables::acg::spell_list::spell_resolve`,
 /// this is not `RuleSetId`-scoped: this book's `rules_tables/` module is
-/// compiled only into `src/bin/sd27_gen_book_cache.rs` via `#[path]`
+/// compiled only into `src/bin/gen_book_cache.rs` via `#[path]`
 /// (SD-27's per-cycle file-touch partition does not allow-list
 /// `src/rules_core/rules_tables/mod.rs`, so this module is not — yet —
 /// wired into the shared `RuleSetId` enum; see that binary's own module

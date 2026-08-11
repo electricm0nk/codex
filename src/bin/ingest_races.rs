@@ -52,7 +52,7 @@
 //! Races, traits, and tokens are emitted in source order; output paths
 //! are derived from the record key; JSON is pretty-printed by
 //! `serde_json` in struct-declaration order. The only non-content input
-//! is `ingested_at`, which honours `SD27_INGESTED_AT` when set so a run
+//! is `ingested_at`, which honours `CODEX_INGESTED_AT` when set so a run
 //! can be reproduced byte-for-byte, and otherwise stamps real UTC now
 //! (the convention every sibling generator in `src/bin/` already uses).
 
@@ -122,8 +122,8 @@ const IN_SCOPE_RACES: &[RaceSpec] = &[
 ];
 
 /// Heuristic OGL/PI screen (`docs/governance/ogl-pi-blacklist.md`) — the
-/// same bounded substring scan `src/bin/sd27_gen_book_cache.rs` and
-/// `scripts/sd27_apg_license_retrofit.py` already apply to the 4
+/// same bounded substring scan `src/bin/gen_book_cache.rs` and
+/// `scripts/apg_license_retrofit.py` already apply to the 4
 /// previously-in-scope books. Racial traits are pure game mechanics
 /// (ability-score adjustments, saves, speeds, weapon familiarity), so
 /// every record here is expected to classify `OGL`; this screen exists so
@@ -760,7 +760,7 @@ fn sha256_hex(bytes: &[u8]) -> String {
 }
 
 /// Lowercase ASCII slug, identical in behaviour to
-/// `src/bin/sd27_gen_book_cache.rs::slugify` so race records file the
+/// `src/bin/gen_book_cache.rs::slugify` so race records file the
 /// same way every other corpus record already does.
 fn slugify(raw: &str) -> String {
     let mut out = String::new();
@@ -798,7 +798,7 @@ fn pi_hits(texts: &[&str]) -> Vec<String> {
 }
 
 fn ingested_at() -> String {
-    if let Ok(v) = std::env::var("SD27_INGESTED_AT") {
+    if let Ok(v) = std::env::var("CODEX_INGESTED_AT") {
         return v;
     }
     let output = std::process::Command::new("date")

@@ -55,7 +55,7 @@ use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, ResolvedTrait};
 use codex::rules_core::shape_b_v1::RawBonusChain;
 
-use crate::ge08_workbench::codex_repo_root;
+use crate::authoring_workbench::codex_repo_root;
 
 /// The corpus books that carry race content today. A book with no `race/`
 /// or `race_trait/` directory contributes nothing and is not an error, so

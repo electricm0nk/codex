@@ -41,7 +41,7 @@ use codex::rules_core::pilot_compute::{
     ComputationDiagnostic, ComputationExplanation, PilotBaseChassisComputation,
     compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
+use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 
 const WIZARD_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_wizard_level1_sd13_deterministic_input.txt");
@@ -249,7 +249,7 @@ fn wizard_without_canonical_specialization_choices_gains_no_school_power_groundi
 
 #[test]
 fn matrix_wizard_row_names_school_power_magnitudes_grounded_and_execution_unproven() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let wizard = matrix
         .row("class.wizard.progression_and_spell_burden")
         .expect("wizard row must exist");

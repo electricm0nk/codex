@@ -25,7 +25,7 @@ const PROOF_EFFECT_ID: &str = "effect.homebrew.guard_stance.ac_bonus";
 const ARMOR_CLASS_DIMENSION: &str = "defense.baseline_armor_class";
 
 fn fixture_root(name: &str) -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!("tests/fixtures/ge08/{name}"))
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!("tests/fixtures/authoring_workbench/{name}"))
 }
 
 #[test]

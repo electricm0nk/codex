@@ -27,7 +27,7 @@ use codex::rules_core::pilot_compute::{
     compute_pilot_base_chassis,
 };
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const HALFLING_FIXTURE: &str =
@@ -309,7 +309,7 @@ fn human_input_does_not_surface_halfling_trait_bundle_records() {
 
 #[test]
 fn matrix_halfling_row_is_partial_computed_and_names_four_recognized_families() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let halfling = matrix
         .row("race.halfling.bounded_semantics")
         .expect("halfling row must exist");
@@ -342,7 +342,7 @@ fn matrix_halfling_row_is_partial_computed_and_names_four_recognized_families() 
 
 #[test]
 fn matrix_all_six_non_human_race_rows_now_carry_runtime_evidence() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // With this slice, every core race row (Human + all six non-Human races)
     // carries runtime evidence; none is a pure roster-scope placeholder any

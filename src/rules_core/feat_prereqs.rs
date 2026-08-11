@@ -411,7 +411,7 @@ pub fn character_prereq_facts(
 }
 
 #[cfg(test)]
-mod sd27_prerequisite_tests {
+mod prerequisite_tests {
     use super::*;
     use crate::rules_core::character_input::{
         AbilityScores, CharacterClassLevel, ChosenCharacterState,

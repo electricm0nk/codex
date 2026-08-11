@@ -1,5 +1,5 @@
 /**
- * Doc-comment hygiene sweep for sd16/feedback/*: no bare SD-16/SD16 tranche
+ * Doc-comment hygiene sweep for feedback/*: no bare SD-16/SD16 tranche
  * tags and no AV-PAY-N audit-ID tags may remain in source comments in this
  * directory (SD-21 Epic 1, criterion E1.3). These files describe behaviour
  * directly in prose instead of pointing at an external tranche/audit-ID
@@ -8,10 +8,10 @@
  * The `sd-16-e8` GitHub *label* string in controlledDefectPayload.ts /
  * .test.ts is real external taxonomy (an actual label applied to filed
  * issues), not a doc-comment tag, so it is deliberately excluded from this
- * sweep rather than rewritten. Likewise, a literal `sd16/`-prefixed source
+ * sweep rather than rewritten. Likewise, a literal source
  * path mentioned in a rendered issue body is a real directory reference
- * (that directory rename is a separate, larger Epic 1 criterion), not a
- * tranche/audit-ID tag, so a bare `sd16` immediately followed by `/` is not
+ * (the directory is now named `feedback/` for what it does), not a
+ * tranche/audit-ID tag and is not
  * flagged.
  */
 import { readFileSync } from 'node:fs';
@@ -49,4 +49,4 @@ function verifiesNoTrancheOrAuditIdTagsRemainInComments() {
 
 verifiesNoTrancheOrAuditIdTagsRemainInComments();
 
-console.log('docCommentHygiene.test.ts: 6/6 sd16/feedback files clean of SD-16/AV-PAY-N tags');
+console.log('docCommentHygiene.test.ts: 6/6 feedback/ files clean of SD-16/AV-PAY-N tags');

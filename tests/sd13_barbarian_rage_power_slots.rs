@@ -32,7 +32,7 @@
 use codex::rules_core::character_input::{CharacterInput, load_character_input_fixture};
 use codex::rules_core::pilot_compute::compute_pilot_base_chassis;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const BARBARIAN_LEVEL10_FIXTURE: &str =
@@ -203,7 +203,7 @@ fn multiclass_barbarian_does_not_gain_rage_power_records() {
 
 #[test]
 fn matrix_barbarian_row_names_the_completed_rage_power_family() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let barbarian = matrix
         .row("class.barbarian.bounded_progression")
         .expect("barbarian bounded_progression row must exist");

@@ -16,7 +16,7 @@
 //! `ClassId::ALL`, `good_saves_for()`), matching `corpus_ingest_diagnostic.rs`'s
 //! existing accessor surface.
 //!
-//! Run once: `cargo run --bin sd26_gen_core_rulebook_cache`. Regenerate if
+//! Run once: `cargo run --bin gen_core_rulebook_cache`. Regenerate if
 //! the corpus or `rules_tables::crb` changes (same "regenerate, don't
 //! hand-edit" convention `equipment_data/`'s own modules already document).
 

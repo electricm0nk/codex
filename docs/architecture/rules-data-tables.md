@@ -277,8 +277,8 @@ Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
 
 - `src/rules_core/cache_gen/acg.rs`, `apg.rs`, `beastiary1.rs` — the three
   original per-book dump generators (SD-26 Epic 3 shape).
-- `src/bin/sd26_gen_core_rulebook_cache.rs` — CRB.
-- `src/bin/sd27_gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
+- `src/bin/gen_core_rulebook_cache.rs` — CRB.
+- `src/bin/gen_book_cache.rs` — Pathfinder Unchained + Advanced Race
   Guide (both books share one binary).
 - `src/bin/ingest_races.rs`, `src/bin/ingest_pu_classes.rs`,
   `src/bin/ingest_race_traits_arg.rs` — the three later single-purpose
@@ -286,7 +286,7 @@ Enumerated directly (grep every `CorpusRecordV1 {` / `CorpusRecord {` /
 
 (`src/bin/gen_cache_apg.rs`, `gen_cache_acg.rs`, `gen_cache_beastiary.rs` are
 older, still-present binaries retained for historical/manual regeneration;
-`sd26_gen_core_rulebook_cache.rs` is the one wired into the current
+`gen_core_rulebook_cache.rs` is the one wired into the current
 regeneration path for CRB.)
 
 This is a **dump of the already-landed `rules_tables` module state, not a
@@ -312,7 +312,7 @@ Every one of the eight writers above now calls
 (`PI_BLACKLIST_TERMS`, asserted at exactly 55 by its own unit test). Before
 this convergence, the `license`/`pi_field`/`pi_marker` fields existed on disk
 **only** because a one-off post-hoc script
-(`scripts/sd27_apg_license_retrofit.py`) had stamped them after the fact —
+(`scripts/apg_license_retrofit.py`) had stamped them after the fact —
 any full regeneration silently destroyed that stamping, including
 un-redacting a record that had been marked `PI-REDACTED`. Five of the eight
 writers lacked the screening call before this cycle (`fix(ge): screen

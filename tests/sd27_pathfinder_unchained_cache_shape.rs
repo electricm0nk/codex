@@ -1,8 +1,8 @@
 //! SD-27 Cycle E2.2 — Shape B v1 key-set + key-order conformance test for
 //! the Pathfinder Unchained (PU) corpus cache at
 //! `data/corpus/pathfinder_unchained/{feat,equipment}/*.json`, generated
-//! by `cargo run --bin sd27_gen_book_cache -- pathfinder_unchained`
-//! (`src/bin/sd27_gen_book_cache.rs`). Reads only the already-generated
+//! by `cargo run --bin gen_book_cache -- pathfinder_unchained`
+//! (`src/bin/gen_book_cache.rs`). Reads only the already-generated
 //! files — this test does not require a live PCGen corpus checkout,
 //! mirroring `tests/sd26_cache_acg.rs`'s own "generated-cache
 //! conformance, not live-corpus" scope, adapted to Shape B **v1**'s

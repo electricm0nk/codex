@@ -19,7 +19,7 @@ const LINUX_BINARY_RESOURCE_DIR_NAME: &str = "codex";
 /// Request to load the GE08 authoring workbench snapshot.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08AuthoringWorkbenchRequest {
+pub struct AuthoringWorkbenchRequest {
     /// Repo-root-relative path to the package bundle.
     pub package_root: String,
     /// Optional stable ID to focus a specific authored record.
@@ -29,7 +29,7 @@ pub struct Ge08AuthoringWorkbenchRequest {
 /// Package manifest information surfaced in the workbench snapshot.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08PackageManifest {
+pub struct PackageManifest {
     pub package_id: String,
     pub package_title: String,
     pub package_version: String,
@@ -40,7 +40,7 @@ pub struct Ge08PackageManifest {
 /// Authored record (feat/effect/prerequisite) information.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08AuthoredRecord {
+pub struct AuthoredRecord {
     pub stable_id: String,
     pub owning_feat_id: Option<String>,
     pub display_name: String,
@@ -54,7 +54,7 @@ pub struct Ge08AuthoredRecord {
 /// Selected slot resolution for the Human bonus feat substitution.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08SelectedSlotResolution {
+pub struct SelectedSlotResolution {
     pub slot: String,
     pub removed: String,
     pub added: String,
@@ -64,11 +64,11 @@ pub struct Ge08SelectedSlotResolution {
 /// Baseline armor class preview result (computed or blocked).
 ///
 /// The `kind` tag stays PascalCase (`Computed` / `Blocked`): the TS boundary
-/// (`loadGe08AuthoringWorkbench.ts`) matches on those exact strings, and a
+/// (`loadAuthoringWorkbench.ts`) matches on those exact strings, and a
 /// container-level `rename_all` would rename the variant tags, not the fields.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(tag = "kind")]
-pub enum Ge08BaselineArmorClass {
+pub enum BaselineArmorClass {
     Computed { value: i16 },
     Blocked { reason: String },
 }
@@ -76,7 +76,7 @@ pub enum Ge08BaselineArmorClass {
 /// Package validation diagnostic.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08Diagnostic {
+pub struct Diagnostic {
     pub class: String,
     pub severity: String, // "Error" or "Warning"
     pub message: String,
@@ -87,7 +87,7 @@ pub struct Ge08Diagnostic {
 /// Provenance/source reference.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08ProvenanceRef {
+pub struct ProvenanceRef {
     pub stable_id: String,
     pub source_package_id: String,
     pub authored_path: String,
@@ -96,7 +96,7 @@ pub struct Ge08ProvenanceRef {
 /// Explanation graph node reference.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08ExplanationRef {
+pub struct ExplanationRef {
     pub node_kind: String,
     pub ref_id: String,
     pub detail: String,
@@ -105,7 +105,7 @@ pub struct Ge08ExplanationRef {
 /// Oracle dimension status.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08OracleDimensionStatus {
+pub struct OracleDimensionStatus {
     pub dimension: String,
     pub status: String,
 }
@@ -113,7 +113,7 @@ pub struct Ge08OracleDimensionStatus {
 /// Lifecycle gate state.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08LifecycleGateState {
+pub struct LifecycleGateState {
     pub save_allowed: bool,
     pub preview_allowed: bool,
     pub export_allowed: bool,
@@ -123,39 +123,39 @@ pub struct Ge08LifecycleGateState {
 /// Complete GE08 authoring workbench snapshot response.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08AuthoringWorkbenchSnapshot {
+pub struct AuthoringWorkbenchSnapshot {
     pub package_root: String,
     pub package_state: String, // "draft", "valid", "invalid", "deferred"
-    pub package_manifest: Ge08PackageManifest,
+    pub package_manifest: PackageManifest,
     pub active_record_ref: Option<String>,
-    pub authored_records: Ge08AuthoredRecords,
-    pub preview: Ge08PreviewEnvelope,
-    pub lifecycle_gate_state: Ge08LifecycleGateState,
-    pub data_source: String, // "ge08-headless-preview-bridge" or "tauri-unavailable"
+    pub authored_records: AuthoredRecords,
+    pub preview: PreviewEnvelope,
+    pub lifecycle_gate_state: LifecycleGateState,
+    pub data_source: String, // "headless-preview-bridge" or "tauri-unavailable"
     pub note: String,
 }
 
 /// Authored records container.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08AuthoredRecords {
-    pub feat: Option<Ge08AuthoredRecord>,
-    pub effect: Option<Ge08AuthoredRecord>,
-    pub prerequisite: Option<Ge08AuthoredRecord>,
+pub struct AuthoredRecords {
+    pub feat: Option<AuthoredRecord>,
+    pub effect: Option<AuthoredRecord>,
+    pub prerequisite: Option<AuthoredRecord>,
 }
 
 /// Preview envelope with all result families.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct Ge08PreviewEnvelope {
+pub struct PreviewEnvelope {
     pub case_id: String,
     pub preview_status: String, // "success", "blocked", "unsupported"
-    pub selected_slot_resolution: Ge08SelectedSlotResolution,
-    pub baseline_armor_class: Ge08BaselineArmorClass,
-    pub diagnostics: Vec<Ge08Diagnostic>,
-    pub provenance_refs: Vec<Ge08ProvenanceRef>,
-    pub explanation_refs: Vec<Ge08ExplanationRef>,
-    pub oracle_dimension_status: Vec<Ge08OracleDimensionStatus>,
+    pub selected_slot_resolution: SelectedSlotResolution,
+    pub baseline_armor_class: BaselineArmorClass,
+    pub diagnostics: Vec<Diagnostic>,
+    pub provenance_refs: Vec<ProvenanceRef>,
+    pub explanation_refs: Vec<ExplanationRef>,
+    pub oracle_dimension_status: Vec<OracleDimensionStatus>,
     pub blocked_claims: Vec<String>,
 }
 
@@ -265,12 +265,12 @@ fn packaged_resource_candidates(package_root: &str) -> Vec<PathBuf> {
 
 /// Build the GE08 authoring workbench snapshot from the headless substrate.
 ///
-/// This is the whole command behavior behind `load_ge08_authoring_workbench_snapshot`;
+/// This is the whole command behavior behind `load_authoring_workbench_snapshot`;
 /// the Tauri command in `main.rs` is a thin wrapper so this mapping (including
 /// the lifecycle gate derivation) stays testable without a webview.
-pub fn build_ge08_workbench_snapshot(
-    request: Ge08AuthoringWorkbenchRequest,
-) -> Result<Ge08AuthoringWorkbenchSnapshot, String> {
+pub fn build_authoring_workbench_snapshot(
+    request: AuthoringWorkbenchRequest,
+) -> Result<AuthoringWorkbenchSnapshot, String> {
     let package_path = resolve_package_path(&request.package_root)?;
 
     if !package_path.exists() {
@@ -289,17 +289,17 @@ pub fn build_ge08_workbench_snapshot(
 
     let (actual_state, _diags) = package.recompute_validation();
     let baseline_ac = match envelope.baseline_armor_class {
-        ArmorClassPreview::Computed(value) => Ge08BaselineArmorClass::Computed { value },
-        ArmorClassPreview::Blocked(reason) => Ge08BaselineArmorClass::Blocked { reason },
+        ArmorClassPreview::Computed(value) => BaselineArmorClass::Computed { value },
+        ArmorClassPreview::Blocked(reason) => BaselineArmorClass::Blocked { reason },
     };
 
     let export_allowed = actual_state == PackageValidationState::Valid;
     let preview_allowed = export_allowed && envelope.preview_status != PreviewStatus::Blocked;
 
-    Ok(Ge08AuthoringWorkbenchSnapshot {
+    Ok(AuthoringWorkbenchSnapshot {
         package_root: request.package_root,
         package_state: actual_state.as_str().to_string(),
-        package_manifest: Ge08PackageManifest {
+        package_manifest: PackageManifest {
             package_id: package.manifest.package_id,
             package_title: package.manifest.package_title,
             package_version: package.manifest.package_version,
@@ -307,8 +307,8 @@ pub fn build_ge08_workbench_snapshot(
             supported_object_kinds: package.manifest.supported_object_kinds,
         },
         active_record_ref: request.active_record_ref,
-        authored_records: Ge08AuthoredRecords {
-            feat: package.feat.map(|f| Ge08AuthoredRecord {
+        authored_records: AuthoredRecords {
+            feat: package.feat.map(|f| AuthoredRecord {
                 stable_id: f.stable_id,
                 owning_feat_id: None,
                 display_name: f.display_name,
@@ -318,7 +318,7 @@ pub fn build_ge08_workbench_snapshot(
                 modifier_value: None,
                 predicate: None,
             }),
-            effect: package.effect.map(|e| Ge08AuthoredRecord {
+            effect: package.effect.map(|e| AuthoredRecord {
                 stable_id: e.stable_id,
                 owning_feat_id: Some(e.owning_feat_id),
                 display_name: e.target_family.clone(),
@@ -328,7 +328,7 @@ pub fn build_ge08_workbench_snapshot(
                 modifier_value: Some(e.modifier_value),
                 predicate: None,
             }),
-            prerequisite: package.prerequisite.map(|p| Ge08AuthoredRecord {
+            prerequisite: package.prerequisite.map(|p| AuthoredRecord {
                 stable_id: p.stable_id,
                 owning_feat_id: Some(p.owning_feat_id),
                 display_name: p.predicate.clone(),
@@ -339,14 +339,14 @@ pub fn build_ge08_workbench_snapshot(
                 predicate: Some(p.predicate),
             }),
         },
-        preview: Ge08PreviewEnvelope {
+        preview: PreviewEnvelope {
             case_id: envelope.case_id,
             preview_status: match envelope.preview_status {
                 PreviewStatus::Success => "success".to_string(),
                 PreviewStatus::Blocked => "blocked".to_string(),
                 PreviewStatus::Unsupported => "unsupported".to_string(),
             },
-            selected_slot_resolution: Ge08SelectedSlotResolution {
+            selected_slot_resolution: SelectedSlotResolution {
                 slot: envelope.selected_slot_resolution.slot,
                 removed: envelope.selected_slot_resolution.removed,
                 added: envelope.selected_slot_resolution.added,
@@ -356,7 +356,7 @@ pub fn build_ge08_workbench_snapshot(
             diagnostics: envelope
                 .diagnostics
                 .iter()
-                .map(|d| Ge08Diagnostic {
+                .map(|d| Diagnostic {
                     class: d.class.clone(),
                     severity: d.severity.as_str().to_string(),
                     message: d.message.clone(),
@@ -367,7 +367,7 @@ pub fn build_ge08_workbench_snapshot(
             provenance_refs: envelope
                 .provenance_refs
                 .iter()
-                .map(|p| Ge08ProvenanceRef {
+                .map(|p| ProvenanceRef {
                     stable_id: p.stable_id.clone(),
                     source_package_id: p.source_package_id.clone(),
                     authored_path: p.authored_path.clone(),
@@ -376,7 +376,7 @@ pub fn build_ge08_workbench_snapshot(
             explanation_refs: envelope
                 .explanation_refs
                 .iter()
-                .map(|e| Ge08ExplanationRef {
+                .map(|e| ExplanationRef {
                     node_kind: e.node_kind.clone(),
                     ref_id: e.ref_id.clone(),
                     detail: e.detail.clone(),
@@ -385,20 +385,20 @@ pub fn build_ge08_workbench_snapshot(
             oracle_dimension_status: envelope
                 .oracle_dimension_status
                 .iter()
-                .map(|o| Ge08OracleDimensionStatus {
+                .map(|o| OracleDimensionStatus {
                     dimension: o.dimension.clone(),
                     status: o.status.clone(),
                 })
                 .collect(),
             blocked_claims: envelope.blocked_claims,
         },
-        lifecycle_gate_state: Ge08LifecycleGateState {
+        lifecycle_gate_state: LifecycleGateState {
             save_allowed: true,
             preview_allowed,
             export_allowed,
             diff_mode: "deferred".to_string(),
         },
-        data_source: "ge08-headless-preview-bridge".to_string(),
+        data_source: "headless-preview-bridge".to_string(),
         note: "Real GE-08 authoring workbench snapshot from headless substrate.".to_string(),
     })
 }
@@ -407,9 +407,9 @@ pub fn build_ge08_workbench_snapshot(
 mod tests {
     use super::*;
 
-    fn snapshot_for(fixture: &str) -> Ge08AuthoringWorkbenchSnapshot {
-        build_ge08_workbench_snapshot(Ge08AuthoringWorkbenchRequest {
-            package_root: format!("tests/fixtures/ge08/{fixture}"),
+    fn snapshot_for(fixture: &str) -> AuthoringWorkbenchSnapshot {
+        build_authoring_workbench_snapshot(AuthoringWorkbenchRequest {
+            package_root: format!("tests/fixtures/authoring_workbench/{fixture}"),
             active_record_ref: None,
         })
         .unwrap_or_else(|err| panic!("fixture '{fixture}' should build a snapshot: {err}"))
@@ -423,7 +423,7 @@ mod tests {
         assert_eq!(snapshot.preview.preview_status, "success");
         assert_eq!(
             snapshot.preview.baseline_armor_class,
-            Ge08BaselineArmorClass::Computed { value: 17 }
+            BaselineArmorClass::Computed { value: 17 }
         );
         assert_eq!(
             snapshot.preview.selected_slot_resolution.slot,
@@ -441,18 +441,18 @@ mod tests {
 
     #[test]
     fn packaged_guard_stance_resource_yields_success_without_repo_fixture_path() {
-        let snapshot = build_ge08_workbench_snapshot(Ge08AuthoringWorkbenchRequest {
-            package_root: "resources/ge08/guard-stance-package".to_string(),
+        let snapshot = build_authoring_workbench_snapshot(AuthoringWorkbenchRequest {
+            package_root: "resources/authoring_workbench/guard-stance-package".to_string(),
             active_record_ref: None,
         })
         .expect("packaged GE08 resource should build a snapshot without tests/fixtures");
 
-        assert_eq!(snapshot.package_root, "resources/ge08/guard-stance-package");
+        assert_eq!(snapshot.package_root, "resources/authoring_workbench/guard-stance-package");
         assert_eq!(snapshot.package_state, "valid");
         assert_eq!(snapshot.preview.preview_status, "success");
         assert_eq!(
             snapshot.preview.baseline_armor_class,
-            Ge08BaselineArmorClass::Computed { value: 17 }
+            BaselineArmorClass::Computed { value: 17 }
         );
     }
 
@@ -472,7 +472,7 @@ mod tests {
         assert!(
             matches!(
                 snapshot.preview.baseline_armor_class,
-                Ge08BaselineArmorClass::Blocked { .. }
+                BaselineArmorClass::Blocked { .. }
             ),
             "blocked preview must not fabricate a computed armor class"
         );
@@ -513,17 +513,17 @@ mod tests {
 
     #[test]
     fn baseline_armor_class_wire_shape_matches_the_ts_boundary() {
-        // loadGe08AuthoringWorkbench.ts matches kind === 'Computed' | 'Blocked';
+        // loadAuthoringWorkbench.ts matches kind === 'Computed' | 'Blocked';
         // this pins the serialized tag casing so the boundary cannot silently
         // fall through to the Blocked rendering branch for computed values.
-        let computed = serde_json::to_value(Ge08BaselineArmorClass::Computed { value: 17 })
+        let computed = serde_json::to_value(BaselineArmorClass::Computed { value: 17 })
             .expect("computed AC should serialize");
         assert_eq!(
             computed,
             serde_json::json!({ "kind": "Computed", "value": 17 })
         );
 
-        let blocked = serde_json::to_value(Ge08BaselineArmorClass::Blocked {
+        let blocked = serde_json::to_value(BaselineArmorClass::Blocked {
             reason: "missing effect".to_string(),
         })
         .expect("blocked AC should serialize");

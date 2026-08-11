@@ -1,7 +1,7 @@
 /**
  * Character Hub Phase 3 — real `UpdateController` adapter.
  *
- * Bridges the sd16/update UI to the parts of the update system that are
+ * Bridges the update UI to the parts of the update system that are
  * genuinely real today: `fetch.ts`'s discovery fetch/validate,
  * `eligibility.ts`'s pure decision table, and the Tauri commands that have
  * real, tested bodies (`verify_relaunch_artifact`, `perform_restore_previous`,

@@ -13,7 +13,7 @@
 //!
 //! **Generation only, not runtime parsing.** Records of this shape are
 //! written by `src/bin/sd27_gen_advanced_race_guide_cache.rs` (a one-off
-//! codegen tool, matching `sd26_gen_core_rulebook_cache.rs`'s established
+//! codegen tool, matching `gen_core_rulebook_cache.rs`'s established
 //! pattern) which dumps the *already-completed* Rust
 //! `rules_tables::advanced_race_guide` module state — it never re-derives
 //! any `data` field's *value* from the raw LST at generation time, only

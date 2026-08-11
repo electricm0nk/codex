@@ -119,7 +119,7 @@ fn ingested_at_now() -> String {
     String::from_utf8(output.stdout).expect("date output is valid UTF-8").trim().to_string()
 }
 
-/// Same slug rule `sd27_gen_book_cache.rs` already uses for every other
+/// Same slug rule `gen_book_cache.rs` already uses for every other
 /// content kind, so `race_trait/` paths read like their `feat/`/`spell/`
 /// siblings.
 fn slugify(raw: &str) -> String {

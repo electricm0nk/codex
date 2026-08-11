@@ -115,7 +115,7 @@ use codex::rules_core::corpus_loader::BookCorpusRoot;
 use codex::rules_core::feat_effects::{display_value_deltas_from_feats, FeatDisplayValueDeltas};
 use codex::rules_core::race_resolver::{load_race_corpus, RaceCorpus, RaceTraitRecord, TraitRole};
 
-use crate::ge08_workbench::codex_repo_root;
+use crate::authoring_workbench::codex_repo_root;
 use crate::race_catalog::{book_code, RACE_CORPUS_BOOKS};
 
 /// `Half-Elf` → `HalfElf`. The same identity rule `race_catalog.rs` uses, so a

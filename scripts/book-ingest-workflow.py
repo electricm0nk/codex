@@ -36,13 +36,13 @@ importing the helper at module scope would defeat it.
 
 Usage
 -----
-    python3 scripts/sd27-workflow.py preflight
-    python3 scripts/sd27-workflow.py seed [--dry-run]
-    python3 scripts/sd27-workflow.py status
-    python3 scripts/sd27-workflow.py next
-    python3 scripts/sd27-workflow.py claim sd27.advanced_race_guide.pre_build --agent backend
-    python3 scripts/sd27-workflow.py complete sd27.advanced_race_guide.pre_build --receipt <path>
-    python3 scripts/sd27-workflow.py block sd27.advanced_race_guide.pre_build --reason "..."
+    python3 scripts/book-ingest-workflow.py preflight
+    python3 scripts/book-ingest-workflow.py seed [--dry-run]
+    python3 scripts/book-ingest-workflow.py status
+    python3 scripts/book-ingest-workflow.py next
+    python3 scripts/book-ingest-workflow.py claim sd27.advanced_race_guide.pre_build --agent backend
+    python3 scripts/book-ingest-workflow.py complete sd27.advanced_race_guide.pre_build --receipt <path>
+    python3 scripts/book-ingest-workflow.py block sd27.advanced_race_guide.pre_build --reason "..."
 
 Environment
 -----------

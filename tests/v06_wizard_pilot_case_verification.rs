@@ -104,7 +104,7 @@ fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
 }
 
-/// Resolution follows `ge08_workbench::resolve_package_path`'s contract —
+/// Resolution follows `authoring_workbench::resolve_package_path`'s contract —
 /// repo-relative paths anchor at the codex repo root. That helper lives in
 /// the separate `codex-desktop` crate and is not reachable from a `codex`
 /// root-crate integration test, so this uses the identical anchor its

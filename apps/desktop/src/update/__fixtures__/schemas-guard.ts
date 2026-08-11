@@ -91,20 +91,20 @@ function assertCanonical(
 ): void {
   if (!schema || typeof schema !== 'object') {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema import did not resolve to a JSON object. ` +
+      `[update/__fixtures__/schemas-guard] ${label} schema import did not resolve to a JSON object. ` +
         `The schema file path may be missing or the import shadowed by a stub.`,
     );
   }
   if (schema.$id !== expectation.expectedId) {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema $id "${schema.$id}" does not match canonical "${
+      `[update/__fixtures__/schemas-guard] ${label} schema $id "${schema.$id}" does not match canonical "${
         expectation.expectedId
       }". The import path may be pointing at a divergent or vendored copy.`,
     );
   }
   if (schema.title !== expectation.expectedTitle) {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema title "${schema.title}" does not match canonical "${
+      `[update/__fixtures__/schemas-guard] ${label} schema title "${schema.title}" does not match canonical "${
         expectation.expectedTitle
       }". The import path may be pointing at a stale or rewritten copy.`,
     );
@@ -112,7 +112,7 @@ function assertCanonical(
   const versionProperty = schema.properties?.schema_version;
   if (!versionProperty) {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema is missing properties.schema_version. The canonical contract must declare schema_version with an enum / oneOf / const.`,
+      `[update/__fixtures__/schemas-guard] ${label} schema is missing properties.schema_version. The canonical contract must declare schema_version with an enum / oneOf / const.`,
     );
   }
   // The pin accepts either a single `const` (channel-index shape)
@@ -133,7 +133,7 @@ function assertCanonical(
   })();
   if (acceptedConsts.length === 0) {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema properties.schema_version has neither a ` +
+      `[update/__fixtures__/schemas-guard] ${label} schema properties.schema_version has neither a ` +
         `string const nor a oneOf of const entries. Expected: const="..." or oneOf=[{const:"a"}, {const:"b"}].`,
     );
   }
@@ -141,7 +141,7 @@ function assertCanonical(
   for (const expected of expectedConsts) {
     if (!acceptedConsts.includes(expected)) {
       throw new Error(
-        `[sd16/update/__fixtures__/schemas-guard] ${label} schema version const mismatch. ` +
+        `[update/__fixtures__/schemas-guard] ${label} schema version const mismatch. ` +
           `Expected const="${expected}" to be accepted by properties.schema_version; ` +
           `got accepted consts=[${acceptedConsts.map((s) => `"${s}"`).join(',')}] from ${JSON.stringify(versionProperty)}. ` +
           `The canonical schema contract has bumped without a guard refresh.`,
@@ -152,14 +152,14 @@ function assertCanonical(
   const missing = expectation.requiredTopLevelKeys.filter((k) => !required.includes(k));
   if (missing.length > 0) {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema is missing required top-level keys: ${missing.join(
+      `[update/__fixtures__/schemas-guard] ${label} schema is missing required top-level keys: ${missing.join(
         ', ',
       )}. The canonical contract has extended without a guard refresh.`,
     );
   }
   if (schema.additionalProperties !== false) {
     throw new Error(
-      `[sd16/update/__fixtures__/schemas-guard] ${label} schema must declare additionalProperties: false at root ` +
+      `[update/__fixtures__/schemas-guard] ${label} schema must declare additionalProperties: false at root ` +
         `(this is the AV-SCH-4 contract that forbids manifest data on the channel index and vice versa). ` +
         `Got additionalProperties=${JSON.stringify(schema.additionalProperties)}.`,
     );

@@ -84,7 +84,7 @@ const defaultFetchImpl: FetchLike = async (input, init) => {
   const f = (globalThis as { fetch?: typeof fetch }).fetch;
   if (typeof f !== 'function') {
     throw new Error(
-      'sd16/update/fetch: no global fetch available; pass `fetchImpl` explicitly'
+      'update/fetch: no global fetch available; pass `fetchImpl` explicitly'
     );
   }
   const res = await f(input, init);

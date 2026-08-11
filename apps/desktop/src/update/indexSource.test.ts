@@ -6,7 +6,7 @@
 // test failure rather than a silent misrouting at fetch time.
 //
 // The mirror of the URL shape also exists in the E6 surface
-// (`apps/desktop/src/sd16/update/fetch.ts`). Both must agree; this
+// (`apps/desktop/src/update/fetch.ts`). Both must agree; this
 // test exercises the F3b half directly. The E6 surface is out of
 // scope per the F3b write scope but the dual assertion here makes a
 // downstream merge that drops the URL helper inspectable.

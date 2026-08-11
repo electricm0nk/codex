@@ -714,7 +714,7 @@ pub(crate) fn map_chosen_feat_targets_dto(
 }
 
 /// The `kind` tag stays PascalCase (`Saved` / `Blocked`) — no container-level
-/// `rename_all` — matching the `Ge08BaselineArmorClass` precedent so the TS
+/// `rename_all` — matching the `BaselineArmorClass` precedent so the TS
 /// boundary can match on those exact strings. v0.6 alpha swarm (real
 /// render-staleness root cause, frontend-found): a bare
 /// `#[serde(rename_all = "camelCase")]` on this enum would ALSO camelCase

@@ -2,11 +2,11 @@
 //! `docs/governance/ogl-pi-blacklist.md` and `decisions.md §17`.
 //!
 //! **Why this module exists.** Before it did, the same 54-term blacklist
-//! (`sd27_gen_book_cache.rs`'s `PI_BLACKLIST_TERMS`/`classify_field`,
+//! (`gen_book_cache.rs`'s `PI_BLACKLIST_TERMS`/`classify_field`,
 //! `ingest_pu_classes.rs`'s and `ingest_races.rs`'s own
 //! `PI_BLACKLIST_TERMS`/`pi_hits`) was forked three times, independently.
 //! Three of the five corpus-cache writers had NO screening at all
-//! (CRB's `sd26_gen_core_rulebook_cache.rs`, ACG/APG/Bestiary 1's
+//! (CRB's `gen_core_rulebook_cache.rs`, ACG/APG/Bestiary 1's
 //! `cache_gen::{acg,apg,beastiary1}`), so their `license`/`pi_field`/
 //! `pi_marker` fields only ever existed on disk via a post-hoc retrofit
 //! pass the generator itself knew nothing about — the exact failure
@@ -22,13 +22,13 @@
 //! The term list itself is a bounded, documented heuristic
 //! (`docs/governance/ogl-pi-blacklist.md` — DRAFT, operator-reviewable),
 //! not an exhaustive legal review. It is reproduced here byte-for-byte
-//! from `sd27_gen_book_cache.rs::PI_BLACKLIST_TERMS`, the most complete
+//! from `gen_book_cache.rs::PI_BLACKLIST_TERMS`, the most complete
 //! of the three existing copies (20 deities + 34 place/nation names).
 
 use crate::rules_core::shape_b_v1::{License, PI_MARKER_REDACTED, REDACTED_PI_MARKER};
 
 /// The 20 canonical core Golarion deities plus 34 sampled setting
-/// place/nation names — byte-identical to `sd27_gen_book_cache.rs`'s copy.
+/// place/nation names — byte-identical to `gen_book_cache.rs`'s copy.
 pub const PI_BLACKLIST_TERMS: &[&str] = &[
     "Iomedae", "Sarenrae", "Asmodeus", "Cayden Cailean", "Abadar", "Calistria", "Desna", "Erastil", "Gorum", "Gozreh",
     "Irori", "Lamashtu", "Nethys", "Norgorber", "Pharasma", "Rovagug", "Shelyn", "Torag", "Urgathoa", "Zon-Kuthon",
@@ -52,7 +52,7 @@ pub const PI_BLACKLIST_TERMS: &[&str] = &[
 /// value, per the PI-blacklist screen. A substring hit on any blacklist
 /// term redacts the whole value to the literal marker
 /// [`REDACTED_PI_MARKER`]; no hit is plain OGL. Mirrors
-/// `sd27_gen_book_cache.rs::classify_field` exactly.
+/// `gen_book_cache.rs::classify_field` exactly.
 pub fn classify_field(field_name: &str, value: &str) -> (License, Option<String>, Option<String>, String) {
     for term in PI_BLACKLIST_TERMS {
         if value.contains(term) {

@@ -45,7 +45,7 @@ use codex::rules_core::pilot_compute::{
 use codex::rules_core::pilot_failure::PrimaryOwner;
 use codex::rules_core::pilot_view_model::PilotViewModel;
 use codex::rules_core::support_state_matrix::{
-    EvidenceFreshness, EvidenceTier, SupportState, seeded_sd13_e1_f1_current_truth,
+    EvidenceFreshness, EvidenceTier, SupportState, seeded_current_truth,
 };
 
 const BARBARIAN_FIXTURE: &str = include_str!(
@@ -635,7 +635,7 @@ fn multiclass_barbarian_is_not_promoted_by_this_slice() {
 
 #[test]
 fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_unproven() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let barbarian = matrix
         .row("class.barbarian.bounded_progression")
         .expect("barbarian bounded_progression row must exist");
@@ -691,7 +691,7 @@ fn matrix_barbarian_row_is_partial_computed_and_names_rage_execution_as_still_un
 
 #[test]
 fn matrix_preserves_accepted_truth_and_unchanged_rows() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
 
     // Fighter rows were later promoted to Supported/ProductVisible by SD-19's
     // Class Progression Catalog browser UI-surfacing work (2026-07-16).

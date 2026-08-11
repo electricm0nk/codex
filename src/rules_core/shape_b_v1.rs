@@ -255,7 +255,7 @@ pub struct RawBonusChain {
 /// `data/corpus/<book>/equipment/<category>/<slug>.json` payload, v1.
 /// Additive over the pre-existing `EquipmentCacheData` copies
 /// (`rules_tables::crb::json_cache`, `rules_tables::advanced_race_guide::
-/// json_cache`, `sd27_gen_book_cache`'s own local copy -- byte-identical to
+/// json_cache`, `gen_book_cache`'s own local copy -- byte-identical to
 /// each other before this addition, confirmed via direct diff): every field
 /// those carry (`key`/`category`/`name`/`cost_gp`/`weight_lbs`/
 /// `description`) is present here unchanged, plus 2 new
@@ -269,7 +269,7 @@ pub struct RawBonusChain {
 /// tokens" should gate on that instead.
 ///
 /// This is now the single shared definition; per-book `json_cache.rs`
-/// copies and `sd27_gen_book_cache.rs`'s local struct should import this
+/// copies and `gen_book_cache.rs`'s local struct should import this
 /// type rather than maintain their own, per the same consolidation
 /// principle `CorpusRecordV1<T>` itself already established over v0's
 /// per-book duplication.

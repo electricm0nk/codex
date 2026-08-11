@@ -29,7 +29,7 @@ use codex::rules_core::character_input::{CharacterInput, load_character_input_fi
 use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
-use codex::rules_core::support_state_matrix::{SupportState, seeded_sd13_e1_f1_current_truth};
+use codex::rules_core::support_state_matrix::{SupportState, seeded_current_truth};
 
 const DRUID_FIXTURE: &str =
     include_str!("fixtures/rules_core/pf1_human_druid_level1_sd13_deterministic_input.txt");
@@ -323,7 +323,7 @@ fn fighter_and_barbarian_do_not_gain_druid_base_attack_or_save_grounding() {
 
 #[test]
 fn matrix_druid_row_note_names_base_attack_and_base_save_as_grounded() {
-    let matrix = seeded_sd13_e1_f1_current_truth();
+    let matrix = seeded_current_truth();
     let druid = matrix
         .row("class.druid.progression_and_spell_burden")
         .expect("druid row must exist");

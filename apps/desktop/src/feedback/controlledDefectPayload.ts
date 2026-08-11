@@ -144,7 +144,7 @@ export function buildControlledDefectIssuePayload(
     '',
     '## Expected fix surface',
     '- The E7 staged transaction (`apps/desktop/src-tauri/src/update/transaction.rs`) pre-replacement SHA-256 guard.',
-    '- The E6 update flow (`apps/desktop/src/sd16/update/fetch.ts`, `eligibility.ts`) and the E3 schema field `artifact_sha256`.',
+    '- The E6 update flow (`apps/desktop/src/update/fetch.ts`, `eligibility.ts`) and the E3 schema field `artifact_sha256`.',
     '- The E4 release lane manifest generation step that signs off on the AppImage digest before publishing.',
     '',
     '## Post-merge verification (E8-F4)',
