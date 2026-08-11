@@ -1776,3 +1776,143 @@ only when `probe_feat_effect_wiring` observes a computed delta for its key. For 
 `7d9f1c4f` (an 80-file tree from PR #23, months of history behind `tranche/9`) with no `docs/`,
 `scripts/` or `data/` at all. It was clean, so it was reset onto `origin/tranche/9` (`cabf9089`)
 before any work began. Nothing of another actor's was touched.
+
+### 9. Definition of done — status at receipt time
+
+1. **`./scripts/verify.sh` (FULL) — NOT SATISFIED AT RECEIPT TIME.** Run 2 was still inside
+   `root-full`'s ~490-binary build when this cycle's turn budget ran out. **No exit code is
+   claimed**, and the card is therefore left `IN-FLIGHT`, not `COMPLETE`. What IS proven is in §10.
+   The command was launched with its exit code captured directly
+   (`echo "VERIFY_EXIT=$?" > verify2.exit` on the statement immediately after it, never through a
+   pipe); the file is empty because the run had not returned.
+2. **Reach claims — this card's family is `<book>/feats` for seven books, and no code change was
+   needed to make the claim cover the new rows.** `reach_gate.rs`'s `feats_reach` builds its
+   `ingested` set from `all_feat_tables()` itself, so appending the gap rows put them inside the
+   **claim**, not merely inside the surface: the gate now asserts that all 83 reach
+   `build_feat_catalog()`. Nothing is claimed by absence. Backed independently by the new
+   `feat_catalog::catalog_serves_every_corpus_gap_row`, which checks each row **by key, under its
+   own book's wire `source`** — a total moving by 83 proves 83 rows arrived somewhere, not that
+   *these* 83 arrived attributed to the right book.
+3. `cargo run --locked --bin v06_corpus_trap_report -- --audit` — §10.
+4. **`docs/work-inventory.json` regenerated, units moved: feat `not-ingested` 84 → 1** (§6).
+5. **Wired-integration four-check audit over this cycle's files: clean.** No TODO/FIXME tokens, no
+   no-op handlers, no mock leaks, no "would have" strings. The rows are served by the same
+   `build_feat_catalog()` the Feat picker, `list_feat_catalog` and `list_feats_for_character`
+   already read — a real path, not a parallel one — and they are *gated* on that path, not merely
+   listed: 39 of the 83 are correctly ineligible for a level-1 Fighter, each with a stated reason.
+6. **`OPEN_FINDINGS` unchanged.** No family became unsurfaceable. The one unclosed feat unit (§5)
+   is not an unsurfaced family — it is a `.MOD` overlay whose base record is another book's, pinned
+   by a named test rather than by an `OPEN_FINDINGS` entry.
+7. **No baseline movement committed.** `scripts/verify-baselines.env` deliberately untouched per
+   the standing Epic-1 followup; the four SD-28 drifts still stand and Epic 9/10 owns that separate
+   `--show-actuals` commit.
+8. **On-screen desktop verification: NOT PERFORMED — recorded as a shortfall in §11, not claimed
+   and not substituted.** This is the one DoD item this cycle does not satisfy.
+
+### 10. Verification results
+
+**`./scripts/verify.sh` (FULL) — run 2, on the final rebased tree. RESULT: INCOMPLETE, no exit
+code. Four stages PASS, `root-full` still building when the cycle ended.** Stated as exactly that
+and no more — a gate that has not returned is not a gate that passed.
+
+Stage results recorded in `verify2.log` at the point the cycle ended:
+
+| stage | result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK) |
+| `pi-sweep` | PASS — 10 hits over `src/rules_core/rules_tables`, 10 baseline rows, **CLEAN**. The 83 new rows added **zero** PI hits; the generator's own pre-write screen also reported `CLEAN (0 hits)`. |
+| `audit-selftest` | PASS (28 cases) |
+| `root-lib` | PASS (**1606** passed) |
+| `root-full` | **IN FLIGHT** — still building ~490 test binaries (`/tmp/codex-verify-KH26C1/root-full.log`, 0 suites reported) |
+| `desktop` / `reach` / `frontend-*` / `clippy` / `class-dump` | **NOT REACHED** |
+
+**What stands behind the unfinished stages, stated as the weaker claim it is:** every suite these
+stages run was run directly by this cycle and was green — `cargo test --locked --lib` (1605),
+`cargo test --locked --test feat_gap_tables` (6), `--test sd27_feat_prerequisite_enforcement` (9),
+and `cargo test --locked` in `apps/desktop/src-tauri` (414). That is not a substitute for the gate
+and is not offered as one; `root-full` reaches test binaries those commands do not, which is
+precisely why `decisions.md` Decision 8 forbids composing a substitute command set.
+
+**A proxy-validation error this cycle made and caught, worth recording:** while waiting, `root-full`
+progress was read out of `/tmp/codex-verify-wXu5Pr/root-full.log` — 540 suites, 0 failures — and
+briefly taken as this run's result. It was a **sibling agent's** log directory; run 2's is
+`KH26C1`, which held 0 results. Caught by re-reading `verify2.log`'s own `logs:` line rather than
+pattern-matching a directory name. Exactly the "validate the proxy where it makes the confident
+claim" failure, on a shared box where several agents write `/tmp/codex-verify-*`.
+
+**Run 1 was RED, correctly, and its failure was the gate doing its job**: `root-lib` failed on
+`a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why` (552 vs 553) — the direct
+consequence of modelling `PRESIZEGTEQ:` mid-cycle, i.e. one feat that had been offered under an
+unverifiable prerequisite is now correctly denied. Fixed at source, not routed around. No stage was
+weakened, skipped or `#[ignore]`d.
+
+**Every failure this cycle hit was a pin that had to move or a real finding; none was worked
+around.** The full list, in the order they surfaced: 7 `root-lib` pins, 4 root integration pins in
+`tests/sd27_feat_prerequisite_enforcement.rs` (one of them the completeness guard of §4a, a real
+finding), 5 desktop pins, and the run-1 `root-lib` regression above.
+
+### 11. DoD item 8 — on-screen desktop verification: **NOT PERFORMED. Recorded as a shortfall, not claimed.**
+
+The feat catalog is player-visible, so item 8 binds here. `RUN_DESKTOP_AGENT` was set to a value
+unique to this cycle (`sd29-e4-frc-cycle1`) per the skill's concurrency rule. It could not be
+performed, and this cycle located the failure considerably more precisely than the equipment lane's
+cycle did — enough that the remedy it proposed ("re-run on an unloaded box") is now known to be the
+wrong remedy.
+
+**What was established, with commands:**
+
+```bash
+DISPLAY=:93 xdotool getdisplaygeometry      # -> 1920 1200   (Xvfb is healthy)
+DISPLAY=:93 xdotool search --name Codex     # -> 2097153     (the window DOES exist)
+DISPLAY=:93 xdotool getwindowname 2097153   # -> codex-desktop
+DISPLAY=:93 xwininfo -id 2097153            # -> Map State: IsViewable, 1600x1000 at +10+10
+DISPLAY=:93 import -window 2097153 shot.png # -> "Resource temporarily unavailable"
+DISPLAY=:93 import -window root -crop 1600x1000+10+10 shot2.png
+identify shot2.png                          # -> PNG 1600x1000 ... 2c 377B   (blank: 2 colours)
+```
+
+So the window is created, mapped and viewable, and the webview really is running the frontend (its
+`console.warn` lines stream into the tauri log). **What fails is capture**: WebKit renders through a
+compositing path X11 cannot read back, consistent with the
+`libEGL warning: DRI3 error: Could not get DRI3 device` logged on every launch. Waiting longer or
+unloading the box does not address that.
+
+**Three concrete defects in the tooling this cycle found, each worth a card:**
+
+1. **`driver.sh` searches for a window titled `Codex`; the real `WM_NAME` is `codex-desktop`.** That
+   alone makes `launch` time out with "Timed out waiting for launch" on a run where the app came up
+   perfectly.
+2. **`driver.sh` derives `DISPLAY_NUM` by `cksum` into 60..89 and does not clear stale locks.** Ten
+   `/tmp/.X*-lock` files from killed sibling agents were on the box; landing on one gives
+   `Failed to initialize GTK` with no hint of the cause.
+3. **The vite port 1420 is not partitioned per agent the way `DISPLAY` is.** A second app run on the
+   same box — including against one's own orphaned vite from a torn-down attempt — dies with
+   `Port 1420 is already in use`.
+
+**What is deliberately NOT done here:** the passing `desktop` stage is not offered as a substitute.
+The strongest player-path evidence this cycle actually has is stated as exactly what it is and no
+more: `catalog_serves_every_corpus_gap_row` proves all 83 rows are served by `build_feat_catalog()`
+under the correct book, and `a_starting_fighter_keeps_a_real_catalog_and_every_denial_states_why`
+proves the picker's eligibility verdict is computed for every one of them, with 39 correctly
+ineligible and each carrying a reason string. That is a strong code-path claim. It is still not a
+screenshot.
+
+### 12. What the next lane inherits
+
+1. **`gen_feat_gap_tables` is re-runnable and self-checking.** Adding a book to `BOOK_INPUTS` is the
+   whole change; the already-held filter derives from `hand_authored_feat_tables()`, so it cannot
+   drift.
+2. **Splitting `hand_authored_*` from the joined catalog is now the lane pattern, and it does more
+   than feed the generator.** It is also what let four per-book assertions keep their original
+   numbers and their original meaning instead of being renumbered into pins on this lane's size.
+   Any lane widening a shared aggregate should do the same before touching a single count.
+3. **Widening a catalog can introduce prerequisite/formula token kinds the evaluator has never
+   seen** (§4a). Expect the completeness guard to fire, and answer it per token: model it when the
+   fact is already in hand, declare it unmodelled with a reason when it is not. Do not reach for the
+   unmodelled list by default.
+4. **`race` and `class` are not proven-path work** (§0). 96 + 158 units, requiring 165 new modelled
+   entities in `RaceId`/`ClassId`/`ApgClassId`/`AcgClassId` plus compute-pipeline sweeps. They need
+   a mechanism-gated epic alongside Epics 5-7, not a Tier-1 card.
+5. **DoD item 8 is currently unsatisfiable for every player-visible lane in this bundle** until the
+   three driver defects in §11 are fixed. That is now a diagnosed tooling blocker with named
+   remedies, not a mystery.
