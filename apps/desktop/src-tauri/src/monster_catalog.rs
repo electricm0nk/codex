@@ -73,6 +73,23 @@ const BOOK_MC: &str = "MC";
 /// mislabelling this program has paid for before. Adding a book to the registry
 /// and forgetting its label fails loudly on the first call rather than shipping
 /// an unlabelled row.
+/// The book's name as a reader sees it, for prose the catalog serves.
+///
+/// Separate from [`book_wire_code`] on purpose: the wire code is an identifier
+/// the frontend maps, and a sentence in a grounding note is read by a player
+/// who has never seen "BB". Both are exhaustive over the registry and both
+/// panic on an unregistered book rather than guessing.
+fn book_display_name(corpus_book: &str) -> &'static str {
+    match corpus_book {
+        "bonus_bestiary" => "Bonus Bestiary",
+        "monster_codex" => "Monster Codex",
+        other => panic!(
+            "monster_catalog: no display name for chassis book {other:?}. Add one here before \
+             registering the book, or a player reads a sentence naming the wrong book."
+        ),
+    }
+}
+
 fn book_wire_code(corpus_book: &str) -> &'static str {
     match corpus_book {
         "bonus_bestiary" => BOOK_BB,
@@ -491,12 +508,29 @@ fn map_chassis_monster(
                 } else {
                     DICE_ABSENT_FROM_CORPUS.to_owned()
                 },
+                // Caught ON SCREEN, not by a test (SD-29 Epic 5 extend,
+                // round 1, DoD item 8): this sentence hard-coded both the
+                // book name and the token shape, so Monster Codex's Seru
+                // rendered "the Bonus Bestiary corpus carries no die
+                // expression" for a Monster Codex row whose attack is named
+                // by `NATURALATTACKS:Venom,...,Poison`, not by
+                // `ABILITY:Internal|AUTOMATIC|Venom`. Two false statements in
+                // one sentence, both player-visible, neither reachable by any
+                // test that did not read the words.
+                //
+                // It now names the real book and stops asserting a token
+                // shape the table does not record. The shape is recoverable
+                // from the record's own `source` citation in
+                // `data/corpus/<book>/monster/`; asserting it here was a
+                // detail this projection never had.
                 grounding_note: if attack.damage_dice.is_some() {
                     None
                 } else {
                     Some(format!(
-                        "This monster's row names the attack with                          `ABILITY:Internal|AUTOMATIC|{}` and the Bonus Bestiary corpus carries no                          die expression for it at any hop. No value is shown because none was                          ingested.",
-                        attack.name
+                        "This monster's row names the attack, and the {} corpus \
+                         carries no die expression for it at any hop. No value is shown \
+                         because none was ingested.",
+                        book_display_name(book)
                     ))
                 },
             })
@@ -679,6 +713,56 @@ mod tests {
         let allip = bb.iter().find(|e| e.name == "Allip").expect("Allip is served");
         assert_eq!(allip.natural_attacks[0].damage_dice.as_deref(), Some("0"));
         assert_eq!(allip.natural_attacks[0].damage_dice_source, DICE_FROM_MONSTER_ROW);
+    }
+
+    /// A grounding note names the book the row actually came from.
+    ///
+    /// **This test exists because the screen said otherwise.** Driving the app
+    /// (DoD item 8) showed Monster Codex's Seru rendering *"the Bonus Bestiary
+    /// corpus carries no die expression for it"* — the note hard-coded one
+    /// book's name and one token shape, and both were wrong on the second book.
+    /// A player reading that sentence would look the creature up in the wrong
+    /// book.
+    ///
+    /// Pinned in both directions: every note must name its own book, and no
+    /// note may name a book it does not belong to.
+    #[test]
+    fn a_grounding_note_never_names_another_books_corpus() {
+        let mut checked = 0;
+        for entry in build_monster_catalog().entries {
+            let Some(table) = monster_chassis::MONSTER_BOOKS
+                .iter()
+                .find(|t| book_wire_code(t.corpus_book) == entry.book)
+            else {
+                continue; // Bestiary 1 serves its notes from published-text provenance.
+            };
+            let own = book_display_name(table.corpus_book);
+            for attack in &entry.natural_attacks {
+                let Some(note) = attack.grounding_note.as_deref() else {
+                    continue;
+                };
+                checked += 1;
+                assert!(
+                    note.contains(own),
+                    "{}'s {} note does not name {own}: {note}",
+                    entry.name,
+                    attack.name
+                );
+                for other in monster_chassis::MONSTER_BOOKS {
+                    if other.corpus_book == table.corpus_book {
+                        continue;
+                    }
+                    let foreign = book_display_name(other.corpus_book);
+                    assert!(
+                        !note.contains(foreign),
+                        "{}'s {} note names {foreign}, a book it did not come from: {note}",
+                        entry.name,
+                        attack.name
+                    );
+                }
+            }
+        }
+        assert!(checked > 0, "no grounding note was examined, so this asserts nothing");
     }
 
     /// The key derivation is checked against the engine's own resolver rather
