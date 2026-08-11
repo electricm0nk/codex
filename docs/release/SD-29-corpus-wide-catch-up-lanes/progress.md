@@ -5341,3 +5341,41 @@ sub-heading half of it ("*No alternate selected*" while an alternate was selecte
 for the extend lane. This cycle sharpens it — the whole left panel is stale, not just its caption —
 and hands it to **round 2** rather than fixing a second surface inside a cycle that already rewrote
 the grounding probe. It is recorded here rather than left in a screenshot nobody reads.
+
+### 9. Cycle end — the merge, and what it does and does not cover
+
+**`tranche/9` moved under this cycle** while its item-8 commit was being written: the monster lane's
+round 1 (`sd29-monster-r1`) landed `cb948dcd` and predecessors, including new Rust
+(`monster_chassis.rs`, `rules_tables/monster_codex/`). The push was **rejected, not forced**;
+`origin/tranche/9` was fetched and merged (`7e887fed`), the merge resolved cleanly, and every one of
+this cycle's own sections was verified present afterwards by grep before pushing.
+
+**What the gate result covers, stated exactly.** §6d's green stages ran on **this lane's tree before
+that merge**. They are not a claim about the merged tip, and this receipt does not make one — a
+post-merge full-bundle gate is `epic-10-review`'s job, which `decisions.md §42` reopened for exactly
+this reason. What *is* checkable here is that the two lanes are file-disjoint in Rust: this lane
+touched `v06_work_inventory.rs`, `race_resolver.rs`, `ingest_apg_race_traits.rs` and three
+desktop/test files; the monster lane touched the monster chassis and its rules tables.
+
+**An independent confirmation this cycle did not arrange and could not fake.** The monster lane
+regenerated `docs/work-inventory.json` on the merged tree at `generated_at 2026-08-11T21:46:51Z` —
+after merging this lane's probe, on a different actor's checkout, for its own purposes. Re-derived
+from *their* regeneration by the same command this receipt used:
+
+```
+race_trait 3447 {'not-ingested': 1512, 'grounded': 336, 'not-started': 1599} remaining = 3111
+grounded by book {'advanced_players_guide': 1, 'advanced_race_guide': 156,
+                  'core_essentials': 175, 'monster_codex': 4}
+```
+
+**Identical to §7's figures, to the unit and to the book.** The probe repair reproduces on a tree
+this cycle did not build.
+
+**Reclaim.** `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-r1` deleted
+(`rm -rf`, 30G) before the on-screen pass, and `preflight-disk` re-run clean afterwards at 87% /
+67G. The desktop driver was stopped (`driver.sh stop`), releasing its Xvfb on `:73`.
+
+**Card `epic-6-race-trait-lane-extend` → READY for round 2, not COMPLETE.** The lane is not dry.
+Round 2's queue, in order: (1) `core_essentials`' 48 and `bestiary`'s 3 — no new mechanism, and the
+probe repair means they ground the moment they land; (2) `inner_sea_races`' 72 and
+`horror_adventures`' 44, each needing a `RuleSetId` variant; (3) §8b's browse-screen render bug.
