@@ -560,9 +560,35 @@ fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
     None
 }
 
+/// True when a row's leading field marks it a PCGen `.MOD` — an *update* to a
+/// record declared elsewhere, not a declaration.
+///
+/// Only field 0 decides. `.MOD` occurring inside a token *value* (PCGen writes
+/// `var("STAT.3.MOD...")`) is not a mod row, which is why this reads the
+/// leading field rather than searching the line. That distinction is
+/// `v06_corpus_trap_report`'s own `mod-record` trap, whose stated risk is
+/// exactly this: "counting these as declarations inflates a record estimate".
+fn is_mod_row(fields: &[&str]) -> bool {
+    fields.first().is_some_and(|f| f.contains(".MOD"))
+}
+
 fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
     let fields = split_fields(line);
     if fields.is_empty() {
+        return None;
+    }
+
+    // A `.MOD` row declares nothing, so it can never become a record. ARG and
+    // Monster Codex never exercised this: their `.MOD` rows carry no `TYPE:`
+    // at all, so the race-key check below already rejected them and the guard
+    // looked unnecessary. **Inner Sea Races is the counter-example** —
+    // `isr_abilities_race.lst` carries 618 `.MOD` rows, 5 of which DO carry a
+    // `<Race> Racial Trait` TYPE and so reach this far. All 5 name races this
+    // project does not model, so they were filtered one step later by
+    // `IN_SCOPE_RACES` and nothing wrong shipped; that is luck, not a rule, and
+    // the next book's `.MOD` row for a modelled race would have been written
+    // out as though it were a new alternate racial trait.
+    if is_mod_row(&fields) {
         return None;
     }
 
@@ -1042,6 +1068,53 @@ mod tests {
             )
             .is_none()
         );
+    }
+
+    /// A `.MOD` row updates a record declared elsewhere; it declares nothing
+    /// and must never become one.
+    ///
+    /// **This is not hypothetical and it is not covered by the TYPE check.**
+    /// ARG's and Monster Codex's `.MOD` rows carry no `TYPE:` at all, so
+    /// `rows_without_a_racial_trait_type_are_not_racial_traits` rejected them
+    /// for a different reason and this property was never exercised. Inner Sea
+    /// Races is the counter-example: `isr_abilities_race.lst` has 618 `.MOD`
+    /// rows, and 5 of them DO carry a `<Race> Racial Trait` TYPE. Those 5 name
+    /// races this project does not model, so `IN_SCOPE_RACES` filtered them one
+    /// step later and nothing wrong shipped — but that is luck, and the next
+    /// book's `.MOD` row for a modelled race would have been written out as a
+    /// new alternate racial trait.
+    ///
+    /// The 5 are `isr_abilities_race.lst:650-654`, all one record
+    /// (`Geneiekin ~ Mostly Human.MOD`) re-typed for Ifrit, Oread, Sylph,
+    /// Undine and Suli. Re-derived by splitting each row on tabs, requiring
+    /// `.MOD` in field 0, and requiring a `TYPE:` component that *ends in*
+    /// `" Racial Trait"` — a substring grep for `Racial Trait` over the same
+    /// rows answers **6**, because it also matches a `.MOD` row whose own name
+    /// is `Changeling ~ Hag Racial Trait`. Different predicate, different
+    /// number; the one that matters here is the TYPE component, because that
+    /// is what `parse_row` reads.
+    #[test]
+    fn a_mod_row_declares_nothing_even_when_it_carries_a_racial_trait_type() {
+        let modded = concat!(
+            "Dwarf ~ Greed.MOD\t",
+            "CATEGORY:Special Ability\t",
+            "TYPE:RacialTraits.Dwarf Racial Trait.SpecialQuality\t",
+            "SOURCEPAGE:p.10",
+        );
+        // The TYPE check alone would have accepted this row: it names a
+        // modelled race and it is well-formed. Only the `.MOD` guard rejects
+        // it, which is the whole point of asserting it separately.
+        assert!(is_mod_row(&split_fields(modded)));
+        assert!(parse_row(23, modded).is_none(), "a .MOD row must never produce a record");
+
+        // ...and `.MOD` inside a token VALUE is not a mod row. PCGen writes
+        // `var("STAT.3.MOD")` in formulas; only field 0 decides.
+        let value_mod = concat!(
+            "Sharp Senses\tKEY:Dwarf ~ Sharp Senses\tTYPE:Dwarf Racial Trait\t",
+            "BONUS:SKILL|Perception|var(\"STAT.3.MOD\")",
+        );
+        assert!(!is_mod_row(&split_fields(value_mod)));
+        assert!(parse_row(1, value_mod).is_some(), "a formula containing .MOD is not a mod row");
     }
 
     #[test]

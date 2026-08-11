@@ -5379,3 +5379,294 @@ this cycle did not build.
 Round 2's queue, in order: (1) `core_essentials`' 48 and `bestiary`'s 3 — no new mechanism, and the
 probe repair means they ground the moment they land; (2) `inner_sea_races`' 72 and
 `horror_adventures`' 44, each needing a `RuleSetId` variant; (3) §8b's browse-screen render bug.
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 2 (SD29-E6-F2-003)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), round 2 of a loop-until-dry lane.
+**Actor:** `sd29-racetrait-r2`. **Branch:** `tranche/9`. **Date:** 2026-08-11.
+**Decision record:** `decisions.md §45`. **PR:** #360, open and NOT merged.
+
+**This round did not finish the lane and does not claim to.** `units_remaining` is re-derived at the
+bottom with the command that produced it.
+
+### 0. Worktree integrity — RECOVERY WAS REQUIRED (a fifth time)
+
+Run as the mandated first action.
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| did HEAD descend from the branch | `git merge-base --is-ancestor origin/tranche/9 HEAD` | **no** |
+| recovery | `git fetch origin && git reset --hard origin/tranche/9` | `855850ac`, docs present, ancestry OK |
+
+`git fetch origin` timed out at 120s on its first invocation but had already updated the refs;
+`git rev-parse origin/tranche/9` resolved to `855850ac` (dated one minute before this cycle started),
+so the reset used that. **This is the fifth consecutive cycle to hit the wrong-base worktree**, and
+the failure is now perfectly reproducible: dispatch creates the worktree at `7d9f1c4f`.
+
+### 1. Merged-ness verified by content, not by anyone's say-so
+
+The chassis this round depends on is `src/bin/ingest_race_traits.rs`'s `BOOK_SOURCES` table and round
+1's grounding probe. Both verified present on the reset tree before being used:
+`grep -n BOOK_SOURCES src/bin/ingest_race_traits.rs` → the book-table-driven form at line 126, with
+`advanced_race_guide` and `monster_codex` rows; `grep -n probe_race_trait_corpus
+src/bin/v06_work_inventory.rs` → present; `ls data/corpus/monster_codex/race_trait` → present.
+Round 1's own figures then reproduced exactly (§3), which is the strongest available check that its
+work is really here rather than on a branch nobody merged.
+
+Exact commands and results:
+
+```
+$ git show origin/tranche/9:src/bin/v06_work_inventory.rs | grep -c "probe_race_trait_corpus"
+5
+$ git show origin/tranche/9:src/bin/ingest_race_traits.rs | grep -n "const BOOK_SOURCES"
+126:const BOOK_SOURCES: &[BookSource] = &[
+$ git ls-tree origin/tranche/9 --name-only data/corpus/monster_codex/
+data/corpus/monster_codex/LICENSE.json … /monster … /monster_ability … /race_trait
+```
+
+### 2. Trap-report (cycle mechanics 0b)
+
+`cargo run --locked --bin v06_corpus_trap_report -- inner_sea_races` → **EXIT 0**. The ingest's own
+source file, `isr_abilities_race.lst`: **122 DECLARES / 0 `.COPY=` / 618 `.MOD` / 0 disabled** (book
+total across 10 files: 394 / 0 / 738 / 0). Findings by trap: 738 mod-record, 216
+key-differs-from-name, 216 namespaced-key, 87 governing-token-hidden-by-filter, 12
+shared-name-distinct-records, 0 copy-record, 0 disabled-line, 0 unresolvable-citation.
+
+**Reading the report rather than filing it caught a latent defect — see §5(e).** 618 `.MOD` rows in
+the file this round was about to ingest, against a trap whose stated risk is that counting them as
+declarations inflates a record estimate, is a question worth asking of one's own output.
+
+### 3. Re-derivation — and the correction that redirected the whole round
+
+**Lane denominators before this cycle**, by the same command round 1 used, so the two rounds'
+figures are commensurable:
+
+```bash
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+rt=[u for u in d['units'] if u['kind']=='race_trait']
+c=collections.Counter(u['status'] for u in rt)
+print(len(rt), dict(c), 'remaining =', len(rt)-c['grounded'])
+"
+```
+
+→ `3447 {'not-ingested': 1512, 'grounded': 336, 'not-started': 1599} remaining = 3111`.
+**Round 1's closing figure and card 10's stated 3,111 both reproduce exactly.** No discrepancy.
+
+**The gap table also reproduced exactly** — 217 in-scope non-grounded units, split
+`advanced_players_guide` 49 / `inner_sea_races` 72 / `core_essentials` 48 / `horror_adventures` 44 /
+`bestiary` 3 / `monster_codex` 1, i.e. §44.4's "genuinely ingestable 167" plus its two named
+residuals.
+
+**And then the round did the one thing round 1 did not: it classified the ROWS.** §44.4 ranked the
+four ingestable books by the inventory's evidence token. This round ran each book's source rows
+through the same predicates `race_resolver::classify` uses:
+
+| book | in-scope rows | sets a replace flag (`Alternate`) | positive-gated (`FlagGranted`) | no readable gate (`Unclassified`) |
+|---|---|---|---|---|
+| `inner_sea_races` | 72 | **68** | 2 | 2 |
+| `horror_adventures` | 43 + 1 | **42** | 0 | 2 |
+| `core_essentials` (subrace files) | 48 | **0** | 48 | 0 |
+| `bestiary` (`b1_abilities_race.lst`) | 3 | **0** | 0 | 3 |
+
+**§44.4's queue was exactly backwards** and this round inverted it. The two books it called
+"no new mechanism" are the mechanism-blocked ones (`PREABILITY`-gated Aasimar/Tiefling subrace traits
+whose 16 selector rows are not even `race_trait`-typed; Drow **Noble** variant traits with no
+chassis) — ingesting either as-is would have shipped records that load and never apply, which is
+precisely the stub class `decisions.md §44.2` was written about. The two it called mechanism-blocked
+need one `RuleSetId` variant, which is five one-line arms the compiler forces you to write.
+Full analysis and the general lesson: `decisions.md §45.1`. Emitted as a `correction` retro event.
+
+### 4. Bounded work (TDD)
+
+**RED first, and deliberately reproduced §44.2's exact failure.** `inner_sea_races` was added to
+`race_catalog::RACE_CORPUS_BOOKS` *with its records on disk and before* its
+`ALTERNATE_TRAIT_REPLACE_FLAGS` rows existed — the precise state round 1 found shipped for Monster
+Codex's 4 alternates:
+
+```
+$ cargo test --locked -j 2 --lib race_resolver
+test result: FAILED. 18 passed; 6 failed
+  every_alternate_the_app_offers_is_one_the_engine_can_place ... FAILED
+  the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate  left: 226  right: 158
+  the_whole_corpus_classifies_into_the_four_roles_with_no_leftovers      left: 226  right: 158
+  no_alternate_the_picker_offers_fires_a_flag_that_suppresses_...        left: 226  right: 158
+  the_one_remaining_unclaimed_flag_is_a_schema_limit_not_a_missing_file
+  no_corpus_trait_is_left_without_a_readable_gate
+      left: [("Human","Human ~ Tribalistic Languages"), ("Goblin","Oversized Goblin")]
+```
+
+**GREEN — what landed.**
+
+| # | change | file |
+|---|---|---|
+| 1 | `RuleSetId::Isr` + `COMPILED_RULE_SETS` + `corpus_dir_for`/`rule_set_id` arms. The exhaustive match did its designed job: the variant broke `v06_content_state_dump` until its arm was written | `rules_tables/mod.rs`, `v06_work_inventory.rs`, `v06_content_state_dump.rs` |
+| 2 | One `BOOK_SOURCES` row — the whole per-book cost, as that binary's module doc promises | `src/bin/ingest_race_traits.rs` |
+| 3 | 72 records ingested at `data/corpus/inner_sea_races/race_trait/` across 18 races | corpus |
+| 4 | `data/corpus/inner_sea_races/LICENSE.json`, citing the pcc's `ISOGL:YES` (line 24) and its real COPYRIGHT block | corpus |
+| 5 | 68 rows in `ALTERNATE_TRAIT_REPLACE_FLAGS`, generated from the written records, re-derived from them by the existing pin test | `src/rules_core/race_resolver.rs` |
+| 6 | reach claim `("inner_sea_races","race_traits")` + `CORPUS_BOOK_IDS` entry + claim test `inner_sea_races_alternate_racial_traits_reach_a_player` | `reach_gate.rs` |
+| 7 | `OPEN_FINDINGS` + `UNREACHED_RECORD_FINDINGS` entries for the one unreachable record, naming two candidate remedies | `reach_gate.rs` |
+| 8 | `RACE_CORPUS_BOOKS` + `BOOK_ISR` + `book_code` arm | `race_catalog.rs` |
+| 9 | count pins moved with their reasons: alternates 158→226, FlagGranted 5→8, Unclassified 1→2, total records 337→409, distinct flags 77→90, checked 158→226 (×3) | `race_resolver.rs` |
+| 10 | the ingest binary's whole-corpus leak guard widened from one hardcoded root to `BOOK_SOURCES` — see §5(b) | `src/bin/ingest_race_traits.rs` |
+| 11 | two stale book-enumerating comments on the creation and browse surfaces, both now naming no book | `CreateCharacterForm.tsx`, `AlternateTraitPicker.tsx` |
+
+**Nothing was relaxed to get green.** The second `Unclassified` row and the third alternate naming
+the truncated multi-flag gate are each pinned by exact key, so a further instance of either fails.
+
+**Ingest output, verbatim** (`cargo run --locked --bin ingest_race_traits -- inner_sea_races`,
+EXIT 0): 741 real lines → **72 records emitted**, 18 distinct races, **114 replace-flags captured**,
+51 rows skipped across 31 out-of-scope races, **0** rows carrying a Racial Default marker, **0**
+`DESC:` args that are not same-row literals, **0** PCGen-syntax leaks.
+
+### 5. What this round found rather than shipped
+
+**(a) §44.4's queue, inverted.** See §3 and `decisions.md §45.1`. The reusable part is *why*: round 1
+ranked four books by the inventory's **evidence token** — a statement about what the engine has
+compiled — when the question was what the **corpus rows** are. The cheaper-sounding token named the
+harder work.
+
+**(b) A fourth instance of the stale-hardcoded-book-roots defect, in this round's own binary.**
+`ingest_race_traits.rs`'s `no_committed_arg_trait_description_leaks_pcgen_syntax` loaded ONE
+hardcoded book root (`advanced_race_guide`) while `BOOK_SOURCES` already held three. A test whose
+stated job is "no committed record leaks PCGen syntax" could not see two thirds of the committed
+records, and would have stayed green through this round's 72-record ingest without reading any of
+it. Found by pointing `decisions.md §44.2`/`§44.5`'s own question at the file this round was already
+editing, *before* trusting its green result. Now derives its roots from `BOOK_SOURCES` and asserts a
+per-book count by name (156 / 5 / 72, total 233). Emitted as a silent `incident`,
+`recurrence-key stale-hardcoded-book-roots`.
+
+**(c) A correction to this round's own draft comment.** A first draft of the `race_resolver` comment
+explaining `Human ~ Tribalistic Languages` asserted that `Human ~ Tribalistic` grants it through a
+`TEMPLATE:` chain. Checking the row before committing it showed that is false — `:210` carries no
+`TEMPLATE` at all, and the `TEMPLATE:` chain is on `:216` itself, granting bonus languages rather
+than the row. The real state is that **nothing upstream grants it**, which is a stronger and more
+useful finding. Emitted as a `correction`; the shipped comment and `OPEN_FINDINGS` entry state the
+verified version.
+
+**(e) A `.MOD` row could have been ingested as a new record, and only race scope prevented it.**
+The trap report's 618 `.MOD` rows prompted a direct check of this round's own output: *did any of the
+72 written records come from one?* Answer, by joining each record's `source.line` back to the file:
+**0**. But the reason is luck, not construction. `parse_row` rejected ARG's and Monster Codex's
+`.MOD` rows because those carry no `TYPE:` at all — so the property was never exercised — while
+`isr_abilities_race.lst` has **5** `.MOD` rows that DO carry a `<Race> Racial Trait` TYPE
+(`:650-654`, one record `Geneiekin ~ Mostly Human.MOD` re-typed for Ifrit, Oread, Sylph, Undine and
+Suli). All 5 name unmodelled races, so `IN_SCOPE_RACES` filtered them one step later. **The next
+book's `.MOD` row for a modelled race would have been written out as a new alternate racial trait.**
+Closed with an explicit `is_mod_row` guard reading field 0 only (`.MOD` inside a token value, as in
+`var("STAT.3.MOD")`, is not a mod row) and a test that pins both directions.
+
+**(f) A correction to this round's own citation for (e)'s figure.** The guard's test doc first cited
+`awk -F'\t' '$1 ~ /\.MOD/' … | grep -c 'Racial Trait'` as the command yielding 5. It yields **6** —
+a substring grep also matches a `.MOD` row whose own *name* is `Changeling ~ Hag Racial Trait`. The
+figure 5 is right and belongs to a different predicate (a `TYPE:` component *ending in*
+`" Racial Trait"`, which is what `parse_row` reads). Different predicate, different number; the
+comment now states which one and why. Emitted as a `correction`. **This is the second time in one
+round that checking a citation before shipping it changed what the comment says** — see (c).
+
+**(d) 12 of 72 descriptions were PI-redacted** — far more than any rulebook this repo has ingested,
+and exactly what a *campaign-setting* book should produce: Golarion nation and ethnicity names occur
+inside otherwise-mechanical trait prose. Schema-preserving, so the mechanical payload
+(`sets_replace_flags`, `raw_tokens`, `raw_bonus_chains`) is untouched and every record still carries
+a description. Recorded in `LICENSE.json`'s `screening_method_note` rather than left implicit.
+
+### 6. Definition of done
+
+| # | item | evidence |
+|---|---|---|
+| 1 | `verify.sh` exits 0, exit code captured directly | **IN FLIGHT when this receipt was first appended** — updated in §6b below. The receipt is landed before the gate finishes deliberately: two run-1 cycles died with their gate unfinished and their work unrecorded, and a receipt that exists and is then corrected beats one that never lands |
+| 2 | the `reach` stage passes with a claim for this book's families | `("inner_sea_races", "race_traits") => race_traits_reach("ISR", "inner_sea_races")` is a declared `reach_of` arm, and `reach_gate::tests::inner_sea_races_alternate_racial_traits_reach_a_player` executes it against the live builders. **It passed in the desktop run below.** Not a pass-by-absence: the family is asserted present in both `corpus_inventory()` and `full_inventory()`, and the test pins the 72 on-disk records and the single unreached key in both directions |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | updated in §6b |
+| 4 | `v06_work_inventory` regenerates, units leave `not-started`, second run changes only `generated_at` | **grounded 336 → 407**, `not-started` **1,599 → 1,457** (ISR's 142 units left `not-started` the moment the book gained a compiled rule set). Idempotence re-check recorded in §6b |
+| 5 | four-check wired-integration audit clean | `tests/sd24_wired_integration_audit.rs` inside `root-full`; and §4's RED — the picker offering 68 keys `pilot_compute` would refuse — is a wired-integration defect this round **deliberately reproduced and closed**, not one it introduced |
+| 6 | families that cannot be surfaced have an `OPEN_FINDINGS` entry naming the remedy | **One new entry**: `inner_sea_races/race_traits`, for `Human ~ Tribalistic Languages`, naming two candidate remedies and stating the evidence that it is an upstream data gap rather than a wiring gap. Paired with an exact-key `UNREACHED_RECORD_FINDINGS` entry. `monster_codex/race_traits` (`Oversized Goblin`) stands unchanged; the 7 `<book>/archetypes` entries are SD-30's and were left standing |
+| 7 | baseline movements are a separate reviewable commit | **None made.** `scripts/verify-baselines.env` is untouched — see §9 default 3 |
+| 8 | on-screen verification for player-visible families | updated in §8 below |
+
+**Desktop suite, run standalone before the full gate** (`cargo test --locked -j 2` in
+`apps/desktop/src-tauri`): first run **420 passed / 6 failed**, every failure a count pin or
+book-set assertion moved by the new book, and the new ISR reach claim **passing** in that same run.
+All 6 fixed at the source with their reasons moved too, none relaxed:
+
+| assertion | moved | why |
+|---|---|---|
+| `character_hub::every_alternate_the_picker_offers_for_a_crb_race_is_one_creation_accepts` | 94 → **148** | the 7 CRB races' alternates, `17+13+12+9+15+13+15` → `24+21+18+16+22+20+27`. This test saves a real character holding each alternate and reloads it, so it is the one that would have caught a half-landed book |
+| `race_catalog::alternate_only_books_contribute_no_catalog_rows_but_are_loaded_and_counted` | 158 → **226** | ISR contributes no catalog row either — it declares no racial default — which is the property this test states |
+| `race_trait_picker::every_alternate_from_every_race_corpus_book_reaches_the_menu…` | 158 → **226** | all 68 reach the menu across the 18 races |
+| `race_trait_picker::no_alternate_in_the_menu_can_ever_be_refused_for_an_unmatched_flag` | 158 → **226** | every one of the 68 names a flag something declares |
+| `race_trait_picker::every_menu_row_has_a_rendered_description_and_none_leaks_pcgen_syntax` | `(173,158)`/331 → `(173,226)`/**399** | standard traits unmoved, as expected: ISR ships no chassis |
+| `race_trait_picker::every_alternate_carries_real_book_attribution_and_prose` | `{APG,ARG,MC}` → `{APG,ARG,ISR,MC}` | **and the *pageless* pin next to it did not move**, which is the evidence that all 68 ISR alternates cite a real `SOURCEPAGE` rather than the `p.xx` placeholder |
+
+### 7. Round 2 stop — the honest remainder
+
+**`units_ingested` this round: 72** corpus records (`data/corpus/inner_sea_races/race_trait/`), of
+which **71 ground** and **71 reach a player**. Unlike round 1, whose weight was a probe repair that
+moved 315 units without ingesting them, every unit this round moved is a record it wrote.
+
+**`units_remaining`, re-derived at cycle end** with the same command §3 used:
+
+```bash
+python3 -c "
+import json,collections
+d=json.load(open('docs/work-inventory.json'))
+rt=[u for u in d['units'] if u['kind']=='race_trait']
+c=collections.Counter(u['status'] for u in rt)
+print(len(rt), dict(c), 'remaining =', len(rt)-c['grounded'])
+"
+```
+
+→ `3447 {'not-ingested': 1583, 'grounded': 407, 'not-started': 1457} remaining = 3040`
+(from 3,111; grounded 336 → **407**, `not-started` 1,599 → **1,457**).
+Grounded by book: `advanced_players_guide` 1, `advanced_race_guide` 156, `core_essentials` 175,
+**`inner_sea_races` 71**, `monster_codex` 4.
+
+**3,040 is still not the lane's workload**, for the reason `§44.4` established and this round
+re-confirmed: 2,894 of the 3,447 name a race the product does not model, and no race-trait ingest can
+ground them. Within the 553 that can, the genuinely ingestable remainder is now **95**, and its order
+is the corrected one:
+
+| book | units | what it needs |
+|---|---|---|
+| `horror_adventures` | 44 | **no new mechanism** — a `RuleSetId` variant + a `BOOK_SOURCES` row, exactly this round's shape. 42 of its 44 are replace-flag alternates; one file is `PRECAMPAIGN`-gated on Occult Adventures |
+| `core_essentials` (Aasimar/Tiefling subraces) | 48 | a `PREABILITY`-grant mechanism **and** ingesting the 16 subrace selector rows, which are not `race_trait`-typed and which the ingest parser therefore skips |
+| `bestiary` (Drow Noble) | 3 | a race-variant chassis; `Unclassified` by construction without one |
+
+Plus three residuals deliberately not gap: APG's 49 ARG-key collisions (`§39`), Monster Codex's
+`Oversized Goblin`, and this round's `Human ~ Tribalistic Languages`.
+
+**Round 3's queue, in order:** (1) `horror_adventures`' 44 — this round's shape, repeated; (2) the
+`PREABILITY`-grant mechanism, which unlocks `core_essentials`' 48; (3) `§8b`'s browse-screen render
+bug, still open and still owned by this lane (see §8b below); (4) the Drow Noble race-variant
+chassis, the largest of the four.
+
+### 9. Defaults taken under UNATTENDED MODE (no operator asked)
+
+1. **Inverted `§44.4`'s stated queue rather than working it as written.** The instruction to
+   re-derive every figure outranks a doc's ordering, and `loop-instruction.md`'s "press on" rule
+   covers correcting this package's own premise in place. Recorded as a correction rather than
+   silently reordered.
+2. **Appended the 68 new flag rows as one commented block rather than merging them into the
+   existing per-race groups.** Lookup is by key so order is not semantic, and a contiguous block
+   keeps the diff and the provenance readable.
+3. **Did not touch `scripts/verify-baselines.env`.** Its four floors are stale-low and were already
+   so before this card; DoD item 7 requires a baseline movement to be its own reviewable commit.
+4. **Ingested the 4 non-alternate rows** (2 `FlagGranted`, 2 `Unclassified`) rather than filtering
+   them out to keep the reach claim clean. A record filtered out of the corpus to make a gate pass
+   is the failure mode this bundle was reopened over; one of the four is now a named finding.
+5. **Left `Human ~ Tribalistic` selectable** despite its unenforced
+   `PREABILITY:...TYPE.HumanEthnicity` prerequisite. ARG already ships one alternate in exactly this
+   state (`Half-Orc ~ Acute Darkvision`), so this is a pre-existing class rather than a new defect,
+   and inventing an ethnicity mechanism inside an ingest round is out of scope.
+
+### 10. Environment
+
+`RETRO_ACTOR=sd29-racetrait-r2`,
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-r2` exported for every cargo and
+`verify.sh` invocation — ONE target dir for both crates, per round 1's recorded lesson.
+`./scripts/verify.sh --only preflight-disk` before bounded work: **EXIT 0**, 79% used / 102G
+available. Retro events on this actor's own shard, `docs/retro/events/sd29-racetrait-r2.jsonl`:
+2 `correction`, 1 silent `incident`, plus `verify.sh`'s auto-emitted `verification` events.

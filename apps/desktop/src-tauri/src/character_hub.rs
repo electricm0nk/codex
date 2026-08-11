@@ -4791,11 +4791,14 @@ mod tests {
             }
         }
         assert_eq!(
-            accepted, 94,
-            "the 7 CRB races' alternates: 17+13+12+9+15+13+15. Half-Orc is 15 rather than \
-             14 because APG's `Half-Orc ~ Plagueborn` landed with SD-29's race-trait extend \
-             lane -- and this test is exactly the one that would have caught it being \
-             shipped without its `ALTERNATE_TRAIT_REPLACE_FLAGS` row"
+            accepted, 148,
+            "the 7 CRB races' alternates: 24+21+18+16+22+20+27, i.e. the previous \
+             17+13+12+9+15+13+15 plus Inner Sea Races' 7+8+6+7+7+7+12 (SD-29's race-trait \
+             extend lane, round 2). Half-Orc's 22 includes APG's `Half-Orc ~ Plagueborn`, \
+             landed by the same lane's round 1 -- and this test is exactly the one that \
+             would have caught either book being shipped without its \
+             `ALTERNATE_TRAIT_REPLACE_FLAGS` rows, because it saves a real character \
+             holding each alternate in turn and reloads it"
         );
     }
 

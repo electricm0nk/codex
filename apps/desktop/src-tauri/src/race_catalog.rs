@@ -557,11 +557,13 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 158,
+            alternates, 226,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
-             Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`). Monster \
-             Codex's 5th record, `Oversized Goblin`, is not an alternate at all -- it sets no \
-             replace flag, so `race_resolver::classify` leaves it `Unclassified`"
+             Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
+             Races' 68 (§45). Two loaded records are not alternates at all and are correctly \
+             outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
+             `Human ~ Tribalistic Languages`, both of which set no replace flag, so \
+             `race_resolver::classify` leaves them `Unclassified`"
         );
     }
 
