@@ -3391,3 +3391,267 @@ tree.
 2 × `correction` (the architecture doc's stale version-stamp section; this brief's baseline
 figures), 1 × `deferral` (the duplicate `buildVersionTriple.test.ts`), plus `verify.sh`'s
 auto-emitted `verification` events.
+
+---
+
+## Cycle SD29-E10-F1-001 — `epic-10-review` (Bundle Code Review)
+
+**Actor:** `sd29-e10-review` · **Branch:** `tranche/9` · **Branch point:** `a1295856`
+(the post-SD-28 tip, PR #359) · **Card:** `epic-10-review` (kanban Order 15)
+**PR-id:** none (direct commit to `tranche/9`, pre-authorized) · **Date:** 2026-08-11
+
+Reviews the WHOLE bundle's diff against its branch point per `decisions.md §27`, not the closing
+cycle alone.
+
+### 0. The finding that reframed the review, recorded first because it nearly became a false blocker
+
+This cycle's first pass concluded that the bundle was **missing every content lane** — that Epics
+4-7 sat unmerged on eight `worktree-wf_3516060a-756-*` branches and that `tranche/9` carried no
+ingested content at all. That conclusion was **wrong**, and it was wrong for one reason: the review
+diffed against the **local** `tranche/9` ref, which had never been fetched.
+
+```
+git status -sb        -> ## tranche/9...origin/tranche/9 [ahead 8, behind 33]
+git rev-list --count origin/tranche/9..worktree-wf_3516060a-756-13   -> 0
+git show origin/tranche/9:apps/desktop/src-tauri/src/reach_gate.rs | grep -c bonus_bestiary  -> 15
+git show        tranche/9:apps/desktop/src-tauri/src/reach_gate.rs | grep -c bonus_bestiary  -> 0
+```
+
+The eight worktree branches are **already-merged ancestors** of `origin/tranche/9`, not orphans.
+The real gap was the opposite of the one alleged and far smaller: **8 unpushed Epic 9 commits** on
+the local side, exactly as `epic-9-version`'s own receipt §8 predicted ("the push is a mechanical
+fast-forward for whoever next holds a clean tree").
+
+`epic-8-toolkit` hit the identical trap and caught it the same way (its receipt §9 addendum:
+"first derived on a stale checkout (`579d5941`) … `origin/tranche/9` proved to be 30 commits
+ahead"). Two of eleven cards in this bundle drew a conclusion from an unfetched ref. That is a
+pattern, not a coincidence, and it is recorded as a correction event rather than quietly fixed.
+
+**Rule for the successor, stated once:** `git fetch` and `git status -sb` come *before* the diff,
+not after. A review that diffs a stale ref reviews a fiction, and it fails in the most expensive
+direction available — a confident blocking finding against work that is fine.
+
+### 1. What this card did, beyond reviewing
+
+Three commits, all pre-authorized on `tranche/9`, all pushed (`b48ca08e..b4cff429`):
+
+| Commit | What |
+|---|---|
+| `a620be48` | committed three prior cycles' uncommitted retro shards. Verified pure appends before touching them — `git diff --numstat` → `3 0`, `1 0`, `3 0`, **zero deletions** — so no sibling's work was clobbered. They blocked the merge below. |
+| `3119419c` | merged `origin/tranche/9` into the local checkout, uniting the 33 lane commits with the 8 Epic 9 commits. Two conflicts, both in append-only receipt files (`kanban.md`, `progress.md`), both resolved by **union** — all 17 cycle receipts survive (`grep -c '^## Cycle' progress.md` → 17). |
+| `b4cff429` | fixed the one red the bundle actually carried. §3 below. |
+
+### 2. Bundle shape — every figure re-derived here, none transcribed
+
+| Figure | Command | Value |
+|---|---|---|
+| Commits since branch point | `git rev-list --count a1295856..HEAD` | **54** |
+| Diff size | `git diff --shortstat a1295856...HEAD` | **552 files, +14546 / -3274** |
+| Ingested-content files added | `git diff --name-only --diff-filter=A a1295856...HEAD -- 'src/rules_core/rules_tables/**' \| wc -l` | **4** |
+| `OPEN_FINDINGS` entries | `git show HEAD:apps/desktop/src-tauri/src/reach_gate.rs \| awk '/^const OPEN_FINDINGS/{f=1} f&&/^\];/{exit} f' \| grep -cE '^    \('` | **8** (unchanged from branch point) |
+
+### 3. The defect this review found and fixed — the bundle gate was red on a pin nobody owned
+
+`origin/tranche/9`'s `root-full` was **RED**, and had been for two prior cycles.
+
+```
+cargo test --locked -j 2 --test v06_apg_acg_feat_catalog
+  -> test result: FAILED. 7 passed; 2 failed
+  :263  the_aggregate_catalog_spans_every_ingested_book   left: 201  right: 185
+  :247  cross_book_feat_key_repeats_are_exactly_the_known_set
+        left:  [("Endurance",Crb,Pu), ("Extended Animal Focus",Acg,Uw), ("Feral Combat Training",Uc,Upsi)]
+        right: [("Endurance",Crb,Pu)]
+```
+
+Cause: `dde9dfc4` (`epic-4-proven-feat-race-class`) chained `feat_gap_tables`' 83 rows onto
+`feats_all::all_feat_tables()` without sweeping for downstream count pins. `epic-5-monster-lane-extend`
+**observed both failures and correctly left them alone** — the owning card was live at the time and
+touching it would have clobbered a sibling. So the red survived to this card, which is the right
+place for it: mechanical, per `loop-instruction.md` §"Stop vs. press on".
+
+**Fix 1 — the count pins.** Addends taken from the generated table two independent ways, per
+`AGENTS.md` §"Concurrency and Measurement" ("any number that moves a baseline needs two independent
+implementations agreeing"):
+
+```
+grep -E '^/// [a-z_]+ — [0-9]+ record' src/rules_core/rules_tables/feat_gap_tables.rs
+awk '/^pub static /{n=$3} /FeatCatalogRecord \{/{c[n]++} END{for(k in c) print c[k],k}' \
+    src/rules_core/rules_tables/feat_gap_tables.rs
+```
+
+Both agree: CRB 16, ARG 48, UC 2, UI 3, UM 12, UPsi 1, UW 1 — **83**, matching that file's own
+stated total. Per-book pins moved to hand-authored + gap (CRB 185→201, ARG 187→235, UI 104→107,
+UW 135→136, UC 261→263, UM 144→156, UPsi 221→222; APG/ACG/PU/UCA unmoved). Total 1578 → **1661**.
+Every derived value was correct on first execution.
+
+**Fix 2 — the cross-book key-repeat pin.** This one was **not** taken on trust. A new key collision
+can mean either a genuine upstream duplicate or the gap generator mis-attributing one book's record
+to another, and per this program's own `corpus-identifier-scope-collisions` lesson a shared name
+never implies a shared thing. Each was checked against the PCGen source for a **first-class
+definition in both books**:
+
+```
+grep -n '^Extended Animal Focus' .../advanced_class_guide/acg_feats.lst .../ultimate_wilderness/uw_feats.lst
+  -> acg_feats.lst:58  AND  uw_feats.lst:46
+grep -n '^Feral Combat Training' .../ultimate_combat/uc_feats.lst .../ultimate_psionics/up_feats.lst
+  -> uc_feats.lst:117  AND  up_feats.lst:128
+```
+
+Both are real upstream duplicates. The pin was **widened to the verified set, not relaxed** — a
+genuinely different feat arriving under an existing key still fails there.
+
+Result: `cargo test --locked --test v06_apg_acg_feat_catalog` → **9 passed; 0 failed**.
+
+### 4. Four-check wired-integration audit (`no-stub-mvp-doctrine.md` §"Per-cycle audit") — CLEAN
+
+Run over the whole bundle diff, `a1295856...HEAD`:
+
+| Check | Result |
+|---|---|
+| 1 — stub tokens | 7 hits, **all inspected individually, all false positives** (see below) |
+| 2 — no-op handlers | `OK_NO_NOOP_HANDLERS` |
+| 3 — mock leaks into shipping modules | `OK_NO_MOCK_LEAKS` |
+| 4 — "Would …" strings | `OK_NO_WOULD_STRINGS` |
+
+The 7 check-1 hits are one JSX `placeholder=` **attribute** (and that line is Epic 1b *removing*
+`GE08` from it — a correct change), plus six doc-comments, one diagnostic message and one test name
+that use the word to assert a placeholder's **absence** — e.g.
+`natural_attacks_without_corpus_dice_are_none_not_a_placeholder`, and
+`"{}'s description serves a raw substitution placeholder: {description}"`, which is a detector for
+the defect, not the defect. A grep is not a verdict; each was opened.
+
+### 5. Reach claims — real claims, not passes-by-absence
+
+The specific thing this card was told to check. Every lane that landed content landed a claim of
+the right shape, and the shape matters more than the count:
+
+- **Equipment** (`epic-4-proven-equip-mod`) — `equipment_reach` now unions the 769 gap keys into
+  the **ingested set**, i.e. into the claim's denominator, not merely into what the catalog serves.
+  The distinction is the whole point: a gate widened only on the surface side would assert nothing
+  about the new rows and would keep passing if every one of them silently stopped reaching the
+  picker. Correct.
+- **Feat** (`epic-4-proven-feat-race-class`) — no `reach_of` arm needed, and that is right, not a
+  gap: `feats_all` was split into `hand_authored_feat_tables()` (the generator's input, so the gap
+  set is *provably* the complement rather than a drift-prone exclusion list) and `all_feat_tables()`
+  (what every consumer and `feats_reach` read). The 83 rows are inside the claim automatically.
+- **Monster / monster-ability** (`epic-5-monster-lane-pilot`) — two real arms,
+  `("bonus_bestiary","monsters")` and `("bonus_bestiary","monster_abilities")`, both judged against
+  the shipped `list_monster_catalog`. Independently re-derived rather than read from the receipt:
+
+  ```
+  awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' .../bonus_bestiary/bb_races.lst | wc -l         -> 14
+  awk -F'\t' '!/^#/ && !/^SOURCELONG/ && NF>0' .../bonus_bestiary/bb_abilities_race.lst | wc -l -> 17
+  git ls-tree -r --name-only HEAD -- data/corpus/bonus_bestiary/monster        | wc -l          -> 14
+  git ls-tree -r --name-only HEAD -- data/corpus/bonus_bestiary/monster_ability | wc -l         -> 17
+  ```
+
+  Exact parity between corpus source and ingested JSON. Nothing invented, nothing dropped.
+
+No family in this bundle passed by absence.
+
+### 6. Provenance gate (Epic 3) — genuinely wired, with one honest gap
+
+`screen_generated_table` is a real hard stop, not a log line — `gen_equipment_gap_tables.rs:429`
+and `gen_feat_gap_tables.rs:422` both `eprintln!("PI screening HARD STOP … nothing written")` then
+`std::process::exit(1)` **before** the write. The standing sweep is equally real: `sweep_dir` +
+`reconcile` report both unbaselined hits **and stale baseline rows**, so the baseline cannot decay
+into a blanket suppression, and it is wired into `verify.sh` as a stage in both `full` and `quick`.
+
+**Gap, recorded not excused:** `src/rules_core/rules_tables/bonus_bestiary/monster_data.rs` (Epic 5
+pilot, 441 lines) has no generator binary and therefore never called the pre-write screen —
+`git grep -l 'bonus_bestiary' -- 'src/bin/'` returns only the three pre-existing tools. Two of the
+three content lanes route through the screen; the monster lane does not. This is a **defence-in-depth
+gap, not a hole**: the standing `pi-sweep` stage covers `rules_tables/**` unconditionally and passes
+on the merged tree (`10 hits, 10 baseline rows`), so nothing leaked. Handed to Epic 11 as the shape
+the next monster cycle-batch should adopt — a generator with the screen in it, like the other two.
+
+### 7. Receipt-discipline audit — one claim asserted without a command, and false
+
+Asked for specifically. The receipts are, on the whole, unusually well-cited: `epic-5-monster-lane-pilot`
+ships the `awk` behind 14 and 17, `epic-9-version` re-derived and **corrected this cycle's own
+dispatch brief** (brief said 1600/6128, measured 1604/6138). One claim fails the bar, and it
+propagated:
+
+> "DoD item 8 is currently unsatisfiable for every player-visible lane in this bundle"
+> — `epic-4-proven-feat-race-class` §11-12.5, restated from `epic-4-proven-equip-mod` §10 and
+> forward into `epic-6-race-trait-lane-pilot`'s item-8 row.
+
+It is false, and the disproof was already committed **in that receipt's own ancestry**:
+
+```
+git merge-base --is-ancestor 1ddeb2f7 5523eb3e   -> true
+git ls-tree -l HEAD docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/
+  -> e4-spell-catalog-after-ui-chip.png   243444 bytes
+     e4-spell-catalog-before-ui-chip.png  242196 bytes
+```
+
+`epic-4-proven-spell` (`1ddeb2f7`, "screen evidence") drove the running desktop app and committed
+two 1920×1200 PNGs. This cycle **opened** the after-shot rather than trusting the filename: it shows
+the live Spell Catalog — 1286 spells, book chips CRB 652 / APG 297 / ACG 144 / ARG 92 / **UI 101**,
+summing exactly to 1286. The driver works and the lane used it.
+
+An impossibility claim is the one kind of claim that must be re-tested before restatement, because
+it licenses skipping a gate. Two later cycles restated it instead. Correction event emitted; no
+`driver.sh` repair card is warranted on this evidence.
+
+### 8. DoD roll-call for this card
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `verify.sh` full, exit code captured directly | **See §9** — captured with `echo $? > verify-e10-run2.exit` on the statement immediately after the command, never through a pipe |
+| 2 | Reach claim for this card's families | **N/A by construction** — a review card surfaces zero new record families. The bundle-wide reach audit it *did* owe is §5, and the `reach` stage runs non-zero matched claims |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | Carried by the lane cycles; this card ingested nothing |
+| 4 | `v06_work_inventory` regeneration | N/A — no units moved by this card |
+| 5 | Four-check wired-integration audit | **CLEAN** — §4, run over the whole bundle diff |
+| 6 | `OPEN_FINDINGS` entries name their remedy | **8 entries, unchanged.** See §10 — the one this bundle was expected to retire is addressed there with its reason |
+| 7 | Baseline movements are a separate reviewable commit | **Satisfied by `e14c4307`** (Epic 9), which is separate and carries the verbatim `--show-actuals` MEASURED block. **This card moved no baseline** — see §10 for the headroom note |
+| 8 | On-screen verification for player-visible families | **N/A** — zero new player-visible families. The bundle-wide item-8 claim is corrected in §7, on evidence, not waived |
+
+### 9. Gate
+
+*(filled in below from `verify-e10-run2.exit` — the exit code, captured directly)*
+
+### 10. Handed to Epic 11 — findings that are real but not this card's to fix
+
+1. **`beastiary1/race_traits` still stands in `OPEN_FINDINGS`.** `loop-instruction.md` DoD item 6
+   states it is "expected to be **retired by Epic 5's Monster Codex cycle-batch** … a closure receipt
+   that leaves it standing must say why." **Why:** Monster Codex was never ingested. Epic 5's extend
+   card is `PARTIAL` — pilot chassis merged, corpus-wide ingest `decision-blocked`. The entry's own
+   text says it closes when `monster_codex/mc_abilities_race.lst` lands, and it has not. The entry is
+   correct as written and must stay; `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs`
+   goes red the day it does land, which is the designed closure mechanism. Not a defect — an
+   unmet expectation, recorded rather than quietly dropped.
+2. **The seven `<book>/archetypes` entries stay standing**, as `loop-instruction.md` DoD item 6
+   directs; they belong to SD-30's class_feature/archetype bundle.
+3. **Baseline headroom.** `BASELINE_ROOT_LIB_TESTS` is 1604; the merged tree measures **1615**.
+   These are floors, so the gate passes and **no movement is required** — flagged only so Epic 11
+   can choose to re-pin in its own separate DoD-item-7 commit rather than discover the drift.
+4. **The monster lane wants a generator** with `screen_generated_table` in it — §6.
+5. **Cards `epic-7-companion-lane-pilot` and `-extend` are still `READY`**, never claimed; the
+   companion lane never started (its pilot was blocked at `preflight-disk`). Epic 11's closure must
+   state the companion kind as unstarted rather than let a `READY` row imply it was attempted.
+
+### Judgment calls taken under unattended mode (default-and-flag, per `loop-instruction.md` item 1)
+
+- **Merged rather than rebased.** `origin/tranche/9` was already published and had been built on by
+  other cycles; rebasing 8 local commits under it would have rewritten shared history. Merge is the
+  non-destructive default on a shared branch.
+- **Union-resolved both receipt conflicts.** `progress.md` and `kanban.md` are append-only records;
+  discarding either side would have destroyed a cycle's receipt. Verified afterwards that all 17
+  `## Cycle` headers survive.
+- **Committed three prior cycles' retro shards** rather than leaving them to block the merge — only
+  after proving them pure appends (zero deletions).
+- **Did not touch the baselines** (§10.3): they pass as floors, and DoD item 7 makes a baseline move
+  a deliberate, separately-reviewable act, not a side effect of a review card.
+
+### Retro events (`docs/retro/events/sd29-e10-review.jsonl`)
+
+2 × `correction` (this cycle's own stale-ref finding, caught before it shipped; the propagated
+"DoD item 8 unsatisfiable" claim), 1 × `rework` (the unowned count pins), plus `verify.sh`'s
+auto-emitted `verification` events.
+
+### Git discipline
+
+`git status --porcelain` run before every git write; no `git add -A`; no `git stash` (banned in this
+checkout). `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-e10-review`, its own directory
+on the repo filesystem — never `/tmp` — deleted at cycle end.
