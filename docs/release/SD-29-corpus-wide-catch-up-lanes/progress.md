@@ -2392,7 +2392,8 @@ Stages reached before this cycle's turn budget expired:
 | `preflight-disk` | **FAIL** — `/` 91% used (max 90%), 45G free (min 20G, passes). Percentage floor only. |
 | `pi-sweep` | PASS — 10 hits over `src/rules_core/rules_tables`, 10 baseline rows |
 | `audit-selftest` | PASS — 28 passed, 0 failed (this is the stage that would catch an SD-NN/GE-NN tag in the new test module's name; it passed with the module in the tree) |
-| `root-lib` … onwards | **did not complete** — CPU/lock-starved, not hung |
+| `root-lib` | PASS — 1606 passed (includes this cycle's 2 new tests) |
+| `root-full` … onwards | **did not complete** — CPU/lock-starved, not hung; still building ~490 test binaries when this cycle's turn budget expired |
 
 The starvation was diagnosed rather than assumed, per the build-contention rule:
 `ps -eo pid,etime,args | grep cargo` showed a sibling agent's `cargo test --locked --no-fail-fast
