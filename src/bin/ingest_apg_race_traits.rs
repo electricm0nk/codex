@@ -807,14 +807,16 @@ mod tests {
     fn no_committed_apg_trait_description_leaks_pcgen_syntax() {
         use codex::rules_core::shape_b_v1::CorpusRecordV1;
 
-        // Deliberately tolerant of an absent directory (decisions.md §39):
-        // the one real record this binary can emit (`Half-Orc ~ Plagueborn`)
-        // is withheld from this cycle's commit -- `race_resolver.rs`'s
-        // `ALTERNATE_TRAIT_REPLACE_FLAGS` table doesn't know it yet
-        // (`§36` instance 15), and shipping the corpus record without that
-        // table knowing it would be a stub. `checked == 0` is the correct,
-        // honest assertion for the current committed state; this test
-        // becomes load-bearing again the moment that follow-up lands.
+        // **The follow-up landed, and this test is load-bearing again.**
+        // `decisions.md §39` withheld the one real record this binary emits
+        // (`Half-Orc ~ Plagueborn`) because `race_resolver.rs`'s
+        // `ALTERNATE_TRAIT_REPLACE_FLAGS` table did not know it (`§36`
+        // instance 15) and shipping the corpus record without that table row
+        // would have been a stub. SD-29's race-trait extend lane landed both
+        // halves in one change (SD-29 `decisions.md §44.3`), so the count
+        // below moves from a deliberate 0 to the real 1. The directory read
+        // stays tolerant of absence so the failure is the count assertion's
+        // clear message rather than an unwrap panic.
         let trait_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_players_guide/race_trait");
         let mut race_dirs: Vec<PathBuf> = match fs::read_dir(&trait_root) {
             Ok(entries) => entries.filter_map(Result::ok).map(|e| e.path()).collect(),
@@ -841,10 +843,13 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 0,
-            "0 committed APG race_trait records this cycle -- decisions.md §39: the 1 real closable \
-             record (Half-Orc ~ Plagueborn) is generated-and-verified but deliberately withheld, \
-             blocked on race_resolver.rs's ALTERNATE_TRAIT_REPLACE_FLAGS table (§36 instance 15)"
+            checked, 1,
+            "1 committed APG race_trait record: `Half-Orc ~ Plagueborn`. It was withheld under \
+             decisions.md §39, blocked on race_resolver.rs's ALTERNATE_TRAIT_REPLACE_FLAGS table \
+             (§36 instance 15) -- shipping the record without that table row would have offered \
+             it in the picker and refused it at character-save time. SD-29's race-trait extend \
+             lane landed both halves together (SD-29 decisions.md §44.3), so the assertion moves \
+             from 'deliberately 0' to 'exactly the 1 real record'"
         );
     }
 }

@@ -699,7 +699,11 @@ function CreateCharacterFields(props: {
             </LabeledField>
           </div>
 
-          {/* Alternate racial traits (Advanced Race Guide).
+          {/* Alternate racial traits, from every book
+              `race_catalog::RACE_CORPUS_BOOKS` loads — the Advanced Race
+              Guide, Monster Codex and the Advanced Player's Guide today.
+              This heading named ARG alone until SD-29's race-trait lane;
+              it stopped being true the moment a second book contributed.
 
               Every fact rendered here comes from the backend: which traits
               exist, what each replaces, and which are locked out by the
@@ -728,7 +732,7 @@ function CreateCharacterFields(props: {
             </p>
           ) : alternateTraitRows.length === 0 ? (
             <p style={{ color: 'var(--color-text-muted)', fontSize: '0.78rem', margin: 0 }}>
-              The Advanced Race Guide offers no alternate racial traits for {selectedRace.label}.
+              No ingested book declares an alternate racial trait for {selectedRace.label}.
             </p>
           ) : (
             <>

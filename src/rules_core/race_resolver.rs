@@ -905,7 +905,7 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 }
 
 
-/// Every ARG alternate racial trait's `<Race>_Replace<Trait>` flag set, keyed
+/// Every alternate racial trait's `<Race>_Replace<Trait>` flag set, keyed
 /// by the corpus record key a player selects.
 ///
 /// # Why this is a hand-written table and not a corpus read
@@ -924,13 +924,24 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 /// # What the values are
 ///
 /// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
-/// all 153 records [`RaceCorpus::alternate_traits`] classifies as
-/// [`TraitRole::Alternate`] across the 18 in-scope races. The three records
-/// that are *not* standalone choices — `Feral ~ Languages`,
-/// `Scion of Humanity ~ Languages` and `Saltbeard ~ Dwarf ~ Greed`, all three
-/// [`TraitRole::FlagGranted`] — are deliberately absent: a player never selects
-/// them, they are granted by the alternate that names them, and putting them
-/// here would offer them as menu items.
+/// all 158 records [`RaceCorpus::alternate_traits`] classifies as
+/// [`TraitRole::Alternate`] across the 18 in-scope races — ARG's 153, Monster
+/// Codex's 4 and the Advanced Player's Guide's 1, the last two landed by
+/// SD-29's race-trait lane. The three records that are *not* standalone
+/// choices — `Feral ~ Languages`, `Scion of Humanity ~ Languages` and
+/// `Saltbeard ~ Dwarf ~ Greed`, all three [`TraitRole::FlagGranted`] — are
+/// deliberately absent: a player never selects them, they are granted by the
+/// alternate that names them, and putting them here would offer them as menu
+/// items. `Oversized Goblin` is absent for the opposite reason: it is
+/// [`TraitRole::Unclassified`] and never applies at all.
+///
+/// **The coverage claim is only as wide as the corpus the pin test loads.**
+/// Both pin tests read the app's own `RACE_CORPUS_BOOKS`; when they were
+/// pinned to three hardcoded book roots instead, four Monster Codex
+/// alternates reached the player's picker while this table stayed silent
+/// about them and `pilot_compute` refused every selection with a
+/// claim-blocking `race.alternate_trait.unknown`. See
+/// [`every_alternate_the_app_offers_is_one_the_engine_can_place`].
 const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     // ---- Aasimar ----
     ("Aasimar ~ Celestial Crusader", &["Aasimar_ReplaceCelestialResistance", "Aasimar_ReplaceSkilled"]),
@@ -955,6 +966,9 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Duergar ~ Deep Magic", &["Duergar_ReplaceSpellLikeAbilities"]),
     ("Duergar ~ Dwarf Traits (Replaces Duergar Immunities)", &["Duergar_ReplaceDuergarImmunities"]),
     ("Duergar ~ Dwarf Traits (Replaces Stability)", &["Duergar_ReplaceStability"]),
+    // Monster Codex (SD-29's race-trait pilot). `mc_abilities_race.lst:16,17`.
+    ("Duergar ~ Ironskinned", &["Duergar_ReplaceSLAEnlargePerson"]),
+    ("Duergar ~ Twilight-Touched", &["Duergar_ReplaceSLAInvisibility"]),
     // ---- Dwarf ----
     ("Dwarf ~ Ancient Enmity", &["Dwarf_ReplaceHatred"]),
     ("Dwarf ~ Craftsman", &["Dwarf_ReplaceGreed"]),
@@ -1030,6 +1044,15 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Goblin ~ Over-Sized Ears", &["Goblin_ReplaceSkilled"]),
     ("Goblin ~ Tree Runner", &["Goblin_ReplaceSkilled"]),
     ("Goblin ~ Weapon Familiarity", &["Goblin_ReplaceSkilled"]),
+    // Monster Codex (`mc_abilities_race.lst:35,36`). Upstream these two are
+    // granted together by picking the `Oversized Goblin` variant out of a
+    // `BONUS:ABILITYPOOL|Goblin Variant|1` pool, a mechanism this engine does
+    // not model; `Oversized Goblin` itself is `TraitRole::Unclassified` and is
+    // deliberately absent from this table. Until the variant mechanism exists
+    // these two are individually selectable, which is recorded as a shortfall
+    // in `reach_gate`'s `OPEN_FINDINGS`, not smoothed over.
+    ("Oversized Goblin ~ Ability Scores", &["Goblin_ReplaceAbilityScores"]),
+    ("Oversized Goblin ~ Size", &["Goblin_ReplaceSize"]),
     // ---- Half-Elf ----
     ("Half-Elf ~ Ancestral Arms", &["HalfElf_ReplaceAdaptability"]),
     ("Half-Elf ~ Arcane Training", &["HalfElf_ReplaceMultitalented"]),
@@ -1049,6 +1072,11 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Half-Orc ~ City-Raised", &["HalfOrc_ReplaceWeaponFamiliarity"]),
     ("Half-Orc ~ Forest Walker", &["HalfOrc_ReplaceVision"]),
     ("Half-Orc ~ Gatecrasher", &["HalfOrc_ReplaceOrcFerocity"]),
+    // Advanced Player's Guide (`apg_abilities_race.lst:83`). The one APG
+    // alternate whose key is not already published by ARG; SD-27
+    // `decisions.md §39` deferred it precisely because this table did not
+    // know it, and SD-29's race-trait extend lane closes that deferral.
+    ("Half-Orc ~ Plagueborn", &["HalfOrc_ReplaceIntimidating", "HalfOrc_ReplaceWeaponFamiliarity"]),
     ("Half-Orc ~ Rock Climber", &["HalfOrc_ReplaceIntimidating"]),
     ("Half-Orc ~ Sacred Tattoo", &["HalfOrc_ReplaceOrcFerocity"]),
     ("Half-Orc ~ Scavenger", &["HalfOrc_ReplaceIntimidating"]),
@@ -1328,21 +1356,92 @@ fn find_json_files(dir: &Path) -> Vec<PathBuf> {
 mod tests {
     use super::*;
 
+    /// The one test here that deliberately loads a SINGLE book —
+    /// `a_race_resolves_from_its_own_book_alone_without_the_alternate_trait_book`
+    /// — needs a hand-built root, and that is a real property rather than a
+    /// stale scope. Its `arg()`/`b1()` siblings are gone: they existed only to
+    /// feed the hardcoded `all_books()` list that
+    /// [`app_loaded_books`] replaced.
     fn crb() -> BookCorpusRoot<'static> {
         BookCorpusRoot { book_id: "core_rulebook", dir: Path::new("data/corpus/core_rulebook") }
     }
-    fn arg() -> BookCorpusRoot<'static> {
-        BookCorpusRoot { book_id: "advanced_race_guide", dir: Path::new("data/corpus/advanced_race_guide") }
-    }
-    fn b1() -> BookCorpusRoot<'static> {
-        BookCorpusRoot { book_id: "beastiary", dir: Path::new("data/corpus/beastiary") }
+
+    /// The books the shipped app really loads, read out of its own
+    /// `RACE_CORPUS_BOOKS` declaration.
+    ///
+    /// **This used to be the hardcoded list `[crb(), b1(), arg()]`, and that
+    /// is why the defect below shipped.** Every assertion in this module that
+    /// says "for every alternate in the corpus" was silently scoped to three
+    /// books, so when SD-29's race-trait pilot ingested a fourth
+    /// (`monster_codex`), the flag table beneath went on claiming complete
+    /// coverage of a corpus it no longer covered — and four alternates
+    /// reached the player's picker that `pilot_compute` then refused with a
+    /// claim-blocking `race.alternate_trait.unknown`. The pilot had already
+    /// found and fixed the identical stale-root bug one file over
+    /// (`tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs`, SD-29
+    /// `progress.md`); this instance survived because nothing pointed the
+    /// same question at this module.
+    fn app_loaded_books() -> Vec<String> {
+        let src = std::fs::read_to_string("apps/desktop/src-tauri/src/race_catalog.rs")
+            .expect("the desktop race catalog source is readable from the repo root");
+        let decl = src
+            .split("pub(crate) const RACE_CORPUS_BOOKS: &[&str] =")
+            .nth(1)
+            .expect("RACE_CORPUS_BOOKS is declared in race_catalog.rs");
+        let list = decl.split(';').next().expect("the declaration terminates");
+        list.split('"').skip(1).step_by(2).map(str::to_owned).collect()
     }
 
     fn all_books() -> RaceCorpus {
-        let roots = [crb(), b1(), arg()];
+        let books = app_loaded_books();
+        let dirs: Vec<(String, PathBuf)> = books
+            .into_iter()
+            .map(|book| {
+                let dir = PathBuf::from("data/corpus").join(&book);
+                (book, dir)
+            })
+            .collect();
+        let roots: Vec<BookCorpusRoot<'_>> = dirs
+            .iter()
+            .map(|(book, dir)| BookCorpusRoot { book_id: book.as_str(), dir: dir.as_path() })
+            .collect();
         let corpus = load_race_corpus(&roots);
         assert!(corpus.diagnostics().is_empty(), "clean load expected: {:?}", corpus.diagnostics());
         corpus
+    }
+
+    /// **No alternate reaches the player's menu that the engine then refuses.**
+    ///
+    /// `race_trait_picker` offers every [`TraitRole::Alternate`] record in the
+    /// loaded corpus, and `pilot_compute::explain_selected_alternate_racial_traits`
+    /// raises a **claim-blocking** `race.alternate_trait.unknown` for any
+    /// selection [`ALTERNATE_TRAIT_REPLACE_FLAGS`] does not know. A record in
+    /// the first set and absent from the second is therefore an affordance
+    /// that looks live and is not — the no-stub doctrine's exact shape.
+    ///
+    /// This is the invariant that
+    /// [`the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate`]
+    /// was believed to enforce and did not, because both it and this module's
+    /// corpus loader were pinned to three books while the app loaded five.
+    #[test]
+    fn every_alternate_the_app_offers_is_one_the_engine_can_place() {
+        let corpus = all_books();
+        let placeable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
+        let mut offered_but_refused: Vec<(String, String)> = Vec::new();
+        for race_key in corpus.race_keys() {
+            for record in corpus.alternate_traits(race_key) {
+                if !placeable.contains(record.data.key.as_str()) {
+                    offered_but_refused
+                        .push((record.book_id.clone(), record.data.key.clone()));
+                }
+            }
+        }
+        assert!(
+            offered_but_refused.is_empty(),
+            "these alternates are offered by race_trait_picker and then refused by \
+             pilot_compute with a claim-blocking race.alternate_trait.unknown: \
+             {offered_but_refused:?}"
+        );
     }
 
     /// Every in-scope race's chassis loads through the real typed
@@ -1521,7 +1620,17 @@ mod tests {
             .iter()
             .map(|t| (t.data.race_key.as_str(), t.data.key.as_str()))
             .collect();
-        assert_eq!(unclassified, Vec::<(&str, &str)>::new());
+        // Pinned by exact key, in both directions: a SECOND unclassified row
+        // fails here, and so does this one disappearing. `Oversized Goblin`
+        // (Monster Codex, `mc_abilities_race.lst:31`) carries no readable
+        // gate at all -- upstream it is picked out of a
+        // `BONUS:ABILITYPOOL|Goblin Variant|1` pool, a mechanism this engine
+        // does not model -- so it is exactly the residue this test exists to
+        // surface. It has its own `OPEN_FINDINGS`/`UNREACHED_RECORD_FINDINGS`
+        // entries in `reach_gate` naming that remedy (SD-29 `decisions.md
+        // §43`), and it is the one alternate deliberately absent from
+        // `ALTERNATE_TRAIT_REPLACE_FLAGS`.
+        assert_eq!(unclassified, vec![("Goblin", "Oversized Goblin")]);
 
         // And the two that used to live here still do not auto-apply: they
         // arrive only through the alternate that grants them.
@@ -1547,10 +1656,19 @@ mod tests {
         let corpus = all_books();
         let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
         assert_eq!(count(TraitRole::Default), 173);
-        assert_eq!(count(TraitRole::Alternate), 153);
+        // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
+        // (`Half-Orc ~ Plagueborn`), both landed by SD-29's race-trait lane.
+        assert_eq!(count(TraitRole::Alternate), 158);
         assert_eq!(count(TraitRole::FlagGranted), 5);
-        assert_eq!(count(TraitRole::Unclassified), 0);
-        assert_eq!(corpus.traits.values().flatten().count(), 331, "175 standard + 156 ARG alternates");
+        // `Oversized Goblin` -- see
+        // `no_corpus_trait_is_left_without_a_readable_gate`, which pins it by
+        // key and names its remedy.
+        assert_eq!(count(TraitRole::Unclassified), 1);
+        assert_eq!(
+            corpus.traits.values().flatten().count(),
+            337,
+            "175 standard + 156 ARG + 5 Monster Codex + 1 APG"
+        );
     }
 
     /// **The corpus gap that was here is closed. This is what replaced it.**
@@ -1614,28 +1732,48 @@ mod tests {
                 }
             }
         }
+        // Two flags, one cause. SD-29's race-trait lane added the second:
+        // Monster Codex's `Duergar ~ Ironskinned` fires
+        // `Duergar_ReplaceSLAEnlargePerson`, whose counterpart
+        // `Duergar ~ Spell-Like Ability ~ Invisibility` is the OTHER end of
+        // the very same truncated multi-flag gate — its row names three flags
+        // and `suppressed_by_flag` keeps only the first. Identical schema
+        // limit, identical proof below that neither is a dead affordance.
         assert_eq!(
             orphan_flags.iter().copied().collect::<Vec<_>>(),
-            vec!["Duergar_ReplaceSLAInvisibility"],
+            vec!["Duergar_ReplaceSLAEnlargePerson", "Duergar_ReplaceSLAInvisibility"],
             "the Aasimar five are closed; a new orphan flag is a new defect"
         );
         assert_eq!(affected_races.iter().copied().collect::<Vec<_>>(), vec!["Duergar"]);
-        assert_eq!(affected_alternates.iter().copied().collect::<Vec<_>>(), vec!["Duergar ~ Blood Enmity"]);
-        // ...and it is not a dead affordance, because the flag grants.
-        let blood_enmity = corpus.resolve("Duergar", &["Duergar ~ Blood Enmity"]).expect("resolves");
-        assert!(blood_enmity.inert_flags.is_empty(), "{:?}", blood_enmity.inert_flags);
+        assert_eq!(
+            affected_alternates.iter().copied().collect::<Vec<_>>(),
+            vec!["Duergar ~ Blood Enmity", "Duergar ~ Ironskinned", "Duergar ~ Twilight-Touched"]
+        );
+        // ...and none is a dead affordance, because both flags grant.
+        // `Twilight-Touched` fires the same `Duergar_ReplaceSLAInvisibility`
+        // `Blood Enmity` does; two alternates may name one flag.
+        for alternate in
+            ["Duergar ~ Blood Enmity", "Duergar ~ Ironskinned", "Duergar ~ Twilight-Touched"]
+        {
+            let resolved = corpus.resolve("Duergar", &[alternate]).expect("resolves");
+            assert!(resolved.inert_flags.is_empty(), "{alternate}: {:?}", resolved.inert_flags);
+        }
         // The bound that matters for the SD-27 mandatory guard.
         for race in ["Human", "Dwarf", "Elf", "Gnome", "Half-Elf", "Half-Orc", "Halfling"] {
             assert!(!affected_races.contains(race), "no CRB race may be affected, but {race} is");
         }
-        // Total flags in play, derived: 74 distinct, 1 of them unclaimed.
+        // Total flags in play, derived: 77 distinct, 2 of them unclaimed.
+        // 74 + Monster Codex's `Duergar_ReplaceSLAEnlargePerson`,
+        // `Goblin_ReplaceAbilityScores`, `Goblin_ReplaceSize`. APG's
+        // `Half-Orc ~ Plagueborn` fires two flags that ARG already declares,
+        // so it adds a row without adding a flag.
         let all_flags: BTreeSet<&str> = corpus
             .traits
             .values()
             .flatten()
             .flat_map(|t| t.data.sets_replace_flags.iter().map(String::as_str))
             .collect();
-        assert_eq!(all_flags.len(), 74);
+        assert_eq!(all_flags.len(), 77);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -1656,7 +1794,7 @@ mod tests {
                 checked += 1;
             }
         }
-        assert_eq!(checked, 153);
+        assert_eq!(checked, 158, "153 ARG + 4 Monster Codex + 1 APG");
     }
 
     /// The runtime machinery that reports an unmatched swap is still under
@@ -1862,7 +2000,7 @@ mod tests {
                 );
             }
         }
-        assert_eq!(corpus_rows.len(), 153, "153 selectable alternates");
+        assert_eq!(corpus_rows.len(), 158, "153 ARG + 4 Monster Codex + 1 APG selectable alternates");
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
         for (key, flags) in ALTERNATE_TRAIT_REPLACE_FLAGS {
             let from_corpus = corpus_rows.get(key).unwrap_or_else(|| panic!("{key} is a real alternate"));
@@ -1902,7 +2040,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 153);
+        assert_eq!(selectable_alternate_trait_keys().len(), 158);
     }
 
     #[test]

@@ -2464,17 +2464,41 @@ mod tests {
         }
     }
 
-    // APG's own reach test is deliberately not added yet: `decisions.md §37`'s
-    // first estimate of 50 real alternates corrected to 1 genuinely new key
-    // (`Half-Orc ~ Plagueborn`, `decisions.md §39`), and that 1 key is not
-    // ingested this cycle -- `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS`
-    // table (`§36` instance 15) does not recognize it, and shipping the
-    // corpus record without updating that table would offer it in the picker
-    // and refuse it at character-save time, a stub. The
-    // `("apg", "race_traits") => race_traits_reach(...)` match arm above is
-    // landed now (harmless and forward-compatible with 0 records today) so
-    // Plagueborn's follow-up only needs to add the corpus record and this
-    // test, not touch `reach_of` again.
+    /// **Plagueborn's follow-up, landed.** `decisions.md §37`'s first estimate
+    /// of 50 real APG alternates corrected to 1 genuinely new key
+    /// (`Half-Orc ~ Plagueborn`, `decisions.md §39`); the other 49 collide
+    /// with already-ingested ARG keys and are excluded at ingest time.
+    ///
+    /// That 1 record was held back — correctly — because
+    /// `race_resolver.rs`'s `ALTERNATE_TRAIT_REPLACE_FLAGS` table did not
+    /// know its key, so shipping the corpus record alone would have offered
+    /// it in the picker and refused it at character-save time. SD-29's
+    /// race-trait extend lane landed both halves, and this test is the
+    /// claim DoD item 2 requires for the book's family: it executes, it is
+    /// not a pass-by-absence, and it accounts for the record.
+    #[test]
+    fn apgs_one_genuinely_new_alternate_racial_trait_reaches_a_player() {
+        // `apg`, not `advanced_players_guide`: `CORPUS_BOOK_IDS` maps the corpus
+        // directory to the book id every claim uses, and APG is one of the
+        // entries where the two spellings differ.
+        let apg_traits = Family::new("apg", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&apg_traits),
+            "the data/corpus scan must see data/corpus/advanced_players_guide/race_trait/"
+        );
+        assert!(full_inventory().contains(&apg_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("advanced_players_guide", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            1,
+            "APG's 1 ingested race-trait record, counted on disk: {ingested:?}"
+        );
+        match reach_of(&apg_traits).expect("APG race traits have a declared claim") {
+            Reach::Surfaced { records, .. } => assert_eq!(records, 1),
+            other => panic!("APG's race-trait record must reach a player, got {other:?}"),
+        }
+    }
 
     /// The other half of the same blind spot: `pathfinder_unchained` hid
     /// behind accessor functions, so a `pub const`-only scanner reported an
