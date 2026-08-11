@@ -1224,8 +1224,36 @@ being `preflight-disk` per §6:
     PASS  class-dump (31/31 computing)
 ```
 
-Run 2 (`/tmp/codex-verify-WNb3h9`, same command with the documented disk override) is the
-exit-code-of-record; its result and exit code are recorded in the follow-up entry below.
+Run 2 (`/tmp/codex-verify-WNb3h9`) — same command, plus the documented override
+`PREFLIGHT_DISK_MAX_PERCENT=95 PREFLIGHT_DISK_MIN_FREE_GB=20` (the min-free floor left at its
+recorded value; only the percentage ceiling moved). **This is the exit-code-of-record:**
+
+```
+$ PREFLIGHT_DISK_MAX_PERCENT=95 PREFLIGHT_DISK_MIN_FREE_GB=20 ./scripts/verify.sh --show-actuals
+  ...; echo $? > verify3.exit
+$ cat verify3.exit
+0
+
+  passed:  12  preflight-disk pi-sweep audit-selftest root-lib root-full desktop reach
+               frontend-install frontend-test frontend-typecheck clippy class-dump
+RESULT: PASS
+```
+
+**12 of 12 stages PASS, exit code `0`, captured directly to a file — never through a pipe.**
+Run 2 also printed **no BASELINE NOTES block at all**, which is the independent confirmation that
+`e14c4307`'s four baseline moves are exactly the measured actuals: the MEASURED block and the
+recorded file now agree on all eight numbers.
+
+**DoD item 3, run separately** (the gate has no trap-report stage):
+
+```
+$ CARGO_TARGET_DIR=... RETRO_ACTOR=sd29-e9-version cargo run --locked --quiet \
+    --bin v06_corpus_trap_report -- --audit ; echo $?
+   TRAP   DEFECT  trap
+    259        0  mod-record
+No defects: every ingested record's citation agrees with the line it names.
+0
+```
 
 ### 8. Git discipline
 
