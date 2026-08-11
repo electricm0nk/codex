@@ -4943,3 +4943,50 @@ the failure this bundle was reopened over.
 `BASELINE_ROOT_LIB_TESTS` 1604 vs 1616, `BASELINE_ROOT_FULL_TESTS` 6138 vs 6179,
 `BASELINE_ROOT_TEST_BINARIES` 539 vs 543, `BASELINE_DESKTOP_TESTS` 413 vs 422. All four were
 already stale before this card. Left untouched per DoD item 7 — see the item-7 row above.
+
+### 8. Definition of done item 8 — on screen, on the real app
+
+`RUN_DESKTOP_AGENT=sd29-racetrait-r1` exported before the first `driver.sh` call (per the skill's
+"Concurrent agents" rule); the driver took its own display `:73`, its own state file
+(`/tmp/run-desktop-driver-sd29-racetrait-r1.state`) and its own logs. Run **after** both gates
+finished, never alongside one — this box has 22 GiB RAM and no swap, and `SD29-E13-F1-001` recorded
+the vite dev server being OOM-killed when the two overlap. `driver.sh launch` → **exit 0**.
+
+Screenshots: `artifacts/race-trait-extend-round-1/`.
+
+| # | what is on screen | why it is the evidence |
+|---|---|---|
+| `02-hub` | landing page, five catalog entry points | the app really launched |
+| `03-racetraits` | **173 trait rows across 18 races**, per-race chips | standard traits unmoved, as expected — this cycle added no chassis |
+| `04-alternates` | **"Alternate racial traits from every ingested book — 158 alternate racial traits across 18 races"**, and the **Half-Orc (15)** chip | the count a player reads moved 157 → 158, and Half-Orc 14 → 15. **This is the number the whole cycle turns on, rendered.** The caption also names no single book — the pilot's label fix holding |
+| `06-plagueborn` | **`Plagueborn`  APG p.19**, `Replaces Intimidating, Weapon Familiarity`, with its full published prose | the record `decisions.md §39` deferred, on a player's screen, carrying **its own book code** — `APG`, not ARG's. Real page cite, real text |
+| `08-selected` | Plagueborn **ticked**, right column reads **"1 selected. 0 further options locked out."** | **the anti-stub proof.** Before this cycle, `ALTERNATE_TRAIT_REPLACE_FLAGS` did not know this key, so a selection would have raised a claim-blocking `race.alternate_trait.unknown`. The engine accepts it |
+
+Also visible on `04-alternates`, unprompted: the screen's own corpus-finding line now reads
+*"2 standard trait row(s) declare a multi-flag `!PREFACT` gate … Duergar ~ Spell-Like Ability ~
+Enlarge Person (Duergar_ReplaceSLAEnlargePerson); Duergar ~ Spell-Like Ability ~ Invisibility
+(Duergar_ReplaceSLAInvisibility)"* — **both** ends of the truncated gate, where it named one before.
+The orphan-flag widening §6b describes is not just a test assertion; it is reported to the player.
+
+### 8b. One finding item 8 caught that no test did — recorded, not fixed
+
+**With `Plagueborn` selected, the left-hand standard-trait column does not recompute.** It still
+reads *"9 traits apply. No alternate selected, so nothing is replaced."* and still lists
+`Intimidating` and `Orc Ferocity` — the two rows Plagueborn's flags suppress. It should read 7.
+
+**This is a browse-screen render bug, not a wiring failure, and the distinction is evidenced rather
+than assumed:**
+
+* the right-hand column *does* update ("1 selected. 0 further options locked out."), so the IPC
+  round trip happened;
+* the engine really performs the suppression —
+  `race_resolver::a_selected_alternate_suppresses_exactly_the_standard_trait_its_flag_names` and
+  `sd27_..._reachability::taking_saltbeard_removes_exactly_the_three_grounded_dwarf_records_its_flags_name`
+  both pass inside the green `root-full`;
+* `reach_gate`'s claim executes `resolve_race_alternate_selection` and passes.
+
+**It is pre-existing and was handed to this lane**, in narrower form: `SD29-E6-F1-002` recorded the
+sub-heading half of it ("*No alternate selected*" while an alternate was selected) and reported it
+for the extend lane. This cycle sharpens it — the whole left panel is stale, not just its caption —
+and hands it to **round 2** rather than fixing a second surface inside a cycle that already rewrote
+the grounding probe. It is recorded here rather than left in a screenshot nobody reads.
