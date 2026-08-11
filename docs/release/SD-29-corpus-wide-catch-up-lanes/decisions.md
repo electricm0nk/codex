@@ -1377,3 +1377,87 @@ from `docs/work-inventory.json`.
 
 **Authority:** operator directive 2026-08-11 (verbatim above); supersedes the closure disposition
 recorded in `progress.md` `## Cycle SD29-E11-F1-001` and in `release-notes.md` §Known issues 1 and 3.
+
+---
+
+## Decision 43 — The desktop driver, not the desktop app, is what broke on-screen verification; item 8 stands unweakened (2026-08-11, card `epic-13-desktop-driver-fix`)
+
+**Ruling.** Definition-of-done item 8 (on-screen verification for player-visible families) is
+**not** weakened, waived, or redefined for a headless host. This box has a usable display: `Xvfb`
+and `xvfb-run` are installed, the driver already provisions one, and the app renders on it. The
+reported blocker was a defect in `apps/desktop/.claude/skills/run-desktop/driver.sh`, and it is
+fixed.
+
+**The claim that was wrong.** Three run-1 cycles independently reported that
+`driver.sh launch` "builds, logs `Running <target>/debug/codex-desktop`, then the binary EXITS
+before any window appears," citing `libEGL warning: DRI3 error: Could not get DRI3 device` as the
+only diagnostic. That diagnosis is false in both halves.
+
+- The `libEGL`/DRI3 lines are **not** an error. They are emitted on every successful launch on this
+  box, including the ones that produced the screenshots in
+  `artifacts/desktop-driver-fix/`. They report the absence of hardware-accelerated rendering, which
+  under Xvfb is expected; WebKitGTK falls back to software rendering and proceeds.
+- The binary does not exit. Re-derived directly, bypassing the driver:
+  `DISPLAY=:67 timeout 60 ./target/debug/codex-desktop; echo $?` → **124**, i.e. still running when
+  the timeout killed it. Enumerating X windows during that run showed `WM_NAME=codex-desktop`
+  immediately and `WM_NAME=Codex` — the window the driver searches for — appearing about **35s**
+  after process start.
+
+**Why every cycle nevertheless saw an empty process table.** `cmd_launch` sets
+`trap 'cmd_stop || true' EXIT INT TERM`. Any launch failure therefore killed the app and the X
+server *on the way out*, before the agent could look at either. Every post-mortem `pgrep -af
+'codex-desktop$'` ran after the evidence had been destroyed, and an empty process table is
+indistinguishable from a crash. The driver's failure path was manufacturing the very symptom that
+was then attributed to the app. This is a diagnostic-destroys-evidence defect, and it cost three
+cycles the same wrong conclusion.
+
+**The three underlying defects, each now covered by a case in
+`scripts/tests/test_run_desktop_driver.sh`:**
+
+1. **Readiness detection was not scoped to the agent's own display.** `pgrep -f "target/debug/codex"`
+   matched *any* agent's app process — the "known gap, still live" that `SKILL.md` documented but
+   nothing tested. When a sibling agent's app was already running, the poll succeeded instantly and
+   the window-search budget began counting while this agent's binary was still compiling, so the
+   search could not possibly succeed. Run 1 dispatched six concurrent agents, which is exactly the
+   condition that fires it. The path-shaped match had a second blind spot: a dispatched agent
+   exporting `CARGO_TARGET_DIR` builds the binary *outside* `target/debug/`, where the pattern finds
+   nothing at all. Now matched on the executable's own name and filtered by the candidate's own
+   `DISPLAY` environ.
+2. **The window-search budget had no headroom.** 90 iterations × `sleep 0.5` = **45s**, against a
+   measured **~35s** cold WebKitGTK start on an *idle, uncontended* box. Run 1 drove this box to
+   load average 9-12. Raised to 180s, overridable via `RUN_DESKTOP_WINDOW_TIMEOUT`.
+3. **`cmd_stop` killed unrelated processes.** `pkill -9 -f "Xvfb :$DISPLAY_NUM "` matches any
+   command line *containing* that text, not just an X server. Observed live twice during this card:
+   it killed the shell that was invoking it, which then returned no output and no error — again
+   indistinguishable from the app dying. Now matched on the process's executable name plus its
+   actual display argument.
+
+Additionally, every failure path now calls `cmd_diagnose` **before** cleanup runs, printing app
+liveness, the full window inventory with `WM_NAME`s, and the launch-log tail; and the timeout paths
+distinguish "app process exited" from "app is running but no window appeared", because those two
+need different fixes and reporting the first when the second happened is what sent three cycles
+after a nonexistent app bug.
+
+**Gate coverage.** New `driver-selftest` stage in `scripts/verify.sh`, in **both** the full and
+quick sets (no build, no display, seconds to run). Precedent and shape: the existing
+`audit-selftest` stage, including its 0-cases-ran guard. The reason it is a gate stage rather than a
+script someone remembers to run is that when this driver breaks, the entire class of defect that
+only on-screen driving reaches stops being detectable and *nothing says so* — five agents invoked
+`launch` during run 1, not one left a state file, and the gate stayed green throughout.
+
+**Detection power was verified, not assumed** (the failure mode
+`scripts/identifier-discipline-audit.sh`'s own header records twice). Each case was re-run against a
+deliberately-regressed copy of the driver: un-scoping the readiness match fails case 1, restoring
+the substring `pkill` fails case 3. That exercise caught **two** worthless assertions in the
+self-test's first draft — `kill -0` returns success on a zombie, so a SIGKILLed child read as alive;
+and `bash -c "echo …; sleep 300"` is exec-optimized so the decoy's command line never contained the
+string it was supposed to be matched on. Both cases passed against a driver that was demonstrably
+broken until this check exposed them.
+
+**A real environmental constraint, recorded rather than worked around.** This box has **22 GiB RAM
+and zero swap** (`free -h`). Launching the desktop app while a cargo build is running gets the vite
+dev server OOM-killed — reproduced during this card while `verify.sh`'s `root-full` stage was
+building at load average 21, where the new diagnostics correctly reported
+`The "beforeDevCommand" terminated with a non-zero status code` and `Killed` rather than blaming the
+binary. **On-screen verification and a full gate must not be run concurrently on this host.** This
+is very likely a second contributor to run 1's driver failures, which ran six agents against 4 cores.

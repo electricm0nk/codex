@@ -99,8 +99,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk pi-sweep audit-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk pi-sweep audit-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk pi-sweep audit-selftest driver-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk pi-sweep audit-selftest driver-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -691,6 +691,58 @@ run_pi_sweep() {
     stage_pass pi-sweep "${summary:-clean}"
 }
 
+# Stage: driver-selftest
+#
+# Runs scripts/tests/test_run_desktop_driver.sh — the self-test for
+# apps/desktop/.claude/skills/run-desktop/driver.sh.
+#
+# Why this is a gate stage. The driver is the only mechanism that satisfies the
+# "drive it on screen" acceptance item, and the tranche/7 retrospective ranks
+# on-screen driving as the sole mechanism reaching the "wired into a twin the
+# sheet doesn't read" defect class — 14% of that tranche's corrections, a class
+# no passing test can reach by construction. When the driver breaks, that whole
+# class stops being detectable and nothing says so: five agents invoked
+# `driver.sh launch` during the first corpus-wide catch-up run, not one left a
+# state file, three independently reported the same wrong root cause, and every
+# player-visible family that run ingested shipped without on-screen
+# verification. Nothing in the gate noticed.
+#
+# No build, no display, seconds to run: it drives throwaway decoy processes.
+# ---------------------------------------------------------------------------
+run_driver_selftest() {
+    stage_start "driver-selftest — scripts/tests/test_run_desktop_driver.sh"
+    local log="$LOG_DIR/driver-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_run_desktop_driver.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail driver-selftest "self-test script missing at scripts/tests/test_run_desktop_driver.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail driver-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # Same 0-matched guard the other self-test stages carry: a self-test that
+    # discovered no cases proves nothing while looking identical to one that
+    # passed them all.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail driver-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass driver-selftest "${tally:-$passed cases passed}"
+}
+
 run_audit_selftest() {
     stage_start "audit-selftest — scripts/tests/test_identifier_discipline_audit.sh"
     local log="$LOG_DIR/audit-selftest.log"
@@ -796,6 +848,7 @@ for stage in "${SELECTED[@]}"; do
         preflight-disk)      run_preflight_disk ;;
         pi-sweep)            run_pi_sweep ;;
         audit-selftest)      run_audit_selftest ;;
+        driver-selftest)     run_driver_selftest ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
         desktop)             run_desktop ;;
