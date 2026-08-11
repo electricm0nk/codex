@@ -63,6 +63,15 @@ def _sandboxed_env(extra: dict | None = None) -> dict:
     env = dict(os.environ)
     env["RETRO_DISABLE"] = "1"
     env.pop("RETRO_EVENTS_DIR", None)
+    # Hermeticity for the codex-target-* scan roots added 2026-08-11: without
+    # these, any cargo-target case here would ALSO scan the real ~/workspace
+    # and /tmp, and the `--older-than 0 --apply` case would delete a live
+    # sibling agent's real target dir (age gate bypassed, no build running at
+    # that instant). Tests that exercise those roots pass their own
+    # --workspace-root/--orphan-tmp-root; everything else must never see the
+    # real ones. (Covered by scripts/tests/test_reclaim_orphan_targets.sh.)
+    env.setdefault("RECLAIM_WORKSPACE_ROOT", "/nonexistent-reclaim-test-workspace")
+    env.setdefault("RECLAIM_ORPHAN_TMP_ROOT", "/nonexistent-reclaim-test-orphan-tmp")
     if extra:
         env.update(extra)
     return env
@@ -247,7 +256,20 @@ class VerifyLogsTests(unittest.TestCase):
             "--apply",
         ])
         self.assertEqual(proc.returncode, 0, proc.stderr)
-        self.assertFalse(d.exists())
+        # Hermeticity against a shared box (2026-08-11): the verify-logs
+        # category deliberately skips EVERY candidate while any live
+        # cargo/rustc/verify.sh process exists — `any_verify_running` reads
+        # the global process table, which cannot be sandboxed away by this
+        # test's --verify-tmp-root override. On a box where sibling agents
+        # are building (the normal state of this checkout), removal is the
+        # wrong expectation; the documented conservative skip is correct.
+        if "a verify run is live" in proc.stdout:
+            self.assertTrue(
+                d.exists(),
+                "with a live build on the box, verify-logs must skip, not delete",
+            )
+        else:
+            self.assertFalse(d.exists())
 
     def test_fresh_verify_log_dir_survives(self):
         d = self.verify_tmp / "codex-verify-FRESH99"

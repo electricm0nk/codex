@@ -4615,6 +4615,114 @@ recorded as the extend lane's first task in `decisions.md §43.5`.
 
 ---
 
+## Gate-reliability receipt — reclaim.sh learns the codex-target-* convention (2026-08-11, actor `gate-reliability`)
+
+**Objective:** close the hole behind the program's #1 recurring failure class — `disk-full` (29) +
+`disk-pressure` (14) + `preflight-disk` failed stages (10) ≈ 43 of ~60 recorded incidents.
+`scripts/reclaim.sh` reported *"would reclaim: 0 item(s), 0.0B"* on 2026-08-10 while ~40G of
+orphaned cargo output sat in `~/workspace/codex-target-*` and `/tmp/codex-target-*` — the exact
+dirs the SD-29 per-agent `CARGO_TARGET_DIR` discipline creates and nothing reclaimed.
+
+### What changed
+
+- `scripts/reclaim.sh` — the `cargo-target` category now runs a second, name-restricted scan pass:
+  dirs matching `codex-target-*` at depth 1 under `~/workspace` and `/tmp` (overridable via
+  `--workspace-root` / `--orphan-tmp-root`, env `RECLAIM_WORKSPACE_ROOT` / `RECLAIM_ORPHAN_TMP_ROOT`).
+  Never a bare CACHEDIR.TAG sweep of those roots — `repos/*/target` and other tools' caches live there.
+  Both scan passes share one skip/remove ladder (`consider_cargo_target_dir`), so no candidate can
+  reach `rm` with fewer checks via one pass than the other. Dry-run-by-default and `--apply` unchanged.
+- Two new liveness guards on every cargo-target candidate, on top of the existing
+  live-cargo/rustc-process check and the `--older-than` age floor (default 6h):
+  1. **open file handle** — any live process holding an fd on anything under the dir
+     (one cached pass over `/proc/<pid>/fd`, self/ancestors excluded);
+  2. **claim file** — `<dir>/.reclaim-claim` containing a PID protects the dir while that PID is
+     alive; an unparseable claim also protects (default to NOT deleting under uncertainty); a claim
+     naming a dead PID is positive orphanhood evidence.
+- `scripts/tests/test_reclaim_orphan_targets.sh` — new 10-case self-test (pattern of
+  `test_identifier_discipline_audit.sh`): dry-run reports/deletes-nothing, apply removes workspace
+  and tmp orphans, young dir survives, live-PID claim survives, dead-PID claim removed, open-handle
+  dir survives, non-`codex-target-*` names untouched, non-cargo-shaped dirs untouched. Written RED
+  first (7 failures against unmodified script), then GREEN 10/10.
+- `scripts/tests/test_reclaim.py` — hermeticity fix: `_sandboxed_env` now defaults
+  `RECLAIM_WORKSPACE_ROOT`/`RECLAIM_ORPHAN_TMP_ROOT` to nonexistent paths. Without this, the old
+  suite against the new script would have had its `--older-than 0 --apply` case delete a **live
+  sibling agent's real target dir**. Full suite green: 21 tests, 0 failures.
+- `scripts/verify.sh` — new `reclaim-selftest` stage (in ALL and QUICK sets, after
+  `audit-selftest`), mirroring the audit-selftest wiring including the 0-cases-ran guard.
+
+### Liveness signal: what was chosen and why the alternatives were rejected
+
+Empirical probe against a live sibling's dir (`codex-target-sd29-racetrait-r2`, agent active,
+between builds): **no** cargo/rustc process, **no** open file handles, **no** cwd references, and
+`/proc/<pid>/environ` of sibling agents is **unreadable in this sandbox** (permission denied on
+every non-descendant pid — verified 2026-08-11). Also, agents export `CARGO_TARGET_DIR` per
+Bash-command, so no long-lived process carries it in environ between builds. Conclusion: **no
+passive signal proves liveness between builds.**
+
+- environ scan of all processes — rejected: unreadable for siblings here, and empty between builds.
+- lsof/fuser (open handles) — kept as a guard (it protects during long builds/reads via
+  `/proc/<pid>/fd`, which *is* readable for same-uid siblings), but it cannot be the sole signal:
+  it proves nothing between builds.
+- **claim file + age floor is the chosen design**: `.reclaim-claim` is the only *positive* liveness
+  signal an idle agent can have; the 6h age floor is the backstop for agents that wrote none (it is
+  what protects the monster-r1 shape: 2h-stale-but-live). An mtime heuristic alone was already
+  ruled out by that near-miss; here it is the last line, not the first.
+
+### Empirical demonstrations (real code path, isolated roots)
+
+One `--apply` run over two byte-identical 30h-stale cargo-shaped dirs:
+
+```
+SKIP     .../codex-target-demo-live    (50.0MB)  — a live process holds an open file handle under it
+REMOVED  .../codex-target-demo-orphan  (50.0MB)
+reclaimed: 1 item(s), 50.0MB — skipped: 1 (open file handle)
+```
+
+And against the real system (dry run): both live siblings' dirs are now *discovered* and correctly
+skipped (`too young`, both built today) — versus 0 candidates found before the change:
+
+```
+SKIP  /home/ubuntu/workspace/codex-target-sd29-companion-r2  (446.3MB)  — modified within the last 6h
+SKIP  /home/ubuntu/workspace/codex-target-sd29-racetrait-r2  (1.2GB)   — modified within the last 6h
+```
+
+### What it would have reclaimed on 2026-08-10
+
+The two confirmed orphans from that day — `/tmp/codex-target-sd29-e6-racetrait-extend` (11G, actor
+finished 12h prior; deleted manually) and the ~27-29G class of mid-cycle-killed dirs — would both
+have been discovered and reclaimed: name-matched roots, >6h stale, no handles, no claim.
+**~40G on the day measured**, recurring every time an agent dies before its own cleanup.
+
+### Defects caught and fixed during this work (retro events on `gate-reliability.jsonl`)
+
+1. `correction`: reclaim.sh's "0 item(s)" claim vs the invisible codex-target-* roots.
+2. `correction`: test_reclaim.py hermeticity — the old suite + new script near-miss above.
+3. `rework`: first `dir_has_open_handle` piped printf into awk; awk's early `exit` on a **hit**
+   SIGPIPEs printf and `set -o pipefail` turns the pipeline into exit 141 — every hit read as a
+   miss, i.e. the guard silently protected nothing. Caught by the self-test going red; fixed with a
+   herestring. (Second defect same function: per-candidate /proc scans blew a 60s test timeout;
+   fixed with a once-per-run fd cache that only errs toward skipping.)
+4. `correction`: pre-existing environmental flake surfaced —
+   `test_old_verify_log_dir_removed_under_apply` expects deletion, but `any_verify_running` reads
+   the global process table, and on this shared box sibling agents' live cargo/rustc make
+   verify-logs skip everything by design. The test now asserts the documented conservative skip
+   when a live build exists, deletion otherwise.
+
+### Verification
+
+- `bash scripts/tests/test_reclaim_orphan_targets.sh` → 10 passed, 0 failed.
+- `python3 -m unittest discover -s scripts/tests -p 'test_reclaim.py'` → 21 tests, OK.
+- `./scripts/verify.sh --only preflight-disk --only audit-selftest --only reclaim-selftest` →
+  3 passed (preflight-disk 80% used/100G avail; audit-selftest 28; reclaim-selftest 10).
+- Disk before/after this work: 79-80% used, ~100G available; no build was run on this actor's
+  `CARGO_TARGET_DIR` (shell-script-only change), and it does not exist to delete.
+
+### Out of territory, reported not fixed
+
+- The claim-file protocol is opt-in until briefs mandate it: adding
+  `echo <agent-pid> > "$CARGO_TARGET_DIR/.reclaim-claim"` to the standard dispatch environment
+  block (loop-instruction.md / dispatch templates) would upgrade live-agent protection from
+  age-floor-backstop to positive proof. Those surfaces belong to the driver, not this lane.
 ## Cycle SD29-E5-F2-002 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 1 of a loop-until-dry lane**)
 
 **Actor:** `sd29-monster-r1` · **Date:** 2026-08-11 · **Branch:** `tranche/9`
@@ -5670,3 +5778,76 @@ chassis, the largest of the four.
 `./scripts/verify.sh --only preflight-disk` before bounded work: **EXIT 0**, 79% used / 102G
 available. Retro events on this actor's own shard, `docs/retro/events/sd29-racetrait-r2.jsonl`:
 2 `correction`, 1 silent `incident`, plus `verify.sh`'s auto-emitted `verification` events.
+---
+
+## item8-harness receipt — on-screen verification made cheap and repeatable (2026-08-11, actor `item8-harness`)
+
+**Objective:** make Definition-of-done item 8 routine for the remaining lanes (~3,300 units, 12
+books) instead of a hand-rolled one-off per cycle. Builds directly on the sd29-driver-fix cycle
+(`46c4f6ce`/`a852fddd`, Decision 43): the driver works; what was missing was a repeatable
+navigate/capture/verify entry point with an honest failure mode.
+
+### What shipped
+
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` (+ `read-clipboard.py`), documented
+in the skill's `SKILL.md` §"On-screen verification (DoD item 8)". One command per record:
+
+```bash
+export RUN_DESKTOP_AGENT=<per-cycle-unique>   # refused if unset or 'default'
+./.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Ankheg" --expect "CR 3" --expect "Bestiary 1 p.15" \
+  --out docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/<cycle>/item8
+```
+
+Launch-or-reuse (one app instance across a whole cycle's records; `driver.sh stop` once at the
+end), hub-link navigation, catalog search filter, screenshot, then **select-all/copy on the
+webview and an X-clipboard read-back** proving the record name, every `--expect` string, and a
+per-family screen marker are in the *rendered text*. PASS writes `<slug>.png` +
+`<slug>.verify.md` (machine verdict + matched lines + HEAD + UTC time); any failure renames
+artifacts `<slug>.FAILED.*` and exits nonzero — a failing run cannot be cited as passing.
+Families: `equipment`, `spell`, `race_trait` (incl. `--tab alternate` + `--nav-click` for the
+per-race alternate panels), `monster`.
+
+### Proven on two real families (live app, tranche/9 `8b621552`)
+
+| family | record | evidence |
+|---|---|---|
+| `race_trait` | Ironskinned (Duergar, **Monster Codex** — this run's own lane pilot) | `artifacts/item8-harness/race-trait-mc-duergar-ironskinned.{png,verify.md}` — Alternate tab, Duergar chip; `ironskin once per day` + `Duergar` rendered |
+| `monster` | Ankheg (**Bestiary 1**) | `artifacts/item8-harness/monster-b1-ankheg.{png,verify.md}` — search-filtered to "1 matching monster."; `CR 3` + `Bestiary 1 p.15` rendered |
+
+Failure modes proven live (see `artifacts/item8-harness/failure-modes/` and README):
+nonexistent record → exit 1; record rendered but expect absent → exit 1 with `.FAILED.*`
+artifacts; `RUN_DESKTOP_AGENT` unset/`default` → refusal exit 2; zero `--expect` strings →
+refusal exit 2 ("a check that expects nothing verifies nothing").
+
+### The defect the harness caught in itself — why the filtered-count gate exists
+
+The first Ankheg run **passed while the screenshot showed 60 unfiltered rows and no Ankheg**: the
+search click missed the box (monster search sits at y=311, not 285) and select-all extraction
+covers the whole DOM including below-the-fold rows, so record + expects were all "present".
+Fixed with per-family `SEARCH_Y` plus a hard gate: the screen's own "N matching" counter must
+read ≤ 8, which is what makes the .png actual evidence. Emitted as a retro correction — this is
+the validate-the-proxy-where-it-makes-the-confident-claim lesson, hit again.
+
+Other live findings folded in: webview cold paint lags `launch`'s "Ready" by ~100s (harness
+polls for painted content); with a focused input, select-all copies only the input (blur-first);
+render lag needs marker-polling, not fixed sleeps.
+
+### Verification, environment, deviations
+
+- No gate stage touched: zero changes under `src/`, `tests/`, `scripts/`, `apps/desktop/src*`.
+  The two harness files are skill-dir shell/python; proof is the live runs above, per the
+  dispatch's explicit waiver of a full `verify.sh` for harness/skill files.
+- **Reused the existing desktop build** (`apps/desktop/src-tauri/target`): no
+  `CARGO_TARGET_DIR` relocation, no cold build, no new target dir to delete. Disk 101G→97G
+  free (81%) across the cycle, all of it siblings' builds.
+- Two in-flight launches were killed by teammate-message interrupts (driver's EXIT trap reaps
+  app+Xvfb → looks like a crash); recovered by running the whole proof in one contiguous turn.
+  Recorded as a retro incident (`interrupt-kills-background-launch`).
+- `progress.md` held gate-reliability's uncommitted receipt at commit time, so this receipt is
+  appended but the file is left out of this cycle's commit rather than committing a sibling's
+  in-flight work under this actor's name.
+- Deferred (retro `deferral` event): equipment/spell `SEARCH_Y` values are by-analogy, not
+  live-verified; wrong values fail loudly, first equipment/spell lane cycle calibrates.
+
+Retro shard: `docs/retro/events/item8-harness.jsonl` (2 corrections, 1 incident, 1 deferral).
