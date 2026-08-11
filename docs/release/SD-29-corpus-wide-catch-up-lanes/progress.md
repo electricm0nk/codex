@@ -3717,3 +3717,201 @@ auto-emitted `verification` events.
 `git status --porcelain` run before every git write; no `git add -A`; no `git stash` (banned in this
 checkout). `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-e10-review`, its own directory
 on the repo filesystem — never `/tmp` — deleted at cycle end.
+
+---
+
+## Cycle SD29-E11-F1-001 — `epic-11-closure` — **BUNDLE CLOSURE RECEIPT**
+
+- **Actor:** `sd29-e11-closure`
+- **Date:** 2026-08-11
+- **Branch:** `tranche/9`
+- **Branch tip at claim:** `c233ec4c`
+- **Commits this cycle:** `73f1421f` `docs(sd29): Epic 11 closure — architecture truth-up + release notes`
+- **`CARGO_TARGET_DIR`:** `/tmp/codex-target-sd29-e11-closure` (own dir, per the Epic 1 build-contention rule), removed at cycle end
+- **Card status left at:** `COMPLETE`
+
+### 1. Card ledger — every card is COMPLETE, blocked-with-a-recorded-reason, or settled here
+
+Re-derived from `kanban.md` at closure (statuses read out of the table, receipt presence counted in
+`progress.md`) with:
+
+```
+grep -oP '^\| [0-9.]+ \| `\K[a-z0-9-]+(?=` \| )' kanban.md | while read c; do
+  echo "$c $(grep -oP "\`$c\` \| \K[A-Z-]+" kanban.md | head -1) $(grep -c "$c" progress.md)"; done
+```
+
+| Card | Status | Receipt in `progress.md` |
+|---|---|---|
+| `epic-1-identifier` | COMPLETE | yes |
+| `epic-2-prelaunch` | COMPLETE | yes |
+| `epic-1b-naming-sweep` | COMPLETE | yes |
+| `epic-3-provenance` | COMPLETE | yes |
+| `epic-4-proven-equip-mod` | COMPLETE | yes |
+| `epic-4-proven-spell` | COMPLETE | yes |
+| `epic-4-proven-feat-race-class` | COMPLETE (settled by `epic-10-review`) | yes |
+| `epic-5-monster-lane-pilot` | COMPLETE | yes |
+| `epic-5-monster-lane-extend` | PARTIAL — chassis complete, ingest `decision-blocked` | yes |
+| `epic-6-race-trait-lane-pilot` | PARTIAL — classifier fix complete, ingest `decision-blocked` | yes |
+| `epic-6-race-trait-lane-extend` | PARTIAL — classifier fix complete, ingest `decision-blocked` | yes |
+| `epic-7-companion-lane-pilot` | **NOT-STARTED, settled by this card** | yes (`## Cycle SD29-E7-F1-001`) |
+| `epic-7-companion-lane-extend` | **NOT-STARTED, settled by this card** | this receipt |
+| `epic-9-version` | COMPLETE | yes |
+| `epic-8-toolkit` | DECISION-BLOCKED (ruled to C3.1) | yes |
+| `epic-10-review` | COMPLETE | yes |
+| `epic-11-closure` | COMPLETE | this receipt |
+
+**Two rows needed settling, and this is the finding worth carrying out of the bundle.** Cards 11 and
+12 sat at `READY` at closure — not blocked, not complete, just never re-queued. Card 11's cycle had
+refused at Cycle-mechanics **step 1c** (`./scripts/verify.sh --only preflight-disk` → `EXIT=1`, 91%
+used / 47G free, twice, with `scripts/reclaim.sh --apply` in between reclaiming ~1MB because five
+sibling worktree agents held every candidate). That refusal was **correct** — step 1c is a refusal
+gate — and leaving the card unclaimed rather than parking it `IN-FLIGHT` under an agent that did no
+bounded work was also correct. What failed is that nothing re-queued the card once the condition
+cleared, and card 12 was never eligible because its `Depends-on` never completed. The cost was the
+bundle's entire companion lane: **1,696** units, **0** grounded.
+
+Both rows are now `NOT-STARTED` with their reason and receipt pointer inline, so no reader mistakes
+a `READY` row for an attempt. The disk condition has cleared — **80% used, 97G available** at this
+closure (`./scripts/verify.sh --only preflight-disk` → `EXIT=0`) — so the lane is a ready
+re-dispatch for a successor, not a corpus finding. Emitted as a `deferral` event, not narrated only
+here.
+
+**Judgment call (unattended mode, default-and-flag):** this closure card did **not** re-open the
+companion lane. Epic 11 fires LAST by `loop-instruction.md`'s own epic ordering and its bounded work
+is closure, not lane execution; starting a mechanism-build lane inside the promotion cycle would
+have put unreviewed ingest into the promotion PR. Recorded rather than silently taken.
+
+### 2. Architecture truth-up (required of every SD closure)
+
+Three stale figures corrected, each **re-derived**, none transcribed:
+
+| Doc | Claimed | Actual | Re-derived by |
+|---|---|---|---|
+| `rules-data-tables.md` §`RuleSetId` | "four populated variants plus a placeholder comment for future books" | **14** | `sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs` |
+| `status.md` rule-table catalogs row | "seven `RuleSetId` variants total" | **14** | same |
+| `rules-data-tables.md` §JSON corpus cache | `data/corpus/` holds **six** book directories | **seven** (`bonus_bestiary/`, **32** JSON files, written by the existing `gen_book_cache.rs` — no ninth writer minted) | `ls data/corpus/` ; `find data/corpus/bonus_bestiary -name '*.json' \| wc -l` |
+
+The same enum count was wrong in **two** documents independently — that pattern, not either fix, is
+the retrospective value; all three are emitted as `correction` events with `--verified-by`.
+
+Added to `status.md`: a new **§"Corpus coverage, corpus-wide"** section — the first time this repo's
+architecture docs can state repo-wide coverage, because SD-29 was the first bundle to derive the
+whole corpus's shape in one pass. **38,540 units / 38 book directories** (37 in scope;
+`beginner_box`'s 19 excluded per `corpus-work-channels.md §10.2`), per-kind grounded/total, and the
+two structural ceilings SD-29 surfaced but did not fix. Re-derived from `docs/work-inventory.json`
+(`generated_at 2026-08-11T10:38:33Z`) with:
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); \
+a=collections.defaultdict(collections.Counter); \
+[a[u['kind']].update([u['status']]) for u in d['units']]; \
+[print(k, dict(a[k])) for k in sorted(a)]"
+```
+
+Status totals: `grounded` **491**, `text-complete` **2,402**, `ingested-magnitude` **6,548**,
+`not-ingested` **14,582**, `not-started` **11,190**, `unknown` **3,291**, `deferred-with-reason`
+**36**.
+
+Also added a `bonus_bestiary` monster/monster-ability chassis row to `status.md`'s Real-today table.
+
+`status.md`'s `Last verified` line is stamped honestly: it names **which** rows were re-verified this
+pass and states that every other row still carries its 2026-08-07 / tranche-8 verification, rather
+than implying a full re-verification that did not happen.
+
+### 3. `release-notes.md` populated
+
+Was a pre-population placeholder ("No population yet (closure has not fired)"); now carries Summary
+(branch, `0.9.<build>`, card tally), per-lane user-visible rollup, operational changes, six defects
+fixed with their corrected denominators, verification evidence, and eight known issues. Every figure
+in it is one of the closure re-derivations above or a figure carried from a named prior receipt.
+
+### 4. DoD items 2 and 8 — stated, not skipped
+
+- **Item 2 (reach claims for this card's families).** This card ingests no record family, so it has
+  no families of its own to claim. It neither added a reach claim nor weakened one; the reach stage's
+  result is whatever the full gate below recorded. Item 2's "zero matched tests is a hard failure"
+  applies to an ingest cycle's own families and is inapplicable to a closure card — recorded
+  explicitly so the gap is visible rather than assumed away.
+- **Item 8 (on-screen desktop verification).** Same reason: this card surfaces no new
+  player-visible family. `RUN_DESKTOP_AGENT` was therefore never needed, and no `driver.sh` call was
+  made. The bundle's on-screen obligation belongs to Epic 5's pilot, which carries it in its own
+  receipt.
+
+### 5. `OPEN_FINDINGS` at closure — the DoD item 6 "must say why"
+
+- **`beastiary1/race_traits` still stands.** DoD item 6 expected Epic 5's Monster Codex cycle-batch
+  to retire it. **Why it did not:** Monster Codex was never ingested — Epic 5's extend card is
+  `PARTIAL` with its corpus-wide ingest `decision-blocked`. The entry is correct as written and must
+  stay; `tests/sd27_duergar_invisibility_sla_is_upstream_blocked.rs` goes red the day
+  `monster_codex/mc_abilities_race.lst` lands, which is the designed closure mechanism. An unmet
+  expectation, recorded rather than quietly dropped.
+- **The seven `<book>/archetypes` entries stay standing**, exactly as DoD item 6 directs; they belong
+  to SD-30's class_feature/archetype bundle.
+
+### 6. Baselines — untouched, deliberately (DoD item 7)
+
+`BASELINE_ROOT_LIB_TESTS` is 1604; this tree measures **1615** (`root-lib` PASS, 1615 passed).
+Baselines are floors, so the gate passes and **no movement is required**. DoD item 7 makes a baseline
+move a separate reviewable commit carrying `--show-actuals`; a closure card taking it as a drive-by
+would defeat that. Left alone and flagged, per the standing note carried into this cycle.
+
+### 7. Gate
+
+`./scripts/verify.sh` (**full**, not `--quick`), launched early as a background process per the
+build-contention rule and run to completion; exit code captured directly from `$?`, never through a
+pipe.
+
+**Result: `RESULT: PASS`, exit code `0`.** All **12** stages green:
+
+| Stage | Result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK — 80% used, 97G available) |
+| `pi-sweep` | PASS (10 hits over `src/rules_core/rules_tables`, 10 baseline rows) |
+| `audit-selftest` | PASS (28 passed, 0 failed) |
+| `root-lib` | PASS (1615 passed) |
+| `root-full` | PASS (**6170** passed across **543** suites, **all 524** `tests/*.rs` suites executed) |
+| `desktop` | PASS (421 passed) |
+| `reach` | PASS (**17** passed) |
+| `frontend-install` | PASS (node_modules present) |
+| `frontend-test` | PASS (98/98 files) |
+| `frontend-typecheck` | PASS (`tsc --noEmit` clean) |
+| `clippy` | PASS (root:**54** desktop:**7** warnings, 0 errors) |
+| `class-dump` | PASS (**31/31** computing) |
+
+Two things worth pulling out of that table rather than leaving buried:
+
+- **`root-full` executed all 524 `tests/*.rs` suites.** That is Decision 40's own
+  did-not-execute check (`comm -23` between the derived expected-suite list and the log's `Running`
+  lines) reporting a clean sweep — the gate is not passing by silently skipping suites, which is the
+  exact failure mode that once hid two proof-carrying parity suites from a whole tranche.
+- **`reach` matched 17 tests, not zero.** DoD item 2's hard-failure condition ("a gate running zero
+  tests asserts nothing") is not met. Among them, `bonus_bestiary_monsters_and_abilities_reach_the_catalog_record_by_record`
+  passes — SD-29's own Epic 5 chassis claim is live in the gate, not absent from its inventory.
+
+`clippy` at root:54 sits under the `CLIPPY_WARNINGS_ROOT` ceiling of 75 (the standing baseline note
+carried into this cycle). Unchanged by this card; not re-pinned, per §6 above.
+
+### 8. Tranche promotion PR
+
+Opened `tranche/9` -> `develop` with `gh`. **The operator merges it — this card opened it and did
+not merge it.** Cutting a new tranche branch is explicitly not part of this closure
+(`memory: tranche digit only bumps on a NEW tranche/N branch cut`).
+
+### 9. Retro events (`docs/retro/events/sd29-e11-closure.jsonl`)
+
+**3 × `correction`** — the two stale `RuleSetId` counts (the same fact wrong in two documents
+independently) and the stale corpus-cache directory count, each with `--verified-by` carrying the
+command that established the true value.
+
+**3 × `deferral`** — the whole companion lane (the finding: an environmental refusal at a preflight
+gate silently cost the bundle a kind lane, because nothing re-queued the card once the condition
+cleared); corpus-wide race-trait grounding (ceiling-blocked on a race chassis, not effort-blocked);
+and the baseline re-pin (headroom, deliberately left for a successor's own DoD-item-7 commit).
+
+Plus `verify.sh`'s auto-emitted `verification` event for the full-gate run above.
+
+### 10. Git discipline
+
+`git status` run before every git write; no `git add -A` (every commit staged by explicit path); no
+`git stash` (banned in this checkout). Commits pushed to `tranche/9` as made, per the pre-authorized
+tranche-branch scope.
