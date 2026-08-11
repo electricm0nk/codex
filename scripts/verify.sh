@@ -99,8 +99,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk pi-sweep audit-selftest driver-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk pi-sweep audit-selftest driver-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -776,6 +776,52 @@ run_audit_selftest() {
     stage_pass audit-selftest "${tally:-$passed cases passed}"
 }
 
+# ---------------------------------------------------------------------------
+# Stage: reclaim-selftest
+#
+# Runs scripts/tests/test_reclaim_orphan_targets.sh — the self-test for
+# scripts/reclaim.sh's orphaned codex-target-* coverage and its liveness
+# guards. Sits next to audit-selftest because it holds the same lesson: an
+# unverified gate is worth little, and reclaim.sh guarding the #1 recorded
+# incident class (disk-full/disk-pressure, 43 of ~60 incidents as of
+# 2026-08-11) must not become another one. The safety property under test —
+# never delete a live agent's target dir — is the difference between a
+# reclaimed 27G and a destroyed 30-minute rebuild.
+# ---------------------------------------------------------------------------
+
+run_reclaim_selftest() {
+    stage_start "reclaim-selftest — scripts/tests/test_reclaim_orphan_targets.sh"
+    local log="$LOG_DIR/reclaim-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_reclaim_orphan_targets.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail reclaim-selftest "self-test script missing at scripts/tests/test_reclaim_orphan_targets.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail reclaim-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # A self-test that discovers no cases proves nothing — same guard the
+    # audit-selftest stage carries.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail reclaim-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass reclaim-selftest "${tally:-$passed cases passed}"
+}
+
 run_class_dump() {
     stage_start "class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)"
     local log="$LOG_DIR/class-dump.log"
@@ -848,6 +894,7 @@ for stage in "${SELECTED[@]}"; do
         preflight-disk)      run_preflight_disk ;;
         pi-sweep)            run_pi_sweep ;;
         audit-selftest)      run_audit_selftest ;;
+        reclaim-selftest)    run_reclaim_selftest ;;
         driver-selftest)     run_driver_selftest ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;

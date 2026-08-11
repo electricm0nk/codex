@@ -4612,3 +4612,114 @@ still reads 213 — noted rather than rewritten, since the commit is already pus
 honest reading: the pilot's 5 records reach a player (`reach_gate`, and the screen) but report
 `race_trait_race_not_modelled` under `v06_work_inventory`'s CRB-pinned probe — the instrument defect
 recorded as the extend lane's first task in `decisions.md §43.5`.
+
+---
+
+## Gate-reliability receipt — reclaim.sh learns the codex-target-* convention (2026-08-11, actor `gate-reliability`)
+
+**Objective:** close the hole behind the program's #1 recurring failure class — `disk-full` (29) +
+`disk-pressure` (14) + `preflight-disk` failed stages (10) ≈ 43 of ~60 recorded incidents.
+`scripts/reclaim.sh` reported *"would reclaim: 0 item(s), 0.0B"* on 2026-08-10 while ~40G of
+orphaned cargo output sat in `~/workspace/codex-target-*` and `/tmp/codex-target-*` — the exact
+dirs the SD-29 per-agent `CARGO_TARGET_DIR` discipline creates and nothing reclaimed.
+
+### What changed
+
+- `scripts/reclaim.sh` — the `cargo-target` category now runs a second, name-restricted scan pass:
+  dirs matching `codex-target-*` at depth 1 under `~/workspace` and `/tmp` (overridable via
+  `--workspace-root` / `--orphan-tmp-root`, env `RECLAIM_WORKSPACE_ROOT` / `RECLAIM_ORPHAN_TMP_ROOT`).
+  Never a bare CACHEDIR.TAG sweep of those roots — `repos/*/target` and other tools' caches live there.
+  Both scan passes share one skip/remove ladder (`consider_cargo_target_dir`), so no candidate can
+  reach `rm` with fewer checks via one pass than the other. Dry-run-by-default and `--apply` unchanged.
+- Two new liveness guards on every cargo-target candidate, on top of the existing
+  live-cargo/rustc-process check and the `--older-than` age floor (default 6h):
+  1. **open file handle** — any live process holding an fd on anything under the dir
+     (one cached pass over `/proc/<pid>/fd`, self/ancestors excluded);
+  2. **claim file** — `<dir>/.reclaim-claim` containing a PID protects the dir while that PID is
+     alive; an unparseable claim also protects (default to NOT deleting under uncertainty); a claim
+     naming a dead PID is positive orphanhood evidence.
+- `scripts/tests/test_reclaim_orphan_targets.sh` — new 10-case self-test (pattern of
+  `test_identifier_discipline_audit.sh`): dry-run reports/deletes-nothing, apply removes workspace
+  and tmp orphans, young dir survives, live-PID claim survives, dead-PID claim removed, open-handle
+  dir survives, non-`codex-target-*` names untouched, non-cargo-shaped dirs untouched. Written RED
+  first (7 failures against unmodified script), then GREEN 10/10.
+- `scripts/tests/test_reclaim.py` — hermeticity fix: `_sandboxed_env` now defaults
+  `RECLAIM_WORKSPACE_ROOT`/`RECLAIM_ORPHAN_TMP_ROOT` to nonexistent paths. Without this, the old
+  suite against the new script would have had its `--older-than 0 --apply` case delete a **live
+  sibling agent's real target dir**. Full suite green: 21 tests, 0 failures.
+- `scripts/verify.sh` — new `reclaim-selftest` stage (in ALL and QUICK sets, after
+  `audit-selftest`), mirroring the audit-selftest wiring including the 0-cases-ran guard.
+
+### Liveness signal: what was chosen and why the alternatives were rejected
+
+Empirical probe against a live sibling's dir (`codex-target-sd29-racetrait-r2`, agent active,
+between builds): **no** cargo/rustc process, **no** open file handles, **no** cwd references, and
+`/proc/<pid>/environ` of sibling agents is **unreadable in this sandbox** (permission denied on
+every non-descendant pid — verified 2026-08-11). Also, agents export `CARGO_TARGET_DIR` per
+Bash-command, so no long-lived process carries it in environ between builds. Conclusion: **no
+passive signal proves liveness between builds.**
+
+- environ scan of all processes — rejected: unreadable for siblings here, and empty between builds.
+- lsof/fuser (open handles) — kept as a guard (it protects during long builds/reads via
+  `/proc/<pid>/fd`, which *is* readable for same-uid siblings), but it cannot be the sole signal:
+  it proves nothing between builds.
+- **claim file + age floor is the chosen design**: `.reclaim-claim` is the only *positive* liveness
+  signal an idle agent can have; the 6h age floor is the backstop for agents that wrote none (it is
+  what protects the monster-r1 shape: 2h-stale-but-live). An mtime heuristic alone was already
+  ruled out by that near-miss; here it is the last line, not the first.
+
+### Empirical demonstrations (real code path, isolated roots)
+
+One `--apply` run over two byte-identical 30h-stale cargo-shaped dirs:
+
+```
+SKIP     .../codex-target-demo-live    (50.0MB)  — a live process holds an open file handle under it
+REMOVED  .../codex-target-demo-orphan  (50.0MB)
+reclaimed: 1 item(s), 50.0MB — skipped: 1 (open file handle)
+```
+
+And against the real system (dry run): both live siblings' dirs are now *discovered* and correctly
+skipped (`too young`, both built today) — versus 0 candidates found before the change:
+
+```
+SKIP  /home/ubuntu/workspace/codex-target-sd29-companion-r2  (446.3MB)  — modified within the last 6h
+SKIP  /home/ubuntu/workspace/codex-target-sd29-racetrait-r2  (1.2GB)   — modified within the last 6h
+```
+
+### What it would have reclaimed on 2026-08-10
+
+The two confirmed orphans from that day — `/tmp/codex-target-sd29-e6-racetrait-extend` (11G, actor
+finished 12h prior; deleted manually) and the ~27-29G class of mid-cycle-killed dirs — would both
+have been discovered and reclaimed: name-matched roots, >6h stale, no handles, no claim.
+**~40G on the day measured**, recurring every time an agent dies before its own cleanup.
+
+### Defects caught and fixed during this work (retro events on `gate-reliability.jsonl`)
+
+1. `correction`: reclaim.sh's "0 item(s)" claim vs the invisible codex-target-* roots.
+2. `correction`: test_reclaim.py hermeticity — the old suite + new script near-miss above.
+3. `rework`: first `dir_has_open_handle` piped printf into awk; awk's early `exit` on a **hit**
+   SIGPIPEs printf and `set -o pipefail` turns the pipeline into exit 141 — every hit read as a
+   miss, i.e. the guard silently protected nothing. Caught by the self-test going red; fixed with a
+   herestring. (Second defect same function: per-candidate /proc scans blew a 60s test timeout;
+   fixed with a once-per-run fd cache that only errs toward skipping.)
+4. `correction`: pre-existing environmental flake surfaced —
+   `test_old_verify_log_dir_removed_under_apply` expects deletion, but `any_verify_running` reads
+   the global process table, and on this shared box sibling agents' live cargo/rustc make
+   verify-logs skip everything by design. The test now asserts the documented conservative skip
+   when a live build exists, deletion otherwise.
+
+### Verification
+
+- `bash scripts/tests/test_reclaim_orphan_targets.sh` → 10 passed, 0 failed.
+- `python3 -m unittest discover -s scripts/tests -p 'test_reclaim.py'` → 21 tests, OK.
+- `./scripts/verify.sh --only preflight-disk --only audit-selftest --only reclaim-selftest` →
+  3 passed (preflight-disk 80% used/100G avail; audit-selftest 28; reclaim-selftest 10).
+- Disk before/after this work: 79-80% used, ~100G available; no build was run on this actor's
+  `CARGO_TARGET_DIR` (shell-script-only change), and it does not exist to delete.
+
+### Out of territory, reported not fixed
+
+- The claim-file protocol is opt-in until briefs mandate it: adding
+  `echo <agent-pid> > "$CARGO_TARGET_DIR/.reclaim-claim"` to the standard dispatch environment
+  block (loop-instruction.md / dispatch templates) would upgrade live-agent protection from
+  age-floor-backstop to positive proof. Those surfaces belong to the driver, not this lane.
