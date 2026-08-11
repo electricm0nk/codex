@@ -4057,4 +4057,60 @@ the dispatch's item 6 and `AGENTS.md` §Retrospective Logging.
 ### 7. Git discipline and gate result
 
 `git status` run before every git write; no `git add -A` (staged by explicit path); no `git stash`
-(banned in this checkout).
+(banned in this checkout). **Two files were already modified in this shared checkout when this cycle
+began** — `docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md` and
+`docs/retro/tranche-9-retrospective.md`, plus untracked
+`docs/retro/events/sd30-lessons-from-sd29.jsonl`. They are another writer's; this cycle did **not**
+touch, stage, or commit them (`AGENTS.md` §Concurrency: "if it lists a file you did not modify").
+
+**`./scripts/verify.sh` FULL — `VERIFY_EXIT=0`. RESULT: PASS. All 12 stages green**, exit code
+captured directly from the script (`echo "VERIFY_EXIT=$?"`), never through a pipe:
+
+```
+preflight-disk  PASS  (80% used, 97G available)
+pi-sweep        PASS  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+audit-selftest  PASS  (28 passed, 0 failed)
+root-lib        PASS  (1615 passed)
+root-full       PASS  (6170 passed across 543 suites, all 524 tests/*.rs suites executed)
+desktop         PASS  (421 passed)
+reach           PASS  (17 passed)
+frontend-install PASS (node_modules present)
+frontend-test   PASS  (98/98 files)
+frontend-typecheck PASS (tsc --noEmit clean)
+clippy          PASS  (root:54 desktop:7 warnings, 0 errors)
+class-dump      PASS  (31/31 computing)
+```
+
+`root-full`'s non-execution check (Decision 40) is the load-bearing one here: **all 524** `tests/*.rs`
+suites executed — none silently dropped.
+
+**Baseline headroom — four stale floors, not one.** `release-notes.md` §Known issues 8 recorded only
+`BASELINE_ROOT_LIB_TESTS`. The full gate reports **four**: `ROOT_LIB` 1604→1615, `ROOT_FULL`
+6138→6170, `ROOT_TEST_BINARIES` 539→543, `DESKTOP` 413→421. All are **floors**, so the gate passes
+and DoD item 7 requires no baseline commit from this documentation-only card — recorded here so a
+successor re-pins deliberately rather than discovering the drift. This cycle did not move them,
+because a baseline movement is owed its own reviewable commit carrying `--show-actuals`.
+
+**Gate/edit independence.** `ALL_STAGES` in `scripts/verify.sh` is
+`preflight-disk pi-sweep audit-selftest root-lib root-full desktop reach frontend-install
+frontend-test frontend-typecheck clippy class-dump` — **no documentation stage**. This cycle changed
+only `.md` files plus one retro `.jsonl` shard, so the concurrent gate run measured exactly the tree
+that ships.
+
+**Merged-ness verified by content, not commit count** (per the dispatch's standing warning): the
+monster chassis really is on `origin/tranche/9` —
+`git grep -c "BonusBestiary" origin/tranche/9 -- src/ apps/` returns hits in
+`src/rules_core/rules_tables/mod.rs`, `src/bin/v06_work_inventory.rs`, and
+`src/bin/v06_content_state_dump.rs`, and `git grep -n "monster_ability" origin/tranche/9 -- src/`
+shows the generator arms in `src/bin/gen_book_cache.rs` (`for sub in ["monster",
+"monster_ability"]`). This is precisely why card 8 reopens for its **ingest** half only and its
+chassis half is recorded as landed.
+
+**Cycle-end:** `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-reopen` deleted (`rm -rf`),
+then `scripts/reclaim.sh --apply`.
+
+### 8. Card status
+
+`epic-12-reopen` → **COMPLETE**. The board now tells the truth: five lane cards and the two
+review/closure cards are `READY`, and the next cycle that reads `kanban.md` reads a correct board.
+**This card reopened the bundle; it did not start the lanes it reopened.**
