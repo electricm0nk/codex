@@ -54,7 +54,11 @@ builder + party-CR math. Epic 8 is gated on Epic 5's pilot cycle-batch (Bonus Be
 can consume the remaining books incrementally as Epic 5's extension cycle-batches close — it does
 not wait for every lane.
 
-**Status:** Epic 8 is optional, operator-pinned; absent an explicit call it takes the safe default of a Class 3 (C3.1) retrofit per §C3.1 below, per `decisions.md §19`.
+**Status: SUPERSEDED BY C3.1 — ruled 2026-08-11.** The safe default this entry anticipated was
+taken: `epic-8-toolkit` is `decision-blocked`, Epic 8 does not land inside SD-29, and ownership
+moves out of this bundle to the Class 3 retrofit at **§C3.1** (now ACTIVE), which carries the
+evidence. SD-29 is no longer the owner of the DM Toolkit extension. Preserved above as the record
+of what was planned, per `decisions.md §19`.
 
 ### C1.3 — `class_feature` (15,472 units corpus-wide) inherits `corpus-work-channels.md §9.1`'s per-class archetype funding
 
@@ -126,14 +130,49 @@ discipline.
 
 ## Class 3 — Retrofit (operator-on-request)
 
-### C3.1 — DM Toolkit extension as retrofit
+### C3.1 — DM Toolkit extension as retrofit — **ACTIVE (ruled 2026-08-11)**
 
-If Epic 8 (DM Toolkit extension; was Epic 7) does not land inside SD-29,
-it surfaces as a Class 3 retrofit: separate bundle that consumes
-`<book>/` monster slices. Operator-pinned per-cycle at Epic 5's pilot
-cycle-batch closure (was Epic 4's under the retired seven-book kind-lane
-numbering, `decisions.md §38`; was "Epics 5 and 6" under the retired per-book
-numbering).
+**Status: ACTIVE.** This is no longer conditional. Card `epic-8-toolkit` was ruled
+`decision-blocked` on 2026-08-11 under `loop-instruction.md` UNATTENDED MODE item 4 (the bundle's
+one sanctioned instance). Epic 8 does **not** land inside SD-29; the DM Toolkit extension is a
+Class 3 retrofit owned by a successor bundle. Full evidence in `progress.md`, cycle
+`SD29-E8-F1-001`.
+
+**The criterion and why it was not met.** `epic-breakdown.md` Epic 8 and `loop-instruction.md`
+"Epic ordering" make Epic 8 in-scope only if a lane cycle *needed* the consumer surface to satisfy
+its reach claim. It did not. Both reach claims Epic 5's pilot landed assess an
+already-shipped surface:
+
+```
+git show origin/worktree-wf_3516060a-756-9:apps/desktop/src-tauri/src/reach_gate.rs \
+  | awk '/^fn bonus_bestiary_(monsters|monster_abilities)_reach/,/^}/' \
+  | grep -o 'assess("[a-z_]*"' | sort -u
+```
+→ `assess("list_monster_catalog"` — one distinct surface, and it is the monster catalog that
+shipped under SD-22/C2.2, not a toolkit. Zero of the pilot's claims route through an encounter
+builder or party-CR screen. No `OPEN_FINDINGS` entry names a DM-toolkit surface as its remedy
+either; the seven standing entries all name an archetype picker (SD-30's).
+
+**What the retrofit inherits, and what it must build.** The engine half already exists and is
+untouched by SD-29 — `src/rules_core/encounters.rs` (DM-toolkit encounter-difficulty computation,
+landed by SD-22 Epic 6, criterion 18) and `src/rules_core/party_cr.rs`. What is missing is the
+entire consumer path, which is why this is a bundle and not a cycle:
+
+- **No IPC command.** `grep -n 'invoke_handler' -A 60 apps/desktop/src-tauri/src/main.rs | grep -icE 'encounter|party_cr'` → **0**. Neither module is reachable from the front end at all.
+- **No screen.** `CharacterHubPage.tsx:112-120` renders the `dm-toolkit` mode as a `StubScreen`
+  reading "Encounter building, initiative tracking, and other GM-side tools. Not built yet." That
+  is an honest labelled placeholder, not a no-stub-doctrine violation — but it is also the whole of
+  the surface today.
+
+So landing Epic 8 inside SD-29 would mean building a new command, a new screen, and new reach
+claims to satisfy no lane's requirement — scope no cycle needs, taken on at the cost of the lanes
+that do. The safe default is the retrofit.
+
+**Consequences to honour downstream.** `epic-10-review`'s dependency on `epic-8-toolkit` is
+written "(COMPLETE or `decision-blocked`)" and is therefore satisfied; Epic 10 is not held. Class 1
+entry **C1.2** ("Owner: SD-29 itself (Epic 8)") is superseded by this ruling — see the note added
+there. Nothing in Epic 5's chassis is wasted: the monster/monster_ability records the retrofit
+consumes land regardless, and the retrofit can start whenever a successor bundle is named.
 
 ### C3.2 — Bestiary 6 + Bonus Bestiary ingestion [SUPERSEDED — decisions.md §34, 2026-08-02]
 

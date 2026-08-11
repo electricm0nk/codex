@@ -933,3 +933,152 @@ with the collision explained — never widen the gate and never edit the blackli
 1 × `correction` (license-matrix.md's own sweep: 4 hits claimed → 10 actual), 1 × `deferral` (the
 three pre-existing real leaks, owned by other bundles), plus `verify.sh`'s auto-emitted
 `verification` event.
+
+---
+
+## Cycle SD29-E8-F1-001 — `epic-8-toolkit` — **DECISION-BLOCKED** (2026-08-11)
+
+**Actor:** `sd29-e8-toolkit`. **Branch:** `tranche/9`. **Card:** `epic-8-toolkit` (Order 14),
+kanban status `READY` → `DECISION-BLOCKED`.
+
+This is the bundle's one sanctioned `decision-blocked` instance
+(`loop-instruction.md` UNATTENDED MODE item 4). It was ruled by this cycle, not waited on. No
+production code was written, by design — the ruling is that the code should not be written here.
+
+### 1. The ruling
+
+**Epic 8 (DM Toolkit extension) does NOT land inside SD-29. It surfaces as the Class 3 retrofit
+C3.1**, now marked ACTIVE in `successor-forward-scope-register.md`.
+
+The criterion is not a preference. `epic-breakdown.md` Epic 8 and `loop-instruction.md`
+"Epic ordering" both make Epic 8 in-scope **only if a lane cycle needed the consumer surface to
+satisfy its reach claim**. That is a checkable fact about what Epic 5's pilot actually landed, and
+it checks false.
+
+### 2. Evidence — every figure re-derived by this cycle, with the command
+
+Epic 5's pilot commits are on `origin/worktree-wf_3516060a-756-9` (tip `c0c72835`), not yet on
+`tranche/9` (`579d5941`), so all four commands below read that ref directly rather than trusting the
+pilot's reported summary.
+
+**D1 — which surface Epic 5's reach claims assess (the decisive figure):**
+```
+git show origin/worktree-wf_3516060a-756-9:apps/desktop/src-tauri/src/reach_gate.rs \
+  | awk '/^fn bonus_bestiary_(monsters|monster_abilities)_reach/,/^}/' \
+  | grep -o 'assess("[a-z_]*"' | sort -u
+```
+→ **`assess("list_monster_catalog"`** — exactly one distinct surface across both claim functions,
+and it is the monster catalog that shipped under SD-22 (register §C2.2, retired 2026-08-01).
+**Zero** of the pilot's claims route through an encounter builder, a party-CR screen, or any other
+GM-side surface. The criterion's antecedent is false.
+
+**D2 — the DM Toolkit's actual state today:** `apps/desktop/src/characterHub/CharacterHubPage.tsx`
+lines 112-120 render `mode === 'dm-toolkit'` as a `StubScreen` titled "DM Toolkit", description
+"Encounter building, initiative tracking, and other GM-side tools. Not built yet." Recorded
+explicitly because it is *not* a no-stub-doctrine violation: `StubScreen.tsx`'s own doc comment
+says its purpose is keeping a button honest about what is not built. It is a labelled placeholder,
+not a `success: true` from work that did not happen. It is, however, the entirety of the surface.
+
+**D3 — the engine half already exists and SD-29 does not touch it:**
+```
+grep -rl 'party_cr\|encounters::' --include=*.rs src apps/desktop/src-tauri/src | sort
+```
+→ `src/rules_core/encounters.rs`, `src/rules_core/mod.rs`, `src/rules_core/party_cr.rs`.
+`encounters.rs:1` self-describes as "DM-toolkit encounter-difficulty computation (SD-22 Epic 6,
+criterion 18)".
+
+**D4 — and it is unreachable from the front end:**
+```
+grep -n 'invoke_handler' -A 60 apps/desktop/src-tauri/src/main.rs | grep -icE 'encounter|party_cr'
+```
+→ **0**. No IPC command exposes either module.
+
+**D5 — no `OPEN_FINDINGS` entry names a toolkit surface as its remedy.** The standing entries in
+`reach_gate.rs` (≈:1586-1642) all name an archetype picker (SD-30's class_feature/archetype
+bundle). Nothing in the gate is waiting on a DM Toolkit.
+
+### 3. Why the safe default is the retrofit, not "do it anyway"
+
+D3+D4 together are the shape of the work: the computation shipped years ago; what is missing is the
+whole consumer path — a tauri command, a real screen, and new reach claims for the families it
+serves. That is bundle-sized, and every unit of it would be built to satisfy **no lane's reach
+requirement** (D1). "Size alone is never a stop reason" per "Stop vs. press on", and size is
+explicitly not the reason recorded here — the reason is that the card's own in-scope condition
+evaluates false. Building it would consume lane capacity to produce a surface the bundle's
+definition of done never asks for.
+
+Nothing is stranded by the deferral: the monster/monster_ability chassis Epic 5 landed is the
+retrofit's input and lands regardless of this ruling.
+
+### 4. Downstream consequences, checked not assumed
+
+- **`epic-10-review` is NOT held.** Its `Depends-on` cell names `epic-8-toolkit` with the explicit
+  qualifier "(COMPLETE or `decision-blocked`)". `DECISION-BLOCKED` satisfies it. Epic 10 becomes
+  eligible on the same terms it would have under a COMPLETE.
+- **Register C1.2 superseded.** It recorded "Owner: SD-29 itself (Epic 8)"; ownership now leaves
+  this bundle. Edited in place with a pointer to C3.1 rather than deleted.
+- **`DECISION-BLOCKED` added to `kanban.md`'s status legend**, which had no entry for it. Recorded
+  as terminal — the card is closed for this bundle and must not be re-dispatched.
+
+### 5. Judgment calls taken under unattended mode (default-and-flag, per item 1)
+
+1. **Dependency eligibility.** `epic-5-monster-lane-pilot` still reads `READY` in `kanban.md` and
+   its commits are not on `tranche/9`, so by the strict dispatch tiebreak this card was not yet
+   eligible. Pressed on: the dependency is satisfied in substance (the pilot ran end-to-end, and
+   this cycle verified its reach claims directly against `origin/worktree-wf_3516060a-756-9` in D1
+   rather than trusting its report), and this card writes no code, so it cannot collide with the
+   pilot's merge. Flagged here rather than idling the bundle.
+2. **Did not merge the pilot's branch.** `origin/worktree-wf_3516060a-756-9` is unmerged into
+   `tranche/9`; merging it is the orchestrator's call and another card's work, not this one's.
+   Left alone; re-surfaced as a followup.
+
+### 6. Definition of done
+
+1. **`./scripts/verify.sh` (FULL) — exit code captured directly, never through a pipe.** Run by a
+   runner script assigning `code=$?` on the statement immediately after the command and writing it
+   to `/home/ubuntu/workspace/gate-e8.code`. Result recorded in §7 below.
+   `CARGO_TARGET_DIR=/home/ubuntu/workspace/.cargo-targets/sd29-e8-toolkit` (own dir, never under
+   `/tmp`) per the build-contention rule; gate launched early in the cycle, not last.
+2. **Reach claims: no change, and not a skip.** This card ingests no content, adds no record
+   family, and retires none. It introduces no claim and removes none; the `reach` stage's matched
+   count is carried in §7 and is non-zero. DoD item 2's hard failure ("zero matched tests") is
+   about the gate asserting nothing — it does not oblige a non-ingesting card to invent a claim.
+3. **`v06_corpus_trap_report -- --audit`:** no corpus file was written this cycle, so the audit's
+   input is byte-identical to the tree Epic 3 left green. Not re-run for a doc-only diff; recorded
+   as such rather than claimed.
+4. **`docs/work-inventory.json`:** untouched. No generator was run and no file under
+   `data/corpus/` was written. No units move, correctly — this card ingests nothing.
+5. **Wired-integration four-check audit: clean.** This cycle's diff is three Markdown files and one
+   append-only retro shard; it introduces no code path, no handler, and no `success: true`. The
+   pre-existing `StubScreen` for `dm-toolkit` (D2) was assessed against the doctrine and is a
+   labelled honest placeholder, left as-is; the ruling above is precisely the decision *not* to
+   replace it with something this bundle cannot finish.
+6. **`OPEN_FINDINGS` unchanged.** No family became unsurfaceable. Per D5, none was ever waiting on
+   this card.
+7. **No baseline movement.** `scripts/verify-baselines.env` deliberately untouched per the standing
+   Epic-1 followup; Epic 9/10 owns the separate `--show-actuals` commit. Any drift this cycle's
+   gate reports is recorded in §7 as a note, never folded in.
+8. **On-screen desktop verification: N/A, and not a skip.** DoD item 8 binds "any record family
+   whose reach claim is player-visible." This card surfaces **no record family** and adds no code
+   path — a screenshot would photograph an unrelated screen and assert nothing. `RUN_DESKTOP_AGENT`
+   was therefore not consumed. Same call Epic 3's receipt made for the same reason. The one
+   player-visible fact this cycle relied on (D2, the toolkit stub) was read from source, and its
+   claim is about what does *not* render.
+
+### 7. Gate result
+
+See the closing note appended below this receipt — written after the gate returned, so the exit
+code in it is measured, not predicted.
+
+### 8. Git discipline
+
+`git status --porcelain` run before every git write. No `git add -A` (explicit paths only), no
+`git stash`. Other actors' retro shards (`codex.jsonl`, `sd29-e1-identifier.jsonl`, untracked
+`sd29-preflight.jsonl`) left dirty and uncommitted — same call Epics 1, 1b, 2 and 3 made. Only this
+actor's own shard is committed. `scripts/reclaim.sh --apply` run at cycle end and the cycle's own
+`CARGO_TARGET_DIR` removed.
+
+### Retro events (`docs/retro/events/sd29-e8-toolkit.jsonl`)
+
+1 × `deferral` (the DM Toolkit extension, with the criterion that failed, the revisit condition, and
+the C3.1 tracking pointer), plus `verify.sh`'s auto-emitted `verification` event.
