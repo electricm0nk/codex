@@ -4807,15 +4807,97 @@ menu-linked abilities), plus `verify.sh`'s auto-emitted `verification` events.
 ### Gate
 
 `./scripts/verify.sh` (FULL, not `--quick`), run from `gate.sh`, which assigns `code=$?` on the
-statement immediately after the command and writes it to a file — never through a pipe.
+statement immediately after the command and writes it to a file — **never through a pipe**.
 
-**GATE RESULT PENDING AT THE TIME THIS RECEIPT WAS FIRST APPENDED.** Recorded this way
-deliberately: two run-1 cycles died with the gate unfinished and their work unrecorded, so the
-receipt lands before the gate returns and is amended with the result rather than being withheld
-until it does. Log: `/tmp/claude-1000/.../scratchpad/verify.log`; exit code file `verify.exit`.
-Stages green at the time of writing: `preflight-disk`, `pi-sweep`, `audit-selftest`,
-`driver-selftest`, `root-lib` (**1623** passed). `root-full` in flight.
+**`VERIFY_EXIT=0`. `RESULT: PASS`. All 13 stages PASS.**
 
-### On screen
+| Stage | Result |
+|---|---|
+| preflight-disk | PASS (disk budget OK) |
+| pi-sweep | PASS (10 hits / 10 baseline rows) |
+| audit-selftest | PASS (28) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (**1623**) |
+| **root-full** | **PASS — 6181 passed across 543 suites, all 524 `tests/*.rs` suites executed** |
+| desktop | PASS (**423**) |
+| reach | PASS (**18**) — non-zero, and see DoD item 2 |
+| frontend-install | PASS |
+| frontend-test | PASS (98/98 files) |
+| frontend-typecheck | PASS (`tsc --noEmit` clean) |
+| clippy | PASS (root:54 desktop:7 warnings, 0 errors) |
+| class-dump | PASS (31/31 computing) |
 
-**PENDING** — see the amendment below.
+**`root-full` is green for the first time in four cycles.** The two
+`tests/v06_apg_acg_feat_catalog.rs` assertions that blocked `sd29-e6-racetrait-pilot`,
+`sd29-e6-racetrait-extend` and `epic-5-monster-lane-extend`'s own first attempt are gone —
+`epic-4-proven-feat-race-class` re-derived its pins, as that cycle's handoff item 1 asked. This
+cycle inherits a green branch rather than paying for that red a fourth time, and says so because
+the incident chain deserves an ending as much as it deserved a start.
+
+**The gate was run twice, and the receipt states why.** The first run (exit 0, table above) covered
+commits `4aa0fb4b`/`92f7abc3`/`897319f0`/`fc7482db`. The on-screen pass below then found a real
+defect, whose fix is commit `3cb9ead6`, so a second full gate was run against the final tree. A
+receipt that published the first run's green for a tree that no longer existed would be exactly the
+"verified something adjacent to what shipped" failure this program keeps paying for.
+
+### On screen — DoD item 8, and it caught a defect no test did
+
+`RUN_DESKTOP_AGENT=sd29-monster-r1` (unique to this cycle, per the SKILL's concurrent-agent rule;
+it hashed to `:84`, and a sibling cycle was live on its own display throughout).
+`driver.sh launch` → landing screen → *Browse Monster Catalog* → search.
+
+**What the screen confirms, on the captured images:**
+
+* The header reads ***"across Bestiary 1, Bonus Bestiary and Monster Codex — 62 monsters"*** — the
+  derived book list rendering correctly, and 62 = 46 + 14 + 2.
+* **`Seru`** — *Small Magical Beast · CR 3 · Speed 20 ft., fly 40 ft. · Monster Codex p.208 · Hit
+  dice Magical Beast:3*, `Bite 1d6 (corpus row)`, `Venom (no dice in the corpus)`, and both
+  abilities with facet, delivery and full rules text: *Poison — Special Attack (Ex)* and
+  *Spit Venom — Special Attack (Ex)*.
+* **`Sootwing Bat`** — *Tiny Undead · **CR 1/2** · Speed 5 ft., fly 40 ft. · Monster Codex p.88 ·
+  Hit dice Undead:2*, `Bite 1d3 (corpus row)`, *Disease — Special Attack (Su)*. **The fractional CR
+  round-trips to the screen as `1/2`**, which is the whole point of the parser change: the corpus
+  token → `0.5` on the wire → `1/2` rendered.
+  It also confirms `FACT:BaseSize|T` reaching the size chip, since this row carries no `SIZE:` token
+  at all.
+
+**The defect, found only by reading the words.** Seru's `Venom` row printed:
+
+> *"This monster's row names the attack with `ABILITY:Internal|AUTOMATIC|Venom` and the **Bonus
+> Bestiary** corpus carries no die expression for it at any hop."*
+
+Two false statements in one player-visible sentence, on a Monster Codex row: the wrong **book**, and
+a **token shape the row does not use** (Seru's attack is named by
+`NATURALATTACKS:Venom,Natural.Ranged.Touch.Weapon,*1,Poison`). A player reading it would look the
+creature up in the wrong book. Every test in the file passed, because no test read the sentence.
+
+The blast radius was the lane, not the book: the note hard-coded one book's name, so it would have
+been wrong for **all 22 remaining books**. Fixed in `3cb9ead6` — `book_display_name` is exhaustive
+over the chassis registry and panics on an unregistered book, and the note no longer asserts a token
+shape the table does not record. `a_grounding_note_never_names_another_books_corpus` pins it in both
+directions (every note names its own book; no note names a book it did not come from).
+**Re-driven after the fix**: the same row now reads *"…and the **Monster Codex** corpus carries no
+die expression for it at any hop."* `correction` emitted with the screenshot as `--verified-by`.
+
+This is the third time in this bundle that on-screen driving has been the *only* mechanism to catch
+a defect (the pilot's raw `%1` placeholder, its `RACESUBTYPE:` separator, and now this) — the
+tranche/7 retrospective's rank-3 finding reproducing itself exactly.
+
+### Disposition and handoff to round 2
+
+**The lane is NOT done and this receipt does not say it is.** `units_remaining` = **4,295**,
+re-derived by the command in §1b at cycle end. Round 2 starts from these, in this order:
+
+1. **`book_of_the_damned_volume_1` (41 units) and `_volume_2` (21 units)** — the only remaining
+   books with **zero** orphan abilities. Not the densest; the cheapest to finish *completely*, which
+   is what a reach claim needs.
+2. Then `inner_sea_world_guide` (44 units, 5 orphans), then `inner_sea_bestiary` (230 units, 26
+   orphans, and a scope flip whose collateral is only 4 `race_trait` units).
+3. **Do not shape `ultimate_psionics`, or any of the ten `monster_ability`-only books (703 units),
+   as a per-monster cycle.** They need a surface decision for abilities that no monster row owns.
+4. Each new book costs: one line in `scripts/transcribe_monster_tables.py`'s `BOOKS`, one row in
+   `monster_chassis::MONSTER_BOOKS`, one row in `gen_book_cache`'s `MONSTER_BOOK_SPECS`, a wire code
+   + display name in `monster_catalog.rs`, two `reach_gate` match arms, one diagnostic row, one
+   frontend label, and — for a `future_state` book only — a `RuleSetId` and the scope-flip sweep.
+5. **The dispatch worktree will land on `7d9f1c4f` again.** Four instances now. `git fetch origin &&
+   git reset --hard origin/tranche/9` before anything else.
