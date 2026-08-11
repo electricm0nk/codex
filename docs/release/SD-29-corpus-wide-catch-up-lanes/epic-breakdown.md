@@ -340,6 +340,17 @@ Epic 5's monster chassis records, book by book as Epic 5's cycle-batches land.
 **Derived from:** `scope-draft.md §"Out of cycle ingestion and surfacing"` +
 `successor-forward-scope-register.md C1.2` + `decisions.md §19` (reach-gate-doD).
 
+> **RULED 2026-08-11 — DEFERRED. Epic 8 does not land inside SD-29.** Card `epic-8-toolkit` is
+> `decision-blocked` (this bundle's one sanctioned instance, `loop-instruction.md` UNATTENDED MODE
+> item 4); the extension surfaces as the Class 3 retrofit **C3.1**, now ACTIVE in
+> `successor-forward-scope-register.md`, which carries the evidence. Reason: the in-scope condition
+> below is unmet — both reach claims Epic 5's pilot landed assess the already-shipped
+> `list_monster_catalog`, zero assess a toolkit surface. Cost of deferring is nil for the gate, per
+> this section's own parenthetical: the `OPEN_FINDINGS` Bestiary-1-monster-surface prerequisite was
+> **already independently satisfied**, so nothing in `reach_gate.rs` was waiting on Epic 8. Both
+> feature seeds below (SD29-E8-F1, SD29-E8-F2) move to the retrofit unbuilt. Full receipt:
+> `progress.md` cycle `SD29-E8-F1-001`.
+
 **Status:** Operator-pinned whether in scope, per-cycle at Epic 5's pilot-batch closure (gating
 event is Epic 5's pilot landing — Bonus Bestiary — not any full book set). If Epic 8 lands inside
 SD-29, it satisfies the reach gate's `OPEN_FINDINGS` Bestiary-1-monster-surface prerequisite (already

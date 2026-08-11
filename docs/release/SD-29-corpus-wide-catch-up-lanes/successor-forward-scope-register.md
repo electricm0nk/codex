@@ -151,7 +151,10 @@ git show origin/worktree-wf_3516060a-756-9:apps/desktop/src-tauri/src/reach_gate
 → `assess("list_monster_catalog"` — one distinct surface, and it is the monster catalog that
 shipped under SD-22/C2.2, not a toolkit. Zero of the pilot's claims route through an encounter
 builder or party-CR screen. No `OPEN_FINDINGS` entry names a DM-toolkit surface as its remedy
-either; the seven standing entries all name an archetype picker (SD-30's).
+either; the seven standing entries all name an archetype picker (SD-30's). `epic-breakdown.md`
+Epic 8 makes the same point from the other side: the `OPEN_FINDINGS` Bestiary-1-monster-surface
+prerequisite Epic 8 would have satisfied "already [was] independently satisfied", so deferring
+costs the reach gate nothing.
 
 **What the retrofit inherits, and what it must build.** The engine half already exists and is
 untouched by SD-29 — `src/rules_core/encounters.rs` (DM-toolkit encounter-difficulty computation,
