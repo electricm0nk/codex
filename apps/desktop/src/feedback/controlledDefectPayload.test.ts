@@ -4,7 +4,7 @@
 // fixtures (each forbidden token class is rejected; missing required
 // fields are rejected; secret strings are redacted).
 
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import {
   buildControlledDefectIssuePayload,
   type ControlledDefectOperatorState,

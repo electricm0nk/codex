@@ -22,7 +22,7 @@
  */
 
 import { invoke } from '@tauri-apps/api/core';
-import { formatError, hasTauriRuntime } from '../../boundary/runtime';
+import { formatError, hasTauriRuntime } from '../boundary/runtime';
 import {
   fetchChannelIndex,
   fetchReleaseNotesBody,

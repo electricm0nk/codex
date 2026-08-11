@@ -24,7 +24,7 @@
 // copied from `tests/fixtures/update/*.json` at authoring time and
 // the receipt comment cites the byte-for-byte verification.
 
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import { parseChannelIndex, type ChannelIndexFile } from './parseChannelIndex';
 
 // ---------- positive channel-index fixtures ----------

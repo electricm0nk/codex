@@ -1,4 +1,4 @@
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import { compareVersions, decideEligibility } from './eligibility';
 import type { EligibilityInput } from './eligibility';
 

@@ -10,7 +10,7 @@ import {
   type UpdateControllerDeps,
   type InstallKind,
 } from './updateModel';
-import { assertEqual } from '../../testSupport/asserts';
+import { assertEqual } from '../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
   if (!actual.includes(needle)) {

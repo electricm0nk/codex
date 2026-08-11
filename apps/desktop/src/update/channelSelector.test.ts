@@ -1,7 +1,7 @@
 import { renderToStaticMarkup } from 'react-dom/server';
 import { ChannelSelector } from './ChannelSelector';
 import { UPDATE_CHANNEL_OPTIONS } from './updateModel';
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 
 function render(props: {
   selected: 'alpha' | 'beta' | 'stable';

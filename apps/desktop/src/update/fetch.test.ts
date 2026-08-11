@@ -1,4 +1,4 @@
-import { assertEqual, assert } from '../../testSupport/asserts';
+import { assertEqual, assert } from '../testSupport/asserts';
 import {
   channelIndexUrl,
   fetchChannelIndex,

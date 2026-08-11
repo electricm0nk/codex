@@ -6,7 +6,7 @@ import {
   type UpdateControllerDeps,
   type LastCheckState,
 } from './updateModel';
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
   if (!actual.includes(needle)) {

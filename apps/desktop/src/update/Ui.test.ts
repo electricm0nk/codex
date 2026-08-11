@@ -3,7 +3,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import { UpdateUi, UPDATE_UI_ID } from './Ui';
 import { RESTORE_OFFER_ID } from './restoreOffer';
 import { buildUnwiredUpdateDeps } from './updateModel';
-import { assert } from '../../testSupport/asserts';
+import { assert } from '../testSupport/asserts';
 
 function assertContains(actual: string, needle: string, message: string) {
   if (!actual.includes(needle)) {

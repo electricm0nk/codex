@@ -8,7 +8,7 @@
  * is reachable ONLY via `BROWSER_OPENED` carrying a non-empty URL, and
  * `canClaimSubmitted` returns `true` ONLY on that `confirmed(url)` state.
  */
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import {
   canClaimSubmitted,
   reduceSubmissionState,

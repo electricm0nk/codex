@@ -12,7 +12,7 @@ function completeEnhancementPayload(surface: TesterWorkbenchSurface) {
       testerGoal: 'Author several Guard Stance packages back-to-back without re-walking each wizard step.',
       currentFriction: 'Every package forces the full multi-click wizard even when only one field differs.',
       requestedCapability: 'A duplicate-and-edit action that clones the last authored package as a starting point.',
-      affectedSurface: 'GE08 authoring workbench',
+      affectedSurface: 'authoring workbench',
     },
   });
 }
@@ -136,7 +136,7 @@ function goalFrictionCapabilityAndSurfaceStayDistinct() {
   assert(!!goal && goal.body.includes('back-to-back'), 'tester goal carries goal text');
   assert(!!friction && friction.body.includes('multi-click wizard'), 'friction carries friction text');
   assert(!!capability && capability.body.includes('duplicate-and-edit'), 'capability carries capability text');
-  assert(!!affected && affected.body.includes('GE08 authoring workbench'), 'affected surface carries surface text');
+  assert(!!affected && affected.body.includes('authoring workbench'), 'affected surface carries surface text');
 
   const bodies = new Set([goal!.body, friction!.body, capability!.body, affected!.body]);
   assertEqual(bodies.size, 4, 'goal, friction, capability and affected surface are four distinct fields');

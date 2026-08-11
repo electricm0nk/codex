@@ -13,7 +13,7 @@
 //   - AV-SCH-6: `release_notes_path` regex locks the path.
 //   - AV-SCH-8: manifest_url regex; sanity asserted post-parse (channel-index side).
 
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import { parseUpdateManifest } from './parseUpdateManifest';
 
 const UPDATE_MANIFEST_JSON = `{

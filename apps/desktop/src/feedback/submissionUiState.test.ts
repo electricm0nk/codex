@@ -7,7 +7,7 @@
  * SubmissionUiState the React layer (F4) will consume, plus the load-bearing
  * invariant `deriveSubmissionUiState(s).canClaimSubmitted === canClaimSubmitted(s)`.
  */
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import { canClaimSubmitted, type SubmissionState } from './submissionState';
 import { deriveSubmissionUiState, type SubmissionUiState } from './submissionUiState';
 

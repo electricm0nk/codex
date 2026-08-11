@@ -22,7 +22,7 @@
  */
 
 import { invoke } from '@tauri-apps/api/core';
-import { hasTauriRuntime } from '../../boundary/runtime';
+import { hasTauriRuntime } from '../boundary/runtime';
 import { reduceSubmissionState, type SubmissionState } from './submissionState';
 import { deriveSubmissionUiState, type SubmissionUiState } from './submissionUiState';
 

@@ -6,7 +6,7 @@ import {
   performInstall,
   type PerformInstallResponse,
 } from "./installAction";
-import { assert, assertEqual } from "../../testSupport/asserts";
+import { assert, assertEqual } from "../testSupport/asserts";
 
 interface CapturedInvokeCall {
   command: string;

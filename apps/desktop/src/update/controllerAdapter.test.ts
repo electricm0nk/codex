@@ -1,4 +1,4 @@
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import type { FetchLike } from './fetch';
 import {
   createUpdateControllerDeps,

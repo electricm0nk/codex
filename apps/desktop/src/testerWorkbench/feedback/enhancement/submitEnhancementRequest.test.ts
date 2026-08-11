@@ -20,7 +20,7 @@ function completeComposed(overrides: Partial<TesterWorkbenchSurface> = {}) {
         testerGoal: 'Author several packages back-to-back.',
         currentFriction: 'The wizard restarts every time.',
         requestedCapability: 'A duplicate-and-edit action.',
-        affectedSurface: 'GE08 authoring workbench',
+        affectedSurface: 'authoring workbench',
       },
     }),
   });

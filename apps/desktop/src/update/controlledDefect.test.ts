@@ -9,7 +9,7 @@
 //   (d) manifest without `artifact_sha256` field returns `match: false`
 //       with reason `checksum-missing-field`.
 
-import { assert, assertEqual } from '../../testSupport/asserts';
+import { assert, assertEqual } from '../testSupport/asserts';
 import {
   decideControlledDefect,
   type ControlledDefectDeps,

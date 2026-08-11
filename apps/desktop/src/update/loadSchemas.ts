@@ -20,8 +20,8 @@
 //     the resolved modules are the canonical JSON documents. Any future
 //     divergence surfaces at first import, not at first parse failure.
 
-import channelIndexSchema from '../../../../../schemas/update/channel-index.schema.json';
-import updateManifestSchema from '../../../../../schemas/update/update-manifest.schema.json';
+import channelIndexSchema from '../../../../schemas/update/channel-index.schema.json';
+import updateManifestSchema from '../../../../schemas/update/update-manifest.schema.json';
 
 // JSON-module imports produce a typed `JsonSchema` shape. Ajv's
 // `Schema` type is structurally compatible (it is the same JSON object)
