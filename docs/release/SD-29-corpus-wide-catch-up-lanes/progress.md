@@ -2847,3 +2847,75 @@ never design.
 immediately and writes it to a file — never through a pipe, which is the pilot's own recorded
 process finding.
 
+**`VERIFY_EXIT=1` — `decision-blocked`, not a pass and not routed around.**
+
+| Stage | Result |
+|---|---|
+| preflight-disk | PASS (87% used, 64G available at start) |
+| pi-sweep | PASS (10 hits / 10 baseline rows) |
+| audit-selftest | PASS (28) |
+| root-lib | PASS (**1615**) |
+| **root-full** | **FAIL** — cargo exit 101; **6168 passed across 543 suites** |
+| desktop | PASS (421) |
+| reach | PASS (**17**) — non-zero, so DoD item 2 is satisfied by claims, not by absence |
+| frontend-install | PASS |
+| frontend-test | PASS (98/98) |
+| frontend-typecheck | PASS |
+| clippy | PASS (root:55 desktop:7, 0 errors) |
+| class-dump | PASS (31/31 computing) |
+
+Log: `/tmp/codex-verify-QU6bi9`.
+
+`root-full`'s two failures, both in `tests/v06_apg_acg_feat_catalog.rs`:
+
+```
+the_aggregate_catalog_spans_every_ingested_book   :263   left: 201  right: 185
+cross_book_feat_key_repeats_are_exactly_the_known_set :247
+  left:  [("Endurance", Crb, Pu), ("Extended Animal Focus", Acg, Uw), ("Feral Combat Training", Uc, Upsi)]
+  right: [("Endurance", Crb, Pu)]
+```
+
+**This is the third consecutive cycle blocked by these same two assertions** — `sd29-e6-racetrait-pilot`
+recorded them, `sd29-e6-racetrait-extend` inherited them, and this cycle makes three. An
+`incident` is emitted with `--recurrence-key root-full-normalized-red` per Decision 39.
+
+The attribution is **proven by content, not asserted**, which is what Decision 39 demands of a
+repeat failure. `git diff --name-only 4ac57534 HEAD` over this cycle's entire delta lists 51 paths:
+the `bonus_bestiary` chassis, 31 corpus records, the monster-catalog frontend, and docs. **Zero feat
+files. `tests/v06_apg_acg_feat_catalog.rs` is not among them.** And `root-full` executed — 6168
+tests across 543 suites — so this is a real named assertion, not a suite that failed to run.
+
+The pins belong to `epic-4-proven-feat-race-class` (commit `dde9dfc4`, *"close the feat
+not-ingested gap corpus-wide (83 rows)"*), which is **still `IN-FLIGHT` under `sd29-e4-frc`**.
+Re-deriving 185 → 201 from this card would edit another session's live work while it is running,
+which "Stop vs. press on" names as a STOP outright. So the pins are left exactly as they are.
+
+**DoD item 3 is independently green.** `cargo run --locked --bin v06_corpus_trap_report -- --audit`
+→ `AUDIT_EXIT=0`, **259 trap rows, 0 defects**, exit code captured by a runner script assigning
+`$?` to a file — never through a pipe, which is the pilot's own recorded process finding and the
+reason this receipt states the capture method for every exit code it publishes.
+
+### Disposition
+
+The merge is pushed to `tranche/9` even though the gate is red. Stated as a deliberate call, per
+UNATTENDED MODE's "default-and-flag, not ask": `tranche/9` was **already** red for these exact two
+assertions before this cycle touched it, so the push does not make the branch worse, and leaving
+the Epic 5 chassis stranded on a worktree branch is what cost this cycle its entire budget and
+would cost the next one the same. The red is owned, named, and tracked; the chassis is now where
+every successor per-book cycle can reach it.
+
+### Handoff
+
+1. **`epic-4-proven-feat-race-class` must re-derive its two pins** before any SD-29 card can close
+   on a green gate. Three cycles have now paid for this.
+2. **Dispatch `epic-5-monster-lane-extend` as one card per book**, densest first, using the residual
+   table above. Ten of the 23 books are `monster_ability`-only — those cards must not be shaped as
+   per-monster cycles.
+3. **Each per-book card must budget the scope flip**: adding the book's `RuleSetId` moves every
+   other kind in that book from `not-started` to `not-ingested` in one step, and that requires a
+   repo-wide grep of the old and new counts before committing.
+4. **Dispatch worktrees keep landing on the wrong base** (7d9f1c4f — three recorded instances in
+   this bundle now). Until the harness is fixed, every cycle's first action must be
+   `git fetch origin && git reset --hard origin/tranche/9`.
+5. **A card marked COMPLETE is not a card that is merged.** The pilot's receipt asked for the merge
+   and nothing performed it. Closure should verify by content on the branch, not by receipt.
