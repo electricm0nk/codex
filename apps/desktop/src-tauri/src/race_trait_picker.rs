@@ -948,19 +948,31 @@ mod tests {
         let menu = menu();
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        assert_eq!(total, 153, "ARG's 153 Alternate-classified records (APG's 1 genuinely new key is deferred, decisions.md §39)");
+        assert_eq!(
+            total, 157,
+            "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43). \
+             APG's 1 genuinely new key is still deferred, decisions.md §39"
+        );
 
-        // Per-race counts, derived from the corpus by this very menu. All
-        // ARG-only for now -- `Half-Orc ~ Plagueborn` (would move HalfOrc
-        // 14 -> 15) is deferred, see the test's own doc comment above.
+        // Per-race counts, derived from the corpus by this very menu.
+        // `Half-Orc ~ Plagueborn` (would move HalfOrc 14 -> 15) is still
+        // deferred, see the test's own doc comment above. Monster Codex moves
+        // exactly two races: Duergar 5 -> 7 (Ironskinned, Twilight-Touched)
+        // and Goblin 7 -> 9 (Oversized Goblin ~ Ability Scores, ~ Size).
+        // `Oversized Goblin` itself is NOT here and that is deliberate -- it
+        // sets no replace flag and carries no positive gate, so
+        // `race_resolver::classify` leaves it `Unclassified`. It is a Goblin
+        // *variant* selector (PCGen models it through a `Goblin Variant`
+        // ABILITYPOOL that this engine has no mechanism for), recorded as a
+        // finding in `reach_gate`'s OPEN_FINDINGS rather than hidden.
         let expected: &[(&str, usize)] = &[
             ("Aasimar", 9),
             ("Drow", 6),
-            ("Duergar", 5),
+            ("Duergar", 7),
             ("Dwarf", 17),
             ("Elf", 13),
             ("Gnome", 12),
-            ("Goblin", 7),
+            ("Goblin", 9),
             ("HalfElf", 9),
             ("HalfOrc", 14),
             ("Halfling", 13),
@@ -976,23 +988,69 @@ mod tests {
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 153);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 157);
     }
 
-    /// Every alternate is ARG's, and carries real prose and a real page —
-    /// no empty cells reaching the screen.
+    /// Every alternate is attributed to a book that really loaded it, and
+    /// carries real prose — no empty cells reaching the screen.
+    ///
+    /// **The book assertion used to be `== "ARG"`.** That was true when ARG was
+    /// the only book contributing alternates and became false the moment SD-29's
+    /// race-trait pilot added Monster Codex's. It is now checked against the
+    /// codes `race_catalog::book_code` derives from `RACE_CORPUS_BOOKS`, so a
+    /// third book widens it without an edit here — and an alternate attributed
+    /// to a book nobody loaded still fails.
+    ///
+    /// **`source_page` is asserted per book, not globally, because the corpus
+    /// differs.** Every ARG alternate carries a real page. Monster Codex's two
+    /// Duergar rows (`mc_abilities_race.lst:16`-`:17`) carry **no `SOURCEPAGE:`
+    /// token at all**, while its two Goblin replacement rows carry `p.104`.
+    /// Asserting a page for a row the corpus does not give one for would force
+    /// either a fabricated citation or a hidden record; the honest form is to
+    /// require that a page, *when present*, is real — never the `p.xx`
+    /// placeholder — and to pin which books currently supply one.
     #[test]
-    fn every_alternate_carries_arg_attribution_real_prose_and_a_real_page() {
+    fn every_alternate_carries_real_book_attribution_and_prose() {
         let menu = menu();
+        let loadable: BTreeSet<String> =
+            crate::race_catalog::RACE_CORPUS_BOOKS.iter().map(|b| book_code(b)).collect();
+        let mut paged: BTreeSet<&str> = BTreeSet::new();
+        let mut pageless: BTreeSet<&str> = BTreeSet::new();
+
         for race in &menu.races {
             for alternate in &race.alternates {
-                assert_eq!(alternate.book, "ARG", "{} book", alternate.key);
+                assert!(
+                    loadable.contains(&alternate.book),
+                    "{} is attributed to {:?}, which is not a book RACE_CORPUS_BOOKS loads ({loadable:?})",
+                    alternate.key,
+                    alternate.book
+                );
                 assert!(!alternate.description.trim().is_empty(), "{} description", alternate.key);
                 assert!(!alternate.sets_flags.is_empty(), "{} sets at least one flag", alternate.key);
-                let page = alternate.source_page.as_deref().unwrap_or_default();
-                assert!(!page.is_empty() && page != "p.xx", "{} real source page, got {page:?}", alternate.key);
+                match alternate.source_page.as_deref() {
+                    Some(page) if !page.is_empty() => {
+                        assert_ne!(page, "p.xx", "{} carries the placeholder page", alternate.key);
+                        paged.insert(alternate.book.as_str());
+                    }
+                    _ => {
+                        pageless.insert(alternate.key.as_str());
+                    }
+                }
             }
         }
+
+        assert_eq!(
+            paged,
+            BTreeSet::from(["ARG", "MC"]),
+            "the books whose alternates carry a real page"
+        );
+        assert_eq!(
+            pageless,
+            BTreeSet::from(["Duergar ~ Ironskinned", "Duergar ~ Twilight-Touched"]),
+            "exactly the two Monster Codex rows the upstream corpus gives no SOURCEPAGE: token; \
+             a third pageless row is a regression, and either of these gaining a page means the \
+             upstream data changed and this pin should be re-derived"
+        );
     }
 
     /// The replace map is resolved through the flag, and the flag alone.
@@ -1037,16 +1095,42 @@ mod tests {
         );
     }
 
-    /// Every alternate has a readable self-exclusion guard, including the
-    /// three that spell the negated branch `!PREABILITY`.
+    /// Every alternate that PCGen guards has a readable self-exclusion guard,
+    /// including the three that spell the negated branch `!PREABILITY` — and
+    /// the ones the corpus does not guard are pinned by name.
+    ///
+    /// **This used to assert a guard on every alternate without exception.**
+    /// That held while ARG was the only contributing book, because every ARG
+    /// alternate is a player-selectable swap and PCGen guards all of them. SD-29's
+    /// Monster Codex pilot brought in two rows from that book's
+    /// `###Block: Replacement Abilities` — `Oversized Goblin ~ Ability Scores`
+    /// and `~ Size` — which carry a `FACT:Goblin_Replace…|True` token but **no
+    /// `PREMULT` guard**, because upstream they are not chosen at all: they are
+    /// granted by picking the `Oversized Goblin` variant out of a
+    /// `BONUS:ABILITYPOOL|Goblin Variant|1` pool (`mc_abilities_race.lst:26`).
+    ///
+    /// This engine has no ability-pool variant mechanism, so the `FACT:` heuristic
+    /// that classifies alternates reads them as free-standing swaps. **That is a
+    /// real modelling gap and it is recorded, not smoothed over** — see
+    /// `reach_gate::OPEN_FINDINGS` for `monster_codex/race_traits`, which names
+    /// the remedy. Pinning the exception by exact key here means a third guardless
+    /// row cannot arrive silently, and either of these gaining a guard fails too.
     #[test]
     fn every_alternate_has_a_readable_exclusion_guard_including_the_preability_spelling() {
         let menu = menu();
+        let mut unguarded: BTreeSet<&str> = BTreeSet::new();
         for race in &menu.races {
             for alternate in &race.alternates {
-                assert!(!alternate.exclusion_guard_flags.is_empty(), "{} has a guard", alternate.key);
+                if alternate.exclusion_guard_flags.is_empty() {
+                    unguarded.insert(alternate.key.as_str());
+                }
             }
         }
+        assert_eq!(
+            unguarded,
+            BTreeSet::from(["Oversized Goblin ~ Ability Scores", "Oversized Goblin ~ Size"]),
+            "exactly the two Monster Codex replacement rows PCGen grants rather than offers"
+        );
         let half_elf = race(&menu, "HalfElf");
         let wary = alternate(half_elf, "Half-Elf ~ Wary");
         assert_eq!(wary.exclusion_guard_flags, vec!["HalfElf_ReplaceKeenSenses"]);
@@ -1090,7 +1174,7 @@ mod tests {
                 checked += 1;
             }
         }
-        assert_eq!(checked, 153);
+        assert_eq!(checked, 157, "153 ARG + 4 Monster Codex (SD-29 decisions.md §43)");
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
         // Aasimar is the worked case: its nine standard rows now declare the
@@ -1122,7 +1206,30 @@ mod tests {
             .filter(|link| link.flag == "Duergar_ReplaceSLAInvisibility")
             .map(|link| link.key.as_str())
             .collect();
-        assert_eq!(grants, vec!["Duergar ~ Spell-Like Ability ~ Enlarge Person"]);
+        // Deduped: SD-29's Monster Codex pilot added a SECOND alternate setting
+        // this same flag (`Duergar ~ Twilight-Touched`, `mc_abilities_race.lst:17`)
+        // alongside ARG's `Duergar ~ Blood Enmity`, so the flag is now named by
+        // two rows and grants the same one row twice. Two setters granting one
+        // record is the corpus's own shape, not a duplicate record -- which is
+        // exactly why the setters are asserted too, rather than only the target.
+        let setters: BTreeSet<&str> = duergar
+            .alternates
+            .iter()
+            .filter(|alternate| {
+                alternate.grants.iter().any(|link| link.flag == "Duergar_ReplaceSLAInvisibility")
+            })
+            .map(|alternate| alternate.key.as_str())
+            .collect();
+        assert_eq!(
+            setters,
+            BTreeSet::from(["Duergar ~ Blood Enmity", "Duergar ~ Twilight-Touched"]),
+            "both books' setters of Duergar_ReplaceSLAInvisibility"
+        );
+        assert_eq!(
+            grants.iter().copied().collect::<BTreeSet<&str>>(),
+            BTreeSet::from(["Duergar ~ Spell-Like Ability ~ Enlarge Person"]),
+            "and both grant the one row the flag gates"
+        );
     }
 
     /// `Duergar_ReplaceSLAInvisibility` is *not* the same case: the corpus does
@@ -1482,9 +1589,9 @@ mod tests {
         // ARG/CRB/Bestiary) never moves.
         let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
         let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        assert_eq!((standard, alternates), (173, 153));
+        assert_eq!((standard, alternates), (173, 157));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 326);
+        assert_eq!(checked, 330);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.
@@ -1505,7 +1612,21 @@ mod tests {
         // arguments the ingest could not finish, so it shipped reading "Three
         // times per day… they only gain a bonus" with the magnitudes simply
         // absent. Rendering restores them for every player, character or not.
-        assert_eq!(changed, vec!["Halfling ~ Adaptable Luck"]);
+        assert_eq!(
+            changed,
+            vec!["Oversized Goblin", "Halfling ~ Adaptable Luck"],
+            "the records whose rendered prose differs from the ingest-time collapse"
+        );
+
+        // SD-29's Monster Codex pilot added the second one, for a different
+        // reason than Adaptable Luck's, and the difference is asserted rather
+        // than merely allowed: `Oversized Goblin`'s corpus DESC carries PCGen's
+        // `&nl;` newline entity, which the stored string holds verbatim and the
+        // renderer resolves. A player reads the rendered form, so the entity
+        // must not survive into it.
+        let oversized = by_key_all(corpus, "Goblin", "Oversized Goblin");
+        assert!(!oversized.contains("&nl;"), "rendered prose still carries a PCGen entity: {oversized}");
+        assert!(oversized.contains("oversized goblins gain a +2 bonus to Strength"), "{oversized}");
         let luck = &by_key_all(corpus, "Halfling", "Halfling ~ Adaptable Luck");
         assert!(luck.contains("they gain the full +2 bonus"), "{luck}");
         assert!(luck.contains("they only gain a +1 bonus"), "{luck}");

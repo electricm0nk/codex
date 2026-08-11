@@ -1687,6 +1687,36 @@ fn quoted_after(line: &str, field: &str) -> Option<String> {
 /// Each entry states the remedy, so this reads as a work queue rather than a
 /// permanent exemption.
 const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
+    (
+        "monster_codex",
+        "race_traits",
+        "4 of Monster Codex's 5 ingested race-trait records reach a player through \
+         `list_alternate_racial_traits` and `resolve_race_alternate_selection`, and this gate \
+         refuses partial credit. ONE does not: `Oversized Goblin` \
+         (`mc_abilities_race.lst:31`). Derived, not assumed: it carries no \
+         `FACT:<flag>|True` token and no positive `PREFACT` gate, so \
+         `race_resolver::classify` leaves it `TraitRole::Unclassified` -- the role that never \
+         applies -- and it is correctly absent from the picker's alternate list. \
+         \
+         **It is not an ARG-shaped swap and no wiring would make it one.** Upstream it is one of \
+         two Goblin VARIANTS (`Standard Goblin` and `Oversized Goblin`), chosen out of an ability \
+         pool that `mc_abilities_race.lst:26` grants with \
+         `CATEGORY=Internal|Racial Traits ~ Goblin.MOD  BONUS:ABILITYPOOL|Goblin Variant|1`. \
+         Picking the variant is what grants its two replacement rows \
+         (`Oversized Goblin ~ Ability Scores`, `~ Size`), which is also why those two are the \
+         only alternates in the whole menu carrying no `PREMULT` self-exclusion guard \
+         (`race_trait_picker::every_alternate_has_a_readable_exclusion_guard_including_the_preability_spelling` \
+         pins them by name). \
+         \
+         REMEDY: an ability-pool variant mechanism -- a race-level choice of one row out of a \
+         `BONUS:ABILITYPOOL|<Pool>|n` pool, whose selection grants the rows TYPEd for it. That is \
+         a new mechanism, not a missing wire, and it is outside the race-trait lane's \
+         replace-flag protocol. Until it exists, the two replacement rows are offered \
+         individually in the picker where the rules would grant them together; that is the \
+         visible consequence and it is recorded here rather than smoothed over. \
+         Do NOT close this by deleting the record: the row is real corpus content for a modelled \
+         race, and a record on disk that no selection can reach is exactly what this gate is for.",
+    ),
     // SD28-C4.8/§60/§63: the tier-1 archetype-swap catalog, 403 records
     // across 7 books. `archetype_resolver::archetype_claiming_slot` grounds
     // the swap correctly in compute output for the wired slots (Alchemist's
@@ -1817,6 +1847,14 @@ const BARE_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[];
 ///   `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`
 ///   holds it closed in both directions.
 const UNREACHED_RECORD_FINDINGS: &[(&str, &str, &[&str])] = &[
+    (
+        "monster_codex",
+        "race_traits",
+        // A Goblin *variant* selector, not a swap: no replace flag, no
+        // positive gate, so it is `TraitRole::Unclassified` and no selection
+        // reaches it. Remedy in OPEN_FINDINGS above.
+        &["Oversized Goblin"],
+    ),
     // SD28-C4.8/§60/§63: all 403 archetype-swap records across 7 books --
     // every key, because none reaches a player through any surface today
     // (no picker exists at all, see OPEN_FINDINGS). This is the "whole

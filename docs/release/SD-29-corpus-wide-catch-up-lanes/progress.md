@@ -4296,3 +4296,66 @@ cycle a concurrent agent held `apps/desktop/.claude/skills/run-desktop/driver.sh
 `docs/release/SD-30-class-feature-archetype-bundle/loop-instruction.md` and
 `docs/retro/events/codex.jsonl` modified. **None was touched.** No `git add -A`, no `git stash`.
 Retro events went to this actor's own shard, `docs/retro/events/sd29-racetrait-repin.jsonl`.
+
+### 9. The gate went RED first, and what it caught (recorded, not smoothed over)
+
+The first full `./scripts/verify.sh` run **FAILED** — `desktop` and `reach`, cargo exit 101, logs
+`/tmp/codex-verify-fsg7zJ/{desktop,reach}.log`. `preflight-disk`, `pi-sweep`, `audit-selftest`,
+`driver-selftest`, `root-lib` and **`root-full` (6173 passed across 543 suites, all 524 `tests/*.rs`
+suites executed)** all passed, as did `frontend-install`/`frontend-test`/`frontend-typecheck` and
+`clippy`. Seven assertions failed, in two classes.
+
+**Class 1 — a real finding about the content, which is the gate doing its job.**
+
+```
+monster_codex/race_traits: 1 of 5 ingested records never appear in
+`list_alternate_racial_traits + resolve_race_alternate_selection` (e.g. Oversized Goblin)
+```
+
+`Oversized Goblin` (`mc_abilities_race.lst:31`) carries **no `FACT:<flag>|True` token and no
+positive `PREFACT` gate**, so `race_resolver::classify` leaves it `TraitRole::Unclassified` — the
+role that never applies. It is not a swap at all: upstream it is one of two Goblin **variants**
+(`Standard Goblin`, `Oversized Goblin`) chosen out of an ability pool granted by
+`mc_abilities_race.lst:26`'s `BONUS:ABILITYPOOL|Goblin Variant|1`. Picking the variant is what grants
+its two replacement rows, which is also why those two are the **only** alternates in the entire menu
+carrying no `PREMULT` self-exclusion guard.
+
+**Recorded as a cycle shortfall, not routed around** (DoD item 6): a new `OPEN_FINDINGS` entry for
+`monster_codex/race_traits` naming the remedy (an ability-pool variant mechanism — a new mechanism,
+not a missing wire), plus an `UNREACHED_RECORD_FINDINGS` entry pinning the exact key. The family
+therefore reports `NotSurfaced` at 4 of 5, honestly. **The record was not deleted to make the gate
+green** — the gate's own doctrine forbids exactly that, and this cycle retired the last finding of
+precisely this shape three sections above.
+
+The visible consequence is stated rather than hidden: until the variant mechanism exists, the picker
+offers `Oversized Goblin ~ Ability Scores` and `~ Size` individually where the rules grant them
+together.
+
+**Class 2 — six count pins and book-scoped assertions written when ARG was the only book.**
+
+| assertion | was | now |
+|---|---|---|
+| `race_catalog` alternates loaded | 153 | 157 |
+| `race_trait_picker` menu total | 153 | 157 |
+| per-race: Duergar / Goblin | 5 / 7 | 7 / 9 |
+| `(standard, alternates)` | (173, 153) | (173, 157) |
+| `checked` rows | 153 → 326 | 157 → 330 |
+| `assert_eq!(alternate.book, "ARG")` | ARG only | any code `RACE_CORPUS_BOOKS` yields |
+| every alternate has an exclusion guard | universal | universal minus 2 pinned by key |
+| `source_page` non-empty for every alternate | universal | real-when-present, 2 pageless rows pinned |
+| rendered ≠ stored prose | `["Halfling ~ Adaptable Luck"]` | `+ "Oversized Goblin"` (`&nl;` entity) |
+| `Duergar_ReplaceSLAInvisibility` grants | one setter | two setters, one granted row (deduped) |
+
+Every widening is asserted **in both directions** rather than relaxed: the two guardless rows and the
+two pageless rows are pinned by exact key, so a third of either fails; the book check is derived from
+`RACE_CORPUS_BOOKS` so a third book widens it without an edit but an unloaded book still fails; and
+the `&nl;` case gained a positive assertion that the rendered prose carries no PCGen entity (it does
+not — verified, so no defect was pinned).
+
+**Root cause of the rework, recorded as a retro event:** the pre-commit sweep grepped for the
+*renamed binary's* references and for the *new book's* wiring, but not for assertions about the
+**shape** the new book changes. Adding a book to a shared corpus list moves count pins and
+book-scoped assertions in files that never mention the book.
+
+**Second run:** `cargo test --locked -j 2` in `apps/desktop/src-tauri` → **421 passed, 0 failed**,
+which covers both the `desktop` and `reach` stages' scope.

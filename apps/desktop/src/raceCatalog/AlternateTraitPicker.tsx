@@ -319,7 +319,7 @@ export function AlternateTraitPicker() {
           <div style={{ ...panel, maxHeight: 420, overflowY: 'auto', padding: '0.25rem 0.9rem' }}>
             {race.alternates.length === 0 ? (
               <p style={{ ...muted, margin: '0.75rem 0' }}>
-                The Advanced Race Guide declares no alternate racial traits for {race.raceName}.
+                No ingested book declares an alternate racial trait for {race.raceName}.
               </p>
             ) : null}
             {race.alternates.map((alternate) => {

@@ -528,15 +528,26 @@ mod tests {
     /// APG likewise declares no races/defaults of its own, so it contributes
     /// zero catalog rows either way.
     #[test]
-    fn arg_and_apg_contribute_no_rows_but_their_alternates_are_loaded_and_counted() {
+    fn alternate_only_books_contribute_no_catalog_rows_but_are_loaded_and_counted() {
         let response = build_race_catalog();
-        assert_eq!(response.entries.iter().filter(|e| e.book == BOOK_ARG).count(), 0);
-        assert_eq!(response.entries.iter().filter(|e| e.book == BOOK_APG).count(), 0);
+        for book in [BOOK_ARG, BOOK_APG, BOOK_MC] {
+            assert_eq!(
+                response.entries.iter().filter(|e| e.book == book).count(),
+                0,
+                "{book} declares no racial DEFAULT traits, so it contributes no catalog row"
+            );
+        }
 
         let corpus = race_corpus().as_ref().expect("race corpus loads in a source checkout");
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
-        assert_eq!(alternates, 153, "alternate racial traits, loaded but not yet surfaced");
+        assert_eq!(
+            alternates, 157,
+            "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
+             Codex's 4 (SD-29 decisions.md §43). Monster Codex's 5th record, `Oversized Goblin`, \
+             is not an alternate at all -- it sets no replace flag, so `race_resolver::classify` \
+             leaves it `Unclassified`"
+        );
     }
 
     /// The widening's most consequential user-visible correction: the
