@@ -22,7 +22,7 @@ use crate::rules_core::rules_tables::crb::equipment_tables::equipment_tables;
 use crate::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
-    ultimate_magic as um, ultimate_psionics as upsi, RuleSetId,
+    equipment_gap_tables, ultimate_magic as um, ultimate_psionics as upsi, RuleSetId,
 };
 use crate::rules_core::source_content::{SourceContentKind, SourcePackageContent};
 
@@ -114,6 +114,11 @@ pub const EQUIPMENT_BOOK_UE: &str = "UE";
 pub const EQUIPMENT_BOOK_UM: &str = "UM";
 pub const EQUIPMENT_BOOK_UPSI: &str = "UPSI";
 pub const EQUIPMENT_BOOK_UC: &str = "UC";
+/// Ultimate Wilderness. This book has no hand-authored `equipment_tables`
+/// module at all — every one of its catalog rows comes from
+/// [`equipment_gap_tables`], which is why the code is declared here rather
+/// than beside a per-book table import.
+pub const EQUIPMENT_BOOK_UW: &str = "UW";
 
 /// One book's equipment row, projected onto the three fields every
 /// *headless* (no-corpus) caller needs: which book it came from, its corpus
@@ -163,6 +168,38 @@ pub struct EquipmentCatalogRow {
 /// the identical CRB row and the identical price. Pinned by
 /// `widening_leaves_every_crb_identity_resolving_to_its_original_cost`.
 pub fn equipment_catalog_rows() -> &'static [EquipmentCatalogRow] {
+    static ROWS: std::sync::OnceLock<Vec<EquipmentCatalogRow>> = std::sync::OnceLock::new();
+    ROWS.get_or_init(|| {
+        // Hand-authored per-book tables first, in their established order, then
+        // the corpus-recovered gap rows. Order is load-bearing (see this
+        // function's own doc comment): putting the gap rows LAST means every
+        // key any hand table already answered still resolves to the identical
+        // hand row at the identical price.
+        hand_authored_equipment_rows()
+            .iter()
+            .copied()
+            .chain(equipment_gap_tables::equipment_gap_rows().map(|row| EquipmentCatalogRow {
+                book: row.book,
+                key: row.key,
+                name: row.name,
+                cost_gp: row.cost_gp,
+            }))
+            .collect()
+    })
+}
+
+/// The eleven hand-authored per-book equipment tables, chained — everything
+/// [`equipment_catalog_rows`] served before the corpus gap lane landed.
+///
+/// **Why this is a separate public function.** `gen_equipment_gap_tables`
+/// needs to know what the hand tables already hold in order to emit only the
+/// records they do not; asking [`equipment_catalog_rows`] would be circular
+/// once the generated rows are chained into it. Splitting the two makes the
+/// generator's filter provably the complement of these tables rather than a
+/// hand-maintained exclusion list that can drift — the same
+/// derive-don't-restate fix `equipment_catalog_books()` already applies on the
+/// desktop side.
+pub fn hand_authored_equipment_rows() -> &'static [EquipmentCatalogRow] {
     static ROWS: std::sync::OnceLock<Vec<EquipmentCatalogRow>> = std::sync::OnceLock::new();
     ROWS.get_or_init(|| {
         let crb_rows = crb::equipment_tables::equipment_tables().iter().map(|entry| {
@@ -393,35 +430,53 @@ pub fn equipment_catalog_row_by_key(key: &str) -> Option<&'static EquipmentCatal
 /// keys, names and legacy-prefixed names by
 /// `widening_leaves_every_crb_identity_resolving_to_its_original_cost`.
 pub fn equipment_cost_gp_headless_resolve(item_id: &str) -> Option<f64> {
+    // Hand-authored tables are searched to exhaustion FIRST, and only then
+    // the full catalog (which adds the corpus gap rows).
+    //
+    // **This two-pass shape is a fix, not a flourish.** Chaining the gap rows
+    // last is not by itself enough to leave shipped pricing alone, because
+    // this resolver's precedence is *stage-major, not row-major*: stage 1
+    // matches any CRB row by KEY before stage 2 matches any CRB row by NAME.
+    // `Cold Iron` is exactly that collision — CRB's hand table holds a row
+    // whose display *name* is `Cold Iron` (0 gp), while `cr_equipmods.lst`
+    // holds a distinct record whose `KEY:` is `Cold Iron` and which carries no
+    // `COST:` token at all. With one pass over the combined rows the gap row
+    // won stage 1 and repriced a shipped CRB identity `Some(0.0)` -> `None`.
+    // Caught by `widening_leaves_every_crb_identity_resolving_to_its_original_cost`,
+    // which exists for precisely this class and is the reason it is exhaustive
+    // rather than sampled.
+    if let Some(row) = resolve_catalog_row(hand_authored_equipment_rows(), item_id) {
+        return row.cost_gp;
+    }
+    resolve_catalog_row(equipment_catalog_rows(), item_id).and_then(|row| row.cost_gp)
+}
+
+/// The five-stage identity match this resolver has always used, over one row
+/// set. Returns the ROW rather than its cost, so "matched a row whose price is
+/// honestly `None`" stays distinguishable from "matched nothing" — the
+/// distinction the two-pass caller above depends on.
+fn resolve_catalog_row<'a>(
+    rows: &'a [EquipmentCatalogRow],
+    item_id: &str,
+) -> Option<&'a EquipmentCatalogRow> {
     let needle = item_id.strip_prefix("item:").unwrap_or(item_id);
     let normalized_needle = normalize_equipment_name(needle);
-    let rows = equipment_catalog_rows();
     let is_crb = |row: &&EquipmentCatalogRow| row.book == EQUIPMENT_BOOK_CRB;
     let is_not_crb = |row: &&EquipmentCatalogRow| row.book != EQUIPMENT_BOOK_CRB;
     let key_hit = |row: &&EquipmentCatalogRow| row.key == needle || row.key == item_id;
     let name_hit = |row: &&EquipmentCatalogRow| row.name == needle || row.name == item_id;
 
-    if let Some(row) = rows.iter().filter(is_crb).find(key_hit) {
-        return row.cost_gp;
-    }
-    if let Some(row) = rows.iter().filter(is_crb).find(name_hit) {
-        return row.cost_gp;
-    }
-    if let Some(row) = rows.iter().filter(is_not_crb).find(key_hit) {
-        return row.cost_gp;
-    }
-    if let Some(row) = rows.iter().filter(is_not_crb).find(name_hit) {
-        return row.cost_gp;
-    }
-    if let Some(row) = rows
-        .iter()
+    rows.iter()
         .filter(is_crb)
-        .find(|row| normalize_equipment_name(row.name) == normalized_needle)
-    {
-        return row.cost_gp;
-    }
-
-    None
+        .find(key_hit)
+        .or_else(|| rows.iter().filter(is_crb).find(name_hit))
+        .or_else(|| rows.iter().filter(is_not_crb).find(key_hit))
+        .or_else(|| rows.iter().filter(is_not_crb).find(name_hit))
+        .or_else(|| {
+            rows.iter()
+                .filter(is_crb)
+                .find(|row| normalize_equipment_name(row.name) == normalized_needle)
+        })
 }
 
 #[cfg(test)]
@@ -571,14 +626,14 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
     fn catalog_rows_span_every_ingested_book_with_their_real_counts() {
         let rows = equipment_catalog_rows();
         let count = |book: &str| rows.iter().filter(|row| row.book == book).count();
-        assert_eq!(count(EQUIPMENT_BOOK_CRB), 2_977);
-        assert_eq!(count(EQUIPMENT_BOOK_APG), 338);
-        assert_eq!(count(EQUIPMENT_BOOK_ACG), 269);
+        assert_eq!(count(EQUIPMENT_BOOK_CRB), 3312);
+        assert_eq!(count(EQUIPMENT_BOOK_APG), 375);
+        assert_eq!(count(EQUIPMENT_BOOK_ACG), 319);
         assert_eq!(count(EQUIPMENT_BOOK_B1), 4);
-        assert_eq!(count(EQUIPMENT_BOOK_ARG), 200);
+        assert_eq!(count(EQUIPMENT_BOOK_ARG), 215);
         assert_eq!(count(EQUIPMENT_BOOK_PU), 42);
-        assert_eq!(count(EQUIPMENT_BOOK_UI), 98);
-        assert_eq!(count(EQUIPMENT_BOOK_UE), 1_549);
+        assert_eq!(count(EQUIPMENT_BOOK_UI), 105);
+        assert_eq!(count(EQUIPMENT_BOOK_UE), 1614);
         // SD28-E15: UM's 26-record equipment table (24 General + 2
         // ArmsArmor). Re-derived from the catalog itself, not by hand-adding
         // 26 to the old 5,477 total -- also independently confirmed the 26
@@ -594,7 +649,7 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
         // Re-derived from the catalog itself, not by hand-adding 439 to the
         // old 5,503 total -- also independently confirmed the 439 UPsi keys
         // are unique within the book.
-        assert_eq!(count(EQUIPMENT_BOOK_UPSI), 439);
+        assert_eq!(count(EQUIPMENT_BOOK_UPSI), 552);
         // SD28-C4.9: UC's 204-record equipment table (185 equipment + 19
         // equipmods). The declared work-inventory equipment figure (185)
         // matches this table's own derivation exactly; the equipmods
@@ -602,8 +657,16 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
         // including 20 VISIBLE:NO .COPY= legacy aliases, the same hazard
         // UPsi's own table found. Real count: 19. See
         // `ultimate_combat::equipment_tables`'s own doc comment.
-        assert_eq!(count(EQUIPMENT_BOOK_UC), 204);
-        assert_eq!(rows.len(), 6_146);
+        assert_eq!(count(EQUIPMENT_BOOK_UC), 224);
+        // SD-29 `epic-4-proven-equip-mod`: UW reaches this chain only through
+        // `equipment_gap_tables`; it has no hand-authored table at all.
+        assert_eq!(count(EQUIPMENT_BOOK_UW), 127);
+        // 6,146 hand-authored + 769 corpus gap rows. The +769 is exactly
+        // `docs/work-inventory.json`'s `not-ingested` equipment /
+        // equipment_modifier population across the nine already-compiled
+        // books; `tests/equipment_gap_tables.rs` pins the per-book split.
+        assert_eq!(hand_authored_equipment_rows().len(), 6_146);
+        assert_eq!(rows.len(), 6_915);
 
         // CRB first, then the documented chain order -- the property the
         // "CRB behaviour unchanged" guarantee rests on.
@@ -691,11 +754,62 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
         }
         disagreements.sort_unstable();
         disagreements.dedup();
+        // SD-29 `epic-4-proven-equip-mod` grew this list from 1 to 36, and
+        // every addition is one shape: a corpus gap row whose `KEY:` equals
+        // some hand-authored row's display NAME. `Cold Iron` is the worked
+        // example — CRB's hand table has a row *named* `Cold Iron` (0 gp);
+        // `cr_equipmods.lst` has a different record *keyed* `Cold Iron` with
+        // no `COST:` token. Both records are real and both belong in the
+        // catalog; what is ambiguous is only the free-form string.
+        //
+        // The remedy is the one this test's own doc comment already
+        // prescribes and that `attach_equipment_modifier_at_root` /
+        // `purchase_equipment_at_root` already follow: a caller holding a
+        // catalog key from a picker prices via `equipment_catalog_row_by_key`,
+        // never via the free-form resolver. Pinned by name, not by count, so
+        // a 37th — which would be a genuinely new ambiguity — still fails.
         assert_eq!(
             disagreements,
-            vec!["Wooden"],
-            "exactly one cross-book identity collision exists today; a new one means a newly \
-             ambiguous id that callers must be told how to disambiguate"
+            vec![
+                "Adamantine (Ammo)",
+                "Adamantine (Heavy Armor)",
+                "Adamantine (Light Armor)",
+                "Adamantine (Medium Armor)",
+                "Adamantine (Weapon)",
+                "Alchemical Silver",
+                "Amorphous",
+                "BRACE",
+                "Backpack (Carrier)",
+                "Backpack (Hydration)",
+                "Backpack (Weaponrack)",
+                "Burdenless",
+                "CLOTH",
+                "Cold Iron",
+                "DISARM",
+                "Exclusionary",
+                "LEATHER",
+                "MONK",
+                "Mithral (Heavy Armor)",
+                "Mithral (Item)",
+                "Mithral (Light Armor)",
+                "Mithral (Medium Armor)",
+                "Mithral (Shield)",
+                "NONLETHAL",
+                "OBSIDIAN",
+                "Prehensile",
+                "REACH",
+                "ROPE",
+                "Restful",
+                "STEEL",
+                "Sneaky",
+                "Spiteful",
+                "TRIP",
+                "Trackless",
+                "WOOD",
+                "Wooden",
+            ],
+            "a cross-book identity collision outside this pinned set means a newly ambiguous id \
+             that callers must be told how to disambiguate"
         );
 
         // The collision itself, stated explicitly rather than left implicit

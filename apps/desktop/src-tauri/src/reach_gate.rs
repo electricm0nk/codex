@@ -878,6 +878,11 @@ fn reach_of(family: &Family) -> Option<Reach> {
                 .map(|entry| entry.key.to_owned())
                 .collect(),
         )),
+        // UW has NO hand-authored equipment table at all — all 127 of its
+        // catalog rows are corpus gap-lane rows, which `equipment_reach`
+        // unions in itself. The empty seed set here is the literal truth of
+        // this book's hand-authored coverage, not an omission.
+        ("ultimate_wilderness", "equipment") => Some(equipment_reach("UW", BTreeSet::new())),
 
         // Races: `list_race_catalog` serves every race's trait bundle, each
         // row carrying the trait's own name and derivation prose, rendered by
@@ -1148,6 +1153,20 @@ fn spells_reach(wire_book: &str, ingested: BTreeSet<String>) -> Reach {
 /// makes the claim per-book honest: a key that only another book serves must
 /// not count as this book's record arriving.
 fn equipment_reach(wire_book: &str, ingested: BTreeSet<String>) -> Reach {
+    // The corpus gap lane (`epic-4-proven-equip-mod`) ingested 769 equipment /
+    // equipment-modifier records that no hand-authored per-book table holds.
+    // They are unioned into the CLAIM, not merely into the catalog: a gate
+    // that widened only what the surface serves, while leaving the ingested
+    // set at the hand tables alone, would assert nothing about the new rows
+    // and would go on passing if every one of them silently stopped reaching
+    // the picker.
+    let mut ingested = ingested;
+    ingested.extend(
+        codex::rules_core::rules_tables::equipment_gap_tables::equipment_gap_rows()
+            .filter(|row| row.book == wire_book)
+            .map(|row| row.key.to_owned()),
+    );
+
     let response = crate::equipment_catalog::build_equipment_catalog();
     let mut with_payload = BTreeSet::new();
     let mut identity_only = BTreeSet::new();

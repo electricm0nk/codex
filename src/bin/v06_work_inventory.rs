@@ -946,6 +946,10 @@ fn equipment_book_slug_for(short_code: &str) -> &'static str {
         "UM" => "ultimate_magic",
         "UPSI" => "ultimate_psionics",
         "UC" => "ultimate_combat",
+        // SD-29 `epic-4-proven-equip-mod`: UW has no hand-authored equipment
+        // table; all 127 of its catalog rows come from
+        // `rules_tables::equipment_gap_tables`.
+        "UW" => "ultimate_wilderness",
         other => panic!(
             "equipment_resolver::equipment_catalog_rows() now carries an unmapped book code \
              {other:?} -- add it to equipment_book_slug_for so the equipment classifier does \

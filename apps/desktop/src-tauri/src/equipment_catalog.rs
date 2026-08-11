@@ -58,7 +58,7 @@ use codex::rules_core::pcgen_desc::render_pcgen_desc;
 use codex::rules_core::rules_tables::{
     acg, advanced_race_guide as arg, apg, beastiary1, crb, pathfinder_unchained as pu,
     ultimate_combat as uc, ultimate_equipment as ue, ultimate_intrigue as ui,
-    ultimate_magic as um, ultimate_psionics as upsi,
+    equipment_gap_tables, ultimate_magic as um, ultimate_psionics as upsi,
 };
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -322,6 +322,23 @@ fn map_uc_entry(entry: &uc::equipment_tables::EquipmentTableEntry) -> EquipmentC
     }
 }
 
+/// One corpus-recovered gap row. Unlike the per-book maps above, this row
+/// already carries its own `book` code and category string — the generated
+/// table is one flat shape across every book, so there is one mapper rather
+/// than nine.
+fn map_gap_entry(
+    row: &equipment_gap_tables::EquipmentGapRow,
+) -> EquipmentCatalogEntryDto {
+    EquipmentCatalogEntryDto {
+        key: row.key.to_string(),
+        category: row.category.to_string(),
+        name: row.name.to_string(),
+        cost_gp: row.cost_gp,
+        book: row.book.to_string(),
+        description: row.description.map(serve_description),
+    }
+}
+
 /// Build the full catalog response across every ingested book. A thin,
 /// testable wrapper behind the Tauri command below (mirroring this
 /// codebase's other command/pure-fn split, e.g.
@@ -349,6 +366,13 @@ pub fn build_equipment_catalog() -> EquipmentCatalogResponse {
         .chain(upsi::equipment_tables::equipmod_tables().iter().map(map_upsi_entry))
         .chain(uc::equipment_tables::equipment_tables().iter().map(map_uc_entry))
         .chain(uc::equipment_tables::equipmod_tables().iter().map(map_uc_entry))
+        // The corpus gap lane (`epic-4-proven-equip-mod`): every equipment /
+        // equipment-modifier record that belongs to one of these already-
+        // compiled books and that no hand-authored table holds. These reach
+        // the player through exactly this chain — the picker, the catalog
+        // screen and `list_equipment` all read this one response — so the
+        // rows are surfaced, not merely resolvable.
+        .chain(equipment_gap_tables::equipment_gap_rows().map(map_gap_entry))
         .collect();
 
     EquipmentCatalogResponse { entries }
@@ -656,14 +680,14 @@ mod tests {
         // Real corpus coverage, not a target: CRB and ARG carry template and
         // bookkeeping rows with no `DESC:` token at all, and that gap is
         // documented on `crb::equipment_tables::EquipmentTableEntry`.
-        assert_eq!(with_description("CRB"), 2021);
-        assert_eq!(with_description("APG"), 331);
+        assert_eq!(with_description("CRB"), 2022);
+        assert_eq!(with_description("APG"), 349);
         assert_eq!(with_description("ACG"), 264);
         assert_eq!(with_description("B1"), 4);
         assert_eq!(with_description("ARG"), 194);
         assert_eq!(with_description("PU"), 42);
         assert_eq!(with_description("UI"), 41);
-        assert_eq!(with_description("UE"), 435);
+        assert_eq!(with_description("UE"), 448);
         // 24 of UM's 26 (both Scrollmaster Gear ArmsArmor rows carry no
         // `DESC:` token; all 24 General spellbooks do).
         assert_eq!(with_description("UM"), 24);
@@ -674,9 +698,12 @@ mod tests {
         // weapons) carry no `SPROP:` token at all, matching every other
         // book's own weapon-heavy shortfall.
         assert_eq!(with_description("UC"), 88);
+        // UW reaches this catalog only through the corpus gap lane; 57 of its
+        // 127 rows carry a real `DESC:`/`SPROP:` token.
+        assert_eq!(with_description("UW"), 57);
         assert_eq!(
             response.entries.iter().filter(|e| e.description.is_some()).count(),
-            3755
+            3844
         );
     }
 
@@ -711,21 +738,21 @@ mod tests {
     fn catalog_spans_every_ingested_book_with_their_real_counts() {
         let response = build_equipment_catalog();
 
-        assert_eq!(count_by_book(&response, "CRB"), 2977);
-        assert_eq!(count_by_book(&response, "APG"), 338);
-        assert_eq!(count_by_book(&response, "ACG"), 269);
+        assert_eq!(count_by_book(&response, "CRB"), 3312);
+        assert_eq!(count_by_book(&response, "APG"), 375);
+        assert_eq!(count_by_book(&response, "ACG"), 319);
         assert_eq!(count_by_book(&response, "B1"), 4);
-        assert_eq!(count_by_book(&response, "ARG"), 200);
+        assert_eq!(count_by_book(&response, "ARG"), 215);
         assert_eq!(count_by_book(&response, "PU"), 42);
         // 91 equipment + 7 equipmods -- see `ultimate_intrigue::equipment_tables`'s
         // own doc comment for why 7, not the 14 `work-inventory.json` reports.
-        assert_eq!(count_by_book(&response, "UI"), 98);
+        assert_eq!(count_by_book(&response, "UI"), 105);
         // 1,369 equipment + 180 equipmods -- see
         // `ultimate_equipment::equipment_tables`'s own doc comment for the
         // full raw/dupe/collision reconciliation (1,425 raw - 1 same-book
         // dupe - 55 cross-book collisions = 1,369; 190 raw - 10 collisions
         // = 180).
-        assert_eq!(count_by_book(&response, "UE"), 1549);
+        assert_eq!(count_by_book(&response, "UE"), 1614);
         // 24 General (pregenerated spellbooks) + 2 ArmsArmor (Scrollmaster
         // Gear); no `um_equipmods.lst` file exists for this book. Matches
         // `equipment_resolver::EQUIPMENT_BOOK_UM`'s own pinned 26.
@@ -733,18 +760,27 @@ mod tests {
         // 326 equipment + 113 equipmods (the `VISIBLE:NO` `.COPY=`
         // legacy-alias-excluded count). Matches
         // `equipment_resolver::EQUIPMENT_BOOK_UPSI`'s own pinned 439.
-        assert_eq!(count_by_book(&response, "UPSI"), 439);
+        assert_eq!(count_by_book(&response, "UPSI"), 552);
         // 185 equipment (26 General + 10 MagicItems + 149 ArmsArmor) + 19
         // equipmods (39 raw lines minus 20 VISIBLE:NO .COPY= legacy
         // aliases). Matches `equipment_resolver::EQUIPMENT_BOOK_UC`'s own
         // pinned 204.
-        assert_eq!(count_by_book(&response, "UC"), 204);
+        assert_eq!(count_by_book(&response, "UC"), 224);
 
-        // 2977 + 338 + 269 + 4 + 200 + 42 + 98 + 1549 + 26 + 439 + 204.
+        // UW: 127 rows, every one of them from the corpus gap lane -- this
+        // book has no hand-authored equipment table at all, so before that
+        // lane landed it served ZERO rows here despite already being a
+        // compiled rule set whose feats and archetypes reach the player.
+        assert_eq!(count_by_book(&response, "UW"), 127);
+
+        // 3312 + 375 + 319 + 4 + 215 + 42 + 105 + 1614 + 26 + 552 + 224 + 127.
         // Pinned as a total as well as per book so that a book silently
         // dropping out of the chain cannot be masked by another book
-        // growing.
-        assert_eq!(response.entries.len(), 6146);
+        // growing. The +769 over the previous 6146 is exactly the corpus
+        // gap lane's row count (`tests/equipment_gap_tables.rs` pins the
+        // per-book split against `docs/work-inventory.json`'s own
+        // `not-ingested` population).
+        assert_eq!(response.entries.len(), 6915);
     }
 
     #[test]
@@ -766,21 +802,21 @@ mod tests {
         let response = build_equipment_catalog();
 
         // CRB — unchanged by the widening; the pre-existing pins.
-        assert_eq!(count_by_book_category(&response, "CRB", "ArmsArmor"), 310);
-        assert_eq!(count_by_book_category(&response, "CRB", "General"), 453);
+        assert_eq!(count_by_book_category(&response, "CRB", "ArmsArmor"), 312);
+        assert_eq!(count_by_book_category(&response, "CRB", "General"), 454);
         assert_eq!(count_by_book_category(&response, "CRB", "MagicItems"), 1556);
-        assert_eq!(count_by_book_category(&response, "CRB", "Equipmods"), 658);
+        assert_eq!(count_by_book_category(&response, "CRB", "Equipmods"), 990);
 
         // APG — no `apg_equipmods.lst` in the corpus, so no Equipmods rows.
         assert_eq!(count_by_book_category(&response, "APG", "ArmsArmor"), 75);
         assert_eq!(count_by_book_category(&response, "APG", "General"), 93);
         assert_eq!(count_by_book_category(&response, "APG", "MagicItems"), 170);
-        assert_eq!(count_by_book_category(&response, "APG", "Equipmods"), 0);
+        assert_eq!(count_by_book_category(&response, "APG", "Equipmods"), 37);
 
         assert_eq!(count_by_book_category(&response, "ACG", "ArmsArmor"), 20);
-        assert_eq!(count_by_book_category(&response, "ACG", "General"), 60);
+        assert_eq!(count_by_book_category(&response, "ACG", "General"), 62);
         assert_eq!(count_by_book_category(&response, "ACG", "MagicItems"), 141);
-        assert_eq!(count_by_book_category(&response, "ACG", "Equipmods"), 48);
+        assert_eq!(count_by_book_category(&response, "ACG", "Equipmods"), 96);
 
         // Bestiary 1 — 4 monster-intrinsic items, and genuinely no
         // `b1_equipmods.lst` file at all.
@@ -789,10 +825,10 @@ mod tests {
         assert_eq!(count_by_book_category(&response, "B1", "MagicItems"), 1);
         assert_eq!(count_by_book_category(&response, "B1", "Equipmods"), 0);
 
-        assert_eq!(count_by_book_category(&response, "ARG", "ArmsArmor"), 28);
+        assert_eq!(count_by_book_category(&response, "ARG", "ArmsArmor"), 29);
         assert_eq!(count_by_book_category(&response, "ARG", "General"), 79);
         assert_eq!(count_by_book_category(&response, "ARG", "MagicItems"), 78);
-        assert_eq!(count_by_book_category(&response, "ARG", "Equipmods"), 15);
+        assert_eq!(count_by_book_category(&response, "ARG", "Equipmods"), 29);
 
         // PU has no category enum: every row is an `pu_equipmods.lst`
         // equipment modifier, so all 42 land in Equipmods and nowhere else.
@@ -999,11 +1035,50 @@ mod tests {
         ]
         .into_iter()
         .collect();
+        // The pinned set above is the HAND-AUTHORED baseline, so it is
+        // asserted against the hand-authored rows alone. Recomputed here by
+        // removing every `(book, key)` pair the corpus gap lane contributes,
+        // which keeps the original UC/UE review intact instead of dissolving
+        // it into a larger, unreviewed set.
+        let gap_pairs: BTreeSet<(&str, &str)> =
+            equipment_gap_tables::equipment_gap_rows().map(|r| (r.book, r.key)).collect();
+        let mut hand_books_per_key: BTreeMap<&str, BTreeSet<&str>> = BTreeMap::new();
+        for entry in &response.entries {
+            let pair = (entry.book.as_str(), entry.key.as_str());
+            if gap_pairs.contains(&pair) {
+                continue;
+            }
+            hand_books_per_key.entry(entry.key.as_str()).or_default().insert(entry.book.as_str());
+        }
+        let hand_cross_book: BTreeSet<&str> = hand_books_per_key
+            .iter()
+            .filter(|(_, books)| books.len() > 1)
+            .map(|(key, _)| *key)
+            .collect();
         assert_eq!(
-            cross_book, expected_cross_book,
-            "cross-book equipment key collisions changed -- every UC/UE reprint pair is named \
-             above; a key outside that set is a new, unreviewed collision"
+            hand_cross_book, expected_cross_book,
+            "cross-book equipment key collisions among the HAND-AUTHORED tables changed -- \
+             every UC/UE reprint pair is named above; a key outside that set is a new, \
+             unreviewed collision"
         );
+
+        // The corpus gap lane (`epic-4-proven-equip-mod`) raises the
+        // cross-book total from 136 to 203, and that is the CORRECT answer
+        // rather than a defect to dedupe away: an item Ultimate Equipment
+        // reprints out of the Core Rulebook is a record in BOTH books, and
+        // this lane's whole predicate is "a record this book's own table does
+        // not hold". Each DTO carries its own `book` tag, so the catalog
+        // shows the CRB copy as CRB's and the UE copy as UE's. What is
+        // asserted here is that every collision the lane introduced actually
+        // involves a gap row -- a new collision between two hand tables would
+        // still fail, above.
+        assert_eq!(cross_book.len(), 203);
+        for key in cross_book.difference(&expected_cross_book) {
+            assert!(
+                gap_pairs.iter().any(|(_, gap_key)| gap_key == key),
+                "new cross-book collision {key:?} involves no gap row -- unreviewed"
+            );
+        }
 
         // 316 keys appear twice within CRB alone (e.g. `Holy Symbol
         // (Silver)`). That is a pre-existing property of
@@ -1065,9 +1140,9 @@ mod tests {
             book: None,
         });
 
-        // 310 CRB + 75 APG + 20 ACG + 2 B1 + 28 ARG + 0 PU + 14 UI + 269 UE
-        // + 2 UM + 52 UPSI + 149 UC.
-        assert_eq!(response.entries.len(), 921);
+        // 312 CRB + 75 APG + 20 ACG + 2 B1 + 29 ARG + 0 PU + 14 UI + 281 UE
+        // + 2 UM + 52 UPSI + 149 UC + 1 UW.
+        assert_eq!(response.entries.len(), 937);
         for entry in &response.entries {
             assert_eq!(entry.category, "ArmsArmor");
         }
@@ -1076,12 +1151,15 @@ mod tests {
     #[test]
     fn filter_equipment_catalog_narrows_to_one_book() {
         for (book, expected) in [
-            ("CRB", 2977),
-            ("APG", 338),
-            ("ACG", 269),
+            ("CRB", 3312),
+            ("APG", 375),
+            ("ACG", 319),
             ("B1", 4),
-            ("ARG", 200),
+            ("ARG", 215),
             ("PU", 42),
+            // UW is filterable only because the corpus gap lane put it in
+            // the catalog at all.
+            ("UW", 127),
         ] {
             let response = filter_equipment_catalog(&EquipmentCatalogFilter {
                 name_contains: None,

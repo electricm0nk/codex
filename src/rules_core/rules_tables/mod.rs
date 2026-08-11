@@ -15,6 +15,7 @@ pub mod archetype_swap;
 pub mod beastiary1;
 pub mod class_spell_levels;
 pub mod crb;
+pub mod equipment_gap_tables;
 pub mod feats_all;
 pub mod pathfinder_unchained;
 pub mod ultimate_campaign;
