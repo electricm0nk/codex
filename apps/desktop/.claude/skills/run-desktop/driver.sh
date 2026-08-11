@@ -52,6 +52,14 @@ XVFB_LOG_FILE="/tmp/run-desktop-driver-${AGENT_ID}.xvfb.log"
 # time, then reported the app as crashed. Override for a slower box.
 WINDOW_TIMEOUT_SECS="${RUN_DESKTOP_WINDOW_TIMEOUT:-180}"
 
+# How long to wait for the binary to appear at all. `launch` runs
+# `npx tauri dev`, so this budget has to cover COMPILING the crate, not just
+# starting it. Observed on this box: a launch expired at 346s with the log
+# reading `Building 495/496: codex-desktop(bin)` — one crate unit short of
+# running. Any sibling commit touching a dependency forces that full rebuild,
+# which on 4 contended cores takes longer than the old 300s allowed.
+LAUNCH_TIMEOUT_SECS="${RUN_DESKTOP_LAUNCH_TIMEOUT:-900}"
+
 # Every process that is OUR app on OUR display.
 #
 # Two independent match sources, because neither alone is sufficient:
@@ -198,7 +206,7 @@ cmd_launch() {
   # compiling. That produced a "no window appeared" failure whose real cause
   # was that the app had not started yet.
   local ready=""
-  for _ in $(seq 1 300); do
+  for _ in $(seq 1 "$LAUNCH_TIMEOUT_SECS"); do
     if [ -n "$(our_app_pids)" ]; then
       ready=1
       break
@@ -210,7 +218,7 @@ cmd_launch() {
     fi
     sleep 1
   done
-  [ -n "$ready" ] || { echo "Timed out waiting for the app process to start; see $LOG_FILE" >&2; cmd_diagnose >&2; exit 1; }
+  [ -n "$ready" ] || { echo "Timed out after ${LAUNCH_TIMEOUT_SECS}s waiting for the app process to start (it may still have been compiling — check the log tail below for a 'Building N/M' line, and raise RUN_DESKTOP_LAUNCH_TIMEOUT if so); see $LOG_FILE" >&2; cmd_diagnose >&2; exit 1; }
 
   # Find the app window by its configured title (tauri.conf.json app.windows[0].title).
   # This also incidentally proves the window title is what it's supposed to be.
@@ -385,6 +393,7 @@ case "${1:-}" in
   _display_num) echo "$DISPLAY_NUM" ;;
   _app_pid) our_app_pids ;;
   _window_timeout) echo "$WINDOW_TIMEOUT_SECS" ;;
+  _launch_timeout) echo "$LAUNCH_TIMEOUT_SECS" ;;
   _diagnose) shift; cmd_diagnose "$@" ;;
   *)
     echo "Usage: driver.sh {launch|screenshot|focus|click|scroll|type|key|title|geometry|logs|diagnose|stop}" >&2

@@ -4359,3 +4359,164 @@ book-scoped assertions in files that never mention the book.
 
 **Second run:** `cargo test --locked -j 2` in `apps/desktop/src-tauri` → **421 passed, 0 failed**,
 which covers both the `desktop` and `reach` stages' scope.
+
+---
+
+## Cycle — epic-13-desktop-driver-fix (SD29-E13-F1-001)
+
+**Actor:** `sd29-driver-fix` · **Branch:** `tranche/9` · **Commits:** `46c4f6ce`, `<second commit>` ·
+**PR:** #360 (open, NOT merged) · **Date:** 2026-08-11
+
+### Worktree integrity
+**No recovery needed.** Ran in the main checkout, not a dispatch worktree.
+`docs/release/SD-29-corpus-wide-catch-up-lanes/loop-instruction.md` was present;
+`git merge-base --is-ancestor origin/tranche/9 HEAD` → HEAD descends from `origin/tranche/9`
+(`0b23f4f3`). No `git fetch && git reset --hard` required.
+
+### Verdict: the app was never broken; the driver's failure path was
+
+Run 1's blocker report — "`driver.sh launch` … then the binary EXITS before any window appears",
+reported independently by three cycles, with `libEGL warning: DRI3 error` as the only diagnostic —
+is **false in both halves**. Ruling and full evidence: `decisions.md` **Decision 43**.
+
+**Re-derived, bypassing the driver** (the command, not the value):
+
+| claim | command | result |
+|---|---|---|
+| the binary exits | `DISPLAY=:67 timeout 60 ./apps/desktop/src-tauri/target/debug/codex-desktop; echo $?` | **124** — still running when the timeout killed it |
+| no window appears | `DISPLAY=:67 xdotool search --name ""` + `xprop WM_NAME` per window | `WM_NAME=codex-desktop` at once; **`WM_NAME=Codex` ~35s** after start |
+| host is headless | `which Xvfb xvfb-run` | both present; the driver already provisions Xvfb |
+| DRI3 is the cause | compared against successful launches | printed on **every** successful headless launch — software-rendering fallback, not an error |
+
+**Why every cycle nevertheless saw an empty process table.** `cmd_launch` sets
+`trap 'cmd_stop || true' EXIT INT TERM`, so any launch failure killed the app *and* Xvfb on the way
+out. Every post-mortem `pgrep` ran after the evidence was destroyed. The driver was manufacturing
+the symptom that was then attributed to the app.
+
+**Item 8 is NOT weakened.** No edit was made to `loop-instruction.md`.
+
+### Three defects fixed, all in `apps/desktop/.claude/skills/run-desktop/driver.sh`
+
+1. **Readiness poll was not display-scoped** — `pgrep -f "target/debug/codex"` matched any agent's
+   app (`SKILL.md`'s own "known gap, still live"), so a sibling's process satisfied it before this
+   agent's binary started; run 1 dispatched six concurrent agents. It also matched **nothing** when
+   `CARGO_TARGET_DIR` moved the binary out of `target/debug/` — which every dispatched agent does.
+   Now `our_app_pids()`: executable-name match, filtered by the candidate's own `DISPLAY` environ.
+2. **Window-search budget had no headroom** — 90 × `sleep 0.5` = **45s** against a measured **~35s**
+   idle cold start. Now **180s** (`RUN_DESKTOP_WINDOW_TIMEOUT`).
+3. **`cmd_stop` killed unrelated processes** — `pkill -9 -f "Xvfb :$N "` matches any command line
+   containing that text. **It killed this cycle's own shell twice**, each time producing no output
+   and no error — indistinguishable from the app dying. Now matched on executable name + the actual
+   display argument.
+
+A fourth, found by using the fixed driver for real: **the readiness budget must cover a cold
+build.** A launch expired at 346s with the log reading `Building 495/496: codex-desktop(bin)` — one
+crate unit short. Now **900s** (`RUN_DESKTOP_LAUNCH_TIMEOUT`).
+
+All failure paths now call `cmd_diagnose` **before** cleanup (app liveness, full window inventory
+with `WM_NAME`s, log tail), and distinguish "app exited" from "app running, no window". `SKILL.md`
+was corrected — it documented the now-closed gap as live and misread DRI3 as an error.
+
+### Gate coverage — new `driver-selftest` stage
+
+`scripts/tests/test_run_desktop_driver.sh`, **7 cases**, wired into `scripts/verify.sh` in **both**
+the full and quick sets (no build, no display, seconds). Shape and 0-cases-ran guard copied from the
+existing `audit-selftest` stage.
+
+**Detection power verified, not assumed.** Each case was re-run against deliberately-regressed
+driver copies: un-scoping readiness fails case 1; restoring the substring `pkill` fails case 3.
+**That check caught two cases in the first draft that asserted nothing** — `kill -0` succeeds on a
+zombie (a SIGKILLed child read as alive), and `bash -c "echo …; sleep 300"` is exec-optimized so the
+decoy's cmdline never contained the pattern. Both passed against a demonstrably broken driver until
+the regression check exposed them. Emitted as a self-correction event.
+
+### Definition of done — item 8 backfill, on screen
+
+Driven with the fixed driver (`launch` exit **0**, 48s warm). Screenshots in
+`artifacts/desktop-driver-fix/`:
+
+| # | surface | what is actually on screen |
+|---|---|---|
+| 01 | Character hub | renders; five catalog entry points |
+| 02 | **Equipment Catalog** | **6915 items across 12 books** (CRB 3312, APG 375, ACG 319, B1 4, ARG 215, PU 42, UC 224, UE 1614, UI 105, UM 26, UPSI 552, UW 127); real prices (0.05 gp, 0.1 gp, 0.2 gp) and real descriptions |
+| 03 | **Spell Catalog** | **1286 spells** (CRB 652, APG 297, ACG 144, ARG 92, UI 101); real levels and full published text |
+| 04 | **Race Traits** (standard) | **173 rows across 18 races**; real magnitudes (+2, +5, +30, +60) |
+| 05 | **Monster Catalog** | **60 monsters**, Bestiary 1 + Bonus Bestiary; CR, speed, page cites, attack dice, and honest provenance labels (`(corpus row)` vs `(grounded from published text)`) |
+| 06-07 | Race Traits (alternates) | 157 alternates across 18 races; per-race panels with `Replaces <trait>` |
+
+Every player-visible family run 1 ingested without item 8 now has on-screen evidence. **No
+wired-to-a-twin defect was found in them** — each screen renders engine values with book
+attribution, and the equipment/spell screens state their own non-invention rules on screen.
+
+### Verification
+
+`./scripts/verify.sh` (FULL, `-j 2`, exit code captured directly, never through a pipe) →
+**exit code 1**. **11 of 13 stages passed**, including the new stage:
+
+```
+passed: 11  preflight-disk pi-sweep audit-selftest driver-selftest root-lib root-full
+            frontend-install frontend-test frontend-typecheck clippy class-dump
+FAILED:  2  desktop reach
+```
+
+`root-full`: **6173 passed across 543 suites, all 524 `tests/*.rs` suites executed.**
+`driver-selftest`: **7 passed, 0 failed.**
+
+**The 2 failures are attributed, not excused — and they are not this card's.** All 9 failing tests
+assert on `monster_codex` race traits (`race_catalog`, `race_trait_picker`, `reach_gate`):
+`left: 157, right: 153`, `Duergar ~ Ironskinned book MC vs ARG`, and
+`monster_codex/race_traits: 1 ingested record … never appear (e.g. Oversized Goblin)`.
+
+Attribution by command:
+- `git show --name-only --pretty=format: 46c4f6ce | grep -c '\.rs$'` → **0**. This card's commit
+  contains **zero Rust**; it cannot turn a Rust test red.
+- `git log --oneline -- data/corpus/monster_codex` → **`378c615a` "feat(sd29): re-pin the race-trait
+  pilot to monster_codex and land its ingest"**, landed *after* `46c4f6ce`, adding 5 monster_codex
+  race-trait records (153 → 157) while the count pins in `race_trait_picker.rs` / `race_catalog.rs`
+  / `reach_gate.rs` were still uncommitted in the shared tree.
+- The concurrent lane has since landed **`fff50576` "fix(sd29): record the Oversized Goblin reach
+  gap and widen ARG-only assertions"**, and the working tree is now clean of those edits.
+
+These belong to card `epic-6-race-trait-lane-pilot`, in flight during this cycle. Per the card's
+instruction, **not fixed inside this card.**
+
+Also recorded (baseline notes, not failures): `BASELINE_ROOT_LIB_TESTS` 1604→1615,
+`BASELINE_ROOT_FULL_TESTS` 6138→6173, `BASELINE_ROOT_TEST_BINARIES` 539→543 are stale in
+`scripts/verify-baselines.env`. Left for the owning lane to update deliberately.
+
+### Defaults taken under UNATTENDED MODE (no operator asked)
+
+1. **Did not export `CARGO_TARGET_DIR` for `driver.sh`.** The app's own
+   `apps/desktop/src-tauri/target` already held a built binary; a per-agent dir would have forced an
+   ~18 G duplicate build with the disk already at 80%. `CARGO_TARGET_DIR` *was* used for
+   `verify.sh`, and that dir was deleted at cycle end.
+2. **Committed with a pathspec, not `git add -A`.** Another agent held uncommitted work in this
+   shared checkout throughout (`race_catalog.rs`, `reach_gate.rs`, `src/bin/ingest_race_traits.rs`,
+   `data/corpus/monster_codex/`, SD-30 docs) and had files **already staged in the shared index**.
+   `git commit -F <msg> -- <my paths>` committed exactly this card's 8 files and left their staged
+   entries intact. `git status` was run before every git write; `git stash` was never used.
+3. **Did not re-run the full gate after the concurrent lane landed `fff50576`.** A second 45-minute
+   full sweep on a disk at 97% used, against a tree with a live second writer, would not have
+   produced a cleaner signal than the attribution above.
+
+### Incidents recorded
+
+- **`desktop-driver-oom-under-concurrent-build`** — this box has **22 GiB RAM and zero swap**
+  (`free -h`). Launching the app while `root-full` was building at load average 21 got the vite dev
+  server **OOM-killed**; the new diagnostics correctly reported `Killed` and
+  `The "beforeDevCommand" terminated with a non-zero status code` rather than blaming the binary.
+  **On-screen verification and a full gate must not run concurrently on this host.** Very likely a
+  second contributor to run 1's driver failures (six agents on 4 cores).
+- **Disk reached 97% used / 18 G available** during this cycle, with three `verify.sh` runs
+  concurrent on 4 cores and two of them interleaving into one log. This cycle's own 23 G
+  `CARGO_TARGET_DIR` was deleted at cycle end.
+
+### Files
+
+`apps/desktop/.claude/skills/run-desktop/driver.sh`, `…/SKILL.md`,
+`scripts/tests/test_run_desktop_driver.sh` (new), `scripts/verify.sh`,
+`docs/release/SD-29-corpus-wide-catch-up-lanes/{kanban.md,decisions.md}`,
+`…/artifacts/desktop-driver-fix/*.png`, `docs/retro/events/sd29-driver-fix.jsonl`.
+
+**Card `epic-13-desktop-driver-fix` → COMPLETE.** Item 8 is satisfiable again and is now defended by
+a gate stage.

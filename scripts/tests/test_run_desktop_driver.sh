@@ -215,5 +215,21 @@ else
          "_window_timeout printed '${budget}'; a cold WebKitGTK start measured ~35s idle and run 1 ran 6 agents on 4 cores"
 fi
 
+# ---------------------------------------------------------------------------
+# Case 6: the readiness budget covers a COLD BUILD, not just a warm start.
+# `launch` runs `npx tauri dev`, which compiles the crate before the binary
+# exists at all. Observed on this box: a launch died at 346s with the log
+# showing `Building 495/496: codex-desktop(bin)` — the app was 1 crate unit
+# from starting. Any sibling commit that touches a dependency forces that
+# rebuild, so the budget has to cover a full link, not an incremental one.
+# ---------------------------------------------------------------------------
+launch_budget="$("$DRIVER" _launch_timeout 2>/dev/null)"
+if [[ "$launch_budget" =~ ^[0-9]+$ ]] && (( launch_budget >= 600 )); then
+    ok "readiness budget covers a cold build (is ${launch_budget}s)"
+else
+    nope "readiness budget covers a cold build" \
+         "_launch_timeout printed '${launch_budget}'; a real launch was still at 'Building 495/496' when a 300s budget expired"
+fi
+
 printf '\npassed: %d  failed: %d\n' "$passed" "$failed"
 (( failed == 0 ))
