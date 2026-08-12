@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1",
+    "corpus_key": "Solifugid (Giant)",
+    "external_ability_refs": [
+      "Rend"
+    ],
+    "key": "bestiary_2:monster:solifugid_giant",
+    "monster_class": "Vermin:2",
+    "name": "Solifugid (Giant)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d3",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "S",
+    "source_page": "p.253",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 813,
+    "record_key": "Solifugid (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

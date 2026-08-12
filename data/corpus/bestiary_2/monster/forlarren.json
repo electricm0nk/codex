@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Forlarren",
+    "external_ability_refs": [
+      "Forlarren ~ Remorse"
+    ],
+    "key": "bestiary_2:monster:forlarren",
+    "monster_class": "Fey:4",
+    "name": "Forlarren",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.125",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 372,
+    "record_key": "Forlarren"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

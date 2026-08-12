@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Brijidine ~ Heat Stone",
+    "delivery": "Supernatural",
+    "description": "Whenever a brijidine uses her meld into stone, soften earth and stone, spike stones, stone shape, or wall of stone spell-like abilities, she can have the affected stone radiate intense heat for 1 minute.  Any creature within 5 feet of the stone takes 1d6 fire damage per round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:brijidine_heat_stone",
+    "name": "Heat Stone",
+    "owners": [
+      "bestiary_2:monster:azata_brijidine"
+    ],
+    "source_page": "p.37",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 150,
+    "record_key": "Brijidine ~ Heat Stone"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

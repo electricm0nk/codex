@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Grig ~ Fiddle",
+    "delivery": "Supernatural",
+    "description": "Grigs are capable of rubbing their legs together like a cricket to create a surprisingly pleasant sound not unlike that of a tiny fiddle.  As a standard action, a grig can create a catchy tune that compels any creature within a 20-foot spread to dance and caper.  A creature can resist this compulsion by making a DC %1 Will save.  Creatures that fail are compelled to dance and shuffle their feet, and are effectively staggered as long as the grig continues to fiddle.  A grig can maintain this effect for up to 10 rounds per day by concentrating.  Once a creature makes a save against a grig's fiddle, it is immune to further fiddle effects from that grig for 24 hours.  This is a sonic mind-affecting effect.",
+    "description_variables": [
+      "GrigFiddleDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:grig_fiddle",
+    "name": "Fiddle",
+    "owners": [
+      "bestiary_2:monster:grig"
+    ],
+    "source_page": "p.147",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 649,
+    "record_key": "Grig ~ Fiddle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

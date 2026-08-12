@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:leukodaemon_breath_of_flies",
+      "bestiary_2:monster_ability:leukodaemon_contagion"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Daemon (Leukodaemon)",
+    "external_ability_refs": [
+      "Deathwatch ~ Constant",
+      "Detect Good ~ Constant",
+      "Flight Maneuverability",
+      "Leukodaemon ~ Infectious Aura"
+    ],
+    "key": "bestiary_2:monster:daemon_leukodaemon",
+    "monster_class": "Outsider (Ref/Will):10",
+    "name": "Daemon (Leukodaemon)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Daemon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.68",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 225,
+    "record_key": "Daemon (Leukodaemon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

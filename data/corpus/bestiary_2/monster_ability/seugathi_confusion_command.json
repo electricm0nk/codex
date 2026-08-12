@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Seugathi ~ Confusion Command",
+    "delivery": "Supernatural",
+    "description": "As an immediate action, a seugathi can issue a telepathic command to a confused creature within 30 feet.  This allows the seugathi to pick a result from the confusion behavior table, rather than the confused creature rolling randomly for its actions that round.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:seugathi_confusion_command",
+    "name": "Confusion Command",
+    "owners": [
+      "bestiary_2:monster:seugathi"
+    ],
+    "source_page": "p.243",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1128,
+    "record_key": "Seugathi ~ Confusion Command"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

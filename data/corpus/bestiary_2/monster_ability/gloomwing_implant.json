@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Gloomwing ~ Implant",
+    "delivery": "Extraordinary",
+    "description": "A gloomwing can lay eggs inside a Small or larger helpless or dead creature as a full-round action that provokes attacks of opportunity.  A creature implanted with gloomwing eggs must make a DC %1 Fortitude save each morning to avoid suffering 1d4 points of Constitution damage.  Within 24 hours of a creature's death from this damage, 1d4 young tenebrous worms (see page 259) emerge from the corpse, devouring it completely in the process.  The eggs can be destroyed via any effect that cures disease, but the eggs themselves are not treated as a disease for the purposes of what creatures are immune to this effect.",
+    "description_variables": [
+      "GloomwingImplantDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:gloomwing_implant",
+    "name": "Implant",
+    "owners": [
+      "bestiary_2:monster:gloomwing"
+    ],
+    "source_page": "p.133",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 583,
+    "record_key": "Gloomwing ~ Implant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

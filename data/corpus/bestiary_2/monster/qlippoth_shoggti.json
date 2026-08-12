@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:shoggti_braincloud",
+      "bestiary_2:monster_ability:shoggti_horrific_appearance"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Qlippoth (Shoggti)",
+    "external_ability_refs": [
+      "Constrict",
+      "Grab ~ Tentacle",
+      "Tongues ~ Constant",
+      "Uncanny Dodge"
+    ],
+    "key": "bestiary_2:monster:qlippoth_shoggti",
+    "monster_class": "Outsider (Fort/Will):7",
+    "name": "Qlippoth (Shoggti)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.225",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 726,
+    "record_key": "Qlippoth (Shoggti)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Lhaksharut ~ Multiweapon Mastery",
+    "delivery": "Extraordinary",
+    "description": "A lhaksharut never takes penalties on its attack rolls when fighting with multiple weapons.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:lhaksharut_multiweapon_mastery",
+    "name": "Multiweapon Mastery",
+    "owners": [
+      "bestiary_2:monster:inevitable_lhaksharut"
+    ],
+    "source_page": "p.164",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 709,
+    "record_key": "Lhaksharut ~ Multiweapon Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

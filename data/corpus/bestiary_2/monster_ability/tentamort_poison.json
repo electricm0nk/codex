@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Tentamort ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting - injury; save Fort DC %1; frequency 2 rounds; effect 1d4 Con plus nausea; cure 1 save.",
+    "description_variables": [
+      "TentamortPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:tentamort_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:tentamort"
+    ],
+    "source_page": "p.261",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1234,
+    "record_key": "Tentamort ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

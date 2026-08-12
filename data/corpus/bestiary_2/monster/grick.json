@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "3",
+    "corpus_key": "Grick",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Cannot Speak",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:grick",
+    "monster_class": "Aberration:5",
+    "name": "Grick",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "M",
+    "source_page": "p.146",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 437,
+    "record_key": "Grick"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

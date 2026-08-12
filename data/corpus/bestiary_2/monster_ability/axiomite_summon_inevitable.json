@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Axiomite ~ Summon Inevitable",
+    "delivery": "SpellLike",
+    "description": "Once per day, four axiomites may join hands to summon a single zelekhut inevitable as a full-round action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:axiomite_summon_inevitable",
+    "name": "Summon Inevitable",
+    "owners": [
+      "bestiary_2:monster:axiomite"
+    ],
+    "source_page": "p.36",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 144,
+    "record_key": "Axiomite ~ Summon Inevitable"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

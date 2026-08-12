@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Clockwork Golem ~ Death Burst",
+    "delivery": "Extraordinary",
+    "description": "When a clockwork golem is reduced to 0 or fewer hit ponts, it explodes in a shower of razor-sharp gears and debris.  All creatures within a 10-foot burst take 12d6 points of slashing damage - a DC %1 Reflex save results in half damage.",
+    "description_variables": [
+      "ClockworkGolemDeathBurstDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:clockwork_golem_death_burst",
+    "name": "Death Burst",
+    "owners": [
+      "bestiary_2:monster:golem_clockwork"
+    ],
+    "source_page": "p.137",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 607,
+    "record_key": "Clockwork Golem ~ Death Burst"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

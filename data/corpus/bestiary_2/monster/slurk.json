@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:slurk_belly_grease",
+      "bestiary_2:monster_ability:slurk_hunker",
+      "bestiary_2:monster_ability:slurk_slime"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Slurk",
+    "external_ability_refs": [
+      "Cannot Speak"
+    ],
+    "key": "bestiary_2:monster:slurk",
+    "monster_class": "Magical Beast:2",
+    "name": "Slurk",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "0",
+        "name": "Slime Squirt"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "M",
+    "source_page": "p.251",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 809,
+    "record_key": "Slurk"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Skulk ~ Chameleon Skin",
+    "delivery": "Extraordinary",
+    "description": "A skulk's racial bonus to Stealth comes from his ability to change the color of his skin to match his surroundings, even complex or regular patterns like bricks and mortar.  A skulk loses this conditional bonus if he is wearing armor, or if he wears any clothing that covers more than one-quarter of his body, as skulks can only change their own flesh, not things they carry.  A skulk normally conceals small items behind his body; by putting his back to a wall and changing his front half, he can hide the item because observers don't have line of sight to the item.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:skulk_chameleon_skin",
+    "name": "Chameleon Skin",
+    "owners": [
+      "bestiary_2:monster:skulk"
+    ],
+    "source_page": "p.248",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1166,
+    "record_key": "Skulk ~ Chameleon Skin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

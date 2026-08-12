@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Thanatotic Titan ~ Godslayer",
+    "delivery": "Supernatural",
+    "description": "When a thanatotic titan damages a creature capable of casting divine spells, that creature must make a DC %1 Will save or be unable to cast any divine spells for 1d4 rounds and be shaken.  If the save is successful, the creature struck is merely shaken for 1 round.  A thanatotic titan's attacks are treated as epic and evil for the purposes of overcoming damage reduction.",
+    "description_variables": [
+      "ThanatoticTitanGodslayerDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:thanatotic_titan_godslayer",
+    "name": "Godslayer",
+    "owners": [
+      "bestiary_2:monster:titan_thanatotic"
+    ],
+    "source_page": "p.267",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1269,
+    "record_key": "Thanatotic Titan ~ Godslayer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

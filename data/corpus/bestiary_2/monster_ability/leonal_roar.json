@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Leonal ~ Roar",
+    "delivery": "Supernatural",
+    "description": "Up to three times per day, a leonal can emit a powerful roar as a standard action.  Each roar affects a 60-foot cone with the effects of a holy word spell and also deals 2d6 points of sonic damage to all creatures in the area (DC %1 Fortitude negates).  This is a sonic effect.",
+    "description_variables": [
+      "LeonalRoarDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:leonal_roar",
+    "name": "Roar",
+    "owners": [
+      "bestiary_2:monster:agathion_leonal"
+    ],
+    "source_page": "p.20",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 65,
+    "record_key": "Leonal ~ Roar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

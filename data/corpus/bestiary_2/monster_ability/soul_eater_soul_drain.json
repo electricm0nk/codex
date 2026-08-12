@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Soul Eater ~ Soul Drain",
+    "delivery": "Supernatural",
+    "description": "If the Wisdom damage from a soul eater's claw attack equals or exceeds an opponent's actual Wisdom score, rendering the victim helpless, the soul eater can devour that creature's soul as a standard action that provokes an attack of opportunity.  This attack kills the victim.  The dead victim can resist having her soul eaten by making a (DC %1) Fortitude save; success means she is still dead, but can be restored to life normally.  If she fails this save, her soul is consumed by the eater.  A victim slain in this manner cannot be returned to life with clone, raise dead, or reincarnation.  She can be restored to life via resurrection, true resurrection, miracle, or wish, but only if the caster can succeed on a DC 30 caster level check.  If the soul eater is killed within 120 feet of its victim's corpse, and the victim has been dead for no longer than 1 minute, the victim's soul returns to her body and restores her to life, leaving her unconscious and at -1 hit point.  This is a death effect.",
+    "description_variables": [
+      "SoulEaterSoulDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:soul_eater_soul_drain",
+    "name": "Soul Drain",
+    "owners": [
+      "bestiary_2:monster:soul_eater"
+    ],
+    "source_page": "p.254",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1195,
+    "record_key": "Soul Eater ~ Soul Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

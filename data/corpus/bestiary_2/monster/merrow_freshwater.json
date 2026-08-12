@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "3",
+    "corpus_key": "Merrow (Freshwater)",
+    "external_ability_refs": [
+      "Amphibious",
+      "Grab ~ Claw"
+    ],
+    "key": "bestiary_2:monster:merrow_freshwater",
+    "monster_class": "Humanoid:4",
+    "name": "Merrow (Freshwater)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Aquatic|Giant",
+    "race_type": "Humanoid",
+    "size": "L",
+    "source_page": "p.189",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 605,
+    "record_key": "Merrow (Freshwater)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

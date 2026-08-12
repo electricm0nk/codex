@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Slithering Tracker ~ Transparent",
+    "delivery": "Extraordinary",
+    "description": "Because of its lack of coloration, a slithering tracker is difficult to discern from its surroundings in most environments.  The slithering tracker gains a +4 racial bonus on Stealth checks as a result, and can move at full speed without taking a penalty on Stealth checks.  A creature that fails to notice a slithering tracker and walks into it automatically takes damage as if struck by the slithering tracker's slam attack and is immediately subject to a grab attempt and paralysis by the ooze.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:slithering_tracker_transparent",
+    "name": "Transparent",
+    "owners": [
+      "bestiary_2:monster:slithering_tracker"
+    ],
+    "source_page": "p.250",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1175,
+    "record_key": "Slithering Tracker ~ Transparent"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

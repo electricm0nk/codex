@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:dullahan_chilling_blade",
+      "bestiary_2:monster_ability:dullahan_death_s_calling",
+      "bestiary_2:monster_ability:dullahan_summon_mount"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Dullahan",
+    "external_ability_refs": [
+      "Channel Resistance",
+      "Fast Healing",
+      "Frightful Presence"
+    ],
+    "key": "bestiary_2:monster:dullahan",
+    "monster_class": "Undead:10",
+    "name": "Dullahan",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.111",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 327,
+    "record_key": "Dullahan"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

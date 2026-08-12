@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Tenebrous Worm ~ Poison",
+    "delivery": "Supernatural",
+    "description": "Bristles - injury; save Fort DC %1, frequency 1/round for 6 rounds, effect paralysis for 1d4 rounds plus 1d2 Con (the duration of the paralysis is cumulative with each failed save), cure 2 consecutive saves.",
+    "description_variables": [
+      "TenebrousWormPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:tenebrous_worm_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:tenebrous_worm"
+    ],
+    "source_page": "p.260",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1230,
+    "record_key": "Tenebrous Worm ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

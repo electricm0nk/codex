@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Redcap ~ Heavy Weapons",
+    "delivery": "Extraordinary",
+    "description": "A redcap can wield weapons sized for Medium creatures without penalty.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:redcap_heavy_weapons",
+    "name": "Heavy Weapons",
+    "owners": [
+      "bestiary_2:monster:redcap"
+    ],
+    "source_page": "p.233",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1066,
+    "record_key": "Redcap ~ Heavy Weapons"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

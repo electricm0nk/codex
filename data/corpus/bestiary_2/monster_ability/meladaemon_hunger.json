@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Meladaemon ~ Hunger",
+    "delivery": "Supernatural",
+    "description": "A meladaemon's claw attack deals an additional 1d6 points of nonlethal damage as it causes sudden pangs of horrific hunger.  Creatures that do not need to eat are immune to this effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:meladaemon_hunger",
+    "name": "Hunger",
+    "owners": [
+      "bestiary_2:monster:daemon_meladaemon"
+    ],
+    "source_page": "p.69",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 306,
+    "record_key": "Meladaemon ~ Hunger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Wendigo ~ Howl",
+    "delivery": "Extraordinary",
+    "description": "Three times per day as a standard action, a wendigo can emit a forlorn howl that can be heard up to a mile away. Any who hear the howl must make a DC %1 Will save to avoid becoming shaken for an hour. Creatures within 120 feet become panicked for 1d4+4 rounds, and those within 30 feet cower with fear for 1d4 rounds. This is a mind-affecting fear effect.",
+    "description_variables": [
+      "WendigoHowlDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:wendigo_howl",
+    "name": "Howl",
+    "owners": [
+      "bestiary_2:monster:wendigo"
+    ],
+    "source_page": "p.281",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1351,
+    "record_key": "Wendigo ~ Howl"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

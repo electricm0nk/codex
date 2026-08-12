@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:catoblepas_poison_breath"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Catoblepas",
+    "external_ability_refs": [
+      "Stench",
+      "Trample"
+    ],
+    "key": "bestiary_2:monster:catoblepas",
+    "monster_class": "Magical Beast:14",
+    "name": "Catoblepas",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Gore"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Hoof"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.52",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 164,
+    "record_key": "Catoblepas"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

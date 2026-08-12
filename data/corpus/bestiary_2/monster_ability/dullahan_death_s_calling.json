@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Dullahan ~ Death's Calling",
+    "delivery": "Supernatural",
+    "description": "Once per day as a standard action, a dullahan may place death's calling on a target within 60 feet (DC %1 Fortitude negates).  If the dullahan knows and speaks the target's name, the target takes a -2 penalty on the save.  If the victim fails the save, he becomes staggered for 1d6 rounds.  For the next 24 hours (or until the dullahan is slain), all critical hits against the victim automatically confirm.  Finally, the victim automatically fails all Constitution checks to stabilize while dying.  This is a mind-affecting curse effect.",
+    "description_variables": [
+      "DullahanDeathsCallingDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:dullahan_death_s_calling",
+    "name": "Death's Calling",
+    "owners": [
+      "bestiary_2:monster:dullahan"
+    ],
+    "source_page": "p.111",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 516,
+    "record_key": "Dullahan ~ Death's Calling"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

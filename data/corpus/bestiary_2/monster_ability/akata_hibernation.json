@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Akata ~ Hibernation",
+    "delivery": "Extraordinary",
+    "description": "Akatas can enter a state of hibernation for an indefinite period of time when food is scarce.  When an akata wishes to enter hibernation, it seeks out a den and surrounds itself in a layer of fibrous material excreted from its mouth - these fibers quickly harden into a dense, almost metallic cocoon.  While hibernating, an akata does not need to eat or drink.  The cocoon has hardness 10 and 60 hit points, and is immune to fire and bludgeoning (including falling) damage.  As long as the cocoon remains intact, the akata within remains unharmed.  The akata remains in a state of hibernation until it senses another living creature within 10 feet or is exposed to extreme heat, at which point it claws its way to freedom in 1d4 minutes as its cocoon degrades to fragments of strange metal.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:akata_hibernation",
+    "name": "Hibernation",
+    "owners": [
+      "bestiary_2:monster:akata"
+    ],
+    "source_page": "p.23",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 74,
+    "record_key": "Akata ~ Hibernation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

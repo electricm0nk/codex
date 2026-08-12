@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:ceustodaemon_drawn_to_service",
+      "bestiary_2:monster_ability:greater_ceustodaemon_breath_weapon"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Daemon (Ceustodaemon/Greater)",
+    "external_ability_refs": [
+      "Detect Good ~ Constant",
+      "Detect Magic ~ Constant",
+      "Immunity to Mind-Affecting Effects",
+      "Immunity to Paralysis",
+      "Immunity to Polymorph Effects",
+      "Immunity to Sleep",
+      "See Invisibility ~ Constant"
+    ],
+    "key": "bestiary_2:monster:daemon_ceustodaemon_greater",
+    "monster_class": "Outsider (Fort/Will):8",
+    "name": "Daemon (Ceustodaemon/Greater)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Daemon|Evil|Extraplanar|Advanced Creature",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.65",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 212,
+    "record_key": "Daemon (Ceustodaemon/Greater)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

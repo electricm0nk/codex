@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Adamantine Golem ~ Destructive Strike",
+    "delivery": "Extraordinary",
+    "description": "An adamantine golem's slam attacks threaten a critical hit on a 19 or 20.  In addition, whenever an adamantine golem scores a critical hit, it deals 6d10+%1 points of damage to the target's armor or shield in addition to the normal damage, as if it had also made a successful sunder combat maneuver.",
+    "description_variables": [
+      "STR"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:adamantine_golem_destructive_strike",
+    "name": "Destructive Strike",
+    "owners": [
+      "bestiary_2:monster:golem_adamantine"
+    ],
+    "source_page": "p.134",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 588,
+    "record_key": "Adamantine Golem ~ Destructive Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

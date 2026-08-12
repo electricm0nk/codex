@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Mandragora ~ Shriek",
+    "delivery": "Supernatural",
+    "description": "Once per day as a standard action, a mandragora can give voice to an unsettling shriek.  All creatures within a 30-foot spread of a shrieking mandragora must make a DC %1 Will save or become nauseated for 1d4 rounds.  This is a sonic, mind-affecting ability.",
+    "description_variables": [
+      "MandragoraShriekDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:mandragora_shriek",
+    "name": "Shriek",
+    "owners": [
+      "bestiary_2:monster:mandragora"
+    ],
+    "source_page": "p.185",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 810,
+    "record_key": "Mandragora ~ Shriek"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

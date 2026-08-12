@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:clockwork_golem_death_burst",
+      "bestiary_2:monster_ability:clockwork_golem_grind",
+      "bestiary_2:monster_ability:clockwork_golem_wall_of_gears"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Golem (Clockwork)",
+    "external_ability_refs": [
+      "Clockwork Golem ~ Immunity to Magic",
+      "Grab ~ Slam"
+    ],
+    "key": "bestiary_2:monster:golem_clockwork",
+    "monster_class": "Construct:16",
+    "name": "Golem (Clockwork)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d10",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "L",
+    "source_page": "p.137",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 422,
+    "record_key": "Golem (Clockwork)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

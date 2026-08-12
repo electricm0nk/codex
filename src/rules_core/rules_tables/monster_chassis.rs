@@ -236,6 +236,16 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monsters: super::inner_sea_world_guide::monsters_static(),
         monster_abilities: super::inner_sea_world_guide::monster_abilities_static(),
     },
+    // SD-29 Epic 5 extend, round 4. Bestiary 2 -- 316 monsters and 402 owned
+    // abilities, four times every book above it put together. The registry
+    // absorbs it as one more row, which is the property the chassis was built
+    // for; the book's own module records why 64 of its 466 ability rows are not
+    // here.
+    MonsterBook {
+        corpus_book: "bestiary_2",
+        monsters: super::bestiary_2::monsters_static(),
+        monster_abilities: super::bestiary_2::monster_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.

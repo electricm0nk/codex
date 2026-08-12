@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Dark Slayer ~ Death Throes",
+    "delivery": "Supernatural",
+    "description": "When a dark slayer is slain, its body implodes violently into nothingness, leaving its gear in a heap on the ground.  All creatures within a 10-foot burst take 1d8 points of sonic damage and must make a DC %1 Fortitude save or be deafened for 2d4 rounds.",
+    "description_variables": [
+      "DarkSlayerDeathThroesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:dark_slayer_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "bestiary_2:monster:dark_slayer"
+    ],
+    "source_page": "p.75",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 333,
+    "record_key": "Dark Slayer ~ Death Throes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:crypt_thing_teleporting_burst"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Crypt Thing",
+    "external_ability_refs": [
+      "Aura ~ Crypt Thing ~ Fear",
+      "Channel Resistance"
+    ],
+    "key": "bestiary_2:monster:crypt_thing",
+    "monster_class": "Undead:8",
+    "name": "Crypt Thing",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.60",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 195,
+    "record_key": "Crypt Thing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

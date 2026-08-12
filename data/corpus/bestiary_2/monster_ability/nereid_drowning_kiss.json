@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Nereid ~ Drowning Kiss",
+    "delivery": "Supernatural",
+    "description": "A nereid can flood the lungs of a willing, helpless, or fascinated creature by touching it (traditionally by kissing the creature on the lips).  If the target cannot breathe water, it cannot hold its breath and immediately begins to drown.  On its turn, the target can attempt a DC %1 Fortitude save to cough up this water; otherwise it falls unconscious at 0 hp.  On the next round, the target must save again or drop to -1 hit points and be dying; on the third round it must save again or die (see page 445 of the Pathfinder RPG Core Rulebook).",
+    "description_variables": [
+      "NereidDrowningKissDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:nereid_drowning_kiss",
+    "name": "Drowning Kiss",
+    "owners": [
+      "bestiary_2:monster:nereid"
+    ],
+    "source_page": "p.198",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 873,
+    "record_key": "Nereid ~ Drowning Kiss"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:tendriculos_paralysis"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Tendriculos",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Cannot Speak",
+      "Grab ~ Bite/Tentacle",
+      "Immunity to Acid",
+      "Regeneration ~ Bludgeoning/Fire",
+      "Swallow Whole"
+    ],
+    "key": "bestiary_2:monster:tendriculos",
+    "monster_class": "Plant:9",
+    "name": "Tendriculos",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "H",
+    "source_page": "p.259",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 831,
+    "record_key": "Tendriculos"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

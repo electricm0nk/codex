@@ -602,10 +602,16 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             companion_book_counts("bestiary_6"),
             &races,
         ),
+        // SD-29 Epic 5 extend, round 4 turned this row into the SECOND book
+        // carrying both registries: B2's 16 familiars were already here, and the
+        // same book now compiles 316 monsters + 402 monster abilities. Reporting
+        // only the companion half would under-state it by 718 records, which is
+        // the exact defect `monster_and_companion_book_counts` was written for
+        // when `monster_codex` became the first such book.
         book_status(
             "bestiary_2",
             "src/rules_core/rules_tables/bestiary_2",
-            companion_book_counts("bestiary_2"),
+            monster_and_companion_book_counts("bestiary_2"),
             &races,
         ),
         book_status(
@@ -765,8 +771,10 @@ mod tests {
                 "inner_sea_combat",
                 "inner_sea_intrigue",
                 "horror_adventures",
-                // SD-29 Epic 7 round 2 -- three more companion-only books,
-                // kept in the same block for the same reason.
+                // SD-29 Epic 7 round 2 -- three more companion books, kept in
+                // the same block for the same reason. Two are companion-ONLY;
+                // `bestiary_2` stopped being one at SD-29 Epic 5 extend round 4,
+                // which added its 316 monsters + 402 abilities to the same row.
                 "bestiary_5",
                 "bestiary_6",
                 "bestiary_2",

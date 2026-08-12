@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:mihstu_deadly_embrace",
+      "bestiary_2:monster_ability:mihstu_gaseous"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Mihstu",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Flight Maneuverability",
+      "Grab ~ Tentacle",
+      "Immunity to Electricity",
+      "Mihstu ~ Susceptible to Cold",
+      "Mihstu ~ Wind Defense"
+    ],
+    "key": "bestiary_2:monster:mihstu",
+    "monster_class": "Outsider (Fort/Ref):8",
+    "name": "Mihstu",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Air|Elemental|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.190",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 612,
+    "record_key": "Mihstu"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

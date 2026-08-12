@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Xtabay ~ Devour",
+    "delivery": "Extraordinary",
+    "description": "While a creature is under the effects of a xtabay's soporific pollen, the plant may, as a full-round action, occupy the same square as the sleeping creature and slowly sap the life from it.  Every round the xtabay uses this ability, the creature must make DC %1 Fortitude save or take 1d2 Con damage.  This feeding is curiously painless, and normally isn't enough to waken a foe put to sleep by the plant.  Each round this feeding continues, the sleeping victim can attempt a new DC %1 Will save to awaken.",
+    "description_variables": [
+      "DevourSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:xtabay_devour",
+    "name": "Devour",
+    "owners": [
+      "bestiary_2:monster:xtabay"
+    ],
+    "source_page": "p.289",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1400,
+    "record_key": "Xtabay ~ Devour"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:sard_electric_slam",
+      "bestiary_2:monster_ability:sard_planar_acclimation",
+      "bestiary_2:monster_ability:sard_poison"
+    ],
+    "challenge_rating": "19",
+    "corpus_key": "Sard",
+    "external_ability_refs": [
+      "Fast Healing",
+      "Immunity to Electricity",
+      "Resistance to Cold",
+      "Resistance to Fire",
+      "Sard ~ Death Throes",
+      "Sard ~ Electrical Jolt",
+      "Vulnerability to Sonic"
+    ],
+    "key": "bestiary_2:monster:sard",
+    "monster_class": "Plant:23",
+    "name": "Sard",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d10",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Thorn"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "C",
+    "source_page": "p.237",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 756,
+    "record_key": "Sard"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

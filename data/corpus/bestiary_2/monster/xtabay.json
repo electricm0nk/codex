@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:xtabay_acid_sting",
+      "bestiary_2:monster_ability:xtabay_devour",
+      "bestiary_2:monster_ability:xtabay_soporific_pollen"
+    ],
+    "challenge_rating": "1/2",
+    "corpus_key": "Xtabay",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Immunity to Acid"
+    ],
+    "key": "bestiary_2:monster:xtabay",
+    "monster_class": "Plant:1",
+    "name": "Xtabay",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "S",
+    "source_page": "p.289",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 915,
+    "record_key": "Xtabay"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

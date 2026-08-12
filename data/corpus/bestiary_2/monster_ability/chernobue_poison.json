@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Chernobue ~ Poison",
+    "delivery": "Supernatural",
+    "description": "Bite - injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d2 Con drain; cure 1 save.  The thick, orange poison injected by a chernobue is semi-alive.  As soon as the poisoned victim is cured of the poison (by making a save, being targeted with an effect like neutralize poison, or enduring the full duration of the poison), the orange fluid bursts from the victim's body, causing 1d6 Charisma damage and rendering the victim unconscious for 2d6 rounds unless he makes a final DC %1 save.",
+    "description_variables": [
+      "ChernobuePoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:chernobue_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:qlippoth_chernobue"
+    ],
+    "source_page": "p.220",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 999,
+    "record_key": "Chernobue ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

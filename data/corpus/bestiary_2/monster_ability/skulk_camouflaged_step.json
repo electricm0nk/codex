@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Skulk ~ Camouflaged Step",
+    "delivery": "Extraordinary",
+    "description": "Skulks can pass through forest and subterranean settings almost without a trace.  Add +10 to the DC to track a skulk in these environments.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:skulk_camouflaged_step",
+    "name": "Camouflaged Step",
+    "owners": [
+      "bestiary_2:monster:skulk"
+    ],
+    "source_page": "p.248",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1165,
+    "record_key": "Skulk ~ Camouflaged Step"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

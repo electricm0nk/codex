@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Wendigo ~ Wind Walk",
+    "delivery": "SpellLike",
+    "description": "If a wendigo pins a grappled foe, it can attempt to Wind Walk with the target by using its spell-like ability - it automatically succeeds on all concentration checks made to use Wind Walk. If the victim fails to resist the spell, the wendigo hurtles into the sky with him. Each round, a victim can make a new DC %1 Will save to turn solid again, but at this point he falls if he cannot fly. Eventually, the wendigo strands the victim in some rural area, usually miles from where it began. A creature that Wind Walks with a wendigo is exposed to wendigo psychosis.",
+    "description_variables": [
+      "WendigoWindWalkDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:wendigo_wind_walk",
+    "name": "Wind Walk",
+    "owners": [
+      "bestiary_2:monster:wendigo"
+    ],
+    "source_page": "p.281",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1353,
+    "record_key": "Wendigo ~ Wind Walk"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Olethrodaemon ~ Soul-Drained Breath",
+    "delivery": "Supernatural",
+    "description": "An olethrodaemon can convert life energy it has consumed into a potent breath weapon.  Up to three times per day, but no more often than once every 1d4 rounds, an olethrodaemon can expel a 120-foot line or a 60-foot cone of shrieking black smoke and wind one of its mouths as a standard action.  Any living creature in the area of this attack takes 20d10 points of damage from negative energy, or half on a successful DC %1 Reflex save.  Undead creatures caught in this negative energy are healed for the same amount instead of damaged.",
+    "description_variables": [
+      "OlethrodaemonSoulDrainedBreathDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:olethrodaemon_soul_drained_breath",
+    "name": "Soul-Drained Breath",
+    "owners": [
+      "bestiary_2:monster:daemon_olethrodaemon"
+    ],
+    "source_page": "p.70",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 314,
+    "record_key": "Olethrodaemon ~ Soul-Drained Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

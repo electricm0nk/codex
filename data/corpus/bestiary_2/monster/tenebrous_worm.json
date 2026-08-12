@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:tenebrous_worm_acid",
+      "bestiary_2:monster_ability:tenebrous_worm_poison"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Tenebrous Worm",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Immunity to Acid",
+      "Tenebrous Worm ~ Bristles"
+    ],
+    "key": "bestiary_2:monster:tenebrous_worm",
+    "monster_class": "Outsider (Fort/Will):10",
+    "name": "Tenebrous Worm",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.260",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 835,
+    "record_key": "Tenebrous Worm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

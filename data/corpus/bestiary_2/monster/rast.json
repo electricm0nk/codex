@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:rast_paralyzing_gaze"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Rast",
+    "external_ability_refs": [
+      "Blood Drain",
+      "Can't Be Tripped",
+      "Cannot Speak",
+      "Flight Maneuverability",
+      "Grab ~ Bite",
+      "Immunity to Fire"
+    ],
+    "key": "bestiary_2:monster:rast",
+    "monster_class": "Outsider (Fort/Ref):6",
+    "name": "Rast",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Extraplanar|Fire",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.229",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 743,
+    "record_key": "Rast"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

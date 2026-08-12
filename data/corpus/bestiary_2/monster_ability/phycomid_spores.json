@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Phycomid ~ Spores",
+    "delivery": "Extraordinary",
+    "description": "Any creature that takes damage from a phycomid's acid pellet (or consumes even a small portion of the fungus) becomes exposed to the fungus's spores.  These spores grow quickly in living creatures.  This affliction is a disease effect, although its course runs much faster than most diseases and is more poison-like in its speed, and like a poison, the spores \"burn out\" after a short period.  A creature that is slain by a phycomid spore infestation bursts open in 1d4 rounds as a fully grown new phycomid emerges.  Phycomid Spores: Disease - injury or ingested; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con damage; cure 1 save.",
+    "description_variables": [
+      "PhycomidSporesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:phycomid_spores",
+    "name": "Spores",
+    "owners": [
+      "bestiary_2:monster:phycomid"
+    ],
+    "source_page": "p.210",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 955,
+    "record_key": "Phycomid ~ Spores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

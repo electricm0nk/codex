@@ -54,6 +54,7 @@ export const BOOK_LABELS: Record<string, string> = {
   BOTD1: 'Book of the Damned, Volume 1',
   BOTD2: 'Book of the Damned, Volume 2',
   ISWG: 'Inner Sea World Guide',
+  B2: 'Bestiary 2',
 };
 
 /** `'BB'` -> `'Bonus Bestiary'`; an unmapped code falls through as itself. */

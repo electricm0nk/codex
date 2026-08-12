@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:seugathi_confusion_command",
+      "bestiary_2:monster_ability:seugathi_item_use",
+      "bestiary_2:monster_ability:seugathi_poison"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Seugathi",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Fast Healing",
+      "Immunity to Mind-Affecting Effects",
+      "Immunity to Poison",
+      "Mage Armor ~ Constant",
+      "Seugathi ~ Aura of Madness",
+      "Seugathi ~ Detect Thoughts",
+      "Telepathy"
+    ],
+    "key": "bestiary_2:monster:seugathi",
+    "monster_class": "Aberration:9",
+    "name": "Seugathi",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "L",
+    "source_page": "p.243",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 781,
+    "record_key": "Seugathi"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

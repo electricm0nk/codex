@@ -40,7 +40,7 @@ const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
  * two characters. They are the books' own `SOURCESHORT` tokens, like every
  * other code here.
  */
-const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG'] as const;
+const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [
@@ -191,6 +191,11 @@ function testEveryServedBookHasARealName() {
     formatBook('ISWG'),
     'Inner Sea World Guide',
     'the round-3 book, whose four-character code is mapped like any other'
+  );
+  assertEqual(
+    formatBook('B2'),
+    'Bestiary 2',
+    'the round-4 book, which serves more monsters than every other book here combined'
   );
   assertEqual(formatBook('ZZ'), 'ZZ', 'an unserved code falls through as itself');
 }

@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:mu_spore_spore_cough"
+    ],
+    "challenge_rating": "21",
+    "corpus_key": "Mu Spore",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Constrict",
+      "Fast Healing",
+      "Flight Maneuverability",
+      "Grab ~ Bite/Tentacle",
+      "Immunity to Acid",
+      "Mu Spore ~ Grasping Tendrils",
+      "Resistance to Acid",
+      "Swallow Whole"
+    ],
+    "key": "bestiary_2:monster:mu_spore",
+    "monster_class": "Plant:31",
+    "name": "Mu Spore",
+    "natural_attacks": [
+      {
+        "damage_dice": "6d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "3d8",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "C",
+    "source_page": "p.195",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 622,
+    "record_key": "Mu Spore"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

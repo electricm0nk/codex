@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Iathavos ~ Entropic Beams",
+    "delivery": "Supernatural",
+    "description": "As a standard action once every minute, an iathavos can fire beams of entropic energy from its 10 eyes.  Each of these beams of energy can be directed at a single target within 300 feet of the iathavos, but no more than one beam may be directed at any one creature.  Beams that are not directed at a creature are wasted.  The qlippoth must make a +15 ranged touch attack to hit with each beam.  Each beam has the same effect as a CL 20th disintegrate (40d6 damage, DC %1 Fortitude partial for 5d6 damage), except a creature killed by this damage explodes in a 5-foot burst of energy, flesh, shadow, and smoke instead of turning into dust.  Any creature in this burst must make a DC %1 Will save or be staggered for 1 round.",
+    "description_variables": [
+      "IathavosEntropicBeamsDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:iathavos_entropic_beams",
+    "name": "Entropic Beams",
+    "owners": [
+      "bestiary_2:monster:qlippoth_iathavos"
+    ],
+    "source_page": "p.222",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1010,
+    "record_key": "Iathavos ~ Entropic Beams"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

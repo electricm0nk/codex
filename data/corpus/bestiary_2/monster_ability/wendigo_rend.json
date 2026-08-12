@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Wendigo ~ Rend",
+    "delivery": "Extraordinary",
+    "description": "If a wendigo hits with both claws in 1 round, it can cause tremendous damage (%1d%2+%3 plus 1d4 Cha) by latching onto the opponent's body and tearing flesh. This attack deals an additional amount of damage, but no more than once per round.",
+    "description_variables": [
+      "RendDamageDice",
+      "RendDamageDieSize",
+      "RendBonusDamage"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:wendigo_rend",
+    "name": "Rend",
+    "owners": [
+      "bestiary_2:monster:wendigo"
+    ],
+    "source_page": "p.281",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1354,
+    "record_key": "Wendigo ~ Rend"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

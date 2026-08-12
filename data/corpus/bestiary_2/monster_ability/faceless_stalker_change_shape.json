@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Faceless Stalker ~ Change Shape",
+    "delivery": "Supernatural",
+    "description": "A faceless stalker can assume the form of a Medium humanoid at will but requires 10 uninterrupted minutes to alter its body.  Performing this transformation is somewhat painful, but the faceless stalker can maintain its new form indefinitely once it has achieved it.  It can change back to its true form as a swift action and gains a +2 morale bonus on attack rolls, damage rolls, skill checks, and saving throws for 1 round after it does so.  Faceless stalkers retain their own innate abilities when they assume their new form and do not gain any of those belonging to the creature they mimic.  A faceless stalker gains a +10 bonus on Disguise checks when they are used in conjunction with this ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:faceless_stalker_change_shape",
+    "name": "Change Shape",
+    "owners": [
+      "bestiary_2:monster:faceless_stalker"
+    ],
+    "source_page": "p.122",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 532,
+    "record_key": "Faceless Stalker ~ Change Shape"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

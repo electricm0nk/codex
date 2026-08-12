@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:achaierai_black_cloud"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Achaierai",
+    "external_ability_refs": [],
+    "key": "bestiary_2:monster:achaierai",
+    "monster_class": "Outsider (Fort/Ref):7",
+    "name": "Achaierai",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.7",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 14,
+    "record_key": "Achaierai"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

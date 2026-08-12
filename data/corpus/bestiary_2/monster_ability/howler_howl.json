@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Howler ~ Howl",
+    "delivery": "Supernatural",
+    "description": "A howler's constant howling is a grating, exhausting baying that can drive listeners insane.  All beings other than outsiders within 120 feet of a howling howler must succeed on a DC %1 Will save or become cursed by the creature's howl.  Once a creature becomes cursed in this way, she takes no additional penalty for being exposed to additional howlers' howls until the current howler curse is lifted.  This is a sonic mind-affecting effect.  Howler Howl: Curse - howl; save Fort DC %1 negates; frequency 1/hour; effect 1 Wis damage; cure 1 save.",
+    "description_variables": [
+      "HowlerHowlDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:howler_howl",
+    "name": "Howl",
+    "owners": [
+      "bestiary_2:monster:howler"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 696,
+    "record_key": "Howler ~ Howl"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Winterwight ~ Blightfire",
+    "delivery": "Supernatural",
+    "description": "Whenever a winterwight damages a creature with a bite or claw, the wound erupts with tongues of black fire.  For the next 5 rounds, the victum must make a DC %1 Fortitude saving throw at the start of its turn or take 1d6 points of Constitution drain.  The winterwight gains 10 temporary hit points each time the creature fails a saving throw against blightfire.  A creature cannot be affected by more than one instance of blightfire at a time.",
+    "description_variables": [
+      "WinterwightBlightfireDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:winterwight_blightfire",
+    "name": "Blightfire",
+    "owners": [
+      "bestiary_2:monster:winterwight"
+    ],
+    "source_page": "p.283",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1367,
+    "record_key": "Winterwight ~ Blightfire"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

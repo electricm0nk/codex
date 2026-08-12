@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Sard ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Thorn - injury; save Fort DC %1; frequency 1/round for 5 rounds; effect 1d2 Dex and 4d6 electricity; cure 2 consecutive saves.",
+    "description_variables": [
+      "SardPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:sard_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:sard"
+    ],
+    "source_page": "p.237",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1094,
+    "record_key": "Sard ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
