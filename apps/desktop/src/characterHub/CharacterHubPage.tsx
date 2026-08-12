@@ -15,6 +15,7 @@ import { EquipmentCatalogScreen } from '../equipmentCatalog/EquipmentCatalogScre
 import { SpellCatalogScreen } from '../spellCatalog/SpellCatalogScreen';
 import { ClassCatalogScreen } from '../classCatalog/ClassCatalogScreen';
 import { RaceCatalogScreen } from '../raceCatalog/RaceCatalogScreen';
+import { CompanionCatalogScreen } from '../companionCatalog/CompanionCatalogScreen';
 import { MonsterCatalogScreen } from '../monsterCatalog/MonsterCatalogScreen';
 import { CorpusIngestDiagnosticPanel } from './CorpusIngestDiagnosticPanel';
 import { StubScreen } from './StubScreen';
@@ -35,6 +36,7 @@ type Mode =
   | 'classCatalog'
   | 'raceCatalog'
   | 'monsterCatalog'
+  | 'companionCatalog'
   | 'corpusIngestDiagnostic'
   | 'dm-toolkit'
   | 'campaign-list'
@@ -77,6 +79,7 @@ export function CharacterHubPage() {
         onBrowseClasses={() => setMode('classCatalog')}
         onBrowseRaces={() => setMode('raceCatalog')}
         onBrowseMonsters={() => setMode('monsterCatalog')}
+        onBrowseCompanions={() => setMode('companionCatalog')}
         onCorpusIngestDiagnostic={() => setMode('corpusIngestDiagnostic')}
         onCampaignManager={() => setMode('campaign-list')}
         campaignManagerGate={computeCampaignManagerAccessGate(isGoogleDriveConfigured())}
@@ -99,6 +102,10 @@ export function CharacterHubPage() {
 
   if (mode === 'raceCatalog') {
     return <RaceCatalogScreen onClose={() => setMode('landing')} />;
+  }
+
+  if (mode === 'companionCatalog') {
+    return <CompanionCatalogScreen onClose={() => setMode('landing')} />;
   }
 
   if (mode === 'monsterCatalog') {

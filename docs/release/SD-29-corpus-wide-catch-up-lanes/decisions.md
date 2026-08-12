@@ -2267,3 +2267,212 @@ and that is a different shape of cycle than rounds 1-3 were.
 
 **The 2,894 chassis-blocked units remain a scope finding for a race-chassis lane, not this card**,
 unchanged from `§44.4` and re-verified here.
+
+## Decision 48 — Companion Lane: the mechanism, and the pilot round (2026-08-12, `sd29-companion-r4`, cards `epic-7-companion-lane-pilot` / `-extend`)
+
+The companion lane had **nothing landed**: round 1 refused at `preflight-disk` and round 2 died with
+its workflow having produced no commits. This round built the kind's whole mechanism — chassis,
+transcriber, corpus generator, work-inventory grounding, a Tauri catalog command, a browse screen and
+reach claims — and ingested **four books, 38 units, all 38 grounded and all four books verified on
+screen**. The lane is **not** dry and this round does not claim it is.
+
+### 48.1 The lane's REAL ceiling is 888, not 1,696 — and 765 units can never be grounded by a per-creature cycle
+
+`§45.1` ruled that a lane classifies **corpus rows** before committing a round to a book, and `§46.1`
+applied it to `monster_ability` and found a structural ceiling. Applied to `companion`, the finding is
+the same shape and larger.
+
+First, `companion` is **not one kind**. `v06_work_inventory::file_kind` types three structurally
+different `.lst` shapes as `Kind::Companion`:
+
+* **creature** rows (`*_races_companion.lst`, `*_races_familiar.lst`) — the chassis.
+* **ability** rows (`*_abilities_companion.lst`, `*_abilities_race_*companion*.lst`) — features that
+  reach a player only underneath the creature that owns them, exactly as `monster_ability` does
+  underneath `monster` (`corpus-work-channels.md §9.2`).
+* **class** rows (`*_classes_companion.lst`) — the PCGen `Companion`/`Familiar` monster *classes* a
+  creature row's `MONSTERCLASS:` token names. Hit-dice progressions; no registered book carries one.
+
+Second, the ownership question. Checked in rather than run from a scratchpad, because `§45.1`'s own
+finding is that **an ephemeral path is not a citation**:
+
+```bash
+python3 scripts/classify_companion_rows.py
+```
+
+It reads three ownership shapes, every one a token the row itself carries: **row-named** (a creature
+row's `ABILITY:Special Ability|AUTOMATIC|<name>`), **prerace** (the ability row's own
+`PRERACE:1,<Race>`), and **prefix** (a namespaced `KEY:<Owner> ~ <Leaf>` resolved through the
+`Companion (<Species>)` / `Familiar (<Species>)` wrapper). A looser rule would over-report
+reachability, which is the direction that ships stubs.
+
+Run corpus-wide at this round's start:
+
+```
+total companion units in scope : 1696
+orphan ability rows            : 808
+reachable remainder            : 888
+```
+
+and, corpus-wide rather than per book, **765** of those 808 are claimed by no creature row in *any*
+book — `ultimate_wilderness` 249, `advanced_players_guide` 188, `ultimate_magic` 132, `core_rulebook`
+86, `core_essentials` 40, `book_of_the_damned_volume_1` 27, `advanced_race_guide` 18, `bestiary_3` 16,
+`bestiary_4` 5, `bestiary` 4. They are generic companion/familiar/eidolon ability libraries — APG's
+`Companion Bonus Skill`, UW's eidolon base forms and archetype abilities — that no creature row
+names.
+
+**This is a scope finding, not a backlog item.** They need a surface decision — a screen that shows an
+ability with no creature, or a cross-book owner resolution — which is an operator question, not an
+ingest. A `deferral` event names both.
+
+**The dispatch brief's "~1,233 in-scope companion units" is corrected to 1,696 total / 888 reachable**
+(`correction` event emitted, command in the receipt). 1,233 reproduces under no predicate this round
+could find.
+
+### 48.2 The four books this round took, and why they were the correct four
+
+The registration predicate is `monster_chassis`'s, for its reason: **a book is registered when EVERY
+one of its ability rows has an owner.** Seven books carry zero orphans; this round took the four
+whose registration cost no unmeasured collateral or whose collateral it could measure:
+
+| book | units | creatures | abilities | orphans | needed a `RuleSetId` |
+|---|---|---|---|---|---|
+| `inner_sea_combat` | 10 | 4 | 6 | 0 | yes (`Isc`) |
+| `monster_codex` | 15 | 8 | 7 | 0 | no |
+| `inner_sea_intrigue` | 11 | 2 | 9 | 0 | yes (`Isi`) |
+| `horror_adventures` | 2 | 1 | 1 | 0 | no |
+| **total** | **38** | **15** | **23** | **0** | |
+
+**The package's pinned pilot book was re-confirmed, not trusted.** `inner_sea_combat` was pinned
+before the race-trait lane's classifier fix moved 13 units into `companion` corpus-wide, and the
+immediately preceding lane discovered its own pinned pilot carried none of the kind it was pinned for
+(`kanban.md`'s Epic 6 note). Re-derived here, the pin is correct: 4 creature rows + 6 ability rows,
+zero orphans.
+
+**`inner_sea_intrigue`'s 11 units are the ones the race-trait lane handed back.** They were typed
+`race_trait` by `file_kind`'s `_abilities_race` substring until that lane's round-2 fix retyped an
+`_abilities_race*` basename carrying a `companion`/`familiar` marker as `Companion`. That fix moved
+them and left them owned by no lane. This lane owns them, and taking them here coordinates with what
+the race-trait lane landed rather than contradicting it.
+
+**Deliberately NOT taken this round:** `bestiary_2` (16), `bestiary_5` (57) and `bestiary_6` (26) —
+also zero-orphan, also ready, but each needs a new `RuleSetId` whose scope flip moves several hundred
+units of OTHER kinds from `not-started` to `not-ingested`. That collateral is measured and cheap to
+pay, but it is a count change, and this round already had two of them to sweep. They are round 2's
+queue, named with their figures in `§48.6`.
+
+### 48.3 The mechanism, and the one place it deliberately diverges from the monster chassis
+
+`companion_chassis.rs` mirrors `monster_chassis.rs` — record types, a `COMPANION_BOOKS` registry every
+consumer iterates rather than naming books, and the same both-directions link test — with three real
+differences, each forced by the corpus:
+
+1. **`PRERACE:` ownership has no monster analogue.** Every `TYPE:CompanionAdvancement` row states its
+   owner in its own `PRERACE:1,Companion (<Species>)` gate rather than being named by the creature's
+   row. A chassis that knew only the monster shape would have reported all 11 of the registered
+   books' advancement rows as orphans and rejected every book.
+2. **The prefix shape needs the species wrapper.** `Worg ~ Mastery` is owned by `Companion (Worg)`;
+   `monster_chassis`'s bare-prefix rule (`<Owner>` is a monster key) does not match, and Inner Sea
+   Combat would have been unregisterable over one row.
+3. **`facet` is `Option`al, and `type_segments` keeps every segment verbatim.** Inner Sea Intrigue's
+   three `TYPE:ClockworkFamiliarInstalledItem` rows carry no segment the chassis models.
+   `transcribe_monster_tables.parse_type` hard-stops on that; here the row is recorded with
+   `facet: None` and its segment kept, and the screen shows the verbatim segment where a facet label
+   would go. Dropping the rows or forcing them into `SpecialQuality` would both assert something the
+   corpus does not, and all three carry real rules text a player can read.
+
+**One thing that is emphatically NOT a divergence: `BONUS:STAT` is transcribed as an *adjustment* and
+never summed into a score.** A Griffon's row states `BONUS:STAT|STR|6` and a Griffon's Strength is not
+6; PCGen computes the real score at runtime from a base plus this token plus the companion class's own
+level advance. The wire carries the abbreviation and the signed adjustment, the screen's caption reads
+*"Ability score adjustments (corpus BONUS:STAT tokens)"*, and a frontend test pins that the caption
+says "adjustment". Under an "Ability scores" heading these numbers would be the quieter lie — the same
+discipline `MonsterStatBlock::monster_class` states for the hit-dice token, which this ingest also
+carries verbatim and does not expand into hit points, AC or saves.
+
+The corpus writes **one** directory, `data/corpus/<book>/companion/`, holding both shapes with each
+record stating its own `record_type`. Two directories would create a corpus family the inventory has
+no kind for, and the two halves would then be judged against a denominator that does not exist.
+
+### 48.4 The surface: a real catalog, because the Pets tab is a different thing and always was
+
+Before this round the entire `companion` kind reached no surface. The engine's only companion content
+was `pilot_compute::ground_wolf_companion_stat_block` and `ground_horse_companion_stat_block` — two
+species whose values are Rust constants chosen for the pilot vertical slice, not corpus reads.
+`monster_catalog.rs`'s module doc already said so in as many words: *"The Pets tab does not count and
+never did."* That tab shows the computed companion of the character in front of you and can never show
+a Griffon or a Clockwork Spy.
+
+So: `companion_catalog.rs` (`list_companion_catalog`), `CompanionCatalogScreen.tsx`, and a
+"Browse Companion Catalog" link on the hub, all in `monster_catalog.rs`'s shape rather than a third
+convention. Abilities are served **attached to the creature that owns them**, which is how the screen
+renders them and why the reach claim judges one denominator with two numerators.
+
+`reach_gate.rs` gets **one claim per book**, not two — `("<book>", "companions")` — because the corpus
+files both shapes under one kind. Each is `Reach::Surfaced` with all its records:
+`inner_sea_combat` 10, `monster_codex` 15, `inner_sea_intrigue` 11, `horror_adventures` 2.
+`every_ingested_companion_book_reaches_the_catalog_record_by_record` asserts the corpus denominator,
+the served numerator and the claim independently, so a table that stopped reaching the wire fails
+rather than agreeing with itself.
+
+### 48.5 Item 8 caught a calibration error before it produced a false pass
+
+All four books were driven on screen and all four PASS. The finding is in how the first run failed.
+
+`verify-on-screen.sh`'s per-family `SEARCH_Y` is a live-calibrated constant. The companion screen
+carries ONE facet-chip row (books) where the monster screen carries two, so `285` — the value every
+other single-chip-row family uses — was the obvious analogy. It lands **below** this screen's search
+box: the query never applied, and the harness's own filtered-count gate refused the run with *"still
+shows 15 rows — filter did not apply"*. Calibrated live, the value is **247**.
+
+Without that gate the run would have screenshotted the **unfiltered** 15-row list, found the record's
+name in a select-all extraction of the whole page, and written a PASS artifact proving nothing about
+the specific record. That is precisely the class of defect item 8 exists to catch, caught by item 8's
+own harness on a family it had never seen. A `near-miss` event records it; the refused run's
+`isc-companion-griffon.FAILED.verify.md` is kept beside the passing artifacts rather than deleted,
+because the harness names a failure so it can never be cited as evidence and the failure is worth
+having.
+
+The four passing artifacts are under
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E7-F1-002/item8/`.
+
+### 48.6 The remainder, re-derived — this is round 2's starting point
+
+Re-derived at the end of the round with the same commands that opened it, so the two are commensurable:
+
+```bash
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); \
+u=[x for x in d['units'] if x['kind']=='companion']; \
+print(len(u), collections.Counter(x['status'] for x in u))"
+python3 scripts/classify_companion_rows.py
+```
+
+`companion` totals **1,696 / 38 grounded / 1,658 remaining**. But **1,658 is not the lane's workload**:
+subtracting the 765 corpus-wide orphans leaves **893 reachable-in-principle**, of which 38 are done, so
+the honest remainder is **855** — and only part of that is ordinary ingest.
+
+Round 2's queue, all zero-orphan and needing no new mechanism, only a `RuleSetId` and a `BOOKS` row:
+
+| book | companion units | collateral of its scope flip |
+|---|---|---|
+| `bestiary_5` | 57 | its other kinds move `not-started` → `not-ingested` |
+| `bestiary_6` | 26 | same |
+| `bestiary_2` | 16 | same |
+| **total** | **99** | |
+
+After those, every remaining book carries orphans and the lane needs a per-book judgement (register the
+book and record its orphans as an `OPEN_FINDINGS` shortfall, or wait on `§48.1`'s operator ruling)
+rather than another repetition of this round's shape.
+
+### 48.7 The scope flip's collateral, measured
+
+Adding `RuleSetId::Isc` and `RuleSetId::Isi` moved both books from `future_state` to `in_scope`, which
+moves every other kind in them from `not-started` to `not-ingested` — the cost `§46.2` first measured
+for the monster lane. Measured here: `inner_sea_combat` **388** units across 3 other kinds,
+`inner_sea_intrigue` **245** across 6. Neither moves this lane's denominator (both statuses count as
+remaining); both move other lanes' `not-ingested` figures, which is why it is recorded.
+
+It also turned `tests/v06_work_inventory.rs`'s `sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books`
+RED for both books, exactly as Inner Sea Races turned it RED for the race-trait lane. Both were added
+to `SD29_INGESTED_CAMPAIGN_SETTING_BOOKS` **with their reason**, which is `§47.3`'s ruling applied
+again rather than relaxing the check: the roster assertion is about SD-30's sixteen books existing, not
+about them staying un-ingested forever.

@@ -36,12 +36,41 @@
 //! The catalog now reads the corpus's `a/b` spelling; the token stays verbatim
 //! here, as [`MonsterStatBlock::challenge_rating`] requires.
 
+mod companion_data;
 mod monster_data;
 
+pub use super::companion_chassis::{
+    CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,
+    StatAdjustment,
+};
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
     NaturalAttack, Speed,
 };
+
+/// Every companion creature this book defines, in corpus row order.
+///
+/// SD-29 Epic 7 (companion lane). This book's third ingested family, after
+/// `monster`/`monster_ability` (Epic 5) and `race_trait` (Epic 6) — and by unit
+/// count the largest of the three: 15 companion units against 5 monster units.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
 
 /// Every monster stat block this book defines, in corpus row order.
 pub const fn monsters_static() -> &'static [MonsterStatBlock] {
@@ -131,5 +160,58 @@ mod tests {
             .find(|a| a.name == "Bite")
             .expect("Seru's row names a Bite attack");
         assert_eq!(bite.damage_dice, Some("1d6"));
+    }
+
+    /// From `docs/work-inventory.json`'s own units for this book: 15 companion
+    /// units, split 8 creature / 7 ability by
+    /// `scripts/classify_companion_rows.py monster_codex` (ORPHAN 0).
+    #[test]
+    fn the_book_defines_eight_companions_and_seven_companion_abilities() {
+        assert_eq!(companions().len(), 8);
+        assert_eq!(companion_abilities().len(), 7);
+    }
+
+    /// The size fallback, on the family that needed it: these companion rows
+    /// carry no `SIZE:` token and state the same fact as `FACT:BaseSize|M` — the
+    /// identical shape this book's monster rows found for
+    /// `transcribe_monster_tables.parse_size`. A reader of `SIZE:` alone serves
+    /// an empty size chip for all six `mc_races_companion.lst` creatures.
+    #[test]
+    fn a_companion_row_states_its_size_through_fact_basesize() {
+        let salamander = companions()
+            .iter()
+            .find(|c| c.key == "Companion (Cave Salamander)")
+            .expect("the Cave Salamander is in this book");
+        assert_eq!(salamander.source_line, 5);
+        assert_eq!(salamander.size, Some("M"));
+        assert_eq!(salamander.monster_class, Some("Companion:2"));
+        assert_eq!(salamander.source_page, Some("p.128"));
+    }
+
+    /// The one row in this family whose display name and `KEY:` disagree:
+    /// column 1 reads `7th-Level Advancement ~ Companion (Giant Vulture)` and
+    /// the key is `Companion Advancement ~ Giant Vulture`. Identity is the key.
+    #[test]
+    fn a_companion_ability_whose_display_name_differs_from_its_key_keeps_both() {
+        let advancement = companion_abilities()
+            .iter()
+            .find(|a| a.key == "Companion Advancement ~ Giant Vulture")
+            .expect("the Giant Vulture advancement is in this book");
+        assert_eq!(advancement.name, "7th-Level Advancement ~ Companion (Giant Vulture)");
+        assert_eq!(advancement.owners, &["Companion (Giant Vulture)"]);
+        assert_eq!(advancement.source_line, 14);
+    }
+
+    /// Two of this book's eight companion creatures are familiars, not animal
+    /// companions, and they are the two whose `TYPE:` states so. The lane serves
+    /// both under one kind because the corpus files both under one kind.
+    #[test]
+    fn the_two_familiar_rows_state_their_familiar_type_segments() {
+        let familiars: Vec<&str> = companions()
+            .iter()
+            .filter(|c| c.type_segments.contains(&"Familiar"))
+            .map(|c| c.key)
+            .collect();
+        assert_eq!(familiars, vec!["Familiar (Seru)", "Familiar (Sootwing Bat)"]);
     }
 }

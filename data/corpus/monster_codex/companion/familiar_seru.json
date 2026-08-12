@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Seru)",
+    "external_ability_refs": [],
+    "key": "monster_codex:companion:familiar_seru",
+    "monster_class": "Magical Beast:1",
+    "name": "Familiar (Seru)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Venom"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+    "race_type": "Magical Beast",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.208",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Magical Beast"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_races_companion.lst",
+    "sha256": "544fc08dc13e63406123ca461fa6a68116f4fd58bb3f78647aa35a9019d6aaad",
+    "line": 11,
+    "record_key": "Familiar (Seru)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

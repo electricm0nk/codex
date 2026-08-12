@@ -745,6 +745,15 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // had to be complete. A third lane ingesting a thirteenth book adds a line.
     "book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2",
+    // SD-29 companion lane, pilot round (`decisions.md §48`): 10 and 11
+    // `companion` records. `inner_sea_combat` is the lane's pilot book and the
+    // first book in this repo whose ONLY ingested family is `companion`;
+    // `inner_sea_intrigue`'s 11 units are the ones the race-trait lane's
+    // classifier fix handed back. Added here rather than relaxing the check,
+    // for the reason §47.3 states: the roster assertion is about SD-30's
+    // sixteen books existing, not about them staying un-ingested forever.
+    "inner_sea_combat",
+    "inner_sea_intrigue",
 ];
 
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[

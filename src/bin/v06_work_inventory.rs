@@ -60,6 +60,7 @@ use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
+use codex::rules_core::rules_tables::companion_chassis;
 use codex::rules_core::rules_tables::monster_chassis;
 use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables,
@@ -889,6 +890,8 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Botd1,
     RuleSetId::Botd2,
     RuleSetId::Ce,
+    RuleSetId::Isc,
+    RuleSetId::Isi,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -917,6 +920,8 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Botd1 => "book_of_the_damned_volume_1",
         RuleSetId::Botd2 => "book_of_the_damned_volume_2",
         RuleSetId::Ce => "core_essentials",
+        RuleSetId::Isc => "inner_sea_combat",
+        RuleSetId::Isi => "inner_sea_intrigue",
     }
 }
 
@@ -957,6 +962,8 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Botd1 => "book_of_the_damned_volume_1",
         RuleSetId::Botd2 => "book_of_the_damned_volume_2",
         RuleSetId::Ce => "core_essentials",
+        RuleSetId::Isc => "inner_sea_combat",
+        RuleSetId::Isi => "inner_sea_intrigue",
     }
 }
 
@@ -1087,6 +1094,16 @@ struct EngineFacts {
     /// key, never the display name: namespaced keys (`Seru ~ Poison`,
     /// `Caryatid Column ~ Immunity to Magic`) have leaves that are not unique.
     chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// Every chassis-book `companion` record the engine holds, keyed by corpus
+    /// book then by lowercase corpus key.
+    ///
+    /// One map for both of the kind's structural shapes (creature rows and
+    /// ability rows), because `Kind::Companion` is one kind: `file_kind` types
+    /// `*_races_companion.lst` and `*_abilities_companion.lst` alike, and a unit
+    /// carries no field that distinguishes them. Built by iterating
+    /// `companion_chassis::COMPANION_BOOKS`, so registering a book there is what
+    /// makes its units classify; nothing here names a book.
+    chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
@@ -1186,6 +1203,7 @@ impl EngineFacts {
                 hit_lowercase(self.chassis_monster_keys.get(book))
             }
             Kind::MonsterAbility => hit_lowercase(self.chassis_monster_ability_keys.get(book)),
+            Kind::Companion => hit_lowercase(self.chassis_companion_keys.get(book)),
             Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
             // The record's OWN race gates this, not "any modelled race" --
             // see `modelled_race_of_race_trait`.
@@ -1806,6 +1824,18 @@ fn gather_engine_facts(
         );
     }
 
+    // Same registry discipline for `companion`: `companion_chassis::COMPANION_BOOKS`
+    // is iterated, never enumerated here. Both structural shapes go into one set
+    // per book because `Kind::Companion` is one kind (see
+    // `EngineFacts::chassis_companion_keys`).
+    let mut chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
+    for book in companion_chassis::COMPANION_BOOKS {
+        let mut keys: BTreeSet<String> =
+            book.companions.iter().map(|c| c.key.to_lowercase()).collect();
+        keys.extend(book.companion_abilities.iter().map(|a| a.key.to_lowercase()));
+        chassis_companion_keys.insert(book.corpus_book, keys);
+    }
+
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
     for id in ClassId::ALL {
         class_books.insert(crb_class_name(*id).to_string(), "core_rulebook");
@@ -1861,6 +1891,7 @@ fn gather_engine_facts(
         monster_names,
         chassis_monster_keys,
         chassis_monster_ability_keys,
+        chassis_companion_keys,
         class_books,
         race_names,
         race_trait_ids,
@@ -2391,6 +2422,22 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 return not_ingested("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
             }
             not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
+        }
+        // SD-29 Epic 7 (companion lane). Registry-driven exactly as the two
+        // monster arms above are: `companion_chassis::COMPANION_BOOKS` decides,
+        // and the evidence token carries the book so a receipt reader sees which
+        // table answered. A book with no registered companion table falls
+        // through to the arm below, which keeps its original wording.
+        Kind::Companion if facts.chassis_companion_keys.contains_key(engine_book.as_str()) => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: format!("{engine_book}_companion_resolve_returned_a_real_record"),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested_owned(format!("companion_absent_from_{engine_book}_companion_tables"))
         }
         Kind::Companion => not_ingested("companion_content_has_no_engine_table"),
         // SD28-E15 (2026-08-09): no engine table exists for monster

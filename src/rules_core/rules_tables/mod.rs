@@ -17,10 +17,14 @@ pub mod bonus_bestiary;
 pub mod book_of_the_damned_volume_1;
 pub mod book_of_the_damned_volume_2;
 pub mod class_spell_levels;
+pub mod companion_chassis;
 pub mod crb;
 pub mod equipment_gap_tables;
 pub mod feat_gap_tables;
 pub mod feats_all;
+pub mod horror_adventures;
+pub mod inner_sea_combat;
+pub mod inner_sea_intrigue;
 pub mod monster_chassis;
 pub mod monster_codex;
 pub mod pathfinder_unchained;
@@ -122,4 +126,18 @@ pub enum RuleSetId {
     /// `RaceCorpus::resolve` would return `None` for its chassis whatever the
     /// ingest wrote.
     Ce,
+    /// Inner Sea Combat. SD-29 Epic 7 pilot (companion lane,
+    /// `rules_tables::inner_sea_combat`, 4 companion creatures + 6 companion
+    /// abilities). The first book whose ONLY ingested family is `companion`, and
+    /// therefore the first proof that the companion chassis stands on its own
+    /// rather than riding a book some other lane had already compiled.
+    Isc,
+    /// Inner Sea Intrigue. SD-29 Epic 7 pilot round, extend half
+    /// (`rules_tables::inner_sea_intrigue`, 2 familiars + 9 abilities).
+    ///
+    /// Its 11 units are the ones the race-trait lane handed back: they were
+    /// typed `race_trait` by `file_kind`'s `_abilities_race` substring until
+    /// that lane's round-2 classifier fix moved them, which left them owned by
+    /// no lane at all. This is the lane that owns them.
+    Isi,
 }

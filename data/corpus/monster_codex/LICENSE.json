@@ -1,7 +1,7 @@
 {
   "book": "monster_codex",
-  "classified_at": "2026-08-11T19:42:15Z",
-  "classified_by_cycle": "SD29-E5-F2-002",
+  "classified_at": "2026-08-12T13:12:30Z",
+  "classified_by_cycle": "SD29-E7-F1-002",
   "license_declaration": {
     "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _monster_codex.pcc declares ISOGL:YES (line 26) and carries a live COPYRIGHT block (lines 37-43) plus a real OGL.txt",
     "product_identity_note": "Named deities, NPCs and unique places are Product Identity; racial trait rules text is Open Game Content.",
@@ -12,7 +12,7 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 10,
+  "records_processed": 25,
   "records_redacted": 0,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "Every field of the 5 records this run wrote (2 monsters + 3 monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 10: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "Every field of the 15 records this run wrote (8 companion creatures + 7 companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 25: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

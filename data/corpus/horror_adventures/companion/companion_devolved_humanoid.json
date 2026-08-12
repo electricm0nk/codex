@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "data": {
+    "ability_keys": [
+      "horror_adventures:companion:companion_advancement_devolved_humanoid"
+    ],
+    "corpus_key": "Companion (Devolved Humanoid)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "horror_adventures:companion:companion_devolved_humanoid",
+    "monster_class": "Companion:2",
+    "name": "Companion (Devolved Humanoid)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.50",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "AnimalCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_races_companion.lst",
+    "sha256": "ee1e57dafe789962483eb7eaa925462b91f84f4aa24bbf88aacc758028f6fca1",
+    "line": 3,
+    "record_key": "Companion (Devolved Humanoid)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

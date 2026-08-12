@@ -348,6 +348,15 @@ const RECORD_TYPE_KINDS: &[(&str, &str)] = &[
     // make the chassis count silently absorb the feature count.
     ("MonsterStatBlock", "monsters"),
     ("MonsterAbilityRecord", "monster_abilities"),
+    // SD-29 Epic 7: the companion chassis. Two record types, ONE family --
+    // deliberately unlike the monster pair above, and for the corpus's own
+    // reason: `v06_work_inventory::file_kind` types a book's
+    // `*_races_companion.lst` creature rows and its `*_abilities_companion.lst`
+    // ability rows both as `Kind::Companion`, so there is one denominator on
+    // disk (`data/corpus/<book>/companion/`) and splitting the claim would
+    // judge two populations against one count.
+    ("CompanionRecord", "companions"),
+    ("CompanionAbilityRecord", "companions"),
     ("SpellListEntry", "spells"),
     ("EquipmentTableEntry", "equipment"),
     ("WeaponTableEntry", "weapons"),
@@ -560,6 +569,10 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // directory and the book id are the same string for both volumes.
     ("book_of_the_damned_volume_1", "book_of_the_damned_volume_1"),
     ("book_of_the_damned_volume_2", "book_of_the_damned_volume_2"),
+    // SD-29 Epic 7 (companion lane). Directory and book id are spelled the same
+    // for both, like every SD-29 book before them.
+    ("inner_sea_combat", "inner_sea_combat"),
+    ("inner_sea_intrigue", "inner_sea_intrigue"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -577,6 +590,10 @@ const CORPUS_KIND_NAMES: &[(&str, &str)] = &[
     ("monster_ability", "monster_abilities"),
     ("race", "races"),
     ("race_trait", "race_traits"),
+    // SD-29 Epic 7 (companion lane). One kind for both of the corpus's
+    // structural shapes -- see the `CompanionRecord` entry in
+    // `RECORD_TYPE_FAMILIES` for why.
+    ("companion", "companions"),
     ("spell", "spells"),
 ];
 
@@ -1121,6 +1138,22 @@ fn reach_of(family: &Family) -> Option<Reach> {
             Some(chassis_monster_abilities_reach("book_of_the_damned_volume_2", "BOTD2"))
         }
 
+        // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
+        // one is served by `list_companion_catalog` and rendered by
+        // apps/desktop/src/companionCatalog/CompanionCatalogScreen.tsx,
+        // reachable from the landing screen alongside the other catalogs.
+        //
+        // ONE claim per book, not two, because the corpus files creature rows
+        // and ability rows under one kind -- see `CORPUS_KIND_NAMES`. The
+        // judgement below therefore has to satisfy both shapes from one
+        // denominator, which is exactly what `companions_reach` does.
+        ("inner_sea_combat", "companions") => Some(companions_reach("inner_sea_combat", "ISC")),
+        ("monster_codex", "companions") => Some(companions_reach("monster_codex", "MC")),
+        ("inner_sea_intrigue", "companions") => {
+            Some(companions_reach("inner_sea_intrigue", "ISI"))
+        }
+        ("horror_adventures", "companions") => Some(companions_reach("horror_adventures", "HA")),
+
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
         // carrying that record's own corpus `KEY:` token, and the character
@@ -1514,6 +1547,60 @@ fn chassis_monsters_reach(corpus_book: &str, wire_code: &str) -> Reach {
     }
 
     assess("list_monster_catalog", &ingested, &with_payload, &identity_only)
+}
+
+/// One companion book's `companion` records -- BOTH structural shapes -- judged
+/// against the real `list_companion_catalog` response.
+///
+/// The denominator is every record file under `data/corpus/<book>/companion/`,
+/// read from disk, which holds the book's creature rows and its ability rows
+/// alike because the corpus files them under one kind. The numerator is the
+/// served response: creatures at the top level, abilities flattened out of the
+/// creatures that own them, which is exactly how the screen renders them.
+/// Neither side reads the compiled `rules_tables` module, so a table that
+/// stopped reaching the wire fails here instead of agreeing with itself.
+///
+/// A creature reaches the player when its row carries something *about* the
+/// creature beyond its name; an ability reaches when its row says something
+/// beyond its name. Both rules are stated below rather than shared, because the
+/// two shapes genuinely have different fields.
+fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
+    let ingested = corpus_record_keys(corpus_book, "companion");
+
+    let response = crate::companion_catalog::build_companion_catalog();
+    let mut with_payload = BTreeSet::new();
+    let mut identity_only = BTreeSet::new();
+    for entry in response.entries.iter().filter(|entry| entry.book == wire_code) {
+        let has_payload = entry.race_type.as_deref().is_some_and(|t| !t.trim().is_empty())
+            || entry.size.as_deref().is_some_and(|s| !s.trim().is_empty())
+            || entry.source_page.as_deref().is_some_and(|p| !p.trim().is_empty())
+            || !entry.speeds.is_empty()
+            || entry.monster_class.is_some()
+            || entry.natural_armor.is_some()
+            || !entry.natural_attacks.is_empty()
+            || !entry.stat_adjustments.is_empty()
+            || !entry.abilities.is_empty();
+        if has_payload {
+            with_payload.insert(entry.key.clone());
+        } else {
+            identity_only.insert(entry.key.clone());
+        }
+        for ability in &entry.abilities {
+            let has_payload = ability.facet.is_some()
+                || ability.delivery.is_some()
+                || !ability.type_segments.is_empty()
+                || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
+                || !ability.stat_adjustments.is_empty()
+                || ability.source_page.is_some();
+            if has_payload {
+                with_payload.insert(ability.key.clone());
+            } else {
+                identity_only.insert(ability.key.clone());
+            }
+        }
+    }
+
+    assess("list_companion_catalog", &ingested, &with_payload, &identity_only)
 }
 
 /// Bonus Bestiary's `monster_ability` records, judged against the same real
@@ -3098,6 +3185,58 @@ mod tests {
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected all 17 to reach, got {other:?}"),
+        }
+    }
+
+    /// Every companion book's one family, per record, against its own corpus
+    /// directory — the `companion` kind's first reach claim in this repo.
+    ///
+    /// Deliberately **one** claim per book against a denominator that holds
+    /// BOTH structural shapes, unlike the monster pair above: the corpus files
+    /// creature rows and ability rows under one kind, so
+    /// `data/corpus/<book>/companion/` is one population and a claim per shape
+    /// would judge two numerators against one count.
+    ///
+    /// Counts re-derived on disk this cycle rather than transcribed:
+    /// `for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures; do
+    /// echo -n "$b "; ls data/corpus/$b/companion/*.json | wc -l; done`
+    /// -> 10, 15, 11, 2 — which reproduce `docs/work-inventory.json`'s own
+    /// companion-unit counts for the same four books exactly.
+    #[test]
+    fn every_ingested_companion_book_reaches_the_catalog_record_by_record() {
+        let expected: &[(&str, &str, usize)] = &[
+            ("inner_sea_combat", "ISC", 10),
+            ("monster_codex", "MC", 15),
+            ("inner_sea_intrigue", "ISI", 11),
+            ("horror_adventures", "HA", 2),
+        ];
+        for &(book, wire_code, count) in expected {
+            let ingested = corpus_record_keys(book, "companion");
+            assert_eq!(ingested.len(), count, "{book}: re-derived on disk this cycle");
+
+            let response = crate::companion_catalog::build_companion_catalog();
+            let mut served: BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|entry| entry.book == wire_code)
+                .map(|entry| entry.key.clone())
+                .collect();
+            served.extend(
+                response
+                    .entries
+                    .iter()
+                    .filter(|entry| entry.book == wire_code)
+                    .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone())),
+            );
+            assert_eq!(served, ingested, "{book}: the wire and the corpus disagree");
+
+            match reach_of(&Family::new(book, "companions")).expect("a claim is declared") {
+                Reach::Surfaced { records, surface } => {
+                    assert_eq!(records, count, "{book}");
+                    assert_eq!(surface, "list_companion_catalog");
+                }
+                other => panic!("{book}: expected all {count} to reach, got {other:?}"),
+            }
         }
     }
 
