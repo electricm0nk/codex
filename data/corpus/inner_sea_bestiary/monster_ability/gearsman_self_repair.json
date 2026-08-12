@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Gearsman ~ Self-Repair",
+    "delivery": "Extraordinary",
+    "description": "A gearsman's nanites heal it of damage at the rate of a number of hit points per hour equal to its Hit Dice. Up to once per day, as a full-round action, it can heal any robot it touches of 4d6 points of damage-if a gearsman uses this ability on itself, it automatically heals the maximum amount.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:gearsman_self_repair",
+    "name": "Self-Repair",
+    "owners": [
+      "inner_sea_bestiary:monster:robot_gearsman"
+    ],
+    "source_page": "p.44",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 299,
+    "record_key": "Gearsman ~ Self-Repair"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

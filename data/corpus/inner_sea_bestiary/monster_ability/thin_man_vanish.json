@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Thin Man ~ Vanish",
+    "delivery": "Extraordinary",
+    "description": "Once per day as a move action while benefiting from concealment, a thin man can simply vanish from sight. This gives it a +20 bonus on Stealth checks and the ability to hide in plain sight for 1 round per Hit Die even when there is no cover, concealment, or shadow nearby. If it makes an attack, the thin man is no longer in its vanished state. It usually uses this ability when attempting to elude pursuit.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:thin_man_vanish",
+    "name": "Vanish",
+    "owners": [
+      "inner_sea_bestiary:monster:thin_man"
+    ],
+    "source_page": "p.52",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 369,
+    "record_key": "Thin Man ~ Vanish"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

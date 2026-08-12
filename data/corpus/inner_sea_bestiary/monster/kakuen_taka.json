@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:kakuen_taka_consume_flesh",
+      "inner_sea_bestiary:monster_ability:kakuen_taka_create_carrionstorm",
+      "inner_sea_bestiary:monster_ability:kakuen_taka_dimensional_snare",
+      "inner_sea_bestiary:monster_ability:kakuen_taka_flesh_mansion",
+      "inner_sea_bestiary:monster_ability:kakuen_taka_fleshy_shield",
+      "inner_sea_bestiary:monster_ability:kakuen_taka_swarm"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Kakuen-Taka",
+    "external_ability_refs": [
+      "Immunity to Poison",
+      "Resistance to Acid",
+      "Resistance to Cold",
+      "Resistance to Electricity",
+      "Resistance to Fire",
+      "Trample"
+    ],
+    "key": "inner_sea_bestiary:monster:kakuen_taka",
+    "monster_class": "Outsider (Fort/Ref):21",
+    "name": "Kakuen-Taka",
+    "natural_attacks": [
+      {
+        "damage_dice": "5d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Evil|Chaotic|Extraplanar|Swarm",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.20",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 38,
+    "record_key": "Kakuen-Taka"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

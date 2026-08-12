@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T21:32:04Z",
+  "ingested_at": "2026-08-12T22:19:24Z",
   "data": {
     "corpus_key": "Isitoq ~ Visual Sensor",
     "delivery": "Supernatural",
@@ -11,8 +11,8 @@
     "key": "bestiary_4:companion:isitoq_visual_sensor",
     "name": "Visual Sensor",
     "owners": [
-      "bestiary_4:companion:isitoq",
-      "bestiary_4:companion:familiar_isitoq"
+      "bestiary_4:companion:familiar_isitoq",
+      "bestiary_4:companion:isitoq"
     ],
     "record_type": "ability",
     "source_page": null,

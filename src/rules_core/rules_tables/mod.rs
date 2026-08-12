@@ -28,6 +28,7 @@ pub mod equipment_gap_tables;
 pub mod feat_gap_tables;
 pub mod feats_all;
 pub mod horror_adventures;
+pub mod inner_sea_bestiary;
 pub mod inner_sea_combat;
 pub mod inner_sea_intrigue;
 pub mod inner_sea_world_guide;
@@ -209,4 +210,20 @@ pub enum RuleSetId {
     /// removal is also why 73 of the book's 225 orphan abilities are orphans —
     /// see `rules_tables::bestiary_4`'s header for both derivations.
     B4,
+    /// Inner Sea Bestiary. SD-29 Epic 5 extend, round 7 (monster lane;
+    /// `rules_tables::inner_sea_bestiary`, 38 monsters + 152 monster
+    /// abilities) — the first `campaign_setting/` book in this lane that is a
+    /// bestiary in its own right rather than a setting book with creatures in
+    /// it.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** Two of its 40 corpus monster rows do not ship, and the
+    /// reason is the one this book contributed to the lane: a monster row's
+    /// emitted `ability_keys` array carries the KEYS of the abilities it names,
+    /// and seven of this book's ability rows are namespaced to a Golarion
+    /// deity's proper name. The abilities are Product Identity, so the monsters
+    /// that name them cannot be emitted either — `decisions.md §57.2`'s cascade
+    /// running backwards, from ability to owner. See
+    /// `rules_tables::inner_sea_bestiary`'s header.
+    Isb,
 }

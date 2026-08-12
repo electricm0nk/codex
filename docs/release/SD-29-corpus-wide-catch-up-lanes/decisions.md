@@ -4616,7 +4616,231 @@ That distinction is the practical one for round 7, because `bestiary_4` now read
 queued work. Running a per-monster cycle against it, or against any of the eleven zero-monster books,
 remains a reportable hard stop.
 
-## Decision 58 — Companion Lane, extend: round 5 (2026-08-12, `sd29-companion-r9`, card `epic-7-companion-lane-extend`)
+## Decision 58 — Monster / Monster-Ability Lane, extend: round 7 (2026-08-12, `sd29-monster-r9`, card `epic-5-monster-lane-extend`)
+
+Round 7 took `inner_sea_bestiary` and ingested **190 of its 230 remaining units** — 38 of 40 monster
+rows and 152 of 190 ability rows. It also answered the structural question `§57.7` left for this
+round, and the answer is not the one the queue assumed.
+
+**This decision does not claim the lane is done.** The REAL ceiling after this round is **821**.
+
+### 58.0 Every figure, command first
+
+The lane's REAL ceiling, **reproduced exactly at cycle start before being moved** — round 6's closing
+figure confirmed, not corrected:
+
+```
+python3 scripts/classify_monster_ability_rows.py
+```
+
+→ `remaining … 2458`, `orphan … 1406`, `PI … 32`, `.COPY= … 2`, **`reachable remainder … 1018`**.
+
+Lane denominators, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` across every book whose `scope` is not `out_of_scope` — the command rounds 1-6 record:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 409 | **371** | −38 |
+| `monster_ability` remaining | 2,049 | **1,897** | −152 |
+| raw remaining total | 2,458 | **2,268** | −190 |
+| `monster` grounded | 861 | **899** | +38 |
+| `monster_ability` grounded | 1,058 | **1,210** | +152 |
+| classifier `reachable remainder` | 1,018 | **828** | −190 |
+| **REAL ceiling** (`828 − 7`, §58.1) | 1,018 | **821** | −197 |
+
+`1018 − 190 = 828` closes exactly, no residue. The further −7 is not this round's ingest; it is
+§58.1's correction to the instrument that produces 828.
+
+**The dispatch brief's "monster ~305, monster_ability ~852, against grounded 62 and 20" was wrong for
+the SIXTH round running.** `§46.1`, `§50.7`, `§52`, `§55` and `§57.0` each corrected the identical
+pair and the round-7 brief repeated it verbatim again. The brief also carried "The previous round
+reported 1018 remaining", which **is** correct and was reproduced exactly. Retro event emitted for
+the pair.
+
+### 58.1 The lane's ceiling instrument over-reports, and this is the book that proves it
+
+`classify_monster_ability_rows.py` reports **197 reachable** for this book (`230 − 26 orphans −
+7 PI − 0 .COPY=`). What ships is **190**. The residue is exactly **7**, and it is a difference of
+*predicate*, not a transcription shortfall:
+
+* The **classifier** screens a monster row's own `KEY:` and name, plus `NAMEISPI:`.
+* The **transcriber** screens the values it is about to **emit** — and a monster's emitted record
+  carries an `ability_keys` array holding the KEYS of the abilities the row names.
+
+Seven of this book's ability rows are namespaced to a Golarion deity's proper name. Two monster rows
+name them. Neither of those two monsters carries a blacklisted term in its own key or name, so the
+classifier counts both reachable; neither can be *emitted* without emitting the deity's name inside
+its own record, so the transcriber drops both — and their 5 remaining abilities lose their only owner
+and fall out through the orphan pass. `2 + 5 = 7`, with nothing left over.
+
+**This is `§57.2`'s cascade running backwards.** There, a dropped Product Identity *monster* orphaned
+73 well-formed abilities. Here, Product Identity *abilities* drop their own owning monsters. The
+lane has now seen the ownership edge carry Product Identity in both directions.
+
+**Measured corpus-wide rather than asserted for one book**, applying the transcriber's emitted-value
+predicate to every book with remaining monster rows and joining the result against the classifier's
+own:
+
+```
+python3 <<'PY'   # full script in the round-7 receipt; it imports both scripts as modules
+# for every book: monster rows the CLASSIFIER counts reachable and the
+# TRANSCRIBER's emitted-value screen drops, plus the abilities owned only by them
+PY
+```
+
+→ `inner_sea_bestiary  remMon 2  extraPI 2  cascade 5  overcount 7`, and **every other book: zero**.
+Corpus-wide over-count is **7**, all of it this book's, so the lane's REAL ceiling is
+`828 − 7 = 821`.
+
+**The classifier was NOT changed.** Narrowing its predicate means running the transcriber's emitted-
+value screen — which needs the link pass, the size/type/CR/page parse and the natural-attack parse —
+inside a script whose job is to rank a queue cheaply. The measurement it makes is still the right one
+for ranking, it is wrong only in the safe direction (it over-reports remaining work, never
+under-reports it), and the exact residue is now known and pinned by a test in
+`rules_tables::inner_sea_bestiary`. **Unattended-mode default taken: measure, pin and report; do not
+rewrite the queue instrument inside an ingest round.**
+
+### 58.2 The continuation `DESC:` shape — a third shape, widened deliberately
+
+Three of this book's *shipping* rows stopped the transcription outright:
+`isb_abilities_race.lst:227`, `:228`, `:229` (`Moxix ~ Gush`, `~ Hopedrinker`, `~ Mindshatter`). Each
+carries **two `DESC:` tokens, neither gated**, and `parse_desc` refuses to pick one by position — the
+guard `§46` put in after Book of the Damned Volume 2's summary/full-text pair.
+
+The guard was right to fire and the rows are not that shape. They are **one description the corpus
+split across two tokens**, and the corpus says so itself: every continuation begins with a space, and
+concatenating in row order yields running prose.
+
+```
+DESC:… blood and pus spews forth from the wound.
+DESC: The blood is extremely slippery and sprays out in a 20-foot radius …
+```
+
+Taking the first token alone would have served the trigger and dropped the 20-foot radius, the DC 28
+Reflex save and the duration — the same loss `§46` recorded, arrived at from the other direction.
+
+**The widening predicate is deliberately narrow: every token must carry no pipe entry at all** (no
+gate, no `%N` variable) **and every token after the first must begin with a space.** That is what
+keeps it a concatenation of verbatim corpus texts in the corpus's own order rather than a
+composition. It was checked against the rows it must still refuse: `isb_abilities_race.lst:203`,
+`:204` and `:206` of this same file carry `%N` variables and state *alternatives* rather than a
+continuation, and they are still refused.
+
+**Scope derived, not assumed.** A scan of every registered book's ability rows found 15 rows
+corpus-wide carrying several ungated `DESC:` tokens — 1 in `bestiary_3`, 8 in `bestiary_4`, 7 here —
+and only 4 of the 15 are continuations. The other 11 use `&nl;` separators or state alternatives, and
+every one of them is an orphan or Product Identity row that no book ships. **Proof that the change is
+additive:** all eight previously registered books were re-transcribed after the widening and
+`git status --porcelain -- 'src/rules_core/rules_tables/*/monster_data.rs'` listed **only this
+round's new file**. Not one record of any earlier book moved.
+
+### 58.3 The `bestiary` ruling `§57.7` asked round 7 to make
+
+`§57.7` recorded that Bestiary 1 is the whole of the lane's large remainder (661 reachable by the
+classifier) and "cannot be taken without a ruling first" on whether the chassis absorbs its 46
+already-grounded SD-22 monsters or sits alongside them. Round 7 made the ruling, derived the work it
+implies, and did **not** execute it in the same round. Both halves are deliberate.
+
+**The ruling: the chassis SITS ALONGSIDE `rules_tables::beastiary1` and takes the book's
+complement.** Derived:
+
+```
+python3 -c "
+import json, collections
+d=json.load(open('docs/work-inventory.json'))
+u=[x for x in d['units'] if x['book']=='bestiary']
+print(collections.Counter((x['kind'],x['status']) for x in u
+                          if x['kind'] in ('monster','monster_ability')))"
+```
+
+→ `monster grounded 46`, `monster not-ingested 284`, `monster_ability not-ingested 523`.
+
+Splitting the 523 ability rows by **which** monster owns them — the derivation nobody had run:
+
+| class | count |
+|---|---|
+| owned by at least one of the 284 REMAINING monsters | **323** |
+| owned ONLY by one of the 46 SD-22 monsters | **54** |
+| orphans — owned by nothing in the book | 146 |
+| total | 523 |
+
+So "alongside" ships `284 + 323 = 607`, and the 54 become a new named exclusion class:
+**cross-table owner** — well-formed, owned, and unreachable only because the owner lives in a
+different table.
+
+**Why alongside rather than absorb.** Absorbing means the chassis emits all 330 monster rows, which
+duplicates 46 records the catalog already serves under the same wire code `B1` — a player-visible
+defect — unless SD-22's `beastiary1` monster tables, their `cache_gen`, their
+`natural_attack_provenance`, their `data/corpus/beastiary/monster/` records and the
+`beastiary1:monster:<slug>` key space are retired with them. That is a cross-bundle retirement of
+shipped, grounded, player-visible records; it is not an ingest round's write scope, and it churns
+content that is already correct.
+
+**The mechanism blocker, named by line so round 8 pays nothing to find it.** Registering `bestiary`
+in `monster_chassis::MONSTER_BOOKS` is NOT sufficient and is, on its own, a **regression**:
+
+* `v06_work_inventory.rs`'s `Kind::Monster if facts.chassis_monster_keys.contains_key(engine_book)`
+  arm takes precedence for the whole book once it is registered, so the SD-22 fallback arm
+  (`facts.monster_names`) is never reached; and
+* `EngineFacts::holds_key` hard-codes `if book == "bestiary_1" { return
+  self.monster_names.contains(&name.to_lowercase()); }`, which ignores the chassis table entirely.
+
+Together those two make a naive registration report the 284 new chassis monsters as `not-ingested`
+**and** demote the 46 SD-22 monsters to `not-ingested` as well. The fix is small and principled —
+Bestiary 1 is the one book served by two tables, so both must ground it — but it is a change to the
+inventory's verdict logic and it belongs in a round that can gate it.
+
+**Why not this round.** The card is loop-until-dry and the honest trade was one gate run against two
+books versus one gate run against one book plus a verdict-logic change to the instrument every other
+lane's denominator is read from. Round 7 banked and pushed 190 units first; the ruling costs round 8
+nothing to re-derive. **Unattended-mode default taken: rule, derive, record the blocker by line, and
+leave the execution to a round that opens with it.**
+
+### 58.4 A test the table cannot carry, recorded rather than shipped wrong
+
+A first draft of `rules_tables::inner_sea_bestiary`'s test module asserted the classifier's
+`row-named 157 / prefix 0` split by requiring that no shipped ability has its namespace prefix as its
+only owner. It fails at **96 of 152 rows**, and every one of the 96 is correct: when a monster row
+names an ability whose namespace is that same monster, the row-named pass records the owner first and
+the prefix pass adds nothing, leaving `owners == [prefix]` — indistinguishable in the table from a
+prefix-only reach. The split is a property of the two *passes*, not of their output.
+
+Recorded in the module rather than deleted silently, for the reason this lane keeps re-learning: an
+instrument validated only where it happens to be right (`§52.6`, `§55.3`, `§57.1`) is the lane's
+most-repeated defect, and this is the same shape caught one step earlier — before it shipped, by
+running it rather than reasoning about it.
+
+### 58.5 Round-8 queue, from ONE command
+
+`python3 scripts/classify_monster_ability_rows.py`, raw remaining **2,268**, classifier reachable
+**828**, REAL ceiling **821**:
+
+| book | remaining units | orphans | PI | classifier reachable | note |
+|---|---|---|---|---|---|
+| `bestiary` | 807 | 146 | 0 | **661** | ruled in `§58.3`; ships **607** under the ruling, and needs the `holds_key` fix FIRST |
+| `inner_sea_gods` | 200 | 81 | 3 | **116** | needs `MonsterAbilityRecord` to carry a `source_file`: its rows live in **two** ability files (`isg_abilities_races.lst` 145, `support/isg_abilities_races_b4.lst` 16), and `MonsterBookSpec::abilities_lst` is singular. The support pair is `PRECAMPAIGN:1,INCLUDES=Bestiary 4` — a gate this repo now **satisfies**, unlike `RuleSetId::Ha`'s and `B5`'s Occult Adventures gate, so those 19 units are in scope rather than out of it. Also: the inventory records those units' `source_file` as a bare basename while the file lives under `support/`, so path resolution must search the book root. |
+| `ultimate_psionics` | 100 | 66 | 0 | **34** | |
+| `horror_adventures` | 74 | 65 | 0 | **9** | |
+
+**`inner_sea_bestiary` now reads `2 remaining monsters / 38 remaining abilities / 26 orphans /
+7 PI`, i.e. 7 classifier-reachable and 0 REAL.** It is the third book in `§57.7`'s taxonomy —
+reachable-exhausted but not monster-exhausted — and its 40 remaining units are lane floor, not queued
+work. **Still eleven books holding 716 orphan abilities and zero remaining monsters**, re-derived
+this round rather than incremented.
+## Decision 59 — Companion Lane, extend: round 5 (2026-08-12, `sd29-companion-r9`, card `epic-7-companion-lane-extend`)
 
 Round 5 took `bestiary_4`, the cleanest book left by the ranking `§56` published (80 units, 5
 orphans, 6% orphan share) and the one `§56.3` had named as the first book that would actually
@@ -4739,7 +4963,54 @@ each of the last two rounds: the nine grounded books' reachable counts sum to **
 count before this round, to the unit — and the eight remaining books' sum to **644**, and
 `279 + 644 = 923`.
 
-### 58.3 What round 6 inherits
+### 59.3 A generated table that differed run to run, and the coin flip was shipping a creature with no abilities
+
+Found while renumbering this decision from §58 to §59 after a merge: regenerating
+`bestiary_4/companion_data.rs` from an inventory proven byte-identical for this book produced a
+DIFFERENT file. Three runs in three processes, diffed:
+
+```
+- owners: &["Nycar", "Familiar (Nycar)"],
++ owners: &["Familiar (Nycar)", "Nycar"],
+```
+
+The cause predates this round and has been latent since ownership shape 3 was written:
+
+```python
+creature_keys = {u["corpus_key"] for u in creatures}     # a SET
+creature_species = {bare_species(k): k for k in creature_keys}
+```
+
+`bare_species` maps `Familiar (Almiraj)` to `Almiraj`, and **Bestiary 4 is the first book that ships
+`Almiraj` AND `Familiar (Almiraj)` as separate creature rows** — seven such pairs (`Almiraj`,
+`Beheaded`, `Isitoq`, `Nycar`, `Pipefox`, `Pooka`, `Ratling`). Two keys collide on one map entry, and
+which survived was decided by set iteration order, i.e. by Python's per-process randomized string
+hash. **The whole lane's "regenerate, never hand-edit, and diff to prove it additive" method rests on
+that generator being a function of its input. For one book it was not.**
+
+**The non-determinism was the smaller half.** Even when the coin landed the same way twice, the answer
+was wrong: `Nycar ~ Poison` is reached from `Nycar` AND from `Familiar (Nycar)` — the corpus states
+both rows, and the catalog serves an ability under whichever creature the player is looking at.
+Attributing it to one was never a decision. In the committed table the losing side shipped visibly
+broken: the creature row `Beheaded` had `ability_keys: &[]` while `Familiar (Beheaded)` held all six
+of the Beheaded variants. A player opening `Beheaded` saw a creature with no abilities at all.
+
+`species_index()` replaces the comprehension: `<species>` -> EVERY creature row claiming it, in
+creature row order. Deterministic, and it states what the corpus states.
+
+* Three consecutive regenerations in three separate processes are now byte-identical.
+* **The nine already-registered books regenerate byte-identical too** — no other book in the lane
+  ships a bare species and its wrapper as two rows, so the collision is Bestiary 4's alone and this
+  fix is a correction to one book, not a corpus-wide re-cut.
+* `Beheaded` now carries its six abilities and every colliding ability names both owners.
+
+**The check that caught it was not a test.** It was regenerating a generated file and diffing, which
+is the same habit `§56.2` used to prove the multi-file spec additive and `§59.1` used to prove shape 6
+inert on registered books. A test asserting "the table has 44 ability records" passes on both sides of
+a coin flip. **Whenever a round changes a generator, regenerate TWICE and diff** — the second run
+costs seconds and is the only thing that would have caught this.
+
+### 59.4 What round 6 inherits
 
 `companion` grounded **279 → 357**; the honest remainder is **923 − 357 = 566** across **7** books.
 Raw `not-ingested` is 1,339, and that number is not the workload.

@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:korir_kokembe_disease",
+      "inner_sea_bestiary:monster_ability:korir_kokembe_spell_like_abilities"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Korir-Kokembe",
+    "external_ability_refs": [
+      "Maneuverability (Good)",
+      "Compression",
+      "Constrict",
+      "Frightful Presence",
+      "Grab",
+      "Immunity to Disease",
+      "Immunity to Paralysis",
+      "Immunity to Sleep",
+      "Rake",
+      "Scent"
+    ],
+    "key": "inner_sea_bestiary:monster:korir_kokembe",
+    "monster_class": "Dragon:13",
+    "name": "Korir-Kokembe",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Dragon",
+    "size": "H",
+    "source_page": "p.23",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      },
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 40,
+    "record_key": "Korir-Kokembe"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

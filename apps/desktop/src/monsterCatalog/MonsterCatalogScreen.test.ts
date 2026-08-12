@@ -51,8 +51,20 @@ const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 // Round 6 added `B4: 'Bestiary 4'` and updated BOTH places in the same edit,
 // which is the whole of the fix for the defect described above: this list and
 // `BOOK_LABELS` are two hand-maintained copies of one fact, and nothing but
-// this assertion couples them.
-const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2', 'B3', 'B4'] as const;
+// this assertion couples them. Round 7 added `ISB: 'Inner Sea Bestiary'` the
+// same way.
+const SERVED_BOOKS = [
+  'B1',
+  'BB',
+  'MC',
+  'BOTD1',
+  'BOTD2',
+  'ISWG',
+  'B2',
+  'B3',
+  'B4',
+  'ISB',
+] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [

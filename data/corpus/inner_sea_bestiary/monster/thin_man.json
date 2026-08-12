@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:thin_man_vanish"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Thin Man",
+    "external_ability_refs": [
+      "Bleed",
+      "Compression",
+      "Immunity to Poison"
+    ],
+    "key": "inner_sea_bestiary:monster:thin_man",
+    "monster_class": "Fey:7",
+    "name": "Thin Man",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.52",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Burrow"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 86,
+    "record_key": "Thin Man"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

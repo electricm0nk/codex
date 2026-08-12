@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:good_regeneration",
+      "inner_sea_bestiary:monster_ability:nascent_demon_lord_traits",
+      "inner_sea_bestiary:monster_ability:nightripper_curse_of_living_death",
+      "inner_sea_bestiary:monster_ability:nightripper_slowing_gaze",
+      "inner_sea_bestiary:monster_ability:nightripper_spell_like_abilities",
+      "inner_sea_bestiary:monster_ability:nightripper_swift_cuts",
+      "inner_sea_bestiary:monster_ability:nightripper_sword_mastery"
+    ],
+    "challenge_rating": "24",
+    "corpus_key": "Nightripper",
+    "external_ability_refs": [
+      "Sneak Attack"
+    ],
+    "key": "inner_sea_bestiary:monster:nightripper",
+    "monster_class": "Outsider (Ref/Will):27",
+    "name": "Nightripper",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Talons"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.34",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 56,
+    "record_key": "Nightripper"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

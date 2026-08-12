@@ -1,9 +1,16 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T21:32:04Z",
+  "ingested_at": "2026-08-12T22:19:24Z",
   "data": {
-    "ability_keys": [],
+    "ability_keys": [
+      "bestiary_4:companion:beheaded_base",
+      "bestiary_4:companion:beheaded_belching",
+      "bestiary_4:companion:beheaded_flaming",
+      "bestiary_4:companion:beheaded_grabbing",
+      "bestiary_4:companion:beheaded_screaming",
+      "bestiary_4:companion:beheaded_swarming"
+    ],
     "corpus_key": "Beheaded",
     "external_ability_refs": [],
     "key": "bestiary_4:companion:beheaded",

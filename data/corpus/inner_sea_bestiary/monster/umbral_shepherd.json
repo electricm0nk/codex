@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:umbral_shepherd_planebound",
+      "inner_sea_bestiary:monster_ability:umbral_shepherd_possession",
+      "inner_sea_bestiary:monster_ability:umbral_shepherd_shadow_touch"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Umbral Shepherd",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Light Sensitivity",
+      "Maneuverability (Perfect)"
+    ],
+    "key": "inner_sea_bestiary:monster:umbral_shepherd",
+    "monster_class": "Outsider (Ref/Will):6",
+    "name": "Umbral Shepherd",
+    "natural_attacks": [],
+    "race_subtype": "Incorporeal",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.53",
+    "speeds": [
+      {
+        "feet": 0,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 90,
+    "record_key": "Umbral Shepherd"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

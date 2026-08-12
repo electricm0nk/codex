@@ -42,9 +42,11 @@ from classify_companion_rows import (  # noqa: E402
     prerace_owners,
     read_row,
     relay_ownership,
+    resolve_owner,
     resolve_source_file,
     row_shape,
     special_ability_refs,
+    species_index,
     token,
 )
 
@@ -315,7 +317,13 @@ def transcribe(book: str) -> str:
         raise SystemExit(f"{book} carries no companion creature rows")
 
     creature_keys = {u["corpus_key"] for u in creatures}
-    creature_species = {bare_species(k): k for k in creature_keys}
+    # `<species>` -> EVERY creature row claiming it, in row order. A list rather
+    # than one key, and derived from the ORDERED creature list rather than from
+    # `creature_keys` (a set) -- see `classify_companion_rows.species_index` and
+    # `decisions.md §59.3`. Bestiary 4 ships `Almiraj` AND `Familiar (Almiraj)`,
+    # and the old comprehension picked between them by set iteration order,
+    # producing a different table on every run.
+    creature_species = species_index(creatures)
 
     # Shape 5, DISPLAY-NAME namespacing -- see the matching block in
     # `classify_companion_rows.py`, whose ORPHAN column must agree with what
@@ -364,16 +372,16 @@ def transcribe(book: str) -> str:
         row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         candidates: list[str] = []
         for owner in prerace_owners(row):
-            candidates.append(creature_display.get(owner) or creature_species.get(owner, owner))
+            candidates.extend(resolve_owner(owner, creature_display, creature_species))
         if " ~ " in key:
             prefix = key.split(" ~ ")[0]
-            candidates.append(creature_display.get(prefix) or creature_species.get(prefix, prefix))
+            candidates.extend(resolve_owner(prefix, creature_display, creature_species))
         for candidate in candidates:
             if candidate in creature_keys and candidate not in owners[key]:
                 owners[key].append(candidate)
                 creature_ability_keys[candidate].append(key)
 
-    # Shape 6, relay rows (`classify_companion_rows`, `decisions.md §58.1`).
+    # Shape 6, relay rows (`classify_companion_rows`, `decisions.md §59.1`).
     # The owner is stated across a corpus row that is NOT an inventory unit:
     # Bestiary 4's `Familiar (Giant Flea)` names `Racial Traits ~ Flea (Giant)`
     # (a `CATEGORY:Internal` row) and THAT row names `Flea (Giant) ~ Disease`.
@@ -459,7 +467,7 @@ def transcribe(book: str) -> str:
     # `verified_citation_line` refuses it outright anyway, because the row's
     # first column reads `CATEGORY=Special Ability|Change Shape.COPY=Pooka ~
     # Change Shape` rather than the record's name -- which is exactly how this
-    # book's two were found (round 5, `decisions.md §58.2`).
+    # book's two were found (round 5, `decisions.md §59.2`).
     #
     # Resolving the delta is not a transcription: it composes values across two
     # rows while `CompanionAbilityRecord` carries ONE `source_file`/`source_line`
@@ -555,7 +563,7 @@ def transcribe(book: str) -> str:
             "//! every field empty; resolving it needs a second citation this chassis does"
         )
         out.append(
-            "//! not carry (`decisions.md §58.2`, adopting the monster lane's `.COPY=`"
+            "//! not carry (`decisions.md §59.2`, adopting the monster lane's `.COPY=`"
         )
         out.append("//! screen). Their owners no longer name them:")
         for key in deltas:

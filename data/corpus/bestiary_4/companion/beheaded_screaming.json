@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T21:32:04Z",
+  "ingested_at": "2026-08-12T22:19:24Z",
   "data": {
     "corpus_key": "Beheaded ~ Screaming",
     "delivery": "Supernatural",
@@ -11,7 +11,8 @@
     "key": "bestiary_4:companion:beheaded_screaming",
     "name": "Screaming",
     "owners": [
-      "bestiary_4:companion:familiar_beheaded"
+      "bestiary_4:companion:familiar_beheaded",
+      "bestiary_4:companion:beheaded"
     ],
     "record_type": "ability",
     "source_page": null,

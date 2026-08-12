@@ -34,7 +34,7 @@ count, and it is a **ceiling on the lane**, not a preference.
 
 (Six of them now.  Shapes 5 and 6 were each found by a round that had already
 committed to a book and read the rows the classifier was about to throw away —
-`decisions.md §56.1` and `§58.1`.  Both moved the lane's ceiling UP.)
+`decisions.md §56.1` and `§59.1`.  Both moved the lane's ceiling UP.)
 
 1. **row-named** — a creature row's `ABILITY:Special Ability|AUTOMATIC|<name>`
    token names the ability outright (by `KEY:` or by display name).  This is the
@@ -60,7 +60,7 @@ committed to a book and read the rows the classifier was about to throw away —
    creature's `OUTPUTNAME:` rather than its `KEY:`.  `KEY:Kyton (Augur)`
    displays as `Augur` and its abilities are keyed `Augur ~ …`.  Read from the
    row's own token, never inferred by unwrapping the key's parentheses.
-6. **relay** (`decisions.md §58.1`) — the owner is stated across a corpus row
+6. **relay** (`decisions.md §59.1`) — the owner is stated across a corpus row
    that is not an inventory unit.  Bestiary 4's `Familiar (Giant Flea)` names
    `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row, and THAT row names
    `Flea (Giant) ~ Disease`.  Shape 4 walks unit-to-unit and cannot see it; see
@@ -244,8 +244,52 @@ def bare_species(key: str) -> str:
     return key
 
 
+def species_index(creatures: list[dict]) -> dict[str, list[str]]:
+    """`<bare species>` -> EVERY creature row of this book claiming that name.
+
+    **A list, in creature row order, and both facts are load-bearing**
+    (`decisions.md §59.3`).
+
+    Until Bestiary 4 this was `{bare_species(k): k for k in creature_keys}` — a
+    dict comprehension over a **set**, mapping each species to ONE key. Bestiary 4
+    is the first book where a species name is claimed by TWO creature rows: it
+    ships `Almiraj` **and** `Familiar (Almiraj)` (and the same pair for
+    `Beheaded`, `Isitoq`, `Nycar`, `Pipefox`, `Pooka`, `Ratling`), and
+    `bare_species` maps both to `Almiraj`.
+
+    Two defects at once, and the first hid the second:
+
+    * **Non-determinism.** Which of the two won was decided by set iteration
+      order, i.e. by Python's per-process randomized string hash. The generated
+      table differed run to run with no corpus change — caught by regenerating
+      twice and diffing, which is the check the whole lane's
+      "regenerate, don't hand-edit" proof rests on.
+    * **A lossy answer even when it was stable.** `Nycar ~ Poison` is reached
+      from `Nycar` AND from `Familiar (Nycar)`; the corpus states both rows and
+      the catalog serves the ability under whichever creature the player is
+      looking at. Attributing it to one was never a decision, just an artifact of
+      the comprehension.
+
+    Returning every claimant, in row order, is deterministic and states what the
+    corpus states.
+    """
+    index: dict[str, list[str]] = {}
+    for unit in creatures:
+        index.setdefault(bare_species(unit["corpus_key"]), []).append(unit["corpus_key"])
+    return index
+
+
+def resolve_owner(
+    name: str, display: dict[str, str], species: dict[str, list[str]]
+) -> list[str]:
+    """The creature keys `<name>` names: display name first, then every species claimant."""
+    if name in display:
+        return [display[name]]
+    return species.get(name, [name])
+
+
 # ---------------------------------------------------------------------------
-# Shape 6, RELAY ROWS (`decisions.md §58.1`).
+# Shape 6, RELAY ROWS (`decisions.md §59.1`).
 #
 # Bestiary 4 is where the closure above stops one hop short.  Its creature row
 # `Familiar (Giant Flea)` does not name `Flea (Giant) ~ Disease` at all; it
@@ -397,7 +441,7 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
     classes = [u for u in units if row_shape(u["source_file"]) == "class"]
 
     creature_keys = {u["corpus_key"] for u in creatures}
-    creature_species = {bare_species(k): k for k in creature_keys}
+    creature_species = species_index(creatures)
 
     # Shape 5, DISPLAY-NAME namespacing.  An ability row's `<X> ~ <Y>` prefix is
     # not always the creature's `KEY:`; it can be the creature's `OUTPUTNAME:`,
@@ -481,7 +525,7 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
                 frontier.append(granted)
 
     orphans = [u["corpus_key"] for u in abilities if u["corpus_key"] not in owned]
-    # Delta rows (`decisions.md §58.2`).  A `<Base>.COPY=<Variant>` row states a
+    # Delta rows (`decisions.md §59.2`).  A `<Base>.COPY=<Variant>` row states a
     # DELTA on another record, and a `.MOD` row an update to one; neither is a
     # record the chassis can transcribe from its own citation, so
     # `transcribe_companion_tables` drops both.  The inventory already classifies

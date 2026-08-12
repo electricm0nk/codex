@@ -65,7 +65,7 @@
 //!    `Familiar (Fox)` and `Kyton (Augur)` look identical to a string unwrap and
 //!    mean different things — one is a wrapper, the other a genus and species.
 //!
-//! 6. **relay** (`decisions.md §58.1`) — the owner is stated across a corpus row
+//! 6. **relay** (`decisions.md §59.1`) — the owner is stated across a corpus row
 //!    that is not an inventory unit at all. Bestiary 4's `Familiar (Giant Flea)`
 //!    names `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row of
 //!    `b4_abilities_companion.lst`, and THAT row names `Flea (Giant) ~ Disease`.
@@ -81,7 +81,7 @@
 //! The ceiling is **923** — and it is the size of the UNION of the exclusions,
 //! never the sum: 735 orphans + 2 `PRECAMPAIGN`-gated rows + 7 class rows + 30
 //! `.COPY=`/`.MOD` delta rows is 774, but exactly one row is both an orphan and
-//! a delta, so 773 distinct rows are excluded (`decisions.md §58.2`). Not
+//! a delta, so 773 distinct rows are excluded (`decisions.md §59.2`). Not
 //! 1,696, not the 888 this comment claimed when three shapes were known, and
 //! not the 937 it claimed before delta rows were subtracted at all. That is a
 //! ceiling, not a backlog.
@@ -397,14 +397,14 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         companion_abilities: super::bestiary_3::companion_abilities_static(),
     },
     // SD-29 Epic 7 round 5. Bestiary 4 — the book that made ownership shape 6
-    // unavoidable (`decisions.md §58.1`). Its `Familiar (Giant Flea)` names
+    // unavoidable (`decisions.md §59.1`). Its `Familiar (Giant Flea)` names
     // `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row that is not an
     // inventory unit, and THAT row names the two abilities the classifier had
     // been reporting as orphans. `Familiar (Pipefox)` and `Familiar (Ratling)`
     // reach three more the same way.
     //
     // 78 of its 80 units ship — the book's whole reachable remainder, with ZERO
-    // orphans. The two exclusions are `.COPY=` delta rows (`§58.2`), the first
+    // orphans. The two exclusions are `.COPY=` delta rows (`§59.2`), the first
     // any registered companion book has carried. No new `RuleSetId`: the monster
     // lane compiled `RuleSetId::B4` in `52da4bc3`.
     CompanionBook {

@@ -590,6 +590,10 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // `race_trait` family too, but this rule set compiles the two monster
     // families and those units stay `not-ingested`, which is their honest state.
     ("bestiary_4", "bestiary_4"),
+    // SD-29 Epic 5 extend, round 7 (monster lane). Same again. Inner Sea
+    // Bestiary carries a 4-unit `race_trait` family too; this rule set compiles
+    // the two monster families and those units stay `not-ingested`.
+    ("inner_sea_bestiary", "inner_sea_bestiary"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1189,6 +1193,15 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("bestiary_4", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("bestiary_4", "B4"))
         }
+        // SD-29 Epic 5 extend, round 7. Inner Sea Bestiary -- the same two
+        // claim functions again, and the first `campaign_setting/` book in this
+        // lane whose whole reach is the two monster families.
+        ("inner_sea_bestiary", "monsters") => {
+            Some(chassis_monsters_reach("inner_sea_bestiary", "ISB"))
+        }
+        ("inner_sea_bestiary", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("inner_sea_bestiary", "ISB"))
+        }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
         // one is served by `list_companion_catalog` and rendered by
@@ -1248,8 +1261,8 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // the board and found every one owned across a `CATEGORY:Internal` relay
         // row that is not itself an inventory unit (`Familiar (Giant Flea)` ->
         // `Racial Traits ~ Flea (Giant)` -> `Flea (Giant) ~ Disease`), which is
-        // ownership shape 6 (`decisions.md §58.1`). The two exclusions are
-        // `.COPY=` DELTA rows (`§58.2`), which state a delta on a base record
+        // ownership shape 6 (`decisions.md §59.1`). The two exclusions are
+        // `.COPY=` DELTA rows (`§59.2`), which state a delta on a base record
         // rather than a record.
         //
         // No `OPEN_FINDINGS` entry, and that is the correct outcome rather than

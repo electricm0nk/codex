@@ -313,7 +313,7 @@ mod tests {
 // The two exclusions are `.COPY=` DELTA rows, not orphans: `Pooka ~ Change
 // Shape` and `Psychopomp (Nosoi) ~ Change Shape` each state a delta on a base
 // record that lives elsewhere, so transcribing one verbatim ships a card with
-// almost every field empty (`decisions.md §58.2`, adopting the monster lane's
+// almost every field empty (`decisions.md §59.2`, adopting the monster lane's
 // screen). This book's `companions` family IS surfaced, so it correctly carries
 // no `OPEN_FINDINGS` entry — that list is per FAMILY, and a family that reaches
 // a player is not an unsurfaced one.
@@ -325,7 +325,7 @@ mod tests {
 // the `ABILITY:Special Ability|AUTOMATIC|Flea (Giant) ~ Disease|…` token. The
 // relay is a corpus row that is **not an inventory unit**, so shape 4 — which
 // walks unit to unit — has nothing to stand on. Reading it is ownership shape 6
-// (`decisions.md §58.1`); `Familiar (Pipefox)` and `Familiar (Ratling)` reach
+// (`decisions.md §59.1`); `Familiar (Pipefox)` and `Familiar (Ratling)` reach
 // the three `~ Constant` rows of `b4_abilities_race_ce_companion.lst` the same
 // way.
 // ---------------------------------------------------------------------------

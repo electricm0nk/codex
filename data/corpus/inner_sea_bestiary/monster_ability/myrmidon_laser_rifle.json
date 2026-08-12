@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Myrmidon ~ Laser Rifle",
+    "delivery": "Extraordinary",
+    "description": "A myrmidon's eye is an integrated laser rifle. This weapon has a range increment of 250 feet and deals 2d10 fire vs touch AC.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:myrmidon_laser_rifle",
+    "name": "Laser Rifle",
+    "owners": [
+      "inner_sea_bestiary:monster:robot_myrmidon"
+    ],
+    "source_page": "p.45",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 304,
+    "record_key": "Myrmidon ~ Laser Rifle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:quantium_golem_eldritch_surge",
+      "inner_sea_bestiary:monster_ability:quantium_golem_immunity_to_magic",
+      "inner_sea_bestiary:monster_ability:quantium_golem_link",
+      "inner_sea_bestiary:monster_ability:quantium_golem_urban_defender"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Golem (Quantium)",
+    "external_ability_refs": [],
+    "key": "inner_sea_bestiary:monster:golem_quantium",
+    "monster_class": "Construct:30",
+    "name": "Golem (Quantium)",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "G",
+    "source_page": "p.19",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 34,
+    "record_key": "Golem (Quantium)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}
