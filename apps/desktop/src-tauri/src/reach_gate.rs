@@ -989,7 +989,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // two mechanism-blocked books ahead of it -- was wrong.
         ("inner_sea_races", "race_traits") => Some(race_traits_reach("ISR", "inner_sea_races")),
         // SD-29 Epic 6 round 3 (race-trait lane, extend, 2026-08-12,
-        // `decisions.md §46`). Horror Adventures' 43 in-scope records from
+        // `decisions.md §47`). Horror Adventures' 43 in-scope records from
         // `ha_abilities_race.lst` -- 41 `TraitRole::Alternate` plus the two
         // `Deep Jungle Halfling ~ ...` rows the book's own
         // `Halfling ~ Deep Jungle` alternate grants -- served by exactly the
@@ -2633,7 +2633,7 @@ mod tests {
 
     /// Horror Adventures' race traits reach a player, all 43 of them.
     ///
-    /// SD-29 race-trait lane round 3 (`decisions.md §46`). The book was picked
+    /// SD-29 race-trait lane round 3 (`decisions.md §47`). The book was picked
     /// by running `scripts/classify_race_trait_rows.py` on it *before* the
     /// round committed to it, which is `decisions.md §45.1`'s method applied a
     /// second time rather than a queue transcribed from a doc.

@@ -72,11 +72,13 @@ const LOADED_BOOKS: &[&str] = &[
     "advanced_race_guide",
     "advanced_players_guide",
     "monster_codex",
-    // SD-29 race-trait lane, rounds 2 and 3. The app loads them, so this
-    // copy must too -- `the_loaded_books_are_the_ones_the_app_loads` reads
-    // `race_catalog.rs` and fails on exactly this drift, which is what it
-    // did here.
+    // SD-29 race-trait lane round 2. Round 2 added the book to the app's
+    // `RACE_CORPUS_BOOKS` without adding it here, so
+    // `the_loaded_books_are_the_ones_the_app_loads` -- the test whose whole job is
+    // stopping this copy from drifting -- was RED on the branch until round 3
+    // (`decisions.md §47.3`). It did its job; nobody read it.
     "inner_sea_races",
+    // SD-29 race-trait lane round 3.
     "horror_adventures",
 ];
 

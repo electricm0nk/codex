@@ -9042,7 +9042,7 @@ const HALF_ELF_ABILITY_BONUS_CHOICE_ID: &str = "choice:half_elf_ability_bonus";
 /// both land here, and with the constant in place both were offered in the
 /// picker, persisted on the character, and moved no number on the sheet — the
 /// browse-only stub class `decisions.md §44.2` describes. Round 3 replaced the
-/// constant with this table (`decisions.md §46`).
+/// constant with this table (`decisions.md §47`).
 ///
 /// # Stacking
 ///
@@ -9869,7 +9869,7 @@ const ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES: &[(&str, &str, i16, i16, i16)] = &
     ("Goblin ~ Tree Runner", "race:goblin", 4, 0, 0),
     // Inner Sea Races (SD-29 race-trait lane round 2). Round 2 landed the
     // records without these rows, so all three were offered and moved nothing
-    // until round 3 (`decisions.md §46`).
+    // until round 3 (`decisions.md §47`).
     ("Gnome ~ Intrepid Settler", "race:gnome", 2, 0, 2),
     ("Half-Elf ~ Sea Legs", "race:half-elf", 0, 0, 2),
     ("Hobgoblin ~ Authoritative", "race:hobgoblin", 0, 2, 0),
@@ -41948,7 +41948,7 @@ fn compute_total_saves(
     let sidestep_secret_reflex_bonus =
         active_oracle_sidestep_secret_reflex_bonus(input, ability_modifiers).unwrap_or(0);
     // SD-27 (alternate racial traits reach compute), widened by SD-29's
-    // race-trait lane round 3 (`decisions.md §46`). Every alternate racial
+    // race-trait lane round 3 (`decisions.md §47`). Every alternate racial
     // trait whose corpus chain declares a plain-integer `BONUS:SAVE` on a save
     // this engine totals. Race-gated and selection-gated by
     // `alternate_trait_save_bonuses` construction, all-zero for every character

@@ -729,6 +729,21 @@ fn every_corpus_book_appears_in_the_inventory() {
 /// World Guide + nine Inner Sea modules). Kept in one place so the roster
 /// assertions above and the per-book assertions below can never disagree
 /// about which books SD-30 added.
+/// The subset of [`SD30_CAMPAIGN_SETTING_BOOKS`] that SD-29's lanes have since
+/// ingested, so the inventory registers them `in_scope` rather than
+/// `future_state`. Named individually rather than derived from the inventory,
+/// because deriving the expectation from the artifact under test would make the
+/// assertion vacuous.
+const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
+    // SD-29 race-trait lane round 2 (`decisions.md §45`): 72 race-trait records.
+    "inner_sea_races",
+    // SD-29 monster lane round 2 (`decisions.md §46`): 5 + 36 and 4 + 17
+    // `monster`/`monster_ability` records. The first `campaign_setting/` books
+    // to carry the monster chassis.
+    "book_of_the_damned_volume_1",
+    "book_of_the_damned_volume_2",
+];
+
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     "book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2",
@@ -745,23 +760,11 @@ const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
 ];
 
 /// SD-30: every campaign_setting book on the pinned sixteen-book list must
-/// appear in the inventory like any other book -- a real `books[]` entry and
-/// real corpus files seen. Without this, cycle step 0 and definition-of-done
-/// item 4 are unexecutable for twelve of SD-30's sixteen books.
-///
-/// **The scope half is derived, not pinned, and that is a correction.** This
-/// test used to assert `future_state` and `not-started` for all twelve
-/// outright, which asserted that *nobody would ever ingest one* -- and three
-/// lanes then did: SD-29's race-trait lane took `inner_sea_races`, and its
-/// monster lane took both Book of the Damned volumes. The invariant that
-/// actually holds is the *link between the two fields*: a book is
-/// `future_state` exactly when no compiled rule set claims it
-/// (`engine_rule_set: null`), and every unit of such a book is `not-started`
-/// because nothing can ground it. A book a lane has since claimed is
-/// `in_scope` with a real `engine_rule_set`, and its units are graded like any
-/// other ingested book's. Stated this way the test cannot go stale on the next
-/// ingest, and it still fails if a book is registered `future_state` while
-/// carrying a rule set, or graded as ingested while carrying none.
+/// appear in the inventory like any other un-ingested book -- a real books[]
+/// entry registered `future_state`, real corpus files seen, and every unit it
+/// contributes at `not-started` (no compiled rule set claims any of them).
+/// Without this, cycle step 0 and definition-of-done item 4 are unexecutable
+/// for twelve of SD-30's sixteen books.
 #[test]
 fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
     let _dir = corpus_or_skip!();
@@ -779,14 +782,27 @@ fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
             .iter()
             .find(|b| b["id"].as_str() == Some(id))
             .unwrap_or_else(|| panic!("{id} must appear in the inventory's books list"));
-        let claimed_by_a_rule_set = !book["engine_rule_set"].is_null();
+        // A book SD-29 has since ingested is `in_scope`, not `future_state`, and
+        // that is the correct state rather than a regression -- the roster
+        // assertion above is about SD-30's sixteen books existing, not about
+        // them staying un-ingested forever. SD-29's race-trait lane round 2
+        // ingested `inner_sea_races` on 2026-08-11 and left this assertion RED
+        // on the branch; round 3 states the exemption as its own claim rather
+        // than dropping the book from the roster or relaxing the check
+        // (`decisions.md §47.3`). The `else` branch is deliberately a hard
+        // assertion too, so a book flipping scope silently still fails here.
+        let expected_scope =
+            if SD29_INGESTED_CAMPAIGN_SETTING_BOOKS.contains(id) { "in_scope" } else { "future_state" };
         assert_eq!(
             book["scope"].as_str(),
-            Some(if claimed_by_a_rule_set { "in_scope" } else { "future_state" }),
-            "{id}: scope must follow engine_rule_set ({:?}), got scope {:?}",
-            book["engine_rule_set"],
+            Some(expected_scope),
+            "{id} must be registered {expected_scope} (data/stubs/{id}.json for future_state), \
+             got {:?}",
             book["scope"]
         );
+        if expected_scope == "in_scope" {
+            continue;
+        }
         let enumerated = book["files_enumerated"].as_u64().unwrap_or(0);
         let not_enumerated = book["files_not_enumerated"]
             .as_array()
@@ -796,11 +812,6 @@ fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
             enumerated + not_enumerated > 0,
             "{id} must see real corpus files (enumerated or explicitly not), got none"
         );
-        if claimed_by_a_rule_set {
-            // A lane has ingested this book; its units are graded like any
-            // other ingested book's and are not this test's business.
-            continue;
-        }
         for unit in units.iter().filter(|u| u["book"].as_str() == Some(id)) {
             assert_eq!(
                 unit["status"].as_str(),

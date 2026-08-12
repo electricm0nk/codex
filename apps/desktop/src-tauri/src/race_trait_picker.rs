@@ -953,7 +953,7 @@ mod tests {
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
              race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2) \
-             + Horror Adventures' 41 (§46, round 3)"
+             + Horror Adventures' 41 (§47, round 3)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -968,7 +968,7 @@ mod tests {
         // finding in `reach_gate`'s OPEN_FINDINGS rather than hidden.
         // **This table was left at its pre-Inner-Sea-Races values by round 2
         // and went RED with five other root-workspace assertions**; round 3
-        // moved it and recorded the miss (`decisions.md §46`). Every cell
+        // moved it and recorded the miss (`decisions.md §47`). Every cell
         // below is re-derived from the written records rather than added up
         // from a prior round's arithmetic, with each race's per-book split in
         // the trailing comment so a future book's contribution is checkable
@@ -1195,7 +1195,7 @@ mod tests {
         assert_eq!(
             checked, 267,
             "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races \
-             (§45) + 41 Horror Adventures (§46)"
+             (§45) + 41 Horror Adventures (§47)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
@@ -1207,7 +1207,7 @@ mod tests {
         // The alternate count moved 9 -> 11 when Inner Sea Races landed
         // (`Aasimar ~ Crusading Magic`, `Aasimar ~ Lost Promise`); round 2 did
         // not move it and this assertion was RED on the branch until round 3
-        // (`decisions.md §46`). The *standard* count did not move and must
+        // (`decisions.md §47`). The *standard* count did not move and must
         // not: ISR and HA contribute alternates only, no `race/` chassis.
         let aasimar = race(&menu, "Aasimar");
         assert_eq!(aasimar.standard_traits.len(), 9);
@@ -1270,6 +1270,12 @@ mod tests {
             setters,
             BTreeSet::from([
                 "Duergar ~ Blood Enmity",
+                // Inner Sea Races, SD-29 race-trait lane round 2. A THIRD
+                // setter of the same flag. Round 2 did not move this pin and
+                // it was RED on the branch until round 3 reached it -- behind
+                // two earlier assertions in this same test, which is why the
+                // cascade only surfaced once those were fixed
+                // (`decisions.md §47.3`).
                 "Duergar ~ Magical Taskmaster",
                 "Duergar ~ Twilight-Touched",
             ]),
@@ -1640,7 +1646,7 @@ mod tests {
         // ARG/CRB/Bestiary) never moves.
         let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
         let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        // Round 3 (`decisions.md §46`) added Horror Adventures' 41 alternates.
+        // Round 3 (`decisions.md §47`) added Horror Adventures' 41 alternates.
         // `standard` did not move for the same reason APG never moved it: HA
         // contributes no `race/` chassis, only alternates onto races CRB and
         // Bestiary 1 already declare.
