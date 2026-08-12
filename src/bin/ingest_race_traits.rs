@@ -1620,13 +1620,15 @@ mod tests {
                 ("inner_sea_races", 72),
                 ("horror_adventures", 43),
                 // Core Essentials' Aasimar and Tiefling heritage traits
-                // (race-trait lane round 4). Re-derived on disk rather than
-                // transcribed: `find data/corpus/core_essentials/race_trait
-                // -name '*.json' | wc -l` -> 64.
+                // (race-trait lane round 4): 16 heritage selectors + the 48
+                // replacement rows they grant, across the book's two subrace
+                // files. Re-derived on disk rather than transcribed:
+                // `find data/corpus/core_essentials/race_trait -name '*.json'
+                // | wc -l` -> 64.
                 ("core_essentials", 64),
             ]
-            .into_iter()
-            .collect();
+                .into_iter()
+                .collect();
         assert_eq!(
             expected.len(),
             BOOK_SOURCES.len(),
@@ -1671,9 +1673,10 @@ mod tests {
                 book.corpus_book
             );
             // Every record carries prose. A redacted one carries the PI marker
-            // rather than nothing, so this holds for Inner Sea Races' 12
-            // redactions too — which is the point of a schema-preserving
-            // redaction and is worth asserting rather than assuming.
+            // rather than nothing, so this holds for Inner Sea Races' 12 and
+            // Core Essentials' 8 redactions too — which is the point of a
+            // schema-preserving redaction and is worth asserting rather than
+            // assuming.
             assert_eq!(
                 with_description,
                 checked,
@@ -1686,10 +1689,11 @@ mod tests {
             total,
             340,
             "156 ARG + 5 Monster Codex + 72 Inner Sea Races + 43 Horror Adventures + 64 Core \
-             Essentials. This total sits alongside the per-book map above and must move with \
-             it; round 3 moved the map first and this pin caught the omission, round 4 did \
-             the same, and this is the third time in one cycle that fixing one assertion \
-             revealed the next one below it -- which is the whole reason the test states both"
+             Essentials heritage records. This total sits alongside the per-book map above \
+             and must move with it; round 3 moved the map first and this pin caught the \
+             omission, round 4 did the same, and the companion lane hit it a third time in \
+             one cycle -- fixing one assertion reveals the next one below it, which is the \
+             whole reason the test states both"
         );
     }
 

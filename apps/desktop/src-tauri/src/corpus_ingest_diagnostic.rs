@@ -280,11 +280,17 @@ fn chassis_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
     counts
 }
 
-/// One companion book's `companion` count, read off its live registry entry.
+/// The `companion` counts a book contributes, read off the live companion
+/// chassis exactly as [`chassis_book_counts`] reads the monster one.
 ///
-/// SD-29 Epic 7. ONE content-kind row, not two, because the corpus files a
-/// book's companion creature rows and its companion ability rows under one kind
-/// (`v06_work_inventory::file_kind`), and the panel's rows are corpus kinds.
+/// **Written independently and identically by two lanes, and kept once.** The
+/// companion lane added it here with its tables (`decisions.md §48`); the
+/// race-trait lane's round 4 added the same function for the same reason
+/// (`§49`) because the three books `bac2f569` landed left
+/// `every_book_landed_in_rules_tables_is_reported` — the drift guard written
+/// for exactly this defect — RED on `origin/tranche/9` until whichever lane got
+/// there first. Both reasons are kept because both are true, and the merge
+/// unioned them rather than picking a side (`§46.6` rule 1).
 ///
 /// Kept separate from [`chassis_book_counts`] rather than merged into it: a
 /// book can be in either registry, both, or neither, and a single helper would
@@ -295,6 +301,17 @@ fn companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
     let table = companion_chassis::companion_book(corpus_book).unwrap_or_else(|| {
         panic!("{corpus_book} is not registered in companion_chassis::COMPANION_BOOKS")
     });
+    // **One kind, not two**, matching `reach_gate::CORPUS_KIND_NAMES`'s
+    // deliberate single `companion -> companions` entry and the corpus's own
+    // single `data/corpus/<book>/companion/` directory, which holds creature
+    // records and ability records side by side. Splitting them here would
+    // invent a `companion_abilities` family the reach gate has no claim for,
+    // and `every_ingested_family_is_accounted_for` would correctly demand one
+    // -- an invented family is exactly the drift this diagnostic exists to
+    // report, not to create. The sum is the on-disk record count, verified per
+    // book: `find data/corpus/inner_sea_combat/companion -name '*.json' | wc -l`
+    // -> 10 = 4 creatures + 6 abilities; inner_sea_intrigue 11 = 2 + 9;
+    // horror_adventures 2 = 1 + 1; monster_codex 15 = 8 + 7.
     let mut counts = BTreeMap::new();
     counts.insert(
         "companions".to_string(),
@@ -540,6 +557,14 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         // SD-29 Epic 7 (companion lane). Three books whose only compiled family
         // is `companion`; `inner_sea_combat` is the first book in this repo
         // whose ONLY ingested family is companions at all.
+        //
+        // **Two lanes added these three rows independently and the merge kept
+        // both copies** (`decisions.md §46.6` rule 1: a non-conflicting hunk is
+        // exactly what an auto-merge duplicates without saying so). One copy is
+        // kept. The race-trait lane's version noted that `monster_codex`'s
+        // companion counts were NOT merged into its own row above; that gap is
+        // closed here by `monster_and_companion_book_counts`, so the note is
+        // corrected rather than dropped.
         book_status(
             "inner_sea_combat",
             "src/rules_core/rules_tables/inner_sea_combat",

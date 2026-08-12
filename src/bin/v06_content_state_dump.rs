@@ -823,6 +823,13 @@ fn main() {
             // `Ha`'s, `Isr`'s and `Ue`'s above do. This match going red is the
             // enum doing its designed job -- `decisions.md §45.2` records the
             // same thing happening when `Isr` was added.
+            //
+            // **They were missing on `origin/tranche/9` at `bac2f569`**, which
+            // is a compile error in this bin and therefore `0 passed across 0
+            // suites` for the whole `root-full` stage -- the failure mode
+            // `AGENTS.md` records as "one broken bin meant 0 of 502 suites
+            // ran". Both lanes found it and both wrote these arms; the merge
+            // keeps one copy and both reasons (`§46.6` rule 1).
             RuleSetId::Isc => "inner_sea_combat",
             RuleSetId::Isi => "inner_sea_intrigue",
         };

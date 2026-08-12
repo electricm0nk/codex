@@ -80,10 +80,16 @@ const LOADED_BOOKS: &[&str] = &[
     "inner_sea_races",
     // SD-29 race-trait lane round 3.
     "horror_adventures",
-    // SD-29 race-trait lane round 4. Round 4 added the book to the app's
-    // `RACE_CORPUS_BOOKS` without adding it here, so this copy drifted again --
-    // the SECOND time this exact test caught the same omission, the first being
-    // round 2's (see `inner_sea_races` above). Widened rather than relaxed.
+    // SD-29 race-trait lane round 4: Core Essentials' Aasimar and Tiefling
+    // heritages (`decisions.md §49`). Loadable like the four books above it
+    // and, like them, contributing no racial default -- its 64 records are 16
+    // heritages a player picks and the 48 replacement rows they grant.
+    //
+    // Round 4 added the book to the app's `RACE_CORPUS_BOOKS` before adding it
+    // here, so this copy drifted again -- the SECOND time this exact test
+    // caught this exact omission from this exact lane, the first being round
+    // 2's (see `inner_sea_races` above). Widened rather than relaxed, both
+    // times.
     "core_essentials",
 ];
 
