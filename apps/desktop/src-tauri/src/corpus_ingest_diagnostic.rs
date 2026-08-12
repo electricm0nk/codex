@@ -280,6 +280,41 @@ fn chassis_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
     counts
 }
 
+/// One companion book's `companion` count, read off its live registry entry.
+///
+/// SD-29 Epic 7. ONE content-kind row, not two, because the corpus files a
+/// book's companion creature rows and its companion ability rows under one kind
+/// (`v06_work_inventory::file_kind`), and the panel's rows are corpus kinds.
+///
+/// Kept separate from [`chassis_book_counts`] rather than merged into it: a
+/// book can be in either registry, both, or neither, and a single helper would
+/// have to guess which. `monster_codex` is in both, which is exactly the case
+/// that would have broken a merged one.
+fn companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
+    use codex::rules_core::rules_tables::companion_chassis;
+    let table = companion_chassis::companion_book(corpus_book).unwrap_or_else(|| {
+        panic!("{corpus_book} is not registered in companion_chassis::COMPANION_BOOKS")
+    });
+    let mut counts = BTreeMap::new();
+    counts.insert(
+        "companions".to_string(),
+        (table.companions.len() + table.companion_abilities.len()) as u32,
+    );
+    counts
+}
+
+/// A book carrying BOTH chassis registries' tables, merged into one row set.
+///
+/// `monster_codex` is the only such book today and the reason this exists: its
+/// panel row has to state its monsters, its monster abilities AND its 15
+/// companion units, and reporting only one registry would under-state a book
+/// the tester is looking at.
+fn monster_and_companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
+    let mut counts = chassis_book_counts(corpus_book);
+    counts.extend(companion_book_counts(corpus_book));
+    counts
+}
+
 fn beastiary1_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("monsters".to_string(), ALL_BESTIARY1_MONSTERS.len() as u32);
@@ -499,7 +534,28 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
         book_status(
             "monster_codex",
             "src/rules_core/rules_tables/monster_codex",
-            chassis_book_counts("monster_codex"),
+            monster_and_companion_book_counts("monster_codex"),
+            &races,
+        ),
+        // SD-29 Epic 7 (companion lane). Three books whose only compiled family
+        // is `companion`; `inner_sea_combat` is the first book in this repo
+        // whose ONLY ingested family is companions at all.
+        book_status(
+            "inner_sea_combat",
+            "src/rules_core/rules_tables/inner_sea_combat",
+            companion_book_counts("inner_sea_combat"),
+            &races,
+        ),
+        book_status(
+            "inner_sea_intrigue",
+            "src/rules_core/rules_tables/inner_sea_intrigue",
+            companion_book_counts("inner_sea_intrigue"),
+            &races,
+        ),
+        book_status(
+            "horror_adventures",
+            "src/rules_core/rules_tables/horror_adventures",
+            companion_book_counts("horror_adventures"),
             &races,
         ),
         book_status(
@@ -647,6 +703,12 @@ mod tests {
                 "bonus_bestiary",
                 // SD-29 Epic 5 extend round 1, for the same reason.
                 "monster_codex",
+                // SD-29 Epic 7 (companion lane) -- the three books whose only
+                // compiled family is `companion`, kept beside `monster_codex`,
+                // which now carries both chassis registries' tables in one row.
+                "inner_sea_combat",
+                "inner_sea_intrigue",
+                "horror_adventures",
                 // SD-29 Epic 5 extend round 2 -- the two Book of the Damned
                 // volumes, kept next to the other chassis books.
                 "book_of_the_damned_volume_1",

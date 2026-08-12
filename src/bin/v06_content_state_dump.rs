@@ -817,6 +817,13 @@ fn main() {
             RuleSetId::Ha => "horror_adventures",
             RuleSetId::Botd1 => "book_of_the_damned_volume_1",
             RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+            // SD-29 Epic 7 (companion lane). Neither book has a feats file this
+            // repo compiles; both arms exist for exhaustiveness, exactly as
+            // `Ha`'s, `Isr`'s and `Ue`'s above do. This match going red is the
+            // enum doing its designed job -- `decisions.md §45.2` records the
+            // same thing happening when `Isr` was added.
+            RuleSetId::Isc => "inner_sea_combat",
+            RuleSetId::Isi => "inner_sea_intrigue",
         };
         let records = table.entries.len();
         let wired_here = table
