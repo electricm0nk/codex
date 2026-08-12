@@ -1,0 +1,289 @@
+//! Bestiary 4 (`SOURCESHORT:B4`) — `monster` + `monster_ability`.
+//!
+//! **206 of this book's 220 monster rows and 543 of its 768 ability rows ship**
+//! — 749 records, the largest reachable book left in the lane when round 6 took
+//! it.
+//!
+//! ```text
+//! python3 scripts/classify_monster_ability_rows.py bestiary_4
+//! book         mon  abil row-named prefix ORPHAN   PI COPY
+//! bestiary_4   220   768         0    543    225   14    0
+//! ```
+//!
+//! `206 + 543 = 749` is exactly the classifier's `reachable remainder`
+//! (`988 − 225 − 14 − 0`), so what ships and what the lane's ceiling says
+//! should ship are the same number, derived two ways.
+//!
+//! Corpus unit counts are the inventory's own, never a line count over the
+//! `.lst`:
+//! `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+//! print(sum(1 for u in d['units'] if u['book']=='bestiary_4'
+//! and u['kind']=='monster'))"` → 220, `monster_ability` → 768.
+//!
+//! # 14 Product Identity rows — and why the rule that predicted zero was right
+//!
+//! This is the **first `roleplaying_game/` bestiary in the lane that carries
+//! any** `NAMEISPI:YES` row: `grep -c NAMEISPI:YES b4_races.lst
+//! b4_abilities_race.lst` → `14` and `0`.
+//!
+//! Rounds 4 and 5 each recorded `ogl-pi-blacklist.md` §2's prediction in a
+//! **book-location** form — "a `roleplaying_game/` bestiary carries zero PI
+//! rows" — and each was right about its own book. Bestiary 2 and Bestiary 3
+//! really do carry none. But the location form is not what the blacklist says,
+//! and this book is where the difference shows.
+//!
+//! §2.1's predicate is **per record**: a *generic SRD species name* ("Goblin",
+//! "Owlbear") is presumptively Open Game Content; the blacklist entry is for
+//! "*non-bestiary* uses of a monster's proper name (e.g. a unique named NPC
+//! monster)". All 14 rows here are unique named personas, not species:
+//!
+//! | rows | `b4_races.lst` lines | what they are |
+//! |---|---|---|
+//! | 3 | 40, 41, 42 | Demon Lords — Dagon, Kostchtchie, Pazuzu |
+//! | 3 | 66, 67, 68 | Empyreal Lords — Cernunnos, Korada, Vildeis |
+//! | 3 | 110, 111, 112 | Great Old Ones — Bokrug, Cthulhu, Hastur |
+//! | 3 | 139, 140, 141 | Kaiju — Agyra, Bezravnis, Mogaru |
+//! | 2 | 219, 222 | Spawn of Yog-Sothoth, Star-Spawn of Cthulhu |
+//!
+//! Not one generic species among them. The book-location form of the rule would
+//! have shipped all 14; the per-record form the corpus itself declares drops
+//! them. The prediction is **refined, not contradicted** — and the transferable
+//! point is that two rounds validated a predicate only where it happened to be
+//! right, which is the failure shape this lane keeps recording.
+//!
+//! # 225 orphans, 73 of which this round's own PI screen created
+//!
+//! An ability reaches a player only underneath its monster, so a row no shipped
+//! monster of this book claims would load and never be shown — the
+//! record-that-is-never-seen class `decisions.md §44.2` is about.
+//!
+//! The 225 split into two causes, and the split is derived rather than assumed:
+//!
+//! | class | count |
+//! |---|---|
+//! | orphans in their own right — no monster row ever named them | 152 |
+//! | **cascade** — namespaced to one of the 14 dropped PI monsters | **73** |
+//! | total | 225 |
+//!
+//! `Demon Lord (Dagon) ~ Breath Weapon` (`b4_abilities_race.lst:439`) is a
+//! cascade row: it is perfectly well-formed and owned, and it is unreachable
+//! only because its owner is Product Identity. That reproduces, by an
+//! independent route, the `152 → 225` figure the round-4 queue note carried.
+//!
+//! **83 of the 152 live in a second file this book ships nothing from.**
+//! `b4_abilities_races_ce.lst` contributes 83 orphan rows and 0 shipped records,
+//! while all 543 shipped abilities come from `b4_abilities_race.lst`. That is
+//! not an artifact of the transcriber reading one file: it takes its unit set
+//! from the inventory, across every source file, exactly as it must for
+//! Inner Sea World Guide's 7/7 monster split. The rows are generic reusable
+//! abilities that no monster row names — checked at the point of the confident
+//! claim rather than inferred:
+//! `grep -c 'ABILITY:Special Ability|AUTOMATIC|Immunity to Calm Emotions'
+//! b4_races.lst` → `0`, and the file's own second line reads
+//! `#This should probably go into ce_abilities_race.lst`.
+//!
+//! # The `§55.1` measurement round 5 asked a successor to run
+//!
+//! `decisions.md §55.1` found that `v06_work_inventory::file_kind` types a row
+//! by its **first** `TYPE:` segment only, so a monster's special quality lands
+//! in `race_trait` or `monster_ability` depending on which segment the book
+//! happened to write first — mis-filing units the lane's denominator then never
+//! counts. Round 5 measured **bestiary_3** and asked that the same measurement
+//! be run on `bestiary_4`, `bestiary` and `inner_sea_bestiary` "before anyone
+//! treats 1,767 as the lane's true size". Round 6 ran it. See this round's
+//! `progress.md` receipt for the command.
+//!
+//! | book | `race_trait` units | namespaced | **owned by a monster of the book** |
+//! |---|---|---|---|
+//! | `bestiary_4` | 86 | 79 | **61** |
+//! | `bestiary` | 21 | 19 | **9** |
+//! | `inner_sea_bestiary` | 4 | 3 | **2** |
+//! | `bestiary_3` (round 5's book) | 799 | 779 | **625**, not 341 — see below |
+//!
+//! **The answer to round 5's question is that the understatement is almost
+//! entirely bestiary_3's.** The three books it named contribute **72** mis-filed
+//! units between them, so 1,767 is very nearly right for the rest of the lane
+//! and does not need re-drawing before work continues.
+//!
+//! **Round 5's own 341 is corrected to 625 here**, and the correction is a
+//! predicate, not an arithmetic slip. 341 is reproduced *exactly* under round
+//! 5's predicate — match the namespace prefix against a monster's `KEY:` — so
+//! the figure was right for what it measured. But this corpus namespaces an
+//! ability by the monster's **display name** while the monster's `KEY:` carries
+//! a taxonomic prefix, which is the `key-differs-from-name` trap the trap report
+//! raises 1,009 times on this very book's sibling:
+//!
+//! ```text
+//! race_trait `Aghash ~ …`      -> monster KEY `Div (Aghash)`
+//! race_trait `Androsphinx ~ …` -> monster KEY `Sphinx (Androsphinx)`
+//! race_trait `Bone Golem ~ …`  -> monster KEY `Golem (Bone)`
+//! ```
+//!
+//! Matching on `KEY:` alone misses every monster whose key differs from its
+//! name — 284 further units in bestiary_3. Name-matching is the weaker
+//! predicate in general and was checked before being used: across all four books
+//! exactly **one** monster display name is ambiguous (`Unfettered Eidolon`, twice
+//! in bestiary_3), and none of the other three books has any.
+//!
+//! Still **not** reclassified here, for the reason round 5 gave and this round
+//! agrees with: moving them changes `file_kind`, which redraws the `race_trait`
+//! and `monster_ability` denominators for every book in two lanes at once.
+
+mod monster_data;
+
+pub use super::monster_chassis::{
+    MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
+    NaturalAttack, Speed,
+};
+
+/// Every monster stat block this book defines, in corpus row order.
+pub const fn monsters_static() -> &'static [MonsterStatBlock] {
+    monster_data::MONSTERS
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
+    monster_data::MONSTER_ABILITIES
+}
+
+/// Every monster stat block this book defines, in corpus row order.
+pub fn monsters() -> &'static [MonsterStatBlock] {
+    monsters_static()
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
+    monster_abilities_static()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// What ships is 206 and 543, against corpus unit counts of 220 and 768.
+    /// Asserting 220 here would assert that this book ships fourteen Product
+    /// Identity personas; asserting 768 would assert it ships 225 records
+    /// nothing can reach.
+    #[test]
+    fn the_book_ships_two_hundred_six_monsters_and_five_hundred_forty_three_abilities() {
+        assert_eq!(monsters().len(), 206);
+        assert_eq!(monster_abilities().len(), 543);
+    }
+
+    /// The shipped total is exactly the classifier's independently derived
+    /// `reachable remainder` for this book — `988 − 225 orphans − 14 PI − 0
+    /// .COPY=` → 749. Two derivations that share no intermediate artifact.
+    #[test]
+    fn the_shipped_total_is_the_classifiers_reachable_remainder() {
+        assert_eq!(
+            monsters().len() + monster_abilities().len(),
+            749,
+            "749 is `classify_monster_ability_rows.py bestiary_4`'s reachable remainder; a \
+             divergence means one of the two screens moved without the other"
+        );
+    }
+
+    /// Every transcribed ability row is owned by a monster row of this book.
+    /// The book has 225 orphans; the point of this test is that none got in.
+    #[test]
+    fn no_shipped_ability_is_an_orphan() {
+        for ability in monster_abilities() {
+            assert!(
+                !ability.owners.is_empty(),
+                "{} reaches no monster and would load without ever being shown",
+                ability.key
+            );
+        }
+    }
+
+    /// Every owner named by a shipped ability is itself a shipped monster.
+    ///
+    /// Not implied by the test above, and this is the book where the difference
+    /// bites: 73 ability rows name an owner that exists as a corpus row and is
+    /// **not shipped**, because the owner is Product Identity. An ability
+    /// pointing at one of them would satisfy "owners is non-empty" and still
+    /// name a creature the catalog cannot render.
+    #[test]
+    fn every_owner_named_by_a_shipped_ability_is_a_shipped_monster() {
+        for ability in monster_abilities() {
+            for owner in ability.owners {
+                assert!(
+                    monsters().iter().any(|m| m.key == *owner),
+                    "{} names owner {owner}, which is not a shipped monster of this book",
+                    ability.key
+                );
+            }
+        }
+    }
+
+    /// The 14 Product Identity personas are not records, pinned by the corpus
+    /// line each one is so a regeneration that stops screening them fails here
+    /// naming the line that returned.
+    ///
+    /// Pinned by line rather than by name deliberately: naming them in source
+    /// is what `decisions.md §52.5` records turning a concurrent lane's
+    /// `pi-sweep` red, and `pi-sweep` does not read intent.
+    #[test]
+    fn the_fourteen_product_identity_rows_are_not_records() {
+        for line in [40u32, 41, 42, 66, 67, 68, 110, 111, 112, 139, 140, 141, 219, 222] {
+            assert!(
+                !monsters().iter().any(|m| m.source_line == line),
+                "b4_races.lst:{line} declares NAMEISPI:YES and must not ship"
+            );
+        }
+    }
+
+    /// Not one shipped monster carries a term from the LIVE Product Identity
+    /// blacklist. The `NAMEISPI:YES` test above is a statement about what the
+    /// corpus declares; this is a statement about what this crate screens, and
+    /// the two catch different things.
+    #[test]
+    fn no_shipped_monster_name_carries_a_product_identity_term() {
+        for monster in monsters() {
+            for term in crate::rules_core::pi_screening::PI_BLACKLIST_TERMS {
+                assert!(
+                    !monster.name.contains(term) && !monster.key.contains(term),
+                    "shipped monster {} carries blacklisted term {term}",
+                    monster.key
+                );
+            }
+        }
+    }
+
+    /// A representative pin over the orphan classes, by the corpus line each
+    /// row is, so a regeneration that quietly pulls one back in fails here.
+    ///
+    /// One row from each cause: `b4_abilities_races_ce.lst:11` from the file
+    /// that ships nothing, `b4_abilities_race.lst:324` from the rows no monster
+    /// ever named, and `b4_abilities_race.lst:439`
+    /// (`Demon Lord (Dagon) ~ Breath Weapon`) from the 73-row cascade this
+    /// round's own PI screen created.
+    #[test]
+    fn the_orphan_rows_are_not_records() {
+        for line in [324u32, 325, 336, 338, 439, 1413, 1414, 1415, 1416] {
+            assert!(
+                !monster_abilities().iter().any(|a| a.source_line == line),
+                "b4_abilities_race.lst:{line} is owned by no SHIPPED monster row of this book \
+                 and must not ship"
+            );
+        }
+    }
+
+    /// Every shipped ability of this book is reached by the namespaced-prefix
+    /// link rather than by a monster row naming it — the `row-named 0 /
+    /// prefix 543` split the classifier reports, asserted rather than trusted.
+    #[test]
+    fn every_shipped_ability_is_reached_by_its_namespaced_key() {
+        for ability in monster_abilities() {
+            let (prefix, _) = ability
+                .key
+                .split_once(" ~ ")
+                .unwrap_or_else(|| panic!("{} is not a namespaced key", ability.key));
+            assert!(
+                ability.owners.contains(&prefix),
+                "{} is namespaced to {prefix}, which is not among its owners",
+                ability.key
+            );
+        }
+    }
+}

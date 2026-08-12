@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Blood Hag ~ Mask Evil",
+    "delivery": "Supernatural",
+    "description": "During the day, a blood hag \"wears her skin,\" giving her the appearance of a young woman. When so disguised, the blood hag can't use her bite, claws, or fiery form ability. At night, she bursts out of her skin and returns to her monstrous form. The hag regrows her skin each dawn. While a blood hag is wearing her skin, her alignment is masked as though by a constant undetectable alignment spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:blood_hag_mask_evil",
+    "name": "Mask Evil",
+    "owners": [
+      "bestiary_4:monster:blood_hag"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 314,
+    "record_key": "Blood Hag ~ Mask Evil"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

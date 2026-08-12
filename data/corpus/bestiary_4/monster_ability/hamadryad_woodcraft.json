@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Hamadryad ~ Woodcraft",
+    "delivery": "Extraordinary",
+    "description": "A hamadryad has a +8 racial bonus on Craft checks involving wood, and is always treated as if she had masterwork artisan's woodworking tools when attempting such checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:hamadryad_woodcraft",
+    "name": "Woodcraft",
+    "owners": [
+      "bestiary_4:monster:hamadryad"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 854,
+    "record_key": "Hamadryad ~ Woodcraft"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

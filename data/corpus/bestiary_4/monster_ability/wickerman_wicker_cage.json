@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Wickerman ~ Wicker Cage",
+    "delivery": "Supernatural",
+    "description": "If a wickerman successfully grapples a creature, as a move action it can shove the grabbed creature into the cage built into its chest. This works like swallow whole (4d6 fire damage plus the target automatically catches on fire [Core Rulebook 444], AC 17, 15 hp). The DC to put out this fire is 17. If a creature cuts its way free, the wickerman can't use this ability again until it is fully healed. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:wickerman_wicker_cage",
+    "name": "Wicker Cage",
+    "owners": [
+      "bestiary_4:monster:wickerman"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1453,
+    "record_key": "Wickerman ~ Wicker Cage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

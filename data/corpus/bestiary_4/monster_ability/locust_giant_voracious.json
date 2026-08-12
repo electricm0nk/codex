@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Locust (Giant) ~ Voracious",
+    "delivery": "Extraordinary",
+    "description": "A giant locust's bite attack deals double damage to creatures with the plant subtype and to objects made of paper, wood, or other plant materials.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:locust_giant_voracious",
+    "name": "Voracious",
+    "owners": [
+      "bestiary_4:monster:locust_giant"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1032,
+    "record_key": "Locust (Giant) ~ Voracious"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

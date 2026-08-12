@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Sayona ~ Living Form",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a sayona can transform into a young, beautiful person for 24 hours. It can only use this ability if it has absorbed or drained blood in the past hour. In this form, the sayona has the aura of a living creature instead of an undead (for the purpose of detect undead and similar effects), its fast healing increases to 10, positive energy attacks (such as channel energy) deal half damage to it, and it cannot use its fear cone or gaze attack. Exposure to holy water or positive energy attacks in this form reduces the duration of this transformation by 1d4 hours.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:sayona_living_form",
+    "name": "Living Form",
+    "owners": [
+      "bestiary_4:monster:sayona"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1221,
+    "record_key": "Sayona ~ Living Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

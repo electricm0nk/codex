@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Executioner's Hood ~ Strangle",
+    "delivery": "Extraordinary",
+    "description": "A grappling executioner's hood entirely covers its opponent's head with an airtight grip. A creature that is grappled by the hood cannot speak or cast spells with verbal components and must hold its breath (see Suffocation, Pathfinder RPG Core Rulebook 445), unless it doesn't speak or breathe through its head. Any attacks against the hood deal half damage to the hood and the other half to the creature that it's strangling.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:executioner_s_hood_strangle",
+    "name": "Strangle",
+    "owners": [
+      "bestiary_4:monster:executioner_s_hood"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1050,
+    "record_key": "Executioner's Hood ~ Strangle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

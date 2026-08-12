@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Soulbound Shell ~ Soul Focus",
+    "delivery": "Supernatural",
+    "description": "The soul bound to the shell lives within a gem inside its chest. As long as this soul focus remains intact, it can be used to animate another shell, at the same cost as creating a new soulbound shell, and retains its personality and memories. A soul focus has hardness 8, 12 hit points, and a break DC of 20.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:soulbound_shell_soul_focus",
+    "name": "Soul Focus",
+    "owners": [
+      "bestiary_4:monster:soulbound_shell"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1310,
+    "record_key": "Soulbound Shell ~ Soul Focus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -898,6 +898,8 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::B2,
     // SD-29 Epic 5 extend, round 5 (monster lane).
     RuleSetId::B3,
+    // SD-29 Epic 5 extend, round 6 (monster lane).
+    RuleSetId::B4,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -933,6 +935,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::B6 => "bestiary_6",
         RuleSetId::B2 => "bestiary_2",
         RuleSetId::B3 => "bestiary_3",
+        RuleSetId::B4 => "bestiary_4",
     }
 }
 
@@ -982,6 +985,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::B6 => "bestiary_6",
         RuleSetId::B2 => "bestiary_2",
         RuleSetId::B3 => "bestiary_3",
+        RuleSetId::B4 => "bestiary_4",
     }
 }
 

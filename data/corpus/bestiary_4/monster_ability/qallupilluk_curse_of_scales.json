@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Qallupilluk ~ Curse of Scales",
+    "delivery": "Supernatural",
+    "description": "If a qallupilluk grapples a Medium or Small humanoid opponent, her target begins transforming into an aquatic monster. Starting on the third consecutive round of grappling, the grappled target must succeed at a DC %1 Fortitude save every round or fully transform into a grindylow (Bestiary 2 148), reefclaw (Bestiary 2 234), bunyip (Bestiary 2 50), merrow (Bestiary 2 189), or scrag (Bestiary 268). Once fully transformed, the creature is slavishly devoted to the qallupilluk that created it. If the qallupilluk is slain, the creature loses this devotion but remains transformed. The transformation ends after 1 hour or if the creature is slain. A qallupilluk can make this transformation permanent by performing a ritual that takes 10 minutes and deals 30 points of damage to the qallupilluk. This is a curse and polymorph effect.",
+    "description_variables": [
+      "CON+14"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:qallupilluk_curse_of_scales",
+    "name": "Curse of Scales",
+    "owners": [
+      "bestiary_4:monster:qallupilluk"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1194,
+    "record_key": "Qallupilluk ~ Curse of Scales"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

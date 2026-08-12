@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Leanan Sidhe ~ Skill Blessing",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a leanan sidhe can create a special token that takes the form of a masterwork artisan's tool for one Craft or Perform skill. The intended recipient of this tool gains a +4 bonus on skill checks made with the token. Like with a cursed item, the recipient prefers to use the token, refuses to get rid of it, and finds that it returns if stolen or discarded. The leanan sidhe can destroy the token as a standard action at any range. She can have %1 tokens in existence.",
+    "description_variables": [
+      "Mythic_Rank"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:leanan_sidhe_skill_blessing",
+    "name": "Skill Blessing",
+    "owners": [
+      "bestiary_4:monster:leanan_sidhe"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1014,
+    "record_key": "Leanan Sidhe ~ Skill Blessing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Clockwork Dragon ~ Flaming Tar",
+    "delivery": "Extraordinary",
+    "description": "These clockwork dragons spray a 30-foot cone of flaming tar. Creatures in the area of effect take 14d6 points of fire damage and are entangled in a thick layer of flaming tar. A successful DC 22 Reflex save halves the damage and negates the entangled effect. Creatures are entangled for 5 rounds as the tar burns. Entangled creatures take 3d6 points of fire damage each round on their turn. Spending a full-round action and succeeding at a DC 22 Reflex save removes the tar, freeing the trapped creature from the entanglement and further fire damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:clockwork_dragon_flaming_tar",
+    "name": "Flaming Tar Breath Weapon",
+    "owners": [
+      "bestiary_4:monster:clockwork_dragon"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 380,
+    "record_key": "Clockwork Dragon ~ Flaming Tar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

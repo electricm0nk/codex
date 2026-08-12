@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:gearghost_create_trap",
+      "bestiary_4:monster_ability:gearghost_rejuvenation",
+      "bestiary_4:monster_ability:gearghost_resetter"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Gearghost",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:gearghost",
+    "monster_class": "Undead:7",
+    "name": "Gearghost",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "T",
+    "source_page": "p.123",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 98,
+    "record_key": "Gearghost"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:colossus_iron_alternate_form",
+      "bestiary_4:monster_ability:colossus_iron_deadly_fumes",
+      "bestiary_4:monster_ability:colossus_iron_fire_absorption",
+      "bestiary_4:monster_ability:colossus_iron_antimagic_aura",
+      "bestiary_4:monster_ability:colossus_iron_siege_tower"
+    ],
+    "challenge_rating": "21",
+    "corpus_key": "Colossus (Iron)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:colossus_iron",
+    "monster_class": "Construct:23",
+    "name": "Iron Colossus",
+    "natural_attacks": [
+      {
+        "damage_dice": "6d6",
+        "name": "Stomp"
+      },
+      {
+        "damage_dice": "4d8",
+        "name": "Heavy Ballistae"
+      }
+    ],
+    "race_subtype": "Colossus|Mythic",
+    "race_type": "Construct",
+    "size": "C",
+    "source_page": "p.36",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 31,
+    "record_key": "Colossus (Iron)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

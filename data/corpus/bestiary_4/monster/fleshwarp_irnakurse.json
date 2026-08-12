@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:fleshwarp_irnakurse_mind_lash",
+      "bestiary_4:monster_ability:fleshwarp_irnakurse_soul_scream"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Fleshwarp (Irnakurse)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:fleshwarp_irnakurse",
+    "monster_class": "Aberration:10",
+    "name": "Irnakurse",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "L",
+    "source_page": "p.105",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 84,
+    "record_key": "Fleshwarp (Irnakurse)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

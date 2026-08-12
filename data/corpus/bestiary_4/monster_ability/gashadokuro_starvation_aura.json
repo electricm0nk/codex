@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Gashadokuro ~ Starvation Aura",
+    "delivery": "Supernatural",
+    "description": "A gashadokuro emits a powerful aura that causes all creatures within range to feel the intense pains of starvation. Each creature within 60 feet must succeed at a DC 24 Fortitude save or be fatigued and succumb to the supernatural starvation of the gashadokuro, taking 2d6 points of nonlethal damage at the end of its turn each round it remains in the aura. Even after leaving the area or slaying the gashadokuro, an affected creature continues to starve and cannot heal from the nonlethal damage dealt by this ability until it consumes food.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:gashadokuro_starvation_aura",
+    "name": "Starvation Aura",
+    "owners": [
+      "bestiary_4:monster:gashadokuro"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 746,
+    "record_key": "Gashadokuro ~ Starvation Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -255,6 +255,18 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monsters: super::bestiary_3::monsters_static(),
         monster_abilities: super::bestiary_3::monster_abilities_static(),
     },
+    // SD-29 Epic 5 extend, round 6. Bestiary 4 -- 206 monsters and 543 owned
+    // abilities, the largest reachable book left in the lane. It is the first
+    // book in the registry to lose monster rows to Product Identity: 14 of its
+    // 220 corpus rows declare `NAMEISPI:YES` and are unique named personas
+    // rather than species. That drop cascades -- 73 of its 225 excluded ability
+    // rows are well-formed and owned, and unreachable only because their owner
+    // is one of the 14. `rules_tables::bestiary_4` derives both figures.
+    MonsterBook {
+        corpus_book: "bestiary_4",
+        monsters: super::bestiary_4::monsters_static(),
+        monster_abilities: super::bestiary_4::monster_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.

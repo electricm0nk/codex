@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Weasel (Dire) ~ Blood Drain",
+    "delivery": "Extraordinary",
+    "description": "The creature drains blood at the end of its turn if it is attached to a foe, inflicting Constitution damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:weasel_dire_blood_drain",
+    "name": "Blood Drain",
+    "owners": [
+      "bestiary_4:monster:weasel_dire"
+    ],
+    "source_page": "p.294",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1437,
+    "record_key": "Weasel (Dire) ~ Blood Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

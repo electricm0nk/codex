@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Formian Worker ~ Able Assistant",
+    "delivery": "Extraordinary",
+    "description": "When a formian worker succeeds at an aid another check or attack roll that aids another hive mate within its telepathy range, it grants a +4 bonus on the skill check, on the attack roll, or to AC instead of the normal +2.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:formian_worker_able_assistant",
+    "name": "Able Assistant",
+    "owners": [
+      "bestiary_4:monster:formian_worker"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 706,
+    "record_key": "Formian Worker ~ Able Assistant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Living Wall ~ Push",
+    "delivery": "Extraordinary",
+    "description": "A living wall can choose to make a free combat maneuver check with a successful slam attack. If successful, this check pushes a creature 5 feet directly away as with a bull rush. This ability only works on creatures of a size equal to or smaller than the pushing creature. Creatures pushed in this way do not provoke attacks of opportunity and stop if the push would move them into a solid object or creature.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:living_wall_push",
+    "name": "Push",
+    "owners": [
+      "bestiary_4:monster:living_wall"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1027,
+    "record_key": "Living Wall ~ Push"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

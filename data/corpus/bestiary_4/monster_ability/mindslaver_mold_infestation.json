@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Mindslaver Mold ~ Infestation",
+    "delivery": "Supernatural",
+    "description": "A mindslaver mold can climb onto and attach itself to a willing or helpless host as a standard action. As long as the mold infests its host, the mold shares the same 5-foot square with its host's space; this does not negatively impact the host or the mold. As long as a mindslaver mold infests a host, the host takes a -4 penalty on Will saves against the mindslaver mold's dominate person spell-like ability, and the duration of that spell-like ability on the host becomes permanent as long as the mold remains attached. Each day, an attached mindslaver mold deals 1d4 points of damage to its host as it feeds on the host's blood and other bodily fluids. A mindslaver mold can be torn free of a host with a successful DC 15 Strength check as a standard action-doing so deals 2d6 points of damage to the host as the mold's tendrils tear free. A dead mindslaver mold deals no damage in this way.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:mindslaver_mold_infestation",
+    "name": "Infestation",
+    "owners": [
+      "bestiary_4:monster:mindslaver_mold"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1084,
+    "record_key": "Mindslaver Mold ~ Infestation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -90,6 +90,27 @@ BOOKS = {
     # SpecialQuality.Supernatural` lands in `race_trait` while
     # `TYPE:SpecialQuality.Extraordinary.AdaroRacial` lands here.
     "bestiary_3": "pathfinder/paizo/roleplaying_game/bestiary_3",
+    # SD-29 Epic 5 extend, round 6, and the largest REACHABLE book left in the
+    # lane: 220 monster rows + 768 ability rows, 749 of which are reachable.
+    # Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py bestiary_4` ->
+    # `bestiary_4  220  768  0  543  225  14  0`.
+    #
+    # It is the first `roleplaying_game/` bestiary in this lane that carries
+    # Product Identity rows at all, and that REFINES rather than contradicts
+    # `ogl-pi-blacklist.md` §2. Rounds 4 and 5 each recorded the prediction as
+    # a BOOK-location predicate ("a `roleplaying_game/` bestiary carries zero
+    # `NAMEISPI:YES`"), and both were right about their own book by luck of its
+    # contents. The blacklist's actual predicate is PER-RECORD (§2.1): a
+    # generic SRD species name is presumptively Open Game Content, a unique
+    # named persona is not. `grep -c NAMEISPI:YES b4_races.lst
+    # b4_abilities_race.lst` -> 14, 0, and all 14 are unique named personas --
+    # three Demon Lords (Dagon, Kostchtchie, Pazuzu), three Empyreal Lords
+    # (Cernunnos, Korada, Vildeis), three Great Old Ones (Bokrug, Cthulhu,
+    # Hastur), three Kaiju (Agyra, Bezravnis, Mogaru), Spawn of Yog-Sothoth
+    # and Star-Spawn of Cthulhu -- not one generic species among them. The
+    # book-location form of the rule would have shipped all 14.
+    "bestiary_4": "pathfinder/paizo/roleplaying_game/bestiary_4",
 }
 
 # The `TYPE:` first segment that names which facet of `monster_ability` a row
@@ -142,10 +163,36 @@ def corpus_root() -> str:
     )
 
 
+# U+00AD SOFT HYPHEN, a PDF-extraction artifact that reaches the corpus as an
+# INVISIBLE character inside a word. Bestiary 4 is the first book in this lane
+# to carry any -- 5 occurrences in `b4_abilities_race.lst`, 0 in Bestiary 2's
+# and Bestiary 3's equivalents -- and `clippy::invisible_characters` is
+# deny-by-default, so transcribing them verbatim does not merely look wrong, it
+# fails the build.
+#
+# Every occurrence stands where a REAL hyphen belongs, mangled by the
+# line-breaking in the source PDF:
+#
+#     pod<U+00AD>spawned   10-foot<U+00AD>radius
+#     free<U+00AD>willed   cone<U+00AD>shaped
+#
+# Replaced with `-` rather than DELETED: deleting yields "10-footradius" and
+# "coneshaped", which are wrong. The book corroborates the hyphen itself --
+# its own ability row is keyed `Pod-Spawned ~ Loss of Magic`, spelled with a
+# plain hyphen, for the same creature whose DESC: text carries the soft one.
+#
+# This is a character-encoding normalisation of a known extraction artifact,
+# not a rewrite of rules text: no word, number or token changes. It is applied
+# in `read_row` so that it lands before EVERY downstream reader -- the Product
+# Identity screen included -- rather than only on the `DESC:` path.
+SOFT_HYPHEN = "­"
+
+
 def read_row(path: str, line_no: int) -> list[str]:
     """The 1-based line at `line_no`, split into its tab-separated tokens."""
     with open(path, encoding="utf-8", errors="replace") as handle:
         line = handle.read().split("\n")[line_no - 1]
+    line = line.replace(SOFT_HYPHEN, "-")
     return [token.strip() for token in line.split("\t") if token.strip()]
 
 

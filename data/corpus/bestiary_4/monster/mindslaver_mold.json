@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:mindslaver_mold_avoidance",
+      "bestiary_4:monster_ability:mindslaver_mold_infestation",
+      "bestiary_4:monster_ability:mindslaver_mold_mold_mindlink",
+      "bestiary_4:monster_ability:mindslaver_mold_spore_pod",
+      "bestiary_4:monster_ability:mindslaver_mold_spores"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Mindslaver Mold",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:mindslaver_mold",
+    "monster_class": "Plant:4",
+    "name": "Mindslaver Mold",
+    "natural_attacks": [
+      {
+        "damage_dice": "0",
+        "name": "Spore Pod"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "S",
+    "source_page": "p.194",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 5,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 163,
+    "record_key": "Mindslaver Mold"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Seaweed Siren ~ Staggering Gaze",
+    "delivery": "Supernatural",
+    "description": "Staggered 1d6 rounds, 30 feet, Will DC %1 negates. This is a mind-affecting effect.",
+    "description_variables": [
+      "CHA+18"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:seaweed_siren_staggering_gaze",
+    "name": "Staggering Gaze",
+    "owners": [
+      "bestiary_4:monster:seaweed_siren"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1240,
+    "record_key": "Seaweed Siren ~ Staggering Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

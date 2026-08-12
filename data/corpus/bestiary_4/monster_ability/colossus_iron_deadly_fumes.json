@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Colossus (Iron) ~ Deadly Fumes",
+    "delivery": "Extraordinary",
+    "description": "An iron colossus emits a 30-foot-radius cloud of poisonous gas, exposing creatures that start their turn in this area. Deadly Fumes - inhaled; save Fort DC 21; frequency 1/round for 2 rounds; effect 1d4 Constitution damage and sickened; cure 1 save.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:colossus_iron_deadly_fumes",
+    "name": "Deadly Fumes",
+    "owners": [
+      "bestiary_4:monster:colossus_iron"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 401,
+    "record_key": "Colossus (Iron) ~ Deadly Fumes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

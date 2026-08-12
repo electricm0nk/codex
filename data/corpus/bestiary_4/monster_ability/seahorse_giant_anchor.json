@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Seahorse (Giant) ~ Anchor",
+    "delivery": "Extraordinary",
+    "description": "As a move action, a seahorse can wrap its tail around a stationary object. The seahorse remains anchored to the object until it releases its grip (a free action) or is forcibly moved. An anchored seahorse gains a +4 bonus to its combat maneuver defense and on checks and saving throws against effects that would move it against its will.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:seahorse_giant_anchor",
+    "name": "Anchor",
+    "owners": [
+      "bestiary_4:monster:seahorse_giant"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1232,
+    "record_key": "Seahorse (Giant) ~ Anchor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

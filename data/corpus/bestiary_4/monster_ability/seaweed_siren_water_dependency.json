@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Seaweed Siren ~ Water Dependency",
+    "delivery": "Extraordinary",
+    "description": "A seaweed siren can survive out of the water for %1 hours. Beyond this limit, a seaweed siren begins to suffocate.",
+    "description_variables": [
+      "CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:seaweed_siren_water_dependency",
+    "name": "Water Dependency",
+    "owners": [
+      "bestiary_4:monster:seaweed_siren"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1241,
+    "record_key": "Seaweed Siren ~ Water Dependency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

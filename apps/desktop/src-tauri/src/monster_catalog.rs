@@ -100,6 +100,15 @@ const BOOK_B2: &str = "B2";
 /// `rules_tables::bestiary_3` for the derivation.
 const BOOK_B3: &str = "B3";
 
+/// Bestiary 4, the ninth (SD-29 Epic 5 extend, round 6). Its wire code is the
+/// book's own `SOURCESHORT:B4`. It is the first book in this catalog to lose
+/// monster rows to Product Identity: 14 of its 220 corpus rows declare
+/// `NAMEISPI:YES` and do not ship, and that drop is also why 73 of its 225
+/// excluded ability rows are excluded — they are well-formed and owned, and
+/// unreachable only because their owner is one of the 14. See
+/// `rules_tables::bestiary_4` for both derivations.
+const BOOK_B4: &str = "B4";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -123,6 +132,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "inner_sea_world_guide" => "Inner Sea World Guide",
         "bestiary_2" => "Bestiary 2",
         "bestiary_3" => "Bestiary 3",
+        "bestiary_4" => "Bestiary 4",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -139,6 +149,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "inner_sea_world_guide" => BOOK_ISWG,
         "bestiary_2" => BOOK_B2,
         "bestiary_3" => BOOK_B3,
+        "bestiary_4" => BOOK_B4,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."

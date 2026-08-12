@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Mindslaver Mold ~ Avoidance",
+    "delivery": "Extraordinary",
+    "description": "When a mindslaver mold is infesting a living or undead creature and would be hit by an attack, it can make a Reflex save as an immediate action. If the mold succeeds, the attack doesn't harm it and instead harms the infested creature-the mold effectively slithers out of the way of the incoming attack so that the blow strikes the creature it controls. The mindslaver mold must choose to attempt avoidance after the attack roll is resolved but before damage is rolled.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mindslaver_mold_avoidance",
+    "name": "Avoidance",
+    "owners": [
+      "bestiary_4:monster:mindslaver_mold"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1083,
+    "record_key": "Mindslaver Mold ~ Avoidance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

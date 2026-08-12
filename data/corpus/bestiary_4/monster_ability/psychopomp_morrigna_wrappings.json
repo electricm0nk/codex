@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Psychopomp (Morrigna) ~ Wrappings",
+    "delivery": "Supernatural",
+    "description": "A morrigna's web wrappings grant her a +2 shield bonus to AC and can make secondary natural attacks.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:psychopomp_morrigna_wrappings",
+    "name": "Wrappings",
+    "owners": [
+      "bestiary_4:monster:psychopomp_morrigna"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1180,
+    "record_key": "Psychopomp (Morrigna) ~ Wrappings"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

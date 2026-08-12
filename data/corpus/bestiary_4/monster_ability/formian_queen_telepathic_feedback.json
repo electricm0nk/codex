@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Formian Queen ~ Telepathic Feedback",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a queen can unleash debilitating telepathic feedback. Those within her telepathic range who are not members of her hive must succeed at a DC %1 Will save or take a -2 penalty on attack rolls, saving throws, ability checks, and skill checks for 1 minute. A creature that succeeds at the save cannot be affected by telepathic feedback for 24 hours. This is a mind-affecting effect.",
+    "description_variables": [
+      "22+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:formian_queen_telepathic_feedback",
+    "name": "Telepathic Feedback",
+    "owners": [
+      "bestiary_4:monster:formian_queen"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 694,
+    "record_key": "Formian Queen ~ Telepathic Feedback"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

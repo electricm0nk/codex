@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Guardian Dragon ~ Heroic Challenge",
+    "delivery": "Supernatural",
+    "description": "Once per day, a guardian dragon can give a non-mythic creature the agile, arcane, divine, invincible, or savage mythic template (Mythic Adventures 224). The dragon must expend a number of uses of mythic power equal to the amount the target creature's CR increases. The creature isn't under the dragon's control, but won't willingly attack the dragon unless magically forced to do so. Alternatively, the dragon can expend one use of mythic power to create difficult terrain in a 100-foot-radius burst; the type of difficult terrain is appropriate to the area (mud in plains, rubble in mountains, and so on). The effects of this ability persist as long as the dragon remains within 10 miles of the affected creature or area.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:guardian_dragon_heroic_challenge",
+    "name": "Heroic Challenge",
+    "owners": [
+      "bestiary_4:monster:guardian_dragon"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 844,
+    "record_key": "Guardian Dragon ~ Heroic Challenge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Clockwork Dragon ~ Infiltrator",
+    "delivery": "Extraordinary",
+    "description": "These clockwork dragons are more subtle and nimble than those of other clockwork dragons. An infiltrator clockwork dragon can rearrange its movable parts into very serpentine and compact shapes, which gives it the compression ability. Furthermore, its parts are coated with a black, noise-dampening resin, granting it a +8 racial bonus on Stealth checks (typically Stealth +0). Finally, it's infused with magic allowing it, as a standard action, to become invisible as the greater invisibility spell (CL 15th) three times per day. The infiltrator clockwork dragon's invisibility is a supernatural ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:clockwork_dragon_infiltrator",
+    "name": "Infiltrator Clockwork Dragon",
+    "owners": [
+      "bestiary_4:monster:clockwork_dragon"
+    ],
+    "source_page": null,
+    "traits": [
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 382,
+    "record_key": "Clockwork Dragon ~ Infiltrator"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

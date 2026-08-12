@@ -1580,6 +1580,20 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 3, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-006",
     },
+    // SD-29 Epic 5 extend, round 6. The `.pcc` name carries a LEADING
+    // UNDERSCORE (`_bestiary_4.pcc`) where B1/B2/B3's do not -- the naming split
+    // `loop-instruction.md`'s corpus shape notes warn about. Provenance verified
+    // against the file rather than copied from the row above: `ISOGL:YES` at
+    // line 23, 17 `COPYRIGHT` lines, and a real 9,977-byte `OGL.txt`.
+    MonsterBookSpec {
+        corpus_book: "bestiary_4",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_4",
+        races_lsts: &["b4_races.lst"],
+        abilities_lst: "b4_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section; 14 monster rows additionally declare NAMEISPI:YES per-record and are dropped by the screen",
+        classified_by_cycle: "SD29-E5-F2-007",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

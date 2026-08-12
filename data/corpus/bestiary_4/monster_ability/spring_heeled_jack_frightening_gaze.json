@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Spring-Heeled Jack ~ Frightening Gaze",
+    "delivery": "Supernatural",
+    "description": "Any creature within a 10-ft. radius upon whom Spring-Heeled Jack's gaze falls is panicked for 1d6 rounds. A successful DC %1 Will save negates.",
+    "description_variables": [
+      "CHA+12"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:spring_heeled_jack_frightening_gaze",
+    "name": "Frightening Gaze",
+    "owners": [
+      "bestiary_4:monster:spring_heeled_jack"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1331,
+    "record_key": "Spring-Heeled Jack ~ Frightening Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -843,6 +843,7 @@ fn main() {
             RuleSetId::B6 => "bestiary_6",
             RuleSetId::B2 => "bestiary_2",
             RuleSetId::B3 => "bestiary_3",
+            RuleSetId::B4 => "bestiary_4",
         };
         let records = table.entries.len();
         let wired_here = table

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Geist ~ Terrifying Laugh",
+    "delivery": "Supernatural",
+    "description": "Once per minute, a geist can unleash a terrifying laugh as a standard action. The laughter lasts until the beginning of the geist's next turn. All creatures within 30 feet of the geist when it begins to laugh, as well as all creatures that end their turn within that radius, must succeed at a DC %1 Will save or be panicked. The save is required only once per laugh. Those who succeed at their saving throws need not save against the same geist's terrifying laughter for 24 hours. This is a mind-affecting fear effect.",
+    "description_variables": [
+      "16+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:geist_terrifying_laugh",
+    "name": "Terrifying Laugh",
+    "owners": [
+      "bestiary_4:monster:geist"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 755,
+    "record_key": "Geist ~ Terrifying Laugh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
