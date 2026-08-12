@@ -1857,3 +1857,230 @@ genuinely ingestable remainder after this round is **95**, and its order is now 
 
 Plus the residuals that are deliberately not gap: APG's 49 ARG-key collisions (`§39`), Monster Codex's
 `Oversized Goblin`, and now ISR's `Human ~ Tribalistic Languages`.
+
+## Decision 46 — Race-Trait Lane, extend: round 3 (2026-08-12, `sd29-racetrait-r3`, card `epic-6-race-trait-lane-extend`)
+
+Round 3 ingested **Horror Adventures** end-to-end — 43 records, **all 43 reaching a player**, the
+first book in this lane with no shortfall — and, in reproducing round 2's gate before trusting it,
+found that **round 2 had left `origin/tranche/9` RED**, that the **PI screen was being defeated on
+the shipped surface**, and that **five alternates across two books were being offered while moving
+no number on the sheet**. Two of those three are worth more than the ingest.
+
+The lane is now **dry for no-new-mechanism work**, and this section says so with the command behind
+the claim rather than as a judgement.
+
+### 46.1 The ceiling and the queue, re-derived rather than inherited
+
+`§44.4`'s ceiling was re-derived independently, against the PCGen source tree, joined to each unit's
+own status — and it **reproduces exactly**: of the corpus's 3,447 `race_trait` units, exactly
+**553** carry a `TYPE:<Race> Racial Trait` component naming one of the 18 modelled races. The other
+**2,894** belong to races with no chassis and no amount of race-trait ingest grounds them
+(`RaceCorpus::resolve` returns `None` without one).
+
+The derivation walks each `race_trait` unit back to its own row by `(book, source_file,
+source_line)`, applies `parse_row`'s `.MOD` filter on field 0 only, and reads the row's `TYPE:`
+tokens — the same predicates `race_resolver::classify` and `ingest_race_traits::parse_row` use.
+Script kept at `scripts/…` is deliberately NOT how this was run: it was a scratch derivation, and
+what is durable is the table it produced, reproduced below at both ends of the round.
+
+| book | before round 3 | after round 3 |
+|---|---|---|
+| `core_essentials` | 175 grounded / 48 not-ingested | unchanged |
+| `advanced_race_guide` | 156 grounded | unchanged |
+| `inner_sea_races` | 71 grounded / 1 not-ingested | unchanged |
+| `advanced_players_guide` | 1 grounded / 49 not-ingested | unchanged |
+| `horror_adventures` | **44 not-started** | **43 grounded / 1 not-ingested** |
+| `monster_codex` | 4 grounded / 1 not-ingested | unchanged |
+| `bestiary` | 3 not-ingested | unchanged |
+| **total of the 553** | **407 grounded / 146 residual** | **450 grounded / 103 residual** |
+
+`§45.1`'s method was applied before committing the round, which is the whole point of checking that
+script in:
+
+```bash
+python3 scripts/classify_race_trait_rows.py ha_abilities_race.lst ha_abilities_race_oa.lst
+```
+
+→ `ha_abilities_race.lst`: **in-scope rows 43 | default 0 | alternate 41 | flag_granted 0 |
+unclassified 2**; `support/ha_abilities_race_oa.lst`: **in-scope rows 1 | alternate 1**. `§45.5`'s
+"44, 42 of them replace-flag alternates" is confirmed, with the 44 correctly split 43 + 1 across two
+files — a split `§45.5` recorded and this round had to act on.
+
+### 46.2 The second file is deliberately not ingested, and that is a scope ruling with evidence
+
+`support/ha_abilities_race_oa.lst` is loaded by the book's pcc as
+
+```
+ABILITY:support/ha_abilities_race_oa.lst|PRECAMPAIGN:1,INCLUDES=Occult Adventures
+```
+
+(`_horror_adventures.pcc:91`). Occult Adventures is not ingested by this repo, so ingesting that
+file's one in-scope row would attach a conditional record to the base book unconditionally — the
+hazard `loop-instruction.md`'s "Conditional cross-book support files" note names. **The gate is on
+the pcc load line, not inside the `.lst`**: `grep PRECAMPAIGN` over the `.lst` itself returns 0, so
+a lane that checks the file for its own gate concludes, wrongly, that it is ungated. That is the
+same trap `loop-instruction.md` records for `bestiary_5/support/*_oa.lst`, and this is the first
+time this lane has actually stood in it.
+
+Recorded as **1 unit of deliberate, evidenced non-scope**, not as gap. It becomes ordinary work the
+day Occult Adventures is ingested, and not before.
+
+### 46.3 Round 2 left the branch RED, and its receipt said the gate was "in flight"
+
+**This is the round's most important finding and it is not about race traits.**
+
+Round 2's own receipt records its full gate as in flight, and no result ever landed. Reproducing it
+here found **eight failing assertions across three files** on the round-2 tip content:
+
+| file | assertion | held | should have held |
+|---|---|---|---|
+| `tests/sd27_alternate_racial_trait_reachability.rs` | pure-table vs resolver | 158 | 226 |
+| " | selectable keys | 158 | 226 |
+| " | all loaded rows | 337 | 409 |
+| " | colon-free key sweep | 337 | 409 |
+| " | every alternate computes | 158 | 226 |
+| " | the reachable-bonus set | 11 entries | 15 |
+| `tests/sd27_aasimar_globalvar_gate_closes_the_dead_affordance.rs` | Aasimar alternates | 9 | 11 |
+| " | offered-and-acceptable sweep | 158 | 226 |
+| `apps/desktop/src-tauri/src/race_trait_picker.rs` | per-race table + sum | 158 | 226 |
+| " | Aasimar alternates | 9 | 11 |
+| " | changed-description list | 2 keys | 14 |
+
+**The attribution is unambiguous and was checked rather than assumed.** Horror Adventures
+contributes **0** Aasimar alternates and **0** entries to the changed-description list, and every
+delta above is exactly Inner Sea Races' 72 records / 68 alternates. Round 3 owns fixing them; round 2
+owns having shipped them.
+
+Every pin is moved **with its reason**; none is relaxed and none is `#[ignore]`d. Two test names
+carrying counts (`exactly_eleven_alternates_…`, `each_of_the_nine_aasimar_alternates_…`) are renamed
+to carry none, for `§44.5`'s reason: a name that must be edited alongside its expectation invites
+editing the expectation.
+
+**The general lesson.** `§44.5` recorded that "a deferral taken before the evidence lands is a
+prediction, not a decision". This is the same finding a third time, in its most expensive form: a
+receipt that records a gate as *in flight* is a prediction that it will pass, and the board read it
+as a result. A round that cannot land its gate should say the gate did not land — which round 2's
+receipt did, honestly — **and the successor must therefore re-run it before building on the work**,
+which is what happened here and is the practice to keep.
+
+### 46.4 The PI screen was live and ineffective on the shipped surface
+
+`pi_screening` redacts a record's `description` to `[redacted PI]` and records `pi_field` /
+`pi_marker`. But `RaceTraitRecord::render_description` renders from the record's **`DESC:` raw
+tokens**, which hold the upstream prose verbatim — and `race_trait_picker` renders every menu row
+that way deliberately, because the stored string is an ingest-time collapse.
+
+So for all **12** Inner Sea Races records the screen redacted, the Race Traits panel was rendering
+back exactly the Product Identity the screen removed. Worked instance, read off disk:
+
+```
+data/corpus/inner_sea_races/race_trait/dwarf/dwarf_stoic_negotiator.json
+  description : [redacted PI]
+  raw DESC    : Some dwarves, especially those who hail from the town of Peddlegate in Druma, …
+```
+
+`Peddlegate` and `Druma` are precisely why the record was redacted, and both reached the panel.
+
+**Redaction that only reaches the stored field is not redaction.** `RaceTraitRecord` now carries
+`description_redacted`, read from `CorpusRecordV1`'s `pi_field`/`pi_marker` at load, and
+`render_description` returns the stored marker for such a record instead of re-rendering its raw
+tokens. `a_pi_redacted_description_is_never_rendered_back_from_its_raw_desc_tokens` pins the
+property over all 12 in both directions, and pins the count so the test cannot pass by finding
+nothing.
+
+This was silent: nothing errored, the records looked redacted on disk, and the only reason it
+surfaced is that the redaction made `rendered != stored` and a *different* test was counting that
+difference. Emitted as a retro `incident` with `--silent`, recurrence key
+`pi-redaction-defeated-downstream`. **Any other kind whose ingest screens a free-text field and
+whose surface re-renders from raw tokens has the same defect shape** — that generalisation is a
+finding for a successor, not something this card verified.
+
+### 46.5 Five alternates were offered and moved nothing
+
+The engine's alternate-trait **save** wiring was a single hardcoded constant,
+`HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS`, whose doc comment called it *"the one alternate racial trait
+across all 153 whose declared bonus lands on a saving throw this engine totals"*. That was true of
+ARG and stopped being true the moment this lane added books.
+
+* `Dwarf ~ Unstoppable` (ISR) — `BONUS:SAVE|Fortitude|1|TYPE=Racial`
+* `Half-Elf ~ Mismatched` (HA) — `BONUS:SAVE|Reflex|-2`
+
+and three ISR alternates were missing from the *skill* table for the same reason:
+`Gnome ~ Intrepid Settler` (Climb +2, Swim +2 — the only alternate landing on two computed totals at
+once), `Half-Elf ~ Sea Legs` (Swim +2), `Hobgoblin ~ Authoritative` (Intimidate +2).
+
+All five were selectable in the picker, persisted on the character, and changed no number on the
+sheet: **the browse-only stub class `§44.2` was written about**, shipped five more times. The
+constant is now `ALTERNATE_TRAIT_SAVE_BONUSES`, the sibling of the existing
+`ALTERNATE_TRAIT_SELECTED_SKILL_BONUSES`, and the three save explanations name their contribution.
+
+Two details worth keeping:
+
+* **The saves sum where the skills maximise**, and that is not an inconsistency.
+  `Half-Elf ~ Mismatched` is a **penalty**; maximising would discard it. Summing is correct only
+  while no race moves one save twice, so that invariant is now derived from the corpus by
+  `no_race_contributes_two_alternate_trait_bonuses_to_one_save` rather than assumed — a future book
+  that breaks it fails there, naming the pair, instead of silently getting the wrong arithmetic.
+* **The reachability test's own delta check had no arm for Fortitude or Reflex**, although its
+  `computed_totals` map declared both. Its `other =>` arm panics rather than skipping, so the gap
+  was fail-loud rather than silent — which is the only reason this was found rather than shipped as
+  a green test that never checked anything. It is closed, not worked around.
+
+### 46.6 What landed
+
+* `RuleSetId::Ha` + `COMPILED_RULE_SETS` + `corpus_dir_for`/`rule_set_id` + the content-state-dump
+  arm. The exhaustive match did its designed job again.
+* One `BOOK_SOURCES` row — the whole per-book cost, as that binary's module doc promises. **43
+  records**, 0 PCGen-syntax leaks, 0 unresolved `DESC:` args, **0 out-of-scope rows** (the first
+  book in this lane with none).
+* `data/corpus/horror_adventures/LICENSE.json`. **0 of 43 descriptions were PI-redacted**, against
+  12 of 72 for ISR. That is the book *class* — a rules supplement (`BOOKTYPE:Supplement`) rather
+  than a campaign setting — not a weaker screen; the identical screen ran over every field.
+* **41** `ALTERNATE_TRAIT_REPLACE_FLAGS` rows, adding exactly **1** distinct flag to the corpus's 90
+  (`Halfling_ReplaceLanguages`). 28 of this book's 29 flags were already declared by an ARG or ISR
+  alternate replacing the same standard trait — the same shape ISR showed, and the reason a book's
+  alternate count is a poor predictor of its flag count.
+* A reach claim `("horror_adventures", "race_traits")` asserting a plain `Reach::Surfaced`, and
+  **no** `OPEN_FINDINGS` / `UNREACHED_RECORD_FINDINGS` entry, because there is no shortfall.
+* `race_trait` grounded **407 → 450**.
+
+### 46.7 The one book in this lane with no unreachable record, and why that is a fact about upstream
+
+HA's two non-`Alternate` rows, `Deep Jungle Halfling ~ Languages` and `~ Poison Use`, are
+`TraitRole::FlagGranted`, not `Unclassified`: `Halfling ~ Deep Jungle` names both outright through
+
+```
+ABILITY:Halfling Racial Trait|AUTOMATIC|Deep Jungle Halfling ~ Languages|Deep Jungle Halfling ~ Poison Use
+```
+
+(`ha_abilities_race.lst:85`). That is the **completed** form of the transaction ISR's
+`Human ~ Tribalistic Languages` leaves half-finished (`§45.4`): there, the alternate suppresses a
+standard row and nothing replaces it; here, the alternate suppresses three and grants both
+replacements by name.
+
+So the absence of a finding for this book is evidence, not an omission — and the reach test asserts
+`Reach::Surfaced` rather than tolerating a `NotSurfaced`, so a future record that stops reaching
+fails by name instead of quietly widening an already-tolerated shortfall.
+
+### 46.8 The remainder — this lane is DRY for no-new-mechanism work
+
+Re-derived at the end of the round by the same join as `§46.1`. Of the 553-unit ceiling, **450 are
+grounded** and **103 remain**, and **not one of the 103 is ordinary ingest**:
+
+| book | units | what it needs | class |
+|---|---|---|---|
+| `core_essentials` | 48 | a `PREABILITY`-grant mechanism **and** the 16 non-`race_trait`-typed subrace selector rows | workable, needs a new mechanism |
+| `bestiary` (Drow Noble) | 3 | a race-variant chassis; `Unclassified` by construction without one | workable, needs a chassis |
+| `advanced_players_guide` | 49 | nothing — same `KEY:` as already-ingested ARG records (`§39`) | **not gap** |
+| `inner_sea_races` | 1 | `Human ~ Tribalistic Languages`, upstream data gap (`§45.4`) | **not gap** |
+| `monster_codex` | 1 | `Oversized Goblin`, ability-pool variant mechanism (`§43`) | **not gap** |
+| `horror_adventures` | 1 | the `PRECAMPAIGN`-gated Occult Adventures row (`§46.2`) | **not gap** |
+| | **103** | | **51 workable / 52 not gap** |
+
+**Round 3 consumed the last book that needed no new mechanism.** `§45.5`'s queue had three entries;
+`horror_adventures` was the only one of them not mechanism-blocked, and it is done. A successor
+round on this card cannot make progress by ingesting — it must first build one of two mechanisms,
+and that is a different shape of cycle than rounds 1-3 were.
+
+**The 2,894 chassis-blocked units remain a scope finding for a race-chassis lane, not this card**,
+unchanged from `§44.4` and re-verified here.
