@@ -163,10 +163,36 @@ def corpus_root() -> str:
     )
 
 
+# U+00AD SOFT HYPHEN, a PDF-extraction artifact that reaches the corpus as an
+# INVISIBLE character inside a word. Bestiary 4 is the first book in this lane
+# to carry any -- 5 occurrences in `b4_abilities_race.lst`, 0 in Bestiary 2's
+# and Bestiary 3's equivalents -- and `clippy::invisible_characters` is
+# deny-by-default, so transcribing them verbatim does not merely look wrong, it
+# fails the build.
+#
+# Every occurrence stands where a REAL hyphen belongs, mangled by the
+# line-breaking in the source PDF:
+#
+#     pod<U+00AD>spawned   10-foot<U+00AD>radius
+#     free<U+00AD>willed   cone<U+00AD>shaped
+#
+# Replaced with `-` rather than DELETED: deleting yields "10-footradius" and
+# "coneshaped", which are wrong. The book corroborates the hyphen itself --
+# its own ability row is keyed `Pod-Spawned ~ Loss of Magic`, spelled with a
+# plain hyphen, for the same creature whose DESC: text carries the soft one.
+#
+# This is a character-encoding normalisation of a known extraction artifact,
+# not a rewrite of rules text: no word, number or token changes. It is applied
+# in `read_row` so that it lands before EVERY downstream reader -- the Product
+# Identity screen included -- rather than only on the `DESC:` path.
+SOFT_HYPHEN = "­"
+
+
 def read_row(path: str, line_no: int) -> list[str]:
     """The 1-based line at `line_no`, split into its tab-separated tokens."""
     with open(path, encoding="utf-8", errors="replace") as handle:
         line = handle.read().split("\n")[line_no - 1]
+    line = line.replace(SOFT_HYPHEN, "-")
     return [token.strip() for token in line.split("\t") if token.strip()]
 
 

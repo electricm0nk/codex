@@ -1,11 +1,11 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T19:58:27Z",
+  "ingested_at": "2026-08-12T20:36:34Z",
   "data": {
     "corpus_key": "Boilborn ~ Death Throes",
     "delivery": "Supernatural",
-    "description": "When killed, a boilborn pops in a 10-foot­radius burst that deals 2d6 points of acid damage (DC 14 Reflex half).",
+    "description": "When killed, a boilborn pops in a 10-foot-radius burst that deals 2d6 points of acid damage (DC 14 Reflex half).",
     "description_variables": [],
     "facet": "SpecialAttack",
     "key": "bestiary_4:monster_ability:boilborn_death_throes",

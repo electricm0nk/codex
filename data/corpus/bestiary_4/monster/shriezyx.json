@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "chassis_only",
-  "ingested_at": "2026-08-12T19:58:27Z",
+  "ingested_at": "2026-08-12T20:36:34Z",
   "data": {
     "ability_keys": [
       "bestiary_4:monster_ability:shriezyx_fear_of_fire",
