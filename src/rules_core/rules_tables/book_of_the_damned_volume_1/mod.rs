@@ -43,12 +43,6 @@
 //! "Campaign setting" predicts a PI hit rate for `race_trait` and does not
 //! predict one for `monster`.
 //!
-//! This paragraph was itself the cycle's `pi-sweep` failure: naming the setting
-//! outright put a blacklisted term in a `rules_tables` source file. The sweep
-//! is a hard stop and the term was removed rather than baselined -- a doc
-//! comment does not need the proper noun to make its point, and baselining
-//! would have spent the exemption on prose.
-//!
 //! # The link shape is Monster Codex's, at scale
 //!
 //! All 5 monster rows name their abilities outright with
