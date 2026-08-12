@@ -10001,3 +10001,209 @@ remaining monsters.** Do NOT shape any of them, or `bestiary_4`, as a per-monste
 `scripts/reclaim.sh --apply` at cycle end; both target directories
 (`codex-target-sd29-monster-r8`, `codex-target-sd29-monster-r8-desktop`) claimed on creation with
 `.reclaim-claim` and removed at the end.
+
+## Cycle SD29-E5-F2-008 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 7 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r9` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-13`)
+**Branch-point:** `af0f2e9b` · **Commits:** `378b7b70` (the ingest, all eight registration points and
+the player surface), plus this receipt's own commit.
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message:**
+`git cat-file -p origin/tranche/9:src/rules_core/rules_tables/inner_sea_bestiary/monster_data.rs | grep -c 'MonsterStatBlock {'` → **38**,
+`| grep -c 'MonsterAbilityRecord {'` → **152**.
+**Kanban status left at:** `READY — round 8.`
+
+**This receipt does not claim the lane is done.** 190 units landed against a REAL ceiling that is
+still **821**, and the whole of the large remainder is one book whose ruling this round made and
+whose execution it deliberately did not take (§7).
+
+### 0. Worktree integrity — the predicted failure, hit a TENTH time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-13`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, the same 2026-06-28 ancestor rounds 2-6 each landed on. The
+checkout had no `docs/release/SD-29-…` directory at all. Recovered before any other action with
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` (`af0f2e9b`), working tree clean
+at the time (`git status --porcelain` → empty). Tenth consecutive instance; a harness condition, not
+an agent error.
+
+### 0/0b. Shape and trap report
+
+`inner_sea_bestiary` was unregistered before this round:
+`grep -rn "inner_sea_bestiary" --include='*.rs' --include='*.py' --include='*.ts' --include='*.tsx' src apps scripts`
+returned only `v06_work_inventory`'s corpus-root list and two doc-comment mentions in
+`rules_tables/bestiary_4/mod.rs` (`§57.3`'s measurement table). No other lane had touched the book, so
+this round paid the **full** registration cost including a new `RuleSetId::Isb`.
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- inner_sea_bestiary
+```
+
+`DECLARES 40 / .COPY= 0 / .MOD 5 / #OFF 0` on `isb_races.lst`; `DECLARES 194 / .COPY= 0 / .MOD 50 /
+#OFF 0` on `isb_abilities_race.lst`. Book-wide: **242 declarations across 7 files**, 0 `.COPY=`, 59
+`.MOD`, 0 disabled lines. **186 `key-differs-from-name` and 186 `namespaced-key`** findings are the
+two traps that matter, and the chassis keys on `KEY:` throughout, which is what the identity rule in
+`monster_chassis`'s header exists for.
+
+Shape notes checked rather than assumed: the `.pcc` carries **no** leading underscore
+(`inner_sea_bestiary.pcc`); a `_pfs/` subtree exists and contributes no `monster`/`monster_ability`
+unit; and no `.lst` of this book is `PRECAMPAIGN`-gated.
+
+### 1b. Every figure re-derived, command first, value second
+
+**The lane's REAL ceiling, reproduced EXACTLY at cycle start before being moved** — round 6's closing
+figure confirmed, not corrected:
+
+```
+python3 scripts/classify_monster_ability_rows.py
+```
+
+→ `remaining … 2458`, `orphan … 1406`, `PI … 32`, `.COPY= … 2`, **`reachable remainder … 1018`**.
+
+**The brief's carried figure — "The previous round reported 1018 remaining" — is confirmed rather
+than corrected**, the second time in this lane a brief's headline number has survived re-derivation.
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, the same command rounds 1-6
+recorded:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 409 | **371** | −38 |
+| `monster_ability` remaining | 2,049 | **1,897** | −152 |
+| raw remaining total | 2,458 | **2,268** | −190 |
+| `monster` grounded | 861 | **899** | +38 |
+| `monster_ability` grounded | 1,058 | **1,210** | +152 |
+| classifier `reachable remainder` | 1,018 | **828** | −190 |
+| **REAL ceiling** (`828 − 7`, §4) | 1,018 | **821** | −197 |
+
+`1018 − 190 = 828` closes exactly, **no residue**.
+
+**`units_ingested` = 190. `units_remaining` (lane REAL ceiling) = 821.**
+
+**The dispatch brief's "monster ~305, monster_ability ~852, against grounded 62 and 20" was wrong for
+the SIXTH round running.** `§46.1`, `§50.7`, `§52`, `§55` and `§57.0` each corrected the identical
+pair. The pair is near `bestiary`'s own book subtotal (284/523) — a brief-template defect, not a
+per-round slip. Retro event emitted.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` PASS at step 1c and again inside the full gate.
+`df -h /home` → **795G available of 968G, 18% used**. Disk was not a constraint at any point.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r9`, claimed with a
+`.reclaim-claim` file the moment it was created, per `scripts/reclaim.sh`'s convention.
+
+### 2. Why `inner_sea_bestiary` — run BEFORE committing the round, per `§45.1`
+
+```
+python3 scripts/classify_monster_ability_rows.py inner_sea_bestiary inner_sea_gods
+book                 mon  abil row-named prefix ORPHAN   PI COPY
+inner_sea_bestiary    40   190       157      0     26    7    0
+inner_sea_gods        39   161         0     77     81    3    0
+```
+
+`bestiary` (661 classifier-reachable) is larger and was ruled on rather than taken — see §7.
+`inner_sea_gods` (116) needs `MonsterAbilityRecord` to carry a `source_file`: its ability rows live in
+**two** files and `MonsterBookSpec::abilities_lst` is singular. `inner_sea_bestiary` is the largest
+book left that needs no new mechanism, and it is one races file and one abilities file.
+**Unattended-mode default taken: take the book that needs no chassis change, and record what the
+other two need.**
+
+### 3. What landed — 190 records
+
+* `src/rules_core/rules_tables/inner_sea_bestiary/{mod.rs,monster_data.rs}` — **38 monsters + 152
+  abilities**, produced by `python3 scripts/transcribe_monster_tables.py inner_sea_bestiary`.
+* The full eight registration points: `RuleSetId::Isb` + module, `monster_chassis::MONSTER_BOOKS`,
+  `gen_book_cache::MONSTER_BOOK_SPECS`, `reach_gate`'s two claim arms + its `CORPUS_BOOK_IDS` row,
+  `monster_catalog`'s wire code `ISB` + display name, `corpus_ingest_diagnostic`'s two rows, and
+  **both** frontend copies of the served-book list (`BOOK_LABELS` in `MonsterCatalogScreen.tsx`,
+  `SERVED_BOOKS` in `MonsterCatalogScreen.test.ts`) — the pair `§54.5`/`§55`/`§57.4` each record going
+  stale.
+* `v06_content_state_dump`'s exhaustive `RuleSetId` match, which went red on the new variant exactly
+  as `§45.2` records it doing. That match going red is the enum doing its designed job; a missing arm
+  is a compile error in a bin and therefore `0 passed across 0 suites` for the whole `root-full`
+  stage.
+* `data/corpus/inner_sea_bestiary/` — 190 records + `LICENSE.json`, from
+  `cargo run --locked --bin gen_book_cache -- inner_sea_bestiary` → `inner_sea_bestiary cache
+  generated: 38 monsters, 152 monster abilities; LICENSE.json records_processed=190`,
+  `records_redacted: 0`.
+
+**OGL provenance verified against the file rather than copied from the row above it:**
+`inner_sea_bestiary.pcc` declares `ISOGL:YES` at line 23, carries **4** `COPYRIGHT` lines and a real
+**6,739-byte** `OGL.txt` in the book's own directory.
+
+### 4. The findings — `decisions.md §58`
+
+**§58.1 — the lane's ceiling instrument over-reports, and the over-count is exactly 7, all of it this
+book's.** The classifier reports 197 reachable; 190 ship. The classifier screens a monster row's own
+key and name; the transcriber screens the values it EMITS, which for a monster include the keys of
+the abilities it names. Two monster rows of this book name seven deity-namespaced abilities, so
+neither can be emitted, and their 5 remaining abilities are orphaned in turn — `2 + 5 = 7`. That is
+`§57.2`'s cascade running **backwards**, from ability to owner. Measured corpus-wide rather than
+asserted for one book (script in the scratchpad, reproduced in `§58.1`): **every other book scores
+zero**, so the lane's REAL ceiling is `828 − 7 = 821`. The classifier was deliberately **not**
+changed — it is wrong only in the safe direction, and rewriting a queue instrument is not an ingest
+round's side effect.
+
+**§58.2 — a third `DESC:` shape, widened deliberately.** Three *shipping* rows carry two ungated
+`DESC:` tokens that are one description split across tokens, each continuation beginning with a
+space. `parse_desc` refused them and was right to; taking the first alone would have served the
+trigger and dropped the effect. The widening requires every token to carry no pipe entry at all and
+every continuation to begin with a space, so the same file's three rows stating *alternatives* under
+`%N` variables are still refused. **Additivity proved, not assumed:** all eight previously registered
+books were re-transcribed after the change and
+`git status --porcelain -- 'src/rules_core/rules_tables/*/monster_data.rs'` listed only this round's
+new file. (`bonus_bestiary`'s pilot-era hand-written header does rewrite under the checked-in
+transcriber — header prose only, zero record changes — and was reverted as out of this round's
+scope.)
+
+**§58.4 — a test the table cannot carry, caught by running it rather than reasoning about it.** A
+draft test asserting the classifier's `row-named 157 / prefix 0` split from the shipped table fails
+at 96 of 152 rows, and all 96 are correct: `owners == [prefix]` is indistinguishable in the table
+from a prefix-only reach. Recorded in the module rather than deleted silently.
+
+### 5. Definition of done
+
+1. **`./scripts/verify.sh` full** — exit code captured directly, never through a pipe. `VERIFY_EXIT=` **pending at the time this receipt was first committed — filled by this cycle's follow-up commit, which is the only place the real exit code appears. A receipt that reads `pending` here has not been superseded and must be read as an unfinished gate, not a passing one.**.
+2. **`reach` stage claims this book's families** — `("inner_sea_bestiary", "monsters")` and
+   `("inner_sea_bestiary", "monster_abilities")` are live claim arms, not absences.
+3. **`v06_corpus_trap_report -- --audit`** — run inside the gate.
+4. **`v06_work_inventory`** — regenerated; the book's 190 units left `not-started`; a second run
+   changes only `generated_at`.
+5. **Four-check wired-integration audit** — clean: the records are compiled tables, the generator
+   re-reads and verifies every cited corpus line, the catalog serves them under a real wire code, and
+   the frontend renders them (item 8 below).
+6. **`OPEN_FINDINGS`** — this book's 26 orphan ability rows, 7 Product Identity ability rows and the
+   2 monster rows those drag with them stay `not-ingested`, which is their honest status; they are
+   recorded here and in `rules_tables::inner_sea_bestiary` rather than shipped as records nothing can
+   reach.
+7. **`verify-baselines.env`** — unmoved this round.
+8. **On-screen verification** — `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh
+   --family monster --record "Cayhound" --expect "Cayhound" --expect "Inner Sea Bestiary"
+   --expect "Thunderous Bark"`, artifacts under
+   `docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-008/item8`.
+
+### 6. Reclaim
+
+`scripts/reclaim.sh --apply` at cycle end; `CARGO_TARGET_DIR` deleted.
+
+### 7. The `bestiary` ruling, and why it is a ruling rather than an ingest
+
+`§57.7` asked round 7 to decide whether the chassis absorbs Bestiary 1's 46 already-grounded SD-22
+monsters or sits alongside them. **Ruled: alongside**, taking the book's complement — `284 + 323 =
+607` units, with a new named exclusion class (**cross-table owner**, 54 rows) for the abilities whose
+only owner is one of the 46. Full derivation, including the two lines in
+`v06_work_inventory.rs` that make a naive registration a 46-unit *regression*, is `decisions.md
+§58.3`. Round 8 opens with it and re-derives nothing.
