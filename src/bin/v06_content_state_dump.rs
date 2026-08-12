@@ -818,6 +818,18 @@ fn main() {
             RuleSetId::Ce => "core_essentials",
             RuleSetId::Botd1 => "book_of_the_damned_volume_1",
             RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+            // The companion lane's two books (SD-29 `decisions.md` 48) carry no
+            // feats file this repo compiles either; these arms exist for
+            // exhaustiveness, exactly as `Ue`'s, `Isr`'s and `Ha`'s above do.
+            //
+            // **They were missing on `origin/tranche/9` at `bac2f569`**, which
+            // is a compile error in this bin and therefore `0 passed across 0
+            // suites` for the whole `root-full` stage -- the failure mode
+            // `AGENTS.md` records as "one broken bin meant 0 of 502 suites
+            // ran". Added here by the race-trait lane's round 4 when its own
+            // merge of that commit went red; see `decisions.md` 49.
+            RuleSetId::Isc => "inner_sea_combat",
+            RuleSetId::Isi => "inner_sea_intrigue",
         };
         let records = table.entries.len();
         let wired_here = table

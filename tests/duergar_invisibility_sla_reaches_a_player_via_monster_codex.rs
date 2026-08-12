@@ -80,6 +80,11 @@ const LOADED_BOOKS: &[&str] = &[
     "inner_sea_races",
     // SD-29 race-trait lane round 3.
     "horror_adventures",
+    // SD-29 race-trait lane round 4: Core Essentials' Aasimar and Tiefling
+    // heritages (`decisions.md §49`). Loadable like the four books above it
+    // and, like them, contributing no racial default -- its 64 records are 16
+    // heritages a player picks and the 48 replacement rows they grant.
+    "core_essentials",
 ];
 
 fn corpus_dirs() -> Vec<(&'static str, PathBuf)> {

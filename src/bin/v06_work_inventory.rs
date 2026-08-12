@@ -2263,7 +2263,7 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             // The probe's answer is the attribution, so it is reported as
             // such: a record whose observed book differs from its own is
             // credited to the observed one, exactly as a shared-library record
-            // was before its host book was named. (`decisions.md §48.3`.)
+            // was before its host book was named. (`decisions.md §49.3`.)
             if let Some(observed) = facts.race_trait_engine_book(unit) {
                 return Verdict {
                     status: "grounded",

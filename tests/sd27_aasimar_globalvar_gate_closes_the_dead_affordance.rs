@@ -150,7 +150,7 @@ fn every_aasimar_alternate_really_replaces_a_standard_trait() {
         alternates.len(),
         17,
         "ARG's nine Aasimar alternates + Inner Sea Races' two (`Aasimar ~ Crusading Magic`, \
-         `Aasimar ~ Lost Promise`) + Core Essentials' six heritages (SD-29 decisions.md §48, \
+         `Aasimar ~ Lost Promise`) + Core Essentials' six heritages (SD-29 decisions.md §49, \
          round 4). Aasimar's nine racial DEFAULTS above did not move and must not: ISR, HA and \
          CE contribute alternates only, no chassis"
     );
@@ -317,7 +317,7 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         checked, 283,
         "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 68 + Horror Adventures' 41 \
          + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
-         §47, §48). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
+         §47, §49). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
          corpus"
     );
 }

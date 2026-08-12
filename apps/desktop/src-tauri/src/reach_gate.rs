@@ -1031,7 +1031,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // asserts the full pass by exact count rather than leaving it unstated.
         ("horror_adventures", "race_traits") => Some(race_traits_reach("HA", "horror_adventures")),
         // SD-29 Epic 6 round 4 (race-trait lane, extend, 2026-08-12,
-        // `decisions.md §48`). Core Essentials' 64 heritage records --
+        // `decisions.md §49`). Core Essentials' 64 heritage records --
         // Aasimar's 6 and Tiefling's 10 selectable heritages, plus the 48
         // replacement rows those heritages grant -- served by exactly the two
         // commands ARG's, APG's, Monster Codex's, ISR's and HA's claims run.
@@ -2783,7 +2783,7 @@ mod tests {
 
     /// Core Essentials' heritage traits reach a player, all 64 of them.
     ///
-    /// SD-29 race-trait lane round 4 (`decisions.md §48`). This is the last
+    /// SD-29 race-trait lane round 4 (`decisions.md §49`). This is the last
     /// entry in the lane's 553-unit ceiling that is ordinary content, and it
     /// is the only book whose records are **majority granted rather than
     /// chosen**: 16 heritages a player picks and 48 replacement rows that

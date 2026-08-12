@@ -598,7 +598,7 @@ mod tests {
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
              Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
-             (§48). Two loaded records are not \
+             (§49). Two loaded records are not \
              alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
              `Human ~ Tribalistic Languages`, both of which set no replace flag, so \

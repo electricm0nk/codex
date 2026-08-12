@@ -280,6 +280,41 @@ fn chassis_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
     counts
 }
 
+/// The `companion` counts a book contributes, read off the live companion
+/// chassis exactly as [`chassis_book_counts`] reads the monster one.
+///
+/// **Added by SD-29's race-trait lane round 4 rather than by the companion
+/// lane that landed the tables** (`decisions.md §49`). Three books gained a
+/// `src/rules_core/rules_tables/<book>/` directory in `bac2f569` —
+/// `inner_sea_combat`, `inner_sea_intrigue` and `horror_adventures` — with no
+/// row here, so `every_book_landed_in_rules_tables_is_reported` (the drift
+/// guard written for exactly this defect) was RED on `origin/tranche/9`. The
+/// panel's caption promises every landed book, so an unreported one reads to a
+/// tester as an un-ingested book.
+fn companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32> {
+    use codex::rules_core::rules_tables::companion_chassis;
+    let table = companion_chassis::companion_book(corpus_book).unwrap_or_else(|| {
+        panic!("{corpus_book} is not registered in companion_chassis::COMPANION_BOOKS")
+    });
+    // **One kind, not two**, matching `reach_gate::CORPUS_KIND_NAMES`'s
+    // deliberate single `companion -> companions` entry and the corpus's own
+    // single `data/corpus/<book>/companion/` directory, which holds creature
+    // records and advancement records side by side. Splitting them here would
+    // invent a `companion_abilities` family the reach gate has no claim for,
+    // and `every_ingested_family_is_accounted_for` would correctly demand one
+    // -- an invented family is exactly the drift this diagnostic exists to
+    // report, not to create. The sum is the on-disk record count, verified per
+    // book: `find data/corpus/inner_sea_combat/companion -name '*.json' | wc -l`
+    // -> 10 = 4 creatures + 6 advancements; inner_sea_intrigue 11 = 2 + 9;
+    // horror_adventures 2 = 1 + 1.
+    let mut counts = BTreeMap::new();
+    counts.insert(
+        "companions".to_string(),
+        (table.companions.len() + table.companion_abilities.len()) as u32,
+    );
+    counts
+}
+
 fn beastiary1_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("monsters".to_string(), ALL_BESTIARY1_MONSTERS.len() as u32);
@@ -514,6 +549,31 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             chassis_book_counts("book_of_the_damned_volume_2"),
             &races,
         ),
+        // SD-29 Epic 7 (companion lane) landed these three as real
+        // `rules_tables` books; the rows are here, next to the other chassis
+        // books, for the reason the drift guard names. `monster_codex` is the
+        // fourth companion book and already has a row above -- its companion
+        // counts are not merged into that row, which is a narrower gap owned by
+        // the companion lane, not the "book is missing entirely" defect this
+        // closes.
+        book_status(
+            "inner_sea_combat",
+            "src/rules_core/rules_tables/inner_sea_combat",
+            companion_book_counts("inner_sea_combat"),
+            &races,
+        ),
+        book_status(
+            "inner_sea_intrigue",
+            "src/rules_core/rules_tables/inner_sea_intrigue",
+            companion_book_counts("inner_sea_intrigue"),
+            &races,
+        ),
+        book_status(
+            "horror_adventures",
+            "src/rules_core/rules_tables/horror_adventures",
+            companion_book_counts("horror_adventures"),
+            &races,
+        ),
         book_status(
             "advanced_race_guide",
             "src/rules_core/rules_tables/advanced_race_guide",
@@ -651,6 +711,12 @@ mod tests {
                 // volumes, kept next to the other chassis books.
                 "book_of_the_damned_volume_1",
                 "book_of_the_damned_volume_2",
+                // SD-29 Epic 7 (companion lane), rows added by the race-trait
+                // lane's round 4 when its merge of that lane went red -- see
+                // `companion_book_counts`.
+                "inner_sea_combat",
+                "inner_sea_intrigue",
+                "horror_adventures",
                 "advanced_race_guide",
                 "pathfinder_unchained",
                 "ultimate_campaign",

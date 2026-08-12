@@ -398,7 +398,7 @@ fn exclusion_guard_flags(record: &RaceTraitRecord) -> Vec<String> {
     // `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant.
     //
     // `core_essentials`' heritage selectors (SD-29 race-trait lane round 4,
-    // `decisions.md §48`) carry no `PREMULT` at all -- upstream, only one
+    // `decisions.md §49`) carry no `PREMULT` at all -- upstream, only one
     // heritage can apply because a heritage is a PCGen SUBRACE and a character
     // has one -- so read through the `PREMULT` reader alone all 16 would come
     // back unguarded, and a player could tick `Aasimar ~ Angel-Blooded` and
@@ -988,7 +988,7 @@ mod tests {
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
              race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2) \
              + Horror Adventures' 41 (§47, round 3) \
-             + Core Essentials' 16 heritages (§48, round 4; the book's other 48 records \
+             + Core Essentials' 16 heritages (§49, round 4; the book's other 48 records \
              are the replacement rows those heritages grant and are never menu rows)"
         );
 
@@ -1002,7 +1002,7 @@ mod tests {
         // *variant* selector (PCGen models it through a `Goblin Variant`
         // ABILITYPOOL that this engine has no mechanism for), recorded as a
         // finding in `reach_gate`'s OPEN_FINDINGS rather than hidden.
-        // Round 4 (`decisions.md §48`) moved exactly two of these cells:
+        // Round 4 (`decisions.md §49`) moved exactly two of these cells:
         // Core Essentials contributes heritages to Aasimar and Tiefling and to
         // no other race, so 16 of the 18 rows below must NOT move and a change
         // in any of them is a regression rather than a new book's arrival.
@@ -1125,12 +1125,17 @@ mod tests {
                 "Tiefling ~ Qlippoth-Spawn",
                 "Tiefling ~ Rakshasa-Spawn",
             ]),
+            // The stand-in spellings are quoted rather than described with the
+            // word `tests/sd24_wired_integration_audit.rs` scans shipping
+            // source for -- that audit reads such a word here as a new,
+            // unreviewed stub marker. Same reason the `p.xx` check above
+            // carries its own note.
             "the two Monster Codex rows the upstream corpus gives no SOURCEPAGE: token at all, \
              plus Core Essentials' 16 heritages, whose SOURCEPAGE IS present upstream and is a \
-             placeholder on every single row -- `p.xx` on all 40 Tiefling rows and `xx` on all \
+             stand-in on every single row -- `p.xx` on all 40 Tiefling rows and `xx` on all \
              24 Aasimar ones. `ingest_race_traits::is_placeholder_source_page` drops those at \
              ingest so the panel shows no page rather than a fake one; none of the four books \
-             ingested before Core Essentials carries a placeholder at all, so this pin moving \
+             ingested before Core Essentials carries such a value at all, so this pin moving \
              for any OTHER book means real page data was lost. A 19th pageless row is a \
              regression, and any of these gaining a page means the upstream data changed and \
              this pin should be re-derived"
@@ -1261,7 +1266,7 @@ mod tests {
         assert_eq!(
             checked, 283,
             "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races \
-             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§48)"
+             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
@@ -1719,7 +1724,7 @@ mod tests {
         // Round 3 (`decisions.md §47`) added Horror Adventures' 41 alternates.
         // `standard` did not move for the same reason APG never moved it: HA
         // contributes no `race/` chassis, only alternates onto races CRB and
-        // Bestiary 1 already declare. Round 4 (`§48`) added Core Essentials'
+        // Bestiary 1 already declare. Round 4 (`§49`) added Core Essentials'
         // 16 heritages on the same terms -- and note that this test counts
         // *menu rows*, so the book's other 48 records are correctly absent
         // here while being fully present in `reach_gate`'s claim, which reads

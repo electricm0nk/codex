@@ -2476,3 +2476,279 @@ RED for both books, exactly as Inner Sea Races turned it RED for the race-trait 
 to `SD29_INGESTED_CAMPAIGN_SETTING_BOOKS` **with their reason**, which is `§47.3`'s ruling applied
 again rather than relaxing the check: the roster assertion is about SD-30's sixteen books existing, not
 about them staying un-ingested forever.
+
+## Decision 49 — Race-Trait Lane, extend: round 4 (2026-08-12, `sd29-racetrait-r4`, card `epic-6-race-trait-lane-extend`)
+
+> **Written as §48 and renumbered on merge.** The companion lane's
+> `sd29-companion-r4` claimed Decision 48 concurrently in a separate worktree and
+> pushed first, so this section is §49. The two commits that landed before the
+> merge (`9176f869`, `c8416f33`) say §48 in their messages and cannot be
+> rewritten; every code comment was updated to §49. This is the second instance
+> of the class in this lane — `§47` carries the same note for the same reason —
+> and `kanban.md` already records the fix: reserve a decision number at claim
+> time, as cycle-ids are suffixed.
+Round 4 ingested **Core Essentials' Aasimar and Tiefling heritages** — 64 records, all 64 reaching a
+player — which was the whole of `§47.8`'s "workable, needs a new mechanism" queue except three
+chassis-blocked rows. **It needed no new mechanism.** `§47.8`'s statement of what the book required
+was wrong in both halves, and correcting it is this round's most reusable output. The lane is now
+**dry**: the genuinely-workable remainder is **3 units**, and all three need a race *chassis*, which
+is not this card.
+
+### 49.1 The stated blocker was not the blocker, and the corpus said so in a third file
+
+`§47.8` recorded `core_essentials`' 48 as needing *"a `PREABILITY`-grant mechanism **and** the 16
+non-`race_trait`-typed subrace selector rows"*, and `§45.1` had already reasoned that ingesting them
+as-is "would have produced records that load and never apply."
+
+The second half is right. The first half named the wrong mechanism, and the reason is worth more
+than the fix.
+
+The 48 rows do carry a positive `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` gate, and
+`race_resolver::classify` genuinely does not read that token. So a reader who classifies the rows by
+**what is on them** concludes a `PREABILITY`-grant mechanism is required. What that reading cannot
+see is that PCGen states the same transaction a second time, from the other end, in a file the
+lane had never opened:
+
+```text
+CATEGORY=Special Ability|Aasimar ~ Agathion-Blooded.MOD
+    ABILITY:Aasimar Racial Trait|AUTOMATIC|Agathion-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0
+    ABILITY:Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Type|PREVAREQ:Aasimar_ReplaceType,0
+    ...
+```
+
+(`core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst`.) That is
+`ABILITY:<cat>|AUTOMATIC|<key>` — **the third grant shape `race_resolver`'s module doc already
+documents and `link_automatic_grants` already resolves**, the one `Orc ~ Feral` → `Feral ~ Languages`
+travels. The heritage names its replacements outright; nothing new is needed in the engine at all.
+The `PREVAREQ:<flag>,0` qualifier on each grant names the standard trait being displaced, which
+supplies the heritage's `sets_replace_flags` and makes it an ordinary `TraitRole::Alternate`.
+
+So the whole book cost **one ingest-side reader** (`ingest_race_traits::subrace_grants`, ~40 lines)
+and **zero resolver changes**. `race_resolver.rs`'s diff for this round is a table of 16 rows and
+three moved count pins.
+
+**The general lesson, and it is `§45.1`'s exactly one level further out.** `§45.1` established that a
+lane must classify **corpus rows**, not the inventory's evidence token. Round 4 shows that
+classifying the corpus rows *of one file* is still not the same as classifying the corpus: the rows
+carried a gate the engine cannot read, and the file that made them ordinary was three directories
+away with a name (`_abilities_globalvar_subrace.lst`) that no row-level scan would reach. The
+question "what does this content need?" is answered by the **book**, not by the file the rows live
+in — and `ingest_races::globalvar_gates` had been reading the non-subrace half of that very file
+family since SD-27, which is the precedent a search would have found.
+
+`scripts/classify_race_trait_rows.py` was run before the round committed, per `§45.1`, and its
+output is what raised the question rather than settling it:
+
+```bash
+python3 scripts/classify_race_trait_rows.py \
+  aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst
+```
+
+→ `aasimar…`: **in-scope rows 18 | default 0 | alternate 0 | flag_granted 18 | unclassified 0**;
+`tiefling…`: **in-scope rows 30 | default 0 | alternate 0 | flag_granted 30 | unclassified 0**.
+`§47.8`'s 48 is confirmed, and "**0 of 48 need no new mechanism**" is exactly the output that should
+send a round looking for the other end of the transaction rather than budgeting for a new engine
+feature.
+
+### 49.2 The ceiling is 571, not 553, and the 18 extra rows are a category the earlier derivation could not see
+
+`§44.4`'s and `§47.1`'s ceiling — of the corpus's 3,447 `race_trait` units, **553** carry a
+`TYPE:<Race> Racial Trait` component naming one of the 18 modelled races — **reproduces exactly**,
+independently derived this round against the PCGen source tree over the bundle's own 38 book
+directories:
+
+```bash
+python3 scripts/race_trait_ceiling.py          # checked in this round
+```
+
+→ `TYPE:<18 races> Racial Trait rows : 553`.
+
+**And 553 was never the whole ceiling.** The predicate reads one TYPE suffix, and the heritage
+*selector* rows carry a different one — `TYPE:Aasimar Subrace`, `TYPE:Tiefling Subrace`. There are
+**18** such rows corpus-wide, all in `core_essentials`, and they are `race_trait`-kinded units in
+`docs/work-inventory.json` exactly like the 553 because `file_kind()` types them by filename. They
+were counted in the lane's *denominator* and excluded from its *ceiling*, which is the one
+combination that makes a lane look further from done than it is.
+
+The honest ceiling is therefore **571**, and the same script prints both halves so the split stays
+visible rather than being folded into one number.
+
+**Two of the 18 are deliberately not gap**, and they are the reason the selector category is not
+simply "16 more records": `Aasimar ~ Default` and `Tiefling ~ Default`, in the books' *non*-subrace
+`<race>_abilities_race.lst`, are the **no-heritage baseline**. `Tiefling ~ Default` states its own
+role outright —
+`PREMULT:1,[PREABILITY:1,…,Tiefling ~ Default],[!PREABILITY:1,CATEGORY=Special Ability,TYPE=Tiefling Subrace]`,
+read *you have this unless you have some Tiefling subrace*. This engine's "no alternate selected"
+state already **is** that record; ingesting it would ship a selectable heritage that sets no flag and
+grants nothing, which is the browse-only stub `§44.2` is about. Recorded as evidenced non-scope.
+
+### 49.3 Giving a storage directory a rule set demoted 155 records that had not changed
+
+**This is the round's most important finding and it is not about heritages.**
+
+`v06_work_inventory`'s `race_trait` verdict grounded a unit when the corpus probe's observed book
+**equalled the unit's own book's rule set**:
+
+```rust
+if facts.race_trait_engine_book(unit) == Some(engine_book.as_str()) { /* grounded */ }
+```
+
+For every book whose `.lst` rows are filed under itself, that equality is free. `core_essentials` is
+the one book where it is not — `race_trait_engine_book`'s own doc comment says so in as many words:
+*"Race traits are the one kind whose `.lst` rows are routinely filed under a different book than the
+one that ingested them."* While the book had no compiled rule set, the shared-library path resolved
+`engine_book` to the record's real host (`core_rulebook`, `bestiary_1`) and the equality held.
+
+Round 4 gave `core_essentials` a `RuleSetId` of its own, for the 64 records that genuinely belong to
+it. **155 Core Rulebook and Bestiary 1 standard racial traits stored in that directory instantly
+dropped from `grounded` to `race_trait_record_loaded_but_never_applies`** — an evidence token
+asserting the *opposite* of what the probe had just observed — and `race_trait` grounded went
+450 → 359 in the same run that added 64 records. Nothing about those 155 changed; only the directory
+they live in gained an id.
+
+Caught because the round re-derived the denominator after the ingest instead of only before it, and
+the number moved the wrong way. **A count that moves in the wrong direction is the cheapest defect
+detector this program has, and it only works if the count is taken twice.**
+
+Fixed at the source: the probe's observation grounds on its own, and reports the observed book as the
+attribution — exactly as a shared-library record was attributed before its own book was named. After
+the fix, `race_trait` grounded is **514** (450 + this round's 64), which is the arithmetic the round
+should produce.
+
+**The generalisation is a live hazard for the other lanes.** Any kind whose units are stored under a
+different book than the one that owns them will demote silently the day that storage directory is
+given a rule set of its own. `race_trait` is the kind whose doc comment names the property; nothing
+proves it is the only one.
+
+### 49.4 A placeholder page cite is not a page
+
+All **64** of the book's rows carry a `SOURCEPAGE` that is a placeholder — `p.xx` on all 40 Tiefling
+rows, `xx` on all 24 Aasimar ones. The picker's own
+`every_alternate_carries_real_book_attribution_and_prose` already refused `p.xx`, which caught the
+Tiefling half; the Aasimar spelling `xx` would have sailed through and rendered "xx" beside the trait
+as though it were a real citation.
+
+None of the four books ingested before this one carries a placeholder at all:
+
+```bash
+grep -oh 'SOURCEPAGE:[^\t]*' \
+  arg_abilities_race.lst mc_abilities_race.lst isr_abilities_race.lst ha_abilities_race.lst \
+  | sort -u | grep -i x
+```
+
+→ no output. So `ingest_race_traits::is_placeholder_source_page` is an exact-match list of the two
+spellings the corpus actually uses, not a pattern — a page cite is free text and a heuristic would
+start discarding real ones. The rows still ship, with their name, prose and bonuses; they ship with
+no page rather than a false one, and the picker's `pageless` pin now names all 18 rows by key.
+
+### 49.5 The heritages are mutually exclusive, and the corpus says so in the token this round already reads
+
+A heritage carries **no `PREMULT` self-exclusion guard** — upstream, only one can apply because a
+heritage is a PCGen `SUBRACE` and a character has one. `race_trait_picker::exclusion_guard_flags` read
+`PREMULT` and nothing else, so all 16 would have come back unguarded and a player could have ticked
+`Aasimar ~ Angel-Blooded` and `Aasimar ~ Archon-Blooded` together and collected **both** ability-score
+bonuses.
+
+The constraint is stated on the grant: `…|AUTOMATIC|Angel-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0`
+reads *grant this while that standard trait has not already been replaced*, which is the same
+"already set by someone else blocks me" relation the `PREMULT` branch expresses. So the ingest
+carries the qualifier through verbatim and the picker reads it as a third spelling of the guard.
+`every_alternate_has_a_readable_exclusion_guard_including_the_preability_spelling` — which pins the
+unguarded set by exact key — went RED and came back green with the pin **unmoved**, which is the
+evidence that these 16 are guarded rather than exempted.
+
+### 49.6 Aasimar proves the read that Tiefling needs
+
+Aasimar's six selector rows carry their own `FACT:Aasimar_Replace<Trait>|True` tokens. Tiefling's ten
+carry **no `FACT:` token at all**. Both books' `_abilities_globalvar_subrace.lst` state the same
+thing the same way, so the ingest asserts equality wherever both sources speak:
+
+* Aasimar: declared `[Aasimar_ReplaceAbilityScores, Aasimar_ReplaceSkilled, Aasimar_ReplaceSpellLikeAbility]`
+  == derived from the globalvar block. Six for six.
+* Tiefling: nothing declared; derived
+  `[Tiefling_ReplaceAbilityScores, Tiefling_ReplaceSkilled, Tiefling_ReplaceSpellLikeAbility]`.
+
+That agreement is what licenses reading the globalvar file for the ten rows that say nothing — it is
+the same discipline `ingest_races::globalvar_gates` documents for the base races ("checkable against
+the first source and *is* checked"), applied one directory down. A contradiction fails the ingest run
+rather than being resolved silently in either direction.
+
+### 49.7 What landed
+
+* `RuleSetId::Ce` + `COMPILED_RULE_SETS` + `corpus_dir_for`/`rule_set_id` + the content-state-dump
+  arm. The exhaustive match did its designed job again.
+* `BookSource.lst_relatives` is now a **list**: a book may declare its racial traits across more than
+  one file, and two `BookSource` rows sharing one `corpus_book` would have had the second silently
+  erase the first's records (`ingest_book` rebuilds the output tree per book). Horror Adventures
+  already had two such files and dodged this by ingesting only one of them.
+* `ingest_race_traits::subrace_grants` + `is_placeholder_source_page` + the `TYPE:<Race> Subrace`
+  arm in `parse_row`. **64 records**, 0 PCGen-syntax leaks, 0 unresolved `DESC:` args, 0
+  out-of-scope rows.
+* `data/corpus/core_essentials/LICENSE.json`. **8 of 64 descriptions PI-redacted** — four Tiefling
+  heritages named for outsider races that are Golarion Product Identity, each hitting twice because
+  the heritage row and its Ability Scores replacement row carry the same prose. Aasimar's 24 hit 0.
+  The book's OGL posture is the one row `docs/governance/license-matrix.md` marks **unestablished
+  from its own file**, and the declaration cites that ruling rather than restating it: every
+  `#ISOGL:YES`/`#COPYRIGHT:` line in `_core_essentials.pcc` is commented out, and the book is
+  reachable only through `core_rulebook.pcc:43`'s unconditional `PCC:@…` inclusion — which is the
+  exact path this ingest travels.
+* **16** `ALTERNATE_TRAIT_REPLACE_FLAGS` rows, adding exactly **2** distinct flags to the corpus's 91
+  (`Aasimar_ReplaceAbilityScores`, `Tiefling_ReplaceAbilityScores`). No alternate in any earlier book
+  replaces a race's ability-score row, because an ordinary alternate never touches ability scores and
+  a heritage always does; the other four flags were already declared by ARG and ISR alternates
+  replacing the same standard rows. Both new flags are claimed by a real standard row, which is why
+  the orphan-flag assertion did not move.
+* A reach claim `("core_essentials", "race_traits")` asserting a plain `Reach::Surfaced`, and **no**
+  `OPEN_FINDINGS` / `UNREACHED_RECORD_FINDINGS` entry, because there is no shortfall. Its test pins
+  both halves — 64 records reached and 16 menu rows — because they fail independently: losing the
+  grant link would leave 16 perfectly selectable records that change nothing.
+* The `v06_work_inventory` attribution fix of `§49.3`.
+* `race_trait` grounded **450 → 514**.
+
+### 49.8 The remainder — this lane is DRY
+
+Re-derived at the end of the round by the same join `§47.1` used, widened to the 571-row ceiling
+(`scripts/race_trait_ceiling.py`, then joined to each unit's status by
+`(book, source_file, source_line)`):
+
+```
+units matched into the ceiling : 571
+by status                      : {'grounded': 514, 'not-ingested': 57}
+```
+
+| book | units | what it needs | class |
+|---|---|---|---|
+| `advanced_players_guide` | 49 | nothing — same `KEY:` as already-ingested ARG records (`§39`) | **not gap** |
+| `bestiary` (Drow Noble) | 3 | a race-variant chassis; `Unclassified` by construction without one | **workable, needs a chassis** |
+| `core_essentials` | 2 | nothing — `Aasimar ~ Default` / `Tiefling ~ Default`, the no-heritage baseline the engine's own no-selection state already is (`§49.2`) | **not gap** |
+| `horror_adventures` | 1 | `Half-Elf ~ Starchild`, the `PRECAMPAIGN`-gated Occult Adventures row (`§47.2`) | **not gap** |
+| `inner_sea_races` | 1 | `Human ~ Tribalistic Languages`, upstream data gap (`§45.4`) | **not gap** |
+| `monster_codex` | 1 | `Oversized Goblin`, ability-pool variant mechanism (`§43`) | **not gap** |
+| | **57** | | **3 workable / 54 not gap** |
+
+**The genuinely-workable remainder of this card is 3 units, and they are not race-trait work.** Drow
+Noble is a race variant with no chassis; `RaceCorpus::resolve` returns `None` for it, so ingesting
+its three rows would produce records that load and never apply whatever this lane does next. That is
+the race-chassis lane, and this card should be read as dry rather than as 3 short.
+
+**The chassis-blocked residue is 3,447 − 571 = 2,876 units** (`bestiary_3` 799, `core_essentials`
+645, `bestiary_2` 162, `ultimate_psionics` 159, and so on) — races the product does not model, for
+which no amount of race-trait ingest changes anything. `§44.4`'s 2,894 was right on its own 553-row
+ceiling and is superseded only by the 18 selector rows `§49.2` adds, not corrected.
+
+**One scope finding for a successor, outside this bundle.** `scripts/race_trait_ceiling.py
+--whole-tree` scans every book under the PCGen data root instead of the bundle's 38 directories and
+returns **897**, against 571 in scope — **326 further rows**, and 291 of them are ordinary
+Pathfinder alternate racial traits for the 18 races this product already models:
+
+| tree | rows | note |
+|---|---|---|
+| `player_companion/` (12 books) | 288 | `blood_of_fiends` 102, `blood_of_angels` 101, `blood_of_shadows` 19, `bastards_of_golarion` 12, `legacy_of_the_first_world` 12, `legacy_of_dragons` 11, `kobolds_of_golarion` 10, `heroes_of_the_street` 7, `heroes_of_the_high_court` 7, `heroes_of_the_wild` 3, `agents_of_evil` 3, `dragon_empires_primer` 1 |
+| `campaign_setting/` (2 books) | 3 | `rival_guide` 2, `dragon_empires_gazetteer` 1 |
+| `starfinder/` | 35 | correctly out of scope for a Pathfinder product |
+
+The 291 are **ordinary no-new-mechanism ingest of exactly the shape rounds 2 and 3 did**, and two of
+those books individually exceed anything this lane has taken since ARG. They are not in
+`corpus-work-channels.md §10.2`'s 37, so they are not this bundle's to take — but they are the
+largest known block of cheap race-trait work anywhere in the tree, and a successor bundle should be
+told they exist rather than rediscovering them a round at a time.
