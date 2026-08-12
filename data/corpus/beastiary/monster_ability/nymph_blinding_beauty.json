@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Nymph ~ Blinding Beauty",
+    "delivery": "Supernatural",
+    "description": "This ability affects all humanoids within 30 feet of a nymph. Those who look directly at a nymph must succeed on a DC %2 Fortitude save or be blinded permanently. A nymph can suppress or resume this ability as a free action. The save DC is Charisma-based.",
+    "description_variables": [
+      "NymphBlindingBeautyDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:nymph_blinding_beauty",
+    "name": "Blinding Beauty",
+    "owners": [
+      "beastiary:monster:nymph"
+    ],
+    "source_page": "p.217",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 998,
+    "record_key": "Nymph ~ Blinding Beauty"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

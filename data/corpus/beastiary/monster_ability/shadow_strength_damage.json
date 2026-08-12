@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shadow ~ Strength Damage",
+    "delivery": "Supernatural",
+    "description": "A shadow's touch deals 1d%1 points of Strength damage to a living creature. This is a negative energy effect. A creature dies if this Strength damage equals or exceeds its actual Strength score.",
+    "description_variables": [
+      "StrengthDamageDieSize"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:shadow_strength_damage",
+    "name": "Strength Damage",
+    "owners": [
+      "beastiary:monster:shadow_greater"
+    ],
+    "source_page": "p.245",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1106,
+    "record_key": "Shadow ~ Strength Damage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

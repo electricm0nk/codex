@@ -885,6 +885,35 @@ fn gen_advanced_race_guide() {
 /// the live `.lst` only to attach a real `path`/`sha256`/`line` citation, and
 /// the line it cites is the one the table itself recorded at transcription
 /// time, verified against the file rather than trusted.
+/// Compose a `LICENSE.json` `screening_method_note` append-only.
+///
+/// `decisions.md §54.4`: a book can be ingested by several lanes, and the note
+/// is the only field carrying which passes put records on disk. Overwriting it
+/// leaves a file whose `records_processed` counts every lane and whose note
+/// accounts for one. Written once here rather than a third time inline: this
+/// function exists because the companion generator's copy was the fix and the
+/// monster generator's absence of it was the defect, and a second copy is how
+/// that happens again.
+///
+/// `marker` is this pass's own leading text. Finding it means this cycle already
+/// appended, so its previous entry is replaced rather than duplicated — a
+/// re-run of the same cycle is a no-op on the note, the way a second run of
+/// `v06_work_inventory` is a no-op on the inventory.
+fn compose_screening_note(prior: Option<String>, marker: &str, this_pass: String) -> String {
+    let Some(previous) = prior else {
+        return this_pass;
+    };
+    let head = match previous.find(marker) {
+        Some(at) => previous[..at].trim_end().to_string(),
+        None => previous.trim_end().to_string(),
+    };
+    if head.is_empty() {
+        this_pass
+    } else {
+        format!("{head} {this_pass}")
+    }
+}
+
 fn gen_monster_book(spec: &MonsterBookSpec) {
     use codex::rules_core::rules_tables::monster_chassis;
 
@@ -904,10 +933,42 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
     let wiring_index = WiringClassIndex::build(book_id, &root);
     let mut wiring_lines = wiring_index.lines();
 
+    // Clear only what THIS generator owns, which for eight of the ten
+    // registered books is the whole directory and for Bestiary 1 is not.
+    //
+    // `data/corpus/beastiary/monster/` holds 46 records SD-22 wrote, in the
+    // pre-`key` Shape B v1 shape (`data.id`, no `data.key`), beside the 284 this
+    // chassis writes (`decisions.md §58.3`). A `remove_dir_all` here would
+    // delete a shipped, grounded, player-visible family every time this
+    // generator ran on the book -- silently, because the next run of the OTHER
+    // generator would put it back and nothing in between would say so.
+    //
+    // The rule is the record shape, not a book name: a file is this generator's
+    // to remove when its `data.key` is namespaced to the book and kind it sits
+    // under. A stale chassis record dropped from the table is still swept, which
+    // is what the old `remove_dir_all` was for; a foreign-shaped record is left
+    // exactly where its own lane put it.
     for sub in ["monster", "monster_ability"] {
         let dir = out_root.join(sub);
-        if dir.exists() {
-            fs::remove_dir_all(&dir).expect("clear stale generated subdir");
+        if !dir.exists() {
+            continue;
+        }
+        let prefix = format!("{book_id}:{sub}:");
+        for entry in fs::read_dir(&dir).expect("read generated subdir") {
+            let path = entry.expect("read generated subdir entry").path();
+            if path.extension().and_then(|e| e.to_str()) != Some("json") {
+                continue;
+            }
+            let owned = fs::read_to_string(&path)
+                .ok()
+                .and_then(|raw| serde_json::from_str::<serde_json::Value>(&raw).ok())
+                .and_then(|v| {
+                    v.get("data")?.get("key")?.as_str().map(|k| k.starts_with(&prefix))
+                })
+                .unwrap_or(false);
+            if owned {
+                fs::remove_file(&path).expect("clear stale generated record");
+            }
         }
     }
 
@@ -1052,6 +1113,33 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         .as_ref()
         .and_then(|v| v.get("license_declaration"))
         .cloned();
+    // `decisions.md §54.4`'s fix, which was applied to the companion generator
+    // and NOT to this one. The declaration was preserved here from the first
+    // run; the SCREENING NOTE was not, and that half is the one carrying
+    // history. `data/corpus/beastiary/LICENSE.json` states four earlier passes
+    // by cycle, date and record count -- E2.0.9's 45, `ingest_races`' 119,
+    // SD28-E16's 5 and the companion lane's 59 -- and this generator would have
+    // replaced all of it with a sentence about its own 607 rows the first time
+    // round 8 ran it, leaving a file whose `records_processed` and whose method
+    // note account for different things.
+    //
+    // The note is append-only from here, and idempotent: re-running the same
+    // cycle replaces its own trailing pass rather than stacking a copy.
+    let prior_note = prior
+        .as_ref()
+        .and_then(|v| v.get("screening_method_note"))
+        .and_then(|v| v.as_str())
+        .map(str::to_owned);
+    let this_pass = format!(
+        "PASS -- {} (monster lane), {ingested_at}: every field of the {} records this run wrote ({monster_written} monsters + {ability_written} monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is {records_processed}: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
+        spec.classified_by_cycle,
+        monster_written + ability_written
+    );
+    let screening_method_note = compose_screening_note(
+        prior_note,
+        &format!("PASS -- {} (monster lane)", spec.classified_by_cycle),
+        this_pass,
+    );
     let license_json = serde_json::json!({
         "book": book_id,
         "license_declaration": prior_declaration.unwrap_or_else(|| serde_json::json!({
@@ -1066,10 +1154,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
             "blacklist_version_reviewed": "2026-07-27"
         },
-        "screening_method_note": format!(
-            "Every field of the {} records this run wrote ({monster_written} monsters + {ability_written} monster abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is {records_processed}: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
-            monster_written + ability_written
-        ),
+        "screening_method_note": screening_method_note,
         "redistribution_posture": "ogl-notice-attached",
         "classified_at": ingested_at,
         "classified_by_cycle": spec.classified_by_cycle,
@@ -1291,23 +1376,14 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         spec.classified_by_cycle,
         creature_written + ability_written
     );
-    let screening_method_note = match prior_note {
-        // Idempotent: a re-run of the same cycle replaces its own trailing
-        // pass rather than appending a second copy of it, so regenerating is
-        // still a no-op the way `v06_work_inventory`'s second run is.
-        Some(previous) => {
-            let head = match previous.find(&format!("PASS -- {} (companion lane)", spec.classified_by_cycle)) {
-                Some(at) => previous[..at].trim_end().to_string(),
-                None => previous.trim_end().to_string(),
-            };
-            if head.is_empty() {
-                this_pass
-            } else {
-                format!("{head} {this_pass}")
-            }
-        }
-        None => this_pass,
-    };
+    // Idempotent and append-only; see `compose_screening_note`, which this lane
+    // wrote inline first and round 8 lifted out when the monster generator
+    // needed the identical logic.
+    let screening_method_note = compose_screening_note(
+        prior_note,
+        &format!("PASS -- {} (companion lane)", spec.classified_by_cycle),
+        this_pass,
+    );
     let license_json = serde_json::json!({
         "book": book_id,
         "license_declaration": prior_declaration.unwrap_or_else(|| serde_json::json!({
@@ -1623,6 +1699,23 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_bestiary.pcc declares ISOGL:YES at line 23, carries 4 COPYRIGHT lines and a real 6,739-byte OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Bestiary, OGL §15 Product Identity section; 7 ability rows carry a blacklisted proper name in their namespace, and the 2 monster rows that NAME them are dropped with them",
         classified_by_cycle: "SD29-E5-F2-008",
+    },
+    // SD-29 Epic 5 extend, round 8. Bestiary 1's complement -- `decisions.md
+    // §58.3`. `corpus_book` is the `data/corpus/` spelling `beastiary`, which is
+    // where SD-22's 46 monster records already live; `book_relative` is the
+    // SOURCE spelling `bestiary`, which is what PCGen calls the directory. The
+    // two differ for this book alone (`decisions.md §54.3` lists all four
+    // spellings), and the generator writing into an already-populated directory
+    // is exactly why this round made its record sweep and its LICENSE note
+    // preserve what other lanes wrote.
+    MonsterBookSpec {
+        corpus_book: "beastiary",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary",
+        races_lsts: &["b1_races.lst"],
+        abilities_lst: "b1_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, which is what the blacklist's per-record predicate predicts for a roleplaying_game/ bestiary",
+        classified_by_cycle: "SD29-E5-F2-009",
     },
 ];
 

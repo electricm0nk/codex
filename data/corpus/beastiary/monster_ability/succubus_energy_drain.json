@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Succubus ~ Energy Drain",
+    "delivery": "Supernatural",
+    "description": "A succubus drains energy from a mortal she lures into an act of passion, such as a kiss. An unwilling victim must be grappled before the succubus can use this ability. The succubus's kiss bestows one negative level. The kiss also has the effect of a suggestion spell, asking the victim to accept another act of passion from the succubus. The victim must succeed on a DC %1 Will save to negate the suggestion. The DC is 22 for the Fortitude save to remove a negative level.",
+    "description_variables": [
+      "EnergyDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:succubus_energy_drain",
+    "name": "Energy Drain",
+    "owners": [
+      "beastiary:monster:demon_succubus"
+    ],
+    "source_page": "p.68",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 314,
+    "record_key": "Succubus ~ Energy Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

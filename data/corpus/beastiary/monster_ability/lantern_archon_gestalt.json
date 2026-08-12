@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Lantern Archon ~ Gestalt",
+    "delivery": "Supernatural",
+    "description": "Nine lantern archons can fuse together as a full-round action, becoming a single Large entity that is more powerful than the individual archons that make up its parts. Looking like a whirlwind of dancing firefly lights, the gestalt has all the powers and abilities of a Large air elemental plus the following: archon, good, and lawful subtypes; archon traits (aura of menace DC 16); 2 light rays (2d6); DR 5/evil and magic. The archons can remain in this form for 2d4 rounds. When the gestalt separates back into individual lantern archons, its remaining hit points are divided evenly among them; if it had less than 9 hit points, some of the component archons die when the gestalt ends.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:lantern_archon_gestalt",
+    "name": "Gestalt",
+    "owners": [
+      "beastiary:monster:archon_lantern"
+    ],
+    "source_page": "p.20",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 115,
+    "record_key": "Lantern Archon ~ Gestalt"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

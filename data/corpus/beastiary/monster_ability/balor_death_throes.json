@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Balor ~ Death Throes",
+    "delivery": "Supernatural",
+    "description": "When killed, a balor explodes in a blinding flash of fire that deals 100 points of damage (half fire, half unholy damage) to anything within 100 feet (Reflex DC 33 halves).",
+    "description_variables": [
+      "DeathThroesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:balor_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "beastiary:monster:demon_balor"
+    ],
+    "source_page": "p.58",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 274,
+    "record_key": "Balor ~ Death Throes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

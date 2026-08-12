@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Djinni ~ Three Wishes",
+    "delivery": "SpellLike",
+    "description": "Noble djinn can grant three wishes to any being (nongenies only) who captures them.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:djinni_three_wishes",
+    "name": "Three Wishes",
+    "owners": [
+      "beastiary:monster:genie_djinni_noble"
+    ],
+    "source_page": "p.139",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 640,
+    "record_key": "Djinni ~ Three Wishes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

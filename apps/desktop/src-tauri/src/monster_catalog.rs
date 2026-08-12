@@ -141,6 +141,13 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "bestiary_2" => "Bestiary 2",
         "bestiary_3" => "Bestiary 3",
         "bestiary_4" => "Bestiary 4",
+        // SD-29 Epic 5 extend, round 8. The chassis half of Bestiary 1 — the
+        // 284 rows `rules_tables::beastiary1` does not hold. It serves under
+        // the SAME display name and the SAME wire code as that table, because
+        // it is the same book: a player filtering the catalog by "Bestiary 1"
+        // must see all 330 creatures, not 46 under one label and 284 under
+        // another. `decisions.md §58.3`.
+        "beastiary" => "Bestiary 1",
         "inner_sea_bestiary" => "Inner Sea Bestiary",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
@@ -159,6 +166,10 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "bestiary_2" => BOOK_B2,
         "bestiary_3" => BOOK_B3,
         "bestiary_4" => BOOK_B4,
+        // Bestiary 1's chassis half, under Bestiary 1's own wire code — see
+        // `book_display_name`. This is the only corpus book in the registry
+        // whose wire code is shared with a table outside the registry.
+        "beastiary" => BOOK_B1,
         "inner_sea_bestiary" => BOOK_ISB,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
@@ -642,17 +653,80 @@ pub fn list_monster_catalog() -> MonsterCatalogResponse {
 mod tests {
     use super::*;
 
+    /// The SD-22 half of Bestiary 1's rows on the wire.
+    ///
+    /// `book == BOOK_B1` stopped identifying that table at SD-29 Epic 5 round
+    /// 8, when the chassis half of the same book joined the same response under
+    /// the same wire code (`decisions.md §58.3`). Every assertion below that was
+    /// written about the hand-modelled 46 — its `speed_ft` scalar, its
+    /// `monster_key_resolve` round trip, its `RACESUBTYPE` population — is a
+    /// claim about that table and not about the book, so the filter is the key
+    /// namespace. This is the same fix the Epic 5 pilot applied when Bonus
+    /// Bestiary widened these denominators, one level finer: there a book code
+    /// separated the two tables, here only the key does.
+    fn sd22_rows(entries: &[MonsterCatalogEntryDto]) -> Vec<&MonsterCatalogEntryDto> {
+        entries
+            .iter()
+            .filter(|e| e.book == BOOK_B1 && e.key.starts_with("beastiary1:monster:"))
+            .collect()
+    }
+
+    /// Bestiary 1 reaches the wire from TWO tables under one wire code since
+    /// SD-29 Epic 5 round 8 (`decisions.md §58.3`), so `book == BOOK_B1` is no
+    /// longer the SD-22 roster on its own. The two are told apart by their key
+    /// namespaces — `beastiary1:monster:` for the hand-modelled 46,
+    /// `beastiary:monster:` for the chassis's 284 — which is the same
+    /// distinction `reach_gate::monsters_reach` joins on.
+    ///
+    /// Both halves are pinned, and the sum is pinned against the corpus, so a
+    /// table that silently stopped reaching the wire fails here rather than
+    /// being absorbed by the other's count.
     #[test]
     fn the_catalog_serves_every_ingested_bestiary_1_monster() {
         let response = build_monster_catalog();
         let b1: Vec<_> = response.entries.iter().filter(|e| e.book == BOOK_B1).collect();
-        assert_eq!(b1.len(), MonsterId::ALL.len());
+        let hand_modelled: Vec<_> =
+            b1.iter().filter(|e| e.key.starts_with("beastiary1:monster:")).collect();
+        let chassis: Vec<_> =
+            b1.iter().filter(|e| e.key.starts_with("beastiary:monster:")).collect();
+        assert_eq!(hand_modelled.len(), MonsterId::ALL.len());
         assert_eq!(
-            b1.len(),
+            hand_modelled.len(),
             46,
-            "Bestiary 1's ingested roster is 46 stat blocks (subsets 01-09, SD28-E16); if the \
+            "Bestiary 1's SD-22 roster is 46 stat blocks (subsets 01-09, SD28-E16); if the \
              roster grew, re-derive this from the corpus rather than relaxing it"
         );
+        assert_eq!(
+            chassis.len(),
+            280,
+            "the chassis holds the book's complement less its 4 `.MOD` overlay rows -- see \
+             `rules_tables::bestiary`"
+        );
+        assert_eq!(
+            b1.len(),
+            326,
+            "326 of the book's 330 monster units reach the wire; the 4 that do not are \
+             `.MOD` overlays, which state a delta rather than a stat block"
+        );
+    }
+
+    /// One creature, one row. The two tables serving Bestiary 1 are disjoint by
+    /// `rules_tables::bestiary`'s own test; this is the same claim made where a
+    /// player would see it break, on the served response rather than on the
+    /// tables.
+    #[test]
+    fn no_bestiary_1_creature_reaches_the_wire_twice() {
+        let response = build_monster_catalog();
+        let mut names: Vec<String> = response
+            .entries
+            .iter()
+            .filter(|e| e.book == BOOK_B1)
+            .map(|e| e.name.clone())
+            .collect();
+        names.sort_unstable();
+        let before = names.len();
+        names.dedup();
+        assert_eq!(names.len(), before, "a Bestiary 1 creature is served twice");
     }
 
     /// Bonus Bestiary joins the same command rather than getting a second one:
@@ -836,11 +910,18 @@ mod tests {
     fn a_grounding_note_never_names_another_books_corpus() {
         let mut checked = 0;
         for entry in build_monster_catalog().entries {
+            // Bestiary 1 serves its SD-22 notes from published-text provenance,
+            // which names a page rather than a book. Since round 8 that table's
+            // rows share `BOOK_B1` with the chassis half, so the wire code no
+            // longer separates them and the key namespace does.
+            if entry.key.starts_with("beastiary1:monster:") {
+                continue;
+            }
             let Some(table) = monster_chassis::MONSTER_BOOKS
                 .iter()
                 .find(|t| book_wire_code(t.corpus_book) == entry.book)
             else {
-                continue; // Bestiary 1 serves its notes from published-text provenance.
+                continue;
             };
             let own = book_display_name(table.corpus_book);
             for attack in &entry.natural_attacks {
@@ -875,7 +956,8 @@ mod tests {
     /// than trusted, so a served key can never be one nothing can look up.
     #[test]
     fn every_served_key_resolves_back_to_its_record() {
-        for entry in build_monster_catalog().entries.iter().filter(|e| e.book == BOOK_B1) {
+        let all = build_monster_catalog().entries;
+        for entry in sd22_rows(&all) {
             let resolved = beastiary1::monster_key_resolve(&entry.key, RuleSetId::Bestiary1)
                 .unwrap_or_else(|| panic!("served key `{}` resolves to no record", entry.key));
             assert_eq!(resolved.name, entry.name);
@@ -888,12 +970,20 @@ mod tests {
         // checked per registered book, so a book whose rows never reach the
         // response fails here rather than passing by being absent.
         let response = build_monster_catalog();
+        // The keys served under a wire code by a table that is NOT in this
+        // registry. Bestiary 1's SD-22 half is the only one, and it is
+        // round-tripped above through its own resolver; without subtracting it
+        // this comparison would demand that the chassis derive keys it does not
+        // own. Subtracted by namespace rather than skipped by book, so a chassis
+        // key that drifted into a foreign namespace still fails here.
+        let foreign_namespaces = ["beastiary1:monster:"];
         for table in monster_chassis::MONSTER_BOOKS {
             let wire_code = book_wire_code(table.corpus_book);
             let served: std::collections::BTreeSet<String> = response
                 .entries
                 .iter()
                 .filter(|e| e.book == wire_code)
+                .filter(|e| !foreign_namespaces.iter().any(|ns| e.key.starts_with(ns)))
                 .map(|e| e.key.clone())
                 .collect();
             let derived: std::collections::BTreeSet<String> = table
@@ -996,9 +1086,9 @@ mod tests {
         // whatsoever, not merely a walk speed of 0). `speed_ft` is 0
         // because the row states no walk movement, never a guessed value.
         let entries = build_monster_catalog().entries;
-        let landless: Vec<&str> = entries
-            .iter()
-            .filter(|entry| entry.book == BOOK_B1 && entry.speed_ft == 0)
+        let landless: Vec<&str> = sd22_rows(&entries)
+            .into_iter()
+            .filter(|entry| entry.speed_ft == 0)
             .map(|entry| entry.name.as_str())
             .collect();
         assert_eq!(landless, vec!["Shark", "Squid", "Vargouille", "Shadow"]);
@@ -1243,9 +1333,9 @@ mod tests {
         // population it was written for, so the book filter is the fix and the
         // new book gets its own assertion below.
         let entries = build_monster_catalog().entries;
-        let with_subtype: Vec<&MonsterCatalogEntryDto> = entries
-            .iter()
-            .filter(|entry| entry.book == BOOK_B1 && entry.race_subtype.is_some())
+        let with_subtype: Vec<&MonsterCatalogEntryDto> = sd22_rows(&entries)
+            .into_iter()
+            .filter(|entry| entry.race_subtype.is_some())
             .collect();
         let multi = with_subtype
             .iter()

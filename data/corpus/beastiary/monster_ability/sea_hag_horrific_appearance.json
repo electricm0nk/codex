@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Sea Hag ~ Horrific Appearance",
+    "delivery": "Supernatural",
+    "description": "The sight of a sea hag is so revolting that anyone within 60 feet (other than another hag) who sets eyes upon one must succeed on a DC %1 Fortitude save or instantly be weakened, taking 1d6 points of Strength damage. Creatures that are affected by this power or that successfully save against it cannot be affected again by the same hag's horrific appearance for 24 hours. This is a mind-affecting effect.",
+    "description_variables": [
+      "HorrificAppearanceSaveDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:sea_hag_horrific_appearance",
+    "name": "Horrific Appearance",
+    "owners": [
+      "beastiary:monster:sea_hag"
+    ],
+    "source_page": "p.243",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1096,
+    "record_key": "Sea Hag ~ Horrific Appearance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

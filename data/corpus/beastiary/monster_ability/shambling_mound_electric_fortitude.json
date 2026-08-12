@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shambling Mound ~ Electric Fortitude",
+    "delivery": "Extraordinary",
+    "description": "Shambling mounds take no damage from electricity. Instead, any electricity attack used against a shambling mound temporarily increases its Constitution score by 1d4 points. The shambling mound loses these temporary points at the rate of 1 per hour.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:shambling_mound_electric_fortitude",
+    "name": "Electric Fortitude",
+    "owners": [
+      "beastiary:monster:shambling_mound"
+    ],
+    "source_page": "p.246",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1110,
+    "record_key": "Shambling Mound ~ Electric Fortitude"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:purple_worm_poison"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Purple Worm",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Grab",
+      "Swallow Whole"
+    ],
+    "key": "beastiary:monster:purple_worm",
+    "monster_class": "Magical Beast:16",
+    "name": "Purple Worm",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "G",
+    "source_page": "p.230",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Burrow"
+      },
+      {
+        "feet": 10,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 328,
+    "record_key": "Purple Worm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

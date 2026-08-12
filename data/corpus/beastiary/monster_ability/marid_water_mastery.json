@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Marid ~ Water Mastery",
+    "delivery": "Extraordinary",
+    "description": "A marid gains a +1 bonus on attack and damage rolls if both it and its opponent are touching water. If the opponent or the marid is touching the ground, the marid takes a -4 penalty on attack and damage rolls.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:marid_water_mastery",
+    "name": "Water Mastery",
+    "owners": [
+      "beastiary:monster:genie_marid",
+      "beastiary:monster:genie_marid_noble"
+    ],
+    "source_page": "p.142",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 654,
+    "record_key": "Marid ~ Water Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

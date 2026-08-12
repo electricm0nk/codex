@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Marilith ~ Multiweapon Mastery",
+    "delivery": "Extraordinary",
+    "description": "A marilith never takes penalties to her attack roll when fighting with multiple weapons.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:marilith_multiweapon_mastery",
+    "name": "Multiweapon Mastery",
+    "owners": [
+      "beastiary:monster:demon_marilith"
+    ],
+    "source_page": "p.63",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 288,
+    "record_key": "Marilith ~ Multiweapon Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

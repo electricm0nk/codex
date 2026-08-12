@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Neothelid ~ Trace Teleport",
+    "delivery": "Extraordinary",
+    "description": "A neothelid telepathically and reflexively learns the mental coordinates of the destination, of all creatures that teleport within 60 feet of it, gaining an awareness of the location equivalent to \"seen casually.\" This knowledge fades and is lost after 1 minute. This power does not grant any environmental information about the conditions of the destination.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:neothelid_trace_teleport",
+    "name": "Trace Teleport",
+    "owners": [
+      "beastiary:monster:neothelid"
+    ],
+    "source_page": "p.214",
+    "traits": [
+      "Sense"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 975,
+    "record_key": "Neothelid ~ Trace Teleport"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

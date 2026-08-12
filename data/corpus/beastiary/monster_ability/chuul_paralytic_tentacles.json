@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Chuul ~ Paralytic Tentacles",
+    "delivery": "Extraordinary",
+    "description": "A chuul can transfer a grappled victim from a claw to its tentacles as a move action. The tentacles grapple with the same strength as the claw but deal no damage, instead exuding a paralytic secretion. Anyone held in the tentacles must succeed on a DC %1 Fortitude save each round on the chuul's turn or be paralyzed for 6 rounds. While held in the tentacles, paralyzed or not, a victim automatically takes 1d8+7 points of damage each round from the creature's mandibles.",
+    "description_variables": [
+      "ParalyticTentaclesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:chuul_paralytic_tentacles",
+    "name": "Paralytic Tentacles",
+    "owners": [
+      "beastiary:monster:chuul"
+    ],
+    "source_page": "p.46",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 220,
+    "record_key": "Chuul ~ Paralytic Tentacles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

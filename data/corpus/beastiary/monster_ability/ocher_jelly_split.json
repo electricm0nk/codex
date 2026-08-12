@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ocher Jelly ~ Split",
+    "delivery": "Extraordinary",
+    "description": "Slashing weapons, piercing weapons, and electricity attacks deal no damage to an ochre jelly. Instead the creature splits into two identical jellies, each with half of the original creature's current hit point total, rounded down. A jelly with 10 hit points or less cannot be further split and dies if reduced to 0 hit points.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:ocher_jelly_split",
+    "name": "Split",
+    "owners": [
+      "beastiary:monster:ochre_jelly"
+    ],
+    "source_page": "p.218",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1006,
+    "record_key": "Ocher Jelly ~ Split"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

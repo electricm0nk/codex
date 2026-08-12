@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Giant Mantis ~ Mandibles",
+    "delivery": "Extraordinary",
+    "description": "A giant mantis that grabs a foe can make a bite attack against that foe as a secondary attack.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_mantis_mandibles",
+    "name": "Mandibles",
+    "owners": [
+      "beastiary:monster:mantis_giant"
+    ],
+    "source_page": "p.200",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 877,
+    "record_key": "Giant Mantis ~ Mandibles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

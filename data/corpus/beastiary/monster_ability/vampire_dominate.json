@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Vampire ~ Dominate",
+    "delivery": "Supernatural",
+    "description": "A vampire can crush a humanoid opponent's will as a standard action. Anyone the vampire targets must succeed on a Will save DC %1 or fall instantly under the vampire's influence, as though by a dominate person spell (caster level 12th). The ability has a range of 30 feet. At the GM's discretion, some vampires might be able to affect different creature types with this power.",
+    "description_variables": [
+      "DominateSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:vampire_dominate",
+    "name": "Dominate",
+    "owners": [
+      "beastiary:monster:vampire_spawn"
+    ],
+    "source_page": "p.271",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1214,
+    "record_key": "Vampire ~ Dominate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

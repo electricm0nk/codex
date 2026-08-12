@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Cloaker ~ Engulf",
+    "delivery": "Extraordinary",
+    "description": "A cloaker can try to wrap a Medium or smaller creature in its body as a standard action. The cloaker attempts a grapple that does not provoke an attack of opportunity. If it wins the grapple check, it establishes a hold and bites the engulfed victim with a +4 bonus on its attack roll. It can still use its whip-like tail to strike at other targets. Attacks that hit an engulfing cloaker deal half their damage to the monster and half to the trapped victim.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:cloaker_engulf",
+    "name": "Engulf",
+    "owners": [
+      "beastiary:monster:cloaker"
+    ],
+    "source_page": "p.47",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 224,
+    "record_key": "Cloaker ~ Engulf"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

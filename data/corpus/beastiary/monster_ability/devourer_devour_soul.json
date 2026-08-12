@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Devourer ~ Devour Soul",
+    "delivery": "Supernatural",
+    "description": "By making a touch attack as a standard action, a devourer can deal 12d6+18 points of damage as if using a slay living spell. A DC %1 Fortitude save reduces this damage to 3d6+18. The soul of a creature slain by this attack becomes trapped within the devourer's chest. The creature cannot be brought back to life until the devourer's destruction releases its soul. A devourer can hold only one soul at a time. The trapped essence provides a devourer with 5 essence points for each Hit Die possessed by the soul. A devourer must expend essence points when it uses a spell-like ability equal to the spell's level. At the start of an encounter, a devourer generally has 3d4+3 essence points available. The trapped essence gains one permanent negative level for every 5 points of essence drained--these negative levels remain if the creature is brought back to life (but they do not stack with any negative levels imparted by being brought back to life). A soul that is completely consumed may only be restored to life by a miracle or wish.",
+    "description_variables": [
+      "DevourSoulDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:devourer_devour_soul",
+    "name": "Devour Soul",
+    "owners": [
+      "beastiary:monster:devourer"
+    ],
+    "source_page": "p.82",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 373,
+    "record_key": "Devourer ~ Devour Soul"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

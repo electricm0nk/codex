@@ -340,9 +340,19 @@ fn monster_and_companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32>
 /// diagnostic id is `beastiary1`. Reporting only the monster half would
 /// under-state the book by 59 records, the same defect
 /// `monster_and_companion_book_counts` exists for.
+/// Since SD-29 Epic 5 round 8 the monster half is TWO tables, not one
+/// (`decisions.md §58.3`): `ALL_BESTIARY1_MONSTERS`' 46 hand-modelled blocks and
+/// the chassis's 284. The panel states the book, so it states the sum — reporting
+/// either alone under-states a book the tester is looking at by the size of the
+/// other, the same defect `monster_and_companion_book_counts` exists for. The
+/// chassis also contributes this book's first `monster_abilities` family.
 fn beastiary1_counts() -> BTreeMap<String, u32> {
-    let mut counts = BTreeMap::new();
-    counts.insert("monsters".to_string(), ALL_BESTIARY1_MONSTERS.len() as u32);
+    let mut counts = chassis_book_counts("beastiary");
+    let chassis_monsters = counts.get("monsters").copied().unwrap_or_default();
+    counts.insert(
+        "monsters".to_string(),
+        ALL_BESTIARY1_MONSTERS.len() as u32 + chassis_monsters,
+    );
     counts.extend(companion_book_counts("beastiary"));
     counts
 }
@@ -743,13 +753,39 @@ mod tests {
     /// `rules_tables` books and this diagnostic kept reporting four, so the
     /// panel — whose caption reads "every rule book landed in `rules_tables`"
     /// — told a tester that two ingested books did not exist.
+    /// `rules_tables` module directories whose records are reported under
+    /// ANOTHER book's panel row, because they are the same book.
+    ///
+    /// `rules_tables::bestiary` is the chassis half of Bestiary 1 — the 280 rows
+    /// `rules_tables::beastiary1` does not hold (`decisions.md §58.3`) — and
+    /// `beastiary1_counts` folds its two families into that book's row. A second
+    /// row would tell a tester this repo had ingested two Bestiary 1s, which is
+    /// the same class of wrong reading this drift guard exists to prevent, in
+    /// the opposite direction.
+    ///
+    /// Each entry states the host row, and the host row's presence is asserted
+    /// below: an alias whose host stopped being reported would otherwise turn
+    /// this guard into a way to hide a book.
+    const MODULES_REPORTED_UNDER_ANOTHER_BOOK: &[(&str, &str)] = &[("bestiary", "beastiary1")];
+
     #[test]
     fn every_book_landed_in_rules_tables_is_reported() {
         let reported: BTreeSet<String> = build_corpus_ingest_diagnostic()
             .into_iter()
             .map(|book| book.book_id)
             .collect();
-        let landed = books_on_disk();
+        let mut landed = books_on_disk();
+        for (module, host) in MODULES_REPORTED_UNDER_ANOTHER_BOOK {
+            assert!(
+                landed.remove(*module),
+                "{module} is recorded as reported under {host} but is not landed in \
+                 rules_tables at all -- drop the alias rather than carrying a dead one"
+            );
+            assert!(
+                reported.contains(*host),
+                "{module}'s records are reported under {host}, and {host} has no panel row"
+            );
+        }
 
         let missing: Vec<&String> = landed.difference(&reported).collect();
         assert!(
@@ -1041,12 +1077,20 @@ mod tests {
         // monsters" figure predates this subset and is stale, flagged here
         // rather than edited -- that doc is outside this cycle's write
         // scope).
+        //
+        // SD-29 Epic 5 round 8 added the chassis half of the same book (280
+        // rows, `rules_tables::bestiary`, `decisions.md §58.3`), so the panel's
+        // monster count is now the SUM of the two tables serving Bestiary 1 —
+        // 46 + 280 — and the book gains its first `monster_abilities` family.
+        // Stated as the sum rather than as `326` so a divergence says which
+        // table moved.
         let response = build_corpus_ingest_diagnostic();
         let bestiary = response
             .iter()
             .find(|b| b.book_id == "beastiary1")
             .expect("beastiary1 present");
-        assert_eq!(bestiary.content_kind_counts["monsters"], 46);
+        assert_eq!(bestiary.content_kind_counts["monsters"], 46 + 280);
+        assert_eq!(bestiary.content_kind_counts["monster_abilities"], 323);
     }
 
     #[test]
@@ -1150,7 +1194,7 @@ mod tests {
             !status.content_kind_counts.contains_key("races"),
             "an unreachable corpus must omit the row, never report a fabricated zero"
         );
-        assert_eq!(status.content_kind_counts["monsters"], 46);
+        assert_eq!(status.content_kind_counts["monsters"], 46 + 280);
     }
 
     #[test]

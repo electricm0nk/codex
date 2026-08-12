@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Nalfeshnee ~ Unholy Nimbus",
+    "delivery": "Supernatural",
+    "description": "Three times per day as a free action a nalfeshnee can create a nimbus of unholy light, causing nauseating beams of writhing color to play around its body. One round later, the light bursts in a 60-foot radius. Any non-demon creature caught within this area must succeed on a DC %1 Will save or be dazed for 1d10 rounds as visions of madness hound it.",
+    "description_variables": [
+      "UnholyNimbusDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:nalfeshnee_unholy_nimbus",
+    "name": "Unholy Nimbus",
+    "owners": [
+      "beastiary:monster:demon_nalfeshnee"
+    ],
+    "source_page": "p.65",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 297,
+    "record_key": "Nalfeshnee ~ Unholy Nimbus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

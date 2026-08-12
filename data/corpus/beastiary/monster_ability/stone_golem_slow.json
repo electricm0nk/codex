@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Stone Golem ~ Slow",
+    "delivery": "Supernatural",
+    "description": "A stone golem can use a slow effect, as the spell, as a free action once every 2 rounds. The effect has a range of 10 feet in a burst centered on the golem and a duration of 7 rounds, requiring a DC %1 Will save to negate.",
+    "description_variables": [
+      "SlowDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:stone_golem_slow",
+    "name": "Slow",
+    "owners": [
+      "beastiary:monster:golem_stone"
+    ],
+    "source_page": "p.163",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 738,
+    "record_key": "Stone Golem ~ Slow"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

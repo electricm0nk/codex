@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Tarn Linnorm ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds as a standard action, a tarn linnorm can expel a %1-foot line or a %2-foot cone of acid, dealing %3d%4 points of acid damage to all creatures struck (Reflex DC %5 halves). This acid creates toxic fumes when it consumes organic material--on the round after a creature takes acid damage from this attack, it must make a DC %5 Fortitude save or take 2d6 points of Strength damage from the poisonous fumes (this secondary effect is a poison effect). As a full-round action, the linnorm may breathe acid with one head and bite with the other (but not use its other weapons). Alternatively, as a full-round action, it can breathe acid from both heads to create two adjacent 60-footlong cones or two separate 120-foot-long lines. In this case it cannot use its breath weapon again for 2d4 rounds.",
+    "description_variables": [
+      "BreathWeaponLine",
+      "BreathWeaponCone",
+      "BreathWeaponDice",
+      "BreathWeaponDamageDie",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:tarn_linnorm_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "beastiary:monster:linnorm_tarn"
+    ],
+    "source_page": "p.192",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 853,
+    "record_key": "Tarn Linnorm ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

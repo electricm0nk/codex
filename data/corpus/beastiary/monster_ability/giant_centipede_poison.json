@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Giant Centipede ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Injury; Save Fort DC %1; Frequency 1/round for 6 rounds; Effect 1d3 Dex damage; Cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_centipede_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:centipede_house",
+      "beastiary:monster:centipede_sewer",
+      "beastiary:monster:centipede_giant",
+      "beastiary:monster:centipede_hisser",
+      "beastiary:monster:centipede_giant_whiptail",
+      "beastiary:monster:centipede_great_forest",
+      "beastiary:monster:centipede_titan"
+    ],
+    "source_page": "p.43",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 209,
+    "record_key": "Giant Centipede ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

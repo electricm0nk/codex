@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Cloaker ~ Shadow Shift",
+    "delivery": "Supernatural",
+    "description": "When in dim illumination, a cloaker can manipulate shadows as a free action to create one of three effects: blur (lasts 1d4 rounds, self only), mirror image (CL 6th), or silent image (DC %1, CL 6th).",
+    "description_variables": [
+      "ShadowShiftDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:cloaker_shadow_shift",
+    "name": "Shadow Shift",
+    "owners": [
+      "beastiary:monster:cloaker"
+    ],
+    "source_page": "p.47",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 226,
+    "record_key": "Cloaker ~ Shadow Shift"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

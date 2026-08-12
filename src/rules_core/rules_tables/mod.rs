@@ -13,6 +13,12 @@ pub mod advanced_race_guide;
 pub mod apg;
 pub mod archetype_swap;
 pub mod beastiary1;
+/// Bestiary 1's monster/monster-ability **chassis**, holding the 284 rows
+/// [`beastiary1`] does not — SD-29 Epic 5 extend round 8, `decisions.md §58.3`.
+/// The two modules serve one book from two tables on purpose; see this one's
+/// header. The near-homograph with `beastiary1` is the corpus's own spelling
+/// split (`decisions.md §54.3` lists all four), not a typo in either name.
+pub mod bestiary;
 pub mod bestiary_2;
 pub mod bestiary_3;
 pub mod bestiary_4;

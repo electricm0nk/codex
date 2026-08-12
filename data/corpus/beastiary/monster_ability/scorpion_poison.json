@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Scorpion ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Strength damage; cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:scorpion_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:scorpion_greensting",
+      "beastiary:monster:scorpion_ghost",
+      "beastiary:monster:scorpion_cave",
+      "beastiary:monster:scorpion_giant",
+      "beastiary:monster:scorpion_deadfall",
+      "beastiary:monster:scorpion_giant_emperor",
+      "beastiary:monster:scorpion_black"
+    ],
+    "source_page": "p.242",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1091,
+    "record_key": "Scorpion ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

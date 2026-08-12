@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Giant Frilled Lizard ~ Intimidating Charge",
+    "delivery": "Extraordinary",
+    "description": "When a giant frilled lizard charges, it hisses ferociously, extends its neck frills, and darts forward on its hind legs, increasing its base speed to 50 feet for that round. In addition to the normal effects of a charge, the creature charged must make a DC %1 Will save or be shaken for 1d6 rounds. This is a fear effect.",
+    "description_variables": [
+      "IntimidatingChargeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_frilled_lizard_intimidating_charge",
+    "name": "Intimidating Charge",
+    "owners": [
+      "beastiary:monster:lizard_giant_frilled"
+    ],
+    "source_page": "p.194",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 863,
+    "record_key": "Giant Frilled Lizard ~ Intimidating Charge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Violet Fungus ~ Rot",
+    "delivery": "Extraordinary",
+    "description": "A creature struck by a violet fungus's tentacle must succeed on a DC %1 Fortitude save or the flesh around the point of contact swiftly begins to rot away, exposing raw bone with shocking swiftness. This hideous affliction causes 1d4 points of Strength damage and 1d4 points of Constitution damage.",
+    "description_variables": [
+      "RotDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:violet_fungus_rot",
+    "name": "Rot",
+    "owners": [
+      "beastiary:monster:violet_fungus"
+    ],
+    "source_page": "p.274",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1230,
+    "record_key": "Violet Fungus ~ Rot"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

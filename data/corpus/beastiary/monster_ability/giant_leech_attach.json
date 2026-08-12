@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Giant Leech ~ Attach",
+    "delivery": "Extraordinary",
+    "description": "When a giant leech hits with a bite attack, it latches onto its target and automatically grapplies. The giant leech loses its Dexterity bonus to AC and has an AC of 10, but holds on with great tenacity and automatically inflicts bite damage each round. A giant leech has a +8 racial bonus to maintain its grapple on a foe once it is attached. An attached giant leech can be struck with a weapon or grappled itself--if its prey manages to win a grapple check or Escape Artist check against it, the giant leech is removed.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_leech_attach",
+    "name": "Attach",
+    "owners": [
+      "beastiary:monster:leech_giant"
+    ],
+    "source_page": "p.187",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 826,
+    "record_key": "Giant Leech ~ Attach"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

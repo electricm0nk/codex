@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gibbering Mouther ~ Engulf",
+    "delivery": "Extraordinary",
+    "description": "This ability functions as swallow whole, except for the following changes. An engulfed creature is trapped in the gibbering mouther's body, where several of its mouths continue to feed and drain blood. A gibbering mouther can engulf only one foe of its size or smaller at a time. If an engulfed creature cuts its way free (the mouther's damage reduction still applies to those inside), the mouther simply flows together again and can still use its engulf attack.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gibbering_mouther_engulf",
+    "name": "Engulf",
+    "owners": [
+      "beastiary:monster:gibbering_mouther"
+    ],
+    "source_page": "p.153",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 700,
+    "record_key": "Gibbering Mouther ~ Engulf"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

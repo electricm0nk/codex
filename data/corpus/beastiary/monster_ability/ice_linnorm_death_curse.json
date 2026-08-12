@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ice Linnorm ~ Death Curse",
+    "delivery": null,
+    "description": "When a creature slays an ice linnorm, the slayer is affected by the curse of frost. Curse of Frost: save Will DC %1; effect creature gains vulnerability to cold.",
+    "description_variables": [
+      "DeathCurseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ice_linnorm_death_curse",
+    "name": "Death Curse",
+    "owners": [
+      "beastiary:monster:linnorm_ice"
+    ],
+    "source_page": "p.191",
+    "traits": [
+      "Supernatrual"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 848,
+    "record_key": "Ice Linnorm ~ Death Curse"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

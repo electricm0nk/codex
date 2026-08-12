@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:archon_magic_circle_against_evil",
+      "beastiary:monster_ability:archon_deflection",
+      "beastiary:monster_ability:archon_resistance",
+      "beastiary:monster_ability:trumpet_archon_trumpet"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Archon (Trumpet)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "beastiary:monster:archon_trumpet",
+    "monster_class": "Outsider (Fort/Will):14",
+    "name": "Archon (Trumpet)",
+    "natural_attacks": [],
+    "race_subtype": "Archon|Extraplanar|Good|Lawful",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.21",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 28,
+    "record_key": "Archon (Trumpet)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

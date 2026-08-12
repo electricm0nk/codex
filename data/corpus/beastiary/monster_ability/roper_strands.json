@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Roper ~ Strands",
+    "delivery": "Extraordinary",
+    "description": "A roper can extend up to six thin, sticky strands from its body at a time, launching them to a maximum range of 50 feet. A roper's attacks with its strands resolve as ranged touch attacks. These strands are quite strong, but can be severed by any amount of slashing damage (a strand is AC 20). A creature struck by a strand is numbed and weakened by the strange material, and must make a DC %1 Fortitude save or take 1d6 points of Strength damage.",
+    "description_variables": [
+      "StrandsNumbnessandWeaknessDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:roper_strands",
+    "name": "Strands",
+    "owners": [
+      "beastiary:monster:roper"
+    ],
+    "source_page": "p.237",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1068,
+    "record_key": "Roper ~ Strands"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

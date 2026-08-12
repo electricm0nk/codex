@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:ghaele_gaze",
+      "beastiary:monster_ability:ghaele_light_form",
+      "beastiary:monster_ability:ghaele_light_ray"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Azata (Ghaele)",
+    "external_ability_refs": [
+      "Detect Evil ~ Constant",
+      "Flight Maneuverability",
+      "Holy Aura ~ Constant",
+      "See Invisibility ~ Constant"
+    ],
+    "key": "beastiary:monster:azata_ghaele",
+    "monster_class": "Outsider (Fort/Will):13",
+    "name": "Azata (Ghaele)",
+    "natural_attacks": [],
+    "race_subtype": "Azata|Chaotic|Extraplanar|Good|Shapechanger",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.25",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 150,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 31,
+    "record_key": "Azata (Ghaele)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Purple Worm ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d4 Strength damage; cure 3 consecutive saves.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:purple_worm_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:purple_worm"
+    ],
+    "source_page": "p.230",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1049,
+    "record_key": "Purple Worm ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

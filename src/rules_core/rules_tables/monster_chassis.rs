@@ -280,6 +280,25 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monsters: super::inner_sea_bestiary::monsters_static(),
         monster_abilities: super::inner_sea_bestiary::monster_abilities_static(),
     },
+    // SD-29 Epic 5 extend, round 8. Bestiary 1 -- 284 monsters and 323 owned
+    // abilities, the largest single row in this registry and the only book
+    // served by TWO compiled monster tables. `rules_tables::beastiary1` (SD-22)
+    // holds 46 hand-modelled stat blocks of the same book; this chassis holds
+    // the complement, per `decisions.md §58.3`'s ALONGSIDE ruling, and
+    // `rules_tables::bestiary`'s `no_creature_is_served_by_both_bestiary_1_tables`
+    // is the guard that keeps the two disjoint.
+    //
+    // `corpus_book` is `beastiary`, NOT `bestiary`: every consumer of this field
+    // reads a `data/corpus/` directory -- `gen_book_cache`'s output root and
+    // `reach_gate`'s denominator -- and this book's directory has been spelled
+    // `beastiary` since SD-22. Registering the source spelling would write a
+    // SECOND corpus directory for a book that already has one, which is the
+    // defect `decisions.md §54.3` records the companion lane catching.
+    MonsterBook {
+        corpus_book: "beastiary",
+        monsters: super::bestiary::monsters_static(),
+        monster_abilities: super::bestiary::monster_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.

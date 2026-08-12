@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Retriever ~ Eye Rays",
+    "delivery": "Supernatural",
+    "description": "A retriever's eyes can produce four different magical rays, each with a range of 100 feet. Each round, it can fire one ray as a free action. A particular ray is usable only once every 4 rounds. A retriever can fire an eye ray in the same round that it makes physical attacks; firing an eye ray does not provoke attacks of opportunity. The save DC for eye rays is %1. The eye ray effects are as follows; Fire, dealing 12d6 fire damage (Reflex DC %2 half); Cold, dealing 12d6 cold damage (Reflex DC %3 half); Electricity, dealing 12d6 electricity damage (Reflex DC %4 half); Petrification, turning the target permenantly to stone (Fortitude DC %5).",
+    "description_variables": [
+      "EyeRaySaveDC",
+      "EyeRaySaveDC",
+      "EyeRaySaveDC",
+      "EyeRaySaveDC",
+      "EyeRaySaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:retriever_eye_rays",
+    "name": "Eye Rays",
+    "owners": [
+      "beastiary:monster:retriever"
+    ],
+    "source_page": "p.234",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1062,
+    "record_key": "Retriever ~ Eye Rays"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Water Elemental ~ Water Mastery",
+    "delivery": "Extraordinary",
+    "description": "A water elemental gains a +1 bonus on attack and damage rolls if both it and its opponent are touching water. If the opponent or the elemental is touching the ground, the elemental takes a -4 penalty on attack and damage rolls. These modifiers apply to bull rush and overrun maneuvers, whether the elemental is initiating or resisting these kinds of attacks.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:water_elemental_water_mastery",
+    "name": "Water Mastery",
+    "owners": [
+      "beastiary:monster:elemental_water_medium",
+      "beastiary:monster:elemental_water_large",
+      "beastiary:monster:elemental_water_huge",
+      "beastiary:monster:elemental_water_greater",
+      "beastiary:monster:elemental_water_elder"
+    ],
+    "source_page": "p.126",
+    "traits": [
+      "Special Attack",
+      "Special Ability"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 596,
+    "record_key": "Water Elemental ~ Water Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

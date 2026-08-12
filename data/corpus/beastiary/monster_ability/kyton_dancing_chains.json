@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Kyton ~ Dancing Chains",
+    "delivery": "Supernatural",
+    "description": "A kyton can control up to four chains within 20 feet as a standard action, making the chains dance or move as it wishes. In addition, a kyton can increase these chains' length by up to 15 feet and cause them to sprout razor-edged barbs. These chains attack as effectively as the kyton itself. If a chain is in another creature's possession, the creature can attempt a DC %1 Will save to break the kyton's power over that chain. If the save is successful, the kyton cannot attempt to control that particular chain again for 24 hours or until the chain leaves the creature's possession. A kyton can climb chains it controls at its normal speed without making Climb checks.",
+    "description_variables": [
+      "DancingChainsDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:kyton_dancing_chains",
+    "name": "Dancing Chains",
+    "owners": [
+      "beastiary:monster:kyton"
+    ],
+    "source_page": "p.185",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 816,
+    "record_key": "Kyton ~ Dancing Chains"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

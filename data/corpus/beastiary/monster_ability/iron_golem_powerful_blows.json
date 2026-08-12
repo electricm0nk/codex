@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Iron Golem ~ Powerful Blows",
+    "delivery": "Extraordinary",
+    "description": "An iron golem inflicts one and a half times its Strength modifier and threatens a critical hit on a 19-20 with its slam attacks.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:iron_golem_powerful_blows",
+    "name": "Powerful Blows",
+    "owners": [
+      "beastiary:monster:golem_iron"
+    ],
+    "source_page": "p.162",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 733,
+    "record_key": "Iron Golem ~ Powerful Blows"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

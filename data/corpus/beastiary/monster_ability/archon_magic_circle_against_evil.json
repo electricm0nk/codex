@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Archon ~ Magic Circle against Evil",
+    "delivery": "Supernatural",
+    "description": "This ability continually duplicates the effect of the spell Magic Circle against Evil.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:archon_magic_circle_against_evil",
+    "name": "Magic Circle against Evil",
+    "owners": [
+      "beastiary:monster:archon_hound",
+      "beastiary:monster:archon_trumpet"
+    ],
+    "source_page": "p.20",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 106,
+    "record_key": "Archon ~ Magic Circle against Evil"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

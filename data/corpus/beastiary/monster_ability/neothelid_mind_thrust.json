@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Neothelid ~ Mind Thrust",
+    "delivery": "Supernatural",
+    "description": "As a standard action up to three times a day, a neothelid can deliver a massive blast of mental energy at any one target within 60 feet, inflicting 15d10 points of damage. A successful DC %1 Will save negates the effect. This effect can only harm creatures with Intelligence scores. This is a mind-affecting effect. The save DC is Charisma-based.",
+    "description_variables": [
+      "NeothelidMindThrustDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:neothelid_mind_thrust",
+    "name": "Mind Thrust",
+    "owners": [
+      "beastiary:monster:neothelid"
+    ],
+    "source_page": "p.214",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 973,
+    "record_key": "Neothelid ~ Mind Thrust"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Mite ~ Vermin Empathy",
+    "delivery": "Extraordinary",
+    "description": "This ability functions as a druid's wild empathy, save that a mite can only use this ability on vermin. A mite gains a +4 racial bonus on this check. Vermin are normally mindless, but this empathic communication imparts on them a modicum of implanted intelligence, allowing mites to train Medium vermin and use them as mounts. Vermin empathy treats swarms as if they were one creature possessing a single mind'a mite can thus use this ability to influence and direct the actions of swarms with relative ease. +%1 to train Medium vermin as mounts or direct the actions of vermin swarms.",
+    "description_variables": [
+      "VerminEmpathy"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:mite_vermin_empathy",
+    "name": "Vermin Empathy",
+    "owners": [
+      "beastiary:monster:mite"
+    ],
+    "source_page": "p.207",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 934,
+    "record_key": "Mite ~ Vermin Empathy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Bebilith ~ Dismantle Armor",
+    "delivery": "Extraordinary",
+    "description": "If a bebilith hits a foe with both claw attacks, it can attempt to peel away the target's armor and shield as a free action by making a CMB check. If the bebilith is successful, the target's armor and shield are torn from his body and dismantled, falling to the ground. Armor subjected to this attack loses half its hit points and gains the broken condition if the target fails a DC %1 Reflex save.",
+    "description_variables": [
+      "DismantleArmorDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bebilith_dismantle_armor",
+    "name": "Dismantle Armor",
+    "owners": [
+      "beastiary:monster:bebilith"
+    ],
+    "source_page": "p.32",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 159,
+    "record_key": "Bebilith ~ Dismantle Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

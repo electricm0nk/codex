@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Tarrasque ~ Powerful Leaper",
+    "delivery": "Extraordinary",
+    "description": "The tarrasque uses its Strength to modify Acrobatics checks made to jump, and has a +24 racial bonus on Acrobatics checks made to jump.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:tarrasque_powerful_leaper",
+    "name": "Powerful Leaper",
+    "owners": [
+      "beastiary:monster:tarrasque"
+    ],
+    "source_page": "p.262",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1182,
+    "record_key": "Tarrasque ~ Powerful Leaper"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}
