@@ -82,12 +82,15 @@ const BOOK_BOTD2: &str = "BOTD2";
 const BOOK_ISWG: &str = "ISWG";
 
 /// Bestiary 2, the seventh (SD-29 Epic 5 extend, round 4) and the first that
-/// serves more records than every book before it combined: 316 monsters and 402
+/// serves more records than every book before it combined: 314 monsters and 401
 /// abilities against a prior total of 80 and 87. Its wire code is the book's own
 /// `SOURCESHORT:B2`, already used by the companion catalog for the same book's
-/// familiars -- one code per book, both catalogs. Every one of its monster rows
-/// ships; the 64 ability rows that do not are owned by no monster row of this
-/// book. See `rules_tables::bestiary_2` for the derivation.
+/// familiars -- one code per book, both catalogs. Of its 316 monster rows, 2 are
+/// `<Base>.COPY=<Variant>` deltas that state no stat block of their own; of its
+/// 466 ability rows, 65 are owned by no monster row this book ships. It is also
+/// the first book here whose abilities have SEVERAL owners -- 19 of them do, and
+/// each is rendered under every monster that claims it. See
+/// `rules_tables::bestiary_2` for the derivation.
 const BOOK_B2: &str = "B2";
 
 /// Wire code for a chassis book's corpus directory.
@@ -683,20 +686,60 @@ mod tests {
         assert_eq!(bat.book, BOOK_MC);
     }
 
-    /// A served ability key is the corpus `KEY:`, so the 6 namespaced records
-    /// stay distinguishable on the wire. Serving the display name would collapse
+    /// A served ability key is the corpus `KEY:`, so namespaced records stay
+    /// distinguishable on the wire. Serving the display name would collapse
     /// `Caryatid Column ~ Immunity to Magic` onto any other `Immunity to Magic`.
+    ///
+    /// **The uniqueness asserted here is PER ENTRY, not global, and that is a
+    /// correction this book forced.** Until Bestiary 2 this test asserted that
+    /// no ability key was served twice anywhere in the response, and it passed
+    /// for five books — because in every one of them each ability had exactly
+    /// one owner. That was a property of those five books, not of the catalog:
+    /// an ability is rendered underneath *each* monster that claims it, so a
+    /// shared ability is served once per owner **by design**. Bestiary 2 is the
+    /// first book with any, and the old assertion read 522 against 488 and
+    /// failed on correct output. Re-derived over
+    /// `rules_tables::bestiary_2`'s table: **19** ability records carry more
+    /// than one owner and account for exactly **34** extra served rows.
+    ///
+    /// The two properties that DO hold are the ones the old assertion was really
+    /// standing in for: a monster never lists the same ability twice, and the
+    /// number of DISTINCT served keys equals the number of ability records the
+    /// registry holds. A key collapsed to a display name, or a record served
+    /// under two different keys, still fails here.
     #[test]
     fn bonus_bestiary_ability_keys_carry_the_namespace() {
-        let served: Vec<String> = build_monster_catalog()
+        let response = build_monster_catalog();
+        assert!(response.entries.iter().any(|e| e
+            .abilities
+            .iter()
+            .any(|a| a.key == "bonus_bestiary:monster_ability:caryatid_column_immunity_to_magic")));
+
+        for entry in &response.entries {
+            let keys: std::collections::BTreeSet<&String> =
+                entry.abilities.iter().map(|a| &a.key).collect();
+            assert_eq!(
+                keys.len(),
+                entry.abilities.len(),
+                "{} lists an ability twice",
+                entry.key
+            );
+        }
+
+        let distinct_served: std::collections::BTreeSet<&String> = response
             .entries
             .iter()
-            .flat_map(|e| e.abilities.iter().map(|a| a.key.clone()))
+            .flat_map(|e| e.abilities.iter().map(|a| &a.key))
             .collect();
-        assert!(served
-            .contains(&"bonus_bestiary:monster_ability:caryatid_column_immunity_to_magic".to_owned()));
-        let unique: std::collections::BTreeSet<&String> = served.iter().collect();
-        assert_eq!(unique.len(), served.len(), "every served ability key is unique");
+        let records_held: usize = codex::rules_core::rules_tables::monster_chassis::MONSTER_BOOKS
+            .iter()
+            .map(|book| book.monster_abilities.len())
+            .sum();
+        assert_eq!(
+            distinct_served.len(),
+            records_held,
+            "every ability record the chassis holds reaches the wire under its own key, once"
+        );
     }
 
     /// No ability description reaches the wire carrying PCGen substitution

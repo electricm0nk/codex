@@ -21,9 +21,9 @@
 //! `grep -c 'NAMEISPI:YES' b2_races.lst b2_abilities_race.lst` → `0` and `0` —
 //! and the term-list screen finds nothing either. `ogl-pi-blacklist.md` §2
 //! predicts exactly that shape: the Product Identity in a Pathfinder book is
-//! its Golarion proper nouns, which live in the `campaign_setting/` line, while
-//! a `roleplaying_game/` bestiary's monster names are presumptively Open Game
-//! Content. Round 3's book (`campaign_setting/inner_sea_world_guide`) sat on
+//! its setting-specific proper nouns, which live in the `campaign_setting/`
+//! line, while a `roleplaying_game/` bestiary's monster names are presumptively
+//! Open Game Content. Round 3's book (`campaign_setting/inner_sea_world_guide`) sat on
 //! the other side of that split and lost 5 of 14 monsters to it.
 //!
 //! The absence is held by a test against the live blacklist
@@ -237,8 +237,10 @@ mod tests {
     /// print(sum(1 for u in d['units'] if u['book']=='bestiary_2'
     /// and u['kind']=='monster'))"` → 316, `monster_ability` → 466.
     ///
-    /// A raw `grep -c '^[^#]' b2_races.lst` reads 322 — the six extra are
-    /// `.COPY=` overlays the inventory correctly folds into their source rows.
+    /// The trap report reads 322 DECLARES on `b2_races.lst` — six more than the
+    /// inventory's 316. The difference is `.COPY=` rows the inventory's own trap
+    /// filters drop; the two that survive as units are the two this table
+    /// withholds, for the reason the module doc gives.
     ///
     /// **314 and 401.** This book carries no Product Identity in either
     /// signal, so nothing is withheld for that; the two withheld monster rows
@@ -298,10 +300,20 @@ mod tests {
     ///
     /// This is `decisions.md §50.4`'s over-exclusion lesson, measured. A first
     /// draft screened description prose case-insensitively too and reported
-    /// **13** hits in this book — every one a false positive on an English
-    /// word: `Nex` inside "the **nex**t round" (12 of the 13) and `Torag`
-    /// inside "s**torag**e" (`Mercane ~ Secret Chest`). Case-sensitively, and
-    /// over identity fields in any casing, this book is clean.
+    /// **13** hits in this book — every one a false positive, a short blacklist
+    /// term sitting inside an ordinary English word that happens to contain it
+    /// (12 of the 13 on one such term, 1 on another).
+    ///
+    /// **The two terms are named in `decisions.md §52.2`, not here, and that is
+    /// itself the finding.** `pi_table_sweep` and `scripts/verify.sh`'s
+    /// `pi-sweep` reject a Product Identity term anywhere under `rules_tables/`
+    /// and neither reads intent: a comment recording a FALSE positive
+    /// instantiates the name exactly as a comment recording a real removal
+    /// does. `decisions.md §50` learned that for removals; this round re-learned
+    /// it for false alarms, from a red gate.
+    ///
+    /// Case-sensitively, and over identity fields in any casing, this book is
+    /// clean.
     #[test]
     fn no_shipped_monster_field_carries_a_product_identity_term() {
         let terms = crate::rules_core::pi_screening::PI_BLACKLIST_TERMS;
