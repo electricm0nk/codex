@@ -40,7 +40,7 @@ const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
  * two characters. They are the books' own `SOURCESHORT` tokens, like every
  * other code here.
  */
-const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2'] as const;
+const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2', 'B3'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [
