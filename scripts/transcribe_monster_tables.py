@@ -49,6 +49,15 @@ BOOKS = {
     # book_of_the_damned_volume_2`.
     "book_of_the_damned_volume_1": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
+    # SD-29 Epic 5 extend, round 3, and the book that made this script grow two
+    # screens. It is the first in the lane that is NOT orphan-free; the first
+    # whose monsters live in TWO races files with COLLIDING line numbers
+    # (`iswg_races.lst` 7 rows, `iswg_races_bestiary.lst` 7); and the first
+    # whose corpus rows carry `NAMEISPI:YES`, PCGen's own per-record Product
+    # Identity declaration. Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py inner_sea_world_guide`
+    # and `grep -c NAMEISPI:YES iswg_races.lst iswg_races_bestiary.lst`.
+    "inner_sea_world_guide": "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
 }
 
 # The `TYPE:` first segment that names which facet of `monster_ability` a row
@@ -60,6 +69,39 @@ DELIVERIES = {
     "Extraordinary": "Extraordinary",
     "SpellLike": "SpellLike",
 }
+
+
+PI_SCREEN_RS = "src/rules_core/pi_screening.rs"
+
+
+def pi_blacklist_terms() -> list[str]:
+    """`pi_screening::PI_BLACKLIST_TERMS`, parsed out of the Rust source.
+
+    **Derived, never re-typed.** `gen_book_cache`'s monster generator screens
+    every serialized record against that list and treats a hit as a HARD STOP
+    -- it writes nothing further and exits. A transcription that did not know
+    the list would therefore produce a table that cannot be generated from, and
+    a copy of the list here would drift the first time a per-book override adds
+    a term (`docs/governance/ogl-pi-blacklist.md` §3 exists to add them).
+
+    Reading the Rust is what keeps one list authoritative.
+    """
+    text = open(PI_SCREEN_RS, encoding="utf-8").read()
+    start = text.index("pub const PI_BLACKLIST_TERMS")
+    body = text[start : text.index("\n];", start)]
+    terms = re.findall(r'"([^"]+)"', body)
+    if len(terms) < 20:
+        raise SystemExit(
+            f"{PI_SCREEN_RS}: parsed only {len(terms)} PI terms, which cannot be right -- "
+            "the const's shape changed and this parser must be updated with it"
+        )
+    return terms
+
+
+def pi_hits(terms: list[str], *values: str | None) -> list[str]:
+    """Every blacklist term appearing in any of these emitted values."""
+    joined = " ".join(v for v in values if v)
+    return [t for t in terms if t in joined]
 
 
 def corpus_root() -> str:
@@ -336,6 +378,135 @@ def transcribe(book: str) -> str:
                 owners[key].append(prefix)
                 monster_ability_keys[prefix].append(key)
 
+    # ---- Product Identity screen, applied BEFORE the orphan pass ----
+    #
+    # Inner Sea World Guide is the first book in this lane to carry a PI term
+    # inside a record's own KEY: `Daughter of Urgathoa` and its three abilities
+    # name a Golarion deity. `decisions.md §46.4` predicted the opposite -- both
+    # Book of the Damned volumes read `records_redacted: 0` and the derived
+    # reason was that a monster row is a stat block, not setting prose. That
+    # holds for a *description*; it does not hold for a NAME, and a name is the
+    # one field redaction cannot touch. `[redacted PI]` as a monster's key would
+    # be a record no one can look up, which is worse than not shipping it.
+    #
+    # So a PI-carrying record is DROPPED, not redacted, and dropping a monster
+    # cascades: its abilities lose their only owner and fall out through the
+    # orphan pass below. Nothing here reclassifies a term -- reclassification is
+    # `docs/governance/ogl-pi-blacklist.md` §3's per-book override and an
+    # operator decision, not a transcriber's.
+    terms = pi_blacklist_terms()
+
+    def monster_pi_reason(unit: dict) -> str | None:
+        row = monster_rows[unit["corpus_key"]]
+        if token(row, "NAMEISPI:") == "YES":
+            return "NAMEISPI:YES"
+        # Only the values this transcription EMITS are screened, because those
+        # are the values `gen_book_cache` serializes and screens in turn. An
+        # earlier draft screened every token of the row and dropped the
+        # Sandpoint Devil for `AUTO:LANG|Abyssal|Varisian` -- a language grant
+        # that never reaches a record, matching the blacklist's `Varisia` as a
+        # substring of `Varisian`. Over-exclusion is a real cost: it silently
+        # drops corpus content nothing was going to publish.
+        hits = pi_hits(
+            terms,
+            unit["corpus_key"],
+            unit["name"],
+            parse_size(row),
+            token(row, "RACETYPE:"),
+            token(row, "RACESUBTYPE:"),
+            token(row, "CR:"),
+            token(row, "MONSTERCLASS:"),
+            token(row, "SOURCEPAGE:"),
+            *(m for m, _ in parse_speeds(row)),
+            *(n for n, _ in parse_natural_attacks(row)),
+            *monster_ability_keys[unit["corpus_key"]],
+            *external[unit["corpus_key"]],
+        )
+        return f"blacklist term {hits[0]!r}" if hits else None
+
+    def ability_pi_reason(unit: dict) -> str | None:
+        row = read_row(os.path.join(root, unit["source_file"]), unit["source_line"])
+        if token(row, "NAMEISPI:") == "YES":
+            return "NAMEISPI:YES"
+        _facet, _delivery, traits = parse_type(row)
+        description, variables = parse_desc(row)
+        hits = pi_hits(
+            terms,
+            unit["corpus_key"],
+            unit["name"],
+            description,
+            token(row, "SOURCEPAGE:"),
+            *traits,
+            *variables,
+            *owners[unit["corpus_key"]],
+        )
+        return f"blacklist term {hits[0]!r}" if hits else None
+
+    # Monsters first, and the ability screen runs only AFTER their owners are
+    # withdrawn. `owners` is an emitted field, so an ability whose owner is a
+    # PI-dropped monster would otherwise be reported as a PI hit on the owner's
+    # name when the true reason is that it has become an orphan. Screening in
+    # this order reports each row under the reason that actually applies to it.
+    pi_monsters = [(u, r) for u in monsters if (r := monster_pi_reason(u))]
+    dropped_keys = {u["corpus_key"] for u, _ in pi_monsters}
+    if dropped_keys:
+        monsters = [u for u in monsters if u["corpus_key"] not in dropped_keys]
+        for key in dropped_keys:
+            monster_ability_keys.pop(key, None)
+            external.pop(key, None)
+        for ability_key in owners:
+            owners[ability_key] = [o for o in owners[ability_key] if o not in dropped_keys]
+
+    pi_abilities = [(u, r) for u in abilities if (r := ability_pi_reason(u))]
+    if pi_monsters or pi_abilities:
+        dropped_ability_keys = {u["corpus_key"] for u, _ in pi_abilities}
+        abilities = [u for u in abilities if u["corpus_key"] not in dropped_ability_keys]
+        for key in monster_ability_keys:
+            monster_ability_keys[key] = [
+                a for a in monster_ability_keys[key] if a not in dropped_ability_keys
+            ]
+        print(
+            f"{book}: PI screen dropped {len(pi_monsters)} monster row(s) and "
+            f"{len(pi_abilities)} ability row(s): "
+            + ", ".join(
+                f"{u['corpus_key']} ({reason})" for u, reason in pi_monsters + pi_abilities
+            ),
+            file=sys.stderr,
+        )
+
+    # An ability row no monster row of this book claims is an ORPHAN: the
+    # catalog renders an ability underneath its owning monster, so a record with
+    # no owner would load and never be shown -- the stub class `decisions.md
+    # §44.2` was written about. Round 2 dodged the question by taking the only
+    # two remaining orphan-free books; from round 3 on, every candidate book has
+    # orphans, and the rule is `kanban.md`'s: transcribe the LINKED subset and
+    # carry the orphans as an `OPEN_FINDINGS` entry naming their remedy. They
+    # stay `not-ingested` in the work inventory, which is the honest status --
+    # not `grounded`, and not silently emitted as unreachable rows.
+    orphans = [u for u in abilities if not owners[u["corpus_key"]]]
+    abilities = [u for u in abilities if owners[u["corpus_key"]]]
+    if orphans:
+        print(
+            f"{book}: {len(orphans)} orphan ability row(s) NOT transcribed "
+            "(no monster row of this book owns them): "
+            + ", ".join(u["corpus_key"] for u in orphans),
+            file=sys.stderr,
+        )
+
+    def source_files(units: list[dict]) -> list[str]:
+        """Distinct `.lst` files these units were read from, in first-seen order.
+
+        A book is not guaranteed one file per kind: Inner Sea World Guide's 14
+        monsters are split 7/7 across `iswg_races.lst` and
+        `iswg_races_bestiary.lst`. Naming `units[0]['source_file']` in the header
+        -- which this script did until round 3 -- silently mis-cites half of them.
+        """
+        seen: list[str] = []
+        for unit in units:
+            if unit["source_file"] not in seen:
+                seen.append(unit["source_file"])
+        return seen
+
     out: list[str] = []
     out.append(f"//! {book} monster + monster-ability tables, transcribed verbatim")
     out.append("//! from the book's own PCGen `.lst` rows.")
@@ -347,14 +518,54 @@ def transcribe(book: str) -> str:
     out.append("//! inventory correctly excludes).")
     out.append("//!")
     out.append("//! Sources, with the line each record was read from carried per row:")
-    if monsters:
+    for name in source_files(monsters):
+        count = sum(1 for u in monsters if u["source_file"] == name)
+        out.append(f"//!   * `{name}` -- {count} monster rows")
+    for name in source_files(abilities):
+        count = sum(1 for u in abilities if u["source_file"] == name)
+        out.append(f"//!   * `{name}` -- {count} monster-ability rows")
+    if pi_monsters or pi_abilities:
+        out.append("//!")
         out.append(
-            f"//!   * `{monsters[0]['source_file']}` -- {len(monsters)} monster rows"
+            f"//! {len(pi_monsters)} monster row(s) and {len(pi_abilities)} ability row(s) of this"
         )
-    if abilities:
         out.append(
-            f"//!   * `{abilities[0]['source_file']}` -- {len(abilities)} monster-ability rows"
+            "//! book are Product Identity and are NOT transcribed -- either because the corpus"
         )
+        out.append(
+            "//! row DECLARES it (`NAMEISPI:YES`, PCGen's own per-record marker) or because an"
+        )
+        out.append(
+            "//! emitted value carries a `pi_screening::PI_BLACKLIST_TERMS` term. Both land in"
+        )
+        out.append(
+            "//! the name or key, which is the one field redaction cannot touch. Reclassifying"
+        )
+        out.append(
+            "//! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
+        )
+        out.append("//! decision, not a transcriber's:")
+        for unit, reason in pi_monsters + pi_abilities:
+            out.append(
+                f"//!   * `{unit['corpus_key']}` "
+                f"({unit['source_file']}:{unit['source_line']}, {reason})"
+            )
+    if orphans:
+        out.append("//!")
+        out.append(
+            f"//! {len(orphans)} further ability row(s) in this book are ORPHANS -- no monster"
+        )
+        out.append(
+            "//! row here claims them, so they are deliberately NOT transcribed (a record"
+        )
+        out.append(
+            "//! with no owner loads and is never shown). `not-ingested` is their honest status"
+        )
+        out.append(
+            "//! in the work inventory, and the round's receipt records them by key:"
+        )
+        for unit in orphans:
+            out.append(f"//!   * `{unit['corpus_key']}` (line {unit['source_line']})")
     out.append("")
     out.append(
         "use crate::rules_core::rules_tables::monster_chassis::{"
@@ -397,6 +608,7 @@ def transcribe(book: str) -> str:
             f"        ability_keys: {rust_slice(monster_ability_keys[key])},"
         )
         out.append(f"        external_ability_refs: {rust_slice(external[key])},")
+        out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")
     out.append("];")

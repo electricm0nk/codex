@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "corpus_key": "Calikang ~ Defensive Slam",
+    "delivery": "Extraordinary",
+    "description": "A calikang gains a cumulative +1 shield bonus to its AC for each of its arms that does not wield a manufactured weapon, to a maximum of +4 for four hands. A calikang can make slam attacks with these arms without losing this AC bonus.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_world_guide:monster_ability:calikang_defensive_slam",
+    "name": "Defensive Slam",
+    "owners": [
+      "inner_sea_world_guide:monster:calikang"
+    ],
+    "source_page": "p.308",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 13,
+    "record_key": "Calikang ~ Defensive Slam"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,369 @@
+//! inner_sea_world_guide monster + monster-ability tables, transcribed verbatim
+//! from the book's own PCGen `.lst` rows.
+//!
+//! GENERATED FILE -- do not hand-edit. Regenerate with
+//! `python3 scripts/transcribe_monster_tables.py inner_sea_world_guide`, whose unit set is
+//! `docs/work-inventory.json`'s own units for this book rather than a raw
+//! line count over the `.lst` (which counts `.MOD`/`.COPY` overlays the
+//! inventory correctly excludes).
+//!
+//! Sources, with the line each record was read from carried per row:
+//!   * `iswg_races_bestiary.lst` -- 5 monster rows
+//!   * `iswg_races.lst` -- 4 monster rows
+//!   * `iswg_abilities_race.lst` -- 14 monster-ability rows
+//!
+//! 5 monster row(s) and 3 ability row(s) of this
+//! book are Product Identity and are NOT transcribed -- either because the corpus
+//! row DECLARES it (`NAMEISPI:YES`, PCGen's own per-record marker) or because an
+//! emitted value carries a `pi_screening::PI_BLACKLIST_TERMS` term. Both land in
+//! the name or key, which is the one field redaction cannot touch. Reclassifying
+//! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator
+//! decision, not a transcriber's:
+//!   * `Boar (Sargavan)` (iswg_races_bestiary.lst:13, NAMEISPI:YES)
+//!   * `Daughter of Urgathoa` (iswg_races.lst:13, NAMEISPI:YES)
+//!   * `Herd Animal (Storval Aurochs)` (iswg_races_bestiary.lst:14, NAMEISPI:YES)
+//!   * `Sandpoint Devil` (iswg_races.lst:14, NAMEISPI:YES)
+//!   * `Treerazer` (iswg_races.lst:16, NAMEISPI:YES)
+//!   * `Daughter of Urgathoa ~ Disease` (iswg_abilities_race.lst:24, blacklist term 'Urgathoa')
+//!   * `Daughter of Urgathoa ~ Great Claw` (iswg_abilities_race.lst:25, blacklist term 'Urgathoa')
+//!   * `Daughter of Urgathoa ~ Spells` (iswg_abilities_race.lst:27, blacklist term 'Urgathoa')
+//!
+//! 13 further ability row(s) in this book are ORPHANS -- no monster
+//! row here claims them, so they are deliberately NOT transcribed (a record
+//! with no owner loads and is never shown). `not-ingested` is their honest status
+//! in the work inventory, and the round's receipt records them by key:
+//!   * `Sandpoint Devil ~ Bay` (line 50)
+//!   * `Sandpoint Devil ~ Hellfire Breath` (line 51)
+//!   * `Sandpoint Devil ~ Kick` (line 52)
+//!   * `Treerazer ~ Regeneration` (line 81)
+//!   * `Treerazer ~ Aura of Corruption` (line 82)
+//!   * `Treerazer ~ Defoliation` (line 83)
+//!   * `Nascent Demon Lord ~ Aligned Strike` (line 86)
+//!   * `Nascent Demon Lord ~ Grant Spells` (line 87)
+//!   * `Constant ~ Desecrate` (line 90)
+//!   * `Constant ~ Water Breathing` (line 92)
+//!   * `Clockwork ~ Winding` (line 96)
+//!   * `Clockwork ~ Swift Reactions` (line 97)
+//!   * `Clockwork ~ Difficult to Create` (line 98)
+
+use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed};
+
+/// Every inner_sea_world_guide monster stat block (9 rows).
+pub(super) static MONSTERS: &[MonsterStatBlock] = &[
+    MonsterStatBlock {
+        key: "Rat (Donkey)",
+        name: "Rat (Donkey)",
+        size: Some("S"),
+        speeds: &[Speed { mode: "Walk", feet: 40 }, Speed { mode: "Climb", feet: 20 }, Speed { mode: "Swim", feet: 20 }],
+        race_type: Some("Animal"),
+        race_subtype: None,
+        challenge_rating: Some("1/4"),
+        monster_class: Some("Animal:1"),
+        source_page: Some("p.254"),
+        natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        ability_keys: &[],
+        external_ability_refs: &["Scent"],
+        source_file: "iswg_races_bestiary.lst",
+        source_line: 8,
+    },
+    MonsterStatBlock {
+        key: "Spider (Drain)",
+        name: "Spider (Drain)",
+        size: Some("T"),
+        speeds: &[Speed { mode: "Walk", feet: 30 }, Speed { mode: "Climb", feet: 30 }],
+        race_type: Some("Vermin"),
+        race_subtype: None,
+        challenge_rating: Some("1/4"),
+        monster_class: Some("Vermin:1"),
+        source_page: Some("p.254"),
+        natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d3") }],
+        ability_keys: &[],
+        external_ability_refs: &["Giant Spider ~ Poison"],
+        source_file: "iswg_races_bestiary.lst",
+        source_line: 9,
+    },
+    MonsterStatBlock {
+        key: "Aluum",
+        name: "Aluum",
+        size: Some("L"),
+        speeds: &[Speed { mode: "Walk", feet: 30 }],
+        race_type: Some("Construct"),
+        race_subtype: None,
+        challenge_rating: Some("10"),
+        monster_class: Some("Construct:14"),
+        source_page: Some("p.306"),
+        natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: Some("2d10") }],
+        ability_keys: &["Aluum ~ Immunity to Magic", "Aluum ~ Paralysis", "Aluum ~ Soul Shriek"],
+        external_ability_refs: &[],
+        source_file: "iswg_races.lst",
+        source_line: 10,
+    },
+    MonsterStatBlock {
+        key: "Fennec (Firefoot)",
+        name: "Fennec (Firefoot)",
+        size: Some("S"),
+        speeds: &[Speed { mode: "Walk", feet: 40 }],
+        race_type: Some("Animal"),
+        race_subtype: None,
+        challenge_rating: Some("1/3"),
+        monster_class: Some("Animal:1"),
+        source_page: Some("p.254"),
+        natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        ability_keys: &[],
+        external_ability_refs: &["Scent"],
+        source_file: "iswg_races_bestiary.lst",
+        source_line: 10,
+    },
+    MonsterStatBlock {
+        key: "Calikang",
+        name: "Calikang",
+        size: Some("L"),
+        speeds: &[Speed { mode: "Walk", feet: 30 }],
+        race_type: Some("Monstrous Humanoid"),
+        race_subtype: None,
+        challenge_rating: Some("12"),
+        monster_class: Some("Monstrous Humanoid:15"),
+        source_page: Some("p.307"),
+        natural_attacks: &[NaturalAttack { name: "Slam (Primary)", damage_dice: Some("1d6") }, NaturalAttack { name: "Slam (1H wpn)", damage_dice: Some("1d6") }, NaturalAttack { name: "Slam (2H wpns)", damage_dice: Some("1d6") }, NaturalAttack { name: "Slam (3H wpns)", damage_dice: Some("1d6") }, NaturalAttack { name: "Slam (4H wpns)", damage_dice: Some("1d6") }, NaturalAttack { name: "Slam (5H wpns)", damage_dice: Some("1d6") }],
+        ability_keys: &["Calikang ~ Breath Weapon", "Calikang ~ Defensive Slam", "Calikang ~ Energy Absorption", "Calikang ~ Fast Healing", "Calikang ~ Suspend Animation", "Constant ~ Magic Weapon"],
+        external_ability_refs: &["Air Walk ~ Constant", "True Seeing ~ Constant", "Water Walk ~ Constant"],
+        source_file: "iswg_races.lst",
+        source_line: 11,
+    },
+    MonsterStatBlock {
+        key: "Gecko (Giant)",
+        name: "Gecko (Giant)",
+        size: Some("M"),
+        speeds: &[Speed { mode: "Walk", feet: 30 }, Speed { mode: "Climb", feet: 30 }],
+        race_type: Some("Animal"),
+        race_subtype: None,
+        challenge_rating: Some("2"),
+        monster_class: Some("Animal:3"),
+        source_page: Some("p.254"),
+        natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        ability_keys: &[],
+        external_ability_refs: &["Grab", "Scent"],
+        source_file: "iswg_races_bestiary.lst",
+        source_line: 11,
+    },
+    MonsterStatBlock {
+        key: "Charau-ka",
+        name: "Charau-ka",
+        size: Some("S"),
+        speeds: &[Speed { mode: "Walk", feet: 30 }, Speed { mode: "Climb", feet: 30 }],
+        race_type: Some("Humanoid"),
+        race_subtype: Some("Charau-ka"),
+        challenge_rating: Some("2"),
+        monster_class: Some("Humanoid (Reflex):3"),
+        source_page: Some("p.308"),
+        natural_attacks: &[NaturalAttack { name: "Bite (Primary)", damage_dice: Some("1d3") }, NaturalAttack { name: "Bite (Weapon equipped)", damage_dice: Some("1d3") }],
+        ability_keys: &["Charau-ka ~ Shrieking Frenzy", "Charau-ka ~ Thrown-Weapon Mastery"],
+        external_ability_refs: &["Scent"],
+        source_file: "iswg_races.lst",
+        source_line: 12,
+    },
+    MonsterStatBlock {
+        key: "Shark (Jigsaw)",
+        name: "Shark (Jigsaw)",
+        size: Some("L"),
+        speeds: &[Speed { mode: "Swim", feet: 60 }],
+        race_type: Some("Animal"),
+        race_subtype: Some("Aquatic"),
+        challenge_rating: Some("2"),
+        monster_class: Some("Animal:4"),
+        source_page: Some("p.255"),
+        natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
+        ability_keys: &[],
+        external_ability_refs: &["Shark ~ Keen Scent"],
+        source_file: "iswg_races_bestiary.lst",
+        source_line: 12,
+    },
+    MonsterStatBlock {
+        key: "Dragon (Spine)",
+        name: "Dragon (Spine)",
+        size: Some("G"),
+        speeds: &[Speed { mode: "Walk", feet: 30 }],
+        race_type: Some("Dragon"),
+        race_subtype: Some("Earth"),
+        challenge_rating: Some("16"),
+        monster_class: Some("Dragon:16"),
+        source_page: Some("p.312"),
+        natural_attacks: &[NaturalAttack { name: "Tail", damage_dice: Some("2d8") }, NaturalAttack { name: "Spine", damage_dice: Some("2d8") }, NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Claw", damage_dice: None }],
+        ability_keys: &["Spine Dragon ~ Breath Weapon", "Spine Dragon ~ Ray Deflection", "Spine Dragon ~ Spines"],
+        external_ability_refs: &["Immunity to Sonic", "Resistance to Cold", "Resistance to Electricity", "Resistance to Fire"],
+        source_file: "iswg_races.lst",
+        source_line: 15,
+    },
+];
+
+/// Every inner_sea_world_guide monster-ability record (14 rows).
+pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
+    MonsterAbilityRecord {
+        key: "Aluum ~ Immunity to Magic",
+        name: "Immunity to Magic",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["Immunity"],
+        description: Some("An aluum is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature. A magical attack that uses negative energy deals no damage, but speeds up the aluum's attacks and movment as if it were under the effects of a haste spell for 1d6 rounds. A magical attack that uses positive energy slows the aluum as if by a slow spell for 1d6 rounds and dispels any haste effects currently affecting it. Magic jar confuses the creature for 1d6 rounds."),
+        description_variables: &[],
+        source_page: Some("p.307"),
+        owners: &["Aluum"],
+        source_line: 7,
+    },
+    MonsterAbilityRecord {
+        key: "Aluum ~ Paralysis",
+        name: "Paralysis",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("The touch of an aluum paralyzes living creatures that fail a DC %1 Fortitude save for 1d4 minutes."),
+        description_variables: &["10+TL/2+CON"],
+        source_page: Some("p.307"),
+        owners: &["Aluum"],
+        source_line: 8,
+    },
+    MonsterAbilityRecord {
+        key: "Aluum ~ Soul Shriek",
+        name: "Soul Shriek",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("As a free action every 1d4 rounds, the aluum's enslaved souls may emit a keening wail in a 15-ft. cone. Creatures in the cone take 10d6 points of sonic damage and are stunned for 1 round. A DC %1 Will save halves the damage and negates the stun effect. This is a sonic mind-affecting effect."),
+        description_variables: &["8+TL/2+CON"],
+        source_page: Some("p.307"),
+        owners: &["Aluum"],
+        source_line: 9,
+    },
+    MonsterAbilityRecord {
+        key: "Calikang ~ Fast Healing",
+        name: "Fast Healing",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &["ModifyHp"],
+        description: Some("A calikang regains hit points at %1 per round. Fast healing does not restore hit points lost from starvation, thirst, or suffocation, nor does it allow a creature to regrow lost body parts or allow lost body parts to be reattached. Fast healing continues to function (even at negative hit points) until a creature dies, at which point the effects of fast healing end immediately."),
+        description_variables: &["FastHealingRate"],
+        source_page: Some("p.308"),
+        owners: &["Calikang"],
+        source_line: 12,
+    },
+    MonsterAbilityRecord {
+        key: "Calikang ~ Defensive Slam",
+        name: "Defensive Slam",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A calikang gains a cumulative +1 shield bonus to its AC for each of its arms that does not wield a manufactured weapon, to a maximum of +4 for four hands. A calikang can make slam attacks with these arms without losing this AC bonus."),
+        description_variables: &[],
+        source_page: Some("p.308"),
+        owners: &["Calikang"],
+        source_line: 13,
+    },
+    MonsterAbilityRecord {
+        key: "Calikang ~ Energy Absorption",
+        name: "Energy Absorption",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A spell that inflicts energy damage that is defeated by the calikang's SR or immunity to electricity is absorbed into its body, healing it for an amount of damage equal to the absorbed spell's caster level and granting an additional daily use of its breath weapon."),
+        description_variables: &[],
+        source_page: Some("p.308"),
+        owners: &["Calikang"],
+        source_line: 14,
+    },
+    MonsterAbilityRecord {
+        key: "Calikang ~ Breath Weapon",
+        name: "Breath Weapon",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("%1-ft. line, %2d6 energy damage, Reflex DC %3 half, usable %4/day. A calikang can choose what kind of energy damage its breath weapon inflicts when it uses this ability. Calikangs are particularly adept at using electricity in this manner, and inflict %5 additional points of damage when they elect to inflict electricity damage with their breath weapon."),
+        description_variables: &["BreathWeaponLine", "BreathWeaponDice", "BreathWeaponDC", "BreathWeaponTimes", "HD"],
+        source_page: Some("p.308"),
+        owners: &["Calikang"],
+        source_line: 15,
+    },
+    MonsterAbilityRecord {
+        key: "Calikang ~ Suspend Animation",
+        name: "Suspend Animation",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("As a full-round action, a calikang can enter a state of suspended animation, freezing in place and becoming motionless. It remains aware of its surroundings. In this state, the calikang is immune to disease, inhaled toxins, poison, starvation, and thirst, and receives a +4 bonus on all Fortitude saves. The calikang can exit this state as an immediate action - if it does so to attack a foe or initiate combat, it gains a +4 insight bonus on its Initiative check."),
+        description_variables: &[],
+        source_page: Some("p.308"),
+        owners: &["Calikang"],
+        source_line: 16,
+    },
+    MonsterAbilityRecord {
+        key: "Charau-ka ~ Shrieking Frenzy",
+        name: "Shrieking Frenzy",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("1/day, a charau-ka can enter a state of shrieking frenzy as a free action. While in this state, the charau-ka automatically fails Stealth checks and cannot speak or cast spells that use verbal components (or use items that require command words to activate), but functions as if under the effects of a haste spell. The charau-ka can continue shrieking for up to 3 rounds, after which it is staggered for 1 round."),
+        description_variables: &[],
+        source_page: Some("p.309"),
+        owners: &["Charau-ka"],
+        source_line: 19,
+    },
+    MonsterAbilityRecord {
+        key: "Charau-ka ~ Thrown-Weapon Mastery",
+        name: "Thrown-Weapon Mastery",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Charau-ka are masters of thrown weapons. All charau-ka gain Throw Anything as a bonus feat. In addition, a charau-ka gains a +1 racial bonus on all thrown weapons, and their threat range for thrown weapons is doubled, as if the charau-ka possessed the Improve Critical feat for all thrown weapons. This effect doesn't stack with any other effect that expands the threat range of a weapon."),
+        description_variables: &[],
+        source_page: Some("p.309"),
+        owners: &["Charau-ka"],
+        source_line: 20,
+    },
+    MonsterAbilityRecord {
+        key: "Spine Dragon ~ Breath Weapon",
+        name: "Breath Weapon",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("Once every 1d4 rounds as a standard action, a spine dragon can emit a devastating shriek of powerful sonic energy in a %1-ft. cone. Creatures caught in this cone take %2d6 sonic damage and are permanently deafened. A DC %3 Reflex save halves the damage and negates the deafness. This sonic damage is particularly devastating to constructs--they take a -4 penalty to save against its effects, and if they fail the save, they are staggered for 1d4 rounds as well."),
+        description_variables: &["BreathWeaponCone", "BreathWeaponDice", "BreathWeaponDC"],
+        source_page: Some("p.313"),
+        owners: &["Dragon (Spine)"],
+        source_line: 55,
+    },
+    MonsterAbilityRecord {
+        key: "Spine Dragon ~ Ray Deflection",
+        name: "Ray Deflection",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::Supernatural),
+        traits: &[],
+        description: Some("A spine dragon's scales deflect rays and magic missile spells, rendering the spine dragon immune to such effects. There's a 30%% chance a deflected effect reflects back in full force at the caster; otherwise it is simply negated."),
+        description_variables: &[],
+        source_page: Some("p.313"),
+        owners: &["Dragon (Spine)"],
+        source_line: 56,
+    },
+    MonsterAbilityRecord {
+        key: "Spine Dragon ~ Spines",
+        name: "Spines",
+        facet: MonsterAbilityFacet::SpecialAttack,
+        delivery: Some(MonsterAbilityDelivery::Extraordinary),
+        traits: &[],
+        description: Some("A spine dragon's body is covered with long, crystalling spines. It can fire up to four of these spines/round as a full-attack action (or one as a standard action). A creature that attacks a spine dragon with a melee weapon, unarmed strike, or natural weapon must make a DC %1 Reflex save or take 2d8+%2 points of piercing damage from the spines."),
+        description_variables: &["10+(HD/2)+DEX", "STR"],
+        source_page: Some("p.313"),
+        owners: &["Dragon (Spine)"],
+        source_line: 57,
+    },
+    MonsterAbilityRecord {
+        key: "Constant ~ Magic Weapon",
+        name: "Magic Weapon",
+        facet: MonsterAbilityFacet::SpecialQuality,
+        delivery: Some(MonsterAbilityDelivery::SpellLike),
+        traits: &[],
+        description: Some("You can use magic weapon, as per the spell, as a constant ability. Constant spell-like abilities function at all times but can be dispelled. Constant spell-like abilities can be reactivated a as a swift action."),
+        description_variables: &[],
+        source_page: Some("p.310"),
+        owners: &["Calikang"],
+        source_line: 91,
+    },
+];

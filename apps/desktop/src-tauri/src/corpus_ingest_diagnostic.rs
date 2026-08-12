@@ -596,6 +596,12 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             &races,
         ),
         book_status(
+            "inner_sea_world_guide",
+            "src/rules_core/rules_tables/inner_sea_world_guide",
+            chassis_book_counts("inner_sea_world_guide"),
+            &races,
+        ),
+        book_status(
             "advanced_race_guide",
             "src/rules_core/rules_tables/advanced_race_guide",
             advanced_race_guide_counts(),
@@ -738,6 +744,9 @@ mod tests {
                 // volumes, kept next to the other chassis books.
                 "book_of_the_damned_volume_1",
                 "book_of_the_damned_volume_2",
+                // SD-29 Epic 5 extend round 3 -- Inner Sea World Guide, the
+                // first chassis book served with only part of its ability rows.
+                "inner_sea_world_guide",
                 "advanced_race_guide",
                 "pathfinder_unchained",
                 "ultimate_campaign",

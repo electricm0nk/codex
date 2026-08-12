@@ -911,7 +911,13 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         }
     }
 
-    let races_file = load_corpus_file_rel(&root, spec.book_relative, spec.races_lst);
+    // Keyed by file name, because a record's `source_line` is only meaningful
+    // together with its `source_file` -- see `MonsterBookSpec::races_lsts`.
+    let races_files: HashMap<&'static str, CorpusFile> = spec
+        .races_lsts
+        .iter()
+        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .collect();
     let abilities_file = load_corpus_file_rel(&root, spec.book_relative, spec.abilities_lst);
 
     // ---- monsters ----
@@ -921,7 +927,14 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         // The display name, not the key: the first column of a monster row is
         // the display name, and Monster Codex is the first book where they
         // differ (`Sootwing Bat` in column 1, `KEY:Bat (Sootwing)`).
-        let line = verified_citation_line(&races_file, block.source_line, block.name);
+        let races_file = races_files.get(block.source_file).unwrap_or_else(|| {
+            panic!(
+                "{book_id}:{} cites {}, which is not in this book's MonsterBookSpec::races_lsts \
+                 ({:?}) -- a citation this generator cannot verify is not a citation",
+                block.key, block.source_file, spec.races_lsts
+            )
+        });
+        let line = verified_citation_line(races_file, block.source_line, block.name);
         let data = serde_json::json!({
             "key": format!("{book_id}:monster:{}", slugify(block.key)),
             "corpus_key": block.key,
@@ -1341,7 +1354,17 @@ fn companion_book_corpus_root(spec: &CompanionBookSpec) -> PathBuf {
 struct MonsterBookSpec {
     corpus_book: &'static str,
     book_relative: &'static str,
-    races_lst: &'static str,
+    /// Every races-`.lst` file this book's monster rows come from.
+    ///
+    /// A slice, not a string, because a book is not guaranteed one: Inner Sea
+    /// World Guide splits its 14 monsters 7/7 across `iswg_races.lst` and
+    /// `iswg_races_bestiary.lst`, and their line numbers COLLIDE
+    /// (`iswg_races.lst:10` is the Aluum, `iswg_races_bestiary.lst:10` is the
+    /// Firefoot Fennec). Each record names its own file in
+    /// `MonsterStatBlock::source_file`; this list is what that name is checked
+    /// against, so a transcription that invents a file fails here rather than
+    /// citing a line in the wrong one.
+    races_lsts: &'static [&'static str],
     abilities_lst: &'static str,
     open_game_content: &'static str,
     product_identity_source: &'static str,
@@ -1352,7 +1375,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
     MonsterBookSpec {
         corpus_book: "bonus_bestiary",
         book_relative: "pathfinder/paizo/roleplaying_game/bonus_bestiary",
-        races_lst: "bb_races.lst",
+        races_lsts: &["bb_races.lst"],
         abilities_lst: "bb_abilities_race.lst",
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bonus_bestiary.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bonus Bestiary, OGL §15 Product Identity section",
@@ -1361,7 +1384,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
     MonsterBookSpec {
         corpus_book: "monster_codex",
         book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
-        races_lst: "mc_races.lst",
+        races_lsts: &["mc_races.lst"],
         abilities_lst: "mc_abilities_race.lst",
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _monster_codex.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Monster Codex, OGL §15 Product Identity section",
@@ -1370,7 +1393,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
     MonsterBookSpec {
         corpus_book: "book_of_the_damned_volume_1",
         book_relative: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
-        races_lst: "botd1_races.lst",
+        races_lsts: &["botd1_races.lst"],
         abilities_lst: "botd1_abilities_race.lst",
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own book_of_the_damned_volume_1.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Princes of Darkness, Book of the Damned Volume 1, OGL §15 Product Identity section",
@@ -1379,11 +1402,20 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
     MonsterBookSpec {
         corpus_book: "book_of_the_damned_volume_2",
         book_relative: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
-        races_lst: "botd2_races.lst",
+        races_lsts: &["botd2_races.lst"],
         abilities_lst: "botd2_abilities_race.lst",
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _book_of_the_damned_volume_2.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Lords of Chaos, Book of the Damned Volume 2, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-003",
+    },
+    MonsterBookSpec {
+        corpus_book: "inner_sea_world_guide",
+        book_relative: "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
+        races_lsts: &["iswg_races.lst", "iswg_races_bestiary.lst"],
+        abilities_lst: "iswg_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_world_guide.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea World Guide, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E5-F2-004",
     },
 ];
 

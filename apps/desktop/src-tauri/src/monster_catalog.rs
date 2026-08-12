@@ -72,6 +72,15 @@ const BOOK_MC: &str = "MC";
 const BOOK_BOTD1: &str = "BOTD1";
 const BOOK_BOTD2: &str = "BOTD2";
 
+/// Inner Sea World Guide, the sixth (SD-29 Epic 5 extend, round 3). Its wire
+/// code is the book's own `SOURCESHORT:ISWG`. The first book here served with
+/// only PART of its rows: 5 of its 14 monster rows carry `NAMEISPI:YES` (the
+/// corpus declaring its own name Product Identity) and 13 of its 30 ability
+/// rows end up owned by no shipped monster. The catalog therefore shows 9
+/// monsters and 14 abilities -- every record that is both shippable and
+/// reachable. See `rules_tables::inner_sea_world_guide` for the derivation.
+const BOOK_ISWG: &str = "ISWG";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -92,6 +101,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "monster_codex" => "Monster Codex",
         "book_of_the_damned_volume_1" => "Book of the Damned, Volume 1",
         "book_of_the_damned_volume_2" => "Book of the Damned, Volume 2",
+        "inner_sea_world_guide" => "Inner Sea World Guide",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -105,6 +115,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "monster_codex" => BOOK_MC,
         "book_of_the_damned_volume_1" => BOOK_BOTD1,
         "book_of_the_damned_volume_2" => BOOK_BOTD2,
+        "inner_sea_world_guide" => BOOK_ISWG,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."

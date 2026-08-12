@@ -28,6 +28,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Apostate Devil ~ Boundless Reach", "Apostate Devil ~ Evangelization", "Apostate Devil ~ Indomitable Oration", "Apostate Devil ~ Malleable Form", "Apostate Devil ~ Ohrwurm", "Apostate Devil ~ Spell-Like Abilities", "Apostate Devil ~ Summon Devil", "Apostate Devil ~ Wisdom Drain"],
         external_ability_refs: &["Flight Maneuverability", "Regeneration"],
+        source_file: "botd1_races.lst",
         source_line: 9,
     },
     MonsterStatBlock {
@@ -43,6 +44,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Slam", damage_dice: None }],
         ability_keys: &["Heresy Devil ~ Blasphemous Bile", "Heresy Devil ~ Corpulence", "Heresy Devil ~ Devil Summoner", "Heresy Devil ~ Searing Word", "Heresy Devil ~ Spell-Like Abilities", "Heresy Devil ~ Summon Devil", "Heresy Devil ~ Throne of Skulls"],
         external_ability_refs: &["Fast Healing", "Flight Maneuverability"],
+        source_file: "botd1_races.lst",
         source_line: 10,
     },
     MonsterStatBlock {
@@ -58,6 +60,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[],
         ability_keys: &["Lesser Host Devil ~ Noxious Breath", "Lesser Host Devil ~ Shared Senses", "Lesser Host Devil ~ Spell-Like Abilities", "Lesser Host Devil ~ Summon Devil", "Lesser Host Devil ~ Superior Grappler", "Lesser Host Devil ~ Swarming"],
         external_ability_refs: &["Flight Maneuverability"],
+        source_file: "botd1_races.lst",
         source_line: 11,
     },
     MonsterStatBlock {
@@ -73,6 +76,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: Some("2d4") }],
         ability_keys: &["Greater Host Devil ~ Infernal Wound", "Greater Host Devil ~ Master Grappler", "Greater Host Devil ~ Noxious Breath", "Greater Host Devil ~ Rend", "Greater Host Devil ~ Shared Senses", "Greater Host Devil ~ Spell-Like Abilities", "Greater Host Devil ~ Summon Devil"],
         external_ability_refs: &["Flight Maneuverability"],
+        source_file: "botd1_races.lst",
         source_line: 12,
     },
     MonsterStatBlock {
@@ -88,6 +92,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Leg", damage_dice: Some("1d8") }, NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Warmonger Devil ~ Construct Form", "Warmonger Devil ~ Hellstrider", "Warmonger Devil ~ Merciless Blow", "Warmonger Devil ~ Phalanx", "Warmonger Devil ~ Skills", "Warmonger Devil ~ Spell-Like Abilities", "Warmonger Devil ~ Stability", "Warmonger Devil ~ Summon Devil"],
         external_ability_refs: &["Warmonger Devil ~ Trample"],
+        source_file: "botd1_races.lst",
         source_line: 13,
     },
 ];
