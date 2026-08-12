@@ -9683,10 +9683,28 @@ edit rather than re-paying it.
 
 ### 8. Retrospective events
 
-Four in `docs/retro/events/sd29-monster-r8.jsonl`: the brief's fifth-consecutive wrong denominator
-pair; the `ogl-pi-blacklist.md` §2 predicate refinement; the `§55.1` 341 → 625 predicate correction;
-and the cycle's own `verification` event. `RETRO_ACTOR` was exported into every tool shell this
-cycle, including `verify.sh`, so the fallback mis-attribution `§55` recorded twice did not recur.
+**Six** in `docs/retro/events/sd29-monster-r8.jsonl`, counted from the shard rather than from memory
+of what was emitted:
+
+```
+python3 -c "
+import json
+for l in open('docs/retro/events/sd29-monster-r8.jsonl'):
+    if l.strip(): print(json.loads(l)['type'])"
+```
+
+→ `correction` ×3, `incident` ×1, `verification` ×2.
+
+Three corrections — the brief's fifth-consecutive wrong denominator pair; the `ogl-pi-blacklist.md`
+§2 predicate refinement; the `§55.1` 341 → 625 predicate correction. One incident — the shared
+scratchpad collision (`§57.6`(a)). Two `verification` events, because the gate ran twice: run 1's
+`FAIL (clippy failed)` and run 2's `PASS`. **A draft of this section said "four" and named the two
+gate runs as one event**; counting the shard corrected it, which is the same re-derive-don't-reason
+lesson `§5` records against a different number in the same cycle.
+
+`RETRO_ACTOR` was exported into every tool shell this cycle, including both `verify.sh` invocations,
+so **both** verification events attributed to this actor and neither landed under the worktree-name
+fallback — the mis-attribution `§55` recorded twice, and did not recur here.
 
 ### 9. DoD item 8 — on screen
 
