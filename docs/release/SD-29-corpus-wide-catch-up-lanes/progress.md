@@ -10490,7 +10490,7 @@ whenever a round changes a generator, regenerate TWICE and diff.
 
 | # | Item | Result |
 |---|---|---|
-| 1 | `./scripts/verify.sh` exits 0 | **PASS on this round's own tree; FAIL after merging `origin/tranche/9`, and every failing stage is INHERITED.** Run 1 (pre-merge, this round's work alone): `VERIFY_EXIT=0`, `RESULT: PASS`, 14/14 stages, `root-full` 6286 passed across 544 suites with all 525 `tests/*.rs` suites executed, clippy exactly at its 54 ceiling, logs `/tmp/codex-verify-7lOxmj`. Run 2 (post-merge, after the `§59.3` fix): `VERIFY_EXIT=1`, 10 passed / 4 FAILED — `pi-sweep root-full desktop clippy` — logs `/tmp/codex-verify-SUP4Qd`. **See §8: all four are the monster lane's round 7, attributed by content to files this round never opened.** |
+| 1 | `./scripts/verify.sh` exits 0 | **PASS** — `VERIFY_EXIT=0`, `RESULT: PASS`, 14/14 stages, `root-full` 6293 passed across 544 suites with all 525 `tests/*.rs` suites executed, clippy at its 54 ceiling, logs `/tmp/codex-verify-4mYfTf`. Exit code captured directly, never through a pipe. **Three full runs, and §8 records all three rather than only the green one:** run 1 (pre-merge, this round's work alone) PASS 14/14; run 2 (after merging `cacf35d8`) FAIL on four INHERITED stages; run 3 (after merging the monster lane's own fix `0090e273`) PASS 14/14 |
 | 2 | `reach` stage passes with a claim for this book's families | **PASS in BOTH runs** — `reach (27 passed)`, and the claim is this book's own: `("bestiary_4", "companions") => companions_reach("bestiary_4", "B4")`, the SECOND claim the book carries beside the monster lane's. Not a pass by absence |
 | 3 | `v06_corpus_trap_report --audit` exits 0 | **PASS** — `AUDIT_EXIT=0`, "No defects: every ingested record's citation agrees with the line it names" |
 | 4 | `v06_work_inventory` regenerates; units leave `not-started`; second run changes only `generated_at` | **PASS** — 78 units `not-ingested` → `grounded`; second run diff over the whole document with `generated_at` popped compares `True` |
@@ -10519,35 +10519,41 @@ whenever a round changes a generator, regenerate TWICE and diff.
 three-for-three: classify before committing to a book, then read the rows the classifier is about to
 throw away. Every one of the last three rounds found the instrument wrong by doing exactly that.
 
-### 8. `origin/tranche/9`'s tip is RED, and it was red before this round merged it
+### 8. `origin/tranche/9`'s tip was RED for ~35 minutes, and the lane that turned it red fixed it
 
-**This round's own tree passed the full gate 14/14 (`VERIFY_EXIT=0`, `RESULT: PASS`, logs
-`/tmp/codex-verify-7lOxmj`).** The four reds appeared only after merging `origin/tranche/9`
-(`cacf35d8`, the monster lane's round 7 / Inner Sea Bestiary ingest), and every one is attributed to
-that lane by CONTENT — read out of `cacf35d8` itself, not inferred from timing:
+**This round's own tree passed the full gate 14/14 (`VERIFY_EXIT=0`, logs `/tmp/codex-verify-7lOxmj`)
+before any merge.** Merging `origin/tranche/9` at `cacf35d8` (the monster lane's round 7 / Inner Sea
+Bestiary ingest) turned four stages red, and every one was attributed to that lane by CONTENT — read
+out of `cacf35d8` itself, not inferred from timing:
 
-| stage | failure | proof it is inherited |
+| stage | failure | proof it was inherited |
 |---|---|---|
 | `pi-sweep`, `root-full` | `rules_tables_carry_no_unbaselined_product_identity_hits`: 2 unbaselined `Golarion` hits | `git show cacf35d8:src/rules_core/rules_tables/inner_sea_bestiary/mod.rs \| sed -n '31p'` and `git show cacf35d8:src/rules_core/rules_tables/mod.rs \| sed -n '223p'` both print the flagged lines verbatim |
-| `root-full` | `sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books`: `inner_sea_bestiary` is `in_scope`, test wants `future_state` | `origin/tranche/9`'s OWN committed `docs/work-inventory.json` already records `scope: in_scope` for that book — this round's regeneration reproduced it, it did not cause it |
+| `root-full` | `sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books`: `inner_sea_bestiary` is `in_scope`, test wanted `future_state` | `origin/tranche/9`'s OWN committed `docs/work-inventory.json` already recorded `scope: in_scope` — this round's regeneration reproduced it, it did not cause it |
 | `clippy` | root 55 vs ceiling 54: `identity_op` at `inner_sea_bestiary/mod.rs:118`, `230 - 26 - 7 - 0` | same `git show` on `cacf35d8` prints the line |
-| `desktop` | `last_ingested_at_is_a_real_git_derived_timestamp_when_available` for `inner_sea_bestiary` | reads git history for `data/corpus/inner_sea_bestiary/`, which arrived in this tree as an uncommitted merge payload |
+| `desktop` | `last_ingested_at_is_a_real_git_derived_timestamp_when_available` for `inner_sea_bestiary` | reads git history for `data/corpus/inner_sea_bestiary/`, which arrived here as an uncommitted merge payload |
 
 `git diff --name-only 2481e31e~1 2481e31e` lists this round's 90 changed paths; the count matching
 `inner_sea_bestiary|rules_tables/mod.rs|corpus_ingest_diagnostic` is **0**.
 
-**Not fixed here, deliberately, and the reason is scope rather than effort.** Two of the four are
-another lane's *judgements*, not mechanical defects: baselining a Product-Identity hit is a governance
+**They were not fixed here, deliberately, and that call was right.** Two of the four were the other
+lane's *judgements* rather than mechanical defects: baselining a Product-Identity hit is a governance
 act under `docs/governance/ogl-pi-blacklist.md`, and whether `inner_sea_bestiary` is SD-30
 `future_state` or SD-29 `in_scope` is a roster ruling. Rewriting another in-flight lane's decision
-prose to make a gate green is the shape of thing this program's doctrine exists to prevent, and the
-lane that wrote those lines was pushing to the same branch minutes earlier. Under UNATTENDED MODE the
-safer default is to attribute precisely and hand it back, not to edit around it. A
-`recurrence-key=red-tip-pushed` incident is in the retro shard.
+prose to make a gate green is the shape of thing this program's doctrine exists to prevent, and that
+lane was pushing to the same branch minutes earlier. Under UNATTENDED MODE the safer default was to
+attribute precisely and hand it back.
 
-**What this means for this round's status.** DoD item 1 is satisfied for this round's work and NOT
-satisfied for the branch. The receipt says both rather than picking the flattering one. The next
-agent on `tranche/9` — in either lane — should treat the four reds as the first thing to clear, and
-must not read `BASELINE_ROOT_FULL_TESTS` as raisable from run 2: a floor set from a run that did not
-pass is a floor set from nothing, which is why that baseline stays at run 1's 6286 while
-`BASELINE_ROOT_LIB_TESTS` moves to the merged 1726.
+**And it came back.** `sd29-monster-r9` pushed `0090e273` — "the three gate stages round 7's own
+ingest turned red" — while this receipt was being written. Merged, and **run 3 of the full gate on the
+combined tree is `RESULT: PASS`, `VERIFY_EXIT=0`, 14/14** (`/tmp/codex-verify-4mYfTf`). Both lanes'
+work is on the branch and the branch is green.
+
+**The transferable finding is not the red, it is the arithmetic of waiting.** The cost of not editing
+another lane's files was one extra ~25-minute gate run. The cost of editing them would have been a
+merge conflict in decision prose plus a governance ruling made by the wrong agent. A
+`recurrence-key=red-tip-pushed` incident is in the retro shard with the resolution recorded as it
+actually happened, not as it was predicted.
+
+**`BASELINE_ROOT_FULL_TESTS` is raised from run 3 (6286 → 6293) and NOT from run 2**, even though run
+2 measured a number too: a floor set from a run that did not pass is a floor set from nothing.
