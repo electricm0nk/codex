@@ -19,32 +19,32 @@
 //! the name or key, which is the one field redaction cannot touch. Reclassifying
 //! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator
 //! decision, not a transcriber's:
-//!   * `Boar (Sargavan)` (iswg_races_bestiary.lst:13, NAMEISPI:YES)
-//!   * `Daughter of Urgathoa` (iswg_races.lst:13, NAMEISPI:YES)
-//!   * `Herd Animal (Storval Aurochs)` (iswg_races_bestiary.lst:14, NAMEISPI:YES)
-//!   * `Sandpoint Devil` (iswg_races.lst:14, NAMEISPI:YES)
-//!   * `Treerazer` (iswg_races.lst:16, NAMEISPI:YES)
-//!   * `Daughter of Urgathoa ~ Disease` (iswg_abilities_race.lst:24, blacklist term 'Urgathoa')
-//!   * `Daughter of Urgathoa ~ Great Claw` (iswg_abilities_race.lst:25, blacklist term 'Urgathoa')
-//!   * `Daughter of Urgathoa ~ Spells` (iswg_abilities_race.lst:27, blacklist term 'Urgathoa')
+//!   * `iswg_races_bestiary.lst:13` (monster row, NAMEISPI:YES)
+//!   * `iswg_races.lst:13` (monster row, NAMEISPI:YES)
+//!   * `iswg_races_bestiary.lst:14` (monster row, NAMEISPI:YES)
+//!   * `iswg_races.lst:14` (monster row, NAMEISPI:YES)
+//!   * `iswg_races.lst:16` (monster row, NAMEISPI:YES)
+//!   * `iswg_abilities_race.lst:24` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+//!   * `iswg_abilities_race.lst:25` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
+//!   * `iswg_abilities_race.lst:27` (ability row, 1 PI_BLACKLIST_TERMS hit(s) in emitted values)
 //!
 //! 13 further ability row(s) in this book are ORPHANS -- no monster
 //! row here claims them, so they are deliberately NOT transcribed (a record
 //! with no owner loads and is never shown). `not-ingested` is their honest status
 //! in the work inventory, and the round's receipt records them by key:
-//!   * `Sandpoint Devil ~ Bay` (line 50)
-//!   * `Sandpoint Devil ~ Hellfire Breath` (line 51)
-//!   * `Sandpoint Devil ~ Kick` (line 52)
-//!   * `Treerazer ~ Regeneration` (line 81)
-//!   * `Treerazer ~ Aura of Corruption` (line 82)
-//!   * `Treerazer ~ Defoliation` (line 83)
-//!   * `Nascent Demon Lord ~ Aligned Strike` (line 86)
-//!   * `Nascent Demon Lord ~ Grant Spells` (line 87)
-//!   * `Constant ~ Desecrate` (line 90)
-//!   * `Constant ~ Water Breathing` (line 92)
-//!   * `Clockwork ~ Winding` (line 96)
-//!   * `Clockwork ~ Swift Reactions` (line 97)
-//!   * `Clockwork ~ Difficult to Create` (line 98)
+//!   * `iswg_abilities_race.lst:50`
+//!   * `iswg_abilities_race.lst:51`
+//!   * `iswg_abilities_race.lst:52`
+//!   * `iswg_abilities_race.lst:81`
+//!   * `iswg_abilities_race.lst:82`
+//!   * `iswg_abilities_race.lst:83`
+//!   * `iswg_abilities_race.lst:86`
+//!   * `iswg_abilities_race.lst:87`
+//!   * `iswg_abilities_race.lst:90`
+//!   * `iswg_abilities_race.lst:92`
+//!   * `iswg_abilities_race.lst:96`
+//!   * `iswg_abilities_race.lst:97`
+//!   * `iswg_abilities_race.lst:98`
 
 use crate::rules_core::rules_tables::monster_chassis::{MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock, NaturalAttack, Speed};
 

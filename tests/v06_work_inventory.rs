@@ -708,20 +708,43 @@ fn every_corpus_book_appears_in_the_inventory() {
          campaign_setting books)"
     );
 
-    // And every un-ingested book must contribute real, named units rather than
-    // being skipped: that is what makes `not-started` a measurement.
-    let unstarted_books: std::collections::HashSet<String> = doc["units"]
+    // And every book must contribute real, named units rather than being
+    // skipped: that is what makes the inventory a measurement rather than a
+    // roster.
+    //
+    // **This was a count and the count was wrong for a structural reason.** It
+    // read `unstarted_books.len() >= 15`, i.e. it asserted that at least 15
+    // books are still un-ingested -- a floor that this bundle's own success
+    // walks straight through. It went RED on `tranche/9` when SD-29's companion
+    // lane grounded three bestiaries (12 books remained, `git show
+    // 5164bf36:docs/work-inventory.json` reproduces the 12 with none of the
+    // monster lane's round-3 changes present), which is a test failing for a
+    // job well done.
+    //
+    // The property it was reaching for does not need a constant: **no in-scope
+    // book is enumerated and then left unmeasured.** That holds no matter how
+    // much of the corpus is ingested, and it fails for the case the count was
+    // written to catch -- a book that lands in the roster and contributes
+    // nothing.
+    let books_with_units: std::collections::HashSet<String> = doc["units"]
         .as_array()
         .expect("units array")
         .iter()
-        .filter(|u| u["status"].as_str() == Some("not-started"))
         .filter_map(|u| u["book"].as_str().map(|s| s.to_string()))
         .collect();
+    let unmeasured: Vec<String> = doc["books"]
+        .as_array()
+        .expect("books array")
+        .iter()
+        .filter(|b| b["scope"].as_str() != Some("out_of_scope"))
+        .filter_map(|b| b["id"].as_str().map(|s| s.to_string()))
+        .filter(|id| !books_with_units.contains(id))
+        .collect();
     assert!(
-        unstarted_books.len() >= 15,
-        "expected the large majority of un-ingested books to contribute \
-         not-started units, saw {}",
-        unstarted_books.len()
+        unmeasured.is_empty(),
+        "these in-scope books appear in the roster and contribute NO units at all -- \
+         a book that is listed but not measured is exactly what this check exists to \
+         catch: {unmeasured:?}"
     );
 }
 
@@ -754,6 +777,14 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // sixteen books existing, not about them staying un-ingested forever.
     "inner_sea_combat",
     "inner_sea_intrigue",
+    // SD-29 monster lane round 3 (`decisions.md §50`): 9 `monster` + 14
+    // `monster_ability` records. A PARTIAL ingest, and it belongs on this list
+    // anyway -- a book's scope is `in_scope` the moment any of its units are
+    // grounded. 21 of its 44 monster-family units are deliberately not ingested
+    // (5 monster rows carry the corpus's own `NAMEISPI:YES` Product Identity
+    // declaration, and 13 ability rows are then owned by no shipped monster),
+    // so "ingested" here means "no longer future_state", never "complete".
+    "inner_sea_world_guide",
 ];
 
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[

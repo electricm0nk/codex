@@ -3405,11 +3405,13 @@ mod tests {
     /// two independent reasons.
     ///
     /// **Product Identity.** Five monster rows carry `NAMEISPI:YES`, PCGen's own
-    /// per-record marker that the NAME is Product Identity (`Daughter of
-    /// Urgathoa`, `Sandpoint Devil`, `Treerazer`, `Boar (Sargavan)`,
-    /// `Herd Animal (Storval Aurochs)`), and three ability rows match
-    /// `PI_BLACKLIST_TERMS` outright. A key cannot be redacted, so they are not
-    /// ingested at all.
+    /// per-record marker that the NAME is Product Identity, and three ability
+    /// rows match `PI_BLACKLIST_TERMS` outright. A key cannot be redacted, so
+    /// they are not ingested at all. The eight are pinned by corpus line, never
+    /// by name, in `rules_tables::inner_sea_world_guide`'s
+    /// `the_eight_product_identity_rows_are_not_records` — their names ARE the
+    /// Product Identity, and a comment recording a removal has no need to
+    /// instantiate what it removed.
     ///
     /// **Orphans.** Thirteen ability rows are then owned by no shipped monster —
     /// five against the whole book (`iswg_templates.lst` templates), eight
@@ -3462,31 +3464,26 @@ mod tests {
         assert_eq!(served_monsters, monsters, "served monsters");
         assert_eq!(served_abilities, abilities, "served abilities");
 
-        // Named, not counted: an exclusion pinned by a number passes just as
-        // well when a different record takes the excluded one's place.
-        for excluded in [
-            "daughter_of_urgathoa",
-            "sandpoint_devil",
-            "treerazer",
-            "boar_sargavan",
-            "herd_animal_storval_aurochs",
-        ] {
-            assert!(
-                !served_monsters.iter().any(|key| key.contains(excluded)),
-                "{excluded} carries NAMEISPI:YES and must never reach a player surface"
-            );
+        // Not a count and not a name list: the property is checked against the
+        // LIVE blacklist, so a term added to `PI_BLACKLIST_TERMS` later fails
+        // here rather than shipping quietly, and this file never has to spell a
+        // Product Identity name to say it is absent. The five `NAMEISPI:YES`
+        // rows, which the term list does not name, are pinned by corpus line in
+        // `rules_tables::inner_sea_world_guide`.
+        for key in served_monsters.iter().chain(served_abilities.iter()) {
+            let lower = key.to_ascii_lowercase();
+            for term in codex::rules_core::pi_screening::PI_BLACKLIST_TERMS {
+                assert!(
+                    !lower.contains(&term.to_ascii_lowercase()),
+                    "a served Inner Sea World Guide key matches a Product Identity term; \
+                     the record must not be ingested at all"
+                );
+            }
         }
-        for excluded in [
-            "aligned_strike",
-            "grant_spells",
-            "winding",
-            "swift_reactions",
-            "difficult_to_create",
-            "urgathoa",
-        ] {
+        for orphan in ["aligned_strike", "grant_spells", "winding", "swift_reactions", "difficult_to_create"] {
             assert!(
-                !served_abilities.iter().any(|key| key.contains(excluded)),
-                "{excluded} is Product Identity or owned by no shipped monster"
+                !served_abilities.iter().any(|key| key.contains(orphan)),
+                "{orphan} is owned by an iswg_templates.lst template and reaches no monster"
             );
         }
 
