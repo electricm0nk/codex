@@ -6,7 +6,7 @@
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
 //! line count over the `.lst`.
 //!
-//! Sources, with the line each record was read from carried per row:
+//! Sources, with the file AND line each record was read from carried per row:
 //!   * `ha_races_companion.lst` -- 1 companion creature rows
 //!   * `ha_abilities_companion.lst` -- 1 companion ability rows
 
@@ -30,6 +30,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.50"),
         ability_keys: &["Companion Advancement ~ Devolved Humanoid"],
         external_ability_refs: &["Scent"],
+        source_file: "ha_races_companion.lst",
         source_line: 3,
     },
 ];
@@ -47,6 +48,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CON", amount: 4 }],
         source_page: None,
         owners: &["Companion (Devolved Humanoid)"],
+        source_file: "ha_abilities_companion.lst",
         source_line: 3,
     },
 ];

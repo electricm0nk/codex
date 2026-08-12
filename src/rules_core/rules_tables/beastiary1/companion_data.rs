@@ -6,7 +6,7 @@
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
 //! line count over the `.lst`.
 //!
-//! Sources, with the line each record was read from carried per row:
+//! Sources, with the file AND line each record was read from carried per row:
 //!   * `b1_races_companion.lst` -- 24 companion creature rows
 //!   * `b1_abilities_companion.lst` -- 35 companion ability rows
 
@@ -30,6 +30,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.30"),
         ability_keys: &["Companion Advancement ~ Bat (Dire)"],
         external_ability_refs: &["Flight Maneuverability", "Animal Traits Output"],
+        source_file: "b1_races_companion.lst",
         source_line: 7,
     },
     CompanionRecord {
@@ -48,6 +49,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.83"),
         ability_keys: &["Companion Advancement ~ Dinosaur (Ankylosaurus)", "Ankylosaurus ~ Stun"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 8,
     },
     CompanionRecord {
@@ -66,6 +68,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.82"),
         ability_keys: &["Companion Advancement ~ Dinosaur (Brachiosaurus)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 9,
     },
     CompanionRecord {
@@ -84,6 +87,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.84"),
         ability_keys: &["Companion Advancement ~ Dinosaur (Elasmosaurus)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 10,
     },
     CompanionRecord {
@@ -102,6 +106,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.85"),
         ability_keys: &["Companion Advancement ~ Dinosaur (Pteranodon)"],
         external_ability_refs: &["Flight Maneuverability", "Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 11,
     },
     CompanionRecord {
@@ -120,6 +125,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.85"),
         ability_keys: &["Companion Advancement ~ Dinosaur (Stegosaurus)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 12,
     },
     CompanionRecord {
@@ -138,6 +144,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.86"),
         ability_keys: &["Companion Advancement ~ Dinosaur (Triceratops)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 13,
     },
     CompanionRecord {
@@ -156,6 +163,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.86"),
         ability_keys: &["Companion Advancement ~ Dinosaur (Tyrannosaurus)", "Tyrannosaurus ~ Powerful Bite"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 14,
     },
     CompanionRecord {
@@ -174,6 +182,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.88"),
         ability_keys: &["Dolphin ~ Hold Breath", "Companion Advancement ~ Dolphin"],
         external_ability_refs: &[],
+        source_file: "b1_races_companion.lst",
         source_line: 15,
     },
     CompanionRecord {
@@ -192,6 +201,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.88"),
         ability_keys: &["Dolphin ~ Hold Breath", "Companion Advancement ~ Dolphin (Orca)"],
         external_ability_refs: &[],
+        source_file: "b1_races_companion.lst",
         source_line: 16,
     },
     CompanionRecord {
@@ -210,6 +220,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.135"),
         ability_keys: &["Giant Frog ~ Tongue", "Companion Advancement ~ Frog (Giant)"],
         external_ability_refs: &["Grab", "Pull", "Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 17,
     },
     CompanionRecord {
@@ -228,6 +239,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.119"),
         ability_keys: &["Companion Advancement ~ Eel (Electric)", "Electric Eel ~ Electricity"],
         external_ability_refs: &["Amphibious", "Can't Be Tripped"],
+        source_file: "b1_races_companion.lst",
         source_line: 18,
     },
     CompanionRecord {
@@ -246,6 +258,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.119"),
         ability_keys: &["Companion Advancement ~ Eel (Giant Moray)", "Giant Moray Eel ~ Gnaw"],
         external_ability_refs: &["Grab", "Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 19,
     },
     CompanionRecord {
@@ -264,6 +277,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.128"),
         ability_keys: &["Companion Advancement ~ Elephant (Mastodon)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 20,
     },
     CompanionRecord {
@@ -282,6 +296,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.128"),
         ability_keys: &["Companion Advancement ~ Elephant (Mastodon)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 21,
     },
     CompanionRecord {
@@ -300,6 +315,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.157"),
         ability_keys: &["Goblin Dog ~ Allergic Reaction", "Companion Advancement ~ Goblin Dog"],
         external_ability_refs: &["Immunity to Disease"],
+        source_file: "b1_races_companion.lst",
         source_line: 22,
     },
     CompanionRecord {
@@ -318,6 +334,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.174"),
         ability_keys: &["Companion Advancement ~ Herd Animal (Aurochs)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 23,
     },
     CompanionRecord {
@@ -336,6 +353,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.174"),
         ability_keys: &["Companion Advancement ~ Herd Animal (Aurochs)"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 24,
     },
     CompanionRecord {
@@ -354,6 +372,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.179"),
         ability_keys: &["Companion Advancement ~ Hyena"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 25,
     },
     CompanionRecord {
@@ -372,6 +391,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.194"),
         ability_keys: &["Companion Advancement ~ Monitor Lizard", "Lizard Monitor ~ Poison"],
         external_ability_refs: &["Grab", "Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 26,
     },
     CompanionRecord {
@@ -390,6 +410,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.219"),
         ability_keys: &["Octopus ~ Ink Cloud", "Octopus ~ Jet", "Companion Advancement ~ Octopus", "Octopus ~ Poison"],
         external_ability_refs: &["Can't Be Tripped", "Grab"],
+        source_file: "b1_races_companion.lst",
         source_line: 27,
     },
     CompanionRecord {
@@ -408,6 +429,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.235"),
         ability_keys: &["Companion Advancement ~ Rhinoceros"],
         external_ability_refs: &["Scent"],
+        source_file: "b1_races_companion.lst",
         source_line: 28,
     },
     CompanionRecord {
@@ -426,6 +448,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.236"),
         ability_keys: &["Companion Advancement ~ Roc"],
         external_ability_refs: &["Flight Maneuverability"],
+        source_file: "b1_races_companion.lst",
         source_line: 29,
     },
     CompanionRecord {
@@ -444,6 +467,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.259"),
         ability_keys: &["Squid ~ Ink Cloud", "Squid ~ Jet", "Companion Advancement ~ Squid"],
         external_ability_refs: &["Grab"],
+        source_file: "b1_races_companion.lst",
         source_line: 30,
     },
 ];
@@ -461,6 +485,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Bat (Dire))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 6,
     },
     CompanionAbilityRecord {
@@ -474,6 +499,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dinosaur (Ankylosaurus))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 7,
     },
     CompanionAbilityRecord {
@@ -487,6 +513,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dinosaur (Brachiosaurus))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -500,6 +527,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dinosaur (Elasmosaurus))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -513,6 +541,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dinosaur (Pteranodon))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 10,
     },
     CompanionAbilityRecord {
@@ -526,6 +555,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dinosaur (Stegosaurus))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -539,6 +569,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dinosaur (Triceratops))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 12,
     },
     CompanionAbilityRecord {
@@ -552,6 +583,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dinosaur (Tyrannosaurus))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 13,
     },
     CompanionAbilityRecord {
@@ -565,6 +597,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }],
         source_page: None,
         owners: &["Companion (Dolphin)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 14,
     },
     CompanionAbilityRecord {
@@ -578,6 +611,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dolphin (Orca))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 15,
     },
     CompanionAbilityRecord {
@@ -591,6 +625,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }],
         source_page: None,
         owners: &["Companion (Frog (Giant))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 16,
     },
     CompanionAbilityRecord {
@@ -604,6 +639,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "DEX", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Eel (Electric))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 17,
     },
     CompanionAbilityRecord {
@@ -617,6 +653,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Eel (Giant Moray))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 18,
     },
     CompanionAbilityRecord {
@@ -630,6 +667,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Elephant (Mastodon))", "Companion (Elephant)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 19,
     },
     CompanionAbilityRecord {
@@ -643,6 +681,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Goblin Dog)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 20,
     },
     CompanionAbilityRecord {
@@ -656,6 +695,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Herd Animal (Aurochs))", "Companion (Herd Animal (Bison))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 21,
     },
     CompanionAbilityRecord {
@@ -669,6 +709,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Hyena)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 22,
     },
     CompanionAbilityRecord {
@@ -682,6 +723,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Lizard (Monitor))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 23,
     },
     CompanionAbilityRecord {
@@ -695,6 +737,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }],
         source_page: None,
         owners: &["Companion (Octopus)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 24,
     },
     CompanionAbilityRecord {
@@ -708,6 +751,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Rhinoceros)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 25,
     },
     CompanionAbilityRecord {
@@ -721,6 +765,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Roc)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 26,
     },
     CompanionAbilityRecord {
@@ -734,6 +779,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Squid)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 27,
     },
     CompanionAbilityRecord {
@@ -747,6 +793,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.83"),
         owners: &["Companion (Dinosaur (Ankylosaurus))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 31,
     },
     CompanionAbilityRecord {
@@ -760,6 +807,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.88"),
         owners: &["Companion (Dolphin)", "Companion (Dolphin (Orca))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 32,
     },
     CompanionAbilityRecord {
@@ -773,6 +821,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.119"),
         owners: &["Companion (Eel (Electric))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 33,
     },
     CompanionAbilityRecord {
@@ -786,6 +835,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.135"),
         owners: &["Companion (Frog (Giant))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 34,
     },
     CompanionAbilityRecord {
@@ -799,6 +849,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.119"),
         owners: &["Companion (Eel (Giant Moray))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 35,
     },
     CompanionAbilityRecord {
@@ -812,6 +863,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.157"),
         owners: &["Companion (Goblin Dog)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 36,
     },
     CompanionAbilityRecord {
@@ -825,6 +877,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.194"),
         owners: &["Companion (Lizard (Monitor))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 37,
     },
     CompanionAbilityRecord {
@@ -838,6 +891,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.219"),
         owners: &["Companion (Octopus)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 38,
     },
     CompanionAbilityRecord {
@@ -851,6 +905,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.219"),
         owners: &["Companion (Octopus)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 39,
     },
     CompanionAbilityRecord {
@@ -864,6 +919,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.219"),
         owners: &["Companion (Octopus)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 40,
     },
     CompanionAbilityRecord {
@@ -877,6 +933,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.259"),
         owners: &["Companion (Squid)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 41,
     },
     CompanionAbilityRecord {
@@ -890,6 +947,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Squid)"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 42,
     },
     CompanionAbilityRecord {
@@ -903,6 +961,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.86"),
         owners: &["Companion (Dinosaur (Tyrannosaurus))"],
+        source_file: "b1_abilities_companion.lst",
         source_line: 43,
     },
 ];

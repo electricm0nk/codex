@@ -1,4 +1,8 @@
-//! Bestiary 3 (`SOURCESHORT:B3`) — `monster` + `monster_ability`.
+//! Bestiary 3 (`SOURCESHORT:B3`) — `monster` + `monster_ability` + `companion`.
+//!
+//! The `companion` family was added by SD-29 Epic 7 round 4 and is documented
+//! above this file's test module; it draws on four `.lst` files none of the
+//! monster text below mentions. The two families share only a `RuleSetId`.
 //!
 //! **261 of this book's 261 monster rows and 27 of its 40 ability rows ship.**
 //! Every exclusion is one class — an ability no monster row of this book owns —
@@ -105,12 +109,14 @@
 //! commented out at `b3_races.lst:293`, so it has no owner and is dropped by the
 //! pass that actually applies to it.
 
+mod companion_data;
 mod monster_data;
 
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
     NaturalAttack, Speed,
 };
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
 
 /// Every monster stat block this book defines, in corpus row order.
 pub const fn monsters_static() -> &'static [MonsterStatBlock] {
@@ -130,6 +136,48 @@ pub fn monsters() -> &'static [MonsterStatBlock] {
 /// Every monster-ability record this book defines, in corpus row order.
 pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
     monster_abilities_static()
+}
+
+// ---------------------------------------------------------------------------
+// SD-29 Epic 7 round 4 (`SD29-E7-F2-005`) — this book's `companion` family.
+//
+// The second family Bestiary 3 contributes, and it shares nothing with the
+// monsters above but a `RuleSetId`: different `.lst` files, different chassis,
+// different catalog screen. `decisions.md §51.5` rules that two lanes
+// registering families of one book is the designed path, and the monster lane
+// having already compiled `RuleSetId::B3` in `9595bd82` is what made this
+// registration free of any scope flip.
+//
+// **All 85 companion units ship** — 31 creature rows and all 54 ability rows,
+// with no `OPEN_FINDINGS` shortfall, drawn from four `.lst` files.
+//
+// The round expected 19 orphans here and found none. Six creature rows of this
+// book carry an `OUTPUTNAME:` that differs from their `KEY:`
+// (`KEY:Kyton (Augur)` / `OUTPUTNAME:Augur`, and likewise `Archon (Harbinger)`,
+// `Div (Doru)`, `Dragon (Faerie)`, `Oni (Spirit)`, `Rakshasa (Raktavarna)`), and
+// their ability rows namespace by the display name — `Augur ~ Spell-Like
+// Abilities`. Those six own all 19 rows the classifier had reported as orphans.
+// Reading the token is ownership shape 5 (`decisions.md §56.1`).
+// ---------------------------------------------------------------------------
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
 }
 
 #[cfg(test)]

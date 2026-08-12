@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_3:companion:companion_advancement_iguanodon",
+      "bestiary_3:companion:iguanodon_thumb_spikes"
+    ],
+    "corpus_key": "Companion (Iguanodon)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:companion:companion_iguanodon",
+    "monster_class": "Companion:2",
+    "name": "Companion (Iguanodon)",
+    "natural_armor": 3,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "AnimalCompanionDinosaur",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": null,
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 6
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_companion.lst",
+    "sha256": "7daa4e30be5659884ac06587264a899d801b61d1a9bd316a2e3a2c380958c374",
+    "line": 16,
+    "record_key": "Companion (Iguanodon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

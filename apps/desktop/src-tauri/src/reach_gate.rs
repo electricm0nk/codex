@@ -1226,6 +1226,19 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // `the_companion_rows_are_not_this_module_s_monster_rows` pins that
         // they never collide.
         ("beastiary1", "companions") => Some(companions_reach("beastiary", "B1")),
+        // SD-29 Epic 7 round 4. Bestiary 3's companions — the SECOND claim this
+        // book carries, beside `("bestiary_3", "monsters")` the monster lane
+        // wrote in `9595bd82`. Same both-families-from-one-book shape Bestiary 1
+        // and Bestiary 2 already have (`decisions.md §51.5`).
+        //
+        // ALL 85 of the book's companion units ship, with no `OPEN_FINDINGS`
+        // shortfall. That was not the plan: the round opened expecting 19
+        // orphans and built the drop-and-record disposition `§50` prescribes,
+        // then found the 19 were never orphans at all — their creature rows are
+        // namespaced by `OUTPUTNAME:` (`KEY:Kyton (Augur)` displays as `Augur`,
+        // and its abilities are keyed `Augur ~ …`). Reading that token is
+        // ownership shape 5 (`decisions.md §56.1`).
+        ("bestiary_3", "companions") => Some(companions_reach("bestiary_3", "B3")),
 
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,

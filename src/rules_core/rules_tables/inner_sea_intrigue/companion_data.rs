@@ -6,7 +6,7 @@
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
 //! line count over the `.lst`.
 //!
-//! Sources, with the line each record was read from carried per row:
+//! Sources, with the file AND line each record was read from carried per row:
 //!   * `isi_races_companion.lst` -- 2 companion creature rows
 //!   * `isi_abilities_race_companion.lst` -- 9 companion ability rows
 
@@ -30,6 +30,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.47"),
         ability_keys: &["Clockwork Spy ~ Record Audio", "Clockwork Spy ~ Self-Destruct", "Clockwork Spy ~ Tinkering"],
         external_ability_refs: &["Flight Maneuverability"],
+        source_file: "isi_races_companion.lst",
         source_line: 8,
     },
     CompanionRecord {
@@ -48,6 +49,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.47"),
         ability_keys: &["Clockwork Familiar ~ Electricity", "Clockwork Familiar ~ Item Installation", "Clockwork Familiar ~ Tinkering", "Clockwork Familiar ~ Potion Installation", "Clockwork Familiar ~ Scroll Installation", "Clockwork Familiar ~ Wand Installation"],
         external_ability_refs: &["Flight Maneuverability"],
+        source_file: "isi_races_companion.lst",
         source_line: 9,
     },
 ];
@@ -65,6 +67,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Spy)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -78,6 +81,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Spy)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 12,
     },
     CompanionAbilityRecord {
@@ -91,6 +95,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Spy)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 13,
     },
     CompanionAbilityRecord {
@@ -104,6 +109,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 26,
     },
     CompanionAbilityRecord {
@@ -117,6 +123,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 27,
     },
     CompanionAbilityRecord {
@@ -130,6 +137,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 28,
     },
     CompanionAbilityRecord {
@@ -143,6 +151,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 30,
     },
     CompanionAbilityRecord {
@@ -156,6 +165,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 31,
     },
     CompanionAbilityRecord {
@@ -169,6 +179,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Familiar (Clockwork Familiar)"],
+        source_file: "isi_abilities_race_companion.lst",
         source_line: 32,
     },
 ];

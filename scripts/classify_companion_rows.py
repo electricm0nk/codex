@@ -246,6 +246,28 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
     creature_keys = {u["corpus_key"] for u in creatures}
     creature_species = {bare_species(k): k for k in creature_keys}
 
+    # Shape 5, DISPLAY-NAME namespacing.  An ability row's `<X> ~ <Y>` prefix is
+    # not always the creature's `KEY:`; it can be the creature's `OUTPUTNAME:`,
+    # which is what a player actually sees.  Bestiary 3 is where this first
+    # matters: `KEY:Kyton (Augur)` carries `OUTPUTNAME:Augur`, and its six
+    # abilities are keyed `Augur ~ Spell-Like Abilities` and so on.  Six of that
+    # book's creature rows are shaped this way and they own 19 ability rows
+    # between them -- every single row the lane was about to write off as an
+    # orphan (`decisions.md §56.1`).
+    #
+    # Read from the row's own `OUTPUTNAME:` token, never inferred by unwrapping
+    # `Kyton (Augur)` into `Augur`: `bare_species` unwraps the two COMPANION
+    # wrappers the corpus uses as wrappers (`Companion (`, `Familiar (`), while
+    # `Kyton (Augur)` is a genus-and-species key whose parenthesis means
+    # something else entirely.  Generalising the unwrap would have produced the
+    # right answer here by luck and the wrong one for `Familiar (Fox)`.
+    creature_display: dict[str, str] = {}
+    for unit in creatures:
+        path = resolve_source_file(directory, unit["source_file"])
+        display = token(read_row(path, unit["source_line"]), "OUTPUTNAME:")
+        if display:
+            creature_display[display] = unit["corpus_key"]
+
     ability_by_key = {u["corpus_key"]: u for u in abilities}
     ability_by_name = {u["name"]: u for u in abilities}
 
@@ -264,11 +286,11 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
         path = resolve_source_file(directory, unit["source_file"])
         row = read_row(path, unit["source_line"])
         for owner in prerace_owners(row):
-            if owner in creature_keys or owner in creature_species:
+            if owner in creature_keys or owner in creature_species or owner in creature_display:
                 owned_prerace.add(key)
         if " ~ " in key:
             prefix = key.split(" ~ ")[0]
-            if prefix in creature_keys or prefix in creature_species:
+            if prefix in creature_keys or prefix in creature_species or prefix in creature_display:
                 owned_prefix.add(key)
 
     # Shape 4, granted-by: shape 1's own token read on an ability row that is

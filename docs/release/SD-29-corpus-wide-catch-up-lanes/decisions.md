@@ -4120,6 +4120,197 @@ the real cost of that book, not its 807 rows.
 worth distinguishing: the two shapes read identically in the classifier's output and mean opposite
 things. Running a per-monster cycle against either remains a reportable hard stop.
 
+
+---
+
+## Decision 56 — Companion Lane, extend: round 4 (2026-08-12, `sd29-companion-r8`, card `epic-7-companion-lane-extend`)
+
+Round 4 was dispatched with `§54`'s closing sentence as its marching order: **"round 4 has no
+orphan-free book left"**, so its first move had to be the scoped-`Reach::Surfaced`-plus-
+`OPEN_FINDINGS` disposition `§50` prescribes, or a wait on `§48.1`'s operator ruling.
+
+That prediction was structurally identical to `§51.7`'s, which `§54` had just disproved one round
+earlier. **It was wrong the same way, for the same reason, and this is now the second consecutive
+round in which the orphan instrument was found to be UNDER-claiming.** The disposition was built
+anyway — it is genuinely needed and it ships — and then Bestiary 3's 19 orphans turned out not to be
+orphans. The book landed with **85 units, all 85 grounded, zero `OPEN_FINDINGS` shortfall**.
+
+The lane's ceiling moved **up** again: **893 → 937**.
+
+### 56.1 Ownership shape 5: the namespace prefix can be the creature's DISPLAY name
+
+`classify_companion_rows.py` resolved a namespaced `KEY:<Owner> ~ <Leaf>` against two things: the
+creature `KEY:` set, and `bare_species`, which unwraps the corpus's two companion wrappers
+(`Companion (X)`, `Familiar (X)`). Bestiary 3 is where that is not enough.
+`b3_races_familiar.lst:18`:
+
+```
+Kyton, Augur   SORTKEY:Kyton   KEY:Kyton (Augur)   OUTPUTNAME:Augur   ...
+```
+
+The creature's key is `Kyton (Augur)`. Its six ability rows are keyed `Augur ~ Spell-Like
+Abilities`, `Augur ~ Unnerving Gaze`, and so on — namespaced to the **`OUTPUTNAME:`**, which is what
+a player actually sees, not to the `KEY:`. Under shapes 1-4 nobody claims them.
+
+Six of this book's 31 creature rows are shaped this way, and between them they own **all 19** rows
+the classifier reported as orphans:
+
+| creature `KEY:` | `OUTPUTNAME:` | orphan rows it owns |
+|---|---|---|
+| `Kyton (Augur)` | `Augur` | 2 |
+| `Div (Doru)` | `Doru` | 2 |
+| `Dragon (Faerie)` | `Faerie Dragon` | 3 |
+| `Archon (Harbinger)` | `Harbinger Archon` | 5 |
+| `Rakshasa (Raktavarna)` | `Raktavarna` | 4 |
+| `Oni (Spirit)` | `Spirit Oni` | 3 |
+
+**Shape 5, display-name:** the `<Owner>` of shape 3, resolved additionally through a map built from
+each creature row's own `OUTPUTNAME:` token.
+
+**The token is READ, never inferred.** The tempting fix is to generalise `bare_species` to unwrap
+any `X (Y)` into `Y` — it produces `Augur` from `Kyton (Augur)` and would have made this book pass.
+It is wrong. The same file carries `Familiar (Flying Squirrel)`, `Familiar (Fox)`, `Familiar (Goat)`,
+`Familiar (Otter)`, `Familiar (Pig)`, `Familiar (Raccoon)`, where the parenthesis is a **wrapper**
+and the inner word is the species; in `Kyton (Augur)` the parenthesis separates a **genus from a
+species** and the display name is a rearrangement the corpus states explicitly
+(`Archon (Harbinger)` → `Harbinger Archon`, which no string surgery over the key produces at all).
+A generalised unwrap would have been right here by luck and wrong next door. `OUTPUTNAME:` is the
+corpus's own statement of the answer, and the corpus is the only authority this lane accepts.
+
+**Both instruments learned it.** `classify_companion_rows.py`'s ORPHAN column and what
+`transcribe_companion_tables.py` drops must agree; `§54.2` records the round where they did not, and
+the classifier printed 886 while every doc carried 879. The shape is implemented in both files, and
+the four new chassis tests pin the result rather than the method.
+
+**The habit this is the second instance of.** Every correction the lane's orphan instrument has taken
+— `§48.1` 1,696 → 888, `§51.1` 888 → 879 — was the instrument finding it had OVER-claimed reach.
+`§54.1` was the first that went the other way, and this is the second. The lane has now been wrong in
+the same direction twice in a row, and both times the discovery came from *looking at the specific
+rows* a book was about to lose rather than from trusting the count. **A round that accepts an orphan
+figure without reading the rows behind it is making the mistake this decision documents.**
+`§45.1` says classify before committing to a book; round 4 amends it: classify, and then read what
+the classifier is about to throw away.
+
+### 56.2 `CompanionBookSpec` was a single-file spec that read as though it were general
+
+`§54`'s hazard (c) named this and it was correct: Bestiary 3 carries `b3_races_companion.lst` **and**
+`b3_races_familiar.lst`, `b3_abilities_companion.lst` **and** `b3_abilities_familiar.lst`. Every book
+registered before it had exactly one file per shape, so `races_lst: &'static str` had never been
+wrong.
+
+The failure it would have produced is not a compile error. `verified_citation_line(&races_file,
+record.source_line, record.name)` checks that the cited line really carries the record's name — a
+genuinely good guard, and the reason this lane's citations are trustworthy. With one file assumed and
+four in play, it would have verified a `b3_races_familiar.lst` record's line number **against
+`b3_races_companion.lst`**, and either panicked with a misleading message or, worse, matched a
+different row that happened to share a name.
+
+Fixed by following a precedent that already existed in the same file: `MonsterBookSpec::races_lsts`
+has been a `&'static [&'static str]` since Inner Sea World Guide, and `gen_monster_book` keys a
+`HashMap<&str, CorpusFile>` by file name and looks up **per record**. `CompanionBookSpec` now does
+exactly that, for both shapes, and `CompanionRecord`/`CompanionAbilityRecord` carry a `source_file`
+beside their `source_line`. The generator panics by name if a record cites a file its book's spec
+does not list — "a citation this generator cannot verify is not a citation", the monster generator's
+own words.
+
+**All 8 previously-registered books were regenerated, not hand-edited**, and the diff was checked to
+be purely additive before it was committed: `git diff -U0 -- '*/companion_data.rs' | grep -E
+"^[+-].*(CompanionRecord \{|CompanionAbilityRecord \{)"` → **no output**, i.e. not one record was
+added or lost in any of the eight.
+
+### 56.3 The orphan-drop disposition ships, and is not exercised by this round's book
+
+`§50`'s disposition — transcribe the linked subset, drop the orphans, name them in the generated
+header, carry them as an `OPEN_FINDINGS` entry — **is implemented** in
+`transcribe_companion_tables.py`, and the registration predicate in `companion_chassis`'s module doc
+moves with it:
+
+* **was:** a book is registerable when EVERY one of its ability rows has an owner (per-book).
+* **now:** a book may leave rows behind, but it may never SHIP a row nothing can reach (per-row).
+
+The second half is the one that matters and it is now a test —
+`every_shipped_ability_row_is_owned_by_a_creature_of_its_own_book` — asserting over every registered
+book that no shipped ability has an empty `owners`, and that every owner named is a creature row of
+that same book.
+
+**Bestiary 3 does not exercise the drop path**, because shape 5 left it with nothing to drop. This is
+stated rather than hidden: the mechanism is live code on the path every future book takes, and
+`bestiary_4` (5 orphans), `core_essentials` (26), `ultimate_wilderness` (247) will exercise it. A
+successor should not read "the disposition is built" as "the disposition has been proven on a real
+book" — it has not, and that is this round's honest shortfall.
+
+### 56.4 Re-derived denominators, and where the 699 in the dispatch brief went
+
+The dispatch brief carried `§54`'s **699** as the honest remainder and instructed that a disagreeing
+derivation wins. It reproduced **exactly** before shape 5 was written — the same command over the same
+nine books printed `reachable remainder : 699` — so `§54`'s figure was correct when written and is
+superseded by a mechanism change, not by an error.
+
+Corpus-wide, over all 17 books that carry companion units
+(`python3 scripts/classify_companion_rows.py inner_sea_combat monster_codex inner_sea_intrigue
+horror_adventures bestiary_5 bestiary_6 bestiary_2 bestiary bestiary_3 bestiary_4 core_essentials
+ultimate_wilderness core_rulebook advanced_race_guide ultimate_magic book_of_the_damned_volume_1
+advanced_players_guide`):
+
+| measure | value |
+|---|---|
+| total companion units in scope | **1,696** |
+| orphan ability rows | **750** (was 794; shape 5 recovered 44) |
+| `PRECAMPAIGN`-gated on an uningested campaign | 2 |
+| `*_classes_companion.lst` class rows the chassis refuses | 7 |
+| **reachable remainder (the lane's REAL ceiling)** | **937** (was 893) |
+
+Grounded, from the regenerated inventory
+(`python3 -c "import json,collections; inv=json.load(open('docs/work-inventory.json'));
+print(collections.Counter(x['status'] for x in inv['units'] if x['kind']=='companion'))"`):
+**279 grounded**, 1,337 `not-ingested`, 80 `not-started`. That is 194 + 85, closing exactly on this
+round's ingest.
+
+**Honest remainder after round 4: `937 - 279 = 658`.**
+
+The `1,696 - 279 = 1,417` a status reader would compute from the inventory alone is NOT the lane's
+workload, and never was; 759 of it (750 orphans + 2 gated + 7 class rows) is a ceiling no ingest can
+cross without a chassis change priced separately.
+
+### 56.5 Round 5's queue, ranked by orphan share and re-derived this round
+
+Every figure below is from this round's own classifier run, after shape 5:
+
+| book | units | orphans | share | reachable |
+|---|---|---|---|---|
+| `bestiary_4` | 80 | 5 | 6% | **75** |
+| `core_essentials` | 145 | 26 | 18% | **119** |
+| `ultimate_wilderness` | 575 | 247 | 43% | **328** |
+| `core_rulebook` | 170 | 84 | 49% | **84** |
+| `advanced_race_guide` | 32 | 18 | 56% | **14** |
+| `ultimate_magic` | 170 | 135 | 79% | **32** |
+| `book_of_the_damned_volume_1` | 31 | 27 | 87% | **2** |
+| `advanced_players_guide` | 212 | 208 | 98% | **4** |
+
+The reachable column sums to **658**, which is the honest remainder `937 - 279` independently — the
+two derivations close exactly. Note that a book's reachable count subtracts its class rows as well as
+its orphans, which is why `core_rulebook` is 84 rather than 86 and `ultimate_magic` 32 rather than
+35; the first draft of this table got all three of those wrong by subtracting orphans only, and the
+sum is what caught it.
+
+`core_essentials` improved most under shape 5 (51 orphans → 26), and is now the second-cleanest book
+left rather than the third.
+
+**Hazards carried forward, re-checked rather than copied:**
+
+1. **`bestiary_4` is still the monster lane's next target** (`§52.8`), and it needs a new
+   `RuleSetId::B4` — the collision `§54`'s hazard (a) named. It is unchanged and still real: check
+   `git log origin/tranche/9` before writing `RuleSetId::B4`. Round 4 avoided it by taking
+   `bestiary_3`, whose `RuleSetId::B3` the monster lane had already compiled.
+2. **`ultimate_wilderness`, `core_rulebook`, `ultimate_magic` and `book_of_the_damned_volume_1` carry
+   `*_classes_companion.lst` rows** the chassis refuses outright (7 in total). The transcriber raises
+   on them by name; it does not silently drop them.
+3. **`core_essentials` has 6 companion `.lst` files.** The multi-file spec built this round handles
+   it — that hazard is now closed, not merely named.
+4. **Shape 5 has not been swept over the already-registered books' ORPHAN counts for a REGRESSION**
+   beyond confirming all 8 still report 0 orphans and that their record counts did not move. Both
+   were checked and both hold.
+
 ---
 
 ## Decision 57 — Monster / Monster-Ability Lane, extend: round 6 (2026-08-12, `sd29-monster-r8`, card `epic-5-monster-lane-extend`)

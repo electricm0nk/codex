@@ -6,7 +6,7 @@
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
 //! line count over the `.lst`.
 //!
-//! Sources, with the line each record was read from carried per row:
+//! Sources, with the file AND line each record was read from carried per row:
 //!   * `b6_races_companion.lst` -- 14 companion creature rows
 //!   * `b6_abilities_companion.lst` -- 12 companion ability rows
 
@@ -30,6 +30,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.311"),
         ability_keys: &["Companion Advancement ~ Amargasaurus"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 4,
     },
     CompanionRecord {
@@ -48,6 +49,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.311"),
         ability_keys: &["Companion Advancement ~ Brontotherium"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 5,
     },
     CompanionRecord {
@@ -66,6 +68,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.311"),
         ability_keys: &["Companion Advancement ~ Deinotherium"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 6,
     },
     CompanionRecord {
@@ -84,6 +87,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.311"),
         ability_keys: &["Companion Advancement ~ Devil Monkey"],
         external_ability_refs: &[],
+        source_file: "b6_races_companion.lst",
         source_line: 7,
     },
     CompanionRecord {
@@ -102,6 +106,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Dunkleosteus"],
         external_ability_refs: &[],
+        source_file: "b6_races_companion.lst",
         source_line: 8,
     },
     CompanionRecord {
@@ -120,6 +125,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Elasmotherium"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 9,
     },
     CompanionRecord {
@@ -138,6 +144,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Giganotosaurus"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 10,
     },
     CompanionRecord {
@@ -156,6 +163,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Kentrosaurus"],
         external_ability_refs: &["Kentrosaurus ~ Impaling Strike"],
+        source_file: "b6_races_companion.lst",
         source_line: 11,
     },
     CompanionRecord {
@@ -174,6 +182,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Mokele-Mbembe"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 12,
     },
     CompanionRecord {
@@ -192,6 +201,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Quetzalcoatlus"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 13,
     },
     CompanionRecord {
@@ -210,6 +220,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Raven (Giant)"],
         external_ability_refs: &["Giant Raven ~ Scavenger"],
+        source_file: "b6_races_companion.lst",
         source_line: 14,
     },
     CompanionRecord {
@@ -228,6 +239,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.312"),
         ability_keys: &["Companion Advancement ~ Titanoboa"],
         external_ability_refs: &["Scent"],
+        source_file: "b6_races_companion.lst",
         source_line: 15,
     },
     CompanionRecord {
@@ -246,6 +258,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.66"),
         ability_keys: &[],
         external_ability_refs: &["Amphibious"],
+        source_file: "b6_races_companion.lst",
         source_line: 18,
     },
     CompanionRecord {
@@ -264,6 +277,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.189"),
         ability_keys: &[],
         external_ability_refs: &[],
+        source_file: "b6_races_companion.lst",
         source_line: 19,
     },
 ];
@@ -281,6 +295,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Amargasaurus)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 4,
     },
     CompanionAbilityRecord {
@@ -294,6 +309,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Brontotherium)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 5,
     },
     CompanionAbilityRecord {
@@ -307,6 +323,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Deinotherium)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 6,
     },
     CompanionAbilityRecord {
@@ -320,6 +337,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Devil Monkey)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 7,
     },
     CompanionAbilityRecord {
@@ -333,6 +351,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Dunkleosteus)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -346,6 +365,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Elasmotherium)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -359,6 +379,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Giganotosaurus)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 10,
     },
     CompanionAbilityRecord {
@@ -372,6 +393,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Kentrosaurus)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -385,6 +407,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Mokele-Mbembe)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 12,
     },
     CompanionAbilityRecord {
@@ -398,6 +421,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Quetzalcoatlus)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 13,
     },
     CompanionAbilityRecord {
@@ -411,6 +435,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Raven (Giant))"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 14,
     },
     CompanionAbilityRecord {
@@ -424,6 +449,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Titanoboa)"],
+        source_file: "b6_abilities_companion.lst",
         source_line: 15,
     },
 ];
