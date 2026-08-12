@@ -4840,6 +4840,47 @@ running it rather than reasoning about it.
 reachable-exhausted but not monster-exhausted — and its 40 remaining units are lane floor, not queued
 work. **Still eleven books holding 716 orphan abilities and zero remaining monsters**, re-derived
 this round rather than incremented.
+
+### 58.6 Three gate stages this round's own ingest turned red, and none of them was environmental
+
+`./scripts/verify.sh` run 1 came back **12 of 15 green** with `pi-sweep`, `root-full` and `clippy`
+red. Each is a different class and each is worth naming, because "the gate went red on an ingest
+round" is exactly the shape a lane learns to wave through.
+
+**(a) `pi-sweep` — a comment explaining a Product Identity removal named the term.** Two doc comments
+this round wrote, one in `rules_tables::inner_sea_bestiary` and one on `RuleSetId::Isb`, spelled the
+deity's name while stating *why the records carrying it were dropped*. `§52.5` recorded exactly this
+("a comment recording a FALSE positive instantiates the name as surely as one recording a removal")
+and this round re-paid it anyway, in the very module documenting the removal. `pi-sweep` rejects a
+term anywhere under `rules_tables/` and does not read intent. Both rewritten to name the **screen**
+(`pi_screening::PI_BLACKLIST_TERMS`) rather than the term; the corpus line numbers already pinned in
+`the_product_identity_rows_are_not_records` were always the better identifier.
+
+**(b) `root-full` — one test of 6,288: an SD-30 roster assertion this book's ingest flipped.**
+`sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books` asserts
+`inner_sea_bestiary` is registered `future_state`; it is `in_scope` now. Closed the way `§47.3` ruled
+and three lanes have closed it before — the book joins
+`SD29_INGESTED_CAMPAIGN_SETTING_BOOKS` as its own stated claim with the partial-ingest arithmetic in
+the comment, rather than the roster being relaxed or the book dropped. **This is the fourth time a
+lane has hit this test**, which is itself the finding: the assertion is correct and the cost is one
+line per book, but nothing tells an ingesting lane it exists until the gate does.
+
+**(c) `clippy` — `root: 55 warnings exceeds recorded ceiling 54`.** `identity_op` on
+`230 - 26 - 7 - 0`, where the `- 0` was the classifier's `.COPY=` term written out to keep the
+four-term arithmetic legible against the receipt. Carried as a comment now.
+
+**All three were fixed and pushed the moment they existed rather than held to cycle end**, because
+`378b7b70` was already on `origin/tranche/9` where (a) and (c) turn a **concurrent** lane's gate red
+through no fault of its own — the 22-minute cost `§52.5` records and the mitigation `§57.5(b)`
+states. Each was verified individually before the gate was re-run, rather than re-running the whole
+gate hopefully: `cargo test --locked --test pi_table_sweep` → 6 passed;
+`cargo test --locked --test v06_work_inventory sd30_campaign_setting_books` → 1 passed;
+`cargo clippy --locked --tests -j 2 | grep -c inner_sea_bestiary` → 0.
+
+**Run 2: `VERIFY_EXIT=0`, 14 of 14 green** — `root-full` 6,289 passed across 544 suites with all 525
+`tests/*.rs` suites executed, `reach` 27, `clippy` root:54 back at the ceiling. No stage failed twice
+with the same attribution, so `§39`'s recurrence rule is not engaged and nothing was accepted as
+environmental.
 ## Decision 59 — Companion Lane, extend: round 5 (2026-08-12, `sd29-companion-r9`, card `epic-7-companion-lane-extend`)
 
 Round 5 took `bestiary_4`, the cleanest book left by the ranking `§56` published (80 units, 5
