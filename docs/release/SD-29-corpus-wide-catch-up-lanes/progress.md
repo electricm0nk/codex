@@ -8388,8 +8388,7 @@ preserved.
 (work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-8`)
 **Branch-point:** `21ead5d7` · **Commits:** `69e0dec8` (the ingest and both screens), `4524efa2`
 (the three gate stages it turned red), `595e1e87` (merge of the concurrent race-trait lane),
-`4667c616` (item-8 evidence + the inventory re-derived on the merged tree), plus the receipt commit
-carrying this section. **Every one was pushed to `origin/tranche/9` as it landed** and verified there
+`4667c616` (item-8 evidence + the inventory re-derived on the merged tree), `5f21bb10` (this receipt). **Every one was pushed to `origin/tranche/9` as it landed** and verified there
 by content, not by a push message: `git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_2/monster_data.rs | grep -c 'MonsterStatBlock {'` → **314**
 **Kanban status left at:** `READY — round 5. 715 units ingested; 3,495 remaining by raw count,
 2,055 by the lane's REAL ceiling. Card stays READY.`
