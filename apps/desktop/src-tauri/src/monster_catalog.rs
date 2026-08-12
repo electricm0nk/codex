@@ -664,7 +664,7 @@ mod tests {
     /// namespace. This is the same fix the Epic 5 pilot applied when Bonus
     /// Bestiary widened these denominators, one level finer: there a book code
     /// separated the two tables, here only the key does.
-    fn sd22_rows(entries: &[MonsterCatalogEntryDto]) -> Vec<&MonsterCatalogEntryDto> {
+    fn hand_modelled_rows(entries: &[MonsterCatalogEntryDto]) -> Vec<&MonsterCatalogEntryDto> {
         entries
             .iter()
             .filter(|e| e.book == BOOK_B1 && e.key.starts_with("beastiary1:monster:"))
@@ -957,7 +957,7 @@ mod tests {
     #[test]
     fn every_served_key_resolves_back_to_its_record() {
         let all = build_monster_catalog().entries;
-        for entry in sd22_rows(&all) {
+        for entry in hand_modelled_rows(&all) {
             let resolved = beastiary1::monster_key_resolve(&entry.key, RuleSetId::Bestiary1)
                 .unwrap_or_else(|| panic!("served key `{}` resolves to no record", entry.key));
             assert_eq!(resolved.name, entry.name);
@@ -1086,7 +1086,7 @@ mod tests {
         // whatsoever, not merely a walk speed of 0). `speed_ft` is 0
         // because the row states no walk movement, never a guessed value.
         let entries = build_monster_catalog().entries;
-        let landless: Vec<&str> = sd22_rows(&entries)
+        let landless: Vec<&str> = hand_modelled_rows(&entries)
             .into_iter()
             .filter(|entry| entry.speed_ft == 0)
             .map(|entry| entry.name.as_str())
@@ -1333,7 +1333,7 @@ mod tests {
         // population it was written for, so the book filter is the fix and the
         // new book gets its own assertion below.
         let entries = build_monster_catalog().entries;
-        let with_subtype: Vec<&MonsterCatalogEntryDto> = sd22_rows(&entries)
+        let with_subtype: Vec<&MonsterCatalogEntryDto> = hand_modelled_rows(&entries)
             .into_iter()
             .filter(|entry| entry.race_subtype.is_some())
             .collect();

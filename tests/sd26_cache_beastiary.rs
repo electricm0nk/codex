@@ -62,7 +62,7 @@ fn load_all(kind: &str) -> Vec<(PathBuf, Value)> {
 /// honest: a chassis record that started carrying `data.id` would be caught
 /// here, and `the_directory_holds_both_tables_records` below pins the two counts
 /// so neither half can quietly vanish behind the other's total.
-fn load_sd22_monsters() -> Vec<(PathBuf, Value)> {
+fn load_hand_modelled_monsters() -> Vec<(PathBuf, Value)> {
     load_all("monster")
         .into_iter()
         .filter(|(_, v)| v["data"].get("id").is_some())
@@ -170,10 +170,10 @@ fn assert_shape_b_record(path: &Path, record: &Value) {
 #[test]
 fn the_directory_holds_both_tables_records() {
     let all = load_all("monster");
-    let sd22 = load_sd22_monsters();
+    let hand_modelled = load_hand_modelled_monsters();
     let chassis: Vec<_> =
         all.iter().filter(|(_, v)| v["data"].get("key").is_some()).collect();
-    assert_eq!(sd22.len(), 46, "the SD-22 hand-modelled roster");
+    assert_eq!(hand_modelled.len(), 46, "the SD-22 hand-modelled roster");
     assert_eq!(
         chassis.len(),
         280,
@@ -181,7 +181,7 @@ fn the_directory_holds_both_tables_records() {
     );
     assert_eq!(
         all.len(),
-        sd22.len() + chassis.len(),
+        hand_modelled.len() + chassis.len(),
         "every record in the directory belongs to exactly one of the two tables"
     );
     for (path, record) in &chassis {
@@ -196,7 +196,7 @@ fn the_directory_holds_both_tables_records() {
 
 #[test]
 fn monster_cache_has_all_46_real_monsters_with_chassis_data() {
-    let records = load_sd22_monsters();
+    let records = load_hand_modelled_monsters();
     assert_eq!(records.len(), 46, "expected exactly the 46 real, corrected-roster Bestiary 1 monsters (MonsterId::ALL, decisions.md §11.6, raised from 41 by SD28-E16 subset 09)");
 
     let mut seen_names = HashSet::new();
@@ -262,7 +262,7 @@ fn monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape() {
     // `beastiary1::monster_key_resolve` accepts, so a consumer can
     // round-trip a cache record's id back into a live chassis-data
     // lookup.
-    let records = load_sd22_monsters();
+    let records = load_hand_modelled_monsters();
     for (path, record) in &records {
         let id = record["data"]["id"].as_str().unwrap();
         let expected_prefix = "beastiary1:monster:";
@@ -310,7 +310,7 @@ fn monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape() {
 /// decay.
 #[test]
 fn every_monster_cache_record_matches_its_shipped_stat_block_field_for_field() {
-    let records = load_sd22_monsters();
+    let records = load_hand_modelled_monsters();
     assert_eq!(records.len(), 46, "the real, corrected Bestiary 1 roster is 46 monsters");
 
     for (path, record) in &records {
