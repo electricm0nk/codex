@@ -104,13 +104,23 @@ case "$FAMILY" in
   # and every coordinate above is unchanged, verified on a live screenshot
   # rather than assumed.
   #
-  # SEARCH_Y=247 is CALIBRATED LIVE, not copied by analogy: this screen carries
-  # ONE facet-chip row (books) where the monster screen carries two, so 285 --
-  # the value every other single-chip-row family uses -- lands BELOW the box and
-  # the filter silently does not apply. The first run with 285 failed exactly
-  # that way (15 rows still shown), which is the filtered-count gate doing its
-  # job rather than a passing screenshot of an unfiltered list.
-  companion)  HUB_X=855;  HUB_Y=971; SEARCH_Y=247; SCREEN_MARKER="Companion Catalog"; MATCH_WORD="matching" ;;
+  # SEARCH_Y for this family is CALIBRATED LIVE every time the lane registers
+  # books, not copied by analogy, because THIS SCREEN'S CHIP ROW GROWS WITH THE
+  # CORPUS and the box moves with it. Two live calibrations so far:
+  #
+  #   247 — SD-29 Epic 7 round 1, 4 books, chips on ONE line. 285 (the value
+  #         every other single-chip-row family uses) landed BELOW the box; the
+  #         run was refused with "still shows 15 rows — filter did not apply".
+  #   285 — SD-29 Epic 7 round 2, 7 books. The chip row WRAPPED to two lines
+  #         (Bestiary 2's chip starts a second row), pushing the box down ~38px.
+  #         247 then landed ABOVE it and the run was refused with "still shows
+  #         77 rows". Same gate, opposite direction, one round apart.
+  #
+  # Both refusals are the filtered-count gate doing its job rather than
+  # screenshotting an unfiltered list and finding the record name in it. **The
+  # constant is a function of registered book count and WILL move again** — the
+  # next companion round should expect to recalibrate, and the gate will say so.
+  companion)  HUB_X=855;  HUB_Y=971; SEARCH_Y=285; SCREEN_MARKER="Companion Catalog"; MATCH_WORD="matching" ;;
   *) echo "FAIL: unknown --family '$FAMILY' (known: equipment spell race_trait monster companion)" >&2; exit 2 ;;
 esac
 SEARCH_X=960
