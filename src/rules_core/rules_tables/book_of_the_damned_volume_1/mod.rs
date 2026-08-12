@@ -30,7 +30,9 @@
 //! (That sentence originally named the setting. `pi_table_sweep` rejected it,
 //! correctly: the sweep does not read intent, and a doc comment explaining the
 //! PI screen has no need to instantiate a PI term to make its point. Reworded
-//! rather than baselined — `decisions.md §47.3`.)
+//! rather than baselined — `decisions.md §47.3`. Both lanes reworded it
+//! independently and within minutes, to nearly the same sentence; this is the
+//! merged form.)
 //!
 //! **It did not, and the derived reason is worth recording rather than
 //! rounding away.** `data/corpus/book_of_the_damned_volume_1/LICENSE.json`
@@ -40,6 +42,12 @@
 //! carries Product Identity lives in the book's chapters, not in a stat block.
 //! "Campaign setting" predicts a PI hit rate for `race_trait` and does not
 //! predict one for `monster`.
+//!
+//! This paragraph was itself the cycle's `pi-sweep` failure: naming the setting
+//! outright put a blacklisted term in a `rules_tables` source file. The sweep
+//! is a hard stop and the term was removed rather than baselined -- a doc
+//! comment does not need the proper noun to make its point, and baselining
+//! would have spent the exemption on prose.
 //!
 //! # The link shape is Monster Codex's, at scale
 //!
