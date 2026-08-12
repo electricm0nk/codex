@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Mi-Go ~ Evisceration",
+    "delivery": "Extraordinary",
+    "description": "A mi-go's claws are capable of swiftly and painfully performing surgical operations upon helpless creatures or those it has grappled. When a mi-go makes a successful grapple check, in addition to any other effects caused by a successful grapple, it deals sneak attack damage to the victim. A creature that takes this damage must succeed at a DC %1 Fortitude save or take 1d4 points of ability damage from the invasive surgery (the type of ability damage dealt is chosen by the mi-go at the time the evisceration occurs).",
+    "description_variables": [
+      "DEX+13"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:mi_go_evisceration",
+    "name": "Evisceration",
+    "owners": [
+      "bestiary_4:monster:mi_go"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1078,
+    "record_key": "Mi-Go ~ Evisceration"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dragon (Lunar) ~ Absolute Cold",
+    "delivery": "Supernatural",
+    "description": "An old or older lunar dragon's breath weapon can affect creatures immune to cold damage. A creature immune to cold damage still takes half damage from the breath weapon (no damage with a successful saving throw). Resistant creatures' cold resistance is treated as 10 less than normal.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dragon_lunar_absolute_cold",
+    "name": "Absolute Cold",
+    "owners": [
+      "bestiary_4:monster:dragon_lunar"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 513,
+    "record_key": "Dragon (Lunar) ~ Absolute Cold"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

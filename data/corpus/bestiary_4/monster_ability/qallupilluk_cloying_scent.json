@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Qallupilluk ~ Cloying Scent",
+    "delivery": "Supernatural",
+    "description": "Qallupilluks exude a vaguely sweet and unexpectedly pleasant briny scent. This smell comforts and distracts humanoids and animals that come within 15 feet of the qallupilluk, causing such creatures to take a -2 penalty on saves against mind-affecting effects.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:qallupilluk_cloying_scent",
+    "name": "Cloying Scent",
+    "owners": [
+      "bestiary_4:monster:qallupilluk"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1193,
+    "record_key": "Qallupilluk ~ Cloying Scent"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

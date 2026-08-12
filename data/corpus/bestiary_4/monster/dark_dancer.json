@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:dark_dancer_bardic_performance",
+      "bestiary_4:monster_ability:dark_dancer_dark_curse",
+      "bestiary_4:monster_ability:dark_dancer_death_throes"
+    ],
+    "challenge_rating": "1",
+    "corpus_key": "Dark Dancer",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:dark_dancer",
+    "monster_class": "Humanoid:2",
+    "name": "Dark Dancer",
+    "natural_attacks": [],
+    "race_subtype": "Dark Folk",
+    "race_type": "Humanoid",
+    "size": "S",
+    "source_page": "p.43",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 38,
+    "record_key": "Dark Dancer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Seps ~ Acid Blood",
+    "delivery": "Extraordinary",
+    "description": "A metal, wooden, or natural weapon that deals piercing or slashing damage to a seps takes 4d6 points of acid damage unless the weapon's wielder succeeds at a DC %1 Reflex save at the listed DC.",
+    "description_variables": [
+      "CON+17"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:seps_acid_blood",
+    "name": "Acid Blood",
+    "owners": [
+      "bestiary_4:monster:seps"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1249,
+    "record_key": "Seps ~ Acid Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:shard_slag_burrow",
+      "bestiary_4:monster_ability:shard_slag_excruciating_burn",
+      "bestiary_4:monster_ability:shard_slag_molten_form",
+      "bestiary_4:monster_ability:shard_slag_slag_blades",
+      "bestiary_4:monster_ability:shard_slag_vulnerable_to_water"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Shard Slag",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:shard_slag",
+    "monster_class": "Ooze:12",
+    "name": "Shard Slag",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Slag Blades"
+      }
+    ],
+    "race_subtype": "Fire",
+    "race_type": "Ooze",
+    "size": "H",
+    "source_page": "p.240",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Burrow"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 207,
+    "record_key": "Shard Slag"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

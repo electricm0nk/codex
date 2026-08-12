@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Taniniver ~ Breath Weapon",
+    "delivery": "Extraordinary",
+    "description": "A taniniver's breath weapon is a hideous gray cloud of disease particles. Any creature in the area must succeed at a DC %1 Fortitude save or contract mummy rot (Bestiary 210). The disease is contracted immediately (the onset period does not apply) and is an instantaneous effect. Ongoing saving throws against the disease use the dragon's breath weapon DC.",
+    "description_variables": [
+      "CON+20"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:taniniver_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "bestiary_4:monster:taniniver"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1352,
+    "record_key": "Taniniver ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

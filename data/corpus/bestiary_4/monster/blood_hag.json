@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:blood_hag_detonate",
+      "bestiary_4:monster_ability:blood_hag_fiery_form",
+      "bestiary_4:monster_ability:blood_hag_mask_evil"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Blood Hag",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:blood_hag",
+    "monster_class": "Monstrous Humanoid:12",
+    "name": "Blood Hag",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d4",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Shapechanger",
+    "race_type": "Monstrous Humanoid",
+    "size": "M",
+    "source_page": "p.19",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 19,
+    "record_key": "Blood Hag"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

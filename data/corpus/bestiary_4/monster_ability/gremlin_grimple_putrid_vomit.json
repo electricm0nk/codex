@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Gremlin (Grimple) ~ Putrid Vomit",
+    "delivery": "Extraordinary",
+    "description": "Every 1d4 rounds, a grimple can spew a 30-foot line of vomit as a standard action. Treat this as a ranged touch attack with no range increment. Anyone struck must succeed at a DC %1 Fortitude save or be nauseated for 1d4 rounds.",
+    "description_variables": [
+      "10+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:gremlin_grimple_putrid_vomit",
+    "name": "Putrid Vomit",
+    "owners": [
+      "bestiary_4:monster:gremlin_grimple"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 827,
+    "record_key": "Gremlin (Grimple) ~ Putrid Vomit"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

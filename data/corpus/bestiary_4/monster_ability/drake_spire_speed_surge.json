@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Drake (Spire) ~ Speed Surge",
+    "delivery": "Supernatural",
+    "description": "Three times per day as a swift action, a spire drake can draw on its draconic reserves for a boost of strength and speed, allowing it to take an additional move action in that round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drake_spire_speed_surge",
+    "name": "Speed Surge",
+    "owners": [
+      "bestiary_4:monster:drake_spire"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 593,
+    "record_key": "Drake (Spire) ~ Speed Surge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

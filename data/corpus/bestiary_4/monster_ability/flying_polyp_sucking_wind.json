@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Flying Polyp ~ Sucking Wind",
+    "delivery": "Supernatural",
+    "description": "This attack allows the flying polyp to send an eerie wind out to slow and eventually stop a creature's escape. The wind itself isn't particularly strong, but it creates a peculiar sucking sensation as if it were attempting to pull creatures back toward the flying polyp. Activating this ability is a full-round action, and it must concentrate each round to maintain the effect. The sucking wind manifests as a 100-foot-radius spread, with the flying polyp at the center. Each round the polyp maintains concentration, the sucking wind's radius increases by 100 feet, to a maximum radius of a mile. A flying polyp can detect creatures within this area via tremorsense. As a free action, it can increase the effects of the sucking wind on up to five different creatures within the area at one time. Each targeted creature must succeed at a DC %1 Fortitude save each round it remains in the area of the sucking wind or it is slowed until it leaves the area. A creature already under the effects of any slowing effect (such as from this sucking wind or a slow spell) that fails this save is held in place for 1 round-it is not helpless, but cannot move via any means. Freedom of movement protects against the effects of the sucking wind, and control winds negates its effects in the area of effect of the control winds spell. Natural windstorms or other powerful winds have no effect on a sucking wind. A flying polyp can activate a sucking wind once per day, and can maintain concentration on the effect for up to an hour.",
+    "description_variables": [
+      "19+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:flying_polyp_sucking_wind",
+    "name": "Sucking Wind",
+    "owners": [
+      "bestiary_4:monster:flying_polyp"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 685,
+    "record_key": "Flying Polyp ~ Sucking Wind"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

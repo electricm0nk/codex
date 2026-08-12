@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Formian Queen ~ Hive Frenzy",
+    "delivery": "Supernatural",
+    "description": "Once per day as a standard action, the queen can send out a command to all formians within range of her telepathy. Those formians are affected as if by a haste spell (CL 20th).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:formian_queen_hive_frenzy",
+    "name": "Hive Frenzy",
+    "owners": [
+      "bestiary_4:monster:formian_queen"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 693,
+    "record_key": "Formian Queen ~ Hive Frenzy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Nependis ~ Roar",
+    "delivery": "Supernatural",
+    "description": "A nependis can let out a savage roar. Nependises within 60 feet gain a +2 morale bonus on attack rolls, saving throws, and weapon damage rolls for 1d4 rounds. All other creatures other within range of the roar become shaken for 1d4 rounds (Will DC %1 negates); this is a mind-affecting sonic fear effect.",
+    "description_variables": [
+      "CHA+16"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:nependis_roar",
+    "name": "Roar",
+    "owners": [
+      "bestiary_4:monster:nependis"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1108,
+    "record_key": "Nependis ~ Roar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

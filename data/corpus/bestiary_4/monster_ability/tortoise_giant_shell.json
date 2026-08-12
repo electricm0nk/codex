@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Tortoise (Giant) ~ Shell",
+    "delivery": "Extraordinary",
+    "description": "As a move action, a tortoise can pull its extremities and head into its shell. It can't move or attack as long as it remains in this state, but its armor bonus from natural armor increases by 4 as long as it does. It may end this state as a move action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:tortoise_giant_shell",
+    "name": "Shell",
+    "owners": [
+      "bestiary_4:monster:tortoise_giant"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1378,
+    "record_key": "Tortoise (Giant) ~ Shell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

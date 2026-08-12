@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Golem (Junk) ~ Discorporate",
+    "delivery": "Extraordinary",
+    "description": "A junk golem can break apart into its constituent pieces as a standard action, becoming a swarming mass of Tiny parts. It gains the swarm subtype, its space changes to 10 feet, and its reach changes to 0. In this form, it gains a swarm attack that deals 1d6 points of damage and inflicts disease, but loses its slam attacks. It can revert back to its normal form as a full-round action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:golem_junk_discorporate",
+    "name": "Discorporate",
+    "owners": [
+      "bestiary_4:monster:golem_junk"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 784,
+    "record_key": "Golem (Junk) ~ Discorporate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Drakainia ~ Gestation Aura",
+    "delivery": "Supernatural",
+    "description": "A drakainia's aura pulses with developing life. All poisons or diseases active within her 30-foot aura have an onset of 1 round and a frequency of 1/minute. Impregnated creatures within her aura gestate in 2d4 rounds. Any creature born within her aura gains a mutation as if it were the drakainia's spawn, though if the creature's parent was not impregnated by the drakainia, the creature born is an infant of the kind its biological parents would produce, and doesn't count toward the CR limit the drakainia can spawn per day.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_gestation_aura",
+    "name": "Gestation Aura",
+    "owners": [
+      "bestiary_4:monster:drakainia"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 551,
+    "record_key": "Drakainia ~ Gestation Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

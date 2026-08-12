@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Mindslaver Mold ~ Mold Mindlink",
+    "delivery": "Supernatural",
+    "description": "A mindslaver mold can communicate telepathically with any other mindslaver mold within 10 miles, and knows the condition of all other mindslaver molds in this area as if it had a status spell in effect on all other molds.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mindslaver_mold_mold_mindlink",
+    "name": "Mold Mindlink",
+    "owners": [
+      "bestiary_4:monster:mindslaver_mold"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1085,
+    "record_key": "Mindslaver Mold ~ Mold Mindlink"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

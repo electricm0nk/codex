@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:harionago_bleed",
+      "bestiary_4:monster_ability:harionago_infectious_laughter"
+    ],
+    "challenge_rating": "11",
+    "corpus_key": "Harionago",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:harionago",
+    "monster_class": "Undead:14",
+    "name": "Harionago",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Hair Barb"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.149",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 120,
+    "record_key": "Harionago"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:maenad_infectious_dance",
+      "bestiary_4:monster_ability:maenad_mad_feast",
+      "bestiary_4:monster_ability:maenad_poison"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Maenad",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:maenad",
+    "monster_class": "Monstrous Humanoid:9",
+    "name": "Maenad",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "size": "M",
+    "source_page": "p.191",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 160,
+    "record_key": "Maenad"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

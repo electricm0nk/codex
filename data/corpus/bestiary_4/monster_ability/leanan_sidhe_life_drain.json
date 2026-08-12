@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Leanan Sidhe ~ Life Drain",
+    "delivery": "Extraordinary",
+    "description": "A leanan sidhe immediately knows if a creature uses her skill blessing or spell blessing. As a standard action at any range, she can expend one use of mythic power to drain 1 point of Constitution from that creature. The leanan sidhe heals 5 hit points or gains 5 temporary hit points for 1 hour (up to a maximum number of temporary hit points equal to her full normal hit points) each time she uses this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:leanan_sidhe_life_drain",
+    "name": "Life Drain",
+    "owners": [
+      "bestiary_4:monster:leanan_sidhe"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1013,
+    "record_key": "Leanan Sidhe ~ Life Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

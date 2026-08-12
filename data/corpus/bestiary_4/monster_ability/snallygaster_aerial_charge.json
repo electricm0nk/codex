@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Snallygaster ~ Aerial Charge",
+    "delivery": "Extraordinary",
+    "description": "When a snallygaster charges downward at an angle of 45 degrees or more, its bite attack deals double damage (or triple damage on a critical hit). Bleed damage is not multiplied for this attack.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:snallygaster_aerial_charge",
+    "name": "Aerial Charge",
+    "owners": [
+      "bestiary_4:monster:snallygaster"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1299,
+    "record_key": "Snallygaster ~ Aerial Charge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

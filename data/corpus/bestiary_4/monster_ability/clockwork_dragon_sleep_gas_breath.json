@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Clockwork Dragon ~ Sleep Gas Breath",
+    "delivery": "Extraordinary",
+    "description": "This clockwork dragon's breath weapon is replaced with tanks of sleep gas. When the clockwork breathes out this gas in a 30-foot cone, creatures within the cone must succeed a DC 22 Will save or fall asleep for 1d6+10 rounds. Clockwork dragons with this breath weapon tend to have either the infiltrator or mithral variants, and often they have both variants. These clockwork dragons excel at missions that require stealth and precision rather than brute force.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:clockwork_dragon_sleep_gas_breath",
+    "name": "Sleep Gas Breath",
+    "owners": [
+      "bestiary_4:monster:clockwork_dragon"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 386,
+    "record_key": "Clockwork Dragon ~ Sleep Gas Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

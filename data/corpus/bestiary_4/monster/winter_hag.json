@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:winter_hag_breath_weapon",
+      "bestiary_4:monster_ability:winter_hag_ice_staff",
+      "bestiary_4:monster_ability:winter_hag_icewalking",
+      "bestiary_4:monster_ability:winter_hag_snow_vision",
+      "bestiary_4:monster_ability:winter_hag_coven"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Winter Hag",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:winter_hag",
+    "monster_class": "Monstrous Humanoid:10",
+    "name": "Winter Hag",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Cold",
+    "race_type": "Monstrous Humanoid",
+    "size": "M",
+    "source_page": "p.279",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 251,
+    "record_key": "Winter Hag"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

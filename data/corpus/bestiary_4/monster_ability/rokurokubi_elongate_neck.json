@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Rokurokubi ~ Elongate Neck",
+    "delivery": "Extraordinary",
+    "description": "A rokurokubi can stretch her neck from a normal human length up to 20 feet, giving her reach with her bite attack and threatening all squares within that range.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:rokurokubi_elongate_neck",
+    "name": "Elongate Neck",
+    "owners": [
+      "bestiary_4:monster:rokurokubi"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1202,
+    "record_key": "Rokurokubi ~ Elongate Neck"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

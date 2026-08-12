@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:leaf_ray_seed",
+      "bestiary_4:monster_ability:leaf_ray_fall_poison",
+      "bestiary_4:monster_ability:leaf_ray_spring_summer_poison",
+      "bestiary_4:monster_ability:leaf_ray_winter_poison"
+    ],
+    "challenge_rating": "1",
+    "corpus_key": "Leaf Ray",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:leaf_ray",
+    "monster_class": "Plant:2",
+    "name": "Leaf Ray",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Stinger"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "S",
+    "source_page": "p.179",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 148,
+    "record_key": "Leaf Ray"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

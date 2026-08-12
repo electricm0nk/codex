@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Shriezyx ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC 14; frequency 1/round for 6 rounds; effect 1d2 Str; cure 1 save.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shriezyx_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:monster:shriezyx"
+    ],
+    "source_page": null,
+    "traits": [
+      "Shriezyx"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1286,
+    "record_key": "Shriezyx ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

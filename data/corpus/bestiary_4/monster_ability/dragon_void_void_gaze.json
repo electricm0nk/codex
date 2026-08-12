@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dragon (Void) ~ Void Gaze",
+    "delivery": "Supernatural",
+    "description": "A creature within 30 feet of an adult or older void dragon must succeed at a Will save (DC %1) or become confused for 1d6 rounds. This gaze attack is a mind-affecting effect.",
+    "description_variables": [
+      "10+(HD/2)+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dragon_void_void_gaze",
+    "name": "Void Gaze",
+    "owners": [
+      "bestiary_4:monster:dragon_void"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 540,
+    "record_key": "Dragon (Void) ~ Void Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Selkie ~ Echo of Reason",
+    "delivery": "Supernatural",
+    "description": "A selkie can instinctively alter the intonation of its voice to make anything it says sound more pleasing to those who understand it. When using the Bluff skill, a selkie treats its lies as one step more believable for the purposes of bonuses or penalties on the check.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:selkie_echo_of_reason",
+    "name": "Echo of Reason",
+    "owners": [
+      "bestiary_4:monster:selkie"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1245,
+    "record_key": "Selkie ~ Echo of Reason"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

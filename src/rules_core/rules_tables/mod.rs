@@ -15,6 +15,7 @@ pub mod archetype_swap;
 pub mod beastiary1;
 pub mod bestiary_2;
 pub mod bestiary_3;
+pub mod bestiary_4;
 pub mod bestiary_5;
 pub mod bestiary_6;
 pub mod bonus_bestiary;
@@ -197,4 +198,15 @@ pub enum RuleSetId {
     /// filed under `race_trait` only because `file_kind` reads the first
     /// `TYPE:` segment.
     B3,
+    /// Bestiary 4. SD-29 Epic 5 extend, round 6 (monster lane;
+    /// `rules_tables::bestiary_4`, 206 monsters + 543 monster abilities) — the
+    /// largest reachable book left in the lane when round 6 took it.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** 14 of its 220 corpus monster rows declare `NAMEISPI:YES` and
+    /// do not ship; they are unique named personas rather than species, which is
+    /// what `ogl-pi-blacklist.md` §2.1's per-record predicate screens on. Their
+    /// removal is also why 73 of the book's 225 orphan abilities are orphans —
+    /// see `rules_tables::bestiary_4`'s header for both derivations.
+    B4,
 }

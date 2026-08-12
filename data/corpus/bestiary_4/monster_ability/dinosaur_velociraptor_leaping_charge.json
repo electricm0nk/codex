@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dinosaur (Velociraptor) ~ Leaping Charge",
+    "delivery": "Extraordinary",
+    "description": "A velociraptor can jump while charging, allowing it to ignore difficult terrain when it charges. When a velociraptor makes a charge in this way, it deals double damage with its talons.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dinosaur_velociraptor_leaping_charge",
+    "name": "Leaping Charge",
+    "owners": [
+      "bestiary_4:monster:dinosaur_velociraptor"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 493,
+    "record_key": "Dinosaur (Velociraptor) ~ Leaping Charge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

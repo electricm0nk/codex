@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Colour Out of Space ~ Aura of Lassitude",
+    "delivery": "Supernatural",
+    "description": "A creature within 300 feet of a colour out of space (even when the colour is hiding within a solid object) must succeed at a DC %1 Will save or become overwhelmed with listlessness and ennui. While under this effect, the creature takes a -4 penalty on all Will saving throws, and doesn't willingly travel farther than a mile from the area where it failed its saving throw against that colour's aura of lassitude. A break enchantment spell (DC %1) ends the effect, as does removing the victim from the aura's area of effect. Every 24 hours, a creature affected by an aura of lassitude can attempt a new DC %1 Will save to cast off the effects of the aura. A creature that succeeds at this saving throw is immune to that colour's aura of lassitude for 24 hours. A creature that is under the effects of an aura of lassitude from a colour out of space can't be further affected by this ability from other colours. This is a mind-affecting effect.",
+    "description_variables": [
+      "CHA+16"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:colour_out_of_space_aura_of_lassitude",
+    "name": "Aura of Lassitude",
+    "owners": [
+      "bestiary_4:monster:colour_out_of_space"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 414,
+    "record_key": "Colour Out of Space ~ Aura of Lassitude"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

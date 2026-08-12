@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Ankou ~ Shadow Doubles",
+    "delivery": "Supernatural",
+    "description": "Once per day as a free action, an ankou can conjure up to four shadowy duplicates, which appear anywhere within 60 feet of the ankou and last a number of rounds equal to the ankou's Charisma modifier (typically 7 rounds). These shadow doubles are identical to the original in all respects except that when conjured they have a number of hit points equal to 20%% of the true ankou's total hit points (26 hit points if conjured by an ankou with full hit points). The doubles have all of the true ankou's melee attacks and abilities, except they can't create more shadow doubles or use the ankou's spell-like abilities except for deeper darkness. Any creature that interacts with a shadow double can attempt a Will save to disbelieve the duplicate (DC 10 + 1/2 the ankou's Hit Dice + the ankou's Charisma modifier, typically DC 24). Against a creature that recognizes a shadow double for what it is, the double functions as a shadow conjuration (Core Rulebook p.340). Shadow doubles take double damage from spells with the light descriptor. If the true ankou is slain, is rendered unconscious, or is ever more than 120 feet from a shadow double, the duplicates instantly vanish.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:ankou_shadow_doubles",
+    "name": "Shadow Doubles",
+    "owners": [
+      "bestiary_4:monster:ankou"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 269,
+    "record_key": "Ankou ~ Shadow Doubles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

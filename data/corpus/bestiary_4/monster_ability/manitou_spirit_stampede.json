@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Manitou ~ Spirit Stampede",
+    "delivery": "Supernatural",
+    "description": "Every 1d4 rounds, a manitou can call upon animal spirits to attack, affecting a 60-foot cone and dealing 10d6 points of force damage (Reflex DC 26 half). Using this ability temporarily weakens the manitou's connection with the natural world, halting its positive energy aura until the stampede is ready to be used again.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:manitou_spirit_stampede",
+    "name": "Spirit Stampede",
+    "owners": [
+      "bestiary_4:monster:manitou"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1073,
+    "record_key": "Manitou ~ Spirit Stampede"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

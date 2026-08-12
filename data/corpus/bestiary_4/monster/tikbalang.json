@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:tikbalang_spines"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Tikbalang",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:tikbalang",
+    "monster_class": "Monstrous Humanoid:12",
+    "name": "Tikbalang",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d4",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Spine"
+      },
+      {
+        "damage_dice": null,
+        "name": "Hoof"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "size": "L",
+    "source_page": "p.260",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 229,
+    "record_key": "Tikbalang"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

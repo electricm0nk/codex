@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dorvae ~ Dorvae Poison",
+    "delivery": "Supernatural",
+    "description": "Writhing snakes-injury; save DC %1; frequency 1/round for 12 rounds; effect 1d4 Wis and on the first failed save the target is susceptible to the dorvae's lesser geas no matter its Hit Dice for 24 hours. Cure 3 saves.",
+    "description_variables": [
+      "16+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dorvae_dorvae_poison",
+    "name": "Dorvae Poison",
+    "owners": [
+      "bestiary_4:monster:dorvae"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 503,
+    "record_key": "Dorvae ~ Dorvae Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

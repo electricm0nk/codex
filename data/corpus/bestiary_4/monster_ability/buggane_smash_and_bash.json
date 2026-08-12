@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Buggane ~ Smash and Bash",
+    "delivery": "Extraordinary",
+    "description": "As a free action, a buggane can attempt to trip an opponent it damages with its rend attack without provoking an attack of opportunity. If the trip attempt fails, the buggane cannot be tripped in return. If the trip attempt is successful, the target must succeed at a DC %1 Fortitude save or be stunned for 1 round.",
+    "description_variables": [
+      "13+STR"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:buggane_smash_and_bash",
+    "name": "Smash and Bash",
+    "owners": [
+      "bestiary_4:monster:buggane"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 363,
+    "record_key": "Buggane ~ Smash and Bash"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

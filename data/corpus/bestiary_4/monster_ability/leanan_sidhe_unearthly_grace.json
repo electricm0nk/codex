@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Leanan Sidhe ~ Unearthly Grace",
+    "delivery": "Supernatural",
+    "description": "A leanan sidhe adds her Charisma modifier as a racial bonus on all her saving throws and as a deflection bonus to her AC.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:leanan_sidhe_unearthly_grace",
+    "name": "Unearthly Grace",
+    "owners": [
+      "bestiary_4:monster:leanan_sidhe"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1016,
+    "record_key": "Leanan Sidhe ~ Unearthly Grace"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

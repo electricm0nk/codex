@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:titan_fomorian_divine_resistance",
+      "bestiary_4:monster_ability:titan_fomorian_divine_spell_perception"
+    ],
+    "challenge_rating": "22",
+    "corpus_key": "Titan (Fomorian)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:titan_fomorian",
+    "monster_class": "Outsider (Fort/Will):18",
+    "name": "Fomorian Titan",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil|Extraplanar|Mythic",
+    "race_type": "Outsider",
+    "size": "C",
+    "source_page": "p.261",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 230,
+    "record_key": "Titan (Fomorian)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

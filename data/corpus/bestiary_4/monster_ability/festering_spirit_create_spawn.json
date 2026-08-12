@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Festering Spirit ~ Create Spawn",
+    "delivery": "Supernatural",
+    "description": "A humanoid creature killed by a festering spirit's Constitution damage becomes a festering spirit under the control of its killer in 1d4 days. Giving the corpse a proper burial (or cremation) prevents it from becoming a festering spirit.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:festering_spirit_create_spawn",
+    "name": "Create Spawn",
+    "owners": [
+      "bestiary_4:monster:festering_spirit"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 645,
+    "record_key": "Festering Spirit ~ Create Spawn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

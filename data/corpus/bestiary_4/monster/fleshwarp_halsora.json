@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:fleshwarp_halsora_acidic_tears",
+      "bestiary_4:monster_ability:fleshwarp_halsora_spores"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Fleshwarp (Halsora)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:fleshwarp_halsora",
+    "monster_class": "Aberration:10",
+    "name": "Halsora",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "S",
+    "source_page": "p.104",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 83,
+    "record_key": "Fleshwarp (Halsora)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

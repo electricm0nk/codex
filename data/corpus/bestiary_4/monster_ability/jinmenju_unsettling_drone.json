@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Jinmenju ~ Unsettling Drone",
+    "delivery": "Supernatural",
+    "description": "A jinmenju emits a low, persistent hum that unnerves living creatures that hear it. Those within 30 feet of it must succeed at a DC %1 Will save or become shaken until they leave the affected area and for 1d4 rounds thereafter. A creature that successfully saves is immune to that jinmenju's unsettling drone for 24 hours.",
+    "description_variables": [
+      "CHA+16"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:jinmenju_unsettling_drone",
+    "name": "Unsettling Drone",
+    "owners": [
+      "bestiary_4:monster:jinmenju"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 909,
+    "record_key": "Jinmenju ~ Unsettling Drone"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

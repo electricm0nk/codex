@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Ningyo ~ Startle",
+    "delivery": "Supernatural",
+    "description": "If an undead ningyo attacks in the surprise round, its target must attempt a DC %1 Will save. Success means the target is shaken for 1 round; failure means it is frightened for 1d4 rounds. The target can only be affected by that ningyo's startle once every 24 hours. Creatures with 6 or more Hit Dice are immune to this ability. This is a mind-affecting fear effect.",
+    "description_variables": [
+      "11+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:ningyo_startle",
+    "name": "Startle",
+    "owners": [
+      "bestiary_4:monster:ningyo"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1133,
+    "record_key": "Ningyo ~ Startle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

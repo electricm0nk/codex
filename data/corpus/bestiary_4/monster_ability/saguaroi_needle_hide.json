@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Saguaroi ~ Needle Hide",
+    "delivery": "Extraordinary",
+    "description": "A saguaroi is covered with needles and spines, and its slam attacks deal both bludgeoning and piercing damage. Any creature grappling a saguaroi or attacking it with a natural attack or unarmed strike takes 1d4 points of piercing damage (manufactured weapons with the reach special feature do not endanger the user this way). A creature grappling a saguaroi takes this damage each round of the grapple.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:saguaroi_needle_hide",
+    "name": "Needle Hide",
+    "owners": [
+      "bestiary_4:monster:saguaroi"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1214,
+    "record_key": "Saguaroi ~ Needle Hide"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

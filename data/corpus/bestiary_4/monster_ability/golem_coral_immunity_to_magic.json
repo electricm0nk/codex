@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Golem (Coral) ~ Immunity to Magic",
+    "delivery": "Extraordinary",
+    "description": "A coral golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature. Any spell with the water descriptor heals a coral golem 1d6 points of damage per level of the caster (maximum 10d6); Transmute rock to mud slows a coral golem (as the slow spell) for 1d6 rounds (no save); Transmute mud to rock increases the golem's bleed damage to 2d6 for 3 rounds; Soften earth and stone causes a coral golem to lose its damage reduction for 3 rounds.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:golem_coral_immunity_to_magic",
+    "name": "Immunity to Magic",
+    "owners": [
+      "bestiary_4:monster:golem_coral"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 781,
+    "record_key": "Golem (Coral) ~ Immunity to Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

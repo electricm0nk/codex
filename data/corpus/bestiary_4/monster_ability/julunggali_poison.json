@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Julunggali ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "A julunggali has three different poisons. Each time it bites, it decides which poison to inject. Julunggali Venom: Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d6 Con or 1d6 Dex or age one age category (julunggali's choice); cure 2 consecutive saves.",
+    "description_variables": [
+      "21+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:julunggali_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:monster:julunggali"
+    ],
+    "source_page": null,
+    "traits": [
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 955,
+    "record_key": "Julunggali ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Jack-o'-Lantern ~ Fear Aura",
+    "delivery": "Supernatural",
+    "description": "Any creature within 30 feet of a jack-o'-lantern must succeed at a DC %1 Will save or be shaken for 2d6 minutes. If the Will save is successful, the creature is immune to that jack-o'-lantern's fear aura for 24 hours. This is a vision-based mind-affecting fear effect.",
+    "description_variables": [
+      "CHA+11"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:jack_o_lantern_fear_aura",
+    "name": "Fear Aura",
+    "owners": [
+      "bestiary_4:monster:jack_o_lantern"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 902,
+    "record_key": "Jack-o'-Lantern ~ Fear Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

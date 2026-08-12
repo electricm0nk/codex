@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Mudlord ~ Vulnerable to Magic",
+    "delivery": "Extraordinary",
+    "description": "A transmute mud to rock spell deals 1d6 points of damage per caster level to any mudlord in the area and automatically staggers it for 2d6 rounds.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mudlord_vulnerable_to_magic",
+    "name": "Vulnerable to Magic",
+    "owners": [
+      "bestiary_4:monster:mudlord"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1093,
+    "record_key": "Mudlord ~ Vulnerable to Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

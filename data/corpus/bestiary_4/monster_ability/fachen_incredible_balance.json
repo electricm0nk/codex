@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Fachen ~ Incredible Balance",
+    "delivery": "Extraordinary",
+    "description": "Despite its strange anatomy, a fachen is adept at keeping itself upright and out of danger. A fachen gains a +3 dodge bonus to AC and a +4 racial bonus to its CMD against trip combat maneuvers.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:fachen_incredible_balance",
+    "name": "Incredible Balance",
+    "owners": [
+      "bestiary_4:monster:fachen"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 642,
+    "record_key": "Fachen ~ Incredible Balance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

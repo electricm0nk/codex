@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Huldra ~ Lashing Tail",
+    "delivery": "Supernatural",
+    "description": "A huldra's tail slap is a primary attack. In addition, each time a huldra damages a creature with her tail slap, she deals 1d4 points of Charisma damage, causing her target to grow progressively more deformed and ugly with each strike. A successful DC %1 Fortitude save negates the Charisma damage.",
+    "description_variables": [
+      "13+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:huldra_lashing_tail",
+    "name": "Lashing Tail",
+    "owners": [
+      "bestiary_4:monster:huldra"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 865,
+    "record_key": "Huldra ~ Lashing Tail"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

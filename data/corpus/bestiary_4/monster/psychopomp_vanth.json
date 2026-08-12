@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:psychopomp_vanth_fear_aura",
+      "bestiary_4:monster_ability:psychopomp_vanth_reaper_s_scythe"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Psychopomp (Vanth)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:psychopomp_vanth",
+    "monster_class": "Outsider (Fort/Will):9",
+    "name": "Vanth",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Extraplanar|Psychopomp",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.221",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 186,
+    "record_key": "Psychopomp (Vanth)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

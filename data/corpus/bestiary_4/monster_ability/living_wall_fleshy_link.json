@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Living Wall ~ Fleshy Link",
+    "delivery": "Extraordinary",
+    "description": "A living wall that is adjacent to another living wall automatically links with it, forming an impassible solid barrier. Linked living walls coordinate their attacks and move as one creature. Any linked wall can unlink itself as a free action. Any damage to one linked living wall is divided evenly among all linked living walls (for example, if three walls are linked and one takes 15 points of damage, each wall instead takes 5 points of damage). Two or three linked living walls count as a Huge creature for the purpose of effects affected or limited by size (such as bull rush), four or five count as Gargantuan, and six or more count as Colossal.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:living_wall_fleshy_link",
+    "name": "Fleshy Link",
+    "owners": [
+      "bestiary_4:monster:living_wall"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1026,
+    "record_key": "Living Wall ~ Fleshy Link"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

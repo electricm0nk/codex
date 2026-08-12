@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Bhole ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Once every minute, a bhole can expel a prodigious amount of thick slime from its gullet. This breath weapon has a range of 900 feet, and creates a 40-foot-diameter spread of slime in its targeted area. Any creature within this area must succeed at a DC 29 Fortitude save or be stunned for 1d4 rounds. The slime transforms the area it coats into difficult terrain. Furthermore, any creature that is in the area (or that attempts to enter the area) must succeed at a DC 29 Reflex save or be entangled by the slime. Bhole slime persists for 2d6 hours and bhole lairs are typically pre-caked with the stuff. A bhole can move through bhole slime without penalty. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:bhole_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "bestiary_4:monster:bhole"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 307,
+    "record_key": "Bhole ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

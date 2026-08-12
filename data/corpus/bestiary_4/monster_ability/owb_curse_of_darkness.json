@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Owb ~ Curse of Darkness",
+    "delivery": "Supernatural",
+    "description": "With a touch, an owb can make bright light unbearable to the victim. Any creature touched must succeed at a DC %1 Fortitude save or gain the light blindness weakness. This ability also robs the victim of its coloration, leaving the creature and its equipment in washed-out shades of gray. This effect can be removed with break enchantment or remove curse, unless the target has the dark folk subtype, in which case the effect can only be removed by wish or similar magic.",
+    "description_variables": [
+      "13+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:owb_curse_of_darkness",
+    "name": "Curse of Darkness",
+    "owners": [
+      "bestiary_4:monster:owb"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1151,
+    "record_key": "Owb ~ Curse of Darkness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

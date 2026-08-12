@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Argus ~ Limitless Vision",
+    "delivery": "Extraordinary",
+    "description": "An argus takes no distance penalties on Perception checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:argus_limitless_vision",
+    "name": "Limitless Vision",
+    "owners": [
+      "bestiary_4:monster:argus"
+    ],
+    "source_page": null,
+    "traits": [
+      "Senses"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 286,
+    "record_key": "Argus ~ Limitless Vision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

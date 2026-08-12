@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Graeae ~ Eye of the Graeae",
+    "delivery": "Supernatural",
+    "description": "Each graeae possesses a mystic eyeball. A graeae can sense the location of her eyeball from anywhere on the same plane. She must remain within 30 feet of her eyeball or she becomes completely blind and cannot use any of her spell-like or supernatural abilities. The eyeball only works for its graeae. If a graeae is slain, her mystic eye instantly turns to dust.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:graeae_eye_of_the_graeae",
+    "name": "Eye of the Graeae",
+    "owners": [
+      "bestiary_4:monster:graeae"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 795,
+    "record_key": "Graeae ~ Eye of the Graeae"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

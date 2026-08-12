@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:irminsul_planar_portal",
+      "bestiary_4:monster_ability:irminsul_see_alignment"
+    ],
+    "challenge_rating": "17",
+    "corpus_key": "Irminsul",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:irminsul",
+    "monster_class": "Plant:14",
+    "name": "Irminsul",
+    "natural_attacks": [
+      {
+        "damage_dice": "5d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Extraplanar|Mythic",
+    "race_type": "Plant",
+    "size": "G",
+    "source_page": "p.158",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 131,
+    "record_key": "Irminsul"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

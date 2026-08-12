@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Apocalypse Locust ~ Accursed Brand",
+    "delivery": "Supernatural",
+    "description": "Whenever a victim fails its save against an apocalypse locust's breath weapon, the unholy fire burns an accursed brand into his flesh. For the next 24 hours, the branded victim is subjected to auditory hallucinations of foul desires and sinful deeds. The hallucinations cause lawful and good victims to become tainted; good-aligned clerics, druids, paladins, and even lawful monks are treated as though they've temporarily broken their codes of conduct. Any character marked by the accursed brand who has a class that's restricted to a good alignment or lawful alignment is treated as an ex-member of that class for 24 hours; an  atonement spell can end this effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:apocalypse_locust_accursed_brand",
+    "name": "Accursed Brand",
+    "owners": [
+      "bestiary_4:monster:apocalypse_locust"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 276,
+    "record_key": "Apocalypse Locust ~ Accursed Brand"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

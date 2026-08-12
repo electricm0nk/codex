@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Fleshwarp (Irnakurse) ~ Soul Scream",
+    "delivery": "Supernatural",
+    "description": "Capable of channeling all of its rage and terror into a single, unnatural noise, an irnakurse can unleash a sound of alien horror as a standard action. Any non-evil creature within 30 feet of a screaming irnakurse must succeed at a DC %1 Will save or take 1d4 points of Wisdom drain. Once it begins screaming, an irnakurse can continue as a free action for 6 rounds, but can't scream again for 5 minutes afterward.",
+    "description_variables": [
+      "15+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshwarp_irnakurse_soul_scream",
+    "name": "Soul Scream",
+    "owners": [
+      "bestiary_4:monster:fleshwarp_irnakurse"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 680,
+    "record_key": "Fleshwarp (Irnakurse) ~ Soul Scream"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

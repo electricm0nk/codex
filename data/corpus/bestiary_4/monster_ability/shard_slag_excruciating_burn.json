@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Shard Slag ~ Excruciating Burn",
+    "delivery": "Extraordinary",
+    "description": "A living creature that takes fire damage from a shard slag must succeed at a DC %1 Fortitude save or be staggered for 1 round. This is a fire effect.",
+    "description_variables": [
+      "CON+10"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shard_slag_excruciating_burn",
+    "name": "Excruciating Burn",
+    "owners": [
+      "bestiary_4:monster:shard_slag"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1270,
+    "record_key": "Shard Slag ~ Excruciating Burn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

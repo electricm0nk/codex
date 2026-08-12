@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:peluda_poison",
+      "bestiary_4:monster_ability:peluda_quill_barrage",
+      "bestiary_4:monster_ability:peluda_quills",
+      "bestiary_4:monster_ability:peluda_vulnerable_tail"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Peluda",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:peluda",
+    "monster_class": "Dragon:11",
+    "name": "Peluda",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Dragon",
+    "size": "L",
+    "source_page": "p.212",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 177,
+    "record_key": "Peluda"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Clockwork Steed ~ Clockwork Charger",
+    "delivery": "Extraordinary",
+    "description": "Clockwork chargers are constructed to wreak greater mechanized terror on the battlefield. A clockwork charger is specially equipped for enhancing mounted charges or making such charges even without a rider by way of its pivoted lance. A clockwork charger has a pivoted latch large enough to support a lance and allows even those who are not proficient with a lance to use it as if they were. Furthermore, the clockwork charger is proficient with any lance equipped in the pivot and gains the undersized weapon special ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:clockwork_steed_clockwork_charger",
+    "name": "Clockwork Steed ~ Charger",
+    "owners": [
+      "bestiary_4:monster:clockwork_steed"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 393,
+    "record_key": "Clockwork Steed ~ Clockwork Charger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

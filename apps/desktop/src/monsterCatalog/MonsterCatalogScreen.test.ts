@@ -48,7 +48,11 @@ const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 // (`decisions.md §54.5`), one commit apart in the sibling file: there the list
 // was SHORT of the labels and nothing checked three books; here it is short of
 // the labels and the gate says so. Same shape, opposite visibility.
-const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2', 'B3'] as const;
+// Round 6 added `B4: 'Bestiary 4'` and updated BOTH places in the same edit,
+// which is the whole of the fix for the defect described above: this list and
+// `BOOK_LABELS` are two hand-maintained copies of one fact, and nothing but
+// this assertion couples them.
+const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2', 'B3', 'B4'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [

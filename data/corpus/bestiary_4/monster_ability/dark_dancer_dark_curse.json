@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dark Dancer ~ Dark Curse",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a dark dancer can make a touch attack against a foe and curse it. The foe must succeed at a DC 12 Will saving throw to resist the effects. Creatures that fail the saving throw take a -2 penalty on all Dexterity and Charisma-based skill checks. This curse is permanent, but the victim of this curse can attempt a new saving throw each day.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dark_dancer_dark_curse",
+    "name": "Dark Curse",
+    "owners": [
+      "bestiary_4:monster:dark_dancer"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 432,
+    "record_key": "Dark Dancer ~ Dark Curse"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

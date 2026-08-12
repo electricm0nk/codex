@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Colossus (Flesh) ~ Alternate Form",
+    "delivery": "Extraordinary",
+    "description": "As a full-round action, a flesh colossus can break apart into four composite creatures. These composite creatures are identical to flesh golems but lack the golem's DR and the berserk and immunity to magic abilities. They gain DR 5/epic, electricity absorption, and selective antimagic aura (10 feet). Divide the colossus's current total hit points by 4 to determine how many hit points each composite creature has. Reverting into a single form requires all of the remaining composite creatures to be adjacent to each other and a full-round action. When this occurs, add up the remaining hit points to determine the colossus's total hit points.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:colossus_flesh_alternate_form",
+    "name": "Alternate Form",
+    "owners": [
+      "bestiary_4:monster:colossus_flesh"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 396,
+    "record_key": "Colossus (Flesh) ~ Alternate Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

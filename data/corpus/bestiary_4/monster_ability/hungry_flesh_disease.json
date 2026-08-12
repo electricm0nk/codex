@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Hungry Flesh ~ Disease",
+    "delivery": "Extraordinary",
+    "description": "Tumor Infestation: Injury; save Fort DC %1; onset 1 minute; frequency 1/day; effect 1d2 Con and 1d2 Cha; cure 2 consecutive saves. Anyone who dies from tumor infestation turns into a hungry flesh 1d4 hours later.",
+    "description_variables": [
+      "12+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:hungry_flesh_disease",
+    "name": "Disease",
+    "owners": [
+      "bestiary_4:monster:hungry_flesh"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 869,
+    "record_key": "Hungry Flesh ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

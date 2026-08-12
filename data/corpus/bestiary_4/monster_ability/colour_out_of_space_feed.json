@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Colour Out of Space ~ Feed",
+    "delivery": "Supernatural",
+    "description": "A colour can attempt to feed on any living creature or a region of plant life as a full-round action. If it feeds on a single creature, the colour must have line of sight and be within 300 feet of the target. If it feeds on a region of plant and animal life, it only needs to be within that region. It can attempt to feed on a region once per week, and upon a living creature at will (but only once per day per living creature). Feeding on a region of plant life is automatically successful, blighting that region of plant life as if by a diminish plants spell used to stunt growth. A creature can resist being fed upon by a colour out of space by succeeding at a DC %1 Will save, in which case the colour must wait 24 hours before attempting to feed on that creature again. If this saving throw fails, the victim takes 1d4 points of Charisma drain and Constitution drain. A creature whose Constitution score is drained to 0 by a colour out of space's feed attack immediately dies, crumbling into a mass of desiccated tissue. A creature whose Charisma score is drained to 0 by a colour out of space's feed attack gains the colour-blighted simple template. Every time a colour successfully feeds on a creature, it gains 1 growth point. A colour out of space can never have more than 100 growth points-it can expend 100 growth points after spending 24 hours concentrating on its growth, and in so doing gains 1 permanent Hit Die.",
+    "description_variables": [
+      "16+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:colour_out_of_space_feed",
+    "name": "Feed",
+    "owners": [
+      "bestiary_4:monster:colour_out_of_space"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 416,
+    "record_key": "Colour Out of Space ~ Feed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

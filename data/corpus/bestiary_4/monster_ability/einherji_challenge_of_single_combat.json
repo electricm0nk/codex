@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Einherji ~ Challenge of Single Combat",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, an einherji can choose a single target within sight to challenge by attempting an Intimidate check to demoralize that creature. If the check succeeds, the target is shaken and the einherji gains a +2 bonus on attack rolls and damage rolls against that target. For the duration of the challenge, the einherji must attack that target, and takes a -2 penalty to its AC, except against attacks made by the target. The challenge (and the shaken condition) remains in effect until the target successfully attacks the einherji in melee combat, the target is dead or unconscious, or the combat ends.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:einherji_challenge_of_single_combat",
+    "name": "Challenge of Single Combat",
+    "owners": [
+      "bestiary_4:monster:einherji"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 602,
+    "record_key": "Einherji ~ Challenge of Single Combat"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

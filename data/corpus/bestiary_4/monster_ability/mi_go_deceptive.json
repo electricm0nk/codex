@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Mi-Go ~ Deceptive",
+    "delivery": "Extraordinary",
+    "description": "A mi-go is a master of deception. It gains a +4 racial bonus on Bluff and Disguise checks. Bluff and Disguise are always class skills for a mi-go.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mi_go_deceptive",
+    "name": "Deceptive",
+    "owners": [
+      "bestiary_4:monster:mi_go"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1077,
+    "record_key": "Mi-Go ~ Deceptive"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Warsworn ~ Absorb Dying Creature",
+    "delivery": "Supernatural",
+    "description": "A warsworn can consume any dying creature by moving into the same space. This immediately kills the creature, absorbs the corpse into the warsworn, and heals the warsworn by an amount equal to the creature's Constitution score. Absorbed corpses can't be resurrected by any effect short of a miracle or wish until the warsworn that consumed them is destroyed.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:warsworn_absorb_dying_creature",
+    "name": "Absorb Dying Creature",
+    "owners": [
+      "bestiary_4:monster:warsworn"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1426,
+    "record_key": "Warsworn ~ Absorb Dying Creature"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

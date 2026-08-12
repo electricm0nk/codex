@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "4",
+    "corpus_key": "Shobhad",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:shobhad",
+    "monster_class": "Monstrous Humanoid:5",
+    "name": "Shobhad",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "size": "L",
+    "source_page": "p.242",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 210,
+    "record_key": "Shobhad"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

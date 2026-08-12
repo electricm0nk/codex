@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Psychopomp (Vanth) ~ Fear Aura",
+    "delivery": "Supernatural",
+    "description": "A creature of fewer than 10 Hit Dice that fails its save (DC %1) against the vanth's fear aura is shaken for as long as it remains within the aura. A creature that succeeds at its save is immune to that vanth's aura for 24 hours.",
+    "description_variables": [
+      "14+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:psychopomp_vanth_fear_aura",
+    "name": "Fear Aura",
+    "owners": [
+      "bestiary_4:monster:psychopomp_vanth"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1183,
+    "record_key": "Psychopomp (Vanth) ~ Fear Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

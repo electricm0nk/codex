@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dark Caller ~ Shadow Ritual",
+    "delivery": "Supernatural",
+    "description": "Three dark callers can collaborate on a ritual that calls an owb to their service. The ritual takes 1 hour to complete. If the dark callers involved are distracted in any way, the attempt is ruined and the ritual must begin anew. Once called to their service, the owb serves them for 24 hours. Though the owb is free­willed, it follows orders to the best of its ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:dark_caller_shadow_ritual",
+    "name": "Shadow Ritual",
+    "owners": [
+      "bestiary_4:monster:dark_caller"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 428,
+    "record_key": "Dark Caller ~ Shadow Ritual"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

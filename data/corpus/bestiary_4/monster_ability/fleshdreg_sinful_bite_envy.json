@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Fleshdreg ~ Sinful Bite (Envy)",
+    "delivery": "Supernatural",
+    "description": "An envy fleshdreg's bite attack can temporarily interfere with magic. If an envy fleshdreg deals damage with its bite attack to any creature under a magic effect, the fleshdreg attempts a dispel check as if it were caster level 3rd against the spell effect with the highest caster level. If the dispel check is successful, the effect is suppressed for 1d4 rounds.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshdreg_sinful_bite_envy",
+    "name": "Sinful Bite (Envy)",
+    "owners": [
+      "bestiary_4:monster:fleshdreg"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 654,
+    "record_key": "Fleshdreg ~ Sinful Bite (Envy)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

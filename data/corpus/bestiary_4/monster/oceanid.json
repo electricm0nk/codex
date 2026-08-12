@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:oceanid_fast_healing",
+      "bestiary_4:monster_ability:oceanid_tremorsense",
+      "bestiary_4:monster_ability:oceanid_water_dependency",
+      "bestiary_4:monster_ability:oceanid_water_magic",
+      "bestiary_4:monster_ability:oceanid_water_telekinesis",
+      "bestiary_4:monster_ability:oceanid_waveglide"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Oceanid",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:oceanid",
+    "monster_class": "Fey:9",
+    "name": "Oceanid",
+    "natural_attacks": [
+      {
+        "damage_dice": "7d6",
+        "name": "Waterspout"
+      },
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Water",
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.208",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 172,
+    "record_key": "Oceanid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

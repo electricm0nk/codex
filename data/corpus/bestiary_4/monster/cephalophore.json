@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:cephalophore_dazing_gaze",
+      "bestiary_4:monster_ability:cephalophore_dazing_strike",
+      "bestiary_4:monster_ability:cephalophore_shatter_weapon",
+      "bestiary_4:monster_ability:cephalophore_statue_form"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Cephalophore",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:cephalophore",
+    "monster_class": "Construct:12",
+    "name": "Cephalophore",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "L",
+    "source_page": "p.27",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 25,
+    "record_key": "Cephalophore"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

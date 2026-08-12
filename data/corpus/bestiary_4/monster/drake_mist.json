@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:drake_mist_fogburst",
+      "bestiary_4:monster_ability:drake_mist_fogvision",
+      "bestiary_4:monster_ability:drake_mist_misty_camouflage",
+      "bestiary_4:monster_ability:drake_mist_speed_surge"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Drake (Mist)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:drake_mist",
+    "monster_class": "Dragon:6",
+    "name": "Mist Drake",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Air",
+    "race_type": "Dragon",
+    "size": "L",
+    "source_page": "p.79",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 59,
+    "record_key": "Drake (Mist)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

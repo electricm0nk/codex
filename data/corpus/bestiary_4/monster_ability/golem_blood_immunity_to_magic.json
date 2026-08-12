@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Golem (Blood) ~ Immunity to Magic",
+    "delivery": "Extraordinary",
+    "description": "A blood golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature.  Cure spells affect it as if it were a living creature, but only cure the minimum amount of damage; Spells and effects that specifically affect blood (such as boiling blood) affect it normally.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:golem_blood_immunity_to_magic",
+    "name": "Immunity to Magic",
+    "owners": [
+      "bestiary_4:monster:golem_blood"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 776,
+    "record_key": "Golem (Blood) ~ Immunity to Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

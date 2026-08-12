@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Udaeus ~ Energy Resistance",
+    "delivery": "Extraordinary",
+    "description": "An udaeus has resistance 30 against one type of energy. By performing a ritual that takes one day, an udaeus can change its energy resistance to a different energy type (either acid, cold, electricity, or fire). Most udaeoi choose fire resistance unless they expect to fight a creature using a specific energy type.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:udaeus_energy_resistance",
+    "name": "Energy Resistance",
+    "owners": [
+      "bestiary_4:monster:udaeus"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1398,
+    "record_key": "Udaeus ~ Energy Resistance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

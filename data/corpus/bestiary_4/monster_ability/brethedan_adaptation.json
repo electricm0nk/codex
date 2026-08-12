@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Brethedan ~ Adaptation",
+    "delivery": "Extraordinary",
+    "description": "A Brethedan's body is extremely mutable, and can adapt to respond to virtually any situation. Once per round as a swift action that does not provoke attacks of opportunity, a Brethedan can reshape its body and chemistry to adopt any of the following qualities - Resistance 5 against a single energy type (acid, cold, electricity, or fire).; An additional natural attack (tentacle, bite, etc.) with damage appropriate to the Brethedan's size; Change its slam damage type to slashing or piercing; Increase its slam damage die by one step (from 1d6 to 1d8 for most Brethedans); Gain a +4 natural armor bonus to AC; Extend its reach to 20 feet. A Brethedan can only have one modification in effect at any one time-a Brethedan that selects a new adaptation loses any other in effect. More extreme adaptations are also possible (at the GM's discretion) but generally take days or even months to adopt.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:brethedan_adaptation",
+    "name": "Adaptation",
+    "owners": [
+      "bestiary_4:monster:brethedan"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 356,
+    "record_key": "Brethedan ~ Adaptation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

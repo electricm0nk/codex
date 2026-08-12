@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:hyakume_drain_memory",
+      "bestiary_4:monster_ability:hyakume_eye_probe",
+      "bestiary_4:monster_ability:hyakume_monk_abilities",
+      "bestiary_4:monster_ability:hyakume_transfer_memories"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Hyakume",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:hyakume",
+    "monster_class": "Aberration:19",
+    "name": "Hyakume",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "L",
+    "source_page": "p.153",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 125,
+    "record_key": "Hyakume"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

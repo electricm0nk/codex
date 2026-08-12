@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Gearghost ~ Resetter",
+    "delivery": "Extraordinary",
+    "description": "A gearghost can reset traps and keep them repaired with supernatural efficiency. A gearghost can reset a trap with a repair or manual reset as a move action. If a trap has an automatic reset that is longer than immediate, a gear ghost can reset that trap as a free action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:gearghost_resetter",
+    "name": "Resetter",
+    "owners": [
+      "bestiary_4:monster:gearghost"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 751,
+    "record_key": "Gearghost ~ Resetter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

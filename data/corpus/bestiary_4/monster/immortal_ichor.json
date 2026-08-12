@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:immortal_ichor_corrupt_ally"
+    ],
+    "challenge_rating": "17",
+    "corpus_key": "Immortal Ichor",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:immortal_ichor",
+    "monster_class": "Ooze:20",
+    "name": "Immortal Ichor",
+    "natural_attacks": [
+      {
+        "damage_dice": "6d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Ooze",
+    "size": "M",
+    "source_page": "p.156",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 129,
+    "record_key": "Immortal Ichor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

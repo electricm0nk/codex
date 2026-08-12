@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Psychopomp (Catrina) ~ Compel Condemned",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a catrina can force one humanoid within 30 feet to make a DC 13 Will save or be affected as per the spell dominate person. This ability functions exactly as that spell, but the catrina can only command an affected creature to approach and kiss her. This action is not considered to be against the target's nature or self-destructive. Any damage taken by the target (other than damage the catrina deals) immediately ends this effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:psychopomp_catrina_compel_condemned",
+    "name": "Compel Condemned",
+    "owners": [
+      "bestiary_4:monster:psychopomp_catrina"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1174,
+    "record_key": "Psychopomp (Catrina) ~ Compel Condemned"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

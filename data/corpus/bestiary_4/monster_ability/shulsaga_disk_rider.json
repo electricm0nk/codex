@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Shulsaga ~ Disk Rider",
+    "delivery": "Supernatural",
+    "description": "A shulsaga can only use its fly speed in tandem with its floating disk spell-like ability. A shulsaga that casts floating disk can use the spell to its normal effect, or step upon it and use it to fly for the duration of the spell. The disk can support its creator and the creator's equipment (even if this exceeds the load a floating disk can normally bear), but nothing else. Only the disk's caster can ride it in this way. A floating disk cast by a shulsaga is dismissible.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:shulsaga_disk_rider",
+    "name": "Disk Rider",
+    "owners": [
+      "bestiary_4:monster:shulsaga"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1291,
+    "record_key": "Shulsaga ~ Disk Rider"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

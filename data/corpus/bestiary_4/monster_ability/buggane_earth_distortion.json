@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Buggane ~ Earth Distortion",
+    "delivery": "Supernatural",
+    "description": "Once per minute as a swift action, a buggane can empower itself to completely ignore the physicality of stone and metal, enabling it to pass through stone and metal barriers as easily as air. Until the beginning of the buggane's next turn, the buggane has earth glide and takes no damage from stone or metal weapons, or from the natural attacks of creatures of the earth subtype or stone or metal constructs. Additionally, a buggane's melee attacks ignore any AC bonus (including enhancement bonuses) from metal or stone armor and shields. While using earth distortion, the buggane cannot damage stone or metal constructs or creatures of the earth subtype with its natural attacks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:buggane_earth_distortion",
+    "name": "Earth Distortion",
+    "owners": [
+      "bestiary_4:monster:buggane"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 362,
+    "record_key": "Buggane ~ Earth Distortion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

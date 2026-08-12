@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Flying Polyp ~ Partial Invisibility",
+    "delivery": "Supernatural",
+    "description": "A flying polyp's body constantly flickers and shifts, passing from visibility to invisibility in a seemingly random pattern and often not wholly at once, leaving the creature's body in what appear to be multiple sections. This ability, combined with the flying polyp's amorphous, elastic form, makes it difficult to target the creature, granting it a 20%% miss chance against all attacks. By concentrating, a flying polyp can become fully invisible.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:flying_polyp_partial_invisibility",
+    "name": "Partial Invisibility",
+    "owners": [
+      "bestiary_4:monster:flying_polyp"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 684,
+    "record_key": "Flying Polyp ~ Partial Invisibility"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

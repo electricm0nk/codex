@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Psychopomp (Vanth) ~ Reaper's Scythe",
+    "delivery": "Supernatural",
+    "description": "Every vanth carries a distinctive adamantine scythe as both a weapon and a symbol of its duty. When the vanth wields its own scythe, the weapon gains a +1 enhancement bonus on attack rolls and damage rolls. As a free action, the vanth can summon its weapon from a personal demiplane or any other location and have it appear in its hands instantly. It can also dismiss its scythe back to its personal demiplane as a free action. If a vanth's scythe is destroyed, it can summon a new one in 24 hours.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:psychopomp_vanth_reaper_s_scythe",
+    "name": "Reaper's Scythe",
+    "owners": [
+      "bestiary_4:monster:psychopomp_vanth"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1184,
+    "record_key": "Psychopomp (Vanth) ~ Reaper's Scythe"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

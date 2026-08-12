@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Drake (Mist) ~ Misty Camouflage",
+    "delivery": "Extraordinary",
+    "description": "A mist drake can use Stealth to hide whenever it is in or adjacent to an area of mist, even while being observed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drake_mist_misty_camouflage",
+    "name": "Misty Camouflage",
+    "owners": [
+      "bestiary_4:monster:drake_mist"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 587,
+    "record_key": "Drake (Mist) ~ Misty Camouflage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

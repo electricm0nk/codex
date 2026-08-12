@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:seaweed_siren_cacophony",
+      "bestiary_4:monster_ability:seaweed_siren_false_heads",
+      "bestiary_4:monster_ability:seaweed_siren_sonic_beams",
+      "bestiary_4:monster_ability:seaweed_siren_staggering_gaze",
+      "bestiary_4:monster_ability:seaweed_siren_water_dependency"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Seaweed Siren",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:seaweed_siren",
+    "monster_class": "Magical Beast:16",
+    "name": "Seaweed Siren",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Sonic Beam"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.235",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 203,
+    "record_key": "Seaweed Siren"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

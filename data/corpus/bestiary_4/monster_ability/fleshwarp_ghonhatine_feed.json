@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Fleshwarp (Ghonhatine) ~ Feed",
+    "delivery": "Supernatural",
+    "description": "By spending a full-round action devouring the body of a dead or unconscious creature, a ghonhatine gains 1d8+%1 temporary hit points and a +2 bonus on attack and damage rolls for 1 minute.",
+    "description_variables": [
+      "CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshwarp_ghonhatine_feed",
+    "name": "Feed",
+    "owners": [
+      "bestiary_4:monster:fleshwarp_ghonhatine"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 664,
+    "record_key": "Fleshwarp (Ghonhatine) ~ Feed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

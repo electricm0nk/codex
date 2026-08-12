@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Spring-Heeled Jack ~ Vault",
+    "delivery": "Supernatural",
+    "description": "Spring-Heeled Jack can jump up to 20 feet (vertically or horizontally in any combination) as a move action without provoking attacks of opportunity.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:spring_heeled_jack_vault",
+    "name": "Vault",
+    "owners": [
+      "bestiary_4:monster:spring_heeled_jack"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1332,
+    "record_key": "Spring-Heeled Jack ~ Vault"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

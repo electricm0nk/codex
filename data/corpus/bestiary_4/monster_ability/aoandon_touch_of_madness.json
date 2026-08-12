@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Aoandon ~ Touch of Madness",
+    "delivery": "Supernatural",
+    "description": "The touch of an aoandon causes maddening fear. As a standard action it can make an incorporeal touch attack that deals 10d6 damage. Any living creature damaged by an aoandon's touch attack must succeed at a DC 24 Will save or be confused for 1d4 rounds. A creature that succeeds at this saving throw can't be confused again by this aoandon's touch of madness for 10 minutes. This is a mind-affecting fear effect. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:aoandon_touch_of_madness",
+    "name": "Touch of Madness",
+    "owners": [
+      "bestiary_4:monster:aoandon"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 272,
+    "record_key": "Aoandon ~ Touch of Madness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

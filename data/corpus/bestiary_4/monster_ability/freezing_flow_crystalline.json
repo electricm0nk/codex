@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Freezing Flow ~ Crystalline",
+    "delivery": "Extraordinary",
+    "description": "As a creature of living ice, a freezing flow is difficult to discern from its surroundings in icy and snowy land environments and when in icy water. A successful DC 15 Perception check is required to notice a freezing flow in these environments. Any creature that fails to notice a freezing flow and walks into it automatically takes damage as if struck by the ooze's slam attack.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:freezing_flow_crystalline",
+    "name": "Crystalline",
+    "owners": [
+      "bestiary_4:monster:freezing_flow"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 716,
+    "record_key": "Freezing Flow ~ Crystalline"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

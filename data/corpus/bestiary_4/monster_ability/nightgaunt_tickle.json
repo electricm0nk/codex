@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Nightgaunt ~ Tickle",
+    "delivery": "Extraordinary",
+    "description": "As a swift action, a nightgaunt can use its tail to tickle a grappled or helpless foe with horrible efficiency. The target must succeed at a DC %1 Fortitude save or be nauseated for 1 round.",
+    "description_variables": [
+      "DEX+12"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:nightgaunt_tickle",
+    "name": "Tickle",
+    "owners": [
+      "bestiary_4:monster:nightgaunt"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1113,
+    "record_key": "Nightgaunt ~ Tickle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

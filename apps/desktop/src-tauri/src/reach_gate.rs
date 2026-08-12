@@ -586,6 +586,10 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // bestiary in this list whose ONLY families are `monster`/`monster_ability`:
     // B5 and B6 carry no monsters, and B2 carries both lanes' families.
     ("bestiary_3", "bestiary_3"),
+    // SD-29 Epic 5 extend, round 6 (monster lane). Bestiary 4 carries an 86-unit
+    // `race_trait` family too, but this rule set compiles the two monster
+    // families and those units stay `not-ingested`, which is their honest state.
+    ("bestiary_4", "bestiary_4"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1177,6 +1181,13 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("bestiary_3", "monsters") => Some(chassis_monsters_reach("bestiary_3", "B3")),
         ("bestiary_3", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("bestiary_3", "B3"))
+        }
+        // SD-29 Epic 5 extend, round 6. Bestiary 4 -- the same two claim
+        // functions again. Like B3 and unlike B2 it contributes no `companions`
+        // family, so these two are the whole of its reach.
+        ("bestiary_4", "monsters") => Some(chassis_monsters_reach("bestiary_4", "B4")),
+        ("bestiary_4", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_4", "B4"))
         }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every

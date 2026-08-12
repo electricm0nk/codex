@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Seps ~ Liquefaction",
+    "delivery": "Supernatural",
+    "description": "Any creature killed by seps poison dissolves into an acidic liquid that deals 2d6 points of acid damage per round to anything in its square (including the dead creature's equipment).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:seps_liquefaction",
+    "name": "Liquefaction",
+    "owners": [
+      "bestiary_4:monster:seps"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1250,
+    "record_key": "Seps ~ Liquefaction"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

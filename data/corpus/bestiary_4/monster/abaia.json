@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:abaia_eldritch_gizzard",
+      "bestiary_4:monster_ability:abaia_endless_coils",
+      "bestiary_4:monster_ability:abaia_wave_rider",
+      "bestiary_4:monster_ability:abaia_spell_resistance"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Abaia",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:abaia",
+    "monster_class": "Magical Beast:14",
+    "name": "Abaia",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "6d6",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Magical Beast",
+    "size": "H",
+    "source_page": "p.7",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 6,
+    "record_key": "Abaia"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

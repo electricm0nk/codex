@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:colossus_stone_alternate_form",
+      "bestiary_4:monster_ability:colossus_stone_movable_keep",
+      "bestiary_4:monster_ability:colossus_stone_antimagic_aura",
+      "bestiary_4:monster_ability:colossus_stone_self_repair",
+      "bestiary_4:monster_ability:colossus_stone_siege_tower"
+    ],
+    "challenge_rating": "19",
+    "corpus_key": "Colossus (Stone)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:colossus_stone",
+    "monster_class": "Construct:21",
+    "name": "Stone Colossus",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d10",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": "6d10",
+        "name": "Stomp"
+      },
+      {
+        "damage_dice": "3d8",
+        "name": "Light Ballista"
+      }
+    ],
+    "race_subtype": "Colossus|Mythic",
+    "race_type": "Construct",
+    "size": "C",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 32,
+    "record_key": "Colossus (Stone)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

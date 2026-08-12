@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Juggernaut ~ Faith-Bound",
+    "delivery": "Supernatural",
+    "description": "A juggernaut cannot attack any creature that openly wears or displays the holy symbol or unholy symbol of the deity to which the juggernaut is dedicated unless that creature first attacks the juggernaut.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:juggernaut_faith_bound",
+    "name": "Faith-Bound",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 912,
+    "record_key": "Juggernaut ~ Faith-Bound"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

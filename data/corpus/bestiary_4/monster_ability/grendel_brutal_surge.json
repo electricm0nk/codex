@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Grendel ~ Brutal Surge",
+    "delivery": "Supernatural",
+    "description": "When Grendel expends mythic power toadd a surge die to an attack roll, he also adds a surge die to that attack's damage roll. This is not an action and does not require him to expend any additional uses of mythic power to use this ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:grendel_brutal_surge",
+    "name": "Brutal Surge",
+    "owners": [
+      "bestiary_4:monster:grendel"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 837,
+    "record_key": "Grendel ~ Brutal Surge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

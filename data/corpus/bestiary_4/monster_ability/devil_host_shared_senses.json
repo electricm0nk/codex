@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Devil (Host) ~ Shared Senses",
+    "delivery": "Supernatural",
+    "description": "All magaavs within 100 feet of one another share the same senses. Thus, if one individual perceives something (for example, with a successful Perception check), all others within range are immediately aware of it. Senses are instantly relayed from one magaav to the next, allowing for the senses of a single devil to potentially spread through and inform an entire swarm instantly. It is still possible for a magaav to be flat-footed for other reasons even if other magaavs nearby are not.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:devil_host_shared_senses",
+    "name": "Shared Senses",
+    "owners": [
+      "bestiary_4:monster:devil_host"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 469,
+    "record_key": "Devil (Host) ~ Shared Senses"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

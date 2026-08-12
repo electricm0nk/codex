@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Udaeus ~ Infuse Arms and Armor",
+    "delivery": "Extraordinary",
+    "description": "Any improvised weapon an udaeus wields is treated as a comparable normal weapon. Any normal weapon an udaeus wields is treated as a masterwork weapon. Any masterwork weapon it wields is treated as a weapon with a magical +1 enhancement bonus. Any weapon with a magical enhancement bonus it wields is treated as though its enhancement bonus were 1 higher than its actual value (to a maximum of +6). This ability also applies to armor and shields (normal is treated as masterwork, masterwork is treated as +1, and +1 or higher is treated as 1 higher than actual).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:udaeus_infuse_arms_and_armor",
+    "name": "Infuse Arms and Armor",
+    "owners": [
+      "bestiary_4:monster:udaeus"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1400,
+    "record_key": "Udaeus ~ Infuse Arms and Armor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

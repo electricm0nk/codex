@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Drake (Lava) ~ Pyroclastic Vomit",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, a lava drake can vomit forth a ball of molten rock that explodes upon striking a target, showering the target and adjacent creatures in magma. This attack has a range of 100 feet, and deals 6d6 points of fire damage (Reflex DC %1 half) to the primary target and 3d6 points of fire damage to any creatures within 20 feet of the primary target. The magma continues to burn for 1d3 rounds, dealing an additional 3d6 points of fire damage per round to the primary target and 1d6 points of fire damage per round to any secondary targets. After the magma cools, it crumbles to dust. Once a lava drake has used its pyroclastic vomit, it cannot do so again for 1d6 rounds.",
+    "description_variables": [
+      "15+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:drake_lava_pyroclastic_vomit",
+    "name": "Pyroclastic Vomit",
+    "owners": [
+      "bestiary_4:monster:drake_lava"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 581,
+    "record_key": "Drake (Lava) ~ Pyroclastic Vomit"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

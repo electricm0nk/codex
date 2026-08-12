@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Festering Spirit ~ Ghost Touch",
+    "delivery": "Supernatural",
+    "description": "A festering spirit can manipulate corporeal objects that weigh up to 25 pounds as if those objects had the ghost touch special ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:festering_spirit_ghost_touch",
+    "name": "Ghost Touch",
+    "owners": [
+      "bestiary_4:monster:festering_spirit"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 646,
+    "record_key": "Festering Spirit ~ Ghost Touch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

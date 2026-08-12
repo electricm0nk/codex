@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Psychopomp (Catrina) ~ Calm Emotions Aura",
+    "delivery": "Supernatural",
+    "description": "A catrina's aura acts like a calm emotions spell with a radius of 30 feet. A creature that succeeds at its save is immune to that catrina's aura for 24 hours.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:psychopomp_catrina_calm_emotions_aura",
+    "name": "Calm Emotions Aura",
+    "owners": [
+      "bestiary_4:monster:psychopomp_catrina"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1173,
+    "record_key": "Psychopomp (Catrina) ~ Calm Emotions Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

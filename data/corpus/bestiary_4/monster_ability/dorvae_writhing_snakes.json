@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dorvae ~ Writhing Snakes",
+    "delivery": "Extraordinary",
+    "description": "When a dorvae succeeds at a grapple check against an opponent, the serpents of its body writhe around the grappled foe, biting wherever they can gain purchase. This deals 2d8 points of piercing damage, and the grappled foe is subject to the dorvae's supernatural poison.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dorvae_writhing_snakes",
+    "name": "Writhing Snakes",
+    "owners": [
+      "bestiary_4:monster:dorvae"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 504,
+    "record_key": "Dorvae ~ Writhing Snakes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

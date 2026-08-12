@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Fossegrim ~ Drowning Touch",
+    "delivery": "Supernatural",
+    "description": "A fossegrim can flood the lungs of a creature that is willing, is helpless, is affected by its enchanted music ability, touches it while it's in treasure form, or is touched by it (traditionally by kissing the creature on the lips). If the target cannot breathe water, it cannot hold its breath and immediately begins to drown slowly. On its turn, the target can attempt a DC %1 Fortitude save to cough up this water; if it fails, it falls unconscious at 0 hp. On the next round, a fallen target must attempt another DC %1 Fortitude save, dropping to -1 hit points and dying if it fails; on the next round it must attempt to save again or lose 1d6 hit points. On the first successful save, the water clears from the target's lungs and the target stabilizes.",
+    "description_variables": [
+      "14+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fossegrim_drowning_touch",
+    "name": "Drowning Touch",
+    "owners": [
+      "bestiary_4:monster:fossegrim"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 710,
+    "record_key": "Fossegrim ~ Drowning Touch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

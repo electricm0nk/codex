@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:psychopomp_morrigna_spider_sight",
+      "bestiary_4:monster_ability:psychopomp_morrigna_wrappings"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Psychopomp (Morrigna)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:psychopomp_morrigna",
+    "monster_class": "Outsider (Ref/Will):18",
+    "name": "Morrigna",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Wrappings"
+      }
+    ],
+    "race_subtype": "Extraplanar|Psychopomp",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.219",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 15,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 184,
+    "record_key": "Psychopomp (Morrigna)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

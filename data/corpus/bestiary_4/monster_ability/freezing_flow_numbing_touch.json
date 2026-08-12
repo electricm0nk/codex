@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Freezing Flow ~ Numbing Touch",
+    "delivery": "Extraordinary",
+    "description": "Each time a freezing flow deals cold damage with its slam attack or constrict ability, the target must succeed at a DC %1 Fortitude save or be staggered with numbing cold for 1 round.",
+    "description_variables": [
+      "12+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:freezing_flow_numbing_touch",
+    "name": "Numbing Touch",
+    "owners": [
+      "bestiary_4:monster:freezing_flow"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 718,
+    "record_key": "Freezing Flow ~ Numbing Touch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

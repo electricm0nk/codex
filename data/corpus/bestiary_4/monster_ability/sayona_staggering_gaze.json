@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Sayona ~ Staggering Gaze",
+    "delivery": "Supernatural",
+    "description": "Staggered for 1d4 rounds, 30 feet, Fortitude DC %1 negates. This is a mind-affecting effect.",
+    "description_variables": [
+      "CHA+18"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:sayona_staggering_gaze",
+    "name": "Staggering Gaze",
+    "owners": [
+      "bestiary_4:monster:sayona"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1223,
+    "record_key": "Sayona ~ Staggering Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

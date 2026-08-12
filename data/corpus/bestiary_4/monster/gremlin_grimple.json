@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:gremlin_grimple_gremlin_lice",
+      "bestiary_4:monster_ability:gremlin_grimple_putrid_vomit"
+    ],
+    "challenge_rating": "1/3",
+    "corpus_key": "Gremlin (Grimple)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:gremlin_grimple",
+    "monster_class": "Fey:1",
+    "name": "Grimple",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "T",
+    "source_page": "p.142",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      },
+      {
+        "feet": 20,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 113,
+    "record_key": "Gremlin (Grimple)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr",
+    "derived:dr"
+  ]
+}

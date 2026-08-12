@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Ijiraq ~ Hide in Plain Sight",
+    "delivery": "Supernatural",
+    "description": "An ijiraq can use the Stealth skill even while being observed. As long as it's standing in terrain covered in ice or snow, an ijiraq can hide itself from view in the open without actually hiding behind anything. An ijiraq can't use this ability while flying, and the ability has no effect when the ijiraq isn't in icy terrain.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:ijiraq_hide_in_plain_sight",
+    "name": "Hide in Plain Sight",
+    "owners": [
+      "bestiary_4:monster:ijiraq"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 888,
+    "record_key": "Ijiraq ~ Hide in Plain Sight"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

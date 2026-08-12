@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Golem (Coral) ~ Aquatic Reconstruction",
+    "delivery": "Extraordinary",
+    "description": "Whenever a coral golem is touching a body of saltwater of a size equal to or greater than its own size, it gains fast healing 5.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:golem_coral_aquatic_reconstruction",
+    "name": "Aquatic Reconstruction",
+    "owners": [
+      "bestiary_4:monster:golem_coral"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 780,
+    "record_key": "Golem (Coral) ~ Aquatic Reconstruction"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

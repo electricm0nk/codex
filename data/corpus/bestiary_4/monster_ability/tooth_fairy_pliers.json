@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Tooth Fairy ~ Pliers",
+    "delivery": "Supernatural",
+    "description": "Each tooth fairy owns a pair of pliers it uses to torment its victims. In the hands of a tooth fairy, the pliers deal damage as a +1 dagger wielded by a Medium creature. The pliers have hardness 10 and 3 hit points. If its pliers are destroyed, a tooth fairy is stunned for 1 round. If the tooth fairy is killed, the pliers rust away into worthless splinters 1d4 rounds later. A tooth fairy can create a new pair of pliers by spending one hour crafting (no materials required), which destroys the previous pair. The pliers grant the tooth fairy the Greater Dirty Trick feat and a +4 bonus on dirty trick and steal combat maneuvers.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:tooth_fairy_pliers",
+    "name": "Pliers",
+    "owners": [
+      "bestiary_4:monster:tooth_fairy"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1373,
+    "record_key": "Tooth Fairy ~ Pliers"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

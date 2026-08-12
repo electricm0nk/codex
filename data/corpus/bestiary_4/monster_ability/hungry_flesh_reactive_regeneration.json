@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Hungry Flesh ~ Reactive Regeneration",
+    "delivery": "Extraordinary",
+    "description": "Whenever a hungry flesh takes piercing or slashing damage, it regenerates 5 hit points and gains 1 growth point.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:hungry_flesh_reactive_regeneration",
+    "name": "Reactive Regeneration",
+    "owners": [
+      "bestiary_4:monster:hungry_flesh"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 871,
+    "record_key": "Hungry Flesh ~ Reactive Regeneration"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

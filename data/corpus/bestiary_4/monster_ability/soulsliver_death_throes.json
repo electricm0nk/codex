@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Soulsliver ~ Death Throes",
+    "delivery": "Supernatural",
+    "description": "When a soulsliver is killed, its body explodes into jagged glass shards that deal 2d6 points of piercing and slashing damage to creatures within a 20-foot-radius burst (Reflex DC %1 half).",
+    "description_variables": [
+      "CON+11"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:soulsliver_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "bestiary_4:monster:soulsliver"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1317,
+    "record_key": "Soulsliver ~ Death Throes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Lampad ~ Weep",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a lampad can unsettle those near her when she cries. Any creature within 30 feet who can hear a lampad weeping becomes shaken unless it succeeds at a DC %1 Will saving throw. This ability can't cause a creature to become frightened or panicked. This is a mind-affecting fear effect that relies on audible components.",
+    "description_variables": [
+      "CHA+13"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:lampad_weep",
+    "name": "Weep",
+    "owners": [
+      "bestiary_4:monster:lampad"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1003,
+    "record_key": "Lampad ~ Weep"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

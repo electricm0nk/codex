@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Gearghost ~ Create Trap",
+    "delivery": "Supernatural",
+    "description": "Once per week, a gearghost can create a trap of CR 4 or lower regardless of cost, materials, or skill checks. Two or more gearghosts working together on a trap can increase the maximum CR by 2 for each additional gearghost working in concert. For example, three gearghosts working together can create any CR 8 or lower trap in a week. Example traps can be found on page 420 of Pathfinder RPG Core Rulebook.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:gearghost_create_trap",
+    "name": "Create Trap",
+    "owners": [
+      "bestiary_4:monster:gearghost"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 749,
+    "record_key": "Gearghost ~ Create Trap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

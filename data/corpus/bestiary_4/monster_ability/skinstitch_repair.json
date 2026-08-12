@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Skinstitch ~ Repair",
+    "delivery": "Extraordinary",
+    "description": "A skinstitch can repair itself by sewing additional fabric, leather, or hide to its body. Doing so requires at least 1 square foot of material and a full-round action, which restores 1 hit point to the skinstitch.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:skinstitch_repair",
+    "name": "Repair",
+    "owners": [
+      "bestiary_4:monster:skinstitch"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1296,
+    "record_key": "Skinstitch ~ Repair"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

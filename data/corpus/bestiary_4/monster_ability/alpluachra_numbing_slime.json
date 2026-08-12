@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Alpluachra ~ Numbing Slime",
+    "delivery": "Extraordinary",
+    "description": "Any creature that deals damage to an alpluachra with a natural attack or an unarmed strike, comes into contact with an alpluachra, or is host to an alpluachra must succeed at a DC 12 Fortitude save or take a -4 penalty on all tactile Perception checks, as well as other skill checks requiring tactile senses (such as Disable Device and Sleight of Hand) for 24 hours. A host creature that fails this saving throw takes the penalty to detect the alpluachra implanted inside it. If the host creature succeeds at the saving throw, it can't be affected by the same alpluachra's numbing slime for another 24 hours.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:alpluachra_numbing_slime",
+    "name": "Numbing Slime",
+    "owners": [
+      "bestiary_4:monster:alpluachra"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 264,
+    "record_key": "Alpluachra ~ Numbing Slime"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

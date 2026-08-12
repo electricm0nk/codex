@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Comozant Wyrd ~ Plasma Form",
+    "delivery": "Extraordinary",
+    "description": "Although incorporeal, a comozant wyrd can't hide inside solid objects. It must start its turn attached to the outside of something that's solid and of Small size or larger, or else it takes 5 points of damage. Anyone attacking the wyrd must either take a -4 penalty on the attack roll or resolve the attack against whatever the wyrd is attached to as well.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:comozant_wyrd_plasma_form",
+    "name": "Plasma Form",
+    "owners": [
+      "bestiary_4:monster:comozant_wyrd"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 422,
+    "record_key": "Comozant Wyrd ~ Plasma Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

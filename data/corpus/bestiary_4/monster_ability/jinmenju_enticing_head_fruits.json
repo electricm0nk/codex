@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Jinmenju ~ Enticing Head-Fruits",
+    "delivery": "Supernatural",
+    "description": "Any creature that begins its turn within 5 feet of a jinmenju must succeed at a DC %1 Will save or be magically compelled to immediately grab a head- fruit and eat it. This is a mind-affecting compulsion effect. A creature that successfully saves is immune to that jinmenju's enticing head-fruits for 24 hours. Anyone who takes a bite out of one suffers from the following effect. [Head-Fruit Poison] Head-fruit-ingested; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d3 Wisdom damage and confused for 1 round; cure 2 consecutive saves.",
+    "description_variables": [
+      "CON+16"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:jinmenju_enticing_head_fruits",
+    "name": "Enticing Head-Fruits",
+    "owners": [
+      "bestiary_4:monster:jinmenju"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 907,
+    "record_key": "Jinmenju ~ Enticing Head-Fruits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

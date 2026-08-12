@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Geist ~ Spiritual Manipulation",
+    "delivery": "Supernatural",
+    "description": "Geists have the ability to take control of haunts (GameMastery Guide 242). When a geist enters a haunt's area of effect, the geist can immediately attempt to take over the haunt by making a Charisma check. If the result of the Charisma check is equal to or greater than the haunt's CR, the geist takes over the haunt and maintains control as long as the geist remains within 1 mile. If the geist's attempt to take control of a haunt fails, the geist must retreat from the haunt's area of effect and cannot attempt to take control of the haunt again for 24 hours. When a geist controls a haunt, it can activate or suppress the haunt's effects as a free action and the haunt automatically resets in half its normal time. A haunt under a geist's control can still be neutralized when reduced to 0 hit points, but it cannot be permanently put to rest until the geist that controls it is destroyed. A geist can control a number of haunts up to its Charisma modifier at one time (usually five).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:geist_spiritual_manipulation",
+    "name": "Spiritual Manipulation",
+    "owners": [
+      "bestiary_4:monster:geist"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 754,
+    "record_key": "Geist ~ Spiritual Manipulation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

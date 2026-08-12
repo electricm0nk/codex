@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Fleshwarp (Ghonhatine) ~ Regurgitate",
+    "delivery": "Extraordinary",
+    "description": "A ghonhatine can expel the contents of its stomach as a ranged attack with a splash weapon that has a range increment of 20 feet. It deals 2d6 acid damage to the target and splashes all adjacent creatures. In addition to taking damage, a target directly hit by a ghonhatine's regurgitation must make two DC %1 Fortitude saves, the first to resist contracting filth fever, and the second to avoid being nauseated for 1 minute. A nauseated creature can end its nausea early by dousing itself in a gallon of water. All creatures adjacent to the target must make DC 24 Fortitude saves to avoid being sickened for 1 minute. Once a ghonhatine uses this ability it can't use it again until it feeds.",
+    "description_variables": [
+      "15+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshwarp_ghonhatine_regurgitate",
+    "name": "Regurgitate",
+    "owners": [
+      "bestiary_4:monster:fleshwarp_ghonhatine"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 667,
+    "record_key": "Fleshwarp (Ghonhatine) ~ Regurgitate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

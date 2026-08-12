@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:dragon_solar_alien_presence",
+      "bestiary_4:monster_ability:dragon_solar_beam_of_light",
+      "bestiary_4:monster_ability:dragon_solar_channel_life",
+      "bestiary_4:monster_ability:dragon_solar_channel_radiation",
+      "bestiary_4:monster_ability:dragon_solar_primal_fire"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Dragon (Solar)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:dragon_solar",
+    "monster_class": "Dragon:7",
+    "name": "Solar Dragon",
+    "natural_attacks": [],
+    "race_subtype": "Fire",
+    "race_type": "Dragon",
+    "size": "S",
+    "source_page": "p.68",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 53,
+    "record_key": "Dragon (Solar)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Flying Polyp ~ Wind Blast",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds as a standard action, a flying polyp can create a powerful blast of wind at a range of up to 120 feet. This blast of wind creates a sudden explosion of flesh-scouring wind in a 30-foot-radius burst. All creatures within this area take 14d6 points of bludgeoning damage, with a successful DC %1 Reflex save halving the damage. In addition, these winds can check or blow away creatures as if they were tornado- strength winds (Pathfinder RPG Core Rulebook 439).",
+    "description_variables": [
+      "19+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:flying_polyp_wind_blast",
+    "name": "Wind Blast",
+    "owners": [
+      "bestiary_4:monster:flying_polyp"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 686,
+    "record_key": "Flying Polyp ~ Wind Blast"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

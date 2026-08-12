@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Mindslaver Mold ~ Spores",
+    "delivery": "Supernatural",
+    "description": "Whenever a mindslaver mold hits a creature with its spore pod, or whenever a creature touches a mindslaver mold (including when a creature hits the mold with a touch attack, unarmed strike, or natural attack), the creature must succeed at a DC 15 Fortitude save or take 1d4 points of Wisdom damage as the mold's spores swiftly drain away the victim's willpower and sense of self.",
+    "description_variables": [
+      "12+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:mindslaver_mold_spores",
+    "name": "Spores",
+    "owners": [
+      "bestiary_4:monster:mindslaver_mold"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1087,
+    "record_key": "Mindslaver Mold ~ Spores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

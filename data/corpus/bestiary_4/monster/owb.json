@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:owb_burning_cold",
+      "bestiary_4:monster_ability:owb_curse_of_darkness"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Owb",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:owb",
+    "monster_class": "Outsider (Fort/Will):8",
+    "name": "Owb",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Burning Cold"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.210",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 174,
+    "record_key": "Owb"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

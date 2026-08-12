@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Lunarma ~ Implant Eggs",
+    "delivery": "Extraordinary",
+    "description": "As a full-round action, a lunarma can lay 2d6 eggs in a helpless creature. The eggs hatch after 24 hours and each deals 1 point of Con damage per hour as they feed on the host. After 1d2 days of eating, the larvae crawl out and find a safe place to mature into adults. A remove disease spell rids a creature of all implanted eggs or larvae, or they can be removed one at a time by using the Heal skill to treat deadly wounds.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:lunarma_implant_eggs",
+    "name": "Implant Eggs",
+    "owners": [
+      "bestiary_4:monster:lunarma"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1045,
+    "record_key": "Lunarma ~ Implant Eggs"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

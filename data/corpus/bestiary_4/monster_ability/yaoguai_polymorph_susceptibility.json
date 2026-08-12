@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Yaoguai ~ Polymorph Susceptibility",
+    "delivery": "Supernatural",
+    "description": "A yaoguai is immune to polymorph effects or effects that otherwise change its shape, but the attempt to alter its shape causes it great pain and it must attempt a saving throw if the effect allows it. If it fails its save or the effect doesn't allow a saving throw, the yaoguai is staggered and loses its damage reduction and fast healing for 1d4 rounds.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:yaoguai_polymorph_susceptibility",
+    "name": "Polymorph Susceptibility",
+    "owners": [
+      "bestiary_4:monster:yaoguai"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1474,
+    "record_key": "Yaoguai ~ Polymorph Susceptibility"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

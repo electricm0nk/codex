@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Elder Thing ~ Limited Starflight",
+    "delivery": "Extraordinary",
+    "description": "An elder thing can survive in the void of outer space, and its wings allow it to use its fly speed in that environment despite the lack of air. Unlike creatures with full starflight, an elder thing's ability to fly in outer space does not allow it to reach unusually high speeds-an elder thing that wishes to travel from one planet to another typically calculates the distance and then hibernates for the majority of the journey, relying on its momentum and inertia to carry it to its destination while it slumbers along the way.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:elder_thing_limited_starflight",
+    "name": "Limited Starflight",
+    "owners": [
+      "bestiary_4:monster:elder_thing"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 607,
+    "record_key": "Elder Thing ~ Limited Starflight"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

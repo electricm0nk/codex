@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:ijiraq_disorienting_gaze",
+      "bestiary_4:monster_ability:ijiraq_hide_in_plain_sight"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Ijiraq",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:ijiraq",
+    "monster_class": "Fey:14",
+    "name": "Ijiraq",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d4",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Gore"
+      }
+    ],
+    "race_subtype": "Shapechanger",
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.155",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 128,
+    "record_key": "Ijiraq"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

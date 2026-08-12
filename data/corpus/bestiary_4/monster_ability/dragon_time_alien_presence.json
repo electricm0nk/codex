@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dragon (Time) ~ Alien Presence",
+    "delivery": "Supernatural",
+    "description": "A creature that fails its saving throw against a time dragon's alien presence is staggered for 5d6 rounds (or stunned if it has 4 Hit Dice or fewer).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:dragon_time_alien_presence",
+    "name": "Alien Presence",
+    "owners": [
+      "bestiary_4:monster:dragon_time"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 528,
+    "record_key": "Dragon (Time) ~ Alien Presence"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

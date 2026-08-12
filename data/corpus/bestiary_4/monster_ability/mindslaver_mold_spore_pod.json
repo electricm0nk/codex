@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Mindslaver Mold ~ Spore Pod",
+    "delivery": "Extraordinary",
+    "description": "A mindslaver mold's sole physical attack is to launch a spore pod the size of a sling bullet. This is a ranged touch attack that has a range increment of 20 feet.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:mindslaver_mold_spore_pod",
+    "name": "Spore Pod",
+    "owners": [
+      "bestiary_4:monster:mindslaver_mold"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1086,
+    "record_key": "Mindslaver Mold ~ Spore Pod"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

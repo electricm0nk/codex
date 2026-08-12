@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Devil (Drowning) ~ Drown",
+    "delivery": "Supernatural",
+    "description": "As a full-round action, a drowning devil can summon murky water into the lungs of a single target within 30 feet. If the target can't breathe water, it's unable hold its breath and immediately begins to drown. At the start of its next turn, the target must succeed at a DC %1 Fortitude save to cough up this water or it falls unconscious and is brought to 0 hit points. On the next round, the target must save successfully again or drop to -1 hit point and start dying; on the third round it must save successfully again or die.",
+    "description_variables": [
+      "14+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:devil_drowning_drown",
+    "name": "Drown",
+    "owners": [
+      "bestiary_4:monster:devil_drowning"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 461,
+    "record_key": "Devil (Drowning) ~ Drown"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

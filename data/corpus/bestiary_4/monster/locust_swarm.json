@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:locust_swarm_devour"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Locust Swarm",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:locust_swarm",
+    "monster_class": "Vermin:4",
+    "name": "Locust Swarm",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Swarm"
+      }
+    ],
+    "race_subtype": "Swarm",
+    "race_type": "Vermin",
+    "size": "F",
+    "source_page": "p.183",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Climb"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 153,
+    "record_key": "Locust Swarm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Drake (Lava) ~ Magma Shake",
+    "delivery": "Extraordinary",
+    "description": "Whenever a lava drake exits from being submerged in molten rock (either magma or lava), on the next round as a full-round action, it can shake its body, flicking a fine spray of scalding molten rock in every direction. All creatures within a 30-foot radius of the lava drake take 5d6 points of fire damage from the shower of scalding rock; a successful DC %1 Reflex save halves the damage. Performing a magma shake clears the drake's scales of all excess molten rock and it must resubmerge itself in order to use this attack again.",
+    "description_variables": [
+      "15+DEX"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:drake_lava_magma_shake",
+    "name": "Magma Shake",
+    "owners": [
+      "bestiary_4:monster:drake_lava"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 580,
+    "record_key": "Drake (Lava) ~ Magma Shake"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Juggernaut ~ Soul-Powered",
+    "delivery": "Supernatural",
+    "description": "When a juggernaut kills a creature with at least 5 Hit Dice and an alignment two or more steps away from the juggernaut's alignment, it gains a kill point. Add its current total kill points as a bonus on its attack rolls, combat maneuver checks, caster level checks, and skill checks. Add half its current total kill points as a bonus to its natural armor and spell resistance. The juggernaut loses 1 kill point every 24 hours.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:juggernaut_soul_powered",
+    "name": "Soul-Powered",
+    "owners": [
+      "bestiary_4:monster:juggernaut"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 915,
+    "record_key": "Juggernaut ~ Soul-Powered"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

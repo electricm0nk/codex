@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Shard Slag ~ Slag Blades",
+    "delivery": "Extraordinary",
+    "description": "Each round, a shard slag manipulates its molten metal form to create 1d4+2 blade-like protrusions it can extend to attack prey. The slag blades each strike as Medium longswords that deal an additional 2d6 points of fire damage. Additionally, the slag blades are natural weapons, so a shard slag can use them to attack creatures it grapples. Due to a shard slag's constantly roiling molten body, the slag blades melt away at the end of the shard slag's turn each round to be immediately replaced by 1d4+2 new slag blades.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shard_slag_slag_blades",
+    "name": "Slag Blades",
+    "owners": [
+      "bestiary_4:monster:shard_slag"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1272,
+    "record_key": "Shard Slag ~ Slag Blades"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

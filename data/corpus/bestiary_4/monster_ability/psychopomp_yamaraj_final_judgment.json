@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Psychopomp (Yamaraj) ~ Final Judgment",
+    "delivery": "Supernatural",
+    "description": "A yamaraj can only use its miracle spell-like ability to restore a slain outsider to life or to reproduce the following spell effects: banishment, dimensional anchor, greater restoration, plane shift, true resurrection.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:psychopomp_yamaraj_final_judgment",
+    "name": "Final Judgment",
+    "owners": [
+      "bestiary_4:monster:psychopomp_yamaraj"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1188,
+    "record_key": "Psychopomp (Yamaraj) ~ Final Judgment"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

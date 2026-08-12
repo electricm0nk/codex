@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Udaeus ~ Fighter Training",
+    "delivery": "Extraordinary",
+    "description": "An udaeus counts its racial Hit Dice as fighter levels for the purpose of qualifying for feats. If it has levels in fighter, these Hit Dice stack.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:udaeus_fighter_training",
+    "name": "Fighter Training",
+    "owners": [
+      "bestiary_4:monster:udaeus"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1399,
+    "record_key": "Udaeus ~ Fighter Training"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

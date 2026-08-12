@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Devil (Nemesis) ~ Infernal Wound",
+    "delivery": "Supernatural",
+    "description": "An advodaza's assaults leave vicious marks that do not easily heal. The damage an advodaza inflicts with its claws leaves persistent wounds that deal 2d6 points of bleed damage. Bleeding caused in this way is difficult to stanch-a successful DC %1 Heal check is required to stop the bleeding, and anyone attempting to magically heal a creature suffering from an infernal wound must succeed at a DC %1 caster level check or the spell does not function. Success indicates the healing works normally and stops all bleed effects.",
+    "description_variables": [
+      "CON+19"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:devil_nemesis_infernal_wound",
+    "name": "Infernal Wound",
+    "owners": [
+      "bestiary_4:monster:devil_nemesis"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 475,
+    "record_key": "Devil (Nemesis) ~ Infernal Wound"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

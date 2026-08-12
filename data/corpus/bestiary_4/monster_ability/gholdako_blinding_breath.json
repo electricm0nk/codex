@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Gholdako ~ Blinding Breath",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds, a gholdako can exhale its noxious breath in a 20-foot cone, permanently blinding any creatures in the affected area unless they succeed at a DC %1 Fortitude save.",
+    "description_variables": [
+      "17+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:gholdako_blinding_breath",
+    "name": "Blinding Breath",
+    "owners": [
+      "bestiary_4:monster:gholdako"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 758,
+    "record_key": "Gholdako ~ Blinding Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

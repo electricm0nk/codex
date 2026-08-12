@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Gremlin (Haniver) ~ Misplacement",
+    "delivery": "Supernatural",
+    "description": "Hanivers are swift and curious, possessing an uncanny ability to meddle with the possessions of any character whose square they enter. Any time a haniver succeeds at a Sleight of Hand check against a creature, it also rearranges that creature's possessions. The next time that creature attempts to produce a weapon or item, it finds its possessions misplaced or disarranged; retrieving a stored item or drawing a weapon then requires a standard action instead of a move action (unless the haniver has stolen the item in question). After spending this standard action, the character takes mental inventory and is no longer affected by this ability. Occasionally, hanivers replace items they've stolen or leave their old treasures-seashells, old fish, clumps of sand-in containers or clothing they have rooted through. They do this without any added difficultly to their Sleight of Hand checks.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:gremlin_haniver_misplacement",
+    "name": "Misplacement",
+    "owners": [
+      "bestiary_4:monster:gremlin_haniver"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 830,
+    "record_key": "Gremlin (Haniver) ~ Misplacement"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

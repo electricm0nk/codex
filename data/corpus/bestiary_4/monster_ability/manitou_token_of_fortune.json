@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Manitou ~ Token of Fortune",
+    "delivery": "Supernatural",
+    "description": "A manitou can imbue an small object, such as a stone or necklace, with its blessing. The object's bearer and any allies within 10 feet gain a +2 luck bonus on saving throws. The manitou can use scrying on the token at will. The manitou can teleport to it (without error) once per day as a swift action. These abilities are lost if the token leaves the manitou's territory. A manitou may only have one token active at a time.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:manitou_token_of_fortune",
+    "name": "Token of Fortune",
+    "owners": [
+      "bestiary_4:monster:manitou"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1074,
+    "record_key": "Manitou ~ Token of Fortune"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Dragon (Lunar) ~ Bewildering Breath",
+    "delivery": "Supernatural",
+    "description": "A creature that fails its saving throw against a lunar dragon's breath weapon emits light (as faerie fire) and is dazzled for 1d4 rounds. If the lunar dragon is adult or older, the creature is also confused for 1d4 rounds.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dragon_lunar_bewildering_breath",
+    "name": "Bewildering Breath",
+    "owners": [
+      "bestiary_4:monster:dragon_lunar"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 515,
+    "record_key": "Dragon (Lunar) ~ Bewildering Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

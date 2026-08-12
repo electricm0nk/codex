@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Flying Polyp ~ Deflecting Winds",
+    "delivery": "Supernatural",
+    "description": "A flying polyp's mastery over air and wind allows it to surround itself with blasts of precisely aimed gusts, granting the creature a +5 deflection bonus to its Armor Class and a +4 resistance bonus on Reflex saving throws.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:flying_polyp_deflecting_winds",
+    "name": "Deflecting Winds",
+    "owners": [
+      "bestiary_4:monster:flying_polyp"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 683,
+    "record_key": "Flying Polyp ~ Deflecting Winds"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

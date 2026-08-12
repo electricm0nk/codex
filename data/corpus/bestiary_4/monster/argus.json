@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:argus_absolute_readiness",
+      "bestiary_4:monster_ability:argus_accurate_strikes",
+      "bestiary_4:monster_ability:argus_argus_vulnerabilities",
+      "bestiary_4:monster_ability:argus_eye_gouge",
+      "bestiary_4:monster_ability:argus_fascinating_gaze",
+      "bestiary_4:monster_ability:argus_limitless_vision"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Argus",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:argus",
+    "monster_class": "Aberration:13",
+    "name": "Argus",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "3d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Mythic",
+    "race_type": "Aberration",
+    "size": "G",
+    "source_page": "p.13",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 12,
+    "record_key": "Argus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

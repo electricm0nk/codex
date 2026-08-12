@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Comozant Wyrd ~ Illuminating Flames",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a comozant wyrd can shroud the upper halves of any Small or larger creatures it can see within 30 feet of it in cold, buzzing flames similar to the wyrd's own. Any electricity resistance blocks this effect unless the target willingly submits. Otherwise the flames persist until the wyrd is out of range. Targets of this effect take a -10 penalty on Stealth checks. A comozant wyrd can communicate empathically with creatures subject to this effect, and gains a +4 racial bonus on Sense Motive checks when doing so. Interacting with a wyrd in this way still uses standard social skills and rules. While communicating this way, a comozant can confer unexpected insight or information equivalent to a divination spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:comozant_wyrd_illuminating_flames",
+    "name": "Illuminating Flames",
+    "owners": [
+      "bestiary_4:monster:comozant_wyrd"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 420,
+    "record_key": "Comozant Wyrd ~ Illuminating Flames"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

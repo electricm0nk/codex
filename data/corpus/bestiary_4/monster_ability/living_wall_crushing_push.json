@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Living Wall ~ Crushing Push",
+    "delivery": "Extraordinary",
+    "description": "A living wall adjacent to a creature that is also adjacent to a barrier (such as a dungeon wall, gate, or another living wall) can spend a standard action to crush that creature against the barrier, dealing 1d8+6 points of damage. If the living wall is grappling the target, as part of this attack it can attempt a free combat maneuver check to pin the target.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:living_wall_crushing_push",
+    "name": "Crushing Push",
+    "owners": [
+      "bestiary_4:monster:living_wall"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1025,
+    "record_key": "Living Wall ~ Crushing Push"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

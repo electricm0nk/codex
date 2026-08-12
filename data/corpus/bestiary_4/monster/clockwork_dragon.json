@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:clockwork_dragon_adamantine_weapons",
+      "bestiary_4:monster_ability:clockwork_dragon_breath_weapon",
+      "bestiary_4:monster_ability:clockwork_dragon_construction",
+      "bestiary_4:monster_ability:clockwork_dragon_specialization",
+      "bestiary_4:monster_ability:clockwork_dragon_destroyer",
+      "bestiary_4:monster_ability:clockwork_dragon_flaming_tar",
+      "bestiary_4:monster_ability:clockwork_dragon_efficient_winding",
+      "bestiary_4:monster_ability:clockwork_dragon_infiltrator",
+      "bestiary_4:monster_ability:clockwork_dragon_mithral_construction",
+      "bestiary_4:monster_ability:clockwork_dragon_rusting_breath",
+      "bestiary_4:monster_ability:clockwork_dragon_self_destruction",
+      "bestiary_4:monster_ability:clockwork_dragon_sleep_gas_breath"
+    ],
+    "challenge_rating": "16",
+    "corpus_key": "Clockwork Dragon",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:clockwork_dragon",
+    "monster_class": "Construct:25",
+    "name": "Clockwork Dragon",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": null,
+        "name": "Wing"
+      }
+    ],
+    "race_subtype": "Clockwork",
+    "race_type": "Construct",
+    "size": "H",
+    "source_page": "p.30",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      },
+      {
+        "feet": 100,
+        "mode": "Fly"
+      },
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 27,
+    "record_key": "Clockwork Dragon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

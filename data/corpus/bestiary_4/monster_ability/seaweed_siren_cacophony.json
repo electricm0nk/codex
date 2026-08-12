@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Seaweed Siren ~ Cacophony",
+    "delivery": "Supernatural",
+    "description": "A seaweed siren's noises disrupt spellcasting; casting within 100 feet of a seaweed siren requires a concentration check (DC 15 + the level of the spell being cast). All other concentration checks and Perception checks involving hearing made inside the aura have their DCs increased by 5. A siren can begin or end this ability as a free action. This is a sonic effect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:seaweed_siren_cacophony",
+    "name": "Cacophony",
+    "owners": [
+      "bestiary_4:monster:seaweed_siren"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1237,
+    "record_key": "Seaweed Siren ~ Cacophony"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "16",
+    "corpus_key": "Oma",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:oma",
+    "monster_class": "Magical Beast:20",
+    "name": "Oma",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "4d6",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "C",
+    "source_page": "p.209",
+    "speeds": [
+      {
+        "feet": 200,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 173,
+    "record_key": "Oma"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

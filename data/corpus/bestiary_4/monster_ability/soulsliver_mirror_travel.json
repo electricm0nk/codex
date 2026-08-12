@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Soulsliver ~ Mirror Travel",
+    "delivery": "Supernatural",
+    "description": "At will as a standard action, a soulsliver can crawl into any mirror as if it were a door or window, instantly transporting itself to another mirror within 500 feet as if using dimension door (caster level 7th). It can remain within that mirror indefinitely, or on its next turn crawl out or use this ability again. Its compression ability allows it to enter or exit Diminutive or larger mirrors. It can only exit a mirror if it is using change shape to take a specific creature's form.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:soulsliver_mirror_travel",
+    "name": "Mirror Travel",
+    "owners": [
+      "bestiary_4:monster:soulsliver"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1318,
+    "record_key": "Soulsliver ~ Mirror Travel"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

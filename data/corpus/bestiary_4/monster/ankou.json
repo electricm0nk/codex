@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:ankou_cold_iron_killer",
+      "bestiary_4:monster_ability:ankou_shadow_doubles"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Ankou",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:ankou",
+    "monster_class": "Fey:14",
+    "name": "Ankou",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Wing"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Fey",
+    "size": "L",
+    "source_page": "p.10",
+    "speeds": [
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 9,
+    "record_key": "Ankou"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

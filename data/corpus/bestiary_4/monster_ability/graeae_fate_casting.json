@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "corpus_key": "Graeae ~ Fate Casting",
+    "delivery": "Supernatural",
+    "description": "A graeae has the ability to predict future events. On a creature's request, a graeae can expend a use of mythic power as a full-round action to answer a single question as if by the divination spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:graeae_fate_casting",
+    "name": "Fate Casting",
+    "owners": [
+      "bestiary_4:monster:graeae"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 796,
+    "record_key": "Graeae ~ Fate Casting"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:guardian_dragon_agonizing_venom",
+      "bestiary_4:monster_ability:guardian_dragon_aura_of_security",
+      "bestiary_4:monster_ability:guardian_dragon_heroic_challenge",
+      "bestiary_4:monster_ability:guardian_dragon_lingering_poisonous_cloud",
+      "bestiary_4:monster_ability:guardian_dragon_poisonous_blood",
+      "bestiary_4:monster_ability:guardian_dragon_poison",
+      "bestiary_4:monster_ability:guardian_dragon_secret_lair",
+      "bestiary_4:monster_ability:guardian_dragon_vengeful_seeker"
+    ],
+    "challenge_rating": "24",
+    "corpus_key": "Guardian Dragon",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:guardian_dragon",
+    "monster_class": "Dragon:26",
+    "name": "Guardian Dragon",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": null,
+        "name": "Wing"
+      }
+    ],
+    "race_subtype": "Aquatic|Mythic",
+    "race_type": "Dragon",
+    "size": "G",
+    "source_page": "p.146",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      },
+      {
+        "feet": 200,
+        "mode": "Fly"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 117,
+    "record_key": "Guardian Dragon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

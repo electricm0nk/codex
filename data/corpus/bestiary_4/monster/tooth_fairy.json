@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T19:58:27Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:tooth_fairy_death_throes",
+      "bestiary_4:monster_ability:tooth_fairy_pliers",
+      "bestiary_4:monster_ability:tooth_fairy_tricky_thief"
+    ],
+    "challenge_rating": "1/4",
+    "corpus_key": "Tooth Fairy",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:tooth_fairy",
+    "monster_class": "Fey:2",
+    "name": "Tooth Fairy",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Fey",
+    "size": "D",
+    "source_page": "p.262",
+    "speeds": [
+      {
+        "feet": 15,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 231,
+    "record_key": "Tooth Fairy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr",
+    "derived:dr"
+  ]
+}
