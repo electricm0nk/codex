@@ -267,6 +267,19 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monsters: super::bestiary_4::monsters_static(),
         monster_abilities: super::bestiary_4::monster_abilities_static(),
     },
+    // SD-29 Epic 5 extend, round 7. Inner Sea Bestiary -- 38 monsters and 152
+    // owned abilities. The first book in the registry to lose monster rows to
+    // the Product Identity of the abilities they NAME rather than of their own
+    // name: the emitted `ability_keys` array carries the ability's key, so a
+    // monster naming a deity-namespaced ability cannot be emitted either.
+    // `rules_tables::inner_sea_bestiary` derives it, and records that this makes
+    // `classify_monster_ability_rows.py`'s `reachable remainder` an upper bound
+    // rather than an equality for any book with that shape.
+    MonsterBook {
+        corpus_book: "inner_sea_bestiary",
+        monsters: super::inner_sea_bestiary::monsters_static(),
+        monster_abilities: super::inner_sea_bestiary::monster_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:memitim_terminal_aura",
+      "inner_sea_bestiary:monster_ability:psychopomp_traits"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Psychopomp (Memitim)",
+    "external_ability_refs": [
+      "Maneuverability (Good)",
+      "Change Shape",
+      "Immunity to Acid"
+    ],
+    "key": "inner_sea_bestiary:monster:psychopomp_memitim",
+    "monster_class": "Outsider (Ref/Will):16",
+    "name": "Psychopomp (Memitim)",
+    "natural_attacks": [],
+    "race_subtype": "Psychopomp|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.39",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 100,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 65,
+    "record_key": "Psychopomp (Memitim)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

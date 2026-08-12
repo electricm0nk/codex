@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Termagant ~ Poison",
+    "delivery": "Supernatural",
+    "description": "Injury; Fort DC 28; 1/round for 10 rounds; 1d4 Con, Dex or Str; Cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:termagant_poison",
+    "name": "Flux Infusion Poison",
+    "owners": [
+      "inner_sea_bestiary:monster:kyton_termagant"
+    ],
+    "source_page": "p.24",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 167,
+    "record_key": "Termagant ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

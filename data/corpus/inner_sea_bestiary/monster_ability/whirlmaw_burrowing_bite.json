@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Whirlmaw ~ Burrowing Bite",
+    "delivery": "Extraordinary",
+    "description": "If a whirlmaw successfully hits a Small or larger creature with its bite attack, it immediately attempts to start a grapple as a free action with a +4 bonus on the grapple check. If the grapple check is successful, the whirlmaw's spinning, sawlike mouth immediately begins to burrow into the flesh of the creature, dealing 4d6+12 points of damage per round until the grapple is broken.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:whirlmaw_burrowing_bite",
+    "name": "Burrowing Bite",
+    "owners": [
+      "inner_sea_bestiary:monster:whirlmaw"
+    ],
+    "source_page": "p.60",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 411,
+    "record_key": "Whirlmaw ~ Burrowing Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Nascent Demon Lord Traits",
+    "delivery": null,
+    "description": "Once per day, Nightripper can summon any demon or combination of demons whose total combined CR is 20 or lower. This ability always works, and is equivalent to a 9th-level spell. Nightripper's natural weapons, as well as any weapon he wields, are treated as chaotic, epic, and evil for the purpose of overcoming damage reduction.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:nascent_demon_lord_traits",
+    "name": "Nascent Demon Lord Traits",
+    "owners": [
+      "inner_sea_bestiary:monster:nightripper"
+    ],
+    "source_page": "p.34",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 235,
+    "record_key": "Nascent Demon Lord Traits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

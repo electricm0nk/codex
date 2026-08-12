@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:water_wraith_expressive_chameleon"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Water Wraith",
+    "external_ability_refs": [
+      "Amphibious",
+      "Blood Drain",
+      "Rend"
+    ],
+    "key": "inner_sea_bestiary:monster:water_wraith",
+    "monster_class": "Magical Beast:3",
+    "name": "Water Wraith",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.59",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 99,
+    "record_key": "Water Wraith"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

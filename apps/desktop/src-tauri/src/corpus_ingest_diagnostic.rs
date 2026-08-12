@@ -641,6 +641,14 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             chassis_book_counts("bestiary_4"),
             &races,
         ),
+        // SD-29 Epic 5 extend, round 7. Monster registry only, like the two
+        // rows above it.
+        book_status(
+            "inner_sea_bestiary",
+            "src/rules_core/rules_tables/inner_sea_bestiary",
+            chassis_book_counts("inner_sea_bestiary"),
+            &races,
+        ),
         book_status(
             "book_of_the_damned_volume_1",
             "src/rules_core/rules_tables/book_of_the_damned_volume_1",
@@ -812,6 +820,9 @@ mod tests {
                 // SD-29 Epic 5 extend round 6 -- monster registry only, like
                 // `bestiary_3` above.
                 "bestiary_4",
+                // SD-29 Epic 5 extend round 7 -- monster registry only, like
+                // `bestiary_4` above.
+                "inner_sea_bestiary",
                 // SD-29 Epic 5 extend round 2 -- the two Book of the Damned
                 // volumes, kept next to the other chassis books.
                 "book_of_the_damned_volume_1",

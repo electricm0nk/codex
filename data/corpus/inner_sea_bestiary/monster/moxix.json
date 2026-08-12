@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:moxix_breath_weapon",
+      "inner_sea_bestiary:monster_ability:moxix_gush",
+      "inner_sea_bestiary:monster_ability:moxix_hopedrinker",
+      "inner_sea_bestiary:monster_ability:moxix_mindshatter",
+      "inner_sea_bestiary:monster_ability:moxix_moxix_s_delectation",
+      "inner_sea_bestiary:monster_ability:moxix_spell_like_abilities"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Moxix",
+    "external_ability_refs": [
+      "Constrict",
+      "Immunity to Electricity",
+      "Immunity to Poison",
+      "Rend",
+      "Resistance to Acid",
+      "Resistance to Cold",
+      "Resistance to Fire"
+    ],
+    "key": "inner_sea_bestiary:monster:moxix",
+    "monster_class": "Outsider (Fort/Will):23",
+    "name": "Moxix",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Gore"
+      },
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "G",
+    "source_page": "p.32",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 52,
+    "record_key": "Moxix"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

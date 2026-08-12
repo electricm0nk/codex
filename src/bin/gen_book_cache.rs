@@ -1594,6 +1594,18 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section; 14 monster rows additionally declare NAMEISPI:YES per-record and are dropped by the screen",
         classified_by_cycle: "SD29-E5-F2-007",
     },
+    // SD-29 Epic 5 extend, round 7. The first `campaign_setting/` bestiary in
+    // this registry. Provenance verified against the file rather than copied
+    // from the row above.
+    MonsterBookSpec {
+        corpus_book: "inner_sea_bestiary",
+        book_relative: "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
+        races_lsts: &["isb_races.lst"],
+        abilities_lst: "isb_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_bestiary.pcc declares ISOGL:YES at line 23, carries 4 COPYRIGHT lines and a real 6,739-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Bestiary, OGL §15 Product Identity section; 7 ability rows carry a blacklisted proper name in their namespace, and the 2 monster rows that NAME them are dropped with them",
+        classified_by_cycle: "SD29-E5-F2-008",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

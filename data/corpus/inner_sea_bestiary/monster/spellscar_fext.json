@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:spellscar_fext_deadly_slam",
+      "inner_sea_bestiary:monster_ability:spellscar_fext_dispelling_critical",
+      "inner_sea_bestiary:monster_ability:spellscar_fext_ravage_magic",
+      "inner_sea_bestiary:monster_ability:spellscar_fext_vulnerable_to_glass"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Spellscar Fext",
+    "external_ability_refs": [],
+    "key": "inner_sea_bestiary:monster:spellscar_fext",
+    "monster_class": "Undead:10",
+    "name": "Spellscar Fext",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.49",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 80,
+    "record_key": "Spellscar Fext"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

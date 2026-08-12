@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:vespergaunt_aura_of_madness",
+      "inner_sea_bestiary:monster_ability:vespergaunt_damage_reduction",
+      "inner_sea_bestiary:monster_ability:vespergaunt_siphon_spirit",
+      "inner_sea_bestiary:monster_ability:vespergaunt_spell_like_abilities"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Vespergaunt",
+    "external_ability_refs": [
+      "All-Around Vision",
+      "Amorphous",
+      "Can't Be Tripped",
+      "Light Sensitivity",
+      "Maneuverability (Perfect)",
+      "No Breath",
+      "Telepathy"
+    ],
+    "key": "inner_sea_bestiary:monster:vespergaunt",
+    "monster_class": "Ooze:17",
+    "name": "Vespergaunt",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Ooze",
+    "size": "M",
+    "source_page": "p.58",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 95,
+    "record_key": "Vespergaunt"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:veiled_master_consume_memory",
+      "inner_sea_bestiary:monster_ability:veiled_master_delayed_suggestion",
+      "inner_sea_bestiary:monster_ability:veiled_master_mucus_cloud",
+      "inner_sea_bestiary:monster_ability:veiled_master_runemastery",
+      "inner_sea_bestiary:monster_ability:veiled_master_slime",
+      "inner_sea_bestiary:monster_ability:veiled_master_spell_like_abilities",
+      "inner_sea_bestiary:monster_ability:veiled_master_spells",
+      "inner_sea_bestiary:monster_ability:veiled_master_swift_transformation",
+      "inner_sea_bestiary:monster_ability:veiled_master_thoughtlance"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Veiled Master",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Fast Healing",
+      "Immunity to Electricity",
+      "Immunity to Mind-Affecting Effects",
+      "Resistance to Cold",
+      "Telepathy"
+    ],
+    "key": "inner_sea_bestiary:monster:veiled_master",
+    "monster_class": "Aberration:16",
+    "name": "Veiled Master",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Aquatic|Shapechanger",
+    "race_type": "Aberration",
+    "size": "L",
+    "source_page": "p.56",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 94,
+    "record_key": "Veiled Master"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

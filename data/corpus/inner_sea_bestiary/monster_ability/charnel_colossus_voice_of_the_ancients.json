@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Charnel Colossus ~ Voice of the Ancients",
+    "delivery": "Supernatural",
+    "description": "Any one creature within 100 ft must make DC 34 Will save or be paralyzed as per Hold Monster. [DC %1]",
+    "description_variables": [
+      "VoiceOfTheAncientsDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:charnel_colossus_voice_of_the_ancients",
+    "name": "Voice of the Ancients",
+    "owners": [
+      "inner_sea_bestiary:monster:charnel_colossus"
+    ],
+    "source_page": "p.10",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 69,
+    "record_key": "Charnel Colossus ~ Voice of the Ancients"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

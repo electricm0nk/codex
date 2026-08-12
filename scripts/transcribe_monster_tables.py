@@ -111,6 +111,19 @@ BOOKS = {
     # and Star-Spawn of Cthulhu -- not one generic species among them. The
     # book-location form of the rule would have shipped all 14.
     "bestiary_4": "pathfinder/paizo/roleplaying_game/bestiary_4",
+    # SD-29 Epic 5 extend, round 7, and the first `campaign_setting/` bestiary
+    # in the lane. Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py inner_sea_bestiary` ->
+    # `inner_sea_bestiary  40  190  157  0  26  7  0`, i.e. 197 reachable.
+    #
+    # Its shape is the ROW-NAMED one (157 of 190 abilities are named by an
+    # `ABILITY:Special Ability|AUTOMATIC|` token on a monster row; 0 reach
+    # through the namespaced prefix), the same shape as the Bonus Bestiary
+    # pilot and the opposite of `bestiary_3`'s. It carries 7 `NAMEISPI:YES`
+    # rows -- and that is what `ogl-pi-blacklist.md` §2's PER-RECORD predicate
+    # (`decisions.md §57.1`) predicts for a `campaign_setting/` book, whose
+    # creatures are Golarion-specific personae rather than generic SRD species.
+    "inner_sea_bestiary": "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
 }
 
 # The `TYPE:` first segment that names which facet of `monster_ability` a row
@@ -385,6 +398,26 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     never a composition of one. A row carrying several `DESC:` tokens under some
     *other* gate is an unmodelled shape and stops the transcription rather than
     being resolved by position.
+
+    **The CONTINUATION shape, widened deliberately in round 7 (Inner Sea
+    Bestiary).** A third shape exists and this book is the first whose rows
+    carrying it actually ship: several `DESC:` tokens, *none* of which carries a
+    pipe-delimited entry at all -- no gate, no `%N` variable -- and every token
+    after the first beginning with a space. That is one description the corpus
+    split across tokens, and PCGen renders them in row order; `Moxix ~ Gush`
+    states its trigger in the first and its effect in the second. Taking the
+    first alone would serve *"blood and pus spews forth from the wound."* and
+    silently drop the 20-foot radius, the DC 28 Reflex save and the duration --
+    the same class of loss `decisions.md §46`'s summary-vs-full finding
+    recorded, arrived at from the other direction.
+
+    Joining them is a concatenation of verbatim corpus texts in the corpus's own
+    order using the corpus's own separator (the leading space each continuation
+    carries), never a composition. The predicate is deliberately narrow: a row
+    whose several tokens carry ANY pipe entry is a variant/gated shape and still
+    refuses. `isb_abilities_race.lst:203`/`:204`/`:206` are exactly that -- they
+    carry `%N` variables and state alternatives rather than a continuation -- and
+    they are still refused by this parser rather than joined.
     """
     descs = [f[len("DESC:") :] for f in row if f.startswith("DESC:")]
     if not descs:
@@ -399,6 +432,10 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
             )
         ]
         if len(full) != 1:
+            if all("|" not in d for d in descs) and all(
+                d.startswith(" ") for d in descs[1:]
+            ):
+                return "".join(descs), []
             raise UnmodelledDesc(
                 f"row carries {len(descs)} DESC: tokens and {len(full)} of them are gated on "
                 f"{FULL_ABILITY_RULE}; the transcriber refuses to pick one by position. "

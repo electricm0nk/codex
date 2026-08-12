@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:scarab_gnaw"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Beetle (Scarab)",
+    "external_ability_refs": [
+      "Maneuverability (Average)",
+      "Immunity to Death Effects",
+      "Immunity to Disease",
+      "Immunity to Mind-Affecting Effects",
+      "Immunity to Paralysis"
+    ],
+    "key": "inner_sea_bestiary:monster:beetle_scarab",
+    "monster_class": "Vermin:9",
+    "name": "Beetle (Scarab)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "L",
+    "source_page": "p.5",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      },
+      {
+        "feet": 20,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 13,
+    "record_key": "Beetle (Scarab)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

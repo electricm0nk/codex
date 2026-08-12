@@ -109,6 +109,14 @@ const BOOK_B3: &str = "B3";
 /// `rules_tables::bestiary_4` for both derivations.
 const BOOK_B4: &str = "B4";
 
+/// Inner Sea Bestiary, the tenth (SD-29 Epic 5 extend, round 7). Its wire code
+/// is the book's own `SOURCESHORT:ISB`. It is the first book in this catalog to
+/// lose monster rows to the Product Identity of the abilities they NAME rather
+/// than of their own name — a monster's emitted `ability_keys` array carries
+/// each ability's key, so a row naming a deity-namespaced ability cannot ship
+/// either. See `rules_tables::inner_sea_bestiary` for the derivation.
+const BOOK_ISB: &str = "ISB";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -133,6 +141,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "bestiary_2" => "Bestiary 2",
         "bestiary_3" => "Bestiary 3",
         "bestiary_4" => "Bestiary 4",
+        "inner_sea_bestiary" => "Inner Sea Bestiary",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -150,6 +159,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "bestiary_2" => BOOK_B2,
         "bestiary_3" => BOOK_B3,
         "bestiary_4" => BOOK_B4,
+        "inner_sea_bestiary" => BOOK_ISB,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."

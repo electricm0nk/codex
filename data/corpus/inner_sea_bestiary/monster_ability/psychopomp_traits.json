@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Psychopomp Traits",
+    "delivery": null,
+    "description": "Psychopomps are neutral outsiders native to the plain known as the Boneyard. Psychopomps have a particular suite of traits.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:psychopomp_traits",
+    "name": "Psychopomp Traits",
+    "owners": [
+      "inner_sea_bestiary:monster:psychopomp_memitim",
+      "inner_sea_bestiary:monster:psychopomp_shoki",
+      "inner_sea_bestiary:monster:psychopomp_viduus"
+    ],
+    "source_page": "p.38",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 261,
+    "record_key": "Psychopomp Traits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

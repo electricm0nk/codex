@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Myrmidon ~ Quantum Lash",
+    "delivery": "Extraordinary",
+    "description": "A myrmidon's two facial tentacles extend up to 20 feet and resolve as touch attacks. Chance to disrupt force fields or force effects.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:myrmidon_quantum_lash",
+    "name": "Quantum Lash",
+    "owners": [
+      "inner_sea_bestiary:monster:robot_myrmidon"
+    ],
+    "source_page": "p.45",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 305,
+    "record_key": "Myrmidon ~ Quantum Lash"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

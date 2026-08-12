@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Moxix ~ Gush",
+    "delivery": "Extraordinary",
+    "description": "Anytime Moxix takes more than 50 points of weapon damage in a round, blood and pus spews forth from the wound. The blood is extremely slippery and sprays out in a 20-foot radius, coating all creatures and surfaces in the area. Any creatures in the area must succeed at a DC 28 Reflex save or drop any items they are holding. A saving throw must be made each round that the creature attempts to use or pick up an item it previously dropped. In addition, the area coated in the gushing blood is difficult to move about in, and creatures moving throgh the area must succeed at a DC 15 Acrobatics check or fall prone.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:moxix_gush",
+    "name": "Gush",
+    "owners": [
+      "inner_sea_bestiary:monster:moxix"
+    ],
+    "source_page": "p.32",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 227,
+    "record_key": "Moxix ~ Gush"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:apostasy_wraith_razmiri_aversion",
+      "inner_sea_bestiary:monster_ability:apostasy_wraith_rend_faith",
+      "inner_sea_bestiary:monster_ability:apostasy_wraith_sense_apostate"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Apostasy Wraith",
+    "external_ability_refs": [
+      "Maneuverability (Perfect)",
+      "Channel Resistance",
+      "Energy Drain",
+      "Incorporeal"
+    ],
+    "key": "inner_sea_bestiary:monster:apostasy_wraith",
+    "monster_class": "Undead:8",
+    "name": "Apostasy Wraith",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Incorporeal Touch"
+      }
+    ],
+    "race_subtype": "Incorporeal",
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.4",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 9,
+    "record_key": "Apostasy Wraith"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Zelishkar ~ Corpse Cremation",
+    "delivery": "Supernatural",
+    "description": "Whenever Zelishkar reduces a living creature to negative hit points, as a swift action he can turn ts body to ashes and feed upon the target's life force, as Death Knell (Will DC 28 negates). Whenever Zelishkar slays a creature with any attack or ability, the creature's corpse is reduced to ashes.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:zelishkar_corpse_cremation",
+    "name": "Corpse Cremation",
+    "owners": [
+      "inner_sea_bestiary:monster:zelishkar"
+    ],
+    "source_page": "p.62",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 429,
+    "record_key": "Zelishkar ~ Corpse Cremation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

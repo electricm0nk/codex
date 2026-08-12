@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Ceru ~ Luckbringer",
+    "delivery": "Supernatural",
+    "description": "%1/day, a Ceru can cause good or bad luck. If luck is bad, target must roll twice and take worse result on all rolls for 1 round. If luck is good, target may choose a single roll and roll twice taking the better result.",
+    "description_variables": [
+      "max(1,TL/4)"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:ceru_luckbringer",
+    "name": "Luckbringer",
+    "owners": [
+      "inner_sea_bestiary:monster:ceru"
+    ],
+    "source_page": "p.9",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 61,
+    "record_key": "Ceru ~ Luckbringer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

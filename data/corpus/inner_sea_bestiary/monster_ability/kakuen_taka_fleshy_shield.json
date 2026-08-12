@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Kakuen-Taka ~ Fleshy Shield",
+    "delivery": "Extraordinary",
+    "description": "A newly created flesh mansion has 150 hit points. The swarm takes only half damage from all attacks that deal hit point damage, with the remainder taken by the flesh mansion. When the flesh mansion reaches 0 hit points, it is destroyed and the swarm functions like a normal swarm",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:kakuen_taka_fleshy_shield",
+    "name": "Fleshy Shield",
+    "owners": [
+      "inner_sea_bestiary:monster:kakuen_taka"
+    ],
+    "source_page": "p.20",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 152,
+    "record_key": "Kakuen-Taka ~ Fleshy Shield"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
