@@ -9016,12 +9016,23 @@ Five, in `docs/retro/events/sd29-monster-r7.jsonl`: the brief's fourth-consecuti
 pair; the `§44.4` cross-lane correction (341 units); the transcriber-abort incident; the
 `source_page` invariant correction; and the cycle's own `verification` event.
 
-**That last one is itself a finding.** `verify.sh` auto-emitted it under the **worktree-name
-fallback** (`docs/retro/events/wf_924a22ca-f35-10.jsonl`) because `RETRO_ACTOR` was not exported into
-the gate's shell — and the fallback names a *checkout*, not a *role*, which is precisely what
-`loop-instruction.md` says makes the log's by-actor breakdown meaningless. Folded into this actor's
-shard with the reason recorded, and run 2 was launched with `RETRO_ACTOR` exported so it attributes
-itself correctly.
+Six, once `reclaim.sh`'s own cycle-end event is counted.
+
+**The attribution is itself a finding, and it recurred after being fixed once.** `verify.sh`
+auto-emitted run 1's event under the **worktree-name fallback**
+(`docs/retro/events/wf_924a22ca-f35-10.jsonl`) because `RETRO_ACTOR` was not exported into the gate's
+shell — and the fallback names a *checkout*, not a *role*, which is precisely what
+`loop-instruction.md` says makes the log's by-actor breakdown meaningless. It was folded into this
+actor's shard, run 2 was launched with `RETRO_ACTOR` exported, and run 2 attributed itself correctly.
+**Then `reclaim.sh` did exactly the same thing at cycle end**, for the same reason, into the same
+filename.
+
+The transferable point: the tools that self-emit do so from **whatever shell invokes them**, so
+"the dispatched agent gets `RETRO_ACTOR` set" is not sufficient as written — it has to reach every
+tool shell, and nothing enforces that. Two of this cycle's six events would have been mis-attributed
+without a manual fold. Recorded as forward scope: either the self-emitting tools should refuse to
+write under the worktree fallback the way `verify-on-screen.sh` refuses an unset `RUN_DESKTOP_AGENT`,
+or the fallback should be dropped in favour of failing loudly.
 
 ### 8. DoD item 8 — on screen, PASS
 
