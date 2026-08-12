@@ -3968,3 +3968,154 @@ took for Inner Sea World Guide (`§50`).
    `b3_abilities_companion.lst`, `b3_abilities_familiar.lst`). Every book registered so far had
    exactly two, so the single-file spec has never been wrong before and reads as though it were
    general. Round 3 chose `bestiary` partly because it is the last two-file book left.
+## Decision 55 — Monster / Monster-Ability Lane, extend: round 5 (2026-08-12, `sd29-monster-r7`, card `epic-5-monster-lane-extend`)
+
+Round 5 ingested **Bestiary 3** end-to-end — **288 of its 301 units**: all 261 monster rows and 27
+of its 40 ability rows, the other 13 being orphans no monster row of the book owns. It is the first
+book in the lane that loses **no monster row at all**: zero `NAMEISPI:YES`, zero
+`PI_BLACKLIST_TERMS` hits, zero `.COPY=` deltas. Grounded `monster` 394 → **655**, `monster_ability`
+488 → **515**. The REAL ceiling moves 2,055 → **1,767**, and `2055 − 288 = 1767` closes exactly with
+no residue.
+
+`§53` is the race-trait lane's round 5 and `§54` the companion lane's round 3; all three landed the
+same day on the same branch. This section is numbered 55 to avoid a collision, not because 54 is
+missing.
+
+### 55.1 341 units the lane's denominator does not count — and it inverts `§44.4` for this book
+
+The card asked whether `monster_ability` carries a ceiling analogous to the race-trait lane's, where
+`§44.4` found 2,894 of 3,447 units structurally unreachable. It carries the **opposite** problem, and
+that is this round's most reusable output.
+
+`b3_races.lst` carries **100** `ABILITY:Special Ability|AUTOMATIC|` tokens, and the classifier still
+reports `row-named` **0**. Both are true, and the reason is a kind boundary rather than a link
+failure:
+
+```text
+b3_abilities_race.lst:289  TYPE:SpecialQuality.Extraordinary.AdaroRacial        -> monster_ability
+b3_abilities_race.lst:703  TYPE:AghashRacialAbility.SpecialQuality.Supernatural -> race_trait
+```
+
+`v06_work_inventory::file_kind` reads only the **first** `TYPE:` segment. Both rows are a monster's
+special quality, namespaced to a monster of this book; they differ only in which segment the book
+happened to write first. `b3_abilities_race.lst`'s 838 units split **798 `race_trait` / 40
+`monster_ability`** on that basis alone.
+
+| measure | count |
+|---|---|
+| `race_trait` units in `b3_abilities_race.lst` | 798 |
+| …whose `KEY:` is namespaced `<X> ~ <Y>` | 778 |
+| …whose `<X>` is a **bestiary_3 monster** | **341** |
+| …and which also carry `SpecialQuality`/`SpecialAttack` in a later `TYPE:` segment | 340 |
+
+**Two independent derivations, sharing no intermediate artifact, agree on 341.** The first joins
+`race_trait` key prefixes from `docs/work-inventory.json` against the book's own monster
+`corpus_key` set. The second never opens the inventory: it parses `b3_races.lst` and
+`b3_abilities_race.lst` directly, takes every ability row whose *first* `TYPE:` segment is not a
+facet, and joins its key prefix against the monster `KEY:`s read straight from the races file —
+**261 monster keys, 341 owned rows**. That agreement is what makes this a finding rather than a
+reading of one script, and it is the practice `validate-proxies-against-known-truth` asks for: test
+the instrument where it makes its confident claim.
+
+**This contradicts `§44.4` for this book.** That section counted Bestiary 3's 799 `race_trait` units
+among the 2,894 "belonging to races with no chassis", concluding "no amount of race-trait ingest
+grounds those" because `RaceCorpus::resolve` returns `None` without a chassis. That is correct for a
+player race trait and **wrong for these 341**: their owners are monsters, and this round gives those
+owners a chassis. They are reachable through the monster catalog's existing ability rendering — the
+path this round's item-8 screenshot shows working for `Adaro ~ Poison` — not through a race chassis
+that will never exist for a Bestiary 3 monster.
+
+**They are deliberately NOT ingested.** Reclassifying them changes `file_kind`, which redraws the
+`race_trait` and `monster_ability` denominators for every book in **two lanes at once**; doing that
+inside an ingest round would leave this card's numbers unreconcilable against round 4's. Recorded
+with its derivation so a successor can price it, which is what `§45.1` asks a round to do *before*
+committing to a book.
+
+**The scope of the claim, stated precisely: this round measured only the book it took.** The same
+measurement should be run on `bestiary_4`, `bestiary` and `inner_sea_bestiary` before anyone treats
+1,767 as the lane's true size. `§46.1` and `§50.7` both moved the ceiling *down* after finding the
+instrument over-reported; this is the first evidence it may also under-report, and the two are not
+symmetric — an over-report wastes a round, an under-report hides work from the plan entirely.
+
+### 55.2 A refusal that fired on a row it was going to discard, and the wrong fix that regeneration caught
+
+`parse_desc` refuses to pick among several `DESC:` texts when none is gated on `DisplayFullAbility`.
+The refusal is right. Its *placement* was not: it raised `SystemExit` from inside
+`ability_pi_reason`, which parses **every** ability row — including the orphans the very next pass
+discards. `b3_abilities_race.lst:1663` (`Jiang-Shi Vampire`: 11 `DESC:` tokens describing an acquired
+template in 11 sections) is an orphan, because the base creature row it templates is **commented
+out** at `b3_races.lst:293`. So a row that was never going to be emitted aborted the transcription of
+288 records.
+
+The refusal is now **deferred, not weakened**: unscreenable rows are collected in a set, and the
+transcription raises only if one **survives** to be emitted. A shape the parser cannot read still
+cannot reach a player.
+
+**The first fix attempted was wrong, and how it was caught is the transferable part.** Moving the
+Product Identity screen to run *after* the orphan pass also fixes the crash, and is what reading the
+code alone suggests — the existing ordering comment even argues for exactly that kind of move, one
+step earlier. Regenerating all six previously ingested books showed it silently relabelled three
+Inner Sea World Guide rows from "Product Identity" to "orphan" in that book's generated header. Those
+three are *genuinely* PI, and PI is the stronger and more durable reason: it holds even if a future
+round gives the row an owner, where "orphan" does not. The reorder was reverted for the narrow fix,
+under which **all six previously ingested books regenerate byte-identically**.
+
+**The general lesson.** A change that makes a failing case pass, and that the surrounding comments
+appear to endorse, is still a behaviour change everywhere else the code runs. The cheap check is to
+re-run the generator over everything it has ever produced and diff — seconds of work that separated
+a correct fix from a plausible one. `§52`'s four findings were all "an instrument validated only
+where it happened to be right"; this is the same shape applied to a *fix* rather than a measurement.
+
+### 55.3 `source_page` is not guaranteed, and seven books said otherwise by accident
+
+`monster_catalog::every_row_carries_the_fields_the_screen_renders` asserted every served monster
+carries a non-empty `source_page`. It passed for seven books because all seven happened to state one.
+`b3_races.lst:215` (`Owl (Giant)`) and `:265` (`Spider (Ogre)`) carry no `SOURCEPAGE:` token at all.
+
+The transcriber emitted `None`, which is its documented and correct behaviour — a token the row does
+not carry becomes `None` rather than an invented citation. Both records state everything else the
+screen renders (name, size, type, challenge rating, speeds, natural attacks), so **dropping them
+would withhold real content over a bibliographic field**, which is the over-exclusion cost `§50`
+already warned about in the Product Identity context.
+
+Resolution: they ship; the monster row renders its page clause **conditionally**, as the ability row
+directly beneath it has always done — the old code interpolated an empty string and left the book
+name with a dangling trailing space, a small live rendering defect this surfaced; and the two are
+pinned by served key with their corpus lines, **with the assertion failing in both directions**, so a
+pinned row silently *gaining* a page is caught as surely as a new row losing one.
+
+### 55.4 The one gate stage this round turned red was a hand-pinned frontend denominator
+
+`MonsterCatalogScreen.test.ts`'s `SERVED_BOOKS` still listed round 4's seven wire codes, so
+`BOOK_LABELS names exactly the served books` failed on the eighth. **The concurrent companion lane
+recorded the identical defect class the same day** (`§54.5`, a stale `SERVED_BOOK_CODES` that left
+three books' labels checked by nothing). Two lanes, two catalogs, one shape: a frontend list that
+must track a backend registry, pinned by hand in a second place with nothing deriving one from the
+other.
+
+Worth naming as a class rather than fixing twice in silence. Both catalogs' backends already expose
+the served book set; neither test reads it. The cheap durable fix is for the frontend test to derive
+its expected set from the served response rather than restate it — recorded here as forward scope,
+not taken in an ingest round.
+
+### 55.5 The lane's queue after this round
+
+`python3 scripts/classify_monster_ability_rows.py`, raw remaining **3,207** (`monster` 615 +
+`monster_ability` 2,592), REAL ceiling **1,767**:
+
+| book | remaining units | orphans | PI | **reachable** |
+|---|---|---|---|---|
+| `bestiary_4` | 988 | 225 | 14 | **749** |
+| `bestiary` | 807 | 146 | 0 | **661** |
+| `inner_sea_bestiary` | 230 | 26 | 7 | **197** |
+| `inner_sea_gods` | 200 | 81 | 3 | **116** |
+
+`bestiary_4` is the biggest. `bestiary` remains the only book where the chassis meets an **existing**
+ingest — its 46 SD-22 monsters are already grounded through `beastiary1`'s own tables, so a round
+taking it must first rule on whether the chassis absorbs them or sits alongside them; that ruling is
+the real cost of that book, not its 807 rows.
+
+**Eleven books now hold 716 orphan abilities and zero remaining monsters**, up from ten and 703 — and
+`bestiary_3` joined that list by ingesting *all* of its monsters rather than by having none, which is
+worth distinguishing: the two shapes read identically in the classifier's output and mean opposite
+things. Running a per-monster cycle against either remains a reportable hard stop.
