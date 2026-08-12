@@ -10001,3 +10001,253 @@ remaining monsters.** Do NOT shape any of them, or `bestiary_4`, as a per-monste
 `scripts/reclaim.sh --apply` at cycle end; both target directories
 (`codex-target-sd29-monster-r8`, `codex-target-sd29-monster-r8-desktop`) claimed on creation with
 `.reclaim-claim` and removed at the end.
+
+## Cycle — epic-7-companion-lane-extend, ROUND 5 (SD29-E7-F2-006)
+
+**Claimed-by** `sd29-companion-r9` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §58` · **Commits** `2481e31e` (ingest + both mechanisms + three tests + two corrected pins), `c6225c82` (the two stale-upward baselines), plus this receipt · **Branch** pushed to
+`origin/tranche/9` and verified BY CONTENT: `git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_4/companion_data.rs | grep -c 'CompanionRecord {'` -> **34**, `| grep -c 'CompanionAbilityRecord {'` -> **44**
+
+**Outcome: 78 units ingested, all 78 grounded. Companion grounded 279 → 357. Honest remainder 566.**
+
+### 0. The dispatch brief was materially stale for the SECOND consecutive round, and was corrected by content
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that the lane is "a NEW MECHANISM with no corpus-wide precedent", and that
+the round should "build the mechanism on a small pilot first" against a pinned `inner_sea_combat`.
+
+None of that was true at dispatch, and `decisions.md §56 §0` records round 4 receiving the **same**
+brief text one round earlier. Re-derived before anything was built:
+
+```
+git log --oneline -12 origin/tranche/9
+  -> dd838a17 feat(sd29): companion lane round 4 — Bestiary 3, ...
+  -> b0cdc3fe docs(sd29): companion round 4 receipt — VERIFY_EXIT=0, reach 27, item 8 PASS
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1417, 'grounded': 279})
+```
+
+Four rounds had landed. `companion_chassis.rs`, `classify_companion_rows.py`,
+`transcribe_companion_tables.py`, a `gen_book_cache companion:<book>` generator,
+`CompanionCatalogScreen.tsx` and **9 registered books** all existed and were verified by content
+before use. The card's real state in `kanban.md` was **`READY (round 5)`**.
+
+**Also corrected: this worktree was cut from the wrong base again.** `HEAD` was `7d9f1c4f` — no
+`docs/release/` directory at all, and not an ancestor of `origin/tranche/9`. Every required read named
+by the brief was absent from the checkout. Fixed with `git fetch origin tranche/9 && git merge
+FETCH_HEAD` before any work. This is the *same* base round 4 was handed
+(`decisions.md §56 §0`), so it is a recurring dispatch defect, not a one-off; a
+`recurrence-key=wrong-base-worktree` incident is in the retro shard.
+
+The one figure the brief carried that could be checked — **658** remaining — was re-derived and
+**reproduced EXACTLY** before this round's own findings superseded it (§4).
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`§56`'s ranking put `bestiary_4` first at 75 reachable / 6% orphan share. Its hazard (a) — that
+`bestiary_4` was the monster lane's next target and needed a new `RuleSetId::B4` — was checked and
+found **closed**: the monster lane took the book in `52da4bc3` (round 6, `§57`) and `RuleSetId::B4`
+is compiled at `src/rules_core/rules_tables/mod.rs:211`. So the book's registration is free of any
+scope flip, the same way `bestiary` (round 3) and `bestiary_3` (round 4) were.
+
+```
+python3 scripts/classify_companion_rows.py bestiary_4
+book                              crea  abil  clas  named  prerace  prefix  relay  granted  ORPHAN
+bestiary_4                          34    46     0     12       10      30     24        0       0
+
+total companion units in scope : 80
+orphan ability rows            : 0
+PRECAMPAIGN-gated on an uningested campaign : 0
+`*_classes_companion.lst` class rows the chassis refuses : 0
+`.COPY=`/`.MOD` delta rows the chassis refuses : 2
+distinct excluded rows (the UNION, not the sum) : 2
+reachable remainder            : 78
+```
+
+That is the output **after** this round's two mechanisms. Before them it read `ORPHAN 5` /
+`reachable remainder 75`, exactly as `§56` predicted — and both numbers were wrong, in opposite
+directions.
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `bestiary_4` (Bestiary 4, wire code `B4`) |
+| Units ingested | **78** of 80 — 34 creature rows, 44 ability rows |
+| Grounded | **78 of 78**; **zero** orphans dropped; 2 `.COPY=` delta rows excluded |
+| Source files | 3 — `b4_races_companion.lst` 34, `b4_abilities_companion.lst` 40, `b4_abilities_race_ce_companion.lst` 4 |
+| New `RuleSetId` | none (`B4` compiled by the monster lane's `52da4bc3`) |
+| Other kinds' units moved | **0** |
+| `OPEN_FINDINGS` | none added — the family IS surfaced, and that list is per family |
+
+Surfaces wired (the same eight points round 4 paid): `companion_chassis::COMPANION_BOOKS` row,
+`gen_book_cache::COMPANION_BOOK_SPECS` `CompanionBookSpec`, `bestiary_4/mod.rs` accessors,
+`companion_catalog`'s `"bestiary_4" => "B4"` wire code, `CompanionCatalogScreen.tsx` `BOOK_LABELS`,
+its test's `SERVED_BOOK_CODES`, a `("bestiary_4", "companions")` `reach_gate` claim, and
+`v06_work_inventory` grounding through the registry.
+
+**Nothing of any other kind moved, and that is measured rather than asserted** — a structural diff of
+every unit's status against `HEAD`:
+
+```
+status changes: 78
+added: 0 removed: 0
+Counter({('bestiary_4', 'companion', 'not-ingested', 'grounded'): 78})
+```
+
+### 3. Two mechanisms, and the second cancelled part of the first
+
+**`§58.1` — ownership shape 6, RELAY ROWS.** `b4_races_companion.lst:22` `Familiar (Giant Flea)`
+never names `Flea (Giant) ~ Disease`. It names `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal`
+row at `b4_abilities_companion.lst:56`, and THAT row carries
+`ABILITY:Special Ability|AUTOMATIC|Flea (Giant) ~ Disease|Flea (Giant) ~ Uncanny Leap|…`. Shape 4 is
+exactly this closure and cannot see it, because **the middle row is not an inventory unit** —
+`v06_work_inventory` does not count `CATEGORY:Internal` rows, so it is absent from the list shape 4
+walks. `Familiar (Pipefox)` and `Familiar (Ratling)` reach the three `~ Constant` rows of
+`b4_abilities_race_ce_companion.lst` the same way. Those five rows are the whole ORPHAN list the
+classifier printed for this book.
+
+The first hop is read under ANY `ABILITY:<Category>|AUTOMATIC|` category, because the creature's own
+token says `Internal`; shape 1 keeps its narrower `Special Ability` predicate, so nothing that was a
+non-owner becomes an owner by a looser read of an existing link. **The token was already being
+parsed** — `parse_natural_attacks` has read `ABILITY:Internal|AUTOMATIC|` since round 1 and skips the
+entries containing ` ~ `, which are precisely the relays.
+
+Corpus-wide shape 6 recovers **15** units (5 `bestiary_4`, 10 `core_essentials` — 26 orphans → 16)
+and changes **not one byte** of the nine already-registered books. All nine were REGENERATED, not
+hand-edited, and the proof is a command rather than a claim:
+
+```
+for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures bestiary_5 \
+         bestiary_6 bestiary_2 bestiary bestiary_3; do
+  python3 scripts/transcribe_companion_tables.py $b; done
+git status --porcelain -- 'src/rules_core/rules_tables/*/companion_data.rs'
+  -> ?? src/rules_core/rules_tables/bestiary_4/companion_data.rs      (and nothing else)
+```
+
+`bestiary_3` reports `relay 5`, but those five rows were already owned through shapes 3 and 5 and
+`owners` is an append-if-absent list — so the finding is additive at the corpus level and inert at
+the record level, which is the strongest form the claim can take.
+
+**`§58.2` — `.COPY=` delta rows, and a ceiling that was ADDING its exclusions.** `gen_book_cache`
+refused the book on its first run and was right to:
+
+```
+b4_abilities_companion.lst:99 names "CATEGORY=Special Ability|Change Shape.COPY=Pooka ~ Change Shape",
+not "Pooka ~ Change Shape" -- the table's recorded line is stale and must be re-transcribed
+```
+
+`verified_citation_line` caught it. Bestiary 4 is the first companion book with `.COPY=` rows; the
+monster lane has screened them since Bestiary 2 and the reasoning transfers unchanged — a
+`<Base>.COPY=<Variant>` row states a DELTA on a base record elsewhere, so transcribed verbatim
+`Pooka ~ Change Shape` ships an `ASPECT` and nothing else. Independently confirmed by the trap
+report, which counts the shapes without knowing what the transcriber did:
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- bestiary_4
+  DECLARES  .COPY=  .MOD  #OFF  file
+        63       2     0     0  bestiary_4/b4_abilities_companion.lst
+        34       0     0     0  bestiary_4/b4_races_companion.lst
+         4       0     0     0  bestiary_4/b4_abilities_race_ce_companion.lst
+```
+
+The transcriber now screens `origin in ("copy","mod_only")`, names the dropped rows in the generated
+module header, and scrubs them from their owners' `ability_keys` so
+`the_chassis_link_resolves_in_both_directions_for_every_book` stays closed. The `mod_only` half is
+**stated, not exercised** (`core_essentials` 4, `ultimate_wilderness` 1) — `§56.3`'s discipline.
+
+And the ceiling itself was being computed as a **sum** of exclusions that are not disjoint. `§51.1`
+and `§54.2` each added a missing TERM; this fixes the arithmetic. Exactly one row corpus-wide is both
+an orphan and a delta.
+
+### 4. Denominators, every one re-derived this round
+
+```
+python3 scripts/classify_companion_rows.py
+total companion units in scope : 1696
+orphan ability rows            : 735
+PRECAMPAIGN-gated on an uningested campaign : 2
+`*_classes_companion.lst` class rows the chassis refuses : 7
+`.COPY=`/`.MOD` delta rows the chassis refuses : 30
+distinct excluded rows (the UNION, not the sum) : 773
+reachable remainder            : 923
+
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1339, 'grounded': 357})
+```
+
+**Ceiling 937 → 923** (shape 6 **+15**, delta screen **−29**). **Honest remainder `923 − 357` = 566**
+across 7 books. Raw `not-ingested` is 1,339 and that is NOT the workload.
+
+The two derivations close exactly, which is the check that caught a bad ceiling table in each of the
+last two rounds: the nine GROUNDED books' reachable counts sum to **357** — the grounded figure to
+the unit — and the seven remaining books' to **644 − 78 = 566**.
+
+| book | units | excluded | **reachable** |
+|---|---|---|---|
+| `ultimate_wilderness` | 575 | 248 | **327** |
+| `core_essentials` | 145 | 42 | **103** |
+| `core_rulebook` | 170 | 86 | **84** |
+| `ultimate_magic` | 170 | 138 | **32** |
+| `advanced_race_guide` | 32 | 18 | **14** |
+| `advanced_players_guide` | 212 | 208 | **4** |
+| `book_of_the_damned_volume_1` | 31 | 29 | **2** |
+
+`327 + 103 + 84 + 32 + 14 + 4 + 2 = 566`.
+
+### 5. The gate found two stale pins, and both were moved WITH the new records named
+
+`root-lib` went red on the first full run:
+
+```
+companion_chassis::tests::an_ability_with_no_modelled_facet_still_states_its_type_segments
+  left: 5  right: 3
+```
+
+and `apps/desktop/src-tauri` went red on its wire-side twin with `left: 7, right: 3`. **The two
+numbers are different because they count different things**, which is the finding rather than the
+fix: the chassis test counts RECORDS, the catalog test counts WIRE ROWS, and the catalog nests
+abilities under each owning creature — Bestiary 4's two `TYPE:Communicate.SpellLike` rows are each
+owned by both `Familiar (Pipefox)`/`Pipefox` and `Familiar (Ratling)`/`Ratling`, so 5 records become
+7 rows. Pinning both to one number was asserting that no record ever has two owners.
+
+Neither was bumped to green. The chassis test now names the two new records and asserts their exact
+segments; the catalog test asserts 7 rows over 5 distinct keys and that every unmodelled row carries
+one of the two known shapes. `Read Magic ~ Constant`, one file-line away from the other two, says
+`TYPE:SpecialQuality.SpellLike` and IS fully modelled — three adjacent rows splitting two ways, which
+is exactly why `type_segments` keeps everything verbatim rather than trusting the enum.
+
+### 6. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `./scripts/verify.sh` exits 0 | **PASS** — `VERIFY_EXIT=0`, `RESULT: PASS`, 14/14 stages (`preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump`); `root-full` 6286 passed across 544 suites, all 525 `tests/*.rs` suites executed; clippy exactly at its 54 ceiling. Exit code captured directly, never through a pipe. Logs `/tmp/codex-verify-7lOxmj` |
+| 2 | `reach` stage passes with a claim for this book's families | **PASS** — `reach (27 passed)`, and the claim is this book's own: `("bestiary_4", "companions") => companions_reach("bestiary_4", "B4")`, the SECOND claim the book carries beside the monster lane's. Not a pass by absence |
+| 3 | `v06_corpus_trap_report --audit` exits 0 | **PASS** — `AUDIT_EXIT=0`, "No defects: every ingested record's citation agrees with the line it names" |
+| 4 | `v06_work_inventory` regenerates; units leave `not-started`; second run changes only `generated_at` | **PASS** — 78 units `not-ingested` → `grounded`; second run diff over the whole document with `generated_at` popped compares `True` |
+| 5 | Four-check wired-integration audit clean | **PASS** — no stub: the records are corpus reads, the catalog screen renders them, the reach claim executes IPC, and item 8 shows a relay-owned record on screen |
+| 6 | `OPEN_FINDINGS` entry for any family that could not be surfaced | **N/A** — none; `bestiary_4/companions` is surfaced, and adding a surfaced family would fail `unsurfaced_families_are_exactly_the_recorded_findings` in the other direction |
+| 7 | Baseline movements a separate reviewable commit | **PASS** — two stale-UPWARD floors, raised in their own commit `c6225c82`: `BASELINE_ROOT_LIB_TESTS 1715 -> 1719`, `BASELINE_ROOT_FULL_TESTS 6282 -> 6286`. Evidence is the run's own `BASELINE NOTES` block quoted verbatim in the file, which is the same instrument `--show-actuals` prints from; that flag was NOT run separately, because it means a second ~25-minute full gate to reprint two numbers this run already measured. Stated, not implied |
+| 8 | On-screen verification | **PASS** — `docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E7-F2-006/item8/b4-companion-familiar-giant-flea.png` + `.verify.md`. **The record chosen is the mechanism's own proof**: `Familiar (Giant Flea)`, and the expected string `Uncanny Leap` is a RELAY-owned ability -- the screen renders `Uncanny Leap — SpecialQuality · Extraordinary` under it, so shape 6 is verified by a player-visible pixel and not only by a passing test. Also on screen: `Bestiary 4 (34)`, `Bestiary 4 p.99`, and the blurb's book list now ending `... Bestiary 3 and Bestiary 4 — 166 creatures`. **`SEARCH_Y=285` held without recalibration** at 10 registered books -- the harness comment predicts this constant will move again and it did not this time, which is worth recording because the prediction is right in general and was wrong here |
+
+### 7. What round 6 inherits
+
+**7 books, 566 reachable units.** Hazards, all derived this round:
+
+* **`ultimate_wilderness` is the largest block left (327) and needs NO new `RuleSetId`**
+  (`RuleSetId::Uw`, SD-28 Epic 26) — but it carries **169** creature rows, more than every registered
+  book combined.
+* **`core_essentials` (103) is the book shape 6 most changed** and the first that will exercise the
+  `mod_only` half of `§58.2`'s screen (6 companion `.lst` files, 22 `.COPY=`, 4 `mod_only`). It needs
+  a NEW `RuleSetId` — nothing in `src/` compiles it today; check before writing one.
+* `core_rulebook`, `ultimate_magic` and `book_of_the_damned_volume_1` still carry the 7
+  `*_classes_companion.lst` class rows the chassis refuses outright.
+* **`advanced_players_guide` (4 reachable of 212) and `book_of_the_damned_volume_1` (2 of 31) are
+  FLOORS, not queued work** — the reachable-exhausted shape `§57` recorded for `bestiary_4`'s monster
+  half. A round taking either pays a full book's registration cost for a handful of records.
+
+**The lane is NOT done and this receipt does not claim it is.** `§45.1` as amended by `§56.1` is now
+three-for-three: classify before committing to a book, then read the rows the classifier is about to
+throw away. Every one of the last three rounds found the instrument wrong by doing exactly that.

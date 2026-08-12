@@ -4615,3 +4615,163 @@ That distinction is the practical one for round 7, because `bestiary_4` now read
 `inner_sea_world_guide` was at `§52`. Its 239 remaining units are the lane's permanent floor, not
 queued work. Running a per-monster cycle against it, or against any of the eleven zero-monster books,
 remains a reportable hard stop.
+
+## Decision 58 — Companion Lane, extend: round 5 (2026-08-12, `sd29-companion-r9`, card `epic-7-companion-lane-extend`)
+
+Round 5 took `bestiary_4`, the cleanest book left by the ranking `§56` published (80 units, 5
+orphans, 6% orphan share) and the one `§56.3` had named as the first book that would actually
+exercise `§50`'s orphan-drop disposition.
+
+**It did not exercise it. For the THIRD consecutive round the orphan instrument was found to be
+UNDER-claiming, and all five orphans turned out to be owned.** The book landed with **78 of its 80
+units grounded** — its whole reachable remainder — with **zero orphans** dropped.
+
+The two exclusions are a different thing entirely, and they are the round's second finding: they are
+`.COPY=` **delta rows**, which the companion chassis had never screened for and which the monster
+lane has screened for since Bestiary 2. That screen moves the lane's ceiling **down** for the first
+time in four rounds.
+
+Net: ceiling **937 → 923**. Shape 6 recovered **+15**; the delta screen removed **−29**.
+
+### 58.1 Ownership shape 6: the owner can be stated across a row that is not a unit
+
+`b4_races_companion.lst:22` is `Familiar (Giant Flea)`. It does **not** name
+`Flea (Giant) ~ Disease`. What it carries is:
+
+```
+ABILITY:Internal|AUTOMATIC|Bite|Racial Traits ~ Flea (Giant)
+```
+
+and `b4_abilities_companion.lst:56` is:
+
+```
+Racial Traits ~ Flea (Giant)   CATEGORY:Internal
+ABILITY:Special Ability|AUTOMATIC|Flea (Giant) ~ Disease|Flea (Giant) ~ Uncanny Leap|Immunity to Disease
+```
+
+The ownership is stated twice over, in the corpus, in plain tokens. Shape 4 (granted-by) is exactly
+this closure — and it cannot see it, because **the middle row is not an inventory unit**.
+`v06_work_inventory` does not count `CATEGORY:Internal` rows, so `Racial Traits ~ Flea (Giant)` is
+absent from the `abilities` list shape 4 walks, and the chain has nothing to stand on.
+
+**Shape 6, relay:** a non-unit row of this book's ability `.lst` files, reached from a creature row,
+propagates its own `ABILITY:Special Ability|AUTOMATIC|` grants to the units it names. Two details are
+load-bearing:
+
+* **The first hop is read under ANY `ABILITY:<Category>|AUTOMATIC|` category.** The creature's token
+  here says `Internal`, not `Special Ability`; PCGen's category segment names the category of the
+  keys that follow. Shape 1 keeps its narrower `Special Ability` predicate for the unit-to-unit links
+  it already governs — the widening applies only to resolving relays, so nothing that was a
+  non-owner becomes an owner by a looser read of an existing link.
+* **The relay is never emitted.** It is not a unit, so it has no record to be emitted as, and
+  inventing one would put a row on the wire `docs/work-inventory.json` does not count. The grant is
+  attributed to the CREATURE that reaches the relay, because `companion_chassis`'s both-directions
+  link test types `owners` as creature keys.
+
+It cannot manufacture reachability: a relay is reached only from a creature row of this book, and a
+reached relay grants only what its own token names. A relay nothing reaches grants nothing.
+
+`Familiar (Pipefox)` and `Familiar (Ratling)` reach the three `~ Constant` rows of
+`b4_abilities_race_ce_companion.lst` by the same two hops. Those five rows — the whole ORPHAN list
+the classifier printed for this book — are pinned by name in
+`bestiary_4::companion_tests::the_five_relay_owned_rows_have_their_relay_owner`.
+
+**The token was already being read.** `transcribe_companion_tables.parse_natural_attacks` has parsed
+`ABILITY:Internal|AUTOMATIC|` since round 1, to pick up attack names, and explicitly skips entries
+containing ` ~ `. Those skipped entries are precisely the relays. The lane had the data in hand for
+five rounds and was throwing away the half of it that answered the ownership question.
+
+Corpus-wide, shape 6 recovers **15** units: 5 in `bestiary_4` and 10 in `core_essentials`
+(26 orphans → 16). It changes **no** already-registered book: all nine were regenerated and
+`git status --porcelain` listed not one of their `companion_data.rs` files. `bestiary_3` reports
+`relay 5`, but those five rows were already owned through shapes 3 and 5, and `owners` is an
+append-if-absent list — so the finding is additive at the corpus level and inert at the record level,
+which is the strongest form the claim can take.
+
+### 58.2 `.COPY=` delta rows, and a ceiling that was adding its exclusions instead of unioning them
+
+`gen_book_cache` refused the book on its first run:
+
+```
+b4_abilities_companion.lst:99 names "CATEGORY=Special Ability|Change Shape.COPY=Pooka ~ Change Shape",
+not "Pooka ~ Change Shape" -- the table's recorded line is stale and must be re-transcribed
+```
+
+`verified_citation_line` caught it, which is what that check is for. `bestiary_4` is the first
+companion book carrying `.COPY=` rows, and the disposition is not a judgement call: the monster lane
+ruled it at `transcribe_monster_tables`'s `.COPY=` screen and the reasoning transfers unchanged. A
+`<Base>.COPY=<Variant>` row states a **delta** on a base record that lives elsewhere. Transcribed
+verbatim — all this program does — `Pooka ~ Change Shape` yields a record with an `ASPECT` and
+nothing else: no `TYPE:`, no `DESC:`, no page. That is the blank card
+`docs/governance/no-stub-mvp-doctrine.md` forbids. Resolving the delta is not transcription; it
+composes values across two rows while `CompanionAbilityRecord` carries ONE `source_file`/
+`source_line` pair, so every inherited field would ship under a citation that does not contain it —
+the exact stale-citation defect `verified_citation_line` exists to catch.
+
+So the companion transcriber now screens `origin in ("copy", "mod_only")` and drops those rows,
+scrubbing them from their owners' `ability_keys` so the chassis link stays closed in both directions.
+The `mod_only` half is **stated, not exercised**: no book registered through round 5 carries one
+(`core_essentials` 4 and `ultimate_wilderness` 1 are where it will first bite). Same discipline
+`§56.3` used for the disposition it built and did not need.
+
+**The ceiling was also being computed wrong, and this is the fix `§54.2` half-made.** `§51.1` ruled
+that a ceiling subtracting one exclusion is not a ceiling; `§54.2` moved the class-row subtraction
+out of prose and into the instrument. Both left the arithmetic a **sum**, which is only correct while
+the exclusion sets are disjoint. They are not: corpus-wide there are 735 orphans + 2 `PRECAMPAIGN`
+rows + 7 class rows + 30 delta rows = 774, but exactly **one** row is both an orphan and a delta, so
+**773** distinct rows are excluded. The classifier now reports the union and derives the remainder
+from it.
+
+Re-derived 2026-08-12 (`python3 scripts/classify_companion_rows.py`):
+
+```
+total companion units in scope : 1696
+orphan ability rows            : 735
+PRECAMPAIGN-gated on an uningested campaign : 2
+`*_classes_companion.lst` class rows the chassis refuses : 7
+`.COPY=`/`.MOD` delta rows the chassis refuses : 30
+distinct excluded rows (the UNION, not the sum) : 773
+reachable remainder            : 923
+```
+
+The two derivations still close exactly, which is the check that has caught a bad ceiling table in
+each of the last two rounds: the nine grounded books' reachable counts sum to **279** — the grounded
+count before this round, to the unit — and the eight remaining books' sum to **644**, and
+`279 + 644 = 923`.
+
+### 58.3 What round 6 inherits
+
+`companion` grounded **279 → 357**; the honest remainder is **923 − 357 = 566** across **7** books.
+Raw `not-ingested` is 1,339, and that number is not the workload.
+
+Per-book, every figure from this round's own classifier run, ranked by reachable share:
+
+| book | units | excluded | **reachable** |
+|---|---|---|---|
+| `core_essentials` | 145 | 42 | **103** |
+| `core_rulebook` | 170 | 86 | **84** |
+| `ultimate_magic` | 170 | 138 | **32** |
+| `advanced_race_guide` | 32 | 18 | **14** |
+| `advanced_players_guide` | 212 | 208 | **4** |
+| `book_of_the_damned_volume_1` | 31 | 29 | **2** |
+| `ultimate_wilderness` | 575 | 248 | **327** |
+
+`103 + 84 + 32 + 14 + 4 + 2 + 327 = 566`.
+
+Three hazards, each derived rather than remembered:
+
+* **`core_essentials` is the cheapest real book left and the one shape 6 most changed** (26 orphans →
+  16). It carries **6** companion `.lst` files, **22** `.COPY=` rows and **4** `mod_only` rows — so
+  it is the book that will first exercise the `mod_only` half of the screen this round built and did
+  not need. It needs a new `RuleSetId`; nothing in `src/` compiles it today.
+* **`ultimate_wilderness` is the largest block left at 327** and needs no new `RuleSetId`
+  (`RuleSetId::Uw` exists, SD-28 Epic 26). It carries 1 `.COPY=` and 1 `mod_only` row and **169**
+  creature rows, more than every registered book combined.
+* **`core_rulebook`, `ultimate_magic` and `book_of_the_damned_volume_1` carry the 7
+  `*_classes_companion.lst` class rows the chassis refuses outright.** The transcriber raises on them
+  by name rather than dropping them silently; that is unchanged and still correct.
+
+**`advanced_players_guide` (4 reachable of 212) and `book_of_the_damned_volume_1` (2 of 31) are
+effectively floors, not queued work** — the same reachable-exhausted shape `§57` recorded for
+`bestiary_4`'s monster half. A round that takes either is paying a full book's registration cost for
+a handful of records, and should say so in its receipt rather than discover it at the ceiling table.
