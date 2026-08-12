@@ -1614,9 +1614,19 @@ mod tests {
         // Stated as a table so a book whose ingest silently stops writing
         // fails here by name rather than by a total that still adds up.
         let expected: BTreeMap<&str, usize> =
-            [("advanced_race_guide", 156usize), ("monster_codex", 5), ("inner_sea_races", 72), ("horror_adventures", 43)]
-                .into_iter()
-                .collect();
+            [
+                ("advanced_race_guide", 156usize),
+                ("monster_codex", 5),
+                ("inner_sea_races", 72),
+                ("horror_adventures", 43),
+                // Core Essentials' Aasimar and Tiefling heritage traits
+                // (race-trait lane round 4). Re-derived on disk rather than
+                // transcribed: `find data/corpus/core_essentials/race_trait
+                // -name '*.json' | wc -l` -> 64.
+                ("core_essentials", 64),
+            ]
+            .into_iter()
+            .collect();
         assert_eq!(
             expected.len(),
             BOOK_SOURCES.len(),
@@ -1674,11 +1684,12 @@ mod tests {
         }
         assert_eq!(
             total,
-            276,
-            "156 ARG + 5 Monster Codex + 72 Inner Sea Races + 43 Horror Adventures. This \
-             total sits alongside the per-book map above and must move with it; round 3 \
-             moved the map first and this pin caught the omission, which is the whole \
-             reason the test states both"
+            340,
+            "156 ARG + 5 Monster Codex + 72 Inner Sea Races + 43 Horror Adventures + 64 Core \
+             Essentials. This total sits alongside the per-book map above and must move with \
+             it; round 3 moved the map first and this pin caught the omission, round 4 did \
+             the same, and this is the third time in one cycle that fixing one assertion \
+             revealed the next one below it -- which is the whole reason the test states both"
         );
     }
 

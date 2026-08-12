@@ -80,6 +80,11 @@ const LOADED_BOOKS: &[&str] = &[
     "inner_sea_races",
     // SD-29 race-trait lane round 3.
     "horror_adventures",
+    // SD-29 race-trait lane round 4. Round 4 added the book to the app's
+    // `RACE_CORPUS_BOOKS` without adding it here, so this copy drifted again --
+    // the SECOND time this exact test caught the same omission, the first being
+    // round 2's (see `inner_sea_races` above). Widened rather than relaxed.
+    "core_essentials",
 ];
 
 fn corpus_dirs() -> Vec<(&'static str, PathBuf)> {

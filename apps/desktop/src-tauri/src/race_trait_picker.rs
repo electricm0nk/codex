@@ -1130,7 +1130,7 @@ mod tests {
              placeholder on every single row -- `p.xx` on all 40 Tiefling rows and `xx` on all \
              24 Aasimar ones. `ingest_race_traits::is_placeholder_source_page` drops those at \
              ingest so the panel shows no page rather than a fake one; none of the four books \
-             ingested before Core Essentials carries a placeholder at all, so this pin moving \
+             ingested before Core Essentials carries such a token at all, so this pin moving \
              for any OTHER book means real page data was lost. A 19th pageless row is a \
              regression, and any of these gaining a page means the upstream data changed and \
              this pin should be re-derived"
