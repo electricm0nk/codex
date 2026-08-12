@@ -6081,3 +6081,383 @@ Standalone runs already captured against this tree, each with its exit code take
 
 **Pending; appended below.** Cannot run concurrently with `verify.sh` on this box (22 GiB, no swap —
 the harness's own header records the OOM).
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 3 (SD29-E6-F2-004)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), round 3 of a loop-until-dry lane.
+**Actor:** `sd29-racetrait-r3`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-1`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §47` (written as §46 — see §0c).
+**PR:** #360, open and NOT merged.
+**Commits:** `bd98b9fe` (ingest + 8 inherited reds), `eee7f34c` (5 more gate reds), `fc32108d`
+(decision record), `c6185e88` (merge of the monster lane), `be05927c` (inventory regen), plus this
+receipt's own commit. All pushed to `origin/tranche/9`.
+
+**Round 3 ingested Horror Adventures — 43 records, all 43 reaching a player — and, by re-running
+round 2's gate before trusting it, found that round 2 had left `origin/tranche/9` RED, that the PI
+screen was being defeated on the shipped surface, and that five alternates across two books were
+offered while moving no number.** The lane is now **dry for no-new-mechanism work**; every one of
+the 51 workable units left needs a mechanism this card did not build.
+
+### 0a. Worktree integrity — RECOVERY WAS REQUIRED (a sixth time)
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| recovery | `git fetch origin tranche/9 && git reset --hard origin/tranche/9` | `e1f0bdd9`, docs present |
+
+**Sixth consecutive cycle at `7d9f1c4f`.** Round 2's receipt called this "perfectly reproducible"; it
+still is. `git fetch` also prints `error: … did not send all necessary objects`, referring to the
+dead worktree ref the monster lane's receipt names — cosmetic here too: refs updated, reset resolved,
+and every `git push` this cycle made succeeded.
+
+### 0b. A shared-scratchpad collision, recorded because it cost real work
+
+This cycle's `progress.md` receipt draft was written to the session scratchpad and **overwritten by a
+sibling agent (`sd29-monster-r3`) writing its own `receipt.md` to the same path**. The scratchpad is
+documented as session-isolated and is not. Recovered by rewriting under a uniquely-named path. This
+is the recorded "shared scratchpad clobbering a verification artifact" incident class, hit again.
+
+### 0c. A decision-number collision, recorded rather than quietly fixed
+
+Both lanes wrote **Decision 46** concurrently in separate worktrees; the monster lane pushed first.
+This round's section is renumbered **§47** and carries its own header note. `bd98b9fe`'s and
+`eee7f34c`'s commit messages, which are already committed, say §46 and cannot be rewritten; every
+code comment was updated to §47. Same failure class as the `SD29-E4-F1-001` cycle-id collision the
+kanban already records. **Unattended-mode default:** renumber the later-pushed section, keep both,
+explain the discrepancy where a reader following a stale reference will land.
+
+### 1. Merged-ness verified by content, not by anyone's say-so
+
+Round 2's chassis verified present on the reset tree **before** being used:
+
+```
+$ grep -n 'inner_sea_races' src/bin/ingest_race_traits.rs      → 146: corpus_book: "inner_sea_races"
+$ find data/corpus/inner_sea_races/race_trait -name '*.json' | wc -l   → 72
+$ grep -n 'RuleSetId::Isr' src/rules_core/rules_tables/mod.rs src/bin/v06_work_inventory.rs → present
+```
+
+Round 1's and round 2's own figures then reproduced exactly (§3).
+
+**But "merged" and "verified" are independent questions, and this lane has now been bitten by both.**
+Round 2's work is genuinely on the branch AND its gate was red. §6a is the second half.
+
+### 2. Preflight and trap-report (cycle mechanics 1c, 0b)
+
+* `./scripts/verify.sh --only preflight-disk` → **EXIT 0**, 16% used / 817G available.
+* `cargo run --locked --bin v06_corpus_trap_report -- horror_adventures` → ran clean. 133
+  `governing-token-hidden-by-filter` findings (`TEMPBONUS`/`ASPECT` alongside `BONUS`/`PRE`) and a
+  long `KEY:` namespace list dominated by the book's Corruption families. **None of it touches the
+  race-trait rows**, which is why the ingest needed no parser change.
+
+### 3. Every figure re-derived (cycle mechanics 1b)
+
+**`§44.4`'s ceiling, re-derived independently and reproducing EXACTLY.** Each `race_trait` unit
+walked back to its own row by `(book, source_file, source_line)`, `.MOD` filtered on field 0 only,
+`TYPE:` tokens read — the predicates `parse_row` and `race_resolver::classify` use:
+
+```
+units whose own row is in-scope-race and non-.MOD: 553
+  core_essentials        {'grounded': 175, 'not-ingested': 48}
+  advanced_race_guide    {'grounded': 156}
+  inner_sea_races        {'grounded': 71,  'not-ingested': 1}
+  advanced_players_guide {'grounded': 1,   'not-ingested': 49}
+  horror_adventures      {'not-started': 44}
+  monster_codex          {'grounded': 4,   'not-ingested': 1}
+  bestiary               {'not-ingested': 3}
+TOTAL by status: {'grounded': 407, 'not-ingested': 102, 'not-started': 44}
+```
+
+**553 confirmed; 3,447 − 553 = 2,894 chassis-blocked, confirmed.** `§44.4` was right and is now
+re-derived rather than transcribed.
+
+**`§45.1`'s method applied BEFORE committing the round**, which is why that script is checked in:
+
+```
+$ python3 scripts/classify_race_trait_rows.py ha_abilities_race.lst ha_abilities_race_oa.lst
+ha_abilities_race.lst            in-scope 43 | default 0 | alternate 41 | flag_granted 0 | unclassified 2
+support/ha_abilities_race_oa.lst in-scope  1 | default 0 | alternate  1 | flag_granted 0 | unclassified 0
+```
+
+`§45.5`'s "44, 42 replace-flag alternates" confirmed, correctly split 43 + 1 across two files.
+
+**A figure this cycle got wrong and corrected against disk.** The first distinct-flag derivation was
+arithmetic over a set difference and reported HA adding 29 new flags. Re-running it against the
+written records gives **90 without HA, 91 with — exactly ONE new flag** (`Halfling_ReplaceLanguages`);
+28 of HA's 29 were already declared. The gate independently produced the same `91` (`left: 91,
+right: 90`), which is what caught it. Recorded because "re-derive at the point of use" means against
+the data, not against another derivation.
+
+### 4. The bounded work
+
+* `RuleSetId::Ha` + four arms. The exhaustive match forced every one.
+* One `BOOK_SOURCES` row → **43 records**, `0` PCGen-syntax leaks, `0` unresolved `DESC:` args,
+  `0` out-of-scope rows, `0` `.MOD` rows carrying a race TYPE. 7 races: Dwarf 6, Elf 7, Gnome 5,
+  Half-Elf 4, Half-Orc 6, Halfling 9, Human 6.
+* `data/corpus/horror_adventures/LICENSE.json` — **0 of 43 redacted**, verified on the written tree
+  (`grep -rl 'redacted PI' data/corpus/horror_adventures/race_trait/ | wc -l` → `0`) against ISR's
+  12 of 72. Book class (`BOOKTYPE:Supplement`), not a weaker screen.
+* 41 `ALTERNATE_TRAIT_REPLACE_FLAGS` rows; reach claim `("horror_adventures", "race_traits")`
+  asserting a plain `Reach::Surfaced`; **no** `OPEN_FINDINGS` entry, because there is no shortfall.
+* `race_catalog::RACE_CORPUS_BOOKS` += `horror_adventures`, `BOOK_HA = "HA"`.
+
+**RED first, deliberately**, per `§45.3`: the book was added to `RACE_CORPUS_BOOKS` with its records
+on disk and *before* its flag-table rows, and `every_alternate_the_app_offers_is_one_the_engine_can_place`
+went red naming all 41 keys the picker offers and `pilot_compute` would refuse.
+
+### 5. DELIBERATE NON-SCOPE: the book's second racial-ability file (1 unit)
+
+`support/ha_abilities_race_oa.lst` is **not** ingested. The pcc loads it as
+`ABILITY:support/ha_abilities_race_oa.lst|PRECAMPAIGN:1,INCLUDES=Occult Adventures`
+(`_horror_adventures.pcc:91`), and Occult Adventures is not ingested here.
+
+**The gate is on the pcc load line, not inside the `.lst`** — `grep PRECAMPAIGN` over the `.lst`
+returns 0. First time this lane has stood in the trap `loop-instruction.md` records for
+`bestiary_5/support/*_oa.lst`. **Unattended-mode default taken and recorded:** ingest the base file
+only; the alternative manufactures a record for a book nobody has audited. 1 unit of evidenced
+non-scope, not gap.
+
+### 6. THE GATE — three full runs, the last one green, and what re-running round 2's found
+
+#### 6a. Round 2 left `origin/tranche/9` RED, across TWO gate stages
+
+Round 2's receipt records its full gate as *in flight*; no result ever landed. Re-running it here
+found **thirteen failing assertions**, in two waves — the second wave only reachable once the first
+was fixed, because several sit *after* an earlier assertion in the same test function:
+
+| wave | file | assertion | held | correct |
+|---|---|---|---|---|
+| 1 | `tests/sd27_alternate_racial_trait_reachability.rs` | 5 pins (158→267 ×3, 337→452 ×2) + the reachable-bonus set | | |
+| 1 | `tests/sd27_aasimar_globalvar_gate_…rs` | Aasimar 9→11, sweep 158→267 | | |
+| 1 | `apps/desktop/src-tauri/src/race_trait_picker.rs` | per-race table, Aasimar 9→11, changed-description list | | |
+| 2 | `src/bin/ingest_race_traits.rs` | leak-guard TOTAL 233→276 | | **this round's own** |
+| 2 | `tests/duergar_invisibility_sla_…rs` | `LOADED_BOOKS` two books stale | 5 | 7 |
+| 2 | `tests/v06_work_inventory.rs` | ISR must be `future_state` | | now `in_scope` |
+| 2 | `apps/desktop/…/race_trait_picker.rs` | `Duergar_ReplaceSLAInvisibility` setters | 2 | 3 |
+| 2 | `scripts/tests/test_reclaim_orphan_targets.sh` | literal `/home/ubuntu` in a comment | | pre-existing, `c8ff0885` |
+
+**Attribution checked, not assumed.** Horror Adventures contributes **0** Aasimar alternates and
+**0** entries to the changed-description list; every wave-1 delta is exactly Inner Sea Races' 72
+records / 68 alternates. Wave 2 is one of mine (the leak-guard total, which caught my own omission —
+the test states a per-book map *and* a total precisely so a book that stops writing fails by name),
+three round 2's, and one pre-existing and unrelated.
+
+**"N failures" is a floor, not a count.** The second wave was invisible until the first was fixed.
+A cycle that fixes a gate must re-run it, not reason about it.
+
+Every pin moved **with its reason**; none relaxed, none `#[ignore]`d, ceiling not lowered. Two test
+names carrying counts renamed to carry none (`§44.5`'s rule).
+
+Emitted as a retro `correction` against `sd29-racetrait-r2`.
+
+#### 6b. The PI screen was defeated on the shipped surface (silent, 12 records)
+
+`pi_screening` redacts `data.description`; `RaceTraitRecord::render_description` renders from the
+record's **`DESC:` raw tokens**, which hold the upstream prose verbatim. All 12 of ISR's redacted
+records were rendering the Product Identity back to the Race Traits panel:
+
+```
+data/corpus/inner_sea_races/race_trait/dwarf/dwarf_stoic_negotiator.json
+  description : [redacted PI]
+  raw DESC    : Some dwarves, especially those who hail from the town of Peddlegate in Druma, …
+```
+
+Fixed at the source: `RaceTraitRecord` carries `description_redacted`, read from the envelope's
+`pi_field`/`pi_marker`, and a redacted record serves its marker rather than re-rendering.
+`a_pi_redacted_description_is_never_rendered_back_from_its_raw_desc_tokens` pins it over all 12 in
+both directions and pins the count so it cannot pass by finding nothing. Retro `incident`,
+`--silent`, recurrence key `pi-redaction-defeated-downstream`.
+
+**The monster lane found the identical defect independently, within hours** (`b08479e6`,
+`description_pi_redacted`). The merge kept this branch's field; verified rather than assumed —
+`grep -rn description_pi_redacted --include='*.rs' .` returns nothing, so no dangling reference to
+the dropped name survives, and the lib builds clean. That two agents found the same silent PI leak
+concurrently is itself the finding: it was reachable from two unrelated entry points.
+
+**Generalisation NOT verified by this card, recorded for a successor:** any kind whose ingest screens
+a free-text field while its surface re-renders from raw tokens has this defect shape.
+
+#### 6c. Five alternates were offered and moved nothing
+
+`HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS` — a single hardcoded constant documented as "the one
+alternate across all 153 whose declared bonus lands on a saving throw" — is now
+`ALTERNATE_TRAIT_SAVE_BONUSES`, carrying ISR's `Dwarf ~ Unstoppable` (+1 Fort) and HA's
+`Half-Elf ~ Mismatched` (−2 Reflex). Three ISR skill-bonus alternates (`Gnome ~ Intrepid Settler`,
+`Half-Elf ~ Sea Legs`, `Hobgoblin ~ Authoritative`) were missing from the skill table for the same
+reason and are added. All three save explanations now name their contribution.
+
+The saves **sum** where the skills **maximise**, because one contribution is a penalty and maximising
+would discard it; the invariant that makes summing correct — no race moves one save twice — is now
+derived from the corpus by `no_race_contributes_two_alternate_trait_bonuses_to_one_save`. The
+reachability test's own delta check had **no arm for Fortitude or Reflex** despite declaring both;
+its `other =>` arm panics rather than skipping, so the gap was fail-loud rather than a green test
+checking nothing, and it is closed rather than worked around.
+
+#### 6d. Full gate results — exit codes captured directly, never through a pipe
+
+`RETRO_ACTOR=sd29-racetrait-r3 ./scripts/verify.sh` (FULL).
+
+| run | tree | result |
+|---|---|---|
+| 1 | `bd98b9fe` | **EXIT 1** — 12 PASS, `root-full` + `desktop` FAIL. Wave 2 above. `root-full` 6186 passed / 543 suites. |
+| 2 | `be05927c` (post-merge) | **EXIT 1** — 12 PASS. `pi-sweep` + `root-full` FAIL, both from the merge rather than from either lane alone: a doc comment naming a PI term, and an SD-30 roster test pinning a book the monster lane had just ingested. `desktop` **428 passed**, `reach` **22 passed** — this round's HA claim among them. |
+| 3 | `a0bc4fc9` | **EXIT 0** — PASS |
+
+Run 1's stage list, recorded rather than summarised: PASS `preflight-disk`, `pi-sweep` (10 hits / 10
+baseline rows), `audit-selftest` (28), `reclaim-selftest` (10), `driver-selftest` (7), `root-lib`
+(1625), `reach` (21 — this round's HA claim among them), `frontend-install`, `frontend-test`
+(98/98), `frontend-typecheck`, `clippy` (root 54 / desktop 7 warnings, **0 errors**), `class-dump`
+(31/31 computing).
+
+
+**Run 3 stage-by-stage** (`a0bc4fc9`, the tree that ships):
+
+| stage | verdict | detail |
+|---|---|---|
+| `preflight-disk` | **PASS** | disk budget OK |
+| `pi-sweep` | **PASS** | 10 hits over src/rules_core/rules_tables, 10 baseline rows |
+| `audit-selftest` | **PASS** | 28 passed, 0 failed |
+| `reclaim-selftest` | **PASS** | 10 passed, 0 failed |
+| `driver-selftest` | **PASS** | 7 passed, 0 failed |
+| `root-lib` | **PASS** | 1635 passed |
+| `root-full` | **PASS** | 6200 passed across 543 suites, all 524 tests/*.rs suites executed |
+| `desktop` | **PASS** | 428 passed |
+| `reach` | **PASS** | 22 passed |
+| `frontend-install` | **PASS** | node_modules present |
+| `frontend-test` | **PASS** | 98/98 files |
+| `frontend-typecheck` | **PASS** | tsc --noEmit clean |
+| `clippy` | **PASS** | root:54 desktop:7 warnings, 0 errors |
+| `class-dump` | **PASS** | 31/31 computing |
+
+### 7. DoD item 8 — on-screen verification
+
+Item 8 is **PASS, twice**, using the proven harness rather than a hand-rolled driver, run alone and
+never concurrently with `verify.sh`. Artifacts in
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/sd29-racetrait-r3/item8/`.
+
+**Artifact 1 — the round's own ingest reaches a player.**
+
+```
+RUN_DESKTOP_AGENT=sd29-racetrait-r3 \
+./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family race_trait --tab alternate --no-search --record "Reptilian Ancestry" \
+  --expect "Reptilian Ancestry" \
+  --expect "nictitating membranes or patches of scaly skin" \
+  --expect "Psychic Defense" --expect "Rationalize" \
+  --out .../artifacts/sd29-racetrait-r3/item8 --slug race-trait-ha-human-alternates
+```
+
+→ **PASS**, `race-trait-ha-human-alternates.png` + `.verify.md`. Rendered lines, extracted from the
+live webview rather than read off a screenshot by eye:
+
+```
+148:Psychic DefenseHA p.41
+152:RationalizeHA p.41
+156:Reptilian AncestryHA p.41
+158:Humans with reptoid or serpentfolk ancestry sometimes have nictitating membranes or patches of
+    scaly skin. They gain a +2 racial bonus on saving throws against mind-affecting effects and
+    poisons. This racial trait replaces the bonus feat trait.
+```
+
+Three separate facts land in one artifact: the **records** render, the **`HA` book code** this round
+added renders beside each, and the **`p.41` page citation** renders — the last being the on-screen
+counterpart of the `paged` assertion that put `HA` in `{APG, ARG, HA, ISR, MC}`. The same screen's
+header reads **"267 alternate racial traits across 18 races"** and lists **"Dwarf (30)"**,
+**"Human (33)"** — this round's own re-derived figures, printed by the product.
+
+**Artifact 2 — the PI fix is proven on screen, not only in a test.**
+
+```
+  --record "Unstoppable Magic" --expect "Unstoppable Magic" --expect "[redacted PI]" \
+  --expect "Self-Made Fate" --slug race-trait-isr-pi-redaction-holds-on-screen
+```
+
+→ **PASS**. The Inner Sea Races records whose descriptions were redacted now render the **marker**
+where they previously rendered the upstream Golarion prose (§6b). A unit test proves
+`render_description` returns the marker; this proves the marker is what a player actually sees, which
+is exactly the gap between "the gate is green" and "the screen is right" that item 8 exists for.
+
+**A harness finding, recorded rather than worked around.** The race_trait family's default
+(search-box) path **cannot reach alternate racial traits on the current app**, and this is not
+specific to this round's records: the harness's own documented example, `--record "Ironskinned"`,
+which passed on 2026-08-11 at HEAD `8b621552` and whose artifact is checked in at
+`artifacts/item8-harness/race-trait-mc-duergar-ironskinned.verify.md`, **fails today** with
+`no 'N matching' counter in rendered text`. Run as a deliberate control before concluding anything
+about Horror Adventures. The search box itself works — `--record "Dwarf"` filters and reports
+`13 rows`, which is the Dwarf **standard**-trait count — so the search path is scoped to the standard
+tab, and alternates require `--tab alternate --no-search`. Something changed between 2026-08-11 and
+today; **this round did not diagnose which change**, and says so rather than guessing. The failed
+first attempt is left in place as `race-trait-ha-dwarf-barrow-warden.FAILED.verify.md`, per the
+harness's own rule that a failure can never be cited as passing evidence.
+
+**Consequence for a successor:** `verify-on-screen.sh`'s usage block still documents the search form
+for `race_trait` (`--record "Ironskinned"`), and that form is now wrong for alternates. Updating the
+harness is not this card's write scope; it is recorded here and belongs with the item-8-harness card.
+
+
+### 8. The remainder — THIS LANE IS DRY FOR NO-NEW-MECHANISM WORK
+
+Same join as §3, re-run at the end of the round **on the merged tree**:
+
+```
+TOTAL by status: {'grounded': 450, 'not-ingested': 103}
+  core_essentials        {'grounded': 175, 'not-ingested': 48}
+  advanced_race_guide    {'grounded': 156}
+  inner_sea_races        {'grounded': 71,  'not-ingested': 1}
+  advanced_players_guide {'grounded': 1,   'not-ingested': 49}
+  horror_adventures      {'grounded': 43,  'not-ingested': 1}
+  monster_codex          {'grounded': 4,   'not-ingested': 1}
+  bestiary               {'not-ingested': 3}
+```
+
+Corpus-wide `race_trait` from the regenerated `docs/work-inventory.json`:
+**3,447 total / 450 grounded / 1,634 `not-ingested` + 1,363 `not-started`** (was 407 / 1,583 /
+1,457). The `not-ingested`/`not-started` shift beyond this lane's 43 is the monster lane's two
+scope flips, which move other kinds between those two states without touching `grounded`.
+
+**`units_ingested` = 43. `units_remaining` = 51**, and the split matters more than the number:
+
+| | units | |
+|---|---|---|
+| workable, needs a `PREABILITY`-grant mechanism | 48 | `core_essentials` (+ its 16 non-`race_trait`-typed selector rows) |
+| workable, needs a race-variant chassis | 3 | `bestiary` Drow Noble |
+| **workable total** | **51** | **none of it is ordinary ingest** |
+| not gap — ARG key collisions (`§39`) | 49 | `advanced_players_guide` |
+| not gap — upstream data gap (`§45.4`) | 1 | ISR `Human ~ Tribalistic Languages` |
+| not gap — ability-pool mechanism (`§43`) | 1 | MC `Oversized Goblin` |
+| not gap — `PRECAMPAIGN` conditional (`§47.2`) | 1 | HA Occult Adventures row |
+| **chassis-blocked, NOT this card** | **2,894** | needs a race-chassis lane |
+
+**Round 3 consumed the last book in `§45.5`'s queue that needed no new mechanism.** A round 4 on
+this card cannot make progress by ingesting; it must first build one of two mechanisms, which is a
+different cycle shape than rounds 1–3.
+
+**Still open and still owned by this lane:** `§8b`'s Race Traits browse-screen render bug (the
+standard-trait column does not recompute when an alternate is selected). Round 3 did not reach it
+either, and says so rather than letting it disappear.
+
+### 9. Verification, environment, deviations
+
+* **Retro shard mis-actored, corrected rather than deleted.** The first `verify.sh --only
+  preflight-disk` ran before `RETRO_ACTOR` was exported, so its verification event landed in
+  `docs/retro/events/wf_924a22ca-f35-1.jsonl` — a shard named after an ephemeral worktree, which
+  `forward-scope-register.md` reads as an *actor*. Re-filed into
+  `docs/retro/events/sd29-racetrait-r3.jsonl` with `actor` corrected and `actor_source` recording
+  the re-file; the worktree-named file removed. Default taken: keep the data, publish no phantom
+  actor.
+* `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-r3`, claimed with
+  `.reclaim-claim` at creation; a **second** dir `…-r3-desktop` for `apps/desktop/src-tauri`, which
+  is a separate cargo workspace — AGENTS.md's one-dir-per-agent-**per-source-tree** rule. Both
+  deleted at cycle end.
+* Disk was never a constraint: 16% used, 817G available throughout.
+* `verify.sh` and the on-screen harness were never run concurrently (OOM).
+* Retro shard `docs/retro/events/sd29-racetrait-r3.jsonl`: 1 re-filed verification, 2 corrections
+  (one against round 2, one against **this cycle's own** first flag-count derivation), 3 incidents
+  (the silent PI leak, `concurrent-lane-duplication`, `shared-scratchpad-clobber`), 1 **escaped**
+  near-miss (the five browse-only alternates, which had already reached the branch), plus
+  verify.sh's own derived events for all three full runs.
+* **Three full gate runs, and the last one is the claim.** Runs 1 and 2 are recorded above with
+  their failures rather than discarded, because "how many rounds it took" is the measurement that
+  says whether the fixes were understood or guessed at. Run 3: `RESULT: PASS`, `VERIFY_EXIT=0`, all
+  14 stages, `root-full` **all 524 `tests/*.rs` suites executed** — the non-execution check
+  `decisions.md §40` requires, satisfied by name rather than by an aggregate count.
