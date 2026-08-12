@@ -7697,9 +7697,45 @@ carries **30 DECLARES and 21 `.MOD`** rows — the `.MOD` overlays the inventory
 from the unit set, which is exactly why the transcriber's unit set is the inventory and never a line
 count. 77 namespaces, the largest at 3 rows each.
 
-### 7. Run record — gate run 5, on the post-merge tree
+### 7. Run record — gate run 5, on the post-merge tree: **`VERIFY_EXIT=0`, all 14 stages**
 
-_(appended below)_
+`origin/tranche/9` advanced once more while run 4 was in flight, with the companion lane's round-2
+receipt (`86aab1a3`). **That commit is not docs-only** — `git diff --stat 64e946cb origin/tranche/9`
+shows `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` (24 lines) and
+`scripts/verify-baselines.env` (26) alongside the receipt — so `§46.6` rule 2 applies and run 4's
+green attests to `64e946cb` rather than to the merged tree. Merged (not rebased), **zero conflicts**,
+and re-gated:
+
+```
+passed: 14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib
+            root-full desktop reach frontend-install frontend-test frontend-typecheck clippy
+            class-dump
+root-full : 6244 passed across 543 suites, all 524 tests/*.rs suites executed
+desktop   : 439 · reach: 25 · frontend: 99/99 · clippy: 0 errors · class-dump: 31/31 computing
+RESULT: PASS      VERIFY_EXIT=0
+```
+
+The three baseline notes run 4 printed are **gone** — the companion lane's `86aab1a3` set
+`ROOT_LIB=1679`, `ROOT_FULL=6244`, `DESKTOP=439`, exactly the figures run 4 measured. Two lanes'
+independent gates agreeing on the same three counts is worth more than either lane's own note.
+
+**The decision numbering collided and the merge resolved it correctly without help.** Both lanes
+wrote a `## Decision 50` against a tree whose highest was §49; the companion lane's is now §51 and
+this round's is §50. Verified by content (`grep -n '^## Decision 5'`), not assumed.
+
+### 8. Branch state at cycle end
+
+| | |
+|---|---|
+| commits | `d81e80ab` (ingest + both screens), `7bbce854` (receipt + `§50`), `63d6b6b5` (ceiling instrument fix + merge), `37dba464` (the three gate reds), `64e946cb` (item-8 artifacts), `3bdfc9e8` (retro), `7f823f11` (gate record), plus two merges of `origin/tranche/9` |
+| pushed | **yes, incrementally, after every commit** — no cycle's only copy lived on a worktree branch at any point |
+| PR #360 | open and unmerged, as the card requires |
+| card | `epic-5-monster-lane-extend` stays **READY — round 4**. The lane is not dry |
+| target dirs | `codex-target-sd29-monster-r5` and `-r5-desktop`, both claimed on creation and deleted at cycle end |
+
+**This round did not finish the lane and does not claim to.** 23 units ingested against a re-derived
+remainder of 4,210 raw / **2,773 reachable** — and the reachable figure moved further from the
+instrument fix (133 units) than from the ingest (23), which is the round's honest headline.
 
 ## Cycle — epic-7-companion-lane-extend, ROUND 2 (SD29-E7-F2-003)
 
