@@ -10007,12 +10007,16 @@ remaining monsters.** Do NOT shape any of them, or `bestiary_4`, as a per-monste
 **Actor:** `sd29-monster-r9` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
 (work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-13`)
 **Branch-point:** `af0f2e9b` · **Commits:** `378b7b70` (the ingest, all eight registration points and
-the player surface), plus this receipt's own commit.
+the player surface), `92d346a7` (this receipt + `decisions.md §58` + the kanban move), `cacf35d8`
+(the item-8 PASS artifacts and two receipt corrections), `0090e273` (the three gate stages the ingest
+turned red, pushed the moment they existed because two of them turn a CONCURRENT lane's gate red),
+plus this receipt's own closing commit.
 **Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
 message:**
 `git cat-file -p origin/tranche/9:src/rules_core/rules_tables/inner_sea_bestiary/monster_data.rs | grep -c 'MonsterStatBlock {'` → **38**,
 `| grep -c 'MonsterAbilityRecord {'` → **152**.
-**Kanban status left at:** `READY — round 8.`
+**Kanban status left at:** `READY — round 8.` **Gate: `VERIFY_EXIT=0` on run 2** (run 1 was `1`,
+three red stages, all three this round's own and all three fixed and pushed in `0090e273` — §5.1).
 
 **This receipt does not claim the lane is done.** 190 units landed against a REAL ceiling that is
 still **821**, and the whole of the large remainder is one book whose ruling this round made and
@@ -10184,12 +10188,39 @@ from a prefix-only reach. Recorded in the module rather than deleted silently.
 
 ### 5. Definition of done
 
-1. **`./scripts/verify.sh` full** — exit code captured directly, never through a pipe. `VERIFY_EXIT=` **pending at the time this receipt was first committed — filled by this cycle's follow-up commit, which is the only place the real exit code appears. A receipt that reads `pending` here has not been superseded and must be read as an unfinished gate, not a passing one.**.
+1. **`./scripts/verify.sh` full, TWICE** — exit code captured directly, never through a pipe.
+
+   **Run 1: `VERIFY_EXIT=1`, 12 of 15 stages green.** `pi-sweep`, `root-full` and `clippy` red.
+   **All three were this round's own defects, none was environmental, and each was a different kind
+   of thing.** Attribution is by named test and named warning, not by bucket:
+
+   | stage | what failed | why |
+   |---|---|---|
+   | `pi-sweep` | 2 unbaselined hits, both in this round's own doc comments | a comment EXPLAINING why a Product Identity record was dropped named the term. `decisions.md §52.5` records exactly this: `pi-sweep` does not read intent. Rewritten to name the screen (`pi_screening::PI_BLACKLIST_TERMS`), not the term. |
+   | `root-full` | `sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books` (1 of 6,288) | it asserts `inner_sea_bestiary` is `future_state`; it is now `in_scope` because this round ingested it. Closed the way `§47.3` ruled and three lanes have closed it before — the book joins `SD29_INGESTED_CAMPAIGN_SETTING_BOOKS` as a stated claim, rather than the roster being relaxed. |
+   | `clippy` | `root: 55 warnings exceeds recorded ceiling 54` | `identity_op` on `230 - 26 - 7 - 0`, where `- 0` was the classifier's `.COPY=` term written out to keep the four-term arithmetic legible. It is a comment now. |
+
+   Fixed in `0090e273` and **pushed the moment it existed rather than held to cycle end**: the bad
+   content was already on `origin/tranche/9` in `378b7b70`, where `pi-sweep` and `clippy` turn a
+   CONCURRENT lane's gate red through no fault of its own — the 22-minute cost `§52.5` records and
+   `§57.5(b)` states this exact mitigation for. Each fix was verified individually first
+   (`cargo test --locked --test pi_table_sweep` → 6 passed;
+   `cargo test --locked --test v06_work_inventory sd30_campaign_setting_books` → 1 passed;
+   `cargo clippy --locked --tests -j 2 | grep -c inner_sea_bestiary` → 0) rather than by re-running
+   the whole gate hopefully.
+
+   **Run 2: `VERIFY_EXIT=0`, 14 of 14 stages green** — `root-full` 6,289 passed across 544 suites with all 525 `tests/*.rs` suites executed (`decisions.md §40`'s no-suite-silently-skipped check), `desktop` 442, `reach` **27**, `frontend-test` 99/99, `clippy` root:54 desktop:7 back at the recorded ceiling, `class-dump` 31/31 computing.
+
+   No stage failed twice with the same attribution, so `decisions.md §39`'s recurrence rule is not
+   engaged and nothing here was accepted as environmental.
 2. **`reach` stage claims this book's families** — `("inner_sea_bestiary", "monsters")` and
    `("inner_sea_bestiary", "monster_abilities")` are live claim arms, not absences.
 3. **`v06_corpus_trap_report -- --audit`** — run inside the gate.
-4. **`v06_work_inventory`** — regenerated; the book's 190 units left `not-started`; a second run
-   changes only `generated_at`.
+4. **`v06_work_inventory`** — regenerated; the book's 190 units left `not-started` (38 `monster` +
+   152 `monster_ability` now `grounded`, 40 honestly `not-ingested`). Idempotence checked rather
+   than asserted: a second run was diffed against the first key by key, and
+   **`['generated_at']` is the only key that differs** — the run's own churn was then reverted, so
+   the committed artifact is the gate's.
 5. **Four-check wired-integration audit** — clean: the records are compiled tables, the generator
    re-reads and verifies every cited corpus line, the catalog serves them under a real wire code, and
    the frontend renders them (item 8 below).
