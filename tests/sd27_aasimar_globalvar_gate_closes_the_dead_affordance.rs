@@ -148,10 +148,11 @@ fn every_aasimar_alternate_really_replaces_a_standard_trait() {
         corpus.alternate_traits("Aasimar").iter().map(|record| record.data.key.clone()).collect();
     assert_eq!(
         alternates.len(),
-        11,
+        17,
         "ARG's nine Aasimar alternates + Inner Sea Races' two (`Aasimar ~ Crusading Magic`, \
-         `Aasimar ~ Lost Promise`). Aasimar's nine racial DEFAULTS above did not move and must \
-         not: ISR and HA contribute alternates only, no chassis"
+         `Aasimar ~ Lost Promise`) + Core Essentials' six heritages (SD-29 decisions.md §48, \
+         round 4). Aasimar's nine racial DEFAULTS above did not move and must not: ISR, HA and \
+         CE contribute alternates only, no chassis"
     );
 
     let mut checked = 0usize;
@@ -182,10 +183,13 @@ fn every_aasimar_alternate_really_replaces_a_standard_trait() {
         }
         checked += 1;
     }
-    // 9 ARG + Inner Sea Races' 2. The name above no longer carries the count,
-    // for `decisions.md §44.5`'s reason: a new book adds Aasimar alternates
-    // without the property changing.
-    assert_eq!(checked, 11);
+    // 9 ARG + Inner Sea Races' 2 + Core Essentials' 6 heritages. The name
+    // above no longer carries the count, for `decisions.md §44.5`'s reason: a
+    // new book adds Aasimar alternates without the property changing -- which
+    // round 4 is the third demonstration of, and this time the six new
+    // alternates each suppress THREE standard rows rather than one or two,
+    // exercising the loop above harder than any previous book did.
+    assert_eq!(checked, 17);
 
     // The worked case, spelled out: Celestial Crusader sets two flags and
     // removes both of the traits they name, and nothing else.
@@ -310,10 +314,11 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 267,
+        checked, 283,
         "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 68 + Horror Adventures' 41 \
-         selectable alternates (SD-29 decisions.md §44, §45, §47). The 158 this pin held until \
-         2026-08-12 was round 2's miss, not a smaller corpus"
+         + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
+         §47, §48). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
+         corpus"
     );
 }
 

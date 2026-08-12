@@ -815,6 +815,7 @@ fn main() {
             // Horror Adventures has no feats file this repo compiles either;
             // the arm exists for exhaustiveness, as `Isr`'s and `Ue`'s do.
             RuleSetId::Ha => "horror_adventures",
+            RuleSetId::Ce => "core_essentials",
             RuleSetId::Botd1 => "book_of_the_damned_volume_1",
             RuleSetId::Botd2 => "book_of_the_damned_volume_2",
         };

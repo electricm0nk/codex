@@ -215,8 +215,8 @@ fn the_pure_flag_table_agrees_with_the_disk_backed_resolver_for_every_alternate(
             checked += 1;
         }
     }
-    assert_eq!(checked, 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
-    assert_eq!(selectable_alternate_trait_keys().len(), 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(checked, 283, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(selectable_alternate_trait_keys().len(), 283, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// The three dependent rows named in this cycle's brief, confirmed by reading
@@ -248,14 +248,14 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .count();
     assert_eq!(
         all,
-        452,
+        516,
         "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 72 Inner Sea Races \
-         + 43 Horror Adventures rows"
+         + 43 Horror Adventures + 64 Core Essentials heritage rows"
     );
     assert_eq!(arg, 156, "ARG's 156 ingested race-trait records");
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
-    assert_eq!(selectable.len(), 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(selectable.len(), 283, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
     for dependent in ["Feral ~ Languages", "Scion of Humanity ~ Languages", "Saltbeard ~ Dwarf ~ Greed"] {
         assert!(!selectable.contains(dependent), "{dependent} must not be a menu item");
     }
@@ -302,7 +302,7 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
             checked += 1;
         }
     }
-    assert_eq!(checked, 452);
+    assert_eq!(checked, 516);
 }
 
 // ---------------------------------------------------------------------------
@@ -495,7 +495,7 @@ fn every_alternate_computes_on_its_own_race_without_an_unknown_key_diagnostic() 
             computed += 1;
         }
     }
-    assert_eq!(computed, 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(computed, 283, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// **The measurement behind this cycle's honesty claim**, re-derived rather

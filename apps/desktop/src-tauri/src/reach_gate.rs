@@ -550,6 +550,12 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("inner_sea_races", "inner_sea_races"),
     // SD-29 Epic 6 round 3 (race-trait lane, extend). Same again.
     ("horror_adventures", "horror_adventures"),
+    // SD-29 Epic 6 round 4 (race-trait lane, extend). Same again -- and note
+    // that this book id names a real corpus directory of its own only because
+    // Aasimar's and Tiefling's heritage traits belong to no other book; the
+    // book's shared racial-trait files are still attributed to `core_rulebook`
+    // and `beastiary` by `ingest_races`.
+    ("core_essentials", "core_essentials"),
     // SD-29 Epic 5 extend, round 2 (monster lane). Same again -- the corpus
     // directory and the book id are the same string for both volumes.
     ("book_of_the_damned_volume_1", "book_of_the_damned_volume_1"),
@@ -1007,6 +1013,21 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // omission -- `horror_adventures_alternate_racial_traits_reach_a_player`
         // asserts the full pass by exact count rather than leaving it unstated.
         ("horror_adventures", "race_traits") => Some(race_traits_reach("HA", "horror_adventures")),
+        // SD-29 Epic 6 round 4 (race-trait lane, extend, 2026-08-12,
+        // `decisions.md §48`). Core Essentials' 64 heritage records --
+        // Aasimar's 6 and Tiefling's 10 selectable heritages, plus the 48
+        // replacement rows those heritages grant -- served by exactly the two
+        // commands ARG's, APG's, Monster Codex's, ISR's and HA's claims run.
+        //
+        // **This is the first book in the lane whose records are majority
+        // `flagGranted` rather than `Alternate`, and the claim is therefore
+        // load-bearing in a way the earlier ones were not.** 48 of the 64 are
+        // reached only through the third arm of `race_traits_reach` -- the one
+        // that selects each alternate in turn and reads what comes in with it.
+        // A regression that broke the heritage grant link would leave the
+        // other five books' claims completely green and drop this one from 64
+        // to 16, which is exactly the granularity this claim exists to have.
+        ("core_essentials", "race_traits") => Some(race_traits_reach("CE", "core_essentials")),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -2669,6 +2690,67 @@ mod tests {
                  non-selectable rows (`Deep Jungle Halfling ~ Languages`, `... ~ Poison Use`) \
                  are granted by name from `Halfling ~ Deep Jungle`, so unlike ISR's \
                  `Human ~ Tribalistic Languages` they are reachable"
+            ),
+        }
+    }
+
+    /// Core Essentials' heritage traits reach a player, all 64 of them.
+    ///
+    /// SD-29 race-trait lane round 4 (`decisions.md §48`). This is the last
+    /// entry in the lane's 553-unit ceiling that is ordinary content, and it
+    /// is the only book whose records are **majority granted rather than
+    /// chosen**: 16 heritages a player picks and 48 replacement rows that
+    /// arrive with whichever heritage was picked.
+    ///
+    /// The count is asserted in both halves, not just in total, because the
+    /// two halves fail independently. Losing the heritage selectors would drop
+    /// the total to 0; losing the grant link derived from
+    /// `<race>_abilities_globalvar_subrace.lst` would drop it to 16 while
+    /// leaving 16 perfectly selectable records that change nothing on the
+    /// sheet -- the browse-only stub class `decisions.md §44.2` describes, and
+    /// the precise failure this book's shape invites.
+    #[test]
+    fn core_essentials_heritage_racial_traits_reach_a_player() {
+        let ce_traits = Family::new("core_essentials", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&ce_traits),
+            "the data/corpus scan must see data/corpus/core_essentials/race_trait/"
+        );
+        assert!(full_inventory().contains(&ce_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("core_essentials", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            64,
+            "Core Essentials' 64 ingested heritage-trait records, counted on disk: 16 selectors \
+             (6 Aasimar + 10 Tiefling) and the 48 `<Race> Racial Trait`-typed replacement rows \
+             they grant. races/skinwalker/ carries the same shape and is out of scope -- \
+             Skinwalker is not one of the 18 races this project models"
+        );
+
+        // The half that a broken grant link would silently leave standing.
+        let menu = crate::race_trait_picker::build_alternate_racial_traits();
+        let selectable: Vec<String> = menu
+            .races
+            .iter()
+            .flat_map(|race| race.alternates.iter())
+            .filter(|row| row.book == "CE")
+            .map(|row| row.key.clone())
+            .collect();
+        assert_eq!(
+            selectable.len(),
+            16,
+            "16 heritages are offered, not 64: the other 48 are granted by whichever heritage \
+             the player picks and are never menu rows. Got {selectable:?}"
+        );
+
+        match reach_of(&ce_traits).expect("CE race traits have a declared claim") {
+            Reach::Surfaced { .. } => {}
+            other => panic!(
+                "every CE heritage record must reach a player; got {other:?}. A shortfall here \
+                 of exactly 48 means the `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant \
+                 links derived from <race>_abilities_globalvar_subrace.lst stopped being \
+                 written by src/bin/ingest_race_traits.rs"
             ),
         }
     }

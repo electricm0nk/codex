@@ -888,6 +888,7 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Ha,
     RuleSetId::Botd1,
     RuleSetId::Botd2,
+    RuleSetId::Ce,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -915,6 +916,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Ha => "horror_adventures",
         RuleSetId::Botd1 => "book_of_the_damned_volume_1",
         RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+        RuleSetId::Ce => "core_essentials",
     }
 }
 
@@ -954,6 +956,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Ha => "horror_adventures",
         RuleSetId::Botd1 => "book_of_the_damned_volume_1",
         RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+        RuleSetId::Ce => "core_essentials",
     }
 }
 
@@ -2206,12 +2209,40 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             // `decisions.md §43.5`. Order matters: nothing the old rule
             // grounded can be demoted, because every record it grounds is
             // also in the loaded corpus.
-            if facts.race_trait_engine_book(unit) == Some(engine_book.as_str()) {
+            //
+            // **The observation grounds on its own; it is not additionally
+            // required to agree with the unit's own book.** This used to read
+            // `== Some(engine_book.as_str())`, which was indistinguishable
+            // from the rule above for every book whose `.lst` rows are filed
+            // under itself -- and silently wrong for `core_essentials`, the
+            // one book whose rows are routinely filed under a *different*
+            // book (`race_trait_engine_book`'s own doc comment says exactly
+            // that). While `core_essentials` had no compiled rule set the
+            // shared-library path above resolved `engine_book` to the real
+            // host and the equality held. SD-29's race-trait lane round 4 gave
+            // the book a rule set of its own, for the 64 heritage records that
+            // genuinely belong to it, and **155 Core Rulebook and Bestiary 1
+            // standard racial traits stored in that directory instantly
+            // dropped from `grounded` to
+            // `race_trait_record_loaded_but_never_applies`** -- an evidence
+            // token asserting the opposite of what the probe had just
+            // observed. Nothing about those records changed; only the book
+            // they are stored in gained an id.
+            //
+            // The probe's answer is the attribution, so it is reported as
+            // such: a record whose observed book differs from its own is
+            // credited to the observed one, exactly as a shared-library record
+            // was before its host book was named. (`decisions.md §48.3`.)
+            if let Some(observed) = facts.race_trait_engine_book(unit) {
                 return Verdict {
                     status: "grounded",
                     evidence: "race_trait_applied_by_the_race_corpus_the_app_loads".to_string(),
                     reason: None,
-                    engine_book: engine_book_field,
+                    engine_book: if own_engine_book == Some(observed) {
+                        engine_book_field
+                    } else {
+                        Some(observed.to_string())
+                    },
                 };
             }
             // FALLBACK: CRB's seven compiled races. Still consulted, because

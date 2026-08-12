@@ -36,9 +36,22 @@
 //! # Book attribution
 //!
 //! A row's `book` is the corpus directory its record was loaded from, which
-//! per `decisions.md §25.2` is its true source book. `core_essentials/` —
-//! PCGen's physical storage for shared race files — is never a book and never
-//! appears here. ARG contributes **zero** rows because it declares zero races
+//! per `decisions.md §25.2` is its true source book.
+//!
+//! **`core_essentials` is now one of those directories, and the reason is a
+//! narrow one.** PCGen uses `core_essentials/races/<race>/` as physical
+//! storage for the shared racial-trait files of races that *belong* to other
+//! books, and `ingest_races` correctly files those under `core_rulebook` and
+//! `beastiary` — so a Dwarf standard trait is still never attributed here to
+//! `core_essentials`, exactly as this note used to say of the whole
+//! directory. What changed (SD-29 race-trait lane, round 4) is that two files
+//! in that tree carry content belonging to no other book: Aasimar's and
+//! Tiefling's *heritage* traits, which no Paizo book outside this data set
+//! declares. Those 64 records are attributed to `core_essentials` because
+//! that is genuinely where they come from, and they contribute **zero**
+//! catalog rows here regardless — none is a racial default.
+//!
+//! ARG contributes **zero** rows because it declares zero races
 //! and zero racial defaults (`decisions.md §25`); that is asserted below
 //! rather than assumed.
 //!
@@ -72,6 +85,7 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     "monster_codex",
     "inner_sea_races",
     "horror_adventures",
+    "core_essentials",
 ];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -96,6 +110,16 @@ const BOOK_ISR: &str = "ISR";
 /// records are 41 alternates plus the two `Deep Jungle Halfling ~ …` rows the
 /// resolver classifies from their gates. SD-29 race-trait lane, round 3.
 const BOOK_HA: &str = "HA";
+/// Core Essentials. Loadable like ARG, APG, MC, ISR and HA, and like them it
+/// contributes no *catalog* rows here — its 64 records are Aasimar and
+/// Tiefling *heritage* traits, 16 selectable heritages plus the 48
+/// replacement rows those heritages grant, and none is a racial default. The
+/// book's ordinary standard racial traits are a different thing entirely and
+/// already reach this catalog under the `core_rulebook` and `beastiary` book
+/// ids, which is where `ingest_races` files them (`race_resolver`'s module
+/// doc: a record's book is the corpus directory it was loaded from).
+/// SD-29 race-trait lane, round 4.
+const BOOK_CE: &str = "CE";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
@@ -119,6 +143,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "monster_codex" => BOOK_MC.to_string(),
         "inner_sea_races" => BOOK_ISR.to_string(),
         "horror_adventures" => BOOK_HA.to_string(),
+        "core_essentials" => BOOK_CE.to_string(),
         other => other.to_string(),
     }
 }
@@ -569,14 +594,19 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 267,
+            alternates, 283,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
-             Races' 68 (§45) + Horror Adventures' 41 (§47). Two loaded records are not \
+             Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \
+             (§48). Two loaded records are not \
              alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
              `Human ~ Tribalistic Languages`, both of which set no replace flag, so \
-             `race_resolver::classify` leaves them `Unclassified`"
+             `race_resolver::classify` leaves them `Unclassified`. Core Essentials' other 48 \
+             records are outside it for a different and larger reason: they are \
+             `TraitRole::FlagGranted` replacement rows, granted by whichever heritage the \
+             player picks rather than chosen, so this book contributes 16 to this count and 64 \
+             to the loaded corpus"
         );
     }
 
