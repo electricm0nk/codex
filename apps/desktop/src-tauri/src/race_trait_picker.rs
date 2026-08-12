@@ -949,10 +949,10 @@ mod tests {
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 158,
+            total, 226,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
-             race-trait extend lane)"
+             race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -1046,8 +1046,10 @@ mod tests {
 
         assert_eq!(
             paged,
-            BTreeSet::from(["APG", "ARG", "MC"]),
-            "the books whose alternates carry a real page"
+            BTreeSet::from(["APG", "ARG", "ISR", "MC"]),
+            "the books whose alternates carry a real page. ISR joined with SD-29's race-trait \
+             lane round 2: all 68 of its alternates cite a real `SOURCEPAGE`, none the literal \
+             `p.xx` stand-in that `ingest_races.rs` filters out"
         );
         assert_eq!(
             pageless,
@@ -1179,7 +1181,10 @@ mod tests {
                 checked += 1;
             }
         }
-        assert_eq!(checked, 158, "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43)");
+        assert_eq!(
+            checked, 226,
+            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races (§45)"
+        );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
         // Aasimar is the worked case: its nine standard rows now declare the
@@ -1595,9 +1600,9 @@ mod tests {
         // ARG/CRB/Bestiary) never moves.
         let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
         let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        assert_eq!((standard, alternates), (173, 158));
+        assert_eq!((standard, alternates), (173, 226));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 331);
+        assert_eq!(checked, 399);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

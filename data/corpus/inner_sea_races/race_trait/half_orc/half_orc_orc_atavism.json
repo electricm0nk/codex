@@ -1,0 +1,121 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Half-Orc ~ Orc Atavism",
+    "name": "Orc Atavism",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfOrc_ReplaceAbilityScores",
+      "HalfOrc_ReplaceIntimidating",
+      "HalfOrc_ReplaceOrcFerocity"
+    ],
+    "description": "Some half-orcs have much stronger orc blood than human blood. Such half-orcs count as only half-orcs and orcs (not also humans) for any effect related to race. They gain a +2 bonus to Strength and a -2 penalty to one mental ability score of their choice. Finally, they gain the ferocity universal monster ability. This racial trait replaces the half-orc's usual racial ability score modifiers, as well as intimidating, orc blood, and orc ferocity.",
+    "source_page": "p.212",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Orc Atavism"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Orc Atavism],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceAbilityScores=true,HalfOrc_ReplaceIntimidating=true,HalfOrc_ReplaceOrcFerocity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-orcs have much stronger orc blood than human blood. Such half-orcs count as only half-orcs and orcs (not also humans) for any effect related to race. They gain a +2 bonus to Strength and a -2 penalty to one mental ability score of their choice. Finally, they gain the ferocity universal monster ability."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the half-orc's usual racial ability score modifiers, as well as intimidating, orc blood, and orc ferocity.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Orc Atavism"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "PCSTAT|INT|WIS|CHA"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Ferocity"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceAbilityScores|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceIntimidating|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceOrcFerocity|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "STR",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "STAT",
+          "%LIST",
+          "-2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 152,
+    "record_key": "Half-Orc ~ Orc Atavism"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1734,3 +1734,126 @@ gate result on the tree that shipped is worth more than two test-scope widenings
 their pins with their reasons, exactly as §44.2 did for the resolver's own module.~~ **Done in round
 1** — see the callout at the top of this section. **Round 2's first item is therefore the ingest
 itself**: `core_essentials`' 48 and `bestiary`'s 3, neither of which needs a new mechanism.
+
+## Decision 45 — Race-Trait Lane, extend: round 2 (2026-08-11, `sd29-racetrait-r2`, card `epic-6-race-trait-lane-extend`)
+
+Round 2 ingested **Inner Sea Races** end-to-end — 72 records, 71 of them grounded and reaching a
+player — and, before doing so, **corrected the successor queue §44.4 handed it.** The lane is still
+not dry and this round does not claim it is.
+
+### 45.1 §44.4's queue was backwards, and the correction is the round's most reusable output
+
+`§44.4` and `§44.5` closed round 1 by naming round 2's first item: *"`core_essentials`' 48 and
+`bestiary`'s 3, neither of which needs a new mechanism"*, with `inner_sea_races` and
+`horror_adventures` ranked behind them as the ones that *do* (a `RuleSetId` variant).
+
+**Both halves of that are wrong, and the shape of the error is worth more than the fix.** Round 1
+classified those books by what the *inventory* said they lacked (`no_compiled_rule_set_for_book` reads
+like a bigger obstacle than `shared_library_record_held_by_no_ingested_host`) rather than by what the
+*corpus rows* are. Re-derived this round, one row at a time, by the gate each row actually carries:
+
+| book | in-scope rows | `Racial Default` | sets a replace flag (→ `Alternate`) | positive-gated (→ `FlagGranted`) | no readable gate (→ `Unclassified`) |
+|---|---|---|---|---|---|
+| `inner_sea_races` | 72 | 0 | **68** | 2 | 2 |
+| `horror_adventures` | 43 + 1 | 0 | **42** | 0 | 2 |
+| `core_essentials` (subrace files) | 48 | 0 | **0** | 48 | 0 |
+| `bestiary` (`b1_abilities_race.lst`) | 3 | 0 | **0** | 0 | 3 |
+
+Command, run against the PCGen source tree rather than any doc — and **checked in**, so a successor
+round re-derives this rather than trusting the table:
+
+```bash
+python3 scripts/classify_race_trait_rows.py \
+  isr_abilities_race.lst ha_abilities_race.lst ha_abilities_race_oa.lst \
+  aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst b1_abilities_race.lst
+```
+
+It mirrors `race_resolver::classify`'s predicates and precedence (`<Race> Racial Default` →
+`Default`; `FACT:<Race>_Replace<Trait>|True` → `Alternate`; a *positive* `PREFACT`/`PREABILITY` →
+`FlagGranted`; otherwise `Unclassified`) and `ingest_race_traits::parse_row`'s `.MOD` and
+in-scope-race filters. Its output is quoted verbatim in `progress.md`. **This began as a scratchpad
+one-off and was checked in mid-round after a sibling agent's write clobbered the scratchpad file this
+section had just cited** — an ephemeral path is not a citation, and the derivation that redirected a
+whole round is worth reproducing.
+
+**Run it on a candidate book before committing a round to it.** That single step is what `§44.4`
+skipped, and it costs seconds.
+
+So:
+
+* **`inner_sea_races` and `horror_adventures` need no new mechanism at all.** A `RuleSetId` variant is
+  five one-line arms the compiler *forces* you to write; their rows are ordinary replace-flag
+  alternates that the picker serving ARG, APG and Monster Codex already handles unchanged.
+* **`core_essentials`' 48 and `bestiary`'s 3 are the mechanism-blocked ones.** The 48 are Aasimar and
+  Tiefling *subrace* traits, every one gated on
+  `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Subrace>` — a shape `classify` does not read — and
+  their 16 selector rows are not even `race_trait`-typed, so the ingest binary's parser skips them.
+  The 3 are Drow **Noble** traits, a race variant with no chassis, carrying only a negative
+  `!PREFACT` and therefore `Unclassified` by construction. Ingesting either set as-is would have
+  produced records that load and never apply: **precisely the stub §44.2 was written about.**
+
+**The general lesson, which is not about race traits.** A round-1 deferral note ranked four books by
+the inventory's *evidence token* — a statement about what the engine has compiled — when the question
+was what the *corpus rows* are. Those are different questions, and the cheaper-sounding token named
+the harder work. `§44.5` already recorded that "a deferral taken before the evidence lands is a
+prediction, not a decision"; this is the same finding one level up, and it is why this round re-derived
+the queue before working it rather than after.
+
+### 45.2 What landed
+
+* `RuleSetId::Isr` + `COMPILED_RULE_SETS` + `corpus_dir_for`/`rule_set_id` arms. The exhaustive match
+  did its designed job: adding the variant broke `v06_content_state_dump` until its arm was written.
+* One `BOOK_SOURCES` row in `ingest_race_traits.rs` — the whole per-book cost, as that binary's module
+  doc promises. 72 records at `data/corpus/inner_sea_races/race_trait/`, 0 PCGen-syntax leaks, 0
+  unresolved `DESC:` args, 51 out-of-scope rows across 31 unmodelled races counted and skipped.
+* `data/corpus/inner_sea_races/LICENSE.json`. **12 of the 72 descriptions were PI-redacted** by
+  `pi_screening` — far more than any rulebook this repo has ingested, and exactly what a
+  *campaign-setting* book should produce: Golarion nation and ethnicity names occur inside otherwise
+  mechanical prose. The redaction is schema-preserving, so the mechanical payload is untouched.
+* 68 rows in `ALTERNATE_TRAIT_REPLACE_FLAGS`, generated from the written records and re-derived from
+  them by the existing pin test. They add **13** distinct flags to the corpus's 77, not 68 — a second
+  book of alternates for the same 18 races mostly replaces standard traits ARG already replaced.
+* A reach claim `("inner_sea_races", "race_traits")`, an `OPEN_FINDINGS` + `UNREACHED_RECORD_FINDINGS`
+  pair for the one record that cannot be surfaced, and a claim test that pins the shortfall by exact
+  key in both directions.
+* `race_trait` grounded **336 → 407**; `not-started` **1,599 → 1,457**.
+
+### 45.3 The RED, and the stale-scope defect this round closed in its own binary
+
+Adding the book to `RACE_CORPUS_BOOKS` before adding the table rows reproduced §44.2's exact failure on
+purpose: `every_alternate_the_app_offers_is_one_the_engine_can_place` went RED naming 68 keys the
+picker offers and `pilot_compute` would refuse. Five further count pins went red with it. Every one was
+moved *with its reason*, none relaxed; the two `Unclassified` rows and the third alternate naming the
+truncated multi-flag gate are each pinned by exact key.
+
+`ingest_race_traits.rs`'s own `no_committed_arg_trait_description_leaks_pcgen_syntax` was found to be a
+**fourth** instance of the stale-hardcoded-roots defect (`§44.2`, `§44.5`): a test whose stated job is
+"no committed record leaks PCGen syntax" that loaded one hardcoded book root while `BOOK_SOURCES` had
+grown to three, and that would have stayed green through this ingest without ever reading it. It now
+derives its roots from `BOOK_SOURCES` and counts each book by name.
+
+### 45.4 The one record that does not reach, stated as a finding rather than rounded away
+
+`Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`) is ingested, visible, and never applies.
+Nothing upstream grants it: its row carries no gate of any kind, and
+`grep -o 'ABILITY:[^\t]*Tribalistic Languages' isr_abilities_race.lst` returns nothing where the same
+grep for `Junk Tinker ~ Skilled` one row-family over returns its granter. The alternate that owns it,
+`Human ~ Tribalistic` (`:210`), IS selectable and correctly fires `Human_ReplaceLanguages`, suppressing
+the standard `Human ~ Languages` row — and nothing replaces it. **An upstream data gap, not a wiring
+gap**, evidenced by the fact that the engine's half of the transaction demonstrably works. Its
+`OPEN_FINDINGS` entry names two candidate remedies, both new mechanisms.
+
+### 45.5 The remainder, re-derived (this is round 3's starting point)
+
+Round 2's own derivation reproduced round 1's `3,447 / 336 / 3,111` exactly before moving it, so the
+two rounds' figures are commensurable. See `progress.md` for the command and the full table. The
+genuinely ingestable remainder after this round is **95**, and its order is now the corrected one:
+
+| book | units | what it needs |
+|---|---|---|
+| `horror_adventures` | 44 | **no new mechanism** — a `RuleSetId` variant + a `BOOK_SOURCES` row, exactly this round's shape. 42 of its 44 are replace-flag alternates. One file is `PRECAMPAIGN`-gated on Occult Adventures |
+| `core_essentials` (Aasimar/Tiefling subraces) | 48 | a `PREABILITY`-grant mechanism **and** ingesting the 16 non-`race_trait`-typed subrace selector rows |
+| `bestiary` (Drow Noble) | 3 | a race-variant chassis; `Unclassified` by construction without one |
+
+Plus the residuals that are deliberately not gap: APG's 49 ARG-key collisions (`§39`), Monster Codex's
+`Oversized Goblin`, and now ISR's `Human ~ Tribalistic Languages`.

@@ -1,0 +1,112 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Half-Elf ~ Elf-Scorned",
+    "name": "Elf-Scorned",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "Defensive",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceElvenImmunities",
+      "HalfElf_ReplaceMultitalented"
+    ],
+    "description": "Many half-elves, especially half-drow and half-Ekujae, are rejected by their elven parents and feel nothing but hatred and fear toward their inhuman ancestors. They gain a +1 racial bonus on attack rolls and a +2 dodge bonus to AC against elves. This racial trait replaces elven immunities and multitalented.",
+    "source_page": "p.211",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Elf-Scorned"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialAttack.Special Attack.Defensive.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Elf-Scorned],[!PREFACT:1,ABILITIES,HalfElf_ReplaceElvenImmunities=true,HalfElf_ReplaceMultitalented=true]"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialDefensiveTrainingBonus|0"
+      },
+      {
+        "key": "DESCISPI",
+        "value": "YES"
+      },
+      {
+        "key": "DESC",
+        "value": "Many half-elves, especially half-drow and half-Ekujae, are rejected by their elven parents and feel nothing but hatred and fear toward their inhuman ancestors. They gain a +1 racial bonus on attack rolls and a +2 dodge bonus to AC against elves."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces elven immunities and multitalented.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Elf-Scorned"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on attack rolls and a +2 dodge bonus to AC against elves."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 dodge bonus to AC vs. elf humanoids)|RacialDefensiveTrainingBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against elf humanoids"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceElvenImmunities|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceMultitalented|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialDefensiveTrainingBonus",
+          "2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 123,
+    "record_key": "Half-Elf ~ Elf-Scorned"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -700,10 +700,12 @@ function CreateCharacterFields(props: {
           </div>
 
           {/* Alternate racial traits, from every book
-              `race_catalog::RACE_CORPUS_BOOKS` loads — the Advanced Race
-              Guide, Monster Codex and the Advanced Player's Guide today.
-              This heading named ARG alone until SD-29's race-trait lane;
-              it stopped being true the moment a second book contributed.
+              `race_catalog::RACE_CORPUS_BOOKS` loads — whichever those are.
+              This comment named ARG alone until SD-29's race-trait lane, then
+              named three books, and each list went stale the moment the next
+              book landed (four, at Inner Sea Races). It names none now, on
+              purpose: the surface is book-agnostic and the backing list is one
+              `grep RACE_CORPUS_BOOKS` away.
 
               Every fact rendered here comes from the backend: which traits
               exist, what each replaces, and which are locked out by the

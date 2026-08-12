@@ -69,4 +69,11 @@ pub enum RuleSetId {
     /// kinds of thing -- a compiled monster table and a disk-served race-trait
     /// family -- and `COMPILED_RULE_SETS` answers for both.
     MonsterCodex,
+    /// Inner Sea Races. SD-29 Epic 6 round 2 (race-trait lane, extend). Like
+    /// `MonsterCodex`, its one ingested family is `race_trait`, served off disk
+    /// from `data/corpus/inner_sea_races/race_trait/` rather than from a
+    /// compiled table (`decisions.md §24` rules out the formula interpreter a
+    /// compiled race-trait table would need). It is the largest single
+    /// alternate-racial-trait contribution after ARG's.
+    Isr,
 }

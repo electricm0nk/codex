@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Half-Orc ~ War-Leader",
+    "name": "War-Leader",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfOrc_ReplaceVision",
+      "HalfOrc_ReplaceOrcFerocity"
+    ],
+    "description": "Some orcs seek out human mates in hopes of birthing intelligent leaders for their interminable war efforts. When nature and luck smile upon this endeavor and a half-orc child shows cunning, that child is raised with many harrowing opportunities to learn how to best lead on the battlefield. Such half-orcs gain a +2 bonus on Diplomacy and Profession (soldier) checks as well as to their Leadership score (for the purpose of the Leadership feat). Armies they control in mass combat gain a +1 bonus to Morale. (See Pathfinder RPG Ultimate Campaign.) This racial trait replaces darkvision and orc ferocity.",
+    "source_page": "p.212",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ War-Leader"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ War-Leader],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceVision=true,HalfOrc_ReplaceOrcFerocity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some orcs seek out human mates in hopes of birthing intelligent leaders for their interminable war efforts. When nature and luck smile upon this endeavor and a half-orc child shows cunning, that child is raised with many harrowing opportunities to learn how to best lead on the battlefield. Such half-orcs gain a +2 bonus on Diplomacy and Profession (soldier) checks as well as to their Leadership score (for the purpose of the Leadership feat). Armies they control in mass combat gain a +1 bonus to Morale. (See Pathfinder RPG Ultimate Campaign.)"
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces darkvision and orc ferocity.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ War-Leader"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.212"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|Armies you control in mass combat gain a +1 bonus to Morale."
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceVision|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceOrcFerocity|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Diplomacy,Profession (Soldier)",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "LeadershipScore",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 156,
+    "record_key": "Half-Orc ~ War-Leader"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

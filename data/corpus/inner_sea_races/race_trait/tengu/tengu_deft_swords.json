@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Tengu ~ Deft Swords",
+    "name": "Deft Swords",
+    "race_key": "Tengu",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tengu Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Tengu_ReplaceNaturalWeapon",
+      "Tengu_ReplaceSneaky"
+    ],
+    "description": "Some tengu learn dazzling blade techniques that allow them to use their weapons to protect against combat maneuvers. They gain a +2 dodge bonus to CMD while wielding a swordlike weapon. This racial trait replaces natural weapon and sneaky.",
+    "source_page": "p.216",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tengu ~ Deft Swords"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tengu Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Deft Swords],[!PREABILITY:1,CATEGORY=Special Ability,Tengu_ReplaceNaturalWeapon=True,Tengu_ReplaceSneaky=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some tengu learn dazzling blade techniques that allow them to use their weapons to protect against combat maneuvers. They gain a +2 dodge bonus to CMD while wielding a swordlike weapon."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces natural weapon and sneaky.|!PREABILITY:1,CATEGORY=Special Ability,Tengu ~ Deft Swords"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.216"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 dodge bonus to CMD while wielding a swordlike weapon."
+      },
+      {
+        "key": "FACT",
+        "value": "Tengu_ReplaceNaturalWeapon|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Tengu_ReplaceSneaky|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1367,
+    "record_key": "Tengu ~ Deft Swords"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

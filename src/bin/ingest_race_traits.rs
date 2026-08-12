@@ -134,6 +134,19 @@ const BOOK_SOURCES: &[BookSource] = &[
         lst_relative: "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
     },
+    // Inner Sea Races, SD-29's race-trait lane round 2. The single largest
+    // alternate-racial-trait contribution after ARG's own: 68 of its 72
+    // in-scope rows set a `<Race>_Replace<Trait>` flag, so they are
+    // `TraitRole::Alternate` and reach a player through the picker that
+    // already serves ARG, APG and Monster Codex. Nothing here is a new
+    // mechanism -- which is the correction this round records against
+    // `decisions.md §44.4`, whose successor queue put this book behind two
+    // that DO need one.
+    BookSource {
+        corpus_book: "inner_sea_races",
+        lst_relative: "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        pcgen_book_relative: "pathfinder/paizo/campaign_setting/inner_sea_races",
+    },
 ];
 
 /// The 18 in-scope races (`decisions.md §25.3`), spelled exactly as the corpus
@@ -547,9 +560,35 @@ fn leaked_pcgen_syntax(text: &str) -> Option<&'static str> {
     None
 }
 
+/// True when a row's leading field marks it a PCGen `.MOD` — an *update* to a
+/// record declared elsewhere, not a declaration.
+///
+/// Only field 0 decides. `.MOD` occurring inside a token *value* (PCGen writes
+/// `var("STAT.3.MOD...")`) is not a mod row, which is why this reads the
+/// leading field rather than searching the line. That distinction is
+/// `v06_corpus_trap_report`'s own `mod-record` trap, whose stated risk is
+/// exactly this: "counting these as declarations inflates a record estimate".
+fn is_mod_row(fields: &[&str]) -> bool {
+    fields.first().is_some_and(|f| f.contains(".MOD"))
+}
+
 fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
     let fields = split_fields(line);
     if fields.is_empty() {
+        return None;
+    }
+
+    // A `.MOD` row declares nothing, so it can never become a record. ARG and
+    // Monster Codex never exercised this: their `.MOD` rows carry no `TYPE:`
+    // at all, so the race-key check below already rejected them and the guard
+    // looked unnecessary. **Inner Sea Races is the counter-example** —
+    // `isr_abilities_race.lst` carries 618 `.MOD` rows, 5 of which DO carry a
+    // `<Race> Racial Trait` TYPE and so reach this far. All 5 name races this
+    // project does not model, so they were filtered one step later by
+    // `IN_SCOPE_RACES` and nothing wrong shipped; that is luck, not a rule, and
+    // the next book's `.MOD` row for a modelled race would have been written
+    // out as though it were a new alternate racial trait.
+    if is_mod_row(&fields) {
         return None;
     }
 
@@ -1031,6 +1070,53 @@ mod tests {
         );
     }
 
+    /// A `.MOD` row updates a record declared elsewhere; it declares nothing
+    /// and must never become one.
+    ///
+    /// **This is not hypothetical and it is not covered by the TYPE check.**
+    /// ARG's and Monster Codex's `.MOD` rows carry no `TYPE:` at all, so
+    /// `rows_without_a_racial_trait_type_are_not_racial_traits` rejected them
+    /// for a different reason and this property was never exercised. Inner Sea
+    /// Races is the counter-example: `isr_abilities_race.lst` has 618 `.MOD`
+    /// rows, and 5 of them DO carry a `<Race> Racial Trait` TYPE. Those 5 name
+    /// races this project does not model, so `IN_SCOPE_RACES` filtered them one
+    /// step later and nothing wrong shipped — but that is luck, and the next
+    /// book's `.MOD` row for a modelled race would have been written out as a
+    /// new alternate racial trait.
+    ///
+    /// The 5 are `isr_abilities_race.lst:650-654`, all one record
+    /// (`Geneiekin ~ Mostly Human.MOD`) re-typed for Ifrit, Oread, Sylph,
+    /// Undine and Suli. Re-derived by splitting each row on tabs, requiring
+    /// `.MOD` in field 0, and requiring a `TYPE:` component that *ends in*
+    /// `" Racial Trait"` — a substring grep for `Racial Trait` over the same
+    /// rows answers **6**, because it also matches a `.MOD` row whose own name
+    /// is `Changeling ~ Hag Racial Trait`. Different predicate, different
+    /// number; the one that matters here is the TYPE component, because that
+    /// is what `parse_row` reads.
+    #[test]
+    fn a_mod_row_declares_nothing_even_when_it_carries_a_racial_trait_type() {
+        let modded = concat!(
+            "Dwarf ~ Greed.MOD\t",
+            "CATEGORY:Special Ability\t",
+            "TYPE:RacialTraits.Dwarf Racial Trait.SpecialQuality\t",
+            "SOURCEPAGE:p.10",
+        );
+        // The TYPE check alone would have accepted this row: it names a
+        // modelled race and it is well-formed. Only the `.MOD` guard rejects
+        // it, which is the whole point of asserting it separately.
+        assert!(is_mod_row(&split_fields(modded)));
+        assert!(parse_row(23, modded).is_none(), "a .MOD row must never produce a record");
+
+        // ...and `.MOD` inside a token VALUE is not a mod row. PCGen writes
+        // `var("STAT.3.MOD")` in formulas; only field 0 decides.
+        let value_mod = concat!(
+            "Sharp Senses\tKEY:Dwarf ~ Sharp Senses\tTYPE:Dwarf Racial Trait\t",
+            "BONUS:SKILL|Perception|var(\"STAT.3.MOD\")",
+        );
+        assert!(!is_mod_row(&split_fields(value_mod)));
+        assert!(parse_row(1, value_mod).is_some(), "a formula containing .MOD is not a mod row");
+    }
+
     #[test]
     fn only_true_valued_replace_facts_count_as_settings() {
         // `FACT:` fields that are not replace flags, and replace flags set to
@@ -1164,42 +1250,84 @@ mod tests {
     }
 
     /// The property the player actually experiences: nothing PCGen-shaped
-    /// survives into a served description. Scoped to the one book this
-    /// binary writes.
+    /// survives into a served description.
+    ///
+    /// **This used to load one hardcoded book root** — `advanced_race_guide` —
+    /// while [`BOOK_SOURCES`] had grown to three. That is the identical
+    /// stale-hardcoded-roots defect SD-29 `decisions.md §44.2` and `§44.5`
+    /// found in `race_resolver`'s test module and in two integration tests: a
+    /// test whose stated job is "no committed record leaks" that cannot see
+    /// two thirds of the committed records, and that stays green through any
+    /// number of new books precisely because it cannot see them. It now
+    /// derives its roots from `BOOK_SOURCES`, so adding a book to that table
+    /// automatically widens this guard instead of silently escaping it.
     #[test]
-    fn no_committed_arg_trait_description_leaks_pcgen_syntax() {
+    fn no_committed_trait_description_leaks_pcgen_syntax_in_any_declared_book() {
         use codex::rules_core::shape_b_v1::CorpusRecordV1;
 
-        let trait_root = PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus/advanced_race_guide/race_trait");
-        let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
-            .expect("race_trait dir must exist")
-            .filter_map(Result::ok)
-            .map(|e| e.path())
-            .collect();
-        race_dirs.sort();
+        // Per-book expected counts, re-derived on disk by this test itself.
+        // Stated as a table so a book whose ingest silently stops writing
+        // fails here by name rather than by a total that still adds up.
+        let expected: BTreeMap<&str, usize> =
+            [("advanced_race_guide", 156usize), ("monster_codex", 5), ("inner_sea_races", 72)]
+                .into_iter()
+                .collect();
+        assert_eq!(
+            expected.len(),
+            BOOK_SOURCES.len(),
+            "every book this binary writes must be counted here"
+        );
 
-        let mut checked = 0usize;
-        let mut with_description = 0usize;
-        for race_dir in race_dirs {
-            let mut files: Vec<PathBuf> =
-                fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
-            files.sort();
-            for path in files {
-                let record: CorpusRecordV1<RaceTraitCacheData> =
-                    serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
-                checked += 1;
-                let Some(desc) = record.data.description.as_deref() else { continue };
-                with_description += 1;
-                assert_eq!(
-                    leaked_pcgen_syntax(desc),
-                    None,
-                    "{path:?}: served description carries PCGen syntax: {desc}"
-                );
-                assert_eq!(desc.trim(), desc, "{path:?}: served description has stray edge whitespace");
+        let mut total = 0usize;
+        for book in BOOK_SOURCES {
+            let trait_root =
+                PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(book.corpus_book).join("race_trait");
+            let mut race_dirs: Vec<PathBuf> = fs::read_dir(&trait_root)
+                .unwrap_or_else(|e| panic!("{trait_root:?} must exist for {}: {e}", book.corpus_book))
+                .filter_map(Result::ok)
+                .map(|e| e.path())
+                .collect();
+            race_dirs.sort();
+
+            let mut checked = 0usize;
+            let mut with_description = 0usize;
+            for race_dir in race_dirs {
+                let mut files: Vec<PathBuf> =
+                    fs::read_dir(&race_dir).unwrap().filter_map(Result::ok).map(|e| e.path()).collect();
+                files.sort();
+                for path in files {
+                    let record: CorpusRecordV1<RaceTraitCacheData> =
+                        serde_json::from_str(&fs::read_to_string(&path).unwrap()).unwrap();
+                    checked += 1;
+                    let Some(desc) = record.data.description.as_deref() else { continue };
+                    with_description += 1;
+                    assert_eq!(
+                        leaked_pcgen_syntax(desc),
+                        None,
+                        "{path:?}: served description carries PCGen syntax: {desc}"
+                    );
+                    assert_eq!(desc.trim(), desc, "{path:?}: served description has stray edge whitespace");
+                }
             }
+            assert_eq!(
+                checked,
+                expected[book.corpus_book],
+                "{} record count on disk",
+                book.corpus_book
+            );
+            // Every record carries prose. A redacted one carries the PI marker
+            // rather than nothing, so this holds for Inner Sea Races' 12
+            // redactions too — which is the point of a schema-preserving
+            // redaction and is worth asserting rather than assuming.
+            assert_eq!(
+                with_description,
+                checked,
+                "{}: every record must carry a description",
+                book.corpus_book
+            );
+            total += checked;
         }
-        assert_eq!(checked, 156, "156 ARG alternate racial trait records");
-        assert_eq!(with_description, 156, "every one of them carries a DESC:");
+        assert_eq!(total, 233, "156 ARG + 5 Monster Codex + 72 Inner Sea Races");
     }
 
     #[test]

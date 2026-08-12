@@ -64,8 +64,14 @@ use crate::authoring_workbench::codex_repo_root;
 /// over exactly the books this catalog actually searches — including a book
 /// that is searched and contributes nothing (ARG), which is a measured zero
 /// rather than an omission.
-pub(crate) const RACE_CORPUS_BOOKS: &[&str] =
-    &["core_rulebook", "beastiary", "advanced_race_guide", "advanced_players_guide", "monster_codex"];
+pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
+    "core_rulebook",
+    "beastiary",
+    "advanced_race_guide",
+    "advanced_players_guide",
+    "monster_codex",
+    "inner_sea_races",
+];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
 /// form, identical to the ones `equipment_catalog.rs` and `spell_catalog.rs`
@@ -79,6 +85,11 @@ const BOOK_APG: &str = "APG";
 /// declares none. Its five records are all alternates, which reach a player
 /// through `race_trait_picker` instead. See SD-29 `decisions.md §43`.
 const BOOK_MC: &str = "MC";
+/// Inner Sea Races. Loadable like ARG, APG and MC, and like them it
+/// contributes no *catalog* rows — it declares no racial-default trait. Its 72
+/// records are 68 alternates plus 4 rows the resolver classifies from their
+/// gates. SD-29 race-trait lane, round 2.
+const BOOK_ISR: &str = "ISR";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
@@ -100,6 +111,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "advanced_race_guide" => BOOK_ARG.to_string(),
         "advanced_players_guide" => BOOK_APG.to_string(),
         "monster_codex" => BOOK_MC.to_string(),
+        "inner_sea_races" => BOOK_ISR.to_string(),
         other => other.to_string(),
     }
 }
@@ -545,11 +557,13 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 158,
+            alternates, 226,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
-             Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`). Monster \
-             Codex's 5th record, `Oversized Goblin`, is not an alternate at all -- it sets no \
-             replace flag, so `race_resolver::classify` leaves it `Unclassified`"
+             Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
+             Races' 68 (§45). Two loaded records are not alternates at all and are correctly \
+             outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
+             `Human ~ Tribalistic Languages`, both of which set no replace flag, so \
+             `race_resolver::classify` leaves them `Unclassified`"
         );
     }
 

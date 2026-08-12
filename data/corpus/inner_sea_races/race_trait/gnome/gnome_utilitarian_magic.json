@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Gnome ~ Utilitarian Magic",
+    "name": "Utilitarian Magic",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceGnomeMagic"
+    ],
+    "description": "Some gnomes develop practical magic to assist them with their obsessive projects. These gnomes add 1 to the DC of any saving throws against transmutation spells they cast. If their Intelligence score is 11 or higher, they also gain the following spell-like abilities: 1/day--mage hand, open/close, prestidigitation, and unseen servant. The DC for these spells is equal to 10 + the spell's level + the gnome's Intelligence modifier. This racial trait replaces gnome magic.",
+    "source_page": "p.211",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Utilitarian Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Vivacious],[!PREFACT:1,ABILITIES,Gnome_ReplaceGnomeMagic=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gnomes develop practical magic to assist them with their obsessive projects. These gnomes add 1 to the DC of any saving throws against transmutation spells they cast. If their Intelligence score is 11 or higher, they also gain the following spell-like abilities: 1/day--mage hand, open/close, prestidigitation, and unseen servant. The DC for these spells is equal to 10 + the spell's level + the gnome's Intelligence modifier."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces gnome magic.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Utilitarian Magic"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Mage Hand|Racial SLA ~ Open/Close|Racial SLA ~ Prestidigitation|Racial SLA ~ Unseen Servant|PRESTAT:1,INT=11"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceGnomeMagic|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "DC",
+          "SCHOOL.Transmutation",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialSLA_MageHand_DCMod,RacialSLA_OpenClose_DCMod,RacialSLA_Prestidigitation_DCMod,RacialSLA_UnseenServant_DCMod",
+          "INT-CHA",
+          "TYPE=Base"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 99,
+    "record_key": "Gnome ~ Utilitarian Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

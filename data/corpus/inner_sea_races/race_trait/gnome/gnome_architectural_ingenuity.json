@@ -1,0 +1,104 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Gnome ~ Architectural Ingenuity",
+    "name": "Architectural Ingenuity",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceKeenSenses",
+      "Gnome_ReplaceObsessive"
+    ],
+    "description": "Some gnomes demonstrate incredible talent for building and adjusting structures. These gnomes gain a +2 racial bonus on Knowledge (engineering) checks and on Craft and Perception checks related to structures (including structural traps). This racial trait replaces keen senses and obsessive.",
+    "source_page": "p.211",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Architectural Ingenuity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Architectural Ingenuity],[!PREFACT:1,ABILITIES,Gnome_ReplaceKeenSenses=true,Gnome_ReplaceObsessive=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gnomes demonstrate incredible talent for building and adjusting structures. These gnomes gain a +2 racial bonus on Knowledge (engineering) checks and on Craft and Perception checks related to structures (including structural traps)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses and obsessive.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Architectural Ingenuity"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+2 racial bonus on Craft checks related to structures (including structural traps)."
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceKeenSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceObsessive|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Perception=related to structures",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Knowledge (Engineering)",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 96,
+    "record_key": "Gnome ~ Architectural Ingenuity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

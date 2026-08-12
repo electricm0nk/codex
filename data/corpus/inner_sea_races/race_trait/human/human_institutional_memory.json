@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Human ~ Institutional Memory",
+    "name": "Institutional Memory",
+    "race_key": "Human",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Human Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Human_ReplaceSkilled"
+    ],
+    "description": "Humans rely on their institutions to remember the distant past and to preserve their own memories for the distant future. They gain a +4 racial bonus on Knowledge checks to answer questions about any organizations, guilds, or religions to which they belong, and they can attempt such skill checks untrained. This racial trait replaces skilled.",
+    "source_page": "p.214",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Human ~ Institutional Memory"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Human Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Human ~ Institutional Memory],[!PREFACT:1,ABILITIES,Human_ReplaceSkilled=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Humans rely on their institutions to remember the distant past and to preserve their own memories for the distant future. They gain a +4 racial bonus on Knowledge checks to answer questions about any organizations, guilds, or religions to which they belong, and they can attempt such skill checks untrained."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces skilled.|!PREABILITY:1,CATEGORY=Special Ability,Human ~ Institutional Memory"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.214"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SkillBonus|+4 racial bonus on Knowledge checks to answer questions about any organizations, guilds, or religions to which you belong, and you can attempt such skill checks untrained."
+      },
+      {
+        "key": "FACT",
+        "value": "Human_ReplaceSkilled|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 205,
+    "record_key": "Human ~ Institutional Memory"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

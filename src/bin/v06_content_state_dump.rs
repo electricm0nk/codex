@@ -809,6 +809,9 @@ fn main() {
             RuleSetId::Upsi => "ultimate_psionics",
             RuleSetId::BonusBestiary => "bonus_bestiary",
             RuleSetId::MonsterCodex => "monster_codex",
+            // Inner Sea Races has no feats file this repo compiles either; the
+            // arm exists for exhaustiveness, exactly as `Ue`'s above does.
+            RuleSetId::Isr => "inner_sea_races",
         };
         let records = table.entries.len();
         let wired_here = table

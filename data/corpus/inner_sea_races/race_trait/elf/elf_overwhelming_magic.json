@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Elf ~ Overwhelming Magic",
+    "name": "Overwhelming Magic",
+    "race_key": "Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Elf_ReplaceElvenMagic",
+      "Elf_ReplaceWeaponFamiliarity"
+    ],
+    "description": "Some elves obsess over the fundamentals of magic, training for decades to add layers of potent spellwork before they ever begin practicing true spells. This builds a foundation that makes their magic increasingly difficult to resist. These elves gain Spell Focus as a bonus feat. This racial trait replaces elven magic and weapon familiarity.",
+    "source_page": "p.211",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Overwhelming Magic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Overwhelming Magic],[!PREFACT:1,ABILITIES,Elf_ReplaceElvenMagic=true,Elf_ReplaceWeaponFamiliarity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some elves obsess over the fundamentals of magic, training for decades to add layers of potent spellwork before they ever begin practicing true spells. This builds a foundation that makes their magic increasingly difficult to resist. These elves gain Spell Focus as a bonus feat."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces elven magic and weapon familiarity.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Overwhelming Magic"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "SCHOOLS|ALL"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Spell Focus (%LIST)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.211"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceElvenMagic|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceWeaponFamiliarity|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 65,
+    "record_key": "Elf ~ Overwhelming Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

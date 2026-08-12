@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T22:08:40Z",
+  "data": {
+    "key": "Tiefling ~ Light from the Darkness",
+    "name": "Light from the Darkness",
+    "race_key": "Tiefling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Tiefling Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Tiefling_ReplaceSpellLikeAbility"
+    ],
+    "description": "Tieflings who deny the evil of their heritage to go on to become heroes refuse to use the dark magic of their blood, but their struggle grants them uncanny resilience against evil's touch. As long as they retain a good alignment, they gain the aasimar's incorruptible alternate racial trait (Advanced Race Guide). This racial trait replaces the spell-like ability racial trait.",
+    "source_page": "p.217",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Tiefling ~ Light from the Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Tiefling Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Light from the Darkness],[!PREFACT:1,ABILITIES,Tiefling_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Tieflings who deny the evil of their heritage to go on to become heroes refuse to use the dark magic of their blood, but their struggle grants them uncanny resilience against evil's touch. As long as they retain a good alignment, they gain the aasimar's incorruptible alternate racial trait (Advanced Race Guide)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Tiefling ~ Light from the Darkness"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Incorruptible|PREALIGN:LG,NG,CG"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.217"
+      },
+      {
+        "key": "FACT",
+        "value": "Tiefling_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 1540,
+    "record_key": "Tiefling ~ Light from the Darkness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
