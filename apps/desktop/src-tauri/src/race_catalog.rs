@@ -71,6 +71,7 @@ pub(crate) const RACE_CORPUS_BOOKS: &[&str] = &[
     "advanced_players_guide",
     "monster_codex",
     "inner_sea_races",
+    "horror_adventures",
 ];
 
 /// Which ingested book a catalog entry came from. Short codes are the wire
@@ -90,6 +91,11 @@ const BOOK_MC: &str = "MC";
 /// records are 68 alternates plus 4 rows the resolver classifies from their
 /// gates. SD-29 race-trait lane, round 2.
 const BOOK_ISR: &str = "ISR";
+/// Horror Adventures. Loadable like ARG, APG, MC and ISR, and like them it
+/// contributes no *catalog* rows — it declares no racial-default trait. Its 43
+/// records are 41 alternates plus the two `Deep Jungle Halfling ~ …` rows the
+/// resolver classifies from their gates. SD-29 race-trait lane, round 3.
+const BOOK_HA: &str = "HA";
 
 /// Every book code this catalog can emit. ARG is a *loadable* book here but
 /// contributes no rows — see this module's doc comment.
@@ -112,6 +118,7 @@ pub(crate) fn book_code(book_id: &str) -> String {
         "advanced_players_guide" => BOOK_APG.to_string(),
         "monster_codex" => BOOK_MC.to_string(),
         "inner_sea_races" => BOOK_ISR.to_string(),
+        "horror_adventures" => BOOK_HA.to_string(),
         other => other.to_string(),
     }
 }
@@ -545,7 +552,12 @@ mod tests {
     #[test]
     fn alternate_only_books_contribute_no_catalog_rows_but_are_loaded_and_counted() {
         let response = build_race_catalog();
-        for book in [BOOK_ARG, BOOK_APG, BOOK_MC] {
+        // ISR and HA belong in this loop for the same reason ARG/APG/MC do:
+        // each is loaded and each declares no racial DEFAULT trait. Round 2
+        // added ISR's records without adding it here, so the loop was one book
+        // narrower than the list it is a statement about; round 3 adds both
+        // rather than leaving a gap it can see (`decisions.md §44.5`).
+        for book in [BOOK_ARG, BOOK_APG, BOOK_MC, BOOK_ISR, BOOK_HA] {
             assert_eq!(
                 response.entries.iter().filter(|e| e.book == book).count(),
                 0,
@@ -557,10 +569,11 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 226,
+            alternates, 267,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
-             Races' 68 (§45). Two loaded records are not alternates at all and are correctly \
+             Races' 68 (§45) + Horror Adventures' 41 (§46). Two loaded records are not \
+             alternates at all and are correctly \
              outside this count: Monster Codex's `Oversized Goblin` and Inner Sea Races' \
              `Human ~ Tribalistic Languages`, both of which set no replace flag, so \
              `race_resolver::classify` leaves them `Unclassified`"

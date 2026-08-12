@@ -156,6 +156,22 @@ pub struct RaceTraitRecord {
     /// [`TraitRole::FlagGranted`] rows that arrive through the positive
     /// `PREFACT` gate instead.
     pub granted_by_trait_key: Option<String>,
+    /// True when this record's `description` was replaced by the PI marker at
+    /// ingest time (`CorpusRecordV1::pi_field == Some("description")` and
+    /// `pi_marker == Some("redacted")`).
+    ///
+    /// **This field exists because the redaction was being defeated on the
+    /// shipped surface.** `pi_screening` redacts `data.description`, but
+    /// [`RaceTraitRecord::render_description`] renders from the record's
+    /// `DESC:` **raw tokens**, which hold the upstream prose verbatim — so
+    /// every Inner Sea Races record whose description was redacted for naming
+    /// a Golarion place was nevertheless rendering that place name into the
+    /// Race Traits panel. Found by SD-29's race-trait lane round 3
+    /// (`decisions.md §46`) when round 2's own RED gate was reproduced; the
+    /// redaction had been live and ineffective on 12 records since round 2.
+    /// A redacted record now serves its marker instead of re-rendering the
+    /// text the screen exists to withhold.
+    pub description_redacted: bool,
     pub data: RaceTraitCacheData,
     pub source_path: String,
     pub source_line: u32,
@@ -271,6 +287,18 @@ impl RaceTraitRecord {
     /// Falls back to the stored description for a record carrying no `DESC:`
     /// token, so this never returns less than the record already shipped.
     pub fn render_description(&self, values: &PcgenDisplayValues) -> RenderedPcgenDesc {
+        // A PI-redacted record serves its stored marker and is never rendered
+        // from its raw `DESC:` tokens. Those tokens hold the upstream prose
+        // verbatim, so rendering them would put back exactly the Product
+        // Identity the ingest-time screen removed -- which is what this
+        // surface was doing for 12 Inner Sea Races records between SD-29's
+        // race-trait rounds 2 and 3. See [`RaceTraitRecord::description_redacted`].
+        if self.description_redacted {
+            return RenderedPcgenDesc {
+                text: self.data.description.clone().unwrap_or_default(),
+                dropped_args: Vec::new(),
+            };
+        }
         let tokens: Vec<&str> = self
             .data
             .raw_tokens
@@ -581,6 +609,9 @@ impl RaceCorpus {
                 // Cross-record, so not knowable here; filled by
                 // `load_race_corpus`'s post-load pass.
                 granted_by_trait_key: None,
+                description_redacted: record.pi_field.as_deref() == Some("description")
+                    && record.pi_marker.as_deref()
+                        == Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED),
                 source_path,
                 source_line,
                 data: record.data,
@@ -924,10 +955,10 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 /// # What the values are
 ///
 /// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
-/// all 226 records [`RaceCorpus::alternate_traits`] classifies as
+/// all 267 records [`RaceCorpus::alternate_traits`] classifies as
 /// [`TraitRole::Alternate`] across the 18 in-scope races — ARG's 153, Monster
-/// Codex's 4, the Advanced Player's Guide's 1 and Inner Sea Races' 68, the
-/// last three landed by SD-29's race-trait lane. The three records that are *not* standalone
+/// Codex's 4, the Advanced Player's Guide's 1, Inner Sea Races' 68 and Horror
+/// Adventures' 41, the last four landed by SD-29's race-trait lane. The three records that are *not* standalone
 /// choices — `Feral ~ Languages`, `Scion of Humanity ~ Languages` and
 /// `Saltbeard ~ Dwarf ~ Greed`, all three [`TraitRole::FlagGranted`] — are
 /// deliberately absent: a player never selects them, they are granted by the
@@ -1253,6 +1284,79 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Tiefling ~ Bullying", &["Tiefling_ReplaceSkilled"]),
     ("Tiefling ~ Light from the Darkness", &["Tiefling_ReplaceSpellLikeAbility"]),
     ("Tiefling ~ Pass for Human", &["Tiefling_ReplaceType", "Tiefling_ReplaceLanguages"]),
+
+    // ================= Horror Adventures =================
+    // SD-29 race-trait lane, round 3. 41 of the book's 43 in-scope rows in
+    // `ha_abilities_race.lst` set a `<Race>_Replace<Trait>` flag and are
+    // therefore `TraitRole::Alternate`; every value below is
+    // `RaceTraitCacheData::sets_replace_flags` read verbatim off
+    // `data/corpus/horror_adventures/race_trait/`, and
+    // `the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate`
+    // re-derives all 41 from those records rather than trusting this block.
+    //
+    // The other 2 rows are deliberately absent and are NOT a shortfall:
+    // `Deep Jungle Halfling ~ Languages` and `Deep Jungle Halfling ~ Poison
+    // Use` are `TraitRole::FlagGranted`. A player never selects them --
+    // `Halfling ~ Deep Jungle` (the alternate below that fires
+    // `Halfling_ReplaceLanguages`, `Halfling_ReplaceSureFooted` and
+    // `Halfling_ReplaceWeaponFamiliarity`) grants them by name through
+    // `ABILITY:Halfling Racial Trait|AUTOMATIC|Deep Jungle Halfling ~
+    // Languages|Deep Jungle Halfling ~ Poison Use`
+    // (`ha_abilities_race.lst:85`). That is the *opposite* of Inner Sea
+    // Races' `Human ~ Tribalistic Languages`, whose owning alternate
+    // suppresses a standard trait and brings nothing in
+    // (SD-29 `decisions.md §45.4`): here the upstream transaction is
+    // complete, so this book contributes no unreachable record and needs no
+    // `OPEN_FINDINGS` entry. `no_corpus_trait_is_left_without_a_readable_gate`
+    // is the assertion that proves it -- it did not move for this book.
+    // ---- Dwarf ----
+    ("Dwarf ~ Barrow Scholar", &["Dwarf_ReplaceStonecunning"]),
+    ("Dwarf ~ Barrow Warden", &["Dwarf_ReplaceDefensiveTraining", "Dwarf_ReplaceHatred"]),
+    ("Dwarf ~ Healthy", &["Dwarf_ReplaceHardy"]),
+    ("Dwarf ~ Sense Aberration", &["Dwarf_ReplaceStonecunning"]),
+    ("Dwarf ~ Tightfisted", &["Dwarf_ReplaceStability", "Dwarf_ReplaceStonecunning"]),
+    ("Dwarf ~ Viscous Blood", &["Dwarf_ReplaceHardy"]),
+    // ---- Elf ----
+    ("Elf ~ Blightborn", &["Elf_ReplaceElvenImmunities"]),
+    ("Elf ~ Creepy", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Keeper of Secrets", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Light against Darkness", &["Elf_ReplaceElvenMagic"]),
+    ("Elf ~ Long-Limbed", &["Elf_ReplaceWeaponFamiliarity"]),
+    ("Elf ~ Perfect", &["Elf_ReplaceElvenImmunities"]),
+    ("Elf ~ Slender", &["Elf_ReplaceElvenImmunities"]),
+    // ---- Gnome ----
+    ("Gnome ~ Fairy Catcher", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceHatred", "Gnome_ReplaceKeenSenses"]),
+    ("Gnome ~ Inquisitive", &["Gnome_ReplaceKeenSenses", "Gnome_ReplaceObsessive"]),
+    ("Gnome ~ Shadow Dodger", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceIllusionResistance"]),
+    ("Gnome ~ Shadow Foe", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceHatred"]),
+    ("Gnome ~ Stalker", &["Gnome_ReplaceDefensiveTraining", "Gnome_ReplaceHatred", "Gnome_ReplaceObsessive"]),
+    // ---- Half-Elf ----
+    ("Half-Elf ~ Dreamer", &["HalfElf_ReplaceElvenImmunities"]),
+    ("Half-Elf ~ Mismatched", &["HalfElf_ReplaceVision", "HalfElf_ReplaceKeenSenses"]),
+    ("Half-Elf ~ Multidisciplined", &["HalfElf_ReplaceMultitalented"]),
+    ("Half-Elf ~ Round Ears", &["HalfElf_ReplaceVision", "HalfElf_ReplaceKeenSenses", "HalfElf_ReplaceAdaptability"]),
+    // ---- Half-Orc ----
+    ("Half-Orc ~ Inured", &["HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Monstrous Sympathy", &["HalfOrc_ReplaceIntimidating", "HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Pain Tolerance", &["HalfOrc_ReplaceIntimidating", "HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Projection", &["HalfOrc_ReplaceWeaponFamiliarity", "HalfOrc_ReplaceOrcFerocity"]),
+    ("Half-Orc ~ Smog Sight", &["HalfOrc_ReplaceVision"]),
+    ("Half-Orc ~ Stoic", &["HalfOrc_ReplaceIntimidating", "HalfOrc_ReplaceOrcFerocity"]),
+    // ---- Halfling ----
+    ("Halfling ~ Acquisitive", &["Halfling_ReplaceKeenSenses"]),
+    ("Halfling ~ Attentive", &["Halfling_ReplaceKeenSenses"]),
+    ("Halfling ~ Blessed", &["Halfling_ReplaceFearless"]),
+    ("Halfling ~ Creepy Doll", &["Halfling_ReplaceKeenSenses", "Halfling_ReplaceSureFooted"]),
+    ("Halfling ~ Deep Jungle", &["Halfling_ReplaceLanguages", "Halfling_ReplaceSureFooted", "Halfling_ReplaceWeaponFamiliarity"]),
+    ("Halfling ~ Irrepressible", &["Halfling_ReplaceFearless"]),
+    ("Halfling ~ Resourceful", &["Halfling_ReplaceSureFooted", "Halfling_ReplaceWeaponFamiliarity"]),
+    // ---- Human ----
+    ("Human ~ Aquatic Ancestry", &["Human_ReplaceSkilled"]),
+    ("Human ~ Giant Ancestry", &["Human_ReplaceSkilled"]),
+    ("Human ~ Piety", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Psychic Defense", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Rationalize", &["Human_ReplaceBonusFeat"]),
+    ("Human ~ Reptilian Ancestry", &["Human_ReplaceBonusFeat"]),
 ];
 
 /// The `<Race>_Replace<Trait>` flags a set of selected alternate racial traits
@@ -1767,6 +1871,55 @@ mod tests {
         }
     }
 
+    /// **A PI-redacted record must never render the prose it was redacted for.**
+    ///
+    /// SD-29 race-trait lane round 3 (`decisions.md §46`). The ingest screens
+    /// `data.description` and stores the marker, but the record's `DESC:` raw
+    /// tokens keep the upstream prose verbatim, and `render_description` reads
+    /// those tokens — so between round 2 and round 3 the Race Traits panel was
+    /// rendering the exact Golarion place and nation names the screen had
+    /// removed, for every one of Inner Sea Races' 12 redacted records.
+    ///
+    /// This asserts the property over the real corpus in both directions: a
+    /// redacted record serves the marker, and there is at least one such record
+    /// so the test cannot pass by finding nothing. The `!= stored` form is what
+    /// the defect looked like from `race_trait_picker`'s own gate; this states
+    /// it as the PI property it actually is.
+    #[test]
+    fn a_pi_redacted_description_is_never_rendered_back_from_its_raw_desc_tokens() {
+        let corpus = all_books();
+        let mut redacted = 0usize;
+        for race_key in corpus.race_keys() {
+            for record in corpus.traits_for(race_key) {
+                if !record.description_redacted {
+                    continue;
+                }
+                redacted += 1;
+                let stored = record.data.description.clone().unwrap_or_default();
+                assert_eq!(
+                    stored, "[redacted PI]",
+                    "{}: a redacted record's stored description is the marker",
+                    record.data.key
+                );
+                let rendered = record.render_description(&record.display_values_with(
+                    &crate::rules_core::race_resolver::FeatDisplayValueDeltas::default(),
+                ));
+                assert_eq!(
+                    rendered.text, stored,
+                    "{}: rendered prose must be the marker, not the raw DESC token the screen \
+                     removed",
+                    record.data.key
+                );
+            }
+        }
+        assert_eq!(
+            redacted, 12,
+            "Inner Sea Races' 12 PI-redacted records, counted on disk -- the only redacted \
+             race-trait records in the corpus. Horror Adventures added 0: it is a rules \
+             supplement, not a campaign setting"
+        );
+    }
+
     /// Role classification over the whole corpus, as a derived census. These
     /// numbers come from the loader itself; if the ingest changes shape, this
     /// is where it shows up.
@@ -1776,22 +1929,31 @@ mod tests {
         let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
         assert_eq!(count(TraitRole::Default), 173);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
-        // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 68, all landed by
-        // SD-29's race-trait lane.
-        assert_eq!(count(TraitRole::Alternate), 226);
+        // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 68 + Horror
+        // Adventures' 41, all landed by SD-29's race-trait lane.
+        assert_eq!(count(TraitRole::Alternate), 267);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
         // and `Pass for Human ~ Tiefling ~ Languages`.
-        assert_eq!(count(TraitRole::FlagGranted), 8);
+        //
+        // + Horror Adventures' 2: `Deep Jungle Halfling ~ Languages` and
+        // `Deep Jungle Halfling ~ Poison Use`, both named by an
+        // `ABILITY:Halfling Racial Trait|AUTOMATIC|` grant on
+        // `Halfling ~ Deep Jungle` -- the `Junk Tinker ~ Skilled` shape
+        // exactly. That this count moved and `TraitRole::Unclassified` below
+        // did NOT is the whole evidence that round 3's book shipped no
+        // unreachable record.
+        assert_eq!(count(TraitRole::FlagGranted), 10);
         // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
         // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
         // key and names each one's remedy.
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            409,
-            "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 72 Inner Sea Races"
+            452,
+            "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 72 Inner Sea Races \
+             + 43 Horror Adventures"
         );
     }
 
@@ -1912,15 +2074,27 @@ mod tests {
         // `Elf_ReplaceElvenMagic`, ...), which is what a second book of
         // alternates for the same 18 races should look like. The 13 are the
         // standard traits no previously-ingested alternate had ever replaced.
-        // That every one of the 90 except the two named above is *claimed* by a
-        // real standard row is the assertion above, and it did not move.
+        // Horror Adventures' 41 alternates add exactly **1** distinct flag to
+        // that 90 -- `Halfling_ReplaceLanguages`, fired by
+        // `Halfling ~ Deep Jungle`. Every other flag its rows fire was already
+        // declared by an ARG or ISR alternate replacing the same standard
+        // trait, which is the same shape ISR showed one round earlier and the
+        // reason a book's alternate count is a poor predictor of its flag
+        // count. Re-derived on the written tree rather than reasoned about:
+        // 29 distinct flags across this book's records, 28 of them already
+        // present.
+        //
+        // That every one of the 91 except the two named above is *claimed* by a
+        // real standard row is the assertion above, and it did not move --
+        // `Halfling_ReplaceLanguages` is claimed by the standard
+        // `Halfling ~ Languages` row that `Halfling ~ Deep Jungle` replaces.
         let all_flags: BTreeSet<&str> = corpus
             .traits
             .values()
             .flatten()
             .flat_map(|t| t.data.sets_replace_flags.iter().map(String::as_str))
             .collect();
-        assert_eq!(all_flags.len(), 90);
+        assert_eq!(all_flags.len(), 91);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -1941,7 +2115,11 @@ mod tests {
                 checked += 1;
             }
         }
-        assert_eq!(checked, 226, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races");
+        assert_eq!(
+            checked,
+            267,
+            "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures"
+        );
     }
 
     /// The runtime machinery that reports an unmatched swap is still under
@@ -2149,8 +2327,9 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            226,
-            "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races selectable alternates"
+            267,
+            "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures \
+             selectable alternates"
         );
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
         for (key, flags) in ALTERNATE_TRAIT_REPLACE_FLAGS {
@@ -2191,7 +2370,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 226);
+        assert_eq!(selectable_alternate_trait_keys().len(), 267);
     }
 
     #[test]

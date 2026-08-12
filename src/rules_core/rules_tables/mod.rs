@@ -76,4 +76,16 @@ pub enum RuleSetId {
     /// compiled race-trait table would need). It is the largest single
     /// alternate-racial-trait contribution after ARG's.
     Isr,
+    /// Horror Adventures. SD-29 Epic 6 round 3 (race-trait lane, extend).
+    /// Like `MonsterCodex` and `Isr`, its one ingested family is `race_trait`,
+    /// served off disk from `data/corpus/horror_adventures/race_trait/` rather
+    /// than from a compiled table (`decisions.md §24` rules out the formula
+    /// interpreter a compiled race-trait table would need).
+    ///
+    /// **Only the book's main `ha_abilities_race.lst` is ingested.** Its
+    /// `support/ha_abilities_race_oa.lst` is loaded by the pcc under
+    /// `PRECAMPAIGN:1,INCLUDES=Occult Adventures`, a book this repo has not
+    /// ingested, so that file's one further in-scope row is out of this rule
+    /// set's scope by construction rather than by omission.
+    Ha,
 }

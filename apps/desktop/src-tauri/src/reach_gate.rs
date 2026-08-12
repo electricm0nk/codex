@@ -548,6 +548,8 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("monster_codex", "monster_codex"),
     // SD-29 Epic 6 round 2 (race-trait lane, extend). Same again.
     ("inner_sea_races", "inner_sea_races"),
+    // SD-29 Epic 6 round 3 (race-trait lane, extend). Same again.
+    ("horror_adventures", "horror_adventures"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -982,6 +984,25 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // take next and why `decisions.md §44.4`'s successor queue -- which put
         // two mechanism-blocked books ahead of it -- was wrong.
         ("inner_sea_races", "race_traits") => Some(race_traits_reach("ISR", "inner_sea_races")),
+        // SD-29 Epic 6 round 3 (race-trait lane, extend, 2026-08-12,
+        // `decisions.md §46`). Horror Adventures' 43 in-scope records from
+        // `ha_abilities_race.lst` -- 41 `TraitRole::Alternate` plus the two
+        // `Deep Jungle Halfling ~ ...` rows the book's own
+        // `Halfling ~ Deep Jungle` alternate grants -- served by exactly the
+        // two commands ARG's, APG's, Monster Codex's and ISR's claims run.
+        // Again no new surface and no new mechanism.
+        //
+        // **This is the first book in the lane whose whole ingested family
+        // reaches, with no `OPEN_FINDINGS` shortfall.** That is a property of
+        // the book's upstream data rather than of this round's care: HA's two
+        // non-selectable rows are named by an
+        // `ABILITY:Halfling Racial Trait|AUTOMATIC|` grant on the alternate
+        // that replaces them, so the upstream transaction ISR's
+        // `Human ~ Tribalistic Languages` leaves half-finished is complete
+        // here. The absence of a finding is therefore evidence, not an
+        // omission -- `horror_adventures_alternate_racial_traits_reach_a_player`
+        // asserts the full pass by exact count rather than leaving it unstated.
+        ("horror_adventures", "race_traits") => Some(race_traits_reach("HA", "horror_adventures")),
 
         // Weapons: `list_weapon_targets` serves WEAPON_TABLE to the chooser
         // feat's "which weapon?" step, each row carrying the record's damage
@@ -2588,6 +2609,48 @@ mod tests {
                 );
             }
             other => panic!("ISR's race-trait shortfall must be reported exactly, got {other:?}"),
+        }
+    }
+
+    /// Horror Adventures' race traits reach a player, all 43 of them.
+    ///
+    /// SD-29 race-trait lane round 3 (`decisions.md §46`). The book was picked
+    /// by running `scripts/classify_race_trait_rows.py` on it *before* the
+    /// round committed to it, which is `decisions.md §45.1`'s method applied a
+    /// second time rather than a queue transcribed from a doc.
+    ///
+    /// Unlike every other book this lane has taken, this one has **no**
+    /// shortfall, and the assertion is written to make that a claim rather
+    /// than a silence: it demands a plain `Reach::Surfaced`, so a future
+    /// record that stops reaching fails here by name instead of quietly
+    /// widening an already-tolerated `NotSurfaced`.
+    #[test]
+    fn horror_adventures_alternate_racial_traits_reach_a_player() {
+        let ha_traits = Family::new("horror_adventures", "race_traits");
+        assert!(
+            corpus_inventory().0.contains(&ha_traits),
+            "the data/corpus scan must see data/corpus/horror_adventures/race_trait/"
+        );
+        assert!(full_inventory().contains(&ha_traits), "and it must reach the gate's inventory");
+
+        let ingested = corpus_record_keys("horror_adventures", "race_trait");
+        assert_eq!(
+            ingested.len(),
+            43,
+            "HA's 43 ingested race-trait records, counted on disk. Only \
+             ha_abilities_race.lst is ingested: support/ha_abilities_race_oa.lst is loaded by \
+             the pcc under PRECAMPAIGN:1,INCLUDES=Occult Adventures, a book this repo has not \
+             ingested"
+        );
+
+        match reach_of(&ha_traits).expect("HA race traits have a declared claim") {
+            Reach::Surfaced { .. } => {}
+            other => panic!(
+                "every HA race-trait record must reach a player; got {other:?}. HA's two \
+                 non-selectable rows (`Deep Jungle Halfling ~ Languages`, `... ~ Poison Use`) \
+                 are granted by name from `Halfling ~ Deep Jungle`, so unlike ISR's \
+                 `Human ~ Tribalistic Languages` they are reachable"
+            ),
         }
     }
 

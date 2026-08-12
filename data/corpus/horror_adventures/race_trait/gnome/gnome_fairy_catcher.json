@@ -1,0 +1,101 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Gnome ~ Fairy Catcher",
+    "name": "Fairy Catcher",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceDefensiveTraining",
+      "Gnome_ReplaceHatred",
+      "Gnome_ReplaceKeenSenses"
+    ],
+    "description": "Some gnomes are especially sensitive to the presence of fey and receive a +2 racial bonus on Perception, Sense Motive, and Survival checks against fey, a +2 racial bonus on saving throws against the spells, spell-like abilities, and supernatural abilities of fey (this bonus stacks with the bonus granted by illusion resistance), and a +2 bonus on caster level checks to overcome the spell resistance of fey. The racial trait replaces defensive training, hatred, and keen senses.",
+    "source_page": "p.39",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Fairy Catcher"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Fairy Catcher],[!PREFACT:1,ABILITIES,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceHatred=true,Gnome_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some gnomes are especially sensitive to the presence of fey and receive a +2 racial bonus on Perception, Sense Motive, and Survival checks against fey, a +2 racial bonus on saving throws against the spells, spell-like abilities, and supernatural abilities of fey (this bonus stacks with the bonus granted by illusion resistance), and a +2 bonus on caster level checks to overcome the spell resistance of fey."
+      },
+      {
+        "key": "DESC",
+        "value": "The racial trait replaces defensive training, hatred, and keen senses.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Fairy Catcher"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 vs. spells, spell-like abilities, and supernatural abilities of fey"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceKeenSenses|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Perception=against fey,Sense Motive=against fey,Survival=against fey",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 42,
+    "record_key": "Gnome ~ Fairy Catcher"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

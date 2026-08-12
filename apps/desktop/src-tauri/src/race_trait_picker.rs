@@ -949,10 +949,11 @@ mod tests {
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 226,
+            total, 267,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
-             race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2)"
+             race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2) \
+             + Horror Adventures' 41 (§46, round 3)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -965,30 +966,37 @@ mod tests {
         // *variant* selector (PCGen models it through a `Goblin Variant`
         // ABILITYPOOL that this engine has no mechanism for), recorded as a
         // finding in `reach_gate`'s OPEN_FINDINGS rather than hidden.
+        // **This table was left at its pre-Inner-Sea-Races values by round 2
+        // and went RED with five other root-workspace assertions**; round 3
+        // moved it and recorded the miss (`decisions.md §46`). Every cell
+        // below is re-derived from the written records rather than added up
+        // from a prior round's arithmetic, with each race's per-book split in
+        // the trailing comment so a future book's contribution is checkable
+        // one race at a time instead of only in the total.
         let expected: &[(&str, usize)] = &[
-            ("Aasimar", 9),
-            ("Drow", 6),
-            ("Duergar", 7),
-            ("Dwarf", 17),
-            ("Elf", 13),
-            ("Gnome", 12),
-            ("Goblin", 9),
-            ("HalfElf", 9),
-            ("HalfOrc", 15),
-            ("Halfling", 13),
-            ("Hobgoblin", 9),
-            ("Human", 15),
-            ("Kobold", 4),
-            ("Merfolk", 3),
-            ("Orc", 4),
-            ("Svirfneblin", 2),
-            ("Tengu", 4),
-            ("Tiefling", 7),
+            ("Aasimar", 11),    // ARG 9 + ISR 2
+            ("Drow", 7),        // ARG 6 + ISR 1
+            ("Duergar", 8),     // ARG 5 + MC 2 + ISR 1
+            ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
+            ("Elf", 28),        // ARG 13 + ISR 8 + HA 7
+            ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
+            ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
+            ("HalfElf", 20),    // ARG 9 + ISR 7 + HA 4
+            ("HalfOrc", 28),    // ARG 14 + APG 1 + ISR 7 + HA 6
+            ("Halfling", 27),   // ARG 13 + ISR 7 + HA 7
+            ("Hobgoblin", 10),  // ARG 9 + ISR 1
+            ("Human", 33),      // ARG 15 + ISR 12 + HA 6
+            ("Kobold", 5),      // ARG 4 + ISR 1
+            ("Merfolk", 4),     // ARG 3 + ISR 1
+            ("Orc", 5),         // ARG 4 + ISR 1
+            ("Svirfneblin", 3), // ARG 2 + ISR 1
+            ("Tengu", 5),       // ARG 4 + ISR 1
+            ("Tiefling", 10),   // ARG 7 + ISR 3
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 158);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 267);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1046,8 +1054,11 @@ mod tests {
 
         assert_eq!(
             paged,
-            BTreeSet::from(["APG", "ARG", "ISR", "MC"]),
-            "the books whose alternates carry a real page. ISR joined with SD-29's race-trait \
+            BTreeSet::from(["APG", "ARG", "HA", "ISR", "MC"]),
+            "the books whose alternates carry a real page. HA joined with SD-29's race-trait \
+             lane round 3: all 41 of its alternates cite a real `SOURCEPAGE` too, which is why \
+             the `pageless` pin below did NOT move for this book either. ISR joined with \
+             SD-29's race-trait \
              lane round 2: all 68 of its alternates cite a real `SOURCEPAGE`, none the literal \
              `p.xx` stand-in that `ingest_races.rs` filters out"
         );
@@ -1182,22 +1193,29 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 226,
-            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races (§45)"
+            checked, 267,
+            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races \
+             (§45) + 41 Horror Adventures (§46)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
         // Aasimar is the worked case: its nine standard rows now declare the
-        // gate its nine alternates fire, read from `aasimar_abilities_globalvar
+        // gate its alternates fire, read from `aasimar_abilities_globalvar
         // .lst`. Asserted off the payload, so this is the shipped DTO, not a
         // corpus-only fact.
+        //
+        // The alternate count moved 9 -> 11 when Inner Sea Races landed
+        // (`Aasimar ~ Crusading Magic`, `Aasimar ~ Lost Promise`); round 2 did
+        // not move it and this assertion was RED on the branch until round 3
+        // (`decisions.md §46`). The *standard* count did not move and must
+        // not: ISR and HA contribute alternates only, no `race/` chassis.
         let aasimar = race(&menu, "Aasimar");
         assert_eq!(aasimar.standard_traits.len(), 9);
         assert!(
             aasimar.standard_traits.iter().all(|row| row.suppressed_by_flag.is_some()),
             "every Aasimar standard row carries its gate"
         );
-        assert_eq!(aasimar.alternates.len(), 9);
+        assert_eq!(aasimar.alternates.len(), 11);
         for alternate in &aasimar.alternates {
             assert!(!alternate.replaces.is_empty(), "{} really replaces something", alternate.key);
         }
@@ -1600,9 +1618,13 @@ mod tests {
         // ARG/CRB/Bestiary) never moves.
         let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
         let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        assert_eq!((standard, alternates), (173, 226));
+        // Round 3 (`decisions.md §46`) added Horror Adventures' 41 alternates.
+        // `standard` did not move for the same reason APG never moved it: HA
+        // contributes no `race/` chassis, only alternates onto races CRB and
+        // Bestiary 1 already declare.
+        assert_eq!((standard, alternates), (173, 267));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 399);
+        assert_eq!(checked, 440);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

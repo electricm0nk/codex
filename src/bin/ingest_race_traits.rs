@@ -147,6 +147,35 @@ const BOOK_SOURCES: &[BookSource] = &[
         lst_relative: "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
         pcgen_book_relative: "pathfinder/paizo/campaign_setting/inner_sea_races",
     },
+    // Horror Adventures, SD-29's race-trait lane round 3. 41 of its 43
+    // in-scope rows in the book's main `_abilities_race.lst` set a
+    // `<Race>_Replace<Trait>` flag, so they are `TraitRole::Alternate` and
+    // reach a player through the same picker that already serves ARG, APG,
+    // Monster Codex and Inner Sea Races. Classified before the round
+    // committed to the book, per SD-29 `decisions.md §45.1`:
+    // `python3 scripts/classify_race_trait_rows.py ha_abilities_race.lst`
+    // -> `in-scope rows 43 | default 0 | alternate 41 | flag_granted 0 |
+    // unclassified 2`.
+    //
+    // **The book's second racial-ability file is deliberately NOT listed.**
+    // `support/ha_abilities_race_oa.lst` carries one further in-scope row
+    // (`Tiefling ~ Fiendish Heritage`-shaped, one alternate), but the pcc
+    // loads it conditionally --
+    // `ABILITY:support/ha_abilities_race_oa.lst|PRECAMPAIGN:1,INCLUDES=Occult
+    // Adventures` (`_horror_adventures.pcc:91`) -- so its content exists only
+    // for a game that also owns Occult Adventures, a book this repo has not
+    // ingested. Listing it here would ingest it unconditionally and
+    // mis-attach a conditional record to the base book, which is the hazard
+    // `loop-instruction.md`'s "Conditional cross-book support files" note
+    // names. The gate is on the pcc load line, not inside the `.lst`:
+    // `grep PRECAMPAIGN support/ha_abilities_race_oa.lst` returns 0, so a
+    // lane that checks the file for its own gate concludes wrongly that it is
+    // ungated. Recorded as a scope finding for a successor round, not as gap.
+    BookSource {
+        corpus_book: "horror_adventures",
+        lst_relative: "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
+    },
 ];
 
 /// The 18 in-scope races (`decisions.md §25.3`), spelled exactly as the corpus
@@ -1269,7 +1298,7 @@ mod tests {
         // Stated as a table so a book whose ingest silently stops writing
         // fails here by name rather than by a total that still adds up.
         let expected: BTreeMap<&str, usize> =
-            [("advanced_race_guide", 156usize), ("monster_codex", 5), ("inner_sea_races", 72)]
+            [("advanced_race_guide", 156usize), ("monster_codex", 5), ("inner_sea_races", 72), ("horror_adventures", 43)]
                 .into_iter()
                 .collect();
         assert_eq!(
