@@ -191,6 +191,46 @@ Bestiary 6 + Bonus Bestiary over Bestiary 5 (per `decisions.md §18`), a
 retrofit bundle adds them. Cycle-0 trap-report + inventory produces the
 per-book shape finding.
 
+### C3.3 — Retroactive magnitude-fidelity sweep over already-landed `static` units — **OPEN (routed 2026-08-12)**
+
+**Routed by `decisions.md §46`, which split one instrument in two.** The per-cycle half is in SD-29
+now: `epic-breakdown.md` Epic 4's three feature seeds each carry a magnitude-fidelity acceptance
+criterion, so no *newly landed* `static` record escapes an exact round-trip check against its corpus
+literal. This entry is the other half — the sweep over records that landed **before** that criterion
+existed — and it is deliberately not SD-29's work.
+
+**What it owns.** The `static` + `ingested-magnitude` backlog: **4,582 units** against the committed
+inventory (`generated_at 2026-08-11T22:28:28Z`), all six of them in Epic 4's kinds
+(`equipment`, `equipment_modifier`, `spell`, `feat`, `race`, `class`) — the command is in
+`epic-breakdown.md` Epic 4. Re-derive before starting; Epic 4's own cycles will have moved the
+figure, downward for records that land under the new criterion and upward for ones they add.
+
+**Why it is a bundle and not a cycle.** The per-cycle criterion is nearly free because the cycle
+already holds both the corpus row and the record it just wrote. The sweep holds neither, so it must
+build the corpus-side reader standalone across every magnitude-bearing field (`COST`, `WT`, `AC`,
+`DAMAGE`, `RANGE`, and `BONUS` literals) over ~7,487 `static` units. Two constraints make it real
+work rather than a rollup:
+
+- **`.MOD` base-name resolution MUST mirror the determinator's** (`CATEGORY=<x>|<Base>.MOD` →
+  `<Base>`; `CLASS:<Base>.MOD` → `<Base>`) or the sweep and the inventory will disagree about which
+  record a row belongs to and the check will silently skip rows — the identical hazard
+  `wiring-class-determination.md` records for the closure pass.
+- **It is a new test binary in the `reach_gate.rs` family**, not an extension of it. The reach gate
+  asserts presence in an IPC response; this asserts textual fidelity to a corpus line. Sharing the
+  inventory-construction machinery is welcome, sharing the assertion is not.
+
+**What it unblocks, and what it does not.** It is the missing `DONE` verdict word for the `static`
+class — `wiring-class-determination.md`'s table records the status column for `static` as
+"(none — currently `ingested-magnitude`)". Until it exists, those units cannot be reported as
+complete by any instrument, which is the dashboard defect the operator raised on 2026-08-12: a
+finished `static` unit renders identically to unfinished `computed` work. It does **not** address
+`derived`, whose bar is an evaluator-vs-fixture check over a further 1,000 `ingested-magnitude`
+units and whose status column is equally "(none)" — a sibling gap, not this entry's scope, and
+unrouted as of this writing.
+
+**Not blocking anything.** No lane, epic, or reach claim in SD-29 waits on this. Deferring it costs
+the bundle nothing; running it inside the bundle would cost the lanes cycles they need.
+
 ## Review trigger
 
 Reopen SD-29's forward-scope register when:
@@ -200,6 +240,8 @@ Reopen SD-29's forward-scope register when:
 - The bulk-modification retrofit is operator-authorized.
 - The post-`tranche/9` consumer is operator-named.
 - Operator requests Class 3.x retrofits.
+- The retroactive magnitude-fidelity sweep is operator-authorized, or the `derived` class's
+  evaluator-vs-fixture bar is routed to an owner (C3.3).
 - SD-28's per-class archetype measurement (`§9.1`) reaches the classes behind SD-29's deferred
   `class_feature` units (C1.3).
 

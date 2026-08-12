@@ -1857,3 +1857,105 @@ genuinely ingestable remainder after this round is **95**, and its order is now 
 
 Plus the residuals that are deliberately not gap: APG's 49 ARG-key collisions (`§39`), Monster Codex's
 `Oversized Goblin`, and now ISR's `Human ~ Tribalistic Languages`.
+
+## Decision 46 — Reach-gate coverage does not check whether the number is right; the magnitude-fidelity bar is split per-cycle / retroactive (2026-08-12, operator directive)
+
+The operator asked, on 2026-08-12, why the dashboard cannot say how *done* something is. The answer
+turned out to be a scope gap in this bundle, not only a rendering defect, and this decision records
+the half that is SD-29's.
+
+### 46.1 The gap: `static` units have no verdict instrument, and Epic 4 was about to add a thousand more
+
+`wiring-class-determination.md` defines four classes on a strict lattice
+(`display < static < derived < computed`) and, for each, what DONE means. Two of the four have no
+status word that can express it — the table's own "today's nearest status" column reads
+"(none — currently `ingested-magnitude`)" for both `static` and `derived`. For `static` the DONE bar
+is *the stored value is byte-equal to the corpus literal, and is rendered or consumed*, and nothing
+in the pipeline asserts the first half.
+
+Every Epic 4 feature seed carried a two-part bar: records land by the settled method, and reach-gate
+coverage for every record. **Reach-gate coverage proves reachability, not fidelity** — the record
+appears in what the Tauri command returns, and its magnitudes could be wrong in every digit. For a
+`static` unit that is the whole correctness question: there is no formula to evaluate and no
+character-state dependency, so a constant that ingested wrongly is simply wrong, permanently and
+invisibly.
+
+The exposure is entirely inside this lane:
+
+```bash
+python3 -c "
+import json,collections
+u=json.load(open('docs/work-inventory.json'))['units']
+E4={'equipment','equipment_modifier','spell','feat','race','class'}
+c=collections.Counter((('E4' if x['kind'] in E4 else 'other'),x['status']) for x in u if x['wiring_class']=='static')
+print(sorted(c.items()))"
+```
+→ against the committed inventory (`generated_at 2026-08-11T22:28:28Z`):
+
+| group | `ingested-magnitude` | `not-ingested` | `not-started` | `grounded` | `text-complete` | `unknown` |
+|---|---:|---:|---:|---:|---:|---:|
+| Epic 4's six kinds | **4,582** | 184 | 828 | 62 | 38 | 18 |
+| every other kind | 0 | 760 | 399 | 17 | 0 | 597 |
+
+**All 4,582** `static` + `ingested-magnitude` units are in Epic 4's kinds; the Tier-2 mechanism lanes
+hold none. And Epic 4 will land roughly **1,012 more** (184 + 828) under a bar that cannot detect a
+lossy parse. That is the same defect shape this bundle's own `README.md` records for the reach gate —
+ingested, present, and wrong in a way nothing enforced — one axis over.
+
+Re-derive at cycle-batch time. The figures above come from the **stale committed artifact**, the same
+one feeding the dashboard's search shards, which drifts from a live `--summary` run; and Epic 4's own
+cycles move it in both directions.
+
+### 46.2 The failure mode is lossy ingest, and numeric comparison does not catch it
+
+`acg_equip.lst:160` is the shape:
+
+```
+Animal Call    TYPE:Goods.General    COST:0.1    SOURCEPAGE:p.202
+               SPROP:+2 on Survival to track specific animal type or get along in the wild
+```
+
+`COST:0.1` through an `f64` becomes `0.1000000000000000055`; through a naive integer-gp parse it
+becomes `0`. Both compare "close enough" numerically and both are wrong on a character sheet. Hence
+the bar is **exact round-trip text equality** — the stored value re-rendered to its corpus text form,
+string-compared to the printed token — not `==` with a tolerance. Same class of defect for `WT:1/2`,
+thousands-separated `COST:23500`, and `.MOD` rows that overwrite a base value.
+
+`static` sits between `display` and `derived` on the lattice and the bar must match it. A
+consumer-delta probe — the `computed` bar, i.e. `grounded` — is the wrong instrument: nothing about a
+longsword's weight changes when character state changes, so there is no delta to observe. That is
+precisely why 4,582 units sit at `ingested-magnitude` and will sit there forever under the current
+instruments. Exact round-trip equality is strictly stronger than `ingested-magnitude` (which asserts
+only that the engine holds *some* numeric field) and, unlike the delta probe, achievable.
+
+### 46.3 The ruling: split the instrument, don't bolt the whole thing onto a running bundle
+
+**In SD-29, now:** a third acceptance criterion on all three Epic 4 feature seeds (`SD29-E4-F1`,
+`-F2`, `-F3`) — for every record a cycle lands, each magnitude-bearing field round-trips exactly
+against the corpus literal at the unit's recorded `source_file:source_line`. Scoped to the records
+that cycle touched, a few hundred at a time, alongside the reach-gate check already there. The
+marginal cost is near zero because the cycle already holds both the corpus row and the record it just
+wrote. Recorded in `epic-breakdown.md` Epic 4.
+
+**Routed forward:** the retroactive sweep over the 4,582 already-landed units, as
+`successor-forward-scope-register.md §C3.3`, with the `.MOD` base-name resolution that must mirror
+the determinator's. That is the expensive half — a standalone corpus-side reader across every
+magnitude-bearing field over ~7,487 `static` units, a new test binary in the `reach_gate.rs` family
+rather than an extension of it — and it blocks no lane, epic, or reach claim in this bundle.
+
+Net effect: SD-29 stops *adding* unverified `static` values immediately, and the backlog flip becomes
+a separately schedulable job instead of a mid-flight scope expansion.
+
+### 46.4 What this does not resolve
+
+- **`derived` has the identical gap** — 1,000 `ingested-magnitude` units whose bar is
+  evaluator-vs-fixture, status column equally "(none)". A sibling of this decision, unrouted as of
+  this writing, and *not* silently folded into C3.3.
+- **The dashboard rendering defect stands.** `PF1e-dashboard.json` publishes `by_status` and
+  `by_wiring_class` as independent marginals of one 2-D table, so doneness — which exists only in the
+  cells — cannot be read off it at all. The producer emits no cross-tab. Fixing that is a
+  `pf1e_dashboard_producer.py` + viewer change outside this bundle's write scope; this decision only
+  removes the reason the *underlying* verdict was unavailable for `static`.
+- **No number moves today.** Until the sweep runs, those 4,582 units should be reported as *held* —
+  the engine has the literal, nothing has confirmed it — never as done. A percentage that rises on
+  the strength of this decision alone is the over-claim this axis exists to prevent.

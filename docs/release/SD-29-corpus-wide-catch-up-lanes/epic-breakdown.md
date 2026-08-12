@@ -164,6 +164,43 @@ scope note below and `decisions.md §38.4`. It is not a small residual kind; it 
 corpus, blocked behind the archetype mechanism (SD-28 `§60`/`§63`), and putting it in a lane scoped
 to *settled* methods would misrepresent 15,472 units as ready-to-ingest.
 
+### This lane is where every `static` unit lives, so it owns the magnitude-fidelity bar
+
+**Added 2026-08-12 (`decisions.md §46`).** Reach-gate coverage proves a record is *reachable* — it
+appears in what the Tauri command returns. It asserts nothing about whether the value matches the
+book. For a `static` unit (`wiring-class-determination.md`: one or more literal constants on the row
+itself, no formula to evaluate and no character-state dependency) "is the number right" is the entire
+correctness question, and no lane in this bundle was checking it.
+
+The cross-tab of `wiring_class` against `status` puts the whole exposure inside this lane:
+
+```bash
+python3 -c "
+import json,collections
+u=json.load(open('docs/work-inventory.json'))['units']
+E4={'equipment','equipment_modifier','spell','feat','race','class'}
+c=collections.Counter((('E4' if x['kind'] in E4 else 'other'),x['status']) for x in u if x['wiring_class']=='static')
+print(sorted(c.items()))"
+```
+→ against the committed inventory (`generated_at 2026-08-11T22:28:28Z`): **all 4,582** `static` +
+`ingested-magnitude` units are in this lane's six kinds — zero in the Tier-2 mechanism lanes — and
+this lane will land roughly **1,012 more** (184 `not-ingested` + 828 `not-started`). Re-derive at
+cycle-batch time rather than transcribing these, per the same rule the seeds below carry.
+
+The failure mode the bar catches is lossy ingest, not absent ingest: `acg_equip.lst:160`
+*Animal Call* carries `COST:0.1`, which through an `f64` becomes `0.1000000000000000055` and through
+a naive integer-gp parse becomes `0`. Both compare "close enough" numerically and both are wrong on
+a character sheet. Same shape for `WT:1/2`, thousands-separated `COST:23500`, and `.MOD` rows that
+overwrite a base value — the last being exactly where `wiring-class-determination.md`'s closure pass
+already found 80 units hiding.
+
+`static` sits between `display` and `derived` on the evidence lattice and the bar has to match it. A
+consumer-delta probe — the `computed` bar, i.e. `grounded` — is the wrong instrument here: nothing
+about a longsword's weight changes when character state changes, so there is no delta to observe,
+which is precisely why those 4,582 units sit at `ingested-magnitude` permanently. Exact round-trip
+equality is strictly stronger than `ingested-magnitude` (which only asserts the engine holds *some*
+numeric field) and, unlike the delta probe, achievable.
+
 ### Feature seeds
 
 #### SD29-E4-F1 — Equipment and equipment-modifier records, corpus-wide
@@ -175,6 +212,12 @@ Acceptance:
   `docs/work-inventory.json` at cycle-batch time (not transcribed from `decisions.md §38.1`'s
   snapshot).
 - Reach-gate coverage for every record. PI sweep (Epic 3) clean or hits resolved before commit.
+- **Magnitude fidelity (added 2026-08-12, `decisions.md §46`).** For every record the cycle
+  lands, each magnitude-bearing field round-trips **exactly** against the corpus literal at the
+  unit's recorded `source_file:source_line` — the stored value re-rendered to its corpus text
+  form is string-equal to the printed token, not merely numerically close. Scoped to the records
+  that cycle touched; the retroactive sweep over already-landed units is **not** this lane's work
+  (`successor-forward-scope-register.md §C3.3`).
 
 #### SD29-E4-F2 — Spell records, corpus-wide
 
@@ -182,6 +225,12 @@ Acceptance:
 
 - Canonical spell records land per book, same method, for every book with remaining `spell` units.
 - Reach-gate coverage for every record. PI sweep (Epic 3) clean or hits resolved before commit.
+- **Magnitude fidelity (added 2026-08-12, `decisions.md §46`).** For every record the cycle
+  lands, each magnitude-bearing field round-trips **exactly** against the corpus literal at the
+  unit's recorded `source_file:source_line` — the stored value re-rendered to its corpus text
+  form is string-equal to the printed token, not merely numerically close. Scoped to the records
+  that cycle touched; the retroactive sweep over already-landed units is **not** this lane's work
+  (`successor-forward-scope-register.md §C3.3`).
 
 #### SD29-E4-F3 — Feat, race, and class records, corpus-wide
 
@@ -190,6 +239,12 @@ Acceptance:
 - Canonical feat, race, and class records land per book, same method, for every book with
   remaining units of these three kinds.
 - Reach-gate coverage for every record. PI sweep (Epic 3) clean or hits resolved before commit.
+- **Magnitude fidelity (added 2026-08-12, `decisions.md §46`).** For every record the cycle
+  lands, each magnitude-bearing field round-trips **exactly** against the corpus literal at the
+  unit's recorded `source_file:source_line` — the stored value re-rendered to its corpus text
+  form is string-equal to the printed token, not merely numerically close. Scoped to the records
+  that cycle touched; the retroactive sweep over already-landed units is **not** this lane's work
+  (`successor-forward-scope-register.md §C3.3`).
 
 ## Epic 5 (SD29-E5) — Monster / Monster-Ability Chassis Lane
 
