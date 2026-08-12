@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1/4",
+    "corpus_key": "Skunk",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "bestiary_3:monster:skunk",
+    "monster_class": "Animal:1",
+    "name": "Skunk",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d2",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "0",
+        "name": "Spray (Touch)"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "size": "T",
+    "source_page": "p.246",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 255,
+    "record_key": "Skunk"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

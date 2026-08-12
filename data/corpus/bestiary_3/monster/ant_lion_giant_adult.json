@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "6",
+    "corpus_key": "Ant Lion (Giant Adult)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_3:monster:ant_lion_giant_adult",
+    "monster_class": "Vermin:10",
+    "name": "Giant Adult Ant Lion",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "H",
+    "source_page": "p.17",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 19,
+    "record_key": "Ant Lion (Giant Adult)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

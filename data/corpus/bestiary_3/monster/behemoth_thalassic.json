@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "20",
+    "corpus_key": "Behemoth (Thalassic)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:behemoth_thalassic",
+    "monster_class": "Magical Beast:29",
+    "name": "Thalassic Behemoth",
+    "natural_attacks": [
+      {
+        "damage_dice": "6d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "3d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "4d6",
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": "4d8",
+        "name": "Water Jet"
+      }
+    ],
+    "race_subtype": "Aquatic|Behemoth|Water",
+    "race_type": "Magical Beast",
+    "size": "C",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 200,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 38,
+    "record_key": "Behemoth (Thalassic)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

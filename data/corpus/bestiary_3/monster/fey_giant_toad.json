@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "3",
+    "corpus_key": "Fey Giant Toad",
+    "external_ability_refs": [
+      "Scent",
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_3:monster:fey_giant_toad",
+    "monster_class": "Fey:3",
+    "name": "Fey Giant Toad",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "L",
+    "source_page": "p.115",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      },
+      {
+        "feet": 15,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 113,
+    "record_key": "Fey Giant Toad"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

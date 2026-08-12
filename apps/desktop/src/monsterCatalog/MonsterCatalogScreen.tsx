@@ -55,6 +55,7 @@ export const BOOK_LABELS: Record<string, string> = {
   BOTD2: 'Book of the Damned, Volume 2',
   ISWG: 'Inner Sea World Guide',
   B2: 'Bestiary 2',
+  B3: 'Bestiary 3',
 };
 
 /** `'BB'` -> `'Bonus Bestiary'`; an unmapped code falls through as itself. */
@@ -350,7 +351,15 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
                   </span>
                 </div>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
-                  {formatSpeedClause(entry)} · {formatBook(entry.book)} {entry.sourcePage}
+                  {/* The page is appended only when the corpus row states one.
+                      Two Bestiary 3 rows carry no `SOURCEPAGE:` token at all
+                      (`b3_races.lst:215` and `:265`), and interpolating an
+                      empty string left the book name with a dangling trailing
+                      space. The ability rows below have always rendered their
+                      page conditionally; this brings the monster row into line
+                      with them. */}
+                  {formatSpeedClause(entry)} · {formatBook(entry.book)}
+                  {entry.sourcePage ? ` ${entry.sourcePage}` : ''}
                   {entry.monsterClass ? ` · Hit dice ${entry.monsterClass}` : ''}
                 </p>
                 {entry.naturalAttacks.length === 0 ? (

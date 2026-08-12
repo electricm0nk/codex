@@ -68,6 +68,28 @@ BOOKS = {
     # `ogl-pi-blacklist.md` §2 predicts it: classic SRD monster names are
     # presumptively Open Game Content.
     "bestiary_2": "pathfinder/paizo/roleplaying_game/bestiary_2",
+    # SD-29 Epic 5 extend, round 5, and the CLEANEST book the lane has taken --
+    # 261 monster rows + 40 ability rows with only 13 orphans, no Product
+    # Identity row and no `.COPY=` delta at all. Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py bestiary_3` ->
+    # `bestiary_3  261  40  0  27  13  0  0`, and
+    # `grep -c NAMEISPI:YES b3_races.lst b3_abilities_race.lst` -> 0, 0, which
+    # is what `ogl-pi-blacklist.md` §2 predicts for a `roleplaying_game/`
+    # bestiary. It is also the first book in the lane whose ability rows are
+    # reached ENTIRELY by the namespaced-prefix shape (27 prefix, 0 row-named).
+    #
+    # `row-named` is 0 even though `b3_races.lst` carries 100
+    # `ABILITY:Special Ability|AUTOMATIC|` tokens
+    # (`grep -c 'ABILITY:Special Ability|AUTOMATIC|' b3_races.lst` -> 100).
+    # Those tokens name rows this book files under a DIFFERENT kind, so they
+    # are not in this book's `monster_ability` key set and the row-named pass
+    # correctly finds none of them. See `rules_tables::bestiary_3` for the
+    # derivation and the 341-unit scope finding it carries -- the tokens are
+    # real, the abilities are real, and `v06_work_inventory::file_kind` reads
+    # only the FIRST `TYPE:` segment, so `TYPE:AghashRacialAbility.
+    # SpecialQuality.Supernatural` lands in `race_trait` while
+    # `TYPE:SpecialQuality.Extraordinary.AdaroRacial` lands here.
+    "bestiary_3": "pathfinder/paizo/roleplaying_game/bestiary_3",
 }
 
 # The `TYPE:` first segment that names which facet of `monster_ability` a row
@@ -274,6 +296,30 @@ def is_prerequisite(entry: str) -> bool:
 FULL_ABILITY_RULE = "DisplayFullAbility"
 
 
+class UnmodelledDesc(Exception):
+    """A row states several `DESC:` texts under a gate `parse_desc` cannot read.
+
+    Raised rather than exiting so the caller can decide whether the row matters.
+    **A row that is going to be DROPPED does not matter**, and until Bestiary 3
+    every unmodelled row happened also to be one that would ship, so exiting
+    from inside the parser and exiting from the transcription were the same
+    thing. They are not: `ability_pi_reason` parses EVERY ability row, including
+    the orphans that the pass below it discards, so an unmodelled shape on a row
+    no monster owns stopped a transcription over a record that was never going
+    to be emitted.
+
+    `b3_abilities_race.lst:1663` (`Jiang-Shi Vampire`) is the first instance --
+    11 `DESC:` tokens, none gated on `DisplayFullAbility`, describing an
+    acquired template in 11 sections. It is an orphan: no `b3_races.lst` monster
+    row names it, and the base creature row it templates is commented out at
+    `b3_races.lst:293`.
+
+    The refusal itself is unchanged and still hard for any row that SHIPS -- the
+    emission pass re-parses and lets this propagate, so a shape the parser
+    cannot read can never reach a player. Only the drop path swallows it.
+    """
+
+
 def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     """The `DESC:` text a player should read, plus the variables its `%N` name.
 
@@ -306,7 +352,7 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
             )
         ]
         if len(full) != 1:
-            raise SystemExit(
+            raise UnmodelledDesc(
                 f"row carries {len(descs)} DESC: tokens and {len(full)} of them are gated on "
                 f"{FULL_ABILITY_RULE}; the transcriber refuses to pick one by position. "
                 f"Widen it deliberately. Tokens: {descs!r}"
@@ -439,12 +485,29 @@ def transcribe(book: str) -> str:
         # one term matched or several.
         return f"{len(hits)} PI_BLACKLIST_TERMS hit(s) in emitted values" if hits else None
 
+    # Ability rows whose `DESC:` shape the parser refuses. Populated by the PI
+    # screen, checked after the orphan pass: any that SURVIVED must stop the
+    # transcription, because they are about to be emitted.
+    unscreenable: set[str] = set()
+
     def ability_pi_reason(unit: dict) -> str | None:
         row = read_row(os.path.join(root, unit["source_file"]), unit["source_line"])
         if token(row, "NAMEISPI:") == "YES":
             return "NAMEISPI:YES"
         _facet, _delivery, traits = parse_type(row)
-        description, variables = parse_desc(row)
+        try:
+            description, variables = parse_desc(row)
+        except UnmodelledDesc:
+            # This row cannot be screened, so it is not reported as Product
+            # Identity -- an unscreenable row is not a clean row, and saying
+            # "no PI" about one would be an unearned claim. Nothing is waived:
+            # if the row survives the orphan pass it is EMITTED, and the
+            # emission pass re-parses it and lets the refusal propagate, so an
+            # unscreened row can never reach the generated table. If it does not
+            # survive, the reason it is absent is that nothing owns it, which is
+            # the reason the header should state.
+            unscreenable.add(unit["corpus_key"])
+            return None
         hits = pi_hits(
             terms,
             unit["corpus_key"],
@@ -561,6 +624,22 @@ def transcribe(book: str) -> str:
             "(no monster row of this book owns them): "
             + ", ".join(u["corpus_key"] for u in orphans),
             file=sys.stderr,
+        )
+
+    # The deferred half of `UnmodelledDesc`. A row the parser refused is fine
+    # only if something else already dropped it; one that reached this point is
+    # on its way into the generated table, and the refusal is now this
+    # transcription's refusal.
+    shipping_unscreenable = [u for u in abilities if u["corpus_key"] in unscreenable]
+    if shipping_unscreenable:
+        raise SystemExit(
+            f"{book}: "
+            + "; ".join(
+                f"{u['source_file']}:{u['source_line']} ({u['corpus_key']})"
+                for u in shipping_unscreenable
+            )
+            + " would be transcribed but carry a `DESC:` shape parse_desc refuses. "
+            "Widen it deliberately."
         )
 
     def source_files(units: list[dict]) -> list[str]:

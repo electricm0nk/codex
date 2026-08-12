@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "6",
+    "corpus_key": "Hungry Fog",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_3:monster:hungry_fog",
+    "monster_class": "Ooze:7",
+    "name": "Hungry Fog",
+    "natural_attacks": [
+      {
+        "damage_dice": "6d6",
+        "name": "Touch"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Ooze",
+    "size": "H",
+    "source_page": "p.151",
+    "speeds": [
+      {
+        "feet": 15,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 148,
+    "record_key": "Hungry Fog"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

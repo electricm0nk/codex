@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "8",
+    "corpus_key": "Rakshasa (Marai)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:rakshasa_marai",
+    "monster_class": "Outsider (Ref/Will):9",
+    "name": "Marai",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Bites"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Energy Bolts (Touch)"
+      }
+    ],
+    "race_subtype": "Native|Rakshasa|Shapechanger",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.227",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 228,
+    "record_key": "Rakshasa (Marai)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

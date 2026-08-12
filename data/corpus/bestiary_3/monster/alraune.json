@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_3:monster_ability:alraune_calming_fragrance",
+      "bestiary_3:monster_ability:alraune_feed"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Alraune",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:alraune",
+    "monster_class": "Plant:19",
+    "name": "Alraune",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d10",
+        "name": "Vines"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "L",
+    "source_page": "p.13",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 16,
+    "record_key": "Alraune"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

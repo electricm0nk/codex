@@ -614,6 +614,16 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             monster_and_companion_book_counts("bestiary_2"),
             &races,
         ),
+        // SD-29 Epic 5 extend, round 5. Unlike the row above it, this book
+        // carries the monster registry ONLY -- it contributes no companion
+        // family -- so it reads through `chassis_book_counts` like the
+        // monster-only books below.
+        book_status(
+            "bestiary_3",
+            "src/rules_core/rules_tables/bestiary_3",
+            chassis_book_counts("bestiary_3"),
+            &races,
+        ),
         book_status(
             "book_of_the_damned_volume_1",
             "src/rules_core/rules_tables/book_of_the_damned_volume_1",
@@ -778,6 +788,10 @@ mod tests {
                 "bestiary_5",
                 "bestiary_6",
                 "bestiary_2",
+                // SD-29 Epic 5 extend round 5 -- the monster lane's own, kept
+                // in this block so the bestiaries stay adjacent. Unlike
+                // `bestiary_2` it carries the monster registry ONLY.
+                "bestiary_3",
                 // SD-29 Epic 5 extend round 2 -- the two Book of the Damned
                 // volumes, kept next to the other chassis books.
                 "book_of_the_damned_volume_1",
