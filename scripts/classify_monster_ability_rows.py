@@ -65,6 +65,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 
 INVENTORY = "docs/work-inventory.json"
@@ -118,6 +119,53 @@ def special_ability_refs(row: list[str]) -> list[str]:
 
 REMAINING = {"not-started", "not-ingested"}
 
+PI_SCREEN_RS = "src/rules_core/pi_screening.rs"
+
+
+def pi_blacklist_terms() -> list[str]:
+    """`pi_screening::PI_BLACKLIST_TERMS`, parsed out of the Rust source.
+
+    Derived, never re-typed -- the same reading
+    `scripts/transcribe_monster_tables.py` does, for the same reason: one list
+    is authoritative and a copy drifts the first time
+    `docs/governance/ogl-pi-blacklist.md` §3's per-book override adds a term.
+    """
+    text = open(PI_SCREEN_RS, encoding="utf-8").read()
+    start = text.index("pub const PI_BLACKLIST_TERMS")
+    body = text[start : text.index("\n];", start)]
+    terms = re.findall(r'"([^"]+)"', body)
+    if len(terms) < 20:
+        raise SystemExit(
+            f"{PI_SCREEN_RS}: parsed only {len(terms)} PI terms, which cannot be right"
+        )
+    return terms
+
+
+def is_product_identity(row: list[str], key: str, name: str, terms: list[str]) -> bool:
+    """Whether this corpus row's own IDENTITY is Product Identity.
+
+    Two independent signals, and the first is the one this program was blind to
+    until SD-29 Epic 5 round 3 (`decisions.md §50.1`):
+
+    ``NAMEISPI:YES``
+        PCGen's own per-record declaration that the record's NAME is Product
+        Identity.  Inner Sea World Guide carries five; **only three of the five
+        are also on the blacklist**, so a term-list-only screen passes two.
+
+    a blacklist term in the key or name
+        What `gen_book_cache`'s hard stop already catches.
+
+    A row matching either can never be ingested by a per-monster cycle: a KEY
+    is the one field redaction cannot touch, so the record is dropped rather
+    than screened, and reclassifying is an operator decision.  Counting such a
+    row as "reachable" over-reports the lane's real remainder.
+    """
+    for field in row:
+        if field.startswith("NAMEISPI:") and field[len("NAMEISPI:") :].strip() == "YES":
+            return True
+    haystack = f"{key} {name}"
+    return any(term in haystack for term in terms)
+
 
 def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
     """Classify a book's REMAINING ability rows against ALL its monster rows.
@@ -136,13 +184,36 @@ def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
         for u in units
         if u["kind"] == "monster_ability" and u["status"] in REMAINING
     ]
-    monster_keys = {u["corpus_key"] for u in monsters}
     ability_keys = {u["corpus_key"] for u in units if u["kind"] == "monster_ability"}
+
+    # Product Identity is read BEFORE the link, because a PI monster is one no
+    # cycle can ship and therefore one that cannot own anything. Resolving the
+    # link against every monster ROW instead reported 11 of Inner Sea World
+    # Guide's 16 remaining abilities as reachable when their owners are the five
+    # `NAMEISPI:YES` rows -- 16 units of over-reported reachability in one book
+    # (`decisions.md §50.7`).
+    terms = pi_blacklist_terms()
+    pi_monster_keys: set[str] = set()
+    pi_ability_keys: set[str] = set()
+    if directory is not None:
+        for unit in units:
+            path = os.path.join(directory, unit["source_file"])
+            if not os.path.exists(path):
+                continue
+            row = read_row(path, unit["source_line"])
+            if is_product_identity(row, unit["corpus_key"], unit["name"], terms):
+                if unit["kind"] == "monster":
+                    pi_monster_keys.add(unit["corpus_key"])
+                else:
+                    pi_ability_keys.add(unit["corpus_key"])
+
+    shippable_monsters = [u for u in monsters if u["corpus_key"] not in pi_monster_keys]
+    monster_keys = {u["corpus_key"] for u in shippable_monsters}
 
     named: set[str] = set()
     unresolved_refs: list[str] = []
     if directory is not None:
-        for unit in monsters:
+        for unit in shippable_monsters:
             path = os.path.join(directory, unit["source_file"])
             if not os.path.exists(path):
                 continue
@@ -152,25 +223,33 @@ def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
                 else:
                     unresolved_refs.append(ref)
 
-    row_named = prefix = orphan = 0
+    row_named = prefix = orphan = pi = 0
     orphan_keys: list[str] = []
     for unit in abilities:
         key = unit["corpus_key"]
-        if key in named:
+        if key in pi_ability_keys:
+            pi += 1
+        elif key in named:
             row_named += 1
         elif " ~ " in key and key.split(" ~ ")[0] in monster_keys:
             prefix += 1
         else:
             orphan += 1
             orphan_keys.append(key)
+    remaining_monsters = [u for u in monsters if u["status"] in REMAINING]
+    pi_monsters_remaining = sum(
+        1 for u in remaining_monsters if u["corpus_key"] in pi_monster_keys
+    )
     return {
         "book": book,
-        "monsters": sum(1 for u in monsters if u["status"] in REMAINING),
+        "monsters": len(remaining_monsters),
         "monsters_all": len(monsters),
         "abilities": len(abilities),
         "row_named": row_named,
         "prefix": prefix,
         "orphan": orphan,
+        "pi": pi + pi_monsters_remaining,
+        "pi_monsters": pi_monsters_remaining,
         "orphan_keys": orphan_keys,
         "external_ability_refs": sorted(set(unresolved_refs)),
         "directory_found": directory is not None,
@@ -198,16 +277,20 @@ def main() -> None:
     rows.sort(key=lambda r: -(r["monsters"] + r["abilities"]))
 
     width = max((len(r["book"]) for r in rows), default=4)
-    print(f"{'book'.ljust(width)}  {'mon':>4} {'abil':>5} {'row-named':>9} {'prefix':>6} {'ORPHAN':>6}")
+    print(
+        f"{'book'.ljust(width)}  {'mon':>4} {'abil':>5} {'row-named':>9} "
+        f"{'prefix':>6} {'ORPHAN':>6} {'PI':>4}"
+    )
     for r in rows:
         print(
             f"{r['book'].ljust(width)}  {r['monsters']:>4} {r['abilities']:>5} "
-            f"{r['row_named']:>9} {r['prefix']:>6} {r['orphan']:>6}"
+            f"{r['row_named']:>9} {r['prefix']:>6} {r['orphan']:>6} {r['pi']:>4}"
             + ("" if r["directory_found"] else "   [pcgen dir NOT FOUND]")
         )
 
     total_units = sum(r["monsters"] + r["abilities"] for r in rows)
     total_orphan = sum(r["orphan"] for r in rows)
+    total_pi = sum(r["pi"] for r in rows)
     zero_monster = [r for r in rows if r["monsters"] == 0]
     zero_monster_units = sum(r["abilities"] for r in zero_monster)
     print()
@@ -217,7 +300,10 @@ def main() -> None:
         f"  of which in ZERO-monster books        : {zero_monster_units} "
         f"across {len(zero_monster)} books (no monster in the book to own them)"
     )
-    print(f"reachable remainder (units - orphans)   : {total_units - total_orphan}")
+    print(f"Product Identity rows (never shippable)  : {total_pi}")
+    print(
+        f"reachable remainder (units - orphans - PI): {total_units - total_orphan - total_pi}"
+    )
 
 
 if __name__ == "__main__":

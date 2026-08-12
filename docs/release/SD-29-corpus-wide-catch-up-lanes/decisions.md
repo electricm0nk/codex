@@ -2934,24 +2934,48 @@ both kinds over every non-`out_of_scope` book in `docs/work-inventory.json`):
 * **After:** `monster` 1,190 + `monster_ability` 3,020 = **4,210**. `units_ingested` = **23**.
 * Grounded: `monster` 71 → **80**, `monster_ability` 73 → **87**.
 
-`scripts/classify_monster_ability_rows.py` run at cycle start reproduces `§46.1`'s **2,906**
-reachable remainder exactly — that figure is confirmed, not corrected. It is now **2,870**, and the
-arithmetic is not `2906 − 23`: this book contributed 13 orphans where the classifier had predicted
-5, because 8 of them were created by the PI drops. **The classifier under-reports the orphan class
-for any book that carries PI names**, and every remaining campaign-setting book in the lane should
-be expected to do the same.
+`scripts/classify_monster_ability_rows.py`, run at cycle start **as round 2 left it**, reproduces
+`§46.1`'s **2,906** reachable remainder exactly — that figure is confirmed, not corrected.
 
-**Round 4's queue, and what it must check first.** `inner_sea_bestiary` (230 units, 40 monsters, 26
-predicted orphans) and `bestiary_2` (782 units, 316 monsters, 64 orphans) remain the two ranked
-candidates. Before committing to either, run **both** derivations, not one:
+**Then the instrument turned out to be over-reporting, and fixing it moves the ceiling more than
+this round's ingest did.** The classifier resolved every ability's link against every monster ROW,
+including rows that carry `NAMEISPI:YES` and can never be shipped. For this book it called 11 of
+the 16 remaining abilities reachable when their owners are the five PI rows, and counted the 8 PI
+rows themselves as reachable units — 16 units of phantom work in one book. It now reads Product
+Identity first (both signals, the term list parsed out of `pi_screening.rs`) and resolves links
+against **shippable** monsters only:
 
-```bash
-python3 scripts/classify_monster_ability_rows.py <book>
-grep -c 'NAMEISPI:YES' <book>/*races*.lst
+```
+remaining monster+monster_ability units : 4210
+orphan monster_ability rows             : 1405
+  of which in ZERO-monster books        : 703 across 10 books
+Product Identity rows (never shippable)  : 32
+reachable remainder (units - orphans - PI): 2773
 ```
 
-`inner_sea_bestiary` is a `campaign_setting/` book and should be assumed to carry the marker until
-counted. `bestiary_2` is a `roleplaying_game/` bestiary, where `ogl-pi-blacklist.md` §2's own note
-says classic SRD monster names are presumptively Open Game Content — the cheaper book to finish
-*completely* may well be the bigger one, which is `§45.1`'s lesson arriving again by a different
-road.
+**The lane's REAL ceiling is 2,773, not 2,906.** The 133-unit difference is not this round's 23
+ingest; it is work that was never available. And the effect is not confined to a campaign-setting
+book: `bestiary_4`, the largest unstarted book in the lane, carries **14** PI rows whose removal
+turns **73** more of its abilities into orphans (152 → 225).
+
+**The general form.** `§45.1` ruled that a lane must classify corpus rows rather than trust an
+inventory token, and `§46.1` built the instrument that does it. This round is the next turn of the
+same screw: **an instrument that classifies rows is itself a proxy, and it needs validating where
+it makes its confident claim.** It said "reachable" about 16 rows that a hard stop in the generator
+refuses to write.
+
+**Round 4's queue, and what it must check first.** the corrected classifier now answers this in one
+command, and it inverts the ranking round 2 wrote:
+
+| book | remaining units | orphans | PI | **reachable** |
+|---|---|---|---|---|
+| `bestiary_2` | 782 | 64 | **0** | **718** |
+| `inner_sea_bestiary` | 230 | 26 | 7 | **197** |
+| `inner_sea_world_guide` | 21 | 13 | 8 | **0** |
+
+`bestiary_2` is a `roleplaying_game/` bestiary and carries **zero** PI rows — which
+`ogl-pi-blacklist.md` §2's own note predicts, since classic SRD monster names are presumptively Open
+Game Content. It is both the biggest and the cleanest remaining book, and it should be round 4's
+target. `inner_sea_bestiary` is `campaign_setting/` and carries 7 PI rows, exactly as this book did.
+The book round 2 ranked first (`inner_sea_world_guide`) is now finished as far as it can be
+finished: 0 reachable units remain in it.

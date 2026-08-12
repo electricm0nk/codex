@@ -7406,11 +7406,41 @@ orphan monster_ability rows             : 1327
 reachable remainder (units - orphans)   : 2906
 ```
 
-Run at cycle start, this reproduces `§46.1`'s 2,906 **exactly**. The previous round's reported
-remainder is confirmed, not corrected. After this round the raw figure is 4,210; the reachable
-figure is not simply 2,906 − 23, because this book contributed 13 *new* orphans that the classifier
-could not see before the PI screen ran (see §2b) — the honest post-round reachable figure is
-**2,870**, derived as 4,210 − 1,340.
+Run at cycle start on the script **as round 2 left it**, this reproduces `§46.1`'s 2,906
+**exactly**. The previous round's reported remainder is confirmed, not corrected.
+
+**And then the instrument itself turned out to be wrong, in the direction that over-reports work.**
+The classifier resolved every ability's link against every monster ROW in the book, including rows
+that carry `NAMEISPI:YES` and can therefore never be shipped by any cycle. For Inner Sea World
+Guide it reported 11 of the 16 remaining abilities as reachable when their owners are the five PI
+rows — and the 5 PI monsters and 3 PI abilities themselves were counted as reachable units too.
+**16 units of over-reported reachability in one book.**
+
+`scripts/classify_monster_ability_rows.py` now reads Product Identity first (both signals, the term
+list parsed out of `pi_screening.rs` rather than copied) and resolves links against **shippable**
+monsters only. Over the merged tree:
+
+```
+book                    mon  abil row-named prefix ORPHAN   PI
+bestiary_4              220   768         0    543    225   14
+bestiary                284   523       375      2    146    0
+bestiary_2              316   466       398      4     64    0
+...
+inner_sea_bestiary       40   190       157      0     26    7
+inner_sea_gods           39   161         0     77     81    3
+inner_sea_world_guide     5    16         0      0     13    8
+
+remaining monster+monster_ability units : 4210
+orphan monster_ability rows             : 1405
+  of which in ZERO-monster books        : 703 across 10 books (no monster in the book to own them)
+Product Identity rows (never shippable)  : 32
+reachable remainder (units - orphans - PI): 2773
+```
+
+**The lane's REAL ceiling is 2,773, not 2,906.** Inner Sea World Guide now reads **0** reachable
+units remaining, which is the correct reading of a book this round finished as far as it can be
+finished. `bestiary_4` gained 73 orphans from its own 14 PI rows — a book nobody has looked at yet,
+where the same cascade is already visible.
 
 ### 1c. Preflight and environment
 
@@ -7546,6 +7576,20 @@ bodies, not by eyeballing `git diff --stat`. Bonus Bestiary's table reproduces i
 check, 63 diff lines, every one of them the new field); its committed file keeps the pilot's
 hand-authored header, so the field was inserted into it rather than the file being regenerated,
 which is round 2's own recorded treatment of that file.
+
+### 2c. The instrument that measured the ceiling was itself over-reporting
+
+`§46.1` established the lane's ceiling with `classify_monster_ability_rows.py`, and `§45.1`'s rule
+is that a lane classifies corpus ROWS before committing a round to a book. Both hold. What this
+round adds is that **the classifier was blind to exactly the thing that stopped this book** — a row
+whose identity is Product Identity is not merely un-ingested, it is un-ingestable, and every ability
+it owns is an orphan.
+
+The corrected script reports a `PI` column and subtracts it. Its effect is not confined to this
+book: `bestiary_4`, the largest unstarted book in the lane, carries **14** PI rows whose removal
+turns **73** of its abilities into orphans (152 → 225). `inner_sea_bestiary` carries 7 and
+`inner_sea_gods` 3. Round 4 gets an honest queue from the same one command rather than discovering
+this per book.
 
 ### 4. Definition of done
 
