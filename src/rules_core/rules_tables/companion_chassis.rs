@@ -237,10 +237,11 @@ impl CompanionBook {
 /// corpus cache, the companion catalog and the reach gate at once — none of
 /// those consumers names a book of its own.
 ///
-/// The seven below are every book with **zero** orphan ability rows that this
+/// The eight below are every book with **zero** orphan ability rows that this
 /// lane has reached, derived rather than assumed:
 /// `python3 scripts/classify_companion_rows.py inner_sea_combat monster_codex
-/// inner_sea_intrigue horror_adventures bestiary_5 bestiary_6 bestiary_2`.
+/// inner_sea_intrigue horror_adventures bestiary_5 bestiary_6 bestiary_2
+/// bestiary`.
 ///
 /// Round 2's three (`bestiary_5`, `bestiary_6`, `bestiary_2`) were held back
 /// from round 1 because each needs its own `RuleSetId`, whose scope flip moves
@@ -280,6 +281,37 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "bestiary_2",
         companions: super::bestiary_2::companions_static(),
         companion_abilities: super::bestiary_2::companion_abilities_static(),
+    },
+    // SD-29 Epic 7 round 3. Bestiary 1, and the first registered book whose
+    // name is spelled THREE different ways by three different consumers
+    // (`decisions.md §54.3`):
+    //
+    // * `beastiary`   — the `data/corpus/` directory, and therefore the value
+    //                   of this field, because every consumer of
+    //                   `corpus_book` (the generator's output root,
+    //                   `reach_gate::companions_reach`'s denominator) reads a
+    //                   corpus directory.
+    // * `bestiary`    — the PCGen source directory and `work-inventory.json`'s
+    //                   book id.
+    // * `beastiary1`  — this Rust module, and the ingest diagnostic's book id.
+    //
+    // None of the three is renamed here: `§44` records the same split silently
+    // under-reporting 108 Bestiary 1 records once already, and the fix for that
+    // class of bug is a translation the code performs, not a spelling everyone
+    // is asked to remember. `CORPUS_DIR_ALIASES` (work inventory) and
+    // `CORPUS_BOOK_IDS` (reach gate) are the two translations, and both already
+    // existed before this row.
+    //
+    // First book needing no new `RuleSetId` — `RuleSetId::Bestiary1` was
+    // already compiled for the book's monsters and equipment, so registering
+    // its companions moved no other kind's status — and the first admitted by
+    // the granted-by ownership shape (`decisions.md §54.1`). Under shapes 1-3
+    // alone it reported five orphans and would have been held back exactly as
+    // `§51.7` predicted.
+    CompanionBook {
+        corpus_book: "beastiary",
+        companions: super::beastiary1::companions_static(),
+        companion_abilities: super::beastiary1::companion_abilities_static(),
     },
 ];
 

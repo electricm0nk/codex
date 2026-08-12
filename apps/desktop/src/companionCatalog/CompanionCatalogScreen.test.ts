@@ -34,7 +34,13 @@ import { assert, assertEqual } from '../testSupport/asserts';
  */
 
 /** The book wire codes `companion_catalog.rs` serves, from its own `book_wire_code`. */
-const SERVED_BOOK_CODES = ['ISC', 'MC', 'ISI', 'HA'] as const;
+// Every wire code `companion_catalog::book_wire_code` can emit, i.e. one per
+// row of `companion_chassis::COMPANION_BOOKS`. Hand-maintained on this side of
+// the wire, so it goes stale silently: round 2 registered B5/B6/B2 and left
+// this list at round 1's four, which is why B5's, B6's and B2's labels were
+// never checked by anything (`decisions.md §54.5`). Corrected here to the
+// eight the backend serves, B1 included.
+const SERVED_BOOK_CODES = ['ISC', 'MC', 'ISI', 'HA', 'B5', 'B6', 'B2', 'B1'] as const;
 
 /** The `SIZE:` codes the registered creature rows actually carry. */
 const SERVED_SIZE_CODES = ['T', 'M', 'L'] as const;

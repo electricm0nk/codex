@@ -30,7 +30,7 @@ An ability row no creature row claims is a record that loads and is never shown:
 the stub class `§44.2` was written about.  The `ORPHAN` column below is that
 count, and it is a **ceiling on the lane**, not a preference.
 
-# The three ownership shapes, every one stated by the corpus
+# The four ownership shapes, every one stated by the corpus
 
 1. **row-named** — a creature row's `ABILITY:Special Ability|AUTOMATIC|<name>`
    token names the ability outright (by `KEY:` or by display name).  This is the
@@ -42,9 +42,22 @@ count, and it is a **ceiling on the lane**, not a preference.
 3. **prefix** — a namespaced `KEY:<Owner> ~ <Leaf>` whose `<Owner>` is a creature
    of this book, either verbatim or as the inner name of `Companion (<Owner>)` /
    `Familiar (<Owner>)`.  `Worg ~ Mastery` owns through `Companion (Worg)`.
+4. **granted-by** — shape 1's *own* token, read on an **ability** row rather
+   than on a creature row.  An `ABILITY:Special Ability|AUTOMATIC|<name>` token
+   on an ability row that is itself owned grants `<name>` underneath the same
+   creature, transitively.  Bestiary 1 is where this shape is unavoidable
+   (`decisions.md §54.1`): `Companion Advancement ~ Dinosaur (Ankylosaurus)` is
+   an ability row owned by `Companion (Dinosaur (Ankylosaurus))` through shape
+   2, and it is the row — not the creature row — that names
+   `Ankylosaurus ~ Stun`.  Applying shape 1 only to creature rows reports five
+   of Bestiary 1's 35 ability rows as orphans while the corpus states their
+   owner one hop away.
 
 A looser rule would over-report reachability, which is the direction that ships
-stubs; each shape above is a token the row itself carries.
+stubs; each shape above is a token the row itself carries.  Shape 4 in
+particular is **not** "an ability near another ability": it is shape 1's exact
+token, and it only propagates from a row that already has an owner, so the
+closure can never manufacture reachability out of an orphan pair.
 
 Usage::
 
@@ -258,7 +271,32 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
             if prefix in creature_keys or prefix in creature_species:
                 owned_prefix.add(key)
 
+    # Shape 4, granted-by: shape 1's own token read on an ability row that is
+    # itself already owned. Run to a fixpoint, because an advancement package
+    # may name a row that names another; seeded ONLY from rows shapes 1-3
+    # established, so an orphan can never grant reachability to another orphan.
+    grants: dict[str, list[str]] = {}
+    for unit in abilities:
+        path = resolve_source_file(directory, unit["source_file"])
+        row = read_row(path, unit["source_line"])
+        named: list[str] = []
+        for ref in special_ability_refs(row):
+            hit = ability_by_key.get(ref) or ability_by_name.get(ref)
+            if hit is not None and hit["corpus_key"] != unit["corpus_key"]:
+                named.append(hit["corpus_key"])
+        grants[unit["corpus_key"]] = named
+
     owned = owned_row_named | owned_prerace | owned_prefix
+    owned_granted: set[str] = set()
+    frontier = list(owned)
+    while frontier:
+        key = frontier.pop()
+        for granted in grants.get(key, []):
+            if granted not in owned:
+                owned.add(granted)
+                owned_granted.add(granted)
+                frontier.append(granted)
+
     orphans = [u["corpus_key"] for u in abilities if u["corpus_key"] not in owned]
     return {
         "book": book,
@@ -268,6 +306,7 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
         "row_named": len(owned_row_named),
         "prerace": len(owned_prerace),
         "prefix": len(owned_prefix),
+        "granted": len(owned_granted),
         "orphans": orphans,
         "gated": [
             (u["corpus_key"], u["source_file"], gates[u["source_file"]]) for u in gated
@@ -286,11 +325,12 @@ def main() -> None:
     books = wanted or sorted(units_by_book)
     print(
         f"{'book':32} {'crea':>5} {'abil':>5} {'clas':>5} {'named':>6} "
-        f"{'prerace':>8} {'prefix':>7} {'ORPHAN':>7}"
+        f"{'prerace':>8} {'prefix':>7} {'granted':>8} {'ORPHAN':>7}"
     )
     total_orphans = 0
     total_units = 0
     total_gated = 0
+    total_classes = 0
     for book in books:
         units = units_by_book.get(book, [])
         if not units:
@@ -303,11 +343,12 @@ def main() -> None:
         result = classify(book, units, directory)
         total_orphans += len(result["orphans"])
         total_gated += len(result["gated"])
+        total_classes += result["classes"]
         total_units += len(units)
         print(
             f"{book:32} {result['creatures']:5} {result['abilities']:5} "
             f"{result['classes']:5} {result['row_named']:6} {result['prerace']:8} "
-            f"{result['prefix']:7} {len(result['orphans']):7}"
+            f"{result['prefix']:7} {result['granted']:8} {len(result['orphans']):7}"
         )
         if wanted and result["orphans"]:
             for key in result["orphans"]:
@@ -315,10 +356,22 @@ def main() -> None:
         if wanted and result["gated"]:
             for key, source_file, gate in result["gated"]:
                 print(f"    GATED  {key} — {source_file} loaded under {gate}")
+    # `decisions.md §51.1`: "a ceiling that subtracts one exclusion is not a
+    # ceiling; it is one exclusion." That section states this line already
+    # subtracts all three known exclusions. It did not — the
+    # `*_classes_companion.lst` class rows, which `transcribe_companion_tables`
+    # refuses with a hard `SystemExit`, were still in the printed remainder, so
+    # the number here read 886 while every doc downstream carried the hand-
+    # corrected 879. `decisions.md §54.2` records the correction; the class-row
+    # subtraction is now in the instrument rather than in prose.
     print(f"\ntotal companion units in scope : {total_units}")
     print(f"orphan ability rows            : {total_orphans}")
     print(f"PRECAMPAIGN-gated on an uningested campaign : {total_gated}")
-    print(f"reachable remainder            : {total_units - total_orphans - total_gated}")
+    print(f"`*_classes_companion.lst` class rows the chassis refuses : {total_classes}")
+    print(
+        "reachable remainder            : "
+        f"{total_units - total_orphans - total_gated - total_classes}"
+    )
 
 
 if __name__ == "__main__":

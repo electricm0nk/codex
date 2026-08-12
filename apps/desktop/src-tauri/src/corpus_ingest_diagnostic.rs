@@ -332,9 +332,18 @@ fn monster_and_companion_book_counts(corpus_book: &str) -> BTreeMap<String, u32>
     counts
 }
 
+/// Bestiary 1's compiled families: its SD-22 monsters, plus — since SD-29
+/// Epic 7 round 3 — its companion rows.
+///
+/// The companion half is looked up under `"beastiary"`, the `data/corpus/`
+/// spelling `companion_chassis::COMPANION_BOOKS` keys on, while this book's
+/// diagnostic id is `beastiary1`. Reporting only the monster half would
+/// under-state the book by 59 records, the same defect
+/// `monster_and_companion_book_counts` exists for.
 fn beastiary1_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("monsters".to_string(), ALL_BESTIARY1_MONSTERS.len() as u32);
+    counts.extend(companion_book_counts("beastiary"));
     counts
 }
 

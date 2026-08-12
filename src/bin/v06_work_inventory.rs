@@ -1846,12 +1846,31 @@ fn gather_engine_facts(
     // is iterated, never enumerated here. Both structural shapes go into one set
     // per book because `Kind::Companion` is one kind (see
     // `EngineFacts::chassis_companion_keys`).
+    //
+    // Keyed by the ENGINE book, translated from the registry's corpus
+    // directory, never by the corpus directory itself. The lookup at the
+    // `Kind::Companion` verdict arm has an `engine_book` in hand
+    // (`rule_set_id`), and for the first seven registered companion books the
+    // two strings happened to be identical, so a raw `book.corpus_book` key
+    // worked by coincidence rather than by rule. Bestiary 1 is where the
+    // coincidence ends: its corpus directory is `beastiary`, its engine book is
+    // `bestiary_1`, and an untranslated key would have reported all 59 of its
+    // grounded records as `companion_content_has_no_engine_table` — the
+    // silent-under-report shape `decisions.md §44` already paid for once.
+    // `engine_book_for_corpus_dir` is the existing translation, not a new one.
     let mut chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
     for book in companion_chassis::COMPANION_BOOKS {
         let mut keys: BTreeSet<String> =
             book.companions.iter().map(|c| c.key.to_lowercase()).collect();
         keys.extend(book.companion_abilities.iter().map(|a| a.key.to_lowercase()));
-        chassis_companion_keys.insert(book.corpus_book, keys);
+        let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
+            panic!(
+                "companion book {:?} is registered in COMPANION_BOOKS but resolves to no rule \
+                 set; add it to CORPUS_DIR_ALIASES or register its RuleSetId",
+                book.corpus_book
+            )
+        });
+        chassis_companion_keys.insert(engine_book, keys);
     }
 
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();

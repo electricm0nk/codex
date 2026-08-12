@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:companion:dolphin_hold_breath",
+      "beastiary:companion:companion_advancement_dolphin"
+    ],
+    "corpus_key": "Companion (Dolphin)",
+    "external_ability_refs": [],
+    "key": "beastiary:companion:companion_dolphin",
+    "monster_class": "Companion:2",
+    "name": "Companion (Dolphin)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.88",
+    "speeds": [
+      {
+        "feet": 80,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "AnimalCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_companion.lst",
+    "sha256": "3fe313f8e8a6327555fb01d34bf2cf2509d638a3005563d66fb1c81d8a9b715c",
+    "line": 15,
+    "record_key": "Companion (Dolphin)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

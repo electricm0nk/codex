@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "corpus_key": "Ankylosaurus ~ Stun",
+    "delivery": "Extraordinary",
+    "description": "The ankylosaurus's tail can deliver a powerful, stunning blow. A creature struck by this attack must make a DC %1 save or be dazed for 1 round. If the strike is a critical hit and the target fails its save, it is instead stunned for 1d4 rounds.",
+    "description_variables": [
+      "StunDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:companion:ankylosaurus_stun",
+    "name": "Stun",
+    "owners": [
+      "beastiary:companion:companion_dinosaur_ankylosaurus"
+    ],
+    "record_type": "ability",
+    "source_page": "p.83",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
+    "line": 31,
+    "record_key": "Ankylosaurus ~ Stun"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

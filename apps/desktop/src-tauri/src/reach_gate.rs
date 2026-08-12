@@ -1202,6 +1202,19 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("bestiary_5", "companions") => Some(companions_reach("bestiary_5", "B5")),
         ("bestiary_6", "companions") => Some(companions_reach("bestiary_6", "B6")),
         ("bestiary_2", "companions") => Some(companions_reach("bestiary_2", "B2")),
+        // SD-29 Epic 7 round 3. Bestiary 1's companions, and the only claim in
+        // this file whose family id and corpus directory are different words:
+        // the family is `beastiary1` (what the ingest diagnostic calls the
+        // book), the corpus directory is `beastiary`, and the PCGen source
+        // directory is `bestiary`. See `companion_chassis::COMPANION_BOOKS`.
+        //
+        // A SECOND claim for this book, beside `("beastiary1", "monsters")`.
+        // The two judge different populations from the same book —
+        // `Companion (Wolf)` is an advanceable companion row, `Wolf` is a stat
+        // block — and `beastiary1`'s own
+        // `the_companion_rows_are_not_this_module_s_monster_rows` pins that
+        // they never collide.
+        ("beastiary1", "companions") => Some(companions_reach("beastiary", "B1")),
 
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,

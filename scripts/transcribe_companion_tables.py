@@ -358,6 +358,45 @@ def transcribe(book: str) -> str:
                 owners[key].append(candidate)
                 creature_ability_keys[candidate].append(key)
 
+    # Shape 4, granted-by (`classify_companion_rows` §"The four ownership
+    # shapes", `decisions.md §54.1`). An ability row that is itself owned may
+    # carry shape 1's own `ABILITY:Special Ability|AUTOMATIC|<name>` token, and
+    # then it — not the creature row — is what names `<name>`. The grant is
+    # attributed to the granting row's OWNER creatures, because
+    # `companion_chassis`'s both-directions link test types `owners` as creature
+    # keys and the catalog serves an ability underneath the creature that
+    # reaches it. The granting row is not dropped from the chain: it is a
+    # registered record of this book in its own right, and its own `owners` say
+    # which creature it hangs from.
+    #
+    # Seeded only from rows shapes 1-3 already owned, and run to a fixpoint in
+    # the abilities file's own row order, so the output cannot depend on set
+    # iteration order and an orphan can never grant reachability to an orphan.
+    granted_by: dict[str, list[str]] = {}
+    for unit in abilities:
+        key = unit["corpus_key"]
+        row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
+        named = []
+        for ref in special_ability_refs(row):
+            hit = ability_by_key.get(ref) or ability_by_name.get(ref)
+            if hit is not None and hit["corpus_key"] != key:
+                named.append(hit["corpus_key"])
+        granted_by[key] = named
+
+    changed = True
+    while changed:
+        changed = False
+        for unit in abilities:
+            key = unit["corpus_key"]
+            if not owners[key]:
+                continue
+            for target in granted_by[key]:
+                for creature in owners[key]:
+                    if creature not in owners[target]:
+                        owners[target].append(creature)
+                        creature_ability_keys[creature].append(target)
+                        changed = True
+
     orphans = [k for k, v in owners.items() if not v]
     if orphans:
         raise SystemExit(
@@ -495,11 +534,28 @@ def transcribe(book: str) -> str:
     return "\n".join(out)
 
 
+# A corpus book id is not always the name of the Rust module that holds its
+# tables. `bestiary` is `beastiary1` on the engine side — a misspelling that
+# predates this lane and that `decisions.md §44` records silently under-reporting
+# 108 Bestiary 1 records once already. Writing `bestiary/companion_data.rs` would
+# create a SECOND module for a book that already has one, and the second would
+# compile, pass its own tests and be reachable from nothing.
+#
+# Mapped rather than renamed: renaming `beastiary1` is a repo-wide identifier
+# change with no companion-lane content in it (`AGENTS.md`, "Do not expand
+# scope"). Books absent from this map use their own id.
+MODULE_DIR = {"bestiary": "beastiary1"}
+
+
+def module_dir(book: str) -> str:
+    return MODULE_DIR.get(book, book)
+
+
 def main() -> None:
     if len(sys.argv) != 2:
         raise SystemExit(f"usage: {sys.argv[0]} <book>")
     book = sys.argv[1]
-    directory = f"src/rules_core/rules_tables/{book}"
+    directory = f"src/rules_core/rules_tables/{module_dir(book)}"
     os.makedirs(directory, exist_ok=True)
     path = os.path.join(directory, "companion_data.rs")
     with open(path, "w", encoding="utf-8") as handle:
