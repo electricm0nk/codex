@@ -24,7 +24,7 @@
 //! Book of the Damned volumes live under `campaign_setting/`, and the
 //! expectation going in was that the PI screen would bite: Inner Sea Races, the
 //! race-trait lane's campaign-setting book, had **12 of its 72** descriptions
-//! PI-redacted (`decisions.md §45.2`), because Golarion nation and ethnicity
+//! PI-redacted (`decisions.md §45.2`), because setting nation and ethnicity
 //! names occur inside otherwise mechanical prose.
 //!
 //! **It did not, and the derived reason is worth recording rather than
@@ -35,6 +35,12 @@
 //! carries Product Identity lives in the book's chapters, not in a stat block.
 //! "Campaign setting" predicts a PI hit rate for `race_trait` and does not
 //! predict one for `monster`.
+//!
+//! This paragraph was itself the cycle's `pi-sweep` failure: naming the setting
+//! outright put a blacklisted term in a `rules_tables` source file. The sweep
+//! is a hard stop and the term was removed rather than baselined -- a doc
+//! comment does not need the proper noun to make its point, and baselining
+//! would have spent the exemption on prose.
 //!
 //! # The link shape is Monster Codex's, at scale
 //!

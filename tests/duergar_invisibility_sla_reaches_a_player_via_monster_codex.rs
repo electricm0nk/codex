@@ -66,8 +66,19 @@ const SETTER_BOOK: &str = "monster_codex";
 /// on the Tauri crate. [`the_loaded_books_are_the_ones_the_app_loads`] pins the
 /// two lists equal by reading that file, so the copy cannot drift silently —
 /// which is precisely the failure mode the predecessor test had.
-const LOADED_BOOKS: &[&str] =
-    &["core_rulebook", "beastiary", "advanced_race_guide", "advanced_players_guide", "monster_codex"];
+const LOADED_BOOKS: &[&str] = &[
+    "core_rulebook",
+    "beastiary",
+    "advanced_race_guide",
+    "advanced_players_guide",
+    "monster_codex",
+    // SD-29 race-trait lane, rounds 2 and 3. The app loads them, so this
+    // copy must too -- `the_loaded_books_are_the_ones_the_app_loads` reads
+    // `race_catalog.rs` and fails on exactly this drift, which is what it
+    // did here.
+    "inner_sea_races",
+    "horror_adventures",
+];
 
 fn corpus_dirs() -> Vec<(&'static str, PathBuf)> {
     LOADED_BOOKS.iter().map(|book| (*book, PathBuf::from("data/corpus").join(book))).collect()

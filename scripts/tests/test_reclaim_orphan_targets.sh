@@ -5,7 +5,7 @@
 #
 # Why this exists: on 2026-08-10 reclaim.sh reported "would reclaim: 0
 # item(s), 0.0B" while ~40G of orphaned cargo output sat in
-# /home/ubuntu/workspace/codex-target-* and /tmp/codex-target-* — the exact
+# $HOME/workspace/codex-target-* and /tmp/codex-target-* — the exact
 # directories the current operating discipline tells every dispatched agent
 # to create. The script scanned only the scratchpad root and ~/.cache, so
 # the safety net had a hole exactly where the new discipline generates

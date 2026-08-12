@@ -1236,10 +1236,28 @@ mod tests {
             .collect();
         // Deduped: SD-29's Monster Codex pilot added a SECOND alternate setting
         // this same flag (`Duergar ~ Twilight-Touched`, `mc_abilities_race.lst:17`)
-        // alongside ARG's `Duergar ~ Blood Enmity`, so the flag is now named by
-        // two rows and grants the same one row twice. Two setters granting one
-        // record is the corpus's own shape, not a duplicate record -- which is
-        // exactly why the setters are asserted too, rather than only the target.
+        // alongside ARG's `Duergar ~ Blood Enmity`, and its Inner Sea Races
+        // round added a THIRD (`Duergar ~ Magical Taskmaster`), so the flag is
+        // now named by three rows that all grant the same one row. Several
+        // setters granting one record is the corpus's own shape, not a
+        // duplicate record -- which is exactly why the setters are asserted
+        // too, rather than only the target, and why THIS list grows with each
+        // book while the target list does not.
+        //
+        // Derived from the committed records rather than read off the menu:
+        //
+        // ```
+        // python3 -c "
+        // import json,glob
+        // for p in glob.glob('data/corpus/*/race_trait/**/*.json', recursive=True):
+        //     d=json.load(open(p))['data']
+        //     if 'Duergar_ReplaceSLAInvisibility' in (d.get('sets_replace_flags') or []):
+        //         print(p.split('/')[2], d['key'])"
+        // ```
+        //
+        // -> `monster_codex Duergar ~ Twilight-Touched`,
+        //    `advanced_race_guide Duergar ~ Blood Enmity`,
+        //    `inner_sea_races Duergar ~ Magical Taskmaster`.
         let setters: BTreeSet<&str> = duergar
             .alternates
             .iter()
@@ -1250,13 +1268,17 @@ mod tests {
             .collect();
         assert_eq!(
             setters,
-            BTreeSet::from(["Duergar ~ Blood Enmity", "Duergar ~ Twilight-Touched"]),
-            "both books' setters of Duergar_ReplaceSLAInvisibility"
+            BTreeSet::from([
+                "Duergar ~ Blood Enmity",
+                "Duergar ~ Magical Taskmaster",
+                "Duergar ~ Twilight-Touched",
+            ]),
+            "all three books' setters of Duergar_ReplaceSLAInvisibility"
         );
         assert_eq!(
             grants.iter().copied().collect::<BTreeSet<&str>>(),
             BTreeSet::from(["Duergar ~ Spell-Like Ability ~ Enlarge Person"]),
-            "and both grant the one row the flag gates"
+            "and all three grant the one row the flag gates"
         );
     }
 

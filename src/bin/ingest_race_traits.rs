@@ -1356,7 +1356,12 @@ mod tests {
             );
             total += checked;
         }
-        assert_eq!(total, 233, "156 ARG + 5 Monster Codex + 72 Inner Sea Races");
+        assert_eq!(
+            total, 276,
+            "156 ARG + 5 Monster Codex + 72 Inner Sea Races + 43 Horror Adventures. \
+             Re-derived on disk rather than transcribed: count the record files under \
+             each BOOK_SOURCES root's `race_trait/` directory"
+        );
     }
 
     #[test]
