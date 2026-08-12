@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T13:11:02Z",
+  "data": {
+    "key": "Agathion-Blooded ~ Ability Scores",
+    "name": "+2 Constitution, +2 Charisma",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Aasimar Racial Trait",
+      "SpecialQuality",
+      "Racial Ability Scores"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Idyllkin possess bestial aspects and calm dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Agathion-Blooded ~ Ability Scores"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality.Racial Ability Scores"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Special Ability,Aasimar ~ Agathion-Blooded"
+      },
+      {
+        "key": "DESC",
+        "value": "Idyllkin possess bestial aspects and calm dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "STAT",
+          "CON,CHA",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+    "sha256": "b0df1e60ce6ee7ac82342e430304020abd174aaa065cca5b608a0a2f4ab0ea9e",
+    "line": 24,
+    "record_key": "Agathion-Blooded ~ Ability Scores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ]
+}

@@ -106,9 +106,22 @@ struct BookSource {
     /// wiring-class index is built for. These are the same string for every
     /// book this binary writes.
     corpus_book: &'static str,
-    /// The source `.lst`, relative to the PCGen `data/` root. This exact string
-    /// is written into every record's `source.path`.
-    lst_relative: &'static str,
+    /// The source `.lst` files, relative to the PCGen `data/` root. The one a
+    /// row came from is written verbatim into that record's `source.path`.
+    ///
+    /// **A list rather than a single path since SD-29's race-trait lane round
+    /// 4.** A book may declare its racial traits across more than one file --
+    /// `core_essentials` states Aasimar's in
+    /// `races/aasimar/aasimar_abilities_race_subrace.lst` and Tiefling's in
+    /// `races/tiefling/tiefling_abilities_race_subrace.lst` -- and the output
+    /// tree is rebuilt per *book*, so two `BookSource` rows sharing one
+    /// `corpus_book` would have the second silently erase the first's records.
+    lst_relatives: &'static [&'static str],
+    /// The `<race>_abilities_globalvar_subrace.lst` files that state, per
+    /// heritage selector, which replacement traits it grants and which
+    /// standard trait each one displaces. Empty for every book whose racial
+    /// traits declare their own gate on their own row. See [`subrace_grants`].
+    subrace_globalvar_relatives: &'static [&'static str],
     /// The book's own directory under the PCGen `data/` root, which the
     /// wiring-class index scans for the row's magnitude signals.
     pcgen_book_relative: &'static str,
@@ -126,12 +139,14 @@ struct BookSource {
 const BOOK_SOURCES: &[BookSource] = &[
     BookSource {
         corpus_book: "advanced_race_guide",
-        lst_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+        lst_relatives: &["pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst"],
+        subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
     },
     BookSource {
         corpus_book: "monster_codex",
-        lst_relative: "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+        lst_relatives: &["pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst"],
+        subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
     },
     // Inner Sea Races, SD-29's race-trait lane round 2. The single largest
@@ -144,7 +159,8 @@ const BOOK_SOURCES: &[BookSource] = &[
     // that DO need one.
     BookSource {
         corpus_book: "inner_sea_races",
-        lst_relative: "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+        lst_relatives: &["pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst"],
+        subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/campaign_setting/inner_sea_races",
     },
     // Horror Adventures, SD-29's race-trait lane round 3. 41 of its 43
@@ -173,8 +189,46 @@ const BOOK_SOURCES: &[BookSource] = &[
     // ungated. Recorded as a scope finding for a successor round, not as gap.
     BookSource {
         corpus_book: "horror_adventures",
-        lst_relative: "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+        lst_relatives: &["pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst"],
+        subrace_globalvar_relatives: &[],
         pcgen_book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
+    },
+    // Core Essentials' Aasimar and Tiefling *heritage* traits, SD-29's
+    // race-trait lane round 4 -- the last of the 553-unit ceiling that is
+    // ordinary content rather than a chassis problem (`decisions.md` 47.8).
+    //
+    // 48 rows across two files, and they are the only rows in this lane whose
+    // swap is not declared on the row itself. Each is gated
+    // `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` on a
+    // *selector* row typed `TYPE:<Race> Subrace`, and which standard trait it
+    // replaces is stated in a third file. Both halves are read here: the
+    // selectors become the records a player picks, and
+    // [`subrace_grants`] supplies the replace-flags and the
+    // `ABILITY:...|AUTOMATIC|...` grant links that make the 48 apply.
+    //
+    // Classified before the round committed to the book, per `decisions.md`
+    // 45.1:
+    // `python3 scripts/classify_race_trait_rows.py aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst`
+    // -> aasimar: `in-scope rows 18 | alternate 0 | flag_granted 18`;
+    //    tiefling: `in-scope rows 30 | alternate 0 | flag_granted 30`.
+    // Zero of the 48 are self-gating alternates, which is exactly why the
+    // third file is not optional.
+    //
+    // **`races/skinwalker/` is deliberately not listed.** It carries the same
+    // subrace shape, but Skinwalker is not one of the 18 races this project
+    // models, so `IN_SCOPE_RACES` would drop every row and
+    // `RaceCorpus::resolve` would return `None` for the chassis regardless.
+    BookSource {
+        corpus_book: "core_essentials",
+        lst_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_race_subrace.lst",
+        ],
+        subrace_globalvar_relatives: &[
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst",
+            "pathfinder/paizo/roleplaying_game/core_essentials/races/tiefling/tiefling_abilities_globalvar_subrace.lst",
+        ],
+        pcgen_book_relative: "pathfinder/paizo/roleplaying_game/core_essentials",
     },
 ];
 
@@ -205,6 +259,11 @@ const IN_SCOPE_RACES: [&str; 18] = [
 
 const RACIAL_TRAIT_TYPE_SUFFIX: &str = " Racial Trait";
 const RACIAL_DEFAULT_TYPE_SUFFIX: &str = " Racial Default";
+/// The TYPE component that marks a *heritage selector* row -- `TYPE:Aasimar
+/// Subrace`, `TYPE:Tiefling Subrace`. See [`subrace_grants`].
+const SUBRACE_TYPE_SUFFIX: &str = " Subrace";
+/// PCGen's suffix marking a row an *update* to a record declared elsewhere.
+const MOD_MARKER: &str = ".MOD";
 
 fn sha256_hex(bytes: &[u8]) -> String {
     let mut hasher = Sha256::new();
@@ -271,6 +330,10 @@ struct TraitRow {
     category: Option<String>,
     type_tokens: Vec<String>,
     is_racial_default: bool,
+    /// True when the row's race key came from a `TYPE:<Race> Subrace`
+    /// component rather than `TYPE:<Race> Racial Trait` -- PCGen's *heritage
+    /// selector*. See [`subrace_grants`] for the whole shape.
+    is_subrace_selector: bool,
     suppressed_by_flag: Option<String>,
     sets_replace_flags: Vec<String>,
     description: Option<String>,
@@ -601,6 +664,124 @@ fn is_mod_row(fields: &[&str]) -> bool {
     fields.first().is_some_and(|f| f.contains(".MOD"))
 }
 
+/// One `<Race> Racial Trait|AUTOMATIC|<key>|PREVAREQ:<flag>,0` grant a
+/// heritage selector's `.MOD` block declares.
+#[derive(Debug, Clone, PartialEq, Eq)]
+struct SubraceGrant {
+    /// The replacement trait this selector hands the character.
+    granted_trait_key: String,
+    /// The `<Race>_Replace<Trait>` flag guarding the standard trait the
+    /// replacement stands in for.
+    replaces_flag: String,
+}
+
+/// Reads a race's `<race>_abilities_globalvar_subrace.lst` and returns, per
+/// heritage-selector key, the replacement traits that selector grants and the
+/// standard-trait flag each one displaces.
+///
+/// # Why this file has to be read at all
+///
+/// `core_essentials`' two subrace files are the last books in this lane
+/// (`decisions.md` Section 47.8) and they state the swap in a shape no other
+/// book this binary ingests uses. The selector row is typed `TYPE:Aasimar
+/// Subrace` and the replacement rows are typed `TYPE:...Aasimar Racial
+/// Trait...` and gated `PREABILITY:1,CATEGORY=Special Ability,Aasimar ~
+/// Agathion-Blooded` -- so on the evidence of that file alone the replacements
+/// have a *positive* gate naming an ability, and nothing says which standard
+/// traits they replace. Ingesting them on that evidence produces records that
+/// load and never apply, or worse, apply *alongside* the standard trait and
+/// double its bonus.
+///
+/// The missing half is stated, per selector, in the race's
+/// `_abilities_globalvar_subrace.lst`:
+///
+/// ```text
+/// CATEGORY=Special Ability|Aasimar ~ Agathion-Blooded.MOD
+///     ABILITY:Aasimar Racial Trait|AUTOMATIC|Agathion-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0
+///     ABILITY:Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Type|PREVAREQ:Aasimar_ReplaceType,0
+/// ```
+///
+/// Read: *taking this heritage grants `Agathion-Blooded ~ Ability Scores`
+/// while `Aasimar_ReplaceAbilityScores` is 0*. The block names the selector's
+/// **whole** effective trait set -- the race's own standard rows where the
+/// heritage keeps them, and a subrace-specific row where it does not. Only the
+/// latter are returned: a grant whose target is the race's own
+/// `<Race> ~ <Trait>` key replaces nothing.
+///
+/// This is exactly the second gate source `ingest_races::globalvar_gates`
+/// already reads for a race's *default* trait set
+/// (`CATEGORY=Special Ability|Aasimar ~ Default.MOD`); the subrace file is the
+/// same protocol addressed to a heritage instead of to `~ Default`.
+///
+/// # Why reading it is transcription, not invention
+///
+/// It is checkable against a first source and **is** checked, by the caller:
+/// Aasimar's six selector rows carry their own
+/// `FACT:Aasimar_Replace<Trait>|True` tokens, and the flags derived here must
+/// equal them exactly. Tiefling's ten carry no `FACT:` token at all, which is
+/// the whole reason this file must be read -- and it is the same file, the
+/// same token and the same rule that Aasimar proves.
+///
+/// Only `PREVAREQ:<flag>,0` is read, for `globalvar_gates`' stated reason: a
+/// `PREVAREQ:<flag>,1` is the opposite statement and treating it as a
+/// suppressor would invert the rule.
+fn subrace_grants(text: &str, race_key: &str) -> BTreeMap<String, Vec<SubraceGrant>> {
+    let category_prefix = format!("{race_key} Racial Trait");
+    let standard_key_prefix = format!("{race_key} ~ ");
+    let mut out: BTreeMap<String, Vec<SubraceGrant>> = BTreeMap::new();
+    for line in text.lines() {
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            continue;
+        }
+        let fields = split_fields(line);
+        let Some(head) = fields.first() else { continue };
+        // `CATEGORY=Special Ability|Aasimar ~ Agathion-Blooded` + the mod marker
+        let Some(selector) = head.rsplit('|').next().and_then(|k| k.strip_suffix(MOD_MARKER)) else { continue };
+        let selector = selector.trim();
+        if selector.is_empty() {
+            continue;
+        }
+        for field in &fields[1..] {
+            let Some((key, value)) = field.split_once(':') else { continue };
+            if key != "ABILITY" {
+                continue;
+            }
+            let parts: Vec<&str> = value.split('|').collect();
+            if parts.len() < 3 || parts[0].trim() != category_prefix || parts[1].trim() != "AUTOMATIC" {
+                continue;
+            }
+            let target = parts[2].trim();
+            // A grant naming the race's own standard trait replaces nothing:
+            // it is this heritage keeping the trait it did not swap out.
+            if target.starts_with(&standard_key_prefix) {
+                continue;
+            }
+            let Some(flag) = parts[3..].iter().find_map(|clause| {
+                let rest = clause.trim().strip_prefix("PREVAREQ:")?;
+                let (flag, want) = rest.rsplit_once(',')?;
+                (want.trim() == "0").then(|| flag.trim().to_string())
+            }) else {
+                continue;
+            };
+            let entry = out.entry(selector.to_string()).or_default();
+            let grant = SubraceGrant { granted_trait_key: target.to_string(), replaces_flag: flag };
+            if !entry.contains(&grant) {
+                entry.push(grant);
+            }
+        }
+    }
+    out
+}
+
+/// True for a `SOURCEPAGE` value that is an upstream placeholder rather than a
+/// page. Deliberately an exact-match list of the two spellings the corpus
+/// actually uses, not a pattern: a page cite is free text and a heuristic here
+/// would start discarding real ones.
+fn is_placeholder_source_page(value: &str) -> bool {
+    matches!(value.trim().to_ascii_lowercase().as_str(), "xx" | "p.xx" | "p. xx" | "pxx")
+}
+
 fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
     let fields = split_fields(line);
     if fields.is_empty() {
@@ -643,10 +824,21 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
     for f in parsed.iter().filter(|f| f.key == "TYPE") {
         type_tokens.extend(f.value.split('.').map(|t| t.trim().to_string()).filter(|t| !t.is_empty()));
     }
-    let race_key = type_tokens
-        .iter()
-        .find_map(|t| t.strip_suffix(RACIAL_TRAIT_TYPE_SUFFIX))
-        .map(|r| r.trim().to_string())?;
+    //
+    // A row may instead be a *heritage selector*, typed `TYPE:<Race> Subrace`
+    // (`Aasimar ~ Agathion-Blooded`, `Tiefling ~ Asura-Spawn`). It is the row
+    // a player actually chooses, and the 48 `<Race> Racial Trait` replacement
+    // rows in the same file are gated on it -- so reading the replacements
+    // without it ships records that load and never apply. The `Racial Trait`
+    // component is tried first and wins: nothing in the corpus carries both,
+    // and the more specific reading is the right one if anything ever does.
+    let racial_trait_race =
+        type_tokens.iter().find_map(|t| t.strip_suffix(RACIAL_TRAIT_TYPE_SUFFIX)).map(|r| r.trim().to_string());
+    let is_subrace_selector = racial_trait_race.is_none();
+    let race_key = match racial_trait_race {
+        Some(race) => race,
+        None => type_tokens.iter().find_map(|t| t.strip_suffix(SUBRACE_TYPE_SUFFIX)).map(|r| r.trim().to_string())?,
+    };
 
     let name = name.unwrap_or_else(|| panic!("line {line_number}: racial-trait row has no display-name field"));
 
@@ -693,7 +885,20 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
 
     let rendered = render_description(&parsed).unwrap_or_else(|e| panic!("line {line_number}: {e}"));
 
-    let source_page = parsed.iter().find(|f| f.key == "SOURCEPAGE").map(|f| f.value.clone());
+    // A `SOURCEPAGE` that is an upstream placeholder is not a citation, and
+    // shipping it renders "p.xx" next to the trait on the Race Traits panel as
+    // though it were a real page. `core_essentials`' two subrace files carry
+    // one on every row -- `SOURCEPAGE:p.xx` on all 40 Tiefling rows and
+    // `SOURCEPAGE:xx` on all 24 Aasimar ones -- and none of the four books
+    // this binary ingested before them carries any placeholder at all
+    // (`grep -oh 'SOURCEPAGE:[^\t]*' <their four .lst files> | sort -u | grep -i x`
+    // -> no output). Recorded as no page rather than as a wrong one; the row
+    // still ships, with its name, prose and bonuses intact.
+    let source_page = parsed
+        .iter()
+        .find(|f| f.key == "SOURCEPAGE")
+        .map(|f| f.value.trim().to_string())
+        .filter(|page| !is_placeholder_source_page(page));
 
     let raw_bonus_chains: Vec<RawBonusChain> = parsed
         .iter()
@@ -720,6 +925,7 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
         category: parsed.iter().find(|f| f.key == "CATEGORY").map(|f| f.value.clone()),
         type_tokens,
         is_racial_default,
+        is_subrace_selector,
         suppressed_by_flag,
         sets_replace_flags,
         description: rendered.text,
@@ -753,14 +959,17 @@ fn main() {
     }
 }
 
+/// One parsed row plus the file it came from -- a book may declare its racial
+/// traits across several `.lst` files and each record cites its own.
+struct SourcedRow {
+    row: TraitRow,
+    lst_relative: &'static str,
+    sha256: String,
+}
+
 fn ingest_book(book: &BookSource) {
-    let BookSource { corpus_book, lst_relative, pcgen_book_relative } = *book;
+    let BookSource { corpus_book, lst_relatives, subrace_globalvar_relatives, pcgen_book_relative } = *book;
     let data_root = pcgen_data_root();
-    let lst_path = data_root.join(lst_relative);
-    let bytes = fs::read(&lst_path)
-        .unwrap_or_else(|e| panic!("failed to read the {corpus_book} racial-ability corpus {lst_path:?}: {e}"));
-    let sha256 = sha256_hex(&bytes);
-    let text = String::from_utf8_lossy(&bytes).to_string();
 
     let out_root =
         PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(corpus_book).join("race_trait");
@@ -768,25 +977,120 @@ fn ingest_book(book: &BookSource) {
     let pcgen_book_dir = data_root.join(pcgen_book_relative);
     let wiring_index = WiringClassIndex::build(corpus_book, &pcgen_book_dir);
     let mut wiring_lines = wiring_index.lines();
-    let lst_basename = lst_relative.rsplit('/').next().unwrap_or(lst_relative);
 
     let in_scope: BTreeSet<&str> = IN_SCOPE_RACES.into_iter().collect();
 
-    let mut rows: Vec<TraitRow> = Vec::new();
+    let mut rows: Vec<SourcedRow> = Vec::new();
     let mut skipped: BTreeMap<String, usize> = BTreeMap::new();
     let mut real_lines = 0usize;
+    let mut source_shas: Vec<(&'static str, String)> = Vec::new();
 
-    for (idx, line) in text.lines().enumerate() {
-        let trimmed = line.trim();
-        if trimmed.is_empty() || trimmed.starts_with('#') {
+    for lst_relative in lst_relatives {
+        let lst_path = data_root.join(lst_relative);
+        let bytes = fs::read(&lst_path)
+            .unwrap_or_else(|e| panic!("failed to read the {corpus_book} racial-ability corpus {lst_path:?}: {e}"));
+        let sha256 = sha256_hex(&bytes);
+        source_shas.push((lst_relative, sha256.clone()));
+        let text = String::from_utf8_lossy(&bytes).to_string();
+        for (idx, line) in text.lines().enumerate() {
+            let trimmed = line.trim();
+            if trimmed.is_empty() || trimmed.starts_with('#') {
+                continue;
+            }
+            real_lines += 1;
+            let Some(row) = parse_row((idx + 1) as u32, line) else { continue };
+            if in_scope.contains(row.race_key.as_str()) {
+                rows.push(SourcedRow { row, lst_relative, sha256: sha256.clone() });
+            } else {
+                *skipped.entry(row.race_key.clone()).or_default() += 1;
+            }
+        }
+    }
+
+    // The heritage-selector half of the swap, read from the book's
+    // `_abilities_globalvar_subrace.lst` files. See `subrace_grants`.
+    let mut grants: BTreeMap<String, Vec<SubraceGrant>> = BTreeMap::new();
+    for globalvar_relative in subrace_globalvar_relatives {
+        let path = data_root.join(globalvar_relative);
+        let bytes = fs::read(&path)
+            .unwrap_or_else(|e| panic!("failed to read the {corpus_book} subrace globalvar file {path:?}: {e}"));
+        let text = String::from_utf8_lossy(&bytes).to_string();
+        for race in IN_SCOPE_RACES {
+            for (selector, found) in subrace_grants(&text, race) {
+                grants.entry(selector).or_default().extend(found);
+            }
+        }
+    }
+
+    let mut heritage_report: Vec<String> = Vec::new();
+    for sourced in rows.iter_mut() {
+        if !sourced.row.is_subrace_selector {
             continue;
         }
-        real_lines += 1;
-        let Some(row) = parse_row((idx + 1) as u32, line) else { continue };
-        if in_scope.contains(row.race_key.as_str()) {
-            rows.push(row);
-        } else {
-            *skipped.entry(row.race_key.clone()).or_default() += 1;
+        let found = grants.get(&sourced.row.key).cloned().unwrap_or_default();
+        // A selector nothing grants through is a browse-only stub by
+        // construction: the player would pick a heritage and get none of its
+        // content. Refuse to ship it rather than write a record that does
+        // nothing (`decisions.md` 44.2).
+        assert!(
+            !found.is_empty(),
+            "{}: heritage selector {:?} is granted no replacement trait by any \
+             `_abilities_globalvar_subrace.lst` row; ingesting it would ship a \
+             selectable record that changes nothing",
+            sourced.lst_relative,
+            sourced.row.key
+        );
+        let derived: Vec<String> = {
+            let mut v: Vec<String> = found.iter().map(|g| g.replaces_flag.clone()).collect();
+            v.sort();
+            v.dedup();
+            v
+        };
+        // Aasimar's six selectors state the same flags on their own row.
+        // Where both sources speak they must agree exactly; that agreement is
+        // what licenses reading the globalvar file for Tiefling's ten, which
+        // carry no `FACT:` token at all.
+        if !sourced.row.sets_replace_flags.is_empty() {
+            let mut declared = sourced.row.sets_replace_flags.clone();
+            declared.sort();
+            declared.dedup();
+            assert_eq!(
+                declared, derived,
+                "{}: heritage selector {:?} declares replace-flags {declared:?} on its own row but its \
+                 `_abilities_globalvar_subrace.lst` block derives {derived:?}; the two sources contradict",
+                sourced.lst_relative, sourced.row.key
+            );
+        }
+        heritage_report.push(format!(
+            "{} -> replaces {:?}, grants {:?}",
+            sourced.row.key,
+            derived,
+            found.iter().map(|g| g.granted_trait_key.as_str()).collect::<Vec<_>>()
+        ));
+        sourced.row.sets_replace_flags = derived;
+        // The grant link itself, in the shape `race_resolver` already reads
+        // (`RaceTraitRecord::automatic_trait_grants` ->
+        // `link_automatic_grants`): the selector names its replacement rows
+        // outright, so selecting it brings them in and nothing new is needed
+        // on the engine side.
+        for grant in &found {
+            // The `PREVAREQ:<flag>,0` qualifier is carried through verbatim,
+            // not dropped as noise. It is the corpus's own statement of the
+            // heritage's mutual exclusion -- this heritage grants its
+            // replacement only while the standard trait it displaces has not
+            // already been displaced by a different heritage -- and
+            // `race_trait_picker::exclusion_guard_flags` reads exactly that.
+            // Without it two heritages of one race could both be ticked and
+            // the character would collect both sets of ability-score bonuses.
+            // `race_resolver::automatic_grant_targets` stops at the first
+            // `PRE` part, so the grant link itself is unaffected.
+            let value = format!(
+                "{} Racial Trait|AUTOMATIC|{}|PREVAREQ:{},0",
+                sourced.row.race_key, grant.granted_trait_key, grant.replaces_flag
+            );
+            if !sourced.row.raw_tokens.iter().any(|t| t.key == "ABILITY" && t.value == value) {
+                sourced.row.raw_tokens.push(RawToken { key: "ABILITY".to_string(), value });
+            }
         }
     }
 
@@ -806,7 +1110,11 @@ fn ingest_book(book: &BookSource) {
     let mut unresolved_desc_args: Vec<String> = Vec::new();
     let mut leaks: Vec<String> = Vec::new();
 
-    for row in &rows {
+    for sourced in &rows {
+        let row = &sourced.row;
+        let lst_relative = sourced.lst_relative;
+        let sha256 = &sourced.sha256;
+        let lst_basename = lst_relative.rsplit('/').next().unwrap_or(lst_relative);
         // Production guard: a description carrying PCGen syntax fails the
         // run loudly rather than reaching a screen. `%1` on the Race
         // Traits panel is the defect this exists to make impossible.
@@ -887,8 +1195,11 @@ fn ingest_book(book: &BookSource) {
     }
 
     let skipped_total: usize = skipped.values().sum();
-    println!("{corpus_book} alternate racial traits -- source {lst_relative}");
-    println!("  sha256                        : {sha256}");
+    println!("{corpus_book} alternate racial traits");
+    for (relative, sha) in &source_shas {
+        println!("  source                        : {relative}");
+        println!("    sha256                      : {sha}");
+    }
     println!("  real (non-comment) lines      : {real_lines}");
     println!("  records emitted               : {written}");
     println!("  distinct races covered        : {}", per_race.len());
@@ -910,6 +1221,11 @@ fn ingest_book(book: &BookSource) {
     println!("  in-scope alternates gated by a standalone !PREFACT   : {}", gated_alternates.len());
     for (k, flag) in &gated_alternates {
         println!("    {k} <- {flag}");
+    }
+
+    println!("\n  heritage selectors, with the swap read from the subrace globalvar file : {}", heritage_report.len());
+    for line in &heritage_report {
+        println!("    {line}");
     }
 
     println!("\n  DESC args that are not same-row literals (dropped, never guessed) : {}", unresolved_desc_args.len());

@@ -393,6 +393,40 @@ fn race_corpus() -> &'static Result<RaceCorpus, String> {
 /// reports the slip.
 fn exclusion_guard_flags(record: &RaceTraitRecord) -> Vec<String> {
     let mut out: Vec<String> = Vec::new();
+    // The third spelling, and the only one that is not a `PREMULT`: a
+    // `PREVAREQ:<flag>,0` qualifier on the record's own
+    // `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant.
+    //
+    // `core_essentials`' heritage selectors (SD-29 race-trait lane round 4,
+    // `decisions.md §48`) carry no `PREMULT` at all -- upstream, only one
+    // heritage can apply because a heritage is a PCGen SUBRACE and a character
+    // has one -- so read through the `PREMULT` reader alone all 16 would come
+    // back unguarded, and a player could tick `Aasimar ~ Angel-Blooded` and
+    // `Aasimar ~ Archon-Blooded` together and collect both ability-score
+    // bonuses. The corpus does state the constraint, on the grant itself:
+    // `ABILITY:Aasimar Racial Trait|AUTOMATIC|Angel-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0`
+    // reads *grant this while that standard trait has not already been
+    // replaced*, which is the same "already set by someone else blocks me"
+    // relation the `PREMULT` branch below expresses. Only `,0` is read, for
+    // `ingest_races::globalvar_gates`' stated reason: `,1` is the opposite
+    // statement.
+    for token in record.data.raw_tokens.iter().filter(|token| token.key == "ABILITY") {
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 2 || !parts[1].trim().eq_ignore_ascii_case("AUTOMATIC") {
+            continue;
+        }
+        for clause in &parts[2..] {
+            let Some(rest) = clause.trim().strip_prefix("PREVAREQ:") else { continue };
+            let Some((flag, want)) = rest.rsplit_once(',') else { continue };
+            let flag = flag.trim();
+            if want.trim() != "0" || !flag.contains("_Replace") {
+                continue;
+            }
+            if !out.iter().any(|existing| existing == flag) {
+                out.push(flag.to_string());
+            }
+        }
+    }
     for token in record.data.raw_tokens.iter().filter(|token| token.key == "PREMULT") {
         for group in negated_bracket_groups(&token.value) {
             for clause in group.split(',') {
@@ -949,11 +983,13 @@ mod tests {
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 267,
+            total, 283,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
              race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2) \
-             + Horror Adventures' 41 (§47, round 3)"
+             + Horror Adventures' 41 (§47, round 3) \
+             + Core Essentials' 16 heritages (§48, round 4; the book's other 48 records \
+             are the replacement rows those heritages grant and are never menu rows)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -966,6 +1002,11 @@ mod tests {
         // *variant* selector (PCGen models it through a `Goblin Variant`
         // ABILITYPOOL that this engine has no mechanism for), recorded as a
         // finding in `reach_gate`'s OPEN_FINDINGS rather than hidden.
+        // Round 4 (`decisions.md §48`) moved exactly two of these cells:
+        // Core Essentials contributes heritages to Aasimar and Tiefling and to
+        // no other race, so 16 of the 18 rows below must NOT move and a change
+        // in any of them is a regression rather than a new book's arrival.
+        //
         // **This table was left at its pre-Inner-Sea-Races values by round 2
         // and went RED with five other root-workspace assertions**; round 3
         // moved it and recorded the miss (`decisions.md §47`). Every cell
@@ -974,7 +1015,7 @@ mod tests {
         // the trailing comment so a future book's contribution is checkable
         // one race at a time instead of only in the total.
         let expected: &[(&str, usize)] = &[
-            ("Aasimar", 11),    // ARG 9 + ISR 2
+            ("Aasimar", 17),    // ARG 9 + ISR 2 + CE 6 (heritages)
             ("Drow", 7),        // ARG 6 + ISR 1
             ("Duergar", 8),     // ARG 5 + MC 2 + ISR 1
             ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
@@ -991,12 +1032,12 @@ mod tests {
             ("Orc", 5),         // ARG 4 + ISR 1
             ("Svirfneblin", 3), // ARG 2 + ISR 1
             ("Tengu", 5),       // ARG 4 + ISR 1
-            ("Tiefling", 10),   // ARG 7 + ISR 3
+            ("Tiefling", 20),   // ARG 7 + ISR 3 + CE 10 (heritages)
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 267);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 283);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1064,10 +1105,35 @@ mod tests {
         );
         assert_eq!(
             pageless,
-            BTreeSet::from(["Duergar ~ Ironskinned", "Duergar ~ Twilight-Touched"]),
-            "exactly the two Monster Codex rows the upstream corpus gives no SOURCEPAGE: token; \
-             a third pageless row is a regression, and either of these gaining a page means the \
-             upstream data changed and this pin should be re-derived"
+            BTreeSet::from([
+                "Aasimar ~ Agathion-Blooded",
+                "Aasimar ~ Angel-Blooded",
+                "Aasimar ~ Archon-Blooded",
+                "Aasimar ~ Azata-Blooded",
+                "Aasimar ~ Garuda-Blooded",
+                "Aasimar ~ Peri-Blooded",
+                "Duergar ~ Ironskinned",
+                "Duergar ~ Twilight-Touched",
+                "Tiefling ~ Asura-Spawn",
+                "Tiefling ~ Daemon-Spawn",
+                "Tiefling ~ Demodand-Spawn",
+                "Tiefling ~ Demon-Spawn",
+                "Tiefling ~ Devil-Spawn",
+                "Tiefling ~ Div-Spawn",
+                "Tiefling ~ Kyton-Spawn",
+                "Tiefling ~ Oni-Spawn",
+                "Tiefling ~ Qlippoth-Spawn",
+                "Tiefling ~ Rakshasa-Spawn",
+            ]),
+            "the two Monster Codex rows the upstream corpus gives no SOURCEPAGE: token at all, \
+             plus Core Essentials' 16 heritages, whose SOURCEPAGE IS present upstream and is a \
+             placeholder on every single row -- `p.xx` on all 40 Tiefling rows and `xx` on all \
+             24 Aasimar ones. `ingest_race_traits::is_placeholder_source_page` drops those at \
+             ingest so the panel shows no page rather than a fake one; none of the four books \
+             ingested before Core Essentials carries a placeholder at all, so this pin moving \
+             for any OTHER book means real page data was lost. A 19th pageless row is a \
+             regression, and any of these gaining a page means the upstream data changed and \
+             this pin should be re-derived"
         );
     }
 
@@ -1193,9 +1259,9 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 267,
+            checked, 283,
             "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races \
-             (§45) + 41 Horror Adventures (§47)"
+             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§48)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
@@ -1215,7 +1281,11 @@ mod tests {
             aasimar.standard_traits.iter().all(|row| row.suppressed_by_flag.is_some()),
             "every Aasimar standard row carries its gate"
         );
-        assert_eq!(aasimar.alternates.len(), 11);
+        // Round 4 moved this 11 -> 17: Core Essentials' six Aasimar heritages
+        // are `TraitRole::Alternate` (each sets three replace-flags) and are
+        // therefore menu rows. The *standard* count above still must not move
+        // -- CE contributes no `race/` chassis either.
+        assert_eq!(aasimar.alternates.len(), 17);
         for alternate in &aasimar.alternates {
             assert!(!alternate.replaces.is_empty(), "{} really replaces something", alternate.key);
         }
@@ -1649,10 +1719,14 @@ mod tests {
         // Round 3 (`decisions.md §47`) added Horror Adventures' 41 alternates.
         // `standard` did not move for the same reason APG never moved it: HA
         // contributes no `race/` chassis, only alternates onto races CRB and
-        // Bestiary 1 already declare.
-        assert_eq!((standard, alternates), (173, 267));
+        // Bestiary 1 already declare. Round 4 (`§48`) added Core Essentials'
+        // 16 heritages on the same terms -- and note that this test counts
+        // *menu rows*, so the book's other 48 records are correctly absent
+        // here while being fully present in `reach_gate`'s claim, which reads
+        // what each selection grants as well as what it offers.
+        assert_eq!((standard, alternates), (173, 283));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 440);
+        assert_eq!(checked, 456);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

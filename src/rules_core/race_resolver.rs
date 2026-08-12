@@ -955,7 +955,7 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 /// # What the values are
 ///
 /// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
-/// all 267 records [`RaceCorpus::alternate_traits`] classifies as
+/// all 283 records [`RaceCorpus::alternate_traits`] classifies as
 /// [`TraitRole::Alternate`] across the 18 in-scope races — ARG's 153, Monster
 /// Codex's 4, the Advanced Player's Guide's 1, Inner Sea Races' 68 and Horror
 /// Adventures' 41, the last four landed by SD-29's race-trait lane. The three records that are *not* standalone
@@ -1357,6 +1357,46 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Human ~ Psychic Defense", &["Human_ReplaceBonusFeat"]),
     ("Human ~ Rationalize", &["Human_ReplaceBonusFeat"]),
     ("Human ~ Reptilian Ancestry", &["Human_ReplaceBonusFeat"]),
+
+    // ================= Core Essentials =================
+    // SD-29 race-trait lane, round 4. The 16 Aasimar and Tiefling *heritage*
+    // selectors, the only rows in this table whose replace-flags are not
+    // stated on their own corpus row: Tiefling's ten carry no `FACT:` token at
+    // all and Aasimar's six carry theirs redundantly. Both books state the
+    // swap in `core_essentials/races/<race>/<race>_abilities_globalvar_subrace.lst`,
+    // and `ingest_race_traits::subrace_grants` reads it there -- so every
+    // value below is still `RaceTraitCacheData::sets_replace_flags` read
+    // verbatim off `data/corpus/core_essentials/race_trait/`, and
+    // `the_alternate_trait_flag_table_matches_the_corpus_for_every_alternate`
+    // re-derives all 16 from those records rather than trusting this block.
+    //
+    // Every heritage of a race replaces the same three standard traits --
+    // Ability Scores, Skilled and Spell-Like Ability -- which is what makes
+    // them mutually exclusive and is exactly the relation
+    // `race_trait_picker::exclusion_guard_flags` now reads from the
+    // `PREVAREQ:<flag>,0` qualifier the ingest carries through.
+    //
+    // The book's other 48 records are deliberately absent: they are the
+    // replacement rows the heritages grant, `TraitRole::FlagGranted`, and a
+    // player never selects one.
+    // ---- Aasimar ----
+    ("Aasimar ~ Agathion-Blooded", &["Aasimar_ReplaceAbilityScores", "Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Angel-Blooded", &["Aasimar_ReplaceAbilityScores", "Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Archon-Blooded", &["Aasimar_ReplaceAbilityScores", "Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Azata-Blooded", &["Aasimar_ReplaceAbilityScores", "Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Garuda-Blooded", &["Aasimar_ReplaceAbilityScores", "Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    ("Aasimar ~ Peri-Blooded", &["Aasimar_ReplaceAbilityScores", "Aasimar_ReplaceSkilled", "Aasimar_ReplaceSpellLikeAbility"]),
+    // ---- Tiefling ----
+    ("Tiefling ~ Asura-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Daemon-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Demodand-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Demon-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Devil-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Div-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Kyton-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Oni-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Qlippoth-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
+    ("Tiefling ~ Rakshasa-Spawn", &["Tiefling_ReplaceAbilityScores", "Tiefling_ReplaceSkilled", "Tiefling_ReplaceSpellLikeAbility"]),
 ];
 
 /// The `<Race>_Replace<Trait>` flags a set of selected alternate racial traits
@@ -1913,10 +1953,13 @@ mod tests {
             }
         }
         assert_eq!(
-            redacted, 12,
-            "Inner Sea Races' 12 PI-redacted records, counted on disk -- the only redacted \
-             race-trait records in the corpus. Horror Adventures added 0: it is a rules \
-             supplement, not a campaign setting"
+            redacted, 20,
+            "Inner Sea Races' 12 PI-redacted records + Core Essentials' 8, counted on disk. \
+             Horror Adventures added 0: it is a rules supplement, not a campaign setting. Core \
+             Essentials' 8 are four Tiefling heritages named for outsider races that are \
+             Golarion Product Identity -- Kyton-, Oni-, Devil- and Rakshasa-Spawn -- each \
+             hitting twice because the heritage row and its Ability Scores replacement row \
+             carry the same prose. Its 24 Aasimar records hit 0 terms"
         );
     }
 
@@ -1931,7 +1974,7 @@ mod tests {
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
         // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 68 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane.
-        assert_eq!(count(TraitRole::Alternate), 267);
+        assert_eq!(count(TraitRole::Alternate), 283);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -1944,16 +1987,26 @@ mod tests {
         // exactly. That this count moved and `TraitRole::Unclassified` below
         // did NOT is the whole evidence that round 3's book shipped no
         // unreachable record.
-        assert_eq!(count(TraitRole::FlagGranted), 10);
+        //
+        // + Core Essentials' 48 (round 4): every replacement row of every
+        // Aasimar and Tiefling heritage, each named by an
+        // `ABILITY:<Race> Racial Trait|AUTOMATIC|` grant on the heritage that
+        // supplies it -- the `Junk Tinker ~ Skilled` shape again, at scale.
+        // This is the first book whose contribution to this census is larger
+        // than its contribution to `Alternate` above (48 against 16), which is
+        // the whole shape of a heritage: one thing a player picks, three
+        // things they get.
+        assert_eq!(count(TraitRole::FlagGranted), 58);
         // `Oversized Goblin` and `Human ~ Tribalistic Languages` -- see
         // `no_corpus_trait_is_left_without_a_readable_gate`, which pins both by
         // key and names each one's remedy.
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            452,
+            516,
             "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 72 Inner Sea Races \
-             + 43 Horror Adventures"
+             + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
+             + the 48 replacement rows they grant)"
         );
     }
 
@@ -2094,7 +2147,18 @@ mod tests {
             .flatten()
             .flat_map(|t| t.data.sets_replace_flags.iter().map(String::as_str))
             .collect();
-        assert_eq!(all_flags.len(), 91);
+        // Round 4 moved this 91 -> 93. Core Essentials' 16 heritages name six
+        // distinct flags between them and only TWO are new to the corpus:
+        // `Aasimar_ReplaceAbilityScores` and `Tiefling_ReplaceAbilityScores`.
+        // No alternate in any earlier book replaces a race's ability-score
+        // row, because an ordinary alternate racial trait never touches
+        // ability scores and a heritage always does -- so the other four
+        // (`*_ReplaceSkilled`, `*_ReplaceSpellLikeAbility`) were already
+        // declared by ARG and ISR alternates replacing the same standard rows.
+        // Both new flags are claimed by a real standard row
+        // (`Aasimar ~ Ability Scores`, `Tiefling ~ Ability Scores`), which is
+        // why the orphan-flag assertion above did not move.
+        assert_eq!(all_flags.len(), 93);
     }
 
     /// **No alternate in the loaded corpus fires an inert flag any more.**
@@ -2117,7 +2181,7 @@ mod tests {
         }
         assert_eq!(
             checked,
-            267,
+            283,
             "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures"
         );
     }
@@ -2327,7 +2391,7 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            267,
+            283,
             "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures \
              selectable alternates"
         );
@@ -2370,7 +2434,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 267);
+        assert_eq!(selectable_alternate_trait_keys().len(), 283);
     }
 
     #[test]

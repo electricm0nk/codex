@@ -106,6 +106,26 @@ pub enum RuleSetId {
     /// monster abilities). The book that found the two-`DESC:`-token row shape
     /// -- see its module doc.
     Botd2,
+    /// Core Essentials. SD-29 Epic 6 round 4 (race-trait lane, extend). Like
+    /// `MonsterCodex`, `Isr` and `Ha`, its one ingested family is `race_trait`,
+    /// served off disk from `data/corpus/core_essentials/race_trait/` rather
+    /// than from a compiled table (`decisions.md §24` rules out the formula
+    /// interpreter a compiled race-trait table would need).
+    ///
+    /// **Only the two `<race>_abilities_race_subrace.lst` files are ingested,
+    /// and that is a narrower claim than the book id suggests.** PCGen uses
+    /// `core_essentials/races/<race>/` as physical storage for the shared
+    /// racial-trait files of races that belong to Core Rulebook and Bestiary
+    /// 1, and `ingest_races` correctly attributes those to `core_rulebook` and
+    /// `beastiary`. What belongs to this rule set is the content no other book
+    /// declares: Aasimar's and Tiefling's heritage (subrace) traits -- 16
+    /// selectable heritages plus the 48 replacement rows they grant.
+    ///
+    /// `races/skinwalker/` carries the same shape and is deliberately out of
+    /// scope: Skinwalker is not one of the 18 races this project models, so
+    /// `RaceCorpus::resolve` would return `None` for its chassis whatever the
+    /// ingest wrote.
+    Ce,
     /// Inner Sea Combat. SD-29 Epic 7 pilot (companion lane,
     /// `rules_tables::inner_sea_combat`, 4 companion creatures + 6 companion
     /// abilities). The first book whose ONLY ingested family is `companion`, and
