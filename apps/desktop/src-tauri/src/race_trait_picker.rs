@@ -1250,13 +1250,23 @@ mod tests {
             .collect();
         assert_eq!(
             setters,
-            BTreeSet::from(["Duergar ~ Blood Enmity", "Duergar ~ Twilight-Touched"]),
-            "both books' setters of Duergar_ReplaceSLAInvisibility"
+            BTreeSet::from([
+                "Duergar ~ Blood Enmity",
+                // Inner Sea Races, SD-29 race-trait lane round 2. A THIRD
+                // setter of the same flag. Round 2 did not move this pin and
+                // it was RED on the branch until round 3 reached it -- behind
+                // two earlier assertions in this same test, which is why the
+                // cascade only surfaced once those were fixed
+                // (`decisions.md §46.3`).
+                "Duergar ~ Magical Taskmaster",
+                "Duergar ~ Twilight-Touched",
+            ]),
+            "all three books' setters of Duergar_ReplaceSLAInvisibility"
         );
         assert_eq!(
             grants.iter().copied().collect::<BTreeSet<&str>>(),
             BTreeSet::from(["Duergar ~ Spell-Like Ability ~ Enlarge Person"]),
-            "and both grant the one row the flag gates"
+            "and all three grant the one row the flag gates"
         );
     }
 

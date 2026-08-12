@@ -729,6 +729,16 @@ fn every_corpus_book_appears_in_the_inventory() {
 /// World Guide + nine Inner Sea modules). Kept in one place so the roster
 /// assertions above and the per-book assertions below can never disagree
 /// about which books SD-30 added.
+/// The subset of [`SD30_CAMPAIGN_SETTING_BOOKS`] that SD-29's lanes have since
+/// ingested, so the inventory registers them `in_scope` rather than
+/// `future_state`. Named individually rather than derived from the inventory,
+/// because deriving the expectation from the artifact under test would make the
+/// assertion vacuous.
+const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
+    // SD-29 race-trait lane round 2 (`decisions.md §45`): 72 race-trait records.
+    "inner_sea_races",
+];
+
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     "book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2",
@@ -767,12 +777,27 @@ fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
             .iter()
             .find(|b| b["id"].as_str() == Some(id))
             .unwrap_or_else(|| panic!("{id} must appear in the inventory's books list"));
+        // A book SD-29 has since ingested is `in_scope`, not `future_state`, and
+        // that is the correct state rather than a regression -- the roster
+        // assertion above is about SD-30's sixteen books existing, not about
+        // them staying un-ingested forever. SD-29's race-trait lane round 2
+        // ingested `inner_sea_races` on 2026-08-11 and left this assertion RED
+        // on the branch; round 3 states the exemption as its own claim rather
+        // than dropping the book from the roster or relaxing the check
+        // (`decisions.md §46.3`). The `else` branch is deliberately a hard
+        // assertion too, so a book flipping scope silently still fails here.
+        let expected_scope =
+            if SD29_INGESTED_CAMPAIGN_SETTING_BOOKS.contains(id) { "in_scope" } else { "future_state" };
         assert_eq!(
             book["scope"].as_str(),
-            Some("future_state"),
-            "{id} must be registered as future_state (data/stubs/{id}.json), got {:?}",
+            Some(expected_scope),
+            "{id} must be registered {expected_scope} (data/stubs/{id}.json for future_state), \
+             got {:?}",
             book["scope"]
         );
+        if expected_scope == "in_scope" {
+            continue;
+        }
         let enumerated = book["files_enumerated"].as_u64().unwrap_or(0);
         let not_enumerated = book["files_not_enumerated"]
             .as_array()

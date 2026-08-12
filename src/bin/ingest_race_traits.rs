@@ -1356,7 +1356,14 @@ mod tests {
             );
             total += checked;
         }
-        assert_eq!(total, 233, "156 ARG + 5 Monster Codex + 72 Inner Sea Races");
+        assert_eq!(
+            total,
+            276,
+            "156 ARG + 5 Monster Codex + 72 Inner Sea Races + 43 Horror Adventures. This \
+             total sits alongside the per-book map above and must move with it; round 3 \
+             moved the map first and this pin caught the omission, which is the whole \
+             reason the test states both"
+        );
     }
 
     #[test]
