@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "corpus_key": "Drake (Shadow) ~ Shadow Blend",
+    "delivery": "Supernatural",
+    "description": "In conditions of illumination other than bright light, a shadow drake disappears into the shadows, giving it concealment (20%% miss chance). It can resume or suspend this ability as a free action.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:companion:drake_shadow_shadow_blend",
+    "name": "Shadow Blend",
+    "owners": [
+      "bestiary_4:companion:drake_shadow",
+      "bestiary_4:companion:familiar_shadow_drake"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "Supernatural",
+      "SpecialQuality"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 79,
+    "record_key": "Drake (Shadow) ~ Shadow Blend"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

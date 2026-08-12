@@ -65,11 +65,26 @@
 //!    `Familiar (Fox)` and `Kyton (Augur)` look identical to a string unwrap and
 //!    mean different things — one is a wrapper, the other a genus and species.
 //!
+//! 6. **relay** (`decisions.md §58.1`) — the owner is stated across a corpus row
+//!    that is not an inventory unit at all. Bestiary 4's `Familiar (Giant Flea)`
+//!    names `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row of
+//!    `b4_abilities_companion.lst`, and THAT row names `Flea (Giant) ~ Disease`.
+//!    Shape 4 walks unit-to-unit and cannot see the hop. The first reference is
+//!    also read under ANY `ABILITY:<Category>|AUTOMATIC|` category, because the
+//!    creature's own token here is `Internal`, not `Special Ability`.
+//!
 //! Every shape after the third was found by a round that had already committed
-//! to a book, and each one moved the lane's ceiling UP. Corpus-wide the
-//! classifier now reports **750** orphan ability rows of the kind's 1,696 units,
-//! so the reachable ceiling is **937**, not 1,696 and not the 888 this comment
-//! claimed when only three shapes were known. That is a ceiling, not a backlog.
+//! to a book and READ the rows the classifier was about to throw away, and each
+//! one moved the lane's ceiling UP. Corpus-wide the classifier now reports
+//! **735** orphan ability rows of the kind's 1,696 units.
+//!
+//! The ceiling is **923** — and it is the size of the UNION of the exclusions,
+//! never the sum: 735 orphans + 2 `PRECAMPAIGN`-gated rows + 7 class rows + 30
+//! `.COPY=`/`.MOD` delta rows is 774, but exactly one row is both an orphan and
+//! a delta, so 773 distinct rows are excluded (`decisions.md §58.2`). Not
+//! 1,696, not the 888 this comment claimed when three shapes were known, and
+//! not the 937 it claimed before delta rows were subtracted at all. That is a
+//! ceiling, not a backlog.
 //!
 //! # What a book costs, now that this exists
 //!
@@ -381,6 +396,22 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         companions: super::bestiary_3::companions_static(),
         companion_abilities: super::bestiary_3::companion_abilities_static(),
     },
+    // SD-29 Epic 7 round 5. Bestiary 4 — the book that made ownership shape 6
+    // unavoidable (`decisions.md §58.1`). Its `Familiar (Giant Flea)` names
+    // `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row that is not an
+    // inventory unit, and THAT row names the two abilities the classifier had
+    // been reporting as orphans. `Familiar (Pipefox)` and `Familiar (Ratling)`
+    // reach three more the same way.
+    //
+    // 78 of its 80 units ship — the book's whole reachable remainder, with ZERO
+    // orphans. The two exclusions are `.COPY=` delta rows (`§58.2`), the first
+    // any registered companion book has carried. No new `RuleSetId`: the monster
+    // lane compiled `RuleSetId::B4` in `52da4bc3`.
+    CompanionBook {
+        corpus_book: "bestiary_4",
+        companions: super::bestiary_4::companions_static(),
+        companion_abilities: super::bestiary_4::companion_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -514,8 +545,22 @@ mod tests {
 
     /// A row whose `TYPE:` states no facet this chassis models must still carry
     /// its segments verbatim, or the record asserts nothing at all about what it
-    /// is. Inner Sea Intrigue's `ClockworkFamiliarInstalledItem` rows are the
-    /// three that exercise this.
+    /// is.
+    ///
+    /// **Five rows exercise it, in two different shapes** — the count moved 3 →
+    /// 5 in round 5 and the shape is what makes the move legitimate rather than
+    /// a pin bumped to make a test pass:
+    ///
+    /// * Inner Sea Intrigue's three `TYPE:ClockworkFamiliarInstalledItem` rows,
+    ///   which carry no delivery either.
+    /// * Bestiary 4's `Comprehend Languages ~ Constant` and
+    ///   `Speak with Animals (Rodents only) ~ Constant`, whose
+    ///   `TYPE:Communicate.SpellLike` states a modelled DELIVERY (`SpellLike`)
+    ///   and an unmodelled facet (`Communicate`). Its sibling
+    ///   `Read Magic ~ Constant` says `TYPE:SpecialQuality.SpellLike` and is
+    ///   therefore fully modelled — three adjacent rows of one file splitting
+    ///   two ways, which is exactly why `type_segments` keeps everything
+    ///   verbatim rather than trusting the enum.
     #[test]
     fn an_ability_with_no_modelled_facet_still_states_its_type_segments() {
         let mut unmodelled = 0;
@@ -533,10 +578,23 @@ mod tests {
             }
         }
         assert_eq!(
-            unmodelled, 3,
+            unmodelled, 5,
             "expected exactly Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows \
-             to carry no modelled facet; a change here means a book's shape moved"
+             plus Bestiary 4's two `TYPE:Communicate.SpellLike` rows to carry no modelled \
+             facet; a change here means a book's shape moved"
         );
+        // Named, so the count above can never be satisfied by a different five.
+        for (book_id, key) in [
+            ("bestiary_4", "Comprehend Languages ~ Constant"),
+            ("bestiary_4", "Speak with Animals (Rodents only) ~ Constant"),
+        ] {
+            let book = companion_book(book_id).expect("registered book");
+            let ability = book
+                .companion_ability_resolve(key)
+                .unwrap_or_else(|| panic!("{book_id} does not define {key}"));
+            assert!(ability.facet.is_none(), "{key} now states a modelled facet");
+            assert_eq!(ability.type_segments, &["Communicate", "SpellLike"]);
+        }
     }
 
     /// `facet` and `delivery` are reads OF `type_segments`, never a separate

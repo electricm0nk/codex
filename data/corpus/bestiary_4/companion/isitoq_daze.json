@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "corpus_key": "Isitoq ~ Daze",
+    "delivery": "Extraordinary",
+    "description": "An isitoq's nerves form grotesque wings. Any creature struck by the creature's wings must succeed at a DC %1 Will save or be dazed for 1 round as the target's mind is flooded with images of the last seconds of the isitoq's existence as a living creature. This is a mind-affecting fear effect.",
+    "description_variables": [
+      "11+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:isitoq_daze",
+    "name": "Daze",
+    "owners": [
+      "bestiary_4:companion:isitoq",
+      "bestiary_4:companion:familiar_isitoq"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 88,
+    "record_key": "Isitoq ~ Daze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

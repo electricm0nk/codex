@@ -1,4 +1,8 @@
-//! Bestiary 4 (`SOURCESHORT:B4`) — `monster` + `monster_ability`.
+//! Bestiary 4 (`SOURCESHORT:B4`) — `monster` + `monster_ability` + `companion`.
+//!
+//! The `companion` family was added by SD-29 Epic 7 round 5 and is documented at
+//! the bottom of this file; it draws on three `.lst` files none of the monster
+//! text below mentions. The two families share only a `RuleSetId`.
 //!
 //! **206 of this book's 220 monster rows and 543 of its 768 ability rows ship**
 //! — 749 records, the largest reachable book left in the lane when round 6 took
@@ -129,8 +133,10 @@
 //! agrees with: moving them changes `file_kind`, which redraws the `race_trait`
 //! and `monster_ability` denominators for every book in two lanes at once.
 
+mod companion_data;
 mod monster_data;
 
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
     NaturalAttack, Speed,
@@ -282,6 +288,147 @@ mod tests {
             assert!(
                 ability.owners.contains(&prefix),
                 "{} is namespaced to {prefix}, which is not among its owners",
+                ability.key
+            );
+        }
+    }
+}
+
+// ---------------------------------------------------------------------------
+// SD-29 Epic 7 round 5 (`SD29-E7-F2-006`) — this book's `companion` family.
+//
+// The second family Bestiary 4 contributes, sharing nothing with the monsters
+// above but a `RuleSetId`: different `.lst` files, different chassis, different
+// catalog screen (`decisions.md §51.5`). The monster lane compiled
+// `RuleSetId::B4` for this book in `52da4bc3`, so this registration cost no
+// scope flip — the same free registration `bestiary` (round 3) and
+// `bestiary_3` (round 4) had.
+//
+// **78 of the book's 80 companion units ship** — 34 creature rows and 44 of its
+// 46 ability rows, drawn from three `.lst` files. `78` is exactly the
+// `reachable remainder` `scripts/classify_companion_rows.py bestiary_4` prints,
+// so what ships and what the lane's ceiling says should ship are the same
+// number derived two ways.
+//
+// The two exclusions are `.COPY=` DELTA rows, not orphans: `Pooka ~ Change
+// Shape` and `Psychopomp (Nosoi) ~ Change Shape` each state a delta on a base
+// record that lives elsewhere, so transcribing one verbatim ships a card with
+// almost every field empty (`decisions.md §58.2`, adopting the monster lane's
+// screen). This book's `companions` family IS surfaced, so it correctly carries
+// no `OPEN_FINDINGS` entry — that list is per FAMILY, and a family that reaches
+// a player is not an unsurfaced one.
+//
+// The round was dispatched with five orphans on the board and, like round 4,
+// found they were never orphans. `Familiar (Giant Flea)` does not name
+// `Flea (Giant) ~ Disease`; it names `Racial Traits ~ Flea (Giant)`, a
+// `CATEGORY:Internal` row of `b4_abilities_companion.lst`, and THAT row carries
+// the `ABILITY:Special Ability|AUTOMATIC|Flea (Giant) ~ Disease|…` token. The
+// relay is a corpus row that is **not an inventory unit**, so shape 4 — which
+// walks unit to unit — has nothing to stand on. Reading it is ownership shape 6
+// (`decisions.md §58.1`); `Familiar (Pipefox)` and `Familiar (Ratling)` reach
+// the three `~ Constant` rows of `b4_abilities_race_ce_companion.lst` the same
+// way.
+// ---------------------------------------------------------------------------
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
+
+#[cfg(test)]
+mod companion_tests {
+    use super::*;
+
+    /// 34 creature rows + 44 ability rows = 78, which is exactly the
+    /// `reachable remainder` `scripts/classify_companion_rows.py bestiary_4`
+    /// prints (`80 − 2` `.COPY=` delta rows). Two routes sharing no intermediate
+    /// artifact, pinned rather than left as a coincidence in prose.
+    #[test]
+    fn the_reachable_seventy_eight_companion_units_ship() {
+        assert_eq!(companions().len(), 34);
+        assert_eq!(companion_abilities().len(), 44);
+        assert_eq!(companions().len() + companion_abilities().len(), 78);
+    }
+
+    /// The two `.COPY=` rows are NOT records, and nothing may serve them.
+    /// `verified_citation_line` refuses them at generation time; this pins that
+    /// they also never re-enter through a hand edit, and that no creature is
+    /// left naming a key the table does not define.
+    #[test]
+    fn the_two_copy_delta_rows_are_not_records() {
+        for key in ["Pooka ~ Change Shape", "Psychopomp (Nosoi) ~ Change Shape"] {
+            assert!(
+                !companion_abilities().iter().any(|a| a.key == key),
+                "{key} states a delta on a base record elsewhere and must not ship"
+            );
+            assert!(
+                !companions().iter().any(|c| c.ability_keys.contains(&key)),
+                "{key} is not transcribed, so no creature row may still name it"
+            );
+        }
+    }
+
+    /// Ownership shape 6, by name. These five rows are exactly the ORPHAN list
+    /// the classifier printed for this book BEFORE the shape existed, and each
+    /// one's owner is a creature reached across a `CATEGORY:Internal` relay.
+    /// If shape 6 regresses, these are the records that vanish.
+    #[test]
+    fn the_five_relay_owned_rows_have_their_relay_owner() {
+        for (key, owner) in [
+            ("Flea (Giant) ~ Disease", "Familiar (Giant Flea)"),
+            ("Flea (Giant) ~ Uncanny Leap", "Familiar (Giant Flea)"),
+            ("Comprehend Languages ~ Constant", "Familiar (Pipefox)"),
+            ("Read Magic ~ Constant", "Familiar (Ratling)"),
+            (
+                "Speak with Animals (Rodents only) ~ Constant",
+                "Familiar (Ratling)",
+            ),
+        ] {
+            let record = companion_abilities()
+                .iter()
+                .find(|a| a.key == key)
+                .unwrap_or_else(|| panic!("{key} is not a shipped companion ability record"));
+            assert!(
+                record.owners.contains(&owner),
+                "{key} is reached from {owner} across a CATEGORY:Internal relay row, \
+                 but {owner} is not among its owners: {:?}",
+                record.owners
+            );
+        }
+    }
+
+    /// This book's companion rows and its monster rows are different records
+    /// even where they share a species name — `Flea (Giant)` is a monster KEY in
+    /// `b4_races.lst` AND the namespace prefix of two companion ability rows.
+    /// Nothing may serve one as the other.
+    #[test]
+    fn the_companion_rows_are_not_this_module_s_monster_rows() {
+        for companion in companions() {
+            assert!(
+                !monsters().iter().any(|m| m.key == companion.key),
+                "{} is registered as both a companion and a monster of this book",
+                companion.key
+            );
+        }
+        for ability in companion_abilities() {
+            assert!(
+                !monster_abilities().iter().any(|a| a.key == ability.key),
+                "{} is registered as both a companion ability and a monster ability",
                 ability.key
             );
         }

@@ -1474,6 +1474,24 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 3, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-005",
     },
+    // SD-29 Epic 7 round 5 (`SD29-E7-F2-006`). Bestiary 4, and the first book
+    // with THREE ability-shape files: `b4_abilities_race_ce_companion.lst` sits
+    // beside `b4_abilities_companion.lst`, and its own header comment says it
+    // "should probably go into ce_abilities_race.lst". It is named here because
+    // `_bestiary_4_for_players.pcc:80` loads it UNGATED alongside the other two,
+    // which is what puts its 4 rows in this book's companion unit set.
+    //
+    // Registering the book costs no scope flip and no new `RuleSetId`: the
+    // monster lane compiled `RuleSetId::B4` for its monsters in `52da4bc3`.
+    CompanionBookSpec {
+        corpus_book: "bestiary_4",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_4",
+        races_lsts: &["b4_races_companion.lst"],
+        abilities_lsts: &["b4_abilities_companion.lst", "b4_abilities_race_ce_companion.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-006",
+    },
 ];
 
 fn companion_book_spec(book: &str) -> Option<&'static CompanionBookSpec> {

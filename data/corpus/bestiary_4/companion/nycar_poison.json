@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "corpus_key": "Nycar ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC 12; frequency 1/round for 6 rounds; effect 1d4 acid and 1 Con damage; cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:nycar_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:companion:familiar_nycar",
+      "bestiary_4:companion:nycar"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 94,
+    "record_key": "Nycar ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

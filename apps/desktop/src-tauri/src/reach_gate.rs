@@ -1239,6 +1239,25 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // and its abilities are keyed `Augur ~ …`). Reading that token is
         // ownership shape 5 (`decisions.md §56.1`).
         ("bestiary_3", "companions") => Some(companions_reach("bestiary_3", "B3")),
+        // SD-29 Epic 7 round 5. Bestiary 4's companions — the SECOND claim this
+        // book carries, beside `("bestiary_4", "monsters")` the monster lane
+        // wrote in `52da4bc3`.
+        //
+        // 78 of the book's 80 companion units ship — its whole `reachable
+        // remainder`. ZERO are dropped as orphans: the round opened with five on
+        // the board and found every one owned across a `CATEGORY:Internal` relay
+        // row that is not itself an inventory unit (`Familiar (Giant Flea)` ->
+        // `Racial Traits ~ Flea (Giant)` -> `Flea (Giant) ~ Disease`), which is
+        // ownership shape 6 (`decisions.md §58.1`). The two exclusions are
+        // `.COPY=` DELTA rows (`§58.2`), which state a delta on a base record
+        // rather than a record.
+        //
+        // No `OPEN_FINDINGS` entry, and that is the correct outcome rather than
+        // an omission: this list is per FAMILY, `bestiary_4/companions` reaches
+        // a player, and adding a surfaced family here would fail
+        // `unsurfaced_families_are_exactly_the_recorded_findings` in the other
+        // direction.
+        ("bestiary_4", "companions") => Some(companions_reach("bestiary_4", "B4")),
 
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,

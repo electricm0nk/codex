@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "corpus_key": "Grab ~ Medium",
+    "delivery": "Extraordinary",
+    "description": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. Unless otherwise noted, grab can only be used on creatures of size Medium or smaller.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:grab_medium",
+    "name": "Grab",
+    "owners": [
+      "bestiary_4:companion:companion_weasel_giant"
+    ],
+    "record_type": "ability",
+    "source_page": "p.301",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race_ce_companion.lst",
+    "sha256": "818d474333f914f8a18e72ce4f6f1f5a34078d1aa0a7e895300210a21afa2100",
+    "line": 12,
+    "record_key": "Grab ~ Medium"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "corpus_key": "Beheaded ~ Grabbing",
+    "delivery": "Extraordinary",
+    "description": "This type of beheaded has long tendrils of ragged hair or other limblike growths (such as a medusa's snake hair). Its slam attack gains the grab (Medium) special ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:beheaded_grabbing",
+    "name": "Grabbing",
+    "owners": [
+      "bestiary_4:companion:familiar_beheaded"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 74,
+    "record_key": "Beheaded ~ Grabbing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

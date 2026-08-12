@@ -1,0 +1,77 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:companion:companion_giraffe_natural_weapons",
+      "bestiary_4:companion:companion_advancement_giraffe"
+    ],
+    "corpus_key": "Companion (Giraffe)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:companion:companion_giraffe",
+    "monster_class": "Companion:2",
+    "name": "Companion (Giraffe)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Hoof"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.311",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 6
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races_companion.lst",
+    "sha256": "a25e07ccc8202a4b84238383d652ae7e30128569cb949455c7c621d1743146c5",
+    "line": 9,
+    "record_key": "Companion (Giraffe)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

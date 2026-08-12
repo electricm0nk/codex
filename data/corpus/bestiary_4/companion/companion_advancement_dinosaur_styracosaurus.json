@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Dinosaur (Styracosaurus)",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "bestiary_4:companion:companion_advancement_dinosaur_styracosaurus",
+    "name": "Companion Advancement (Dinosaur (Styracosaurus))",
+    "owners": [
+      "bestiary_4:companion:companion_dinosaur_styracosaurus"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 9,
+    "record_key": "Companion Advancement ~ Dinosaur (Styracosaurus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

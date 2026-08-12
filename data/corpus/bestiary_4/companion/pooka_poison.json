@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:04Z",
+  "data": {
+    "corpus_key": "Pooka ~ Poison",
+    "delivery": "Supernatural",
+    "description": "As a standard action, a pooka can blow across her palm and create a 5-foot-diameter cloud of intoxicating dust. The pooka decides when she uses this ability whether the dust acts as an inhaled poison or a mild intoxicant (equivalent to 1-2 glasses of beer). [Pooka Dust] Inhaled; save Fort DC 13; frequency 1/round for 6 rounds; effect 1d2 Wis and 1d2 Cha (or intoxication); cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:pooka_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:companion:pooka",
+      "bestiary_4:companion:familiar_pooka"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 100,
+    "record_key": "Pooka ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

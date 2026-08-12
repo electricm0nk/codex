@@ -41,6 +41,7 @@ from classify_companion_rows import (  # noqa: E402
     precampaign_gates,
     prerace_owners,
     read_row,
+    relay_ownership,
     resolve_source_file,
     row_shape,
     special_ability_refs,
@@ -372,6 +373,26 @@ def transcribe(book: str) -> str:
                 owners[key].append(candidate)
                 creature_ability_keys[candidate].append(key)
 
+    # Shape 6, relay rows (`classify_companion_rows`, `decisions.md §58.1`).
+    # The owner is stated across a corpus row that is NOT an inventory unit:
+    # Bestiary 4's `Familiar (Giant Flea)` names `Racial Traits ~ Flea (Giant)`
+    # (a `CATEGORY:Internal` row) and THAT row names `Flea (Giant) ~ Disease`.
+    # Applied BEFORE the shape-4 fixpoint below, so a relay-owned row can go on
+    # to grant through shape 4 like any other owned row.
+    #
+    # The attribution is the same as shape 4's: the CREATURE that reaches the
+    # relay, because `companion_chassis`'s both-directions link test types
+    # `owners` as creature keys. The relay itself is never emitted -- it is not
+    # a unit, so it has no record to be emitted as, and inventing one would put
+    # a row on the wire that `docs/work-inventory.json` does not count.
+    for key, relay_owners in relay_ownership(
+        directory, creatures, abilities, creature_rows
+    ).items():
+        for creature in relay_owners:
+            if creature in creature_keys and creature not in owners[key]:
+                owners[key].append(creature)
+                creature_ability_keys[creature].append(key)
+
     # Shape 4, granted-by (`classify_companion_rows` §"The four ownership
     # shapes", `decisions.md §54.1`). An ability row that is itself owned may
     # carry shape 1's own `ABILITY:Special Ability|AUTOMATIC|<name>` token, and
@@ -425,6 +446,62 @@ def transcribe(book: str) -> str:
     # their honest `not-ingested` status in the work inventory — this function
     # never touches that — so the shortfall stays a stated claim a reader can
     # check rather than a silent omission.
+    # ---- delta-row screen (`.COPY=` / `.MOD`), before the orphan pass ----
+    #
+    # Adopted verbatim from `transcribe_monster_tables`'s `.COPY=` screen, for
+    # the reason stated there: a `<Base>.COPY=<Variant>` row does not state a
+    # record, it states a DELTA on one.  PCGen copies the base record whole and
+    # then applies the few tokens the copy row carries, so transcribing the row
+    # verbatim -- which is all this script does -- yields a record with an
+    # `ASPECT` and nothing else: no `TYPE:`, no `DESC:`, no page. That is a card
+    # a player opens to find blank, the stub class
+    # `docs/governance/no-stub-mvp-doctrine.md` forbids. `gen_book_cache`'s
+    # `verified_citation_line` refuses it outright anyway, because the row's
+    # first column reads `CATEGORY=Special Ability|Change Shape.COPY=Pooka ~
+    # Change Shape` rather than the record's name -- which is exactly how this
+    # book's two were found (round 5, `decisions.md §58.2`).
+    #
+    # Resolving the delta is not a transcription: it composes values across two
+    # rows while `CompanionAbilityRecord` carries ONE `source_file`/`source_line`
+    # pair, so every inherited field would ship under a citation that does not
+    # contain it. A chassis modelling inheritance needs a second citation, and
+    # that is a deliberate widening, not something to slip into an ingest round.
+    #
+    # `mod_only` is the same class of row and screened by the same pass -- a
+    # `.MOD` overlay updates a record declared elsewhere. **No book registered
+    # through round 5 carries one**, so that half is stated, not exercised
+    # (`decisions.md §56.3`'s discipline); `core_essentials` (4) and
+    # `ultimate_wilderness` (1) are where it will first bite.
+    #
+    # The inventory already states which rows these are -- `origin` is its own
+    # field, so this reads a classification rather than re-deriving one:
+    #   python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+    #   print(collections.Counter(u['origin'] for u in d['units'] if u['kind']=='companion'))"
+    #   -> Counter({'declared': 1666, 'copy': 25, 'mod_only': 5})
+    deltas = sorted(
+        u["corpus_key"] for u in abilities if u.get("origin") in ("copy", "mod_only")
+    )
+    delta_kinds = {
+        u["corpus_key"]: u["origin"]
+        for u in abilities
+        if u.get("origin") in ("copy", "mod_only")
+    }
+    if deltas:
+        delta_keys = set(deltas)
+        abilities = [u for u in abilities if u["corpus_key"] not in delta_keys]
+        for key in delta_keys:
+            owners.pop(key, None)
+        # A creature must never name a record this table does not define --
+        # `companion_chassis`'s `the_chassis_link_resolves_in_both_directions_
+        # for_every_book` asserts exactly that, in both directions.
+        for creature_key, keys in creature_ability_keys.items():
+            creature_ability_keys[creature_key] = [k for k in keys if k not in delta_keys]
+        print(
+            f"{book}: {len(deltas)} delta row(s) NOT transcribed (a `.COPY=`/`.MOD` row "
+            "states a delta on another record, not a record): " + ", ".join(deltas),
+            file=sys.stderr,
+        )
+
     orphans = sorted(k for k, v in owners.items() if not v)
     orphan_keys = set(orphans)
     if orphans:
@@ -466,6 +543,23 @@ def transcribe(book: str) -> str:
         )
         for key in orphans:
             out.append(f"//!   * `{key}`")
+    if deltas:
+        out.append("//!")
+        out.append(
+            "//! NOT transcribed -- rows that state a DELTA on another record rather than"
+        )
+        out.append(
+            "//! a record of their own. Transcribing one verbatim ships a card with almost"
+        )
+        out.append(
+            "//! every field empty; resolving it needs a second citation this chassis does"
+        )
+        out.append(
+            "//! not carry (`decisions.md §58.2`, adopting the monster lane's `.COPY=`"
+        )
+        out.append("//! screen). Their owners no longer name them:")
+        for key in deltas:
+            out.append(f"//!   * `{key}` (`origin: {delta_kinds[key]}`)")
     if gated:
         out.append("//!")
         out.append(

@@ -75,6 +75,10 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // book's second family, beside the monsters the monster lane landed in
         // `9595bd82`. Same wire code either way: it names the BOOK.
         "bestiary_3" => "B3",
+        // SD-29 Epic 7 round 5. Bestiary 4's companions and familiars — the
+        // book's second family, beside the monsters the monster lane landed in
+        // `52da4bc3`. Same wire code either way: it names the BOOK.
+        "bestiary_4" => "B4",
         other => panic!(
             "companion_catalog: no wire code for companion book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -501,9 +505,19 @@ mod tests {
         assert_eq!(griffon.reach_feet, None);
     }
 
-    /// The three unmodelled-facet rows reach the player carrying their verbatim
+    /// The unmodelled-facet rows reach the player carrying their verbatim
     /// `TYPE:` segments, so the screen has something true to show where a facet
     /// label would go.
+    ///
+    /// **This counts WIRE ROWS, not records, and the two numbers differ.** The
+    /// catalog nests abilities under each owning creature, so a record with two
+    /// owners appears twice — which is what round 5 discovered here: Bestiary 4's
+    /// two `TYPE:Communicate.SpellLike` rows are each owned by BOTH
+    /// `Familiar (Pipefox)`/`Pipefox` and `Familiar (Ratling)`/`Ratling`, so 5
+    /// records become 7 rows. `companion_chassis`'s
+    /// `an_ability_with_no_modelled_facet_still_states_its_type_segments` is the
+    /// per-RECORD count (5); this is the per-ROW one, and asserting they are the
+    /// same number would be asserting that no record ever has two owners.
     #[test]
     fn an_unmodelled_facet_reaches_the_wire_with_its_type_segments() {
         let response = build_companion_catalog();
@@ -513,9 +527,25 @@ mod tests {
             .flat_map(|e| e.abilities.iter())
             .filter(|a| a.facet.is_none())
             .collect();
-        assert_eq!(unmodelled.len(), 3);
+        assert_eq!(unmodelled.len(), 7);
+        let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
+        keys.sort_unstable();
+        keys.dedup();
+        assert_eq!(keys.len(), 5, "5 distinct records behind the 7 wire rows");
         for ability in unmodelled {
-            assert_eq!(ability.type_segments, vec!["ClockworkFamiliarInstalledItem".to_owned()]);
+            assert!(
+                !ability.type_segments.is_empty(),
+                "{}: an unmodelled facet with no segments shows the player nothing",
+                ability.key
+            );
+            assert!(
+                ability.type_segments == vec!["ClockworkFamiliarInstalledItem".to_owned()]
+                    || ability.type_segments
+                        == vec!["Communicate".to_owned(), "SpellLike".to_owned()],
+                "{} carries an unrecognised unmodelled shape: {:?}",
+                ability.key,
+                ability.type_segments
+            );
         }
     }
 

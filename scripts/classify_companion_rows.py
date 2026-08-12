@@ -30,7 +30,11 @@ An ability row no creature row claims is a record that loads and is never shown:
 the stub class `§44.2` was written about.  The `ORPHAN` column below is that
 count, and it is a **ceiling on the lane**, not a preference.
 
-# The four ownership shapes, every one stated by the corpus
+# The ownership shapes, every one stated by the corpus
+
+(Six of them now.  Shapes 5 and 6 were each found by a round that had already
+committed to a book and read the rows the classifier was about to throw away —
+`decisions.md §56.1` and `§58.1`.  Both moved the lane's ceiling UP.)
 
 1. **row-named** — a creature row's `ABILITY:Special Ability|AUTOMATIC|<name>`
    token names the ability outright (by `KEY:` or by display name).  This is the
@@ -52,6 +56,15 @@ count, and it is a **ceiling on the lane**, not a preference.
    `Ankylosaurus ~ Stun`.  Applying shape 1 only to creature rows reports five
    of Bestiary 1's 35 ability rows as orphans while the corpus states their
    owner one hop away.
+5. **display-name** (`decisions.md §56.1`) — shape 3's `<Owner>` read from the
+   creature's `OUTPUTNAME:` rather than its `KEY:`.  `KEY:Kyton (Augur)`
+   displays as `Augur` and its abilities are keyed `Augur ~ …`.  Read from the
+   row's own token, never inferred by unwrapping the key's parentheses.
+6. **relay** (`decisions.md §58.1`) — the owner is stated across a corpus row
+   that is not an inventory unit.  Bestiary 4's `Familiar (Giant Flea)` names
+   `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row, and THAT row names
+   `Flea (Giant) ~ Disease`.  Shape 4 walks unit-to-unit and cannot see it; see
+   the block above `ability_refs_any_category` below.
 
 A looser rule would over-report reachability, which is the direction that ships
 stubs; each shape above is a token the row itself carries.  Shape 4 in
@@ -231,6 +244,146 @@ def bare_species(key: str) -> str:
     return key
 
 
+# ---------------------------------------------------------------------------
+# Shape 6, RELAY ROWS (`decisions.md §58.1`).
+#
+# Bestiary 4 is where the closure above stops one hop short.  Its creature row
+# `Familiar (Giant Flea)` does not name `Flea (Giant) ~ Disease` at all; it
+# names `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal` row in the same
+# `.lst`, and THAT row carries the
+# `ABILITY:Special Ability|AUTOMATIC|Flea (Giant) ~ Disease|…` token.  The relay
+# is a corpus row like any other, but it is **not an inventory unit** --
+# `v06_work_inventory` does not count `CATEGORY:Internal` rows -- so shape 4,
+# which walks unit-to-unit, has nothing to stand on, and the abilities read as
+# orphans while the corpus states their owner two hops away.
+#
+# Two further things the corpus says here, both load-bearing:
+#
+# * The creature's own token is `ABILITY:Internal|AUTOMATIC|…`, not
+#   `ABILITY:Special Ability|AUTOMATIC|…`.  PCGen's category segment names the
+#   category of the keys that follow, so shape 1's `Special Ability`-only
+#   predicate cannot see the first hop either.  Shape 6 reads the reference
+#   under ANY category and resolves it ONLY against relay rows; shape 1 keeps
+#   its narrower predicate for the unit-to-unit links it already governs.
+# * `transcribe_companion_tables.parse_natural_attacks` has read this exact
+#   token since round 1 and deliberately SKIPS entries containing ` ~ ` (they
+#   are not attack names).  Those skipped entries are precisely the relays --
+#   the token was already being read, one field at a time, for another purpose.
+#
+# This can never manufacture reachability: a relay is reached only from a
+# creature row of this book, and a reached relay grants only what its own token
+# names.  A relay no creature reaches grants nothing.
+# ---------------------------------------------------------------------------
+
+
+def ability_refs_any_category(row: list[str]) -> list[str]:
+    """Keys named by `ABILITY:<Category>|AUTOMATIC|…` under ANY category.
+
+    Shape 1's `special_ability_refs` is this token restricted to
+    `Special Ability`; this is the same token read one category wider, used ONLY
+    to resolve relay rows.
+    """
+    refs: list[str] = []
+    for field in row:
+        if not field.startswith("ABILITY:"):
+            continue
+        parts = field.split("|")
+        if len(parts) < 3 or parts[1] != "AUTOMATIC":
+            continue
+        for name in parts[2:]:
+            name = name.strip()
+            if not name or name.startswith("PRE") or "=" in name:
+                continue
+            if name not in refs:
+                refs.append(name)
+    return refs
+
+
+def _row_key(row: list[str]) -> str:
+    """A corpus row's identity: its `KEY:` token, else its first field."""
+    return token(row, "KEY:") or (row[0] if row else "")
+
+
+def relay_rows(directory: str, abilities: list[dict]) -> dict[str, list[str]]:
+    """Non-unit rows of this book's ability `.lst` files that name abilities.
+
+    `<relay key> -> [<key it names>, ...]`, in file order.  A row whose key IS
+    an inventory unit is excluded by construction: units are shapes 1-5's
+    business and counting one here would double-count it.
+    """
+    unit_keys = {u["corpus_key"] for u in abilities}
+    source_files: list[str] = []
+    for unit in abilities:
+        if unit["source_file"] not in source_files:
+            source_files.append(unit["source_file"])
+    relays: dict[str, list[str]] = {}
+    for source_file in source_files:
+        path = resolve_source_file(directory, source_file)
+        with open(path, encoding="utf-8", errors="replace") as handle:
+            for line in handle.read().split("\n"):
+                if not line.strip() or line.lstrip().startswith("#"):
+                    continue
+                row = [t.strip() for t in line.split("\t") if t.strip()]
+                key = _row_key(row)
+                if not key or key in unit_keys or key in relays:
+                    continue
+                refs = ability_refs_any_category(row)
+                if refs:
+                    relays[key] = refs
+    return relays
+
+
+def relay_ownership(
+    directory: str,
+    creatures: list[dict],
+    abilities: list[dict],
+    creature_rows: dict[str, list[str]],
+) -> dict[str, list[str]]:
+    """`<ability unit key> -> [<creature key>, ...]` reached through relays."""
+    relays = relay_rows(directory, abilities)
+    if not relays:
+        return {}
+    ability_by_key = {u["corpus_key"]: u for u in abilities}
+    ability_by_name = {u["name"]: u for u in abilities}
+
+    # Seeded ONLY from creature rows of this book, in creature row order.
+    reached: dict[str, list[str]] = {}
+    for unit in creatures:
+        for ref in ability_refs_any_category(creature_rows[unit["corpus_key"]]):
+            if ref not in relays:
+                continue
+            owners = reached.setdefault(ref, [])
+            if unit["corpus_key"] not in owners:
+                owners.append(unit["corpus_key"])
+
+    # A relay may name another relay.  Fixpoint in insertion order, so the
+    # output can never depend on set iteration order.
+    changed = True
+    while changed:
+        changed = False
+        for key in list(reached):
+            for ref in relays[key]:
+                if ref not in relays:
+                    continue
+                owners = reached.setdefault(ref, [])
+                for creature in reached[key]:
+                    if creature not in owners:
+                        owners.append(creature)
+                        changed = True
+
+    out: dict[str, list[str]] = {}
+    for key, creature_owners in reached.items():
+        for ref in relays[key]:
+            hit = ability_by_key.get(ref) or ability_by_name.get(ref)
+            if hit is None:
+                continue
+            got = out.setdefault(hit["corpus_key"], [])
+            for creature in creature_owners:
+                if creature not in got:
+                    got.append(creature)
+    return out
+
+
 def classify(book: str, units: list[dict], directory: str) -> dict:
     gates = precampaign_gates(directory)
     gated = [
@@ -271,13 +424,21 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
     ability_by_key = {u["corpus_key"]: u for u in abilities}
     ability_by_name = {u["name"]: u for u in abilities}
 
+    creature_rows: dict[str, list[str]] = {}
+    for unit in creatures:
+        creature_rows[unit["corpus_key"]] = read_row(
+            resolve_source_file(directory, unit["source_file"]), unit["source_line"]
+        )
+
     owned_row_named: set[str] = set()
     for unit in creatures:
-        path = resolve_source_file(directory, unit["source_file"])
-        for ref in special_ability_refs(read_row(path, unit["source_line"])):
+        for ref in special_ability_refs(creature_rows[unit["corpus_key"]]):
             hit = ability_by_key.get(ref) or ability_by_name.get(ref)
             if hit is not None:
                 owned_row_named.add(hit["corpus_key"])
+
+    # Shape 6, relay rows — see the block above `ability_refs_any_category`.
+    owned_relay = set(relay_ownership(directory, creatures, abilities, creature_rows))
 
     owned_prerace: set[str] = set()
     owned_prefix: set[str] = set()
@@ -308,7 +469,7 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
                 named.append(hit["corpus_key"])
         grants[unit["corpus_key"]] = named
 
-    owned = owned_row_named | owned_prerace | owned_prefix
+    owned = owned_row_named | owned_prerace | owned_prefix | owned_relay
     owned_granted: set[str] = set()
     frontier = list(owned)
     while frontier:
@@ -320,6 +481,15 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
                 frontier.append(granted)
 
     orphans = [u["corpus_key"] for u in abilities if u["corpus_key"] not in owned]
+    # Delta rows (`decisions.md §58.2`).  A `<Base>.COPY=<Variant>` row states a
+    # DELTA on another record, and a `.MOD` row an update to one; neither is a
+    # record the chassis can transcribe from its own citation, so
+    # `transcribe_companion_tables` drops both.  The inventory already classifies
+    # them in its own `origin` field, so this reads a classification rather than
+    # re-deriving one.  Counted over the whole unit set, creature rows included:
+    # a `.COPY=` creature row is no more transcribable than a `.COPY=` ability
+    # row, and Bestiary 2's monster half is where that first showed.
+    deltas = [u["corpus_key"] for u in units if u.get("origin") in ("copy", "mod_only")]
     return {
         "book": book,
         "creatures": len(creatures),
@@ -328,8 +498,20 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
         "row_named": len(owned_row_named),
         "prerace": len(owned_prerace),
         "prefix": len(owned_prefix),
+        "relay": len(owned_relay),
         "granted": len(owned_granted),
         "orphans": orphans,
+        "deltas": deltas,
+        # The exclusions as a UNION, never a sum: a row can be both an orphan
+        # and a `.COPY=` delta, and adding the columns would subtract it twice.
+        # `§51.1` ruled that a ceiling subtracting one exclusion is not a
+        # ceiling; `§54.2` moved the class-row subtraction out of prose and into
+        # this instrument. This is the same correction one step further —
+        # the arithmetic, not just the terms.
+        "excluded": set(orphans)
+        | set(deltas)
+        | {u["corpus_key"] for u in classes}
+        | {u["corpus_key"] for u in gated},
         "gated": [
             (u["corpus_key"], u["source_file"], gates[u["source_file"]]) for u in gated
         ],
@@ -347,12 +529,14 @@ def main() -> None:
     books = wanted or sorted(units_by_book)
     print(
         f"{'book':32} {'crea':>5} {'abil':>5} {'clas':>5} {'named':>6} "
-        f"{'prerace':>8} {'prefix':>7} {'granted':>8} {'ORPHAN':>7}"
+        f"{'prerace':>8} {'prefix':>7} {'relay':>6} {'granted':>8} {'ORPHAN':>7}"
     )
     total_orphans = 0
     total_units = 0
     total_gated = 0
     total_classes = 0
+    total_deltas = 0
+    total_excluded = 0
     for book in books:
         units = units_by_book.get(book, [])
         if not units:
@@ -366,11 +550,14 @@ def main() -> None:
         total_orphans += len(result["orphans"])
         total_gated += len(result["gated"])
         total_classes += result["classes"]
+        total_deltas += len(result["deltas"])
+        total_excluded += len(result["excluded"])
         total_units += len(units)
         print(
             f"{book:32} {result['creatures']:5} {result['abilities']:5} "
             f"{result['classes']:5} {result['row_named']:6} {result['prerace']:8} "
-            f"{result['prefix']:7} {result['granted']:8} {len(result['orphans']):7}"
+            f"{result['prefix']:7} {result['relay']:6} {result['granted']:8} "
+            f"{len(result['orphans']):7}"
         )
         if wanted and result["orphans"]:
             for key in result["orphans"]:
@@ -390,10 +577,9 @@ def main() -> None:
     print(f"orphan ability rows            : {total_orphans}")
     print(f"PRECAMPAIGN-gated on an uningested campaign : {total_gated}")
     print(f"`*_classes_companion.lst` class rows the chassis refuses : {total_classes}")
-    print(
-        "reachable remainder            : "
-        f"{total_units - total_orphans - total_gated - total_classes}"
-    )
+    print(f"`.COPY=`/`.MOD` delta rows the chassis refuses : {total_deltas}")
+    print(f"distinct excluded rows (the UNION, not the sum) : {total_excluded}")
+    print(f"reachable remainder            : {total_units - total_excluded}")
 
 
 if __name__ == "__main__":
