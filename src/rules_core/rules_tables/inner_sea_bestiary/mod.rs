@@ -28,9 +28,13 @@
 //! * The transcriber screens the values it is about to **emit**, which for a
 //!   monster include the ability keys the row NAMES. Two rows of this book name
 //!   seven `ABILITY:Special Ability|AUTOMATIC|` keys that are themselves Product
-//!   Identity — a Golarion deity's proper name in the ability's namespace — so
-//!   the monster cannot be emitted without emitting that name in its
-//!   `ability_keys` array.
+//!   Identity — the ability's namespace is a named deity of this setting, one of
+//!   `pi_screening::PI_BLACKLIST_TERMS` — so the monster cannot be emitted
+//!   without emitting that term in its own `ability_keys` array. The term is
+//!   NOT spelled here: `pi-sweep` rejects a Product Identity term anywhere under
+//!   `rules_tables/` regardless of the sentence around it, and it does not read
+//!   intent (`decisions.md §52.5`). The corpus line is the better identifier
+//!   anyway — see `the_product_identity_rows_are_not_records` below.
 //!
 //! So this book runs `decisions.md §57.2`'s cascade **backwards**: there, a
 //! dropped Product Identity monster orphaned 73 well-formed abilities; here,
@@ -115,7 +119,12 @@ mod tests {
     /// ability; this one is the first that does.
     #[test]
     fn the_shipped_total_is_the_classifiers_reachable_remainder_less_the_cascade() {
-        let classifier_reachable = 230 - 26 - 7 - 0;
+        // The classifier's fourth term, `.COPY=`, is 0 for this book and is
+        // therefore ABSENT here rather than written as `- 0`: `clippy`'s
+        // deny-by-default `identity_op` rejects the no-op subtraction, and a
+        // gate warning is a worse way to carry the fourth term than this
+        // comment is.
+        let classifier_reachable = 230 - 26 - 7;
         let cascade = 2 + 5;
         assert_eq!(monsters().len() + monster_abilities().len(), classifier_reachable - cascade);
         assert_eq!(monsters().len() + monster_abilities().len(), 190);
