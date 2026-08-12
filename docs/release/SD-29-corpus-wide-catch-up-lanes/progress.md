@@ -5996,14 +5996,14 @@ rather than left as an unexplained skip.
 
 | # | Item | State |
 |---|---|---|
-| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | see **Gate** below |
-| 2 | Reach claims for this card's families — zero matched tests is a hard failure | see **Gate** |
+| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | **PASS. `VERIFY_EXIT=0`, `RESULT: PASS`, all 14 stages green on the final tree** — run 3 below. Runs 1 and 2 are reported too, red and stopped-early respectively, rather than only the run that passed |
+| 2 | Reach claims for this card's families — zero matched tests is a hard failure | **PASS, by claim not by absence.** `reach` runs **22** (was 18). Four new claims, asserted per record against the files on disk: BotD1 **5** monsters + **36** abilities, BotD2 **4** + **17**, all `Reach::Surfaced` on `list_monster_catalog` |
 | 3 | `v06_corpus_trap_report -- --audit` exits 0 | **PASS. `AUDIT_EXIT=0`**, 259 trap rows, 0 defects, *"every ingested record's citation agrees with the line it names."* Exit code captured by redirecting to a file and reading `$?` on the next statement, never through a pipe |
 | 4 | `v06_work_inventory` regenerated; the books' units leave `not-started` | **PASS.** Both books read `monster` and `monster_ability` **fully `grounded`** (5/5 + 36/36, 4/4 + 17/17). Second run differs in **`generated_at` only** — proven by comparing the two runs' parsed JSON key by key, not by eyeballing a diff |
 | 5 | Four-check wired-integration audit | **Clean.** No stub tokens, no no-op handlers, no fixture-only data, no "would have" strings. The places a placeholder could have shipped all serve `None` plus the reason: 3 natural attacks the corpus never prices, and the Lesser Host Devil's genuinely empty attack list |
 | 6 | Unsurfaced families carry an `OPEN_FINDINGS` entry | **`OPEN_FINDINGS` unchanged, and nothing was owed** — both books' families reach the catalog record by record, which is the property that made them the correct pair. The 1,327 orphan rows are NOT an `OPEN_FINDINGS` debt of this cycle: they belong to books this cycle did not ingest, and `§46.1` records them as a lane ceiling instead |
 | 7 | Baseline movements are a separate commit | **None made.** `scripts/verify-baselines.env` untouched |
-| 8 | On-screen verification for player-visible families | see **On screen** below |
+| 8 | On-screen verification for player-visible families | **PASS, both books**, via the checked-in harness — see **On screen** below. The Seraptis capture is the two-`DESC:` fix proven on a player's screen |
 
 ### 6b. The branch tip was RED before this cycle touched it — attributed, then fixed
 
@@ -6057,27 +6057,244 @@ picking a side. Picking a side on any of the union files would have silently dro
 **Pushed to `origin/tranche/9` at `5f04bbcf`.** PR #360 remains open and unmerged, as the card
 requires — the bundle is not done.
 
-### Gate
+### 0b. Trap report — cycle mechanics step 0b, and what it reconciles
 
-**IN FLIGHT at the time this receipt was appended** — `./scripts/verify.sh` FULL is running against
-this exact tree via a wrapper that assigns `code=$?` on the statement immediately after the command
-and writes it to a file, never through a pipe. Result and per-stage table are appended below as a
-follow-up entry, exactly as rounds 1 and 2 of the race-trait lane did and for the reason they
-recorded. Stages green so far: `preflight-disk`, `pi-sweep`, `audit-selftest`, `driver-selftest`,
-`root-lib` (**1635 passed**).
+`cargo run --locked --bin v06_corpus_trap_report -- <book_dir>` for each book, exit `0` both times.
 
-Standalone runs already captured against this tree, each with its exit code taken directly:
+| file | DECLARES | `.COPY=` | `.MOD` | `#OFF` | units the inventory counts |
+|---|---|---|---|---|---|
+| `botd1_races.lst` | 5 | 0 | 0 | 0 | **5 monster** |
+| `botd1_abilities_race.lst` | 37 | 0 | 0 | 0 | **36 monster_ability** |
+| `botd2_races.lst` | 4 | 0 | 0 | 0 | **4 monster** |
+| `botd2_abilities_race.lst` | 18 | 0 | 0 | 0 | **17 monster_ability** |
 
-* desktop suite — `cargo test --locked` in `apps/desktop/src-tauri` → **`DESKTOP_EXIT=0`, 427 passed,
-  0 failed**, including this cycle's `both_book_of_the_damned_volumes_reach_the_catalog_record_by_record`.
-* `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`AUDIT_EXIT=0`**.
-* `BASE_BRANCH=e1f0bdd9 bash scripts/wired-integration-audit.sh` → **`WIRED_CYCLE_EXIT=0`, all four
-  checks clean** over this cycle's own diff. Run at its default `origin/develop` base it exits 1 on
-  check 1, and this receipt says so rather than quoting only the passing invocation: all 8 hits are
-  pre-existing bundle-wide false positives — 7 are doc comments that use the word *placeholder* to
-  say a value is never one, and the 8th is an HTML `placeholder=` input attribute.
+**Both ability files declare exactly one row more than the inventory counts, and neither delta is a
+dropped record.** Each was chased to its own row rather than waved at:
 
-### On screen — DoD item 8
+* Volume 1's 37th is `Warmonger Devil ~ Trample` (`botd1_abilities_race.lst:46`), `TYPE:Internal` —
+  excluded by the inventory's `internal_namespace` trap. It is carried as an
+  `external_ability_refs` entry on the Warmonger Devil's stat block and pinned in both directions by
+  `an_internal_typed_ability_stays_an_external_reference`.
+* Volume 2's 18th is `Smoking Wound` at `:36`, `TYPE:Ability Focus` — a feat-interaction record, not
+  one of `monster_ability`'s two facets, so the chassis correctly does not model it. The creature's
+  own `Vavakia ~ Smoking Wound` row IS ingested.
+
+This is the reconciliation the playbook asks for: a count that disagrees with a line count is
+explained by naming the rows, not by preferring whichever number is convenient.
+
+Neither book's trap report flags a defect. Volume 1's notable shapes are 8 `KEY:` namespaces (which
+is why nothing here joins on a bare leaf) and 5 `ASPECT`-alongside-`BONUS` rows in files this lane
+does not touch; Volume 2's are 48 `.MOD` rows and 2 `#OFF` rows, all in `botd2_deities.lst`, likewise
+outside this lane.
+
+### Gate — run 1, and the six failures it found
+
+Superseding the "IN FLIGHT" note above. `./scripts/verify.sh` FULL, run through a wrapper that
+assigns `code=$?` on the statement immediately after the command and writes it to a file — never
+through a pipe.
+
+**Run 1 (post-merge tree, commit `5f04bbcf`): `VERIFY_EXIT=1`. `RESULT: FAIL`. 3 of 14 stages red.**
+
+| Stage | Run 1 |
+|---|---|
+| preflight-disk | PASS (disk budget OK) |
+| **pi-sweep** | **FAIL** — 11 hits over `src/rules_core/rules_tables`, 10 baseline rows |
+| audit-selftest | PASS (28) |
+| reclaim-selftest | PASS (10) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (**1635**) |
+| **root-full** | **FAIL** — cargo exit 101; **6195 passed across 543 suites**, 5 failing |
+| **desktop** | **FAIL** — cargo exit 101; 427 passed, 1 failed |
+| reach | PASS (**22** — up from round 1's 18; the four new claims are this cycle's) |
+| frontend-install / frontend-test / frontend-typecheck | PASS / PASS (98/98) / PASS |
+| clippy | PASS (root:54 desktop:7 warnings, 0 errors) |
+| class-dump | PASS (31/31 computing) |
+
+`decisions.md §39` forbids calling a red stage environmental without naming what did not execute.
+Nothing failed to execute here: `root-full` ran **543 suites** and reports its own `comm -23`
+non-execution check clean. All six failures were real, and each is attributed individually rather
+than bucketed — §40's rule.
+
+**Two were this cycle's:**
+
+1. `pi-sweep` — a doc comment **this cycle wrote** in
+   `src/rules_core/rules_tables/book_of_the_damned_volume_1/mod.rs:27` named the campaign setting
+   outright, putting a blacklisted term in a `rules_tables` source file. **Removed, not baselined:**
+   a doc comment does not need the proper noun to make its point, and baselining would have spent the
+   exemption on prose. The sweep is a hard stop by design and behaved correctly.
+2. `tests/v06_work_inventory.rs` — an SD-30 test pinned all twelve `campaign_setting` books as
+   `future_state`, which is an assertion that **nobody will ever ingest one**. Three lanes since have.
+   (This one was already red at the branch point on `inner_sea_races` alone; this cycle's two books
+   made it red twice over.)
+
+**Three were inherited**, all from lanes that landed on `tranche/9` without a gate run across the
+merge: `ingest_race_traits.rs`'s 233-record pin (Horror Adventures' 43), the Duergar test's
+duplicated `RACE_CORPUS_BOOKS` copy, and a hardcoded `/home/ubuntu` in a `reclaim` self-test comment.
+
+**And one this cycle caused by its own merge resolution, which is the most transferable of the six.**
+Resolving `race_trait_picker.rs` with `git checkout --theirs` kept the race-trait lane's PI fix and
+**silently discarded this cycle's `Duergar_ReplaceSLAInvisibility` setter fix**, which that lane had
+not made. Picking a side on a file two lanes both fixed drops whichever fix the other side did not
+make, and only a gate run against the *merged* tree can see it — the pre-merge desktop suite was
+green at 427/0 with that fix in place.
+
+All six fixed at the source in `5c5de84c`; none relaxed, none `#[ignore]`d, no baseline moved.
+
+### Gate — run 2, stopped deliberately, and what it had already proven
+
+**Run 2 was killed by this cycle at `root-full`+1, and the receipt says so rather than quoting its
+partial table as a result.** `VERIFY_EXIT=143` is SIGTERM, not a verdict.
+
+The reason is a real hazard worth naming: **`verify.sh` reads the working tree, not a commit**, and
+`origin/tranche/9` advanced twice while run 2 was in flight (the race-trait lane's round 3, working
+the same files). Merging mid-run would have produced a result whose early stages were measured
+against one tree and whose late stages were measured against another — a green that answers no
+question. Stopping and re-running is the only defensible move, and it costs a full gate.
+
+**What run 2 did establish before it was stopped**, on the tree carrying all six fixes:
+
+| Stage | Run 2 (partial) |
+|---|---|
+| preflight-disk | PASS |
+| **pi-sweep** | **PASS (10 hits / 10 baseline rows)** — was red in run 1 |
+| audit-selftest | PASS (28) |
+| reclaim-selftest | PASS (10) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (1635) |
+| **root-full** | **PASS — 6200 passed across 543 suites, all 524 `tests/*.rs` suites executed** — was red in run 1 |
+| desktop and later | not reached |
+
+Both stages that run 1 failed came back green, and `root-full`'s own `comm -23` non-execution check
+reports **all 524 suites executed** — so the green is a green, not an absence.
+
+### Gate — run 3, on the final tree
+
+**`VERIFY_EXIT=0`. `RESULT: PASS`. All 14 stages green**, on the final tree — commit `0588801a`,
+which is `origin/tranche/9` plus this cycle's last doc commit and nothing else. Exit code taken from
+`code=$?` on the statement immediately after the command and written to a file; never through a pipe.
+
+| Stage | Run 3 |
+|---|---|
+| preflight-disk | PASS (disk budget OK) |
+| pi-sweep | PASS (10 hits / 10 baseline rows) |
+| audit-selftest | PASS (28) |
+| reclaim-selftest | PASS (10) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (**1635**) |
+| **root-full** | **PASS — 6200 passed across 543 suites, all 524 `tests/*.rs` suites executed** |
+| desktop | PASS (**428**) |
+| **reach** | **PASS (22)** — 18 before this cycle; see DoD item 2 |
+| frontend-install | PASS |
+| frontend-test | PASS (98/98 files) |
+| frontend-typecheck | PASS (`tsc --noEmit` clean) |
+| clippy | PASS (root:54 desktop:7 warnings, **0 errors**) |
+| class-dump | PASS (31/31 computing) |
+
+`root-full`'s non-execution check — the `comm -23` between the derived expected-suite list and the
+log's own `Running` lines, which `decisions.md §40` requires and which `root-full` runs on every
+invocation — reports **all 524 `tests/*.rs` suites executed**. The green is a green, not an absence.
+
+**DoD item 2 is satisfied by claim, not by absence.** `reach` runs **22** tests, up from round 1's 18:
+the four new ones are this cycle's, and `both_book_of_the_damned_volumes_reach_the_catalog_record_by_record`
+asserts each book's two families **per record** against the files on disk —
+`("book_of_the_damned_volume_1","monsters")` → **5**,
+`…"monster_abilities"` → **36**, `("book_of_the_damned_volume_2","monsters")` → **4**,
+`…"monster_abilities"` → **17**, every one `Reach::Surfaced` on `list_monster_catalog`. The suite also
+runs `unsurfaced_families_are_exactly_the_recorded_findings`, which computes the unsurfaced set from
+live behaviour and would fail if any of the four reached nothing.
+
+**Independently re-run against the same final tree, each with its exit code captured directly** — so
+no single instrument is the only witness:
+
+* `cargo test --locked --workspace` (repo root) → **`ROOT_WS_EXIT=0`**, **544** `test result: ok`
+  lines, **0** `test result: FAILED`.
+* `cargo test --locked` in `apps/desktop/src-tauri` → **`DESKTOP_FINAL_EXIT=0`, 428 passed**.
+* `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`AUDIT_EXIT=0`**, 259 trap rows,
+  0 defects.
+* `BASE_BRANCH=e1f0bdd9 bash scripts/wired-integration-audit.sh` → **`WIRED_EXIT=0`, all four checks
+  clean** over this cycle's diff. At its default `origin/develop` base it exits 1 on check 1, and
+  this receipt says so rather than quoting only the passing invocation: all 8 hits are pre-existing
+  bundle-wide false positives — 7 doc comments using the word *placeholder* to say a value is never
+  one, and one HTML `placeholder=` input attribute.
+* `v06_work_inventory` run twice → the two outputs differ in **`generated_at` only**, compared key by
+  key on the parsed JSON rather than eyeballed.
+
+
+### On screen — DoD item 8, both books, PASS
+
+`RUN_DESKTOP_AGENT=sd29-monster-r3` (unique to this cycle, per the SKILL's concurrent-agent rule),
+via the checked-in harness rather than a hand-rolled drive. Artifacts:
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/sd29-monster-r3/item8/`.
+
+**What the screen confirms, on the captured images and in the clipboard extraction:**
+
+* The catalog header reads ***"across Bestiary 1, Bonus Bestiary, Monster Codex, Book of the Damned,
+  Volume 1 and Book of the Damned, Volume 2 — 71 monsters"*** — the derived book list picking up both
+  new books, and **71 = 46 + 14 + 2 + 5 + 4**. The size and type facet chips re-derive too
+  (Outsider 12, of which this cycle's 9 are new).
+* **`Demon (Seraptis)`** (`monster-botd2-seraptis.png`) — *Medium Outsider (Chaotic, Demon, Evil,
+  Extraplanar) · CR 15 · Speed 50 ft. · **Book of the Damned, Volume 2 p.58** · Hit dice Outsider
+  (Fort/Will):15*, four natural attacks each tagged `(corpus row)`, and all five abilities with facet,
+  delivery and rules text. **This is the two-`DESC:`-token fix, proven on screen:** `Gaze of Despair`
+  renders the *full* rules text — the Will save, the 1d6 Charisma drain, the staggered duration, the
+  suicidal-state clause — where the pre-fix ingest would have shown the one-line summary and stopped
+  at "…soul-crushing despair."
+* **`Devil, Lesser Host (Gaav)`** (`monster-botd1-lesser-host-devil.png`) — *Small Outsider · **CR 3**
+  · Speed 5 ft., fly 60 ft. · **Book of the Damned, Volume 1 p.58*** and, in place of an attack list,
+  ***"No natural attack on this corpus row — this creature fights with manufactured weapons."*** That
+  row's corpus line carries no `NATURALATTACKS:` token at all, and the screen says so in a sentence
+  rather than showing a blank.
+
+**One honest observation the screenshot makes and the receipt will not round away.** Seraptis' Gaze of
+Despair renders as *"those within  feet"* and *"a DC  Will save"* — the `%1`/`%2` magnitudes are
+**dropped, not guessed**, which is `decisions.md §24`'s standing treatment for this program (there is
+no formula interpreter, and the values are `BONUS:VAR` chains this ingest deliberately does not
+compute). It is pre-existing lane behaviour, identical to Bonus Bestiary's `Babble` DC, and not a
+regression from this cycle — but a player does read a sentence with a gap in it, and that is a known
+cost of the lane rather than a thing this receipt should let pass unmentioned.
+
+**A process finding from the first attempt, recorded because it is not the documented one.** The
+harness header forbids running concurrently with `verify.sh` on memory grounds (22 GiB, no swap). This
+box now has **45 GB with 40 GB available**, so that constraint no longer binds — but the first attempt
+still failed, with `sh: 1: vite: not found`: the gate's own `frontend-install` stage runs `npm ci`,
+which had `apps/desktop/node_modules` mid-reinstall when the app launched. The harness failed loudly
+and named its artifacts `.FAILED.*`, exactly as designed. **The rule still holds; its reason has
+changed from memory to `npm ci` racing the launch.** Both records passed on a re-run with the gate
+idle.
+
+### Disposition and handoff to round 3
+
+**The lane is NOT done and this receipt does not say it is.**
+
+* `units_ingested` = **62**. `units_remaining` = **4,233** raw, re-derived by the §1b command at cycle
+  end over the merged tree.
+* **The number that should drive round 3 is 2,906**, the reachable remainder after removing the 1,327
+  orphan ability rows (`decisions.md §46.1`). Re-derive both with
+  `python3 scripts/classify_monster_ability_rows.py` rather than trusting this line.
+
+Round 3 starts here, in this order:
+
+1. **`inner_sea_world_guide`** — 44 units, 14 monsters, **5 orphans**. The cheapest book with monsters
+   left. It is `future_state`, so budget a `RuleSetId` and a scope flip.
+2. **`inner_sea_bestiary`** — 230 units, 40 monsters, 26 orphans; a real bestiary and the largest
+   fully-linked-enough book remaining.
+3. **`bestiary_2`** — 782 units, 316 monsters, **64 orphans — 8% of its units**, the
+   lowest orphan share of the three big bestiaries (`bestiary_4` 988 units / 152 orphans,
+   `bestiary` 807 / 146). The first of the big three and the cleanest of them.
+4. **Do NOT shape `ultimate_psionics`, or any of the ten zero-monster books (703 units), as a
+   per-monster cycle.** They need a surface decision. `ultimate_psionics` additionally carries a third
+   link shape (Astral Construct menu selections in the `TYPE:` token) that the chassis does not model
+   — round 1's deferral stands and this round reproduces its 66-orphan figure independently.
+5. **Each book with orphans needs a decision before its cycle, not during it:** a whole-book reach
+   claim is not available for a book whose ability rows do not all have owners. Either the claim is
+   scoped to the linked subset with an `OPEN_FINDINGS` entry for the rest, or the book waits. This
+   round dodged the question by taking the only two books with zero orphans; round 3 cannot.
+6. **The dispatch worktree will land on `7d9f1c4f` again** — five instances now.
+   `git reset --hard origin/tranche/9` before anything else.
+7. **Expect to merge, not rebase, and expect the race-trait lane to be live in the same files.** This
+   cycle merged `origin/tranche/9` twice mid-flight and both times the other lane had independently
+   fixed something this one had also fixed. Resolve by union for pure additions; **never
+   `--theirs` a whole file both lanes edited** — see the Gate section.
 
 **Pending; appended below.** Cannot run concurrently with `verify.sh` on this box (22 GiB, no swap —
 the harness's own header records the OOM).
