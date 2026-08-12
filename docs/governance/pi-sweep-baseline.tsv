@@ -25,13 +25,3 @@ src/rules_core/rules_tables/crb/bard_spell_list.rs	Nex	1	false-positive	same "Ne
 src/rules_core/rules_tables/crb/sorcerer_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
 src/rules_core/rules_tables/crb/wizard_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
 src/rules_core/rules_tables/ultimate_magic/equipment_tables.rs	Geb	1	false-positive	blacklist term "Geb" (a place name) inside the unrelated proper noun "Gebr" — the example license-matrix.md already records
-# --- 2026-08-12, SD-29 race-trait lane round 5 (`decisions.md` 53), for hits landed by the
-# monster lane's Bestiary 2 round (`69e0dec8`) which pushed to tranche/9 with pi-sweep RED.
-# All three are in DOC COMMENTS that exist to explain PI screening itself, so the terms appear
-# because the paragraph is ABOUT them. Dispositioned rather than reworded: editing another
-# lane's live file to satisfy a gate would clobber work in flight, and this file is the
-# mechanism the sweep documents for exactly this case. The bestiary_2 TABLE DATA is clean —
-# `no_shipped_monster_field_carries_a_product_identity_term` passes, and these are prose.
-src/rules_core/rules_tables/bestiary_2/mod.rs	Golarion	1	false-positive	module doc explaining WHY a roleplaying_game/ bestiary carries no Product Identity: "its Golarion proper nouns, which live in the campaign_setting/ line". Prose about the rule, not a record
-src/rules_core/rules_tables/bestiary_2/mod.rs	Nex	1	false-positive	module doc naming the false positive it rejected — `Nex` inside "the next round", 12 of that round's 13 case-insensitive hits
-src/rules_core/rules_tables/bestiary_2/mod.rs	Torag	1	false-positive	same doc, the other false positive — `Torag` inside "storage" (Mercane ~ Secret Chest)

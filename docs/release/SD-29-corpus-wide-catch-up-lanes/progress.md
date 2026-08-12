@@ -8087,3 +8087,297 @@ Ranked by orphan **share** rather than size, `bestiary_4` (6%) and `bestiary` (8
    rows.** `transcribe_companion_tables` refuses the book outright — a hard stop, not a silent drop —
    with *"carries N `*_classes_companion.lst` rows; the chassis models creature and ability rows
    only. Widen it deliberately."*
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 5 (SD29-E6-F2-006)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), round 5 of a loop-until-dry lane.
+**Actor:** `sd29-racetrait-r6`. **Branch:** `tranche/9`. **Date:** 2026-08-12.
+**Decision record:** `decisions.md §53` (number reserved at claim time — §51 was already held by the
+companion lane's round 2; this is the first round in this lane not to renumber on merge).
+**PR:** #360, open and NOT merged.
+
+### 0. What this round is, in one paragraph
+
+`§49.8` ruled the lane **dry for ingest**, and that ruling **reproduces exactly** — re-derived before
+touching anything, with the instrument round 4 checked in. So round 5 did not ingest. It fixed a
+defect in what the lane had already shipped: **this program's Product-Identity screen is a 55-term
+heuristic, and PCGen has been declaring the answer per record, in tokens the ingest path never read.**
+26 shipped `race_trait` records declare `DESCISPI:YES`; the blacklist caught 18 of them by
+coincidence and **published the other 8**. One declares `NAMEISPI:YES` and shipped a Product Identity
+NAME. The monster lane found this for its own kind, reported it as corpus-wide, and `kanban.md` card
+8 handed it to this lane by name.
+
+### 1. Re-derivation at round start — every figure, with its command
+
+**The lane ceiling and remainder, before any change** (`scripts/race_trait_ceiling.py`, checked in by
+round 4):
+
+```
+CEILING
+  TYPE:<one of 18 races> Racial Trait rows : 553
+  TYPE:<one of 18 races> Subrace rows      : 18
+  total                                    : 571
+STATUS, joined by (book, source_file, source_line)
+  units matched into the ceiling : 571
+  by status                      : {'not-ingested': 57, 'grounded': 514}
+```
+
+**Identical to `§49.8`, cell for cell**, including the per-book split
+(`advanced_players_guide` 49 / `bestiary` 3 / `core_essentials` 2 / `horror_adventures` 1 /
+`inner_sea_races` 1 / `monster_codex` 1). **The dispatch brief's "race_trait now shows 232+ grounded"
+and "continue from round 2" are both stale** — rounds 3 and 4 landed after that text was written, and
+the live figure was **514**, not 232. Corrected here rather than carried.
+
+**`§44.4`'s ceiling finding, verified rather than relied on:** 3,447 total `race_trait` units,
+571-row ceiling, chassis-blocked residue **2,876**. Holds.
+
+**The defect, in one command** (over `data/corpus/*/race_trait/*/*.json`, counting `raw_tokens` keys
+against the record's own `pi_marker`):
+
+```
+{('DESCISPI', 'redacted'): 18, ('DESCISPI', None): 8, ('NAMEISPI', None): 1}
+```
+
+The 8 published descriptions name `Kodar Mountains`, `Earthfall`, `Ekujae`, `Gogpodda`, `Omesta`,
+`Droskar`, `Abaddon` and `Inner Sea`. None is on the 55-term list, and the list was never going to
+have them.
+
+### 2. Cycle mechanics 0-8
+
+* **0/0b — Shape / trap-report.** Not re-run: this round ingested no new book, and the two books it
+  regenerated (`inner_sea_races`, `core_essentials`) were shaped and trap-reported by rounds 2 and 4.
+  Recorded as a deliberate skip with its reason, per the unattended-mode default-and-flag rule.
+* **1c — Preflight.** `./scripts/verify.sh --only preflight-disk` → `RESULT: PASS`, `PREFLIGHT_EXIT=0`
+  (18% used, 795G available).
+* **2 — Claim.** `epic-6-race-trait-lane-extend`, round 5.
+* **3 — Do.** TDD: `tests/sd29_declared_product_identity_in_shipped_race_traits.rs` written first and
+  run RED, naming all 9 offenders by key; then `pi_screening`'s reader (7 unit tests, RED→GREEN);
+  then the ingest wiring; then the regeneration; then the nine count re-pins.
+* **4 — Verify.** `./scripts/verify.sh` FULL, exit code captured directly. See §6.
+* **5/6 — Commit and receipt.** See §7.
+* **7 — Retro.** One `correction` event emitted with `--verified-by`
+  (`docs/retro/events/sd29-racetrait-r6.jsonl`). The stray `verification` event the preflight wrote
+  under the worktree-directory fallback actor was **re-attributed to `sd29-racetrait-r6` rather than
+  left**, because a shard named after a checkout makes the log's by-actor breakdown meaningless —
+  which is the exact reason `loop-instruction.md` requires `RETRO_ACTOR`.
+* **8 — Reclaim + on-screen.** See §5 and §8.
+
+### 3. The ruling: a declared PI name is dropped, a declared PI description is redacted
+
+A description can become `[redacted PI]` and the record still works — key, flags, bonuses and page
+cite untouched. **A name cannot.** It is the picker checkbox's text, the Race Traits panel's heading,
+and half of the record's key. So `Elf ~ Sovyrian-Born` (`isr_abilities_race.lst:67`) is **dropped**,
+not screened.
+
+This is the identical ruling `§50` reached independently for Inner Sea World Guide's five
+`NAMEISPI:YES` monster rows, from a different kind and a different lane. It is now written **once**,
+in `pi_screening`, instead of twice in two hand-built tables.
+
+Reclassifying a declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book override, an
+operator decision. Unattended mode: safer default taken (drop), recorded here.
+
+### 4. Nine counts moved, and one deliberately did not
+
+| pin | was | now |
+|---|---|---|
+| `ALTERNATE_TRAIT_REPLACE_FLAGS` / `TraitRole::Alternate` / `selectable_alternate_trait_keys()` | 283 | **282** |
+| whole race corpus, all roles | 516 | **515** |
+| picker menu total / `race_catalog` alternates / reachability `checked` | 283 | **282** |
+| picker per-race, Elf | 28 | **27** |
+| picker menu rows + standard rows | 456 | **455** |
+| `character_hub` alternates creation accepts (7 CRB races) | 189 | **188** |
+| `reach_gate` ISR ingested / reached | 72 / 71 | **71 / 70** |
+| `ingest_race_traits` per-book record count, `inner_sea_races` | 72 | **71** |
+| `work-inventory` `race_trait` grounded | 514 | **513** |
+
+**The orphan-flag assertion did not move, and that is a result rather than an omission.** The row
+fired `Elf_ReplaceElvenMagic` and `Elf_ReplaceKeenSenses`; both are still claimed by other ISR and ARG
+alternates, so no flag became an orphan. Checked, not assumed.
+
+**`race_trait` grounded going DOWN is the correct direction here.** `§49.3` caught a real defect
+because a count moved the wrong way; this round *expected* the drop and would have found a defect if
+it had not appeared. A denominator taken twice works in both directions.
+
+### 5. Regeneration scope — derived, not assumed
+
+Only `inner_sea_races` and `core_essentials` were regenerated, because they are the only two books
+whose sources carry either token:
+
+```bash
+grep -rl 'DESCISPI:YES' core_essentials/races/
+#  -> tiefling/tiefling_abilities_race_subrace.lst   (ingested)
+#     skinwalker/skinwalker_abilities_race_subrace.lst (a race this product does not model)
+grep -c 'NAMEISPI:YES' arg_abilities_race.lst mc_abilities_race.lst ha_abilities_race.lst
+#  -> 0, 0, 0
+grep -c 'NAMEISPI:YES' isr_abilities_race.lst      # -> 1
+```
+
+`core_rulebook`'s 67 and `beastiary`'s 108 shipped `race_trait` records carry **no** `ISPI` token
+(scanned: 175 records, 0 hits) and neither do their sources. **136 files changed; 9 of them
+substantively** (8 descriptions redacted, 1 record deleted). The rest are `ingested_at` restamps —
+the binary stamps `date -u` on every run, and the restamp is honest: those records really were
+rewritten. Recorded rather than reverted, because pinning the old timestamp back would claim a file
+was produced at a time it was not.
+
+### 6. Gate
+
+`./scripts/verify.sh` (FULL, not `--quick`), exit code captured directly and never through a pipe:
+
+```
+VERIFY_EXIT=<FILLED IN BELOW>
+```
+
+Component runs on the way there, each green before the full gate was launched:
+
+* `cargo test --locked --lib` → **1686 passed, 0 failed**
+* `cargo test --locked --tests` (root integration) → **exit 0**
+* `cargo test --locked --bin codex-desktop` (the separate `apps/desktop/src-tauri` workspace the root
+  sweep does not reach) → **439 passed, 0 failed**
+
+### 7. The remainder — this card is still DRY, and the residue gains a class
+
+Re-derived AFTER the change by the same script:
+
+```
+units matched into the ceiling : 571
+by status                      : {'grounded': 513, 'not-ingested': 58}
+```
+
+58 = `§49.8`'s 57 + `Elf ~ Sovyrian-Born`, whose class is new to this lane:
+
+| book | units | class |
+|---|---|---|
+| `advanced_players_guide` | 49 | not gap — ARG key collisions (`§39`) |
+| `bestiary` (Drow Noble) | 3 | **workable, needs a race-variant chassis — NOT this card** |
+| `core_essentials` | 2 | not gap — the no-heritage baseline (`§49.2`) |
+| `horror_adventures` | 1 | not gap — `PRECAMPAIGN`-gated on Occult Adventures (`§47.2`) |
+| `inner_sea_races` | 1 | not gap — `Human ~ Tribalistic Languages`, upstream (`§45.4`) |
+| `inner_sea_races` | 1 | **not gap — `Elf ~ Sovyrian-Born`, declared Product Identity (`§53.2`)** |
+| `monster_codex` | 1 | not gap — ability-pool variant mechanism (`§43`) |
+| | **58** | **3 workable / 55 not gap** |
+
+**`units_remaining` for this card is 3**, unchanged, and none of the 3 is race-trait work — all need
+a race *variant chassis*, which is a different card. Chassis-blocked residue is unchanged at
+**3,447 − 571 = 2,876**.
+
+### 8. The two findings this round hands forward
+
+**(a) `§8b` was misattributed for three rounds, and this round narrowed it with a test.** The
+round-1 receipt argued *"the right-hand column does update ('1 selected. 0 further options locked
+out.'), so the IPC round trip happened"*. `AlternateTraitPicker.tsx` renders that sentence from
+`selected.length` — **local React state, updated synchronously by the checkbox, needing no backend at
+all** — and from `blocked.size`, which is **0 when `selection` is `null`**. The two panels are one
+symptom, not two.
+
+That left two candidates, and the backend one is now **dead by test**, not by argument.
+`race_trait_picker::plagueborn_really_suppresses_both_standard_traits_its_flags_name_so_8b_is_not_a_backend_gap`
+resolves the exact selection `§8b` screenshotted:
+
+```
+before: 9 applied, 0 suppressions   # matches the screenshot's "9 traits apply"
+after:  8 applied, suppressions = [Half-Orc ~ Intimidating, Half-Orc ~ Weapon Familiarity],
+        blocked_alternates NON-EMPTY
+```
+
+The caption should read 8, and the lock-out count should not be 0 — so the rendered *"0 further
+options locked out."* is itself evidence of a `selection == null` render. What survives is the timing
+reading: a screenshot captured between the click's commit and the effect's `setSelection(null)`,
+which is a harness settle-wait rather than a product defect. **Round 6 reproduces that live before
+writing any fix.** The general lesson is `§45.1`'s in a new register — this program re-derives a
+receipt's *figures* at the point of use and inherits its *attributions* on trust, and the attribution
+cost three rounds of deferral.
+
+**(b) The declaration gap is corpus-wide and much larger than one kind — with a hard obstacle named.**
+
+```bash
+grep -rho "NAMEISPI:YES\|DESCISPI:YES" --include="*.lst" ~/workspace/repos/pcgen/data/pathfinder/paizo/ | sort | uniq -c
+#  -> 1190 DESCISPI:YES
+#     2530 NAMEISPI:YES
+```
+
+106 `*_spells.lst` / `*_feats*.lst` / `*_equip*.lst` files alone carry them. **The corpus-level gate
+this round added cannot simply be widened to those kinds**, and the reason is a second finding:
+
+```
+kind             records   with raw_tokens
+feat                 204                 0
+spell              1,185                 0
+companion            135                 0
+monster               80                 0
+monster_ability       87                 0
+equipment          3,516             2,914
+race_trait           515               515
+```
+
+`feat`, `spell`, `companion`, `monster`, `monster_ability` and 602 `equipment` records ship with **no
+`raw_tokens` at all**, so a declaration on their source rows is invisible in the shipped file. A gate
+that reads shipped records — the shape this round used, deliberately, so both ends read the same
+bytes — cannot see them. Each ingest path has to read the declaration itself.
+
+**This round did NOT widen the gate**, and the omission is deliberate rather than an oversight:
+turning it on for kinds whose ingest paths cannot yet satisfy it would land a red gate on three other
+lanes' live work, which is `loop-instruction.md`'s "STOP — do not clobber another session's live
+work", not a courtesy. Recorded as scope for a successor bundle with the commands above.
+
+### 8c. DoD item 8 — on-screen verification, two PASS artifacts on the MERGED tree
+
+Both taken at `HEAD 413bb59d`, i.e. **after** merging the monster lane's Bestiary 2 round, so they
+are claims about the tip rather than about this lane's private tree.
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E6-F2-006/item8/`:
+
+| artifact | what it proves |
+|---|---|
+| `isr-industrious-pi-redacted.png` + `.verify.md` | the extraction reads **`120:IndustriousISR p.213`** immediately followed by **`122:[redacted PI]`** — the newly-redacted description rendered *on the row it belongs to*, not merely somewhere in the DOM. `Human ~ Industrious` is one of the 8 the term list published; a player now reads the marker instead of `Inner Sea` |
+| `elf-alternates-27-after-pi-drop.png` + `.verify.md` | the race chip row reads **`Elf (27)`** beside **`Half-Orc (28)`** — the visible consequence of dropping `Elf ~ Sovyrian-Born`. A count a player reads, not a test constant |
+
+**One harness finding, recorded because it cost 30 minutes.** The first attempt hung silently for the
+whole of its 1800s timeout, producing no artifact and no failure line. Cause: this cycle merged
+`origin/tranche/9` **while the run was mid-flight**, and `tauri dev`'s file watcher rebuilt and
+restarted the app underneath it — after `wait_for_paint` had already returned. The harness has no
+guard for the window disappearing between paint and navigation, so it sat in `wait_for_text` until
+killed. The retry with `--fresh` passed in **2 minutes**. **Do not merge into the tree while an
+item-8 run is live**; there is no failure mode here that looks like a failure.
+
+### 8d. The gate went red on another lane's file, and the fix for it was stale ten minutes later
+
+Recorded in full because both halves are findings and neither was predictable from this lane's diff.
+
+**Run 1 of the full gate failed `pi-sweep`**, and not on anything this round wrote:
+
+```
+pi-sweep: UNBASELINED src/rules_core/rules_tables/bestiary_2/mod.rs:24  [Golarion]
+pi-sweep: UNBASELINED src/rules_core/rules_tables/bestiary_2/mod.rs:302 [Torag]
+pi-sweep: UNBASELINED src/rules_core/rules_tables/bestiary_2/mod.rs:302 [Nex]
+pi-sweep: FAIL — 3 unbaselined hit(s), 0 stale row(s).
+```
+
+All three were **doc comments explaining PI screening itself** — the terms appear because the
+paragraph is about them — landed by the monster lane's round 4 (`69e0dec8`) and pushed to
+`tranche/9` with the stage red. This round dispositioned them as `false-positive` in
+`docs/governance/pi-sweep-baseline.tsv` rather than rewording another lane's live file, which is the
+mechanism the sweep documents and the non-clobbering choice.
+
+**Ten minutes later that fix was itself a gate failure.** The next fetch brought the monster lane's
+own repair: they reworded the doc comment, so all three terms left the tree and the three rows this
+round had just added became **stale**, which `pi-sweep` fails on exactly as hard as an unbaselined
+hit (*"so this file cannot rot into a blanket suppression"*). The rows were removed; the baseline is
+back to its original 10 and `pi_sweep_rules_tables` reports **CLEAN**.
+
+**The general shape, and it is not about this file.** A shared gate with a *baseline* has a
+concurrency hazard neither the branch protocol nor `git` catches: two lanes fixing the same failure
+by different legitimate routes — one by disposition, one at the source — produce a tree that is red
+*because both fixes landed*. Merging cleanly is not evidence the gate still passes. **Re-run the
+affected stage after every merge, not only after every edit** — this round caught it only because it
+happened to re-run `pi_sweep_rules_tables` by hand after the merge rather than trusting the green it
+had seen five minutes earlier.
+
+### 9. Reclaim
+
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-r6` and its desktop sibling
+`-desktop` claimed at start (`.reclaim-claim`) and deleted at cycle end; `scripts/reclaim.sh --apply`
+run. The desktop driver was stopped (`driver.sh stop`), releasing its Xvfb.
+
+**Card `epic-6-race-trait-lane-extend` → DRY, not COMPLETE.** Three units remain and they need a race
+chassis. Round 6, if one fires, has exactly two pieces of work available on this card and neither is
+ingest: `§8b` (reproduce before fixing) and the corpus-wide declaration gate of §8(b). Prior receipts
+preserved.

@@ -3225,3 +3225,222 @@ grep -rl 'NAMEISPI:YES' bestiary_5 bestiary_6 bestiary_2
 in a file this lane does not read. Recorded because "our book was clean" is worth exactly as much as
 the command behind it, and `§50.1`'s own lesson is that the marker was available in every `.lst` this
 program has ever parsed and was never read.
+
+## Decision 53 — Race-Trait Lane, extend: round 5 (2026-08-12, `sd29-racetrait-r6`, card `epic-6-race-trait-lane-extend`)
+
+> **§53, after a live collision this round caught before merge rather than during it.** §51 was
+> already held by the companion lane's round 2 when this round started, so this section was written as
+> §52 — and the monster lane's round 4 claimed §52 concurrently, in a separate worktree, while this
+> round was mid-flight. That makes **three** consecutive collisions in this bundle (`§47`, `§49`, and
+> now this one), and it settles that "reserve the number at claim time" does not work when the claim
+> is recorded only in the claimant's own worktree: `kanban.md` is the shared surface and none of the
+> three claims reached it before the section was written. **The number a concurrent lane has not yet
+> pushed is not reserved by anything.** This round moved rather than collide, on the safer-default
+> rule, and every code comment it lands says 53.
+
+`§49.8` closed round 4 by ruling the lane **dry**: 571-row ceiling, 514 grounded, 57 remaining, and
+of those only 3 workable — Bestiary 1's Drow Noble, which needs a race *variant chassis* that is not
+this card. **That ruling reproduces exactly and this round does not disturb it.** Re-derived at
+round start, before any change, with the instrument round 4 checked in:
+
+```bash
+python3 scripts/race_trait_ceiling.py
+```
+
+→ `TYPE:<18 races> Racial Trait rows : 553` + `Subrace rows : 18` = **571**;
+`by status : {'grounded': 514, 'not-ingested': 57}`; remaining by book
+`advanced_players_guide 49 / bestiary 3 / core_essentials 2 / horror_adventures 1 /
+inner_sea_races 1 / monster_codex 1`. Identical to `§49.8`'s table, cell for cell.
+
+So this round did not ingest. **It fixed a defect in what the lane had already shipped**, and the
+defect is the one the monster lane found in its own kind, reported as corpus-wide, and handed to this
+lane by name (`kanban.md` card 8: *"a `PI_BLACKLIST_TERMS` addition is corpus-wide and sits in the
+race-trait lane's territory"*).
+
+### 53.1 This program's Product-Identity screen is a heuristic, and the corpus has been declaring the answer all along
+
+`pi_screening::PI_BLACKLIST_TERMS` is 55 names — 20 Golarion deities, 34 place/nation names, and one
+NPC an ACG retrofit found by hand. Its own module doc calls it *"a bounded, documented heuristic …
+not an exhaustive legal review."* Every Pipeline A ingest path screens against it and nothing else.
+
+PCGen states the same fact **per record**, in two tokens this program has parsed into `raw_tokens`
+and never read:
+
+* `NAMEISPI:YES` — this record's **name** is Product Identity;
+* `DESCISPI:YES` — this record's **description** is Product Identity.
+
+Derived over the shipped tree at round start, which is the whole finding in one command:
+
+```bash
+python3 -c "
+import json,glob,collections
+c=collections.Counter()
+for p in glob.glob('data/corpus/*/race_trait/*/*.json'):
+    d=json.load(open(p)); ks={t['key'].upper() for t in (d['data'].get('raw_tokens') or [])}
+    for k in ('NAMEISPI','DESCISPI'):
+        if k in ks: c[(k, d.get('pi_marker'))]+=1
+print(dict(c))"
+```
+
+→ `{('DESCISPI', 'redacted'): 18, ('DESCISPI', None): 8, ('NAMEISPI', None): 1}`
+
+**26 shipped `race_trait` records declare `DESCISPI:YES`. The blacklist redacted 18 of them by
+coincidence** — their prose happens to contain a Golarion place name the list knows — **and published
+the other 8.** Their Product Identity is `Kodar Mountains`, `Earthfall`, `Ekujae`, `Gogpodda`,
+`Omesta`, `Droskar`, `Abaddon` and `Inner Sea`: eight names, none on a 55-term list assembled by
+sampling. The list was never going to have them, and the row said so.
+
+A heuristic that agrees with a declaration 69% of the time is not a screen; it is a coincidence with
+a good track record. The two are now a **union** — the declaration redacts unconditionally, and an
+undeclared row is still term-scanned, because `ogl-pi-blacklist.md` §2 is equally explicit that the
+corpus's markers are incomplete.
+
+### 53.2 A name cannot be redacted, so the row is dropped
+
+One record declares `NAMEISPI:YES`: `Elf ~ Sovyrian-Born`
+(`isr_abilities_race.lst:67`, shipped since round 2 on 2026-08-11).
+
+A description can be replaced with `[redacted PI]` and the record still works — its key, flags,
+bonuses and page cite are untouched. **A name cannot.** It is what the picker's checkbox says, what
+the Race Traits panel prints, and half of the record's key. The only way not to publish it is not to
+publish the row.
+
+This is the identical ruling `§50` reached independently, from the other end of the corpus, for Inner
+Sea World Guide's five `NAMEISPI:YES` monster rows — reached there by a lane that had no reason to
+consult this one. Two lanes converging on the same rule from different kinds is the strongest
+evidence available that it is the rule, and it is now written once, in `pi_screening`, rather than
+twice in two hand-built tables.
+
+Reclassifying a declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book override — an
+operator decision. Under unattended mode the safer default was taken and recorded: **drop**.
+
+### 53.3 What that costs, stated exactly
+
+`Elf ~ Sovyrian-Born` was a live, selectable alternate. Dropping it moved **nine** pinned counts
+across six files, every one of them re-derived rather than decremented:
+
+| pin | was | now |
+|---|---|---|
+| `race_resolver::ALTERNATE_TRAIT_REPLACE_FLAGS` rows / `TraitRole::Alternate` / `selectable_alternate_trait_keys()` | 283 | **282** |
+| whole race corpus, all roles | 516 | **515** |
+| `race_trait_picker` menu total / `race_catalog` alternates / `checked` | 283 | **282** |
+| picker per-race, Elf | 28 | **27** |
+| picker menu rows + standard rows | 456 | **455** |
+| `character_hub` alternates creation accepts, 7 CRB races | 189 | **188** |
+| `reach_gate` ISR ingested records / reached | 72 / 71 | **71 / 70** |
+| `ingest_race_traits` per-book record count, `inner_sea_races` | 72 | **71** |
+| `work-inventory` `race_trait` grounded | 514 | **513** |
+
+The two distinct replace-flags the row fired (`Elf_ReplaceElvenMagic`, `Elf_ReplaceKeenSenses`) are
+both still claimed by other ISR and ARG alternates, so **no flag became an orphan** and the
+orphan-flag assertion did not move — checked, not assumed.
+
+`race_trait` grounded going **down** is the correct direction here and is the second time in two
+rounds that this lane's own count moved against the intuitive sign. `§49.3` caught a defect because a
+count moved the wrong way; this round *expects* the drop and would have found a defect if it had not
+appeared. **A denominator taken twice is this program's cheapest instrument either way.**
+
+### 53.4 The ceiling is unchanged; the remainder gains a class
+
+`scripts/race_trait_ceiling.py` still reports **571**, because the row is still in the corpus — it is
+the *shipped* record that is gone. Re-derived after the change:
+
+```
+units matched into the ceiling : 571
+by status                      : {'grounded': 513, 'not-ingested': 58}
+```
+
+The 58 is `§49.8`'s 57 plus `Elf ~ Sovyrian-Born`, and its class is new to this lane:
+
+| book | units | class |
+|---|---|---|
+| `advanced_players_guide` | 49 | not gap — same `KEY:` as already-ingested ARG records (`§39`) |
+| `bestiary` (Drow Noble) | 3 | **workable, needs a race-variant chassis — not this card** |
+| `core_essentials` | 2 | not gap — the no-heritage baseline (`§49.2`) |
+| `horror_adventures` | 1 | not gap — `PRECAMPAIGN`-gated on Occult Adventures (`§47.2`) |
+| `inner_sea_races` | 1 | not gap — `Human ~ Tribalistic Languages`, upstream data gap (`§45.4`) |
+| `inner_sea_races` | 1 | **not gap — `Elf ~ Sovyrian-Born`, declared Product Identity (this section)** |
+| `monster_codex` | 1 | not gap — ability-pool variant mechanism (`§43`) |
+| | **58** | **3 workable / 55 not gap** |
+
+**The genuinely-workable remainder of this card is still 3, and still not race-trait work.** The
+chassis-blocked residue is unchanged at **3,447 − 571 = 2,876**.
+
+### 53.5 The finding this round could not close, and will not pretend it did
+
+**`§8b`'s browse-screen render bug is still open and this lane still owns it.** Rounds 2, 3, 4 and
+now 5 have not fixed it. Round 5 did read the code, and hands the next round a narrower starting
+point than "the panel is stale", because the round-1 receipt's stated evidence does not survive
+inspection:
+
+> *"the right-hand column does update ('1 selected. 0 further options locked out.'), so the IPC round
+> trip happened"*
+
+That inference is **unsound**. `AlternateTraitPicker.tsx` renders that sentence from
+`selected.length` (local React state, updated synchronously by the checkbox) and `blocked.size`,
+which is **0 when `selection` is `null`**. So the observed right-hand text is exactly what renders
+when the resolve call has *not* answered. The left panel being stale and the right panel reading
+"1 selected. 0 locked out." are one symptom, not two, and "the IPC round trip happened" was never
+established.
+
+Two candidate causes remained: (a) the screenshot was captured inside the window between the click's
+commit and the effect's `setSelection(null)`, in which case there is no product defect and the
+*harness* needs a settle-wait; (b) the resolve genuinely returns no suppressions for this selection,
+in which case the defect is in the backend and not in a render path at all.
+
+**(b) is dead, and this round killed it with a test rather than an argument.**
+`race_trait_picker::plagueborn_really_suppresses_both_standard_traits_its_flags_name_so_8b_is_not_a_backend_gap`
+resolves the exact selection `§8b` screenshotted, at the DTO layer the screen reads:
+
+```
+before: 9 applied, 0 suppressions          # matches the screenshot's "9 traits apply"
+after:  8 applied, suppressions = [Half-Orc ~ Intimidating, Half-Orc ~ Weapon Familiarity],
+        blocked_alternates NON-EMPTY
+```
+
+The caption should read **8**, and the right panel's lock-out count should **not** be 0 — which is the
+other half of the same evidence. A rendered *"1 selected. 0 further options locked out."* beside a
+real selection is a `selection == null` render, not a resolved one. So `§8b`'s two symptoms are one
+symptom, the backend is not implicated, and what survives is the timing reading.
+
+**The label was wrong for three rounds and the cost was three rounds of deferral.** The general
+lesson is `§45.1`'s in a new register: a receipt's *diagnosis* is inherited as readily as its
+figures, and this program re-derives figures at the point of use while taking attributions on trust.
+Round 6 should reproduce the timing reading live — click an alternate, wait, screenshot again — and
+close or reopen `§8b` on that, not on this section.
+
+### 53.6 What landed
+
+* `pi_screening::{DeclaredProductIdentity, declared_product_identity, classify_optional_field_declared}`
+  — the shared reader, with 7 unit tests including the explicit-`NO` case and the case-insensitive
+  trimmed spelling. Placed in the shared module rather than in this lane's ingest binary, because the
+  finding is corpus-wide and the monster lane's hand-built copy is the precedent for what happens
+  otherwise.
+* `ingest_race_traits`: `NAMEISPI:YES` rows dropped **before** the scope filter and reported by
+  file:line in the run receipt (`dropped, NAMEISPI:YES : 1`); `DESCISPI:YES` descriptions redacted
+  through the shared reader and counted (`descriptions redacted by DESCISPI:YES : 16` for ISR, `9`
+  for Core Essentials). A row that vanishes without a line in the receipt is indistinguishable from
+  an ingest bug.
+* `tests/sd29_declared_product_identity_in_shipped_race_traits.rs` — the corpus-level gate, reading
+  the **shipped files** rather than the source rows, so both ends read the same bytes. It went RED
+  first and named all 9 offenders by key.
+* `data/corpus/inner_sea_races/` and `data/corpus/core_essentials/` regenerated: 8 descriptions newly
+  redacted, 1 record deleted. **Only these two books were regenerated**, because they are the only
+  two whose sources carry either token — derived, not assumed:
+  `grep -rl 'DESCISPI:YES' core_essentials/races/` → `tiefling_abilities_race_subrace.lst` (ingested)
+  and `skinwalker_abilities_race_subrace.lst` (a race this product does not model);
+  `grep -c NAMEISPI:YES` over ARG's, Monster Codex's and Horror Adventures' racial `.lst` files → 0
+  for all three. `core_rulebook`'s 67 and `beastiary`'s 108 shipped records carry no `ISPI` token at
+  all (scanned: 175 records, 0 hits), and their sources carry none either.
+* The nine count re-pins of `§53.3`, each carrying the reason in its own assertion message.
+
+### 53.7 One scope finding for a successor — this is not a race_trait-only defect
+
+The reader is shared, but **only `ingest_race_traits` calls it.** Every other Pipeline A writer
+(`gen_book_cache`, `ingest_races`, `ingest_pu_classes`, `gen_core_rulebook_cache`, `cache_gen::*`)
+still screens on the term list alone, and `tests/sd29_declared_product_identity_in_shipped_race_traits.rs`
+only walks `*/race_trait/`. The same command that found this, pointed at the whole corpus rather than
+one kind, is the successor's first move — this round did not run it corpus-wide because widening the
+gate to a kind whose ingest path cannot yet satisfy it would land a red gate on another lane's work,
+which is `loop-instruction.md`'s "STOP — do not clobber another session's live work" rather than a
+courtesy.
