@@ -3546,8 +3546,9 @@ mod tests {
     /// rather than rounding up to the corpus's 316 and 466.
     ///
     /// Corpus unit counts are the inventory's own, never a line count over the
-    /// `.lst` (which reads 322 for the races file — six `.COPY=` rows the
-    /// inventory drops for carrying no classifying token):
+    /// `.lst` (which reads 322 declared rows for the races file — six more than
+    /// the inventory's 316, the difference being `.COPY=` rows its own trap
+    /// filters drop):
     /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
     /// print(sum(1 for u in d['units'] if u['book']=='bestiary_2'
     /// and u['kind']=='monster'))"` → 316, `monster_ability` → 466.
