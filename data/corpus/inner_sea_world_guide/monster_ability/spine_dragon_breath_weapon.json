@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "corpus_key": "Spine Dragon ~ Breath Weapon",
+    "delivery": "Extraordinary",
+    "description": "Once every 1d4 rounds as a standard action, a spine dragon can emit a devastating shriek of powerful sonic energy in a %1-ft. cone. Creatures caught in this cone take %2d6 sonic damage and are permanently deafened. A DC %3 Reflex save halves the damage and negates the deafness. This sonic damage is particularly devastating to constructs--they take a -4 penalty to save against its effects, and if they fail the save, they are staggered for 1d4 rounds as well.",
+    "description_variables": [
+      "BreathWeaponCone",
+      "BreathWeaponDice",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:spine_dragon_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "inner_sea_world_guide:monster:dragon_spine"
+    ],
+    "source_page": "p.313",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 55,
+    "record_key": "Spine Dragon ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

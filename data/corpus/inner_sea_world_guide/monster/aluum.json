@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_world_guide:monster_ability:aluum_immunity_to_magic",
+      "inner_sea_world_guide:monster_ability:aluum_paralysis",
+      "inner_sea_world_guide:monster_ability:aluum_soul_shriek"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Aluum",
+    "external_ability_refs": [],
+    "key": "inner_sea_world_guide:monster:aluum",
+    "monster_class": "Construct:14",
+    "name": "Aluum",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d10",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "L",
+    "source_page": "p.306",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
+    "line": 10,
+    "record_key": "Aluum"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

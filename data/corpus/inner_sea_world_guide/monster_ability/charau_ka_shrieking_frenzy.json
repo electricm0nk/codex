@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "corpus_key": "Charau-ka ~ Shrieking Frenzy",
+    "delivery": "Supernatural",
+    "description": "1/day, a charau-ka can enter a state of shrieking frenzy as a free action. While in this state, the charau-ka automatically fails Stealth checks and cannot speak or cast spells that use verbal components (or use items that require command words to activate), but functions as if under the effects of a haste spell. The charau-ka can continue shrieking for up to 3 rounds, after which it is staggered for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:charau_ka_shrieking_frenzy",
+    "name": "Shrieking Frenzy",
+    "owners": [
+      "inner_sea_world_guide:monster:charau_ka"
+    ],
+    "source_page": "p.309",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 19,
+    "record_key": "Charau-ka ~ Shrieking Frenzy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

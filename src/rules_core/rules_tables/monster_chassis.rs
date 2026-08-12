@@ -33,15 +33,26 @@
 //! `Poison` — or `Breath Weapon`, which two registered books now both define —
 //! with every other book's rule of that name.
 //!
-//! # A book is registered when EVERY one of its ability rows has an owner
+//! # Only ability rows WITH an owner are registered
 //!
 //! `monster_ability` records reach a player only underneath the monster that
 //! owns them, so an ability row no monster row claims is a record that loads and
 //! is never shown. `scripts/classify_monster_ability_rows.py` classifies a
-//! candidate book's rows before a round commits to it; the four books here are
-//! the four with **zero** orphans. That predicate is a ceiling on the lane, not
-//! a preference — 1,327 of the 4,295 remaining units are orphan ability rows,
-//! and 703 of those sit in ten books that carry no monster row at all.
+//! candidate book's rows before a round commits to it.
+//!
+//! The first four books here (Bonus Bestiary, Monster Codex, both Book of the
+//! Damned volumes) have **zero** orphans, so registering them registered every
+//! row. Inner Sea World Guide, added in round 3, is the first that does not:
+//! 5 of its 30 ability rows are namespaced to a *template* (`Clockwork ~ …`,
+//! `Nascent Demon Lord ~ …`) that no monster row of this book defines. The rule
+//! from round 3 on is `kanban.md`'s — **transcribe the linked subset, and carry
+//! the orphans as an `OPEN_FINDINGS` entry naming their remedy** — rather than
+//! emitting rows that cannot be reached or skipping the book entirely. Those
+//! rows stay `not-ingested` in the work inventory, which is their honest status.
+//!
+//! That predicate is a ceiling on the lane, not a preference — 1,327 of the
+//! 4,233 remaining units are orphan ability rows, and 703 of those sit in ten
+//! books that carry no monster row at all.
 
 /// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -144,7 +155,17 @@ pub struct MonsterStatBlock {
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
     pub external_ability_refs: &'static [&'static str],
-    /// The 1-based races-`.lst` line this record was read from.
+    /// The races-`.lst` file this record was read from, relative to the book
+    /// directory.
+    ///
+    /// A book is not guaranteed one monster file. Inner Sea World Guide splits
+    /// its 14 monsters 7/7 across `iswg_races.lst` and `iswg_races_bestiary.lst`
+    /// — so `source_line` alone does not identify a row, and the generator that
+    /// re-reads the cited line to verify it must be told which file to open.
+    /// Before this field existed the generator took the file from a single
+    /// per-book spec string, which is correct only for a one-file book.
+    pub source_file: &'static str,
+    /// The 1-based line of [`Self::source_file`] this record was read from.
     pub source_line: u32,
 }
 
@@ -209,6 +230,11 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "book_of_the_damned_volume_2",
         monsters: super::book_of_the_damned_volume_2::monsters_static(),
         monster_abilities: super::book_of_the_damned_volume_2::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "inner_sea_world_guide",
+        monsters: super::inner_sea_world_guide::monsters_static(),
+        monster_abilities: super::inner_sea_world_guide::monster_abilities_static(),
     },
 ];
 

@@ -816,6 +816,7 @@ fn main() {
             // the arm exists for exhaustiveness, as `Isr`'s and `Ue`'s do.
             RuleSetId::Ha => "horror_adventures",
             RuleSetId::Ce => "core_essentials",
+            RuleSetId::Iswg => "inner_sea_world_guide",
             RuleSetId::Botd1 => "book_of_the_damned_volume_1",
             RuleSetId::Botd2 => "book_of_the_damned_volume_2",
             // SD-29 Epic 7 (companion lane). Neither book has a feats file this

@@ -40,7 +40,7 @@ const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
  * two characters. They are the books' own `SOURCESHORT` tokens, like every
  * other code here.
  */
-const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2'] as const;
+const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [
@@ -186,6 +186,11 @@ function testEveryServedBookHasARealName() {
     formatBook('BOTD1'),
     'Book of the Damned, Volume 1',
     'a wire code wider than two characters maps like any other'
+  );
+  assertEqual(
+    formatBook('ISWG'),
+    'Inner Sea World Guide',
+    'the round-3 book, whose four-character code is mapped like any other'
   );
   assertEqual(formatBook('ZZ'), 'ZZ', 'an unserved code falls through as itself');
 }

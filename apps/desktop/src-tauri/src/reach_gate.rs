@@ -569,6 +569,8 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // directory and the book id are the same string for both volumes.
     ("book_of_the_damned_volume_1", "book_of_the_damned_volume_1"),
     ("book_of_the_damned_volume_2", "book_of_the_damned_volume_2"),
+    // SD-29 Epic 5 extend, round 3 (monster lane). Same again.
+    ("inner_sea_world_guide", "inner_sea_world_guide"),
     // SD-29 Epic 7 (companion lane). Directory and book id are spelled the same
     // for both, like every SD-29 book before them.
     ("inner_sea_combat", "inner_sea_combat"),
@@ -1143,6 +1145,18 @@ fn reach_of(family: &Family) -> Option<Reach> {
         }
         ("book_of_the_damned_volume_2", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("book_of_the_damned_volume_2", "BOTD2"))
+        }
+        // SD-29 Epic 5 extend, round 3. The first book whose claims cover a
+        // SUBSET of the book's corpus rows: 5 of Inner Sea World Guide's 14
+        // monster rows carry `NAMEISPI:YES` and are Product Identity, and 13 of
+        // its 30 ability rows end up owned by no shipped monster. Both claims
+        // assert what is served -- 9 and 14 -- rather than rounding up to the
+        // corpus count, which is what claims of 14 and 30 would be doing.
+        ("inner_sea_world_guide", "monsters") => {
+            Some(chassis_monsters_reach("inner_sea_world_guide", "ISWG"))
+        }
+        ("inner_sea_world_guide", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("inner_sea_world_guide", "ISWG"))
         }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
@@ -3383,6 +3397,116 @@ mod tests {
                 }
                 other => panic!("{book}: expected every ability to reach, got {other:?}"),
             }
+        }
+    }
+
+    /// Inner Sea World Guide, per record — and the first book in this lane
+    /// whose served set is deliberately SMALLER than its corpus row count, for
+    /// two independent reasons.
+    ///
+    /// **Product Identity.** Five monster rows carry `NAMEISPI:YES`, PCGen's own
+    /// per-record marker that the NAME is Product Identity (`Daughter of
+    /// Urgathoa`, `Sandpoint Devil`, `Treerazer`, `Boar (Sargavan)`,
+    /// `Herd Animal (Storval Aurochs)`), and three ability rows match
+    /// `PI_BLACKLIST_TERMS` outright. A key cannot be redacted, so they are not
+    /// ingested at all.
+    ///
+    /// **Orphans.** Thirteen ability rows are then owned by no shipped monster —
+    /// five against the whole book (`iswg_templates.lst` templates), eight
+    /// cascading from the PI drops. Re-derived:
+    ///
+    /// ```text
+    /// python3 scripts/classify_monster_ability_rows.py inner_sea_world_guide
+    /// book                    mon  abil row-named prefix ORPHAN
+    /// inner_sea_world_guide    14    30        25      0      5
+    /// ```
+    ///
+    /// So the claim asserts **9 and 14** — every record that ships — rather than
+    /// 14 and 30. The corpus unit counts are the inventory's own:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if u['book']=='inner_sea_world_guide'
+    /// and u['kind']=='monster'))"` -> 14, `monster_ability` -> 30.
+    ///
+    /// **The excluded rows are asserted absent from the response too.** A claim
+    /// that only counted what arrived would pass equally well if a PI name had
+    /// quietly been ingested, which is the outcome this exclusion exists to
+    /// prevent.
+    #[test]
+    fn inner_sea_world_guide_reaches_the_catalog_for_every_linked_record() {
+        let monsters = corpus_record_keys("inner_sea_world_guide", "monster");
+        let abilities = corpus_record_keys("inner_sea_world_guide", "monster_ability");
+        assert_eq!(
+            monsters.len(),
+            9,
+            "the 9 shippable rows; the book's other 5 carry NAMEISPI:YES"
+        );
+        assert_eq!(
+            abilities.len(),
+            14,
+            "the 14 owned, non-PI rows; the book's other 16 are PI or orphaned"
+        );
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "ISWG")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "ISWG")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters, "served monsters");
+        assert_eq!(served_abilities, abilities, "served abilities");
+
+        // Named, not counted: an exclusion pinned by a number passes just as
+        // well when a different record takes the excluded one's place.
+        for excluded in [
+            "daughter_of_urgathoa",
+            "sandpoint_devil",
+            "treerazer",
+            "boar_sargavan",
+            "herd_animal_storval_aurochs",
+        ] {
+            assert!(
+                !served_monsters.iter().any(|key| key.contains(excluded)),
+                "{excluded} carries NAMEISPI:YES and must never reach a player surface"
+            );
+        }
+        for excluded in [
+            "aligned_strike",
+            "grant_spells",
+            "winding",
+            "swift_reactions",
+            "difficult_to_create",
+            "urgathoa",
+        ] {
+            assert!(
+                !served_abilities.iter().any(|key| key.contains(excluded)),
+                "{excluded} is Product Identity or owned by no shipped monster"
+            );
+        }
+
+        match reach_of(&Family::new("inner_sea_world_guide", "monsters"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 9);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every monster to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("inner_sea_world_guide", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 14);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every linked ability to reach, got {other:?}"),
         }
     }
 

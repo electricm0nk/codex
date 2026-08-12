@@ -28,6 +28,7 @@ pub mod feats_all;
 pub mod horror_adventures;
 pub mod inner_sea_combat;
 pub mod inner_sea_intrigue;
+pub mod inner_sea_world_guide;
 pub mod monster_chassis;
 pub mod monster_codex;
 pub mod pathfinder_unchained;
@@ -109,6 +110,15 @@ pub enum RuleSetId {
     /// monster abilities). The book that found the two-`DESC:`-token row shape
     /// -- see its module doc.
     Botd2,
+    /// Inner Sea World Guide. SD-29 Epic 5 extend, round 3
+    /// (`rules_tables::inner_sea_world_guide`, 14 monsters + 25 LINKED monster
+    /// abilities). The first book in this lane that is not orphan-free -- 5
+    /// further ability rows are namespaced to an `iswg_templates.lst` template
+    /// no monster row of this book applies, and are deliberately not ingested
+    /// (`OPEN_FINDINGS`) rather than shipped as records nothing can reach. Also
+    /// the first whose monsters live in two races files with colliding line
+    /// numbers, which is why `MonsterStatBlock` carries a `source_file`.
+    Iswg,
     /// Core Essentials. SD-29 Epic 6 round 4 (race-trait lane, extend). Like
     /// `MonsterCodex`, `Isr` and `Ha`, its one ingested family is `race_trait`,
     /// served off disk from `data/corpus/core_essentials/race_trait/` rather

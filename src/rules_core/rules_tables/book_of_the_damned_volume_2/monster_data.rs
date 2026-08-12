@@ -28,6 +28,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite (Primary)", damage_dice: Some("1d6") }, NaturalAttack { name: "Bite (with weapon attack)", damage_dice: Some("1d6") }],
         ability_keys: &["Vermlek ~ Abandon Flesh", "Vermlek ~ Flesh Armor", "Vermlek ~ Inhabit Body", "Vermlek ~ Negative Energy Affinity"],
         external_ability_refs: &["Scent"],
+        source_file: "botd2_races.lst",
         source_line: 7,
     },
     MonsterStatBlock {
@@ -43,6 +44,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Hoof", damage_dice: Some("1d3") }],
         ability_keys: &["Brimorak ~ Boiling Blood", "Brimorak ~ Breath Weapon", "Brimorak ~ Burning Hooves", "Brimorak ~ Flaming Weapon", "Brimorak ~ Smoke Breath"],
         external_ability_refs: &[],
+        source_file: "botd2_races.lst",
         source_line: 8,
     },
     MonsterStatBlock {
@@ -58,6 +60,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw (Primary)", damage_dice: Some("1d6") }, NaturalAttack { name: "Claw (with weapon attack)", damage_dice: Some("1d6") }, NaturalAttack { name: "Gore (primary)", damage_dice: Some("2d6") }, NaturalAttack { name: "Gore (with weapon attack)", damage_dice: Some("2d6") }],
         ability_keys: &["Seraptis ~ Bloodless", "Seraptis ~ Compelling Domination", "Seraptis ~ Gaze of Despair", "Seraptis ~ Grab", "Seraptis ~ Ravenous Embrace"],
         external_ability_refs: &["Deathwatch ~ Constant", "True Seeing ~ Constant", "Unholy Aura ~ Constant"],
+        source_file: "botd2_races.lst",
         source_line: 9,
     },
     MonsterStatBlock {
@@ -73,6 +76,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("3d6") }, NaturalAttack { name: "Claw", damage_dice: Some("1d8") }, NaturalAttack { name: "Tail Slap", damage_dice: Some("2d8") }],
         ability_keys: &["Vavakia ~ Breath Weapon", "Vavakia ~ Smoking Wound", "Vavakia ~ Stun"],
         external_ability_refs: &["Frightful Presence", "Immunity to Fire", "Trample", "True Seeing ~ Constant", "Unholy Aura ~ Constant"],
+        source_file: "botd2_races.lst",
         source_line: 10,
     },
 ];
