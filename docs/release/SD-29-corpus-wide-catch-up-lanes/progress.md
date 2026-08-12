@@ -8724,3 +8724,335 @@ grounded through `beastiary1`'s own tables, and a round taking it must decide wh
 absorbs them or sits alongside. **Ten books hold 703 orphan abilities and zero monsters**; no
 per-monster cycle can ground them, and running one against a zero-monster book is a reportable hard
 stop per `loop-instruction.md`.
+
+---
+
+## Cycle SD29-E5-F2-006 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 5 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r7` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-10`)
+**Branch-point:** `df829763` · **Commits:** `9595bd82` (the ingest, both instrument corrections and
+the player surface), `7f470a78` (the one gate stage it turned red + retro shard re-attribution),
+merge `7037c1dd` (the concurrent companion lane's round 3), `1cdcb082` (item-8 evidence), plus this
+receipt's own commit.
+**Every one was pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than
+by a push message:**
+`git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_3/monster_data.rs | grep -c 'MonsterStatBlock {'` → **261**,
+`| grep -c 'MonsterAbilityRecord {'` → **27**.
+**Kanban status left at:** `READY — round 6. 288 units ingested; 3,207 remaining by raw count,
+1,767 by the lane's REAL ceiling. Card stays READY.`
+
+**This receipt does not claim the lane is done.** 288 units landed against a REAL ceiling that is
+still **1,767**. It also does not claim the round's biggest number is its ingest: the round found
+**341 units the lane's own denominator does not count**, and that is §4.
+
+### 0. Worktree integrity — the predicted failure, hit an eighth time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-10`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, an ancestor from **2026-06-28** which is **not** an ancestor of
+`origin/tranche/9` (`git merge-base --is-ancestor 7d9f1c4f origin/tranche/9` → non-zero). Rounds 2,
+3 and 4 each predicted and recorded this; it is now the **eighth** consecutive instance and remains
+a harness condition, not an agent error. Recovered before any other action with
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` (`df829763`), working tree clean
+at the time (`git status --porcelain | wc -l` → 0).
+
+**The `.git` object corruption three prior rounds recorded was fixed mid-cycle — by the concurrent
+companion lane, not by this one.** At this cycle's start `git fetch` and `git gc` still reported
+`error: object file .git/objects/3c/534e50… is empty` plus
+`fatal: bad object refs/heads/worktree-wf_9029acd8-6b0-6`, and completed anyway. `sd29-companion-r7`
+repaired the dangling ref during its round 3 (`decisions.md §54`, `git branch -f
+worktree-wf_9029acd8-6b0-6 b49c603a`); this lane's later fetches are clean. Recorded because three
+rounds of this lane deliberately left it alone on the reasoning that repairing a **shared** checkout's
+object store is not an ingest card's write scope — that reasoning was right up to the point where a
+lane actually needed the fetch, which is the condition that finally justified the fix.
+
+### 0/0b. Shape and trap report
+
+`bestiary_3` was `scope: unregistered` before this round, with **zero** references anywhere in the
+repo (`grep -rn "bestiary_3" --include='*.rs' --include='*.py' --include='*.ts' --include='*.tsx'
+src apps scripts data/corpus` → no output). Unlike round 4, this round therefore paid the **full**
+registration cost including a new `RuleSetId` variant. Registering it flips the book to `in_scope`
+automatically, because `v06_work_inventory` derives scope from `rule_set_for(id)` rather than from a
+second hand-maintained list.
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_3
+```
+
+`DECLARES 261 / .COPY= 0 / .MOD 0 / #OFF 24` on `b3_races.lst`; `DECLARES 1099 / .COPY= 0 / .MOD 0 /
+#OFF 58` on `b3_abilities_race.lst`. Book-wide: 1,519 declarations across 20 files, **2** `.COPY=`
+rows (both in `b3_equipmods.lst`, another lane's kind), 61 `.MOD`, 83 disabled lines. **870
+`namespaced-key` and 1,009 `key-differs-from-name` findings** are the two traps that matter here, and
+the transcriber reads whole rows and namespaced keys, so neither applied. **The `#OFF 24` on the
+races file is the one that mattered downstream**: one of those 24 commented-out rows is the base
+creature for the ability row §5.1 is about.
+
+### 1b. Every figure re-derived, command first, value second
+
+**The lane's REAL ceiling, reproduced EXACTLY at cycle start before being moved** — round 4's closing
+figure confirmed, not corrected:
+
+```
+python3 scripts/classify_monster_ability_rows.py
+```
+
+→ `remaining … 3495`, `orphan … 1406`, `PI … 32`, `.COPY= … 2`, **`reachable remainder … 2055`**.
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same command
+rounds 1-4 recorded:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 876 | **615** | −261 |
+| `monster_ability` remaining | 2,619 | **2,592** | −27 |
+| raw remaining total | 3,495 | **3,207** | −288 |
+| `monster` grounded | 394 | **655** | +261 |
+| `monster_ability` grounded | 488 | **515** | +27 |
+| **REAL ceiling** | 2,055 | **1,767** | −288 |
+
+`2055 − 288 = 1767` closes exactly, with **no residue** — unlike round 4, which had to account for 2
+`.COPY=` rows and 1 cascade separately, because this book has none of either.
+
+The grounded `monster` figure has an independent witness that is not the inventory: the Monster
+Catalog's own on-screen caption, captured by the item-8 harness in §8, reads **"— 655 monsters"**.
+
+**The dispatch brief's "monster ~305, monster_ability ~852, grounded 62 and 20" is wrong for the
+FOURTH round running.** `§46.1`, `§50.7` and `§52` each corrected the identical pair, and the round-5
+brief repeated it verbatim again. That pair is near `bestiary`'s book subtotal (284/523), not the
+corpus-wide figure. Retro event emitted.
+
+### 1c. Preflight
+
+`preflight-disk` PASS. `df -h /home/ubuntu/workspace` → **803G available of 968G, 18% used**; the
+operator's expansion holds and disk was not a constraint at any point this cycle.
+
+### 2. Why `bestiary_3` and not the bigger books — run BEFORE committing the round
+
+Per `§45.1`, which asks a round to classify corpus ROWS before choosing a book:
+
+```
+python3 scripts/classify_monster_ability_rows.py bestiary_3
+book         mon  abil row-named prefix ORPHAN   PI COPY
+bestiary_3   261    40         0     27     13    0    0
+```
+
+`bestiary_4` (749 reachable) and `bestiary` (661) are bigger. `bestiary_3` is the **cleanest per unit
+of work** and the only candidate with neither a Product Identity row nor a `.COPY=` delta;
+`bestiary` additionally carries an unresolved design question (its 46 SD-22 monsters are already
+grounded through `beastiary1`'s own tables, so a round taking it must first rule on whether the
+chassis absorbs them or sits alongside). Taking the clean book meant this round's cost was
+registration plus transcription and nothing else — which is what left room for §4.
+
+### 3. What landed
+
+`RuleSetId::B3` + module + the registration points. The exhaustive matches did their designed job:
+adding the variant broke `v06_content_state_dump` and `v06_work_inventory` until their arms were
+written, which is the property that makes a new variant cheap rather than risky.
+
+* `src/rules_core/rules_tables/bestiary_3/{mod.rs,monster_data.rs}` — **261 monsters + 27 abilities**,
+  produced by `python3 scripts/transcribe_monster_tables.py bestiary_3`.
+* `monster_chassis::MONSTER_BOOKS`, `gen_book_cache::MONSTER_BOOK_SPECS`, `reach_gate`'s two claim
+  arms + its `CORPUS_BOOK_IDS` row, `monster_catalog`'s wire code `B3` + display name,
+  `corpus_ingest_diagnostic`'s row (`chassis_book_counts`, **not** the companion variant — this book
+  contributes no companion family), and the frontend `BOOK_LABELS` entry.
+* `data/corpus/bestiary_3/` — 261 + 27 records + `LICENSE.json`, from
+  `cargo run --locked --bin gen_book_cache -- bestiary_3` → `bestiary_3 cache generated: 261
+  monsters, 27 monster abilities; LICENSE.json records_processed=288`. The generator's PI screen is a
+  hard stop rather than a warning, and it passed: `records_redacted: 0`.
+
+**Zero Product Identity rows in either signal** — `grep -c NAMEISPI:YES b3_races.lst
+b3_abilities_race.lst` → `0`, `0` — as `ogl-pi-blacklist.md` §2 predicts for a `roleplaying_game/`
+bestiary. **The OGL provenance string was verified rather than copied from the row above it**:
+`bestiary_3.pcc` declares `ISOGL:YES` (line 22), carries 34 `COPYRIGHT` lines and a real
+11,789-byte `OGL.txt`.
+
+**The first book in the lane that loses NO monster row.** All 261 ship. The single exclusion class is
+the 13 orphan abilities, pinned by line in `monster_data.rs`'s generated header and again by an
+individual-line test in `rules_tables::bestiary_3`.
+
+### 4. The finding worth more than the ingest — 341 units the lane's denominator does not count
+
+The card asked whether `monster_ability` has a ceiling analogous to the race-trait lane's. It has the
+**opposite** problem, and this is the round's most reusable output.
+
+`b3_races.lst` carries **100** `ABILITY:Special Ability|AUTOMATIC|` tokens
+(`grep -c 'ABILITY:Special Ability|AUTOMATIC|' b3_races.lst` → 100), yet the classifier reports
+`row-named` **0**. Both are true. Those tokens name real ability rows that this book files under a
+different *kind*:
+
+```
+b3_abilities_race.lst:289  TYPE:SpecialQuality.Extraordinary.AdaroRacial        -> monster_ability
+b3_abilities_race.lst:703  TYPE:AghashRacialAbility.SpecialQuality.Supernatural -> race_trait
+```
+
+`v06_work_inventory::file_kind` reads only the **first** `TYPE:` segment. Both rows are a monster's
+special quality; they differ only in which segment the book happened to write first.
+
+Re-derived from `docs/work-inventory.json`, joining `race_trait` key prefixes against this book's own
+monster key set:
+
+| measure | count |
+|---|---|
+| `race_trait` units in `b3_abilities_race.lst` | 798 |
+| …whose `KEY:` is namespaced `<X> ~ <Y>` | 778 |
+| …whose `<X>` is a **bestiary_3 monster** | **341** |
+| …and which also carry `SpecialQuality`/`SpecialAttack` in a later `TYPE:` segment | 340 |
+
+**Cross-checked by a second, independent route that does not read the inventory at all** — parsing
+`b3_races.lst` and `b3_abilities_race.lst` directly, taking every ability row whose *first* `TYPE:`
+segment is not a facet, and joining its key prefix against the monster `KEY:`s read straight from the
+races file: **261 monster keys, 341 owned rows**. Two derivations that share no intermediate artifact
+agreeing on 341 is what makes it a finding rather than a reading of one script.
+
+**This contradicts a standing race-trait-lane finding.** `§44.4` counted this book's 799 `race_trait`
+units among the **2,894** that "belong to races with no chassis", concluding that "no amount of
+race-trait ingest grounds those" because `RaceCorpus::resolve` returns `None` without a chassis. That
+is correct for a player race trait and wrong for these 341: their owners are **monsters**, and this
+round gives those owners a chassis. They are reachable through the monster catalog's existing ability
+rendering — the very path §8's screenshot shows working for `Adaro ~ Poison` — not through a race
+chassis that will never exist for a Bestiary 3 monster.
+
+**They are deliberately NOT ingested here.** Moving them changes `file_kind`'s classification, which
+redraws the `race_trait` and `monster_ability` denominators for **every book in two lanes at once**;
+doing that inside an ingest round would leave this card's own numbers unreconcilable against round 4's.
+Recorded with its derivation so a successor can price it — which is exactly what `§45.1` asks a round
+to do *before* committing to a book. **Unattended-mode default taken: report, do not reclassify.**
+
+**This round measured only the book it took.** The same measurement should be run on `bestiary_4`,
+`bestiary` and `inner_sea_bestiary` before anyone treats 1,767 as this lane's true size — the ceiling
+may be understated in the same direction and for the same reason.
+
+### 5. Two instrument corrections, both surfaced by a gate doing its job
+
+**5.1 The transcriber aborted a whole book over a record it was going to drop.** `parse_desc` refuses
+to pick among several `DESC:` texts when none is gated on `DisplayFullAbility` — a deliberate and
+correct refusal. It raised `SystemExit` from inside `ability_pi_reason`, which parses **every**
+ability row including the orphans the next pass discards. `b3_abilities_race.lst:1663`
+(`Jiang-Shi Vampire`, 11 `DESC:` tokens describing an acquired template in 11 sections) is an orphan:
+no monster row names it, and the base creature row it templates is **commented out** at
+`b3_races.lst:293` — one of the `#OFF 24` from §0b. So a row that was never going to be emitted
+stopped the transcription of 288 records.
+
+The refusal is now **deferred, not weakened**: unscreenable rows are collected, and the transcription
+stops only if one **survives** to be emitted. A shape the parser cannot read still can never reach a
+player.
+
+**The first fix attempted was wrong, and how it was caught is the point.** Reordering the PI screen
+to run after the orphan pass also fixes the crash, and is what reading the code alone suggests.
+Regenerating all six previously ingested books showed it silently relabelled three Inner Sea World
+Guide rows from "Product Identity" to "orphan" in that book's generated header. Those three are
+*genuinely* PI, and PI is the stronger, more durable reason — it holds even if a future round gives
+the row an owner. The reorder was reverted and the narrower fix taken. **Under the narrow fix all six
+previously ingested books regenerate byte-identically**, verified by regenerating each and asking git
+(`git status --porcelain -- 'src/rules_core/rules_tables/*/monster_data.rs'` → only the new book).
+
+*Noted, not fixed:* `bonus_bestiary/monster_data.rs` does **not** regenerate identically. It is the
+pilot's hand-authored file, predating the transcriber, and differs in its doc header, its `use` path
+and two doc comments with **zero record changes**. Pre-existing drift on `tranche/9`, outside this
+card's scope, reverted rather than carried into this round's diff.
+
+**5.2 A screen-completeness invariant that held for seven books by accident.**
+`monster_catalog::every_row_carries_the_fields_the_screen_renders` asserted that every served monster
+carries a non-empty `source_page`. `b3_races.lst:215` (`Owl (Giant)`) and `:265` (`Spider (Ogre)`)
+carry no `SOURCEPAGE:` token at all — `sed -n '215p;265p' b3_races.lst | tr '\t' '\n' | grep -c
+SOURCEPAGE` → `0`. The transcriber emitted `None`, which is its documented and correct behaviour: a
+token the row does not carry becomes `None` rather than an invented citation.
+
+Both records state everything else the screen renders, so **dropping them would withhold real content
+over a bibliographic field**. They ship; the monster row now renders its page clause
+**conditionally**, as the ability row directly beneath it has always done (the previous code
+interpolated an empty string and left the book name with a dangling trailing space — a small live
+defect this surfaced); and the two are pinned by served key alongside their corpus lines, with the
+assertion failing in **both** directions so a pinned row silently *gaining* a page is caught too.
+
+### 6. Gate
+
+`./scripts/verify.sh` (FULL, exit code captured directly, never through a pipe).
+
+**Run 1** — `VERIFY_EXIT=1`. 13 of 14 stages green; `frontend-test` the only red, at 98/99 files.
+The cause was a stale frontend denominator: `MonsterCatalogScreen.test.ts`'s `SERVED_BOOKS` still
+listed round 4's seven wire codes, so `BOOK_LABELS names exactly the served books` failed on the
+eighth. **Exactly the defect class the concurrent companion lane recorded the same day at `§54.5`** —
+a frontend list that must track a backend registry, pinned by hand in a second place. Fixed in
+`7f470a78`; `npm test` → 99/99.
+
+**Run 2** — **`VERIFY_EXIT=0`, all 14 stages green**, launched with `RETRO_ACTOR` exported so the
+gate's own `verification` event attributes itself to this actor rather than to the worktree:
+
+```
+preflight-disk PASS · pi-sweep PASS (10 hits, 10 baseline rows) · audit-selftest PASS (28)
+reclaim-selftest PASS (10) · driver-selftest PASS (7) · root-lib PASS (1703)
+root-full PASS (6270 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop PASS (442) · reach PASS (27) · frontend-install PASS · frontend-test PASS (99/99)
+frontend-typecheck PASS (tsc --noEmit clean) · clippy PASS (root:54 desktop:7 warnings, 0 errors)
+class-dump PASS (31/31 computing)
+```
+
+`root-full` and `root-lib` both rose between the runs (6,265 → 6,270 and 1,698 → 1,703) because run
+2 was taken after merging the concurrent companion lane's round 3 — the merge is in the gated tree,
+so this result covers both lanes' work rather than this one's in isolation.
+
+Both runs executed **all 525 `tests/*.rs` suites** — the `comm -23` completeness check
+`decisions.md §40` requires, performed by the stage itself, so "the gate was green" here means every
+suite ran rather than that no failure was reported by whichever suites happened to build.
+
+### 7. Retrospective events
+
+Five, in `docs/retro/events/sd29-monster-r7.jsonl`: the brief's fourth-consecutive wrong denominator
+pair; the `§44.4` cross-lane correction (341 units); the transcriber-abort incident; the
+`source_page` invariant correction; and the cycle's own `verification` event.
+
+**That last one is itself a finding.** `verify.sh` auto-emitted it under the **worktree-name
+fallback** (`docs/retro/events/wf_924a22ca-f35-10.jsonl`) because `RETRO_ACTOR` was not exported into
+the gate's shell — and the fallback names a *checkout*, not a *role*, which is precisely what
+`loop-instruction.md` says makes the log's by-actor breakdown meaningless. Folded into this actor's
+shard with the reason recorded, and run 2 was launched with `RETRO_ACTOR` exported so it attributes
+itself correctly.
+
+### 8. DoD item 8 — on screen, PASS
+
+```
+RUN_DESKTOP_AGENT=sd29-monster-r7 ./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Adaro" --expect "Adaro" --expect "Bestiary 3" \
+  --out docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-006/item8
+```
+
+**PASS** at HEAD `7037c1dd`, first attempt — evidence
+`artifacts/SD29-E5-F2-006/item8/monster-adaro.png` + `.verify.md`. The verdict is the text extracted
+from the live webview via select-all/copy and an X-clipboard read, not the screenshot.
+
+The rendered row: `Speed 10 ft., swim 50 ft. · Bestiary 3 p.7 · Hit dice Monstrous Humanoid:4`, with
+all three of this monster's abilities rendered beneath it — the namespaced-prefix link reaching a
+player, which is the shape this entire book is reached by (§4). The screen's caption independently
+witnesses this round's arithmetic: **"— 655 monsters"**.
+
+`SEARCH_Y=311` held for the eighth registered book; the chip row did not wrap. The companion family's
+calibration note warns the constant moves with registered book count, so recording that this round
+did not need a recalibration is worth as much as recording one that did.
+
+**One judgment call, per UNATTENDED MODE item 1.** The harness must not run concurrently with
+`verify.sh` (documented OOM on a 22 GiB box). A sibling lane's gate was running at the time. Proceeded
+after checking `free -g` → **39G available of 45G**, on the reasoning that the documented failure is
+memory-bound and this box has twice the RAM of the one it was recorded on, and that the harness fails
+loudly — renaming artifacts `.FAILED.*` and exiting non-zero — so a memory-pressure failure would be
+detectable and retryable rather than silently producing false evidence. It passed first try.
+
+### 9. Reclaim
+
+`scripts/reclaim.sh --apply` at cycle end; both of this cycle's target directories
+(`codex-target-sd29-monster-r7`, `codex-target-sd29-monster-r7-desktop`) claimed on creation with
+`.reclaim-claim` and removed at the end.
