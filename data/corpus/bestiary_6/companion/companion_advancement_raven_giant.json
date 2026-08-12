@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T14:58:50Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Raven (Giant)",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "bestiary_6:companion:companion_advancement_raven_giant",
+    "name": "Companion Advancement (Raven (Giant))",
+    "owners": [
+      "bestiary_6:companion:companion_raven_giant"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_abilities_companion.lst",
+    "sha256": "a35382873f67665402e00c8af78f74feaf569a79ad4cb4acbcd006fe8c093014",
+    "line": 14,
+    "record_key": "Companion Advancement ~ Raven (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1329,6 +1329,46 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Horror Adventures, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F1-002",
     },
+    // SD-29 Epic 7 round 2 (`SD29-E7-F2-003`). Bestiary 5 and Bestiary 6 carry
+    // ZERO monsters -- B5's pcc `CAMPAIGN` line says "Only Player Options
+    // Implemented" -- so this generator, not the monster one, is the whole of
+    // what those books contribute.
+    //
+    // **B5's `support/b5_races_companion_oa.lst` is deliberately NOT named
+    // here.** `_bestiary_5.pcc:69` loads it under
+    // `PRECAMPAIGN:1,Occult Adventures`, a book this repo has not ingested;
+    // `decisions.md §47.2`. The transcriber excludes its two rows from the
+    // table by reading that pcc gate, so this spec has nothing to point at.
+    CompanionBookSpec {
+        corpus_book: "bestiary_5",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_5",
+        races_lst: "b5_races_companion.lst",
+        abilities_lst: "b5_abilities_companion.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_5.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 5, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-003",
+    },
+    CompanionBookSpec {
+        corpus_book: "bestiary_6",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_6",
+        races_lst: "b6_races_companion.lst",
+        abilities_lst: "b6_abilities_companion.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_6.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 6, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-003",
+    },
+    // The lane's first FAMILIAR book: `*_races_familiar.lst` rather than
+    // `*_races_companion.lst`, which is why the spec names the files rather
+    // than deriving them from a `<prefix>_races_companion.lst` convention.
+    CompanionBookSpec {
+        corpus_book: "bestiary_2",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_2",
+        races_lst: "b2_races_familiar.lst",
+        abilities_lst: "b2_abilities_familiar_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_2.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 2, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-003",
+    },
 ];
 
 fn companion_book_spec(book: &str) -> Option<&'static CompanionBookSpec> {

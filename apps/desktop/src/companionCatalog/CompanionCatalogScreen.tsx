@@ -44,6 +44,9 @@ export const BOOK_LABELS: Record<string, string> = {
   MC: 'Monster Codex',
   ISI: 'Inner Sea Intrigue',
   HA: 'Horror Adventures',
+  B5: 'Bestiary 5',
+  B6: 'Bestiary 6',
+  B2: 'Bestiary 2',
 };
 
 /** `'ISC'` -> `'Inner Sea Combat'`; an unmapped code falls through as itself. */

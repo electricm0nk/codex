@@ -1,0 +1,91 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:57Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Lyrakien)",
+    "external_ability_refs": [
+      "Detect Evil ~ Constant",
+      "Detect Magic ~ Constant",
+      "Flight Maneuverability",
+      "Freedom of Movement ~ Constant",
+      "Lyrakien ~ Starlight Blast",
+      "Lyrakien ~ Traveler's Friend",
+      "Resistance to Cold",
+      "Resistance to Fire"
+    ],
+    "key": "bestiary_2:companion:familiar_lyrakien",
+    "monster_class": "Outsider (Ref/Will):3",
+    "name": "Familiar (Lyrakien)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Azata|Chaotic|Extraplanar|Good",
+    "race_type": "Outsider",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.38",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -6
+      },
+      {
+        "ability": "DEX",
+        "amount": 8
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": 4
+      },
+      {
+        "ability": "WIS",
+        "amount": 6
+      },
+      {
+        "ability": "CHA",
+        "amount": 10
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+    "line": 12,
+    "record_key": "Familiar (Lyrakien)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

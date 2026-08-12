@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T14:58:45Z",
+  "data": {
+    "corpus_key": "Flying Fox ~ Disease Resistant",
+    "delivery": "Extraordinary",
+    "description": "Flying foxes are resistant to disease. They receive a +4 racial bonus on saving throws against disease.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_5:companion:flying_fox_disease_resistant",
+    "name": "Disease Resistant",
+    "owners": [
+      "bestiary_5:companion:familiar_flying_fox"
+    ],
+    "record_type": "ability",
+    "source_page": "p.112",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "FlyingFoxRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_abilities_companion.lst",
+    "sha256": "2c75b3d5d10c80857b5bf94529f1c1c6f327bf63cb18ab901f824cee80f8b31e",
+    "line": 46,
+    "record_key": "Flying Fox ~ Disease Resistant"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

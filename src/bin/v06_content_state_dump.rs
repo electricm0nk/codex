@@ -833,6 +833,15 @@ fn main() {
             // keeps one copy and both reasons (`§46.6` rule 1).
             RuleSetId::Isc => "inner_sea_combat",
             RuleSetId::Isi => "inner_sea_intrigue",
+            // SD-29 Epic 7 round 2. Same disposition as `Isc`/`Isi` above: no
+            // feats file this repo compiles, so these three arms exist for
+            // exhaustiveness only. Written in the same commit that adds the
+            // variants, because a missing arm here is a compile error in this
+            // bin and therefore `0 passed across 0 suites` for the entire
+            // `root-full` stage.
+            RuleSetId::B5 => "bestiary_5",
+            RuleSetId::B6 => "bestiary_6",
+            RuleSetId::B2 => "bestiary_2",
         };
         let records = table.entries.len();
         let wired_here = table

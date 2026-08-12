@@ -237,10 +237,14 @@ impl CompanionBook {
 /// corpus cache, the companion catalog and the reach gate at once — none of
 /// those consumers names a book of its own.
 ///
-/// The four below are the four smallest books with **zero** orphan ability rows,
-/// derived rather than assumed:
+/// The seven below are every book with **zero** orphan ability rows that this
+/// lane has reached, derived rather than assumed:
 /// `python3 scripts/classify_companion_rows.py inner_sea_combat monster_codex
-/// inner_sea_intrigue horror_adventures`.
+/// inner_sea_intrigue horror_adventures bestiary_5 bestiary_6 bestiary_2`.
+///
+/// Round 2's three (`bestiary_5`, `bestiary_6`, `bestiary_2`) were held back
+/// from round 1 because each needs its own `RuleSetId`, whose scope flip moves
+/// several hundred units of OTHER kinds from `not-started` to `not-ingested`.
 pub const COMPANION_BOOKS: &[CompanionBook] = &[
     CompanionBook {
         corpus_book: "inner_sea_combat",
@@ -261,6 +265,21 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "horror_adventures",
         companions: super::horror_adventures::companions_static(),
         companion_abilities: super::horror_adventures::companion_abilities_static(),
+    },
+    CompanionBook {
+        corpus_book: "bestiary_5",
+        companions: super::bestiary_5::companions_static(),
+        companion_abilities: super::bestiary_5::companion_abilities_static(),
+    },
+    CompanionBook {
+        corpus_book: "bestiary_6",
+        companions: super::bestiary_6::companions_static(),
+        companion_abilities: super::bestiary_6::companion_abilities_static(),
+    },
+    CompanionBook {
+        corpus_book: "bestiary_2",
+        companions: super::bestiary_2::companions_static(),
+        companion_abilities: super::bestiary_2::companion_abilities_static(),
     },
 ];
 

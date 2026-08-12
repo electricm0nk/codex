@@ -583,6 +583,31 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             companion_book_counts("horror_adventures"),
             &races,
         ),
+        // SD-29 Epic 7 round 2 (companion lane, extend). Three more books whose
+        // only compiled family is `companion`. This panel's caption says it
+        // shows every rule book landed in `rules_tables`, so a book missing here
+        // reads to a tester as an un-ingested book — the defect
+        // `every_book_landed_in_rules_tables_is_reported` caught for round 1's
+        // three, and the reason these rows are written in the same commit that
+        // registers the books.
+        book_status(
+            "bestiary_5",
+            "src/rules_core/rules_tables/bestiary_5",
+            companion_book_counts("bestiary_5"),
+            &races,
+        ),
+        book_status(
+            "bestiary_6",
+            "src/rules_core/rules_tables/bestiary_6",
+            companion_book_counts("bestiary_6"),
+            &races,
+        ),
+        book_status(
+            "bestiary_2",
+            "src/rules_core/rules_tables/bestiary_2",
+            companion_book_counts("bestiary_2"),
+            &races,
+        ),
         book_status(
             "book_of_the_damned_volume_1",
             "src/rules_core/rules_tables/book_of_the_damned_volume_1",
@@ -740,6 +765,11 @@ mod tests {
                 "inner_sea_combat",
                 "inner_sea_intrigue",
                 "horror_adventures",
+                // SD-29 Epic 7 round 2 -- three more companion-only books,
+                // kept in the same block for the same reason.
+                "bestiary_5",
+                "bestiary_6",
+                "bestiary_2",
                 // SD-29 Epic 5 extend round 2 -- the two Book of the Damned
                 // volumes, kept next to the other chassis books.
                 "book_of_the_damned_volume_1",

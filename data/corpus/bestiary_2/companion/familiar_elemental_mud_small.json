@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:57Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Elemental (Mud/Small))",
+    "external_ability_refs": [
+      "Immunity to acid",
+      "Mud Elemental ~ Earth Glide",
+      "Mud Elemental ~ Entrap"
+    ],
+    "key": "bestiary_2:companion:familiar_elemental_mud_small",
+    "monster_class": "Outsider (Fort/Ref):2",
+    "name": "Familiar (Elemental (Mud/Small))",
+    "natural_armor": 6,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Earth|Elemental|Extraplanar|Water",
+    "race_type": "Outsider",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.120",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Burrow"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 4
+      },
+      {
+        "ability": "DEX",
+        "amount": -2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -6
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+    "line": 18,
+    "record_key": "Familiar (Elemental (Mud/Small))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

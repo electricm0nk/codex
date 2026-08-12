@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:45Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Earth Wysp)",
+    "external_ability_refs": [],
+    "key": "bestiary_5:companion:familiar_earth_wysp",
+    "monster_class": "Outsider (Fort/Ref):3",
+    "name": "Familiar (Earth Wysp)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Tendrils"
+      }
+    ],
+    "race_subtype": "Earth|Elemental",
+    "race_type": "Outsider",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.282",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Burrow"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 4
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+    "line": 39,
+    "record_key": "Familiar (Earth Wysp)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

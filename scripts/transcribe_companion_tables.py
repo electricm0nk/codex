@@ -37,8 +37,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from classify_companion_rows import (  # noqa: E402
     bare_species,
     book_dirs,
+    gated_on_an_uningested_campaign,
+    precampaign_gates,
     prerace_owners,
     read_row,
+    resolve_source_file,
     row_shape,
     special_ability_refs,
     token,
@@ -280,6 +283,19 @@ def transcribe(book: str) -> str:
     directory = book_dirs()[book]
     inventory = json.load(open("docs/work-inventory.json", encoding="utf-8"))
     units = [u for u in inventory["units"] if u["book"] == book and u["kind"] == "companion"]
+
+    # A `.lst` the book's pcc loads only under a campaign this repo has not
+    # ingested is out of this rule set's scope BY CONSTRUCTION, not by omission
+    # — `decisions.md §47.2`, ruled for Horror Adventures' Occult-Adventures-
+    # gated race-trait file and applied here to Bestiary 5's
+    # `support/b5_races_companion_oa.lst`.  Excluded here rather than silently
+    # missing, and named in the emitted module doc so the shortfall is a stated
+    # claim a reader can check.
+    gates = precampaign_gates(directory)
+    gated = [u for u in units if gated_on_an_uningested_campaign(gates.get(u["source_file"]))]
+    gated_keys = {u["corpus_key"] for u in gated}
+    units = [u for u in units if u["corpus_key"] not in gated_keys]
+
     creatures = sorted(
         (u for u in units if row_shape(u["source_file"]) == "creature"),
         key=lambda u: u["source_line"],
@@ -309,7 +325,7 @@ def transcribe(book: str) -> str:
 
     # Shape 1, row-named: iterated in the creature file's own row order.
     for unit in creatures:
-        row = read_row(os.path.join(directory, unit["source_file"]), unit["source_line"])
+        row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         creature_rows[unit["corpus_key"]] = row
         named = special_ability_refs(row)
         mine: list[str] = []
@@ -330,7 +346,7 @@ def transcribe(book: str) -> str:
     # corpus reason.
     for unit in abilities:
         key = unit["corpus_key"]
-        row = read_row(os.path.join(directory, unit["source_file"]), unit["source_line"])
+        row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         candidates: list[str] = []
         for owner in prerace_owners(row):
             candidates.append(creature_species.get(owner, owner))
@@ -362,6 +378,20 @@ def transcribe(book: str) -> str:
     out.append(f"//!   * `{creatures[0]['source_file']}` -- {len(creatures)} companion creature rows")
     if abilities:
         out.append(f"//!   * `{abilities[0]['source_file']}` -- {len(abilities)} companion ability rows")
+    if gated:
+        out.append("//!")
+        out.append(
+            "//! NOT transcribed -- out of this rule set's scope by construction, not by"
+        )
+        out.append(
+            "//! omission (`decisions.md §47.2`): the book's pcc loads these rows only under"
+        )
+        out.append("//! a campaign this repo has not ingested.")
+        for unit in gated:
+            out.append(
+                f"//!   * `{unit['corpus_key']}` -- `{unit['source_file']}`, "
+                f"`{gates[unit['source_file']]}`"
+            )
     out.append("")
     # Filled in at the end from what the emitted rows actually name -- see the
     # note beside `IMPORT_PLACEHOLDER`.
@@ -419,7 +449,7 @@ def transcribe(book: str) -> str:
     out.append(f"/// Every {book} companion ability record ({len(abilities)} rows).")
     out.append("pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[")
     for unit in abilities:
-        row = read_row(os.path.join(directory, unit["source_file"]), unit["source_line"])
+        row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         segments = parse_type_segments(row)
         facet, delivery = read_facet_and_delivery(segments)
         description, variables = parse_desc(row)
