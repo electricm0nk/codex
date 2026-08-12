@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Jack-o'-Lantern ~ Strangling Ensnare",
+    "delivery": "Extraordinary",
+    "description": "A jack-o'-lantern's slam attack entangles the target in its vines for 2d4 rounds unless the target succeeds at a DC %1 Reflex save. The target can attempt to burst these entangling vines before the duration expires with a successful DC %2 Strength check as a full-round action. While the target is entangled, its vines also grasp at the target's mouth. The target cannot speak or cast spells with verbal components while it is entangled by the jack-o'-lantern. When a creature is entangled by this ability, the jack-o'-lantern loses its slam attack, but it can end this ability as a free action.",
+    "description_variables": [
+      "CON+13",
+      "CON+11"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:jack_o_lantern_strangling_ensnare",
+    "name": "Strangling Ensnare",
+    "owners": [
+      "bestiary_4:monster:jack_o_lantern"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 904,
+    "record_key": "Jack-o'-Lantern ~ Strangling Ensnare"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

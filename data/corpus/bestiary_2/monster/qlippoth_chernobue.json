@@ -1,0 +1,63 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:chernobue_con_damage",
+      "bestiary_2:monster_ability:chernobue_horrific_appearance",
+      "bestiary_2:monster_ability:chernobue_poison"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Qlippoth (Chernobue)",
+    "external_ability_refs": [
+      "Air Walk ~ Constant",
+      "Arcane Sight ~ Constant",
+      "Chernobue ~ Aura of Misfortune",
+      "Chernobue ~ Light Vulnerability",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:qlippoth_chernobue",
+    "monster_class": "Outsider (Fort/Will):12",
+    "name": "Qlippoth (Chernobue)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.220",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 711,
+    "record_key": "Qlippoth (Chernobue)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

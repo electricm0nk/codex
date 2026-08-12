@@ -13,9 +13,8 @@ use codex::rules_core::pilot_compute::{
     ComputationExplanation, PilotBaseChassisComputation, compute_pilot_base_chassis,
 };
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -51,15 +50,18 @@ fn computes_selected_skill_modifiers_with_contributors() {
 
     let computation = compute_pilot_base_chassis(&input);
 
-    // Climb: rank 1 + STR +3 + class-skill +3 + Chain Shirt armor-check -2 = 5.
-    assert_eq!(computation.selected_skill_modifiers.climb, 5);
-    // Intimidate: rank 1 + CHA -1 + class-skill +3 = 3 (no armor-check; CHA-based).
+    // Climb: rank 1 + STR +4 (CG-03 fix: the Human +2 racial bonus is now applied to
+    // the base 16 before the modifier is derived) + class-skill +3 + Chain Shirt
+    // armor-check -2 = 6.
+    assert_eq!(computation.selected_skill_modifiers.climb, 6);
+    // Intimidate: rank 1 + CHA -1 + class-skill +3 = 3 (no armor-check; CHA-based;
+    // unaffected by the Strength fix).
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    // Swim: rank 1 + STR +3 + class-skill +3 + Chain Shirt armor-check -2 = 5.
-    assert_eq!(computation.selected_skill_modifiers.swim, 5);
+    // Swim: rank 1 + STR +4 + class-skill +3 + Chain Shirt armor-check -2 = 6.
+    assert_eq!(computation.selected_skill_modifiers.swim, 6);
 
     let climb = explanation(&computation, "skill.selected_modifier.climb");
-    assert_eq!(climb.value, 5);
+    assert_eq!(climb.value, 6);
     assert!(
         climb.detail.contains("rank"),
         "climb detail must cite the rank allocation: {}",
@@ -81,7 +83,7 @@ fn computes_selected_skill_modifiers_with_contributors() {
         climb.detail
     );
     assert!(
-        climb.detail.contains('5'),
+        climb.detail.contains('6'),
         "climb detail must cite the total: {}",
         climb.detail
     );
@@ -116,7 +118,7 @@ fn computes_selected_skill_modifiers_with_contributors() {
     );
 
     let swim = explanation(&computation, "skill.selected_modifier.swim");
-    assert_eq!(swim.value, 5);
+    assert_eq!(swim.value, 6);
     assert!(
         swim.detail.contains("rank"),
         "swim detail must cite the rank allocation: {}",
@@ -138,7 +140,7 @@ fn computes_selected_skill_modifiers_with_contributors() {
         swim.detail
     );
     assert!(
-        swim.detail.contains('5'),
+        swim.detail.contains('6'),
         "swim detail must cite the total: {}",
         swim.detail
     );
@@ -187,8 +189,10 @@ fn missing_selected_skill_allocation_blocks_skill_modifiers() {
 fn widened_selected_skill_allocation_blocks_skill_modifiers() {
     // Widen beyond this slice by adding an out-of-scope skill allocation. The
     // narrow selected-skill surface must refuse rather than silently extend.
-    let mutated = DETERMINISTIC_FIXTURE
-        .replace("skill=skill:swim:1\n", "skill=skill:swim:1\nskill=skill:stealth:1\n");
+    let mutated = DETERMINISTIC_FIXTURE.replace(
+        "skill=skill:swim:1\n",
+        "skill=skill:swim:1\nskill=skill:stealth:1\n",
+    );
     assert!(
         mutated.contains("skill=skill:stealth:1"),
         "test setup should have widened the skill allocations"
@@ -246,13 +250,21 @@ fn absent_chain_shirt_blocks_skill_modifiers() {
 
 #[test]
 fn unsupported_chassis_blocks_skill_modifiers() {
-    // Replace the Fighter level-1 chassis with a Rogue level-1 chassis. The
-    // selected-skill surface is grounded only on the Fighter class posture and
-    // must refuse rather than fabricate Fighter class-skill bonuses.
-    let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
+    // Replace the Fighter level-1 chassis with a Monk level-1 chassis. The
+    // selected-skill surface is grounded only on the Fighter class posture
+    // and must refuse rather than fabricate Fighter class-skill bonuses.
+    // The negative control is a SYNTHETIC class id, not a real class. It
+    // was Rogue level-1, then Cleric, then Barbarian, then Monk -- each
+    // stopped being unsupported the moment `table_class_id` learned it
+    // (see ge06_failure_classifier.rs for why Rogue went first). Monk was
+    // the LAST real class outside that mapping (v0.6 alpha swarm,
+    // Monk/Summoner chassis-recognition closure, 2026-07-29), so all 27
+    // base classes are now recognized and no real class can serve here
+    // again.
+    let mutated = DETERMINISTIC_FIXTURE
+        .replace("class_level=class:fighter:1", "class_level=class:not_a_real_pf1_class:1");
     assert!(
-        mutated.contains("class_level=class:rogue:1"),
+        mutated.contains("class_level=class:not_a_real_pf1_class:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);

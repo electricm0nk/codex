@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Peluda ~ Quills",
+    "delivery": "Extraordinary",
+    "description": "A peluda's back and tail are covered in sharp black quills. A creature that strikes a peluda with a melee weapon, an unarmed attack, or a natural weapon takes 1d6 points of piercing damage from the peluda's quills and risks being poisoned. Weapons with reach do not endanger an attacker in this way. Any creature that grapples a peluda takes 3d6 points of piercing damage and risks being poisoned on its turn each round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:peluda_quills",
+    "name": "Quills",
+    "owners": [
+      "bestiary_4:monster:peluda"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1160,
+    "record_key": "Peluda ~ Quills"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Mi-Go ~ Item Creation",
+    "delivery": "Extraordinary",
+    "description": "A mi-go possesses the ability to create strange items that blur the line between magic and technology, given time and resources. This ability allows a mi-go to ignore all of the Item Creation feat requirements and spellcasting requirements for creating a magic item; the resulting item is always mi-go technology. A mi-go can use the Heal skill to craft mi-go technology. When a mi-go uses this ability to craft an item, it must use a larger amount of strange ingredients and expendable resources-this effectively doubles the gp cost to create the item.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:mi_go_item_creation",
+    "name": "Item Creation",
+    "owners": [
+      "bestiary_4:monster:mi_go"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1079,
+    "record_key": "Mi-Go ~ Item Creation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

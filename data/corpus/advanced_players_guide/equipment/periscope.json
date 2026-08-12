@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Periscope",
+    "category": "General",
+    "name": "Periscope",
+    "cost_gp": 20.0,
+    "weight": 4.0,
+    "description": "A 2-foot metal tube with mirrors at right angles at each end, letting the user safely peer over an obstacle at the cost of a -4 Perception penalty while in use."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:korred_animated_hair",
+      "bestiary_2:monster_ability:korred_stone_stride",
+      "bestiary_2:monster_ability:korred_stunning_laugh"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Korred",
+    "external_ability_refs": [
+      "Rock Throwing"
+    ],
+    "key": "bestiary_2:monster:korred",
+    "monster_class": "Fey:6",
+    "name": "Korred",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "S",
+    "source_page": "p.173",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 554,
+    "record_key": "Korred"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

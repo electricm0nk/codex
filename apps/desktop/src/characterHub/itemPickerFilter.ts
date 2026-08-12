@@ -1,0 +1,251 @@
+import type { EquipmentCatalogEntryDto } from '../boundary/loadEquipmentCatalog';
+import type { SpellCatalogEntryDto } from '../boundary/loadSpellCatalog';
+import type { FeatCatalogEntryDto } from '../boundary/listFeats';
+
+/**
+ * Pure logic backing `ItemPickerModal`: mapping the two real catalog DTOs
+ * (equipment, spell — otherwise shaped nothing alike) onto one generic
+ * display row, and filtering those rows by the search box's text. Kept
+ * separate from the React component so it's unit-testable without a DOM
+ * (this repo has no jsdom/testing-library — see `characterSheetRefresh.ts`
+ * for the same split applied to the mutation-outcome mapping).
+ */
+
+export interface ItemPickerEntry {
+  /** The catalog `key` — what gets sent back as `itemId` / `spellId` on select. */
+  key: string;
+  name: string;
+  detail: string;
+  /**
+   * Feat entries only: `'Weapon'`, `'Skill'` or `'SpellSchool'` when this
+   * feat needs a chosen target, absent otherwise.
+   *
+   * Carried on the picker entry so the Add Feat flow can tell, at the
+   * moment of the pick, whether a second target step is required — without
+   * re-querying the catalog or hardcoding a list of chooser feats in the
+   * frontend, which would be rules knowledge duplicated out of the engine.
+   */
+  chooserTargetKind?: string | null;
+  /**
+   * True when this row must be shown but not selectable — a feat whose real
+   * corpus prerequisites this character does not meet.
+   *
+   * Deliberately "greyed out and explained" rather than "filtered away":
+   * hiding the row would tell a player nothing about why their build cannot
+   * take Improved Two-Weapon Fighting, and offering it and then refusing the
+   * mutation is the offered-then-refused shape the no-stub doctrine calls a
+   * dead affordance.
+   */
+  disabled?: boolean;
+  /**
+   * Why this row is disabled. Required whenever `disabled` is true — a
+   * greyed-out row with no reason is exactly as unhelpful as no enforcement.
+   */
+  disabledReason?: string;
+  /**
+   * A note shown on a row that IS selectable: prerequisites the rules engine
+   * could not evaluate. Never a reason to disable.
+   */
+  unverifiedNote?: string;
+}
+
+/** Friendly labels for `EquipmentCategory` variants — mirrors `EquipmentCatalogScreen`'s own map. */
+const EQUIPMENT_CATEGORY_LABELS: Record<string, string> = {
+  ArmsArmor: 'Arms & Armor',
+  General: 'General',
+  MagicItems: 'Magic Items',
+  Equipmods: 'Equipment Mods',
+};
+
+/**
+ * How much corpus description prose one picker row may carry.
+ *
+ * The picker is a scan-and-select list rendered inside a modal, and the
+ * catalog's descriptions are not uniformly short: median 107 characters, but
+ * 817 of the 2856 described records run past 200 and the longest is 5971.
+ * Pasting those in full turns a 3830-row list into an unscrollable wall.
+ *
+ * So the picker shows a bounded summary and the **Equipment Catalog screen
+ * shows the full text** — a division of labour, not a loss. The bound is
+ * marked with an ellipsis whenever it bites, so a truncated line always
+ * announces itself rather than reading as the whole description.
+ */
+export const ITEM_PICKER_DESCRIPTION_MAX_CHARS = 140;
+
+/**
+ * Trims description prose to a readable one-liner for a picker row.
+ *
+ * Cuts on a word boundary rather than mid-word, and appends `…` only when
+ * something was actually removed — a description that already fits is
+ * returned byte-for-byte, so short rules text (the median case) is never
+ * decorated with a truncation mark it does not deserve.
+ *
+ * Newlines collapse to spaces because the picker row is a single line; the
+ * full, paragraph-preserving text is on the catalog screen.
+ */
+export function summariseItemDescription(
+  description: string,
+  maxChars: number = ITEM_PICKER_DESCRIPTION_MAX_CHARS
+): string {
+  const flat = description.replace(/\s+/g, ' ').trim();
+  if (flat.length <= maxChars) return flat;
+
+  const cut = flat.slice(0, maxChars);
+  const lastSpace = cut.lastIndexOf(' ');
+  // A single word longer than the bound has no boundary to cut on; hard-cut
+  // it rather than returning the whole thing and defeating the bound.
+  const trimmed = (lastSpace > 0 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.]+$/, '');
+  return `${trimmed}…`;
+}
+
+export function mapEquipmentCatalogEntries(entries: EquipmentCatalogEntryDto[]): ItemPickerEntry[] {
+  return entries.map((entry) => {
+    // Unknown/future categories fall back to the raw variant string verbatim
+    // rather than a fabricated label.
+    const category = EQUIPMENT_CATEGORY_LABELS[entry.category] ?? entry.category;
+    // The corpus `DESC:` prose the Rust adapter already renders. Until this
+    // hop existed the field crossed the IPC boundary and was read by nothing,
+    // so a player picking equipment saw a bare category label and had no way
+    // to tell a Longsword from a Longspear except by name.
+    //
+    // `null`/blank stays absent: the detail line is then exactly what it was
+    // before, not a category followed by a dangling separator.
+    const description =
+      typeof entry.description === 'string' && entry.description.trim().length > 0
+        ? summariseItemDescription(entry.description)
+        : null;
+
+    return {
+      key: entry.key,
+      name: entry.name,
+      detail: description === null ? category : `${category} · ${description}`,
+    };
+  });
+}
+
+export function mapSpellCatalogEntries(entries: SpellCatalogEntryDto[]): ItemPickerEntry[] {
+  return entries.map((entry) => ({
+    key: entry.key,
+    // The spell catalog DTO has no separate display-name field (see
+    // `SpellCatalogEntryDto`'s doc comment) — `key` is the spell's real
+    // corpus identity and doubles as the display name.
+    name: entry.key,
+    // Book first, since the catalog spans CRB, APG, ACG and ARG and a
+    // player picking a spell needs to know which book it comes from.
+    // `school`/`level` are omitted rather than defaulted when the corpus
+    // row genuinely lacks them (a real `apg_spells.lst` gap), so the
+    // detail line never asserts a school or level the corpus never gave.
+    //
+    // The level is labelled "Lowest class level", not "Level", because
+    // that is what the catalog record's own field is: the MINIMUM across
+    // every class named in its corpus `CLASSES:` tag. Hideous Laughter is
+    // `CLASSES:Bard=1|Sorcerer,Wizard=2`, so it reads 1 here even for a
+    // Wizard who learns it at 2. This picker browses all 1185 records
+    // across every class, so it has no one class to answer for — unlike
+    // the Spells tab, which resolves each row against its own
+    // `sourceClassId` via `list_class_spell_levels` (see
+    // `spellsTabModel.ts`). Same wording as `SpellCatalogScreen.tsx`,
+    // the other cross-class browse.
+    detail: [
+      entry.book,
+      entry.school,
+      entry.level === null ? null : `Lowest class level ${entry.level}`,
+    ]
+      .filter((part): part is string => part !== null)
+      .join(' · '),
+  }));
+}
+
+/**
+ * Friendly book labels for `RuleSetId` variants — mirrors the spell
+ * catalog's own `book` strings. Every variant `list_feat_catalog` can
+ * actually emit needs an entry: a missing one reaches the player as the raw
+ * `RuleSetId` variant name (`Arg`, `Pu`) sitting beside properly-coded
+ * CRB/APG/ACG rows. `feat_catalog.rs` serves Crb 185, Apg 172, Acg 129, Arg
+ * 187 and Pu 17 (690 total), so ARG and PU alone are 204 of the picker's
+ * rows. `Bestiary1` is deliberately absent: that book contributes equipment
+ * but no feats.
+ */
+const FEAT_SOURCE_LABELS: Record<string, string> = {
+  Crb: 'CRB',
+  Apg: 'APG',
+  Acg: 'ACG',
+  Arg: 'ARG',
+  Pu: 'PU',
+};
+
+export function mapFeatCatalogEntries(entries: FeatCatalogEntryDto[]): ItemPickerEntry[] {
+  return entries.map((entry) => ({
+    key: entry.key,
+    name: entry.name,
+    // Book first, then category, then the corpus description — the
+    // catalog spans CRB, APG, ACG, ARG and PU, and a player picking a feat
+    // needs to know which book it comes from, exactly as
+    // `mapSpellCatalogEntries` already does. An unknown/future book falls
+    // back to the raw variant string rather than a fabricated label, and
+    // the description is omitted rather than invented when the corpus
+    // record has no `DESC:` token (a real gap: CRB's "Heighten Spell +N"
+    // records and APG's base "Elemental Fist" — see
+    // `FeatTableEntry.description`'s own doc comment).
+    detail: [FEAT_SOURCE_LABELS[entry.source] ?? entry.source, entry.category, entry.description]
+      .filter((part): part is string => Boolean(part))
+      .join(' · '),
+    chooserTargetKind: entry.chooserTargetKind,
+    // `eligibility` is absent on the character-less `listFeats` response,
+    // which leaves every row selectable — the previous behaviour, unchanged,
+    // for the browse surfaces that have no character to check against.
+    disabled: entry.eligibility ? !entry.eligibility.eligible : undefined,
+    disabledReason: entry.eligibility?.unavailableReason ?? undefined,
+    unverifiedNote:
+      entry.eligibility && entry.eligibility.eligible && entry.eligibility.unverified.length > 0
+        ? entry.eligibility.unverified.join('; ')
+        : undefined,
+  }));
+}
+
+/**
+ * One sentence describing what the Add Feat picker actually serves, derived
+ * from the catalog response itself.
+ *
+ * The Feats tab's caption used to read *"Add feats from the real CRB feat
+ * catalog."* — true when `feat_catalog.rs` served CRB alone, and false from
+ * the moment APG, ACG, ARG and PU landed: the catalog serves 690 feats across
+ * 5 books, and 204 of them (ARG's 187 and PU's 17) sat behind a caption
+ * telling the player they were not there.
+ *
+ * The point of deriving it is that the replacement cannot rot the same way. A
+ * sixth book's feats change this sentence by being in the response, with
+ * nobody editing a string. `FEAT_SOURCE_LABELS` is reused so the caption names
+ * books exactly as the picker's own rows label them, and an unknown/future
+ * book falls back to its raw `RuleSetId` variant rather than being dropped
+ * from the count of books.
+ *
+ * Returns `null` for an empty response — the catalog failed to load or is
+ * genuinely empty, and a caption is not the place to guess which.
+ */
+export function describeFeatCatalogCoverage(entries: readonly FeatCatalogEntryDto[]): string | null {
+  if (entries.length === 0) {
+    return null;
+  }
+  const books: string[] = [];
+  for (const entry of entries) {
+    const label = FEAT_SOURCE_LABELS[entry.source] ?? entry.source;
+    if (!books.includes(label)) {
+      books.push(label);
+    }
+  }
+  const bookWord = books.length === 1 ? 'book' : 'books';
+  const featWord = entries.length === 1 ? 'feat' : 'feats';
+  return `Add feats from the real feat catalog: ${entries.length} ${featWord} across ${books.length} ${bookWord} (${books.join(', ')}).`;
+}
+
+/** Case-insensitive substring match against either the name or the detail line. */
+export function filterItemPickerEntries(entries: ItemPickerEntry[], searchTerm: string): ItemPickerEntry[] {
+  const term = searchTerm.trim().toLowerCase();
+  if (!term) {
+    return entries;
+  }
+  return entries.filter(
+    (entry) => entry.name.toLowerCase().includes(term) || entry.detail.toLowerCase().includes(term)
+  );
+}

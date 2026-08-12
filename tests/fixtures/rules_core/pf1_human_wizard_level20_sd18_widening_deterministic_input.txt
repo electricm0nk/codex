@@ -1,0 +1,70 @@
+# SD18 deterministic Human Wizard level 20 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Wizard
+# level-1..level-19 prepared arcane spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_wizard_level19_sd18_widening_deterministic_input.txt)
+# to level 20 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-19 fixtures, and the
+# same canonical school specialization selections (Evocation chosen,
+# Necromancy/Transmutation opposed), adding only the level bump this bounded
+# slice needs.
+#
+# It deliberately avoids every later Wizard burden surface: no evocation
+# spell-damage application, no force-missile casting execution, no
+# opposed-school preparation cost, no spellbook, no spells prepared, no spell
+# slots, no spell DCs, and no bonus-feat selection/execution for the
+# still-unproven 5th/10th/15th/20th-level "Bonus feat" grant. Two PF1 CRB
+# primary sources (d20pfsrd.com and the Archives of Nethys aonprd.com
+# mirror) were read directly (raw curl fetch + a small Python tag-stripper,
+# not AI-summarized) before writing this fixture, fetching the full
+# levels-16-through-20 block in one pass so the level-20 row's neighbors
+# were visible in context (guards against level-misattribution), and both
+# agree byte-for-byte: base attack bonus genuinely RISES to +10
+# (20 / 2 = 10, up from +9 at level 19); good Will genuinely RISES to +12
+# (20 / 2 + 2 = 12, up from +11 at level 19); poor Fortitude/Reflex both STAY
+# at +6 (20 / 3 = 6, an integer-division coincidence with level 19).
+# The raw Wizard spells-per-day table's level-20 row is
+# "4/4/4/4/4/4/4/4/4/4" — up from the level-19 row "4/4/4/4/4/4/4/4/3/3" (the
+# 8th- and 9th-level columns both rise to 4), but NO genuinely new
+# spell-level column opens (9th is already the highest wizard spell level in
+# PF1, first opened at level 17), so the specialist bonus-slot flat count
+# (one bonus slot of each spell level she can cast, 1st through 9th) STAYS
+# at 9, unchanged from levels 17-19. Intense Spells' bonus-damage magnitude
+# genuinely RISES to 10 (max(20/2, 1) = 10, up from 9 at level 19) via the
+# pre-existing formula, not re-derived; Force Missile's uses-per-day pool
+# stays level-independent and unchanged; Scribe Scroll and the school
+# specialization choice stay recognized as already-held grants.
+# The level-20 "Special" column reads "Bonus feat" on both primary sources
+# (byte-for-byte agreement) — the SAME genuinely open-ended
+# metamagic/item-creation/Spell-Mastery choice already left
+# named-but-unproven at levels 5, 10, and 15 (verified: the class table's
+# own "Bonus Feats" ability text, "At 5th, 10th, 15th, and 20th level, a
+# wizard gains a bonus feat. At each such opportunity, he can choose a
+# metamagic feat, an item creation feat, or Spell Mastery," is identical
+# wording across both sources and names no new mechanic at 20th level), so
+# it stays deliberately named-but-unproven and no new pillar record is
+# grounded at level 20. (A separate, non-Core-Rulebook "Well-Prepared"
+# alternate capstone exists on both sources but is explicitly sourced to
+# Pathfinder Player Companion: Chronicle of Legends, an optional splatbook
+# replacement a player may pick instead of the standard ability — out of
+# SD18's Core Rulebook scope, not part of the default level-20 Wizard row,
+# and not used by this fixture.) This is the final level within PF1's 1-20
+# character-level cap for this class row.
+case_id=pf1-crb-human-wizard-level20-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:20
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

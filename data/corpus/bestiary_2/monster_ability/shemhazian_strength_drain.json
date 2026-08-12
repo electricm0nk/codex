@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Shemhazian ~ Strength Drain",
+    "delivery": "Supernatural",
+    "description": "A shemhazian demon deals 2d4 points of Strength drain with each successful bite.  A DC %1 Fortitude save reduces this amount to 1d4 points of Strength damage.",
+    "description_variables": [
+      "ShemhazianStrengthDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:shemhazian_strength_drain",
+    "name": "Strength Drain",
+    "owners": [
+      "bestiary_2:monster:demon_shemhazian"
+    ],
+    "source_page": "p.80",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 365,
+    "record_key": "Shemhazian ~ Strength Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:dossenus_burrow",
+      "bestiary_4:monster_ability:dossenus_devastating_maw",
+      "bestiary_4:monster_ability:dossenus_hydrophobia",
+      "bestiary_4:monster_ability:dossenus_swarming"
+    ],
+    "challenge_rating": "1",
+    "corpus_key": "Dossenus",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:dossenus",
+    "monster_class": "Aberration:2",
+    "name": "Dossenus",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "S",
+    "source_page": "p.63",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Burrow"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 51,
+    "record_key": "Dossenus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T16:45:13Z",
+  "data": {
+    "key": "Oversized Goblin",
+    "name": "Oversized Goblin",
+    "race_key": "Goblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Goblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Goblin Variant"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "A few goblins attain a much larger size than their kin. No one is exactly sure why they grow to be giants among their kind, but it's probably due to a combination of luck, diet, and constant access to food. These goblins are monsters among their own kind, not just in height, but also in girth and in strength. If not cast out for eating all of the tribe's food, oversized goblins often become the bosses of their tribes, and the most powerful of them become chiefs.&nl;Oversized goblins are Medium size, and grow to 4 to 5 feet tall. They tend to be particularly obese, weighing between 225 and 275 pounds. Instead of the normal racial ability score modifiers for goblins, oversized goblins gain a +2 bonus to Strength, a +2 bonus to Dexterity, and a -2 penalty to Charisma.",
+    "source_page": "p.104",
+    "raw_tokens": [
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Goblin Racial Trait.SpecialQuality.Special Quality.Goblin Variant"
+      },
+      {
+        "key": "DESC",
+        "value": "A few goblins attain a much larger size than their kin. No one is exactly sure why they grow to be giants among their kind, but it's probably due to a combination of luck, diet, and constant access to food. These goblins are monsters among their own kind, not just in height, but also in girth and in strength. If not cast out for eating all of the tribe's food, oversized goblins often become the bosses of their tribes, and the most powerful of them become chiefs.&nl;Oversized goblins are Medium size, and grow to 4 to 5 feet tall. They tend to be particularly obese, weighing between 225 and 275 pounds. Instead of the normal racial ability score modifiers for goblins, oversized goblins gain a +2 bonus to Strength, a +2 bonus to Dexterity, and a -2 penalty to Charisma."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Goblin Racial Trait|AUTOMATIC|Oversized Goblin ~ Ability Scores|Oversized Goblin ~ Size"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.104"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_race.lst",
+    "sha256": "2cde87583641aec61ec0da397064c651fefd27d679ac0cc6368930ded84e5e30",
+    "line": 31,
+    "record_key": "Oversized Goblin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

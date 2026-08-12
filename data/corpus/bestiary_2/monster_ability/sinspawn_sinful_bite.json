@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Sinspawn ~ Sinful Bite",
+    "delivery": "Supernatural",
+    "description": "A creature bitten by a sinspawn is overwhelmed with sinful thoughts (DC %1 Will save negates).  These emotions are so powerful that the target becomes sickened for 1d6 minutes.  An effected target that is bitten a second time is staggered for 1 round if it fails its saving throw.  Calm emotions, remove curse, or break enchantment negates the effects of sinful bite.",
+    "description_variables": [
+      "SinspawnSinfulBiteDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:sinspawn_sinful_bite",
+    "name": "Sinful Bite",
+    "owners": [
+      "bestiary_2:monster:sinspawn_wrathspawn",
+      "bestiary_2:monster:sinspawn_envyspawn",
+      "bestiary_2:monster:sinspawn_gluttonspawn",
+      "bestiary_2:monster:sinspawn_greedspawn",
+      "bestiary_2:monster:sinspawn_lustspawn",
+      "bestiary_2:monster:sinspawn_pridespawn",
+      "bestiary_2:monster:sinspawn_slothspawn"
+    ],
+    "source_page": "p.246",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1150,
+    "record_key": "Sinspawn ~ Sinful Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

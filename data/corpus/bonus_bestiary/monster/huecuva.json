@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-11T09:16:36Z",
+  "data": {
+    "ability_keys": [
+      "bonus_bestiary:monster_ability:faithless",
+      "bonus_bestiary:monster_ability:huecuva_disease"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Huecuva",
+    "external_ability_refs": [],
+    "key": "bonus_bestiary:monster:huecuva",
+    "monster_class": "Undead:3",
+    "name": "Huecuva",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.12",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_races.lst",
+    "sha256": "14ef1129bc2ea0a5055d56d3a09dda0b93c8740a14f97c1b448114edf6189bef",
+    "line": 15,
+    "record_key": "Huecuva"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

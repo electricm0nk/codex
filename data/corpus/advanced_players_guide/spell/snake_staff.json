@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Snake Staff",
+    "school": "Transmutation",
+    "level": 5,
+    "description": "With a long hissing whisper, you transform ordinary pieces of wood into various sorts of snakes that immediately attack your foes.  As long as the snakes remain within sight, you can direct their actions telepathically as a free action. You can only apply this spell to wooden objects not in a creature's possession or not part of a larger structure or plant. Each time you cast this spell you can create a number of snakes equal to your caster level. More powerful snakes take up more than one of your available total, as noted below. Snake statistics can be found on page 255 of the Pathfinder Bestiary; details on the advanced and giant simple templates can be found on pages 294-295 of that book.  Venomous Snake: A stick or piece of firewood.  Counts as 1 snake.  Constrictor Snake: A staff or tree branch. Counts as 2 snakes.  Advanced Venomous Snake: A stick or piece of firewood. Counts as 2 snakes.  Advanced Constrictor Snake: A staff or tree branch.  Counts as 3 snakes.  Advanced Giant Venomous Snake: A log or pile of debris. Counts as 4 snakes.  Advanced Giant Constrictor Snake: A fallen tree or a large pile of debris. Counts as 5 snakes.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 2067,
+    "record_key": "Snake Staff"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Special Ability ~ Returning ~ Thrown",
+    "category": "equipmods",
+    "name": "Returning",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This special ability can only be placed on a weapon that can be thrown. A returning weapon flies through the air back to the creature that threw it. It returns to the thrower just before the creature's next turn (and is therefore ready to use again in that turn). Catching a returning weapon when it comes back is a free action. If the character can't catch it, or if the character has moved since throwing it, the weapon drops to the ground in the square from which it was thrown."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/returning/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

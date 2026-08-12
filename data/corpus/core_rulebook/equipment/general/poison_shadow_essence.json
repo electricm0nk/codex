@@ -1,0 +1,90 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "general",
+    "cost_gp": 250.0,
+    "description": null,
+    "key": "Poison (Shadow Essence)",
+    "name": "Poison, Shadow Essence",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Shadow Essence)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Shadow Essence"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Shadow Essence"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "250"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Inhaled; Fort DC 17;  Freq 1 rnd (6); Effect 1 Str drain/1d2 Str dmg; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, injury"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 17"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/round for 6 rounds"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1 Str drain"
+      },
+      {
+        "key": "INFO",
+        "value": "Secondary Effect|1d2 Str damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 519,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Shadow Essence)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

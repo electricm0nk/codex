@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Elemental Speech",
+    "school": "Divination",
+    "level": 2,
+    "description": "This spell enables you to converse with creatures associated with a chosen element, including but not limited to true elemental creatures. This spell gains the elemental subtype based on the version of the spell you cast. Elemental speech does not guarantee a friendly reaction; it merely enables communication. You may converse with all creatures of the selected type with an Intelligence score of 1 or greater, even if they do not understand one another.  When cast as an air spell, you can converse in Auran and with any creature that has the air subtype or a fly speed.  When cast as an earth spell, you can converse in Terran and with any creature that has the earth subtype or a burrow speed.  When cast as a fire spell, you can converse in Ignan and with any creature that has the fire subtype.  When cast as a water spell, you can converse in Aquan and with any creature that has the water subtype or a swim speed.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1929,
+    "record_key": "Elemental Speech"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

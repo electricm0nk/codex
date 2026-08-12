@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Gnome ~ Defensive Training",
+    "name": "Defensive Training",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "Gnome Racial Default",
+      "SpecialQuality",
+      "Defensive"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Gnome_ReplaceDefensiveTraining",
+    "sets_replace_flags": [],
+    "description": "Gnomes get a +4 dodge bonus to AC against monsters of the giant subtype.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Defensive Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.Gnome Racial Default.SpecialQuality.Defensive"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Gnome_ReplaceDefensiveTraining=true"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialDefensiveTrainingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes get a +%1 dodge bonus to AC against monsters of the giant subtype.|RacialDefensiveTrainingBonus"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+%1 dodge bonus to AC against monsters of the giant subtype.|RacialDefensiveTrainingBonus"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+%1 dodge bonus to AC vs. giants)|RacialDefensiveTrainingBonus"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialDefensiveTrainingBonus",
+          "4"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gnome/gnome_abilities_race.lst",
+    "sha256": "aa95c706e39ae8a191f89c092152b6a5a25ab27540dc35f0a8796aa8e67db38f",
+    "line": 22,
+    "record_key": "Gnome ~ Defensive Training"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

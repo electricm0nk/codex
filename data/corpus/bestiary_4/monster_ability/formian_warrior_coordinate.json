@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Formian Warrior ~ Coordinate",
+    "delivery": "Supernatural",
+    "description": "Once a formian warrior has acted in a combat, all allied formians within the hive mind are no longer considered flat-footed. When a formian warrior attacks a creature in melee, allied formians gain a +2 insight bonus on melee attack rolls against that creature until the start of the warrior's next turn.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:formian_warrior_coordinate",
+    "name": "Coordinate",
+    "owners": [
+      "bestiary_4:monster:formian_warrior"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 701,
+    "record_key": "Formian Warrior ~ Coordinate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "data": {
+    "key": "Heart of the Metal",
+    "school": "Transmutation",
+    "level": 3,
+    "description": "You lend the nature of adamantine, cold iron, or silver, depending on component used, to the targeted weapons, with the following effects: Adamantine: The weapons overcome DR/adamantine and ignore hardness less than 20. Cold Iron: The weapons overcome DR/cold iron. Silver: The weapons overcome DR/silver. No other advantages or disadvantages of these metal types apply. For example, a weapon given the nature of adamantine is not automatically masterwork. This is able to affect nonmetal weapons. If you grant the target weapons the property of cold iron, the spell lasts half as long as normal.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 64,
+    "record_key": "Heart of the Metal"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

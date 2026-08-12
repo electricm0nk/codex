@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Merfolk ~ Languages",
+    "name": "Languages",
+    "race_key": "Merfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Merfolk Racial Trait",
+      "Merfolk Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Merfolk_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Merfolk speak Common and Aquan. Merfolk with high Intelligence scores can choose from the following languages: Aboleth, Aklo, Draconic, Elven, and Sylvan.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Merfolk ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Merfolk Racial Trait.Merfolk Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Merfolk_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Merfolk speak Common and Aquan. Merfolk with high Intelligence scores can choose from the following languages: Aboleth, Aklo, Draconic, Elven, and Sylvan."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Aboleth|Bonus Language ~ Aklo|Bonus Language ~ Draconic|Bonus Language ~ Elven|Bonus Language ~ Sylvan"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Aquan"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/merfolk/merfolk_abilities_race.lst",
+    "sha256": "a42f2010dc4a236c2da1c5a545a675700a560d90db1d3ff860a40a9ed44c2170",
+    "line": 22,
+    "record_key": "Merfolk ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

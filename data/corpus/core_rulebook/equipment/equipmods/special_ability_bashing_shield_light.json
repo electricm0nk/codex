@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Special Ability ~ Bashing ~ Shield / Light",
+    "category": "equipmods",
+    "name": "Bashing",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A shield with this special ability is designed to perform a shield bash. A bashing shield deals damage as if it were a bashing weapon of two size categories larger (a Medium light shield thus deals 1d6 points of damage and a Medium heavy shield deals 1d8 points of damage). The shield acts as a +1 weapon when used to bash. Only light and heavy shields can have this ability."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/bashing/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

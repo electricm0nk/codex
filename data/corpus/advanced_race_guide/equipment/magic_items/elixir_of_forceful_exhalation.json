@@ -1,0 +1,58 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 900.0,
+    "description": "The drinker can exhale up to three 15-foot-long Gusts of Wind (as the spell), after which the skill bonuses end.",
+    "key": "Elixir of Forceful Exhalation",
+    "name": "Elixir of Forceful Exhalation",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Potion.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "900"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "SPROP",
+        "value": "The drinker can exhale up to three 15-foot-long Gusts of Wind (as the spell), after which the skill bonuses end."
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SKILL|Swim|4|TYPE=Competence"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "ANYPC|SITUATION|SKILL=Acrobatics,Jump|4|TYPE=Competence"
+      }
+    ],
+    "weight_lbs": 1.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 39,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Elixir of Forceful Exhalation",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ]
+}

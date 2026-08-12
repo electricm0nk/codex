@@ -17,9 +17,8 @@ use codex::rules_core::pilot_compute::{
     HeadlessReceiptStatus, PilotHeadlessReceipt, build_pilot_headless_receipt,
 };
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -44,7 +43,10 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
     let receipt = build_pilot_headless_receipt(&input);
 
     // Case and source-package identity are preserved from the loaded input.
-    assert_eq!(receipt.case_id.as_deref(), Some("pf1-crb-human-fighter-level1"));
+    assert_eq!(
+        receipt.case_id.as_deref(),
+        Some("pf1-crb-human-fighter-level1")
+    );
     assert_eq!(receipt.source_package_id, "pf1.core_rulebook");
 
     // The integrated path produced evidence, not a blocker.
@@ -54,7 +56,9 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
     // their values (F2a ability mods, F2a chassis, F2b combat, F2c total saves,
     // F2d selected skills).
     let computation = &receipt.computation;
-    assert_eq!(computation.ability_modifiers.strength, 3);
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Strength adjustment is now
+    // applied before ability modifiers are derived, raising Strength from +3 to +4.
+    assert_eq!(computation.ability_modifiers.strength, 4);
     assert_eq!(computation.ability_modifiers.dexterity, 2);
     assert_eq!(computation.ability_modifiers.constitution, 2);
     assert_eq!(computation.ability_modifiers.intelligence, 0);
@@ -66,16 +70,16 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
     assert_eq!(computation.base_saves.reflex, 0);
     assert_eq!(computation.base_saves.will, 0);
 
-    assert_eq!(computation.baseline_melee_attack_bonus, 5);
+    assert_eq!(computation.baseline_melee_attack_bonus, 6);
     assert_eq!(computation.baseline_armor_class, 17);
 
     assert_eq!(computation.total_saves.fortitude, 4);
     assert_eq!(computation.total_saves.reflex, 2);
     assert_eq!(computation.total_saves.will, 1);
 
-    assert_eq!(computation.selected_skill_modifiers.climb, 5);
+    assert_eq!(computation.selected_skill_modifiers.climb, 6);
     assert_eq!(computation.selected_skill_modifiers.intimidate, 3);
-    assert_eq!(computation.selected_skill_modifiers.swim, 5);
+    assert_eq!(computation.selected_skill_modifiers.swim, 6);
 
     // The integrated receipt preserves access to representative explanation ids
     // grounded by prior slices.
@@ -107,15 +111,80 @@ fn supported_deterministic_pilot_yields_computed_receipt() {
 }
 
 #[test]
+fn computed_receipt_exposes_explicit_human_race_seam() {
+    let input = load(DETERMINISTIC_FIXTURE);
+
+    let receipt = build_pilot_headless_receipt(&input);
+
+    // The receipt must make the grounded Human race seam explicit rather than leaving
+    // it an incidental side effect of the numeric outputs.
+    assert!(
+        has_explanation(&receipt, "race.human.ability_bonus_target"),
+        "computed receipt must expose the Human ability-bonus race explanation, got {:?}",
+        receipt.computation.explanations
+    );
+    assert!(
+        has_explanation(&receipt, "race.human.bonus_feat_grant"),
+        "computed receipt must expose the Human bonus-feat race explanation, got {:?}",
+        receipt.computation.explanations
+    );
+
+    let ability = receipt
+        .computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "race.human.ability_bonus_target")
+        .expect("ability-bonus race explanation present");
+    // Derived strictly from the chosen human_ability_bonus -> ability:strength selection
+    // and the already-computed, now-correctly-racial-bonus-adjusted Strength modifier
+    // (+4, CG-03 fix).
+    assert_eq!(ability.value, 4);
+    assert!(
+        ability.detail.contains("human_ability_bonus") && ability.detail.contains("strength"),
+        "ability-bonus detail must name the chosen Human ability-bonus seam: {}",
+        ability.detail
+    );
+
+    let bonus_feat = receipt
+        .computation
+        .explanations
+        .iter()
+        .find(|e| e.id == "race.human.bonus_feat_grant")
+        .expect("bonus-feat race explanation present");
+    // Derived strictly from the chosen human_bonus_feat -> feat:dodge selection and the
+    // already-grounded Dodge armor-class contribution (+1).
+    assert_eq!(bonus_feat.value, 1);
+    assert!(
+        bonus_feat.detail.contains("human_bonus_feat") && bonus_feat.detail.contains("Dodge"),
+        "bonus-feat detail must name the chosen Human bonus-feat Dodge seam: {}",
+        bonus_feat.detail
+    );
+
+    // Making broader Human race semantics absent must be explicit but non-blocking, so
+    // the deterministic pilot still reports a computed receipt.
+    assert!(
+        receipt
+            .computation
+            .diagnostics
+            .iter()
+            .any(|d| d.id == "race.human.bounded_semantics" && !d.claim_blocking),
+        "receipt must carry a bounded, non-claim-blocking Human race-semantics note: {:?}",
+        receipt.computation.diagnostics
+    );
+    assert_eq!(receipt.status, HeadlessReceiptStatus::Computed);
+}
+
+#[test]
 fn broken_prerequisite_yields_blocked_receipt() {
     // Mutate one supported prerequisite in memory: replace the Fighter level-1
-    // chassis with a Rogue level-1 chassis. The integrated receipt must report a
+    // chassis with a Cleric level-1 chassis. The integrated receipt must report a
     // blocked posture with claim-blocking diagnostics rather than a counterfeit
-    // success state.
+    // success state. (Was Rogue level-1 -- see ge06_failure_classifier.rs for why
+    // that stopped being an unsupported negative control.)
     let mutated =
-        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:rogue:1");
+        DETERMINISTIC_FIXTURE.replace("class_level=class:fighter:1", "class_level=class:cleric:1");
     assert!(
-        mutated.contains("class_level=class:rogue:1"),
+        mutated.contains("class_level=class:cleric:1"),
         "test setup should have mutated the class chassis"
     );
     let input = load(&mutated);
@@ -123,12 +192,14 @@ fn broken_prerequisite_yields_blocked_receipt() {
     let receipt = build_pilot_headless_receipt(&input);
 
     // Identity is still preserved on the blocker receipt.
-    assert_eq!(receipt.case_id.as_deref(), Some("pf1-crb-human-fighter-level1"));
+    assert_eq!(
+        receipt.case_id.as_deref(),
+        Some("pf1-crb-human-fighter-level1")
+    );
     assert_eq!(receipt.source_package_id, "pf1.core_rulebook");
 
     // The integrated path is blocked, not computed.
     assert_eq!(receipt.status, HeadlessReceiptStatus::Blocked);
-    assert_ne!(receipt.status, HeadlessReceiptStatus::Computed);
 
     // At least one claim-blocking diagnostic is preserved.
     assert!(

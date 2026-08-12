@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Aasimar ~ Incorruptible",
+    "name": "Incorruptible",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Aasimar Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Aasimar_ReplaceSpellLikeAbility"
+    ],
+    "description": "Occasionally, aasimars arise with the ability to further ward away evil. Aasimars with this racial trait can cast corruption resistance (Pathfinder RPG Advanced Player's Guide) against evil once per day as a spell-like ability. If an aasimar uses this ability on herself, the duration increases to 1 hour per level. This racial trait replaces the spell-like ability racial trait.",
+    "source_page": "p.85",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Incorruptible"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Incorruptible],[!PREFACT:1,ABILITIES,Aasimar_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Occasionally, aasimars arise with the ability to further ward away evil. Aasimars with this racial trait can cast corruption resistance (Pathfinder RPG Advanced Player's Guide) against evil once per day as a spell-like ability. If an aasimar uses this ability on herself, the duration increases to 1 hour per level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the spell-like ability racial trait.|!PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Incorruptible"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Corruption Resistance (Evil)"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 330,
+    "record_key": "Aasimar ~ Incorruptible"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ]
+}

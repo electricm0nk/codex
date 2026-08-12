@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 3500.0,
+    "description": "Ignore additional 10 feet of falling distance with Acrobatics; 1/round gain +10 competence bonus to Acrobatics to jump, treated as running start; +10 to Acrobatics to afoid attacks of opportunity while jumping or to balance after landing; if used more than 1/minute, may reduce speed by half",
+    "key": "Boots of Vaulting",
+    "name": "Boots of Vaulting",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Boot"
+      },
+      {
+        "key": "COST",
+        "value": "3500"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SLOTS",
+        "value": "2"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.227"
+      },
+      {
+        "key": "SPROP",
+        "value": "Ignore additional 10 feet of falling distance with Acrobatics; 1/round gain +10 competence bonus to Acrobatics to jump, treated as running start; +10 to Acrobatics to afoid attacks of opportunity while jumping or to balance after landing; if used more than 1/minute, may reduce speed by half"
+      }
+    ],
+    "weight": 1.0
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 354,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Boots of Vaulting",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

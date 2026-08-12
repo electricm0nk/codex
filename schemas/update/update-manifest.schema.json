@@ -1,0 +1,263 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://codex.electricm0nk/schemas/update/update-manifest.schema.json",
+  "title": "Codex Update Manifest",
+  "description": "Artifact/provenance contract for a single release. Tied to a channel (alpha|beta|stable) and a tranche. Carries release-notes binding, AppImage artifact identity, workflow provenance, eligibility policy, promotion lineage, and a reserved signature field.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "channel",
+    "version",
+    "tag",
+    "tranche_id",
+    "source_branch",
+    "source_commit",
+    "release_notes_path",
+    "release_notes_url",
+    "release_notes_hash",
+    "linux_appimage",
+    "workflow_provenance",
+    "eligibility",
+    "promotion_lineage"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "string",
+      "description": "Semantic version of this manifest contract. Bump on any field-list or cross-field-rule change (F1 closure schema-version discipline). Bumped 1.0.0 -> 1.1.0 in SD16-F-WINDOWS to admit two new optional platform-identity blocks paralleling linux_appimage: windows_msi and macos_dmg. The AppImage block remains required so prior publishers stay conformant. The schema remains closed-world: unknown top-level fields are still rejected. Both '1.0.0' and '1.1.0' are accepted here so that v1.0.0 manifests already deployed on the update-index branch continue to validate against the new closed-world rules — the 1.1.0 release only ADDS optional blocks, so the additive change is backwards-compatible and we explicitly do NOT reject pre-1.1.0 manifests. Future additive bumps that are non-breaking continue this pattern; non-additive breaks require a separate breaking-bump workflow.",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "oneOf": [
+        { "const": "1.0.0" },
+        { "const": "1.1.0" }
+      ]
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["alpha", "beta", "stable"],
+      "description": "Channel this release belongs to."
+    },
+    "version": {
+      "type": "string",
+      "description": "Release version string.",
+      "minLength": 1
+    },
+    "tag": {
+      "type": "string",
+      "description": "Release tag, prefixed by the channel. Must satisfy cross-field rule tag.split('/')[0] == channel.",
+      "pattern": "^(alpha|beta|stable)/.+$",
+      "minLength": 1
+    },
+    "tranche_id": {
+      "type": "string",
+      "description": "Identifier of the tranche that produced this release. Locked to STC-CODEX-SD-16 for the duration of this contract (AV-SCH-5, schema-side half).",
+      "const": "STC-CODEX-SD-16"
+    },
+    "source_branch": {
+      "type": "string",
+      "description": "Git branch this release was built from. Branch name characters only.",
+      "pattern": "^[A-Za-z0-9._/-]+$",
+      "minLength": 1
+    },
+    "source_commit": {
+      "type": "string",
+      "description": "Full SHA-1 hex commit hash this release was built from.",
+      "pattern": "^[0-9a-f]{40}$"
+    },
+    "release_notes_path": {
+      "type": "string",
+      "description": "Repo-relative path to the tranche release-notes.md. Locked to the canonical docs/release/<SD-NN>/release-notes.md path (AV-SCH-6). Relocated 2026-07-20 from programs/codex/requirements/<stc-id>/release-notes.md as part of a repo-wide docs-structure consolidation; manifests published before that date reference the old path and are not retroactively updated.",
+      "pattern": "^docs/release/[^/]+/release-notes\\.md$"
+    },
+    "release_notes_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Canonical URL where the release notes can be fetched."
+    },
+    "release_notes_hash": {
+      "type": "string",
+      "description": "SHA-256 hex digest of the release-notes file referenced by release_notes_path.",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "linux_appimage": {
+      "type": "object",
+      "description": "Linux AppImage artifact identity (name, URL, hash, size). First-class self-update target per technical-requirements §AppImage Install Requirements.",
+      "additionalProperties": false,
+      "required": ["name", "url", "sha256", "size_bytes"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "File name of the AppImage artifact.",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Canonical URL where the AppImage artifact can be fetched."
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA-256 hex digest of the AppImage artifact.",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "description": "Size of the AppImage artifact in bytes.",
+          "minimum": 1
+        }
+      }
+    },
+    "windows_msi": {
+      "type": "object",
+      "description": "Windows MSI artifact identity (name, URL, hash, size). Optional parallel of linux_appimage for the tester Windows lane added in SD16-F-WINDOWS. Schema 1.0.0 publishers do not set this; schema 1.1.0 publishers set this when the publish-tester-release-windows job produces a .msi. The schema admits it as OPTIONAL so back-compat with v1.0.0 manifests remains intact.",
+      "additionalProperties": false,
+      "required": ["name", "url", "sha256", "size_bytes"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "File name of the Windows MSI artifact.",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Canonical URL where the Windows MSI artifact can be fetched."
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA-256 hex digest of the Windows MSI artifact.",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "description": "Size of the Windows MSI artifact in bytes.",
+          "minimum": 1
+        }
+      }
+    },
+    "macos_dmg": {
+      "type": "object",
+      "description": "macOS DMG artifact identity (name, URL, hash, size). Optional parallel of linux_appimage / windows_msi for the tester macOS lane added in SD16-F-WINDOWS. Same contract: optional, closed-world, identical required-key shape so the discovery path can be generalized. Production macOS DMGs typically require Developer ID signing + notarization; that work is deferred and an unsigned DMG is shipped for tester delivery until the Apple-cert epic lands.",
+      "additionalProperties": false,
+      "required": ["name", "url", "sha256", "size_bytes"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "File name of the macOS DMG artifact.",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Canonical URL where the macOS DMG artifact can be fetched."
+        },
+        "sha256": {
+          "type": "string",
+          "description": "SHA-256 hex digest of the macOS DMG artifact.",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "size_bytes": {
+          "type": "integer",
+          "description": "Size of the macOS DMG artifact in bytes.",
+          "minimum": 1
+        }
+      }
+    },
+    "workflow_provenance": {
+      "type": "object",
+      "description": "Provenance of the workflow that produced this release: workflow file, run id, and run attempt.",
+      "additionalProperties": false,
+      "required": ["workflow", "run_id", "run_attempt"],
+      "properties": {
+        "workflow": {
+          "type": "string",
+          "description": "Path of the GitHub Actions workflow file that produced this release.",
+          "pattern": "^\\.github/workflows/[A-Za-z0-9._-]+\\.ya?ml$"
+        },
+        "run_id": {
+          "description": "GitHub Actions run identifier.",
+          "oneOf": [
+            { "type": "integer", "minimum": 1 },
+            { "type": "string", "pattern": "^[0-9]+$", "minLength": 1 }
+          ]
+        },
+        "run_attempt": {
+          "type": "integer",
+          "description": "GitHub Actions run attempt number (starts at 1).",
+          "minimum": 1
+        }
+      }
+    },
+    "eligibility": {
+      "type": "object",
+      "description": "Eligibility policy for the shell's Install enabler. Decides whether a given installed state may self-update to this release.",
+      "additionalProperties": false,
+      "required": ["min_supported_version", "appimage_install", "required_install_kind"],
+      "properties": {
+        "min_supported_version": {
+          "type": "string",
+          "description": "Minimum installed version eligible to update to this release.",
+          "minLength": 1
+        },
+        "appimage_install": {
+          "type": "boolean",
+          "description": "If true, this release supports AppImage-based self-update."
+        },
+        "required_install_kind": {
+          "type": "string",
+          "enum": ["appimage", "dev", "any"],
+          "description": "Install kind required for self-update eligibility."
+        }
+      }
+    },
+    "promotion_lineage": {
+      "type": "object",
+      "description": "Promotion ancestry of this release: which source branch was promoted into the target channel.",
+      "additionalProperties": false,
+      "required": ["source_branch", "source_commit", "promoted_at"],
+      "properties": {
+        "source_branch": {
+          "type": "string",
+          "description": "Branch this release was promoted FROM.",
+          "pattern": "^[A-Za-z0-9._/-]+$",
+          "minLength": 1
+        },
+        "source_commit": {
+          "type": "string",
+          "description": "SHA-1 hex commit this release was promoted FROM.",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "promoted_at": {
+          "type": "string",
+          "format": "date-time",
+          "description": "RFC 3339 UTC timestamp when the promotion occurred."
+        }
+      }
+    },
+    "signature": {
+      "description": "Reserved signature field. Cryptographic signing is deferred for Tranche 2.5 (AV-SCH-3); null is accepted, a populated object is reserved for a future contract bump.",
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "properties": {},
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "description": "Cross-field rule: tag prefix must equal channel (F1 closure §Update manifest contract).",
+      "if": { "properties": { "channel": { "const": "alpha" } }, "required": ["channel", "tag"] },
+      "then": { "properties": { "tag": { "pattern": "^alpha/" } } }
+    },
+    {
+      "if": { "properties": { "channel": { "const": "beta" } }, "required": ["channel", "tag"] },
+      "then": { "properties": { "tag": { "pattern": "^beta/" } } }
+    },
+    {
+      "if": { "properties": { "channel": { "const": "stable" } }, "required": ["channel", "tag"] },
+      "then": { "properties": { "tag": { "pattern": "^stable/" } } }
+    }
+  ]
+}

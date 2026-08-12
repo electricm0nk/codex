@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Svirfneblin ~ Defensive Training",
+    "name": "Defensive Training",
+    "race_key": "Svirfneblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Svirfneblin Racial Trait",
+      "Svirfneblin Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Svirfneblin_ReplaceDefensiveTraining",
+    "sets_replace_flags": [],
+    "description": "Svirfneblin gain a +2 dodge bonus to their AC.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Svirfneblin ~ Defensive Training"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Svirfneblin Racial Trait.Svirfneblin Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Svirfneblin_ReplaceDefensiveTraining=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "RacialDefensiveTrainingBonus|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Svirfneblin gain a +2 dodge bonus to their AC."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "AC",
+          "RacialDefensiveTrainingBonus",
+          "TYPE=Dodge"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialDefensiveTrainingBonus",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/svirfneblin/svirfneblin_abilities_race.lst",
+    "sha256": "ade579734f87892699788177f48917039bd45e705cae21e94b32900c8fb9c942",
+    "line": 19,
+    "record_key": "Svirfneblin ~ Defensive Training"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

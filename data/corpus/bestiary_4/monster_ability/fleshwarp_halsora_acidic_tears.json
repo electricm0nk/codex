@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Fleshwarp (Halsora) ~ Acidic Tears",
+    "delivery": "Extraordinary",
+    "description": "A halsora's sunken eyes have oversized tear ducts that weep a constant stream of black, acidic tears. As a standard action that provokes attacks of opportunity, a halsora can jerk its head and flick the acidic tears on a single creature within 20 feet. That creature takes 2d6 acid damage (Reflex DC %1 half). A creature that fails its save takes an additional 1d4 points of acid damage at the end of the halsora's turn for 1d4 rounds or until the acid is scraped off, which requires a full-round action on the part of the creature taking the damage or a creature adjacent to that creature.",
+    "description_variables": [
+      "15+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshwarp_halsora_acidic_tears",
+    "name": "Acidic Tears",
+    "owners": [
+      "bestiary_4:monster:fleshwarp_halsora"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 675,
+    "record_key": "Fleshwarp (Halsora) ~ Acidic Tears"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

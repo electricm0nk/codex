@@ -1,0 +1,47 @@
+# SD13-E5 deterministic Human Paladin level 10 progression fixture — the
+# level-10 band closer: with this fixture's slice every one of the ten
+# level-banded class rows is grounded through level 10, the tranche ceiling.
+# Widens the accepted SD13-E5 deterministic PF1 Core Rulebook Human Paladin
+# level-1..level-9 hybrid chassis baseline to level 10 as chosen input only.
+# It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat), the deterministic Longsword / Chain Shirt / no-shield /
+# Power Attack posture, and the level-3..level-9 fixture's
+# choice=choice:paladin_mercy selection (mercy:shaken) unchanged -- the PF1
+# CRB level-10 "Special" column reads "Smite evil 4/day" only (verified
+# independently against both d20pfsrd and legacy.aonprd.com): the uses/day
+# rise is already captured by the grounded Smite Evil uses-per-day formula
+# (1 + (level - 1) / 3), so this fixture adds no new selection for it; 10th
+# is NOT a repeat-Mercy-grant level (the 3rd/6th/9th cadence), so the single
+# grounded level-3 selection carries over unchanged.
+#
+# Aura of Resolve (8th) remains named-but-unproven exactly as the level-8
+# slice left it (condition-immunity + ally-aura engines, neither of which
+# exists in this codebase); this fixture makes no aura claim either way.
+#
+# It deliberately avoids every later hybrid burden surface: no spell
+# selections, no spells known/prepared posture, no domains, no mercy EFFECT
+# resolution, no channel positive energy healing/damage-resolution execution,
+# no Divine Bond (weapon bond / mount bond) selection or execution, and no
+# alignment-target or healing-resource accounting, and no level-11+
+# progression.
+case_id=pf1-crb-human-paladin-level10
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:paladin:10
+ability=strength:16
+ability=dexterity:12
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:14
+feat=feat:power_attack
+skill=skill:diplomacy:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+choice=choice:paladin_mercy:mercy:shaken
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Vemerak ~ Earthquake",
+    "delivery": "Supernatural",
+    "description": "As a full-round action, a vemerak can burrow its tentacles, legs, and mouth into the ground - this action does not provoke attacks of opportunity.  At the start of the next round, it creates an effect identical to an earthquake spell (CL %1).  A vemerak can maintain this zone of trembling earth indefinitely, as long as it continues to take full-round actions to maintain the effect.",
+    "description_variables": [
+      "TL"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:vemerak_earthquake",
+    "name": "Earthquake",
+    "owners": [
+      "bestiary_2:monster:vemerak"
+    ],
+    "source_page": "p.278",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1332,
+    "record_key": "Vemerak ~ Earthquake"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

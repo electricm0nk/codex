@@ -1,0 +1,108 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Hobgoblin ~ Unfit",
+    "name": "Unfit",
+    "race_key": "Hobgoblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Hobgoblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Hobgoblin_ReplaceSneaky"
+    ],
+    "description": "Hobgoblins who failed to secure a position in the military hold the lowest status in hobgoblin society, and quickly learn the value of currying favor with their betters. Hobgoblins with this racial trait gain proficiency in a single martial weapon and +1 racial bonus on Bluff and Diplomacy checks. This racial trait replaces sneaky.",
+    "source_page": "p.121",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hobgoblin ~ Unfit"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hobgoblin Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Unfit],[!PREFACT:1,ABILITIES,Hobgoblin_ReplaceSneaky=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Hobgoblins who failed to secure a position in the military hold the lowest status in hobgoblin society, and quickly learn the value of currying favor with their betters. Hobgoblins with this racial trait gain proficiency in a single martial weapon and +1 racial bonus on Bluff and Diplomacy checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces sneaky.|!PREABILITY:1,CATEGORY=Special Ability,Hobgoblin ~ Unfit"
+      },
+      {
+        "key": "STACK",
+        "value": "NO"
+      },
+      {
+        "key": "MULT",
+        "value": "YES"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "WEAPONPROFICIENCY|TYPE=Martial"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|%LIST"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.121"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+1 Bluff, +1 Diplomacy"
+      },
+      {
+        "key": "FACT",
+        "value": "Hobgoblin_ReplaceSneaky|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Bluff,Diplomacy",
+          "1",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 520,
+    "record_key": "Hobgoblin ~ Unfit"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

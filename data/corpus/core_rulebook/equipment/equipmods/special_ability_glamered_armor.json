@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Special Ability ~ Glamered ~ Armor",
+    "category": "equipmods",
+    "name": "Glamered",
+    "cost_gp": 2700.0,
+    "weight_lbs": null,
+    "description": "Upon command, a suit of glamered armor changes shape and appearance to assume the form of a normal set of clothing. The armor retains all its properties (including weight) when it is so disguised. Only a true seeing spell or similar magic reveals the true nature of the armor when it is disguised."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/glamered/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

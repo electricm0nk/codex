@@ -1,0 +1,53 @@
+# SD18 deterministic Human Paladin level 14 widening fixture.
+# Widens the accepted SD18 level-13 fixture
+# (tests/sd18_paladin_level13_widening.rs) to level 14 as chosen input
+# only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic Longsword / Chain
+# Shirt / no-shield / Power Attack posture, and the level-3..level-13
+# fixture's mercy selections unchanged (choice:paladin_mercy ->
+# mercy:shaken, choice:paladin_mercy_4 -> mercy:blinded).
+#
+# The PF1 CRB Paladin class table's level-14 "Special" column reads
+# "Aura of faith" ONLY (verified independently against d20pfsrd, the
+# Archives of Nethys aonprd.com mirror, and legacy.aonprd.com, all three
+# agreeing byte-for-byte) -- a genuinely NEW class feature, grounded as a
+# bounded grant-only identity record, mirroring the Aura of Justice /
+# Monk Diamond Body idiom exactly: no good-alignment-weapon-treatment
+# execution engine and no damage-reduction-overcoming resolution engine
+# exists anywhere in this codebase. 14th is NOT a repeat-Mercy-grant
+# level (the 3rd/6th/9th/12th/15th cadence), so no fifth mercy selection
+# is added here. The base spells-per-day table's level-14 row is
+# "3/2/1/1" (verified independently against all three sources): the
+# 1st/2nd/3rd-level columns stay 3/2/1 unchanged, and the 4th-level
+# column genuinely rises from 0 to 1 -- the first castable 4th-level
+# paladin spell slot.
+#
+# It deliberately avoids every later hybrid burden surface: no spell
+# selections, no spells known/prepared posture, no domains, no mercy
+# EFFECT resolution, no channel positive energy healing/damage-resolution
+# execution, no Divine Bond (weapon bond / mount bond) selection or
+# execution, no Aura of Justice's own smite-sharing resolution, no Aura
+# of Faith's own good-alignment-weapon-treatment resolution, and no
+# level-15+ progression.
+case_id=pf1-crb-human-paladin-level14
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:paladin:14
+ability=strength:16
+ability=dexterity:12
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:10
+ability=charisma:14
+feat=feat:power_attack
+skill=skill:diplomacy:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+choice=choice:paladin_mercy:mercy:shaken
+choice=choice:paladin_mercy_4:mercy:blinded
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

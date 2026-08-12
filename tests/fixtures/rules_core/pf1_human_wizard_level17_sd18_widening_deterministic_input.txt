@@ -1,0 +1,59 @@
+# SD18 deterministic Human Wizard level 17 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Wizard
+# level-1..level-16 prepared arcane spell-bearing baseline
+# (tests/sd18_wizard_level16_widening.rs) to Wizard level 17 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1..level-16 fixtures, and the same canonical school
+# specialization selections (Evocation chosen, Necromancy/Transmutation
+# opposed), adding only the level bump this cycle needs.
+#
+# It deliberately avoids every later Wizard burden surface: no evocation
+# spell-damage application, no force-missile casting execution, no
+# opposed-school preparation cost, no spellbook, no spells prepared, no spell
+# slots, no spell DCs, no bonus-feat selection/execution for the
+# still-unproven 5th/10th/15th-level "Bonus feat" grants, and no level-18+
+# progression. Two PF1 CRB primary sources (d20pfsrd and the Archives of
+# Nethys aonprd.com mirror) were read directly before writing this fixture,
+# fetching the full levels-15-through-18 block in one pass so the level-17
+# row's neighbors were visible in context (guards against
+# level-misattribution), and both agree byte-for-byte on all four rows: base
+# attack bonus STAYS at +8 (`17/2 = 8`, an integer-division coincidence with
+# level 16) and good Will STAYS at +10 (`17/2+2 = 10`, also an
+# integer-division coincidence with level 16), while poor Fortitude/Reflex
+# both STAY at +5 (`17/3 = 5`, an integer-division coincidence with level
+# 16).
+# The raw Wizard spells-per-day table's level-17 row is
+# "4/4/4/4/4/4/4/3/2/1" — up from the level-16 row "4/4/4/4/4/4/3/3/2" (the
+# 6th-level column rises from 3 to 4) AND a genuinely NEW 9th-level column
+# opens for the first time (value 1) — so a level-17 specialist wizard casts
+# 9th-level spells for the first time, and the specialist bonus-slot flat
+# count (one bonus slot of each spell level she can cast, 1st through 9th)
+# GENUINELY RISES to 9, up from 8 at levels 15-16. Intense Spells'
+# bonus-damage magnitude STAYS at 8 (`max(17/2, 1) = 8`, an
+# integer-division coincidence with level 16) via the pre-existing formula,
+# not re-derived; Force Missile's uses-per-day pool stays level-independent
+# and unchanged; Scribe Scroll stays recognized as an already-held grant.
+# The level-17 "Special" column is genuinely BLANK on both primary sources
+# (the Wizard's own next bonus feat lands at 20th level) — a pure ceiling
+# raise on the Special column, no new pillar record is grounded at level 17
+# beyond the 9th-level-column-opening widening of the pre-existing
+# specialist-bonus-slot pillar.
+case_id=pf1-crb-human-wizard-level17-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:17
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_world_guide:monster_ability:spine_dragon_breath_weapon",
+      "inner_sea_world_guide:monster_ability:spine_dragon_ray_deflection",
+      "inner_sea_world_guide:monster_ability:spine_dragon_spines"
+    ],
+    "challenge_rating": "16",
+    "corpus_key": "Dragon (Spine)",
+    "external_ability_refs": [
+      "Immunity to Sonic",
+      "Resistance to Cold",
+      "Resistance to Electricity",
+      "Resistance to Fire"
+    ],
+    "key": "inner_sea_world_guide:monster:dragon_spine",
+    "monster_class": "Dragon:16",
+    "name": "Dragon (Spine)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Tail"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Spine"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Earth",
+    "race_type": "Dragon",
+    "size": "G",
+    "source_page": "p.312",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
+    "line": 15,
+    "record_key": "Dragon (Spine)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:witchwyrd_force_bolt"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Witchwyrd",
+    "external_ability_refs": [
+      "Detect Magic ~ Constant",
+      "Floating Disk ~ Constant",
+      "Grab ~ Slam",
+      "Mage Armor ~ Constant",
+      "Resist Energy (one at a time) ~ Constant",
+      "Tongues ~ Constant",
+      "Unseen Servant ~ Constant",
+      "Witchwyrd ~ Absorb Force"
+    ],
+    "key": "bestiary_2:monster:witchwyrd",
+    "monster_class": "Monstrous Humanoid:8",
+    "name": "Witchwyrd",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "size": "M",
+    "source_page": "p.285",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 909,
+    "record_key": "Witchwyrd"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

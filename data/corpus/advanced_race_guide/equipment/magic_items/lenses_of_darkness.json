@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 12000.0,
+    "description": "These lenses protect the wearer against the effect of sunlight, the daylight spell, or similar light effects.",
+    "key": "Lenses of Darkness",
+    "name": "Lenses of Darkness",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Eyegear"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.101"
+      },
+      {
+        "key": "SPROP",
+        "value": "These lenses protect the wearer against the effect of sunlight, the daylight spell, or similar light effects.|PREABILITY:1,CATEGORY=Special Ability,TYPE.Light Sensitivity,TYPE.Light Blindness"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 61,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Lenses of Darkness",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

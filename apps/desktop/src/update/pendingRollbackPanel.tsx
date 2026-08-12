@@ -1,0 +1,99 @@
+import type { UpdateControllerDeps } from './updateModel';
+import {
+  UI_FIELD_LABEL_STYLE,
+  UI_PANEL_STYLE,
+  UI_PANEL_TITLE_STYLE,
+} from './updateModel';
+
+export const PENDING_ROLLBACK_PANEL_ID = 'pending-rollback-panel';
+
+/**
+ * E7's carryover panel. Until the AppImage staged transaction lands, the
+ * panel surfaces deterministic placeholders (`unknown`, `0`, `false`).
+ * The contract this slice owns is that every named key in
+ * `technical-requirements.md` §"Diagnostics Requirements" is rendered as
+ * a row — values being unknown is acceptable, an absent field is not.
+ */
+export function PendingRollbackPanel({
+  deps,
+  stateSource = 'unwired',
+  promotedVersion = '',
+}: {
+  deps: UpdateControllerDeps;
+  /**
+   * F3c binding layer (AV-DIAG-3, joint with E6): which runtime surface
+   * produced the pending/rollback values. `pending-update` means F3a's
+   * `pending-update.json`; `installed-state` means `installed-state.json`;
+   * `unwired` means no runtime data is bound and the values are E6's
+   * deterministic placeholders.
+   */
+  stateSource?: 'pending-update' | 'installed-state' | 'unwired';
+  /**
+   * Version promoted by the last relaunch verification (F3c's
+   * `verify_relaunch_artifact` `promoted` outcome). Empty until the shell
+   * wires the verification result through.
+   */
+  promotedVersion?: string;
+}) {
+  const { pendingRollback } = deps;
+  return (
+    <section
+      id={PENDING_ROLLBACK_PANEL_ID}
+      data-testid="pending-rollback-panel"
+      data-state-source={stateSource}
+      data-promoted-version={promotedVersion}
+      style={UI_PANEL_STYLE}
+    >
+      <h2 style={UI_PANEL_TITLE_STYLE}>Pending / Rollback</h2>
+      <dl style={{ margin: 0, padding: 0 }}>
+        {row('Pending update state', pendingRollback.pendingUpdateState)}
+        {row(
+          'Previous version available',
+          pendingRollback.previousVersionAvailable ? 'yes' : 'no',
+        )}
+        {row('Rollback state', pendingRollback.rollbackState)}
+        {row('Backup count', String(pendingRollback.backupCount))}
+        {row(
+          'Retained update bytes',
+          String(pendingRollback.retainedUpdateStorageBytes),
+        )}
+      </dl>
+      <p
+        id="pending-rollback-source-note"
+        data-testid="pending-rollback-source-note"
+        style={{
+          margin: '8px 0 0 0',
+          fontSize: '11px',
+          color: 'var(--color-text-muted)',
+          fontStyle: 'italic',
+        }}
+      >
+        Values are populated by the staged-transaction module;
+        until that surface lands, defaults are deterministic placeholders.
+      </p>
+    </section>
+  );
+}
+
+function row(label: string, value: string) {
+  return (
+    <div
+      key={label}
+      style={{ display: 'flex', margin: '2px 0' }}
+      data-pending-rollback-row={label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}
+    >
+      <dt style={{ ...UI_FIELD_LABEL_STYLE, fontWeight: 500 }}>{label}</dt>
+      <dd
+        style={{
+          margin: 0,
+          fontFamily:
+            'ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace',
+          fontSize: '12px',
+          wordBreak: 'break-all',
+        }}
+      >
+        {value}
+      </dd>
+    </div>
+  );
+}

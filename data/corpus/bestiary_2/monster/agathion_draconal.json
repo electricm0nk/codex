@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:draconal_celestial_focus",
+      "bestiary_2:monster_ability:draconal_divine_insight"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Agathion (Draconal)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Draconal ~ Protective Aura",
+      "Flight Maneuverability",
+      "Regeneration ~ Evil"
+    ],
+    "key": "bestiary_2:monster:agathion_draconal",
+    "monster_class": "Outsider (Fort/Ref):24",
+    "name": "Agathion (Draconal)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Agathion|Extraplanar|Good",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.18",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 120,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 44,
+    "record_key": "Agathion (Draconal)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

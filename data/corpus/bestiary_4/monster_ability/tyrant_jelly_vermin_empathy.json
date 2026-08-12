@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Tyrant Jelly ~ Vermin Empathy",
+    "delivery": "Supernatural",
+    "description": "A tyrant jelly can improve the attitude of vermin as a druid can with animals. Vermin have a starting attitude of unfriendly.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:tyrant_jelly_vermin_empathy",
+    "name": "Vermin Empathy",
+    "owners": [
+      "bestiary_4:monster:tyrant_jelly"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1394,
+    "record_key": "Tyrant Jelly ~ Vermin Empathy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

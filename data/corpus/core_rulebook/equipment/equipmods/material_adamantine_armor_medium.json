@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Material ~ Adamantine ~ Armor / Medium",
+    "category": "equipmods",
+    "name": "Adamantine",
+    "cost_gp": 10000.0,
+    "weight_lbs": null,
+    "description": "Adamantine is extremely strong and favored by weapon and armor smiths alike for its ability to cut through solid barriers with ease and endure heavy blows. Weapons with at least one adamantine part ignore hardness less than 20 when dealing damage to objects. Armor and shields made of adamantine grant their wearer damage reduction: 1/-- for light armor, 2/-- for medium armor, 3/-- for heavy armor."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

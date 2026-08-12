@@ -1,0 +1,90 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "general",
+    "cost_gp": 1000.0,
+    "description": null,
+    "key": "Poison (Ungol Dust)",
+    "name": "Poison, Ungol Dust",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Ungol Dust)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Ungol Dust"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Ungol Dust"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Inhaled; Fort DC 15; Freq 1 rnd (4); Effect 1 Cha drain/1d2 Cha dmg; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, inhaled"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 15"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/round for 4 rounds"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1 Cha drain"
+      },
+      {
+        "key": "INFO",
+        "value": "Secondary Effect|1d2 Cha damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 524,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Ungol Dust)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

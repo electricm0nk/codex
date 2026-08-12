@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Fleshwarp (Ghonhatine) ~ Powerful Stench",
+    "delivery": "Extraordinary",
+    "description": "An enraged ghonhatine secretes a tarry, musk-like chemical. Any living, non-ghonhatine creature within 10 feet must succeed at a DC %1 Fortitude save or be nauseated as long as it remains within the affected area and for 1d4 rounds afterward. A creature that saves is sickened as long as it remains in the area, and can't be affected again by the same ghonhatine's stench for 24 hours. This is a poison effect.",
+    "description_variables": [
+      "15+CON"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:fleshwarp_ghonhatine_powerful_stench",
+    "name": "Powerful Stench",
+    "owners": [
+      "bestiary_4:monster:fleshwarp_ghonhatine"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 666,
+    "record_key": "Fleshwarp (Ghonhatine) ~ Powerful Stench"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

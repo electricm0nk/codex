@@ -1,0 +1,44 @@
+# SD18 deterministic Human Cleric level 18 progression fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Cleric
+# level-1..level-17 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_cleric_level17_sd18_widening_deterministic_input.txt)
+# to level 18 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-17 fixtures, and the
+# same canonical domain selections (Good, Healing), adding only the level
+# bump this bounded slice needs.
+#
+# It deliberately avoids every later Cleric burden surface: no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no bonus spells, no domain
+# power execution beyond the flat facets already grounded at levels 1-17, no
+# domain spell-list contents, and no level-19+ progression. The PF1 CRB
+# Cleric class table's level-18 "Special" column is genuinely BLANK
+# (verified independently against both d20pfsrd and the Archives of Nethys
+# aonprd.com mirror, byte-for-byte agreement): base attack bonus genuinely
+# RISES to +13 (18 * 3 / 4 = 13, up from 12 at level 17), both good
+# Fortitude/Will genuinely RISE to +11 (18 / 2 + 2 = 11, up from 10 at level
+# 17), and poor Reflex genuinely RISES to +6 (18 / 3 = 6, up from 5 at level
+# 17). Channel Energy's die count STAYS 9d6 ((18 + 1) / 2 = 9, an
+# integer-division coincidence with level 17, the odd-level cadence's next
+# rise landing at 19th), and the flat domain spell slot count STAYS 9 (a
+# level-18 cleric still casts only up to 9th-level cleric spells, the
+# highest cleric spell level in PF1). The Good domain's Touch of Good sacred
+# bonus genuinely RISES to 9 (18 / 2 = 9, up from 8 at level 17) via the
+# same pre-existing formula, not re-derived.
+case_id=pf1-crb-human-cleric-level18
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:cleric:18
+ability=strength:10
+ability=dexterity:12
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:14
+feat=feat:dodge
+choice=choice:cleric_domain:domain:good
+choice=choice:cleric_domain:domain:healing
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

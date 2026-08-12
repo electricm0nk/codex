@@ -1,0 +1,70 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 0.01,
+    "description": "A candle dimly illuminates a small area, increasing the light level in a 5-foot radius by one step (darkness becomes dim light and dim light becomes normal light). A candle cannot increase the light level above normal light. A candle burns for 1 hour.",
+    "key": "Candle",
+    "name": "Candle",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Candle"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Candle"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General.Consumable.Light Source"
+      },
+      {
+        "key": "COST",
+        "value": "0.01"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.155"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Increases light level by one step|5 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|1 hr."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Increases light level by one step|5 ft."
+      },
+      {
+        "key": "QUALITY",
+        "value": "Duration|1 hr."
+      },
+      {
+        "key": "DESC",
+        "value": "A candle dimly illuminates a small area, increasing the light level in a 5-foot radius by one step (darkness becomes dim light and dim light becomes normal light). A candle cannot increase the light level above normal light. A candle burns for 1 hour."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 117,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Candle",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

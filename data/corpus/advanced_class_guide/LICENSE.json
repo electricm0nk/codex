@@ -1,0 +1,24 @@
+{
+  "book": "advanced_class_guide",
+  "license_declaration": {
+    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2",
+    "product_identity_source": "Paizo Pathfinder Roleplaying Game Advanced Class Guide, OGL §15 Product Identity section",
+    "product_identity_note": "Named deities, NPCs, and unique places are Product Identity per the book's own OGL Section 15 declaration; core class/spell/equipment MECHANICS (class_id/maxlevel/chassis, key/school/level, key/category/cost_gp/weight) are Open Game Content."
+  },
+  "redaction_policy": {
+    "marker": "[redacted PI]",
+    "schema_preserving": true,
+    "pi_field_recorded": true,
+    "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
+    "blacklist_version_reviewed": "2026-07-27"
+  },
+  "screening_method_note": "License classification for this book was produced by a heuristic first-pass screen: every class record's fields (class_id/maxlevel/chassis) are blanket-OGL per ogl-pi-blacklist.md §2.2 (no free text present), and every spell/equipment record's `description` value was substring-scanned against a documented, bounded proper-noun list -- the 20 canonical core Golarion deities plus proper nouns actually observed while sampling this book's own real description text (one: the example NPC name 'Jarn' embedded in spell/discern_next_of_kin.json's flavor text). This is NOT an exhaustive human legal review; it is a bounded substring/regex scan against ~20-21 known names and cannot prove the absence of PI content the scan's term list does not cover (e.g. Golarion place names, faction names, or NPC names not sampled during this pass). Rules-citation book/product titles appearing in description text (e.g. 'Pathfinder RPG Core Rulebook', 'Bestiary', 'GameMastery Guide' page references) were deliberately NOT redacted -- they are bibliographic cross-references to page numbers in other OGC-compatible rules texts, not Golarion setting/story content, and fall outside the NPC-name / place-name-in-Golarion scope this pass targeted; a future, more thorough pass may reach a different conclusion on product-line-name PI and should treat this note as a known gap, not a settled classification.",
+  "redistribution_posture": "ogl-notice-attached",
+  "classified_at": "2026-07-27T00:00:00Z",
+  "classified_by_cycle": "E2.0.8",
+  "operator_sign_off": {
+    "signed_off": false,
+    "signed_off_at": null,
+    "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header."
+  }
+}

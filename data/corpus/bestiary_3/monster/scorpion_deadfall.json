@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "8",
+    "corpus_key": "Scorpion (Deadfall)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:scorpion_deadfall",
+    "monster_class": "Vermin:10",
+    "name": "Deadfall Scorpion",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "H",
+    "source_page": "p.236",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 236,
+    "record_key": "Scorpion (Deadfall)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

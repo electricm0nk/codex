@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Duergar ~ Speed",
+    "name": "Slow and Steady",
+    "race_key": "Duergar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Duergar Racial Trait",
+      "Duergar Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Racial Speed"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Duergar_ReplaceSpeed",
+    "sets_replace_flags": [],
+    "description": "Duergar have a base speed of 20 feet, but their speed is never modified by armor or encumbrance.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duergar ~ Speed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Duergar Racial Trait.Duergar Racial Default.SpecialQuality.Special Quality.Racial Speed"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Duergar_ReplaceSpeed=True"
+      },
+      {
+        "key": "DEFINE",
+        "value": "MOVEBASE|0"
+      },
+      {
+        "key": "DESC",
+        "value": "Duergar have a base speed of 20 feet, but their speed is never modified by armor or encumbrance."
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Steady"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "MOVEBASE",
+          "20"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_abilities_race.lst",
+    "sha256": "7a492c53ce8b6c58373d1a0f1901123598f3b1e6bc86ed60ee7d66cd052a2b41",
+    "line": 17,
+    "record_key": "Duergar ~ Speed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

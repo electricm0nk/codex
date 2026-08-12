@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Drow ~ Languages",
+    "name": "Languages",
+    "race_key": "Drow",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Drow Racial Trait",
+      "Drow Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Drow_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Drow begin play speaking Elven and Undercommon. Drow with high Intelligence scores can choose from the following: Abyssal, Aklo, Aquan, Common, Draconic, Gnome, Goblin, and Sakvroth.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Drow ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Drow Racial Trait.Drow Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Drow_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Drow begin play speaking Elven and Undercommon. Drow with high Intelligence scores can choose from the following: Abyssal, Aklo, Aquan, Common, Draconic, Gnome, Goblin, and Sakvroth."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Abyssal|Bonus Language ~ Aklo|Bonus Language ~ Aquan|Bonus Language ~ Common|Bonus Language ~ Draconic|Bonus Language ~ Drow Sign Language|Bonus Language ~ Gnome|Bonus Language ~ Goblin"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Elven|Undercommon"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/drow/drow_abilities_race.lst",
+    "sha256": "c7e61fc9b3213d4d6c074685d5e9e4876ed2dce76f4d225ff23f76224027cc8f",
+    "line": 26,
+    "record_key": "Drow ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

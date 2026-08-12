@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Special Ability ~ Fortification / Light ~ Armor",
+    "category": "equipmods",
+    "name": "Light Fortification",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This suit of armor or shield produces a magical force that protects vital areas of the wearer more effectively. Whenever a critical hit or sneak attack is scored on the wearer, there is a 25% chance that the critical hit or sneak attack is negated and damage is instead rolled normally."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/fortification/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

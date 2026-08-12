@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Heroic Fortune (Mass)",
+    "school": "Evocation",
+    "level": 4,
+    "description": "This spell functions like heroic fortune, except that it affects one or more creatures, no two of which can be more than 30 ft. apart, at close range (25 ft. + 5 ft./2 levels).",
+    "full_text": true
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedNewRules.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+school+level",
+    "citation_precision": "exact_item_page"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

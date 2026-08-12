@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Barbed Vest",
+    "category": "General",
+    "name": "Barbed Vest",
+    "cost_gp": 10.0,
+    "weight": 4.0,
+    "description": "A black vest lined with hundreds of tiny fishhook-like needles; anyone striking the wearer with a natural or unarmed attack takes 1 point of damage unless they make a Reflex save. Worn only over light armor."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

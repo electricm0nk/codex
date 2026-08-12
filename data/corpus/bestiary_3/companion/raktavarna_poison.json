@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Raktavarna ~ Poison",
+    "delivery": "Supernatural",
+    "description": "Bite-injury; save Fort DC 13; frequency 1/round for 6 rounds; effect 1d2 Wis plus modify memory; cure 1 save. Each time a victim takes Wisdom damage from this poison, a modify memory effect causes the victim to forget the previous minute's interactions with the raktavarna, as long as the raktavarna is no longer visible or is in object form. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:companion:raktavarna_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_3:companion:rakshasa_raktavarna"
+    ],
+    "record_type": "ability",
+    "source_page": "p.229",
+    "stat_adjustments": [],
+    "type_segments": [
+      "RaktavarnaRacialAbility",
+      "SpecialQuality",
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
+    "line": 75,
+    "record_key": "Raktavarna ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

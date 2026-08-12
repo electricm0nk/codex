@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Boilborn ~ Leprosy",
+    "delivery": "Supernatural",
+    "description": "Creatures damaged by either the slam attack or the death throes must succeed at a DC %1 Fortitude save or contract leprosy. Leprosy - Injury;  save  Fort DC 12;  onset  2d4 weeks;  frequency  1/week;  effect  1d2 Cha damage;  cure  2 consecutive saves.",
+    "description_variables": [
+      "CON+9"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:boilborn_leprosy",
+    "name": "Disease (Leprosy)",
+    "owners": [
+      "bestiary_4:monster:boilborn"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 329,
+    "record_key": "Boilborn ~ Leprosy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

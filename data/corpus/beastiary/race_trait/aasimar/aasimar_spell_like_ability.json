@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Aasimar ~ Spell-Like Ability",
+    "name": "Spell-Like Ability",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Aasimar Racial Trait",
+      "Aasimar Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Aasimar_ReplaceSpellLikeAbility",
+    "sets_replace_flags": [],
+    "description": "Aasimars can use daylight once per day as a spell-like ability (with a caster level equal to the aasimar's character level).",
+    "source_page": "p.7",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Spell-Like Ability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.Aasimar Racial Default.SpecialQuality"
+      },
+      {
+        "key": "DESC",
+        "value": "Aasimars can use daylight once per day as a spell-like ability (with a caster level equal to the aasimar's character level)."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Daylight"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.7"
+      },
+      {
+        "key": "GLOBALVAR:ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Aasimar ~ Spell-Like Ability|PREVAREQ:Aasimar_ReplaceSpellLikeAbility,0"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race.lst",
+    "sha256": "81f71066c67433e4b6734fc591aaa6b8df7eb833af1a08a2e86117432e778ae0",
+    "line": 23,
+    "record_key": "Aasimar ~ Spell-Like Ability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

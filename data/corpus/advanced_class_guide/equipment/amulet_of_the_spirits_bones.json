@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 12000.0,
+    "description": "increase effective level of mystery or spirit powers by 2; 1/day gain +2 deflection bonus to AC for 8 rounds; 1/day cause creature within 30 ft. to be frightened for 1 round (Will DC 13)",
+    "key": "Amulet of the Spirits (Bones)",
+    "name": "Amulet of the Spirits (Bones)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPROP",
+        "value": "increase effective level of mystery or spirit powers by 2|PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Bones,Spirit Bond ~ Bones"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day gain +2 deflection bonus to AC for 8 rounds; 1/day cause creature within 30 ft. to be frightened for 1 round (Will DC 13)|!PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Bones,Spirit Bond ~ Bones"
+      }
+    ],
+    "weight": 1.0
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 330,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Amulet of the Spirits (Bones)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

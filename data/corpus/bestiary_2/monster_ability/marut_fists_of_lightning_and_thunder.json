@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Marut ~ Fists of Lightning and Thunder",
+    "delivery": "Supernatural",
+    "description": "A marut's fists strike with the power of a thunderstorm.  For any given slam attack, a marut can choose whether the attack uses lightning or thunder.  A lightning attack deals an additional 3d6 points of electricity damage, and the resulting flash blinds the target for 2d6 rounds (Fortitude DC %1 negates the blindness).  A thunder attack deals an additional 3d6 points of sonic damage, and the resulting thunderclap deafens the target for 2d6 rounds (Fortitude DC %1 negates the deafness).",
+    "description_variables": [
+      "MarutFistsOfLightningAndThunderDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:marut_fists_of_lightning_and_thunder",
+    "name": "Fists of Lightning and Thunder",
+    "owners": [
+      "bestiary_2:monster:inevitable_marut"
+    ],
+    "source_page": "p.166",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 715,
+    "record_key": "Marut ~ Fists of Lightning and Thunder"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

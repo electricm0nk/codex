@@ -1,0 +1,54 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 12000.0,
+    "description": "increase effective level of mystery or spirit powers by 2; 1/day activate battle ward (+3 deflection bonus to AC, reduced by 1 each time attacked); 1/day curse creature within 30 ft. for 8 rounds to take additional bleed damage and only half hit points are healed",
+    "key": "Amulet of the Spirits (Battle)",
+    "name": "Amulet of the Spirits (Battle)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPROP",
+        "value": "increase effective level of mystery or spirit powers by 2|PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Battle,Spirit Bond ~ Battle"
+      },
+      {
+        "key": "SPROP",
+        "value": "1/day activate battle ward (+3 deflection bonus to AC, reduced by 1 each time attacked); 1/day curse creature within 30 ft. for 8 rounds to take additional bleed damage and only half hit points are healed|!PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Battle,Spirit Bond ~ Battle"
+      }
+    ],
+    "weight": 1.0
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 329,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Amulet of the Spirits (Battle)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,31 @@
+# Task #66 deterministic Human Wizard level 20 Abjuration-school fixture.
+# Widens the task-66 Abjuration fixtures to level 20, the character-level
+# cap and the level at which Resistance's DESC text (not a BONUS:VAR
+# formula) replaces "resistance" with "immunity" to an energy type
+# (PREVARGTEQ:AbjurationProgressionSchoolLVL,20 on the second DESC line of
+# the Abjuration School ~ Resistance record in cr_abilities_class.lst).
+# Since Immunity is a tokenless, non-numeric capstone (the commented-out
+# `#Immunity` KEY record in the corpus is not an active ability record), it
+# stays deferred/named-only per this task's scope: at level 20 the
+# Resistance flat-magnitude explanation must NOT fire (there is no longer a
+# numeric "resistance" value to ground -- the DESC itself says the
+# character gains immunity instead), while Protective Ward and Energy
+# Absorption, which have no such level-20 discontinuity, keep grounding
+# their level-scaled magnitudes.
+case_id=task66-pf1-crb-human-wizard-level20-abjuration
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:20
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:abjuration
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=task-66-wizard-abjuration-school-grounding

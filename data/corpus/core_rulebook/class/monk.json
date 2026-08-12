@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "class_id": "Monk",
+    "maxlevel": 20,
+    "bab": "level*3/4",
+    "save_fort": "level/2+2",
+    "save_ref": "level/2+2",
+    "save_will": "level/2+2"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
+    "line": 147,
+    "record_key": "CLASS:Monk"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

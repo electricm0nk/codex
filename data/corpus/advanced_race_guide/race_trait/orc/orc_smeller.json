@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Orc ~ Smeller",
+    "name": "Smeller",
+    "race_key": "Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Orc_ReplaceWeaponFamiliarity",
+      "Orc_ReplaceFerocity"
+    ],
+    "description": "Orcs with this racial trait gain a limited scent ability with half the normal range. This racial trait replaces ferocity and weapon familiarity.",
+    "source_page": "p.139",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orc ~ Smeller"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Orc ~ Smeller],[!PREFACT:1,ABILITIES,Orc_ReplaceWeaponFamiliarity=True,Orc_ReplaceFerocity=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Orcs with this racial trait gain a limited scent ability with half the normal range."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces ferocity and weapon familiarity.|!PREABILITY:1,CATEGORY=Special Ability,Orc ~ Smeller"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Special Ability|AUTOMATIC|Universal Monster Rule ~ Scent"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.139"
+      },
+      {
+        "key": "FACT",
+        "value": "Orc_ReplaceWeaponFamiliarity|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Orc_ReplaceFerocity|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 601,
+    "record_key": "Orc ~ Smeller"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

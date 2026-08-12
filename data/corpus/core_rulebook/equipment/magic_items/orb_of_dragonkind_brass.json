@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 0.0,
+    "description": "Each of these fabled Orbs contains the essence and personality of an ancient dragon of a different variety (one for each of the major ten different chromatic and metallic dragons). The bearer of an Orb can, as a standard action, dominate dragons of its particular variety within 500 feet (as dominate monster), the dragon being forced to make a DC 25 Will save to resist. Spell resistance is not useful against this effect. Each Orb of Dragonkind bestows upon the wielder the AC and saving throw bonuses of the dragon within. These values replace whatever values the character would otherwise have, whether they are better or worse. These values cannot be modified by any means short of ridding the character of the Orb. A character possessing an Orb of Dragonkind is immune to the breath weapon--but only the breath weapon--of the dragon variety keyed to the Orb. Finally, a character possessing an Orb can herself use the breath weapon of the dragon in the Orb three times per day.\nAll Orbs of Dragonkind can be used to communicate verbally and visually with the possessors of the other Orbs. The owner of an Orb knows if there are dragons within 10 miles at all times. For dragons of the Orb's particular variety, the range is 100 miles. If within 1 mile of a dragon of the Orb's variety, the wielder can determine the dragon's exact location and age. The bearer of one of these Orbs earns the enmity of dragonkind forever for profiting by draconic enslavement, even if she later loses the item. Each Orb also has an individual power that can be invoked once per round at caster level 10th.\n* Brass Dragon Orb: Teleport.",
+    "key": "Orb of Dragonkind (Brass)",
+    "name": "Brass Dragon Orb",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Orb of Dragonkind (Brass)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Orb of Dragonkind (Brass)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Artifact.Major.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.548"
+      },
+      {
+        "key": "SPELLS",
+        "value": "Orb of Dragonkind|TIMES=1|TIMEUNIT=Round|CASTERLEVEL=10|Teleport,19"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|20th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Destruction|An orb of dragonkind immediately shatters if it is caught in the breath weapon of a dragon who is a blood relative of the dragon trapped within. This causes everyone within 90 feet to be struck by the breath weapon of that dragon, released as the orb explodes."
+      },
+      {
+        "key": "DESC",
+        "value": "Each of these fabled Orbs contains the essence and personality of an ancient dragon of a different variety (one for each of the major ten different chromatic and metallic dragons). The bearer of an Orb can, as a standard action, dominate dragons of its particular variety within 500 feet (as dominate monster), the dragon being forced to make a DC 25 Will save to resist. Spell resistance is not useful against this effect. Each Orb of Dragonkind bestows upon the wielder the AC and saving throw bonuses of the dragon within. These values replace whatever values the character would otherwise have, whether they are better or worse. These values cannot be modified by any means short of ridding the character of the Orb. A character possessing an Orb of Dragonkind is immune to the breath weapon--but only the breath weapon--of the dragon variety keyed to the Orb. Finally, a character possessing an Orb can herself use the breath weapon of the dragon in the Orb three times per day.&nl;All Orbs of Dragonkind can be used to communicate verbally and visually with the possessors of the other Orbs. The owner of an Orb knows if there are dragons within 10 miles at all times. For dragons of the Orb's particular variety, the range is 100 miles. If within 1 mile of a dragon of the Orb's variety, the wielder can determine the dragon's exact location and age. The bearer of one of these Orbs earns the enmity of dragonkind forever for profiting by draconic enslavement, even if she later loses the item. Each Orb also has an individual power that can be invoked once per round at caster level 10th.&nl;* Brass Dragon Orb: Teleport."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 1611,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Orb of Dragonkind (Brass)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

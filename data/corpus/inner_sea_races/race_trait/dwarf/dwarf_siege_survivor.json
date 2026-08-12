@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Dwarf ~ Siege Survivor",
+    "name": "Siege Survivor",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceGreed",
+      "Dwarf_ReplaceHardy",
+      "Dwarf_ReplaceHatred"
+    ],
+    "description": "Dwarves who make their homes in the Sky Citadels are trained to outlast sieges and serve as vigilant guards. They gain Endurance as a bonus feat. In addition, during rounds in which they have not moved, they gain a +1 racial bonus on attack rolls against foes who also did not move since their last turn. This racial trait replaces greed, hardy, and hatred.",
+    "source_page": "p.210",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Siege Survivor"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Siege Survivor],[!PREFACT:1,ABILITIES,Dwarf_ReplaceGreed=true,Dwarf_ReplaceHardy=true,Dwarf_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves who make their homes in the Sky Citadels are trained to outlast sieges and serve as vigilant guards. They gain Endurance as a bonus feat. In addition, during rounds in which they have not moved, they gain a +1 racial bonus on attack rolls against foes who also did not move since their last turn."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces greed, hardy, and hatred.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Siege Survivor"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Endurance"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on attack rolls against foes who also did not move since their last turn."
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceGreed|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceHardy|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceHatred|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 34,
+    "record_key": "Dwarf ~ Siege Survivor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

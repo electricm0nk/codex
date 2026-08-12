@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "corpus_key": "Calikang ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "%1-ft. line, %2d6 energy damage, Reflex DC %3 half, usable %4/day. A calikang can choose what kind of energy damage its breath weapon inflicts when it uses this ability. Calikangs are particularly adept at using electricity in this manner, and inflict %5 additional points of damage when they elect to inflict electricity damage with their breath weapon.",
+    "description_variables": [
+      "BreathWeaponLine",
+      "BreathWeaponDice",
+      "BreathWeaponDC",
+      "BreathWeaponTimes",
+      "HD"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:calikang_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "inner_sea_world_guide:monster:calikang"
+    ],
+    "source_page": "p.308",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 15,
+    "record_key": "Calikang ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

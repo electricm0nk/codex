@@ -1,0 +1,116 @@
+name: Check release manifest
+
+# SD-16 / Tranche 2.x release-lane guard.
+#
+# Doctrine (per Tranche-2.5 user memory):
+#   - Release publication fails closed if tranche release notes are missing,
+#     empty, structurally incomplete, or manifest-disconnected.
+#   - No placeholder / emergency-synthesized notes and no alpha-channel exception.
+#   - Release notes are part of PR review; if a PR adds or modifies a release
+#     manifest, its tranche_id and release_notes_path must bind to a real
+#     release-notes.md file on the branch under test.
+#
+# This workflow enforces that contract at PR time. The publish lane
+# (publish-tester-release.yml) is expected to invoke the same validator
+# before publishing.
+
+on:
+  pull_request:
+    branches:
+      - develop
+      - test
+      - main
+    paths:
+      - 'tools/release/**'
+      - 'apps/desktop/src/testerWorkbench/update/**'
+      - 'apps/desktop/src/operatorTriage/**'
+      - 'apps/desktop/src/sd16/**'
+      - 'apps/desktop/src/sd17/**'
+      - 'release-manifest.json'
+      - 'docs/release/**/release-notes.md'
+      - '.github/workflows/publish-tester-release.yml'
+      - '.github/workflows/check-release-manifest.yml'
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  check-release-manifest:
+    name: Validate bound release manifest(s)
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout PR head
+        uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Detect release-manifest.json additions / modifications
+        id: detect
+        env:
+          BASE_REF: ${{ github.event.pull_request.base.ref }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+          BASE="${BASE_SHA:-HEAD~1}"
+
+          changed_files=$(git diff --name-only --diff-filter=ACMRT "${BASE}...HEAD" -- \
+            'release-manifest.json' \
+            'tools/release/release-manifest.*.json' \
+            'programs/codex/requirements/*/release-manifest.json' \
+            | grep -Ev '^tools/release/release-manifest\.schema\.json$' || true)
+
+          if [ -z "${changed_files}" ]; then
+            echo "manifests_changed=false" >> "$GITHUB_OUTPUT"
+            echo "No release manifest files changed in this PR; nothing to validate."
+          else
+            echo "manifests_changed=true" >> "$GITHUB_OUTPUT"
+            {
+              echo "changed_manifests<<EOF"
+              echo "${changed_files}"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+            echo "Detected release manifest changes:"
+            echo "${changed_files}"
+          fi
+
+      - name: Install Python dependencies
+        if: steps.detect.outputs.manifests_changed == 'true'
+        run: |
+          python3 -m ensurepip --upgrade || true
+          python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
+
+      - name: Validate release manifests
+        if: steps.detect.outputs.manifests_changed == 'true'
+        env:
+          GITHUB_BASE_REF: ${{ github.event.pull_request.base.ref }}
+        run: |
+          set -euo pipefail
+          # shellcheck disable=SC2207
+          files=(${{ steps.detect.outputs.changed_manifests }})
+          python3 tools/release/check_release_manifest.py "${files[@]}"
+
+      - name: Post summary comment on PR
+        if: steps.detect.outputs.manifests_changed == 'true' && failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const msg = [
+              "⚠️ **Release manifest gate failed**",
+              "",
+              "One or more release manifests in this PR do not satisfy the SD-16 binding doctrine:",
+              "",
+              " - `tranche_id` and `release_notes_path` must be present and structurally valid.",
+              " - `release_notes_path` must resolve to a real file on the merged branch.",
+              " - The referenced file must contain every required section (Summary, User-Visible Changes, Defects Fixed, Operational Notes, Verification Evidence, Known Issues, Update Eligibility).",
+              " - No placeholder / emergency-synthesized notes are accepted, and no alpha-channel exception exists.",
+              "",
+              "Run `python3 tools/release/check_release_manifest.py <paths>` locally to inspect the failure before requesting review."
+            ].join("\n");
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: msg
+            });

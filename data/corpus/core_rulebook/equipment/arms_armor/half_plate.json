@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Half-Plate",
+    "category": "arms_armor",
+    "name": "Half-Plate (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "Combining elements of full plate and chainmail, half-plate includes gauntlets and a helm."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 60,
+    "record_key": "Half-Plate",
+    "inherited_from_record_key": "Half-Plate (Base)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

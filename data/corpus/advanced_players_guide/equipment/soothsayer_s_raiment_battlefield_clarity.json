@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Soothsayer's Raiment (Battlefield Clarity)",
+    "category": "ArmsArmor",
+    "name": "Soothsayer's Raiment (Battlefield Clarity)",
+    "cost_gp": 150.0,
+    "weight": 40.0,
+    "description": "A +1 chainmail granting the wearer oracle spellcasting access to the Battle mystery's Battlefield Clarity revelation, plus a +5 bonus on the wearer's divination spell success."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,105 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Halfling ~ Deep Jungle",
+    "name": "Deep Jungle",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Halfling_ReplaceLanguages",
+      "Halfling_ReplaceSureFooted",
+      "Halfling_ReplaceWeaponFamiliarity"
+    ],
+    "description": "Some reclusive halfling tribes flourish in tropical locales. These halflings begin play speaking only Halfling (in addition to any additional languages gained from having a high Intelligence score), rather than Common and Halfling. They gain a +2 racial bonus on Survival checks and are proficient with blowguns. In addition, they have the poison use ability (they never risk poisoning themselves accidentally). This racial trait alters halflings' languages and replaces sure-footed and weapon familiarity.",
+    "source_page": "p.40",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Halfling ~ Deep Jungle"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Deep Jungle],[!PREFACT:1,ABILITIES,Halfling_ReplaceLanguages=true,Halfling_ReplaceSureFooted=true,Halfling_ReplaceWeaponFamiliarity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some reclusive halfling tribes flourish in tropical locales. These halflings begin play speaking only Halfling (in addition to any additional languages gained from having a high Intelligence score), rather than Common and Halfling. They gain a +2 racial bonus on Survival checks and are proficient with blowguns. In addition, they have the poison use ability (they never risk poisoning themselves accidentally)."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait alters halflings' languages and replaces sure-footed and weapon familiarity.|!PREABILITY:1,CATEGORY=Special Ability,Halfling ~ Deep Jungle"
+      },
+      {
+        "key": "AUTO",
+        "value": "WEAPONPROF|Blowgun"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Halfling Racial Trait|AUTOMATIC|Deep Jungle Halfling ~ Languages|Deep Jungle Halfling ~ Poison Use"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceLanguages|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceSureFooted|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Halfling_ReplaceWeaponFamiliarity|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Survival",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 85,
+    "record_key": "Halfling ~ Deep Jungle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

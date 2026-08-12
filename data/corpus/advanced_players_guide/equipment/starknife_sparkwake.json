@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Starknife (Sparkwake)",
+    "category": "ArmsArmor",
+    "name": "Starknife, Sparkwake",
+    "cost_gp": 19024.0,
+    "weight": 3.0,
+    "description": "A +1 shock starknife that leaves trails of sparks in flight; once per day it can transform into an 8d6 lightning bolt (Reflex DC 14 half) before returning to its physical form."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

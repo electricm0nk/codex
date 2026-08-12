@@ -1,0 +1,139 @@
+/**
+ * Wasp color scheme — central design tokens.
+ *
+ * Ported from the Wasp Obsidian theme (dark backgrounds, yellow/amber accents):
+ *   https://github.com/santiyounger/Wasp-Obsidian-Theme
+ *
+ * Every surface in the app references these `--color-*` variables (via inline
+ * `var(--color-…)`), so palette changes happen here, not across component files.
+ * Dark mode is the default; a `[data-theme="light"]` block mirrors Wasp light.
+ */
+
+/**
+ * Two layers of tokens, deliberately kept separate:
+ *
+ * `--wasp-color-*` is the built-in Wasp palette (mode-aware via
+ * `[data-theme='light']`). Nothing ever overrides these — they exist purely
+ * as a guaranteed-valid fallback.
+ *
+ * `--color-*` is what every component actually references. By default it's
+ * just an alias for the Wasp value. A community theme's bridge stylesheet
+ * (injected only while a theme is active — see communityTheme.ts) overrides
+ * `--color-*` on `body.theme-dark` / `body.theme-light` using the theme's own
+ * Obsidian variables, falling back to `--wasp-color-*` — NOT `--color-*`
+ * itself. Falling back to the same custom property being defined is a
+ * self-reference, and per the CSS spec a cyclic custom-property reference
+ * resolves to the guaranteed-invalid value (silently empty) rather than the
+ * inherited value — which invisibly voided every `--color-*` token the first
+ * time this was tried, making every themed surface render fully transparent.
+ */
+:root {
+  color-scheme: dark;
+
+  --wasp-color-page: #191919;          /* app canvas (Wasp background-secondary) */
+  --wasp-color-surface: #242424;       /* cards (Wasp background-primary) */
+  --wasp-color-surface-2: #2e2e2c;     /* inputs / subtle raised fills */
+  --wasp-color-border: #3c3a30;        /* structural hairlines */
+  --wasp-color-border-strong: #f8c537; /* emphasized / focus outlines */
+
+  --wasp-color-accent: #f8c537;
+  --wasp-color-accent-hover: #ffd34d;
+  --wasp-color-on-accent: #242424;             /* text/icons sitting on accent fills */
+  --wasp-color-on-accent-muted: rgba(36, 36, 36, 0.72);
+
+  --wasp-color-text: #faf2d6;          /* primary (Wasp text-normal) */
+  --wasp-color-text-secondary: #d9cda4;
+  --wasp-color-text-muted: #bdae93;    /* Wasp text-muted */
+  --wasp-color-text-faint: #8f836a;
+  --wasp-color-link: #83a598;          /* Wasp text-link */
+
+  --wasp-color-warn: #e8b04b;
+  --wasp-color-warn-bg: #2b2411;
+  --wasp-color-warn-border: #5c4a1e;
+
+  --wasp-color-error: #d96c5f;
+  --wasp-color-error-bg: #2c1a17;
+  --wasp-color-error-border: #5c2a22;
+
+  /* Active tokens components reference — default to the Wasp base. */
+  --color-page: var(--wasp-color-page);
+  --color-surface: var(--wasp-color-surface);
+  --color-surface-2: var(--wasp-color-surface-2);
+  --color-border: var(--wasp-color-border);
+  --color-border-strong: var(--wasp-color-border-strong);
+  --color-accent: var(--wasp-color-accent);
+  --color-accent-hover: var(--wasp-color-accent-hover);
+  --color-on-accent: var(--wasp-color-on-accent);
+  --color-on-accent-muted: var(--wasp-color-on-accent-muted);
+  --color-text: var(--wasp-color-text);
+  --color-text-secondary: var(--wasp-color-text-secondary);
+  --color-text-muted: var(--wasp-color-text-muted);
+  --color-text-faint: var(--wasp-color-text-faint);
+  --color-link: var(--wasp-color-link);
+  --color-warn: var(--wasp-color-warn);
+  --color-warn-bg: var(--wasp-color-warn-bg);
+  --color-warn-border: var(--wasp-color-warn-border);
+  --color-error: var(--wasp-color-error);
+  --color-error-bg: var(--wasp-color-error-bg);
+  --color-error-border: var(--wasp-color-error-border);
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --wasp-color-page: #e8dfd0;
+  --wasp-color-surface: #faf6f0;
+  --wasp-color-surface-2: #efe7d8;
+  --wasp-color-border: #d8c9ad;
+  --wasp-color-border-strong: #d4922a;
+
+  --wasp-color-accent: #d4922a;
+  --wasp-color-accent-hover: #b97c1e;
+  --wasp-color-on-accent: #faf6f0;
+  --wasp-color-on-accent-muted: rgba(250, 246, 240, 0.82);
+
+  --wasp-color-text: #2c2419;
+  --wasp-color-text-secondary: #4a4034;
+  --wasp-color-text-muted: #5c5044;
+  --wasp-color-text-faint: #7a6f60;
+  --wasp-color-link: #9b4218;
+
+  --wasp-color-warn: #9a5a12;
+  --wasp-color-warn-bg: #f5e6c8;
+  --wasp-color-warn-border: #d8a24a;
+
+  --wasp-color-error: #9a3412;
+  --wasp-color-error-bg: #f7e0da;
+  --wasp-color-error-border: #d8917f;
+}
+
+html,
+body {
+  margin: 0;
+  background-color: var(--color-page);
+  color: var(--color-text);
+}
+
+::placeholder {
+  color: var(--color-text-faint);
+}
+
+a {
+  color: var(--color-link);
+}
+
+/* Landing banners — lift and brighten the accent frame on hover. */
+.landing-banner {
+  transition: transform 120ms ease, box-shadow 120ms ease, border-color 120ms ease;
+}
+
+.landing-banner:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-accent-hover);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+.landing-banner:focus-visible {
+  outline: 2px solid var(--color-accent-hover);
+  outline-offset: 2px;
+}

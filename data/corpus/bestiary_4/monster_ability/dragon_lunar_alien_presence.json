@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Dragon (Lunar) ~ Alien Presence",
+    "delivery": "Supernatural",
+    "description": "A lunar dragon's alien presence affects opponents that fail their saves as touch of idiocy (or as feeblemind for creatures with 4 or fewer Hit Dice) for 5d6 rounds. This is a mind-affecting compulsion effect.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:dragon_lunar_alien_presence",
+    "name": "Alien Presence",
+    "owners": [
+      "bestiary_4:monster:dragon_lunar"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 514,
+    "record_key": "Dragon (Lunar) ~ Alien Presence"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

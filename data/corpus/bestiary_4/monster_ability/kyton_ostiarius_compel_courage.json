@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Kyton (Ostiarius) ~ Compel Courage",
+    "delivery": "Extraordinary",
+    "description": "An ostiarius can inspire courage as a 5th-level bard using bardic performance, granting a +2 morale bonus on saving throws against charm and fear effects and a +2 competence bonus on attack and weapon damage rolls. This ability has a range of 50 feet and affects those creatures the ostiarius chooses who also willingly accept the benefits of the effect (no saving throw required). The ostiarius's performance compels creatures to perform at dangerous extremes. Any living non-outsider that benefits from this ability takes 1 point of bleed damage. A creature that accepts these benefits for multiple consecutive rounds gains additional points of bleed damage that stack with one another (to a maximum of 5). This is an audible, mind-affecting effect and can be countered by a bard's countersong class feature.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:kyton_ostiarius_compel_courage",
+    "name": "Compel Courage",
+    "owners": [
+      "bestiary_4:monster:kyton_ostiarius"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 991,
+    "record_key": "Kyton (Ostiarius) ~ Compel Courage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

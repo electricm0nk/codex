@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Fleshdreg ~ Sinful Bite (Sloth)",
+    "delivery": "Supernatural",
+    "description": "A sloth fleshdreg's bite conjures an amber crust that covers the target and restricts the target's movements. Any creature that takes damage from a sloth fleshdreg's bite attack must succeed at a DC %1 Reflex save or take a -2 penalty on attack rolls and Reflex saves for 1d4 rounds.",
+    "description_variables": [
+      "10+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshdreg_sinful_bite_sloth",
+    "name": "Sinful Bite (Sloth)",
+    "owners": [
+      "bestiary_4:monster:fleshdreg"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 659,
+    "record_key": "Fleshdreg ~ Sinful Bite (Sloth)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

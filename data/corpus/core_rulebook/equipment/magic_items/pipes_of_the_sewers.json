@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 1150.0,
+    "description": "If the possessor learns the proper tune, he can use these pipes to attract 1d3 rat swarms if rats are within 400 feet. For each 50-foot distance the rats have to travel, there is a 1-round delay. The piper must continue playing until the rats appear, and when they do so, the piper must make a DC 10 Perform (wind instruments) check. Success means that they obey the piper's telepathic commands so long as he continues to play. Failure indicates that they turn on the piper. If for any reason the piper ceases playing, the rats leave immediately. The Perform DC increases by +5 for each time the rats have been successfully called in a 24-hour period.\nIf the rats are under the control of another creature, add the HD of the controller to the Perform check DC. Once control is assumed, another check is required each round to maintain it if the other creature is actively seeking to reassert its control.",
+    "key": "Pipes of the Sewers",
+    "name": "Pipes of the Sewers",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Pipes of the Sewers"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Pipes of the Sewers"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Instrument.Wind"
+      },
+      {
+        "key": "COST",
+        "value": "1150"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.526"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|2nd"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|575 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, charm animal, summon nature's ally I, wild empathy ability"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "If the possessor learns the proper tune, he can use these pipes to attract 1d3 rat swarms if rats are within 400 feet. For each 50-foot distance the rats have to travel, there is a 1-round delay. The piper must continue playing until the rats appear, and when they do so, the piper must make a DC 10 Perform (wind instruments) check. Success means that they obey the piper's telepathic commands so long as he continues to play. Failure indicates that they turn on the piper. If for any reason the piper ceases playing, the rats leave immediately. The Perform DC increases by +5 for each time the rats have been successfully called in a 24-hour period.&nl;If the rats are under the control of another creature, add the HD of the controller to the Perform check DC. Once control is assumed, another check is required each round to maintain it if the other creature is actively seeking to reassert its control."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 301,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Pipes of the Sewers",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

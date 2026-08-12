@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Soulsliver ~ Perfect Copy",
+    "delivery": "Supernatural",
+    "description": "When a soulsliver uses change shape, it can assume the appearance of a specific individual. However, it is always the mirror image of the person it copies, which might give away that something is wrong.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:soulsliver_perfect_copy",
+    "name": "Perfect Copy",
+    "owners": [
+      "bestiary_4:monster:soulsliver"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1319,
+    "record_key": "Soulsliver ~ Perfect Copy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

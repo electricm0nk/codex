@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Gloomwing ~ Confusion",
+    "delivery": "Supernatural",
+    "description": "The eerie shifting of patterns on a gloomwing's wings is hypnotic - any creature within 30 feet that does not avert its gaze from the gloomwing must make a DC %1 Will save at the start of each turn or become confused for 1 round.  This is a mind-affecting effect - gloomwings and tenebrous worms are immune to this effect.",
+    "description_variables": [
+      "GloomwingConfusionDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:gloomwing_confusion",
+    "name": "Confusion",
+    "owners": [
+      "bestiary_2:monster:gloomwing"
+    ],
+    "source_page": "p.133",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 582,
+    "record_key": "Gloomwing ~ Confusion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

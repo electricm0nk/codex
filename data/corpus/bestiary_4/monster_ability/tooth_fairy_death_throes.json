@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Tooth Fairy ~ Death Throes",
+    "delivery": "Supernatural",
+    "description": "When killed, a tooth fairy explodes into a cloud of sparkling white fairy dust that clings to creatures within 5 feet. This glittery substance has a stench so foul that it sickens any creature coated by it for 1d4 rounds (Fortitude DC %1 negates). This is a poison effect.",
+    "description_variables": [
+      "CON+11"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:tooth_fairy_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "bestiary_4:monster:tooth_fairy"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1371,
+    "record_key": "Tooth Fairy ~ Death Throes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

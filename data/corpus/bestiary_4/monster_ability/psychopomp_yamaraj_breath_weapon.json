@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Psychopomp (Yamaraj) ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "In addition to its cold breath weapon, a yamaraj can breath a 60-foot cone of beetles and other insectile scavengers. Creatures in the breath weapon's area take 16d6 points of slashing damage and are nauseated for 1d4 rounds (Reflex %1 halves damage and negates nausea). The scavengers persist as a swarm around the affected creature that is closest to the breath weapon's point of origin; this swarm has the same statistics as an army ant swarm, but its distraction DC is the same as the yamaraj's breath weapon DC.",
+    "description_variables": [
+      "CON+22"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:psychopomp_yamaraj_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "bestiary_4:monster:psychopomp_yamaraj"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1187,
+    "record_key": "Psychopomp (Yamaraj) ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

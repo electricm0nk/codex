@@ -1,0 +1,28 @@
+# SD13-E4-F7 deterministic Human Sorcerer level 1 spontaneous spell-burden baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Sorcerer level 1 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and bonus-feat)
+# and stays a single-class, level-1-only spell-bearing baseline.
+#
+# It deliberately avoids every spell-support surface: no spell slots, no spells known, no
+# spell DCs, no bonus spells, no prepared posture, no general spell totals, and no
+# bloodline-power resolution. It adds only the minimum choice data needed to make the
+# Sorcerer class identity, the bloodline burden, and the spontaneous known-spell / slot
+# posture burden legible; those burdens are intentionally left for the runtime and matrix
+# to name as still blocking.
+case_id=pf1-crb-human-sorcerer-level1
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:sorcerer:1
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:17
+feat=feat:dodge
+choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e4-r2-spellcasting-and-hybrid-level-10-progression-execution-handoff-2026-07-01.md

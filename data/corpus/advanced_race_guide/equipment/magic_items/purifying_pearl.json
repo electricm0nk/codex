@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 19000.0,
+    "description": "Up to 10 cubic feet of food or drink per day is affected as if a purify food and drink spell had been cast. If placed in the mouth of a creature, the pearl acts as a neutralize poison spell cast on that creature (caster level 10th).",
+    "key": "Purifying Pearl",
+    "name": "Purifying Pearl",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "19000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.48"
+      },
+      {
+        "key": "SPROP",
+        "value": "Up to 10 cubic feet of food or drink per day is affected as if a purify food and drink spell had been cast. If placed in the mouth of a creature, the pearl acts as a neutralize poison spell cast on that creature (caster level 10th)."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 68,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_magic_items.lst",
+    "record_key": "Purifying Pearl",
+    "sha256": "894fe0503949ab48c527aa3d9423a8a475d2b251b6e7eaddd5f53889b4d5cc17"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

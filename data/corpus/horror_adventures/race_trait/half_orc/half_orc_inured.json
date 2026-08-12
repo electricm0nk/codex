@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Half-Orc ~ Inured",
+    "name": "Inured",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfOrc_ReplaceOrcFerocity"
+    ],
+    "description": "Half-orcs raised by orcs often become desensitized to the violence around them. Half-orcs with this trait gain a +4 bonus on Will saving throws to avoid sanity damage (see page 12) caused by encountering monsters, extreme violence, or death. This racial trait replaces orc ferocity.",
+    "source_page": "p.40",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Inured"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Inured],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceOrcFerocity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Half-orcs raised by orcs often become desensitized to the violence around them. Half-orcs with this trait gain a +4 bonus on Will saving throws to avoid sanity damage (see page 12) caused by encountering monsters, extreme violence, or death."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces orc ferocity.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Inured"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "WillSaveBonus|+4 vs. sanity damage"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceOrcFerocity|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 67,
+    "record_key": "Half-Orc ~ Inured"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

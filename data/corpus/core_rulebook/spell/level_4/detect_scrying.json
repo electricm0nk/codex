@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Detect Scrying",
+    "school": "Divination",
+    "level": 4,
+    "description": "You immediately become aware of any attempt to observe you by means of a divination [scrying] spell or effect. The spell's area radiates from you and moves as you move. You know the location of every magical sensor within the spell's area. If the scrying attempt originates within the area, you also know its location; otherwise, you and the scrier immediately make opposed caster level checks [1d20 + caster level]. If you at least match the scrier's result, you get a visual image of the scrier and an accurate sense of his direction and distance from you."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 920,
+    "record_key": "Detect Scrying.MOD"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

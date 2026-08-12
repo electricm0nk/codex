@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-11T09:16:36Z",
+  "data": {
+    "corpus_key": "Spores",
+    "delivery": "Extraordinary",
+    "description": "Once per round, as a free action, an ascomoid can release a jet of deadly spores in a 30-foot line. Upon impacting a solid surface, such as a wall or creature, the jet billows out into a cloud of spores, that fills a 10-foot-radius area. This cloud lasts for 1 round before dispersing. Any creature in the cloud inhales ascomoid poison (Save Fortitude DC %1, Frequency 1 round (7), Effect 1 Con damage, Cure 1 save). Even if the save succeeds, creatures inside the cloud are nauseated as long as they remain in the cloud. Ascomoids are immune to ascomoid spores.",
+    "description_variables": [
+      "SporesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bonus_bestiary:monster_ability:spores",
+    "name": "Spores",
+    "owners": [
+      "bonus_bestiary:monster:ascomoid"
+    ],
+    "source_page": "p.6",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bonus_bestiary/bb_abilities_race.lst",
+    "sha256": "57d97e9b0d8e6e002162187ace2c288c558fa9a3f0d333a2ba487a0161f4f82e",
+    "line": 16,
+    "record_key": "Spores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

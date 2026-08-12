@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Create Treasure Map",
+    "school": "Divination",
+    "level": 2,
+    "description": "You can take a piece from a dead creature's body and use it to create a map that reveals the locations of any valuables that creature knew about while still alive. You must cut this piece off yourself and the creature cannot have died more than 24 hours prior to the casting of this spell. You cannot cast this spell on a creature without a physical body, and the portion you remove must have a fairly level surface such as a piece of hide, carapace, or skin. The map you create is accurate to the best knowledge the creature had at the time of its death. It reveals the location of one source of treasure for every three caster levels you possess.  Any inaccuracies or faulty information held by the creature are represented on the map as well. Similarly, the map cannot account for any changes that occur after the creature's death.  You must choose the scale of the map when creating it, opting between nearby (e.g., one or two dungeon levels), local (e.g., a valley or community), or broad (e.g., a country or larger). The map reveals the locations of what the creature deemed most valuable within its area. Depending on the creature, the map might reveal a source of tasty food, suitable mates, or even your own treasure vault.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1907,
+    "record_key": "Create Treasure Map"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

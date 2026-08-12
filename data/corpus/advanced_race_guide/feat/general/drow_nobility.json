@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "data": {
+    "key": "Drow Nobility",
+    "category": "general",
+    "name": "Drow Nobility",
+    "description": "Your blood courses with power, granting you greater spell-like abilities.",
+    "effect": [
+      [
+        "VAR",
+        "RacialSLA_DetectMagic_AtWill",
+        "1",
+        "TYPE=Boolean"
+      ]
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_feats.lst",
+    "sha256": "420384054e43adeb60135c7e379a4645e5817ea1f2e78a8de8c7c687fc510fec",
+    "line": 271,
+    "record_key": "Drow Nobility"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "computed:pre_guard"
+  ]
+}

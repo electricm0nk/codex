@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Guisarme",
+    "category": "arms_armor",
+    "name": "Guisarme (Base)",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A guisarme is an 8-foot-long shaft with a blade and a hook mounted at the tip."
+  },
+  "source": {
+    "kind": "lst_inherited_copy",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_arms_armor.lst",
+    "sha256": "93dbb7ca43793137955851a68d745a069885e059f5eed8d77402380fea934f3a",
+    "line": 235,
+    "record_key": "Guisarme",
+    "inherited_from_record_key": "Guisarme (Base)"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

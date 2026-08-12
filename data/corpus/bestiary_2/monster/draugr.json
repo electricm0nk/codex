@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:draugr_nausea",
+      "bestiary_2:monster_ability:draugr_negative_level"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Draugr",
+    "external_ability_refs": [
+      "Cannot Speak",
+      "Resistance to Fire"
+    ],
+    "key": "bestiary_2:monster:draugr",
+    "monster_class": "Undead:3",
+    "name": "Draugr",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d10",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Water",
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.110",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 322,
+    "record_key": "Draugr"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

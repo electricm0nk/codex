@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "20",
+    "corpus_key": "Kami (Elder Jinushigami)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:kami_elder_jinushigami",
+    "monster_class": "Outsider (Fort/Will):28",
+    "name": "Elder Jinushigami",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d10",
+        "name": "Slams"
+      }
+    ],
+    "race_subtype": "Kami|Native",
+    "race_type": "Outsider",
+    "size": "C",
+    "source_page": "p.160",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Burrow"
+      },
+      {
+        "feet": 40,
+        "mode": "Earth Glide"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 159,
+    "record_key": "Kami (Elder Jinushigami)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

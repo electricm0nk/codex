@@ -1,0 +1,38 @@
+# SD18 deterministic Human Sorcerer level 12 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Sorcerer
+# level-1..level-11 spontaneous spell-burden baseline
+# (tests/sd18_sorcerer_level11_widening.rs) to Sorcerer level 12 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1..level-11 fixtures, and the same canonical bloodline and
+# bloodline class-skill selections (Arcane, Knowledge [arcana]), adding only
+# the level bump this cycle needs.
+#
+# It deliberately avoids every later Sorcerer burden surface: no Arcane Bond
+# execution, no bloodline arcana, no bonus spells/feats at 3rd+/7th level, no
+# spellbook, no which-spells-known selection, no spontaneous-casting
+# execution, and no level-13+ progression. The PF1 CRB Sorcerer class table's
+# level-12 "Special" column is genuinely BLANK — verified independently
+# against both d20pfsrd and the Archives of Nethys (aonprd.com/legacy mirror)
+# — so this fixture grounds no new class feature at level 12 either; only the
+# existing base-attack/base-save/spells-per-day/spells-known/spell-save-DC/
+# bonus-spell/bloodline-choice pillars are widened, with the spells-per-day
+# and spells-known tables each gaining a genuinely new 6th-level column for
+# the first time.
+case_id=pf1-crb-human-sorcerer-level12-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:sorcerer:12
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:17
+feat=feat:dodge
+choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

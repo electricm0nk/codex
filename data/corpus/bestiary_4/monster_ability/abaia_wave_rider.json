@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Abaia ~ Wave Rider",
+    "delivery": "Supernatural",
+    "description": "An abaia moving onto land brings a sheath of water with it, allowing it to swim on land. Its swim speed drops by 10 feet at the start of its turn if it is out of the water, and the sheath dissipates entirely when the abaia's swim speed reaches 20 feet. An abaia wave riding on land retains its spell resistance but loses its bonus to Stealth.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:abaia_wave_rider",
+    "name": "Wave Rider",
+    "owners": [
+      "bestiary_4:monster:abaia"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 259,
+    "record_key": "Abaia ~ Wave Rider"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

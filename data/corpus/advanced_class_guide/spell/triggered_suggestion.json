@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "data": {
+    "key": "Triggered Suggestion",
+    "school": "Enchantment",
+    "level": 3,
+    "description": "This spell functions as suggestion, except you can use it only to specify a condition that triggers a special activity, and the subject does not remember that you made the suggestion. For example, you could use triggered suggestion on a palace guard to make him attack the king the next time he and the king are alone, and the guard would not remember the suggestion to do so until the trigger occurred.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 129,
+    "record_key": "Triggered Suggestion"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

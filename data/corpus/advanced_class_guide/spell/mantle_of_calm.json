@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "data": {
+    "key": "Mantle of Calm",
+    "school": "Enchantment",
+    "level": 3,
+    "description": "You surround yourself with a mantle of calm serenity. You take a -2 penalty on attack rolls, and opponents gain a +2 bonus on saving throws against spells you cast. Any creature affected by a rage effect (barbarian's rage, bloodrager's bloodrage, blood rage monster ability, rage spell, skald's inspired rage raging song, and so on) that strikes you with a melee attack must attempt at a Will saving throw, without the rage effect's bonus to Will; failure means the rage effect ends (as if it were dispelled or the creature voluntarily ended it, as appropriate). If you become affected by a rage effect while this spell is active, this spell immediately ends. If your rage effect comes from a skald's raging song, then it ends only for you, and you cannot re-accept the effects of the song.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 78,
+    "record_key": "Mantle of Calm"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus",
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

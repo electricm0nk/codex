@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Vampiric Mist ~ Blood Siphon",
+    "delivery": "Extraordinary",
+    "description": "A vampiric mist drains blood with each melee touch attack dealing 1d3 points of Constitution damage.  Every time a vampiric mist damages a creature in this way, it heals 1d8 hit points.  Hit points healed in excess of its maximum are gained as temporary hit points, to a maximum of %1.  These temporary hit points last for 1 hour.",
+    "description_variables": [
+      "CONSCORE"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:vampiric_mist_blood_siphon",
+    "name": "Blood Siphon",
+    "owners": [
+      "bestiary_2:monster:vampiric_mist"
+    ],
+    "source_page": "p.277",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1324,
+    "record_key": "Vampiric Mist ~ Blood Siphon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

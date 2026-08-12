@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Sword Cane",
+    "category": "ArmsArmor",
+    "name": "Sword Cane",
+    "cost_gp": 45.0,
+    "weight": 4.0,
+    "description": "A slender light blade concealed within a wooden container serving as both scabbard and hiding place; drawing it is a swift action, and a DC 20 Perception check (DC 10 if handled) is needed to identify it as a weapon."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,51 @@
+{
+  "completeness": "chassis_only",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": null,
+    "description": null,
+    "key": "Special Ability ~ Charged Item / 12 Maximum",
+    "name": "Charges (12)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Charged Item / 12 Maximum"
+      },
+      {
+        "key": "COST",
+        "value": "((BASECOST/12)*%CHARGES)-BASECOST"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "NO"
+      },
+      {
+        "key": "CHOOSE",
+        "value": "NOCHOICE"
+      },
+      {
+        "key": "CHARGES",
+        "value": "1|12"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 122,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Special Ability ~ Charged Item / 12 Maximum",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "derived:cost"
+  ]
+}

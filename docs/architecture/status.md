@@ -1,0 +1,147 @@
+# Status
+
+> Scope: what is real, working product surface today across the whole repo, and what is stubbed, partially wired, or deferred — superseding the root README's "Current state" section.
+> Last verified: 2026-08-11 against tranche/9 (SD-29 closure, Epic 11). The rows re-derived in full this pass are the rule-table catalog count, the JSON-corpus-cache count, and the new §"Corpus coverage, corpus-wide" section; every other row carries its prior 2026-08-07/tranche-8 verification and is unchanged by SD-29.
+> Maintenance: pre-PR truth-up cycle per [README.md](./README.md) §Maintenance contract — fires before every PR via the architecture-truth-up skill
+
+## Posture
+
+Codex today is a developer proof-harness and a buildable desktop workbench,
+not a finished character-management product. The corpus-ingest pipeline, the
+deterministic compute chassis, the boundary contract, and every persistence
+store are real, tested, and exercised end to end by `cargo test --locked`
+and `npm test`. But character coverage is narrow: **single-class Fighter at
+levels 1-3, for any race, is the only path that reaches a fully `Computed`
+receipt today** — every other class/level combination returns real
+claim-blocking diagnostics from the engine (two `apps/desktop/src-tauri/src/character_hub.rs`
+tests prove this jointly:
+`compose_character_input_reaches_computed_status_for_supported_fighter_levels_1_to_3`
+covers the Fighter levels-1-3 `Computed` half, and
+`claim_blocking_diagnostic_ids_match_the_catalogued_support_shape_per_class`
+asserts the per-class claim-blocking diagnostic sets for the other classes;
+verified directly against both test bodies).
+Several desktop-facing actions that look interactive are session-local or
+inert by design, named individually below — this is the fail-honest
+convention (see [conventions.md](./conventions.md)) applied at the product
+level: a stub says so rather than pretending to work.
+
+## Real today
+
+| Area | What works | Where |
+|---|---|---|
+| Corpus-ingest pipeline | `.pcc`/`.lst` parsing through canonical `SourcePackageContent` projection, six of seven record kinds fully wired | [corpus-ingest.md](./corpus-ingest.md) |
+| Pilot compute + boundary contract | `compute_pilot_base_chassis` → `compute_pilot_with_corpus` → `to_pilot_receipt` → `printed_sheet_cell_map`, fail-honest throughout | [rules-engine.md](./rules-engine.md) |
+| Per-domain engines | Spellbook (9/9 schools), skill allocation, feat prerequisites (4/4 categories), equipment effects (4/4 categories), damage total, level-up (11/11 classes) | [rules-engine.md](./rules-engine.md) |
+| Rule-table catalogs | **Grown past "four" (correction, 2026-08-07):** CRB (full), APG (6/6 classes), ACG (10/10 classes), Bestiary 1 (41 monsters across 8 subsets, plus its own small equipment table), plus Advanced Race Guide and Pathfinder Unchained (SD-27/28 ingest) and a new `ultimate_campaign` (`Uca`) rule set carrying 23 feats (SD28-E13) — seven `RuleSetId` variants total (`src/rules_core/rules_tables/mod.rs`). **Corrected 2026-08-11 (SD-29 closure): 14, not seven** — SD-28's six Ultimate books (`Ui`, `Ue`, `Uw`, `Uc`, `Um`, `Upsi`) and SD-29's `BonusBestiary` landed after that count was written. Re-derived with `sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs` | [rules-data-tables.md](./rules-data-tables.md) |
+| Monster + monster_ability chassis | **New in SD-29 (Epic 5 pilot).** The merged `monster`/`monster_ability` kind chassis — `RuleSetId::BonusBestiary`, its rules-table module, generator arm, wire DTO, `CORPUS_KIND_NAMES` entry, reach claims, diagnostic row, and frontend path — is real and proven end-to-end on Bonus Bestiary (**14** monster + **17** monster_ability units, all `grounded`). The chassis is once-per-*kind*, not once-per-book: remaining monster-bearing books inherit it. Corpus-wide ingest beyond the pilot is **not** done — see §"Corpus coverage" below | [rules-data-tables.md](./rules-data-tables.md) §`RuleSetId` |
+| Character Hub | Create, load, clone, portrait upload/load/delete, JSON export, recompute — all real engine compute + real persistence | [desktop-app.md](./desktop-app.md) |
+| Rule-system adapter seam (hub-of-hubs) | `RuleSystemAdapter` trait is the object-safe seam the Character Hub's mutation commands (`append_to_character`/`recompute_character`/`re_save_character`) dispatch through on a `rule_system_id`: `"pf1"` resolves to the real `Pf1Adapter` (wraps the extracted PF1 free functions); any other id resolves to the governed `StubAdapter`, which reports an honest "not yet implemented" diagnostic — never fabricated data (registered exception 0002 in `docs/governance/wired-integration-stubs-registry.md`) | [desktop-app.md](./desktop-app.md) §"Rule-system adapter seam" |
+| Corpus-ingest diagnostic | `corpus_ingest_diagnostic` Tauri command reports the real ingested state (record-kind counts + last-touched git timestamp) of every populated `rules_tables` book, counted from the tables actually compiled into the binary — reachable from the Character Hub landing via the `CorpusIngestDiagnosticPanel`. Sketch-scoped to four fields; SD-26 fans out the full status table | [desktop-app.md](./desktop-app.md) |
+| PCGen runner scaffolding | `scripts/pcgen-run-character.sh` drives the real headless PCGen Gradle batch-export; `scripts/pcgen-normalize-output.py` normalizes its XML into the golden-fixture comparison shape. Real, invocable, smoke-tested end-to-end (`tests/pcgen_runner_smoke.rs`), and now wrapped into one Rust call by `oracle_validation::pcgen_runner::run_pcgen_character` (SD-26 Epic 2). The in-crate comparator that consumes its output now exists too — see the oracle-parity comparator row below | [testing.md](./testing.md) |
+| Campaign manager (local) | Create/edit/list campaigns and their assets, backed by `CampaignStore` on disk; nonce-based conflict detection with local-wins + preserved-conflict-copy resolution | [persistence.md](./persistence.md) |
+| Update eligibility / restore / verify | `is_install_eligible`, `perform_restore_previous`, `verify_relaunch_artifact` — all real, tested Tauri commands | [update-and-feedback.md](./update-and-feedback.md) |
+| Feedback composers + browser handoff | Bug/enhancement draft composition, evidence capture/redaction, and the governed GitHub-issue browser handoff | [update-and-feedback.md](./update-and-feedback.md) |
+| Release pipeline | Multi-platform publish, dual manifest validation, channel-index push, branch-promotion gates — the machinery is real and has shipped releases; the `test` job's frontend-typecheck step passes cleanly (see [testing.md](./testing.md)) | [release-pipeline.md](./release-pipeline.md) |
+| Support-state matrix | 34-row typed truth ledger, read-only bridged to the desktop tester workbench | [support-state-matrix.md](./support-state-matrix.md) |
+| IPC bridge liveness | `load_backend_health` returns the real crate version and compile-time git SHA; reaching it at all proves the Tauri bridge is alive | [desktop-app.md](./desktop-app.md) |
+| Homebrew authoring workbench | The Guard Stance proof package's validate/persist/preview round trip, read-only bridged to the desktop tester workbench | [homebrew-and-oracle.md](./homebrew-and-oracle.md) |
+| Encounter difficulty / party CR compute | `Encounter::new` and `party_challenge_rating` are real, grounded compute — but see the DM Toolkit UI row below | [rules-engine.md](./rules-engine.md) |
+| Fighter+Wizard multiclass base-chassis dispatch | `compute_multiclass_base_chassis` grounds BAB/save stacking + per-class named-feature explanations for any Fighter+Wizard split, total level 1-10, deterministically proven at every level and both transition directions (SD-24 Epic 5) — but this grounds the base-chassis layer only, not a full `Computed` receipt end-to-end (see the Class/level compute coverage row below) | [rules-engine.md](./rules-engine.md) §"Multiclass base-chassis dispatch" |
+| Repo-resident JSON corpus cache | `data/corpus/<book>/**/*.json` — **seven** book directories as of 2026-08-11 (SD-29 added `bonus_bestiary/`, 32 JSON files, via the existing `gen_book_cache.rs` writer — no new writer); the row below is the 2026-08-07 six-book text, kept for its per-book detail: **six** book directories now, not four: core_rulebook (3326 records), advanced_players_guide (641), advanced_class_guide (423), beastiary (45), plus advanced_race_guide (637 files) and pathfinder_unchained (129 files) added by SD-27/28. Written by **eight** distinct writer binaries/modules (see [rules-data-tables.md](./rules-data-tables.md) §"JSON corpus cache" for the full enumeration); each generator *dumps* the compiled Rust module's runtime state and never re-parses raw LST for values (only for line-number citations). Every writer now runs its output through `rules_core::pi_screening` (a shared 55-term blacklist) and stamps a GE-01 `wiring_class` on every record. Round-trip-tested by `tests/sd26_cache_core_rulebook.rs`/`apg`/`acg`/`beastiary` and `tests/pi_screening_regeneration_round_trip.rs` | [rules-data-tables.md](./rules-data-tables.md) |
+| CRB/APG/ACG/Bestiary 1 equipment + spell record ingestion | 100% record coverage (equipment and spells) across all four books; `weight`/`description` fields on every book's `EquipmentTableEntry`, populated toward each book's honest ceiling. SD-25 Epic 7 raised those ceilings via cited web second-source passes: CRB `description` 2021/2977 (67.9%, was 61.2%); APG `description` 331/338 (was 0% — the APG corpus itself carries no `DESC:` token, every value identity-matched from `aonprd.com`/`d20pfsrd.com`); APG spell full-text 284/297 (was 261); Bestiary 1 equipment newly ingested at 4/4 records with full cost/weight/description. Remaining gaps are honest, undispatched residue, not silently accepted (per-book counts asserted exactly by `tests/sd24_equipment_coverage_audit.rs` / `tests/sd24_equipment_field_completion.rs`) | [rules-data-tables.md](./rules-data-tables.md) §"Equipment/spell content completeness" |
+
+## Corpus coverage, corpus-wide (new section, 2026-08-11 — SD-29 closure)
+
+SD-29 was the first bundle to derive the *whole* corpus's shape in one pass
+rather than book-by-book, so this is the first time this document can state
+repo-wide coverage honestly. All figures below are re-derived from
+`docs/work-inventory.json` (`generated_at` `2026-08-11T10:38:33Z`) with:
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); \
+a=collections.defaultdict(collections.Counter); \
+[a[u['kind']].update([u['status']]) for u in d['units']]; \
+[print(k, dict(a[k])) for k in sorted(a)]"
+```
+
+**38,540 units across 38 book directories** (37 in scope; `beginner_box`'s 19
+units are excluded per `corpus-work-channels.md §10.2`). By status:
+`grounded` **491**, `text-complete` **2,402**, `ingested-magnitude` **6,548**,
+`not-ingested` **14,582**, `not-started` **11,190**, `unknown` **3,291**,
+`deferred-with-reason` **36**.
+
+Per kind (`grounded` / total):
+
+| Kind | Total | Grounded | Note |
+|---|---|---|---|
+| `class_feature` | 15,472 | 109 | Tier-3 deferral, out of SD-29 scope (`decisions.md §38.4`); owned by SD-30 |
+| `equipment` | 6,227 | 133 | 4,817 `ingested-magnitude` — the deepest proven-path kind |
+| `race_trait` | 3,447 | 21 | Blocked on a race chassis: the engine models exactly **7** races |
+| `monster_ability` | 3,107 | 17 | Pilot only (Bonus Bestiary) |
+| `spell` | 2,843 | — | 1,260 `ingested-magnitude`, 22 `text-complete` |
+| `feat` | 2,610 | 77 | 1,240 `text-complete` |
+| `companion` | 1,696 | 0 | **Lane never started** — see below |
+| `equipment_modifier` | 1,580 | 40 | 841 `text-complete` |
+| `monster` | 1,270 | 60 | Pilot only (Bonus Bestiary's 14, plus Bestiary 1's hand-transcribed set) |
+| `class` | 185 | 27 | |
+| `race` | 103 | 7 | The 7 hardcoded CRB races — the ceiling `race_trait` is blocked against |
+
+The two structural ceilings this section exists to name, both surfaced by
+SD-29 and neither fixed by it:
+
+- **Race chassis.** Of 3,447 `race_trait` units, **805** carry
+  `race_trait_race_not_modelled` and **144**
+  `race_trait_absent_from_race_traits`. `crb::race_traits()` hardcodes
+  **7** races, so no book's race traits can ground until a real race chassis
+  lands. This is work outside any SD-29 epic.
+- **Companion kind is unstarted.** All **1,696** `companion` units are
+  `not-ingested`/`not-started` and **0** are grounded. SD-29's companion lane
+  (Epic 7) never began: its pilot cycle refused at the `preflight-disk` gate
+  and the card was left unclaimed rather than falsely marked attempted. The
+  disk condition has since cleared; the lane is a ready re-dispatch, not a
+  finding about the corpus.
+
+## Stubbed / partially wired / deferred today
+
+Grouped by the plane each item lives in. Every row was re-verified directly
+against the cited source, not carried over from a sibling doc unchecked.
+
+### Desktop app: character sheet and update actions
+
+| Item | Status | Where (re-verified) |
+|---|---|---|
+| `perform_install` | Always returns `Err("...not wired: downloading the AppImage artifact requires an HTTP client...")`; its TS caller `installAction.ts::performInstall` has zero production call sites — `Ui.tsx`'s `handleInstall` is a documented no-op. Doubly inert. | `apps/desktop/src-tauri/src/update/transaction.rs:763-771`; `apps/desktop/src/update/Ui.tsx:110-117` |
+| `perform_retention_sweep` | Real, tested body (`perform_retention_sweep_impl`), but not in `main.rs`'s `generate_handler!` list — unreachable from the frontend. | `apps/desktop/src-tauri/src/update/transaction.rs:817`; `apps/desktop/src-tauri/src/main.rs:113-140` |
+| `drive_list_campaigns` / `drive_load_campaign` / `drive_save_campaign` / `drive_delete_campaign` | Registered in `generate_handler!` and unit-tested, but no frontend file invokes any of them (confirmed: zero grep hits across `apps/desktop/src`). `campaignModel.ts` uses `localStorage` as the real source of truth; only `write_campaign_drive_artifacts` (one-way mirror) is called. | `apps/desktop/src-tauri/src/main.rs:132-135`; `apps/desktop/src/campaign/campaignModel.ts` |
+| `append_to_character` / `re_save_character` | Registered in `generate_handler!` and unit-tested (SD-24 Epic 7, criteria 7.1/7.3), but no `boundary/*.ts` wrapper and zero `invoke()` call sites exist anywhere in `apps/desktop/src` — same "registered-but-unreachable" shape as the `drive_*` row above. (Their sibling `recompute_character` was wired to a real UI affordance by SD-25 Epic 3 — see the Real-today Character Hub row and `desktop-app.md`; these two were not, because SD-25 Criterion 3.5's own file-touch grant only wired the recompute call site.) | `apps/desktop/src-tauri/src/characterHub/appendToCharacter.rs`, `apps/desktop/src-tauri/src/characterHub/reSaveCharacter.rs`; `apps/desktop/src-tauri/src/main.rs` (registration) |
+| Level-up acceptance | `LevelUpDialog`'s `onAccept` in `CharacterSheet.tsx` is an empty closure with a comment: "accepting is a no-op today." Nothing is persisted or recomputed. | `apps/desktop/src/characterHub/CharacterSheet.tsx` (`LevelUpDialog` `onAccept`) |
+| Skill-allocation acceptance | `SkillAllocationDialog`'s own header comment: "Accepting only updates in-memory state (`onAccept`) — there is no backend [persistence]." Wired to a plain `useState` setter, lost on sheet close. | `apps/desktop/src/characterHub/SkillAllocationDialog.tsx` (header comment) |
+| Character-sheet bio fields | Alignment/deity/sex/age/height/weight/hair/eyes are explicitly session-local; no persisted schema slot exists yet. | `apps/desktop/src/characterHub/CharacterSheet.tsx` (`DetailsPanel`) |
+| Sheet `☰ Menu` | Graduated (SD-25 Epic 3, register A4): `Open` and `Clone` are now wired to real behavior, and `Save` — which had nothing session-local to persist — is replaced by a real `Recompute` action that calls `recompute_character` through the active rule-system adapter. `Print` (`window.print()`) is unchanged. No menu item is a bare no-op today. | `apps/desktop/src/characterHub/CharacterSheet.tsx` (`menuItems`, `handleRecompute`) |
+| Campaign conflict merge | Conflict detection is real and tested (nonce-based); resolution is local-wins with both copies preserved under `conflicts/<timestamp>/` — there is no merge UI. | [persistence.md](./persistence.md) §"Conflict detection" |
+| DM Toolkit UI | The Landing screen's "DM Toolkit" action routes to `StubScreen.tsx`, a generic "not built yet" placeholder — it does not call `encounters.rs`/`party_cr.rs` even though that compute is real (see the Real-today table above). | `apps/desktop/src/characterHub/CharacterHubPage.tsx:93-99`; `apps/desktop/src/characterHub/StubScreen.tsx` |
+
+### Core engine: compute coverage and proof surfaces
+
+| Item | Status | Where (re-verified) |
+|---|---|---|
+| Class/level compute coverage | Only single-class Fighter levels 1-3 reach `Computed` for any race; Wizard level 1 is closest but still blocked on spellbook/school-power diagnostics. | `apps/desktop/src-tauri/src/character_hub.rs:949-954` (test) |
+| Oracle-parity comparator | **Graduated (SD-26 Epic 2): the in-crate harness now exists and is tested.** `oracle_validation::comparator::compare` aligns a normalized PCGen output against Codex's selected dimensions and reports per-dimension matches/mismatches; `normalization` reduces raw PCGen text into the comparator's input shape; `parity_report` renders a real `PASS`/`FAIL` `parity_report_<case-id>.md`; `pcgen_runner::run_pcgen_character` wraps the two real PCGen scripts into one Rust call. What is still deferred is a *passing* parity claim: the pilot end-to-end run (`tests/sd26_pilot_case_verification.rs`) currently produces a real **FAIL** — two genuine `skill.selected_modifier.{climb,swim}` mismatches because `pilot_compute::compute_ability_modifiers` does not yet apply the chosen racial ability bonus (the open CG-03 blocker). `SelectedParityDimensions` still carries only a `Computed` `ClaimTierFloor` (no `OracleChecked` variant), so no fixture can yet assert oracle-checked parity. The harness is real; a green parity verdict is not, pending CG-03. | `src/oracle_validation/comparator.rs`; `src/oracle_validation/normalization.rs`; `src/oracle_validation/parity_report.rs`; `src/oracle_validation/pcgen_runner.rs`; `tests/sd26_pilot_case_verification.rs`; `src/rules_core/pilot_compute.rs` (CG-03) |
+| Bestiary 1 monster parser | `monster_stat_block.rs`'s row parser is fully unwired: no `ParsedLstRecord`/`SourceContentPayload` variant exists for it, and its only callers outside its own module are its own test file. Bestiary 1 table content is hand-transcribed, not parsed through the canonical-IR path. | `src/pcgen_import/lst_parser/monster_stat_block.rs`; zero references in `ir_converter.rs`/`source_content_payload.rs`/`source_content.rs` |
+| Failure-owner classifier | `pilot_failure.rs`'s `primary_owner` only ever returns `OracleGap` (on `Computed`) or `EngineFlaw` (on `Blocked`); `ModelFlaw`/`ImporterFlaw`/`UiGap` are unreachable from the current receipt surface. | `src/rules_core/pilot_failure.rs:61-66` |
+| Spellbook magnitude — a third disconnected twin (**in-flight**) | `contract::build_pilot_receipt` wires `spellbook::compute_spellbook_coverage` into `PilotReceipt.spellbook`, but nothing in the shipped desktop app reaches it — `grep -rn build_pilot_receipt apps/desktop/src-tauri/src` returns 0 hits (re-confirmed 2026-08-07). The app instead gates on `pf1_adapter::resolve_unified_pilot_snapshot`, so no spell magnitude reaches a player surface through the receipt path. **This is being actively worked right now**: at write time, `apps/desktop/src-tauri/src/character_hub.rs`, `apps/desktop/src-tauri/src/pf1_adapter.rs`, and `src/rules_core/pilot_view_model.rs` all carry uncommitted changes adding spell save DC/slot-total surfacing directly through `resolve_unified_pilot_snapshot` (not by connecting `build_pilot_receipt`) — confirm current state before relying on this row; it may already be resolved. Same shape as `decisions.md §29.1`/`§29.2` (a magnitude not wired until it moves on the twin the player reads). | `src/rules_core/contract.rs` (`build_pilot_receipt`); `apps/desktop/src-tauri/src/pf1_adapter.rs` (`resolve_unified_pilot_snapshot`) |
+| Per-item corpus equipment stats | `pilot_compute_corpus.rs`'s `DerivedEquipmentStats` is always `default()` — a permanent placeholder there; real per-item stats are computed separately by `equipment_effects.rs`. | `src/rules_core/pilot_compute_corpus.rs:80-147` |
+| Homebrew content breadth | Guard Stance (`guard_stance_shell`/`guard_stance_proof`) is the only authored package content the authoring format ships; no second package constructor exists. | `src/homebrew_authoring/mod.rs:106-117` |
+| Future-state books (`book_stub`) | 21 out-of-scope Paizo books (`data/stubs/*.json`, e.g. `bestiary_4`, `ultimate_magic`) are registered as honest `book_stub` future-state placeholders (SD-26 Epic 4) — each carries only `book_id`/`book_name`/`planned_resolution_bundle`/`registered_at`, `content_kind_counts: null`, and no rule data. They are declared, not implemented: the registry (`docs/governance/wired-integration-stubs-registry.md`, 21 `book_stub` entries) tracks them so the corpus-diagnostic surface can name a book as "known but unbuilt" rather than silently omit it. Concrete rule-system content lands in SD-27+. | `data/stubs/*.json`; `docs/governance/wired-integration-stubs-registry.md` |
+
+### Release pipeline: CI coverage gaps
+
+| Item | Status | Where (re-verified) |
+|---|---|---|
+| No concurrency guard on publish | `publish-tester-release.yml` declares no `concurrency:` block; two rapid pushes to `develop` can run two concurrent `finalize` jobs, each pushing to the shared `update-index` branch (mitigated only by each push being a fast-forward-or-fail `git push`, not by the workflow serializing runs itself). | `.github/workflows/publish-tester-release.yml` (no `concurrency` key anywhere in the file — re-confirmed by grep) |
+| No tranche/5-scoped CI workflow | `tranche-3-ci.yml` is the only tranche-specific workflow present, and it is scoped to `tranche/3` only (refuses PRs targeting any other branch by design). No `tranche-5-ci.yml` or equivalent exists yet. | `.github/workflows/` (directory listing: only `tranche-3-ci.yml` matches `tranche*`) |
+
+This doc is the first one every SD closure re-checks — a stub graduating to
+real, tested behavior is the most common architectural-doc change, and it
+must be reflected here before it is reflected anywhere else. See
+[README.md](./README.md) §Maintenance contract for the update procedure.

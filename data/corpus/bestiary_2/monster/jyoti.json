@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:jyoti_breath_weapon",
+      "bestiary_2:monster_ability:jyoti_positive_energy"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Jyoti",
+    "external_ability_refs": [
+      "Fast Healing",
+      "Flight Maneuverability",
+      "Immunity to Death Effects",
+      "Immunity to Disease",
+      "Immunity to Energy Drain",
+      "Immunity to Poison",
+      "Jyoti ~ Divine Aversion",
+      "Jyoti ~ Positive Energy Affinity",
+      "Mage Armor ~ Constant",
+      "Resistance to Acid",
+      "Resistance to Cold",
+      "Resistance to Electricity",
+      "Resistance to Fire",
+      "Resistance to Sonic"
+    ],
+    "key": "bestiary_2:monster:jyoti",
+    "monster_class": "Outsider (Fort/Will):11",
+    "name": "Jyoti",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.171",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 546,
+    "record_key": "Jyoti"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

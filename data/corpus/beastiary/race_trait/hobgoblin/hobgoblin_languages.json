@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Hobgoblin ~ Languages",
+    "name": "Languages",
+    "race_key": "Hobgoblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Hobgoblin Racial Trait",
+      "Hobgoblin Racial Default",
+      "SpecialQuality",
+      "Racial Language"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Hobgoblin_ReplaceLanguages",
+    "sets_replace_flags": [],
+    "description": "Hobgoblins begin play speaking Common and Goblin. Hobgoblins with high Intelligence scores can choose from the following languages: Draconic, Dwarven, Infernal, Giant, and Orc.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Hobgoblin ~ Languages"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Hobgoblin Racial Trait.Hobgoblin Racial Default.SpecialQuality.Racial Language"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Hobgoblin_ReplaceLanguages=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Hobgoblins begin play speaking Common and Goblin. Hobgoblins with high Intelligence scores can choose from the following languages: Draconic, Dwarven, Infernal, Giant, and Orc."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Bonus Language ~ Draconic|Bonus Language ~ Dwarven|Bonus Language ~ Infernal|Bonus Language ~ Giant|Bonus Language ~ Orc"
+      },
+      {
+        "key": "AUTO",
+        "value": "LANG|Common|Goblin"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/hobgoblin/hobgoblin_abilities_race.lst",
+    "sha256": "a28847c13ccd5fdc18ec5cede6b29e8d450d22ef5c3d9f3b1463bc54470d94f0",
+    "line": 20,
+    "record_key": "Hobgoblin ~ Languages"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

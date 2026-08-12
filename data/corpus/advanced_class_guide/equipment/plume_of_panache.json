@@ -1,0 +1,46 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 1000.0,
+    "description": "User must affix it to a non-magical hat worth at least 10 gp. 1/day, when the wearer performs a deed, the plume provides her with 1 panache point that can be used for that deed. Once used the plume appears bedraggled until its magic is replenished.",
+    "key": "Plume of Panache",
+    "name": "Plume of Panache",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Headgear"
+      },
+      {
+        "key": "COST",
+        "value": "1000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SPROP",
+        "value": "User must affix it to a non-magical hat worth at least 10 gp. 1/day, when the wearer performs a deed, the plume provides her with 1 panache point that can be used for that deed. Once used the plume appears bedraggled until its magic is replenished."
+      }
+    ],
+    "weight": null
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 394,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Plume of Panache",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

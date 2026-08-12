@@ -1,0 +1,78 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 21000.0,
+    "description": "A rope of entanglement looks just like any other hempen rope about 30 feet long. Upon command, the rope lashes forward 20 feet or upward 10 feet to entangle a victim. An entangled creature can break free with a DC 20 Strength check or a DC 20 Escape Artist check.\nA rope of entanglement has AC 22, 12 hit points, hardness 10, and damage reduction 5/slashing. The rope repairs damage to itself at a rate of 1 point per 5 minutes, but if a rope of entanglement is severed (all 12 hit points lost to damage), it is destroyed.",
+    "key": "Rope of Entanglement",
+    "name": "Rope of Entanglement",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rope of Entanglement"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rope of Entanglement"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "21000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.529"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|10,500 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, animate objects, animate rope or entangle"
+      },
+      {
+        "key": "DESC",
+        "value": "A rope of entanglement looks just like any other hempen rope about 30 feet long. Upon command, the rope lashes forward 20 feet or upward 10 feet to entangle a victim. An entangled creature can break free with a DC 20 Strength check or a DC 20 Escape Artist check.&nl;A rope of entanglement has AC 22, 12 hit points, hardness 10, and damage reduction 5/slashing. The rope repairs damage to itself at a rate of 1 point per 5 minutes, but if a rope of entanglement is severed (all 12 hit points lost to damage), it is destroyed."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 319,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rope of Entanglement",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

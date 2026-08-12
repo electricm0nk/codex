@@ -1,0 +1,49 @@
+# SD13-E5 deterministic Human Monk level 5 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Monk
+# level-1/level-2/level-3/level-4 martial chassis baseline to level 5 as
+# chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice
+# seam (ability-bonus and bonus-feat) and the deterministic
+# ability/feat/skill/equipment posture from the level-1 through level-4
+# fixtures, adding only the level bump this bounded tranche needs. The
+# level-1 monk_bonus_feat choice (Stunning Fist) is carried forward
+# unchanged — PF1 also grants monks a SEPARATE bonus feat at 2nd level, but
+# this slice deliberately does not add a second choice-slot for it (no
+# fixture data and no recognition code exist for a level-2 bonus feat grant;
+# it stays named but unproven, unchanged by this widening).
+#
+# It deliberately avoids every later Monk burden surface: no execution of
+# what the recognized bonus feat actually does, no level-2 bonus feat grant
+# recognition, no ki-power execution (extra attack, AC bonus, or speed
+# bonus), no fall-damage engine, no High Jump (it requires wiring the monk's
+# level into an Acrobatics-check total — no skill-check-total engine exists
+# in this codebase — and spending a ki point, an action-economy/resource-
+# consumption engine this codebase deliberately does not implement), and no
+# level-6+ progression. The unarmed strike damage die (confirmed to stay
+# 1d8 at level 5, unchanged from level 4, verified independently against
+# d20pfsrd and legacy.aonprd.com's Medium-monk damage progression table),
+# the Flurry of Blows flat attack bonus (steps to +3/+3 at level 5 via the
+# same `monk level - 2` formula), and Purity of Body (the PF1 Core
+# Rulebook's other 5th-level Monk class feature, "a monk gains immunity to
+# all diseases, including supernatural and magical diseases," verified
+# independently against both primary sources) are the pillars this fixture
+# exercises. Purity of Body is grounded only as a bounded grant-only
+# identity record, never wired into any disease-resolution engine (none
+# exists in this codebase).
+case_id=pf1-crb-human-monk-level5
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:5
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:deflect_arrows
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

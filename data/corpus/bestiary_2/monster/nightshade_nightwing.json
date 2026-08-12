@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:nightwing_cold",
+      "bestiary_2:monster_ability:nightwing_magic_drain"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Nightshade (Nightwing)",
+    "external_ability_refs": [
+      "Detect Magic ~ Constant",
+      "Flight Maneuverability",
+      "Immunity to Cold",
+      "Magic Fang ~ Constant",
+      "Telepathy"
+    ],
+    "key": "bestiary_2:monster:nightshade_nightwing",
+    "monster_class": "Undead:17",
+    "name": "Nightshade (Nightwing)",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d10",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Extraplanar|Nightshade",
+    "race_type": "Undead",
+    "size": "H",
+    "source_page": "p.203",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 650,
+    "record_key": "Nightshade (Nightwing)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

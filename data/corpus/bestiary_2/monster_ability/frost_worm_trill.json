@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Frost Worm ~ Trill",
+    "delivery": "Supernatural",
+    "description": "As a full-round action, a frost worm can emit a strange trilling sound that affects all creatures within a 100-foot radius.  Creatures must succeed on a DC %1 Will save or be fascinated for as long as the worm continues to trill (the frost worm can maintain this trill by concentrating).  Once a creature has resisted or broken the effect, it cannot be affected again by that same frost worm's trill for 24 hours.  This is a sonic mind-affecting effect.",
+    "description_variables": [
+      "FrostWormTrillDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:frost_worm_trill",
+    "name": "Trill",
+    "owners": [
+      "bestiary_2:monster:frost_worm"
+    ],
+    "source_page": "p.126",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 556,
+    "record_key": "Frost Worm ~ Trill"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

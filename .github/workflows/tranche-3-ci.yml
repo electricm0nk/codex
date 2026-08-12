@@ -1,0 +1,151 @@
+name: Tranche 3 CI
+
+# Tranche 3 (tranche/3): slice PR guard, doctrinally aligned to
+# gov-tranche-branch-governance.
+#
+# Doctrine:
+#   - All slice branches target tranche/3, NEVER develop (the devops/tranche-branch-
+#     governance refusal).
+#   - Slice PRs into tranche/3 must contain a tranche manifest entry referencing
+#     docs/release/<GE-or-SD> and a release-notes lane (or carry
+#     an explicit skip-reason).
+#   - On every push to tranche/3 itself, run the test + typecheck lanes that
+#     the publish lane relies on, so a tranche branch that fails the basic gates
+#     cannot become the develop PR base.
+#
+# Companion refusals enforced by separate workflows:
+#   - allow-only-tranche-3-slice-base.yml (slice-PR base must be tranche/3)
+#   - allow-only-develop-into-test.yml (already in repo, do not modify)
+
+on:
+  pull_request:
+    branches:
+      - tranche/3
+  push:
+    branches:
+      - tranche/3
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: tranche-3-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  slice-tranche-base-guard:
+    name: Slice PR base must be tranche/3
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Verify base ref
+        env:
+          BASE: ${{ github.base_ref }}
+        run: |
+          set -euo pipefail
+          if [ "${BASE}" != "tranche/3" ]; then
+            echo "::error::Slice PRs for Tranche 3 must target tranche/3 (got ${BASE})."
+            echo "       Per gov-tranche-branch-governance, the tranche branch is the collection layer."
+            exit 1
+          fi
+          echo "Slice PR base ref OK: ${BASE}"
+
+  desktop-typecheck-and-test:
+    name: Desktop typecheck + unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            apps/desktop/src-tauri -> target
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - name: Run core crate tests
+        run: cargo test --locked
+
+      - name: Run desktop shell tests
+        working-directory: apps/desktop/src-tauri
+        run: cargo test --locked
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      - name: Typecheck frontend
+        working-directory: apps/desktop
+        run: npm run typecheck
+
+      - name: Run frontend tests
+        working-directory: apps/desktop
+        run: npm test
+
+  tranche-manifest-coverage:
+    name: Manifest + release-notes coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Detect tranche manifest + release-notes touches
+        id: detect
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          set -euo pipefail
+          BASE="${BASE_SHA:-HEAD~1}"
+          # On the first push of a new branch, github.event.before is the null SHA
+          # (unknown to this checkout); fall back to HEAD~1 in that case too.
+          if [ "${BASE}" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "${BASE}^{commit}" 2>/dev/null; then
+            BASE="HEAD~1"
+          fi
+          changed="$(git diff --name-only --diff-filter=ACMRT "${BASE}...HEAD" -- \
+            'docs/release/**/manifest.yaml' \
+            'docs/release/**/release-notes.md' \
+            'docs/release/**/tranche-*/manifest.yaml' || true)"
+          if [ -z "${changed}" ]; then
+            echo "manifests_changed=false" >> "$GITHUB_OUTPUT"
+            echo "No tranche manifest or release-notes touched in this PR."
+          else
+            echo "manifests_changed=true" >> "$GITHUB_OUTPUT"
+            {
+              echo "changed_files<<EOF"
+              echo "${changed}"
+              echo "EOF"
+            } >> "$GITHUB_OUTPUT"
+            echo "Detected:"
+            echo "${changed}"
+          fi
+
+      - name: Run check_release_manifest.py if a manifest changed
+        if: steps.detect.outputs.manifests_changed == 'true'
+        run: |
+          set -euo pipefail
+          python3 -m ensurepip --upgrade || true
+          python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
+          # shellcheck disable=SC2207
+          files=$(awk 'BEGIN{RS=""} /changed_files<<EOF/{flag=1; next} /^EOF$/{flag=0} flag' <<<"${{ steps.detect.outputs.changed_files }}" || true)
+          # awk above is fallback; the standard pattern:
+          echo "${{ steps.detect.outputs.changed_files }}" | while IFS= read -r f; do
+            [ -n "$f" ] && python3 tools/release/check_release_manifest.py "$f"
+          done

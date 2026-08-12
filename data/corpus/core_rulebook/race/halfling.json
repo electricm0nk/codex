@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Halfling",
+    "name": "Halfling",
+    "base_size": "S",
+    "base_move_walk": 20,
+    "race_type": "Humanoid",
+    "type_tokens": [
+      "Humanoid",
+      "Base",
+      "PC"
+    ],
+    "legs": 2,
+    "hands": 2,
+    "raw_tokens": [
+      {
+        "key": "SORTKEY",
+        "value": "a_base_pc"
+      },
+      {
+        "key": "STARTFEATS",
+        "value": "1"
+      },
+      {
+        "key": "FACT",
+        "value": "BaseSize|S"
+      },
+      {
+        "key": "MOVE",
+        "value": "Walk,20"
+      },
+      {
+        "key": "BONUS",
+        "value": "SAVE|ALL|Halfling_HalflingLuck_SaveBonus|TYPE=Racial"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Internal|AUTOMATIC|Racial Traits ~ Halfling"
+      },
+      {
+        "key": "LEGS",
+        "value": "2"
+      },
+      {
+        "key": "HANDS",
+        "value": "2"
+      },
+      {
+        "key": "RACETYPE",
+        "value": "Humanoid"
+      },
+      {
+        "key": "TYPE",
+        "value": "Humanoid.Base.PC"
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Halfling"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "FACT",
+        "value": "IsPC|true"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/halfling/halfling_races.lst",
+    "sha256": "018426db2bcb580b82a82b0d04b29f437970ef701456cbef8e67b50a1d5a3fe7",
+    "line": 6,
+    "record_key": "Halfling"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

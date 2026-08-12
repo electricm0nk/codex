@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Urdefhan ~ Strength Damage",
+    "delivery": "Supernatural",
+    "description": "An urdefhan's bite drains vitality, turning the skin and muscle around the wound transparent and causing 2 points of Strength damage unless the target succees on a DC %1 Fortitude save.  The flesh remains transparent until the Strength damage is healed, but this does not have any other effects.",
+    "description_variables": [
+      "UrdefhanStrengthDamageDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:urdefhan_strength_damage",
+    "name": "Strength Damage",
+    "owners": [
+      "bestiary_2:monster:urdefhan"
+    ],
+    "source_page": "p.276",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1320,
+    "record_key": "Urdefhan ~ Strength Damage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

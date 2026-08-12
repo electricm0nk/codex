@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Control Weather",
+    "school": "Transmutation",
+    "level": 7,
+    "description": "You change the weather in the local area. It takes 10 minutes to cast the spell and an additional 10 minutes for the effects to manifest. You can call forth weather appropriate to the climate and season of the area you are in. You can also use this spell to cause the weather in the area to become calm and normal for the season. \nSeason | Possible Weather \nSpring | Tornado, thunderstorm, sleet storm, or hot weather \nSummer | Torrential rain, heat wave, or hailstorm \nAutumn | Hot or cold weather, fog, or sleet \nWinter | Frigid cold, blizzard, or thaw \nLate winter | Hurricane-force winds or early spring \nYou control the general tendencies of the weather, such as the direction and intensity of the wind. You cannot control specific applications of the weather-where lightning strikes, for example, or the exact path of a tornado. The weather continues as you left it for the duration, or until you use a standard action to designate a new kind of weather [which fully manifests itself 10 minutes later]. Contradictory conditions are not possible simultaneously. Control weather can do away with atmospheric phenomena [naturally occurring or otherwise] as well as create them. A druid casting this spell doubles the duration and affects a circle with a 3-mile radius."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 877,
+    "record_key": "Control Weather.MOD"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

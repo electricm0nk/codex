@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Polymorph Any Object",
+    "school": "Transmutation",
+    "level": 8,
+    "description": "This spell functions like greater polymorph, except that it changes one object or creature into another. You can use this spell to transform all manner of objects and creatures into new forms-you aren't limited to transforming a living creature into another living form. The duration of the spell depends on how radical a change is made from the original state to its transmuted state. The duration is determined by using the following guidelines. \nChanged Subject Is. | Increase to Duration Factor* \nSame kingdom [animal, vegetable, mineral] | +5 \nSame class [mammals, fungi, metals, etc.] | +2 \nChanged Subject Is. | Increase to Duration Factor* \nSame size | +2 \nRelated [twig is to tree, wolf fur is to wolf, etc.] | +2 \nSame or lower Intelligence | +2 \n*Add all that apply. Look up the total on the next table. \nDuration Factor Duration Example \n0 | 20 minutes | Pebble to human \n2 | 1 hour | Marionette to human \n4 | 3 hours | Human to marionette \n5 | 12 hours | Lizard to manticore \n6 | 2 days | Sheep to wool coat \n7 | 1 week | Shrew to manticore \n9+ Permanent Manticore to shrew \nIf the target of the spell does not have physical ability scores [Strength, Dexterity, or Constitution], this spell grants a base score of 10 to each missing ability score. If the target of the spell does not have mental ability scores [Intelligence, Wisdom, or Charisma], this spell grants a score of 5 to such scores. Damage taken by the new form can result in the injury or death of the polymorphed creature. In general, damage occurs when the new form is changed through physical force. A nonmagical object cannot be made into a magic item with this spell. Magic items aren't affected by this spell. This spell cannot create material of great intrinsic value, such as copper, silver, gems, silk, gold, platinum, mithral, or adamantine. It also cannot reproduce the special properties of cold iron in order to overcome the damage reduction of certain creatures. This spell can also be used to duplicate the effects of baleful polymorph, greater polymorph, flesh to stone, stone to flesh, transmute mud to rock, transmute metal to wood, or transmute rock to mud."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1201,
+    "record_key": "Polymorph Any Object.MOD"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Goblin ~ Skilled",
+    "name": "Skilled",
+    "race_key": "Goblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Goblin Racial Trait",
+      "Goblin Racial Default",
+      "SpecialQuality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Goblin_ReplaceSkilled",
+    "sets_replace_flags": [],
+    "description": "+4 racial bonus on Ride and Stealth checks.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Goblin ~ Skilled"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Goblin Racial Trait.Goblin Racial Default.SpecialQuality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Goblin_ReplaceSkilled=True"
+      },
+      {
+        "key": "DESC",
+        "value": "+4 racial bonus on Ride and Stealth checks."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+4 Ride, +4 Stealth"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Ride,Stealth",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/goblin/goblin_abilities_race.lst",
+    "sha256": "d06f0378d15b44dbd07d7b6cd1e566dc98a7acaeb4997f0fe1218bda7d4c7402",
+    "line": 19,
+    "record_key": "Goblin ~ Skilled"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

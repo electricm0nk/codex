@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Half-Elf ~ Elf Blood",
+    "name": "Elf Blood",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "Half-Elf Racial Default",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "HalfElf_ReplaceElfBlood",
+    "sets_replace_flags": [],
+    "description": "Half-elves count as both elves and humans for any effect related to race.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Elf Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.Half-Elf Racial Default.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,HalfElf_ReplaceElfBlood=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Half-elves count as both elves and humans for any effect related to race."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_elf/halfelf_abilities_race.lst",
+    "sha256": "524f7178985b7404fe819984e4880f61cc1f05d588f450b97934dc97c1c251d0",
+    "line": 23,
+    "record_key": "Half-Elf ~ Elf Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

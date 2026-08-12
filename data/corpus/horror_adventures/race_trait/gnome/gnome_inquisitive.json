@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Gnome ~ Inquisitive",
+    "name": "Inquisitive",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceKeenSenses",
+      "Gnome_ReplaceObsessive"
+    ],
+    "description": "Gnomes have a knack for being in places they shouldn't be. Gnomes with this trait gain a +2 racial bonus on Disable Device and Escape Artist checks. This racial trait replaces keen senses and obsessive.",
+    "source_page": "p.39",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Inquisitive"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Inquisitive],[!PREFACT:1,ABILITIES,Gnome_ReplaceKeenSenses=true,Gnome_ReplaceObsessive=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes have a knack for being in places they shouldn't be. Gnomes with this trait gain a +2 racial bonus on Disable Device and Escape Artist checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses and obsessive.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Inquisitive"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceKeenSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceObsessive|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Disable Device,Escape Artist",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 43,
+    "record_key": "Gnome ~ Inquisitive"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

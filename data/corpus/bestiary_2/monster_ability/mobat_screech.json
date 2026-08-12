@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Mobat ~ Screech",
+    "delivery": "Supernatural",
+    "description": "Once per day as a standard action, a mobat can produce an ear-splitting screech that stuns non-mobats in a 20-foot-radius burst.  All creatures within the area must make a DC %1 Fortitude save or be staggered for 1d3 rounds.  Other mobats and urdefhans are immune to this effect.  This is a sonic mind-affecting effect.",
+    "description_variables": [
+      "MobatScreechDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:mobat_screech",
+    "name": "Screech",
+    "owners": [
+      "bestiary_2:monster:bat_mobat"
+    ],
+    "source_page": "p.42",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 168,
+    "record_key": "Mobat ~ Screech"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

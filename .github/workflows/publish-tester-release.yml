@@ -1,0 +1,973 @@
+name: Publish tester release
+
+# Publish official tester-channel release units from governed promotion sources only.
+# develop -> alpha (prerelease)
+# main    -> stable (non-prerelease)
+# beta is reserved until a governed candidate promotion surface exists in repo/workflow truth.
+
+on:
+  push:
+    branches:
+      - develop
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  stamp:
+    name: Stamp build version
+    runs-on: ubuntu-latest
+
+    # SD16-F-WINDOWS: required for downstream `needs.stamp.outputs.version`
+    # access. Without this block, child jobs (publish-tester-release,
+    # publish-tester-release-{macos,windows}) read empty strings for
+    # `version` and the update-manifest fails the schema version check
+    # (`version: '' should be non-empty`).
+    outputs:
+      version: ${{ steps.stamp_version.outputs.version }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      # SD16: derive a monotonically increasing build version so every
+      # release is distinguishable by version, not only by its SHA suffix.
+      # The repo keeps "0.<tranche>.0" as the committed placeholder (see the
+      # tranche note below); the publish lane owns the build position of the
+      # real version. GITHUB_RUN_NUMBER increments on every
+      # run of this workflow, so versions are strictly increasing per
+      # channel lane. The stamp happens BEFORE `tauri build` so the built
+      # app self-reports the same version the release tag and the update
+      # manifest carry.
+      #
+      # SD16-F-WINDOWS: this step moved out of the publish job into a
+      # top-level job so the linux and windows publish jobs share the
+      # same version. Each publish job reads versions.version via ${{ needs.stamp.outputs.version }}
+      # (or ${{ steps.stamp_version.outputs.version }} when invoke_jobs_v2
+      # is unavailable) instead of stamping independently. This keeps the
+      # release tag, the AppImage identity, the MSI identity, and the
+      # update-manifest `version` field all consistent across platforms.
+      #
+      # SD22-E9: tranche-base position bumped 0.4 -> 0.5 (self-healed by the
+      # Epic 9 closure-readiness eval). This stamp had drifted one tranche
+      # behind since SD-21's tranche/4-1 lane. Bump the leading digit
+      # alongside the next tranche promotion (i.e. when a new tranche/N
+      # branch is cut for the next bundle — not automatically at a bundle's
+      # own closure while still on the same tranche branch; an SD-22 Epic 7
+      # cycle briefly bumped this to 0.6 in error and it was reverted).
+      #
+      # tranche/7: bumped 0.6 -> 0.7 for the SD-27 bundle closure on
+      # tranche/7 (and the v0.6 alpha cut on tranche/6 prior). The
+      # v0.6.120 publish at 5c432a1b stamped 0.6.120 even though it
+      # bundled the SD-27 closure work — that was a missed advance, not
+      # a wrong scheme; the fix here is to land the SD-27 advance as
+      # 0.7.0 in the repo, retroactively matching what the v0.6.120
+      # release actually contained. SD-28/29/30 follow the same
+      # one-advance-per-tranche-cut rule (v0.8.0 / v0.9.0 / v0.10.0).
+      #
+      # tranche/8: bumped 0.6 -> 0.8 for the SD-28 bundle cut per operator
+      # directive 2026-08-01. The tranche/8 branch is the live branch for SD-28,
+      # and the repo version files moved to 0.8.0 with it. The stamp's tranche
+      # digit must always equal the repo version files' tranche digit; the two
+      # are kept in lockstep by src/release/buildVersionTriple.test.ts, which
+      # parses this line and compares the relationship rather than two
+      # independent literals (the previous form asserted each side's prefix
+      # separately and so blessed mismatches).
+      #
+      # tranche/9: bumped 0.8 -> 0.9 for the SD-29 bundle cut (tranche/9 is a
+      # NEW tranche branch, which is what authorizes the advance; a bundle's
+      # own closure on an unchanged tranche branch does not). The repo version
+      # files moved to 0.9.0 in the same commit, keeping the lockstep above.
+      #
+      # Only the tranche prefix is written here. The build number is always
+      # ${GITHUB_RUN_NUMBER} — never hardcode one.
+      - name: Stamp build version
+        id: stamp_version
+        working-directory: apps/desktop
+        run: |
+          set -euo pipefail
+          VERSION="0.9.${GITHUB_RUN_NUMBER}"
+          node - "$VERSION" <<'EOF'
+          const fs = require('fs');
+          const version = process.argv[2];
+          for (const p of ['package.json', 'src-tauri/tauri.conf.json']) {
+            const doc = JSON.parse(fs.readFileSync(p, 'utf8'));
+            doc.version = version;
+            fs.writeFileSync(p, JSON.stringify(doc, null, 2) + '\n');
+          }
+          EOF
+          STAMPED=$(node -p "require('./package.json').version")
+          if [ "${STAMPED}" != "${VERSION}" ]; then
+            echo "::error::version stamp failed: package.json reports ${STAMPED}, expected ${VERSION}"
+            exit 1
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+          echo "Stamped build version ${VERSION}"
+
+      - name: Upload stamped sources
+        uses: actions/upload-artifact@v7
+        with:
+          name: stamped-sources
+          path: |
+            apps/desktop/package.json
+            apps/desktop/src-tauri/tauri.conf.json
+          if-no-files-found: error
+
+  test:
+    name: Test before publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            . -> target
+            apps/desktop/src-tauri -> target
+
+      - name: Run core crate tests
+        run: cargo test --locked
+
+      - name: Run desktop shell tests
+        working-directory: apps/desktop/src-tauri
+        run: cargo test --locked
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      - name: Typecheck frontend
+        working-directory: apps/desktop
+        run: npm run typecheck
+
+      - name: Run frontend tests
+        working-directory: apps/desktop
+        run: npm test
+
+  publish-tester-release:
+    name: Publish tester release (${{ github.ref_name }}, linux)
+    runs-on: ubuntu-latest
+    needs: [test, stamp]
+
+    # SD16-F-WINDOWS: the `stage` step's outputs are surfaced as job
+    # outputs so the parallel windows publish job can read the AppImage
+    # name and URL without rebuilding them. The same applies to
+    # `generate_manifest`, `release_meta`, and `emit_alpha_channel_index`
+    # (which lives near the end of this file). The channel-index push
+    # step was intentionally NOT exposed — see comment in
+    # publish-tester-release-windows.
+    outputs:
+      appimage_name: ${{ steps.stage.outputs.appimage_name }}
+      appimage_url: ${{ steps.release_meta.outputs.tag }}
+      manifest_tag: ${{ steps.generate_manifest.outputs.manifest-tag }}
+      release_tag: ${{ steps.release_meta.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Resolve publication channel
+        id: channel
+        run: |
+          if [ "$GITHUB_REF_NAME" = "main" ]; then
+            echo "channel=stable" >> "$GITHUB_OUTPUT"
+            echo "prerelease=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "channel=alpha" >> "$GITHUB_OUTPUT"
+            echo "prerelease=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # SD16-F-WINDOWS: pull the stamped-sources artifact produced by
+      # the top-level `stamp` job so this job (and the new windows job)
+      # see the same `version` in package.json + tauri.conf.json. The
+      # stamp job holds the authoritative 0.<tranche>.${GITHUB_RUN_NUMBER} value;
+      # both publish jobs consume ${{ needs.stamp.outputs.version }}.
+      - name: Download stamped sources
+        uses: actions/download-artifact@v8
+        with:
+          name: stamped-sources
+
+      - name: Install Linux build dependencies
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libappindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build artifacts
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri -> target
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      - name: Validate tranche release notes
+        run: |
+          python scripts/tranche/validate-tranche-notes.py --release-notes-path docs/release/v0.7/release-notes.md
+
+      # SD16-F-WINDOWS: the version stamp moved out of this job into the
+      # top-level `stamp` job to keep the linux and windows publish jobs
+      # on a single source of truth. This block is intentionally empty
+      # in the linux publish job now — the consumed `version` output is
+      # ${{ needs.stamp.outputs.version }}.
+
+      - name: Build Linux artifact set
+        working-directory: apps/desktop
+        run: npx tauri build --bundles deb,appimage --ci
+
+      - name: Stage release artifacts
+        id: stage
+        working-directory: apps/desktop
+        run: |
+          DEB=$(find src-tauri/target/release/bundle/deb -maxdepth 1 -name '*.deb' | head -1)
+          APPIMAGE=$(find src-tauri/target/release/bundle/appimage -maxdepth 1 -name '*.AppImage' | head -1)
+
+          [ -n "$DEB" ] || { echo "ERROR: No .deb artifact found. E1 Linux artifact set may not yet be complete."; exit 1; }
+          [ -n "$APPIMAGE" ] || { echo "ERROR: No .AppImage artifact found. E1 Linux artifact set may not yet be complete."; exit 1; }
+
+          mkdir -p ../../release-staging
+          DEB_NAME=$(basename "$DEB" | tr ' ' '.')
+          APPIMAGE_NAME=$(basename "$APPIMAGE" | tr ' ' '.')
+          cp "$DEB" "../../release-staging/$DEB_NAME"
+          cp "$APPIMAGE" "../../release-staging/$APPIMAGE_NAME"
+
+          echo "deb_name=$DEB_NAME" >> "$GITHUB_OUTPUT"
+          echo "appimage_name=$APPIMAGE_NAME" >> "$GITHUB_OUTPUT"
+
+      - name: Write provenance receipt
+        working-directory: release-staging
+        run: |
+          cat > provenance.json << EOF
+          {
+            "schema_version": "v1",
+            "source_revision": "${GITHUB_SHA}",
+            "source_branch": "${GITHUB_REF_NAME}",
+            "channel": "${{ steps.channel.outputs.channel }}",
+            "publication_run_id": "${GITHUB_RUN_ID}",
+            "publication_run_url": "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}",
+            "platform": "linux",
+            "support_tier": "first-class"
+          }
+          EOF
+
+      - name: Generate update manifest
+        id: generate_manifest
+        working-directory: release-staging
+        run: |
+          set -euo pipefail
+
+          # Two tag forms coexist for backward compatibility with deployed
+          # tooling (F3c's channel-index URL uses the release tag verbatim):
+          #   MANIFEST_TAG = schema-conformant `${channel}/${version}-${shortsha}`
+          #                   (satisfies schemas/update/update-manifest.schema.json
+          #                    tag pattern `^(alpha|beta|stable)/.+$`)
+          #   RELEASE_TAG  = GitHub release tag `${channel}-${version}-${shortsha}`
+          #                   (the existing form; used by gh release create
+          #                    and F3c's MANIFEST_URL)
+          # SD16-F-WINDOWS: $VERSION now comes from the top-level `stamp`
+          # job rather than being re-derived from $GITHUB_RUN_NUMBER
+          # inside this step. The two publish jobs (linux + windows) must
+          # agree on `version`, which only the `stamp` job's output
+          # guarantees. The stamp output lives in the stamp job's
+          # `stamp_version` step; pull it via ${{ needs.stamp.outputs.version }}.
+          VERSION="${{ needs.stamp.outputs.version }}"
+          SHORT_SHA="${GITHUB_SHA:0:8}"
+          CHANNEL="${{ steps.channel.outputs.channel }}"
+          MANIFEST_TAG="${CHANNEL}/v${VERSION}-${SHORT_SHA}"
+          RELEASE_TAG="${CHANNEL}-v${VERSION}-${SHORT_SHA}"
+          APPIMAGE_NAME="${{ steps.stage.outputs.appimage_name }}"
+          APPIMAGE_PATH="${GITHUB_WORKSPACE}/release-staging/${APPIMAGE_NAME}"
+          APPIMAGE_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/${APPIMAGE_NAME}"
+          RELEASE_NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
+
+          python3 ../scripts/release/write_release_manifest.py \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --channel "${CHANNEL}" \
+            --tag "${MANIFEST_TAG}" \
+            --version "${VERSION}" \
+            --source-branch "${GITHUB_REF_NAME}" \
+            --source-commit "${GITHUB_SHA}" \
+            --release-notes-path "docs/release/v0.7/release-notes.md" \
+            --appimage-name "${APPIMAGE_NAME}" \
+            --appimage-path "${APPIMAGE_PATH}" \
+            --appimage-url "${APPIMAGE_URL}" \
+            --workflow ".github/workflows/publish-tester-release.yml" \
+            --run-id "${GITHUB_RUN_ID}" \
+            --run-attempt "${GITHUB_RUN_ATTEMPT}" \
+            --release-notes-url "${RELEASE_NOTES_URL}" \
+            --min-supported-version "0.0.0" \
+            --appimage-install "true" \
+            --required-install-kind "appimage" \
+            --output update-manifest.json
+
+          # Legacy alias for F3c's channel-index URL: F3c is merged and
+          # references `update-manifest-stub.json`. The stub is now a
+          # verbatim copy of the schema-valid manifest under the legacy
+          # filename, so the index's MANIFEST_URL still resolves to a
+          # manifest that satisfies the schema.
+          cp update-manifest.json update-manifest-stub.json
+
+          echo "manifest-tag=${MANIFEST_TAG}" >> "${GITHUB_OUTPUT}"
+          echo "release-tag=${RELEASE_TAG}" >> "${GITHUB_OUTPUT}"
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m ensurepip --upgrade || true
+          python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
+
+      - name: Validate update manifest
+        working-directory: release-staging
+        run: |
+          set -euo pipefail
+          python3 -m ensurepip --upgrade || true
+          python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
+          python3 ../scripts/release/validate_manifest.py \
+            --manifest update-manifest.json \
+            --schema ../schemas/update/update-manifest.schema.json
+
+      - name: Validate release manifest (gate)
+        working-directory: release-staging
+        run: |
+          set -euo pipefail
+          python3 ../tools/release/check_release_manifest_against_dev_schema.py \
+            update-manifest.json
+
+      - name: Compute checksums
+        working-directory: release-staging
+        run: |
+          sha256sum ./*.deb ./*.AppImage provenance.json update-manifest.json update-manifest-stub.json > checksums.sha256
+          cat checksums.sha256
+
+      - name: Derive release tag and title
+        id: release_meta
+        run: |
+          VERSION=$(node -p "require('./apps/desktop/package.json').version")
+          SHORT_SHA="${GITHUB_SHA:0:8}"
+          CHANNEL="${{ steps.channel.outputs.channel }}"
+          echo "tag=${CHANNEL}-v${VERSION}-${SHORT_SHA}" >> "$GITHUB_OUTPUT"
+          echo "title=${CHANNEL} v${VERSION} (${SHORT_SHA})" >> "$GITHUB_OUTPUT"
+
+      - name: Stage tranche release notes
+        run: |
+          set -euo pipefail
+          mkdir -p release-staging
+          cp docs/release/v0.7/release-notes.md \
+             release-staging/release-notes.md
+
+      # SD16-F-WINDOWS: the platform publish jobs no longer `gh release
+      # create` themselves. They each upload their staging tree via
+      # actions/upload-artifact and surface their outputs. The `finalize`
+      # job (added below) consumes all three artifacts, builds the unified
+      # update-manifest.json with every available platform-identity block,
+      # creates the GitHub release, validates against the schema, and
+      # pushes the channel-index pointer. This is the single source of
+      # truth for the release, replacing the prior in-job `gh release
+      # create + channel-index push` sequence that ran BEFORE the windows
+      # and macos jobs and therefore could not see their artifacts.
+      - name: Upload linux platform artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: platform-linux
+          path: |
+            release-staging/*.deb
+            release-staging/*.AppImage
+            release-staging/checksums.sha256
+            release-staging/provenance.json
+            release-staging/update-manifest.json
+            release-staging/update-manifest-stub.json
+            release-staging/release-notes.md
+          if-no-files-found: error
+
+  # SD16-F-WINDOWS: parallel macOS publish job. Mirrors the windows job
+  # in structure: pulls the stamp artifact, builds .app + .dmg on
+  # macos-latest, uploads them as a `platform-macos` artifact that the
+  # `finalize` job consumes. Code-signing + notarization are deferred
+  # to a follow-up SD (Apple Developer ID + notarytool); the DMG ships
+  # unsigned for tester delivery and will trigger Gatekeeper warnings
+  # that testers acknowledge.
+  publish-tester-release-macos:
+    name: Publish tester release (${{ github.ref_name }}, macos)
+    runs-on: macos-latest
+    needs: [test, stamp]
+
+    outputs:
+      dmg_name: ${{ steps.stage_macos.outputs.dmg_name }}
+      dmg_url: ${{ steps.stage_macos.outputs.dmg_url }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Download stamped sources
+        uses: actions/download-artifact@v8
+        with:
+          name: stamped-sources
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      # SD16-F-WINDOWS: build a single-arch DMG for the runner's native
+      # arch (macos-latest is Apple Silicon). A universal binary
+      # (`--target universal-apple-darwin`) requires both aarch64 and
+      # x86_64 Rust targets; macos-latest only pre-installs
+      # `aarch64-apple-darwin`. Building native-arch keeps the slice
+      # tight to runner capability. Intel-Mac testers running aarch64
+      # DMGs through Rosetta is supported by macOS; x86_64 native
+      # coverage is a follow-up (would need `macos-13` matrix). The
+      # CLI sees `--bundles app,dmg` and emits:
+      #   .app  — auto-derived from the binary when 'app' is in targets
+      #   .dmg — installer bundle, controlled by bundle.macOS.dmg in
+      #          tauri.conf.json
+      - name: Build macOS artifact set
+        working-directory: apps/desktop
+        run: npx tauri build --target aarch64-apple-darwin --bundles app,dmg --ci
+
+      - name: Stage macOS release artifacts
+        id: stage_macos
+        working-directory: apps/desktop
+        run: |
+          # Tauri places bundles under src-tauri/target/universal-apple-darwin/release/bundle/{dmg,macos}.
+          # We upload the DMG (tester download); the .app is intentionally
+          # NOT shipped because DMG already carries it.
+          mkdir -p ../../release-staging
+          DMG=$(find src-tauri/target -path '*release/bundle/dmg/*.dmg' -type f | head -1)
+          if [ -z "$DMG" ]; then echo "ERROR: No .dmg artifact found under src-tauri/target/**/release/bundle/dmg"; exit 1; fi
+          DMG_NAME=$(basename "$DMG" | tr ' ' '.')
+          cp "$DMG" "../../release-staging/$DMG_NAME"
+          echo "dmg_name=$DMG_NAME" >> "$GITHUB_OUTPUT"
+          # dmg_url is a placeholder; the canonical release-download URL is
+          # composed in the finalize job after `gh release create` returns
+          # the tag. We surface the NAME here so finalize can compute URL.
+          echo "dmg_url=TBD" >> "$GITHUB_OUTPUT"
+
+      - name: Upload macos platform artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: platform-macos
+          path: |
+            release-staging/*.dmg
+          if-no-files-found: error
+
+
+  # SD16-F-WINDOWS: parallel windows job to the linux publish lane.
+  # Builds .msi + .exe on windows-latest, uploads the artifact tree
+  # via actions/upload-artifact. The `finalize` job (added below)
+  # consumes this alongside platform-linux and platform-macos to
+  # produce the unified update-manifest.json with every available
+  # platform-identity block, then creates the GitHub release and
+  # pushes the channel-index pointer in one final sequenced step.
+  publish-tester-release-windows:
+    name: Publish tester release (${{ github.ref_name }}, windows)
+    runs-on: windows-latest
+    needs: [test, stamp]
+
+    outputs:
+      msi_name: ${{ steps.stage_windows.outputs.msi_name }}
+
+    steps:
+      - uses: actions/checkout@v7
+
+      # Same source of truth as the linux + macos jobs: the `stamp` job's output.
+      - name: Download stamped sources
+        uses: actions/download-artifact@v8
+        with:
+          name: stamped-sources
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      # Note: the Swatinem/rust-cache action operates on a per-runner
+      # cache key. The Linux runner's target/ is on ubuntu-latest, the
+      # Windows runner is on windows-latest, and the macos runner is on
+      # macos-latest — so the cache keys are fundamentally disjoint and
+      # each platform rebuilds from scratch.
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install npm dependencies
+        working-directory: apps/desktop
+        run: npm ci
+
+      # The `tauri build` invocation targets Windows MSVC and emits
+      # both msi (WiX) and nsis bundles. Code-signing is intentionally
+      # deferred to a follow-up — testers can click through SmartScreen.
+      - name: Build Windows artifact set
+        working-directory: apps/desktop
+        run: npx tauri build --target x86_64-pc-windows-msvc --bundles msi,nsis --ci
+
+      - name: Stage Windows release artifacts
+        id: stage_windows
+        # SD16-F-WINDOWS: Windows-latest preinstalls setup-pwsh, which makes
+        # GitHub Actions default the step's `shell:` to PowerShell 7.
+        # `actions/checkout`'s default default shell on Windows is now
+        # `pwsh`, not `bash`, on this runner image. The `run:` body is
+        # bash syntax (uses `[ -z "$VAR" ]`, `tr`, `basename`,
+        # `cp`, $GITHUB_OUTPUT). Explicitly pin `shell: bash` so the
+        # body parses. Without this, PowerShell sees the `if [ -z ]`
+        # as its own `if`/comparison syntax and fails with
+        # `ParserError: Missing '(' after 'if' in if statement.` —
+        # observed in run 29162839096 (post-PR #251) and again in
+        # 29165597856 (post-develop churn).
+        shell: bash
+        working-directory: apps/desktop
+        run: |
+          # Tauri bundles targeting x86_64-pc-windows-msvc land under
+          # `src-tauri/target/<triple>/release/bundle/{msi,nsis}/`, NOT
+          # the cross-platform default `src-tauri/target/release/bundle/...`.
+          # The earlier flat `target/release/bundle/msi` path worked when
+          # `--target` was not passed (default triple = host triple);
+          # once we pass `--target x86_64-pc-windows-msvc` to build the
+          # MSI from neutral rustc on windows-latest runners, the bundle
+          # sub-path picks up the triple directory. Walk the bundle
+          # subtree with `find` so the Stage step works regardless of
+          # whether `--target` is passed.
+          mkdir -p ../../release-staging
+          MSI=$(find src-tauri/target -path '*/release/bundle/msi/*.msi' -type f 2>/dev/null | head -1 || true)
+          NSIS=$(find src-tauri/target -path '*/release/bundle/nsis/*.exe' -type f 2>/dev/null | head -1 || true)
+          # Resolve to absolute Windows paths for the `cp` command
+          # (bash on Windows is fine with mixed / and \\ but the
+          # output goes back to a Linux-style GITHUB_OUTPUT write).
+          MSI=$(cygpath -wa "${MSI}" 2>/dev/null || echo "${MSI}")
+          NSIS=$(cygpath -wa "${NSIS}" 2>/dev/null || echo "${NSIS}")
+          if [ -z "${MSI}" ] || [ ! -f "${MSI}" ]; then
+            echo "ERROR: No .msi artifact found under src-tauri/target/*/release/bundle/msi/"
+            find src-tauri/target -type d -name 'release' 2>/dev/null || true
+            exit 1
+          fi
+          if [ -z "${NSIS}" ] || [ ! -f "${NSIS}" ]; then
+            echo "ERROR: No .exe (NSIS) artifact found under src-tauri/target/*/release/bundle/nsis/"
+            exit 1
+          fi
+          MSI_NAME=$(basename "${MSI}")
+          NSIS_NAME=$(basename "${NSIS}")
+          cp "${MSI}" "../../release-staging/${MSI_NAME}"
+          cp "${NSIS}" "../../release-staging/${NSIS_NAME}"
+          echo "msi_name=${MSI_NAME}" >> "$GITHUB_OUTPUT"
+          echo "nsis_name=${NSIS_NAME}" >> "$GITHUB_OUTPUT"
+
+      - name: Upload windows platform artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: platform-windows
+          path: |
+            release-staging/*.msi
+            release-staging/*.exe
+          if-no-files-found: error
+
+  # SD16-F-WINDOWS: the new owner of the unified release + channel-index
+  # push. Depends on all three platform publish jobs (`publish-tester-release`,
+  # `publish-tester-release-macos`, `publish-tester-release-windows`) so
+  # it sees the union of artifacts regardless of which subset of platforms
+  # produced them on a given run. If one platform job fails, finalize still
+  # runs with the survivors — the schema already admits windows_msi and
+  # macos_dmg as OPTIONAL, so a linux-only run remains conformant.
+  #
+  # Discipline: `finalize` is the ONLY writer of:
+  #   - the GitHub release tag
+  #   - update-manifest.json on the release
+  #   - the channel-index pointer on the protected `update-index` branch
+  # The per-platform publish jobs only build artifacts and upload them
+  # as workflow artifacts. Finalize composes, validates, and ships.
+  finalize:
+    name: Finalize release (${{ github.ref_name }})
+    runs-on: ubuntu-latest
+    needs: [test, stamp, publish-tester-release, publish-tester-release-macos, publish-tester-release-windows]
+
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install Python dependencies
+        run: |
+          python3 -m ensurepip --upgrade || true
+          python3 -m pip install --quiet --no-cache-dir jsonschema==4.21.1
+
+      # Pull each platform's staging tree. Each may or may not be present
+      # depending on which platform jobs succeeded; we do `continue-on-error`
+      # so a single platform's missing-artifact doesn't fail the whole job.
+      - name: Download platform-linux artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: platform-linux
+        continue-on-error: true
+      - name: Download platform-macos artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: platform-macos
+        continue-on-error: true
+      - name: Download platform-windows artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: platform-windows
+        continue-on-error: true
+
+      # Discover artifact files now present on disk. We name variables
+      # for each artifact type so the manifest-emission + release steps
+      # can read them in shell.
+      - name: Resolve release tag and per-platform identity
+        id: resolve
+        run: |
+          set -euo pipefail
+          VERSION="${{ needs.stamp.outputs.version }}"
+          SHORT_SHA="${GITHUB_SHA:0:8}"
+          if [ "${GITHUB_REF_NAME}" = "main" ]; then
+            CHANNEL="stable"; PRERELEASE="false"
+          else
+            CHANNEL="alpha"; PRERELEASE="true"
+          fi
+          MANIFEST_TAG="${CHANNEL}/v${VERSION}-${SHORT_SHA}"
+          RELEASE_TAG="${CHANNEL}-v${VERSION}-${SHORT_SHA}"
+          echo "channel=${CHANNEL}" >> "$GITHUB_OUTPUT"
+          echo "manifest_tag=${MANIFEST_TAG}" >> "$GITHUB_OUTPUT"
+          echo "release_tag=${RELEASE_TAG}" >> "$GITHUB_OUTPUT"
+          echo "prerelease=${PRERELEASE}" >> "$GITHUB_OUTPUT"
+
+          # Per-platform artifacts (each may be absent if its job failed).
+          # Capture each name with `|| true` so a missing artifact leaves
+          # the variable empty rather than failing the script under
+          # `set -euo pipefail`.
+          APPIMAGE_NAME="$( (find . -maxdepth 5 -name '*.AppImage' -type f -print -quit 2>/dev/null || true) | head -1 )"
+          APPIMAGE_NAME="$(basename "${APPIMAGE_NAME:-}" 2>/dev/null || echo '')"
+          MSI_NAME="$( (find . -maxdepth 5 -name '*.msi' -type f -print -quit 2>/dev/null || true) )"
+          MSI_NAME="$(basename "${MSI_NAME:-}" 2>/dev/null || echo '')"
+          DMG_NAME="$( (find . -maxdepth 5 -name '*.dmg' -type f -print -quit 2>/dev/null || true) )"
+          DMG_NAME="$(basename "${DMG_NAME:-}" 2>/dev/null || echo '')"
+          echo "appimage_name=${APPIMAGE_NAME}" >> "$GITHUB_OUTPUT"
+          echo "msi_name=${MSI_NAME}" >> "$GITHUB_OUTPUT"
+          echo "dmg_name=${DMG_NAME}" >> "$GITHUB_OUTPUT"
+
+      # Build the unified update-manifest.json in a clean staging dir.
+      # Pull the linux-supplied manifest as the seed (it carries the
+      # required linux_appimage + provenance + release_notes metadata
+      # already); only the windows_msi + macos_dmg blocks are conditional.
+      - name: Build unified update-manifest.json
+        id: build_manifest
+        run: |
+          set -euo pipefail
+          cd ${{ github.workspace }}
+
+          # Collect the staged release files into a single staging dir.
+          mkdir -p release-staging
+
+          # Copy every artifact (across all platform artifact trees)
+          # into release-staging. The `find` loop is path-globbed at
+          # depth 5 to cover the unzipped platform-* artifact trees.
+          # `|| true` keeps `set -euo pipefail` happy when no match exists.
+          for pattern in '*.deb' '*.AppImage' '*.msi' '*.exe' '*.dmg' \
+                         'checksums.sha256' 'provenance.json' \
+                         'release-notes.md' 'update-manifest.json' \
+                         'update-manifest-stub.json'; do
+            for f in $(find . -maxdepth 5 -name "${pattern}" -type f 2>/dev/null || true); do
+              cp "$f" "release-staging/$(basename "$f")" || true
+            done
+          done
+
+          # Pull the linux-seeded manifest (it carries linux_appimage,
+          # provenance, eligibility, release_notes metadata).
+          if [ ! -f release-staging/update-manifest.json ]; then
+            echo "::error::release-staging/update-manifest.json missing — linux publish must succeed first"
+            exit 1
+          fi
+
+          # Compute URL templates based on the channel/tag we resolved.
+          CHANNEL="${{ steps.resolve.outputs.channel }}"
+          RELEASE_TAG="${{ steps.resolve.outputs.release_tag }}"
+          BASE="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}"
+
+          EXTRA_ARGS=()
+          if [ -n "${{ steps.resolve.outputs.appimage_name }}" ]; then
+            APPIMAGE="${{ steps.resolve.outputs.appimage_name }}"
+            EXTRA_ARGS+=(--appimage-name "${APPIMAGE}")
+            EXTRA_ARGS+=(--appimage-path "release-staging/${APPIMAGE}")
+            EXTRA_ARGS+=(--appimage-url "${BASE}/${APPIMAGE}")
+          fi
+          if [ -n "${{ steps.resolve.outputs.msi_name }}" ]; then
+            MSI="${{ steps.resolve.outputs.msi_name }}"
+            EXTRA_ARGS+=(--windows-msi-name "${MSI}")
+            EXTRA_ARGS+=(--windows-msi-path "release-staging/${MSI}")
+            EXTRA_ARGS+=(--windows-msi-url "${BASE}/${MSI}")
+          fi
+          if [ -n "${{ steps.resolve.outputs.dmg_name }}" ]; then
+            DMG="${{ steps.resolve.outputs.dmg_name }}"
+            EXTRA_ARGS+=(--macos-dmg-name "${DMG}")
+            EXTRA_ARGS+=(--macos-dmg-path "release-staging/${DMG}")
+            EXTRA_ARGS+=(--macos-dmg-url "${BASE}/${DMG}")
+          fi
+
+          # The writer reads release-notes path from repo. We need the
+          # release-notes on disk for sha256; it was uploaded as part of
+          # platform-linux artifact.
+          if [ -f release-staging/release-notes.md ]; then
+            mkdir -p "docs/release/SD-16"
+            cp release-staging/release-notes.md \
+               "docs/release/v0.7/release-notes.md"
+          fi
+
+          RELEASE_NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}"
+
+          python3 scripts/release/write_release_manifest.py \
+            --repo-root "${{ github.workspace }}" \
+            --repo "${GITHUB_REPOSITORY}" \
+            --channel "${CHANNEL}" \
+            --tag "${{ steps.resolve.outputs.manifest_tag }}" \
+            --version "${{ needs.stamp.outputs.version }}" \
+            --source-branch "${GITHUB_REF_NAME}" \
+            --source-commit "${GITHUB_SHA}" \
+            --release-notes-path "docs/release/v0.7/release-notes.md" \
+            --workflow ".github/workflows/publish-tester-release.yml" \
+            --run-id "${GITHUB_RUN_ID}" \
+            --run-attempt "${GITHUB_RUN_ATTEMPT}" \
+            --release-notes-url "${RELEASE_NOTES_URL}" \
+            --min-supported-version "0.0.0" \
+            --appimage-install "true" \
+            --required-install-kind "appimage" \
+            "${EXTRA_ARGS[@]}" \
+            --output release-staging/update-manifest.json
+
+          cp release-staging/update-manifest.json release-staging/update-manifest-stub.json
+
+      - name: Validate unified update-manifest.json
+        working-directory: release-staging
+        run: |
+          python3 ../scripts/release/validate_manifest.py \
+            --manifest update-manifest.json \
+            --schema ../schemas/update/update-manifest.schema.json
+          python3 ../tools/release/check_release_manifest_against_dev_schema.py \
+            update-manifest.json
+
+      - name: Create GitHub release with all platform assets
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: release-staging
+        run: |
+          set -euo pipefail
+          TAG="${{ steps.resolve.outputs.release_tag }}"
+          TITLE="${{ steps.resolve.outputs.channel }} v${{ needs.stamp.outputs.version }} (${GITHUB_SHA:0:8})"
+          PRERELEASE="${{ steps.resolve.outputs.prerelease }}"
+
+          EXTRA_FLAGS=()
+          if [ "$PRERELEASE" = "true" ]; then
+            EXTRA_FLAGS+=(--prerelease)
+          fi
+
+          # Pull the release notes from the platform-linux artifact; this
+          # keeps the doc copy identical across runs.
+          NOTES_FILE="release-notes.md"
+          if [ ! -f "$NOTES_FILE" ]; then
+            cp ../docs/release/v0.7/release-notes.md "$NOTES_FILE"
+          fi
+
+          # Build the file glob: every artifact we have staged.
+          GLOB=( *.deb *.AppImage *.msi *.exe *.dmg
+                 checksums.sha256 provenance.json
+                 update-manifest.json update-manifest-stub.json
+                 "$NOTES_FILE" )
+
+          gh release create "${TAG}" \
+            --title "${TITLE}" \
+            --notes-file "${NOTES_FILE}" \
+            "${EXTRA_FLAGS[@]}" \
+            "${GLOB[@]}"
+
+      # === Channel-index preparation + push (moved from linux publish job) ===
+
+      - name: Assert channel-index gate preconditions
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') == ''
+        run: |
+          echo "::error::channel-index: no tranche manifest matched docs/release/SD-16/tranche-*/manifest.yaml — the channel-index steps would be silently skipped and the update-index branch would never move. Failing loudly instead."
+          exit 1
+
+      - name: Emit alpha channel index
+        env:
+          GITHUB_SERVER_URL: ${{ github.server_url }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          CHANNEL: ${{ steps.resolve.outputs.channel }}
+          RELEASE_TAG: ${{ steps.resolve.outputs.release_tag }}
+        run: |
+          set -euo pipefail
+          mkdir -p release-staging/channels
+          python3 tools/release/emit_channel_index.py \
+            --channel "${CHANNEL}" \
+            --manifest release-staging/update-manifest.json \
+            --output release-staging/channels/${CHANNEL}.json \
+            --release-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${RELEASE_TAG}" \
+            --manifest-url "${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${RELEASE_TAG}/update-manifest-stub.json" \
+            --published-at "$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+
+      - name: Prepare channel index payload
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
+        id: channel_index_prep
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CHANNEL: ${{ steps.resolve.outputs.channel }}
+          TAG: ${{ steps.resolve.outputs.release_tag }}
+          MANIFEST_TAG: ${{ steps.resolve.outputs.manifest_tag }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CHANNEL:-}" ] || [ -z "${TAG:-}" ] || [ -z "${MANIFEST_TAG:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL, TAG, or MANIFEST_TAG from upstream steps"
+            exit 1
+          fi
+
+          TRANCHE_ID=""
+          FOUND="$(find docs/release/SD-16/tranche-* -maxdepth 2 -name 'manifest.yaml' 2>/dev/null | while read -r f; do
+            PB="$(awk -F': *' '/^promotion_branch:/{gsub(/["'"'"' ]/,"",$2); print $2; exit}' "$f")"
+            if [ "${PB}" = "${GITHUB_REF_NAME}" ]; then
+              echo "$f"
+              exit 0
+            fi
+          done | head -1 || true)"
+          if [ -n "${FOUND:-}" ] && [ -f "${FOUND}" ]; then
+            TRANCHE_ID="$(awk -F': *' '/^tranche_id:/{gsub(/["'"'"' ]/,"",$2); print $2; exit}' "${FOUND}")"
+          fi
+          if [ -z "${TRANCHE_ID}" ]; then
+            echo "::error::channel-index: no tranche manifest found for promotion_branch=${GITHUB_REF_NAME} (looked in docs/release/SD-16/tranche-*/manifest.yaml)"
+            exit 1
+          fi
+
+          PUBLISHED_AT="$(gh release view "${TAG}" --json publishedAt --jq '.publishedAt')"
+          if [ -z "${PUBLISHED_AT}" ] || [ "${PUBLISHED_AT}" = "null" ]; then
+            echo "::error::channel-index: gh release view returned no publishedAt for tag=${TAG}"
+            exit 1
+          fi
+
+          MANIFEST_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${TAG}/update-manifest-stub.json"
+          NOTES_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/tag/${TAG}"
+          MIRROR_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/update-index/manifests/${MANIFEST_TAG}/update-manifest.json"
+          MANIFEST_SRC="${GITHUB_WORKSPACE}/release-staging/update-manifest.json"
+
+          if [ ! -f "${MANIFEST_SRC}" ]; then
+            echo "::error::channel-index: expected manifest source not found at ${MANIFEST_SRC} (was the Build unified update-manifest.json step skipped or did it fail?)"
+            exit 1
+          fi
+
+          mkdir -p channels
+          python3 tools/release/emit_channel_index.py \
+            --channel "${CHANNEL}" \
+            --manifest "${MANIFEST_SRC}" \
+            --output "channels/${CHANNEL}.json" \
+            --release-url "${NOTES_URL}" \
+            --manifest-url "${MIRROR_URL}" \
+            --published-at "${PUBLISHED_AT}"
+          INDEX_JSON="$(cat "channels/${CHANNEL}.json")"
+
+          mkdir -p "manifests/${MANIFEST_TAG}"
+          cp "${MANIFEST_SRC}" "manifests/${MANIFEST_TAG}/update-manifest.json"
+          python3 -c "import json; json.load(open('manifests/${MANIFEST_TAG}/update-manifest.json'))"
+
+          mkdir -p channels
+          printf '%s\n' "${INDEX_JSON}" > "channels/${CHANNEL}.json"
+          python3 -c "import json; json.load(open('channels/${CHANNEL}.json'))"
+
+          MANIFEST_CONTENT_B64="$(base64 -w0 "manifests/${MANIFEST_TAG}/update-manifest.json")"
+          if [ -z "${MANIFEST_CONTENT_B64}" ]; then
+            echo "::error::channel-index: failed to base64-encode the staged manifest mirror at manifests/${MANIFEST_TAG}/update-manifest.json"
+            exit 1
+          fi
+
+          {
+            echo "CHANNEL=${CHANNEL}"
+            echo "TAG=${TAG}"
+            echo "MANIFEST_TAG=${MANIFEST_TAG}"
+            echo "PUBLISHED_AT=${PUBLISHED_AT}"
+            echo "MANIFEST_URL=${MANIFEST_URL}"
+            echo "MIRROR_URL=${MIRROR_URL}"
+            echo "NOTES_URL=${NOTES_URL}"
+            echo "TRANCHE_ID=${TRANCHE_ID}"
+            echo "COMMIT_MESSAGE=channel-index: ${CHANNEL} ${TAG} (tranche ${TRANCHE_ID})"
+            echo "CHANNEL_INDEX_JSON_B64=$(printf '%s' "${INDEX_JSON}" | base64 -w0)"
+            echo "MANIFEST_CONTENT_B64=${MANIFEST_CONTENT_B64}"
+          } >> "${GITHUB_ENV}"
+
+          echo "channel-index: prepared channels/${CHANNEL}.json (channel=${CHANNEL}, tag=${TAG}, tranche=${TRANCHE_ID}, published_at=${PUBLISHED_AT}, mirror_url=${MIRROR_URL})"
+
+      - name: Update channel index on update-index branch
+        if: success() && github.event_name == 'push' && (github.ref_name == 'develop' || github.ref_name == 'main') && hashFiles('docs/release/SD-16/tranche-*/manifest.yaml') != ''
+        run: |
+          set -euo pipefail
+
+          if [ -z "${CHANNEL:-}" ] || [ -z "${COMMIT_MESSAGE:-}" ] || [ -z "${CHANNEL_INDEX_JSON_B64:-}" ] || [ -z "${MANIFEST_TAG:-}" ] || [ -z "${MANIFEST_CONTENT_B64:-}" ]; then
+            echo "::error::channel-index: missing CHANNEL, COMMIT_MESSAGE, CHANNEL_INDEX_JSON_B64, MANIFEST_TAG, or MANIFEST_CONTENT_B64"
+            exit 1
+          fi
+
+          FILE="channels/${CHANNEL}.json"
+          MIRROR_FILE="manifests/${MANIFEST_TAG}/update-manifest.json"
+
+          git reset --hard HEAD
+          git clean -fd
+
+          if git ls-remote --exit-code --heads origin update-index >/dev/null 2>&1; then
+            git fetch origin update-index:refs/remotes/origin/update-index
+            git checkout -B update-index refs/remotes/origin/update-index
+          else
+            git checkout --orphan update-index
+            git rm -rf . >/dev/null 2>&1 || true
+          fi
+
+          mkdir -p channels
+          printf '%s' "${CHANNEL_INDEX_JSON_B64}" | base64 -d > "${FILE}"
+          python3 -c "import json; json.load(open('${FILE}'))"
+
+          mkdir -p "manifests/${MANIFEST_TAG}"
+          printf '%s' "${MANIFEST_CONTENT_B64}" | base64 -d > "${MIRROR_FILE}"
+          python3 -c "import json; json.load(open('${MIRROR_FILE}'))"
+
+          git add "${FILE}" "${MIRROR_FILE}"
+          if git diff --cached --quiet; then
+            echo "channel-index: no changes for ${FILE} and ${MIRROR_FILE}; update-index is already current"
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "${COMMIT_MESSAGE}"
+          git push origin HEAD:update-index
+
+

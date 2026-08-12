@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Kobold ~ Crafty",
+    "name": "Crafty",
+    "race_key": "Kobold",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Kobold Racial Trait",
+      "Kobold Racial Default",
+      "SpecialQuality",
+      "Special Quality",
+      "Special Ability"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Kobold_ReplaceCrafty",
+    "sets_replace_flags": [],
+    "description": "Kobolds gain a +2 racial bonus on Craft (traps), Perception, and Profession (miner) checks. Craft (traps) and Stealth are always class skills for a kobold.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Kobold ~ Crafty"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Kobold Racial Trait.Kobold Racial Default.SpecialQuality.Special Quality.Special Ability"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Kobold_ReplaceCrafty=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Kobolds gain a +2 racial bonus on Craft (traps), Perception, and Profession (miner) checks. Craft (traps) and Stealth are always class skills for a kobold."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Class Skill|AUTOMATIC|Craft (Traps)|Stealth"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "RacialSkillModifier|+2 Craft (traps), +2 Perception, +2 Profession (miner)"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Craft (Traps),Perception,Profession (Miner)",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/kobold/kobold_abilities_race.lst",
+    "sha256": "a5ca69f1f5d3bb2127fa2699aaa540d54a37b697b458ec3a68f3ec52a8af6f61",
+    "line": 20,
+    "record_key": "Kobold ~ Crafty"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

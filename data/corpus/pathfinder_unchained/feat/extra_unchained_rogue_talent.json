@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:44Z",
+  "data": {
+    "key": "Extra Unchained Rogue Talent",
+    "category": "General",
+    "name": "Extra Unchained Rogue Talent",
+    "description": "Through constant practice, you have learned how to perform a special trick.",
+    "source_page": "APG p.160"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_feats.lst",
+    "sha256": "7152b04c335ae5ca8ecd260310cd338bda74d10983760533ea997fec324a3b52",
+    "line": 29,
+    "record_key": "Extra Unchained Rogue Talent"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard"
+  ]
+}

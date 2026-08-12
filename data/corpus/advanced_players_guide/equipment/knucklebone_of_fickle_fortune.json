@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Knucklebone of Fickle Fortune",
+    "category": "MagicItems",
+    "name": "Knucklebone of Fickle Fortune",
+    "cost_gp": 0.0,
+    "weight": 0.01,
+    "description": "A piece of bone worn down to a near sphere, resembling a twenty-sided die, that produces random effects ranging from permanent negative levels to resurrection when rolled."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/wondrousItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

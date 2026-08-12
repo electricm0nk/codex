@@ -1,0 +1,27 @@
+# Product-Identity sweep baseline for src/rules_core/rules_tables/**/*.rs
+#
+# Format: file<TAB>term<TAB>count<TAB>disposition<TAB>note
+# disposition is `real-leak` or `false-positive` — no other value parses.
+#
+# Every row here is a hit that PRE-DATES the provenance gate
+# (docs/governance/license-matrix.md's central finding: no file under
+# rules_tables/ had ever been screened). The gate fails on anything not
+# listed, and on a listed row the tree no longer carries — so this file
+# cannot rot into a blanket suppression.
+#
+# The three `real-leak` rows are OWNED BY OTHER BUNDLES' write scope
+# (SD-27/SD-28 landed those tables); the provenance gate records them and
+# does not redact them here. Redaction is that bundle's cycle, not this one's.
+#
+# Derived 2026-08-11 by `cargo run --locked --bin pi_sweep_rules_tables`
+# over 137 files / 55 terms: 10 hits, 3 real, 7 false positives.
+src/rules_core/rules_tables/acg/archetype_tables.rs	Sarenrae	1	real-leak	Ecclesitheurge ~ Domain Mastery description; named in license-matrix.md; ACG table owned outside SD-29
+src/rules_core/rules_tables/acg/spell_list.rs	Jarn	1	real-leak	Discern Next of Kin flavor text; the re-leak license-matrix.md names — the JSON-cache copy was redacted, this Rust-literal copy never was
+src/rules_core/rules_tables/advanced_race_guide/archetype_tables.rs	Asmodeus	1	real-leak	Fiendish Vessel ~ Fiendish Familiar description; named in license-matrix.md; ARG table owned outside SD-29
+src/rules_core/rules_tables/acg/shaman_spell_list.rs	Nex	1	false-positive	blacklist term "Nex" substring-matches the spell name "Discern Next of Kin"
+src/rules_core/rules_tables/acg/spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
+src/rules_core/rules_tables/apg/witch_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
+src/rules_core/rules_tables/crb/bard_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
+src/rules_core/rules_tables/crb/sorcerer_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
+src/rules_core/rules_tables/crb/wizard_spell_list.rs	Nex	1	false-positive	same "Next of Kin" substring collision
+src/rules_core/rules_tables/ultimate_magic/equipment_tables.rs	Geb	1	false-positive	blacklist term "Geb" (a place name) inside the unrelated proper noun "Gebr" — the example license-matrix.md already records

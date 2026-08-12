@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Duergar ~ Stability",
+    "name": "Stability",
+    "race_key": "Duergar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Duergar Racial Trait",
+      "Duergar Racial Default",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Duergar_ReplaceStability",
+    "sets_replace_flags": [],
+    "description": "Duergar receive a +4 racial bonus to their Combat Maneuver Defense against bull rush or trip attempts while standing on the ground.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Duergar ~ Stability"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Duergar Racial Trait.Duergar Racial Default.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Duergar_ReplaceStability=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Duergar receive a +4 racial bonus to their Combat Maneuver Defense against bull rush or trip attempts while standing on the ground."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+4 racial bonus to their Combat Maneuver Defense against bull rush or trip attempts while standing on the ground."
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/duergar/duergar_abilities_race.lst",
+    "sha256": "7a492c53ce8b6c58373d1a0f1901123598f3b1e6bc86ed60ee7d66cd052a2b41",
+    "line": 20,
+    "record_key": "Duergar ~ Stability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

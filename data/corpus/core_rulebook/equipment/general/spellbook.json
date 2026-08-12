@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 15.0,
+    "description": "A spellbook has 100 pages of parchment, and each spell takes up one page per spell level (one page each for 0-level spells).",
+    "key": "Spellbook",
+    "name": "Spellbook",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Spellbook"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Spellbook"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Book.Spellbook"
+      },
+      {
+        "key": "NUMPAGES",
+        "value": "100"
+      },
+      {
+        "key": "PAGEUSAGE",
+        "value": "max(SPELLLEVEL,1)"
+      },
+      {
+        "key": "COST",
+        "value": "15"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "DESC",
+        "value": "A spellbook has 100 pages of parchment, and each spell takes up one page per spell level (one page each for 0-level spells)."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 229,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Spellbook",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Fester (Mass)",
+    "school": "Necromancy",
+    "level": 6,
+    "description": "This spell functions as fester, except that it affects multiple foes.",
+    "full_text": false
+  },
+  "source": {
+    "kind": "lst_corrected_ingest",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_spells.lst",
+    "sha256": "382c1801049980712680989650dd17f86b1d4cca8d1c7b1106c5fdd01a5d9ac7",
+    "line": 1945,
+    "record_key": "Fester (Mass)",
+    "original_ingest_defect": "same-line .MOD-stanza concatenation (with Fiery Body.MOD); prior parser attributed the line's last DESC: token to this record instead of its own"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_ability_scaling",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

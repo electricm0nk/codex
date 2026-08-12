@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Drakainia ~ Transfer Suffering",
+    "delivery": "Supernatural",
+    "description": "As a swift action, a drakainia can transfer a single harmful spell effect or condition from herself to one of her offspring that is currently within her gestation aura.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_transfer_suffering",
+    "name": "Transfer Suffering",
+    "owners": [
+      "bestiary_4:monster:drakainia"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 556,
+    "record_key": "Drakainia ~ Transfer Suffering"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

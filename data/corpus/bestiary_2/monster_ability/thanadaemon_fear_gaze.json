@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Thanadaemon ~ Fear Gaze",
+    "delivery": "Supernatural",
+    "description": "Cower in fear for 1d6 rounds, 30 feet, Will DC %1 negates.  This is a mind-affecting fear effect.",
+    "description_variables": [
+      "ThanadaemonFearGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:thanadaemon_fear_gaze",
+    "name": "Fear Gaze",
+    "owners": [
+      "bestiary_2:monster:daemon_thanadaemon"
+    ],
+    "source_page": "p.74",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 328,
+    "record_key": "Thanadaemon ~ Fear Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

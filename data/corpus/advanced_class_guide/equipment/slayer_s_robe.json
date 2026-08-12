@@ -1,0 +1,79 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 15000.0,
+    "description": "5 min/day gaseous form; +5 bonus to Stealth (+10 in gaseous form) and +5 to Sleight of Hand to conceal a weapon, +1 resistance bonus to saves; bonus to saves increases to studied target bonus when facing a studied target",
+    "key": "Slayer's Robe",
+    "name": "Slayer's Robe",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Stealth",
+          "SlayersRobeStealthBonus",
+          "TYPE=Competence"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "SlayersRobeStealthBonus",
+          "5"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Robe"
+      },
+      {
+        "key": "COST",
+        "value": "15000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "DEFINE",
+        "value": "SlayersRobeStealthBonus|0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.235"
+      },
+      {
+        "key": "SPROP",
+        "value": "5 min/day gaseous form; +5 bonus to Stealth (+10 in gaseous form) and +5 to Sleight of Hand to conceal a weapon, +1 resistance bonus to saves"
+      },
+      {
+        "key": "SPROP",
+        "value": "bonus to saves increases to studied target bonus when facing a studied target|PRECLASS:1,Slayer=1"
+      },
+      {
+        "key": "TEMPBONUS",
+        "value": "PC|VAR|SlayersRobeStealthBonus|5|DESC=In Gaseous Form"
+      }
+    ],
+    "weight": 5.0
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 417,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Slayer's Robe",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "computed:tempbonus"
+  ]
+}

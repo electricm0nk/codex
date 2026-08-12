@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Twigjack ~ Splinterspray",
+    "delivery": "Extraordinary",
+    "description": "A twigjack can eject a barrage of splinters and brambles from its body three times per day as a standard action.  This effect creates a 15-foot conical burst of jagged splinters, dealing 4d6 points of piercing damage to all creatures in the area.  A DC %1 Reflex saving throw halves this damage.",
+    "description_variables": [
+      "TwigjackSplintersprayDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:twigjack_splinterspray",
+    "name": "Splinterspray",
+    "owners": [
+      "bestiary_2:monster:twigjack"
+    ],
+    "source_page": "p.274",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1314,
+    "record_key": "Twigjack ~ Splinterspray"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

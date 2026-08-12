@@ -1,0 +1,98 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Svirfneblin ~ Stoneseer",
+    "name": "Stoneseer",
+    "race_key": "Svirfneblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Svirfneblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Svirfneblin_ReplaceSvirfneblinMagic"
+    ],
+    "description": "Svirfneblin add +1 to the caster level of any spells with the earth descriptor they cast. Svirfneblin also gain the following spell-like abilities: Constant--nondetection; 1/day--magic stone, stone shape, stone tell; caster level equals the svirfneblin's class levels. This racial trait replaces svirfneblin magic.",
+    "source_page": "p.204",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Svirfneblin ~ Stoneseer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Svirfneblin Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Svirfneblin ~ Stoneseer],[!PREFACT:1,ABILITIES,Svirfneblin_ReplaceSvirfneblinMagic=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Svirfneblin add +1 to the caster level of any spells with the earth descriptor they cast. Svirfneblin also gain the following spell-like abilities: Constant--nondetection; 1/day--magic stone, stone shape, stone tell; caster level equals the svirfneblin's class levels."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces svirfneblin magic.|!PREABILITY:1,CATEGORY=Special Ability,Svirfneblin ~ Stoneseer"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Spell-Like Ability|AUTOMATIC|Racial SLA ~ Nondetection|Racial SLA ~ Magic Stone|Racial SLA ~ Stone Shape|Racial SLA ~ Stone Tell"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "FACT",
+        "value": "Svirfneblin_ReplaceSvirfneblinMagic|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DESCRIPTOR.Earth",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "RacialSLA_Nondetection_Constant",
+          "1",
+          "TYPE=Boolean"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1214,
+    "record_key": "Svirfneblin ~ Stoneseer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

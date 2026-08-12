@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "corpus_key": "Spine Dragon ~ Ray Deflection",
+    "delivery": "Supernatural",
+    "description": "A spine dragon's scales deflect rays and magic missile spells, rendering the spine dragon immune to such effects. There's a 30%% chance a deflected effect reflects back in full force at the caster; otherwise it is simply negated.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_world_guide:monster_ability:spine_dragon_ray_deflection",
+    "name": "Ray Deflection",
+    "owners": [
+      "inner_sea_world_guide:monster:dragon_spine"
+    ],
+    "source_page": "p.313",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 56,
+    "record_key": "Spine Dragon ~ Ray Deflection"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

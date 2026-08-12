@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Fossegrim ~ Enchanting Music",
+    "delivery": "Supernatural",
+    "description": "As a full-round action, a fossegrim can play a musical stringed instrument (usually a harp or violin) and target a single creature within 45 feet that can hear and see the fossegrim with an effect identical to the unnatural lust spell (CL 9th; Will DC %1). This action provokes an attack of opportunity. If the target touches or kisses the fossegrim, the fey can affect the target with its drowning touch ability. This is a sonic mind-affecting compulsion effect.",
+    "description_variables": [
+      "14+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fossegrim_enchanting_music",
+    "name": "Enchanting Music",
+    "owners": [
+      "bestiary_4:monster:fossegrim"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 711,
+    "record_key": "Fossegrim ~ Enchanting Music"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

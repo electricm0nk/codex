@@ -1,0 +1,77 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": 8000.0,
+    "description": null,
+    "key": "Intelligent Item ~ Ability Score / Wisdom 20",
+    "name": "Int Item / Stat Wisdom 20",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "IntelligentItemEgo",
+          "5"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "IntItemStatWIS",
+          "10"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Intelligent Item ~ Ability Score / Wisdom 20"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NOTHING"
+      },
+      {
+        "key": "TYPE",
+        "value": "Weapon.Armor.Goods"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "REPLACES",
+        "value": "Intelligent Item ~ Ability Score / Wisdom 11,Intelligent Item ~ Ability Score / Wisdom 12,Intelligent Item ~ Ability Score / Wisdom 13,Intelligent Item ~ Ability Score / Wisdom 14,Intelligent Item ~ Ability Score / Wisdom 15,Intelligent Item ~ Ability Score / Wisdom 16,Intelligent Item ~ Ability Score / Wisdom 17,Intelligent Item ~ Ability Score / Wisdom 18,Intelligent Item ~ Ability Score / Wisdom 19"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,EQMOD=Intelligent Item ~ Base"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Intelligent Item|AUTOMATIC|Intelligent Item Stat WIS ~ 20"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 382,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Intelligent Item ~ Ability Score / Wisdom 20",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

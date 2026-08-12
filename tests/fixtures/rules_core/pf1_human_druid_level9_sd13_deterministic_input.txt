@@ -1,0 +1,37 @@
+# SD13-E5 deterministic Human Druid level 9 progression fixture.
+# Widens the accepted SD13-E4/E5 deterministic PF1 Core Rulebook Human Druid
+# level-1..level-8 prepared divine spell-bearing baseline to level 9 as
+# chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice
+# seam (ability-bonus and bonus-feat), the deterministic ability/feat
+# posture from the level-1..level-8 fixtures, and the same canonical
+# nature-bond selection (animal companion), adding only the level bump this
+# bounded tranche needs.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no wild shape
+# execution (Wild Shape's uses stay 3/day at level 9 — the next rise lands
+# at 10th, verified independently against both d20pfsrd and
+# legacy.aonprd.com — and it stays entirely named-but-unproven per the
+# level-4/6/8 precedent, so this fixture makes no wild-shape claim either
+# way), no poison-application or condition-resolution execution for the
+# newly recognized Venom Immunity grant (the PF1 CRB level-9 "Special"
+# column's only entry, "a druid gains immunity to all poisons" — a genuinely
+# flat, no-choice grant grounded as a +0 identity record only, mirroring
+# Monk's Purity of Body precedent), no spellbook, no spells prepared, no
+# spell slots, no spell DCs, no bonus spells, and no level-10+ progression.
+case_id=pf1-crb-human-druid-level9
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:9
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

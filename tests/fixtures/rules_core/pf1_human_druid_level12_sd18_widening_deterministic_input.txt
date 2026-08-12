@@ -1,0 +1,47 @@
+# SD18 deterministic Human Druid level 12 progression fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Druid
+# level-1..level-11 prepared divine spell-bearing baseline
+# (tests/fixtures/rules_core/pf1_human_druid_level11_sd18_widening_deterministic_input.txt)
+# to level 12 as chosen input only. It names selections; it does not contain
+# derived, computed, or parity values. It preserves the accepted Human
+# race-choice seam (ability-bonus and bonus-feat), the deterministic
+# ability/feat posture from the level-1 through level-11 fixtures, and the
+# same canonical nature-bond selection (animal companion), adding only the
+# level bump this bounded slice needs.
+#
+# It deliberately avoids every later Druid burden surface: no animal
+# companion stat block/advancement/link-share-spells, no spellbook, no
+# spells prepared, no spell slots, no spell DCs, no bonus spells, and no
+# level-13+ progression. UNLIKE level 11, the PF1 CRB Druid class table's
+# level-12 "Special" column is NOT blank — it reads "Wild shape (5/day)"
+# (verified independently against both d20pfsrd and legacy.aonprd.com) —
+# but per the level-4/6/8/10 precedent that frequency rise is bundled with a
+# form-list expansion (Huge elemental or Huge plant creature) and a
+# functioning-level upgrade (elemental body IV / plant shape III), neither
+# of which is separable from the "5/day" numeral without misrepresenting the
+# bundled feature as flat, so Wild Shape stays entirely named-but-unproven
+# and this fixture makes no new class-feature claim at level 12 either way.
+# Base attack bonus genuinely rises to +9 (12 * 3 / 4, up from +8 at level
+# 11); both good saves genuinely rise to +8 (12/2+2, up from +7) and poor
+# Reflex genuinely rises to +4 (12/3, up from +3); Wild Empathy genuinely
+# rises to 13 (12 + Charisma modifier 1); Nature Sense, Woodland Stride,
+# Trackless Step, Resist Nature's Lure, Venom Immunity, and the nature-bond
+# choice recognition all carry over unchanged — so no new pillar is grounded
+# at level 12, only the existing arithmetic pillars are widened (mirroring
+# exactly how Barbarian's/Bard's/Cleric's own level-12 widenings were
+# grounded).
+case_id=pf1-crb-human-druid-level12
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:druid:12
+ability=strength:10
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:12
+feat=feat:dodge
+choice=choice:druid_nature_bond:bond:animal_companion
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

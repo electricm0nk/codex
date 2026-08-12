@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Gnome ~ Weapon Familiarity",
+    "name": "Weapon Familiarity",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "Gnome Racial Default",
+      "SpecialQuality",
+      "Weapon Familiarity"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Gnome_ReplaceWeaponFamiliarity",
+    "sets_replace_flags": [],
+    "description": "Gnomes treat any weapon with the word \"gnome\" in its name as a martial weapon.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Weapon Familiarity"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.Gnome Racial Default.SpecialQuality.Weapon Familiarity"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Gnome_ReplaceWeaponFamiliarity=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes treat any weapon with the word \"gnome\" in its name as a martial weapon."
+      },
+      {
+        "key": "CHANGEPROF",
+        "value": "TYPE.Gnome=Martial"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/gnome/gnome_abilities_race.lst",
+    "sha256": "aa95c706e39ae8a191f89c092152b6a5a25ab27540dc35f0a8796aa8e67db38f",
+    "line": 28,
+    "record_key": "Gnome ~ Weapon Familiarity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

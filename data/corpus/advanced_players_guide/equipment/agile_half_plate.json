@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Agile Half-Plate",
+    "category": "ArmsArmor",
+    "name": "Agile Half-Plate",
+    "cost_gp": 850.0,
+    "weight": 55.0,
+    "description": "A half-plate crafted for extra maneuverability, reducing the usual armor check penalty on Climb and Jump checks to -4, and letting the wearer run at quadruple speed as though wearing light armor."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

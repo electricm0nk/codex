@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Charda ~ Cold Vigor",
+    "delivery": "Extraordinary",
+    "description": "When a charda is in a cold environment, it becomes more animated and gains a +1 racial bonus on attack rolls and weapon damage rolls.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:charda_cold_vigor",
+    "name": "Cold Vigor",
+    "owners": [
+      "bestiary_2:monster:charda"
+    ],
+    "source_page": "p.55",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 241,
+    "record_key": "Charda ~ Cold Vigor"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:tempbonus"
+  ]
+}

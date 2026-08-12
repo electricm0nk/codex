@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Leucrotta ~ Lure",
+    "delivery": "Supernatural",
+    "description": "At any point that a leucrotta's targets are unaware of it (for example, if the leucrotta is hiding or concealed in darkness), the leucrotta can call out to the targets, who must be in line of sight and within 60 feet.  When the leucrotta calls out, the targets must make a DC %1 Will save or fall under the effects of a suggestion to approach the sound of the leucrotta's voice.  This effect functions identically to a mass suggestion spell with a caster level of %2.  A creature that saves cannot be affected again by the same leucrotta's lure for 24 hours.  The lure is a language-dependent effect, and if the leucrotta uses the victim's name during the lure, the victim takes a -4 penalty on its saving throw.  This is a sonic mind-affecting charm effect.",
+    "description_variables": [
+      "LeucrottaLureDC",
+      "TL"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:leucrotta_lure",
+    "name": "Lure",
+    "owners": [
+      "bestiary_2:monster:leucrotta"
+    ],
+    "source_page": "p.178",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 777,
+    "record_key": "Leucrotta ~ Lure"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

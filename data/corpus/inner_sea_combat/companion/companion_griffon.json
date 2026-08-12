@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T13:12:24Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_combat:companion:unable_to_carry_a_rider_while_flying",
+      "inner_sea_combat:companion:companion_advancement_griffon"
+    ],
+    "corpus_key": "Companion (Griffon)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "inner_sea_combat:companion:companion_griffon",
+    "monster_class": "Companion:2",
+    "name": "Companion (Griffon)",
+    "natural_armor": 4,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "reach_feet": null,
+    "record_type": "creature",
+    "size": "L",
+    "source_page": null,
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 6
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -6
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -2
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_races_companion.lst",
+    "sha256": "94e386d8d30b9a147d7d6e54dd56279524aadad67ff1302f7f8b1db6b11c007e",
+    "line": 5,
+    "record_key": "Companion (Griffon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

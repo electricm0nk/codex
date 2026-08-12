@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:spider_goliath_poison",
+      "bestiary_4:monster_ability:spider_goliath_poisoned_web"
+    ],
+    "challenge_rating": "11",
+    "corpus_key": "Spider (Goliath)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:spider_goliath",
+    "monster_class": "Vermin:14",
+    "name": "Goliath Spider",
+    "natural_attacks": [
+      {
+        "damage_dice": "6d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "C",
+    "source_page": "p.252",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 220,
+    "record_key": "Spider (Goliath)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

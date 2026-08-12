@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Half-Orc ~ Orc Blood",
+    "name": "Orc Blood",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "Half-Orc Racial Default",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "HalfOrc_ReplaceOrcBlood",
+    "sets_replace_flags": [],
+    "description": "Half-orcs count as both humans and orcs for any effect related to race.",
+    "source_page": "p.25",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Orc Blood"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.Half-Orc Racial Default.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,HalfOrc_ReplaceOrcBlood=true"
+      },
+      {
+        "key": "DESC",
+        "value": "Half-orcs count as both humans and orcs for any effect related to race."
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.25"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/half_orc/halforc_abilities_race.lst",
+    "sha256": "f6ee56352d24d49bc05955f40296ba3db009530a488c78515b64238895f44f48",
+    "line": 23,
+    "record_key": "Half-Orc ~ Orc Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

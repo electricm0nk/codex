@@ -1,0 +1,96 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Elf ~ Fleet-Footed",
+    "name": "Fleet-Footed",
+    "race_key": "Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Elf_ReplaceWeaponFamiliarity",
+      "Elf_ReplaceKeenSenses"
+    ],
+    "description": "While all elves are naturally lithe and agile, some also are naturally speedy and have a strong desire to rush into situations rather than worrying about looking ahead. Elves with this racial trait receive Run as a bonus feat and a +2 racial bonus on initiative checks. This racial trait replaces keen senses and weapon familiarity.",
+    "source_page": "p.22",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Fleet-Footed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Fleet-Footed],[!PREFACT:1,ABILITIES,Elf_ReplaceWeaponFamiliarity=true,Elf_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "While all elves are naturally lithe and agile, some also are naturally speedy and have a strong desire to rush into situations rather than worrying about looking ahead. Elves with this racial trait receive Run as a bonus feat and a +2 racial bonus on initiative checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses and weapon familiarity.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Fleet-Footed"
+      },
+      {
+        "key": "ABILITY",
+        "value": "FEAT|AUTOMATIC|Run"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.22"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceWeaponFamiliarity|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceKeenSenses|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "INITIATIVE",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 81,
+    "record_key": "Elf ~ Fleet-Footed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

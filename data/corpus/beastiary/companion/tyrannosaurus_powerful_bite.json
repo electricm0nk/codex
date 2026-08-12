@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "corpus_key": "Tyrannosaurus ~ Powerful Bite",
+    "delivery": "Extraordinary",
+    "description": "A tyrannosaurus applies twice its Strength modifier to bite damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:companion:tyrannosaurus_powerful_bite",
+    "name": "Powerful Bite",
+    "owners": [
+      "beastiary:companion:companion_dinosaur_tyrannosaurus"
+    ],
+    "record_type": "ability",
+    "source_page": "p.86",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
+    "line": 43,
+    "record_key": "Tyrannosaurus ~ Powerful Bite"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

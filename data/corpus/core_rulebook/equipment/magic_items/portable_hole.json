@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 20000.0,
+    "description": "A portable hole is a circle of cloth spun from the webs of a phase spider interwoven with strands of ether and beams of starlight, resulting in a portable extradimensional space. When opened fully, a portable hole is 6 feet in diameter, but it can be folded up to be as small as a pocket handkerchief. When spread upon any surface, it causes an extradimensional space 10 feet deep to come into being. This hole can be picked up from inside or out by simply taking hold of the edges of the cloth and folding it up. Either way, the entrance disappears, but anything inside the hole remains, traveling with the item.\nThe only air in the hole is that which enters when the hole is opened. It contains enough air to supply one Medium creature or two Small creatures for 10 minutes. The cloth does not accumulate weight even if its hole is filled. Each portable hole opens on its own particular nondimensional space. If a bag of holding is placed within a portable hole, a rift to the Astral Plane is torn in that place. Both the bag and the cloth are sucked into the void and forever lost. If a portable hole is placed within a bag of holding, it opens a gate to the Astral Plane. The hole, the bag, and any creatures within a 10-foot radius are drawn there, the portable hole and bag of holding being destroyed in the process.",
+    "key": "Portable Hole",
+    "name": "Portable Hole",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Portable Hole"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Portable Hole"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Container"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "*UNLIM"
+      },
+      {
+        "key": "COST",
+        "value": "20000"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.526"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|strong conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|12th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|10,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, plane shift"
+      },
+      {
+        "key": "DESC",
+        "value": "A portable hole is a circle of cloth spun from the webs of a phase spider interwoven with strands of ether and beams of starlight, resulting in a portable extradimensional space. When opened fully, a portable hole is 6 feet in diameter, but it can be folded up to be as small as a pocket handkerchief. When spread upon any surface, it causes an extradimensional space 10 feet deep to come into being. This hole can be picked up from inside or out by simply taking hold of the edges of the cloth and folding it up. Either way, the entrance disappears, but anything inside the hole remains, traveling with the item.&nl;The only air in the hole is that which enters when the hole is opened. It contains enough air to supply one Medium creature or two Small creatures for 10 minutes. The cloth does not accumulate weight even if its hole is filled. Each portable hole opens on its own particular nondimensional space. If a bag of holding is placed within a portable hole, a rift to the Astral Plane is torn in that place. Both the bag and the cloth are sucked into the void and forever lost. If a portable hole is placed within a bag of holding, it opens a gate to the Astral Plane. The hole, the bag, and any creatures within a 10-foot radius are drawn there, the portable hole and bag of holding being destroyed in the process."
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 303,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Portable Hole",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

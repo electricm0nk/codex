@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Animate Dream ~ Nightmare Curse",
+    "delivery": "Extraordinary",
+    "description": "An animate dream's touch puts horrifying visions in the target's mind.  Curse - incorporeal touch; save Fortitude DC %1; frequency 1/day; effect 1d4 Wisdom drain and target is fatigued; cure 3 consecutive saves or dispel evil, dream, or remove curse.",
+    "description_variables": [
+      "AnimateDreamNightmareCurseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:animate_dream_nightmare_curse",
+    "name": "Nightmare Curse",
+    "owners": [
+      "bestiary_2:monster:animate_dream"
+    ],
+    "source_page": "p.29",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 107,
+    "record_key": "Animate Dream ~ Nightmare Curse"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

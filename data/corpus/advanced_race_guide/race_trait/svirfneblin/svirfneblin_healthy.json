@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Svirfneblin ~ Healthy",
+    "name": "Healthy",
+    "race_key": "Svirfneblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Svirfneblin Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Svirfneblin_ReplaceFortunate"
+    ],
+    "description": "Svirfneblin gain a +4 bonus on Fortitude saves against disease and poison, including magical diseases. This racial trait replaces fortunate.",
+    "source_page": "p.204",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Svirfneblin ~ Healthy"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Svirfneblin Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Svirfneblin ~ Healthy],[!PREFACT:1,ABILITIES,Svirfneblin_ReplaceFortunate=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Svirfneblin gain a +4 bonus on Fortitude saves against disease and poison, including magical diseases."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces fortunate.|!PREABILITY:1,CATEGORY=Special Ability,Svirfneblin ~ Healthy"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.204"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+4 bonus on Fortitude saves against disease and poison, including magical diseases."
+      },
+      {
+        "key": "FACT",
+        "value": "Svirfneblin_ReplaceFortunate|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "FortSave_vs_Disease,FortSave_vs_Poison",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 1213,
+    "record_key": "Svirfneblin ~ Healthy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

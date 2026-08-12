@@ -7,24 +7,23 @@
 //! 3. preserving machine-readable diagnostics and claim-blocking posture
 //! 4. keeping valid packages preview-eligible after validation
 
-#[path = "../src/homebrew_authoring/mod.rs"]
-mod homebrew_authoring;
-
 use std::path::PathBuf;
 
-use homebrew_authoring::package_manifest::PackageValidationState;
-use homebrew_authoring::package_store::PackageStore;
-use homebrew_authoring::SourcePackage;
+use codex::homebrew_authoring::SourcePackage;
+use codex::homebrew_authoring::package_manifest::PackageValidationState;
+use codex::homebrew_authoring::package_store::PackageStore;
 
 fn fixture_root(name: &str) -> PathBuf {
-    PathBuf::from(env!("CARGO_MANIFEST_DIR"))
-        .join(format!("tests/fixtures/ge08/{}", name))
+    PathBuf::from(env!("CARGO_MANIFEST_DIR")).join(format!("tests/fixtures/authoring_workbench/{}", name))
 }
 
 #[test]
 fn ge08_validation_valid_package_remains_preview_eligible() {
     let valid = SourcePackage::guard_stance_proof();
-    assert_eq!(valid.manifest.validation_state, PackageValidationState::Valid);
+    assert_eq!(
+        valid.manifest.validation_state,
+        PackageValidationState::Valid
+    );
 
     let (state, diagnostics) = valid.recompute_validation();
     assert_eq!(state, PackageValidationState::Valid);
@@ -39,7 +38,10 @@ fn ge08_validation_valid_package_remains_preview_eligible() {
 fn ge08_validation_valid_package_from_fixture() {
     let fixture = PackageStore::load(&fixture_root("guard-stance-package"))
         .expect("valid fixture should load");
-    assert_eq!(fixture.manifest.validation_state, PackageValidationState::Valid);
+    assert_eq!(
+        fixture.manifest.validation_state,
+        PackageValidationState::Valid
+    );
 
     let (state, diagnostics) = fixture.recompute_validation();
     assert_eq!(state, PackageValidationState::Valid);
@@ -52,8 +54,9 @@ fn ge08_validation_valid_package_from_fixture() {
 
 #[test]
 fn ge08_validation_missing_effect_blocks_preview_with_diagnostics() {
-    let invalid_fixture = PackageStore::load(&fixture_root("guard-stance-package-invalid-missing-effect"))
-        .expect("invalid missing-effect fixture should load");
+    let invalid_fixture =
+        PackageStore::load(&fixture_root("guard-stance-package-invalid-missing-effect"))
+            .expect("invalid missing-effect fixture should load");
 
     let (state, diagnostics) = invalid_fixture.recompute_validation();
     assert_eq!(
@@ -67,11 +70,9 @@ fn ge08_validation_missing_effect_blocks_preview_with_diagnostics() {
         "package with missing effect must emit diagnostics"
     );
 
-    let has_missing_effect_diagnostic = diagnostics.iter().any(|d| {
-        d.subject_ref == "effect"
-            && d.message.contains("missing")
-            && d.claim_blocking
-    });
+    let has_missing_effect_diagnostic = diagnostics
+        .iter()
+        .any(|d| d.subject_ref == "effect" && d.message.contains("missing") && d.claim_blocking);
     assert!(
         has_missing_effect_diagnostic,
         "must have claim-blocking diagnostic for missing effect. Diagnostics: {:?}",
@@ -86,8 +87,10 @@ fn ge08_validation_missing_effect_blocks_preview_with_diagnostics() {
 
 #[test]
 fn ge08_validation_widened_effect_target_blocks_preview_with_diagnostics() {
-    let invalid_fixture = PackageStore::load(&fixture_root("guard-stance-package-invalid-widened-preview"))
-        .expect("invalid widened-preview fixture should load");
+    let invalid_fixture = PackageStore::load(&fixture_root(
+        "guard-stance-package-invalid-widened-preview",
+    ))
+    .expect("invalid widened-preview fixture should load");
 
     let (state, diagnostics) = invalid_fixture.recompute_validation();
     assert_eq!(

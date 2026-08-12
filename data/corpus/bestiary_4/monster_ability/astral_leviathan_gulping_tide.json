@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Astral Leviathan ~ Gulping Tide",
+    "delivery": "Extraordinary",
+    "description": "An astral leviathan can create a 60-foot cone of roiling astral material, pulling all Large or smaller creatures and objects into its mouth so it can swallow them. Any creature in the area that succeeds at a DC 30 Fortitude save moves up to 60 feet toward the cone's origin; creatures that fail are swallowed. The leviathan can use this ability only once per minute. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:astral_leviathan_gulping_tide",
+    "name": "Gulping Tide",
+    "owners": [
+      "bestiary_4:monster:astral_leviathan"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 290,
+    "record_key": "Astral Leviathan ~ Gulping Tide"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

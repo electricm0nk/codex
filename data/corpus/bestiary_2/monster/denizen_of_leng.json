@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:denizen_of_leng_dexterity_drain"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Denizen of Leng",
+    "external_ability_refs": [
+      "Denizen of Leng ~ Planar Fast Healing",
+      "Denizen of Leng ~ Unusual Anatomy",
+      "Immunity to Poison",
+      "No Breath",
+      "Resistance to Cold",
+      "Resistance to Electricity",
+      "Sneak Attack",
+      "Tongues ~ Constant"
+    ],
+    "key": "bestiary_2:monster:denizen_of_leng",
+    "monster_class": "Outsider (Fort/Ref):10",
+    "name": "Denizen of Leng",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.82",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 270,
+    "record_key": "Denizen of Leng"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

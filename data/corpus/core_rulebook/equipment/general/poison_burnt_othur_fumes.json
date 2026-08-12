@@ -1,0 +1,90 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "general",
+    "cost_gp": 2100.0,
+    "description": null,
+    "key": "Poison (Burnt Othur Fumes)",
+    "name": "Poison, Burnt Othur Fumes",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Burnt Othur Fumes)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Burnt Othur Fumes"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Burnt Othur Fumes"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "2100"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.558"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Inhaled; Fort DC 18; Freq 1 rnd (6); Effect 1 Con drain/1d3 Con dmg; Cure 2 consecutive saves"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, inhaled"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 18"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/round for 6 rounds"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|1 Con drain"
+      },
+      {
+        "key": "INFO",
+        "value": "Secondary Effect|1d3 Con damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|2 consecutive saves"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 499,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Burnt Othur Fumes)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

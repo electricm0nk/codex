@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "data": {
+    "key": "Fairy Ring Retreat",
+    "school": "Conjuration",
+    "level": 7,
+    "description": "You conjure up an extradimensional meadow that can be accessed from a single entrance on the plane from which the spell was cast. The entry point looks like a circle of toadstools enclosing a 10-foot square. Only those you designate can enter the meadow before you do, and the portal is shut and made invisible behind you when you enter. You can open it again from your own side at will. Once a visitor has passed through the entry point, they find themselves in an idyllic twilight meadow surrounded by an impassable grove of fruit and nut trees. The atmosphere is clean, fresh, and warm. You can configure the meadow into any shape you desire, to the limit of the spell's effect. The place is comfortable and temperate. The trees can provide enough food to sustain 4 people per caster level for a day. A staff of near-transparent animal or feylike servants (as many as two per caster level) wait upon all who enter. The servants function as unseen servant spells except that they are visible and can go anywhere in the meadow. Since the place can be entered only through its special portal, outside conditions do not affect the meadow, nor do conditions inside it pass to the plane beyond.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 54,
+    "record_key": "Fairy Ring Retreat"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

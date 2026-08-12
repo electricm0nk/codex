@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Half-Elf ~ Multidisciplined",
+    "name": "Multidisciplined",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceMultitalented"
+    ],
+    "description": "Born to two races, half-elves have a knack for combining different magical traditions. If a half-elf with this racial trait has spellcasting abilities from at least two different classes, the effects of spells she casts from all her classes are calculated as though her caster level were 1 level higher, to a maximum of her character level. This racial trait replaces multitalented.",
+    "source_page": "p.39",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Multidisciplined"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Multidisciplined],[!PREFACT:1,ABILITIES,HalfElf_ReplaceMultitalented=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Born to two races, half-elves have a knack for combining different magical traditions. If a half-elf with this racial trait has spellcasting abilities from at least two different classes, the effects of spells she casts from all her classes are calculated as though her caster level were 1 level higher, to a maximum of her character level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces multitalented.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Multidisciplined"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceMultitalented|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "ALLSPELLS",
+          "1",
+          "PRECLASS:2,Bard=1,Cleric=1,Druid=1,Paladin=1,Ranger=1,Sorcerer=1,Wizard=1,Alchemist=1,Inquisitor=1,Magus=1,Oracle=1,Summoner=1,Witch=1,Arcanist=1,Bloodrager=1,Hunter=1,Investigator=1,Shaman=1,Skald=1,Warpriest=1,Medium=1,Mesmerist=1,Occultist=1,Psychic=1,Spiritualist=1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 57,
+    "record_key": "Half-Elf ~ Multidisciplined"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

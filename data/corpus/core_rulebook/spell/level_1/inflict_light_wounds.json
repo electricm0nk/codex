@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Inflict Light Wounds",
+    "school": "Necromancy",
+    "level": 1,
+    "description": "When laying your hand upon a creature, you channel negative energy that deals 1d8 points of damage + 1 point per caster level [maximum +5]. Since undead are powered by negative energy, this spell cures such a creature of a like amount of damage, rather than harming it."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1082,
+    "record_key": "Inflict Light Wounds.MOD"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

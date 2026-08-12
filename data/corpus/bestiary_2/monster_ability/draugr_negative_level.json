@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Draugr ~ Negative Level",
+    "delivery": "Supernatural",
+    "description": "A creature that is damaged by a draugr must make a DC %1 Fortitude save or gain one negative level.  The draugr captain can even bestow a negative level via a weapon it wields, but if it gains multiple attacks with a weapon, it can only bestow 1 negative level per round in this manner.",
+    "description_variables": [
+      "DraugrNegativeLevelDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:draugr_negative_level",
+    "name": "Negative Level",
+    "owners": [
+      "bestiary_2:monster:draugr_captain",
+      "bestiary_2:monster:draugr"
+    ],
+    "source_page": "p.110",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 511,
+    "record_key": "Draugr ~ Negative Level"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

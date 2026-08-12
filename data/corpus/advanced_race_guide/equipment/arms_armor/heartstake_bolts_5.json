@@ -1,0 +1,62 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "arms_armor",
+    "cost_gp": 100.0,
+    "description": "A vampire struck with a heartstake bolt takes the normal damage but must also succeed at a DC 20 Fortitude saving throw or fall to the ground helpless for 1 round.",
+    "key": "Heartstake Bolts (5)",
+    "name": "Heartstake Bolts (5)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "WEAPON",
+          "TOHIT",
+          "-2"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Ammunition.Resizable.Specific.Bolt.Racial.Dhampir"
+      },
+      {
+        "key": "COST",
+        "value": "100"
+      },
+      {
+        "key": "WT",
+        "value": "3"
+      },
+      {
+        "key": "BASEQTY",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.99"
+      },
+      {
+        "key": "SPROP",
+        "value": "A vampire struck with a heartstake bolt takes the normal damage but must also succeed at a DC 20 Fortitude saving throw or fall to the ground helpless for 1 round."
+      }
+    ],
+    "weight_lbs": 3.0
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 10,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equip_arms_armor.lst",
+    "record_key": "Heartstake Bolts (5)",
+    "sha256": "34bf37d241bf277200170432a33c322930b10cd1c8a96b6b2a41cc08667ed566"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

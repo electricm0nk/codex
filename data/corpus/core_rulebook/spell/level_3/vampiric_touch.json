@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Vampiric Touch",
+    "school": "Necromancy",
+    "level": 3,
+    "description": "You must succeed on a melee touch attack. Your touch deals 1d6 points of damage per two caster levels [maximum 10d6]. You gain temporary hit points equal to the damage you deal. You can't gain more than the subject's current hit points + the subject's Constitution score [which is enough to kill the subject]. The temporary hit points disappear 1 hour later."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 1400,
+    "record_key": "Vampiric Touch.MOD"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

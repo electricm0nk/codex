@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Special Ability ~ Throwing ~ Melee",
+    "category": "equipmods",
+    "name": "Throwing",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A melee weapon crafted with this ability gains a range increment of 10 feet and can be thrown by a wielder proficient in its normal use. This special ability can only be placed on melee weapons."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-weapons/magic-weapon-special-abilities/throwing/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

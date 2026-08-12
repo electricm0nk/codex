@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:svartalfar_bane",
+      "bestiary_4:monster_ability:svartalfar_quickened_spell_strike"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Svartalfar",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:svartalfar",
+    "monster_class": "Fey:13",
+    "name": "Svartalfar",
+    "natural_attacks": [],
+    "race_subtype": "Extraplanar",
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.256",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 223,
+    "record_key": "Svartalfar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

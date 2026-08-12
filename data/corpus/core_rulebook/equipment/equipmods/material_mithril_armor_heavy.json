@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Material ~ Mithril ~ Armor / Heavy",
+    "category": "equipmods",
+    "name": "Mithral",
+    "cost_gp": 9000.0,
+    "weight_lbs": null,
+    "description": "Mithral is a very rare silvery, glistening metal that is lighter than steel but just as hard. Objects made of mithral weigh half as much as the same object made of steel or other metal. Mithral armor is considered light armor for purposes of movement, and its spell failure chance is decreased by 10%, its maximum Dexterity bonus is increased by 2, and its armor check penalty is lessened by 3 compared to ordinary armor of its type. Weapons made of mithral count as silver for the purpose of overcoming the damage reduction of certain creatures."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

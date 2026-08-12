@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:sayona_absorb_blood",
+      "bestiary_4:monster_ability:sayona_create_spawn",
+      "bestiary_4:monster_ability:sayona_fear_cone",
+      "bestiary_4:monster_ability:sayona_living_form",
+      "bestiary_4:monster_ability:sayona_staggering_gaze"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Sayona",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:sayona",
+    "monster_class": "Undead:17",
+    "name": "Sayona",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.231",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 198,
+    "record_key": "Sayona"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

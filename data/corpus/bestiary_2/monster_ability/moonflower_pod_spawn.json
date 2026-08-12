@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Moonflower ~ Pod Spawn",
+    "delivery": "Extraordinary",
+    "description": "Should a moonflower's pod prison kill and digest a Small or larger creature, the pod transforms him into an adult moonflower with full hit points after 1d4 hours.  The newly formed moonflower has its own consciousness, but some aspect of its trunk or blossoms resembles the creature that died within.  The dead creature's equipment remains inside the new moonflower and can be retrieved by killing it.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:moonflower_pod_spawn",
+    "name": "Pod Spawn",
+    "owners": [
+      "bestiary_2:monster:moonflower"
+    ],
+    "source_page": "p.192",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 840,
+    "record_key": "Moonflower ~ Pod Spawn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

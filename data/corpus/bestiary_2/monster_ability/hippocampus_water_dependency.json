@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Hippocampus ~ Water Dependency",
+    "delivery": "Extraordinary",
+    "description": "A hippocampus can survive out of the water for %1 minutes.  Beyond this limit, a hippocampus runs the risk of suffocation, as if it were drowning.",
+    "description_variables": [
+      "CONSCORE"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:hippocampus_water_dependency",
+    "name": "Water Dependency",
+    "owners": [
+      "bestiary_2:monster:hippocampus",
+      "bestiary_2:monster:hippocampus_giant"
+    ],
+    "source_page": "p.155",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 682,
+    "record_key": "Hippocampus ~ Water Dependency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

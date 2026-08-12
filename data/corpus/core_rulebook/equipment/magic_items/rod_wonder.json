@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 12000.0,
+    "description": "A rod of wonder is a strange and unpredictable device that randomly generates any number of weird effects each time it is used. Activating the rod is a standard action. Typical powers of the rod include the following.\nd%% / Wondrous Effect\n01-05 / Slow target for 10 rounds (Will DC 15 negates).\n06-10 / Faerie fire surrounds the target.\n11-15 / Deludes wielder for 1 round into believing the rod functions as indicated by a second die roll (no save).\n16-20 / Gust of wind, but at windstorm force (Fortitude DC 14 negates).\n21-25 / Wielder learns target's surface thoughts (as with detect thoughts) for 1d4 rounds (no save).\n26-30 / Stinking cloud appears at 30-ft. range (Fortitude DC 15 negates).\n31-33 / Heavy rain falls for 1 round in 60-ft. radius centered on rod wielder.\n34-36 / Summon an animal--a rhino (01-25 on d%%), elephant (26-50), or mouse (51-100).\n37-46 / Lightning bolt (70 ft. long, 5 ft. wide), 6d6 damage (Reflex DC 15 half ).\n47-49 / A stream of 600 large butterflies pours forth and flutters around for 2 rounds, blinding everyone within 25 ft. (Reflex DC 14 negates).\n50-53 / Enlarge person on target if within 60 ft. of rod (Fortitude DC 13 negates).\n54-58 / Darkness, 30-ft.-diameter hemisphere, centered 30 ft. away from rod.\n59-62 / Grass grows in 160-square-ft. area before the rod, or grass existing there grows to 10 times normal size.\n63-65 / Turn ethereal any nonliving object of up to 1,000 lbs. mass and up to 30 cubic ft. in size.\n66-69 / Reduce wielder two size categories (no save) for 1 day.\n70-79 / Fireball at target or 100 ft. straight ahead, 6d6 damage (Reflex DC 15 half ).\n80-84 / Invisibility covers rod wielder.\n85-87 / Leaves grow from target if within 60 ft. of rod. These last 24 hours.\n88-90 / 10-40 gems, value 1 gp each, shoot forth in a 30-ft.- long stream. Each gem deals 1 point of damage to any creature in its path: roll 5d4 for the number of hits and divide them among the available targets.\n91-95 / Shimmering colors dance and play over a 40-ft.- by-30-ft. area in front of rod. Creatures therein are blinded for 1d6 rounds (Fortitude DC 15 negates).\n96-97 / Wielder (50%% chance) or target (50%% chance) turns permanently blue, green, or purple (no save).\n98-100 / Flesh to stone (or stone to flesh if target is stone already) if target is within 60 ft. (Fortitude DC 18 negates).",
+    "key": "Rod (Wonder)",
+    "name": "Rod",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rod (Wonder)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rod of Wonder"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Rod.Combat Gear"
+      },
+      {
+        "key": "COST",
+        "value": "12000"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "MODS",
+        "value": "NO"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.489"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate enchantment"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|6,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Rod, confusion, creator must be chaotic"
+      },
+      {
+        "key": "DESC",
+        "value": "A rod of wonder is a strange and unpredictable device that randomly generates any number of weird effects each time it is used. Activating the rod is a standard action. Typical powers of the rod include the following.&nl;d%% / Wondrous Effect&nl;01-05 / Slow target for 10 rounds (Will DC 15 negates).&nl;06-10 / Faerie fire surrounds the target.&nl;11-15 / Deludes wielder for 1 round into believing the rod functions as indicated by a second die roll (no save).&nl;16-20 / Gust of wind, but at windstorm force (Fortitude DC 14 negates).&nl;21-25 / Wielder learns target's surface thoughts (as with detect thoughts) for 1d4 rounds (no save).&nl;26-30 / Stinking cloud appears at 30-ft. range (Fortitude DC 15 negates).&nl;31-33 / Heavy rain falls for 1 round in 60-ft. radius centered on rod wielder.&nl;34-36 / Summon an animal--a rhino (01-25 on d%%), elephant (26-50), or mouse (51-100).&nl;37-46 / Lightning bolt (70 ft. long, 5 ft. wide), 6d6 damage (Reflex DC 15 half ).&nl;47-49 / A stream of 600 large butterflies pours forth and flutters around for 2 rounds, blinding everyone within 25 ft. (Reflex DC 14 negates).&nl;50-53 / Enlarge person on target if within 60 ft. of rod (Fortitude DC 13 negates).&nl;54-58 / Darkness, 30-ft.-diameter hemisphere, centered 30 ft. away from rod.&nl;59-62 / Grass grows in 160-square-ft. area before the rod, or grass existing there grows to 10 times normal size.&nl;63-65 / Turn ethereal any nonliving object of up to 1,000 lbs. mass and up to 30 cubic ft. in size.&nl;66-69 / Reduce wielder two size categories (no save) for 1 day.&nl;70-79 / Fireball at target or 100 ft. straight ahead, 6d6 damage (Reflex DC 15 half ).&nl;80-84 / Invisibility covers rod wielder.&nl;85-87 / Leaves grow from target if within 60 ft. of rod. These last 24 hours.&nl;88-90 / 10-40 gems, value 1 gp each, shoot forth in a 30-ft.- long stream. Each gem deals 1 point of damage to any creature in its path: roll 5d4 for the number of hits and divide them among the available targets.&nl;91-95 / Shimmering colors dance and play over a 40-ft.- by-30-ft. area in front of rod. Creatures therein are blinded for 1d6 rounds (Fortitude DC 15 negates).&nl;96-97 / Wielder (50%% chance) or target (50%% chance) turns permanently blue, green, or purple (no save).&nl;98-100 / Flesh to stone (or stone to flesh if target is stone already) if target is within 60 ft. (Fortitude DC 18 negates)."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 465,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Rod (Wonder)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

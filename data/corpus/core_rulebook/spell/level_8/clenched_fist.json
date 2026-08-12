@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Clenched Fist",
+    "school": "Evocation",
+    "level": 8,
+    "description": "This spell functions like interposing hand, except that the hand can also push or strike one opponent that you select. The floating hand can move as far as 60 feet and can attack in the same round. Since this hand is directed by you, its ability to notice or attack invisible or concealed creatures is no better than yours. The hand attacks once per round, and its attack bonus equals your caster level + your Intelligence, Wisdom, or Charisma modifier [for a wizard, cleric, or sorcerer, respectively] + 11 for the hand's Strength score [33], - 1 for being Large. The hand deals 1d8+11 points of damage on each attack, and any creature struck must make a Fortitude save [against this spell's save DC] or be stunned for 1 round. Directing the spell to a new target is a move action. The clenched fist can also interpose itself as interposing hand does, or it can bull rush an opponent as forceful hand does. Its CMB for bull rush checks uses your caster level in place of its base attack bonus, with a +11 bonus for its Strength score and a +1 bonus for being Large."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 854,
+    "record_key": "Clenched Fist.MOD"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

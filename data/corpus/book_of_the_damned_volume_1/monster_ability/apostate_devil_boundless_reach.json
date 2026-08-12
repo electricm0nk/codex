@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "corpus_key": "Apostate Devil ~ Boundless Reach",
+    "delivery": "Supernatural",
+    "description": "A deimavigga's claws slice through reality, allowing it to make melee attacks against any creature it is aware of-typically meaning creatures within 100 feet. The devil still only threatens the 10-foot area around it and it cannot make attacks of opportunity against creatures farther away. This ability can span vast distances, allowing a deimavigga making use of divination magic to detect distant creatures and attack foes separated by miles or even planes. Spells like forbiddance, which prevent planar travel, also protect against a deimavigga's claws. The spell dimensional anchor also prevents a deimavigga from using this ability for the duration of that spell. An attacked creature can retaliate that round, striking at the devil's claws with weapons or spells as if its entire body were present, but cannot grapple or otherwise prevent the claws from vanishing out of reach at the end of the round.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_1:monster_ability:apostate_devil_boundless_reach",
+    "name": "Boundless Reach",
+    "owners": [
+      "book_of_the_damned_volume_1:monster:devil_apostate"
+    ],
+    "source_page": "p.54",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
+    "line": 9,
+    "record_key": "Apostate Devil ~ Boundless Reach"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

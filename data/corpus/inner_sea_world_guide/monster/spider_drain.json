@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1/4",
+    "corpus_key": "Spider (Drain)",
+    "external_ability_refs": [
+      "Giant Spider ~ Poison"
+    ],
+    "key": "inner_sea_world_guide:monster:spider_drain",
+    "monster_class": "Vermin:1",
+    "name": "Spider (Drain)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "T",
+    "source_page": "p.254",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst",
+    "sha256": "d72743ae54143c507ef6cea069fca77c519e4d44b89432cca21b64fff8d29593",
+    "line": 9,
+    "record_key": "Spider (Drain)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

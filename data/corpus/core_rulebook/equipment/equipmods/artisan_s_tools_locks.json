@@ -1,0 +1,76 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": 0.0,
+    "description": null,
+    "key": "Artisan's Tools (Locks)",
+    "name": "Locks",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "Craft (Locks)",
+          "2",
+          "TYPE=Circumstance",
+          "PRETYPE:1,Masterwork"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Artisan's Tools (Locks)"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "PARENS"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "NORMAL"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Tools.Artisan.CraftToolsLocks"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "CraftToolsLocks"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.161"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "2,Tools,Artisan"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 84,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equipmods.lst",
+    "record_key": "Artisan's Tools (Locks)",
+    "sha256": "a777d51860c355f8cda2e042e3e6353d275db5bb705590850c1db7358aa565df"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

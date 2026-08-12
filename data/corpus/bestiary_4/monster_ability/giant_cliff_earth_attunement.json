@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Giant (Cliff) ~ Earth Attunement",
+    "delivery": "Supernatural",
+    "description": "A cliff giant has tremorsense 30 feet when standing on unworked stone or natural earth. Knowledge (nature) is a class skill for cliff giants.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:giant_cliff_earth_attunement",
+    "name": "Earth Attunement",
+    "owners": [
+      "bestiary_4:monster:giant_cliff"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 763,
+    "record_key": "Giant (Cliff) ~ Earth Attunement"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

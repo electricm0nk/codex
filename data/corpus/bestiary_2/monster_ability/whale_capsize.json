@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Whale ~ Capsize",
+    "delivery": "Extraordinary",
+    "description": "A whale can attempt to capsize a boat or ship by ramming it as a charge attack and making a CMB check.  The DC of this check is 25, or the result of the captain's Profession (sailor) check, whichever is higher.  For each size category the ship is larger than the whale's size, the whale takes a cumulative -10 penalty on this CMB check.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:whale_capsize",
+    "name": "Capsize",
+    "owners": [
+      "bestiary_2:monster:whale",
+      "bestiary_2:monster:whale_great_white"
+    ],
+    "source_page": "p.282",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1358,
+    "record_key": "Whale ~ Capsize"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "class_id": "Cleric",
+    "maxlevel": 20,
+    "bab": "level*3/4",
+    "save_fort": "level/2+2",
+    "save_ref": "level/3",
+    "save_will": "level/2+2"
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_classes.lst",
+    "sha256": "e05eb34d4df7410d9078e35085961da6692978c02de053a8d5bf21b4389dd9b7",
+    "line": 55,
+    "record_key": "CLASS:Cleric"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

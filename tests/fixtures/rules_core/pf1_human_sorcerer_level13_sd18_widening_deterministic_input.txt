@@ -1,0 +1,40 @@
+# SD18 deterministic Human Sorcerer level 13 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Sorcerer
+# level-1..level-12 spontaneous spell-burden baseline
+# (tests/sd18_sorcerer_level12_widening.rs) to Sorcerer level 13 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1..level-12 fixtures, and the same canonical bloodline and
+# bloodline class-skill selections (Arcane, Knowledge [arcana]), adding only
+# the level bump this cycle needs.
+#
+# It deliberately avoids every later Sorcerer burden surface: no Arcane Bond
+# execution, no bloodline arcana, no bloodline feat selection, no bloodline
+# bonus spell selection, no spellbook, no which-spells-known selection, no
+# spontaneous-casting execution, and no level-14+ progression. The PF1 CRB
+# Sorcerer class table's level-13 "Special" column reads "Bloodline feat,
+# bloodline spell" (verified independently against d20pfsrd, the Archives of
+# Nethys aonprd.com mirror, and legacy.aonprd.com, all identical) — but, like
+# the level-3/5/7/11 bloodline power/spell entries, both named grants are
+# bloodline-specific (varying per bloodline) and neither is flat/
+# identity-shaped, so this fixture grounds no new class feature at level 13
+# either; only the existing base-attack/base-save/spells-per-day/
+# spells-known/spell-save-DC/bonus-spell/bloodline-choice pillars are
+# widened.
+case_id=pf1-crb-human-sorcerer-level13-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:sorcerer:13
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:17
+feat=feat:dodge
+choice=choice:sorcerer_bloodline:bloodline:arcane
+choice=choice:sorcerer_bloodline_class_skill:knowledge:arcana
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:charisma
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

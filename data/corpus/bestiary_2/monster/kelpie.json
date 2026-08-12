@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:kelpie_captivating_lure"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Kelpie",
+    "external_ability_refs": [
+      "Amphibious",
+      "Change Shape ~ Kelpie",
+      "Grab ~ Slam",
+      "Resistance to Fire",
+      "Telepathy ~ Kelpie"
+    ],
+    "key": "bestiary_2:monster:kelpie",
+    "monster_class": "Fey:7",
+    "name": "Kelpie",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Aquatic|Shapechanger",
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.172",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 550,
+    "record_key": "Kelpie"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

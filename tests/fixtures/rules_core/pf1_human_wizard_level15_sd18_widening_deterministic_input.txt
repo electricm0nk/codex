@@ -1,0 +1,55 @@
+# SD18 deterministic Human Wizard level 15 widening fixture.
+# Widens the accepted SD18 deterministic PF1 Core Rulebook Human Wizard
+# level-1..level-14 prepared arcane spell-bearing baseline
+# (tests/sd18_wizard_level14_widening.rs) to Wizard level 15 as chosen
+# input only. It names selections; it does not contain derived, computed, or
+# parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat), the deterministic ability/feat posture from
+# the level-1..level-14 fixtures, and the same canonical school
+# specialization selections (Evocation chosen, Necromancy/Transmutation
+# opposed), adding only the level bump this cycle needs.
+#
+# It deliberately avoids every later Wizard burden surface: no evocation
+# spell-damage application, no force-missile casting execution, no
+# opposed-school preparation cost, no spellbook, no spells prepared, no spell
+# slots, no spell DCs, no bonus-feat selection/execution for the
+# still-unproven 5th/10th/15th-level "Bonus feat" grants, and no level-16+
+# progression. Two PF1 CRB primary sources (d20pfsrd and the Archives of
+# Nethys aonprd.com mirror) were read directly before writing this fixture,
+# and both agree byte-for-byte: base attack bonus STAYS at +7 (`15/2 = 7`,
+# an integer-division coincidence with level 14) and good Will STAYS at +9
+# (`15/2+2 = 9`, another integer-division coincidence with level 14), while
+# poor Fortitude/Reflex both GENUINELY RISE to +5 (`15/3 = 5`, up from +4).
+# The raw Wizard spells-per-day table's level-15 row is
+# "4/4/4/4/4/4/3/2/1" — up from the level-14 row "4/4/4/4/4/3/3/2" (the
+# 5th-level column rises from 3 to 4) AND a genuinely NEW 8th-level column
+# appears for the first time (value 1) — so a level-15 specialist wizard
+# casts 8th-level spells for the first time, and the specialist bonus-slot
+# flat count (one bonus slot of each spell level she can cast, 1st through
+# 8th) GENUINELY RISES to 8, up from 7 at level 14. Intense Spells'
+# bonus-damage magnitude STAYS at 7 (`max(15/2, 1) = 7`, an
+# integer-division coincidence with level 14) via the pre-existing formula,
+# not re-derived; Force Missile's uses-per-day pool stays level-independent
+# and unchanged; Scribe Scroll stays recognized as an already-held grant.
+# The level-15 "Special" column reads "Bonus feat" on both primary sources —
+# the same genuinely open-ended metamagic/item-creation/Spell-Mastery choice
+# already left named-but-unproven at levels 5 and 10, not a new type of
+# class feature, so no new pillar record is grounded at level 15 beyond
+# widening the specialist-bonus-slot pillar to its new value.
+case_id=pf1-crb-human-wizard-level15-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:wizard:15
+ability=strength:8
+ability=dexterity:14
+ability=constitution:13
+ability=intelligence:17
+ability=wisdom:12
+ability=charisma:10
+feat=feat:dodge
+choice=choice:wizard_school_specialization:school:evocation
+choice=choice:wizard_opposed_schools:school:necromancy
+choice=choice:wizard_opposed_schools:school:transmutation
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:intelligence
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/scope-draft.md

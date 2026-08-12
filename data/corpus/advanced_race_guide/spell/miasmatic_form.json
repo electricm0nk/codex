@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "data": {
+    "key": "Miasmatic Form",
+    "school": "Transmutation",
+    "level": 4,
+    "description": "This spell functions like gaseous form, except the target's vaporous body is dangerous to creatures that touch it. A creature can make a Fortitude save (DC ) on its turn to resist the vapors. When you cast this spell, you select one of the following options. Stinking cloud: The target's body nauseates creatures that fail their saving throws, as stinking cloud (Fortitude negates, see text). This form of the spell does not require a material component. Poisonous cloud: The target's body is deadly poison, dealing 1d2 points of Constitution damage to creatures that fail their saves (Fortitude halves). This form of the spell requires a material component."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_spells.lst",
+    "sha256": "ed4570f19fdea4c1392b542e2ecfa11fb091094e17c1de9d34bac7830f834f58",
+    "line": 147,
+    "record_key": "Miasmatic Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:prose_expr"
+  ]
+}

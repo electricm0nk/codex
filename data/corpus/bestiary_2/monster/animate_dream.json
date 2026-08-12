@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:animate_dream_negative_energy",
+      "bestiary_2:monster_ability:animate_dream_nightmare_curse"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Animate Dream",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Telepathy"
+    ],
+    "key": "bestiary_2:monster:animate_dream",
+    "monster_class": "Outsider (Fort/Will):12",
+    "name": "Animate Dream",
+    "natural_attacks": [
+      {
+        "damage_dice": "6d8",
+        "name": "Incorporeal Touch"
+      }
+    ],
+    "race_subtype": "Extraplanar|Incorporeal",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.29",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 86,
+    "record_key": "Animate Dream"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Agathion (Silvanshee)",
+    "external_ability_refs": [
+      "Flight ~ Su",
+      "Flight Maneuverability",
+      "Know Direction ~ Constant",
+      "Pounce",
+      "Silvanshee ~ Cat's Luck",
+      "Silvanshee ~ Heroic Strength",
+      "Silvanshee ~ Spectral Mist"
+    ],
+    "key": "bestiary_2:monster:agathion_silvanshee",
+    "monster_class": "Outsider (Fort/Ref):2",
+    "name": "Agathion (Silvanshee)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d2",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Agathion|Extraplanar|Good",
+    "race_type": "Outsider",
+    "size": "T",
+    "source_page": "p.21",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 54,
+    "record_key": "Agathion (Silvanshee)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Guarding Blade",
+    "category": "ArmsArmor",
+    "name": "Guarding Blade",
+    "cost_gp": 10.0,
+    "weight": 2.0,
+    "description": "A +1 dancing short sword that automatically defends an unconscious or sleeping wielder, attacking nearby enemies for several rounds before dropping back into the wielder's square."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+weight",
+    "citation_precision": "exact_item_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

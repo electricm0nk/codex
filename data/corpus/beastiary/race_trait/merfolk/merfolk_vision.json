@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Merfolk ~ Vision",
+    "name": "Low-Light Vision",
+    "race_key": "Merfolk",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Merfolk Racial Trait",
+      "Merfolk Racial Default",
+      "SpecialQuality",
+      "Racial Vision"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Merfolk_ReplaceVision",
+    "sets_replace_flags": [],
+    "description": "Merfolk have low-light vision.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Merfolk ~ Vision"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Merfolk Racial Trait.Merfolk Racial Default.SpecialQuality.Racial Vision"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Merfolk_ReplaceVision=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Merfolk have low-light vision."
+      },
+      {
+        "key": "VISION",
+        "value": "Low-Light Vision"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "HasRacialVision",
+          "1"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/merfolk/merfolk_abilities_race.lst",
+    "sha256": "a42f2010dc4a236c2da1c5a545a675700a560d90db1d3ff860a40a9ed44c2170",
+    "line": 18,
+    "record_key": "Merfolk ~ Vision"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

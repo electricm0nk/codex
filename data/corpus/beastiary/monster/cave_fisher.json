@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "data": {
+    "id": "beastiary1:monster:cave_fisher",
+    "name": "Cave Fisher",
+    "challenge_rating": 2.0,
+    "size": "M",
+    "speed_ft": 20,
+    "race_type": "Vermin",
+    "race_subtype": null,
+    "source_page": "p.41",
+    "natural_attacks": [
+      {
+        "name": "Filament",
+        "damage_dice": "0"
+      },
+      {
+        "name": "Claw",
+        "damage_dice": "1d4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 59,
+    "record_key": "Cave Fisher"
+  },
+  "field_provenance": [
+    {
+      "field": "natural_attacks[1].damage_dice",
+      "value": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Claw",
+      "published_melee_text": "2 claws +5 (1d4+3)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://legacy.aonprd.com/bestiary/caveFisher.html",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/vermin/cave-fisher/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 2 + Medium vermin + Bestiary pg. 41 (matches the cached chassis's own source_page); all sources place Filament on the Ranged line, matching the real row's own NATURALATTACKS:Filament,...Ranged... token"
+      }
+    }
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

@@ -1,0 +1,39 @@
+# SD13-E5 deterministic Human Monk level 3 progression fixture.
+# Widens the accepted SD13-E3/E5 deterministic PF1 Core Rulebook Human Monk
+# level-1/level-2 martial chassis baseline to level 3 as chosen input only. It
+# names selections; it does not contain derived, computed, or parity values.
+# It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and the deterministic ability/feat/skill/equipment posture from
+# the level-1/level-2 fixtures, adding only the level bump this bounded
+# tranche needs. The level-1 monk_bonus_feat choice (Stunning Fist) is carried
+# forward unchanged — PF1 also grants monks a SEPARATE bonus feat at 2nd
+# level, but this slice deliberately does not add a second choice-slot for it
+# (no fixture data and no recognition code exist for a level-2 bonus feat
+# grant; it stays named but unproven, unchanged by this widening).
+#
+# It deliberately avoids every later Monk burden surface: no ki pool, no
+# execution of what the recognized bonus feat actually does, no level-2
+# bonus feat grant recognition, and no level-4+ progression. Still Mind (the
+# 3rd-level monk class feature this fixture newly exercises) is grounded only
+# as a bounded flat-magnitude record, never applied to any actual save total.
+# Fast Movement and Maneuver Training, the other two entries in the PF1 CRB
+# Monk class table's 3rd-level "Special" column, are deliberately left
+# named-but-unproven this slice (no speed-total engine and no CMB/CMD engine
+# exist in this codebase to attach either to).
+case_id=pf1-crb-human-monk-level3
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:monk:3
+ability=strength:13
+ability=dexterity:16
+ability=constitution:13
+ability=intelligence:8
+ability=wisdom:17
+ability=charisma:10
+feat=feat:stunning_fist
+skill=skill:acrobatics:1
+equipment=item:shield:absent
+choice=choice:monk_bonus_feat:feat:deflect_arrows
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:wisdom
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

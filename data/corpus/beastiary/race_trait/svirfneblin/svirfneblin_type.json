@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:54Z",
+  "data": {
+    "key": "Svirfneblin ~ Type",
+    "name": "Gnome",
+    "race_key": "Svirfneblin",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Svirfneblin Racial Trait",
+      "Svirfneblin Racial Default",
+      "SpecialQuality",
+      "Racial Type"
+    ],
+    "is_racial_default": true,
+    "suppressed_by_flag": "Svirfneblin_ReplaceType",
+    "sets_replace_flags": [],
+    "description": "Svirfneblin are humanoids with the gnome subtype.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Svirfneblin ~ Type"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Svirfneblin Racial Trait.Svirfneblin Racial Default.SpecialQuality.Racial Type"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "DISPLAY"
+      },
+      {
+        "key": "!PREFACT",
+        "value": "1,ABILITIES,Svirfneblin_ReplaceType=True"
+      },
+      {
+        "key": "DESC",
+        "value": "Svirfneblin are humanoids with the gnome subtype."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Humanoid|Gnome"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.xx"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/svirfneblin/svirfneblin_abilities_race.lst",
+    "sha256": "ade579734f87892699788177f48917039bd45e705cae21e94b32900c8fb9c942",
+    "line": 15,
+    "record_key": "Svirfneblin ~ Type"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

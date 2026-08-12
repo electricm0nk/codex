@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "data": {
+    "key": "Flaming Sphere (Greater)",
+    "school": "Evocation",
+    "level": 4,
+    "description": "This spell functions as flaming sphere, except that it deals 6d6 points of fire damage to any creature it strikes. Any creature that fails its save against the sphere catches on fire (see page 444 of the Core Rulebook). If a creature catches on fire, the DC to extinguish the flames is equal to the DC of this spell.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 57,
+    "record_key": "Flaming Sphere (Greater)"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "derived:range_keyword"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

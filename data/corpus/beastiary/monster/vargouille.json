@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-07T20:21:41Z",
+  "data": {
+    "id": "beastiary1:monster:vargouille",
+    "name": "Vargouille",
+    "challenge_rating": 2.0,
+    "size": "S",
+    "speed_ft": 0,
+    "race_type": "Outsider",
+    "race_subtype": "Evil|Extraplanar",
+    "source_page": "p.272",
+    "natural_attacks": [
+      {
+        "name": "Bite",
+        "damage_dice": "1d4"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 401,
+    "record_key": "Vargouille"
+  },
+  "field_provenance": [
+    {
+      "field": "natural_attacks[0].damage_dice",
+      "value": "1d4",
+      "corpus_name_token": "ABILITY:Internal|AUTOMATIC|Bite",
+      "published_melee_text": "bite +5 (1d4 plus poison)",
+      "source": {
+        "kind": "web_second_source",
+        "urls": [
+          "https://www.aonprd.com/MonsterDisplay.aspx?ItemName=Vargouille",
+          "https://www.d20pfsrd.com/bestiary/monster-listings/outsiders/vargouille/"
+        ],
+        "fetched_at": "2026-07-29",
+        "identity_match_basis": "name + CR 2 + Small outsider (evil, extraplanar) + Bestiary pg. 272 (matches the cached chassis's own source_page and RACESUBTYPE); 'kiss' and 'shriek' appear only under Special Attacks with no damage dice in any source, so neither is recorded as a natural attack"
+      }
+    }
+  ],
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

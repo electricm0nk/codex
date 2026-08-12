@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Elf ~ Light against Darkness",
+    "name": "Light against Darkness",
+    "race_key": "Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Elf Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "Elven Magic"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Elf_ReplaceElvenMagic"
+    ],
+    "description": "Elves have fought against the corruption of demons since time immemorial. Elves with this trait receive a +1 bonus on attack rolls against outsiders with the demon subtype. This racial trait replaces elven magic.",
+    "source_page": "p.38",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Light against Darkness"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialAttack.Special Attack.Elven Magic"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Light against Darkness],[!PREFACT:1,ABILITIES,Elf_ReplaceElvenMagic=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Elves have fought against the corruption of demons since time immemorial. Elves with this trait receive a +1 bonus on attack rolls against outsiders with the demon subtype."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces elven magic.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Light against Darkness"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 on attack rolls vs. outsiders with the demon subtype."
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against demon outsiders"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceElvenMagic|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 30,
+    "record_key": "Elf ~ Light against Darkness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

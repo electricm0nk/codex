@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Dragon (Void) ~ Obliterate",
+    "delivery": "Supernatural",
+    "description": "A young or older void dragon's bite deals an additional 2d6 points of negative energy damage. A creature reduced to 0 or fewer hit points by this attack must succeed at a Fortitude save (DC %1) or be immediately slain and reduced to ashes (as the disintegrate spell).",
+    "description_variables": [
+      "10+(HD/2)+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dragon_void_obliterate",
+    "name": "Obliterate",
+    "owners": [
+      "bestiary_4:monster:dragon_void"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 538,
+    "record_key": "Dragon (Void) ~ Obliterate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

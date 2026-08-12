@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Devil (Drowning) ~ Heavy Aura",
+    "delivery": "Supernatural",
+    "description": "Whenever a creature enters the drowning devil's heavy aura, it must succeed at a DC %1 Will save or reduce its speed as if carrying a load one step higher or wearing armor one category heavier (whichever is worse), and its armor check penalty increases by 2. A creature already carrying a heavy load or wearing heavy armor that fails its save can't move as long as it remains in the affected area. A creature that saves against a drowning devil's heavy aura is immune to that devil's aura for 24 hours.",
+    "description_variables": [
+      "14+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:devil_drowning_heavy_aura",
+    "name": "Heavy Aura",
+    "owners": [
+      "bestiary_4:monster:devil_drowning"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 462,
+    "record_key": "Devil (Drowning) ~ Heavy Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 60000.0,
+    "description": "This rug is able to fly through the air as if affected by an overland flight spell of unlimited duration. Beautifully and intricately made, each carpet has its own command word to activate it--if the device is within voice range, the command word activates it, whether the speaker is on the rug or not. The carpet is then controlled by spoken directions.\nA carpet of flying can carry up to double its capacity, but doing so reduces its speed to 30 feet. A carpet of flying can hover without making a Fly skill check and gives a +5 bonus to other Fly checks.",
+    "key": "Carpet of Flying (10 ft by 10 ft)",
+    "name": "Carpet of Flying (10 ft. by 10 ft.)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Carpet of Flying (10 ft by 10 ft)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Carpet of Flying, 10 ft. by 10 ft."
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Container"
+      },
+      {
+        "key": "CONTAINS",
+        "value": "*800"
+      },
+      {
+        "key": "COST",
+        "value": "60000"
+      },
+      {
+        "key": "WT",
+        "value": "15"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.505"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|moderate transmutation"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|10th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|30,000 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, overland flight"
+      },
+      {
+        "key": "DESC",
+        "value": "This rug is able to fly through the air as if affected by an overland flight spell of unlimited duration. Beautifully and intricately made, each carpet has its own command word to activate it--if the device is within voice range, the command word activates it, whether the speaker is on the rug or not. The carpet is then controlled by spoken directions.&nl;A carpet of flying can carry up to double its capacity, but doing so reduces its speed to 30 feet. A carpet of flying can hover without making a Fly skill check and gives a +5 bonus to other Fly checks."
+      }
+    ],
+    "weight_lbs": 15.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 97,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Carpet of Flying (10 ft by 10 ft)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

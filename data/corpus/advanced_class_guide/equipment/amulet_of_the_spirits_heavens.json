@@ -1,0 +1,64 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "MagicItems",
+    "cost_gp": 8000.0,
+    "description": "increase effective level of mystery or spirit powers by 2; can determine precise location when open sky can be seen at night; add Wisdom modifier to Charisma modifer on all Charisma checks and Charisma-based skill checks; cause enemy within 30 ft. to treat light level as two steps lower for 8 rounds",
+    "key": "Amulet of the Spirits (Heavens)",
+    "name": "Amulet of the Spirits (Heavens)",
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SKILL",
+          "TYPE.Charisma",
+          "max(0,WIS)",
+          "TYPE=WisdomBonus"
+        ]
+      }
+    ],
+    "raw_tokens": [
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous.Amulet"
+      },
+      {
+        "key": "COST",
+        "value": "8000"
+      },
+      {
+        "key": "WT",
+        "value": "1"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.224"
+      },
+      {
+        "key": "SPROP",
+        "value": "increase effective level of mystery or spirit powers by 2|PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Heavens,Spirit Bond ~ Heavens"
+      },
+      {
+        "key": "SPROP",
+        "value": "can determine precise location when open sky can be seen at night; add Wisdom modifier to Charisma modifer on all Charisma checks and Charisma-based skill checks; cause enemy within 30 ft. to treat light level as two steps lower for 8 rounds|!PREABILITY:1,CATEGORY=Special Ability,Mystery ~ Heavens,Spirit Bond ~ Heavens"
+      }
+    ],
+    "weight": 1.0
+  },
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 332,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_equip.lst",
+    "record_key": "Amulet of the Spirits (Heavens)",
+    "sha256": "146be6110fa2e51fdd26dbc01acf00ac0205de47b9f9028612189ea5a8861a39"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

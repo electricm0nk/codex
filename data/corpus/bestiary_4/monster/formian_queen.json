@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:formian_queen_hive_frenzy",
+      "bestiary_4:monster_ability:formian_queen_telepathic_feedback"
+    ],
+    "challenge_rating": "17",
+    "corpus_key": "Formian Queen",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:formian_queen",
+    "monster_class": "Monstrous Humanoid:24",
+    "name": "Formian Queen",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d8",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "size": "L",
+    "source_page": "p.110",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 87,
+    "record_key": "Formian Queen"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

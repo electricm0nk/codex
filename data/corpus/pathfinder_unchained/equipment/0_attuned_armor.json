@@ -1,0 +1,72 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": null,
+    "description": "Attunement for equipment that has magic abilities, powering the ability rather than granting bonuses.",
+    "equip_type": "Armor.Clothing",
+    "key": "ABP ~ +0 Attunement ~ Armor",
+    "name": "+0 Attuned Armor",
+    "plus": null,
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "ABP ~ +0 Attunement ~ Armor"
+      },
+      {
+        "key": "FORMATCAT",
+        "value": "MIDDLE"
+      },
+      {
+        "key": "NAMEOPT",
+        "value": "TEXT=[Attuned]"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor.Clothing"
+      },
+      {
+        "key": "VISIBLE",
+        "value": "QUALIFY"
+      },
+      {
+        "key": "ITYPE",
+        "value": "ArmorEnhancement.Magic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "PREABILITY",
+        "value": "1,CATEGORY=Internal,ABP_Armor"
+      },
+      {
+        "key": "PRETYPE",
+        "value": "1,Armor,Clothing"
+      },
+      {
+        "key": "DESC",
+        "value": "Attunement for equipment that has magic abilities, powering the ability rather than granting bonuses."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:44Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 35,
+    "path": "pathfinder/paizo/roleplaying_game/pathfinder_unchained/pu_equipmods.lst",
+    "record_key": "ABP ~ +0 Attunement ~ Armor",
+    "sha256": "79adaa8f365496088ebfe9151c2436cb4b10c20f5b202da8f8884e1040398e3b"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Fortune-Teller's Deck (Masterwork)",
+    "category": "General",
+    "name": "Fortune-Teller's Deck (Masterwork)",
+    "cost_gp": 50.0,
+    "weight": 1.0,
+    "description": "A masterwork fortune-telling deck of wood, ivory, or metal with painted or carved images, suitable as an augury spell focus and granting a +2 circumstance bonus on related Profession checks."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/advancedGear.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "category_aggregate_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

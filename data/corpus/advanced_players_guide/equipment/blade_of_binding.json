@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Blade of Binding",
+    "category": "ArmsArmor",
+    "name": "Blade of Binding",
+    "cost_gp": 50.0,
+    "weight": 8.0,
+    "description": "A +1 greatsword that enables free grapple attempts on a successful hit; the blade transforms into a chain that wraps around the target (Escape Artist DC 20, break DC 28, hardness 10, 10 hit points)."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/weapons.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

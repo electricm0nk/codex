@@ -1,0 +1,30 @@
+# SD13-E3 deterministic Human Rogue level 1 chassis baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Rogue level 1 chassis as
+# chosen input only. It names selections; it does not contain derived, computed,
+# or parity values. It preserves the accepted Human race-choice seam
+# (ability-bonus and bonus-feat) and stays a single-class, level-1-only chassis
+# baseline.
+#
+# It deliberately avoids every later Rogue burden surface: no base-attack or
+# base-save progression (3/4 BAB / poor Fortitude / good Reflex / poor Will),
+# no sneak attack damage-die execution, no trapfinding Perception/Disable
+# Device bonus, no rogue talent, no level-2+ progression. It adds only the
+# minimum feat and selected-skill posture needed to make the bounded level-1
+# chassis legible; the rogue base-attack, base-save, sneak-attack, and
+# trapfinding burdens are intentionally left for the runtime and matrix to
+# name as still blocking.
+case_id=pf1-crb-human-rogue-level1
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:rogue:1
+ability=strength:10
+ability=dexterity:17
+ability=constitution:12
+ability=intelligence:12
+ability=wisdom:10
+ability=charisma:10
+feat=feat:weapon_finesse
+skill=skill:stealth:1
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:dexterity
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/core-roster-and-support-state-matrix.md

@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_world_guide:monster_ability:charau_ka_shrieking_frenzy",
+      "inner_sea_world_guide:monster_ability:charau_ka_thrown_weapon_mastery"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Charau-ka",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "inner_sea_world_guide:monster:charau_ka",
+    "monster_class": "Humanoid (Reflex):3",
+    "name": "Charau-ka",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite (Primary)"
+      },
+      {
+        "damage_dice": "1d3",
+        "name": "Bite (Weapon equipped)"
+      }
+    ],
+    "race_subtype": "Charau-ka",
+    "race_type": "Humanoid",
+    "size": "S",
+    "source_page": "p.308",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races.lst",
+    "sha256": "d4ce7298dc71c3527171e3b3b4591974432bdd0d41fc20f8002197b0d5bcf8d8",
+    "line": 12,
+    "record_key": "Charau-ka"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

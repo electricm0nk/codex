@@ -1,0 +1,28 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Boneless Leather",
+    "category": "ArmsArmor",
+    "name": "Boneless Leather",
+    "cost_gp": 11010.0,
+    "weight": 15.0,
+    "description": "A +1 leather armor granting a +5 bonus on Escape Artist and Acrobatics checks, a +5 bonus to CMD, and DR 5/piercing or slashing."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/armor.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+weight",
+    "citation_precision": "exact_item_page"
+  },
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:dr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

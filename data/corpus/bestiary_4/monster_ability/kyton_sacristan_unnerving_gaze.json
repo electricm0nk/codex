@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Kyton (Sacristan) ~ Unnerving Gaze",
+    "delivery": "Supernatural",
+    "description": "A creature that succumbs to a sacristan's unnerving gaze becomes staggered for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:kyton_sacristan_unnerving_gaze",
+    "name": "Unnerving Gaze",
+    "owners": [
+      "bestiary_4:monster:kyton_sacristan"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 997,
+    "record_key": "Kyton (Sacristan) ~ Unnerving Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

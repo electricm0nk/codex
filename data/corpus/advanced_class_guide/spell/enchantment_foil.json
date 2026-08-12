@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:41:57Z",
+  "data": {
+    "key": "Enchantment Foil",
+    "school": "Abjuration",
+    "level": 4,
+    "description": "You gain a +4 bonus on saving throws against enchantment effects. If you succeed at a save against an enchantment effect, you identify the effect as if you had succeeded at a Spellcraft check to do so. Furthermore, you can choose to act as if you had failed your saving throw. If you do so, you gain a +20 bonus on Bluff checks to convince others that you failed your save and are under the enchantment's effects. A creature that attempts to use magic to detect this ruse or to make you speak truthfully about it must succeed at a caster level check (DC 15 + your caster level) to do so.",
+    "full_text": true
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_class_guide/acg_spells.lst",
+    "sha256": "58e2ecf73dd93d3a975f240376f43bb003540021c2a3150be644232977bc50b3",
+    "line": 49,
+    "record_key": "Enchantment Foil"
+  },
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

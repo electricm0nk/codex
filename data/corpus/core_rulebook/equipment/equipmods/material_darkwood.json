@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Material ~ Darkwood",
+    "category": "equipmods",
+    "name": "Darkwood",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "This rare magic wood is as hard as normal wood but very light, weighing half as much as normal wood items of its kind. Any wooden item can be made from darkwood. Armor and shields made from darkwood are treated as if they were masterwork, and shields made from darkwood have their armor check penalty reduced by an additional 2."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/equipment---final/special-materials/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

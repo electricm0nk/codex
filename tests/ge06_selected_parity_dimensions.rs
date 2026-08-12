@@ -7,14 +7,13 @@
 //! oracle-checked parity or normalization.
 
 use codex::oracle_validation::selected_parity_dimensions::{
-    SelectedParityDimensions, ClaimTierFloor,
+    ClaimTierFloor, SelectedParityDimensions,
 };
 use codex::rules_core::character_input::load_character_input_fixture;
 use codex::rules_core::pilot_compute::build_pilot_headless_receipt;
 
-const DETERMINISTIC_FIXTURE: &str = include_str!(
-    "fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt"
-);
+const DETERMINISTIC_FIXTURE: &str =
+    include_str!("fixtures/rules_core/pf1_human_fighter_level1_ge06_deterministic_input.txt");
 
 fn load(fixture: &str) -> codex::rules_core::character_input::CharacterInput {
     let result = load_character_input_fixture(fixture);
@@ -37,9 +36,18 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
     let dimensions = SelectedParityDimensions::from_receipt(&receipt);
 
     // The adapter emits exactly the mandatory selected pilot dimensions.
-    let dimension_ids: Vec<&str> = dimensions.dimensions.iter().map(|d| d.id.as_str()).collect();
-    assert_eq!(dimension_ids.len(), 9, "Expected exactly 9 selected dimensions");
+    let dimension_ids: Vec<&str> = dimensions
+        .dimensions
+        .iter()
+        .map(|d| d.id.as_str())
+        .collect();
+    assert_eq!(
+        dimension_ids.len(),
+        10,
+        "Expected exactly 10 selected dimensions"
+    );
     assert!(dimension_ids.contains(&"character.identity"));
+    assert!(dimension_ids.contains(&"combat.base_attack_bonus"));
     assert!(dimension_ids.contains(&"combat.baseline_melee_attack_bonus"));
     assert!(dimension_ids.contains(&"defense.baseline_armor_class"));
     assert!(dimension_ids.contains(&"defense.total_save.fortitude"));
@@ -55,17 +63,26 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
             .dimensions
             .iter()
             .find(|d| d.id == id)
-            .expect(&format!("dimension {id} should exist"))
+            .unwrap_or_else(|| panic!("dimension {id} should exist"))
     };
 
     // character.identity preserves pilot identity from the merged receipt.
     let char_identity = find_dimension("character.identity");
-    assert_eq!(char_identity.value_string, Some("pf1-crb-human-fighter-level1".to_string()));
+    assert_eq!(
+        char_identity.value_string,
+        Some("pf1-crb-human-fighter-level1".to_string())
+    );
     assert_eq!(char_identity.source_package_id, "pf1.core_rulebook");
 
     // The remaining selected dimensions preserve the already-grounded new-system values.
+    // CG-03 fix: the Human ability-bonus choice's +2 racial Strength adjustment is now
+    // applied before ability modifiers are derived, raising Strength from +3 to the
+    // correct +4, which raises this Strength-derived total from 5 to 6.
+    let base_attack_bonus = find_dimension("combat.base_attack_bonus");
+    assert_eq!(base_attack_bonus.value_i16, Some(1));
+
     let melee_bonus = find_dimension("combat.baseline_melee_attack_bonus");
-    assert_eq!(melee_bonus.value_i16, Some(5));
+    assert_eq!(melee_bonus.value_i16, Some(6));
 
     let armor_class = find_dimension("defense.baseline_armor_class");
     assert_eq!(armor_class.value_i16, Some(17));
@@ -79,14 +96,15 @@ fn supported_deterministic_pilot_yields_selected_dimensions() {
     let will_save = find_dimension("defense.total_save.will");
     assert_eq!(will_save.value_i16, Some(1));
 
+    // Climb and Swim are Strength-keyed skills; CG-03's fix raises both from 5 to 6.
     let climb_mod = find_dimension("skill.selected_modifier.climb");
-    assert_eq!(climb_mod.value_i16, Some(5));
+    assert_eq!(climb_mod.value_i16, Some(6));
 
     let intimidate_mod = find_dimension("skill.selected_modifier.intimidate");
     assert_eq!(intimidate_mod.value_i16, Some(3));
 
     let swim_mod = find_dimension("skill.selected_modifier.swim");
-    assert_eq!(swim_mod.value_i16, Some(5));
+    assert_eq!(swim_mod.value_i16, Some(6));
 
     // The carrier keeps its claim-tier floor at `Computed` and does not imply
     // oracle-checked parity.

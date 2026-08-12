@@ -1,0 +1,87 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_3:companion:zoog_otherworldly_touch",
+      "bestiary_3:companion:zoog_spell_sight",
+      "bestiary_3:companion:zoog_spell_like_abilities"
+    ],
+    "corpus_key": "Zoog",
+    "external_ability_refs": [],
+    "key": "bestiary_3:companion:zoog",
+    "monster_class": "Magical Beast:2",
+    "name": "Zoog",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d2",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "reach_feet": null,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.287",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 0
+      },
+      {
+        "ability": "INT",
+        "amount": -6
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -6
+      }
+    ],
+    "type_segments": [
+      "Magical Beast"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_familiar.lst",
+    "sha256": "ec0c2451742db5e8a9bf20141ab644e07c58f05249150ba02bfbff0b5623ddbb",
+    "line": 22,
+    "record_key": "Zoog"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

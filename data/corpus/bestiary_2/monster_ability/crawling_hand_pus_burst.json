@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Crawling Hand ~ Pus Burst",
+    "delivery": "Supernatural",
+    "description": "When damaged by a piercing or slashing melee weapon, a spray of vile pus strikes the attacker unless the attacker makes a DC %1 Reflex save.  Weapons that provide reach protect the attacker completely from a pus burst.  Creatures struck by pus become nauseated for 1d3 rounds and take 2d6 points of negative energy damage.",
+    "description_variables": [
+      "CrawlingHandPusBurstDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:crawling_hand_pus_burst",
+    "name": "Pus Burst",
+    "owners": [
+      "bestiary_2:monster:crawling_hand_giant",
+      "bestiary_2:monster:crawling_hand"
+    ],
+    "source_page": "p.59",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 260,
+    "record_key": "Crawling Hand ~ Pus Burst"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Phycomid ~ Acid Pellet",
+    "delivery": "Extraordinary",
+    "description": "A phycomid attacks by firing a glob of acid from one of its several mushroom-like stalks.  This attack has a range increment of 10 feet.  A phycomid can fire up to six acid pellets per minute - during rounds in which the fungus has no acid pellets, it has no method of attacking at all and must wait until its acid stores replenish in 4 rounds before continuing a battle.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:phycomid_acid_pellet",
+    "name": "Acid Pellet",
+    "owners": [
+      "bestiary_2:monster:phycomid"
+    ],
+    "source_page": "p.210",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 954,
+    "record_key": "Phycomid ~ Acid Pellet"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

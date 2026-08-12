@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Shark (Jigsaw)",
+    "external_ability_refs": [
+      "Shark ~ Keen Scent"
+    ],
+    "key": "inner_sea_world_guide:monster:shark_jigsaw",
+    "monster_class": "Animal:4",
+    "name": "Shark (Jigsaw)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Animal",
+    "size": "L",
+    "source_page": "p.255",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_races_bestiary.lst",
+    "sha256": "d72743ae54143c507ef6cea069fca77c519e4d44b89432cca21b64fff8d29593",
+    "line": 12,
+    "record_key": "Shark (Jigsaw)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Myrmecoleon ~ Scalding Spray",
+    "delivery": "Extraordinary",
+    "description": "Once every 1d4 rounds, a myrmecoleon can eject a 60-foot cone of acidic chemicals from its mouth. Creatures caught in the blast take 8d6 points of acid damage and are blinded for 10 minutes (Reflex DC %1 half damage and negates blindness). Following the initial blast, the chemicals vaporize into a thick and noxious cloud 20 feet high with a 40-foot radius. Within the cloud, all sight is obscured beyond 5 feet. Furthermore, any living creature within the area of effect must succeed at a DC %1 Fortitude save or become nauseated for as long as it remains in the cloud and for 1d4+1 rounds after it leaves the cloud. Any creature that succeeds at its save but remains in the cloud must continue to save each round on the myrmecoleon's turn. This is a poison effect.",
+    "description_variables": [
+      "CON+15"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:myrmecoleon_scalding_spray",
+    "name": "Scalding Spray",
+    "owners": [
+      "bestiary_4:monster:myrmecoleon"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1104,
+    "record_key": "Myrmecoleon ~ Scalding Spray"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

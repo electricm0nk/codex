@@ -1,0 +1,66 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "general",
+    "cost_gp": 10.0,
+    "description": "This rope has 4 hit points and can be burst with a DC 24 Strength check.",
+    "key": "Rope (Silk/50 ft)",
+    "name": "Rope, Silk (50 ft.)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Rope (Silk/50 ft)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Rope, Silk (50 ft.)"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Silk Rope (50 ft.)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.General"
+      },
+      {
+        "key": "COST",
+        "value": "10"
+      },
+      {
+        "key": "WT",
+        "value": "5"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.157"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "DESC",
+        "value": "This rope has 4 hit points and can be burst with a DC 24 Strength check."
+      }
+    ],
+    "weight_lbs": 5.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 168,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Rope (Silk/50 ft)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

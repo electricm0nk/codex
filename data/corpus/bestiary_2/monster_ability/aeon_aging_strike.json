@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Aeon ~ Aging Strike",
+    "delivery": "Supernatural",
+    "description": "If a bythos strikes a living target with two slam attacks in a single round, the bythos ages the creature, causing it to advance to the next age category (Pathfinder RPG Core Rulebook 169) if it fails a %1 DC Fortitude save. The victim gains all of the penalties from this aging and none of the bonuses. A venerable victim targeted by this ability dies if it fails the save. This process is reversible with greater restoration, limited wish, miracle, or wish.",
+    "description_variables": [
+      "AgingStrikeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:aeon_aging_strike",
+    "name": "Aging Strike",
+    "owners": [
+      "bestiary_2:monster:aeon_bythos"
+    ],
+    "source_page": "p.10",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 14,
+    "record_key": "Aeon ~ Aging Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

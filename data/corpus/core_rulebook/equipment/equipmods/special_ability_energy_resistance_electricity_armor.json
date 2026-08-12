@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Special Ability ~ Energy Resistance / Electricity ~ Armor",
+    "category": "equipmods",
+    "name": "Energy Resistance (Electricity)",
+    "cost_gp": 18000.0,
+    "weight_lbs": null,
+    "description": "This suit of armor or shield is often decorated with symbols of the element it wards against. It protects the wearer from one type of energy (acid, cold, electricity, fire, or sonic). The armor grants the wearer resist energy Electricity 10 (as the resist energy spell), absorbing the first 10 points of electricity damage per attack that the wearer would otherwise take."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/energy-resistance/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

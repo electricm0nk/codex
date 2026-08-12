@@ -1,0 +1,88 @@
+name: Allow only develop into test
+
+# Enforce the canonical release-channel branch governance for the beta surface:
+# Pull requests into `test` (beta) MUST come from this repository's `develop`
+# (alpha) branch. A fork branch named `develop` must not satisfy the policy.
+#
+# Branch-protection rulesets that block direct pushes to `test` are configured
+# on GitHub.com; this workflow is the second enforcement layer — any PR that
+# bypasses the ruleset is rejected here with an explicit error so a careless
+# merge cannot slip a non-develop parent into beta.
+#
+# The actual policy logic lives in `tools/ci/branch-promotion-guard.sh` so it
+# can be unit-tested without GitHub. The unit tests live at
+# `tests/sd16-e5-f1/test_branch_promotion_guard.sh` and run in CI as part of
+# the regular test pipeline.
+
+'on':
+  pull_request_target:
+    branches:
+      - test
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - edited
+      - ready_for_review
+  delete:
+
+permissions: {}
+
+jobs:
+  verify-source-branch:
+    if: github.event_name == 'pull_request_target'
+    name: Verify source branch
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Ensure PR source branch is develop in this repository
+        env:
+          EXPECTED_SOURCE: develop
+          SOURCE_BRANCH: ${{ github.event.pull_request.head.ref }}
+          HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          BASE_REPO: ${{ github.repository }}
+        run: bash tools/ci/branch-promotion-guard.sh
+
+  restore-develop-branch:
+    if: github.event_name == 'delete' && github.event.ref_type == 'branch' && github.event.ref == 'develop'
+    name: Restore develop branch
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Recreate develop from test
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            const { data: testRef } = await github.rest.git.getRef({
+              owner,
+              repo,
+              ref: 'heads/test'
+            });
+
+            try {
+              await github.rest.git.getRef({
+                owner,
+                repo,
+                ref: 'heads/develop'
+              });
+
+              core.info('develop already exists; nothing to restore.');
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+
+              await github.rest.git.createRef({
+                owner,
+                repo,
+                ref: 'refs/heads/develop',
+                sha: testRef.object.sha
+              });
+
+              core.info(`Recreated develop at ${testRef.object.sha}.`);
+            }

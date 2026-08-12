@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Faerie Dragon ~ Spells",
+    "delivery": null,
+    "description": "A faerie dragon casts spells as a 3rd-level sorcerer.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:companion:faerie_dragon_spells",
+    "name": "Spells",
+    "owners": [
+      "bestiary_3:companion:dragon_faerie"
+    ],
+    "record_type": "ability",
+    "source_page": "p.91",
+    "stat_adjustments": [],
+    "type_segments": [
+      "FaerieDragonRacialAbility",
+      "SpecialQuality"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
+    "line": 60,
+    "record_key": "Faerie Dragon ~ Spells"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

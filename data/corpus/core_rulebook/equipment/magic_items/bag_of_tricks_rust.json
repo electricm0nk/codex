@@ -1,0 +1,74 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "magic_items",
+    "cost_gp": 8500.0,
+    "description": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.\nThe heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.\nAnimals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.\nd%% Animal\n01-30 Wolverine\n31-60 Wolf\n67-85 Boar\n86-100 Leopard",
+    "key": "Bag of Tricks (Rust)",
+    "name": "Bag of Tricks (Rust)",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Bag of Tricks (Rust)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Bag of Tricks (Rust)"
+      },
+      {
+        "key": "TYPE",
+        "value": "Magic.Wondrous"
+      },
+      {
+        "key": "COST",
+        "value": "8500"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.501"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Aura|faint conjuration"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Caster Level|5th"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Slot|none"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Cost|4,250 gp"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Construction Requirements|Craft Wondrous Item, summon nature's ally III"
+      },
+      {
+        "key": "DESC",
+        "value": "This small sack appears empty. Anyone reaching into the bag feels a small, fuzzy ball. If the ball is removed and tossed up to 20 feet away, it turns into an animal. The animal serves the character who drew it from the bag for 10 minutes (or until slain or ordered back into the bag), at which point it disappears. It can follow any of the commands described in the Handle Animal skill. Each of the three kinds of bags of tricks produces a different set of animals. Use the following tables to determine what animals can be drawn out of each.&nl;The heavy horse appears with harness and tack and accepts the character who drew it from the bag as a rider.&nl;Animals produced are always random, and only one may exist at a time. Up to 10 animals can be drawn from the bag each week, but no more than two per day. Statistics for these animals can be found in the Pathfinder RPG Bestiary.&nl;d%% Animal&nl;01-30 Wolverine&nl;31-60 Wolf&nl;67-85 Boar&nl;86-100 Leopard"
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 33,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+    "record_key": "Bag of Tricks (Rust)",
+    "sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

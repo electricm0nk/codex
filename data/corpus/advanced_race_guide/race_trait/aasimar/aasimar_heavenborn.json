@@ -1,0 +1,106 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Aasimar ~ Heavenborn",
+    "name": "Heavenborn",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Aasimar Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Aasimar_ReplaceSkilled",
+      "Aasimar_ReplaceSpellLikeAbility"
+    ],
+    "description": "Born in the celestial realms, aasimars with this racial trait gain a +2 bonus on Knowledge (planes) checks and they cast spells with the good or light descriptor at +1 caster level. This racial trait replaces the skilled and spell-like ability racial traits.",
+    "source_page": "p.85",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Heavenborn"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Aasimar Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Heavenborn],[!PREFACT:1,ABILITIES,Aasimar_ReplaceSkilled=True,Aasimar_ReplaceSpellLikeAbility=True]"
+      },
+      {
+        "key": "DESC",
+        "value": "Born in the celestial realms, aasimars with this racial trait gain a +2 bonus on Knowledge (planes) checks and they cast spells with the good or light descriptor at +1 caster level."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces the skilled and spell-like ability racial traits.|!PREABILITY:1,CATEGORY=Special Ability,Aasimar ~ Heavenborn"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.85"
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceSkilled|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceSpellLikeAbility|True"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DESCRIPTOR.Good",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "CASTERLEVEL",
+          "DESCRIPTOR.Light",
+          "1"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SKILL",
+          "Knowledge (Planes)",
+          "2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 328,
+    "record_key": "Aasimar ~ Heavenborn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

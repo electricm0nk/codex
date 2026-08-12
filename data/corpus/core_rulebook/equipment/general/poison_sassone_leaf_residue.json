@@ -1,0 +1,94 @@
+{
+  "completeness": "chassis_plus_extract",
+  "data": {
+    "category": "general",
+    "cost_gp": 300.0,
+    "description": null,
+    "key": "Poison (Sassone Leaf Residue)",
+    "name": "Poison, Sassone Leaf Residue",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Poison (Sassone Leaf Residue)"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "Poison, Sassone Leaf Residue"
+      },
+      {
+        "key": "OUTPUTNAME",
+        "value": "Sassone Leaf Residue"
+      },
+      {
+        "key": "TYPE",
+        "value": "Goods.Poison.Consumable"
+      },
+      {
+        "key": "COST",
+        "value": "300"
+      },
+      {
+        "key": "WT",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.560"
+      },
+      {
+        "key": "QUALITY",
+        "value": "Plural|No"
+      },
+      {
+        "key": "SPROP",
+        "value": "Contact; Fort DC 16; Onset 1 min; Freq 1 min (6); Effect 2d12 hp dmg/1 Con dmg; Cure 1 save"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Type|poison, contact"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Save|Fortitude DC 16"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Onset|1 minute"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Frequency|1/minute for 6 minutes"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Effect|2d12 hit point damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Secondary Effect|1 Con damage"
+      },
+      {
+        "key": "INFO",
+        "value": "Poison Cure|1 save"
+      }
+    ],
+    "weight_lbs": 0.0
+  },
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 518,
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_general.lst",
+    "record_key": "Poison (Sassone Leaf Residue)",
+    "sha256": "2e1b57fbd956b64e9df1584ff580adb9d9aa8e65871b6e638ce6791151f8436d"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

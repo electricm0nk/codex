@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Soulbound Mannequin ~ Soul Focus",
+    "delivery": "Supernatural",
+    "description": "The soul bound to the mannequin lives within a focus integrated into the doll or its apparel, typically a carved mask. As long as this soul focus remains intact, it can be used to animate another mannequin, at the same cost as creating a new soulbound mannequin. The new mannequin retains its personality and memories. A soul focus has hardness 8, 12 hit points, and a break DC of 20.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:soulbound_mannequin_soul_focus",
+    "name": "Soul Focus",
+    "owners": [
+      "bestiary_4:monster:soulbound_mannequin"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1305,
+    "record_key": "Soulbound Mannequin ~ Soul Focus"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

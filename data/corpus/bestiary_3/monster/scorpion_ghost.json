@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1/2",
+    "corpus_key": "Scorpion (Ghost)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:scorpion_ghost",
+    "monster_class": "Vermin:2",
+    "name": "Ghost Scorpion",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d3",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "S",
+    "source_page": "236",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 237,
+    "record_key": "Scorpion (Ghost)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

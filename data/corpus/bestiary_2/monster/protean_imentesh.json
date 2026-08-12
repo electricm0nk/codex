@@ -1,0 +1,71 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:imentesh_change_shape",
+      "bestiary_2:monster_ability:imentesh_inflict_warpwave"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Protean (Imentesh)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Detect Law ~ Constant",
+      "Fast Healing",
+      "Flight Maneuverability",
+      "Sneak Attack",
+      "Tongues ~ Constant"
+    ],
+    "key": "bestiary_2:monster:protean_imentesh",
+    "monster_class": "Outsider (Fort/Will):13",
+    "name": "Protean (Imentesh)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Tail"
+      }
+    ],
+    "race_subtype": "Chaotic|Extraplanar|Protean|Shapechanger",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.214",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 694,
+    "record_key": "Protean (Imentesh)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

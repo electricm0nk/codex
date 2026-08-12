@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Svartalfar ~ Quickened Spell Strike",
+    "delivery": "Supernatural",
+    "description": "Three times per day as a free action after hitting with a melee weapon, a svartalfar can cast and deliver one of the following of its spell-like abilities through the weapon: chill touch, corrosive touch, force punch, frigid touch, or ray of exhaustion. If the attack is a critical hit and the spell-like ability deals damage, it deals double damage.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:svartalfar_quickened_spell_strike",
+    "name": "Quickened Spell Strike",
+    "owners": [
+      "bestiary_4:monster:svartalfar"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1341,
+    "record_key": "Svartalfar ~ Quickened Spell Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

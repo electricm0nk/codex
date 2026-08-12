@@ -1,0 +1,298 @@
+import { buildClassFeatureSurface } from './classFeaturesModel';
+import { assert, assertEqual } from '../testSupport/asserts';
+import type { ExplanationDto } from '../boundary/loadSavedCharacterDetail';
+import type { HeldClass } from './characterProgression';
+
+const ROGUE: HeldClass[] = [{ classId: 'class:rogue', classLabel: 'Rogue', level: 11 }];
+
+const SNEAK_ATTACK_DETAIL =
+  'Rogue level 11 sneak attack from the PF1 Core Rulebook Rogue class table: the sneak ' +
+  'attack die count increases by 1 every two rogue levels (1d6 at levels 1-2, 2d6 at level ' +
+  '3+): (level + 1) / 2 = (11 + 1) / 2 = 6, i.e. 6d6 sneak attack damage die';
+
+function explanation(id: string, value: number, detail = 'engine detail'): ExplanationDto {
+  return { id, value, detail };
+}
+
+function verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6, SNEAK_ATTACK_DETAIL)],
+    ROGUE
+  );
+
+  assertEqual(surface.features.length, 1, 'the sneak-attack record must reach the surface');
+  assertEqual(surface.features[0].id, 'class_chassis.rogue.sneak_attack', 'id carried verbatim');
+  assertEqual(surface.features[0].classToken, 'rogue', 'attributed to the held Rogue class');
+  assertEqual(surface.features[0].label, 'Sneak Attack', 'label humanised from the id');
+  assertEqual(surface.features[0].value, 6, 'PF1 sneak attack at Rogue 11 is 6 dice');
+}
+
+function verifiesTheDetailTextIsNeverRewritten() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.rogue.sneak_attack', 6, SNEAK_ATTACK_DETAIL)],
+    ROGUE
+  );
+
+  assertEqual(
+    surface.features[0].detail,
+    SNEAK_ATTACK_DETAIL,
+    'the engine detail is the rules citation and must cross byte-identical'
+  );
+  assert(
+    surface.features[0].detail.includes('6d6'),
+    'the dice expression the player needs is inside the engine detail'
+  );
+}
+
+function verifiesNonClassRecordsAreIgnored() {
+  const surface = buildClassFeatureSurface(
+    [
+      explanation('ability_modifier.strength', 4, 'STR 18 -> +4'),
+      explanation('race.human.ability_bonus_applied', 18, 'Human +2 racial'),
+      explanation('class_feature.rogue.evasion', 1, 'Rogue level 2 Evasion'),
+    ],
+    ROGUE
+  );
+
+  assertEqual(surface.features.length, 1, 'only the class record is a class feature');
+  assertEqual(surface.features[0].id, 'class_feature.rogue.evasion', 'the class record survives');
+}
+
+function verifiesUnsupportedNoticesNeverRenderTheirFillerZeroAsAMagnitude() {
+  const surface = buildClassFeatureSurface(
+    [
+      explanation('class_chassis.barbarian.rage_rounds_per_day', 8, 'Barbarian level 2 rage'),
+      explanation(
+        'class_chassis.barbarian.rage_rounds_per_day.unsupported',
+        0,
+        'no rage-round budget is grounded for this posture'
+      ),
+    ],
+    [{ classId: 'class:barbarian', classLabel: 'Barbarian', level: 2 }]
+  );
+
+  assertEqual(surface.features.length, 1, 'only the grounded record is a feature row');
+  assertEqual(
+    surface.features[0].id,
+    'class_chassis.barbarian.rage_rounds_per_day',
+    'the grounded record keeps its magnitude'
+  );
+  assertEqual(surface.notComputed.length, 1, 'the unsupported record becomes a notice');
+  assertEqual(surface.notComputed[0].label, 'Rage Rounds Per Day', 'notice label drops the suffix');
+  assertEqual(
+    surface.notComputed[0].detail,
+    'no rage-round budget is grounded for this posture',
+    'the engine explains the absence in its own words'
+  );
+  assert(
+    !Object.prototype.hasOwnProperty.call(surface.notComputed[0], 'value'),
+    'a notice carries no value at all, so no caller can render the filler zero'
+  );
+}
+
+function verifiesPreNamespacingChassisIdsGetNoGuessedOwner() {
+  const surface = buildClassFeatureSurface(
+    [
+      explanation('class_chassis.base_attack_bonus', 5, 'Fighter level 5 BAB'),
+      explanation('class_chassis.base_save.will', 1, 'Fighter level 5 Will'),
+    ],
+    [{ classId: 'class:fighter', classLabel: 'Fighter', level: 5 }]
+  );
+
+  assertEqual(surface.features[0].classToken, null, 'no class segment means no owner is invented');
+  assertEqual(surface.features[0].label, 'Base Attack Bonus', 'the whole remainder is the label');
+  assertEqual(surface.features[1].label, 'Base Save Will', 'dotted segments humanise too');
+}
+
+function verifiesARecordIsOnlyAttributedToAClassTheCharacterHolds() {
+  // `wizard` is a real class segment, but this character is a Rogue — the
+  // segment must not be silently stripped as if it were the owner.
+  const surface = buildClassFeatureSurface(
+    [explanation('class_chassis.wizard.scribe_scroll', 1, 'Wizard Scribe Scroll')],
+    ROGUE
+  );
+
+  assertEqual(surface.features[0].classToken, null, 'an unheld class is not treated as the owner');
+  assertEqual(surface.features[0].label, 'Wizard Scribe Scroll', 'the segment stays in the label');
+}
+
+function verifiesTheEngineEmissionOrderIsPreserved() {
+  const surface = buildClassFeatureSurface(
+    [
+      explanation('class_chassis.rogue.base_attack_bonus', 8),
+      explanation('class_chassis.rogue.trapfinding', 5),
+      explanation('class_chassis.rogue.sneak_attack', 6),
+    ],
+    ROGUE
+  );
+
+  assertEqual(
+    surface.features.map((row) => row.label).join(' | '),
+    'Base Attack Bonus | Trapfinding | Sneak Attack',
+    'rows stay in the order the engine emitted them'
+  );
+}
+
+function verifiesABuildWithNoClassRecordsGetsCleanEmptySurfaces() {
+  const surface = buildClassFeatureSurface([], ROGUE);
+
+  assertEqual(surface.features.length, 0, 'no features');
+  assertEqual(surface.notComputed.length, 0, 'no notices');
+}
+
+// ---------------------------------------------------------------------------
+// SD-27: a book-namespaced id (`class_feature.<book>.<class>.…`) is attributed
+// to its class, not swallowed into the label.
+// ---------------------------------------------------------------------------
+
+const UNCHAINED_SUMMONER: HeldClass[] = [
+  { classId: 'class:unchained_summoner', classLabel: 'Unchained Summoner', level: 20 },
+];
+
+/**
+ * The defect, verbatim: every one of Pathfinder Unchained's receipt rows
+ * rendered as `Pu Unchained Summoner Bond Senses Rounds Per Day` under a
+ * `Chassis` gutter, because `class_feature.pu.<class>.*` puts the literal book
+ * segment `pu` in the position `splitId` matched against held classes.
+ */
+function verifiesABookNamespacedIdIsAttributedToItsClassRatherThanToNoOne() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_feature.pu.unchained_summoner.bond_senses_rounds_per_day', 20)],
+    UNCHAINED_SUMMONER
+  );
+
+  assertEqual(
+    surface.features[0].classToken,
+    'unchained_summoner',
+    'the class segment sits behind a book namespace and must still be found'
+  );
+  assertEqual(
+    surface.features[0].label,
+    'Bond Senses Rounds Per Day',
+    'the label is the feature, with neither the book nor the class in it'
+  );
+  assertEqual(
+    surface.features[0].classLabel,
+    'Unchained Summoner',
+    "the gutter reads the held class's own label, not its raw id token"
+  );
+}
+
+/**
+ * The per-record roster rows carry an extra `corpus_record` segment naming the
+ * record family. It is id structure, not feature text, and must not reach the
+ * label.
+ *
+ * The `makers_call` id here is the one the engine really emits
+ * (`pilot_compute::pu_feature_slug` swallows the apostrophe in
+ * `Unchained Summoner ~ Maker's Call`). It previously read `maker_s_call` and
+ * asserted the label `'Maker S Call'` — an id the engine can no longer produce
+ * and the rendering of a fixed defect. A synthetic fixture that pins an
+ * impossible input proves nothing, so it was corrected rather than left to pass.
+ */
+function verifiesTheRecordFamilySegmentIsNotPartOfTheFeatureName() {
+  const surface = buildClassFeatureSurface(
+    [
+      explanation('class_feature.pu.unchained_summoner.corpus_record.makers_call', 6),
+      explanation('class_feature.pu.unchained_summoner.corpus_record.greater_shield_ally', 12),
+    ],
+    UNCHAINED_SUMMONER
+  );
+
+  assertEqual(surface.features[0].label, 'Makers Call', 'the record family segment is dropped');
+  assertEqual(surface.features[1].label, 'Greater Shield Ally', 'and dropped on every row');
+  assertEqual(surface.features[0].classToken, 'unchained_summoner', 'still attributed');
+}
+
+/** The same treatment must reach the "Not computed" lane. */
+function verifiesABookNamespacedNoticeIsAlsoAttributedAndLabelled() {
+  const surface = buildClassFeatureSurface(
+    [
+      explanation(
+        'class_feature.pu.unchained_summoner.other_features_deferred.unsupported',
+        0,
+        'the engine explains the deferral'
+      ),
+      explanation('class_feature.pu.unchained_summoner.corpus_record.transposition.unsupported', 0),
+    ],
+    UNCHAINED_SUMMONER
+  );
+
+  assertEqual(surface.notComputed.length, 2, 'both notices survive');
+  assertEqual(surface.notComputed[0].label, 'Other Features Deferred', 'notice label');
+  assertEqual(surface.notComputed[0].classLabel, 'Unchained Summoner', 'notice gutter');
+  assertEqual(surface.notComputed[1].label, 'Transposition', 'record-family segment dropped here too');
+}
+
+/**
+ * The namespace scan must not invent an owner. A book-namespaced record for a
+ * class this character does not hold keeps every segment in its label, exactly
+ * as an unheld class segment already does.
+ */
+function verifiesABookNamespacedIdForAnUnheldClassStillGetsNoGuessedOwner() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_feature.pu.unchained_monk.ki_points', 6)],
+    UNCHAINED_SUMMONER
+  );
+
+  assertEqual(surface.features[0].classToken, null, 'a class the character does not hold is not the owner');
+  assertEqual(surface.features[0].classLabel, null, 'and carries no label to render in the gutter');
+  assertEqual(surface.features[0].label, 'Pu Unchained Monk Ki Points', 'nothing is silently stripped');
+}
+
+/**
+ * The scan is bounded to one namespace segment, so a class token appearing
+ * deeper in an id — inside a feature name — can never be mistaken for the
+ * owner.
+ */
+function verifiesTheNamespaceScanIsBoundedToOneSegment() {
+  const surface = buildClassFeatureSurface(
+    [explanation('class_feature.pu.extra.unchained_summoner.something', 1)],
+    UNCHAINED_SUMMONER
+  );
+
+  assertEqual(surface.features[0].classToken, null, 'a class token two namespaces deep is not the owner');
+  assertEqual(
+    surface.features[0].label,
+    'Pu Extra Unchained Summoner Something',
+    'and the whole remainder stays in the label'
+  );
+}
+
+/** The pre-namespacing single-segment ids must be untouched by all of this. */
+function verifiesTheUnnamespacedIdsKeepTheirExistingAttribution() {
+  const surface = buildClassFeatureSurface(
+    [
+      explanation('class_feature.rogue.evasion', 1),
+      explanation('class_chassis.rogue.sneak_attack', 6),
+    ],
+    ROGUE
+  );
+
+  assertEqual(surface.features[0].classToken, 'rogue', 'class in position 0 still resolves');
+  assertEqual(surface.features[0].classLabel, 'Rogue', 'and carries its held label');
+  assertEqual(surface.features[0].label, 'Evasion', 'label unchanged');
+  assertEqual(surface.features[1].label, 'Sneak Attack', 'label unchanged');
+}
+
+async function main() {
+  verifiesALevel11RoguesSneakAttackKeepsItsMagnitudeAndCitation();
+  verifiesTheDetailTextIsNeverRewritten();
+  verifiesNonClassRecordsAreIgnored();
+  verifiesUnsupportedNoticesNeverRenderTheirFillerZeroAsAMagnitude();
+  verifiesPreNamespacingChassisIdsGetNoGuessedOwner();
+  verifiesARecordIsOnlyAttributedToAClassTheCharacterHolds();
+  verifiesTheEngineEmissionOrderIsPreserved();
+  verifiesABuildWithNoClassRecordsGetsCleanEmptySurfaces();
+  verifiesABookNamespacedIdIsAttributedToItsClassRatherThanToNoOne();
+  verifiesTheRecordFamilySegmentIsNotPartOfTheFeatureName();
+  verifiesABookNamespacedNoticeIsAlsoAttributedAndLabelled();
+  verifiesABookNamespacedIdForAnUnheldClassStillGetsNoGuessedOwner();
+  verifiesTheNamespaceScanIsBoundedToOneSegment();
+  verifiesTheUnnamespacedIdsKeepTheirExistingAttribution();
+}
+
+main().catch((error: unknown) => {
+  console.error(error);
+  throw error;
+});

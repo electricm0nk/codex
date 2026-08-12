@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Nyogoth ~ Horrific Appearance",
+    "delivery": "Supernatural",
+    "description": "Creatures that succumb to a nyogoth's horrific appearance become nauseated for 1d8 rounds.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:nyogoth_horrific_appearance",
+    "name": "Horrific Appearance",
+    "owners": [
+      "bestiary_2:monster:qlippoth_nyogoth"
+    ],
+    "source_page": "p.224",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1016,
+    "record_key": "Nyogoth ~ Horrific Appearance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

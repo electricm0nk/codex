@@ -1,0 +1,25 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Awaken",
+    "school": "Transmutation",
+    "level": 5,
+    "description": "You awaken a tree or animal to human-like sentience. To succeed, you must make a Will save [DC 10 + the animal's current HD, or the HD the tree will have once awakened]. The awakened animal or tree is friendly toward you. You have no special empathy or connection with a creature you awaken, although it serves you in specific tasks or endeavors if you communicate your desires to it. If you cast awaken again, any previously awakened creatures remain friendly to you, but they no longer undertake tasks for you unless it is in their best interests. An awakened tree has characteristics as if it were an animated object, except that it gains the plant type and its Intelligence, Wisdom, and Charisma scores are each 3d6. An awakened plant gains the ability to move its limbs, roots, vines, creepers, and so forth, and it has senses similar to a human's. An awakened animal gets 3d6 Intelligence, +1d3 Charisma, and +2 HD. Its type becomes magical beast [augmented animal]. An awakened animal can't serve as an animal companion, familiar, or special mount. An awakened tree or animal can speak one language that you know, plus one additional language that you know per point of Intelligence bonus [if any]. This spell does not function on an animal or plant with an Intelligence greater than 2."
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_spells.lst",
+    "sha256": "6da07d57030565fec332991219192133f06d699a960d9d2cb9a5da9e9282bb31",
+    "line": 804,
+    "record_key": "Awaken.MOD"
+  },
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

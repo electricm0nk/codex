@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:freezing_flow_crystalline",
+      "bestiary_4:monster_ability:freezing_flow_jagged_slam",
+      "bestiary_4:monster_ability:freezing_flow_numbing_touch"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Freezing Flow",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:freezing_flow",
+    "monster_class": "Ooze:5",
+    "name": "Freezing Flow",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d4",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Cold|Water",
+    "race_type": "Ooze",
+    "size": "L",
+    "source_page": "p.115",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 92,
+    "record_key": "Freezing Flow"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

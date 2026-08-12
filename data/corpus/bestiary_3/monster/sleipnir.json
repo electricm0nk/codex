@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "11",
+    "corpus_key": "Sleipnir",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:sleipnir",
+    "monster_class": "Magical Beast:14",
+    "name": "Sleipnir",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Hooves"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.247",
+    "speeds": [
+      {
+        "feet": 80,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Air Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 257,
+    "record_key": "Sleipnir"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

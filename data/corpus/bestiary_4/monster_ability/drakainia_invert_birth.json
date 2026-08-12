@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Drakainia ~ Invert Birth",
+    "delivery": "Supernatural",
+    "description": "When a drakainia uses her dimension door spell-like ability, instead of the normal range, she can choose to teleport to any space occupied by one of her spawn that is within 1 mile of her. She doesn't need line of sight or knowledge of the spawn's location. If she chooses a spawn that is farther than a mile away, she does not lose the use of the spell-like ability, but does lose the action. On arrival, she explodes out from her offspring, destroying it entirely.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:drakainia_invert_birth",
+    "name": "Invert Birth",
+    "owners": [
+      "bestiary_4:monster:drakainia"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 553,
+    "record_key": "Drakainia ~ Invert Birth"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

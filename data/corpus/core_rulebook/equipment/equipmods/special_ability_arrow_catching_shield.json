@@ -1,0 +1,26 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:42:22Z",
+  "data": {
+    "key": "Special Ability ~ Arrow Catching ~ Shield",
+    "category": "equipmods",
+    "name": "Arrow Catching",
+    "cost_gp": null,
+    "weight_lbs": null,
+    "description": "A shield with this ability attracts ranged weapon attacks to it. It has a deflection bonus of +1 against ranged weapons because projectiles and thrown weapons veer toward it. Additionally, any projectile or thrown weapon aimed at a target within 5 feet of the shield's wearer diverts from its original target and targets the shield's bearer instead. Total cover prevents diversion, ranged attackers ignore miss chances against the wearer, and weapons whose enhancement bonus exceeds the shield's base AC bonus aren't diverted (though the deflection bonus still applies). The wielder may toggle this power using a command word."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://www.d20pfsrd.com/magic-items/magic-armor/magic-armor-and-shield-special-abilities/arrow-catching/",
+    "fetched_at": "2026-07-22",
+    "identity_match_basis": "name"
+  },
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

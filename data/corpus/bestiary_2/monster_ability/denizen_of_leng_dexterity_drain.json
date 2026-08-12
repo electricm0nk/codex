@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Denizen of Leng ~ Dexterity Drain",
+    "delivery": "Supernatural",
+    "description": "The otherworldly teeth and tongues of a denizen of Leng deal 1d6 points of Dexterity drain with a bite.  Constructs, elementals, and other creatures that do not possess flesh are immune to this effect.  A successful DC %1 Fortitude save reduces the Dexterity drain to 1 point.",
+    "description_variables": [
+      "DenizenOfLengDexterityDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:denizen_of_leng_dexterity_drain",
+    "name": "Dexterity Drain",
+    "owners": [
+      "bestiary_2:monster:denizen_of_leng"
+    ],
+    "source_page": "p.82",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 376,
+    "record_key": "Denizen of Leng ~ Dexterity Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

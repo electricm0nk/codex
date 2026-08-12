@@ -1,0 +1,95 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T17:43:16Z",
+  "data": {
+    "key": "Gnome ~ Warden of Nature",
+    "name": "Warden of Nature",
+    "race_key": "Gnome",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Gnome Racial Trait",
+      "SpecialAttack",
+      "Special Attack",
+      "Defensive"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Gnome_ReplaceDefensiveTraining",
+      "Gnome_ReplaceHatred"
+    ],
+    "description": "Gnomes must often protect their homes against unnatural or pestilential infestations. Gnomes with this racial trait gain a +2 dodge bonus to AC against aberrations, oozes, and vermin, and a +1 bonus on attack rolls against them because of their special training. This racial trait replaces defensive training and hatred.",
+    "source_page": "p.33",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Gnome ~ Warden of Nature"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Gnome Racial Trait.SpecialAttack.Special Attack.Defensive"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Warden of Nature],[!PREFACT:1,ABILITIES,Gnome_ReplaceDefensiveTraining=true,Gnome_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Gnomes must often protect their homes against unnatural or pestilential infestations. Gnomes with this racial trait gain a +2 dodge bonus to AC against aberrations, oozes, and vermin, and a +1 bonus on attack rolls against them because of their special training."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces defensive training and hatred.|!PREABILITY:1,CATEGORY=Special Ability,Gnome ~ Warden of Nature"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.33"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+2 dodge bonus to AC against aberrations, oozes, and vermin, and a +1 bonus on attack rolls against them."
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ability Benefit|(+2 dodge bonus to AC vs. aberrations, oozes, and vermin)"
+      },
+      {
+        "key": "ASPECT",
+        "value": "StatBlockName|+1 on attack rolls against aberrations, oozes, and vermin"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceDefensiveTraining|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Gnome_ReplaceHatred|True"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_race.lst",
+    "sha256": "ea475d7c207e2c4b182019997689ca48a090019620250e43bc4e85b0ff77c3a3",
+    "line": 132,
+    "record_key": "Gnome ~ Warden of Nature"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

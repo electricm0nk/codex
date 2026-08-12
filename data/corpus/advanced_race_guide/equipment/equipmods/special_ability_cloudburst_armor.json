@@ -1,0 +1,50 @@
+{
+  "completeness": "full",
+  "data": {
+    "category": "equipmods",
+    "cost_gp": 5000.0,
+    "description": "If an attack strikes the wearer and deals at least 10 points of electricity damage, as a swift action on the wearer's next turn that does not provoke an attack of opportunity, she may use shocking grasp as a spell-like ability, dealing 1d6 points of electricity damage for every 10 points of damage dealt to the wearer since last turn.",
+    "key": "Special Ability ~ Cloudburst ~ Armor",
+    "name": "Cloudburst",
+    "raw_bonus_chains": [],
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Special Ability ~ Cloudburst ~ Armor"
+      },
+      {
+        "key": "TYPE",
+        "value": "Armor"
+      },
+      {
+        "key": "COST",
+        "value": "5000"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.160"
+      },
+      {
+        "key": "SPROP",
+        "value": "If an attack strikes the wearer and deals at least 10 points of electricity damage, as a swift action on the wearer's next turn that does not provoke an attack of opportunity, she may use shocking grasp as a spell-like ability, dealing 1d6 points of electricity damage for every 10 points of damage dealt to the wearer since last turn."
+      }
+    ],
+    "weight_lbs": null
+  },
+  "ingested_at": "2026-08-03T19:41:45Z",
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "population": "in_scope",
+  "source": {
+    "kind": "lst_token",
+    "line": 30,
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_equipmods.lst",
+    "record_key": "Special Ability ~ Cloudburst ~ Armor",
+    "sha256": "5abd1c97f4ef1f1e037a9dbd839ac5009f06bb694c8abf7d7398c4af7add9ad7"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

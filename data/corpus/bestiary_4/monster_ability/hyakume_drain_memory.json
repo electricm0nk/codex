@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Hyakume ~ Drain Memory",
+    "delivery": "Supernatural",
+    "description": "Once per day as a standard action, a hyakume can make a touch attack with either its hands or one of its eye probes to drain a target of its memories. The target loses the majority of memories relating to life and identity, and the hyakume can control the creature as if it were subject to a charm monster spell until those memories are regained (Will DC %1 negates). The hyakume absorbs the memories and can store and use them. It can store the memories of a number of creatures equal to its Intelligence bonus (typically 4) at one time. This is a mind-affecting effect.",
+    "description_variables": [
+      "CHA+19"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:hyakume_drain_memory",
+    "name": "Drain Memory",
+    "owners": [
+      "bestiary_4:monster:hyakume"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 875,
+    "record_key": "Hyakume ~ Drain Memory"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

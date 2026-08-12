@@ -1,0 +1,65 @@
+# SD18 deterministic Human Fighter level 19 widening fixture.
+# Widens the accepted SD18 deterministic Human Fighter pilot from the bounded
+# level 18 (ninth bonus-feat cadence slot, Bravery +5) tranche to level 19 as
+# chosen input only. It names selections; it does not contain derived,
+# computed, or parity values. It preserves the accepted Human race-choice
+# seam and the deterministic Longsword / Chain Shirt / no-shield posture.
+# Level 19 is NOT a Fighter bonus-feat cadence level (1, 2, 4, 6, 8, 10, 12,
+# 14, 16, 18, 20), NOT a Weapon Training rank-rise level (ranks rise at 5, 9,
+# 13, 17; the next rise is beyond level 20), and NOT an Armor Training
+# rank-rise level (ranks rise at 3, 7, 11, 15; the PF1 Core Rulebook names no
+# fifth rank), so this fixture adds NO new bonus-feat, weapon-training-group,
+# or armor-training choice slot relative to the level-18 fixture. The PF1
+# Core Rulebook level-19 Special column names only "Armor mastery" (DR 5/--
+# whenever wearing armor or using a shield), a genuinely new named class
+# feature grounded as a flat, non-fabricated magnitude record only (no
+# damage-resolution engine or incoming-damage total exists anywhere in this
+# codebase, mirroring exactly how the Barbarian's own Damage Reduction class
+# feature was grounded).
+case_id=pf1-crb-human-fighter-level19-sd18-widening
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:fighter:19
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+feat=feat:dodge
+feat=feat:weapon_focus
+feat=feat:toughness
+feat=feat:cleave
+feat=feat:combat_reflexes
+feat=feat:improved_critical
+feat=feat:greater_weapon_focus
+feat=feat:weapon_specialization
+feat=feat:greater_weapon_specialization
+feat=feat:critical_focus
+feat=feat:staggering_critical
+skill=skill:climb:1
+skill=skill:intimidate:1
+skill=skill:swim:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+equipment=power_attack:selected_inactive
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:fighter_bonus_feat:feat:weapon_focus:weapon:longsword
+choice=choice:fighter_bonus_feat_2:feat:toughness
+choice=choice:fighter_bonus_feat_4:feat:cleave
+choice=choice:fighter_weapon_training_group:group:heavy_blades
+choice=choice:fighter_bonus_feat_6:feat:combat_reflexes
+choice=choice:fighter_bonus_feat_8:feat:improved_critical
+choice=choice:fighter_weapon_training_group_2:group:bows
+choice=choice:fighter_bonus_feat_10:feat:greater_weapon_focus
+choice=choice:fighter_bonus_feat_12:feat:weapon_specialization
+choice=choice:fighter_weapon_training_group_3:group:polearms
+choice=choice:fighter_bonus_feat_14:feat:greater_weapon_specialization
+choice=choice:fighter_bonus_feat_16:feat:critical_focus
+choice=choice:fighter_weapon_training_group_4:group:hammers
+choice=choice:fighter_bonus_feat_18:feat:staggering_critical
+choice=choice:human_ability_bonus:ability:strength
+provenance=programs/codex/requirements/SD-18-core-rules-breadth/artifacts/core-roster-and-support-state-matrix.md

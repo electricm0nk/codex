@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Aeon (Paracletus)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Flight Maneuverability",
+      "Paracletus ~ Electricity"
+    ],
+    "key": "bestiary_2:monster:aeon_paracletus",
+    "monster_class": "Outsider (Fort/Will):3",
+    "name": "Aeon (Paracletus)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Aeon|Extraplanar",
+    "race_type": "Outsider",
+    "size": "S",
+    "source_page": "p.11",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 23,
+    "record_key": "Aeon (Paracletus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

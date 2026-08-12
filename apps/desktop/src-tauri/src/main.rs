@@ -1,13 +1,72 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod ge08_workbench;
+mod browser_handoff;
+mod campaign_drive;
+mod character_hub;
+#[allow(non_snake_case)]
+mod characterHub;
+mod class_catalog;
+mod class_spell_levels;
+mod corpus_fixtures;
+mod corpus_full;
+mod corpus_ingest_diagnostic;
+mod equipment_catalog;
+mod feat_catalog;
+mod authoring_workbench;
+mod companion_catalog;
+mod monster_catalog;
+mod pf1_adapter;
+mod race_catalog;
+mod race_trait_picker;
+/// Test-only: the reach gate, which fails when ingested content has no
+/// consumer carrying it to a player. Compiled out of the shipping binary
+/// because it is a verification surface, not a runtime one.
+#[cfg(test)]
+mod reach_gate;
+mod rule_system_adapter;
+mod spell_catalog;
+mod stub_adapter;
+mod support_state_matrix_bridge;
+mod update;
 
 use serde::Serialize;
 
-use ge08_workbench::{
-    Ge08AuthoredRecords, Ge08AuthoredRecord, Ge08AuthoringWorkbenchRequest, Ge08AuthoringWorkbenchSnapshot,
-    Ge08BaselineArmorClass, Ge08Diagnostic, Ge08ExplanationRef, Ge08LifecycleGateState, Ge08OracleDimensionStatus,
-    Ge08PackageManifest, Ge08PreviewEnvelope, Ge08ProvenanceRef, Ge08SelectedSlotResolution,
+use campaign_drive::{
+    drive_delete_campaign, drive_list_campaigns, drive_load_campaign, drive_save_campaign,
+    write_campaign_drive_artifacts,
+};
+use character_hub::{
+    add_equipment_selection, add_feat_selection, add_spell_selection, adjust_character_hp,
+    adjust_character_money, attach_equipment_modifier, clone_character, create_character,
+    delete_character, delete_character_portrait, export_character, export_character_json,
+    import_character, level_up_character, list_feats_for_character, list_saved_characters,
+    load_character_bio,
+    load_character_durability, load_character_money, load_character_portrait,
+    list_race_creation_roster, load_saved_character, preview_level_up, purchase_equipment,
+    record_and_prepare_spell_selection, remove_equipment_selection, remove_feat_selection,
+    remove_spell_selection,
+    save_character_portrait, set_skill_allocations, update_character_bio,
+};
+use characterHub::appendToCharacter::append_to_character;
+use characterHub::recomputeCharacter::recompute_character;
+use characterHub::reSaveCharacter::re_save_character;
+use class_catalog::list_class_catalog;
+use class_spell_levels::list_class_spell_levels;
+use corpus_ingest_diagnostic::corpus_ingest_diagnostic;
+use equipment_catalog::{list_equipment, list_equipment_catalog};
+use feat_catalog::{list_feat_catalog, list_feats, list_weapon_targets};
+use companion_catalog::list_companion_catalog;
+use monster_catalog::list_monster_catalog;
+use race_catalog::list_race_catalog;
+use race_trait_picker::{list_alternate_racial_traits, resolve_race_alternate_selection};
+use spell_catalog::{list_spell_catalog, list_spells};
+use support_state_matrix_bridge::{build_support_state_matrix_snapshot, SupportStateMatrixSnapshot};
+use update::transaction::{
+    is_install_eligible, perform_install, perform_restore_previous, verify_relaunch_artifact,
+};
+
+use authoring_workbench::{
+    build_authoring_workbench_snapshot, AuthoringWorkbenchRequest, AuthoringWorkbenchSnapshot,
 };
 
 #[derive(Serialize)]
@@ -41,151 +100,138 @@ fn load_pilot_shell_snapshot() -> PilotShellSnapshot {
 }
 
 #[tauri::command]
-fn load_ge08_authoring_workbench_snapshot(
-    request: Ge08AuthoringWorkbenchRequest,
-) -> Result<Ge08AuthoringWorkbenchSnapshot, String> {
-    use codex::homebrew_authoring::preview_bridge::PreviewBridge;
+fn load_authoring_workbench_snapshot(
+    request: AuthoringWorkbenchRequest,
+) -> Result<AuthoringWorkbenchSnapshot, String> {
+    build_authoring_workbench_snapshot(request)
+}
 
-    let repo_root = std::env::current_dir().map_err(|e| format!("cannot determine repo root: {}", e))?;
-    let package_path = repo_root.join(&request.package_root);
+/// Read-only SD-13 support-state/debt bridge for the SD-11 tester workbench.
+/// Returns the seeded SD-13 matrix truth verbatim; no filtering or promotion.
+#[tauri::command]
+fn load_support_state_matrix() -> SupportStateMatrixSnapshot {
+    build_support_state_matrix_snapshot()
+}
 
-    if !package_path.exists() {
-        return Err(format!(
-            "package root does not exist: {} (resolved to {})",
-            request.package_root,
-            package_path.display()
-        ));
+/// Identifies which build of the Rust backend is actually running. `version`
+/// is the crate's own Cargo.toml version (not the npm frontend version, which
+/// is tracked separately); `gitCommit` is the short commit hash embedded at
+/// compile time by build.rs, or "unknown" for a build outside a git checkout.
+/// Reaching this command at all — regardless of what it returns — is itself
+/// proof the Tauri IPC bridge to the Rust backend is alive.
+#[derive(Serialize)]
+#[serde(rename_all = "camelCase")]
+struct BackendHealthSnapshot {
+    version: String,
+    git_commit: String,
+}
+
+#[tauri::command]
+fn load_backend_health() -> BackendHealthSnapshot {
+    BackendHealthSnapshot {
+        version: env!("CARGO_PKG_VERSION").to_string(),
+        git_commit: env!("CODEX_GIT_SHA").to_string(),
     }
-
-    let envelope = PreviewBridge::preview_from_root(&package_path)
-        .map_err(|e| format!("failed to load/preview package: {}", e))?;
-
-    let package = codex::homebrew_authoring::package_store::PackageStore::load(&package_path)
-        .map_err(|e| format!("failed to load package source: {}", e))?;
-
-    let (actual_state, _diags) = package.recompute_validation();
-    let baseline_ac = match envelope.baseline_armor_class {
-        codex::homebrew_authoring::preview_bridge::ArmorClassPreview::Computed(value) => {
-            Ge08BaselineArmorClass::Computed { value }
-        }
-        codex::homebrew_authoring::preview_bridge::ArmorClassPreview::Blocked(reason) => {
-            Ge08BaselineArmorClass::Blocked { reason }
-        }
-    };
-
-    let export_allowed = actual_state == codex::homebrew_authoring::package_manifest::PackageValidationState::Valid;
-    let preview_allowed = export_allowed && envelope.preview_status != codex::homebrew_authoring::preview_bridge::PreviewStatus::Blocked;
-
-    Ok(Ge08AuthoringWorkbenchSnapshot {
-        package_root: request.package_root,
-        package_state: actual_state.as_str().to_string(),
-        package_manifest: Ge08PackageManifest {
-            package_id: package.manifest.package_id,
-            package_title: package.manifest.package_title,
-            package_version: package.manifest.package_version,
-            depends_on: package.manifest.depends_on,
-            supported_object_kinds: package.manifest.supported_object_kinds,
-        },
-        active_record_ref: request.active_record_ref,
-        authored_records: Ge08AuthoredRecords {
-            feat: package.feat.map(|f| Ge08AuthoredRecord {
-                stable_id: f.stable_id,
-                owning_feat_id: None,
-                display_name: f.display_name,
-                object_kind: f.object_kind,
-                target_family: None,
-                modifier_type: None,
-                modifier_value: None,
-                predicate: None,
-            }),
-            effect: package.effect.map(|e| Ge08AuthoredRecord {
-                stable_id: e.stable_id,
-                owning_feat_id: Some(e.owning_feat_id),
-                display_name: e.target_family.clone(),
-                object_kind: "effect".to_string(),
-                target_family: Some(e.target_family),
-                modifier_type: Some(e.modifier_type),
-                modifier_value: Some(e.modifier_value),
-                predicate: None,
-            }),
-            prerequisite: package.prerequisite.map(|p| Ge08AuthoredRecord {
-                stable_id: p.stable_id,
-                owning_feat_id: Some(p.owning_feat_id),
-                display_name: p.predicate.clone(),
-                object_kind: "prerequisite".to_string(),
-                target_family: None,
-                modifier_type: None,
-                modifier_value: None,
-                predicate: Some(p.predicate),
-            }),
-        },
-        preview: Ge08PreviewEnvelope {
-            case_id: envelope.case_id,
-            preview_status: match envelope.preview_status {
-                codex::homebrew_authoring::preview_bridge::PreviewStatus::Success => "success".to_string(),
-                codex::homebrew_authoring::preview_bridge::PreviewStatus::Blocked => "blocked".to_string(),
-                codex::homebrew_authoring::preview_bridge::PreviewStatus::Unsupported => "unsupported".to_string(),
-            },
-            selected_slot_resolution: Ge08SelectedSlotResolution {
-                slot: envelope.selected_slot_resolution.slot,
-                removed: envelope.selected_slot_resolution.removed,
-                added: envelope.selected_slot_resolution.added,
-                resolved_feat_id: envelope.selected_slot_resolution.resolved_feat_id,
-            },
-            baseline_armor_class: baseline_ac,
-            diagnostics: envelope
-                .diagnostics
-                .iter()
-                .map(|d| Ge08Diagnostic {
-                    class: d.class.clone(),
-                    severity: d.severity.as_str().to_string(),
-                    message: d.message.clone(),
-                    subject_ref: d.subject_ref.clone(),
-                    claim_blocking: d.claim_blocking,
-                })
-                .collect(),
-            provenance_refs: envelope
-                .provenance_refs
-                .iter()
-                .map(|p| Ge08ProvenanceRef {
-                    stable_id: p.stable_id.clone(),
-                    source_package_id: p.source_package_id.clone(),
-                    authored_path: p.authored_path.clone(),
-                })
-                .collect(),
-            explanation_refs: envelope
-                .explanation_refs
-                .iter()
-                .map(|e| Ge08ExplanationRef {
-                    node_kind: e.node_kind.clone(),
-                    ref_id: e.ref_id.clone(),
-                    detail: e.detail.clone(),
-                })
-                .collect(),
-            oracle_dimension_status: envelope
-                .oracle_dimension_status
-                .iter()
-                .map(|o| Ge08OracleDimensionStatus {
-                    dimension: o.dimension.clone(),
-                    status: o.status.clone(),
-                })
-                .collect(),
-            blocked_claims: envelope.blocked_claims,
-        },
-        lifecycle_gate_state: Ge08LifecycleGateState {
-            save_allowed: true,
-            preview_allowed,
-            export_allowed,
-            diff_mode: "deferred".to_string(),
-        },
-        data_source: "ge08-headless-preview-bridge".to_string(),
-        note: "Real GE-08 authoring workbench snapshot from headless substrate.".to_string(),
-    })
 }
 
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![load_pilot_shell_snapshot, load_ge08_authoring_workbench_snapshot])
+        .plugin(tauri_plugin_opener::init())
+        .plugin(tauri_plugin_dialog::init())
+        .setup(|app| {
+            if let Err(err) = character_hub::seed_default_character_if_needed(app.handle()) {
+                eprintln!("Failed to seed default character: {err}");
+            }
+            Ok(())
+        })
+        .invoke_handler(tauri::generate_handler![
+            load_pilot_shell_snapshot,
+            load_authoring_workbench_snapshot,
+            load_support_state_matrix,
+            load_backend_health,
+            browser_handoff::handoff_defect_report_to_browser,
+            is_install_eligible,
+            perform_install,
+            perform_restore_previous,
+            verify_relaunch_artifact,
+            create_character,
+            clone_character,
+            level_up_character,
+            recompute_character,
+            add_equipment_selection,
+            purchase_equipment,
+            attach_equipment_modifier,
+            add_spell_selection,
+            record_and_prepare_spell_selection,
+            add_feat_selection,
+            remove_feat_selection,
+            remove_spell_selection,
+            remove_equipment_selection,
+            set_skill_allocations,
+            append_to_character,
+            re_save_character,
+            list_saved_characters,
+            load_saved_character,
+            preview_level_up,
+            save_character_portrait,
+            load_character_portrait,
+            delete_character_portrait,
+            update_character_bio,
+            load_character_bio,
+            load_character_money,
+            adjust_character_money,
+            load_character_durability,
+            adjust_character_hp,
+            delete_character,
+            export_character_json,
+            export_character,
+            import_character,
+            write_campaign_drive_artifacts,
+            drive_list_campaigns,
+            drive_load_campaign,
+            drive_save_campaign,
+            drive_delete_campaign,
+            list_equipment_catalog,
+            list_spell_catalog,
+            list_feat_catalog,
+            // SD-27: Bestiary 1's 41 ingested monster stat blocks, which
+            // reached no surface at all until this catalog landed.
+            list_monster_catalog,
+            list_companion_catalog,
+            list_equipment,
+            list_spells,
+            list_feats,
+            // SD-27: the same catalog with each record's real prerequisite
+            // verdict for a specific saved character, so the picker can grey
+            // out what that character cannot take and say why.
+            list_feats_for_character,
+            list_weapon_targets,
+            list_class_catalog,
+            list_class_spell_levels,
+            list_race_catalog,
+            list_race_creation_roster,
+            list_alternate_racial_traits,
+            resolve_race_alternate_selection,
+            corpus_ingest_diagnostic
+        ])
         .run(tauri::generate_context!())
-        .expect("error while running codex desktop shell scaffold");
+        .expect("error while running codex");
+}
+
+#[cfg(test)]
+mod path_resolution_tests {
+    use crate::authoring_workbench::resolve_package_path;
+
+    #[test]
+    fn resolves_repo_relative_fixture_from_src_tauri_runtime() {
+        let resolved = resolve_package_path("tests/fixtures/authoring_workbench/guard-stance-package")
+            .expect("fixture path should resolve from repo root");
+
+        assert!(
+            resolved.ends_with("tests/fixtures/authoring_workbench/guard-stance-package"),
+            "resolved path should end with the repo fixture path, got {}",
+            resolved.display()
+        );
+        assert!(resolved.exists(), "resolved fixture path should exist: {}", resolved.display());
+    }
 }

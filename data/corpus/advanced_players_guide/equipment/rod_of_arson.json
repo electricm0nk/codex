@@ -1,0 +1,27 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-03T18:18:56Z",
+  "data": {
+    "key": "Rod of Arson",
+    "category": "MagicItems",
+    "name": "Rod of Arson",
+    "cost_gp": 0.0,
+    "weight": 5.0,
+    "description": "A cursed rod, disguised as a rod of flame extinguishing, that instead channels flame into its wielder's body, compelling them to set flammable objects alight or take fire damage resisting the urge."
+  },
+  "source": {
+    "kind": "web_second_source",
+    "url": "https://legacy.aonprd.com/advancedPlayersGuide/magicItems/cursedItems.html",
+    "fetched_at": "2026-07-22T08:37:22-04:00",
+    "identity_match_basis": "name+cost",
+    "citation_precision": "exact_item_page"
+  },
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ],
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null
+}

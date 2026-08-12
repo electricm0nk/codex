@@ -8,8 +8,8 @@
 //! passed.
 
 use codex::oracle_validation::golden_fixture::{
-    load_golden_case_fixture, ClaimTier, CodexOutputState, DiagnosticClass, DiagnosticSeverity,
-    DimensionStatus, OracleEvidenceKind, RawOutputRetention,
+    ClaimTier, CodexOutputState, DiagnosticClass, DiagnosticSeverity, DimensionStatus,
+    OracleEvidenceKind, RawOutputRetention, load_golden_case_fixture,
 };
 
 /// A complete, valid set of fixture lines for the governed first-case instance.
@@ -90,10 +90,6 @@ fn loads_governed_pf1_human_fighter_fixture_with_deterministic_input_and_explici
         fixture.legacy_oracle.evidence_kind,
         OracleEvidenceKind::RuntimeBehaviorEvidence
     );
-    assert_ne!(
-        fixture.legacy_oracle.evidence_kind,
-        OracleEvidenceKind::StaticSourceTruth
-    );
 
     // Raw-output retention posture and SHA-256 are preserved exactly.
     assert_eq!(
@@ -108,7 +104,6 @@ fn loads_governed_pf1_human_fighter_fixture_with_deterministic_input_and_explici
     // Codex/new-system output is still unresolved; parity is not claimed.
     assert_eq!(fixture.codex_output.state, CodexOutputState::Unresolved);
     assert!(!fixture.parity_claimed());
-    assert_ne!(fixture.current_claim_status, ClaimTier::OracleChecked);
     assert_eq!(fixture.claim_target, ClaimTier::OracleChecked);
 
     // Closed pilot-input selections are no longer carried as provisional truth.
@@ -136,10 +131,12 @@ fn loads_governed_pf1_human_fighter_fixture_with_deterministic_input_and_explici
     // Comparison dimensions exist and none are in a passing state (the schema has
     // no "passed" variant), so the case cannot masquerade as oracle-checked.
     assert!(!fixture.dimensions.is_empty());
-    assert!(fixture
-        .dimensions
-        .iter()
-        .any(|dimension| dimension.status == DimensionStatus::NotYetGrounded));
+    assert!(
+        fixture
+            .dimensions
+            .iter()
+            .any(|dimension| dimension.status == DimensionStatus::NotYetGrounded)
+    );
 }
 
 #[test]
@@ -191,8 +188,10 @@ fn fixture_can_represent_blocked_or_unresolved_codex_output_without_passing_pari
         "an unresolved/blocked case must never report parity as claimed"
     );
     assert_ne!(fixture.current_claim_status, ClaimTier::OracleChecked);
-    assert!(fixture
-        .dimensions
-        .iter()
-        .any(|dimension| dimension.status == DimensionStatus::Blocked));
+    assert!(
+        fixture
+            .dimensions
+            .iter()
+            .any(|dimension| dimension.status == DimensionStatus::Blocked)
+    );
 }

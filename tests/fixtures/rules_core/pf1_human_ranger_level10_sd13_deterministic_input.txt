@@ -1,0 +1,58 @@
+# SD13-E5 Ranger level 10 hybrid chassis baseline fixture.
+# Represents a deterministic PF1 Core Rulebook Human Ranger level 10 identity as chosen
+# input only. It names selections; it does not contain derived, computed, or parity
+# values. It preserves the accepted Human race-choice seam (ability-bonus and
+# bonus-feat) and stays a single-class, level-10 hybrid baseline, mirroring the
+# level-9 fixture's shape with the class level swapped. The PF1 CRB Ranger
+# class table's level-10 "Special" column reads "3rd favored enemy, combat
+# style feat" (verified independently against both d20pfsrd and
+# legacy.aonprd.com). The THIRD combat-style bonus feat is grounded by this
+# slice as a restricted-list choice recognition mirroring the level-2/6
+# grants exactly (the Archery style's own 10th-level list adds Pinpoint
+# Targeting and Shot on the Run; this fixture selects Shot on the Run). The
+# "3rd favored enemy" interval (a third enemy-type selection PLUS the
+# rule's own second +2 bonus-increase-target choice) is a real,
+# newly-discovered multi-record burden deliberately left named-but-unproven
+# this slice — mirroring exactly how the level-8 "2nd favored terrain"
+# multi-record burden was deferred — so this fixture carries NO third
+# favored-enemy selection and NO second increase-target choice, and nothing
+# is fabricated for either.
+#
+# Level 8's PF1 Core Rulebook "Special" column names TWO entries (verified
+# independently against d20pfsrd and legacy.aonprd.com): "Swift tracker" (an
+# automatic, no-choice class feature) and "2nd favored terrain" (a
+# player-choice feature mirroring the Favored Enemy 5th-level idiom, left
+# named-but-unproven this slice per the operator brief's one-new-record cap).
+# Favored Enemy's next interval is 10th level, and the Combat Style Feat's next
+# bonus feat lands at 10th level too, so this fixture carries forward the same
+# favored-enemy (both types and the bonus-increase target), combat-style (both
+# bonus feats), favored-terrain, and hunter's-bond selections from the level-7
+# fixture unchanged.
+case_id=pf1-crb-human-ranger-level10
+source_package_id=pf1.core_rulebook
+race_id=race:human
+class_level=class:ranger:10
+ability=strength:16
+ability=dexterity:14
+ability=constitution:14
+ability=intelligence:10
+ability=wisdom:12
+ability=charisma:8
+feat=feat:power_attack
+skill=skill:survival:1
+equipment=item:chain_shirt:equipped_worn_active
+equipment=item:longsword:equipped_primary_active
+equipment=item:shield:absent
+choice=choice:level_1_character_feat:feat:power_attack
+choice=choice:human_bonus_feat:feat:dodge
+choice=choice:human_ability_bonus:ability:strength
+choice=choice:ranger_favored_enemy:enemy:humanoid_orc
+choice=choice:ranger_favored_enemy_2:enemy:undead
+choice=choice:ranger_favored_enemy_bonus_increase_target:enemy:first
+choice=choice:ranger_combat_style:style:archery
+choice=choice:ranger_combat_style_bonus_feat:feat:point_blank_shot
+choice=choice:ranger_combat_style_bonus_feat_2:feat:manyshot
+choice=choice:ranger_combat_style_bonus_feat_3:feat:shot_on_the_run
+choice=choice:ranger_favored_terrain:terrain:forest
+choice=choice:ranger_hunters_bond:form:bond
+provenance=programs/codex/requirements/SD-13-core-class-race-roster-and-level-10-progression-matrix/artifacts/sd13-e3-r5-paladin-and-ranger-hybrid-chassis-baseline-execution-handoff-2026-07-01.md

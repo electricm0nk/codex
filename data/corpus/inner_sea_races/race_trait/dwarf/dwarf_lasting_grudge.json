@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:16Z",
+  "data": {
+    "key": "Dwarf ~ Lasting Grudge",
+    "name": "Lasting Grudge",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceDefensiveTraining",
+      "Dwarf_ReplaceHatred"
+    ],
+    "description": "Dwarves are notorious for their long-lasting grudges. Those who live up to this racial reputation gain a +1 racial bonus on attack rolls against any individual creature that has attacked them 1 day ago or longer. This racial trait replaces defensive training and hatred.",
+    "source_page": "p.210",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Lasting Grudge"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Lasting Grudge],[!PREFACT:1,ABILITIES,Dwarf_ReplaceDefensiveTraining=true,Dwarf_ReplaceHatred=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves are notorious for their long-lasting grudges. Those who live up to this racial reputation gain a +1 racial bonus on attack rolls against any individual creature that has attacked them 1 day ago or longer."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces defensive training and hatred.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Lasting Grudge"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.210"
+      },
+      {
+        "key": "ASPECT",
+        "value": "CombatBonus|+1 racial bonus on attack rolls against any individual creature that has attacked 1 day ago or longer."
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceDefensiveTraining|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceHatred|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_races/isr_abilities_race.lst",
+    "sha256": "9f4d653eed18681cf969c75453f2d2dc00707f382e3ed7f9d767a75d1e5776bf",
+    "line": 33,
+    "record_key": "Dwarf ~ Lasting Grudge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
