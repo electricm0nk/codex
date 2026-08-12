@@ -13,7 +13,7 @@
     "signed_off_at": null
   },
   "records_processed": 64,
-  "records_redacted": 8,
+  "records_redacted": 9,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "Every field of the 64 heritage-trait records this run wrote was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md by src/rules_core/pi_screening.rs, which the ingest binary calls per record. Verified on the written tree rather than assumed: `grep -rl 'redacted PI' data/corpus/core_essentials/race_trait/ | wc -l` -> 8, and records_processed is the real on-disk count (`find data/corpus/core_essentials/race_trait -name '*.json' | wc -l` -> 64). SCOPE NOTE: this declaration covers exactly the two files this book's BookSource lists — races/aasimar/aasimar_abilities_race_subrace.lst and races/tiefling/tiefling_abilities_race_subrace.lst — plus the two races/<race>/<race>_abilities_globalvar_subrace.lst files read for the swap protocol, which contribute gate structure and no prose. core_essentials' other racial-ability files are already ingested under the core_rulebook and beastiary book ids by src/bin/ingest_races.rs and are not re-declared here. races/skinwalker/ is out of scope: Skinwalker is not one of the 18 races this project models. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "Every field of the 64 heritage-trait records this run wrote was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md by src/rules_core/pi_screening.rs, which the ingest binary calls per record. Verified on the written tree rather than assumed: `grep -rl 'redacted PI' data/corpus/core_essentials/race_trait/ | wc -l` -> 9, and records_processed is the real on-disk count (`find data/corpus/core_essentials/race_trait -name '*.json' | wc -l` -> 64). SCOPE NOTE: this declaration covers exactly the two files this book's BookSource lists — races/aasimar/aasimar_abilities_race_subrace.lst and races/tiefling/tiefling_abilities_race_subrace.lst — plus the two races/<race>/<race>_abilities_globalvar_subrace.lst files read for the swap protocol, which contribute gate structure and no prose. core_essentials' other racial-ability files are already ingested under the core_rulebook and beastiary book ids by src/bin/ingest_races.rs and are not re-declared here. races/skinwalker/ is out of scope: Skinwalker is not one of the 18 races this project models. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

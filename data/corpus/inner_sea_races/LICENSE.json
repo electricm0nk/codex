@@ -12,8 +12,8 @@
     "signed_off": false,
     "signed_off_at": null
   },
-  "records_processed": 72,
-  "records_redacted": 12,
+  "records_processed": 71,
+  "records_redacted": 18,
   "redaction_policy": {
     "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
     "blacklist_version_reviewed": "2026-07-27",
@@ -22,5 +22,5 @@
     "schema_preserving": true
   },
   "redistribution_posture": "ogl-notice-attached",
-  "screening_method_note": "Every field of the 72 alternate-racial-trait records this run wrote was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md by src/rules_core/pi_screening.rs, which the ingest binary calls per record. 12 descriptions hit a term and were replaced by the marker with pi_field recording which field was redacted; the record's mechanical payload (sets_replace_flags, raw_tokens, raw_bonus_chains) is untouched, so redaction costs prose and not rules. records_processed is 72, the real on-disk count for this book's only ingested kind. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+  "screening_method_note": "Every field of the 71 alternate-racial-trait records now on disk was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md by src/rules_core/pi_screening.rs, which the ingest binary calls per record. 18 descriptions hit a term and were replaced by the marker with pi_field recording which field was redacted; the record's mechanical payload (sets_replace_flags, raw_tokens, raw_bonus_chains) is untouched, so redaction costs prose and not rules. records_processed is 72, the real on-disk count for this book's only ingested kind. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
 }

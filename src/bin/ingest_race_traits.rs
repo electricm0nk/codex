@@ -1738,7 +1738,7 @@ mod tests {
         }
         assert_eq!(
             total,
-            340,
+            339,
             "156 ARG + 5 Monster Codex + 71 Inner Sea Races + 43 Horror Adventures + 64 Core \
              Essentials heritage records. This total sits alongside the per-book map above \
              and must move with it; round 3 moved the map first and this pin caught the \
