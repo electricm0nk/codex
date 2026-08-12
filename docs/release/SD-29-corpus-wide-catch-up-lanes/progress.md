@@ -7066,8 +7066,9 @@ mechanism and the extend half is that mechanism applied three more times.
 **Commits:** `bac2f569` (the mechanism + 4 books + `§48` + item-8 artifacts + retro events),
 `63359234` (the two reds gate run 1 found), `de4811a3` (merge: race-trait lane round 4),
 `3cfcb097` (the three inherited reds gate run 2 found), `cddd1734` (merge: the race-trait lane's own
-fix for the same three, 5 conflicts resolved by union), plus this receipt's own commit. All pushed to
-`origin/tranche/9`.
+fix for the same three, 5 conflicts resolved by union), `268ccacf` (this receipt), `edd2adaf`
+(merge: round 4's receipt and baseline move). All pushed to `origin/tranche/9`; the pushed tip is
+`edd2adaf` and its own full gate is green (§4, run 4).
 
 **The companion lane had NOTHING landed** — its round 1 refused at `preflight-disk` (91% used, twice)
 and its round 2 died with its workflow having produced no commits. This round built the kind's entire
@@ -7246,11 +7247,24 @@ VERIFY_EXIT=0
 executed** — the aggregate count is not trusted on its own, which is the whole reason that check
 exists.
 
+#### Run 4 — the confirmation run, on the pushed tip `edd2adaf`
+
+`origin/tranche/9` advanced once more while run 3 was in flight (`5c21ef75`, `82d34353`: the
+race-trait lane's round-4 receipt and its baseline move). Merged as `edd2adaf`; the merge's only
+conflict was `progress.md`, where both lanes appended a receipt at the end, and it was resolved by
+**keeping both receipts in full** rather than picking a side — round 4's first, then this one's.
+
+That merge touches no code (`progress.md`, `scripts/verify-baselines.env`, one retro shard), but
+`§46.6` rule 2 does not carve an exception for docs, and `verify-baselines.env` is read by the gate.
+So the gate was run a fourth time on the exact pushed tip: **`VERIFY_EXIT=0`, `RESULT: PASS`, all 14
+stages**, `root-full` 6,224 across 543 suites with all 524 executed — the same figures the other
+lane's baseline move had just pinned, measured independently here.
+
 ### 5. Definition of done
 
 | item | evidence |
 |---|---|
-| 1. `verify.sh` exits 0 | run 3, `VERIFY_EXIT=0` |
+| 1. `verify.sh` exits 0 | run 3 `VERIFY_EXIT=0` on `cddd1734`, and run 4 `VERIFY_EXIT=0` on the pushed tip `edd2adaf`. Exit code captured directly, never through a pipe |
 | 2. `reach` passes with a claim for this cycle's families | 4 new claims, all `Reach::Surfaced`: `inner_sea_combat/companions` 10, `monster_codex/companions` 15, `inner_sea_intrigue/companions` 11, `horror_adventures/companions` 2. `every_ingested_companion_book_reaches_the_catalog_record_by_record` asserts the corpus denominator, the served numerator and the claim independently, so a table that stopped reaching the wire fails rather than agreeing with itself |
 | 3. trap report `--audit` | EXIT 0, 259 traps / 0 defects |
 | 4. inventory regenerated, units leave `not-started`, second run changes only `generated_at` | 38 units → `grounded`; two consecutive runs diffed with `generated_at` stripped → **byte-identical** |
