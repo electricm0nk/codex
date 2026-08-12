@@ -1857,3 +1857,142 @@ genuinely ingestable remainder after this round is **95**, and its order is now 
 
 Plus the residuals that are deliberately not gap: APG's 49 ARG-key collisions (`§39`), Monster Codex's
 `Oversized Goblin`, and now ISR's `Human ~ Tribalistic Languages`.
+
+## Decision 46 — Monster / Monster-Ability Lane, extend: round 2 (2026-08-12, `sd29-monster-r3`, card `epic-5-monster-lane-extend`)
+
+Round 2 ingested **both Book of the Damned volumes** end-to-end — 62 units, all 62 grounded and
+reaching the catalog — and, before doing so, **applied `§45.1`'s lesson to this kind and found a
+ceiling that changes what "done" means for this card.** The lane is not dry and this round does not
+claim it is.
+
+### 46.1 The lane's REAL remainder is 2,906, not 4,233 — and the difference is structural
+
+`§45.1` established that a lane must classify **corpus rows**, not read the work inventory's
+*evidence token*, before committing a round to a book. Applied to `monster_ability`, the question is
+not "has the engine compiled this book" but **"is there a monster row that owns this ability"** — a
+`monster_ability` record reaches a player only underneath its owning monster (`monster_catalog.rs`
+renders it inside that creature's row, per `corpus-work-channels.md §9.2`). An ability no monster row
+claims is a record that loads and is never shown: the exact stub class `§44.2` was written about.
+
+Round 1 derived this per book in a `/tmp/.../shape_all.py` that no longer exists. `§45.1`'s own
+finding is that **an ephemeral path is not a citation**, so this round checked the derivation in:
+
+```bash
+python3 scripts/classify_monster_ability_rows.py
+```
+
+It mirrors `scripts/transcribe_monster_tables.py`'s own `parse_special_ability_refs` predicate and
+its namespaced-`KEY:` prefix pass, so it predicts what a transcription of that book would really
+produce — a looser rule would over-report reachability, which is the direction that ships stubs. Its
+unit set is `docs/work-inventory.json`, never a line count over the `.lst`.
+
+Run at this round's end, over the merged tree:
+
+```
+remaining monster+monster_ability units : 4233
+orphan monster_ability rows             : 1327
+  of which in ZERO-monster books        : 703 across 10 books (no monster in the book to own them)
+reachable remainder (units - orphans)   : 2906
+```
+
+**1,327 of the 4,233 remaining units cannot be grounded by any per-monster cycle**, and 703 of those
+sit in ten books that carry no monster row at all (`core_essentials` 380, `advanced_class_guide` 106,
+`pathfinder_unchained` 72, `ultimate_wilderness` 52, `bestiary_5` 39, `mythic_adventures` 21,
+`ultimate_magic` 13, `bestiary_6` 13, `ultimate_intrigue` 6, `advanced_race_guide` 1). Those ten are
+`loop-instruction.md`'s named hard stop reproduced at scale: *a per-monster cycle against a
+zero-monster book is a reportable hard stop, not something to force.* The other 624 orphans sit in
+books that DO carry monsters — `bestiary_4` 152, `bestiary` 146, `inner_sea_gods` 84,
+`ultimate_psionics` 66, `horror_adventures` 65, `bestiary_2` 64 — where the ability's owner is
+elsewhere or is expressed in a link shape the chassis does not model.
+
+**This is a scope finding, not a backlog item.** They need a surface decision — a screen that shows
+an ability with no monster, or a cross-book owner resolution — which is an operator question, not an
+ingest. `deferral` emitted naming both.
+
+**One correction to round 1's table, recorded rather than folded in.** Round 1's `bestiary` row read
+`mon 330`; this round's reads `284`. Both are right under their own predicate and neither is wrong:
+round 1 counted every monster unit in the book, this round counts the **remaining** ones and Bestiary
+1's 46 are already grounded from SD-22. The *link* is still resolved against every monster row
+regardless of status, because a grounded monster owns its abilities as well as an ungrounded one —
+restricting the link to remaining monsters reported 54 of Bestiary 1's abilities as orphans that are
+not. The script says which predicate each column uses.
+
+### 46.2 The two books this round took, and why they were the correct pair
+
+`book_of_the_damned_volume_1` (41 units) and `_volume_2` (21) are **the only remaining books with
+zero orphans** — 36 of 36 and 17 of 17 ability rows are named outright by a monster row of the same
+book. They are not the densest books; they are the cheapest to finish *completely*, and a whole-book
+reach claim is only meaningful for a book that has no orphans in the first place.
+
+Both were `future_state`, so each paid the scope flip round 1 flagged as an unmeasured cost: adding a
+`RuleSetId` moves every other kind in the book from `not-started` to `not-ingested`. Measured here
+for the first time — v1's collateral is 49 units across 5 other kinds, v2's is 233 across 6. Neither
+moves this lane's denominator (both statuses count as remaining); both move other lanes' `not-ingested`
+figures, which is why it is recorded.
+
+### 46.3 Two transcriber defects a third and fourth book found, both fixed at the source
+
+Neither was findable by a test, and both are the reason `§45.1`'s "run it on a candidate book before
+committing" generalizes: the *transcriber* also needs re-proving per book.
+
+**A row may carry TWO `DESC:` tokens.** 15 of Volume 2's 17 ability rows do — one gated
+`!PRERULE:1,DisplayFullAbility` (a one-line summary) and one gated `PRERULE:1,DisplayFullAbility`
+(the complete rules text). `parse_desc` took the first match, which on those rows is the **summary**.
+`Seraptis ~ Gaze of Despair` (`botd2_abilities_race.lst:17`) would have reached the catalog reading
+*"fills the minds of those within %1 feet with overwhelming and soul-crushing despair"* and never
+mentioned the Will save, the Charisma drain or the suicidal state the ability causes — a caption
+where the rule belongs. The full-text token is now selected when a row states both; a row carrying
+several `DESC:` tokens under some *other* gate stops the transcription rather than being resolved by
+position. This is a choice between two verbatim corpus texts on a criterion the corpus itself states,
+never a composition of one.
+
+**A negated prerequisite was being recorded as a formula variable.** `parse_desc` filtered
+`PRERULE:…` out of the trailing variable list and not `!PRERULE:…`, so
+`!PRERULE:1,DisplayFullAbility` landed in `description_variables` — a field whose contract is "what
+the `%N` in `description` refer to". Bonus Bestiary and Monster Codex carry the shape zero times,
+which is why it survived two books. Corpus-wide it occurs on **650** `DESC:` tokens across the
+`*_abilities_race*.lst` files (`grep -rhoE 'DESC:[^\t]*\|![A-Z]+[A-Z:]*' --include='*_abilities_race*.lst' .`
+from the PCGen `data/` root), so it would have recurred in every remaining book in the lane.
+
+Regenerating Monster Codex under both fixes reproduces its table byte-for-byte, which is the check
+that neither fix moved an already-shipped book. Bonus Bestiary's records reproduce identically too;
+its committed file is deliberately **not** regenerated, because the pilot hand-authored a module
+header the generator does not produce and regenerating would delete prose for no data gain.
+
+### 46.4 A campaign-setting book predicted a PI hit rate and did not have one
+
+Inner Sea Races had 12 of 72 descriptions PI-redacted (`§45.2`) and the reasoning was that a
+campaign-setting book's prose carries Golarion proper nouns inside mechanical sentences. Both Book of
+the Damned volumes are `campaign_setting/` books and both read `records_redacted: 0`.
+
+The derived reason is worth keeping: a campaign-setting book's *monster* rows are not its setting
+prose. These records name devils and demons by their Open Game Content type names; the geography that
+carries Product Identity lives in the book's chapters, not in a stat block. **"Campaign setting"
+predicts a PI hit rate for `race_trait` and does not predict one for `monster`.**
+
+### 46.5 The branch tip was RED before this round touched it, and one of the three reds was a PI leak
+
+`origin/tranche/9`'s tip `e1f0bdd9` failed three `race_trait_picker` tests. **Proven, not asserted:**
+a clean worktree at `e1f0bdd9` with none of this round's changes present reproduces all three
+identically (`git worktree add … e1f0bdd9 --detach`, then
+`cargo test --locked --bin codex-desktop race_trait_picker`). The merge commit says so itself —
+*"Gate not yet re-run across the merge; the resumed lane cycle verifies."*
+
+Two were count pins Inner Sea Races legitimately moved and `c8e2d6ad` missed, because they sit
+**after** the aggregate pins it did move inside the same test functions and therefore never executed
+until those passed. Fixing an assertion reveals the next one, and a suite run once after a fix is not
+a suite run.
+
+The third was not a pin. **`pi_screening` redacts `data.description` and deliberately leaves
+`raw_tokens` verbatim — they are the provenance record, not player-facing text — and
+`race_resolver::RaceTraitRecord::render_description` reads the tokens.** All 12 redacted Inner Sea
+Races descriptions therefore rendered **un-redacted** on the alternate racial trait picker. The
+redaction held on disk and was defeated on the screen, which is the only place it matters.
+
+This round fixed it and pushed; **the race-trait lane's round 3 found and fixed the same defect
+concurrently and independently**, landing `bd98b9fe` while this round's gate was in flight. The merge
+resolved `race_resolver.rs` and `race_trait_picker.rs` in favour of that lane — it owns those files
+and its fix is the same fix — so this package carries one implementation, not two. That two lanes
+found it within hours of each other, and that neither found it until a book with a PI hit rate landed,
+is the finding: **a redaction is only proven by a test that reads the rendered string**, and none
+existed until now.

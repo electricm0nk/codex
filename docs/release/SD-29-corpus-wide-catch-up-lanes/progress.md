@@ -5851,3 +5851,233 @@ render lag needs marker-polling, not fixed sleeps.
   live-verified; wrong values fail loudly, first equipment/spell lane cycle calibrates.
 
 Retro shard: `docs/retro/events/item8-harness.jsonl` (2 corrections, 1 incident, 1 deferral).
+
+## Cycle SD29-E5-F2-003 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 2 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r3` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-2`)
+**Branch-point:** `e1f0bdd9` · **Commits:** `44d1b4c5` (ingest), `b08479e6` (inherited-RED fix),
+`5f04bbcf` (merge of `origin/tranche/9`'s concurrent round-3 race-trait landing)
+**Kanban status left at:** `READY — round 3. 62 units ingested, 4,233 remaining by raw count and
+2,906 by the lane's real ceiling. Card stays READY.`
+
+**This receipt does not claim the lane is done, and the numbers below say so.**
+
+### 0. Worktree integrity — the predicted failure, hit a fifth time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-2`; `git log -1 --format=%ci` →
+**2026-06-28**, i.e. the worktree was created on `7d9f1c4f`, the same unrelated ancestor round 1's
+receipt named as the fourth instance and predicted for this one. Recovered before any other action
+with `git reset --hard e1f0bdd9` (`origin/tranche/9`'s tip at cycle start). Round 1's handoff item 5
+predicted this exactly and it is now the **fifth** recorded instance — a harness condition, not an
+agent error.
+
+A second repo-health condition, recorded because it affects anyone pushing from this checkout:
+`git fetch` prints `fatal: bad object refs/heads/worktree-wf_9029acd8-6b0-6` and
+`error: object file .git/objects/3c/534e50… is empty`. The stale worktree branch left by the dead
+`wf_9029acd8` workflow points at a corrupt object. Fetch still updates `origin/tranche/9` and
+`git push` succeeds, so it did not block this cycle; it is left for the operator rather than repaired
+unilaterally, because deleting a ref in a shared checkout is not this card's write scope.
+
+### 1b. Every figure re-derived, command first, value second
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same
+command round 1's receipt records:
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+tm=ta=0
+for b in d['books']:
+    if b['scope']=='out_of_scope': continue
+    m=b['kinds'].get('monster',{}).get('by_status',{}); a=b['kinds'].get('monster_ability',{}).get('by_status',{})
+    tm+=m.get('not-ingested',0)+m.get('not-started',0); ta+=a.get('not-ingested',0)+a.get('not-started',0)
+print(tm,ta)"
+```
+
+* **Before this cycle:** `1208 3087` → **4,295**. Round 1's closing figure, reproduced exactly
+  before being moved.
+* **After this cycle (post-merge):** `1199 3034` → **4,233 remaining**. `units_ingested` = **62**.
+* **Grounded**, same file: `monster` **62 → 71**, `monster_ability` **20 → 73**. The card's stated
+  starting pair (62 and 20) is **correct and is confirmed, not corrected**.
+
+**The card's raw-remaining figure is wrong and is corrected here.** It states *"monster ~305,
+monster_ability ~852"*. The re-derived pair is 1,208 / 3,087. The brief's pair is close to
+`bestiary`'s own book subtotal (284 / 523, which the brief separately quotes correctly), not to the
+corpus-wide figure this card is scoped to. `correction` emitted with the command as `--verified-by`.
+
+**Per-book unit counts** for the two ingested books come from the inventory's units, never a line
+count over the `.lst`:
+
+```
+python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+print(sum(1 for u in d['units'] if u['book']=='book_of_the_damned_volume_1' and u['kind']=='monster'),
+      sum(1 for u in d['units'] if u['book']=='book_of_the_damned_volume_1' and u['kind']=='monster_ability'))"
+```
+
+→ `5 36` for Volume 1 and `4 17` for Volume 2. Both are each book's **entire** monster family.
+
+### 1c. Preflight and environment
+
+`df -h /` → **968G total, 151G used, 818G available, 16% used** at cycle start. Disk is no longer a
+constraint on this box. `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r3`,
+claimed with a `.reclaim-claim` file the moment it was created, plus a second dir
+(`…-r3-desktop`) for the desktop crate — which is a **separate cargo workspace**, so sharing one
+target dir between them is the recorded shared-target-dir hazard. A third
+(`…-r3-baseline`) was created for the attribution worktree in §6b. All three deleted at cycle end.
+`nproc` → 4.
+
+### 2. The scope finding, which is worth more than the ingest
+
+See `decisions.md §46.1` for the full statement. In brief, and re-derived by a **checked-in**
+command rather than a `/tmp` script:
+
+```bash
+python3 scripts/classify_monster_ability_rows.py
+```
+
+```
+remaining monster+monster_ability units : 4233
+orphan monster_ability rows             : 1327
+  of which in ZERO-monster books        : 703 across 10 books (no monster in the book to own them)
+reachable remainder (units - orphans)   : 2906
+```
+
+A `monster_ability` record reaches a player only underneath the monster that owns it. **1,327 of the
+4,233 remaining units have no owner in their own book and no per-monster cycle can ground them**;
+703 sit in ten books carrying no monster row at all, which is `loop-instruction.md`'s named hard stop
+reproduced at scale. **The lane's REAL ceiling is 2,906.** `deferral` emitted.
+
+The script mirrors `scripts/transcribe_monster_tables.py`'s own link predicates, so it predicts what
+a transcription would produce rather than describing something adjacent to it. This is `§45.1`'s
+lesson applied to this kind, and checking it in is `§45.1`'s *other* lesson — an ephemeral path is
+not a citation.
+
+### 3. What landed
+
+| book | monsters | abilities | orphans | scope-flip collateral |
+|---|---|---|---|---|
+| `book_of_the_damned_volume_1` | 5 | 36 | **0** | 49 units across 5 other kinds |
+| `book_of_the_damned_volume_2` | 4 | 17 | **0** | 233 units across 6 other kinds |
+
+Both were `future_state`; each needed a `RuleSetId` (`Botd1`, `Botd2`). The scope-flip cost round 1
+flagged as unmeasured is **measured here for the first time** — it moves other kinds from
+`not-started` to `not-ingested` and so does not move this lane's denominator, but it does move other
+lanes' figures.
+
+Eight registration points per book, exactly as round 1's handoff predicted: transcriber `BOOKS`,
+`monster_chassis::MONSTER_BOOKS`, `gen_book_cache::MONSTER_BOOK_SPECS`, a wire code + display name in
+`monster_catalog.rs`, two `reach_gate` claim arms plus a `CORPUS_BOOK_IDS` row, a
+`corpus_ingest_diagnostic` row, and a frontend label. `BOTD1`/`BOTD2` are the first wire codes wider
+than two characters; nothing in the frontend's map assumed a width, and a test now says so.
+
+### 4. Two transcriber defects a third and fourth book found
+
+Full statement in `decisions.md §46.3`. Both were found by *transcribing* a new book — the mechanism
+the loop instruction ranks first — and neither was findable by any existing test.
+
+1. **A row may carry TWO `DESC:` tokens.** 15 of Volume 2's 17 ability rows do, one gated
+   `!PRERULE:1,DisplayFullAbility` (a summary) and one gated `PRERULE:1,DisplayFullAbility` (the full
+   rules text). The parser took the first, i.e. the summary. `Seraptis ~ Gaze of Despair` would have
+   shipped without its Will save, its Charisma drain or its duration.
+2. **`!PRERULE:` was recorded as a formula variable.** `PRERULE:` was filtered from
+   `description_variables` and its negated spelling was not. Corpus-wide the shape occurs on **650**
+   `DESC:` tokens across the `*_abilities_race*.lst` files.
+
+Regenerating Monster Codex under both fixes reproduces its table **byte-for-byte** — the check that
+neither fix moved an already-shipped book. Bonus Bestiary's *records* reproduce identically as well;
+its committed file is deliberately not regenerated, because the pilot hand-authored a module header
+the generator does not produce, and regenerating would delete prose for zero data gain. Recorded here
+rather than left as an unexplained skip.
+
+### 5. Definition of done
+
+| # | Item | State |
+|---|---|---|
+| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | see **Gate** below |
+| 2 | Reach claims for this card's families — zero matched tests is a hard failure | see **Gate** |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **PASS. `AUDIT_EXIT=0`**, 259 trap rows, 0 defects, *"every ingested record's citation agrees with the line it names."* Exit code captured by redirecting to a file and reading `$?` on the next statement, never through a pipe |
+| 4 | `v06_work_inventory` regenerated; the books' units leave `not-started` | **PASS.** Both books read `monster` and `monster_ability` **fully `grounded`** (5/5 + 36/36, 4/4 + 17/17). Second run differs in **`generated_at` only** — proven by comparing the two runs' parsed JSON key by key, not by eyeballing a diff |
+| 5 | Four-check wired-integration audit | **Clean.** No stub tokens, no no-op handlers, no fixture-only data, no "would have" strings. The places a placeholder could have shipped all serve `None` plus the reason: 3 natural attacks the corpus never prices, and the Lesser Host Devil's genuinely empty attack list |
+| 6 | Unsurfaced families carry an `OPEN_FINDINGS` entry | **`OPEN_FINDINGS` unchanged, and nothing was owed** — both books' families reach the catalog record by record, which is the property that made them the correct pair. The 1,327 orphan rows are NOT an `OPEN_FINDINGS` debt of this cycle: they belong to books this cycle did not ingest, and `§46.1` records them as a lane ceiling instead |
+| 7 | Baseline movements are a separate commit | **None made.** `scripts/verify-baselines.env` untouched |
+| 8 | On-screen verification for player-visible families | see **On screen** below |
+
+### 6b. The branch tip was RED before this cycle touched it — attributed, then fixed
+
+`origin/tranche/9`'s tip `e1f0bdd9` failed **3** `race_trait_picker` tests. Attribution is **proven,
+not asserted**, per `decisions.md §39`:
+
+```bash
+git worktree add /home/ubuntu/workspace/sd29-monster-r3-baseline e1f0bdd9 --detach
+cd /home/ubuntu/workspace/sd29-monster-r3-baseline/apps/desktop/src-tauri
+cargo test --locked --bin codex-desktop race_trait_picker
+```
+
+→ `test result: FAILED. 13 passed; 3 failed`, the **identical three**, with none of this cycle's
+changes present. The merge commit that created that tip says so itself: *"Gate not yet re-run across
+the merge; the resumed lane cycle verifies."*
+
+Two were count pins Inner Sea Races legitimately moved and `c8e2d6ad` missed — they sit **after** the
+aggregate pins it did move, inside the same test functions, so they never executed until those
+passed. Fixing an assertion reveals the next one, and a suite run once after a fix is not a suite run.
+
+**The third was a PI-redaction bypass on a shipped screen** (`decisions.md §46.5`):
+`pi_screening` redacts `data.description` and deliberately leaves `raw_tokens` verbatim, and
+`race_resolver::RaceTraitRecord::render_description` reads the tokens — so all **12** PI-redacted
+Inner Sea Races descriptions rendered **un-redacted** on the alternate racial trait picker. The
+redaction held on disk and was defeated where it matters.
+
+This cycle fixed it (`b08479e6`, with a corpus-wide two-directional regression test). **The
+race-trait lane's round 3 found and fixed the same defect concurrently and independently**, landing
+`bd98b9fe` while this cycle's gate was in flight. The merge resolved `race_resolver.rs` and
+`race_trait_picker.rs` **in favour of that lane** — it owns those files and its fix is the same fix —
+so the package carries one implementation, not two. `incident` + `correction` emitted.
+
+### 6. Retro events (`docs/retro/events/sd29-monster-r3.jsonl`)
+
+1 × `incident` (`merged-without-rerunning-the-gate` — the inherited RED, with the baseline-worktree
+command as `--detected-by`), 3 × `correction` (the PI bypass; this lane's own transcriber on both
+`DESC:` shapes; this cycle's dispatch brief on the lane's remaining figure), 1 × `deferral` (the
+1,327 orphan rows and the surface decision they need), plus `verify.sh`'s auto-emitted `verification`
+events.
+
+### Merge to `tranche/9`
+
+`origin/tranche/9` advanced by 1 commit (`bd98b9fe`, the race-trait lane's round 3) while this cycle
+ran. **Merged, not rebased**, per this checkout's shared-branch discipline. Seven conflicts, all of
+them two lanes appending a different arm to the same exhaustive match or list — resolved **by union**
+in five files (`rules_tables/mod.rs`, `v06_work_inventory.rs`, `v06_content_state_dump.rs`,
+`reach_gate.rs`), in favour of the owning lane in two (`race_resolver.rs`,
+`race_trait_picker.rs`), and by **regeneration** for `docs/work-inventory.json` rather than by
+picking a side. Picking a side on any of the union files would have silently dropped one lane's book.
+
+**Pushed to `origin/tranche/9` at `5f04bbcf`.** PR #360 remains open and unmerged, as the card
+requires — the bundle is not done.
+
+### Gate
+
+**IN FLIGHT at the time this receipt was appended** — `./scripts/verify.sh` FULL is running against
+this exact tree via a wrapper that assigns `code=$?` on the statement immediately after the command
+and writes it to a file, never through a pipe. Result and per-stage table are appended below as a
+follow-up entry, exactly as rounds 1 and 2 of the race-trait lane did and for the reason they
+recorded. Stages green so far: `preflight-disk`, `pi-sweep`, `audit-selftest`, `driver-selftest`,
+`root-lib` (**1635 passed**).
+
+Standalone runs already captured against this tree, each with its exit code taken directly:
+
+* desktop suite — `cargo test --locked` in `apps/desktop/src-tauri` → **`DESKTOP_EXIT=0`, 427 passed,
+  0 failed**, including this cycle's `both_book_of_the_damned_volumes_reach_the_catalog_record_by_record`.
+* `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`AUDIT_EXIT=0`**.
+* `BASE_BRANCH=e1f0bdd9 bash scripts/wired-integration-audit.sh` → **`WIRED_CYCLE_EXIT=0`, all four
+  checks clean** over this cycle's own diff. Run at its default `origin/develop` base it exits 1 on
+  check 1, and this receipt says so rather than quoting only the passing invocation: all 8 hits are
+  pre-existing bundle-wide false positives — 7 are doc comments that use the word *placeholder* to
+  say a value is never one, and the 8th is an HTML `placeholder=` input attribute.
+
+### On screen — DoD item 8
+
+**Pending; appended below.** Cannot run concurrently with `verify.sh` on this box (22 GiB, no swap —
+the harness's own header records the OOM).
