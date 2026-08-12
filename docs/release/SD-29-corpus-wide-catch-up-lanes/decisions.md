@@ -1997,19 +1997,22 @@ found it within hours of each other, and that neither found it until a book with
 is the finding: **a redaction is only proven by a test that reads the rendered string**, and none
 existed until now.
 
-> **Numbered 47, not 46, and the collision is recorded rather than quietly fixed.** This section
-> was written as `§46` and pushed as `§46` in this round's code comments and commit messages,
+## Decision 47 — Race-Trait Lane, extend: round 3 (2026-08-12, `sd29-racetrait-r3`, card `epic-6-race-trait-lane-extend`)
+
+> **Numbered 47, not 46, and the collision is recorded rather than quietly fixed.** This round wrote
+> its decision as `§46` and pushed two commits (`bd98b9fe`, `eee7f34c`) whose messages say `§46`,
 > because the monster lane's round-2 cycle (`sd29-monster-r3`) was running concurrently in another
 > worktree and claimed `§46` for its own decision on `origin/tranche/9` first. Neither cycle could
-> see the other's claim before pushing — the same failure the bundle already recorded for the
-> `SD29-E4-F1-001` cycle-id collision, now repeated for decision numbers. **References to `§46` in
-> `bd98b9fe`'s and `eee7f34c`'s commit messages, and in the code comments they landed, resolve to
-> THIS section.** They are deliberately not rewritten: the numbers are already committed, and a
-> reader who follows one needs to land somewhere that explains the discrepancy rather than
-> somewhere that pretends it never happened. A future concurrent split should reserve decision
-> numbers at claim time, exactly as `kanban.md` now says cycle-ids should be suffixed.
+> see the other's claim before pushing — the same failure this bundle already recorded for the
+> `SD29-E4-F1-001` cycle-id collision, now repeated for decision numbers.
+>
+> **Every code comment was updated to `§47`; the two commit messages were not, because they are
+> already committed.** A reader who follows `§46` from one of them lands on the monster lane's
+> section, which is why this note exists here rather than nowhere: the discrepancy is explained
+> where the wrong reference resolves *and* where the right one does. A future concurrent split
+> should reserve decision numbers at claim time, exactly as `kanban.md` now says cycle-ids should
+> be suffixed.
 
-## Decision 47 — Race-Trait Lane, extend: round 3 (2026-08-12, `sd29-racetrait-r3`, card `epic-6-race-trait-lane-extend`)
 
 Round 3 ingested **Horror Adventures** end-to-end — 43 records, **all 43 reaching a player**, the
 first book in this lane with no shortfall — and, in reproducing round 2's gate before trusting it,

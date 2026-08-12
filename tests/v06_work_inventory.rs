@@ -739,7 +739,10 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     "inner_sea_races",
     // SD-29 monster lane round 2 (`decisions.md §46`): 5 + 36 and 4 + 17
     // `monster`/`monster_ability` records. The first `campaign_setting/` books
-    // to carry the monster chassis.
+    // to carry the monster chassis. Added when the two lanes' branches merged
+    // -- this entry and the one above were each written by the lane that
+    // ingested the book, and the merge is the first point at which the list
+    // had to be complete. A third lane ingesting a thirteenth book adds a line.
     "book_of_the_damned_volume_1",
     "book_of_the_damned_volume_2",
 ];
