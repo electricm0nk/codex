@@ -315,6 +315,20 @@ def transcribe(book: str) -> str:
 
     creature_keys = {u["corpus_key"] for u in creatures}
     creature_species = {bare_species(k): k for k in creature_keys}
+
+    # Shape 5, DISPLAY-NAME namespacing -- see the matching block in
+    # `classify_companion_rows.py`, whose ORPHAN column must agree with what
+    # this transcriber drops. An ability's `<X> ~ <Y>` prefix may be the
+    # creature's `OUTPUTNAME:` rather than its `KEY:`; read from the row's own
+    # token, never inferred by unwrapping the key's parentheses.
+    creature_display: dict[str, str] = {}
+    for unit in creatures:
+        display = token(
+            read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"]),
+            "OUTPUTNAME:",
+        )
+        if display:
+            creature_display[display] = unit["corpus_key"]
     ability_by_key = {u["corpus_key"]: u for u in abilities}
     ability_by_name = {u["name"]: u for u in abilities}
 
@@ -349,10 +363,10 @@ def transcribe(book: str) -> str:
         row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         candidates: list[str] = []
         for owner in prerace_owners(row):
-            candidates.append(creature_species.get(owner, owner))
+            candidates.append(creature_display.get(owner) or creature_species.get(owner, owner))
         if " ~ " in key:
             prefix = key.split(" ~ ")[0]
-            candidates.append(creature_species.get(prefix, prefix))
+            candidates.append(creature_display.get(prefix) or creature_species.get(prefix, prefix))
         for candidate in candidates:
             if candidate in creature_keys and candidate not in owners[key]:
                 owners[key].append(candidate)
@@ -397,12 +411,24 @@ def transcribe(book: str) -> str:
                         creature_ability_keys[creature].append(target)
                         changed = True
 
-    orphans = [k for k, v in owners.items() if not v]
+    # Only ability rows WITH an owner are registered.  A row no creature row of
+    # this book reaches is a record that would load and never be shown, so it is
+    # dropped from the emitted table and named in the module doc below.
+    #
+    # Until round 4 this was a hard refusal, which was right while every
+    # candidate book still had an orphan-free alternative.  `bestiary` was the
+    # last such book (`decisions.md §54`), so from here the rule is the monster
+    # lane's, adopted verbatim (`monster_chassis.rs` module doc, `decisions.md
+    # §50`): **transcribe the linked subset, and carry the orphans as an
+    # `OPEN_FINDINGS` entry naming their remedy** rather than emitting
+    # unreachable rows or skipping the book entirely.  The dropped rows keep
+    # their honest `not-ingested` status in the work inventory — this function
+    # never touches that — so the shortfall stays a stated claim a reader can
+    # check rather than a silent omission.
+    orphans = sorted(k for k, v in owners.items() if not v)
+    orphan_keys = set(orphans)
     if orphans:
-        raise SystemExit(
-            f"{book} has {len(orphans)} orphan ability rows and is not registerable: {orphans!r}. "
-            "Run scripts/classify_companion_rows.py before committing a round to a book."
-        )
+        abilities = [u for u in abilities if u["corpus_key"] not in orphan_keys]
 
     out: list[str] = []
     out.append(f"//! {book} companion tables, transcribed verbatim from the book's own")
@@ -413,10 +439,33 @@ def transcribe(book: str) -> str:
     out.append("//! `docs/work-inventory.json`'s own units for this book rather than a raw")
     out.append("//! line count over the `.lst`.")
     out.append("//!")
-    out.append("//! Sources, with the line each record was read from carried per row:")
-    out.append(f"//!   * `{creatures[0]['source_file']}` -- {len(creatures)} companion creature rows")
-    if abilities:
-        out.append(f"//!   * `{abilities[0]['source_file']}` -- {len(abilities)} companion ability rows")
+    out.append("//! Sources, with the file AND line each record was read from carried per row:")
+    # Counted per file rather than reported off `[0]`.  Until round 4 every
+    # registered book had exactly one file per shape, so naming the first row's
+    # file and the whole shape's count said the same thing; Bestiary 3 is the
+    # first book with a `_companion` AND a `_familiar` file per shape, where the
+    # old line claimed all 31 creature rows came from the 16-row file
+    # (`decisions.md §56.2`).
+    for shape_name, rows in (("creature", creatures), ("ability", abilities)):
+        for source_file in sorted({u["source_file"] for u in rows}):
+            n = sum(1 for u in rows if u["source_file"] == source_file)
+            out.append(f"//!   * `{source_file}` -- {n} companion {shape_name} rows")
+    if orphans:
+        out.append("//!")
+        out.append(
+            "//! NOT transcribed -- ability rows no creature row of this book owns, so"
+        )
+        out.append(
+            "//! nothing could ever reach them on screen. Dropped rather than emitted"
+        )
+        out.append(
+            "//! unreachable, and carried as a `reach_gate` `OPEN_FINDINGS` entry naming"
+        )
+        out.append(
+            "//! their remedy (`decisions.md §50`, adopted from the monster lane; §56.1):"
+        )
+        for key in orphans:
+            out.append(f"//!   * `{key}`")
     if gated:
         out.append("//!")
         out.append(
@@ -481,6 +530,7 @@ def transcribe(book: str) -> str:
         out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
         out.append(f"        ability_keys: {rust_slice(creature_ability_keys[key])},")
         out.append(f"        external_ability_refs: {rust_slice(external[key])},")
+        out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")
     out.append("];")
@@ -518,6 +568,7 @@ def transcribe(book: str) -> str:
         )
         out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
         out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
+        out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")
     out.append("];")

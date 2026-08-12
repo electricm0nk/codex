@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Carbuncle ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 3rd; concentration +3) 3/day-daze (DC 10), jump, levitate (self only, up to 10 feet)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:companion:carbuncle_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:companion:carbuncle"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "CarbuncleRacialAbility",
+      "SpecialQuality",
+      "SpellLike"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
+    "line": 52,
+    "record_key": "Carbuncle ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

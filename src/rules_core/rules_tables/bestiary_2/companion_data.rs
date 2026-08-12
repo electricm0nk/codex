@@ -6,7 +6,7 @@
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
 //! line count over the `.lst`.
 //!
-//! Sources, with the line each record was read from carried per row:
+//! Sources, with the file AND line each record was read from carried per row:
 //!   * `b2_races_familiar.lst` -- 15 companion creature rows
 //!   * `b2_abilities_familiar_race.lst` -- 1 companion ability rows
 
@@ -30,6 +30,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.90"),
         ability_keys: &[],
         external_ability_refs: &["Compsognathus ~ Poison", "Scent"],
+        source_file: "b2_races_familiar.lst",
         source_line: 5,
     },
     CompanionRecord {
@@ -48,6 +49,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.273"),
         ability_keys: &["Snapping Turtle ~ Shell"],
         external_ability_refs: &["Scent"],
+        source_file: "b2_races_familiar.lst",
         source_line: 6,
     },
     CompanionRecord {
@@ -66,6 +68,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.11"),
         ability_keys: &[],
         external_ability_refs: &["Can't Be Tripped", "Flight Maneuverability", "Paracletus ~ Electricity"],
+        source_file: "b2_races_familiar.lst",
         source_line: 9,
     },
     CompanionRecord {
@@ -84,6 +87,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.21"),
         ability_keys: &[],
         external_ability_refs: &["Flight ~ Su", "Flight Maneuverability", "Know Direction ~ Constant", "Pounce", "Silvanshee ~ Cat's Luck", "Silvanshee ~ Heroic Strength", "Silvanshee ~ Spectral Mist"],
+        source_file: "b2_races_familiar.lst",
         source_line: 10,
     },
     CompanionRecord {
@@ -102,6 +106,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.26"),
         ability_keys: &[],
         external_ability_refs: &["Can't Be Tripped", "Cassisian ~ Breath Weapon", "Cassisian ~ Change Shape", "Cassisian ~ Lesser Protective Aura", "Cassisian ~ Perfect Memory", "Detect Evil ~ Constant", "Flight Maneuverability", "Know Direction ~ Constant"],
+        source_file: "b2_races_familiar.lst",
         source_line: 11,
     },
     CompanionRecord {
@@ -120,6 +125,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.38"),
         ability_keys: &[],
         external_ability_refs: &["Detect Evil ~ Constant", "Detect Magic ~ Constant", "Flight Maneuverability", "Freedom of Movement ~ Constant", "Lyrakien ~ Starlight Blast", "Lyrakien ~ Traveler's Friend", "Resistance to Cold", "Resistance to Fire"],
+        source_file: "b2_races_familiar.lst",
         source_line: 12,
     },
     CompanionRecord {
@@ -138,6 +144,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.49"),
         ability_keys: &[],
         external_ability_refs: &["Brownie ~ Bonus vs Illusions"],
+        source_file: "b2_races_familiar.lst",
         source_line: 13,
     },
     CompanionRecord {
@@ -156,6 +163,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.64"),
         ability_keys: &[],
         external_ability_refs: &["Cacodaemon ~ Change Shape", "Cacodaemon ~ Disease", "Cacodaemon ~ Soul Lock", "Detect Good ~ Constant", "Detect Magic ~ Constant", "Fast Healing", "Flight Maneuverability"],
+        source_file: "b2_races_familiar.lst",
         source_line: 14,
     },
     CompanionRecord {
@@ -174,6 +182,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.114"),
         ability_keys: &[],
         external_ability_refs: &["Can't Be Tripped", "Ice Elemental ~ Burrow", "Ice Elemental ~ Cold", "Ice Elemental ~ Ice Glide", "Ice Elemental ~ Icewalking", "Ice Elemental ~ Numbing Cold", "Ice Elemental ~ Snow Vision"],
+        source_file: "b2_races_familiar.lst",
         source_line: 15,
     },
     CompanionRecord {
@@ -192,6 +201,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.116"),
         ability_keys: &[],
         external_ability_refs: &["Flight Maneuverability", "Immunity to electricity", "Lightning Elemental ~ Electricity", "Lightning Elemental ~ Metal Mastery", "Lightning Elemental ~ Spark Leap"],
+        source_file: "b2_races_familiar.lst",
         source_line: 16,
     },
     CompanionRecord {
@@ -210,6 +220,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.118"),
         ability_keys: &[],
         external_ability_refs: &["Burn", "Magma Elemental ~ Earth Glide", "Magma Elemental ~ Lava Puddle"],
+        source_file: "b2_races_familiar.lst",
         source_line: 17,
     },
     CompanionRecord {
@@ -228,6 +239,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.120"),
         ability_keys: &[],
         external_ability_refs: &["Immunity to acid", "Mud Elemental ~ Earth Glide", "Mud Elemental ~ Entrap"],
+        source_file: "b2_races_familiar.lst",
         source_line: 18,
     },
     CompanionRecord {
@@ -246,6 +258,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.162"),
         ability_keys: &[],
         external_ability_refs: &["Arbiter ~ Constant Vigilance", "Arbiter ~ Electrical Burst", "Arbiter ~ Locate Inevitable", "Detect Chaos ~ Constant", "Flight Maneuverability"],
+        source_file: "b2_races_familiar.lst",
         source_line: 19,
     },
     CompanionRecord {
@@ -264,6 +277,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.217"),
         ability_keys: &[],
         external_ability_refs: &["Can't Be Tripped", "Detect Law ~ Constant", "Fast Healing", "Flight Maneuverability", "Voidworm ~ Change Shape", "Voidworm ~ Confusion"],
+        source_file: "b2_races_familiar.lst",
         source_line: 20,
     },
     CompanionRecord {
@@ -282,6 +296,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.221"),
         ability_keys: &[],
         external_ability_refs: &["Cythnigot ~ Horrific Appearance", "Cythnigot ~ Spores", "Detect Law ~ Constant", "Detect Magic ~ Constant", "Fly ~ Constant", "Telepathy ~ Touch"],
+        source_file: "b2_races_familiar.lst",
         source_line: 21,
     },
 ];
@@ -299,6 +314,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: Some("p.273"),
         owners: &["Familiar (Snapping Turtle)"],
+        source_file: "b2_abilities_familiar_race.lst",
         source_line: 6,
     },
 ];

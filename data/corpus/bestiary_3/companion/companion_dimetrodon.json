@@ -1,0 +1,73 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_3:companion:dimetrodon_tearing_bite",
+      "bestiary_3:companion:companion_advancement_dimetrodon"
+    ],
+    "corpus_key": "Companion (Dimetrodon)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:companion:companion_dimetrodon",
+    "monster_class": "Companion:2",
+    "name": "Companion (Dimetrodon)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "AnimalCompanionDinosaur",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": null,
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races_companion.lst",
+    "sha256": "7daa4e30be5659884ac06587264a899d801b61d1a9bd316a2e3a2c380958c374",
+    "line": 11,
+    "record_key": "Companion (Dimetrodon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

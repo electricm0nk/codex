@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Harbinger Archon ~ Wrath",
+    "delivery": "Supernatural",
+    "description": "Once per minute, a harbinger archon can emit a blast of energy that deals 2d6 points of force damage to adjacent creatures. A DC 12 Reflex save halves this damage. The harbinger can choose to omit any target from this blast that it desires, damaging only those foes it chooses. The save DC is Charisma-based.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:companion:harbinger_archon_wrath",
+    "name": "Wrath",
+    "owners": [
+      "bestiary_3:companion:archon_harbinger"
+    ],
+    "record_type": "ability",
+    "source_page": "p.18",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
+    "line": 44,
+    "record_key": "Harbinger Archon ~ Wrath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

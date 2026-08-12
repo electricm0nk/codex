@@ -27,17 +27,23 @@
 //!   names. Hit-dice progressions, neither creature nor ability; this chassis
 //!   does not model them and no registered book carries one.
 //!
-//! # A book is registered when EVERY one of its ability rows has an owner
+//! # Only ability rows WITH an owner are registered
 //!
 //! Same predicate `monster_chassis` states, for the same reason: an ability row
 //! no creature row claims is a record that loads and is never shown.
 //! `scripts/classify_companion_rows.py` classifies a candidate book's rows before
-//! a round commits to it, per `decisions.md §45.1`. Run corpus-wide it reports
-//! **808** orphan ability rows of the kind's 1,696 units — **765** of which no
-//! creature row in *any* book claims — so the lane's reachable ceiling is 888
-//! under the per-book predicate, not 1,696. That is a ceiling, not a backlog.
+//! a round commits to it, per `decisions.md §45.1`.
 //!
-//! # The three ownership shapes, every one stated by the corpus
+//! Through round 3 this was a per-BOOK predicate — a book with any orphan was
+//! held back — because an orphan-free candidate always remained. `bestiary` was
+//! the last one, so from round 4 the rule is the monster lane's: **transcribe
+//! the linked subset, drop the orphans, and carry them as an `OPEN_FINDINGS`
+//! entry naming their remedy** (`decisions.md §50`). The dropped rows keep their
+//! honest `not-ingested` status. What is still absolute is the other half: a
+//! book may never SHIP a row nothing can reach, which
+//! `every_shipped_ability_row_is_owned_by_a_creature_of_its_own_book` pins.
+//!
+//! # The five ownership shapes, every one stated by the corpus
 //!
 //! 1. **row-named** — a creature row's `ABILITY:Special Ability|AUTOMATIC|<name>`
 //!    names the ability outright, by `KEY:` or by display name.
@@ -49,6 +55,21 @@
 //!    creature of this book, either verbatim or as the inner name of
 //!    `Companion (<Owner>)` / `Familiar (<Owner>)`. `Worg ~ Mastery` owns through
 //!    `Companion (Worg)`, which the monster chassis's bare-prefix rule would miss.
+//! 4. **granted-by** (`decisions.md §54.1`) — shape 1's own token read on an
+//!    ability row that is itself already owned, seeded only from owned rows so an
+//!    orphan can never grant reachability to an orphan.
+//! 5. **display-name** (`decisions.md §56.1`) — the `<Owner>` of shape 3 is the
+//!    creature's `OUTPUTNAME:` rather than its `KEY:`. `KEY:Kyton (Augur)`
+//!    displays as `Augur` and its abilities are keyed `Augur ~ …`. Read from the
+//!    row's own token, never inferred by unwrapping the key's parentheses:
+//!    `Familiar (Fox)` and `Kyton (Augur)` look identical to a string unwrap and
+//!    mean different things — one is a wrapper, the other a genus and species.
+//!
+//! Every shape after the third was found by a round that had already committed
+//! to a book, and each one moved the lane's ceiling UP. Corpus-wide the
+//! classifier now reports **750** orphan ability rows of the kind's 1,696 units,
+//! so the reachable ceiling is **937**, not 1,696 and not the 888 this comment
+//! claimed when only three shapes were known. That is a ceiling, not a backlog.
 //!
 //! # What a book costs, now that this exists
 //!
@@ -157,9 +178,19 @@ pub struct CompanionAbilityRecord {
     pub stat_adjustments: &'static [StatAdjustment],
     pub source_page: Option<&'static str>,
     /// Every creature in this book whose row, `PRERACE:` gate or namespaced key
-    /// claims this ability. Non-empty for every registered book's every row.
+    /// claims this ability. Non-empty for every registered book's every row —
+    /// a row no creature owns is dropped by the transcriber and carried as an
+    /// `OPEN_FINDINGS` entry instead (`decisions.md §50`, §56.1).
     pub owners: &'static [&'static str],
-    /// The 1-based abilities-`.lst` line this record was read from.
+    /// The abilities-`.lst` basename this record was read from. Carried per row
+    /// because [`source_line`](Self::source_line) is only meaningful together
+    /// with its file: Bestiary 3 is the first book whose ability rows come from
+    /// TWO files (`b3_abilities_companion.lst` and `b3_abilities_familiar.lst`),
+    /// and line 40 means a different row in each. Same discipline as
+    /// `MonsterBookSpec::races_lsts`.
+    pub source_file: &'static str,
+    /// The 1-based line, within [`source_file`](Self::source_file), that this
+    /// record was read from.
     pub source_line: u32,
 }
 
@@ -195,7 +226,13 @@ pub struct CompanionRecord {
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
     pub external_ability_refs: &'static [&'static str],
-    /// The 1-based races-`.lst` line this record was read from.
+    /// The races-`.lst` basename this record was read from. Carried per row for
+    /// the same reason as [`CompanionAbilityRecord::source_file`]: Bestiary 3
+    /// draws creature rows from both `b3_races_companion.lst` and
+    /// `b3_races_familiar.lst`.
+    pub source_file: &'static str,
+    /// The 1-based line, within [`source_file`](Self::source_file), that this
+    /// record was read from.
     pub source_line: u32,
 }
 
@@ -237,8 +274,8 @@ impl CompanionBook {
 /// corpus cache, the companion catalog and the reach gate at once — none of
 /// those consumers names a book of its own.
 ///
-/// The eight below are every book with **zero** orphan ability rows that this
-/// lane has reached, derived rather than assumed:
+/// The first eight are every book with **zero** orphan ability rows that this
+/// lane reached, derived rather than assumed:
 /// `python3 scripts/classify_companion_rows.py inner_sea_combat monster_codex
 /// inner_sea_intrigue horror_adventures bestiary_5 bestiary_6 bestiary_2
 /// bestiary`.
@@ -246,6 +283,16 @@ impl CompanionBook {
 /// Round 2's three (`bestiary_5`, `bestiary_6`, `bestiary_2`) were held back
 /// from round 1 because each needs its own `RuleSetId`, whose scope flip moves
 /// several hundred units of OTHER kinds from `not-started` to `not-ingested`.
+///
+/// **`bestiary` was the last orphan-free book in the corpus** (`decisions.md
+/// §54`), so "every registered book ships every row it owns" stopped being true
+/// at the ninth. From `bestiary_3` on, a registered book ships the rows its own
+/// creature rows reach and carries the rest as an `OPEN_FINDINGS` entry — the
+/// monster lane's rule (`decisions.md §50`), which that lane adopted one book
+/// earlier for exactly the same reason. Whether a book is registerable is
+/// therefore no longer a question about orphans at all; the tests below assert
+/// the property that still holds, which is that every SHIPPED ability row has an
+/// owner.
 pub const COMPANION_BOOKS: &[CompanionBook] = &[
     CompanionBook {
         corpus_book: "inner_sea_combat",
@@ -312,6 +359,27 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         corpus_book: "beastiary",
         companions: super::beastiary1::companions_static(),
         companion_abilities: super::beastiary1::companion_abilities_static(),
+    },
+    // SD-29 Epic 7 round 4. Bestiary 3 — the first book with TWO source files
+    // per shape (`_companion` and `_familiar`), which is what widened
+    // `CompanionBookSpec`'s file fields into lists and put a `source_file` on
+    // every record above.
+    //
+    // All 31 creature rows and all 54 ability rows ship. The round was dispatched
+    // expecting 19 orphans and expecting to have to build the drop-and-record
+    // disposition for them; the disposition was built, and then the 19 turned
+    // out not to be orphans. Their creature rows are namespaced by `OUTPUTNAME:`
+    // rather than `KEY:` — `KEY:Kyton (Augur)` displays as `Augur`, and its six
+    // abilities are keyed `Augur ~ …`. Six of this book's creature rows are
+    // shaped that way and they own all 19 rows between them. Reading the token
+    // is ownership shape 5 (`decisions.md §56.1`), and it is read from the row,
+    // never inferred by unwrapping the key's parentheses — `Familiar (Fox)` and
+    // `Kyton (Augur)` look identical to a string unwrap and mean different
+    // things.
+    CompanionBook {
+        corpus_book: "bestiary_3",
+        companions: super::bestiary_3::companions_static(),
+        companion_abilities: super::bestiary_3::companion_abilities_static(),
     },
 ];
 
@@ -503,6 +571,125 @@ mod tests {
     /// The `Companion (<Species>)` / `Familiar (<Species>)` prefix-ownership
     /// shape, pinned on the row that needs it: Inner Sea Combat's
     /// `Worg ~ Mastery` is owned by `Companion (Worg)`, which the monster
+    /// Shape 5, display-name namespacing (`decisions.md §56.1`). Bestiary 3's
+    /// `Kyton (Augur)` displays as `Augur` and its abilities are keyed
+    /// `Augur ~ …`; the link is the row's own `OUTPUTNAME:` token.
+    ///
+    /// Pinned by name rather than by count because the failure this guards is a
+    /// silent one: if the transcriber stops reading `OUTPUTNAME:`, these rows do
+    /// not break, they simply stop being owned and are dropped as orphans, and
+    /// the book quietly ships 66 records instead of 85.
+    #[test]
+    fn a_namespaced_key_owns_through_the_creature_s_display_name() {
+        let book = companion_book("bestiary_3").expect("Bestiary 3 is registered");
+        for (ability_key, creature_key) in [
+            ("Augur ~ Spell-Like Abilities", "Kyton (Augur)"),
+            ("Doru ~ Poison", "Div (Doru)"),
+            ("Faerie Dragon ~ Breath Weapon", "Dragon (Faerie)"),
+            ("Harbinger Archon ~ Blades", "Archon (Harbinger)"),
+            ("Raktavarna ~ Change Shape", "Rakshasa (Raktavarna)"),
+            ("Spirit Oni ~ Poison", "Oni (Spirit)"),
+        ] {
+            let ability = book
+                .companion_ability_resolve(ability_key)
+                .unwrap_or_else(|| panic!("{ability_key} is in this book"));
+            assert!(
+                ability.owners.contains(&creature_key),
+                "{ability_key} should be owned by {creature_key} through its OUTPUTNAME, \
+                 but its owners are {:?}",
+                ability.owners
+            );
+            let creature = book
+                .companion_resolve(creature_key)
+                .unwrap_or_else(|| panic!("{creature_key} is in this book"));
+            assert!(
+                creature.ability_keys.contains(&ability_key),
+                "{creature_key} should reach {ability_key}"
+            );
+        }
+    }
+
+    /// Every SHIPPED ability row has an owner. This is the property that
+    /// survived round 4's discovery that "every registered book is orphan-free"
+    /// did not: a book may now leave rows behind, but it may never SHIP one that
+    /// nothing can reach.
+    #[test]
+    fn every_shipped_ability_row_is_owned_by_a_creature_of_its_own_book() {
+        for book in COMPANION_BOOKS {
+            let creature_keys: Vec<&str> = book.companions.iter().map(|c| c.key).collect();
+            for ability in book.companion_abilities {
+                assert!(
+                    !ability.owners.is_empty(),
+                    "{}: {} ships with no owner — it would load and never be shown",
+                    book.corpus_book,
+                    ability.key
+                );
+                for owner in ability.owners {
+                    assert!(
+                        creature_keys.contains(owner),
+                        "{}: {} is owned by {owner}, which is not a creature row of this book",
+                        book.corpus_book,
+                        ability.key
+                    );
+                }
+            }
+        }
+    }
+
+    /// A record's `source_line` is only meaningful with its `source_file`, so
+    /// every record must name one. Bestiary 3 draws on four files; a record that
+    /// named none would make the generator verify a line against whichever file
+    /// happened to be first.
+    #[test]
+    fn every_record_names_the_file_it_was_read_from() {
+        for book in COMPANION_BOOKS {
+            for companion in book.companions {
+                assert!(
+                    companion.source_file.ends_with(".lst"),
+                    "{}: {} source_file {:?} is not a .lst basename",
+                    book.corpus_book,
+                    companion.key,
+                    companion.source_file
+                );
+            }
+            for ability in book.companion_abilities {
+                assert!(
+                    ability.source_file.ends_with(".lst"),
+                    "{}: {} source_file {:?} is not a .lst basename",
+                    book.corpus_book,
+                    ability.key,
+                    ability.source_file
+                );
+            }
+        }
+    }
+
+    /// Bestiary 3 is the first registered book drawing on more than one file per
+    /// shape, and all 85 of its corpus units ship.
+    #[test]
+    fn bestiary_3_ships_all_eighty_five_units_from_four_files() {
+        let book = companion_book("bestiary_3").expect("Bestiary 3 is registered");
+        assert_eq!(book.companions.len(), 31);
+        assert_eq!(book.companion_abilities.len(), 54);
+
+        let mut creature_files: Vec<&str> = book.companions.iter().map(|c| c.source_file).collect();
+        creature_files.sort_unstable();
+        creature_files.dedup();
+        assert_eq!(
+            creature_files,
+            vec!["b3_races_companion.lst", "b3_races_familiar.lst"]
+        );
+
+        let mut ability_files: Vec<&str> =
+            book.companion_abilities.iter().map(|a| a.source_file).collect();
+        ability_files.sort_unstable();
+        ability_files.dedup();
+        assert_eq!(
+            ability_files,
+            vec!["b3_abilities_companion.lst", "b3_abilities_familiar.lst"]
+        );
+    }
+
     /// chassis's bare-prefix rule would have reported as an orphan.
     #[test]
     fn a_namespaced_key_owns_through_the_companion_species_wrapper() {

@@ -6,7 +6,7 @@
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
 //! line count over the `.lst`.
 //!
-//! Sources, with the line each record was read from carried per row:
+//! Sources, with the file AND line each record was read from carried per row:
 //!   * `mc_races_companion.lst` -- 8 companion creature rows
 //!   * `mc_abilities_companion.lst` -- 7 companion ability rows
 
@@ -30,6 +30,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.128"),
         ability_keys: &["Companion Advancement ~ Cave Salamander"],
         external_ability_refs: &[],
+        source_file: "mc_races_companion.lst",
         source_line: 5,
     },
     CompanionRecord {
@@ -48,6 +49,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.172"),
         ability_keys: &["Companion Advancement ~ Gorthek"],
         external_ability_refs: &[],
+        source_file: "mc_races_companion.lst",
         source_line: 6,
     },
     CompanionRecord {
@@ -66,6 +68,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.128"),
         ability_keys: &["Companion Advancement ~ Python (Riding)"],
         external_ability_refs: &["Can't Be Tripped"],
+        source_file: "mc_races_companion.lst",
         source_line: 7,
     },
     CompanionRecord {
@@ -84,6 +87,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.117"),
         ability_keys: &["Companion Advancement ~ Rat (Riding)"],
         external_ability_refs: &["Scent"],
+        source_file: "mc_races_companion.lst",
         source_line: 8,
     },
     CompanionRecord {
@@ -102,6 +106,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.124"),
         ability_keys: &["Companion Advancement ~ Yzobu", "Yzobu ~ Stampede"],
         external_ability_refs: &["Scent"],
+        source_file: "mc_races_companion.lst",
         source_line: 9,
     },
     CompanionRecord {
@@ -120,6 +125,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.208"),
         ability_keys: &[],
         external_ability_refs: &[],
+        source_file: "mc_races_companion.lst",
         source_line: 11,
     },
     CompanionRecord {
@@ -138,6 +144,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: Some("p.88"),
         ability_keys: &[],
         external_ability_refs: &[],
+        source_file: "mc_races_companion.lst",
         source_line: 12,
     },
     CompanionRecord {
@@ -156,6 +163,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: None,
         ability_keys: &["Companion Advancement ~ Giant Vulture"],
         external_ability_refs: &[],
+        source_file: "mc_races_companion.lst",
         source_line: 15,
     },
 ];
@@ -173,6 +181,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Cave Salamander)"],
+        source_file: "mc_abilities_companion.lst",
         source_line: 5,
     },
     CompanionAbilityRecord {
@@ -186,6 +195,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Gorthek)"],
+        source_file: "mc_abilities_companion.lst",
         source_line: 6,
     },
     CompanionAbilityRecord {
@@ -199,6 +209,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Python (Riding))"],
+        source_file: "mc_abilities_companion.lst",
         source_line: 7,
     },
     CompanionAbilityRecord {
@@ -212,6 +223,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Yzobu)"],
+        source_file: "mc_abilities_companion.lst",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -225,6 +237,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 2 }],
         source_page: None,
         owners: &["Companion (Rat (Riding))"],
+        source_file: "mc_abilities_companion.lst",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -238,6 +251,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Yzobu)"],
+        source_file: "mc_abilities_companion.lst",
         source_line: 11,
     },
     CompanionAbilityRecord {
@@ -251,6 +265,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Giant Vulture)"],
+        source_file: "mc_abilities_companion.lst",
         source_line: 14,
     },
 ];

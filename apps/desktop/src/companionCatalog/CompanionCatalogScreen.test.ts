@@ -40,7 +40,7 @@ import { assert, assertEqual } from '../testSupport/asserts';
 // this list at round 1's four, which is why B5's, B6's and B2's labels were
 // never checked by anything (`decisions.md §54.5`). Corrected here to the
 // eight the backend serves, B1 included.
-const SERVED_BOOK_CODES = ['ISC', 'MC', 'ISI', 'HA', 'B5', 'B6', 'B2', 'B1'] as const;
+const SERVED_BOOK_CODES = ['ISC', 'MC', 'ISI', 'HA', 'B5', 'B6', 'B2', 'B1', 'B3'] as const;
 
 /** The `SIZE:` codes the registered creature rows actually carry. */
 const SERVED_SIZE_CODES = ['T', 'M', 'L'] as const;

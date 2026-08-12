@@ -6,7 +6,7 @@
 //! `docs/work-inventory.json`'s own units for this book rather than a raw
 //! line count over the `.lst`.
 //!
-//! Sources, with the line each record was read from carried per row:
+//! Sources, with the file AND line each record was read from carried per row:
 //!   * `isc_races_companion.lst` -- 4 companion creature rows
 //!   * `isc_abilities_companion.lst` -- 6 companion ability rows
 
@@ -30,6 +30,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: None,
         ability_keys: &["Unable to carry a rider while flying", "Companion Advancement ~ Griffon"],
         external_ability_refs: &["Scent"],
+        source_file: "isc_races_companion.lst",
         source_line: 5,
     },
     CompanionRecord {
@@ -48,6 +49,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: None,
         ability_keys: &["Companion Advancement ~ Hippocampus"],
         external_ability_refs: &["Hippocampus ~ Water Dependency", "Scent"],
+        source_file: "isc_races_companion.lst",
         source_line: 6,
     },
     CompanionRecord {
@@ -66,6 +68,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: None,
         ability_keys: &["Companion Advancement ~ Hippogriff", "Unable to carry a rider while flying"],
         external_ability_refs: &["Flight Maneuverability", "Scent"],
+        source_file: "isc_races_companion.lst",
         source_line: 7,
     },
     CompanionRecord {
@@ -84,6 +87,7 @@ pub(super) static COMPANIONS: &[CompanionRecord] = &[
         source_page: None,
         ability_keys: &["Companion Advancement ~ Worg", "Worg ~ Mastery"],
         external_ability_refs: &["Scent"],
+        source_file: "isc_races_companion.lst",
         source_line: 8,
     },
 ];
@@ -101,6 +105,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Griffon)"],
+        source_file: "isc_abilities_companion.lst",
         source_line: 5,
     },
     CompanionAbilityRecord {
@@ -114,6 +119,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "DEX", amount: 4 }],
         source_page: None,
         owners: &["Companion (Hippocampus)"],
+        source_file: "isc_abilities_companion.lst",
         source_line: 6,
     },
     CompanionAbilityRecord {
@@ -127,6 +133,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Hippogriff)"],
+        source_file: "isc_abilities_companion.lst",
         source_line: 7,
     },
     CompanionAbilityRecord {
@@ -140,6 +147,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 2 }, StatAdjustment { ability: "CON", amount: 2 }],
         source_page: None,
         owners: &["Companion (Worg)"],
+        source_file: "isc_abilities_companion.lst",
         source_line: 8,
     },
     CompanionAbilityRecord {
@@ -153,6 +161,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Griffon)", "Companion (Hippogriff)"],
+        source_file: "isc_abilities_companion.lst",
         source_line: 9,
     },
     CompanionAbilityRecord {
@@ -166,6 +175,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         stat_adjustments: &[],
         source_page: None,
         owners: &["Companion (Worg)"],
+        source_file: "isc_abilities_companion.lst",
         source_line: 10,
     },
 ];

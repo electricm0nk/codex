@@ -1122,13 +1122,31 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         fs::remove_dir_all(&dir).expect("clear stale generated subdir");
     }
 
-    let races_file = load_corpus_file_rel(&root, spec.book_relative, spec.races_lst);
-    let abilities_file = load_corpus_file_rel(&root, spec.book_relative, spec.abilities_lst);
+    // Keyed by file name, because a record's `source_line` is only meaningful
+    // together with its `source_file` -- see `CompanionRecord::source_file`.
+    let races_files: HashMap<&'static str, CorpusFile> = spec
+        .races_lsts
+        .iter()
+        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .collect();
+    let abilities_files: HashMap<&'static str, CorpusFile> = spec
+        .abilities_lsts
+        .iter()
+        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .collect();
 
     let mut pi_hits: Vec<String> = Vec::new();
     let mut creature_written = 0u32;
     for companion in table.companions {
-        let line = verified_citation_line(&races_file, companion.source_line, companion.name);
+        let races_file = races_files.get(companion.source_file).unwrap_or_else(|| {
+            panic!(
+                "{book_id}:{} cites {}, which is not in this book's \
+                 CompanionBookSpec::races_lsts ({:?}) -- a citation this generator \
+                 cannot verify is not a citation",
+                companion.key, companion.source_file, spec.races_lsts
+            )
+        });
+        let line = verified_citation_line(races_file, companion.source_line, companion.name);
         let data = serde_json::json!({
             "key": format!("{book_id}:companion:{}", slugify(companion.key)),
             "corpus_key": companion.key,
@@ -1181,7 +1199,15 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
 
     let mut ability_written = 0u32;
     for ability in table.companion_abilities {
-        let line = verified_citation_line(&abilities_file, ability.source_line, ability.name);
+        let abilities_file = abilities_files.get(ability.source_file).unwrap_or_else(|| {
+            panic!(
+                "{book_id}:{} cites {}, which is not in this book's \
+                 CompanionBookSpec::abilities_lsts ({:?}) -- a citation this generator \
+                 cannot verify is not a citation",
+                ability.key, ability.source_file, spec.abilities_lsts
+            )
+        });
+        let line = verified_citation_line(abilities_file, ability.source_line, ability.name);
         let data = serde_json::json!({
             "key": format!("{book_id}:companion:{}", slugify(ability.key)),
             "corpus_key": ability.key,
@@ -1316,14 +1342,21 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
     );
 }
 
-/// Where one companion book's two `.lst` files live and what its OGL notice
-/// says. Same shape and same discipline as [`MonsterBookSpec`]: locations and
+/// Where one companion book's `.lst` files live and what its OGL notice says.
+/// Same shape and same discipline as [`MonsterBookSpec`]: locations and
 /// citations only, never behaviour.
+///
+/// Both file fields are LISTS. Through round 3 every registered book had
+/// exactly one file per shape, so a single-file field was never wrong and read
+/// as though it were general; Bestiary 3 carries a `_companion` and a
+/// `_familiar` file for each shape (`decisions.md §56.2`). A record names its
+/// own file, so the citation check below can never verify a line against the
+/// wrong one.
 struct CompanionBookSpec {
     corpus_book: &'static str,
     book_relative: &'static str,
-    races_lst: &'static str,
-    abilities_lst: &'static str,
+    races_lsts: &'static [&'static str],
+    abilities_lsts: &'static [&'static str],
     open_game_content: &'static str,
     product_identity_source: &'static str,
     classified_by_cycle: &'static str,
@@ -1333,8 +1366,8 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "inner_sea_combat",
         book_relative: "pathfinder/paizo/campaign_setting/inner_sea_combat",
-        races_lst: "isc_races_companion.lst",
-        abilities_lst: "isc_abilities_companion.lst",
+        races_lsts: &["isc_races_companion.lst"],
+        abilities_lsts: &["isc_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_combat.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Combat, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F1-002",
@@ -1342,8 +1375,8 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "monster_codex",
         book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
-        races_lst: "mc_races_companion.lst",
-        abilities_lst: "mc_abilities_companion.lst",
+        races_lsts: &["mc_races_companion.lst"],
+        abilities_lsts: &["mc_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _monster_codex.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Monster Codex, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F1-002",
@@ -1351,8 +1384,8 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "inner_sea_intrigue",
         book_relative: "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
-        races_lst: "isi_races_companion.lst",
-        abilities_lst: "isi_abilities_race_companion.lst",
+        races_lsts: &["isi_races_companion.lst"],
+        abilities_lsts: &["isi_abilities_race_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_intrigue.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Intrigue, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F1-002",
@@ -1360,8 +1393,8 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "horror_adventures",
         book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
-        races_lst: "ha_races_companion.lst",
-        abilities_lst: "ha_abilities_companion.lst",
+        races_lsts: &["ha_races_companion.lst"],
+        abilities_lsts: &["ha_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own horror_adventures.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Horror Adventures, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F1-002",
@@ -1379,8 +1412,8 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "bestiary_5",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_5",
-        races_lst: "b5_races_companion.lst",
-        abilities_lst: "b5_abilities_companion.lst",
+        races_lsts: &["b5_races_companion.lst"],
+        abilities_lsts: &["b5_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_5.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 5, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-003",
@@ -1388,8 +1421,8 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "bestiary_6",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_6",
-        races_lst: "b6_races_companion.lst",
-        abilities_lst: "b6_abilities_companion.lst",
+        races_lsts: &["b6_races_companion.lst"],
+        abilities_lsts: &["b6_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_6.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 6, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-003",
@@ -1400,8 +1433,8 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "bestiary_2",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_2",
-        races_lst: "b2_races_familiar.lst",
-        abilities_lst: "b2_abilities_familiar_race.lst",
+        races_lsts: &["b2_races_familiar.lst"],
+        abilities_lsts: &["b2_abilities_familiar_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_2.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 2, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-003",
@@ -1417,11 +1450,29 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
     CompanionBookSpec {
         corpus_book: "beastiary",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary",
-        races_lst: "b1_races_companion.lst",
-        abilities_lst: "b1_abilities_companion.lst",
+        races_lsts: &["b1_races_companion.lst"],
+        abilities_lsts: &["b1_abilities_companion.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-004",
+    },
+    // SD-29 Epic 7 round 4 (`SD29-E7-F2-005`). Bestiary 3, and the FIRST book
+    // with two files per shape -- which is what widened both fields from a
+    // single name to a list (`decisions.md §56.2`). Its companion and familiar
+    // files are separate corpus rows of the same kind, not two kinds: the
+    // chassis has modelled `Familiar` as a `type_segment` since Bestiary 2.
+    //
+    // Registering it costs NO scope flip and needs no new `RuleSetId`: the
+    // monster lane compiled `RuleSetId::B3` for this book's monsters in
+    // `9595bd82`, the same free registration `bestiary` had in round 3.
+    CompanionBookSpec {
+        corpus_book: "bestiary_3",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_3",
+        races_lsts: &["b3_races_companion.lst", "b3_races_familiar.lst"],
+        abilities_lsts: &["b3_abilities_companion.lst", "b3_abilities_familiar.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_3.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 3, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-005",
     },
 ];
 
