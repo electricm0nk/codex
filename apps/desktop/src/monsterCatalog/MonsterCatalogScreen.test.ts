@@ -40,7 +40,15 @@ const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
  * two characters. They are the books' own `SOURCESHORT` tokens, like every
  * other code here.
  */
-const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2'] as const;
+// SD-29 Epic 5 extend round 5 added `B3: 'Bestiary 3'` to `BOOK_LABELS` and did
+// not add it here, which turned this assertion RED on `origin/tranche/9`
+// (`9595bd82`) — `expected …,B2,BB,… got …,B2,B3,BB,…`. Closed by the companion
+// lane's round 3 while merging that work, because it is the SAME hand-maintained
+// -list-goes-stale defect that round found on the companion side
+// (`decisions.md §54.5`), one commit apart in the sibling file: there the list
+// was SHORT of the labels and nothing checked three books; here it is short of
+// the labels and the gate says so. Same shape, opposite visibility.
+const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2', 'B3'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [

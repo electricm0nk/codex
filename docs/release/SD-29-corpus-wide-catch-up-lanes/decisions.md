@@ -3696,3 +3696,275 @@ work** (13 orphans against 301 units) and is the correct target for a round that
 Ten books hold 703 orphan abilities and **zero** monsters. No per-monster cycle can ground them, and
 `loop-instruction.md`'s "Hard stops" names running one against a zero-monster book as a reportable
 hard stop rather than something to force. That is the floor this lane cannot go below.
+
+## Decision 54 — Companion Lane, extend: round 3 (2026-08-12, `sd29-companion-r7`, card `epic-7-companion-lane-extend`)
+
+`§51.7` predicted this round's shape and got it exactly backwards, in the direction nobody budgets
+for: it said **every remaining book carries orphans**, so round 3's first move would be a *reach*
+decision — a scoped claim plus an `OPEN_FINDINGS` entry naming the rest. Round 3 opened by trying to
+write that mechanism, looked at the five rows that made Bestiary 1 orphan-bearing, and found that
+**none of them is an orphan**. The book was registerable all along under an ownership shape the
+classifier did not read, and it landed with **59 units, all 59 grounded, zero `OPEN_FINDINGS`
+shortfall and no orphan-drop mechanism written at all**.
+
+The lane's ceiling moved **up** for the first time.
+
+### 54.1 The granted-by ownership shape: an ability row can be what names another ability row
+
+`classify_companion_rows.py` read three ownership shapes, and applied shape 1 — a
+`ABILITY:Special Ability|AUTOMATIC|<name>` token — **only to creature rows**. Bestiary 1 is where
+that restriction is wrong. `b1_abilities_companion.lst:7`:
+
+```
+Companion Advancement (Dinosaur (Ankylosaurus))  KEY:Companion Advancement ~ Dinosaur (Ankylosaurus)
+  CATEGORY:Special Ability  TYPE:CompanionAdvancement  VISIBLE:DISPLAY
+  PRERACE:1,Companion (Dinosaur (Ankylosaurus))
+  ABILITY:Special Ability|AUTOMATIC|Ankylosaurus ~ Stun  BONUS:SIZEMOD|NUMBER|1
+```
+
+That row is an **ability** row. It is owned by `Companion (Dinosaur (Ankylosaurus))` through shape 2
+(its own `PRERACE:`), and it — not the creature row — is what names `Ankylosaurus ~ Stun`. Under
+shapes 1-3 the Stun row is claimed by nobody and the book reports 5 orphans; the corpus states its
+owner one hop away.
+
+**Shape 4, granted-by:** shape 1's own token, read on an ability row that shapes 1-3 have already
+given an owner, propagating that row's owners to what it names. Run to a fixpoint, seeded only from
+already-owned rows, so an orphan can never grant reachability to an orphan. It is not a looser rule —
+it is the *same* token, read on a row the previous predicate skipped.
+
+Corpus-wide, re-derived with `python3 scripts/classify_companion_rows.py`:
+
+| | before shape 4 | after |
+|---|---|---|
+| orphan ability rows | 808 | **794** |
+| `bestiary` | 5 | **0** |
+| `core_rulebook` | 88 | **84** |
+| `ultimate_magic` | 138 | **135** |
+| `ultimate_wilderness` | 249 | **247** |
+
+**14 units, and the ceiling moves the other way for the first time in this lane.** `§48.1` moved it
+1,696 → 888, `§51.1` moved it 888 → 879; both were the instrument discovering it had been
+*over*-claiming. This is the first correction where the instrument had been *under*-claiming, and the
+asymmetry is the point: every prior tightening was found by asking "is this really reachable?", and
+nothing in that habit ever asks the opposite question. The five rows sat in an `ORPHAN` column for
+two rounds, in a book `§51.7` ranked as one of the two cheapest, and the column was believed because
+under-claiming is the safe direction — which is true of what you ship and false of what you plan.
+
+The five are pinned BY NAME, not by a count, in
+`rules_tables::beastiary1::the_five_granted_by_advancement_abilities_resolve_to_their_creature`: a
+regression that dropped shape 4 leaves those five with no owner and that test says which.
+
+### 54.2 The ceiling instrument still did not subtract the exclusion `§51.1` said it subtracts
+
+`§51.1` closes: *"The classifier now prints all three lines and the reachable remainder subtracts all
+three."* Re-derived at this round's open, before any change:
+
+```
+total companion units in scope : 1696
+orphan ability rows            : 808
+PRECAMPAIGN-gated on an uningested campaign : 2
+reachable remainder            : 886
+```
+
+886 = 1696 − 808 − 2. The 7 `*_classes_companion.lst` class rows are **not** subtracted. Every doc
+downstream of `§51` — that section's own table, `kanban.md` card 12, the dispatch brief — carries the
+hand-corrected **879**, so nothing shipped wrong; but the instrument and the prose disagreed by 7 for
+a full round, and the prose is what a reader checks the instrument against. `§51.1`'s own words for
+this are exactly right and were applied to everyone except itself: *"a ceiling that subtracts one
+exclusion is not a ceiling; it is one exclusion."* The class-row line is now printed and subtracted
+in the script.
+
+**The lane's REAL ceiling, both corrections applied:**
+
+| adjustment | units |
+|---|---|
+| total `companion` units in scope | 1,696 |
+| − orphan ability rows (shape 4 applied) | 794 |
+| − `PRECAMPAIGN`-gated on an uningested campaign | 2 |
+| − `*_classes_companion.lst` class rows the chassis refuses | 7 |
+| **REAL ceiling** | **893** |
+| grounded after this round | 194 |
+| **honest remainder** | **699** |
+
+`879 + 14 = 893`, and `744 − 59 (this round) + 14 (measurement) = 699`. Both close exactly.
+
+### 54.3 Bestiary 1 is spelled three ways, and the third one is where the grounding was lost
+
+The book id hazard `§51.7` named is worse than two spellings:
+
+| string | who uses it |
+|---|---|
+| `bestiary` | the PCGen source directory, and `docs/work-inventory.json`'s `book` field |
+| `beastiary` | the `data/corpus/` directory (misspelled since SD-22) |
+| `beastiary1` | the Rust module, and the ingest diagnostic's `book_id` |
+| `bestiary_1` | `rule_set_id(RuleSetId::Bestiary1)` — the **engine book**, a fourth string |
+
+`COMPANION_BOOKS.corpus_book` must be `beastiary`, because every consumer of that field reads a
+`data/corpus/` directory: the generator's output root and `reach_gate::companions_reach`'s
+denominator. Registering it as `bestiary` writes `data/corpus/bestiary/`, a second corpus directory
+for a book that already has one, with its own `LICENSE.json` and a companion half that could never be
+judged against the monster half.
+
+But `v06_work_inventory`'s `Kind::Companion` verdict arm looks up `chassis_companion_keys` by the
+**engine book** (`bestiary_1`), and the map was keyed by `book.corpus_book`. For the first seven
+registered companion books those two strings are identical, so the key worked **by coincidence
+rather than by rule**, and nothing said so. Untranslated, all 59 of this book's grounded records
+would have reported `companion_content_has_no_engine_table` — a book fully ingested, fully reaching
+the catalog, reported as having no engine table at all. That is `§44`'s spelling defect again, in a
+new place, and the same size (§44: 108 records; here: 59).
+
+The fix is a translation the code performs, not a spelling anyone is asked to remember:
+`engine_book_for_corpus_dir` already existed, `CORPUS_DIR_ALIASES` already carried
+`("beastiary", "bestiary")`, and the registry loop now uses them — and **panics** on a registered book
+that resolves to no rule set, so the next such book fails the build instead of silently grounding
+nothing.
+
+### 54.4 The generator preserved the licence declaration and destroyed the licence *history*
+
+`gen_companion_book` read a prior `LICENSE.json`, kept its `license_declaration` — and overwrote its
+`screening_method_note` with a sentence about the current run.
+
+`data/corpus/beastiary/LICENSE.json`'s note stated **three earlier PI-screening passes** by cycle,
+date and record count: E2.0.9's 45 records (2026-07-27), `ingest_races`' 119 (2026-07-31), SD28-E16's
+5 (2026-08-07), each with what was screened and why. After a companion run it read: *"Every field of
+the 59 records this run wrote … records_processed is 228."* A file whose record count says 228 and
+whose method note accounts for 59.
+
+**It had already happened twice, unnoticed, in this lane's own round 1**: `monster_codex` (whose note
+had covered its race-trait and monster passes) and `horror_adventures`, both clobbered by
+`bac2f569`. Neither round noticed, because the field a generator overwrites looks exactly like the
+field a generator wrote.
+
+Fixed at the source — the note is now **append-only**, composed onto whatever was there, and
+idempotent (a re-run of the same cycle replaces its own trailing pass rather than stacking copies,
+verified by running the generator twice and comparing note length: 2,837 characters both times). The
+two clobbered books' notes are restored from the commit that preceded the overwrite by
+`scripts/tests/restore_clobbered_license_notes.py`, which reads the original bytes out of git rather
+than retyping them, and the generator then appends this lane's pass to the restored text.
+
+The wider point is `§47.3`'s again: **the preservation rule was already written and already
+implemented — for the other half of the file.** `gen_companion_book`'s comment says in as many words
+that clobbering a prior lane's sharper OGL citation "would replace a real derivation with a weaker
+one." That reasoning is exactly as true of the screening note, and the code applied it to one field.
+
+### 54.5 A hand-maintained frontend list had been stale for a round, and nothing could tell
+
+`CompanionCatalogScreen.test.ts`'s `SERVED_BOOK_CODES` — the list the "every served book has a real
+name" test iterates — was still round 1's four (`ISC`, `MC`, `ISI`, `HA`) after round 2 registered
+three more. B5's, B6's and B2's labels were therefore checked by nothing: the test passed, over a
+denominator that had stopped being the truth. Corrected to the eight the backend serves. The test
+asserts about a hand-written list rather than about the wire, so it will go stale again; that is
+recorded here rather than solved, because deriving it needs a fixture the frontend does not have.
+
+### 54.6 The same stale-hand-list defect was RED on the branch, in the sibling file, one commit away
+
+`§54.5` found `CompanionCatalogScreen.test.ts`'s `SERVED_BOOK_CODES` stale and *silent* — the test
+passed over a denominator that had stopped being the truth. The first full gate on the merged tree
+found the identical defect in `MonsterCatalogScreen.test.ts`, and there it was **loud**:
+
+```
+FAIL src/monsterCatalog/MonsterCatalogScreen.test.ts
+Error: BOOK_LABELS names exactly the served books:
+  expected B1,B2,BB,BOTD1,BOTD2,ISWG,MC, got B1,B2,B3,BB,BOTD1,BOTD2,ISWG,MC
+```
+
+**Proven inherited rather than assumed**, which is the part the doctrine asks for
+(`loop-instruction.md`, "A gate stage that fails twice … it blocks the cycle until the attribution is
+*proven*"). Read out of the monster lane's own commit rather than out of the merged tree:
+
+```bash
+git show 9595bd82:apps/desktop/src/monsterCatalog/MonsterCatalogScreen.test.ts | grep 'const SERVED_BOOKS'
+#   -> ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2', 'ISWG', 'B2']      (7)
+git show 9595bd82:apps/desktop/src/monsterCatalog/MonsterCatalogScreen.tsx  | grep 'B3:'
+#   -> B3: 'Bestiary 3',
+```
+
+`origin/tranche/9` was red on its own gate before this lane touched it. Fixed here — a mechanical
+defect is an explicit PRESS ON case, not a `decision-blocked` — by adding `B3` to `SERVED_BOOKS` with
+the attribution in a comment beside it.
+
+**The pair is the finding.** The same hand-maintained frontend list went stale in two catalogs one
+commit apart, and the two failed in opposite directions: the companion list was **short of the
+labels** so three books were checked by nothing, and the monster list was **short of the labels** so
+the gate refused. Identical cause, and only one of the two was visible. Nothing on the frontend side
+derives these lists from `COMPANION_BOOKS`/`MONSTER_BOOKS`; every book registration leaves two lists
+to remember, and remembering is what failed twice. Deriving them needs a fixture the frontend does
+not have, so this is recorded rather than solved — but it is now recorded as a *pattern* with two
+instances, not as one lane's oversight.
+
+### 54.7 What landed
+
+| book | units | creatures | abilities | grounded | needed a `RuleSetId` |
+|---|---|---|---|---|---|
+| `bestiary` (Bestiary 1) | 59 | 24 | 35 | **59** | **no** |
+
+* **The first companion book needing no new `RuleSetId` and no scope flip.**
+  `RuleSetId::Bestiary1` was already compiled for the book's monsters and equipment, so registering
+  its companions moved **zero** units of any other kind — where `§51.6` measured 1,099 for round 2's
+  three books. The per-book cost was a `COMPANION_BOOKS` row, a `COMPANION_BOOK_SPECS` row, a wire
+  code, a frontend label, a `reach_gate` claim, and a widening of `beastiary1_counts()`.
+* **The first book whose companion tables sit beside another family's tables in one module.**
+  `rules_tables::beastiary1` now holds 46 monsters and 24 companions.
+  `the_companion_rows_are_not_this_module_s_monster_rows` pins that the two populations never
+  collide: `Companion (Wolf)` is an advanceable companion chassis row, `Wolf` is a stat block, both
+  are Bestiary 1 and neither is the other. `§52.8` flagged this book to the monster lane as "the only
+  remaining book where the chassis meets an EXISTING ingest"; the same is true here, and the answer
+  is that they sit alongside under one `RuleSetId` with a test saying they are disjoint.
+* `data/corpus/beastiary/companion/` — 59 records, **zero PI redactions**. The book's own
+  `NAMEISPI:YES` audit (`§50.1`'s corpus-wide finding, checked rather than assumed):
+  `grep -c 'NAMEISPI:YES' bestiary/b1_races_companion.lst bestiary/b1_abilities_companion.lst` → **0**
+  for both.
+* `reach_gate` claim `("beastiary1", "companions")` — a **second** claim for a book that already
+  claimed `("beastiary1", "monsters")`, and the only claim in that file whose family id and corpus
+  directory are different words.
+* Corpus-wide `companion` grounded **135 → 194**.
+
+### 54.8 The remainder, re-derived — and round 4's queue
+
+Re-derived at the end of the round with the same command that opened it
+(`python3 scripts/classify_companion_rows.py`), now carrying shape 4:
+
+| book | units | orphans | class rows | **reachable** |
+|---|---|---|---|---|
+| `ultimate_wilderness` | 575 | 247 (43%) | 0 | **328** |
+| `core_essentials` | 145 | 51 (35%) | 0 | **94** |
+| `core_rulebook` | 170 | 84 (49%) | 2 | **84** |
+| `bestiary_4` | 80 | 5 (**6%**) | 0 | **75** |
+| `bestiary_3` | 85 | 19 (22%) | 0 | **66** |
+| `ultimate_magic` | 170 | 135 (79%) | 3 | **32** |
+| `advanced_race_guide` | 32 | 18 (56%) | 0 | **14** |
+| `advanced_players_guide` | 212 | 208 (98%) | 0 | **4** |
+| `book_of_the_damned_volume_1` | 31 | 27 (87%) | 2 | **2** |
+| **total** | **1,500** | **794** | **7** | **699** |
+
+**`§51.7`'s wall is still there for every one of these**, and round 3 did not build the machinery to
+climb it — it found a book that never needed it. Round 4 has no such book left: the cheapest
+remaining, `bestiary_4` at 6%, still needs a scoped `Reach::Surfaced` claim over the linked subset
+plus an `OPEN_FINDINGS` entry naming its 5 orphans, which is the disposition the monster lane already
+took for Inner Sea World Guide (`§50`).
+
+**Four hazards named so round 4 does not pay to discover them.**
+
+1. **`bestiary_4` is the concurrent monster lane's round-5 target too** (`§52.8` ranks it first at 749
+   reachable monster units). Round 3 chose `bestiary` partly to avoid that collision, and confirmed
+   mid-round that the monster lane had claimed `bestiary_3` on this branch. `§51.5`'s ruling stands —
+   two lanes registering families of one book is the designed path — but the two rounds must not add
+   the same `RuleSetId` variant in the same hour. Check `git log origin/tranche/9` before writing
+   `RuleSetId::B4`.
+2. **`ultimate_wilderness`, `core_rulebook`, `ultimate_magic` and `book_of_the_damned_volume_1` carry
+   `*_classes_companion.lst` rows.** `transcribe_companion_tables` refuses those books outright.
+   `§51.7` named the first three; `book_of_the_damned_volume_1` carries 2 more and `§51.1`'s own
+   breakdown says so, but the hazard list left it out. The classifier's `clas` column has printed all
+   four all along — the column was there and was read past, which is the same failure the `ORPHAN`
+   column produced in `§54.1`. Nothing about the instrument changed here; only the list did.
+3. **`bestiary_3` is now a free registration too.** The merge this round took brought in the monster
+   lane's Bestiary 3 ingest, which moved the book `future_state` → `in_scope` under `RuleSetId::B3`.
+   Its 85 companion units (66 reachable) therefore cost no scope flip, exactly as `bestiary`'s did —
+   the second instance of `§51.5`'s designed cross-lane path, and this time the companion lane is the
+   one being paid for rather than the one paying.
+4. **`core_essentials` and `bestiary_3` need the spec widened to MULTIPLE source files per shape.**
+   `CompanionBookSpec` carries one `races_lst` and one `abilities_lst`; `core_essentials` has six
+   companion `.lst` files and `bestiary_3` four (`b3_races_companion.lst`, `b3_races_familiar.lst`,
+   `b3_abilities_companion.lst`, `b3_abilities_familiar.lst`). Every book registered so far had
+   exactly two, so the single-file spec has never been wrong before and reads as though it were
+   general. Round 3 chose `bestiary` partly because it is the last two-file book left.
