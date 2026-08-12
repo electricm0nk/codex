@@ -14,6 +14,7 @@ pub mod apg;
 pub mod archetype_swap;
 pub mod beastiary1;
 pub mod bestiary_2;
+pub mod bestiary_3;
 pub mod bestiary_5;
 pub mod bestiary_6;
 pub mod bonus_bestiary;
@@ -184,4 +185,16 @@ pub enum RuleSetId {
     /// from `not-started` to `not-ingested`, which states the engine's real
     /// relationship to the book more precisely and claims nothing about them.
     B2,
+    /// Bestiary 3. SD-29 Epic 5 extend, round 5 (monster lane;
+    /// `rules_tables::bestiary_3`, 261 monsters + 27 monster abilities). The
+    /// cleanest book the lane has taken: no Product Identity row, no `.COPY=`
+    /// delta, and every one of its 261 corpus monster rows ships.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** The book's 799 `race_trait` units are a separate question,
+    /// and `rules_tables::bestiary_3`'s header records the finding that 341 of
+    /// them are namespaced abilities of the monsters this rule set compiles —
+    /// filed under `race_trait` only because `file_kind` reads the first
+    /// `TYPE:` segment.
+    B3,
 }

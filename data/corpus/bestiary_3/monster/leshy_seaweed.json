@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "3",
+    "corpus_key": "Leshy (Seaweed)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:leshy_seaweed",
+    "monster_class": "Plant:4",
+    "name": "Seaweed Leshy",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": null,
+        "name": "Ranged water jet"
+      }
+    ],
+    "race_subtype": "Aquatic|Leshy|Shapechanger",
+    "race_type": "Plant",
+    "size": "S",
+    "source_page": "p.179",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 175,
+    "record_key": "Leshy (Seaweed)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

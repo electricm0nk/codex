@@ -93,6 +93,13 @@ const BOOK_ISWG: &str = "ISWG";
 /// `rules_tables::bestiary_2` for the derivation.
 const BOOK_B2: &str = "B2";
 
+/// Bestiary 3, the eighth (SD-29 Epic 5 extend, round 5). Its wire code is the
+/// book's own `SOURCESHORT:B3`. Every one of its 261 corpus monster rows ships
+/// -- the first book in this catalog for which that is true -- and the 13
+/// ability rows that do not are owned by no monster row of this book. See
+/// `rules_tables::bestiary_3` for the derivation.
+const BOOK_B3: &str = "B3";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -115,6 +122,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "book_of_the_damned_volume_2" => "Book of the Damned, Volume 2",
         "inner_sea_world_guide" => "Inner Sea World Guide",
         "bestiary_2" => "Bestiary 2",
+        "bestiary_3" => "Bestiary 3",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -130,6 +138,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "book_of_the_damned_volume_2" => BOOK_BOTD2,
         "inner_sea_world_guide" => BOOK_ISWG,
         "bestiary_2" => BOOK_B2,
+        "bestiary_3" => BOOK_B3,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -888,9 +897,37 @@ mod tests {
     /// Every row carries readable payload beyond its own identity — the bar
     /// `reach_gate.rs` applies, asserted here at the source so a regression
     /// names itself in this file first.
+    /// **`source_page` is the one field here that the corpus does not always
+    /// state**, and Bestiary 3 is the book that proved it. The invariant held
+    /// for seven books because every row in all seven happened to carry a
+    /// `SOURCEPAGE:` token — a property of those books' data, not of the
+    /// format. Re-derived against the corpus rather than inferred from the
+    /// failure:
+    ///
+    /// ```text
+    /// sed -n '215p;265p' b3_races.lst | tr '\t' '\n' | grep -c SOURCEPAGE   -> 0
+    /// ```
+    ///
+    /// The transcriber emits `None` for a token the row does not carry, which
+    /// is exactly right — the alternative is inventing a citation. Both records
+    /// state everything else the screen renders (name, size, type, challenge
+    /// rating, speeds, natural attacks), so dropping them for a missing page
+    /// reference would withhold real content over a bibliographic field. They
+    /// ship, the screen omits the page clause for them (`MonsterCatalogScreen`
+    /// renders it conditionally, as it has always done for ability rows), and
+    /// the two are pinned here BY CORPUS LINE so a third one cannot appear
+    /// silently.
     #[test]
     fn every_row_carries_the_fields_the_screen_renders() {
-        for entry in &build_monster_catalog().entries {
+        // The corpus rows that state no `SOURCEPAGE:` token, by the book and
+        // line each one is. Keyed by served key so a renamed record still
+        // matches the line it came from.
+        const NO_SOURCE_PAGE: &[&str] =
+            &["bestiary_3:monster:owl_giant", "bestiary_3:monster:spider_ogre"];
+
+        let mut seen_without_page: Vec<&str> = Vec::new();
+        let response = build_monster_catalog();
+        for entry in &response.entries {
             assert!(!entry.name.trim().is_empty(), "{} has no name", entry.key);
             assert!(!entry.size.trim().is_empty(), "{} has no size", entry.key);
             assert!(
@@ -898,17 +935,29 @@ mod tests {
                 "{} has no creature type",
                 entry.key
             );
-            assert!(
-                !entry.source_page.trim().is_empty(),
-                "{} has no source page",
-                entry.key
-            );
+            if entry.source_page.trim().is_empty() {
+                assert!(
+                    NO_SOURCE_PAGE.contains(&entry.key.as_str()),
+                    "{} has no source page, and is not one of the two corpus rows \
+                     (`b3_races.lst:215`, `:265`) known to state none. Check the row before \
+                     adding it here: a page that vanished from a row that used to have one is \
+                     a transcription defect, not a corpus fact.",
+                    entry.key
+                );
+                seen_without_page.push(entry.key.as_str());
+            }
             assert!(
                 entry.challenge_rating > 0.0,
                 "{} has no challenge rating",
                 entry.key
             );
         }
+        seen_without_page.sort_unstable();
+        assert_eq!(
+            seen_without_page, NO_SOURCE_PAGE,
+            "the set of records serving no source page changed; a pinned one gaining a page is \
+             as much a signal as a new one losing it"
+        );
     }
 
     /// The three records whose land speed is genuinely `0`, pinned by name so

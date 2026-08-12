@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "9",
+    "corpus_key": "Shedu",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_3:monster:shedu",
+    "monster_class": "Magical Beast:11",
+    "name": "Shedu",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Gore"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Hooves"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Wings"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.242",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 250,
+    "record_key": "Shedu"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

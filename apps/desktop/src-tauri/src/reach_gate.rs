@@ -582,6 +582,10 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("bestiary_5", "bestiary_5"),
     ("bestiary_6", "bestiary_6"),
     ("bestiary_2", "bestiary_2"),
+    // SD-29 Epic 5 extend, round 5 (monster lane). Same again -- and the first
+    // bestiary in this list whose ONLY families are `monster`/`monster_ability`:
+    // B5 and B6 carry no monsters, and B2 carries both lanes' families.
+    ("bestiary_3", "bestiary_3"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1166,6 +1170,13 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("bestiary_2", "monsters") => Some(chassis_monsters_reach("bestiary_2", "B2")),
         ("bestiary_2", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("bestiary_2", "B2"))
+        }
+        // SD-29 Epic 5 extend, round 5. Bestiary 3 -- the same two claim
+        // functions again. Unlike B2 this book contributes no `companions`
+        // family, so these two are the whole of its reach.
+        ("bestiary_3", "monsters") => Some(chassis_monsters_reach("bestiary_3", "B3")),
+        ("bestiary_3", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("bestiary_3", "B3"))
         }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
@@ -3632,6 +3643,94 @@ mod tests {
         {
             Reach::Surfaced { records, surface } => {
                 assert_eq!(records, 401);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every linked ability to reach, got {other:?}"),
+        }
+    }
+
+    /// Bestiary 3, per record — the first book in this lane that loses NO
+    /// monster row, and the cleanest by every screen the lane runs.
+    ///
+    /// ```text
+    /// python3 scripts/classify_monster_ability_rows.py bestiary_3
+    /// book         mon  abil row-named prefix ORPHAN   PI COPY
+    /// bestiary_3   261    40         0     27     13    0    0
+    /// ```
+    ///
+    /// **Zero Product Identity rows** — `grep -c 'NAMEISPI:YES' b3_races.lst
+    /// b3_abilities_race.lst` → `0` and `0`, and the classifier's own PI column
+    /// agrees, which `ogl-pi-blacklist.md` §2 predicts for a
+    /// `roleplaying_game/` bestiary. **Zero `.COPY=` rows** — the only two in
+    /// the corpus are Bestiary 2's.
+    ///
+    /// So the single exclusion class is the 13 orphan ability rows, and the
+    /// claim asserts **261 and 27**: all 261 monsters, and the 27 abilities a
+    /// monster row of this book actually owns.
+    ///
+    /// Corpus unit counts are the inventory's own, never a line count over the
+    /// `.lst`:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if u['book']=='bestiary_3'
+    /// and u['kind']=='monster'))"` → 261, `monster_ability` → 40.
+    #[test]
+    fn bestiary_3_reaches_the_catalog_for_every_linked_record() {
+        let monsters = corpus_record_keys("bestiary_3", "monster");
+        let abilities = corpus_record_keys("bestiary_3", "monster_ability");
+        assert_eq!(
+            monsters.len(),
+            261,
+            "every one of this book's corpus monster rows ships; no PI row, no `.COPY=` delta"
+        );
+        assert_eq!(
+            abilities.len(),
+            27,
+            "the 27 owned rows; the book's other 13 are orphans owned by no monster row here"
+        );
+
+        let response = crate::monster_catalog::build_monster_catalog();
+        let served_monsters: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "B3")
+            .map(|entry| entry.key.clone())
+            .collect();
+        let served_abilities: BTreeSet<String> = response
+            .entries
+            .iter()
+            .filter(|entry| entry.book == "B3")
+            .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+            .collect();
+        assert_eq!(served_monsters, monsters, "served monsters");
+        assert_eq!(served_abilities, abilities, "served abilities");
+
+        // The same live-blacklist property every chassis book's claim checks:
+        // a grep that returned 0 today is a statement about today, and this
+        // fails if a per-book override ever adds a term one of these 288 keys
+        // matches.
+        for key in served_monsters.iter().chain(served_abilities.iter()) {
+            let lower = key.to_ascii_lowercase();
+            for term in codex::rules_core::pi_screening::PI_BLACKLIST_TERMS {
+                assert!(
+                    !lower.contains(&term.to_ascii_lowercase()),
+                    "a served Bestiary 3 key matches a Product Identity term; the record must \
+                     not be ingested at all"
+                );
+            }
+        }
+
+        match reach_of(&Family::new("bestiary_3", "monsters")).expect("a claim is declared") {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 261);
+                assert_eq!(surface, "list_monster_catalog");
+            }
+            other => panic!("expected every monster to reach, got {other:?}"),
+        }
+        match reach_of(&Family::new("bestiary_3", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, surface } => {
+                assert_eq!(records, 27);
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected every linked ability to reach, got {other:?}"),

@@ -1520,6 +1520,15 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 2, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-005",
     },
+    MonsterBookSpec {
+        corpus_book: "bestiary_3",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary_3",
+        races_lsts: &["b3_races.lst"],
+        abilities_lst: "b3_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_3.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 3, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E5-F2-006",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

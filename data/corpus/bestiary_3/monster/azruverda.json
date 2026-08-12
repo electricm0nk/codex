@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "13",
+    "corpus_key": "Azruverda",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:azruverda",
+    "monster_class": "Aberration:16",
+    "name": "Azruverda",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d10",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "10d6",
+        "name": "Acid Spit"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "H",
+    "source_page": "p.30",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 32,
+    "record_key": "Azruverda"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

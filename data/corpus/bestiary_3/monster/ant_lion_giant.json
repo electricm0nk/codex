@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_3:monster_ability:ant_lion_giant_sand_trap"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Ant Lion (Giant)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:ant_lion_giant",
+    "monster_class": "Vermin:8",
+    "name": "Giant Ant Lion",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "L",
+    "source_page": "p.17",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Burrow"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 18,
+    "record_key": "Ant Lion (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

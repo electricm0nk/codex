@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "3",
+    "corpus_key": "Disenchanter",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:disenchanter",
+    "monster_class": "Magical Beast:4",
+    "name": "Disenchanter",
+    "natural_attacks": [
+      {
+        "damage_dice": "0",
+        "name": "trunk"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Hooves"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.80",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 80,
+    "record_key": "Disenchanter"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

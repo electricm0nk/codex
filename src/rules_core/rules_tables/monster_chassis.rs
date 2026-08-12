@@ -246,6 +246,15 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monsters: super::bestiary_2::monsters_static(),
         monster_abilities: super::bestiary_2::monster_abilities_static(),
     },
+    // SD-29 Epic 5 extend, round 5. Bestiary 3 -- 261 monsters and 27 owned
+    // abilities, and the first book in the registry to lose no monster row at
+    // all: no Product Identity row, no `.COPY=` delta. Its 13 excluded ability
+    // rows are orphans, pinned by line in `rules_tables::bestiary_3`.
+    MonsterBook {
+        corpus_book: "bestiary_3",
+        monsters: super::bestiary_3::monsters_static(),
+        monster_abilities: super::bestiary_3::monster_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.
