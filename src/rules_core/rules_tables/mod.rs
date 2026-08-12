@@ -13,6 +13,9 @@ pub mod advanced_race_guide;
 pub mod apg;
 pub mod archetype_swap;
 pub mod beastiary1;
+pub mod bestiary_2;
+pub mod bestiary_5;
+pub mod bestiary_6;
 pub mod bonus_bestiary;
 pub mod book_of_the_damned_volume_1;
 pub mod book_of_the_damned_volume_2;
@@ -140,4 +143,35 @@ pub enum RuleSetId {
     /// that lane's round-2 classifier fix moved them, which left them owned by
     /// no lane at all. This is the lane that owns them.
     Isi,
+    /// Bestiary 5. SD-29 Epic 7 round 2 (companion lane, extend;
+    /// `rules_tables::bestiary_5`, 33 companion creatures + 22 companion
+    /// abilities). A "bestiary" with **zero** monsters — its pcc's `CAMPAIGN`
+    /// line says "Only Player Options Implemented" — so this rule set exists
+    /// for its companion rows and no other family.
+    ///
+    /// **Two of the book's 57 `companion` units are out of this rule set's
+    /// scope by construction.** `_bestiary_5.pcc:69` loads
+    /// `support/b5_races_companion_oa.lst` under
+    /// `PRECAMPAIGN:1,Occult Adventures`, a book this repo has not ingested, so
+    /// `Familiar (Brain Mole)` and `Familiar (Chuspiki)` are not ingested — the
+    /// same ruling `RuleSetId::Ha` records for the same gate on `race_trait`
+    /// (`decisions.md §47.2`).
+    B5,
+    /// Bestiary 6. SD-29 Epic 7 round 2 (companion lane, extend;
+    /// `rules_tables::bestiary_6`, 14 companion creatures + 12 companion
+    /// abilities). The second monster-less bestiary, and the book on which both
+    /// of the chassis's `named` and `prerace` ownership shapes fire on all
+    /// twelve ability rows at once.
+    B6,
+    /// Bestiary 2. SD-29 Epic 7 round 2 (companion lane, extend;
+    /// `rules_tables::bestiary_2`, 15 familiars + 1 ability). The lane's first
+    /// FAMILIAR book: its creature rows are `*_races_familiar.lst`
+    /// `TYPE:Companion.Familiar.Animal` rows rather than animal companions.
+    ///
+    /// **This rule set compiles the book's `companion` family and nothing
+    /// else.** B2's 782 `monster` / `monster_ability` units belong to the
+    /// monster lane (`decisions.md §46`); registering this rule set moves them
+    /// from `not-started` to `not-ingested`, which states the engine's real
+    /// relationship to the book more precisely and claims nothing about them.
+    B2,
 }

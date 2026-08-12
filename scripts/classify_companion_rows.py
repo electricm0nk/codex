@@ -59,6 +59,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 import sys
 
 INVENTORY = "docs/work-inventory.json"
@@ -96,6 +97,81 @@ def read_row(path: str, line_no: int) -> list[str]:
     with open(path, encoding="utf-8", errors="replace") as handle:
         line = handle.read().split("\n")[line_no - 1]
     return [t.strip() for t in line.split("\t") if t.strip()]
+
+
+# `docs/work-inventory.json` records `source_file` as a BASENAME, so a `.lst`
+# that PCGen loads out of a subdirectory (`support/`, `_pfs/`) is not at
+# `<book>/<basename>` at all.  Bestiary 5's `b5_races_companion_oa.lst` is the
+# first companion instance: two of its 57 units live in `support/`.
+#
+# `classify` used to `continue` past a path it could not open, which is the
+# failure shape `decisions.md §47.3` warns about — a check that silently
+# measures less than it claims.  Both consumers now resolve the basename and
+# raise when it is nowhere under the book.
+_RESOLVED: dict[tuple[str, str], str] = {}
+
+
+def resolve_source_file(directory: str, source_file: str) -> str:
+    """`<book>/<basename>` if it exists, else the one match anywhere below it."""
+    cached = _RESOLVED.get((directory, source_file))
+    if cached is not None:
+        return cached
+    direct = os.path.join(directory, source_file)
+    if os.path.exists(direct):
+        _RESOLVED[(directory, source_file)] = direct
+        return direct
+    hits = [
+        os.path.join(parent, source_file)
+        for parent, _dirs, files in os.walk(directory)
+        if source_file in files
+    ]
+    if not hits:
+        raise SystemExit(f"{source_file} is nowhere under {directory}")
+    if len(hits) > 1:
+        raise SystemExit(f"{source_file} is ambiguous under {directory}: {hits!r}")
+    _RESOLVED[(directory, source_file)] = hits[0]
+    return hits[0]
+
+
+# A `.lst` whose pcc load line carries `PRECAMPAIGN:` is loaded only when that
+# campaign is also loaded — and the gate is on the PCC LINE, never inside the
+# `.lst` (`loop-instruction.md`, "Conditional cross-book support files"; a
+# `grep PRECAMPAIGN` over the `.lst` itself returns 0).
+#
+# Most such gates name a book this repo HAS ingested (`INCLUDES=Bestiary 3`,
+# `INCLUDES=Advanced Player's Guide`), so "gated" alone is not "out of scope".
+# What is out of scope is a gate naming a campaign this repo has not ingested.
+# `decisions.md §47.2` already ruled exactly this for Horror Adventures'
+# `ha_abilities_race_oa.lst`, and `RuleSetId::Ha`'s doc comment records it.
+UNINGESTED_CAMPAIGN_GATES = ("Occult Adventures",)
+
+_PCC_LOAD = re.compile(r"^[A-Z]+:(?P<path>[^|\t]+\.lst)\|(?P<rest>.*)$")
+
+
+def precampaign_gates(directory: str) -> dict[str, str]:
+    """`.lst` basename -> the `PRECAMPAIGN:` expression its pcc load line carries."""
+    gates: dict[str, str] = {}
+    for parent, _dirs, files in os.walk(directory):
+        for name in files:
+            if not name.endswith(".pcc"):
+                continue
+            with open(os.path.join(parent, name), encoding="utf-8", errors="replace") as handle:
+                for line in handle:
+                    line = line.strip()
+                    if line.startswith("#"):
+                        continue
+                    match = _PCC_LOAD.match(line)
+                    if match is None or "PRECAMPAIGN:" not in match.group("rest"):
+                        continue
+                    for field in match.group("rest").split("|"):
+                        if field.startswith("PRECAMPAIGN:"):
+                            gates[os.path.basename(match.group("path"))] = field
+                            break
+    return gates
+
+
+def gated_on_an_uningested_campaign(gate: str | None) -> bool:
+    return gate is not None and any(name in gate for name in UNINGESTED_CAMPAIGN_GATES)
 
 
 def token(row: list[str], prefix: str) -> str | None:
@@ -143,6 +219,13 @@ def bare_species(key: str) -> str:
 
 
 def classify(book: str, units: list[dict], directory: str) -> dict:
+    gates = precampaign_gates(directory)
+    gated = [
+        u for u in units if gated_on_an_uningested_campaign(gates.get(u["source_file"]))
+    ]
+    gated_keys = {u["corpus_key"] for u in gated}
+    units = [u for u in units if u["corpus_key"] not in gated_keys]
+
     creatures = [u for u in units if row_shape(u["source_file"]) == "creature"]
     abilities = [u for u in units if row_shape(u["source_file"]) == "ability"]
     classes = [u for u in units if row_shape(u["source_file"]) == "class"]
@@ -155,9 +238,7 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
 
     owned_row_named: set[str] = set()
     for unit in creatures:
-        path = os.path.join(directory, unit["source_file"])
-        if not os.path.exists(path):
-            continue
+        path = resolve_source_file(directory, unit["source_file"])
         for ref in special_ability_refs(read_row(path, unit["source_line"])):
             hit = ability_by_key.get(ref) or ability_by_name.get(ref)
             if hit is not None:
@@ -167,12 +248,11 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
     owned_prefix: set[str] = set()
     for unit in abilities:
         key = unit["corpus_key"]
-        path = os.path.join(directory, unit["source_file"])
-        if os.path.exists(path):
-            row = read_row(path, unit["source_line"])
-            for owner in prerace_owners(row):
-                if owner in creature_keys or owner in creature_species:
-                    owned_prerace.add(key)
+        path = resolve_source_file(directory, unit["source_file"])
+        row = read_row(path, unit["source_line"])
+        for owner in prerace_owners(row):
+            if owner in creature_keys or owner in creature_species:
+                owned_prerace.add(key)
         if " ~ " in key:
             prefix = key.split(" ~ ")[0]
             if prefix in creature_keys or prefix in creature_species:
@@ -189,6 +269,9 @@ def classify(book: str, units: list[dict], directory: str) -> dict:
         "prerace": len(owned_prerace),
         "prefix": len(owned_prefix),
         "orphans": orphans,
+        "gated": [
+            (u["corpus_key"], u["source_file"], gates[u["source_file"]]) for u in gated
+        ],
     }
 
 
@@ -207,6 +290,7 @@ def main() -> None:
     )
     total_orphans = 0
     total_units = 0
+    total_gated = 0
     for book in books:
         units = units_by_book.get(book, [])
         if not units:
@@ -218,6 +302,7 @@ def main() -> None:
             continue
         result = classify(book, units, directory)
         total_orphans += len(result["orphans"])
+        total_gated += len(result["gated"])
         total_units += len(units)
         print(
             f"{book:32} {result['creatures']:5} {result['abilities']:5} "
@@ -227,9 +312,13 @@ def main() -> None:
         if wanted and result["orphans"]:
             for key in result["orphans"]:
                 print(f"    ORPHAN {key}")
+        if wanted and result["gated"]:
+            for key, source_file, gate in result["gated"]:
+                print(f"    GATED  {key} — {source_file} loaded under {gate}")
     print(f"\ntotal companion units in scope : {total_units}")
     print(f"orphan ability rows            : {total_orphans}")
-    print(f"reachable remainder            : {total_units - total_orphans}")
+    print(f"PRECAMPAIGN-gated on an uningested campaign : {total_gated}")
+    print(f"reachable remainder            : {total_units - total_orphans - total_gated}")
 
 
 if __name__ == "__main__":

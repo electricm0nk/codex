@@ -1,0 +1,83 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:45Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_5:companion:companion_advancement_digmaul"
+    ],
+    "corpus_key": "Companion (Digmaul)",
+    "external_ability_refs": [
+      "Digmaul ~ Ball Tail",
+      "Scent"
+    ],
+    "key": "bestiary_5:companion:companion_digmaul",
+    "monster_class": "Companion:2",
+    "name": "Companion (Digmaul)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d2",
+        "name": "Tail"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.312",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 10
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_5/b5_races_companion.lst",
+    "sha256": "abc345765b76b957e43dc473fba69c8774f2e1c85df56b2817bc866ca71e509d",
+    "line": 9,
+    "record_key": "Companion (Digmaul)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:57Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Paracletus)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Flight Maneuverability",
+      "Paracletus ~ Electricity"
+    ],
+    "key": "bestiary_2:companion:familiar_paracletus",
+    "monster_class": "Outsider (Fort/Will):3",
+    "name": "Familiar (Paracletus)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Aeon|Extraplanar",
+    "race_type": "Outsider",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.11",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": -2
+      },
+      {
+        "ability": "INT",
+        "amount": 0
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+    "line": 9,
+    "record_key": "Familiar (Paracletus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

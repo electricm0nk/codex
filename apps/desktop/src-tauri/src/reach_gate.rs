@@ -573,6 +573,13 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // for both, like every SD-29 book before them.
     ("inner_sea_combat", "inner_sea_combat"),
     ("inner_sea_intrigue", "inner_sea_intrigue"),
+    // SD-29 Epic 7 round 2 (companion lane, extend). Same again. Note these
+    // three books' `companion` family is the ONLY one they contribute today:
+    // B5 and B6 carry no monsters at all, and B2's 782 monster/monster_ability
+    // units belong to the monster lane.
+    ("bestiary_5", "bestiary_5"),
+    ("bestiary_6", "bestiary_6"),
+    ("bestiary_2", "bestiary_2"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1153,6 +1160,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
             Some(companions_reach("inner_sea_intrigue", "ISI"))
         }
         ("horror_adventures", "companions") => Some(companions_reach("horror_adventures", "HA")),
+        // SD-29 Epic 7 round 2 (companion lane, extend). The same one-claim-per-
+        // book judgement; `companions_reach`'s denominator is the book's own
+        // `data/corpus/<book>/companion/` directory, so Bestiary 5's two
+        // Occult-Adventures-gated familiars are outside it by construction
+        // rather than counted as a shortfall (`decisions.md §47.2`).
+        ("bestiary_5", "companions") => Some(companions_reach("bestiary_5", "B5")),
+        ("bestiary_6", "companions") => Some(companions_reach("bestiary_6", "B6")),
+        ("bestiary_2", "companions") => Some(companions_reach("bestiary_2", "B2")),
 
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
@@ -3198,10 +3213,17 @@ mod tests {
     /// would judge two numerators against one count.
     ///
     /// Counts re-derived on disk this cycle rather than transcribed:
-    /// `for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures; do
-    /// echo -n "$b "; ls data/corpus/$b/companion/*.json | wc -l; done`
-    /// -> 10, 15, 11, 2 — which reproduce `docs/work-inventory.json`'s own
-    /// companion-unit counts for the same four books exactly.
+    /// `for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures
+    /// bestiary_5 bestiary_6 bestiary_2; do echo -n "$b ";
+    /// ls data/corpus/$b/companion/*.json | wc -l; done`
+    /// -> 10, 15, 11, 2, 55, 26, 16 — which reproduce `docs/work-inventory.json`'s
+    /// own companion-unit counts for the same books exactly, with ONE stated
+    /// exception: Bestiary 5's inventory count is 57, and the two extra units
+    /// (`Familiar (Brain Mole)`, `Familiar (Chuspiki)`) live in
+    /// `support/b5_races_companion_oa.lst`, which the book's pcc loads only
+    /// under `PRECAMPAIGN:1,Occult Adventures`. Out of this rule set's scope by
+    /// construction, not by omission — `decisions.md §47.2`, and
+    /// `rules_tables::bestiary_5` pins their absence by name.
     #[test]
     fn every_ingested_companion_book_reaches_the_catalog_record_by_record() {
         let expected: &[(&str, &str, usize)] = &[
@@ -3209,6 +3231,9 @@ mod tests {
             ("monster_codex", "MC", 15),
             ("inner_sea_intrigue", "ISI", 11),
             ("horror_adventures", "HA", 2),
+            ("bestiary_5", "B5", 55),
+            ("bestiary_6", "B6", 26),
+            ("bestiary_2", "B2", 16),
         ];
         for &(book, wire_code, count) in expected {
             let ingested = corpus_record_keys(book, "companion");

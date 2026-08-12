@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:57Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:companion:snapping_turtle_shell"
+    ],
+    "corpus_key": "Familiar (Snapping Turtle)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "bestiary_2:companion:familiar_snapping_turtle",
+    "monster_class": "Animal:1",
+    "name": "Familiar (Snapping Turtle)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.273",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -6
+      },
+      {
+        "ability": "DEX",
+        "amount": -2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Animal"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races_familiar.lst",
+    "sha256": "1d341ce56b60bc691178213b7cb2ad454dc22cca799eaaffedf315b21f31c8b6",
+    "line": 6,
+    "record_key": "Familiar (Snapping Turtle)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

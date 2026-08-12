@@ -892,6 +892,9 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::Ce,
     RuleSetId::Isc,
     RuleSetId::Isi,
+    RuleSetId::B5,
+    RuleSetId::B6,
+    RuleSetId::B2,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -922,6 +925,9 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Ce => "core_essentials",
         RuleSetId::Isc => "inner_sea_combat",
         RuleSetId::Isi => "inner_sea_intrigue",
+        RuleSetId::B5 => "bestiary_5",
+        RuleSetId::B6 => "bestiary_6",
+        RuleSetId::B2 => "bestiary_2",
     }
 }
 
@@ -964,6 +970,11 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::Ce => "core_essentials",
         RuleSetId::Isc => "inner_sea_combat",
         RuleSetId::Isi => "inner_sea_intrigue",
+        // Unlike `bestiary` -> `bestiary_1`, these three engine ids are spelled
+        // exactly like their corpus directories.
+        RuleSetId::B5 => "bestiary_5",
+        RuleSetId::B6 => "bestiary_6",
+        RuleSetId::B2 => "bestiary_2",
     }
 }
 
