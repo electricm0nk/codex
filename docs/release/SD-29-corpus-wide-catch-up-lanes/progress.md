@@ -6678,3 +6678,268 @@ either, and says so rather than letting it disappear.
   says whether the fixes were understood or guessed at. Run 3: `RESULT: PASS`, `VERIFY_EXIT=0`, all
   14 stages, `root-full` **all 524 `tests/*.rs` suites executed** — the non-execution check
   `decisions.md §40` requires, satisfied by name rather than by an aggregate count.
+
+## Cycle — epic-7-companion-lane, ROUND 1 (SD29-E7-F1-002)
+
+**Card:** `epic-7-companion-lane-pilot` + `epic-7-companion-lane-extend` (Orders 11 and 12), round 1
+of a loop-until-dry lane. Both cards are served by one cycle because the pilot's whole output is a
+mechanism and the extend half is that mechanism applied three more times.
+**Actor:** `sd29-companion-r4`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-3`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §48`.
+**PR:** #360, open and NOT merged.
+**Commits:** `bac2f569` (the mechanism + 4 books + `§48` + item-8 artifacts + retro events),
+`63359234` (the two reds gate run 1 found), `de4811a3` (merge: race-trait lane round 4),
+`3cfcb097` (the three inherited reds gate run 2 found), `cddd1734` (merge: the race-trait lane's own
+fix for the same three, 5 conflicts resolved by union), plus this receipt's own commit. All pushed to
+`origin/tranche/9`.
+
+**The companion lane had NOTHING landed** — its round 1 refused at `preflight-disk` (91% used, twice)
+and its round 2 died with its workflow having produced no commits. This round built the kind's entire
+mechanism and ingested **four books, 38 units, all 38 grounded, all four verified on screen**. The
+lane is **not** dry and this round does not claim it is.
+
+### 0a. Worktree integrity — recovery was required (a seventh time)
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/` | **`No such file or directory`** |
+| recovery | `git fetch origin tranche/9 && git reset --hard origin/tranche/9` | `03acb5a5`, docs present |
+
+**Seventh consecutive cycle at `7d9f1c4f`.** Rounds 2 and 3 of the race-trait lane both called this
+"perfectly reproducible"; it still is. `git fetch` also prints
+`error: … did not send all necessary objects` / `fatal: failed to run repack`, naming dead worktree
+refs — cosmetic here too: refs updated, resets resolved, and every `git push` this cycle made
+succeeded.
+
+### 0b. Merged-ness verified by content before anything was built on it
+
+| dependency | command | result |
+|---|---|---|
+| the desktop driver is fixed | `driver.sh launch` | `Ready. DISPLAY=:82` |
+| the on-screen harness exists | `ls apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` | present, and used five times |
+| `reclaim.sh` knows `codex-target-*` | `scripts/reclaim.sh` (dry run) | lists and skips live target dirs correctly |
+| the race-trait lane's classifier fix landed | `grep -n 'companion.*familiar' src/bin/v06_work_inventory.rs` | `file_kind` types an `_abilities_race*companion*` basename `Kind::Companion` |
+| that fix's units are really there | `python3 -c "…kind=='companion' and book=='inner_sea_intrigue'…"` | **11** |
+
+### 1. Step 0/0b — shape and traps
+
+`cargo run --locked --bin v06_work_inventory` regenerated the inventory; the four books' `books[]`
+entries were read before any ingest. Trap report at DoD time:
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`TRAP 259 / DEFECT 0`**, EXIT 0,
+*"No defects: every ingested record's citation agrees with the line it names."*
+
+### 2. Step 1b — every figure re-derived, with the command
+
+| figure | command | result |
+|---|---|---|
+| companion units, corpus-wide | `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(len([x for x in d['units'] if x['kind']=='companion']))"` | **1,696** |
+| grounded before this round | same, filtered `status=='grounded'` | **0** |
+| orphan ability rows, per book | `python3 scripts/classify_companion_rows.py` | **808** |
+| orphans corpus-wide (claimed by no creature in ANY book) | the same script's predicates applied across books | **765** |
+| the four books' units | `python3 scripts/classify_companion_rows.py inner_sea_combat monster_codex inner_sea_intrigue horror_adventures` | 10 / 15 / 11 / 2, **ORPHAN 0** for all four |
+| corpus records written | `ls data/corpus/<book>/companion \| wc -l` per book | 10 / 15 / 11 / 2 = **38** |
+| grounded after | `python3 -c "…Counter(x['status'] …)"` | **38 grounded**, 1,394 `not-ingested`, 264 `not-started` |
+| round 2's queue | `python3 scripts/classify_companion_rows.py bestiary_5 bestiary_6 bestiary_2` | 57 / 26 / 16 = **99**, ORPHAN **0** |
+
+**The dispatch brief's "~1,233 in-scope companion units" reproduces under no predicate this cycle
+could find** and is corrected to 1,696 total / 888 reachable. `correction` event emitted with both
+commands as `--verified-by`.
+
+### 3. Step 3 — what was built
+
+**The chassis** (`src/rules_core/rules_tables/companion_chassis.rs`) mirrors `monster_chassis` — same
+record/registry/link-test shape — with three differences the corpus forces, each documented at its
+definition: `PRERACE:` ownership (no `monster_ability` analogue; every `TYPE:CompanionAdvancement`
+row uses it), prefix ownership resolved through the `Companion (<Species>)` / `Familiar (<Species>)`
+wrapper, and an `Option`al `facet` beside verbatim `type_segments`.
+
+**The transcriber** (`scripts/transcribe_companion_tables.py`) takes its unit set from
+`docs/work-inventory.json`, never a line count over the `.lst`, and emits only substrings of the
+cited row. Its `use` line is derived from the symbols the emitted rows actually name, because Horror
+Adventures' single ability row carries no delivery segment and a fixed import line would be an unused
+import under a clippy stage that denies warnings.
+
+**The row classifier** (`scripts/classify_companion_rows.py`) is checked in rather than left in a
+scratchpad — `§45.1`'s own finding is that an ephemeral path is not a citation, and this session's
+scratchpad is the same shared path a sibling agent clobbered last cycle.
+
+**The corpus generator** writes ONE directory per book, `data/corpus/<book>/companion/`, holding both
+structural shapes with each record stating its `record_type`. Invoked as
+`gen_book_cache companion:<book>` rather than a bare book name, because three of the four books are
+also monster or race-trait books and a bare name would silently run whichever generator matched
+first.
+
+**The surface**: `companion_catalog.rs` + `CompanionCatalogScreen.tsx` + a hub link, in
+`monster_catalog.rs`'s shape. `BONUS:STAT` is served as an *adjustment* under a caption that says so;
+`MONSTERCLASS:` is carried verbatim and hit points/AC/saves are not computed.
+
+### 4. Step 4 — the gate ran THREE times, and the first two are reported rather than discarded
+
+#### Run 1 — VOID, and it found two of this lane's own reds
+
+1. **`v06_content_state_dump.rs` did not compile.** Its `RuleSetId` match is exhaustive on purpose,
+   so `RuleSetId::Isc`/`::Isi` broke it — the enum doing its designed job, exactly as `§45.2` records
+   happening when `Isr` was added. **`cargo build --bin v06_work_inventory` does not reach this
+   binary**, which is why it survived every pre-gate build this cycle ran and surfaced only at
+   `root-full` — where one broken bin means `0 passed across 0 suites` for the whole stage.
+2. **The Corpus Ingest panel did not report three books it now ships.** Its caption states it shows
+   every rule book landed in `rules_tables`, so an unreported book reads to a tester as an
+   un-ingested book — the exact defect `every_book_landed_in_rules_tables_is_reported` exists to
+   catch, and it caught it. Fixing it revealed `reports_every_landed_book_in_a_stable_order`, which
+   only executes once the first passes.
+
+Fixed in `63359234`. **Run 1 is VOID and is reported as void rather than cited**: it was still inside
+`frontend-test` when those fixes landed in the working tree, and `verify.sh` reads the **tree, not a
+commit** (`§46.6`). A green whose early stages measured one tree and whose late stages measured
+another answers no question.
+
+#### Run 2 — `VERIFY_EXIT=1`, and all three failures were INHERITED
+
+Before run 2, `origin/tranche/9` had advanced: the race-trait lane's round 4 landed Core Essentials
+(`9176f869`, `499b75e8`, `c8416f33`). Merged as `de4811a3`.
+
+Run 2 stages: `preflight-disk` PASS, `pi-sweep` PASS, `audit-selftest` PASS, `reclaim-selftest` PASS,
+`driver-selftest` PASS, `root-lib` PASS (1,659), **`root-full` FAIL (6,221 passed across 543
+suites, 3 failures)**, `desktop` PASS (438), `reach` PASS (24), `frontend-install` PASS,
+`frontend-test` PASS (99/99), `frontend-typecheck` PASS, `clippy` PASS (0 errors), `class-dump` PASS
+(31/31).
+
+**Attribution PROVEN by content, not asserted.**
+`git log --oneline 03acb5a5..HEAD -- src/bin/ingest_race_traits.rs apps/desktop/src-tauri/src/race_trait_picker.rs`
+returns exactly one commit, `9176f869`. None of this lane's commits touches either file, and the two
+remaining failures are in test files this lane never edited; all three name `core_essentials`, a book
+present only via that commit. They were RED on `origin/tranche/9` at `c8416f33` before the merge.
+
+Fixed here anyway in `3cfcb097` — they are on this branch's tip and DoD item 1 requires exit 0 —
+each widened **with its reason**, none relaxed:
+
+* `ingest_race_traits.rs`'s per-book count table did not know Core Essentials (`+64`, re-derived on
+  disk). Fixing it revealed the aggregate pin below it (276 → 340): **the third time in this one
+  cycle that fixing an assertion revealed the next one** (`§46.5`).
+* `duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`'s `LOADED_BOOKS` drifted from the
+  app's `RACE_CORPUS_BOOKS` — the **second** time this exact test caught this exact omission from
+  this exact lane; its own comment records the first.
+* `sd24_wired_integration_audit.rs` flagged two `placeholder` hits in `race_trait_picker.rs`'s
+  assertion message. That message is bucket E's shape exactly — prose ABOUT PCGen's upstream
+  `SOURCEPAGE:p.xx` token, which the ingest DROPS, the opposite of a stub marker. Bucket E's
+  scoped-path list was widened to that file with the `p.xx` literal requirement unchanged.
+
+`near-miss` event emitted. **The transferable finding is `§46.6` rule 2's corollary: a lane pushing
+to the shared branch before a full gate covers its own diff makes the NEXT lane pay for it.**
+
+#### Run 3 — the result, on the twice-merged tree
+
+`origin/tranche/9` advanced again while run 2 was in flight (`7a3c0bdf`), with the race-trait lane's
+own fix for the same three reds. Merged as `cddd1734`, **5 conflicts, every one resolved by union
+rather than by picking a side** (`§46.6` rule 1) — and the merge then demonstrated exactly why that
+rule has a second half. Two blocks auto-merged **without** conflicting and were silently
+**duplicated**: three `book_status(..)` rows and their entry in the stable-order pin, added
+independently by both lanes. Nothing in the conflict markers showed it. Found by reading the
+non-conflicting hunks of the side not taken, and de-duplicated; the surviving copy carries both
+lanes' reasons, and the race-trait lane's note that `monster_codex`'s companion counts were NOT
+merged into its row is corrected rather than dropped, because this tree's
+`monster_and_companion_book_counts` does merge them.
+
+**`verify.sh` FULL, exit code captured directly and never through a pipe:**
+
+```
+VERIFY_EXIT=0
+```
+
+**All 14 stages PASS**, on `cddd1734`:
+
+| stage | result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK) |
+| `pi-sweep` | PASS (10 hits over `src/rules_core/rules_tables`, 10 baseline rows) |
+| `audit-selftest` | PASS (28 passed, 0 failed) |
+| `reclaim-selftest` | PASS (10 passed, 0 failed) |
+| `driver-selftest` | PASS (7 passed, 0 failed) |
+| `root-lib` | PASS (1,659 passed) |
+| `root-full` | PASS (**6,224 passed across 543 suites, all 524 `tests/*.rs` suites executed**) |
+| `desktop` | PASS (438 passed) |
+| `reach` | PASS (24 passed) |
+| `frontend-install` | PASS |
+| `frontend-test` | PASS (99/99 files) |
+| `frontend-typecheck` | PASS (`tsc --noEmit` clean) |
+| `clippy` | PASS (root 54 / desktop 7 warnings, **0 errors**) |
+| `class-dump` | PASS (31/31 computing) |
+
+`root-full`'s non-execution check (`decisions.md §40`) reports **all 524 `tests/*.rs` suites
+executed** — the aggregate count is not trusted on its own, which is the whole reason that check
+exists.
+
+### 5. Definition of done
+
+| item | evidence |
+|---|---|
+| 1. `verify.sh` exits 0 | run 3, `VERIFY_EXIT=0` |
+| 2. `reach` passes with a claim for this cycle's families | 4 new claims, all `Reach::Surfaced`: `inner_sea_combat/companions` 10, `monster_codex/companions` 15, `inner_sea_intrigue/companions` 11, `horror_adventures/companions` 2. `every_ingested_companion_book_reaches_the_catalog_record_by_record` asserts the corpus denominator, the served numerator and the claim independently, so a table that stopped reaching the wire fails rather than agreeing with itself |
+| 3. trap report `--audit` | EXIT 0, 259 traps / 0 defects |
+| 4. inventory regenerated, units leave `not-started`, second run changes only `generated_at` | 38 units → `grounded`; two consecutive runs diffed with `generated_at` stripped → **byte-identical** |
+| 5. four-check wired-integration audit | no stubs: every served field is a corpus token; no fixture data in the production path (`build_companion_catalog` reads the compiled tables, `reach_gate` reads the corpus directory); the hub link is wired to a real screen; the browser-preview fixture is behind `hasTauriRuntime()` and transcribed from real committed records. `sd24_wired_integration_audit` green |
+| 6. `OPEN_FINDINGS` for anything unsurfaced | **none needed for these four books** — all 38 records reach a player. The kind's 765 corpus-wide orphan ability rows are a *scope* finding recorded in `§48.1` with a `deferral` event, not a per-book shortfall of an ingested book |
+| 7. baseline movements | none by this lane |
+| 8. on-screen verification | **4 PASS artifacts**, one per book, under `artifacts/SD29-E7-F1-002/item8/` |
+
+### 6. Item 8 — four passes, and the near-miss the harness caught
+
+| book | record | proven on screen |
+|---|---|---|
+| Inner Sea Combat | `Companion (Griffon)` | `Companion:2`, `Magical Beast`, `fly 40 ft.`, `STR +6`, `Companion Advancement (Griffon)` |
+| Inner Sea Intrigue | `Familiar (Clockwork Familiar)` | `Construct:3`, `Clockwork`, `Potion Installation`, `ClockworkFamiliarInstalledItem`, `reach 0 ft.` |
+| Monster Codex | `Companion (Yzobu)` | `Stampede`, `SpecialAttack`, `Monster Codex` |
+| Horror Adventures | `Companion (Devolved Humanoid)` | `Horror Adventures`, `climb 30 ft.`, `Companion Advancement (Devolved Humanoid)`, `p.50` |
+
+The harness gained a `companion` family. Its `SEARCH_Y` had to be **calibrated live at 247**: the
+`285` every other single-chip-row family uses lands below this screen's search box, so the query never
+applied and the run was refused by the harness's own filtered-count gate with *"still shows 15 rows —
+filter did not apply"*. Without that gate the run would have screenshotted the **unfiltered** list,
+found the record name in a whole-page extraction, and written a PASS proving nothing about the
+specific record — exactly the class of defect item 8 exists to catch, caught by item 8's own harness
+on a family it had never seen. `near-miss` event emitted. The refused run's
+`isc-companion-griffon.FAILED.verify.md` is kept beside the passing artifacts rather than deleted.
+
+`driver.sh stop` was run before any `verify.sh` invocation; the app and the gate never overlapped.
+
+### 7. Step 7 — retro events
+
+Under `docs/retro/events/sd29-companion-r4.jsonl`, plus `verify.sh`'s own auto-emitted `verification`
+events:
+
+* `correction` — the brief's 1,233 vs the derived 1,696 / 888, with both commands as `--verified-by`.
+* `near-miss` — the `SEARCH_Y` calibration, `--caught-by` the harness's filtered-count gate.
+* `near-miss` — the three inherited `root-full` reds, `--caught-by` this lane's own gate over the
+  merged tree, with the push-before-gate finding.
+* `deferral` — the 765 corpus-wide orphan ability rows, with the per-book breakdown and the operator
+  question they need answered.
+
+### 8. Step 8 — reclaim
+
+`scripts/reclaim.sh --apply` at cycle end; `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-companion-r4`
+(claimed at creation with a `.reclaim-claim` file) removed.
+
+### 9. The remainder, re-derived — round 2's starting point
+
+`companion` is **1,696 total / 38 grounded / 1,658 remaining by status**. **1,658 is not the lane's
+workload.** Subtracting the 765 corpus-wide orphans leaves **893 reachable in principle**, of which 38
+are done: the honest remainder is **855**, and only part of that is ordinary ingest.
+
+**Round 2's queue — zero-orphan, no new mechanism, a `RuleSetId` and a registry row each:**
+
+| book | companion units | shape |
+|---|---|---|
+| `bestiary_5` | 57 | 35 creatures / 22 abilities, ORPHAN 0 |
+| `bestiary_6` | 26 | 14 / 12, ORPHAN 0 |
+| `bestiary_2` | 16 | 15 / 1, ORPHAN 0 |
+| **total** | **99** | |
+
+Not taken this round deliberately: each flips its book `future_state` → `in_scope` and moves several
+hundred units of other kinds `not-started` → `not-ingested`, and this round already carried two such
+sweeps (`inner_sea_combat` 388, `inner_sea_intrigue` 245). After those three, every remaining book
+carries orphans and needs a per-book judgement — register it and record its orphans as an
+`OPEN_FINDINGS` shortfall, or wait on `§48.1`'s operator ruling — rather than another repetition of
+this round's shape.
+
+**This round did not finish the lane and does not claim to.**
