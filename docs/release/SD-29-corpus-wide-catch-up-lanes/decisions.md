@@ -1997,6 +1997,35 @@ found it within hours of each other, and that neither found it until a book with
 is the finding: **a redaction is only proven by a test that reads the rendered string**, and none
 existed until now.
 
+### 46.6 The gate is the only instrument that sees a merged tree, and it ran three times to say so
+
+`VERIFY_EXIT=0`, all 14 stages, on the final tree — but only on the **third** run, and the two before
+it are reported rather than discarded.
+
+* **Run 1 found six failures on the post-merge tree.** Two were this cycle's (a PI term in a doc
+  comment it had just written; an SD-30 test pinning all twelve campaign-setting books as
+  `future_state`, which asserts that nobody will ever ingest one). Three were inherited from lanes
+  that landed on `tranche/9` without a gate run across the merge. **And one this cycle created by its
+  own merge resolution:** `git checkout --theirs` on a file *both* lanes had fixed kept the other
+  lane's fix and silently dropped this one's. Nothing in the conflict markers showed that a
+  non-conflicting hunk was being lost, and the pre-merge suite had been green with that fix in place.
+* **Run 2 was killed deliberately** at `root-full`+1, because `origin/tranche/9` advanced twice while
+  it was in flight. `verify.sh` reads the **working tree, not a commit**: merging mid-run yields a
+  result whose early stages measured one tree and whose late stages measured another. That is not a
+  weaker green, it is a green that answers no question. It had already proven the two stages run 1
+  failed were fixed (`pi-sweep` clean, `root-full` 6200 across 543 suites, all 524 executed).
+* **Run 3 is the result**, on `0588801a`.
+
+**The transferable finding is about concurrency, not about this lane.** Two lanes ran in the same
+files for the whole cycle and independently produced the *same* fix three separate times — the
+PI-redaction bypass, the `pi-sweep` doc-comment rewording, and the SD-30 scope exemption. Each lane's
+gate was green in isolation; several of the reds existed **only** in the merged tree and neither lane
+could have seen them alone. Two rules follow, and round 3 of this lane should carry both:
+
+1. **Never resolve a conflicted file both lanes edited by picking a side.** Union the additions, and
+   read the non-conflicting hunks of the side you did not take.
+2. **A gate run that spans a merge is void.** Re-run from the merged tree, and expect to pay for it.
+
 ## Decision 47 — Race-Trait Lane, extend: round 3 (2026-08-12, `sd29-racetrait-r3`, card `epic-6-race-trait-lane-extend`)
 
 > **Numbered 47, not 46, and the collision is recorded rather than quietly fixed.** This round wrote
