@@ -3,9 +3,11 @@
 //! # The monster half (SD-29 Epic 5 extend, round 4)
 //!
 //! **314 of 316 monster rows and 401 of 466 ability rows ship.** This is the
-//! largest book in the monster lane by an order of magnitude — the four books
-//! registered before it hold 80 monsters between them — and the first
-//! `roleplaying_game/` bestiary taken since the Bonus Bestiary pilot.
+//! largest book in the monster lane by an order of magnitude: the five books in
+//! `monster_chassis::MONSTER_BOOKS` before it hold **34** monsters between them,
+//! and even counting Bestiary 1's 46 SD-22 records — served by the same catalog
+//! but not through this chassis — the whole prior population is 80. It is also
+//! the first `roleplaying_game/` bestiary taken since the Bonus Bestiary pilot.
 //!
 //! ```text
 //! python3 scripts/classify_monster_ability_rows.py bestiary_2
