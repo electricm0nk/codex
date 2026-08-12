@@ -8995,6 +8995,19 @@ units `not-started` → `not-ingested` — **the lane's denominator, ceiling and
 unchanged** (both statuses count as remaining), and it makes `bestiary_3` a free registration for a
 future companion round.
 
+**Second merge, after the gate.** `origin/tranche/9` moved again while this receipt was being
+written (the monster lane's round-5 receipt, `f91bcd13`). Merged and pushed as `b2df1d83`. Its only
+non-doc content relative to the gated tree is `apps/desktop/src/monsterCatalog/MonsterCatalogScreen.test.ts`
+— **the monster lane fixed the same red independently** (`7f470a78`, "a stale frontend denominator",
+their words for it), landing the identical one-token change on the same line. The two fixes merged to
+one line; this lane's comment, which carries the attribution and the `§54.5`/`§54.6` pairing, is what
+survived. `git diff --stat f3d2a766 HEAD -- data` is **empty**, so no corpus record entered the tree
+after the green run and `VERIFY_EXIT=0` still describes the pushed tip's code.
+
+That both lanes found it within the same hour is the third instance of the pattern in `§54.6` and the
+strongest argument in this receipt for deriving those lists rather than writing them: a defect two
+independent agents fix concurrently is one nobody's process caught, twice.
+
 **Four hazards for round 4, named so it does not pay to discover them** (full text in `§54.8`):
 
 1. **`bestiary_4` is the concurrent monster lane's round-5 target too.** This round confirmed
