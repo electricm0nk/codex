@@ -10045,9 +10045,17 @@ cargo run --locked --bin v06_corpus_trap_report -- inner_sea_bestiary
 two traps that matter, and the chassis keys on `KEY:` throughout, which is what the identity rule in
 `monster_chassis`'s header exists for.
 
-Shape notes checked rather than assumed: the `.pcc` carries **no** leading underscore
-(`inner_sea_bestiary.pcc`); a `_pfs/` subtree exists and contributes no `monster`/`monster_ability`
-unit; and no `.lst` of this book is `PRECAMPAIGN`-gated.
+Shape notes checked rather than assumed, and the third one **corrected a claim this receipt's own
+first draft made**: the `.pcc` carries **no** leading underscore (`inner_sea_bestiary.pcc`, the
+B1/B2/B3 shape rather than B4/B5/B6's); a `_pfs/` subtree exists (`_pfs/_.pcc`) and contributes no
+`monster`/`monster_ability` unit — every unit of this book cites `isb_races.lst` or
+`isb_abilities_race.lst`; and the draft's "no `.lst` of this book is `PRECAMPAIGN`-gated" was
+**wrong**, caught by running `grep -c PRECAMPAIGN …/*.pcc` → **7** rather than asserting it. Six are
+BOOK-level prerequisites (`inner_sea_bestiary.pcc:9-14`) gating the whole book on Core Rules, the
+Advanced Player's Guide, Bestiary 1, the Inner Sea World Guide, Ultimate Combat and Ultimate Magic —
+**all six are books this repo has ingested, so the gate is satisfied rather than waived**. The
+seventh is file-level (`:43`) and gates `isb_kits_race_b1.lst`, a KIT file no unit of this lane comes
+from. Neither `isb_races.lst` nor `isb_abilities_race.lst` is gated.
 
 ### 1b. Every figure re-derived, command first, value second
 
@@ -10190,10 +10198,30 @@ from a prefix-only reach. Recorded in the module rather than deleted silently.
    recorded here and in `rules_tables::inner_sea_bestiary` rather than shipped as records nothing can
    reach.
 7. **`verify-baselines.env`** — unmoved this round.
-8. **On-screen verification** — `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh
-   --family monster --record "Cayhound" --expect "Cayhound" --expect "Inner Sea Bestiary"
-   --expect "Thunderous Bark"`, artifacts under
-   `docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-008/item8`.
+8. **On-screen verification — PASS.** `RUN_DESKTOP_AGENT=sd29-monster-r9
+   apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh --family monster --record "Cayhound"
+   --expect "Cayhound" --expect "Inner Sea Bestiary" --expect "Thunderous Bark"`. Artifacts:
+   `artifacts/SD29-E5-F2-008/item8/monster-cayhound.png` + `.verify.md`. The harness extracts the
+   rendered text rather than trusting the image, and the catalog's own header line is the best
+   evidence in this receipt that the ingest reached a player:
+
+   > *Every real stat block the engine knows about, across Bestiary 1, Bonus Bestiary, Monster Codex,
+   > Book of the Damned, Volume 1, Book of the Damned, Volume 2, Inner Sea World Guide, Bestiary 2,
+   > Bestiary 3, Bestiary 4 **and Inner Sea Bestiary** — **899 monsters**.*
+
+   899 is the same number the work-inventory reports as `monster grounded`, arrived at from the
+   running app rather than from the inventory.
+
+   **The first attempt FAILED and the failure is kept rather than deleted**
+   (`monster-cayhound.FAILED.verify.md`, which the harness names so it can never be cited as passing
+   evidence). Cause: `vite: not found` — the dispatch worktree has no `apps/desktop/node_modules`,
+   so `tauri dev`'s `beforeDevCommand` died and the launch timed out after 900s. Fixed with
+   `npm ci` in `apps/desktop`, then re-run with `--fresh` and
+   `RUN_DESKTOP_LAUNCH_TIMEOUT=1500` (the desktop crate's first build in a fresh
+   `CARGO_TARGET_DIR` is ~496 crates and does not finish inside the 900s default). **Forward note
+   for the dispatch:** a worktree-isolated agent gets its own `CARGO_TARGET_DIR` by convention and
+   its own `node_modules` by nobody, and item 8 is not waivable — `npm ci` in `apps/desktop` belongs
+   in the worktree setup the way the target dir already does.
 
 ### 6. Reclaim
 
