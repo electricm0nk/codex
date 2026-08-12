@@ -1077,6 +1077,261 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
     );
 }
 
+/// One companion book's corpus cache -- SD-29 Epic 7 (companion lane).
+///
+/// One kind, not two, unlike `gen_monster_book`: `v06_work_inventory::file_kind`
+/// types both a book's `*_races_companion.lst` creature rows and its
+/// `*_abilities_companion.lst` ability rows as `Kind::Companion`, so the corpus
+/// writes both under `data/corpus/<book>/companion/` and each record states its
+/// own `record_type`. Splitting them into two directories here would create a
+/// corpus family the inventory has no kind for, and the two would then be
+/// counted against a denominator that does not exist.
+///
+/// Everything else is `gen_monster_book`'s shape and for its reasons: the values
+/// are dumped from the compiled `rules_tables` module, the `.lst` is re-read
+/// only to attach a real `path`/`sha256`/`line` citation, that line is verified
+/// against the file rather than trusted, and a PI hit is a hard stop.
+fn gen_companion_book(spec: &CompanionBookSpec) {
+    use codex::rules_core::rules_tables::companion_chassis;
+
+    let book_id = spec.corpus_book;
+    let table = companion_chassis::companion_book(book_id).unwrap_or_else(|| {
+        panic!("{book_id} is not registered in companion_chassis::COMPANION_BOOKS")
+    });
+    let root = companion_book_corpus_root(spec);
+    let out_root = Path::new(env!("CARGO_MANIFEST_DIR")).join("data/corpus").join(book_id);
+    let ingested_at = ingested_at_now();
+    let wiring_index = WiringClassIndex::build(book_id, &root);
+    let mut wiring_lines = wiring_index.lines();
+
+    let dir = out_root.join("companion");
+    if dir.exists() {
+        fs::remove_dir_all(&dir).expect("clear stale generated subdir");
+    }
+
+    let races_file = load_corpus_file_rel(&root, spec.book_relative, spec.races_lst);
+    let abilities_file = load_corpus_file_rel(&root, spec.book_relative, spec.abilities_lst);
+
+    let mut pi_hits: Vec<String> = Vec::new();
+    let mut creature_written = 0u32;
+    for companion in table.companions {
+        let line = verified_citation_line(&races_file, companion.source_line, companion.name);
+        let data = serde_json::json!({
+            "key": format!("{book_id}:companion:{}", slugify(companion.key)),
+            "corpus_key": companion.key,
+            "name": companion.name,
+            "record_type": "creature",
+            "size": companion.size,
+            "speeds": companion.speeds.iter().map(|s| serde_json::json!({ "mode": s.mode, "feet": s.feet })).collect::<Vec<_>>(),
+            "reach_feet": companion.reach_feet,
+            "race_type": companion.race_type,
+            "race_subtype": companion.race_subtype,
+            "monster_class": companion.monster_class,
+            "type_segments": companion.type_segments,
+            "natural_attacks": companion.natural_attacks.iter().map(|a| serde_json::json!({ "name": a.name, "damage_dice": a.damage_dice })).collect::<Vec<_>>(),
+            "stat_adjustments": companion.stat_adjustments.iter().map(|a| serde_json::json!({ "ability": a.ability, "amount": a.amount })).collect::<Vec<_>>(),
+            "natural_armor": companion.natural_armor,
+            "source_page": companion.source_page,
+            "ability_keys": companion.ability_keys.iter().map(|k| format!("{book_id}:companion:{}", slugify(k))).collect::<Vec<_>>(),
+            "external_ability_refs": companion.external_ability_refs,
+        });
+        pi_hits.extend(monster_record_pi_hits(companion.key, &data.to_string()));
+        let source = CorpusSource::LstToken {
+            path: races_file.relative_path.clone(),
+            sha256: races_file.sha256.clone(),
+            line,
+            record_key: companion.key.to_string(),
+        };
+        let (wiring_class, wiring_class_signals) =
+            wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
+        let record = CorpusRecordV1 {
+            population: Population::InScope,
+            // The creature's AC, hit points and saves are PCGen-computed from
+            // the `MONSTERCLASS:` token this ingest carries verbatim and does
+            // not expand -- the same corpus fact `MonsterStatBlock` records.
+            completeness: Completeness::ChassisOnly,
+            ingested_at: ingested_at.clone(),
+            data,
+            source,
+            license: Some(License::Ogl),
+            pi_field: None,
+            pi_marker: None,
+            wiring_class,
+            wiring_class_signals,
+        };
+        write_record(
+            &out_root.join("companion").join(format!("{}.json", slugify(companion.key))),
+            &record,
+        );
+        creature_written += 1;
+    }
+
+    let mut ability_written = 0u32;
+    for ability in table.companion_abilities {
+        let line = verified_citation_line(&abilities_file, ability.source_line, ability.name);
+        let data = serde_json::json!({
+            "key": format!("{book_id}:companion:{}", slugify(ability.key)),
+            "corpus_key": ability.key,
+            "name": ability.name,
+            "record_type": "ability",
+            "facet": ability.facet.map(|f| f.corpus_token()),
+            "delivery": ability.delivery.map(|d| d.corpus_token()),
+            "type_segments": ability.type_segments,
+            "description": ability.description,
+            "description_variables": ability.description_variables,
+            "stat_adjustments": ability.stat_adjustments.iter().map(|a| serde_json::json!({ "ability": a.ability, "amount": a.amount })).collect::<Vec<_>>(),
+            "source_page": ability.source_page,
+            "owners": ability.owners.iter().map(|o| format!("{book_id}:companion:{}", slugify(o))).collect::<Vec<_>>(),
+        });
+        pi_hits.extend(monster_record_pi_hits(ability.key, &data.to_string()));
+        let source = CorpusSource::LstToken {
+            path: abilities_file.relative_path.clone(),
+            sha256: abilities_file.sha256.clone(),
+            line,
+            record_key: ability.key.to_string(),
+        };
+        let (wiring_class, wiring_class_signals) =
+            wiring_class_for_source(&wiring_index, &mut wiring_lines, &source);
+        let record = CorpusRecordV1 {
+            population: Population::InScope,
+            completeness: Completeness::Full,
+            ingested_at: ingested_at.clone(),
+            data,
+            source,
+            license: Some(License::Ogl),
+            pi_field: None,
+            pi_marker: None,
+            wiring_class,
+            wiring_class_signals,
+        };
+        write_record(
+            &out_root.join("companion").join(format!("{}.json", slugify(ability.key))),
+            &record,
+        );
+        ability_written += 1;
+    }
+
+    if !pi_hits.is_empty() {
+        eprintln!("PI screen FAILED for {book_id}: {pi_hits:?}");
+        std::process::exit(1);
+    }
+
+    let records_processed = count_on_disk_records(&out_root);
+    let license_path = out_root.join("LICENSE.json");
+    // Same preservation rule `gen_monster_book` states: Monster Codex and
+    // Horror Adventures were both ingested by earlier lanes, whose LICENSE.json
+    // carries a sharper OGL citation than this spec does. Clobbering it would
+    // replace a real derivation with a weaker one.
+    let prior: Option<serde_json::Value> = fs::read_to_string(&license_path)
+        .ok()
+        .and_then(|raw| serde_json::from_str(&raw).ok());
+    let prior_declaration = prior
+        .as_ref()
+        .and_then(|v| v.get("license_declaration"))
+        .cloned();
+    let license_json = serde_json::json!({
+        "book": book_id,
+        "license_declaration": prior_declaration.unwrap_or_else(|| serde_json::json!({
+            "open_game_content": spec.open_game_content,
+            "product_identity_source": spec.product_identity_source,
+            "product_identity_note": "Named deities, NPCs and unique places are Product Identity; companion and familiar stat blocks and their special-ability rules text are Open Game Content."
+        })),
+        "redaction_policy": {
+            "marker": "[redacted PI]",
+            "schema_preserving": true,
+            "pi_field_recorded": true,
+            "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
+            "blacklist_version_reviewed": "2026-07-27"
+        },
+        "screening_method_note": format!(
+            "Every field of the {} records this run wrote ({creature_written} companion creatures + {ability_written} companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is {records_processed}: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
+            creature_written + ability_written
+        ),
+        "redistribution_posture": "ogl-notice-attached",
+        "classified_at": ingested_at,
+        "classified_by_cycle": spec.classified_by_cycle,
+        "records_processed": records_processed,
+        "records_redacted": 0,
+        "operator_sign_off": {
+            "signed_off": false,
+            "signed_off_at": null,
+            "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header."
+        }
+    });
+    fs::write(&license_path, serde_json::to_string_pretty(&license_json).unwrap() + "\n")
+        .unwrap_or_else(|e| panic!("failed to write {license_path:?}: {e}"));
+    println!(
+        "{book_id} companion cache generated: {creature_written} creatures, {ability_written} \
+         abilities; LICENSE.json records_processed={records_processed}"
+    );
+}
+
+/// Where one companion book's two `.lst` files live and what its OGL notice
+/// says. Same shape and same discipline as [`MonsterBookSpec`]: locations and
+/// citations only, never behaviour.
+struct CompanionBookSpec {
+    corpus_book: &'static str,
+    book_relative: &'static str,
+    races_lst: &'static str,
+    abilities_lst: &'static str,
+    open_game_content: &'static str,
+    product_identity_source: &'static str,
+    classified_by_cycle: &'static str,
+}
+
+const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
+    CompanionBookSpec {
+        corpus_book: "inner_sea_combat",
+        book_relative: "pathfinder/paizo/campaign_setting/inner_sea_combat",
+        races_lst: "isc_races_companion.lst",
+        abilities_lst: "isc_abilities_companion.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_combat.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Combat, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F1-002",
+    },
+    CompanionBookSpec {
+        corpus_book: "monster_codex",
+        book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
+        races_lst: "mc_races_companion.lst",
+        abilities_lst: "mc_abilities_companion.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _monster_codex.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Monster Codex, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F1-002",
+    },
+    CompanionBookSpec {
+        corpus_book: "inner_sea_intrigue",
+        book_relative: "pathfinder/paizo/campaign_setting/inner_sea_intrigue",
+        races_lst: "isi_races_companion.lst",
+        abilities_lst: "isi_abilities_race_companion.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_intrigue.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Intrigue, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F1-002",
+    },
+    CompanionBookSpec {
+        corpus_book: "horror_adventures",
+        book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
+        races_lst: "ha_races_companion.lst",
+        abilities_lst: "ha_abilities_companion.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own horror_adventures.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Horror Adventures, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F1-002",
+    },
+];
+
+fn companion_book_spec(book: &str) -> Option<&'static CompanionBookSpec> {
+    COMPANION_BOOK_SPECS.iter().find(|s| s.corpus_book == book)
+}
+
+fn companion_book_corpus_root(spec: &CompanionBookSpec) -> PathBuf {
+    let override_var = format!("PCGEN_CORPUS_ROOT_{}", spec.corpus_book.to_uppercase());
+    if let Ok(v) = std::env::var(&override_var) {
+        return PathBuf::from(v);
+    }
+    let home = std::env::var("HOME")
+        .expect("HOME must be set to locate the default PCGen corpus checkout");
+    PathBuf::from(home).join("workspace/repos/pcgen/data").join(spec.book_relative)
+}
+
 /// Where one monster book's two `.lst` files live and what its OGL notice
 /// says. Every field is a *location* or a *citation*, never a behaviour: the
 /// parsing, the citation check, the PI screen and the wiring-class computation
@@ -1188,6 +1443,20 @@ fn main() {
     match book.as_str() {
         "pathfinder_unchained" => gen_pathfinder_unchained(),
         "advanced_race_guide" => gen_advanced_race_guide(),
+        // `companion:<book>` rather than a bare book name: three of the four
+        // companion books are ALSO monster or race-trait books, so a bare name
+        // would be ambiguous and would silently run whichever generator the
+        // match arm reached first.
+        other if other.starts_with("companion:") => {
+            let book = &other["companion:".len()..];
+            match companion_book_spec(book) {
+                Some(spec) => gen_companion_book(spec),
+                None => panic!(
+                    "gen_book_cache: no companion generator wired for book {book:?} yet -- add a \
+                     CompanionBookSpec and a companion_chassis::COMPANION_BOOKS row"
+                ),
+            }
+        }
         other => match monster_book_spec(other) {
             Some(spec) => gen_monster_book(spec),
             None => panic!(

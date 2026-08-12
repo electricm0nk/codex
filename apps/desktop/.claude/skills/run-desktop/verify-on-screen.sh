@@ -16,7 +16,7 @@
 #     --expect "Duergar" --expect "+2" \
 #     --out docs/release/<bundle>/artifacts/<cycle>/item8 [--slug duergar-ironskinned]
 #
-# Families: equipment | spell | race_trait | monster  (hub bottom links).
+# Families: equipment | spell | race_trait | monster | companion  (hub bottom links).
 #
 # Outcomes (the ONLY two):
 #   PASS — exit 0; writes <out>/<slug>.png and <out>/<slug>.verify.md
@@ -99,7 +99,19 @@ case "$FAMILY" in
   spell)      HUB_X=781;  HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Spell Catalog";     MATCH_WORD="matching" ;;
   race_trait) HUB_X=1166; HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Race Traits";       MATCH_WORD="matching" ;;
   monster)    HUB_X=1350; HUB_Y=930; SEARCH_Y=311; SCREEN_MARKER="Monster Catalog";   MATCH_WORD="matching" ;;
-  *) echo "FAIL: unknown --family '$FAMILY' (known: equipment spell race_trait monster)" >&2; exit 2 ;;
+  # SD-29 Epic 7 (companion lane). The hub's bottom link row WRAPPED when this
+  # link was added -- "Browse Companion Catalog" sits on a second line at y=971,
+  # and every coordinate above is unchanged, verified on a live screenshot
+  # rather than assumed.
+  #
+  # SEARCH_Y=247 is CALIBRATED LIVE, not copied by analogy: this screen carries
+  # ONE facet-chip row (books) where the monster screen carries two, so 285 --
+  # the value every other single-chip-row family uses -- lands BELOW the box and
+  # the filter silently does not apply. The first run with 285 failed exactly
+  # that way (15 rows still shown), which is the filtered-count gate doing its
+  # job rather than a passing screenshot of an unfiltered list.
+  companion)  HUB_X=855;  HUB_Y=971; SEARCH_Y=247; SCREEN_MARKER="Companion Catalog"; MATCH_WORD="matching" ;;
+  *) echo "FAIL: unknown --family '$FAMILY' (known: equipment spell race_trait monster companion)" >&2; exit 2 ;;
 esac
 SEARCH_X=960
 # A neutral left-margin point OUTSIDE every interactive element: clicking it

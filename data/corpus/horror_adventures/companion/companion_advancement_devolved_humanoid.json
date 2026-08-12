@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Devolved Humanoid",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "horror_adventures:companion:companion_advancement_devolved_humanoid",
+    "name": "Companion Advancement (Devolved Humanoid)",
+    "owners": [
+      "horror_adventures:companion:companion_devolved_humanoid"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 8
+      },
+      {
+        "ability": "DEX",
+        "amount": -2
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_companion.lst",
+    "sha256": "99e5710e0999915d1c13a7e360da1b6ba1e1745eeff8c822f513110693627717",
+    "line": 3,
+    "record_key": "Companion Advancement ~ Devolved Humanoid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

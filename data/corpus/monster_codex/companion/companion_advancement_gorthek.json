@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Gorthek",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "monster_codex:companion:companion_advancement_gorthek",
+    "name": "Companion Advancement (Gorthek)",
+    "owners": [
+      "monster_codex:companion:companion_gorthek"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/monster_codex/mc_abilities_companion.lst",
+    "sha256": "7165ce2b4cbdeb72b094d9d1f3213616a89979351abe293544935d9dc15476ff",
+    "line": 6,
+    "record_key": "Companion Advancement ~ Gorthek"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

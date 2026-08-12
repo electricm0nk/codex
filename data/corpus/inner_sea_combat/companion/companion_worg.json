@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T13:12:24Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_combat:companion:companion_advancement_worg",
+      "inner_sea_combat:companion:worg_mastery"
+    ],
+    "corpus_key": "Companion (Worg)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "inner_sea_combat:companion:companion_worg",
+    "monster_class": "Companion:2",
+    "name": "Companion (Worg)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "reach_feet": null,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": null,
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 6
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "WIS",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_combat/isc_races_companion.lst",
+    "sha256": "94e386d8d30b9a147d7d6e54dd56279524aadad67ff1302f7f8b1db6b11c007e",
+    "line": 8,
+    "record_key": "Companion (Worg)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

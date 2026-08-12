@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T13:12:30Z",
+  "data": {
+    "corpus_key": "Clockwork Familiar ~ Tinkering",
+    "delivery": "Extraordinary",
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_intrigue:companion:clockwork_familiar_tinkering",
+    "name": "Tinkering",
+    "owners": [
+      "inner_sea_intrigue:companion:familiar_clockwork_familiar"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "ClockworkFamiliarRacialAbility",
+      "SpecialQuality",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_intrigue/isi_abilities_race_companion.lst",
+    "sha256": "cc2db65754b883c24c83cdd077e7cb20965af4f6264b754c3f028de73d41896f",
+    "line": 28,
+    "record_key": "Clockwork Familiar ~ Tinkering"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
