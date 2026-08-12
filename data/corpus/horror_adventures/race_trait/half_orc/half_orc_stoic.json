@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Half-Orc ~ Stoic",
+    "name": "Stoic",
+    "race_key": "Half-Orc",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Orc Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfOrc_ReplaceIntimidating",
+      "HalfOrc_ReplaceOrcFerocity"
+    ],
+    "description": "Some half-orcs learn to suppress their strong emotions. They don't usually gain morale bonuses, but instead gain a +2 racial bonus on saving throws against emotion and fear effects, and the DC to intimidate them increases by 2. They can choose to gain morale bonuses when they would normally be able to do so, but if they do, they lose the benefits from this racial trait for 24 hours. This racial trait replaces intimidating and orc ferocity.",
+    "source_page": "p.40",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Orc ~ Stoic"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Orc Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Stoic],[!PREFACT:1,ABILITIES,HalfOrc_ReplaceIntimidating=true,HalfOrc_ReplaceOrcFerocity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Some half-orcs learn to suppress their strong emotions. They don't usually gain morale bonuses, but instead gain a +2 racial bonus on saving throws against emotion and fear effects, and the DC to intimidate them increases by 2. They can choose to gain morale bonuses when they would normally be able to do so, but if they do, they lose the benefits from this racial trait for 24 hours."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces intimidating and orc ferocity.|!PREABILITY:1,CATEGORY=Special Ability,Half-Orc ~ Stoic"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.40"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 vs. emotion and fear effects"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceIntimidating|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfOrc_ReplaceOrcFerocity|true"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 72,
+    "record_key": "Half-Orc ~ Stoic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

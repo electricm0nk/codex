@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Half-Elf ~ Dreamer",
+    "name": "Dreamer",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceElvenImmunities"
+    ],
+    "description": "Half-elves with this trait gain a +2 racial saving throw bonus against illusion spells and effects. In addition, when entering a dreamscape in a lucid body (Pathfinder RPG Occult Adventures 241), a half-elf with this racial trait treats her Charisma score as 2 points higher for the purpose of effects related to the Dimension of Dreams. This racial trait replaces elven immunities.",
+    "source_page": "p.39",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Dreamer"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Dreamer],[!PREFACT:1,ABILITIES,HalfElf_ReplaceElvenImmunities=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Half-elves with this trait gain a +2 racial saving throw bonus against illusion spells and effects. In addition, when entering a dreamscape in a lucid body (Pathfinder RPG Occult Adventures 241), a half-elf with this racial trait treats her Charisma score as 2 points higher for the purpose of effects related to the Dimension of Dreams."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces elven immunities.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Dreamer"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "ASPECT",
+        "value": "SaveBonus|+2 racial saving throw bonus against illusion spells and effects."
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceElvenImmunities|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "VAR",
+          "SaveBonus_vs_Illusions",
+          "2",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 55,
+    "record_key": "Half-Elf ~ Dreamer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

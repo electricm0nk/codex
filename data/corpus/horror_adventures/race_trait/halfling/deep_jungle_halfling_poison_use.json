@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Deep Jungle Halfling ~ Poison Use",
+    "name": "Poison Use",
+    "race_key": "Halfling",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Halfling Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Poison Use"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [],
+    "description": "Deep jungle halflings are skilled with poison and never risk accidentally poisoning themselves when applying it to weapons.",
+    "source_page": "p.233",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Deep Jungle Halfling ~ Poison Use"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Halfling Racial Trait.SpecialQuality.Special Quality.Poison Use"
+      },
+      {
+        "key": "DESC",
+        "value": "Deep jungle halflings are skilled with poison and never risk accidentally poisoning themselves when applying it to weapons."
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCELONG",
+        "value": "Advanced Race Guide"
+      },
+      {
+        "key": "SOURCESHORT",
+        "value": "ARG"
+      },
+      {
+        "key": "SOURCEWEB",
+        "value": "http://paizo.com/products/btpy8rv2?Pathfinder-Roleplaying-Game-Advanced-Race-Guide"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.233"
+      },
+      {
+        "key": "SOURCEDATE",
+        "value": "2012-06"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 92,
+    "record_key": "Deep Jungle Halfling ~ Poison Use"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

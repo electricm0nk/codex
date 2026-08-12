@@ -885,6 +885,7 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::BonusBestiary,
     RuleSetId::MonsterCodex,
     RuleSetId::Isr,
+    RuleSetId::Ha,
     RuleSetId::Botd1,
     RuleSetId::Botd2,
 ];
@@ -911,6 +912,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::BonusBestiary => "bonus_bestiary",
         RuleSetId::MonsterCodex => "monster_codex",
         RuleSetId::Isr => "inner_sea_races",
+        RuleSetId::Ha => "horror_adventures",
         RuleSetId::Botd1 => "book_of_the_damned_volume_1",
         RuleSetId::Botd2 => "book_of_the_damned_volume_2",
     }
@@ -949,6 +951,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::BonusBestiary => "bonus_bestiary",
         RuleSetId::MonsterCodex => "monster_codex",
         RuleSetId::Isr => "inner_sea_races",
+        RuleSetId::Ha => "horror_adventures",
         RuleSetId::Botd1 => "book_of_the_damned_volume_1",
         RuleSetId::Botd2 => "book_of_the_damned_volume_2",
     }

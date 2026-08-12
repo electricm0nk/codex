@@ -133,7 +133,7 @@ fn every_aasimar_standard_trait_now_declares_the_flag_that_suppresses_it() {
 /// longer inert" is a weaker claim than "the player's trait list actually
 /// changed", and only the second one is what a player sees.
 #[test]
-fn each_of_the_nine_aasimar_alternates_now_really_replaces_a_standard_trait() {
+fn every_aasimar_alternate_really_replaces_a_standard_trait() {
     let corpus = corpus();
 
     let before = corpus.resolve("Aasimar", &[]).expect("Aasimar resolves");
@@ -146,7 +146,13 @@ fn each_of_the_nine_aasimar_alternates_now_really_replaces_a_standard_trait() {
     // standard rows its own flags name.
     let alternates: Vec<String> =
         corpus.alternate_traits("Aasimar").iter().map(|record| record.data.key.clone()).collect();
-    assert_eq!(alternates.len(), 9, "ARG's nine Aasimar alternates");
+    assert_eq!(
+        alternates.len(),
+        11,
+        "ARG's nine Aasimar alternates + Inner Sea Races' two (`Aasimar ~ Crusading Magic`, \
+         `Aasimar ~ Lost Promise`). Aasimar's nine racial DEFAULTS above did not move and must \
+         not: ISR and HA contribute alternates only, no chassis"
+    );
 
     let mut checked = 0usize;
     for key in &alternates {
@@ -176,7 +182,10 @@ fn each_of_the_nine_aasimar_alternates_now_really_replaces_a_standard_trait() {
         }
         checked += 1;
     }
-    assert_eq!(checked, 9);
+    // 9 ARG + Inner Sea Races' 2. The name above no longer carries the count,
+    // for `decisions.md §44.5`'s reason: a new book adds Aasimar alternates
+    // without the property changing.
+    assert_eq!(checked, 11);
 
     // The worked case, spelled out: Celestial Crusader sets two flags and
     // removes both of the traits they name, and nothing else.
@@ -301,8 +310,10 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 158,
-        "ARG's 153 + Monster Codex's 4 + APG's 1 selectable alternates (SD-29 decisions.md §44)"
+        checked, 267,
+        "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 68 + Horror Adventures' 41 \
+         selectable alternates (SD-29 decisions.md §44, §45, §46). The 158 this pin held until \
+         2026-08-12 was round 2's miss, not a smaller corpus"
     );
 }
 

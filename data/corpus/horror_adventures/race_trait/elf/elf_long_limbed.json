@@ -1,0 +1,86 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Elf ~ Long-Limbed",
+    "name": "Long-Limbed",
+    "race_key": "Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Elf_ReplaceWeaponFamiliarity"
+    ],
+    "description": "Elves with this racial trait have a base move speed of 35 feet. This racial trait replaces weapon familiarity.",
+    "source_page": "p.38",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Elf ~ Long-Limbed"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Elf ~ Long-Limbed],[!PREFACT:1,ABILITIES,Elf_ReplaceWeaponFamiliarity=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Elves with this racial trait have a base move speed of 35 feet."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces weapon familiarity.|!PREABILITY:1,CATEGORY=Special Ability,Elf ~ Long-Limbed"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "FACT",
+        "value": "Elf_ReplaceWeaponFamiliarity|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "MOVEADD",
+          "TYPE.Walk",
+          "5"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 31,
+    "record_key": "Elf ~ Long-Limbed"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

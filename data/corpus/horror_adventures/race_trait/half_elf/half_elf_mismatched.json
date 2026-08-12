@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Half-Elf ~ Mismatched",
+    "name": "Mismatched",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality",
+      "Applied Bonus"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceVision",
+      "HalfElf_ReplaceKeenSenses"
+    ],
+    "description": "Rather than having bodily and facial features that are a blend of elven and human, or tending towards one parent or the other, a rare few half-elves have a strange combination of features. They have noticeable mismatched eyes and ears, as well as uneven limbs. Half-elves with this trait take a -2 penalty on Reflex saves but receive a +4 racial bonus on initiative checks. This racial trait replaces keen senses and low-light vision.",
+    "source_page": "p.39",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Mismatched"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality.Applied Bonus"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Mismatched],[!PREFACT:1,ABILITIES,HalfElf_ReplaceVision=true,HalfElf_ReplaceKeenSenses=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Rather than having bodily and facial features that are a blend of elven and human, or tending towards one parent or the other, a rare few half-elves have a strange combination of features. They have noticeable mismatched eyes and ears, as well as uneven limbs. Half-elves with this trait take a -2 penalty on Reflex saves but receive a +4 racial bonus on initiative checks."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces keen senses and low-light vision.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Mismatched"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceVision|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceKeenSenses|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "COMBAT",
+          "INITIATIVE",
+          "4",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "SAVE",
+          "Reflex",
+          "-2"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 56,
+    "record_key": "Half-Elf ~ Mismatched"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

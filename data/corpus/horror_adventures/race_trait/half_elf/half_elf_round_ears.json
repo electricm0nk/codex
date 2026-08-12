@@ -1,0 +1,100 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Half-Elf ~ Round Ears",
+    "name": "Round Ears",
+    "race_key": "Half-Elf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Half-Elf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "HalfElf_ReplaceVision",
+      "HalfElf_ReplaceKeenSenses",
+      "HalfElf_ReplaceAdaptability"
+    ],
+    "description": "Sometimes half-elves are born with no obvious elven features. Their parents may even be humans with only faint traces of elven blood. They gain the human's skilled racial trait. In addition, they receive a +4 racial bonus on Disguise checks to appear human. This racial trait replaces adaptability, keen senses, and low-light vision.",
+    "source_page": "p.39",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Half-Elf ~ Round Ears"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Half-Elf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Round Ears],[!PREFACT:1,ABILITIES,HalfElf_ReplaceVision=true,HalfElf_ReplaceKeenSenses=true,HalfElf_ReplaceAdaptability=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Sometimes half-elves are born with no obvious elven features. Their parents may even be humans with only faint traces of elven blood. They gain the human's skilled racial trait. In addition, they receive a +4 racial bonus on Disguise checks to appear human."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces adaptability, keen senses, and low-light vision.|!PREABILITY:1,CATEGORY=Special Ability,Half-Elf ~ Round Ears"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Human Racial Trait|AUTOMATIC|Human ~ Skilled"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.39"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceVision|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceKeenSenses|true"
+      },
+      {
+        "key": "FACT",
+        "value": "HalfElf_ReplaceAdaptability|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Disguise=to appear human",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 58,
+    "record_key": "Half-Elf ~ Round Ears"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

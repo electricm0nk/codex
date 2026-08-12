@@ -1,0 +1,99 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:11:53Z",
+  "data": {
+    "key": "Dwarf ~ Tightfisted",
+    "name": "Tightfisted",
+    "race_key": "Dwarf",
+    "category": "Special Ability",
+    "type_tokens": [
+      "RacialTraits",
+      "Dwarf Racial Trait",
+      "SpecialQuality",
+      "Special Quality"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Dwarf_ReplaceStability",
+      "Dwarf_ReplaceStonecunning"
+    ],
+    "description": "Dwarves with this racial trait gain a +4 racial bonus to their CMD against disarm and steal combat maneuvers and a +2 racial bonus on Perception checks to notice Sleight of Hand attempts. If a dwarf with this trait notices a Sleight of Hand attempt to steal from him and the dwarf is not flat-footed or has Combat Reflexes, the attempt triggers an attack of opportunity from that dwarf. This racial trait replaces stability and stonecunning.",
+    "source_page": "p.38",
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Dwarf ~ Tightfisted"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "RacialTraits.Dwarf Racial Trait.SpecialQuality.Special Quality"
+      },
+      {
+        "key": "PREMULT",
+        "value": "1,[PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Tightfisted],[!PREFACT:1,ABILITIES,Dwarf_ReplaceStability=true,Dwarf_ReplaceStonecunning=true]"
+      },
+      {
+        "key": "DESC",
+        "value": "Dwarves with this racial trait gain a +4 racial bonus to their CMD against disarm and steal combat maneuvers and a +2 racial bonus on Perception checks to notice Sleight of Hand attempts. If a dwarf with this trait notices a Sleight of Hand attempt to steal from him and the dwarf is not flat-footed or has Combat Reflexes, the attempt triggers an attack of opportunity from that dwarf."
+      },
+      {
+        "key": "DESC",
+        "value": "This racial trait replaces stability and stonecunning.|!PREABILITY:1,CATEGORY=Special Ability,Dwarf ~ Tightfisted"
+      },
+      {
+        "key": "COST",
+        "value": "0"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "p.38"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceStability|true"
+      },
+      {
+        "key": "FACT",
+        "value": "Dwarf_ReplaceStonecunning|true"
+      }
+    ],
+    "raw_bonus_chains": [
+      {
+        "qualifiers": [
+          "SITUATION",
+          "Perception=to notice Sleight of Hand attempts",
+          "2",
+          "TYPE=Racial"
+        ]
+      },
+      {
+        "qualifiers": [
+          "VAR",
+          "CMD_Disarm,CMD_Steal",
+          "4",
+          "TYPE=Racial"
+        ]
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 17,
+    "record_key": "Dwarf ~ Tightfisted"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
