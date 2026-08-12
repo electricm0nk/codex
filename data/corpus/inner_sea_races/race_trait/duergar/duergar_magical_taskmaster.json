@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-11T22:08:40Z",
+  "ingested_at": "2026-08-12T16:47:16Z",
   "data": {
     "key": "Duergar ~ Magical Taskmaster",
     "name": "Magical Taskmaster",
@@ -17,7 +17,7 @@
     "sets_replace_flags": [
       "Duergar_ReplaceSLAInvisibility"
     ],
-    "description": "Some duergar demonstrate magic of a more insidious kind than the rest of their kin, a difference that is often taken to be a sign of Droskar's blessing. They can use charm person once per day as a spell-like ability. The save DC is equal to 10 + 1/2 duergar's Hit Dice + duergar's Wisdom modifier. This racial trait replaces the invisibility spell-like ability racial trait.",
+    "description": "[redacted PI]",
     "source_page": "p.215",
     "raw_tokens": [
       {
@@ -89,9 +89,9 @@
     "line": 571,
     "record_key": "Duergar ~ Magical Taskmaster"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard",

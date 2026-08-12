@@ -955,9 +955,9 @@ pub fn race_size_for_race_token(race_id: &str) -> Option<SizeCategory> {
 /// # What the values are
 ///
 /// `RaceTraitCacheData::sets_replace_flags`, verbatim and in source order, for
-/// all 283 records [`RaceCorpus::alternate_traits`] classifies as
+/// all 282 records [`RaceCorpus::alternate_traits`] classifies as
 /// [`TraitRole::Alternate`] across the 18 in-scope races — ARG's 153, Monster
-/// Codex's 4, the Advanced Player's Guide's 1, Inner Sea Races' 68 and Horror
+/// Codex's 4, the Advanced Player's Guide's 1, Inner Sea Races' 67 and Horror
 /// Adventures' 41, the last four landed by SD-29's race-trait lane. The three records that are *not* standalone
 /// choices — `Feral ~ Languages`, `Scion of Humanity ~ Languages` and
 /// `Saltbeard ~ Dwarf ~ Greed`, all three [`TraitRole::FlagGranted`] — are
@@ -1221,7 +1221,6 @@ const ALTERNATE_TRAIT_REPLACE_FLAGS: &[(&str, &[&str])] = &[
     ("Elf ~ Memories Beyond Death", &["Elf_ReplaceElvenImmunities", "Elf_ReplaceElvenMagic"]),
     ("Elf ~ Overwhelming Magic", &["Elf_ReplaceElvenMagic", "Elf_ReplaceWeaponFamiliarity"]),
     ("Elf ~ Retreat Magic", &["Elf_ReplaceElvenMagic"]),
-    ("Elf ~ Sovyrian-Born", &["Elf_ReplaceElvenMagic", "Elf_ReplaceKeenSenses"]),
     // ---- Gnome ----
     ("Gnome ~ Architectural Ingenuity", &["Gnome_ReplaceKeenSenses", "Gnome_ReplaceObsessive"]),
     ("Gnome ~ Dirty Trickster", &["Gnome_ReplaceHatred", "Gnome_ReplaceKeenSenses"]),
@@ -1953,13 +1952,20 @@ mod tests {
             }
         }
         assert_eq!(
-            redacted, 20,
-            "Inner Sea Races' 12 PI-redacted records + Core Essentials' 8, counted on disk. \
-             Horror Adventures added 0: it is a rules supplement, not a campaign setting. Core \
-             Essentials' 8 are four Tiefling heritages named for outsider races that are \
-             Golarion Product Identity -- Kyton-, Oni-, Devil- and Rakshasa-Spawn -- each \
+            redacted, 27,
+            "Inner Sea Races' 18 PI-redacted records + Core Essentials' 9, counted on disk. \
+             Horror Adventures added 0: it is a rules supplement, not a campaign setting. \
+             **Was 12 + 8 = 20 until 2026-08-12** (SD-29 `decisions.md §53`), when the ingest \
+             path learned to read PCGen's own per-record declaration `DESCISPI:YES` alongside \
+             the 55-term blacklist. The blacklist had caught 18 of the 26 declared rows by \
+             coincidence -- their prose happens to name a Golarion place the list knows -- and \
+             published the other 8, whose Product Identity is `Kodar Mountains`, `Earthfall`, \
+             `Ekujae`, `Gogpodda`, `Omesta`, `Droskar`, `Abaddon` and `Inner Sea`. Core \
+             Essentials' original 8 are four Tiefling heritages named for outsider races that \
+             are Golarion Product Identity -- Kyton-, Oni-, Devil- and Rakshasa-Spawn -- each \
              hitting twice because the heritage row and its Ability Scores replacement row \
-             carry the same prose. Its 24 Aasimar records hit 0 terms"
+             carry the same prose; the 9th is `Tiefling ~ Daemon-Spawn`, declared and not on \
+             the list. Its 24 Aasimar records hit 0 terms and declare nothing"
         );
     }
 
@@ -1972,9 +1978,9 @@ mod tests {
         let count = |role: TraitRole| corpus.traits.values().flatten().filter(|t| t.role == role).count();
         assert_eq!(count(TraitRole::Default), 173);
         // 153 ARG + Monster Codex's 4 + the Advanced Player's Guide's 1
-        // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 68 + Horror
+        // (`Half-Orc ~ Plagueborn`) + Inner Sea Races' 67 + Horror
         // Adventures' 41, all landed by SD-29's race-trait lane.
-        assert_eq!(count(TraitRole::Alternate), 283);
+        assert_eq!(count(TraitRole::Alternate), 282);
         // 5 + Inner Sea Races' 3: `Junk Tinker ~ Skilled` (named by an
         // `ABILITY:Goblin Racial Trait|AUTOMATIC|` grant) and the two rows
         // carrying a positive `PREFACT` gate, `Secret Magic ~ Merfolk ~ Speed`
@@ -2003,8 +2009,8 @@ mod tests {
         assert_eq!(count(TraitRole::Unclassified), 2);
         assert_eq!(
             corpus.traits.values().flatten().count(),
-            516,
-            "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 72 Inner Sea Races \
+            515,
+            "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
              + 43 Horror Adventures + 64 Core Essentials heritage records (16 heritages \
              + the 48 replacement rows they grant)"
         );
@@ -2121,7 +2127,7 @@ mod tests {
         // `Half-Orc ~ Plagueborn` fires two flags that ARG already declares,
         // so it adds a row without adding a flag.
         //
-        // Inner Sea Races' 68 alternates add **13** distinct flags to that 77,
+        // Inner Sea Races' 67 alternates add **13** distinct flags to that 77,
         // not 68: the great majority of them replace standard traits ARG's
         // alternates already replace (`Dwarf_ReplaceHatred`,
         // `Elf_ReplaceElvenMagic`, ...), which is what a second book of
@@ -2181,8 +2187,12 @@ mod tests {
         }
         assert_eq!(
             checked,
-            283,
-            "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures"
+            282,
+            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures. \
+             **282, not 283, since 2026-08-12** (SD-29 `decisions.md` 53): Inner Sea Races' \
+             `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's own declaration that the \
+             record NAME is Product Identity, and a name cannot be redacted -- so the row is \
+             dropped, not screened."
         );
     }
 
@@ -2391,8 +2401,8 @@ mod tests {
         }
         assert_eq!(
             corpus_rows.len(),
-            283,
-            "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures \
+            282,
+            "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures \
              selectable alternates"
         );
         assert_eq!(ALTERNATE_TRAIT_REPLACE_FLAGS.len(), corpus_rows.len(), "no table row is extra or missing");
@@ -2434,7 +2444,7 @@ mod tests {
         let typo = vec!["Dwarf ~ Saltbeerd".to_string()];
         assert!(replace_flags_fired_by(&typo).is_empty());
         assert_eq!(unknown_alternate_trait_keys(&typo), vec!["Dwarf ~ Saltbeerd".to_string()]);
-        assert_eq!(selectable_alternate_trait_keys().len(), 283);
+        assert_eq!(selectable_alternate_trait_keys().len(), 282);
     }
 
     #[test]

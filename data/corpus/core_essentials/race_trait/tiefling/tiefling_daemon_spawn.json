@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-12T13:11:02Z",
+  "ingested_at": "2026-08-12T16:47:21Z",
   "data": {
     "key": "Tiefling ~ Daemon-Spawn",
     "name": "Daemon-Spawn (Grimspawn)",
@@ -17,7 +17,7 @@
       "Tiefling_ReplaceSkilled",
       "Tiefling_ReplaceSpellLikeAbility"
     ],
-    "description": "Enthralled by death and appearing ill and malnourished even if healthy, these tieflings are tied to the daemons of Abaddon.",
+    "description": "[redacted PI]",
     "source_page": null,
     "raw_tokens": [
       {
@@ -114,9 +114,9 @@
     "line": 13,
     "record_key": "Tiefling ~ Daemon-Spawn"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "wiring_class": "display",
   "wiring_class_signals": [
     "display:no_magnitude_token"
