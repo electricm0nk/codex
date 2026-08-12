@@ -983,10 +983,10 @@ mod tests {
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 283,
+            total, 282,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
-             race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2) \
+             race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
              + Horror Adventures' 41 (§47, round 3) \
              + Core Essentials' 16 heritages (§49, round 4; the book's other 48 records \
              are the replacement rows those heritages grant and are never menu rows)"
@@ -1019,7 +1019,8 @@ mod tests {
             ("Drow", 7),        // ARG 6 + ISR 1
             ("Duergar", 8),     // ARG 5 + MC 2 + ISR 1
             ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
-            ("Elf", 28),        // ARG 13 + ISR 8 + HA 7
+            ("Elf", 27),        // ARG 13 + ISR 7 + HA 7 (ISR 8 until 2026-08-12: `Elf ~
+            // Sovyrian-Born` carries `NAMEISPI:YES` and is dropped, `decisions.md` 53)
             ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
             ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
             ("HalfElf", 20),    // ARG 9 + ISR 7 + HA 4
@@ -1037,7 +1038,7 @@ mod tests {
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 283);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 282);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1264,8 +1265,8 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 283,
-            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races \
+            checked, 282,
+            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
              (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
@@ -1411,6 +1412,68 @@ mod tests {
         assert!(applied.contains("Saltbeard ~ Dwarf ~ Greed"), "ARG's Greed took its place");
         assert!(applied.contains("Dwarf ~ Saltbeard"), "the chosen alternate itself applies");
         assert_eq!(after.applied_traits.len(), 12 - 4 + 1 + 1);
+    }
+
+    /// The exact selection SD-29 `progress.md` §8b screenshotted, asserted at
+    /// the DTO layer the screen actually reads.
+    ///
+    /// **This test exists to decide an attribution, not to guard a number.**
+    /// `§8b` recorded that with `Half-Orc ~ Plagueborn` ticked, the picker's
+    /// left panel still read *"9 traits apply. No alternate selected, so
+    /// nothing is replaced."*, and diagnosed it a *render* bug on the grounds
+    /// that *"the right-hand column does update ('1 selected. 0 further options
+    /// locked out.'), so the IPC round trip happened"*.
+    ///
+    /// **That inference is unsound.** `AlternateTraitPicker.tsx` builds that
+    /// sentence from `selected.length` — local React state, updated
+    /// synchronously by the checkbox and needing no backend at all — and from
+    /// `blocked.size`, which is **0 when `selection` is `null`**. So the
+    /// reported right-hand text is exactly what renders when the resolve call
+    /// has *not* answered yet. The two panels are one symptom, not two.
+    ///
+    /// That leaves two candidate causes, and this test kills one of them: if
+    /// the backend genuinely returned no suppressions for this selection, the
+    /// defect would be here and not in any render path. It does not. What
+    /// survives is the timing reading — a screenshot captured between the
+    /// click's commit and the effect's `setSelection(null)` — which is a
+    /// harness settle-wait, not a product defect. Round 6 starts from that
+    /// rather than from the label.
+    #[test]
+    fn plagueborn_really_suppresses_both_standard_traits_its_flags_name_so_8b_is_not_a_backend_gap() {
+        let corpus = race_corpus().as_ref().expect("corpus");
+
+        let before = resolve_selection(corpus, "Half-Orc", &[], &[]);
+        assert!(before.errors.is_empty(), "{:?}", before.errors);
+        assert!(before.suppressions.is_empty());
+        assert_eq!(before.applied_traits.len(), 9, "Half-Orc's 9 racial defaults — §8b's screenshot said 9");
+
+        let after = resolve_selection(corpus, "Half-Orc", &["Half-Orc ~ Plagueborn".to_string()], &[]);
+        assert!(after.errors.is_empty(), "{:?}", after.errors);
+        assert!(after.unmatched_selections.is_empty(), "{:?}", after.unmatched_selections);
+        assert!(after.inert_flags.is_empty(), "{:?}", after.inert_flags);
+
+        let suppressed: Vec<&str> = after.suppressions.iter().map(|s| s.suppressed_trait_key.as_str()).collect();
+        assert_eq!(
+            suppressed,
+            vec!["Half-Orc ~ Intimidating", "Half-Orc ~ Weapon Familiarity"],
+            "the two standard traits `HalfOrc_ReplaceIntimidating`/`HalfOrc_ReplaceWeaponFamiliarity` name"
+        );
+        for suppression in &after.suppressions {
+            assert_eq!(suppression.set_by_trait_key, "Half-Orc ~ Plagueborn");
+        }
+        // 9 - 2 + 1: the screen's own caption should read 8, not 9.
+        assert_eq!(after.applied_traits.len(), 8);
+
+        // ...and the lock-out count the right panel prints is NOT 0 either,
+        // which is the other half of the same evidence: every sibling alternate
+        // whose guard names a flag Plagueborn fired is blocked. A rendered
+        // "0 further options locked out." alongside a selection is therefore a
+        // `selection == null` render, not a resolved one.
+        assert!(
+            !after.blocked_alternates.is_empty(),
+            "Plagueborn fires two flags other Half-Orc alternates guard on; a resolved response \
+             cannot report zero lock-outs"
+        );
     }
 
     /// The `PREMULT` guard is honoured: with Saltbeard taken, no other Dwarf
@@ -1729,9 +1792,9 @@ mod tests {
         // *menu rows*, so the book's other 48 records are correctly absent
         // here while being fully present in `reach_gate`'s claim, which reads
         // what each selection grants as well as what it offers.
-        assert_eq!((standard, alternates), (173, 283));
+        assert_eq!((standard, alternates), (173, 282));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 456);
+        assert_eq!(checked, 455);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

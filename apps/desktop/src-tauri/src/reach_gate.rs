@@ -1010,7 +1010,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // `tests/duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`.
         ("monster_codex", "race_traits") => Some(race_traits_reach("MC", "monster_codex")),
         // SD-29 Epic 6 round 2 (race-trait lane, extend, 2026-08-11,
-        // `decisions.md §45`). Inner Sea Races' 72 in-scope records -- 68 of
+        // `decisions.md §45`). Inner Sea Races' 71 in-scope records -- 67 of
         // them `TraitRole::Alternate`, the largest single contribution after
         // ARG's own 153 -- served by exactly the two commands ARG's, APG's and
         // Monster Codex's claims run, now that `inner_sea_races` is in
@@ -1931,7 +1931,7 @@ const OPEN_FINDINGS: &[(&str, &str, &str)] = &[
     (
         "inner_sea_races",
         "race_traits",
-        "71 of Inner Sea Races' 72 ingested race-trait records reach a player through \
+        "70 of Inner Sea Races' 71 ingested race-trait records reach a player through \
          `list_alternate_racial_traits` and `resolve_race_alternate_selection`. ONE does not: \
          `Human ~ Tribalistic Languages` (`isr_abilities_race.lst:216`). Derived, not assumed: \
          the row carries no `FACT:<flag>|True`, no positive `PREFACT`, no `PREABILITY` and no \
@@ -2760,9 +2760,17 @@ mod tests {
         assert!(full_inventory().contains(&isr_traits), "and it must reach the gate's inventory");
 
         let ingested = corpus_record_keys("inner_sea_races", "race_trait");
-        assert_eq!(ingested.len(), 72, "ISR's 72 ingested race-trait records, counted on disk");
+        assert_eq!(
+            ingested.len(),
+            71,
+            "ISR's 71 ingested race-trait records, counted on disk. **Was 72 until 2026-08-12** \
+             (SD-29 `decisions.md` 53): `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES`, PCGen's \
+             own declaration that the record NAME is Product Identity. A name cannot be \
+             redacted, so the row is dropped at ingest rather than screened -- the same \
+             ruling the monster lane reached for Inner Sea World Guide's five NAMEISPI rows"
+        );
 
-        // 71 of 72 reach. The shortfall is `Human ~ Tribalistic Languages` and
+        // 70 of 71 reach. The shortfall is `Human ~ Tribalistic Languages` and
         // it is pinned by key, both ways, so a SECOND unreached record fails
         // here and so does this one silently starting to reach.
         match reach_of(&isr_traits).expect("ISR race traits have a declared claim") {

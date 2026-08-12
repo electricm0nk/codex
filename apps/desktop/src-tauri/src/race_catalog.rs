@@ -594,7 +594,7 @@ mod tests {
         let alternates: usize =
             corpus.race_keys().iter().map(|key| corpus.alternate_traits(key).len()).sum();
         assert_eq!(
-            alternates, 283,
+            alternates, 282,
             "alternate racial traits loaded but contributing no catalog row: ARG's 153 + Monster \
              Codex's 4 (SD-29 decisions.md §43) + APG's 1 (`Half-Orc ~ Plagueborn`) + Inner Sea \
              Races' 68 (§45) + Horror Adventures' 41 (§47) + Core Essentials' 16 heritages \

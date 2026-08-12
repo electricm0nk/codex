@@ -936,6 +936,21 @@ fn parse_row(line_number: u32, line: &str) -> Option<TraitRow> {
     })
 }
 
+/// [`pi_screening::declared_product_identity`] over one parsed row's preserved
+/// tokens.
+///
+/// Reads `raw_tokens` rather than re-parsing the line, because `raw_tokens` is
+/// what actually ships: if a token were ever dropped on the way into a record,
+/// screening the line would report a declaration the shipped file does not
+/// carry, and the corpus-level gate
+/// (`tests/sd29_declared_product_identity_in_shipped_race_traits.rs`) reads the
+/// shipped file. Both ends therefore read the same bytes.
+fn declared_product_identity_of(row: &TraitRow) -> pi_screening::DeclaredProductIdentity {
+    pi_screening::declared_product_identity(
+        row.raw_tokens.iter().map(|token| (token.key.as_str(), token.value.as_str())),
+    )
+}
+
 fn main() {
     // A book name selects one book; no argument ingests every declared book.
     // Both forms are deterministic and both rebuild whatever they write, so a
@@ -982,6 +997,10 @@ fn ingest_book(book: &BookSource) {
 
     let mut rows: Vec<SourcedRow> = Vec::new();
     let mut skipped: BTreeMap<String, usize> = BTreeMap::new();
+    // Rows refused outright because the corpus declares their NAME to be
+    // Product Identity. Reported, never silent: a row that vanishes without a
+    // line in the receipt is indistinguishable from an ingest bug.
+    let mut pi_dropped: Vec<String> = Vec::new();
     let mut real_lines = 0usize;
     let mut source_shas: Vec<(&'static str, String)> = Vec::new();
 
@@ -999,6 +1018,18 @@ fn ingest_book(book: &BookSource) {
             }
             real_lines += 1;
             let Some(row) = parse_row((idx + 1) as u32, line) else { continue };
+            // PCGen's own per-record Product Identity declaration, read before
+            // the scope filter so a dropped row is reported even for a race
+            // this book does not model. A NAME cannot be redacted -- it is the
+            // record's identity on every screen and half of its key -- so a row
+            // declaring `NAMEISPI:YES` is DROPPED, never screened. Same ruling
+            // the monster lane reached for Inner Sea World Guide's five
+            // `NAMEISPI:YES` monster rows (`decisions.md §50`), applied to the
+            // kind that lane reported it against.
+            if declared_product_identity_of(&row).name {
+                pi_dropped.push(format!("{lst_relative}:{} {}", row.line_number, row.key));
+                continue;
+            }
             if in_scope.contains(row.race_key.as_str()) {
                 rows.push(SourcedRow { row, lst_relative, sha256: sha256.clone() });
             } else {
@@ -1109,6 +1140,7 @@ fn ingest_book(book: &BookSource) {
     let mut written_paths: BTreeSet<PathBuf> = BTreeSet::new();
     let mut unresolved_desc_args: Vec<String> = Vec::new();
     let mut leaks: Vec<String> = Vec::new();
+    let mut pi_declared_descriptions = 0usize;
 
     for sourced in &rows {
         let row = &sourced.row;
@@ -1151,8 +1183,22 @@ fn ingest_book(book: &BookSource) {
         // (re-verified externally on 2026-07-31 with 0 hits across all 156
         // records) but not by construction. It now runs the same screen
         // every other unscreened writer in this cycle gained.
-        let (license, pi_field, pi_marker, stored_desc) =
-            pi_screening::classify_optional_field("description", row.description.as_deref());
+        // ...and, since 2026-08-12, the row's own declaration takes precedence
+        // over that term scan. `DESCISPI:YES` is PCGen stating that this
+        // description is Product Identity; 8 of the 26 shipped race_trait rows
+        // carrying it named nothing the 55-term list knows (`Kodar Mountains`,
+        // `Earthfall`, `Ekujae`, `Gogpodda`, `Omesta`, `Droskar`, `Abaddon`,
+        // `Inner Sea`) and were published verbatim. The two screens are a
+        // union: an undeclared row is still scanned.
+        let declared = declared_product_identity_of(row);
+        let (license, pi_field, pi_marker, stored_desc) = pi_screening::classify_optional_field_declared(
+            "description",
+            row.description.as_deref(),
+            declared.description,
+        );
+        if declared.description {
+            pi_declared_descriptions += 1;
+        }
         let record = CorpusRecordV1 {
             population: Population::InScope,
             completeness: Completeness::Full,
@@ -1205,6 +1251,11 @@ fn ingest_book(book: &BookSource) {
     println!("  distinct races covered        : {}", per_race.len());
     println!("  replace-flags captured        : {flags_total}");
     println!("  skipped, out-of-scope races   : {skipped_total} across {} races", skipped.len());
+    println!("  dropped, NAMEISPI:YES         : {}", pi_dropped.len());
+    for line in &pi_dropped {
+        println!("    {line}");
+    }
+    println!("  descriptions redacted by DESCISPI:YES : {pi_declared_descriptions}");
     println!("  ingested_at                   : {ingested_at}");
     println!("\n  per in-scope race (records / replace-flags):");
     for (race, n) in &per_race {
@@ -1617,7 +1668,7 @@ mod tests {
             [
                 ("advanced_race_guide", 156usize),
                 ("monster_codex", 5),
-                ("inner_sea_races", 72),
+                ("inner_sea_races", 71),
                 ("horror_adventures", 43),
                 // Core Essentials' Aasimar and Tiefling heritage traits
                 // (race-trait lane round 4): 16 heritage selectors + the 48
@@ -1688,7 +1739,7 @@ mod tests {
         assert_eq!(
             total,
             340,
-            "156 ARG + 5 Monster Codex + 72 Inner Sea Races + 43 Horror Adventures + 64 Core \
+            "156 ARG + 5 Monster Codex + 71 Inner Sea Races + 43 Horror Adventures + 64 Core \
              Essentials heritage records. This total sits alongside the per-book map above \
              and must move with it; round 3 moved the map first and this pin caught the \
              omission, round 4 did the same, and the companion lane hit it a third time in \

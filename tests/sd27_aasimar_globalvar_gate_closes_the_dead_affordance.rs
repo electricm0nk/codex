@@ -314,8 +314,8 @@ fn no_offered_alternate_racial_trait_can_ever_be_refused_for_an_inert_flag() {
         }
     }
     assert_eq!(
-        checked, 283,
-        "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 68 + Horror Adventures' 41 \
+        checked, 282,
+        "ARG's 153 + Monster Codex's 4 + APG's 1 + Inner Sea Races' 67 + Horror Adventures' 41 \
          + Core Essentials' 16 heritages, selectable alternates (SD-29 decisions.md §44, §45, \
          §47, §49). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller \
          corpus"
