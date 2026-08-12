@@ -7604,17 +7604,102 @@ this per book.
 | 7 | Baseline movements are a separate commit | **None made.** `scripts/verify-baselines.env` untouched |
 | 8 | On-screen verification for player-visible families | See **§6** |
 
-### 5. The gate
+### 5. The gate — **`VERIFY_EXIT=0`, `RESULT: PASS`, all 14 stages** (run 4)
 
-`VERIFY_EXIT` and the trap-report audit are recorded in §7 below, written after the run completed.
+Exit code captured by redirecting `verify.sh` to a log and reading `$?` on the very next statement,
+never through a pipe.
 
-### 6. On screen
+```
+passed: 14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib
+            root-full desktop reach frontend-install frontend-test frontend-typecheck clippy
+            class-dump
+root-full : 6244 passed across 543 suites, all 524 tests/*.rs suites executed
+reach     : 25 passed  (was 22 at round 2's close; +2 are this round's, +1 the companion lane's)
+RESULT: PASS
+```
 
-Recorded in §7 below.
+**Four runs, and the three that did not produce this line are reported rather than discarded.**
 
-### 7. Run record
+* **Run 1** was launched on the pre-merge tree and **deliberately abandoned** at `root-full` when
+  `origin/tranche/9` advanced with the companion lane's round 2. `§46.6` rule 2: a gate run that
+  spans a merge is void, because `verify.sh` reads the **working tree, not a commit**. Killing it
+  early was cheaper than believing it.
+* **Run 2**, on the merged tree, **failed `root-full` with three tests** — and finding them is what
+  the run was for. All three are named, attributed and fixed in `37dba464`; see §5b.
+* **Run 3 was killed by SIGTERM**, mid-`root-full` (`cargo exit 143`, **0** suites executed), and
+  `verify.sh` itself died before writing its summary. Proven rather than guessed: there is no exit
+  file, and `/tmp/codex-verify-8tJ2PH/desktop.log` shows a stage that had already passed 439 tests
+  and was never reported. A sibling SD-29 lane was gating on the same box. **`pkill -f verify.sh` is
+  not agent-scoped** — stopping your own void run stops every sibling's too, and this round did
+  exactly that to its own run 1 twenty minutes earlier. `incident` emitted with
+  `recurrence-key pkill-verify-hits-every-agent`. ~25 minutes.
+* **Run 4 is the result**, on `64e946cb`, with nothing in the tree changed between runs 3 and 4.
 
-_(completed at cycle end; see the appended block)_
+**Baseline notes, deliberately not acted on** (DoD item 7). Run 4 printed three stale baselines
+(`ROOT_LIB` 1659→1679, `ROOT_FULL` 6224→6244, `DESKTOP` 438→439). They are notes, not failures, and
+under two lanes landing tests concurrently any value this round wrote would be stale before it was
+read. The companion lane's `86aab1a3` then updated all three to **exactly** the numbers run 4
+measured — which is also independent confirmation of run 4's counts from a second lane's gate.
+
+**Run 5, on the post-merge tree, is recorded in §7.** `86aab1a3` is not docs-only — it carries
+`verify-on-screen.sh` and `scripts/verify-baselines.env` — so `§46.6` rule 2 applies and run 4's
+green attests to `64e946cb`, not to the merged tree.
+
+### 5b. The three reds run 2 found — two this round's, one inherited
+
+| test | whose | fix |
+|---|---|---|
+| `pi_table_sweep::rules_tables_carry_no_unbaselined_product_identity_hits` | **this round's** | The generated header, this cycle's module doc and its exclusion tests all spelled the Product Identity names they were recording the removal of. The sweep does not read intent and is right not to. Every checked-in citation is now `FILE:LINE` — which is also the stronger pin, surviving an upstream rename of the very name that makes the row excluded. `reach_gate`'s ISWG test now checks against the **live** `PI_BLACKLIST_TERMS` rather than a hand-written slug list. This is `§47.3`'s finding in a new place |
+| `v06_work_inventory::sd30_campaign_setting_books_appear_…` | **this round's** | `inner_sea_world_guide` is `in_scope` now that 23 of its units are grounded. Added to `SD29_INGESTED_CAMPAIGN_SETTING_BOOKS` as its own stated exemption, exactly as `§47.3` added `inner_sea_races` — not by relaxing the check |
+| `v06_work_inventory::every_corpus_book_appears_in_the_inventory` | **inherited, proven** | It asserted `unstarted_books.len() >= 15` — a floor this bundle's own success walks through. `git show 5164bf36:docs/work-inventory.json` reads **12** un-ingested books with none of this round's changes present: it went red when the companion lane grounded three bestiaries. **A test failing for a job well done.** The property needs no constant — *no in-scope book is enumerated and then left unmeasured* — and is now checked per book |
+
+### 6. On screen — **PASS, two records**
+
+Via the checked-in harness, `RUN_DESKTOP_AGENT=sd29-monster-r5`, both machine-verdicted by
+select-all/copy off the live webview rather than by a human re-reading an image:
+
+```
+verify-on-screen.sh --family monster --record "Aluum" \
+  --expect "Aluum" --expect "Inner Sea World Guide" --expect "Soul Shriek"
+verify-on-screen.sh --family monster --record "Calikang" \
+  --expect "Calikang" --expect "Inner Sea World Guide" --expect "Suspend Animation"
+```
+
+Artifacts: `artifacts/SD29-E5-F2-004/item8/iswg-aluum.{png,verify.md}` and
+`iswg-calikang.{png,verify.md}`.
+
+**The Aluum capture proves both of this round's mechanism fixes on a player's screen at once.** Its
+rendered line reads:
+
+```
+32:Speed 30 ft. · Inner Sea World Guide p.306 · Hit dice Construct:14
+38:Soul Shriek — Special Attack (Su)p.307
+```
+
+`p.306` is the citation `gen_book_cache` verified against `iswg_races.lst:10` — the line number that
+also names a different creature in `iswg_races_bestiary.lst`, and the reason `source_file` exists.
+`Soul Shriek` is an ability reached through the chassis link, rendered underneath its owning monster,
+which is the property that makes an *un*owned ability unreachable.
+
+The catalog blurb in the same capture derives its book list from the served rows and reads *"…and
+Inner Sea World Guide — 80 monsters"*, matching the re-derived grounded figure exactly.
+
+### 6b. DoD item 3 — trap report
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit    # AUDIT_EXIT=0
+259 trap rows, 0 defects: "every ingested record's citation agrees with the line it names."
+```
+
+Cycle mechanics step 0b, this book specifically:
+`cargo run --locked --bin v06_corpus_trap_report -- <iswg dir>` → exit 0. `iswg_abilities_race.lst`
+carries **30 DECLARES and 21 `.MOD`** rows — the `.MOD` overlays the inventory correctly excludes
+from the unit set, which is exactly why the transcriber's unit set is the inventory and never a line
+count. 77 namespaces, the largest at 3 rows each.
+
+### 7. Run record — gate run 5, on the post-merge tree
+
+_(appended below)_
 
 ## Cycle — epic-7-companion-lane-extend, ROUND 2 (SD29-E7-F2-003)
 
