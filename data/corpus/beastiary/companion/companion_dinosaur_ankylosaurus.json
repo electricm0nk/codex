@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:companion:companion_advancement_dinosaur_ankylosaurus",
+      "beastiary:companion:ankylosaurus_stun"
+    ],
+    "corpus_key": "Companion (Dinosaur (Ankylosaurus))",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "beastiary:companion:companion_dinosaur_ankylosaurus",
+    "monster_class": "Companion:2",
+    "name": "Companion (Dinosaur (Ankylosaurus))",
+    "natural_armor": 9,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Tail"
+      }
+    ],
+    "race_subtype": "AnimalCompanionDinosaur",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.83",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": -2
+      },
+      {
+        "ability": "CHA",
+        "amount": -2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "AnimalCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_companion.lst",
+    "sha256": "3fe313f8e8a6327555fb01d34bf2cf2509d638a3005563d66fb1c81d8a9b715c",
+    "line": 8,
+    "record_key": "Companion (Dinosaur (Ankylosaurus))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

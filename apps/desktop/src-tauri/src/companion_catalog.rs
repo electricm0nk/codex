@@ -68,6 +68,9 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "bestiary_5" => "B5",
         "bestiary_6" => "B6",
         "bestiary_2" => "B2",
+        // SD-29 Epic 7 round 3. The corpus directory is the misspelled
+        // `beastiary`; the wire code is the book's real shorthand.
+        "beastiary" => "B1",
         other => panic!(
             "companion_catalog: no wire code for companion book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."

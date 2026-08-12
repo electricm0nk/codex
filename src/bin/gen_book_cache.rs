@@ -1242,6 +1242,46 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         .as_ref()
         .and_then(|v| v.get("license_declaration"))
         .cloned();
+    // The declaration was preserved from the first companion book that landed
+    // in an already-ingested directory; the SCREENING NOTE was not, and that
+    // half is the one that carries history. `data/corpus/beastiary`'s note
+    // stated three earlier passes by name, date and record count (E2.0.9's 45,
+    // `ingest_races`' 119, SD28-E16's 5) and this generator replaced all of it
+    // with a sentence about its own 59 rows — leaving a file whose
+    // `records_processed` said 228 and whose method note accounted for 59.
+    //
+    // It had already happened twice unnoticed, on `monster_codex` and
+    // `horror_adventures`, in this lane's round 1 (`decisions.md §54.4`). The
+    // note is append-only from here: every pass that put records on disk stays
+    // named, and re-running this generator over a book it already wrote
+    // re-composes onto the same prior text rather than stacking a copy.
+    let prior_note = prior
+        .as_ref()
+        .and_then(|v| v.get("screening_method_note"))
+        .and_then(|v| v.as_str())
+        .map(str::to_owned);
+    let this_pass = format!(
+        "PASS -- {} (companion lane), {ingested_at}: every field of the {} records this run wrote ({creature_written} companion creatures + {ability_written} companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is {records_processed}: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
+        spec.classified_by_cycle,
+        creature_written + ability_written
+    );
+    let screening_method_note = match prior_note {
+        // Idempotent: a re-run of the same cycle replaces its own trailing
+        // pass rather than appending a second copy of it, so regenerating is
+        // still a no-op the way `v06_work_inventory`'s second run is.
+        Some(previous) => {
+            let head = match previous.find(&format!("PASS -- {} (companion lane)", spec.classified_by_cycle)) {
+                Some(at) => previous[..at].trim_end().to_string(),
+                None => previous.trim_end().to_string(),
+            };
+            if head.is_empty() {
+                this_pass
+            } else {
+                format!("{head} {this_pass}")
+            }
+        }
+        None => this_pass,
+    };
     let license_json = serde_json::json!({
         "book": book_id,
         "license_declaration": prior_declaration.unwrap_or_else(|| serde_json::json!({
@@ -1256,10 +1296,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
             "blacklist_version_reviewed": "2026-07-27"
         },
-        "screening_method_note": format!(
-            "Every field of the {} records this run wrote ({creature_written} companion creatures + {ability_written} companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is {records_processed}: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see.",
-            creature_written + ability_written
-        ),
+        "screening_method_note": screening_method_note,
         "redistribution_posture": "ogl-notice-attached",
         "classified_at": ingested_at,
         "classified_by_cycle": spec.classified_by_cycle,
@@ -1368,6 +1405,23 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_2.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 2, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-003",
+    },
+    // SD-29 Epic 7 round 3 (`SD29-E7-F2-004`). Bestiary 1. `corpus_book` is
+    // `beastiary` because it names the `data/corpus/` directory this generator
+    // writes into, and Bestiary 1's has been spelled that way since SD-22;
+    // `book_relative` is `bestiary` because that is the PCGen source directory.
+    // The two differ for exactly one book in this table and the difference is
+    // load-bearing: writing `data/corpus/bestiary/` would split the book's
+    // corpus in half, giving it a second LICENSE.json and a monster/equipment
+    // half the new companion half could never be judged against.
+    CompanionBookSpec {
+        corpus_book: "beastiary",
+        book_relative: "pathfinder/paizo/roleplaying_game/bestiary",
+        races_lst: "b1_races_companion.lst",
+        abilities_lst: "b1_abilities_companion.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-004",
     },
 ];
 

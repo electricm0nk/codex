@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "corpus_key": "Lizard Monitor ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite--injury; save Fort DC %1; onset 1 minute; frequency 1/hour for 6 hours; effect 1d2 Dexterity damage; cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:companion:lizard_monitor_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:companion:companion_lizard_monitor"
+    ],
+    "record_type": "ability",
+    "source_page": "p.194",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
+    "line": 37,
+    "record_key": "Lizard Monitor ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

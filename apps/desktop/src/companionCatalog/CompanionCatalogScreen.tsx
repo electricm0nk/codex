@@ -47,6 +47,7 @@ export const BOOK_LABELS: Record<string, string> = {
   B5: 'Bestiary 5',
   B6: 'Bestiary 6',
   B2: 'Bestiary 2',
+  B1: 'Bestiary 1',
 };
 
 /** `'ISC'` -> `'Inner Sea Combat'`; an unmapped code falls through as itself. */

@@ -1,0 +1,92 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:companion:giant_frog_tongue",
+      "beastiary:companion:companion_advancement_frog_giant"
+    ],
+    "corpus_key": "Companion (Frog (Giant))",
+    "external_ability_refs": [
+      "Grab",
+      "Pull",
+      "Scent"
+    ],
+    "key": "beastiary:companion:companion_frog_giant",
+    "monster_class": "Companion:2",
+    "name": "Companion (Frog (Giant))",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "0",
+        "name": "Tongue"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.135",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 4
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -9
+      },
+      {
+        "ability": "WIS",
+        "amount": -2
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "AnimalCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races_companion.lst",
+    "sha256": "3fe313f8e8a6327555fb01d34bf2cf2509d638a3005563d66fb1c81d8a9b715c",
+    "line": 17,
+    "record_key": "Companion (Frog (Giant))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
