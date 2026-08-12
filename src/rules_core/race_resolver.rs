@@ -156,6 +156,18 @@ pub struct RaceTraitRecord {
     /// [`TraitRole::FlagGranted`] rows that arrive through the positive
     /// `PREFACT` gate instead.
     pub granted_by_trait_key: Option<String>,
+    /// True when this record's envelope says its `description` was **redacted**
+    /// as Product Identity (`pi_field == "description"` and
+    /// `pi_marker == "redacted"`).
+    ///
+    /// Read off the envelope at load time because [`RaceTraitRecord`] otherwise
+    /// drops it, and [`RaceTraitRecord::render_description`] cannot honour a
+    /// redaction it cannot see. That was a real leak: the PI screen replaces
+    /// `data.description` with `[redacted PI]` but leaves `raw_tokens`' `DESC:`
+    /// values verbatim, and the renderer reads the tokens. Twelve Inner Sea
+    /// Races records were redacted on disk and rendered un-redacted on the
+    /// picker screen.
+    pub description_pi_redacted: bool,
     pub data: RaceTraitCacheData,
     pub source_path: String,
     pub source_line: u32,
@@ -270,7 +282,21 @@ impl RaceTraitRecord {
     ///
     /// Falls back to the stored description for a record carrying no `DESC:`
     /// token, so this never returns less than the record already shipped.
+    ///
+    /// **A PI-redacted description is never re-rendered.** The screening pass
+    /// replaces `data.description` with `[redacted PI]` and deliberately leaves
+    /// `raw_tokens` verbatim — the raw tokens are the provenance record, not the
+    /// player-facing text. Rendering from them would restore on screen exactly
+    /// the Product Identity the screen removed, which is what this repo shipped
+    /// for 12 Inner Sea Races records until this branch was added. The redacted
+    /// marker is returned instead: less text, and the only correct text.
     pub fn render_description(&self, values: &PcgenDisplayValues) -> RenderedPcgenDesc {
+        if self.description_pi_redacted {
+            return RenderedPcgenDesc {
+                text: self.data.description.clone().unwrap_or_default(),
+                dropped_args: Vec::new(),
+            };
+        }
         let tokens: Vec<&str> = self
             .data
             .raw_tokens
@@ -581,6 +607,8 @@ impl RaceCorpus {
                 // Cross-record, so not knowable here; filled by
                 // `load_race_corpus`'s post-load pass.
                 granted_by_trait_key: None,
+                description_pi_redacted: record.pi_field.as_deref() == Some("description")
+                    && record.pi_marker.as_deref() == Some(crate::rules_core::shape_b_v1::PI_MARKER_REDACTED),
                 source_path,
                 source_line,
                 data: record.data,
@@ -2222,5 +2250,50 @@ mod tests {
             .find(|t| t.type_tokens.iter().any(|tt| tt == "Racial Ability Scores"))
             .expect("ability scores trait");
         assert_eq!(ability.declared_bonus_magnitudes(), vec![2, -2]);
+    }
+
+    /// A PI-redacted description never reaches a rendered string, in either
+    /// direction: every record the envelope marks redacted renders its marker,
+    /// and no record that renders the marker is unmarked.
+    ///
+    /// **This is a leak that shipped, not a hypothetical.** `pi_screening`
+    /// replaces `data.description` with `[redacted PI]` and leaves the record's
+    /// `raw_tokens` verbatim on purpose -- they are the provenance record. But
+    /// `render_description` read the tokens, so 12 Inner Sea Races records were
+    /// redacted on disk and un-redacted on the alternate-trait picker screen.
+    /// The denominator here is the disk, not a list: a book ingested later whose
+    /// screen redacts a description is covered without editing this test.
+    ///
+    /// The 12 are re-derived from the corpus rather than transcribed --
+    /// count the `race_trait` records whose envelope `pi_marker` is
+    /// `"redacted"` under `data/corpus/`; SD-29 `decisions.md` §45.2 records
+    /// the same figure for Inner Sea Races, and no other book carries one.
+    #[test]
+    fn a_pi_redacted_description_is_never_rendered_back_into_readable_prose() {
+        let corpus = all_books();
+        let mut redacted = 0usize;
+        for race_key in corpus.race_keys() {
+            for record in corpus.traits_for(race_key) {
+                let rendered = record
+                    .render_description(&record.display_values_with(&FeatDisplayValueDeltas::default()));
+                if record.description_pi_redacted {
+                    redacted += 1;
+                    assert_eq!(
+                        rendered.text,
+                        crate::rules_core::shape_b_v1::REDACTED_PI_MARKER,
+                        "{}: a redacted description rendered readable prose",
+                        record.data.key
+                    );
+                } else {
+                    assert_ne!(
+                        rendered.text,
+                        crate::rules_core::shape_b_v1::REDACTED_PI_MARKER,
+                        "{}: renders the redaction marker without being marked redacted",
+                        record.data.key
+                    );
+                }
+            }
+        }
+        assert_eq!(redacted, 12, "the redacted population the corpus really carries");
     }
 }

@@ -965,30 +965,51 @@ mod tests {
         // *variant* selector (PCGen models it through a `Goblin Variant`
         // ABILITYPOOL that this engine has no mechanism for), recorded as a
         // finding in `reach_gate`'s OPEN_FINDINGS rather than hidden.
+        // **Moved by Inner Sea Races, with its per-race split derived rather
+        // than read off the live menu** (SD-29 Epic 5 extend round 2 found this
+        // table still at its pre-ISR values: the aggregate pin above was moved
+        // to 226 by `c8e2d6ad` and this per-race one, later in the same test
+        // function, never executed until the aggregate passed). The third
+        // column is ISR's own contribution, derived from the committed records
+        // by the flag each one really sets:
+        //
+        // ```
+        // python3 -c "
+        // import json,glob,collections
+        // c=collections.Counter()
+        // for p in glob.glob('data/corpus/inner_sea_races/race_trait/**/*.json', recursive=True):
+        //     d=json.load(open(p))['data']
+        //     if d.get('sets_replace_flags'): c[d['race_key']]+=1
+        // print(sorted(c.items()), sum(c.values()))"
+        // ```
+        //
+        // -> 68, split Aasimar 2, Drow 1, Duergar 1, Dwarf 7, Elf 8, Gnome 6,
+        // Goblin 1, Half-Elf 7, Half-Orc 7, Halfling 7, Hobgoblin 1, Human 12,
+        // Kobold 1, Merfolk 1, Orc 1, Svirfneblin 1, Tengu 1, Tiefling 3.
         let expected: &[(&str, usize)] = &[
-            ("Aasimar", 9),
-            ("Drow", 6),
-            ("Duergar", 7),
-            ("Dwarf", 17),
-            ("Elf", 13),
-            ("Gnome", 12),
-            ("Goblin", 9),
-            ("HalfElf", 9),
-            ("HalfOrc", 15),
-            ("Halfling", 13),
-            ("Hobgoblin", 9),
-            ("Human", 15),
-            ("Kobold", 4),
-            ("Merfolk", 3),
-            ("Orc", 4),
-            ("Svirfneblin", 2),
-            ("Tengu", 4),
-            ("Tiefling", 7),
+            ("Aasimar", 11),
+            ("Drow", 7),
+            ("Duergar", 8),
+            ("Dwarf", 24),
+            ("Elf", 21),
+            ("Gnome", 18),
+            ("Goblin", 10),
+            ("HalfElf", 16),
+            ("HalfOrc", 22),
+            ("Halfling", 20),
+            ("Hobgoblin", 10),
+            ("Human", 27),
+            ("Kobold", 5),
+            ("Merfolk", 4),
+            ("Orc", 5),
+            ("Svirfneblin", 3),
+            ("Tengu", 5),
+            ("Tiefling", 10),
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 158);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 226);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1197,7 +1218,11 @@ mod tests {
             aasimar.standard_traits.iter().all(|row| row.suppressed_by_flag.is_some()),
             "every Aasimar standard row carries its gate"
         );
-        assert_eq!(aasimar.alternates.len(), 9);
+        // 9 ARG alternates + Inner Sea Races' 2 (`Crusading Magic`,
+        // `Lost Promise`), by the derivation quoted on the per-race table
+        // above. The *standard* column does not move: ISR declares no racial
+        // default, so the nine gated standard rows are still nine.
+        assert_eq!(aasimar.alternates.len(), 11);
         for alternate in &aasimar.alternates {
             assert!(!alternate.replaces.is_empty(), "{} really replaces something", alternate.key);
         }
@@ -1218,10 +1243,28 @@ mod tests {
             .collect();
         // Deduped: SD-29's Monster Codex pilot added a SECOND alternate setting
         // this same flag (`Duergar ~ Twilight-Touched`, `mc_abilities_race.lst:17`)
-        // alongside ARG's `Duergar ~ Blood Enmity`, so the flag is now named by
-        // two rows and grants the same one row twice. Two setters granting one
-        // record is the corpus's own shape, not a duplicate record -- which is
-        // exactly why the setters are asserted too, rather than only the target.
+        // alongside ARG's `Duergar ~ Blood Enmity`, and its round-2 Inner Sea
+        // Races ingest added a THIRD (`Duergar ~ Magical Taskmaster`), so the
+        // flag is now named by three rows that all grant the same one row. Three
+        // setters granting one record is the corpus's own shape, not a duplicate
+        // record -- which is exactly why the setters are asserted too, rather
+        // than only the target, and why this list grows with each book instead
+        // of the target list growing.
+        //
+        // Derived from the committed records rather than read off the menu:
+        //
+        // ```
+        // python3 -c "
+        // import json,glob
+        // for p in glob.glob('data/corpus/*/race_trait/**/*.json', recursive=True):
+        //     d=json.load(open(p))['data']
+        //     if 'Duergar_ReplaceSLAInvisibility' in (d.get('sets_replace_flags') or []):
+        //         print(p.split('/')[2], d['key'])"
+        // ```
+        //
+        // -> `monster_codex Duergar ~ Twilight-Touched`,
+        //    `advanced_race_guide Duergar ~ Blood Enmity`,
+        //    `inner_sea_races Duergar ~ Magical Taskmaster`.
         let setters: BTreeSet<&str> = duergar
             .alternates
             .iter()
@@ -1232,13 +1275,17 @@ mod tests {
             .collect();
         assert_eq!(
             setters,
-            BTreeSet::from(["Duergar ~ Blood Enmity", "Duergar ~ Twilight-Touched"]),
-            "both books' setters of Duergar_ReplaceSLAInvisibility"
+            BTreeSet::from([
+                "Duergar ~ Blood Enmity",
+                "Duergar ~ Magical Taskmaster",
+                "Duergar ~ Twilight-Touched",
+            ]),
+            "all three books' setters of Duergar_ReplaceSLAInvisibility"
         );
         assert_eq!(
             grants.iter().copied().collect::<BTreeSet<&str>>(),
             BTreeSet::from(["Duergar ~ Spell-Like Ability ~ Enlarge Person"]),
-            "and both grant the one row the flag gates"
+            "and all three grant the one row the flag gates"
         );
     }
 
@@ -1618,11 +1665,22 @@ mod tests {
                 }
             }
         }
-        // Exactly one, and it is the record the defect was reported against.
-        // Its stored prose is the ingest-time collapse of a row whose `%N`
+        // Exactly two, and each is the record its defect was reported against.
+        // Their stored prose is the ingest-time collapse of a row whose `%N`
         // arguments the ingest could not finish, so it shipped reading "Three
         // times per day… they only gain a bonus" with the magnitudes simply
         // absent. Rendering restores them for every player, character or not.
+        //
+        // **This list stayed at two through the Inner Sea Races ingest, and
+        // that is the assertion, not an accident.** ISR shipped 12 records
+        // whose `description` the PI screen replaced with `[redacted PI]` while
+        // leaving their `DESC:` tokens verbatim, and this renderer reads the
+        // tokens — so all 12 rendered *un-redacted* and appeared here, which is
+        // how the leak was found (SD-29 Epic 5 extend round 2, attributing an
+        // inherited red). `RaceTraitRecord::description_pi_redacted` now short-
+        // circuits the render for a redacted description, so a redacted record
+        // renders its marker and never re-enters this list. A future ingest
+        // that redacts a description and shows it anyway lands back here.
         assert_eq!(
             changed,
             vec!["Oversized Goblin", "Halfling ~ Adaptable Luck"],
