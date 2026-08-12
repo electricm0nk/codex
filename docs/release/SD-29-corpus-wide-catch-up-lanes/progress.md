@@ -8221,18 +8221,51 @@ was produced at a time it was not.
 
 ### 6. Gate
 
-`./scripts/verify.sh` (FULL, not `--quick`), exit code captured directly and never through a pipe:
+`./scripts/verify.sh` (FULL, not `--quick`), exit code captured directly — assigned from `$?` on the
+line after the command, never read through a pipe
+(`/tmp/.../run-gate.sh`, `verify-exit.txt`):
 
 ```
-VERIFY_EXIT=<FILLED IN BELOW>
+VERIFY_EXIT=0        RESULT: PASS        run 3, at tree 99df2e36
 ```
+
+**All 14 stages green**, and `root-full` states its own coverage rather than only its count:
+
+```
+PASS preflight-disk · PASS pi-sweep (10 hits, 10 baseline rows) · PASS audit-selftest (28)
+PASS reclaim-selftest (10) · PASS driver-selftest (7) · PASS root-lib (1692)
+PASS root-full (6259 passed across 544 suites, all 525 tests/*.rs suites executed)
+PASS desktop (441) · PASS reach (26) · PASS frontend-install · PASS frontend-test (99/99)
+PASS frontend-typecheck · PASS clippy (root:54 desktop:7 warnings, 0 errors) · PASS class-dump (31/31)
+```
+
+**Three runs, and the two that were not green are recorded rather than dropped**, because a receipt
+that reports only the passing run is reporting a filtered sample:
+
+| run | result | why |
+|---|---|---|
+| 1 | killed | `pi-sweep` RED on the monster lane's `bestiary_2/mod.rs` doc comments (§8d). Killed mid-`root-full` once the tree moved under it rather than left to produce a verdict about a tree that no longer existed |
+| 2 | `VERIFY_EXIT=1` | `root-full` the **only** red stage, with three failures, **all of them this round's**: the `ingest_race_traits` total pin `340 != 339` (the map moved, the constant did not — the third consecutive round to make exactly that mistake, which is why the assertion's own message warns about it), and both books' `LICENSE.json` restating counts the drop and the new redactions had moved. Every other stage green |
+| 3 | **`VERIFY_EXIT=0`** | after those three fixes. This is the gate record |
+
+**Run 2's failures were the gate doing its job on this round's own work**, not environmental, and are
+fixed at the source: a `LICENSE.json` is an OGL redistribution record, so its own failure message
+instructs restating the number rather than adjusting the test, and both books' *screening notes* were
+rewritten with the numbers so the prose and the integer cannot drift apart.
+
+**One concurrency note the branch protocol does not cover.** The monster lane's round-4 gate hit the
+identical three failures at the same time and fixed them independently (`39f87cf2`), reaching the
+same four numbers — 339, 71, 18, 9 — by its own derivation. The merge conflicted on both
+`LICENSE.json` files and was resolved in favour of this lane's text, which explains the *mechanism*
+behind each number; the numbers themselves were already agreed by two independent derivations, which
+is better evidence than either alone.
 
 Component runs on the way there, each green before the full gate was launched:
 
-* `cargo test --locked --lib` → **1686 passed, 0 failed**
+* `cargo test --locked --lib` → **1686 passed, 0 failed** (1692 by run 3, after the merges)
 * `cargo test --locked --tests` (root integration) → **exit 0**
 * `cargo test --locked --bin codex-desktop` (the separate `apps/desktop/src-tauri` workspace the root
-  sweep does not reach) → **439 passed, 0 failed**
+  sweep does not reach) → **439 passed, 0 failed** (441 by run 3)
 
 ### 7. The remainder — this card is still DRY, and the residue gains a class
 
