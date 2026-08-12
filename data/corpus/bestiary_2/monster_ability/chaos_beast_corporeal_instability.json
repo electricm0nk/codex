@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Chaos Beast ~ Corporeal Instability",
+    "delivery": "Extraordinary",
+    "description": " Claw - contact (curse); save Fort DC %1; effect amorphous body and 1 Wisdom drain per round (see below); cure 3 consecutive saves.  A creature cursed with an amorphous body becomes a spongy, shapeless mass. Unless the victim manages to control the effect (see below), its shape constantly melts, flows, writhes, and boils. An affected creature is unable to hold or use any item. Clothing, armor, helmets, and rings become useless. Large items worn or carried - armor, backpacks, even shirts - hamper more than help, reducing the victim's Dexterity score by 4. Speed is reduced to 10 feet or one-quarter normal, whichever is less. The victim gains the amorphous quality, but cannot cast spells or use magic items, and it attacks blindly, unable to distinguish friend from foe (?4 penalty on attack rolls and a 50%% miss chance, regardless of the attack roll).  A victim can temporarily regain its own shape by taking a standard action to attempt a DC 15 Will save (this check DC does not vary for a chaos beast with different Hit Dice or ability scores). A success reestablishes the creature's normal form for 1 minute. Spells that change the victim's shape (such as alter self, beast shape, elemental body, and polymorph) do not remove the curse, but hold the creature in a stable form (which might not be its own form, depending on the spell) and prevent additional Wisdom drain for the duration of the spell; shapechange and stoneskin have a similar effect. The victim takes 1 point of Wisdom drain from mental shock every round that it ends its turn in an amorphous shape - upon being drained to 1 Wisdom, further Wisdom drain ceases and the amorphous body effect is permanent until removed via magic (no further number of saving throws can cure the condition at this time).",
+    "description_variables": [
+      "ChaosBeastCorporealInstabilityDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:chaos_beast_corporeal_instability",
+    "name": "Corporeal Instability",
+    "owners": [
+      "bestiary_2:monster:chaos_beast"
+    ],
+    "source_page": "p.54",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 234,
+    "record_key": "Chaos Beast ~ Corporeal Instability"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

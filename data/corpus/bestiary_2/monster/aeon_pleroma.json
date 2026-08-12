@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:aeon_energy_touch",
+      "bestiary_2:monster_ability:aeon_sphere_of_creation",
+      "bestiary_2:monster_ability:aeon_sphere_of_oblivion"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Aeon (Pleroma)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Fast Healing",
+      "Flight Maneuverability",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:aeon_pleroma",
+    "monster_class": "Outsider (Fort/Will):24",
+    "name": "Aeon (Pleroma)",
+    "natural_attacks": [],
+    "race_subtype": "Aeon|Extraplanar",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.12",
+    "speeds": [
+      {
+        "feet": 0,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 33,
+    "record_key": "Aeon (Pleroma)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

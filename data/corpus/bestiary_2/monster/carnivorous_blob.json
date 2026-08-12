@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:carnivorous_blob_absorb_flesh",
+      "bestiary_2:monster_ability:carnivorous_blob_con_drain"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Carnivorous Blob",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Carnivorous Blob ~ Reactive Strike",
+      "Carnivorous Blob ~ Split",
+      "Constrict",
+      "Grab ~ Slam",
+      "Immunity to Acid",
+      "Resistance to Electricity",
+      "Resistance to Fire",
+      "Vulnerability to Cold"
+    ],
+    "key": "bestiary_2:monster:carnivorous_blob",
+    "monster_class": "Ooze:16",
+    "name": "Carnivorous Blob",
+    "natural_attacks": [
+      {
+        "damage_dice": "8d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Ooze",
+    "size": "C",
+    "source_page": "p.51",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 160,
+    "record_key": "Carnivorous Blob"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

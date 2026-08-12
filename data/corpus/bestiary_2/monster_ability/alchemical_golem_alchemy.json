@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Alchemical Golem ~ Alchemy",
+    "delivery": "Extraordinary",
+    "description": "When an alchemical golem strikes a foe, the attack has an additional random effect, chosen from the options below.  The attack can either deal 1d6 points of acid, cold, electricity, or fire damage, or cause the target to become sickened (Fortitude DC %1 negates) or entangled (Reflex %1 negates) for 1d4 rounds.",
+    "description_variables": [
+      "AlchemicalGolemAlchemyDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:alchemical_golem_alchemy",
+    "name": "Alchemy",
+    "owners": [
+      "bestiary_2:monster:golem_alchemical"
+    ],
+    "source_page": "p.135",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 594,
+    "record_key": "Alchemical Golem ~ Alchemy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

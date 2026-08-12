@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Mithral Golem ~ Fluid Form",
+    "delivery": "Extraordinary",
+    "description": "A mithral golem's body can take on a form like liquid silver as a swift action.  While in this form, the mithral golem's reach increases to 30 feet and its DR becomes 15/bludgeoning and adamantine.  A mithral golem in this form can also move through any crack or hole in a wall or door, no matter how small, without impeding its movement.  A mithral golem can maintain this form for up to 10 rounds per day, but these rounds do not need to be consecutive.  Reverting to its normal form is a free action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:mithral_golem_fluid_form",
+    "name": "Fluid Form",
+    "owners": [
+      "bestiary_2:monster:golem_mithral"
+    ],
+    "source_page": "p.139",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 620,
+    "record_key": "Mithral Golem ~ Fluid Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

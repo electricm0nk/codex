@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:wendigo_cold",
+      "bestiary_2:monster_ability:wendigo_dream_haunting",
+      "bestiary_2:monster_ability:wendigo_howl",
+      "bestiary_2:monster_ability:wendigo_rend",
+      "bestiary_2:monster_ability:wendigo_wendigo_psychosis",
+      "bestiary_2:monster_ability:wendigo_wind_walk"
+    ],
+    "challenge_rating": "17",
+    "corpus_key": "Wendigo",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Grab ~ Bite",
+      "Immunity to Cold",
+      "Immunity to Fear",
+      "No Breath",
+      "Regeneration ~ Fire",
+      "Telepathy ~ Miles",
+      "Vulnerability to Fire"
+    ],
+    "key": "bestiary_2:monster:wendigo",
+    "monster_class": "Outsider (Fort/Ref):18",
+    "name": "Wendigo",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Cold|Native",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.281",
+    "speeds": [
+      {
+        "feet": 120,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 901,
+    "record_key": "Wendigo"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

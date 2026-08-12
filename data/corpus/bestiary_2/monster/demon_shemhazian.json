@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:shemhazian_paralyzing_gaze",
+      "bestiary_2:monster_ability:shemhazian_strength_drain"
+    ],
+    "challenge_rating": "16",
+    "corpus_key": "Demon (Shemhazian)",
+    "external_ability_refs": [
+      "Detect Good ~ Constant",
+      "Fly ~ Constant",
+      "Rend",
+      "Scent",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:demon_shemhazian",
+    "monster_class": "Outsider (Fort/Will):17",
+    "name": "Demon (Shemhazian)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d12",
+        "name": "Pincer"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "G",
+    "source_page": "p.80",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 268,
+    "record_key": "Demon (Shemhazian)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

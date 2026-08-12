@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Pech Magic",
+    "delivery": "SpellLike",
+    "description": "Four pechs working together can cast wall of stone once per day.  Eight pechs working together can cast stone to flesh (DC 17) once per day.  These spell-like abilities function at CL 10th.  Each pech must use a full-round action to take part in the casting.  The save DCs are modified by the highest Charisma modifier in the group.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:pech_magic",
+    "name": "Pech Magic",
+    "owners": [
+      "bestiary_2:monster:pech"
+    ],
+    "source_page": "p.206",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 930,
+    "record_key": "Pech Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:bubonic_plague_disease"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Tick Swarm",
+    "external_ability_refs": [
+      "Blood Drain",
+      "Distraction ~ Swarm",
+      "No Combat Maneuvers",
+      "Scent",
+      "Swarm Traits",
+      "Tick Swarm ~ Cling"
+    ],
+    "key": "bestiary_2:monster:tick_swarm",
+    "monster_class": "Vermin:16",
+    "name": "Tick Swarm",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d6",
+        "name": "Swarm"
+      }
+    ],
+    "race_subtype": "Swarm",
+    "race_type": "Vermin",
+    "size": "F",
+    "source_page": "p.265",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 845,
+    "record_key": "Tick Swarm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

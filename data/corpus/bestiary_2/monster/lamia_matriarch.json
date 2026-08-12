@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:lamia_wisdom_drain_matriarch"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Lamia Matriarch",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Change Shape ~ Lama Matriarch",
+      "Immunity to Mind-Affecting Effects",
+      "Lamia Matriarch ~ Spells",
+      "Undersized Weapons"
+    ],
+    "key": "bestiary_2:monster:lamia_matriarch",
+    "monster_class": "Monstrous Humanoid:12",
+    "name": "Lamia Matriarch",
+    "natural_attacks": [
+      {
+        "damage_dice": "0",
+        "name": "Touch"
+      }
+    ],
+    "race_subtype": "Shapechanger",
+    "race_type": "Monstrous Humanoid",
+    "size": "L",
+    "source_page": "p.175",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      },
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 569,
+    "record_key": "Lamia Matriarch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

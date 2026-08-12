@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Neh-Thalggu ~ Brain Collection",
+    "delivery": "Extraordinary",
+    "description": "A neh-thalggu can store up to seven  humanoid brains and use them to enhance its knowledge and power.  Each stored brain grants a neh-thalggu a cumulative +1 insight bonus to AC, concentration checks, and Knowledge checks.  A neh-thalggu can extract a brain from a helpless opponent with a coup de grace attack, or as a standard action from a body that has been dead for no more than 1 minute.  A neh-thalggu that has fewer than seven grains gains one negative level for each missing brain.  These negative levels can never become permanent, but they can only be removed by replacing one of its collected brains.  The stats presented here assume a monster with a full collection.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:neh_thalggu_brain_collection",
+    "name": "Brain Collection",
+    "owners": [
+      "bestiary_2:monster:neh_thalggu"
+    ],
+    "source_page": "p.197",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 866,
+    "record_key": "Neh-Thalggu ~ Brain Collection"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

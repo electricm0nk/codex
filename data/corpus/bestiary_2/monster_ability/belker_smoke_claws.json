@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Belker ~ Smoke Claws",
+    "delivery": "Extraordinary",
+    "description": "A belker using its smoke form ability can enter a target's square as a standard action that does not provoke attacks of opportunity.  The target must make a DC %1 Fortitude save or inhale part of the creature.  Smoke inside the victim solidifies into a claw and attacks the target from within, dealing 3d4 points of damage per round as a swift action.  If the target moves, the belker may automatically move with the target (this movement does not count toward the belker's movement and does not provoke attacks of opportunity against the belker).  Each round, the target can attempt another DC %1 Fortitude to cough out the belker's smoke, which ends the smoke claws attack and forces the belker into an adjacent square.  Creatures that do not need to breathe are immune to this attack.",
+    "description_variables": [
+      "BelkerSmokeClawsDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:belker_smoke_claws",
+    "name": "Smoke Claws",
+    "owners": [
+      "bestiary_2:monster:belker"
+    ],
+    "source_page": "p.45",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 190,
+    "record_key": "Belker ~ Smoke Claws"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

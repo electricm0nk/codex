@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Lhaksharut ~ Perfect Prediction",
+    "delivery": "Supernatural",
+    "description": "A lhaksharut gains an insight bonus to AC equal to its Wisdom bonus.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:lhaksharut_perfect_prediction",
+    "name": "Perfect Prediction",
+    "owners": [
+      "bestiary_2:monster:inevitable_lhaksharut"
+    ],
+    "source_page": "p.164",
+    "traits": [
+      "SpecialAttack"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 710,
+    "record_key": "Lhaksharut ~ Perfect Prediction"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

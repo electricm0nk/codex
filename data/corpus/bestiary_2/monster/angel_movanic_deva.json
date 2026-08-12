@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "10",
+    "corpus_key": "Angel (Movanic Deva)",
+    "external_ability_refs": [
+      "Detect Evil ~ Constant",
+      "Flight Maneuverability",
+      "Immunity to Death Effects",
+      "Immunity to Electricity",
+      "Immunity to Energy Drain",
+      "Immunity to Fire",
+      "Movanic Deva ~ Nature's Pacifism",
+      "Movanic Deva ~ Protected Life Force"
+    ],
+    "key": "bestiary_2:monster:angel_movanic_deva",
+    "monster_class": "Outsider (Fort/Ref):12",
+    "name": "Angel (Movanic Deva)",
+    "natural_attacks": [],
+    "race_subtype": "Angel|Extraplanar|Good",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.28",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 84,
+    "record_key": "Angel (Movanic Deva)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

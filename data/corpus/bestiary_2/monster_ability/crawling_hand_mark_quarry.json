@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Crawling Hand ~ Mark Quarry",
+    "delivery": "Supernatural",
+    "description": "A crawling hand is assigned a quarry by anointing the hand with a drop of the intended quarry's blood.  If the hand has no current quarry, it automatically gains the next creature it damages as its quarry.  Once attuned to a target, it becomes aware of the target's location as if under the effect of a continuous locate creature spell.  The hand gains a +1 bonus on all attack rolls, damage rolls, and skill checks made to seek out and destroy the marked quarry.  The mark quarry ability lasts until the quarry or the hand is slain.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:crawling_hand_mark_quarry",
+    "name": "Mark Quarry",
+    "owners": [
+      "bestiary_2:monster:crawling_hand",
+      "bestiary_2:monster:crawling_hand_giant"
+    ],
+    "source_page": "p.59",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 259,
+    "record_key": "Crawling Hand ~ Mark Quarry"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

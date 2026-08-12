@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:faceless_stalker_change_shape",
+      "bestiary_2:monster_ability:faceless_stalker_faceless"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Faceless Stalker",
+    "external_ability_refs": [
+      "Blood Drain",
+      "Compression",
+      "Grab ~ Slam",
+      "Sneak Attack",
+      "Tongues ~ Constant"
+    ],
+    "key": "bestiary_2:monster:faceless_stalker",
+    "monster_class": "Aberration:5",
+    "name": "Faceless Stalker",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Shapechanger",
+    "race_type": "Aberration",
+    "size": "M",
+    "source_page": "p.122",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 366,
+    "record_key": "Faceless Stalker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

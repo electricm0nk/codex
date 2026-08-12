@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:peryton_horrific_critical",
+      "bestiary_2:monster_ability:peryton_shadow_mark"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Peryton",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_2:monster:peryton",
+    "monster_class": "Magical Beast:5",
+    "name": "Peryton",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Gore"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Hoof"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "M",
+    "source_page": "p.207",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 662,
+    "record_key": "Peryton"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

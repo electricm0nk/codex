@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:flame_drake_fire",
+      "bestiary_2:monster_ability:flame_drake_fireball_breath",
+      "bestiary_2:monster_ability:flame_drake_speed_surge"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Drake (Flame)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:drake_flame",
+    "monster_class": "Dragon:6",
+    "name": "Drake (Flame)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Fire",
+    "race_type": "Dragon",
+    "size": "L",
+    "source_page": "p.106",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 303,
+    "record_key": "Drake (Flame)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

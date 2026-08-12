@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "D'ziriak ~ Dazzling Burst",
+    "delivery": "Supernatural",
+    "description": "Once per day, a d'ziriak can cause its body to flare with intense, colorful light as a swift action.  Non-d'ziriaks within a 20-foot radius must make a DC %1 Fortitude save or be dazzled for 1 minute.  After using this ability, the d'ziriak's brilliant glow is extinguished for 24 hours.  This ability is a light effect, and creatures that cannot see are immune to it.",
+    "description_variables": [
+      "DziriakDazzlingBurstDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:d_ziriak_dazzling_burst",
+    "name": "Dazzling Burst",
+    "owners": [
+      "bestiary_2:monster:d_ziriak"
+    ],
+    "source_page": "p.113",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 526,
+    "record_key": "D'ziriak ~ Dazzling Burst"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

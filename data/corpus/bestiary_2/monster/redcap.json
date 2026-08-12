@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:redcap_boot_stomp",
+      "bestiary_2:monster_ability:redcap_heavy_weapons",
+      "bestiary_2:monster_ability:redcap_red_cap"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Redcap",
+    "external_ability_refs": [
+      "Redcap ~ Irreligious"
+    ],
+    "key": "bestiary_2:monster:redcap",
+    "monster_class": "Fey:8",
+    "name": "Redcap",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Kick"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "S",
+    "source_page": "p.233",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 746,
+    "record_key": "Redcap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Banshee ~ Wail",
+    "delivery": "Supernatural",
+    "description": "Once per minute, a banshee may wail as a full-round action.  The wail lasts until the beginning of her next turn.  All creatures within 30 feet of the banshee when she begins her wail, as well as all creatures that end their turn within that radius, must make a DC %1 Fortitude save.  (This save is only required once per wail.)  Creatures under the effects of a fear effect take a -4 penalty on this save.  Creatures that make their saving throw are sickened for 1d6 rounds.  Those that fail take 140 points of damage (as if affected by a CL 14 wail of the banshee).  If a wailing banshee is damaged during a wail, she must make a Will save (DC 15 + damage taken) to maintain the wail; otherwise it ends.  This is a sonic death effect.  Banshee wails are supernaturally powerful, and penetrate the effect of any spell of 3rd level or lower that creates silence.",
+    "description_variables": [
+      "BansheeWailDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:banshee_wail",
+    "name": "Wail",
+    "owners": [
+      "bestiary_2:monster:banshee"
+    ],
+    "source_page": "p.41",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 163,
+    "record_key": "Banshee ~ Wail"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:shining_child_burning_touch",
+      "bestiary_2:monster_ability:shining_child_radiant_armor",
+      "bestiary_2:monster_ability:shining_child_searing_ray"
+    ],
+    "challenge_rating": "12",
+    "corpus_key": "Shining Child",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Immunity to Blindness",
+      "Immunity to Fire",
+      "Immunity to Poison",
+      "Resistance to Cold",
+      "Resistance to Sonic",
+      "Shining Child ~ Blinding Light",
+      "Telepathy"
+    ],
+    "key": "bestiary_2:monster:shining_child",
+    "monster_class": "Outsider (Fort/Will):16",
+    "name": "Shining Child",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d10",
+        "name": "Touch"
+      },
+      {
+        "damage_dice": "10d6",
+        "name": "Searing Ray"
+      }
+    ],
+    "race_subtype": "Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.245",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 787,
+    "record_key": "Shining Child"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

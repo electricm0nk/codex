@@ -81,6 +81,15 @@ const BOOK_BOTD2: &str = "BOTD2";
 /// reachable. See `rules_tables::inner_sea_world_guide` for the derivation.
 const BOOK_ISWG: &str = "ISWG";
 
+/// Bestiary 2, the seventh (SD-29 Epic 5 extend, round 4) and the first that
+/// serves more records than every book before it combined: 316 monsters and 402
+/// abilities against a prior total of 80 and 87. Its wire code is the book's own
+/// `SOURCESHORT:B2`, already used by the companion catalog for the same book's
+/// familiars -- one code per book, both catalogs. Every one of its monster rows
+/// ships; the 64 ability rows that do not are owned by no monster row of this
+/// book. See `rules_tables::bestiary_2` for the derivation.
+const BOOK_B2: &str = "B2";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -102,6 +111,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "book_of_the_damned_volume_1" => "Book of the Damned, Volume 1",
         "book_of_the_damned_volume_2" => "Book of the Damned, Volume 2",
         "inner_sea_world_guide" => "Inner Sea World Guide",
+        "bestiary_2" => "Bestiary 2",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -116,6 +126,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "book_of_the_damned_volume_1" => BOOK_BOTD1,
         "book_of_the_damned_volume_2" => BOOK_BOTD2,
         "inner_sea_world_guide" => BOOK_ISWG,
+        "bestiary_2" => BOOK_B2,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."

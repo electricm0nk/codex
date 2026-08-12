@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:meladaemon_disease",
+      "bestiary_2:monster_ability:meladaemon_hunger"
+    ],
+    "challenge_rating": "11",
+    "corpus_key": "Daemon (Meladaemon)",
+    "external_ability_refs": [
+      "Detect Good ~ Constant",
+      "Detect Magic ~ Constant",
+      "Fly ~ Constant",
+      "Immunity to Critical Hits",
+      "Immunity to Sneak Attacks",
+      "Meladaemon ~ Consumptive Aura",
+      "See Invisibility ~ Constant"
+    ],
+    "key": "bestiary_2:monster:daemon_meladaemon",
+    "monster_class": "Outsider (Ref/Will):14",
+    "name": "Daemon (Meladaemon)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Daemon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.69",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 238,
+    "record_key": "Daemon (Meladaemon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

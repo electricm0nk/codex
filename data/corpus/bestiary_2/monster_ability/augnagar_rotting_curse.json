@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Augnagar ~ Rotting Curse",
+    "delivery": "Supernatural",
+    "description": "Bite - injury; Save Fort DC %1; Frequency 1/day; Effect 1d6 Con drain plus constant stench.  A creature that suffers the rotting curse imparted by an augnagar's bite displays hideous, festering wounds that exude a horrific stench.  This functions as the stench universal monster rule (see page 302), save that it affects all creatures except those that are immune to poison.  The victim of this curse receives no saving throw to avoid becoming sickened by the stench, but other creatures can attempt a DC %1 Fortitude save to negate this condition - those who fail remain sickened as long as they remain within 30 feet of the cursed victim.  The horrific stench also imparts a -8 penalty on all Stealth checks made by the cursed victim.",
+    "description_variables": [
+      "AugnagarRottingCurseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:augnagar_rotting_curse",
+    "name": "Rotting Curse",
+    "owners": [
+      "bestiary_2:monster:qlippoth_augnagar"
+    ],
+    "source_page": "p.219",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 994,
+    "record_key": "Augnagar ~ Rotting Curse"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

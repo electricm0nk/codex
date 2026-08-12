@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Carnivorous Blob ~ Absorb Flesh",
+    "delivery": "Extraordinary",
+    "description": "A carnivorous blob cannot eat plant matter or inorganic matter, but it devours living flesh with a voracious speed by dealing Constitution drain on creatures it slams or constricts. Whenever the blob deals Constitution drain in this manner, it heals 10 hit points for each point of Constitution it drains. Excess hit points above its normal maximum are gained as temporary hit points. As soon as a carnivorous blob has at least 50 temporary hit points, it loses those temporary hit points and splits as an immediate action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:carnivorous_blob_absorb_flesh",
+    "name": "Absorb Flesh",
+    "owners": [
+      "bestiary_2:monster:carnivorous_blob"
+    ],
+    "source_page": "p.51",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 212,
+    "record_key": "Carnivorous Blob ~ Absorb Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:chaos_beast_corporeal_instability"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Chaos Beast",
+    "external_ability_refs": [
+      "Amorphous",
+      "Can't Be Tripped",
+      "Chaos Beast ~ Resistant to Transformation"
+    ],
+    "key": "bestiary_2:monster:chaos_beast",
+    "monster_class": "Outsider (Fort/Ref):9",
+    "name": "Chaos Beast",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Chaotic|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.54",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 175,
+    "record_key": "Chaos Beast"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

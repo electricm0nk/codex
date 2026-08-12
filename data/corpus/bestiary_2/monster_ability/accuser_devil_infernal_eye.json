@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Accuser Devil ~ Infernal Eye",
+    "delivery": "Supernatural",
+    "description": "A zebub records all that it sees and may pass its visions on to another creature.  By remaining in contact with a willing creature, it can replay up to 24 hours of witnessed events, or shorter incidents if it so chooses.  It takes a zebub 1 round to replay 1 hour of recorded images, which the target receives in a flash of information, without sound or other sensory information.  After relaying its findings, the zebub cannot replay its visions of those events again.  A zebub cannot replay its visions for an unwilling creature or as an attack, no matter how horrific the events it might have witnessed.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:accuser_devil_infernal_eye",
+    "name": "Infernal Eye",
+    "owners": [
+      "bestiary_2:monster:devil_accuser"
+    ],
+    "source_page": "p.84",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 389,
+    "record_key": "Accuser Devil ~ Infernal Eye"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

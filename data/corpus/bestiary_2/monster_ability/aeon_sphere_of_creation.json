@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Aeon ~ Sphere of Creation",
+    "delivery": "Supernatural",
+    "description": "Three times per day, the pleroma can manifest a 2-foot-diameter sphere of white energy that hovers above its left hand. By concentrating, the pleroma can control this sphere, causing it to fly slowly at a speed of 10 feet per round. The sphere can travel in any direction, but must remain within 300 feet of the pleroma or it immediately dissipates. Wherever the sphere travels, it leaves behind a 5-foot-wide path of new matter, creating either new terrain (such as swamp, tundra, desert, or forest) or a 10-foot-square wall composed of a single natural substance (such as clay, wood, or stone). Any existing matter, either living or nonliving that comes in contact with the sphere must make a DC %1 Fortitude save or be absorbed and incorporated into the new substance (only freedom, miracle, or wish can rescue creatures so trapped). Creatures that save are pushed to the nearest unoccupied location adjacent to the newly created substance. The sphere is highly unstable and only lasts 1d4 minutes before exploding with a blinding flash. All creatures within 30 feet of the flash must make a DC %2 Fortitude save or be permanently blinded.",
+    "description_variables": [
+      "SphereofCreationDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:aeon_sphere_of_creation",
+    "name": "Sphere of Creation",
+    "owners": [
+      "bestiary_2:monster:aeon_pleroma"
+    ],
+    "source_page": "p.12",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 23,
+    "record_key": "Aeon ~ Sphere of Creation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

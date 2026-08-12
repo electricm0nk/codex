@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Witchfire ~ Sound Mimicry",
+    "delivery": "Extraordinary",
+    "description": "The creature perfectly imitates animal noises.  The creature makes a Bluff check opposed by the listener's Sense Motive check to recognize the mimicry, although if the listener isn't familiar with the type of creatures mimicked, it takes a -8 penalty on its Sense Motive check.  The creature has a +8 racial bonus on its Bluff check to mimic sounds it has listened to for at least 10 minutes.  The creature cannot duplicate the effects of magical abilities (such as bardic performance or a harpy's captivating song), although it may be able to mimic the sound of those abilities.  This ability does not allow the creature to speak or understand languages it doesn't know.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:witchfire_sound_mimicry",
+    "name": "Sound Mimicry",
+    "owners": [
+      "bestiary_2:monster:witchfire"
+    ],
+    "source_page": "p.301",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1372,
+    "record_key": "Witchfire ~ Sound Mimicry"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

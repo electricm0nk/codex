@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:thanadaemon_draining_weapon",
+      "bestiary_2:monster_ability:thanadaemon_fear_gaze",
+      "bestiary_2:monster_ability:thanadaemon_soul_crush"
+    ],
+    "challenge_rating": "13",
+    "corpus_key": "Daemon (Thanadaemon)",
+    "external_ability_refs": [
+      "Air Walk ~ Constant",
+      "Energy Drain",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:daemon_thanadaemon",
+    "monster_class": "Outsider (Ref/Will):15",
+    "name": "Daemon (Thanadaemon)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Daemon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.74",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 253,
+    "record_key": "Daemon (Thanadaemon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

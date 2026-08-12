@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:siren_bardic_performance",
+      "bestiary_2:monster_ability:siren_siren_song"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Siren",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Immunity to Mind-Affecting Effects",
+      "Sneak Attack"
+    ],
+    "key": "bestiary_2:monster:siren",
+    "monster_class": "Magical Beast:8",
+    "name": "Siren",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Talons"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "M",
+    "source_page": "p.247",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 801,
+    "record_key": "Siren"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -58,6 +58,16 @@ BOOKS = {
     # `python3 scripts/classify_monster_ability_rows.py inner_sea_world_guide`
     # and `grep -c NAMEISPI:YES iswg_races.lst iswg_races_bestiary.lst`.
     "inner_sea_world_guide": "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
+    # SD-29 Epic 5 extend, round 4, and the largest book in the lane by an order
+    # of magnitude: 316 monster rows + 466 ability rows, of which 402 are owned
+    # by a monster row of this book. The first `roleplaying_game/` bestiary the
+    # lane has taken since the Bonus Bestiary pilot, and the first book with
+    # ZERO Product Identity rows in either signal -- derived, never assumed:
+    # `grep -c NAMEISPI:YES b2_races.lst b2_abilities_race.lst` -> 0, 0, and
+    # `python3 scripts/classify_monster_ability_rows.py bestiary_2` -> PI 0.
+    # `ogl-pi-blacklist.md` §2 predicts it: classic SRD monster names are
+    # presumptively Open Game Content.
+    "bestiary_2": "pathfinder/paizo/roleplaying_game/bestiary_2",
 }
 
 # The `TYPE:` first segment that names which facet of `monster_ability` a row
@@ -482,6 +492,58 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
+    # ---- `.COPY=` screen, between the PI screen and the orphan pass ----
+    #
+    # A `<Base>.COPY=<Variant>` row does not state a stat block. It states a
+    # DELTA on one: PCGen copies the base record whole and then applies the few
+    # tokens the copy row carries. Bestiary 2 is the first book in this lane to
+    # carry any (`b2_races.lst:454` and `:594`, the only two in the whole
+    # corpus -- derived, not assumed:
+    #
+    #   python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    #   print(sum(1 for u in d['units'] if u['kind'] in ('monster','monster_ability')
+    #   and u.get('origin')=='copy'))"   -> 2
+    #
+    # Transcribing one verbatim -- which is all this script does -- produces a
+    # record with a challenge rating and NOTHING else: no size, no speed, no
+    # type, no page. That is a card a player opens to find blank, the stub class
+    # `docs/governance/no-stub-mvp-doctrine.md` forbids, and `gen_book_cache`'s
+    # `verified_citation_line` refuses it outright anyway, because the row's
+    # first column reads `<Base>.COPY=<Variant>` and not the record's name.
+    #
+    # Resolving the delta is not a transcription. It means composing values
+    # across two rows while `MonsterStatBlock` carries ONE `source_file` /
+    # `source_line` pair, so every inherited field would ship under a citation
+    # that does not contain it -- precisely the stale-citation defect
+    # `verified_citation_line` and `v06_corpus_trap_report --audit` exist to
+    # catch. A chassis that models inheritance needs a second citation, and that
+    # is a deliberate widening, not something to slip into an ingest round.
+    #
+    # So a `.COPY=` row is DROPPED, exactly as a PI row is, and it cascades the
+    # same way: an ability owned only by a dropped variant falls out through the
+    # orphan pass below.
+    copy_monsters = [
+        u
+        for u in monsters
+        if ".COPY=" in (monster_rows[u["corpus_key"]][0] if monster_rows[u["corpus_key"]] else "")
+    ]
+    if copy_monsters:
+        copy_keys = {u["corpus_key"] for u in copy_monsters}
+        monsters = [u for u in monsters if u["corpus_key"] not in copy_keys]
+        for key in copy_keys:
+            monster_ability_keys.pop(key, None)
+            external.pop(key, None)
+        for ability_key in owners:
+            owners[ability_key] = [o for o in owners[ability_key] if o not in copy_keys]
+        print(
+            f"{book}: {len(copy_monsters)} `.COPY=` derived monster row(s) NOT transcribed "
+            "(a copy row states a delta on another record, not a stat block): "
+            + ", ".join(
+                f"{u['source_file']}:{u['source_line']}" for u in copy_monsters
+            ),
+            file=sys.stderr,
+        )
+
     # An ability row no monster row of this book claims is an ORPHAN: the
     # catalog renders an ability underneath its owning monster, so a record with
     # no owner would load and never be shown -- the stub class `decisions.md
@@ -565,6 +627,29 @@ def transcribe(book: str) -> str:
                 f"//!   * `{unit['source_file']}:{unit['source_line']}` "
                 f"({'monster' if unit['kind'] == 'monster' else 'ability'} row, {reason})"
             )
+    if copy_monsters:
+        out.append("//!")
+        out.append(
+            f"//! {len(copy_monsters)} monster row(s) of this book are `<Base>.COPY=<Variant>`"
+        )
+        out.append(
+            "//! derived rows and are NOT transcribed. A copy row states a DELTA on another"
+        )
+        out.append(
+            "//! record, not a stat block -- transcribing one verbatim yields a card with a"
+        )
+        out.append(
+            "//! challenge rating and no size, speed, type or page. Resolving the delta means"
+        )
+        out.append(
+            "//! composing two rows under one `source_line`, which is the stale-citation defect"
+        )
+        out.append(
+            "//! `gen_book_cache::verified_citation_line` refuses. It needs a second citation on"
+        )
+        out.append("//! the chassis, deliberately widened, not an ingest round's side effect:")
+        for unit in copy_monsters:
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}`")
     if orphans:
         out.append("//!")
         out.append(

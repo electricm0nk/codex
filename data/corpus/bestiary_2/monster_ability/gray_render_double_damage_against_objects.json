@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Gray Render ~ Double Damage Against Objects",
+    "delivery": "Extraordinary",
+    "description": "A gray render that makes a full attack against an object or structure deals double damage.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:gray_render_double_damage_against_objects",
+    "name": "Double Damage Against Objects",
+    "owners": [
+      "bestiary_2:monster:gray_render"
+    ],
+    "source_page": "p.140",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 626,
+    "record_key": "Gray Render ~ Double Damage Against Objects"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

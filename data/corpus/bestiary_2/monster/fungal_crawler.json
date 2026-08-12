@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:fungal_crawler_leap",
+      "bestiary_2:monster_ability:fungal_crawler_poison"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Fungal Crawler",
+    "external_ability_refs": [
+      "Fungal Crawler ~ Plant Defenses"
+    ],
+    "key": "bestiary_2:monster:fungal_crawler",
+    "monster_class": "Aberration:4",
+    "name": "Fungal Crawler",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "S",
+    "source_page": "p.127",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 379,
+    "record_key": "Fungal Crawler"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

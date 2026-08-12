@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Vexgit ~ Speedy Sabotage",
+    "delivery": "Supernatural",
+    "description": "Vexgits are adepts at disassembling machinery, reducing even complex devices to trash with shocking speed.  When using the Disable Device skill, these gremlins treat all devices as being one category simpler for the purposes of determining how long it takes to use the skill.  Thus, difficult devices count as tricky, tricky devices count as simple, and simple devices can be dismantled as a free action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:vexgit_speedy_sabotage",
+    "name": "Speedy Sabotage",
+    "owners": [
+      "bestiary_2:monster:gremlin_vexgit"
+    ],
+    "source_page": "p.145",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 642,
+    "record_key": "Vexgit ~ Speedy Sabotage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -167,6 +167,25 @@ def is_product_identity(row: list[str], key: str, name: str, terms: list[str]) -
     return any(term in haystack for term in terms)
 
 
+def is_copy_row(row: list[str]) -> bool:
+    """Whether this monster row is a `<Base>.COPY=<Variant>` derived row.
+
+    A copy row states a DELTA on another record, not a stat block: PCGen copies
+    the base record whole and applies the few tokens the copy row carries.
+    Transcribed verbatim it produces a card with a challenge rating and no size,
+    speed, type or page, and `gen_book_cache::verified_citation_line` refuses it
+    outright because the row's first column is not the record's name.
+
+    So a copy row is not reachable through this chassis, for the same *kind* of
+    reason a `NAMEISPI:YES` row is not: no per-monster cycle can ship it as it
+    stands. Counting one as reachable over-reports the lane's remainder, which
+    is the error `decisions.md` §50.7 corrected for Product Identity and this
+    corrects for inheritance. Corpus-wide there are exactly two, both in
+    `bestiary_2` -- the `origin: copy` units in `docs/work-inventory.json`.
+    """
+    return bool(row) and ".COPY=" in row[0]
+
+
 def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
     """Classify a book's REMAINING ability rows against ALL its monster rows.
 
@@ -195,6 +214,7 @@ def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
     terms = pi_blacklist_terms()
     pi_monster_keys: set[str] = set()
     pi_ability_keys: set[str] = set()
+    copy_monster_keys: set[str] = set()
     if directory is not None:
         for unit in units:
             path = os.path.join(directory, unit["source_file"])
@@ -206,8 +226,11 @@ def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
                     pi_monster_keys.add(unit["corpus_key"])
                 else:
                     pi_ability_keys.add(unit["corpus_key"])
+            elif unit["kind"] == "monster" and is_copy_row(row):
+                copy_monster_keys.add(unit["corpus_key"])
 
-    shippable_monsters = [u for u in monsters if u["corpus_key"] not in pi_monster_keys]
+    unshippable = pi_monster_keys | copy_monster_keys
+    shippable_monsters = [u for u in monsters if u["corpus_key"] not in unshippable]
     monster_keys = {u["corpus_key"] for u in shippable_monsters}
 
     named: set[str] = set()
@@ -240,6 +263,9 @@ def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
     pi_monsters_remaining = sum(
         1 for u in remaining_monsters if u["corpus_key"] in pi_monster_keys
     )
+    copy_monsters_remaining = sum(
+        1 for u in remaining_monsters if u["corpus_key"] in copy_monster_keys
+    )
     return {
         "book": book,
         "monsters": len(remaining_monsters),
@@ -250,6 +276,7 @@ def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
         "orphan": orphan,
         "pi": pi + pi_monsters_remaining,
         "pi_monsters": pi_monsters_remaining,
+        "copy": copy_monsters_remaining,
         "orphan_keys": orphan_keys,
         "external_ability_refs": sorted(set(unresolved_refs)),
         "directory_found": directory is not None,
@@ -279,30 +306,34 @@ def main() -> None:
     width = max((len(r["book"]) for r in rows), default=4)
     print(
         f"{'book'.ljust(width)}  {'mon':>4} {'abil':>5} {'row-named':>9} "
-        f"{'prefix':>6} {'ORPHAN':>6} {'PI':>4}"
+        f"{'prefix':>6} {'ORPHAN':>6} {'PI':>4} {'COPY':>4}"
     )
     for r in rows:
         print(
             f"{r['book'].ljust(width)}  {r['monsters']:>4} {r['abilities']:>5} "
-            f"{r['row_named']:>9} {r['prefix']:>6} {r['orphan']:>6} {r['pi']:>4}"
+            f"{r['row_named']:>9} {r['prefix']:>6} {r['orphan']:>6} {r['pi']:>4} "
+            f"{r['copy']:>4}"
             + ("" if r["directory_found"] else "   [pcgen dir NOT FOUND]")
         )
 
     total_units = sum(r["monsters"] + r["abilities"] for r in rows)
     total_orphan = sum(r["orphan"] for r in rows)
     total_pi = sum(r["pi"] for r in rows)
+    total_copy = sum(r["copy"] for r in rows)
     zero_monster = [r for r in rows if r["monsters"] == 0]
     zero_monster_units = sum(r["abilities"] for r in zero_monster)
     print()
-    print(f"remaining monster+monster_ability units : {total_units}")
-    print(f"orphan monster_ability rows             : {total_orphan}")
+    print(f"remaining monster+monster_ability units     : {total_units}")
+    print(f"orphan monster_ability rows                 : {total_orphan}")
     print(
-        f"  of which in ZERO-monster books        : {zero_monster_units} "
+        f"  of which in ZERO-monster books            : {zero_monster_units} "
         f"across {len(zero_monster)} books (no monster in the book to own them)"
     )
-    print(f"Product Identity rows (never shippable)  : {total_pi}")
+    print(f"Product Identity rows (never shippable)      : {total_pi}")
+    print(f"`.COPY=` delta rows (no stat block of their own): {total_copy}")
     print(
-        f"reachable remainder (units - orphans - PI): {total_units - total_orphan - total_pi}"
+        "reachable remainder (units - orphans - PI - COPY): "
+        f"{total_units - total_orphan - total_pi - total_copy}"
     )
 
 

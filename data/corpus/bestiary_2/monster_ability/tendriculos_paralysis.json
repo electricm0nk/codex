@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Tendriculos ~ Paralysis",
+    "delivery": "Extraordinary",
+    "description": "You can render your victims immobile. Paralyzed creatures cannot move, speak, or take any physical actions. The creature is rooted to the spot, frozen and helpless. Paralysis works on the body, and a character can usually resist it with a Fortitude saving throw (DC %1). Unlike hold person and similar effects, a paralysis effect does not allow a new save each round. A winged creature flying in the air at the time that it is paralyzed cannot flap its wings and falls. A swimmer can't swim and may drown.",
+    "description_variables": [
+      "ParalysisDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:tendriculos_paralysis",
+    "name": "Paralysis",
+    "owners": [
+      "bestiary_2:monster:tendriculos"
+    ],
+    "source_page": "p.259",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1224,
+    "record_key": "Tendriculos ~ Paralysis"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Aeon ~ Sphere of Oblivion",
+    "delivery": "Supernatural",
+    "description": "Three times per day, the pleroma can manifest a 2-foot-diameter sphere of complete and utter darkness that hovers above its right hand. The sphere is an empty void similar to a sphere of annihilation. Any matter (living or nonliving) that touches the sphere must succeed on a DC %1 Fortitude save or be sucked into the sphere and destroyed. Larger objects (such as ships or buildings) are destroyed at a rate of one 10-foot cube per round of contact with the sphere. By concentrating, the pleroma can control this sphere, causing it to fly slowly at a speed of 10 feet per round. The sphere can travel in any direction, but must remain within 300 feet of the pleroma or it immediately dissipates. The sphere is highly unstable and only lasts 1d4 minutes before harmlessly imploding upon itself. Alternatively, the pleroma may hurl the sphere as a ranged touch attack (with a 10-foot range increment) against a single creature. When thrown in this manner, the sphere implodes immediately after the attack is resolved.",
+    "description_variables": [
+      "SphereofOblivionDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:aeon_sphere_of_oblivion",
+    "name": "Sphere of Oblivion",
+    "owners": [
+      "bestiary_2:monster:aeon_pleroma"
+    ],
+    "source_page": "p.12",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 24,
+    "record_key": "Aeon ~ Sphere of Oblivion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

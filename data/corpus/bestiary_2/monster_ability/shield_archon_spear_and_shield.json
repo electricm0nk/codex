@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Shield Archon ~ Spear and Shield",
+    "delivery": "Supernatural",
+    "description": "At will as a free action, a shield archon can transform his hands into a +1 tower shield and a +3 shortspear, or either individually, or back to hands again.  He cannot transform both hands into shields or both into shortspears.  A shield archon never takes the typical -2 penalty on attack rolls while wielding a tower shield.  A shield archon's weapons cannot be disarmed, but they can be sundered.  If a shield archon loses his spear or shield, he can manifest a new one as a full-round action.  When a shield archon is slain, these two items fade away - they cannot be looted or wielded by any other creature.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:shield_archon_spear_and_shield",
+    "name": "Spear and Shield",
+    "owners": [
+      "bestiary_2:monster:archon_shield"
+    ],
+    "source_page": "p.31",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 116,
+    "record_key": "Shield Archon ~ Spear and Shield"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

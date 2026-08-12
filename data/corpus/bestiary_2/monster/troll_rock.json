@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "6",
+    "corpus_key": "Troll (Rock)",
+    "external_ability_refs": [
+      "Regeneration ~ Acid/Sonic",
+      "Rend",
+      "Rock Troll ~ Sunlight Petrification",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:troll_rock",
+    "monster_class": "Humanoid:7",
+    "name": "Troll (Rock)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Giant|Earth",
+    "race_type": "Humanoid",
+    "size": "L",
+    "source_page": "p.272",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 875,
+    "record_key": "Troll (Rock)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Alchemical Golem ~ Bombs",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, an alchemical golem can throw a bomb as a ranged touch attack to a distance of 60 feet (no range increment).  If the attack misses, treat it as a thrown splash weapon to determine where it lands.  Anyone struck by an alchemical golem's bomb takes 8d6 points of acid, cold, electricity, or fire damage (determine type randomly).  All creatures adjacent to the location where the bomb hits take 1d6 points of energy damage of the same type.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:alchemical_golem_bombs",
+    "name": "Bombs",
+    "owners": [
+      "bestiary_2:monster:golem_alchemical"
+    ],
+    "source_page": "p.135",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 595,
+    "record_key": "Alchemical Golem ~ Bombs"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Scarecrow ~ Fascinating Gaze",
+    "delivery": "Supernatural",
+    "description": "Target is fascinated, 30 feet, Will DC %1 negates.  Fascination lasts as long as the scarecrow remains within 300 feet of the fascinated creature.  The approach or animation of the scarecrow does not count as an obvious threat to the victim of this particular fascination (although the scarecrow's attack does count as an obvious threat and ends the fascination immediately).  This is a mind-affecting effect.",
+    "description_variables": [
+      "ScarecrowFascinatingGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:scarecrow_fascinating_gaze",
+    "name": "Fascinating Gaze",
+    "owners": [
+      "bestiary_2:monster:scarecrow"
+    ],
+    "source_page": "p.238",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1099,
+    "record_key": "Scarecrow ~ Fascinating Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

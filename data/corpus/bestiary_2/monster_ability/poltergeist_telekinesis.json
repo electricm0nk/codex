@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Poltergeist ~ Telekinesis",
+    "delivery": "Supernatural",
+    "description": "A poltergeist has no method of attacking apart from its telekinesis.  This ability functions as the spell telekinesis, with a CL of %1.  A poltergeist has a ranged attack roll of +%1 when using telekinesis to hurl objects or creatures, and can use the ability on objects or creatures of up to %2 pounds.  If a poltergeist attempts to hurl a creature with this ability, that creature can resist the effect with a successful DC %3 Will save.",
+    "description_variables": [
+      "TL",
+      "TL*25",
+      "PoltergeistTelekinesisDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:poltergeist_telekinesis",
+    "name": "Telekinesis",
+    "owners": [
+      "bestiary_2:monster:poltergeist"
+    ],
+    "source_page": "p.211",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 962,
+    "record_key": "Poltergeist ~ Telekinesis"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

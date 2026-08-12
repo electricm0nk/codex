@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Angel (Cassisian)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Cassisian ~ Breath Weapon",
+      "Cassisian ~ Change Shape",
+      "Cassisian ~ Lesser Protective Aura",
+      "Cassisian ~ Perfect Memory",
+      "Detect Evil ~ Constant",
+      "Flight Maneuverability",
+      "Know Direction ~ Constant"
+    ],
+    "key": "bestiary_2:monster:angel_cassisian",
+    "monster_class": "Outsider (Fort/Ref):2",
+    "name": "Angel (Cassisian)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Angel ~ Cassisian|Extraplanar|Good",
+    "race_type": "Outsider",
+    "size": "S",
+    "source_page": "p.26",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 79,
+    "record_key": "Angel (Cassisian)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

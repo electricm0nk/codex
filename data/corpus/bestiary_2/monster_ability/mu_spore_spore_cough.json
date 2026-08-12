@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Mu Spore ~ Spore Cough",
+    "delivery": "Supernatural",
+    "description": "Once every 1d4 rounds as a standard action, a mu spore can release a cloud of burrowing spores in a 100-foot cone.  The burrowing spores deal 20d8 points of damage to all creatures and wooden structures in the area, or half damage to any creatures that make a DC %1 Reflex save.  Plants and plant creatures are immune to this damage.",
+    "description_variables": [
+      "MuSporeSporeCoughDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:mu_spore_spore_cough",
+    "name": "Spore Cough",
+    "owners": [
+      "bestiary_2:monster:mu_spore"
+    ],
+    "source_page": "p.195",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 857,
+    "record_key": "Mu Spore ~ Spore Cough"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

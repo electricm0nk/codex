@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Soulbound Doll ~ Alignment Variation",
+    "delivery": "Extraordinary",
+    "description": "Soulbound dolls are at least partially neutral in alignment, although they can also be chaotic, evil, good, or lawful.  They have an alignment-dependent spell-like ability usable once per day depending on the alignment.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:soulbound_doll_alignment_variation",
+    "name": "Alignment Variation",
+    "owners": [
+      "bestiary_2:monster:soulbound_doll"
+    ],
+    "source_page": "p.255",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1201,
+    "record_key": "Soulbound Doll ~ Alignment Variation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
