@@ -785,6 +785,14 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // declaration, and 13 ability rows are then owned by no shipped monster),
     // so "ingested" here means "no longer future_state", never "complete".
     "inner_sea_world_guide",
+    // SD-29 monster lane round 7 (`decisions.md §58`): 38 `monster` + 152
+    // `monster_ability` records. Like `inner_sea_world_guide` above this is a
+    // PARTIAL ingest and belongs here anyway -- 40 of its 230 monster-family
+    // units are deliberately not ingested (26 orphan ability rows, 7 Product
+    // Identity ability rows, and the 2 monster rows that NAME those 7 and so
+    // cannot be emitted either, plus the 5 abilities orphaned by losing them).
+    // A book's scope is `in_scope` the moment any of its units are grounded.
+    "inner_sea_bestiary",
 ];
 
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[

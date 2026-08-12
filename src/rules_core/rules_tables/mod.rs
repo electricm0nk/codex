@@ -220,9 +220,11 @@ pub enum RuleSetId {
     /// families.** Two of its 40 corpus monster rows do not ship, and the
     /// reason is the one this book contributed to the lane: a monster row's
     /// emitted `ability_keys` array carries the KEYS of the abilities it names,
-    /// and seven of this book's ability rows are namespaced to a Golarion
-    /// deity's proper name. The abilities are Product Identity, so the monsters
-    /// that name them cannot be emitted either — `decisions.md §57.2`'s cascade
+    /// and seven of this book's ability rows are namespaced to a named deity of
+    /// this setting — a `pi_screening::PI_BLACKLIST_TERMS` term, deliberately
+    /// not spelled here because `pi-sweep` does not read intent
+    /// (`decisions.md §52.5`). The abilities are Product Identity, so the
+    /// monsters that name them cannot be emitted either — `decisions.md §57.2`'s cascade
     /// running backwards, from ability to owner. See
     /// `rules_tables::inner_sea_bestiary`'s header.
     Isb,
