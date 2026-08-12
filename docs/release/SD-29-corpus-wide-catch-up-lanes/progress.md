@@ -7333,3 +7333,241 @@ carries orphans and needs a per-book judgement — register it and record its or
 this round's shape.
 
 **This round did not finish the lane and does not claim to.**
+
+---
+
+## Cycle SD29-E5-F2-004 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 3 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r5` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-5`)
+**Branch-point:** `d27107d7` · **Commits:** `d81e80ab` (ingest + both screens), plus the receipt
+commit carrying this section
+**Kanban status left at:** `READY — round 4. 23 units ingested, 4,210 remaining by raw count.
+Card stays READY.`
+
+**This receipt does not claim the lane is done, and the numbers below say so.** It also reports a
+book whose ingest is *smaller* than its unit count on purpose, and a PI defect in another lane's
+shipped output that it did not fix.
+
+### 0. Worktree integrity — the predicted failure, hit a sixth time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-5`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, an ancestor from **2026-06-28**. Round 2's receipt predicted
+this exactly and it is now the **sixth** recorded instance — a harness condition, not an agent
+error. Recovered before any other action with `git fetch origin tranche/9` +
+`git reset --hard origin/tranche/9` (`d27107d7`).
+
+The `.git` object corruption round 2 reported is still live and still non-blocking:
+`git fetch` prints `error: object file .git/objects/3c/534e50… is empty` and `fatal: failed to run
+repack`, and both `fetch` and `push` complete anyway. Left for the operator, as round 2 left it —
+deleting a ref in a shared checkout is not this card's write scope.
+
+### 1b. Every figure re-derived, command first, value second
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same
+command rounds 1 and 2 recorded:
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+tm=ta=0
+for b in d['books']:
+    if b['scope']=='out_of_scope': continue
+    m=b['kinds'].get('monster',{}).get('by_status',{}); a=b['kinds'].get('monster_ability',{}).get('by_status',{})
+    tm+=m.get('not-ingested',0)+m.get('not-started',0); ta+=a.get('not-ingested',0)+a.get('not-started',0)
+print(tm,ta)"
+```
+
+* **Before this cycle:** `1199 3034` → **4,233**. Round 2's closing figure, reproduced exactly
+  before being moved.
+* **After this cycle:** `1190 3020` → **4,210 remaining**. `units_ingested` = **23**.
+* **Grounded**, same file: `monster` **71 → 80**, `monster_ability` **73 → 87**.
+
+**The card's raw-remaining figure is wrong for the second round running, and is corrected here
+again.** The dispatch brief states *"monster ~305, monster_ability ~852, against grounded 62 and
+20"*. The re-derived pair was 1,199 / 3,034 and grounded was 71 / 73. `§46.1` already corrected the
+identical error in round 2's brief; the brief for round 3 repeated it verbatim, which is worth
+recording as a fact about the dispatch path rather than about either round. `correction` emitted
+with the command as `--verified-by`.
+
+**The lane's REAL ceiling, re-derived rather than inherited** — the check `§45.1` says to run
+*before* committing a round to a book, on the checked-in script rather than a `/tmp` one:
+
+```bash
+python3 scripts/classify_monster_ability_rows.py
+```
+
+```
+remaining monster+monster_ability units : 4233
+orphan monster_ability rows             : 1327
+  of which in ZERO-monster books        : 703 across 10 books (no monster in the book to own them)
+reachable remainder (units - orphans)   : 2906
+```
+
+Run at cycle start, this reproduces `§46.1`'s 2,906 **exactly**. The previous round's reported
+remainder is confirmed, not corrected. After this round the raw figure is 4,210; the reachable
+figure is not simply 2,906 − 23, because this book contributed 13 *new* orphans that the classifier
+could not see before the PI screen ran (see §2b) — the honest post-round reachable figure is
+**2,870**, derived as 4,210 − 1,340.
+
+### 1c. Preflight and environment
+
+`df -h /` → **968G total, 161G used, 807G available, 17% used** at cycle start. `nproc` → **8** on
+this box, not the 4 the brief states; `verify.sh` self-limits to `-j 2` regardless.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r5`, claimed with a
+`.reclaim-claim` file the moment it was created, plus `…-r5-desktop` for the desktop crate — a
+separate cargo workspace, so sharing one target dir between them is the recorded shared-target-dir
+hazard. Both deleted at cycle end.
+
+### 2. The scope finding, which is worth more than the ingest
+
+Full statement in `decisions.md §50`. **`NAMEISPI:YES` is an upstream, per-record Product Identity
+declaration that no ingest path in this repository has ever read.**
+
+Inner Sea World Guide is the first book in this lane to carry it:
+
+```bash
+grep -c 'NAMEISPI:YES' iswg_races.lst iswg_races_bestiary.lst   # -> 3, 2
+```
+
+| row | file:line | why it is Product Identity on its face |
+|---|---|---|
+| `Daughter of Urgathoa` | `iswg_races.lst:13` | a named Golarion deity |
+| `Sandpoint Devil` | `iswg_races.lst:14` | a named Golarion town |
+| `Treerazer` | `iswg_races.lst:16` | a unique named NPC |
+| `Boar (Sargavan)` | `iswg_races_bestiary.lst:13` | a named Golarion nation |
+| `Herd Animal (Storval Aurochs)` | `iswg_races_bestiary.lst:14` | a named Golarion region |
+
+**The marker and an independent reading agree**, which is what makes the marker usable rather than
+merely present — the proxy is validated where it makes its confident claim, not adjacent to it.
+Only *three* of the five would have been caught by `PI_BLACKLIST_TERMS`; two — `Boar (Sargavan)` and
+`Herd Animal (Storval Aurochs)` — carry place names the 55-term list does not contain, and would
+have shipped. `near-miss` emitted.
+
+**Already-shipped monster books are clean.** `grep -c 'NAMEISPI:YES'` over the races `.lst` of
+`bonus_bestiary`, `monster_codex`, `book_of_the_damned_volume_1` and `book_of_the_damned_volume_2`
+returns **0** for all four. Nothing this lane has shipped is affected.
+
+**The corpus-wide picture is NOT clean, and this cycle did not fix it.**
+`grep -rl 'NAMEISPI:YES'` over every ingested book's tree finds the token in
+`inner_sea_races/isr_abilities_race.lst:67` — `Elf ~ Sovyrian-Born` — and
+`grep -rl 'Sovyrian' data/corpus/` finds
+**`data/corpus/inner_sea_races/race_trait/elf/elf_sovyrian_born.json`, shipped on `tranche/9`
+today**. "Sovyrian" is a Golarion place name and is not in `PI_BLACKLIST_TERMS`, so no screen fired.
+
+**Not fixed here, deliberately, and the reason is the safer default rather than the cheaper one.**
+Adding a term to `PI_BLACKLIST_TERMS` is corpus-wide: it changes what every book's generator
+redacts, and the affected file is the race-trait lane's ingest territory. `§46.6`'s rule 1 exists
+because two lanes editing the same files cost this bundle a whole gate run. The blast radius of a
+term addition cannot be verified inside this card's write scope, so it is reported with its command
+and its file path instead. `incident` emitted, `recurrence-key pi-declaration-token-unread`.
+
+### 2b. What was ingested, and what was deliberately left
+
+| | corpus units | ingested | left, and why |
+|---|---|---|---|
+| `monster` | 14 | **9** | 5 carry `NAMEISPI:YES` |
+| `monster_ability` | 30 | **14** | 3 carry `Urgathoa` in their own KEY; 13 are owned by no shipped monster |
+
+**A key cannot be redacted.** `pi_screening` redacts a `description`; `[redacted PI]` as a monster's
+key is a record nobody can look up, and a record whose *identity* is the PI is not a redaction
+problem but a scope one. So PI rows are dropped, not screened, and reclassifying a term is
+`docs/governance/ogl-pi-blacklist.md` §3's per-book override — an operator decision, not a
+transcriber's. `deferral` emitted.
+
+**The orphans, and how the two screens interact.** `classify_monster_ability_rows.py` reported 5
+orphans for this book *before* the PI screen ran — the `Nascent Demon Lord ~ …` and
+`Clockwork ~ …` rows, namespaced to `iswg_templates.lst` templates the chassis does not model.
+Dropping 5 monsters produced **8 more**, because an ability whose only owner is gone reaches
+nothing either. 13 total. The transcriber runs the PI screen first and the orphan screen second for
+exactly this reason: run the other way round, `Constant ~ Desecrate` is reported as a PI hit on its
+*owner's* name when the true reason is that it has become an orphan.
+
+**This is the divergence from the card's literal instruction, and it is recorded rather than
+smoothed over.** The card says a book with orphans lands *"the claim scoped to the linked subset
+with an `OPEN_FINDINGS` entry for the rest."* The first half is what happened; the second is not
+available, and the reason is mechanical. `reach_gate`'s own finding test
+(`apps/desktop/src-tauri/src/reach_gate.rs`, the `stale` assertion in the `OPEN_FINDINGS` test)
+fails when a recorded finding names a family that **does** reach a surface:
+
+```
+"these families now reach a surface — delete their OPEN_FINDINGS entries: {}"
+```
+
+`inner_sea_world_guide/monster_abilities` reaches `list_monster_catalog` for all 14 of its shipped
+records, so an entry for it would be `stale` by that test's own definition and would fail the gate.
+Writing one would have meant weakening the gate to satisfy a doc. The excluded rows are instead
+held by **three named tests** — `the_five_product_identity_names_are_not_records`,
+`no_shipped_ability_is_an_orphan`, `every_owner_named_by_a_shipped_ability_is_a_shipped_monster` —
+plus a fourth, `no_shipped_field_carries_a_product_identity_term`, which checks the property
+against the live blacklist rather than against a list of names, so a term added later fails there
+instead of shipping quietly. Every excluded row is named by key in the generated module header with
+its file:line and its reason.
+
+### 3. Two mechanism gaps this book found, both fixed at the source
+
+**A book's monsters may live in more than one file, and the line numbers collide.**
+Inner Sea World Guide splits its 14 monster rows 7/7 across `iswg_races.lst` and
+`iswg_races_bestiary.lst`, and:
+
+```
+iswg_races.lst:10          -> Aluum
+iswg_races_bestiary.lst:10 -> Fennec (Firefoot)
+```
+
+`MonsterStatBlock` carried a `source_line` and `gen_book_cache` took the *file* from a single
+per-book spec string, so every row of one file would have been citation-checked against the other —
+`verified_citation_line` compares the cited line's first column to the record's name, so this would
+have surfaced as a confusing citation failure rather than as the modelling gap it is.
+`MonsterStatBlock::source_file` is new, `MonsterBookSpec::races_lst` became `races_lsts: &[&str]`,
+and the generator looks the file up per record and panics by name if a record cites a file the spec
+does not list. `the_two_races_files_carry_colliding_line_numbers` is the regression.
+
+**The transcriber's PI screen must read the values it EMITS, not the row.** The first draft screened
+every token of the monster's corpus row and dropped the Sandpoint Devil for
+`AUTO:LANG|Abyssal|Varisian` — a language grant that never reaches a record — because the blacklist
+term `Varisia` is a substring of `Varisian`. Over-exclusion is a real cost in the other direction:
+it silently deletes corpus content nothing was going to publish. The screen now reads exactly the
+fields the transcription emits, which is exactly what `gen_book_cache` serializes and screens in
+turn. `correction` emitted. (The Sandpoint Devil is excluded anyway — by `NAMEISPI:YES`, which is
+the right reason.)
+
+**The term list is read out of the Rust, never re-typed.** `pi_blacklist_terms()` parses
+`pi_screening::PI_BLACKLIST_TERMS` out of `src/rules_core/pi_screening.rs` and refuses to run if it
+parses fewer than 20 terms. A copy in Python would drift the first time `ogl-pi-blacklist.md` §3's
+per-book override adds one — which is precisely the mechanism the Sovyrian finding above will need.
+
+**Neither fix moved an already-shipped book.** Regenerating Monster Codex and both Book of the
+Damned volumes under all of the above changes their record bodies by **exactly the one new
+`source_file` field and nothing else** — checked by a unified diff of the two versions' table
+bodies, not by eyeballing `git diff --stat`. Bonus Bestiary's table reproduces identically too (same
+check, 63 diff lines, every one of them the new field); its committed file keeps the pilot's
+hand-authored header, so the field was inserted into it rather than the file being regenerated,
+which is round 2's own recorded treatment of that file.
+
+### 4. Definition of done
+
+| # | Item | State |
+|---|---|---|
+| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | See **§5** below — exit code captured by redirecting to a file and reading `$?` on the next statement, never through a pipe |
+| 2 | Reach claims for this card's families — zero matched tests is a hard failure | **PASS, by claim not by absence.** Two new claims asserted per record against the files on disk: `inner_sea_world_guide` **9** monsters + **14** abilities, both `Reach::Surfaced` on `list_monster_catalog`. The test also asserts the 5 PI names and the 5 template orphans are **absent** from the response — a claim that only counted arrivals would pass equally well if a PI name had quietly been ingested |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | See **§5** |
+| 4 | `v06_work_inventory` regenerated; the book's units leave `not-started` | **PASS, partially by design.** `inner_sea_world_guide` reads `monster` 9 `grounded` / 5 `not-ingested`, `monster_ability` 14 `grounded` / 16 `not-ingested`. The 21 that stayed are the PI and orphan rows named above; `not-ingested` is their honest status and this receipt says so rather than reporting a whole-book move |
+| 5 | Four-check wired-integration audit | **Clean.** No stub tokens, no no-op handlers, no fixture-only data, no "would have" strings. The one place a placeholder could have shipped is `damage_dice` on attacks the corpus does not price, which stays `None` |
+| 6 | Unsurfaced families carry an `OPEN_FINDINGS` entry | **Nothing owed, and the reason is stated rather than assumed** — see §2b. Both of this book's families reach the catalog record by record, so an `OPEN_FINDINGS` entry for either would fail the gate's own `stale` check. The excluded rows are held by four named tests and by the generated header, per row, with reasons |
+| 7 | Baseline movements are a separate commit | **None made.** `scripts/verify-baselines.env` untouched |
+| 8 | On-screen verification for player-visible families | See **§6** |
+
+### 5. The gate
+
+`VERIFY_EXIT` and the trap-report audit are recorded in §7 below, written after the run completed.
+
+### 6. On screen
+
+Recorded in §7 below.
+
+### 7. Run record
+
+_(completed at cycle end; see the appended block)_
