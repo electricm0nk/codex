@@ -503,6 +503,18 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             &races,
         ),
         book_status(
+            "book_of_the_damned_volume_1",
+            "src/rules_core/rules_tables/book_of_the_damned_volume_1",
+            chassis_book_counts("book_of_the_damned_volume_1"),
+            &races,
+        ),
+        book_status(
+            "book_of_the_damned_volume_2",
+            "src/rules_core/rules_tables/book_of_the_damned_volume_2",
+            chassis_book_counts("book_of_the_damned_volume_2"),
+            &races,
+        ),
+        book_status(
             "advanced_race_guide",
             "src/rules_core/rules_tables/advanced_race_guide",
             advanced_race_guide_counts(),
@@ -635,6 +647,10 @@ mod tests {
                 "bonus_bestiary",
                 // SD-29 Epic 5 extend round 1, for the same reason.
                 "monster_codex",
+                // SD-29 Epic 5 extend round 2 -- the two Book of the Damned
+                // volumes, kept next to the other chassis books.
+                "book_of_the_damned_volume_1",
+                "book_of_the_damned_volume_2",
                 "advanced_race_guide",
                 "pathfinder_unchained",
                 "ultimate_campaign",

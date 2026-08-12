@@ -25,10 +25,23 @@
 //!
 //! # Identity is the `KEY:` token, never the display name
 //!
-//! Both books in the registry carry rows whose `KEY:` differs from the first
+//! Every book in the registry carries rows whose `KEY:` differs from the first
 //! column — Bonus Bestiary has 6 (`Caryatid Column ~ Immunity to Magic`),
-//! Monster Codex has all 3 of its abilities (`Seru ~ Poison`). Joining on the
-//! display name would merge `Poison` with every other book's rule of that name.
+//! Monster Codex has all 3 of its abilities (`Seru ~ Poison`), and both Book of
+//! the Damned volumes have all of theirs (`Vermlek ~ Flesh Armor`, whose first
+//! column is just `Flesh Armor`). Joining on the display name would merge
+//! `Poison` — or `Breath Weapon`, which two registered books now both define —
+//! with every other book's rule of that name.
+//!
+//! # A book is registered when EVERY one of its ability rows has an owner
+//!
+//! `monster_ability` records reach a player only underneath the monster that
+//! owns them, so an ability row no monster row claims is a record that loads and
+//! is never shown. `scripts/classify_monster_ability_rows.py` classifies a
+//! candidate book's rows before a round commits to it; the four books here are
+//! the four with **zero** orphans. That predicate is a ceiling on the lane, not
+//! a preference — 1,327 of the 4,295 remaining units are orphan ability rows,
+//! and 703 of those sit in ten books that carry no monster row at all.
 
 /// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -186,6 +199,16 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "monster_codex",
         monsters: super::monster_codex::monsters_static(),
         monster_abilities: super::monster_codex::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "book_of_the_damned_volume_1",
+        monsters: super::book_of_the_damned_volume_1::monsters_static(),
+        monster_abilities: super::book_of_the_damned_volume_1::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "book_of_the_damned_volume_2",
+        monsters: super::book_of_the_damned_volume_2::monsters_static(),
+        monster_abilities: super::book_of_the_damned_volume_2::monster_abilities_static(),
     },
 ];
 

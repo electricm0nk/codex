@@ -548,6 +548,10 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     ("monster_codex", "monster_codex"),
     // SD-29 Epic 6 round 2 (race-trait lane, extend). Same again.
     ("inner_sea_races", "inner_sea_races"),
+    // SD-29 Epic 5 extend, round 2 (monster lane). Same again -- the corpus
+    // directory and the book id are the same string for both volumes.
+    ("book_of_the_damned_volume_1", "book_of_the_damned_volume_1"),
+    ("book_of_the_damned_volume_2", "book_of_the_damned_volume_2"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1058,6 +1062,21 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("monster_codex", "monsters") => Some(chassis_monsters_reach("monster_codex", "MC")),
         ("monster_codex", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("monster_codex", "MC"))
+        }
+        // SD-29 Epic 5 extend, round 2. Two more books, four more arms, and
+        // the same two claim functions -- which is the registry rewrite's whole
+        // point: a book's reach is judged by the chassis, not per book.
+        ("book_of_the_damned_volume_1", "monsters") => {
+            Some(chassis_monsters_reach("book_of_the_damned_volume_1", "BOTD1"))
+        }
+        ("book_of_the_damned_volume_1", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("book_of_the_damned_volume_1", "BOTD1"))
+        }
+        ("book_of_the_damned_volume_2", "monsters") => {
+            Some(chassis_monsters_reach("book_of_the_damned_volume_2", "BOTD2"))
+        }
+        ("book_of_the_damned_volume_2", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("book_of_the_damned_volume_2", "BOTD2"))
         }
 
         // PU class features: each of the four Unchained classes emits one
@@ -2989,6 +3008,72 @@ mod tests {
                 assert_eq!(surface, "list_monster_catalog");
             }
             other => panic!("expected all 3 to reach, got {other:?}"),
+        }
+    }
+
+    /// Both Book of the Damned volumes, per record, driven off the chassis
+    /// registry rather than hand-listed.
+    ///
+    /// **This is the round's whole-book claim and it is only meaningful because
+    /// neither book has an orphan ability row.** An orphan -- an ability row no
+    /// monster row of the same book claims -- reaches no screen, so a book with
+    /// orphans cannot satisfy a whole-family claim at all. Re-derived, not
+    /// assumed:
+    ///
+    /// ```text
+    /// python3 scripts/classify_monster_ability_rows.py \
+    ///     book_of_the_damned_volume_1 book_of_the_damned_volume_2
+    /// book                          mon  abil row-named prefix ORPHAN
+    /// book_of_the_damned_volume_1     5    36        36      0      0
+    /// book_of_the_damned_volume_2     4    17        17      0      0
+    /// ```
+    ///
+    /// Counts on the other side come from the inventory's own units:
+    /// `python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+    /// print(sum(1 for u in d['units'] if
+    /// u['book']=='book_of_the_damned_volume_1' and u['kind']=='monster'))"`
+    /// -> 5, `monster_ability` -> 36; volume 2 -> 4 and 17.
+    #[test]
+    fn both_book_of_the_damned_volumes_reach_the_catalog_record_by_record() {
+        for (book, wire_code, monster_count, ability_count) in [
+            ("book_of_the_damned_volume_1", "BOTD1", 5usize, 36usize),
+            ("book_of_the_damned_volume_2", "BOTD2", 4, 17),
+        ] {
+            let monsters = corpus_record_keys(book, "monster");
+            let abilities = corpus_record_keys(book, "monster_ability");
+            assert_eq!(monsters.len(), monster_count, "{book}: re-derived on disk this cycle");
+            assert_eq!(abilities.len(), ability_count, "{book}: re-derived on disk this cycle");
+
+            let response = crate::monster_catalog::build_monster_catalog();
+            let served_monsters: BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|entry| entry.book == wire_code)
+                .map(|entry| entry.key.clone())
+                .collect();
+            let served_abilities: BTreeSet<String> = response
+                .entries
+                .iter()
+                .filter(|entry| entry.book == wire_code)
+                .flat_map(|entry| entry.abilities.iter().map(|a| a.key.clone()))
+                .collect();
+            assert_eq!(served_monsters, monsters, "{book}: served monsters");
+            assert_eq!(served_abilities, abilities, "{book}: served abilities");
+
+            match reach_of(&Family::new(book, "monsters")).expect("a claim is declared") {
+                Reach::Surfaced { records, surface } => {
+                    assert_eq!(records, monster_count);
+                    assert_eq!(surface, "list_monster_catalog");
+                }
+                other => panic!("{book}: expected every monster to reach, got {other:?}"),
+            }
+            match reach_of(&Family::new(book, "monster_abilities")).expect("a claim is declared") {
+                Reach::Surfaced { records, surface } => {
+                    assert_eq!(records, ability_count);
+                    assert_eq!(surface, "list_monster_catalog");
+                }
+                other => panic!("{book}: expected every ability to reach, got {other:?}"),
+            }
         }
     }
 

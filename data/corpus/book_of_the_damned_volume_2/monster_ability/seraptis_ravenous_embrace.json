@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Seraptis ~ Ravenous Embrace",
+    "delivery": "Supernatural",
+    "description": "Once per round, a creature grappling or grappled by a seraptis can be attacked by the ravenous, toothed wounds that decorate a seraptis's arms. These teeth bite and chew, inflicting an automatic 4d6+12 points of damage each round--in addition, the wounds caused by the ravenous embrace cause 2d6 bleed and 1d4 point of Strength drain as the seraptis drinks away the victim's blood and other vital fluids. As long as the seraptis is within 30 feet of a foe suffering bleed damage from her ravenous embrace, the blood that flows from the victim writhes through the air into the seraptis's arm maws, healing the seraptis by an amount equal to the amount caused by that round's bleed effect.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_2:monster_ability:seraptis_ravenous_embrace",
+    "name": "Ravenous Embrace",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_seraptis"
+    ],
+    "source_page": "p.58",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 19,
+    "record_key": "Seraptis ~ Ravenous Embrace"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

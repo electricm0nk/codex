@@ -33,8 +33,14 @@ import { assert, assertEqual } from '../testSupport/asserts';
 /** The `SIZE:` codes the 41 served records actually use, derived from `data/corpus/beastiary/monster/`. */
 const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 
-/** The books the catalog serves, as `monster_catalog.rs`'s own wire codes. */
-const SERVED_BOOKS = ['B1', 'BB', 'MC'] as const;
+/**
+ * The books the catalog serves, as `monster_catalog.rs`'s own wire codes.
+ *
+ * `BOTD1`/`BOTD2` (SD-29 Epic 5 extend, round 2) are the first codes wider than
+ * two characters. They are the books' own `SOURCESHORT` tokens, like every
+ * other code here.
+ */
+const SERVED_BOOKS = ['B1', 'BB', 'MC', 'BOTD1', 'BOTD2'] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
 const SERVED_DICE_SOURCES = [
@@ -176,6 +182,11 @@ function testEveryServedBookHasARealName() {
   );
   assertEqual(formatBook('BB'), 'Bonus Bestiary', 'the wire code is never what a reader sees');
   assertEqual(formatBook('MC'), 'Monster Codex', 'the wire code is never what a reader sees');
+  assertEqual(
+    formatBook('BOTD1'),
+    'Book of the Damned, Volume 1',
+    'a wire code wider than two characters maps like any other'
+  );
   assertEqual(formatBook('ZZ'), 'ZZ', 'an unserved code falls through as itself');
 }
 

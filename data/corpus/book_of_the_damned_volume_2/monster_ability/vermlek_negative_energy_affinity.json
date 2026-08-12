@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Vermlek ~ Negative Energy Affinity",
+    "delivery": "Extraordinary",
+    "description": "A vermlek is healed by negative energy and harmed by positive energy as if it were an undead creature.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_2:monster_ability:vermlek_negative_energy_affinity",
+    "name": "Negative Energy Affinity",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_vermlek"
+    ],
+    "source_page": "p.54",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 32,
+    "record_key": "Vermlek ~ Negative Energy Affinity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

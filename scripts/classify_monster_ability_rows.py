@@ -1,0 +1,224 @@
+#!/usr/bin/env python3
+"""Classify every `monster_ability` corpus row by the link that would reach it.
+
+# Why this exists
+
+SD-29 `decisions.md §45.1` records the lesson this script exists to make cheap:
+a round-1 deferral note ranked four books by the **work inventory's evidence
+token** -- a statement about what the *engine* has compiled -- when the question
+was what the *corpus rows* are.  Those are different questions, and the
+cheaper-sounding token named the harder work.  `scripts/classify_race_trait_rows.py`
+is the race-trait lane's answer to that; this is the monster lane's.
+
+Round 1 of `epic-5-monster-lane-extend` (`progress.md` `## Cycle SD29-E5-F2-002`
+§4) derived the per-book link-shape table with a `/tmp/.../shape_all.py` that no
+longer exists.  §45.1's own finding is that **an ephemeral path is not a
+citation**; a successor must be able to re-derive the table rather than trust
+it.  This is that script, checked in.
+
+# What it classifies, and why the classes are the ones that matter
+
+A `monster_ability` record only reaches a player through a monster: the desktop
+monster catalog lists monsters, and an ability is shown as a row underneath the
+monster that owns it (`monster_catalog.rs`).  So the operative question for
+every ability row is *which monster claims it*, and there are exactly three
+answers in the corpus:
+
+``row-named``
+    Some monster row in the same book names it in an
+    ``ABILITY:Special Ability|AUTOMATIC|<key>`` token.  Bonus Bestiary's shape.
+
+``prefix``
+    The ability's own ``KEY:`` is namespaced ``<Monster> ~ <Ability>`` and the
+    prefix is a monster of this book.  Monster Codex's shape (`Seru ~ Poison`).
+
+``orphan``
+    Neither.  Nothing in the book's own monster rows reaches it.  **An orphan is
+    a reach-gate cost, not a transcription one** -- ingesting it produces a
+    record that loads and is never shown, which is precisely the stub class
+    `decisions.md §44.2` was written about.
+
+Both link shapes mirror `scripts/transcribe_monster_tables.py`'s own
+`parse_special_ability_refs` + namespaced-prefix pass, so the classification
+predicts what a transcription of that book would actually produce.
+
+# The ceiling this measures
+
+A book with monsters and few orphans is ingestable at its stated unit count.  A
+book with **zero monster rows** and N ability rows has N orphans by
+construction: there is no monster in that book to hang them on, so no per-monster
+cycle can ground them at all.  That is a scope finding about the lane, not a
+backlog item -- `loop-instruction.md`'s "Hard stops" names a per-monster cycle
+against a zero-monster book as a reportable hard stop.
+
+Usage::
+
+    python3 scripts/classify_monster_ability_rows.py            # every book with remaining units
+    python3 scripts/classify_monster_ability_rows.py book_of_the_damned_volume_1 ...
+
+``PCGEN_CORPUS_ROOT`` may point at a local PCGen ``data/`` checkout; it defaults
+to ``$HOME/workspace/repos/pcgen/data``.  Run from the repo root: the unit set
+is ``docs/work-inventory.json``, never a raw line count over the ``.lst``.
+"""
+
+from __future__ import annotations
+
+import json
+import os
+import sys
+
+INVENTORY = "docs/work-inventory.json"
+
+
+def corpus_root() -> str:
+    return os.environ.get(
+        "PCGEN_CORPUS_ROOT", os.path.expanduser("~/workspace/repos/pcgen/data")
+    )
+
+
+def book_dirs() -> dict[str, str]:
+    """Book id -> absolute PCGen directory, found by directory basename.
+
+    Derived from the tree rather than from a hand-kept table, so a book this
+    script has never seen classifies without an edit here.
+    """
+    found: dict[str, str] = {}
+    for dirpath, dirnames, _ in os.walk(corpus_root()):
+        for name in dirnames:
+            found.setdefault(name, os.path.join(dirpath, name))
+    return found
+
+
+def read_row(path: str, line_no: int) -> list[str]:
+    """The 1-based line at `line_no`, split into its tab-separated tokens."""
+    with open(path, encoding="utf-8", errors="replace") as handle:
+        line = handle.read().split("\n")[line_no - 1]
+    return [token.strip() for token in line.split("\t") if token.strip()]
+
+
+def special_ability_refs(row: list[str]) -> list[str]:
+    """Ability keys named by this monster row's `ABILITY:Special Ability` tokens.
+
+    Identical predicate to `transcribe_monster_tables.parse_special_ability_refs`
+    -- a classification that used a looser rule than the transcriber would
+    over-report reachability, which is the direction that ships stubs.
+    """
+    refs: list[str] = []
+    for field in row:
+        if not field.startswith("ABILITY:Special Ability|"):
+            continue
+        for name in field.split("|")[2:]:
+            name = name.strip()
+            if not name or name.startswith("PRE") or "=" in name:
+                continue
+            if name not in refs:
+                refs.append(name)
+    return refs
+
+
+REMAINING = {"not-started", "not-ingested"}
+
+
+def classify_book(book: str, units: list[dict], directory: str | None) -> dict:
+    """Classify a book's REMAINING ability rows against ALL its monster rows.
+
+    The two predicates are deliberately different.  The *counts* answer "what
+    does this lane still owe", so they are over remaining units only.  The
+    *link* answers "is there a monster in this book that owns this row", and a
+    monster that is already grounded owns its abilities just as well as one this
+    lane has yet to transcribe -- restricting the link to remaining monsters
+    would report Bestiary 1's 46 SD-22 monsters' abilities as orphans, which
+    they are not.
+    """
+    monsters = [u for u in units if u["kind"] == "monster"]
+    abilities = [
+        u
+        for u in units
+        if u["kind"] == "monster_ability" and u["status"] in REMAINING
+    ]
+    monster_keys = {u["corpus_key"] for u in monsters}
+    ability_keys = {u["corpus_key"] for u in units if u["kind"] == "monster_ability"}
+
+    named: set[str] = set()
+    unresolved_refs: list[str] = []
+    if directory is not None:
+        for unit in monsters:
+            path = os.path.join(directory, unit["source_file"])
+            if not os.path.exists(path):
+                continue
+            for ref in special_ability_refs(read_row(path, unit["source_line"])):
+                if ref in ability_keys:
+                    named.add(ref)
+                else:
+                    unresolved_refs.append(ref)
+
+    row_named = prefix = orphan = 0
+    orphan_keys: list[str] = []
+    for unit in abilities:
+        key = unit["corpus_key"]
+        if key in named:
+            row_named += 1
+        elif " ~ " in key and key.split(" ~ ")[0] in monster_keys:
+            prefix += 1
+        else:
+            orphan += 1
+            orphan_keys.append(key)
+    return {
+        "book": book,
+        "monsters": sum(1 for u in monsters if u["status"] in REMAINING),
+        "monsters_all": len(monsters),
+        "abilities": len(abilities),
+        "row_named": row_named,
+        "prefix": prefix,
+        "orphan": orphan,
+        "orphan_keys": orphan_keys,
+        "external_ability_refs": sorted(set(unresolved_refs)),
+        "directory_found": directory is not None,
+    }
+
+
+def main() -> None:
+    inventory = json.load(open(INVENTORY, encoding="utf-8"))
+    wanted = set(sys.argv[1:])
+
+    by_book: dict[str, list[dict]] = {}
+    for unit in inventory["units"]:
+        if unit["kind"] not in ("monster", "monster_ability"):
+            continue
+        if wanted and unit["book"] not in wanted:
+            continue
+        by_book.setdefault(unit["book"], []).append(unit)
+
+    dirs = book_dirs()
+    rows = [
+        classify_book(book, by_book[book], dirs.get(book))
+        for book in sorted(by_book)
+    ]
+    rows = [r for r in rows if r["monsters"] + r["abilities"] > 0]
+    rows.sort(key=lambda r: -(r["monsters"] + r["abilities"]))
+
+    width = max((len(r["book"]) for r in rows), default=4)
+    print(f"{'book'.ljust(width)}  {'mon':>4} {'abil':>5} {'row-named':>9} {'prefix':>6} {'ORPHAN':>6}")
+    for r in rows:
+        print(
+            f"{r['book'].ljust(width)}  {r['monsters']:>4} {r['abilities']:>5} "
+            f"{r['row_named']:>9} {r['prefix']:>6} {r['orphan']:>6}"
+            + ("" if r["directory_found"] else "   [pcgen dir NOT FOUND]")
+        )
+
+    total_units = sum(r["monsters"] + r["abilities"] for r in rows)
+    total_orphan = sum(r["orphan"] for r in rows)
+    zero_monster = [r for r in rows if r["monsters"] == 0]
+    zero_monster_units = sum(r["abilities"] for r in zero_monster)
+    print()
+    print(f"remaining monster+monster_ability units : {total_units}")
+    print(f"orphan monster_ability rows             : {total_orphan}")
+    print(
+        f"  of which in ZERO-monster books        : {zero_monster_units} "
+        f"across {len(zero_monster)} books (no monster in the book to own them)"
+    )
+    print(f"reachable remainder (units - orphans)   : {total_units - total_orphan}")
+
+
+if __name__ == "__main__":
+    main()

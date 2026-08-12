@@ -40,13 +40,19 @@ export const SIZE_ORDER = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 
 /**
  * Wire book code -> the book's name. A row that named no book would leave a
- * reader unable to look the creature up, and the catalog now serves three
+ * reader unable to look the creature up, and the catalog now serves five
  * books.
+ *
+ * `BOTD1`/`BOTD2` are the first codes here wider than two characters -- they
+ * are the books' own `SOURCESHORT` tokens, exactly like `B1` and `MC`, and
+ * nothing in this map or in `formatBook` assumes a width.
  */
 export const BOOK_LABELS: Record<string, string> = {
   B1: 'Bestiary 1',
   BB: 'Bonus Bestiary',
   MC: 'Monster Codex',
+  BOTD1: 'Book of the Damned, Volume 1',
+  BOTD2: 'Book of the Damned, Volume 2',
 };
 
 /** `'BB'` -> `'Bonus Bestiary'`; an unmapped code falls through as itself. */

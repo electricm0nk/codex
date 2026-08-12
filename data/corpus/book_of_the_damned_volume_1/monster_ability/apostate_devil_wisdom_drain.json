@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "corpus_key": "Apostate Devil ~ Wisdom Drain",
+    "delivery": "Supernatural",
+    "description": "A deimavigga drains 1d6 points of Wisdom each time it hits with its claw attack. (A deimavigga does not heal any damage when it uses its Wisdom drain.)",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_1:monster_ability:apostate_devil_wisdom_drain",
+    "name": "Wisdom Drain",
+    "owners": [
+      "book_of_the_damned_volume_1:monster:devil_apostate"
+    ],
+    "source_page": "p.55",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
+    "line": 15,
+    "record_key": "Apostate Devil ~ Wisdom Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

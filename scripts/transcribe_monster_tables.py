@@ -42,6 +42,13 @@ import sys
 BOOKS = {
     "bonus_bestiary": "pathfinder/paizo/roleplaying_game/bonus_bestiary",
     "monster_codex": "pathfinder/paizo/roleplaying_game/monster_codex",
+    # The first two campaign-setting books in this lane, and the only two
+    # remaining books with ZERO orphan abilities -- every one of their ability
+    # rows is named by a monster row in the same book. Derived, not assumed:
+    # `python3 scripts/classify_monster_ability_rows.py book_of_the_damned_volume_1
+    # book_of_the_damned_volume_2`.
+    "book_of_the_damned_volume_1": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
+    "book_of_the_damned_volume_2": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
 }
 
 # The `TYPE:` first segment that names which facet of `monster_ability` a row
@@ -193,13 +200,68 @@ def parse_special_ability_refs(row: list[str]) -> list[str]:
     return refs
 
 
+def is_prerequisite(entry: str) -> bool:
+    """Whether a `DESC:` trailing entry is a prerequisite rather than a variable.
+
+    PCGen writes prerequisites in both polarities and the negated spelling is
+    the one this parser originally missed: ``PRERULE:1,DisplayFullAbility`` was
+    filtered, ``!PRERULE:1,DisplayFullAbility`` was not, so it landed in
+    ``description_variables`` as though it were a formula variable the row's
+    ``%N`` refer to. Book of the Damned Volume 2 is the first ingested book to
+    carry the shape (11 of its 17 ability rows); Bonus Bestiary and Monster
+    Codex carry none, which is why the defect was latent through two books.
+    Corpus-wide the shape occurs on **650** `DESC:` tokens across the
+    `*_abilities_race*.lst` files
+    (``grep -rhoE 'DESC:[^\\t]*\\|![A-Z]+[A-Z:]*' --include='*_abilities_race*.lst' .``
+    from the PCGen `data/` root), so it would have recurred in the lane's every
+    remaining book.
+    """
+    return entry.lstrip("!").startswith("PRE")
+
+
+FULL_ABILITY_RULE = "DisplayFullAbility"
+
+
 def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
-    """The `DESC:` text plus the trailing variable list its `%N` refer to."""
-    raw = token(row, "DESC:")
-    if raw is None:
+    """The `DESC:` text a player should read, plus the variables its `%N` name.
+
+    **A row may carry more than one `DESC:` token**, and Book of the Damned
+    Volume 2 is the first ingested book that does: 15 of its 17 ability rows
+    carry two, one gated ``!PRERULE:1,DisplayFullAbility`` (a one-line summary,
+    shown when PCGen's full-ability rule is off) and one gated
+    ``PRERULE:1,DisplayFullAbility`` (the complete rules text). Taking the first
+    match — which is what a single-`DESC:` book let this parser do — serves the
+    **summary** and silently drops the mechanics: `Seraptis ~ Gaze of Despair`
+    would reach the catalog as *"fills the minds of those within %1 feet with
+    …despair"* and never mention the save, the Charisma drain or the duration.
+
+    So when a row states both, the full-text one is selected. This is a choice
+    between two verbatim corpus texts on a criterion the corpus itself states,
+    never a composition of one. A row carrying several `DESC:` tokens under some
+    *other* gate is an unmodelled shape and stops the transcription rather than
+    being resolved by position.
+    """
+    descs = [f[len("DESC:") :] for f in row if f.startswith("DESC:")]
+    if not descs:
         return None, []
-    parts = raw.split("|")
-    return parts[0], [p for p in parts[1:] if p and not p.startswith("PRE")]
+    if len(descs) > 1:
+        full = [
+            d
+            for d in descs
+            if any(
+                entry.startswith("PRERULE") and FULL_ABILITY_RULE in entry
+                for entry in d.split("|")[1:]
+            )
+        ]
+        if len(full) != 1:
+            raise SystemExit(
+                f"row carries {len(descs)} DESC: tokens and {len(full)} of them are gated on "
+                f"{FULL_ABILITY_RULE}; the transcriber refuses to pick one by position. "
+                f"Widen it deliberately. Tokens: {descs!r}"
+            )
+        descs = full
+    parts = descs[0].split("|")
+    return parts[0], [p for p in parts[1:] if p and not is_prerequisite(p)]
 
 
 def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:

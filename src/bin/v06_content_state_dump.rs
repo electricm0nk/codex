@@ -812,6 +812,8 @@ fn main() {
             // Inner Sea Races has no feats file this repo compiles either; the
             // arm exists for exhaustiveness, exactly as `Ue`'s above does.
             RuleSetId::Isr => "inner_sea_races",
+            RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+            RuleSetId::Botd2 => "book_of_the_damned_volume_2",
         };
         let records = table.entries.len();
         let wired_here = table

@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Brimorak ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "20-foot line of boiling blood, %1d6 fire damage, Reflex DC %2 half, usable every 1d4 rounds.",
+    "description_variables": [
+      "BreathWeaponDice",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_2:monster_ability:brimorak_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_brimorak"
+    ],
+    "source_page": "p.56",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 8,
+    "record_key": "Brimorak ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
