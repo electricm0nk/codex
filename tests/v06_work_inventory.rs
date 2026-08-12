@@ -737,6 +737,13 @@ fn every_corpus_book_appears_in_the_inventory() {
 const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // SD-29 race-trait lane round 2 (`decisions.md §45`): 72 race-trait records.
     "inner_sea_races",
+    // SD-29 monster lane round 2 (`decisions.md §46`): each volume's entire
+    // monster family, 5 + 36 and 4 + 17 records. Added when the two lanes'
+    // branches merged -- this entry and the one above were each written by the
+    // lane that ingested the book, and the merge is where the list first had to
+    // be complete. A third lane ingesting a thirteenth book adds a line here.
+    "book_of_the_damned_volume_1",
+    "book_of_the_damned_volume_2",
 ];
 
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[

@@ -24,8 +24,13 @@
 //! Book of the Damned volumes live under `campaign_setting/`, and the
 //! expectation going in was that the PI screen would bite: Inner Sea Races, the
 //! race-trait lane's campaign-setting book, had **12 of its 72** descriptions
-//! PI-redacted (`decisions.md §45.2`), because Golarion nation and ethnicity
-//! names occur inside otherwise mechanical prose.
+//! PI-redacted (`decisions.md §45.2`), because setting-specific nation and
+//! ethnicity names occur inside otherwise mechanical prose.
+//!
+//! (That sentence originally named the setting. `pi_table_sweep` rejected it,
+//! correctly: the sweep does not read intent, and a doc comment explaining the
+//! PI screen has no need to instantiate a PI term to make its point. Reworded
+//! rather than baselined — `decisions.md §47.3`.)
 //!
 //! **It did not, and the derived reason is worth recording rather than
 //! rounding away.** `data/corpus/book_of_the_damned_volume_1/LICENSE.json`
