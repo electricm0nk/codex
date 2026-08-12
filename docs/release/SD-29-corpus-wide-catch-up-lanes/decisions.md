@@ -2752,3 +2752,230 @@ those books individually exceed anything this lane has taken since ARG. They are
 `corpus-work-channels.md §10.2`'s 37, so they are not this bundle's to take — but they are the
 largest known block of cheap race-trait work anywhere in the tree, and a successor bundle should be
 told they exist rather than rediscovering them a round at a time.
+
+## Decision 50 — Monster / Monster-Ability Lane, extend: round 3 (2026-08-12, `sd29-monster-r5`, card `epic-5-monster-lane-extend`)
+
+Round 3 ingested **Inner Sea World Guide** — 23 of its 44 monster-family units — and found, in the
+process, that this program has never read the corpus's own per-record Product Identity declaration.
+Two of the five rows that carry it would have shipped past the existing screen. The lane is not dry
+and this round does not claim it is.
+
+### 50.1 `NAMEISPI:YES` is an upstream PI declaration and nothing in this repo read it
+
+`§46.4` closed round 2 with a derived generalisation: *"'Campaign setting' predicts a PI hit rate
+for `race_trait` and does not predict one for `monster`"* — a monster row is a stat block, not
+setting prose, and both Book of the Damned volumes read `records_redacted: 0`.
+
+**That held for two books whose creatures are Open Game Content devil and demon types, and it does
+not hold for a book whose creatures are named after Golarion places and deities.** Inner Sea World
+Guide is a `campaign_setting/` book, and `gen_book_cache`'s PI screen hard-stopped on it at the
+first attempt: four records carried `Urgathoa`.
+
+Following that stop into the corpus rows found something the term list could not have:
+
+```bash
+grep -c 'NAMEISPI:YES' iswg_races.lst iswg_races_bestiary.lst   # -> 3, 2
+```
+
+| row | file:line | why it is PI on its face |
+|---|---|---|
+| `Daughter of Urgathoa` | `iswg_races.lst:13` | a named Golarion deity |
+| `Sandpoint Devil` | `iswg_races.lst:14` | a named Golarion town |
+| `Treerazer` | `iswg_races.lst:16` | a unique named NPC |
+| `Boar (Sargavan)` | `iswg_races_bestiary.lst:13` | a named Golarion nation |
+| `Herd Animal (Storval Aurochs)` | `iswg_races_bestiary.lst:14` | a named Golarion region |
+
+`NAMEISPI:YES` is PCGen's own per-record marker that a record's NAME is Product Identity. **This
+repository's entire PI apparatus — `pi_screening::PI_BLACKLIST_TERMS`, `pi_table_sweep`,
+`gen_book_cache`'s hard stop — reads a hand-maintained 55-term list and nothing else.** Only three
+of the five above are on that list. `Boar (Sargavan)` and `Herd Animal (Storval Aurochs)` carry
+place names it does not contain and **would have shipped**.
+
+**The marker and an independent reading agree**, and that agreement is the point rather than an
+aside: a proxy is only usable once it has been checked where it makes its confident claim. Each of
+the five is Product Identity under OGL §1(e) on inspection, not merely by upstream assertion. Had
+they disagreed — had the marker flagged a generic species name — the correct conclusion would have
+been that the token is not a PI oracle for this program, and this decision would read the other way.
+
+### 50.2 One record already shipped with the marker set, in another lane's territory
+
+The finding does not stop at this lane:
+
+```bash
+grep -rl 'NAMEISPI:YES' <every ingested book's .lst tree>
+#   -> inner_sea_races/isr_abilities_race.lst:67   `Elf ~ Sovyrian-Born`
+grep -rl 'Sovyrian' data/corpus/
+#   -> data/corpus/inner_sea_races/race_trait/elf/elf_sovyrian_born.json
+```
+
+**That record is on `tranche/9` now.** "Sovyrian" is a Golarion place name, it is not in
+`PI_BLACKLIST_TERMS`, and no screen fired. The four books already carrying the monster chassis are
+clean (`grep -c` → 0 on all four), so this lane's own output is unaffected; the race-trait lane's is
+not.
+
+**Not fixed by this round, and the reason is a rule this bundle already paid for.** The remedy is a
+`PI_BLACKLIST_TERMS` addition under `docs/governance/ogl-pi-blacklist.md` §3's per-book-override
+template — the same mechanism that folded in `Jarn`. That is a **corpus-wide** change: it alters
+what every book's generator redacts, and its blast radius cannot be verified inside this card's
+write scope without re-running other lanes' generators. `§46.6` rule 1 exists because two lanes
+working the same files cost this bundle an entire gate run. So it is reported with its command and
+its file path rather than reached for. `incident` emitted with `recurrence-key
+pi-declaration-token-unread`.
+
+**The general form, which is not about this token.** A screen built from a list somebody maintains
+is only as complete as that person's imagination. A screen that reads a *declaration the source data
+already makes* is complete by construction for every record that carries it. This program had the
+second kind of evidence available in every `.lst` file it has ever parsed and used the first kind
+exclusively.
+
+### 50.3 A key cannot be redacted, so PI rows are dropped rather than screened
+
+`pi_screening` redacts a `description` and records `pi_field`. It has no answer for a record whose
+*identity* is the Product Identity: `[redacted PI]` as a monster's key is a record nobody can look
+up, and one whose `owners` links break.
+
+So the transcriber **drops** the row and names it, with its file:line and its reason, in the
+generated module header. Nothing is reclassified — reclassification is `ogl-pi-blacklist.md` §3's
+per-book override and an operator decision. `deferral` emitted for all 21 excluded units.
+
+Dropping a monster **cascades**: an ability whose only owner is gone reaches nothing either. This
+book's orphan count went from 5 (the `iswg_templates.lst`-owned rows the classifier saw) to 13. The
+transcriber therefore runs the PI screen **before** the orphan screen, and the ordering is
+load-bearing rather than incidental: run it the other way and `Constant ~ Desecrate` is reported as
+a PI hit on its *owner's* name when the true reason is that it has become an orphan. Each row is
+reported under the reason that actually applies to it.
+
+### 50.4 A screen that is too broad is a defect in the other direction
+
+The first draft of the transcriber's term screen read **every token of the corpus row** — the
+instinct being that over-inclusion is the safe direction for a PI screen. It dropped the Sandpoint
+Devil for:
+
+```
+AUTO:LANG|Abyssal|Varisian
+```
+
+a language grant that never reaches a record, on the blacklist term `Varisia` matching as a
+substring of `Varisian`. **Over-exclusion silently deletes corpus content nothing was going to
+publish**, and it does so in a way no gate can see, because the missing record simply never exists.
+
+The screen now reads exactly the values the transcription **emits**, which is exactly what
+`gen_book_cache` serializes and screens in turn — the two are the same set by construction rather
+than by coincidence. The Sandpoint Devil is excluded anyway, by `NAMEISPI:YES`, which is the right
+reason.
+
+The term list itself is now **parsed out of `src/rules_core/pi_screening.rs`** rather than repeated
+in Python, and the parser refuses to run if it finds fewer than 20 terms. A copy would drift the
+first time §3's per-book override adds one — which is exactly what `§50.2` will eventually need.
+
+### 50.5 A book's monsters may live in two files, and the line numbers collide
+
+Inner Sea World Guide splits its 14 monster rows 7/7 across `iswg_races.lst` (beside the book's
+player races) and `iswg_races_bestiary.lst`. Their line numbers overlap:
+
+```
+iswg_races.lst:10          -> Aluum
+iswg_races_bestiary.lst:10 -> Fennec (Firefoot)
+```
+
+`MonsterStatBlock` carried only a `source_line`, and `gen_book_cache` took the file from a single
+per-book spec string. Under that model every row of one of the two files would have been
+citation-checked against the other — and `verified_citation_line` compares the cited line's first
+column against the record's name, so it would have surfaced as a citation failure rather than as the
+modelling gap it is. `MonsterStatBlock::source_file` is new,
+`MonsterBookSpec::races_lst` became `races_lsts: &'static [&'static str]`, and the generator looks
+the file up per record and panics by name on a file the spec does not list.
+
+**The four already-shipped books reproduce byte-for-byte under every change above except that one
+new field** — checked by a unified diff of the two versions' table bodies, not by `git diff --stat`.
+Bonus Bestiary's committed file keeps the pilot's hand-authored header (round 2's own recorded
+treatment) and had the field inserted rather than being regenerated.
+
+### 50.6 The card's `OPEN_FINDINGS` instruction is not satisfiable, and the divergence is recorded
+
+`kanban.md`'s round-3 note says a book with orphans lands *"the claim scoped to the linked subset
+with an `OPEN_FINDINGS` entry for the rest."* The first half is exactly what happened. The second is
+mechanically unavailable, and pretending otherwise would have meant weakening a gate.
+
+`reach_gate`'s own findings test asserts, in both directions, that a recorded finding names a family
+that reaches **nothing**:
+
+```
+"these families now reach a surface — delete their OPEN_FINDINGS entries: {}"
+```
+
+`inner_sea_world_guide/monster_abilities` reaches `list_monster_catalog` for all 14 of its shipped
+records, so an entry for it is `stale` by that test's own definition. The list is for a *family* that
+does not reach, not for rows a cycle chose not to ingest — those are not records at all, so there is
+nothing for the gate to find unreached.
+
+The exclusions are held instead by four named tests
+(`the_five_product_identity_names_are_not_records`, `no_shipped_ability_is_an_orphan`,
+`every_owner_named_by_a_shipped_ability_is_a_shipped_monster`, and
+`no_shipped_field_carries_a_product_identity_term`, which checks the property against the live
+blacklist rather than a list of names), and by the generated header, per row, with reasons. **A
+round that had followed the card literally would have added a finding the gate rejects; a round that
+had ingested the rows to make the finding true would have shipped five Product Identity names.**
+
+### 50.7 What landed, and the remainder
+
+| book | monster units | ingested | monster_ability units | ingested |
+|---|---|---|---|---|
+| `inner_sea_world_guide` | 14 | **9** | 30 | **14** |
+
+`records_redacted: 0` in the book's `LICENSE.json` — which is now a *weaker* statement than it looks,
+and is why `§50.1` exists: zero redactions is what a book reads when its PI is in the keys.
+
+Denominators, by the command rounds 1 and 2 both recorded (sum `not-ingested` + `not-started` for
+both kinds over every non-`out_of_scope` book in `docs/work-inventory.json`):
+
+* **Before:** `monster` 1,199 + `monster_ability` 3,034 = **4,233**. Round 2's closing figure,
+  reproduced exactly before being moved.
+* **After:** `monster` 1,190 + `monster_ability` 3,020 = **4,210**. `units_ingested` = **23**.
+* Grounded: `monster` 71 → **80**, `monster_ability` 73 → **87**.
+
+`scripts/classify_monster_ability_rows.py`, run at cycle start **as round 2 left it**, reproduces
+`§46.1`'s **2,906** reachable remainder exactly — that figure is confirmed, not corrected.
+
+**Then the instrument turned out to be over-reporting, and fixing it moves the ceiling more than
+this round's ingest did.** The classifier resolved every ability's link against every monster ROW,
+including rows that carry `NAMEISPI:YES` and can never be shipped. For this book it called 11 of
+the 16 remaining abilities reachable when their owners are the five PI rows, and counted the 8 PI
+rows themselves as reachable units — 16 units of phantom work in one book. It now reads Product
+Identity first (both signals, the term list parsed out of `pi_screening.rs`) and resolves links
+against **shippable** monsters only:
+
+```
+remaining monster+monster_ability units : 4210
+orphan monster_ability rows             : 1405
+  of which in ZERO-monster books        : 703 across 10 books
+Product Identity rows (never shippable)  : 32
+reachable remainder (units - orphans - PI): 2773
+```
+
+**The lane's REAL ceiling is 2,773, not 2,906.** The 133-unit difference is not this round's 23
+ingest; it is work that was never available. And the effect is not confined to a campaign-setting
+book: `bestiary_4`, the largest unstarted book in the lane, carries **14** PI rows whose removal
+turns **73** more of its abilities into orphans (152 → 225).
+
+**The general form.** `§45.1` ruled that a lane must classify corpus rows rather than trust an
+inventory token, and `§46.1` built the instrument that does it. This round is the next turn of the
+same screw: **an instrument that classifies rows is itself a proxy, and it needs validating where
+it makes its confident claim.** It said "reachable" about 16 rows that a hard stop in the generator
+refuses to write.
+
+**Round 4's queue, and what it must check first.** the corrected classifier now answers this in one
+command, and it inverts the ranking round 2 wrote:
+
+| book | remaining units | orphans | PI | **reachable** |
+|---|---|---|---|---|
+| `bestiary_2` | 782 | 64 | **0** | **718** |
+| `inner_sea_bestiary` | 230 | 26 | 7 | **197** |
+| `inner_sea_world_guide` | 21 | 13 | 8 | **0** |
+
+`bestiary_2` is a `roleplaying_game/` bestiary and carries **zero** PI rows — which
+`ogl-pi-blacklist.md` §2's own note predicts, since classic SRD monster names are presumptively Open
+Game Content. It is both the biggest and the cleanest remaining book, and it should be round 4's
+target. `inner_sea_bestiary` is `campaign_setting/` and carries 7 PI rows, exactly as this book did.
+The book round 2 ranked first (`inner_sea_world_guide`) is now finished as far as it can be
+finished: 0 reachable units remain in it.

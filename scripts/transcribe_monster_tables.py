@@ -422,7 +422,12 @@ def transcribe(book: str) -> str:
             *monster_ability_keys[unit["corpus_key"]],
             *external[unit["corpus_key"]],
         )
-        return f"blacklist term {hits[0]!r}" if hits else None
+        # The reason names the SCREEN, never the term: the reason string is
+        # written into a checked-in generated file, and `pi_table_sweep` rejects
+        # a Product Identity term anywhere under `rules_tables/` regardless of
+        # the sentence around it. `len(hits)` is enough to tell a reader whether
+        # one term matched or several.
+        return f"{len(hits)} PI_BLACKLIST_TERMS hit(s) in emitted values" if hits else None
 
     def ability_pi_reason(unit: dict) -> str | None:
         row = read_row(os.path.join(root, unit["source_file"]), unit["source_line"])
@@ -440,7 +445,7 @@ def transcribe(book: str) -> str:
             *variables,
             *owners[unit["corpus_key"]],
         )
-        return f"blacklist term {hits[0]!r}" if hits else None
+        return f"{len(hits)} PI_BLACKLIST_TERMS hit(s) in emitted values" if hits else None
 
     # Monsters first, and the ability screen runs only AFTER their owners are
     # withdrawn. `owners` is an emitted field, so an ability whose owner is a
@@ -465,6 +470,9 @@ def transcribe(book: str) -> str:
             monster_ability_keys[key] = [
                 a for a in monster_ability_keys[key] if a not in dropped_ability_keys
             ]
+        # stderr may name the keys: it is a console message, not a checked-in
+        # file, and an operator ruling on the exclusion needs to know what was
+        # excluded.
         print(
             f"{book}: PI screen dropped {len(pi_monsters)} monster row(s) and "
             f"{len(pi_abilities)} ability row(s): "
@@ -545,10 +553,17 @@ def transcribe(book: str) -> str:
             "//! is `docs/governance/ogl-pi-blacklist.md` §3's per-book override, an operator"
         )
         out.append("//! decision, not a transcriber's:")
+        # The row is cited by FILE:LINE and never by its key. `pi_table_sweep`
+        # rejects a Product Identity term anywhere under `rules_tables/`,
+        # including a comment explaining why the term was excluded -- the sweep
+        # does not read intent, and a generated header has no need to
+        # instantiate the very name it is recording the removal of. The
+        # citation is also the better identifier: a reader checks it against
+        # the corpus, where the name legitimately lives.
         for unit, reason in pi_monsters + pi_abilities:
             out.append(
-                f"//!   * `{unit['corpus_key']}` "
-                f"({unit['source_file']}:{unit['source_line']}, {reason})"
+                f"//!   * `{unit['source_file']}:{unit['source_line']}` "
+                f"({'monster' if unit['kind'] == 'monster' else 'ability'} row, {reason})"
             )
     if orphans:
         out.append("//!")
@@ -564,8 +579,11 @@ def transcribe(book: str) -> str:
         out.append(
             "//! in the work inventory, and the round's receipt records them by key:"
         )
+        # Cited by FILE:LINE, not by key, for the same reason the PI block above
+        # is: an orphan created by a PI drop carries the dropped row's declared
+        # Product Identity name in its own namespaced key.
         for unit in orphans:
-            out.append(f"//!   * `{unit['corpus_key']}` (line {unit['source_line']})")
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}`")
     out.append("")
     out.append(
         "use crate::rules_core::rules_tables::monster_chassis::{"

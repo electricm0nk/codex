@@ -7,22 +7,24 @@
 //! # 1. Product Identity, declared by the corpus itself
 //!
 //! Five monster rows carry `NAMEISPI:YES` — PCGen's own per-record marker that
-//! the record's NAME is Product Identity:
+//! the record's NAME is Product Identity. **They are cited here by line and
+//! never by name**, because `pi_table_sweep` rejects a PI term anywhere under
+//! `rules_tables/` and a comment recording a removal has no need to
+//! instantiate the name it removed. Read them out of the corpus, where they
+//! legitimately live:
 //!
 //! ```text
 //! grep -n 'NAMEISPI:YES' iswg_races.lst iswg_races_bestiary.lst
-//! iswg_races.lst:13           Daughter of Urgathoa
-//! iswg_races.lst:14           Sandpoint Devil
-//! iswg_races.lst:16           Treerazer
-//! iswg_races_bestiary.lst:13  Boar (Sargavan)
-//! iswg_races_bestiary.lst:14  Herd Animal (Storval Aurochs)
+//! iswg_races.lst:13   iswg_races.lst:14   iswg_races.lst:16
+//! iswg_races_bestiary.lst:13   iswg_races_bestiary.lst:14
 //! ```
 //!
 //! The marker and an independent reading agree, which is the check that makes
-//! the marker usable rather than merely present: each name embeds a Golarion
-//! deity, town, region or unique NPC — Product Identity under OGL §1(e) on its
-//! face, not only by upstream declaration. Three of the excluded ability rows
-//! (`Daughter of Urgathoa ~ …`) also match `PI_BLACKLIST_TERMS` outright.
+//! the marker usable rather than merely present: each of the five names a
+//! setting-specific deity, town, region, nation or unique NPC — Product
+//! Identity under OGL §1(e) on its face, not only by upstream declaration.
+//! Three of the excluded ability rows are namespaced to the first of them and
+//! match `PI_BLACKLIST_TERMS` outright.
 //!
 //! **They are dropped, not redacted.** `pi_screening` redacts a `description`;
 //! it cannot redact a KEY, and `[redacted PI]` as a monster's key is a record
@@ -30,12 +32,13 @@
 //! `docs/governance/ogl-pi-blacklist.md` §3's per-book override — an operator
 //! decision, not a transcriber's.
 //!
-//! **`NAMEISPI:YES` was invisible to this program until this book.** The four
-//! books already carrying the chassis contain zero such rows
-//! (`grep -c NAMEISPI:YES` over each one's races `.lst` → 0), so nothing
-//! already shipped is affected *in this lane*. It is not clean corpus-wide: see
-//! this round's receipt for the one shipped record another lane's ingest
-//! carries with the marker set.
+//! **`NAMEISPI:YES` was invisible to this program until this book**, and only
+//! three of the five are on `PI_BLACKLIST_TERMS` — so a term-list-only screen
+//! would have passed two of them. The four books already carrying the chassis
+//! contain zero such rows (`grep -c NAMEISPI:YES` over each one's races `.lst`
+//! → 0), so nothing already shipped is affected *in this lane*. It is not clean
+//! corpus-wide: see this round's receipt for the one shipped record another
+//! lane's ingest carries with the marker set.
 //!
 //! # 2. Orphans — 13 ability rows no monster row of this book claims
 //!
@@ -48,9 +51,9 @@
 //! inner_sea_world_guide    14    30        25      0      5
 //! ```
 //!
-//! Five are orphans against the whole book (`Nascent Demon Lord ~ …` and
-//! `Clockwork ~ …`, namespaced to `iswg_templates.lst` templates this chassis
-//! does not model). The other eight lost their owner to the PI screen above —
+//! Five are orphans against the whole book — namespaced to `iswg_templates.lst`
+//! templates this chassis does not model, at `iswg_abilities_race.lst:86-87`
+//! and `:96-98`. The other eight lost their owner to the PI screen above —
 //! dropping a monster cascades to the abilities only it claimed, which is why
 //! the two screens run in that order.
 //!
@@ -153,31 +156,54 @@ mod tests {
         }
     }
 
-    /// The five `NAMEISPI:YES` rows are named individually rather than counted,
-    /// so a regeneration that quietly pulls one back in fails here with the name
-    /// that returned — and a reader can check each against the cited line.
+    /// The eight excluded rows are pinned **individually, by the corpus line
+    /// each one is**, so a regeneration that quietly pulls one back in fails
+    /// here naming the line that returned.
+    ///
+    /// By line and not by key on purpose: their keys are the Product Identity,
+    /// and `pi_table_sweep` rejects a PI term anywhere under `rules_tables/` —
+    /// including a test asserting the term's absence. A line citation is also
+    /// the stronger pin, because it survives an upstream rename of the very
+    /// name that makes the row excluded.
     #[test]
-    fn the_five_product_identity_names_are_not_records() {
-        for key in [
-            "Daughter of Urgathoa",
-            "Sandpoint Devil",
-            "Treerazer",
-            "Boar (Sargavan)",
-            "Herd Animal (Storval Aurochs)",
+    fn the_eight_product_identity_rows_are_not_records() {
+        for (file, line) in [
+            ("iswg_races.lst", 13u32),
+            ("iswg_races.lst", 14),
+            ("iswg_races.lst", 16),
+            ("iswg_races_bestiary.lst", 13),
+            ("iswg_races_bestiary.lst", 14),
         ] {
             assert!(
-                !monsters().iter().any(|m| m.key == key),
-                "{key} carries NAMEISPI:YES in its own corpus row and must not ship"
+                !monsters()
+                    .iter()
+                    .any(|m| m.source_file == file && m.source_line == line),
+                "{file}:{line} carries NAMEISPI:YES in its own corpus row and must not ship"
             );
         }
-        for key in [
-            "Daughter of Urgathoa ~ Disease",
-            "Daughter of Urgathoa ~ Great Claw",
-            "Daughter of Urgathoa ~ Spells",
-        ] {
+        for line in [24u32, 25, 27] {
             assert!(
-                !monster_abilities().iter().any(|a| a.key == key),
-                "{key} carries a PI_BLACKLIST_TERMS term in its own key and must not ship"
+                !monster_abilities().iter().any(|a| a.source_line == line),
+                "iswg_abilities_race.lst:{line} carries a PI_BLACKLIST_TERMS term in its own \
+                 key and must not ship"
+            );
+        }
+    }
+
+    /// The five template-owned orphan rows, pinned by line for the same reason
+    /// the block above is — three of the thirteen orphans are namespaced to a
+    /// PI-declared monster and carry its name in their own key.
+    ///
+    /// These five are the ones that are orphans against the WHOLE book rather
+    /// than as a consequence of the PI drops, so they are the ones a future
+    /// template surface would close.
+    #[test]
+    fn the_five_template_owned_orphans_are_not_records() {
+        for line in [86u32, 87, 96, 97, 98] {
+            assert!(
+                !monster_abilities().iter().any(|a| a.source_line == line),
+                "iswg_abilities_race.lst:{line} is owned by an iswg_templates.lst template, \
+                 not by any monster row of this book"
             );
         }
     }
