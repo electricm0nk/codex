@@ -65,6 +65,13 @@ const BOOK_BB: &str = "BB";
 /// the book's own `SOURCESHORT:MC`.
 const BOOK_MC: &str = "MC";
 
+/// Book of the Damned, Volumes 1 and 2 -- the fourth and fifth (SD-29 Epic 5
+/// extend, round 2). Wire codes are the books' own `SOURCESHORT:BOTD1` and
+/// `SOURCESHORT:BOTD2`, so they are the first codes here longer than two
+/// characters; nothing in the frontend's map assumes a width.
+const BOOK_BOTD1: &str = "BOTD1";
+const BOOK_BOTD2: &str = "BOTD2";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -83,6 +90,8 @@ fn book_display_name(corpus_book: &str) -> &'static str {
     match corpus_book {
         "bonus_bestiary" => "Bonus Bestiary",
         "monster_codex" => "Monster Codex",
+        "book_of_the_damned_volume_1" => "Book of the Damned, Volume 1",
+        "book_of_the_damned_volume_2" => "Book of the Damned, Volume 2",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -94,6 +103,8 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
     match corpus_book {
         "bonus_bestiary" => BOOK_BB,
         "monster_codex" => BOOK_MC,
+        "book_of_the_damned_volume_1" => BOOK_BOTD1,
+        "book_of_the_damned_volume_2" => BOOK_BOTD2,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."

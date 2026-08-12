@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_2:monster_ability:vermlek_abandon_flesh",
+      "book_of_the_damned_volume_2:monster_ability:vermlek_flesh_armor",
+      "book_of_the_damned_volume_2:monster_ability:vermlek_inhabit_body",
+      "book_of_the_damned_volume_2:monster_ability:vermlek_negative_energy_affinity"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Demon (Vermlek)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "book_of_the_damned_volume_2:monster:demon_vermlek",
+    "monster_class": "Outsider (Fort/Will):4",
+    "name": "Demon (Vermlek)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite (Primary)"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Bite (with weapon attack)"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.54",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Burrow"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+    "sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+    "line": 7,
+    "record_key": "Demon (Vermlek)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

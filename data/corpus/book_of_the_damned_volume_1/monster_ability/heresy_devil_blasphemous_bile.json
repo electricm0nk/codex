@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "corpus_key": "Heresy Devil ~ Blasphemous Bile",
+    "delivery": "Supernatural",
+    "description": "30-ft. line, once every 1d4 hours; damage 4d6 acid, Reflex DC 23 half. Those struck by this bile find themselves drenched in liquid corruption so profound it impedes the power of non-evil divine magic for 10 minutes. Any non-evil divine spellcaster who casts a spell targeting a creature soaked in an ayngavhaul's bile must make a DC 23 caster level check or have the spell fail. A creature affected by this bile may wash off the sludge by spending a round and using at least a gallon of fluid to cleanse itself. The save DC is Constitution-based.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_1:monster_ability:heresy_devil_blasphemous_bile",
+    "name": "Blasphemous Bile",
+    "owners": [
+      "book_of_the_damned_volume_1:monster:devil_heresy"
+    ],
+    "source_page": "p.56",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
+    "line": 21,
+    "record_key": "Heresy Devil ~ Blasphemous Bile"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -784,7 +784,7 @@ fn sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books() {
         // ingested `inner_sea_races` on 2026-08-11 and left this assertion RED
         // on the branch; round 3 states the exemption as its own claim rather
         // than dropping the book from the roster or relaxing the check
-        // (`decisions.md §46.3`). The `else` branch is deliberately a hard
+        // (`decisions.md §47.3`). The `else` branch is deliberately a hard
         // assertion too, so a book flipping scope silently still fails here.
         let expected_scope =
             if SD29_INGESTED_CAMPAIGN_SETTING_BOOKS.contains(id) { "in_scope" } else { "future_state" };

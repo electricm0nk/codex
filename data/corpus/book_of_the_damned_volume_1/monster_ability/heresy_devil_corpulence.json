@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "corpus_key": "Heresy Devil ~ Corpulence",
+    "delivery": "Extraordinary",
+    "description": "Ayngavhauls are greasy and grossly obese. This extraordinary bulk provides them with a +10 bonus on their combat maneuver defense.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_1:monster_ability:heresy_devil_corpulence",
+    "name": "Corpulence",
+    "owners": [
+      "book_of_the_damned_volume_1:monster:devil_heresy"
+    ],
+    "source_page": "p.56",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_race.lst",
+    "sha256": "7a4bbe22fbfbad0f5d641cbef4be5cdc2973d2c3dd4d5bd9abb8aa49650d7177",
+    "line": 20,
+    "record_key": "Heresy Devil ~ Corpulence"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -886,6 +886,8 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::MonsterCodex,
     RuleSetId::Isr,
     RuleSetId::Ha,
+    RuleSetId::Botd1,
+    RuleSetId::Botd2,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -911,6 +913,8 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::MonsterCodex => "monster_codex",
         RuleSetId::Isr => "inner_sea_races",
         RuleSetId::Ha => "horror_adventures",
+        RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+        RuleSetId::Botd2 => "book_of_the_damned_volume_2",
     }
 }
 
@@ -948,6 +952,8 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::MonsterCodex => "monster_codex",
         RuleSetId::Isr => "inner_sea_races",
         RuleSetId::Ha => "horror_adventures",
+        RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+        RuleSetId::Botd2 => "book_of_the_damned_volume_2",
     }
 }
 

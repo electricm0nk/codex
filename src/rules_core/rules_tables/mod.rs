@@ -14,6 +14,8 @@ pub mod apg;
 pub mod archetype_swap;
 pub mod beastiary1;
 pub mod bonus_bestiary;
+pub mod book_of_the_damned_volume_1;
+pub mod book_of_the_damned_volume_2;
 pub mod class_spell_levels;
 pub mod crb;
 pub mod equipment_gap_tables;
@@ -88,4 +90,16 @@ pub enum RuleSetId {
     /// ingested, so that file's one further in-scope row is out of this rule
     /// set's scope by construction rather than by omission.
     Ha,
+    /// Princes of Darkness -- Book of the Damned, Volume 1. SD-29 Epic 5
+    /// extend, round 2 (`rules_tables::book_of_the_damned_volume_1`, 5
+    /// monsters + 36 monster abilities). The first `campaign_setting/` book to
+    /// carry the monster chassis, and one of only two remaining books in the
+    /// lane whose ability rows are ALL owned by a monster row of the same book
+    /// (`scripts/classify_monster_ability_rows.py`).
+    Botd1,
+    /// Lords of Chaos -- Book of the Damned, Volume 2. SD-29 Epic 5 extend,
+    /// round 2 (`rules_tables::book_of_the_damned_volume_2`, 4 monsters + 17
+    /// monster abilities). The book that found the two-`DESC:`-token row shape
+    /// -- see its module doc.
+    Botd2,
 }

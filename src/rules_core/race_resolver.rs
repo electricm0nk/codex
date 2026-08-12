@@ -167,7 +167,7 @@ pub struct RaceTraitRecord {
     /// every Inner Sea Races record whose description was redacted for naming
     /// a Golarion place was nevertheless rendering that place name into the
     /// Race Traits panel. Found by SD-29's race-trait lane round 3
-    /// (`decisions.md §46`) when round 2's own RED gate was reproduced; the
+    /// (`decisions.md §47`) when round 2's own RED gate was reproduced; the
     /// redaction had been live and ineffective on 12 records since round 2.
     /// A redacted record now serves its marker instead of re-rendering the
     /// text the screen exists to withhold.
@@ -1873,7 +1873,7 @@ mod tests {
 
     /// **A PI-redacted record must never render the prose it was redacted for.**
     ///
-    /// SD-29 race-trait lane round 3 (`decisions.md §46`). The ingest screens
+    /// SD-29 race-trait lane round 3 (`decisions.md §47`). The ingest screens
     /// `data.description` and stores the marker, but the record's `DESC:` raw
     /// tokens keep the upstream prose verbatim, and `render_description` reads
     /// those tokens — so between round 2 and round 3 the Race Traits panel was

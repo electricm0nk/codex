@@ -215,8 +215,8 @@ fn the_pure_flag_table_agrees_with_the_disk_backed_resolver_for_every_alternate(
             checked += 1;
         }
     }
-    assert_eq!(checked, 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 46)");
-    assert_eq!(selectable_alternate_trait_keys().len(), 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 46)");
+    assert_eq!(checked, 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(selectable_alternate_trait_keys().len(), 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// The three dependent rows named in this cycle's brief, confirmed by reading
@@ -255,7 +255,7 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
     assert_eq!(arg, 156, "ARG's 156 ingested race-trait records");
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
-    assert_eq!(selectable.len(), 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 46)");
+    assert_eq!(selectable.len(), 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
     for dependent in ["Feral ~ Languages", "Scion of Humanity ~ Languages", "Saltbeard ~ Dwarf ~ Greed"] {
         assert!(!selectable.contains(dependent), "{dependent} must not be a menu item");
     }
@@ -495,7 +495,7 @@ fn every_alternate_computes_on_its_own_race_without_an_unknown_key_diagnostic() 
             computed += 1;
         }
     }
-    assert_eq!(computed, 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 46)");
+    assert_eq!(computed, 267, "153 ARG + 4 Monster Codex + 1 APG + 68 Inner Sea Races + 41 Horror Adventures. The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// **The measurement behind this cycle's honesty claim**, re-derived rather
@@ -598,7 +598,7 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
         ],
         "the reachable set is a measurement of today's engine; a change here is a real change. \
          Round 2 added ISR's 4 without moving this list, so it was RED on the branch; round 3 \
-         moved it and added HA's 1 (SD-29 decisions.md 46)"
+         moved it and added HA's 1 (SD-29 decisions.md 47)"
     );
 
     // Every one of them is genuinely wired: the engine's own before/after
@@ -619,7 +619,7 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
                 // Adventures' `Half-Elf ~ Mismatched` do, and this match's
                 // `other =>` arm panics rather than skipping -- so the gap was
                 // fail-loud, not silent, and is closed rather than worked
-                // around (SD-29 `decisions.md §46`).
+                // around (SD-29 `decisions.md §47`).
                 "total_saves.fortitude" => after.total_saves.fortitude - before.total_saves.fortitude,
                 "total_saves.reflex" => after.total_saves.reflex - before.total_saves.reflex,
                 "total_saves.will" => after.total_saves.will - before.total_saves.will,
@@ -650,7 +650,7 @@ fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_an
 ///
 /// Derived from the corpus rather than from the table, so a future book that
 /// breaks the invariant fails here even if nobody remembers the table exists.
-/// SD-29 `decisions.md §46`.
+/// SD-29 `decisions.md §47`.
 #[test]
 fn no_race_contributes_two_alternate_trait_bonuses_to_one_save() {
     let corpus = corpus();

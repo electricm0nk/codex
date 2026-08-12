@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Brimorak ~ Burning Hooves",
+    "delivery": "Supernatural",
+    "description": "A brimorak's hooves burn with fire, leaving scorched hoofprints on wood, stone, and most every other solid surface, yet this supernatural fire does not set alight surfaces the demon treads upon. It does make it easier to track a brimorak, though--Survival checks made to track a brimorak gain a +8 circumstance bonus. Brimoraks use their air walk ability to throw creatures off their trail, or to leave their prints in strange places (like atop roofs) to spread fear and terror. Against a prone foe, a brimorak can make two hoof attacks rather than just one.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_2:monster_ability:brimorak_burning_hooves",
+    "name": "Burning Hooves",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_brimorak"
+    ],
+    "source_page": "p.56",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 9,
+    "record_key": "Brimorak ~ Burning Hooves"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

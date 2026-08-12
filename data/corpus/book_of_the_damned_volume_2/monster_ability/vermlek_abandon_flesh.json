@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "corpus_key": "Vermlek ~ Abandon Flesh",
+    "delivery": "Supernatural",
+    "description": "As a swift action, a vermlek can abandon an inhabited body, crawling hideously out of its host and leaving behind an empty sack of skin and bits of gristle. In so doing, it absorbs much of the body's flesh to heal itself, restoring 2d6+3 hit points. A vermlek cannot later reclaim this body with its inhabit body ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "book_of_the_damned_volume_2:monster_ability:vermlek_abandon_flesh",
+    "name": "Abandon Flesh",
+    "owners": [
+      "book_of_the_damned_volume_2:monster:demon_vermlek"
+    ],
+    "source_page": "p.54",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_abilities_race.lst",
+    "sha256": "885aa43c609fa27a4566424433c65b9433e39627f498bca12fd3b3354ebb10cf",
+    "line": 29,
+    "record_key": "Vermlek ~ Abandon Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

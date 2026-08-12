@@ -76,7 +76,7 @@ const LOADED_BOOKS: &[&str] = &[
     // `RACE_CORPUS_BOOKS` without adding it here, so
     // `the_loaded_books_are_the_ones_the_app_loads` -- the test whose whole job is
     // stopping this copy from drifting -- was RED on the branch until round 3
-    // (`decisions.md §46.3`). It did its job; nobody read it.
+    // (`decisions.md §47.3`). It did its job; nobody read it.
     "inner_sea_races",
     // SD-29 race-trait lane round 3.
     "horror_adventures",

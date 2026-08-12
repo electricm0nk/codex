@@ -1112,6 +1112,24 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Monster Codex, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-002",
     },
+    MonsterBookSpec {
+        corpus_book: "book_of_the_damned_volume_1",
+        book_relative: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
+        races_lst: "botd1_races.lst",
+        abilities_lst: "botd1_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own book_of_the_damned_volume_1.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Princes of Darkness, Book of the Damned Volume 1, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E5-F2-003",
+    },
+    MonsterBookSpec {
+        corpus_book: "book_of_the_damned_volume_2",
+        book_relative: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
+        races_lst: "botd2_races.lst",
+        abilities_lst: "botd2_abilities_race.lst",
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _book_of_the_damned_volume_2.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Lords of Chaos, Book of the Damned Volume 2, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E5-F2-003",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

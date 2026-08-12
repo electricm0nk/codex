@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_2:monster_ability:vavakia_breath_weapon",
+      "book_of_the_damned_volume_2:monster_ability:vavakia_smoking_wound",
+      "book_of_the_damned_volume_2:monster_ability:vavakia_stun"
+    ],
+    "challenge_rating": "18",
+    "corpus_key": "Demon (Vavakia)",
+    "external_ability_refs": [
+      "Frightful Presence",
+      "Immunity to Fire",
+      "Trample",
+      "True Seeing ~ Constant",
+      "Unholy Aura ~ Constant"
+    ],
+    "key": "book_of_the_damned_volume_2:monster:demon_vavakia",
+    "monster_class": "Outsider (Fort/Will):18",
+    "name": "Demon (Vavakia)",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.60",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+    "sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+    "line": 10,
+    "record_key": "Demon (Vavakia)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}
