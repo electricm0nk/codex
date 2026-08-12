@@ -1048,8 +1048,8 @@ mod tests {
             paged,
             BTreeSet::from(["APG", "ARG", "ISR", "MC"]),
             "the books whose alternates carry a real page. ISR joined with SD-29's race-trait \
-             lane round 2: all 68 of its alternates cite a real `SOURCEPAGE`, none the `p.xx` \
-             placeholder `ingest_races.rs` filters"
+             lane round 2: all 68 of its alternates cite a real `SOURCEPAGE`, none the literal \
+             `p.xx` stand-in that `ingest_races.rs` filters out"
         );
         assert_eq!(
             pageless,
