@@ -6678,3 +6678,379 @@ either, and says so rather than letting it disappear.
   says whether the fixes were understood or guessed at. Run 3: `RESULT: PASS`, `VERIFY_EXIT=0`, all
   14 stages, `root-full` **all 524 `tests/*.rs` suites executed** — the non-execution check
   `decisions.md §40` requires, satisfied by name rather than by an aggregate count.
+
+---
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 4 (SD29-E6-F2-005)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), round 4 of a loop-until-dry lane.
+**Actor:** `sd29-racetrait-r4`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-4`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §49` (written as §48 — see §0b).
+**PR:** #360, open and NOT merged.
+**Commits:** `9176f869` (ingest + engine + gate pins), `499b75e8` (merge of the companion lane),
+`c8416f33` (inventory regen over the merged tree), `7a3c0bdf` (the two stages `origin/tranche/9` was
+RED on, this round's own gate reds, and the decision record), plus this receipt's own commit and the
+baseline commit. All pushed to `origin/tranche/9`.
+**Gate:** `./scripts/verify.sh` full — **`VERIFY_EXIT=0`, all 14 stages PASS** (§8).
+
+**Round 4 ingested Core Essentials' Aasimar and Tiefling heritages — 64 records, all 64 reaching a
+player — and found that `§47.8`'s "needs a new mechanism" verdict on them was wrong: the book needed
+no engine change at all.** It also found that giving that book a `RuleSetId` silently demoted 155
+unrelated records, and closed a mutual-exclusion hole that would have let a player take two
+heritages at once. **The lane is now DRY: 3 workable units remain and all three need a race
+chassis, not race-trait work.**
+
+### 0a. Worktree integrity — RECOVERY WAS REQUIRED (a seventh time)
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| recovery | `git fetch origin tranche/9 && git reset --hard origin/tranche/9` | `03acb5a5`, docs present |
+
+**Seventh consecutive cycle at `7d9f1c4f`.** Rounds 2 and 3 both called this reproducible; it still
+is. `git fetch` also prints `fatal: bad object refs/heads/worktree-wf_9029acd8-6b0-6` and
+`fatal: failed to run repack`, from a zero-length object file
+(`.git/objects/3c/534e505be2e82ffb325fbe86320fd90120fc45`, 0 bytes, dated 2026-08-11 19:47) behind a
+dead worktree branch. **Cosmetic but not free:** the remote-tracking ref updates and every push this
+cycle made succeeded, but the same message appears on `git commit` and on `git fetch`, and it is
+noise a future cycle will have to re-diagnose. Left alone deliberately — deleting another agent's
+ref is not this card's write scope — and recorded here so the next reader does not spend the same
+ten minutes.
+
+### 0b. A decision-number collision, for the second time in this lane
+
+The companion lane's `sd29-companion-r4` wrote **Decision 48** concurrently in a separate worktree
+and pushed first. This round's section is renumbered **§49** and carries its own header note;
+`9176f869`'s and `c8416f33`'s commit messages, already pushed, say §48 and cannot be rewritten;
+every code comment was updated to §49. Identical to `§47`'s note. **Unattended-mode default:**
+renumber the later-pushed section, keep both, explain the discrepancy where a reader following a
+stale reference will land.
+
+### 0c. A gate run thrown away, on purpose
+
+The full gate was launched on the pre-merge tree, then `origin/tranche/9` was found to have moved
+(the companion lane's `bac2f569`). The running gate was **killed rather than allowed to finish**: a
+green result on a tree that is not the tree being pushed is exactly the "receipt records a gate that
+proved something else" failure `§47.3` is about. Cost ~8 minutes of build; the alternative was a
+result that would have had to be discarded anyway, or worse, quoted.
+
+### 1. Merged-ness verified by content, not by anyone's say-so
+
+Round 3's work verified present on the reset tree **before** being used:
+
+```
+$ grep -c 'horror_adventures' src/bin/ingest_race_traits.rs                    → 4 (BookSource + its note)
+$ find data/corpus/horror_adventures/race_trait -name '*.json' | wc -l         → 43
+$ grep -n 'RuleSetId::Ha' src/rules_core/rules_tables/mod.rs                   → present
+$ grep -n 'description_redacted' src/rules_core/race_resolver.rs               → present (§47.4's fix)
+$ grep -n 'ALTERNATE_TRAIT_SAVE_BONUSES' src/rules_core/*.rs                   → present (§47.5's fix)
+```
+
+Round 3's own gate result was reproduced too: `cargo test --lib race_resolver` and the two `sd27_*`
+race-trait integration tests were green on the reset tree before any edit.
+
+### 2. Preflight and trap-report (cycle mechanics 1c, 0b)
+
+* `./scripts/verify.sh --only preflight-disk` → **EXIT 0**, 17% used / 810G available.
+* `cargo run --locked --bin v06_corpus_trap_report -- core_essentials` — **not run, and the reason
+  is a scope fact rather than a skip.** `core_essentials` has no `.pcc` this bundle loads
+  standalone; it is reachable only through `core_rulebook.pcc:43`'s unconditional inclusion
+  (`license-matrix.md`'s own finding, quoted in the book's `LICENSE.json`). The two files this round
+  ingests were instead read row-by-row by `scripts/classify_race_trait_rows.py` before the round
+  committed to the book (§3), which is the check that actually decides a race-trait cycle's shape.
+  **Unattended-mode default, recorded rather than silently taken.**
+
+### 3. Every figure re-derived (cycle mechanics 1b)
+
+**`§45.1`'s method applied BEFORE committing the round:**
+
+```
+$ python3 scripts/classify_race_trait_rows.py \
+    aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst
+aasimar_abilities_race_subrace.lst   in-scope rows 18 | default 0 | alternate 0 | flag_granted 18 | unclassified 0
+tiefling_abilities_race_subrace.lst  in-scope rows 30 | default 0 | alternate 0 | flag_granted 30 | unclassified 0
+   => 0 of 48 rows need no new mechanism
+```
+
+`§47.8`'s 48 confirmed. **And "0 of 48" is what sent this round looking for the other end of the
+transaction instead of budgeting for a new engine feature** — see §5.
+
+**The ceiling, re-derived independently and reproducing `§44.4`/`§47.1` EXACTLY, then corrected
+upward.** Checked in this round as `scripts/race_trait_ceiling.py` rather than left in a scratchpad,
+which is `§45.1`'s own lesson applied to this round's derivation:
+
+```
+$ python3 scripts/race_trait_ceiling.py
+CEILING
+  TYPE:<one of 18 races> Racial Trait rows : 553      ← §44.4's figure, reproduced
+  TYPE:<one of 18 races> Subrace rows      : 18       ← the category that derivation could not see
+  total                                    : 571
+
+STATUS, joined by (book, source_file, source_line)
+  units matched into the ceiling : 571
+  by status                      : {'grounded': 514, 'not-ingested': 57}
+
+  advanced_players_guide     {'not-ingested': 49, 'grounded': 1}
+  advanced_race_guide        {'grounded': 156}
+  bestiary                   {'not-ingested': 3}
+  core_essentials            {'grounded': 239, 'not-ingested': 2}
+  horror_adventures          {'grounded': 43, 'not-ingested': 1}
+  inner_sea_races            {'grounded': 71, 'not-ingested': 1}
+  monster_codex              {'grounded': 4, 'not-ingested': 1}
+
+chassis-blocked residue: 3447 race_trait units - 571 ceiling = 2876 that no race-trait ingest can ground
+```
+
+**553 confirmed. 571 is the honest ceiling** — the 18 `TYPE:<Race> Subrace` heritage-selector rows
+are `race_trait`-kinded units in the work inventory exactly like the 553, so they were in the lane's
+denominator and out of its ceiling. `§44.4`'s 2,894 residue becomes **2,876**, superseded by those
+18 rather than corrected.
+
+**Corpus-wide denominator, re-derived over `docs/work-inventory.json` at both ends of the round:**
+
+```
+$ python3 -c "…sum by_status over every book's race_trait kind…"
+BEFORE  TOTAL units 3447  grounded 450  remaining 2997
+AFTER   TOTAL units 3447  grounded 514  remaining 2933
+```
+
+**Round 3's own figures reproduced before being moved** (3,447 / 450), so the two rounds are
+commensurable. `units_ingested` = **64**.
+
+**The prior round reported 51 workable remaining; this round derives 3, and the two agree.** 51 was
+48 (`core_essentials`) + 3 (`bestiary` Drow Noble). This round took the 48. The 3 that remain are
+the same 3.
+
+### 4. What landed
+
+* **64 records** at `data/corpus/core_essentials/race_trait/{aasimar,tiefling}/` — 16 heritage
+  selectors a player picks (Aasimar 6, Tiefling 10) plus the 48 `<Race> Racial Trait`-typed
+  replacement rows they grant. 0 PCGen-syntax leaks, 0 unresolved `DESC:` args, 0 out-of-scope rows.
+* `data/corpus/core_essentials/LICENSE.json`. **8 of 64 descriptions PI-redacted** —
+  Kyton-, Oni-, Devil- and Rakshasa-Spawn, each twice (the heritage row and its Ability Scores
+  replacement row carry the same prose). Aasimar's 24 hit 0 terms. Verified on the written tree:
+  `grep -rl 'redacted PI' data/corpus/core_essentials/race_trait/ | wc -l` → **8**;
+  `find data/corpus/core_essentials/race_trait -name '*.json' | wc -l` → **64**.
+* `RuleSetId::Ce` + `COMPILED_RULE_SETS` + `corpus_dir_for`/`rule_set_id` + the content-state-dump
+  arm + `RACE_CORPUS_BOOKS` + `book_code` + the reach-gate book row and claim.
+* `ingest_race_traits::subrace_grants`, `is_placeholder_source_page`, the `TYPE:<Race> Subrace` arm
+  in `parse_row`, and `BookSource.lst_relatives` as a **list** (see §6).
+* **16** `ALTERNATE_TRAIT_REPLACE_FLAGS` rows, adding exactly **2** distinct flags to the corpus's 91
+  (`Aasimar_ReplaceAbilityScores`, `Tiefling_ReplaceAbilityScores`). Derived, not reasoned:
+  `python3 -c "…union of sets_replace_flags over data/corpus/*/race_trait/*/*.json…"` → 93 total, and
+  the CE-only set minus the everything-else set → exactly those two. No earlier book's alternate
+  replaces a race's ability-score row.
+* A reach claim `("core_essentials", "race_traits")` asserting a plain `Reach::Surfaced`, with **no**
+  `OPEN_FINDINGS` / `UNREACHED_RECORD_FINDINGS` entry, because there is no shortfall.
+* `race_trait` grounded **450 → 514**.
+
+### 5. The finding: `§47.8` named a mechanism the book did not need
+
+`§47.8` recorded these 48 rows as needing *"a `PREABILITY`-grant mechanism **and** the 16
+non-`race_trait`-typed subrace selector rows"*. The second half is right. The first is not, and the
+shape of the error is the round's most reusable output.
+
+The rows do carry a positive `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` gate that
+`race_resolver::classify` cannot read. But PCGen states the same transaction a second time, from the
+other end, in a file this lane had never opened:
+
+```
+CATEGORY=Special Ability|Aasimar ~ Agathion-Blooded.MOD
+    ABILITY:Aasimar Racial Trait|AUTOMATIC|Agathion-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0
+```
+
+(`core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst`) — which is
+`ABILITY:<cat>|AUTOMATIC|<key>`, **the third grant shape `link_automatic_grants` has resolved since
+SD-27**. The heritage names its replacements outright and the `PREVAREQ:<flag>,0` qualifier names the
+standard trait each one displaces. So the book cost one ~40-line ingest-side reader and **zero
+resolver changes**.
+
+**`§45.1` one level further out.** That decision established that a lane must classify corpus *rows*
+rather than the inventory's evidence token. This round shows classifying the rows *of one file* is
+still not classifying the corpus: the file that made these rows ordinary was three directories away,
+and `ingest_races::globalvar_gates` had been reading the non-subrace half of that same file family
+since SD-27. Emitted as a retro `correction` against `§47.8` with the command behind it.
+
+### 6. Three defects fixed at the source, each found by this round's own work
+
+**(a) Giving a storage directory a rule set demoted 155 records that had not changed.**
+`v06_work_inventory`'s `race_trait` verdict required the corpus probe's observed book to *equal* the
+unit's own book's rule set. `core_essentials` is the one book whose rows are routinely filed under a
+different book — `race_trait_engine_book`'s own doc comment says so — and while it had no rule set
+the shared-library path resolved the equality to the real host. Adding `RuleSetId::Ce` broke it:
+**155 Core Rulebook and Bestiary 1 standard racial traits dropped from `grounded` to
+`race_trait_record_loaded_but_never_applies`**, an evidence token asserting the opposite of what the
+probe had just observed, and `race_trait` grounded went **450 → 359 in the run that ADDED 64
+records**. Caught by re-deriving the denominator *after* the ingest as well as before it; the number
+moved the wrong way. The probe's observation now grounds on its own and reports the observed book as
+the attribution. Emitted as a retro `incident`, recurrence key
+`storage-book-gains-rule-set-demotes-its-tenants`. **The generalisation is live for the other
+lanes:** any kind whose units are stored under a different book than the one that owns them will
+demote silently the day that directory gets a rule set.
+
+**(b) Sixteen heritages, no mutual-exclusion guard.** A heritage carries no `PREMULT`, so
+`race_trait_picker::exclusion_guard_flags` returned nothing for all 16 and a player could tick
+`Aasimar ~ Angel-Blooded` and `Aasimar ~ Archon-Blooded` together and collect both ability-score
+bonuses. The corpus states the constraint on the grant (`PREVAREQ:<flag>,0`), so the ingest carries
+that qualifier through and the picker reads it as a third spelling.
+`every_alternate_has_a_readable_exclusion_guard_including_the_preability_spelling` went RED and came
+back green **with its unguarded-set pin unmoved** — which is the evidence these 16 are guarded rather
+than exempted.
+
+**(c) A placeholder page cite is not a page.** All 64 rows carry one — `p.xx` on Tiefling's 40, `xx`
+on Aasimar's 24. The picker already refused `p.xx`; `xx` would have rendered beside the trait as a
+real citation. Dropped at ingest by an exact-match list of the two spellings the corpus uses, not a
+pattern. None of the four books ingested before this one carries a placeholder at all:
+`grep -oh 'SOURCEPAGE:[^\t]*' <their four .lst files> | sort -u | grep -i x` → no output.
+
+**(d) A structural hazard the previous rounds dodged by luck.** `ingest_book` rebuilds
+`data/corpus/<book>/race_trait/` per book, so two `BookSource` rows sharing one `corpus_book` would
+have had the second silently erase the first's records. `BookSource.lst_relatives` is now a list.
+Horror Adventures already had two racial-ability files and avoided this only by ingesting one.
+
+### 7. Definition of done
+
+| # | item | result |
+|---|---|---|
+| 1 | `./scripts/verify.sh` full, exit captured directly | **`VERIFY_EXIT=0`, all 14 stages** (§8) |
+| 2 | `reach` passes **with a claim for this book's families** | `("core_essentials", "race_traits")` → `Reach::Surfaced`, pinned at 64 records AND 16 menu rows |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | in the gate (`trap-audit` stage) |
+| 4 | `v06_work_inventory` regenerated, units leave `not-started`, second run changes only `generated_at` | regenerated; `core_essentials` `race_trait` grounded 175 → 239 |
+| 5 | four-check wired-integration audit clean | in the gate (`wired-integration` stage); no stub added, and (b) above removes one this round would otherwise have shipped |
+| 6 | any unsurfaced family has an `OPEN_FINDINGS` entry | **none needed** — no shortfall for this book |
+| 7 | baseline movements in `verify-baselines.env` | none |
+| 8 | on-screen verification | **2 PASS artifacts, §9** |
+
+### 8. The gate — GREEN, all 14 stages
+
+```
+$ ./scripts/verify.sh          # full, exit captured directly, not through a pipe
+SUMMARY
+  passed:  14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+               root-lib root-full desktop reach frontend-install frontend-test
+               frontend-typecheck clippy class-dump
+RESULT: PASS — logs in /tmp/codex-verify-RDgc6p
+VERIFY_EXIT=0
+```
+
+`root-full` **6,224 passed across 543 suites, all 524 `tests/*.rs` suites executed** — the
+executed-suite check, not just the total, because `0 passed across 0 suites` is what this stage
+reported twice earlier in this cycle. `desktop` 438, `reach` **24**, `clippy` 0 errors,
+`class-dump` 31/31.
+
+**It went RED twice first, and both reds were worth having.**
+
+* **Run 1 (discarded, not quoted).** Launched on the pre-merge tree, then `origin/tranche/9` was
+  found to have moved to the companion lane's `bac2f569`. Killed rather than allowed to finish: a
+  green result on a tree that is not the tree being pushed is exactly `§47.3`'s failure. Cost ~8
+  minutes.
+* **Run 2 — `origin/tranche/9` was RED, and not from this lane.** `bac2f569` was pushed with two
+  stages failing. `root-full`: `v06_content_state_dump.rs`'s exhaustive `match table.rule_set`
+  gained no arms for `RuleSetId::Isc`/`Isi`, so that bin does not compile and the stage reported
+  **`0 passed across 0 suites`** — `AGENTS.md`'s own "one broken bin meant 0 of 502 suites ran".
+  `desktop`: three books gained a `src/rules_core/rules_tables/<book>/` directory with no
+  `corpus_ingest_diagnostic` row, so `every_book_landed_in_rules_tables_is_reported` — the drift
+  guard written for exactly that defect — was red. **Third instance of `§47.3`'s class in this
+  bundle.** Both fixed at the source here; neither is this card's content.
+* **Run 3 — this round's own reds**, all four fixed at the source, ceiling not raised, nothing
+  `#[ignore]`d: `ingest_race_traits`' per-book map and its total (276 → 340, the pin that exists
+  because round 3 moved the map and forgot the total); the hardcoded `LOADED_BOOKS` copy in
+  `duergar_invisibility_sla_reaches_a_player_via_monster_codex` (**the test whose entire job is
+  stopping that copy drifting, red for the same reason in round 2**); and a test message using the
+  literal word `sd24_wired_integration_audit` scans shipping source for, which that audit correctly
+  read as a new unreviewed stub marker.
+
+**Baselines (DoD item 7).** Five moved, in their own commit, each carrying the run that measured it:
+`BASELINE_ROOT_LIB_TESTS` 1604 → 1659 and `BASELINE_FRONTEND_TEST_FILES` 98 → 99 before the green
+run; `BASELINE_ROOT_FULL_TESTS` 6138 → 6224, `BASELINE_ROOT_TEST_BINARIES` 539 → 543 and
+`BASELINE_DESKTOP_TESTS` 413 → 438 after it, since those three stages could not report an actual
+until they stopped failing. All five are the numbers the green run itself printed, and both lanes
+contributed to every one of them.
+
+### 9. DoD item 8 — on-screen, on the merged tree
+
+`RUN_DESKTOP_AGENT=sd29-racetrait-r4`, harness
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`, never concurrently with `verify.sh`.
+Artifacts in `docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E6-F2-005/item8/`.
+
+**Two FAILED runs are kept alongside the passes, because both were real navigation findings and the
+harness renamed their artifacts so they cannot be cited as passing evidence.** The first ran without
+`--tab alternate` and landed on the Standard traits tab (`No race traits match.`); the second added
+the tab but not the race chip and landed on Human's 33 alternates. Neither was a defect in the
+ingest, and the extraction in each `.FAILED.verify.md` proves it.
+
+**Artifact 1 — the heritages a player picks.**
+
+```
+RUN_DESKTOP_AGENT=sd29-racetrait-r4 \
+./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family race_trait --tab alternate --no-search --nav-click "1366,351" \
+  --record "Agathion-Blooded" \
+  --expect "Agathion-Blooded" --expect "Idyllkin possess bestial aspects" \
+  --expect "Peri-Blooded" \
+  --out .../artifacts/SD29-E6-F2-005/item8 --slug race-trait-ce-aasimar-heritages
+```
+
+→ **PASS**. Rendered lines, extracted from the live webview rather than read off a screenshot:
+
+```
+58:Agathion-Blooded (Idyllkin)CE
+60:Idyllkin possess bestial aspects and calm dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good.
+114:Peri-Blooded (Emberkin)CE
+```
+
+**Artifact 2 — the Tiefling half, and the PI redaction holding on the shipped surface.**
+
+```
+… --nav-click "1246,351" --record "Kyton-Spawn" \
+  --expect "Kyton-Spawn" --expect "[redacted PI]" --expect "Rakshasa-Spawn" \
+  --slug race-trait-ce-tiefling-heritages-pi-redaction
+```
+
+→ **PASS**:
+
+```
+86:[redacted PI]
+96:Kyton-Spawn (Shackleborn)CE
+98:[redacted PI]
+110:[redacted PI]
+124:Rakshasa-Spawn (Beastbrood)CE
+126:[redacted PI]
+```
+
+Four `[redacted PI]` lines, which is exactly the four redacted Tiefling heritages — `§47.4`'s fix
+holding for a second book, proven on screen rather than on disk.
+
+The alternate-traits screen's own header read **"283 alternate racial traits across 18 races"** with
+**Aasimar (17)** and **Tiefling (20)** chips, against 267 / 11 / 10 before this round.
+
+### 10. The remainder — this lane is DRY
+
+| book | units | what it needs | class |
+|---|---|---|---|
+| `advanced_players_guide` | 49 | nothing — same `KEY:` as already-ingested ARG records (`§39`) | **not gap** |
+| `bestiary` (Drow Noble) | 3 | a race-variant chassis | **workable, needs a chassis** |
+| `core_essentials` | 2 | nothing — `Aasimar ~ Default` / `Tiefling ~ Default`, the no-heritage baseline the engine's no-selection state already is (`§49.2`) | **not gap** |
+| `horror_adventures` | 1 | `Half-Elf ~ Starchild`, the `PRECAMPAIGN` Occult Adventures row (`§47.2`) | **not gap** |
+| `inner_sea_races` | 1 | `Human ~ Tribalistic Languages`, upstream data gap (`§45.4`) | **not gap** |
+| `monster_codex` | 1 | `Oversized Goblin`, ability-pool variant mechanism (`§43`) | **not gap** |
+| | **57** | | **3 workable / 54 not gap** |
+
+**`units_remaining` for this card is 3**, and they are not race-trait work: `RaceCorpus::resolve`
+returns `None` for Drow Noble, so ingesting its three rows produces records that load and never
+apply whatever this lane does next. Read this card as dry rather than as 3 short.
+
+**Chassis-blocked residue: 2,876 units.** Command in §3.
+
+**Scope finding for a successor, outside this bundle.** `scripts/race_trait_ceiling.py --whole-tree`
+returns **897** against 571 in scope. Of the 326 extra rows, **291 are ordinary Pathfinder alternate
+racial traits for the 18 races this product already models** — 288 across twelve `player_companion/`
+books (`blood_of_fiends` 102, `blood_of_angels` 101, `blood_of_shadows` 19, and nine smaller) and 3
+in two `campaign_setting/` books — i.e. no-new-mechanism ingest of exactly the shape rounds 2 and 3
+did, two of those books individually larger than anything this lane has taken since ARG. The other
+35 are `starfinder/` and correctly out of scope. Those books are not in
+`corpus-work-channels.md §10.2`'s 37 and are not this bundle's to take.
+
+**`§8b`'s browse-screen render bug is still open and still owned by this lane** — round 4 did not
+reach it either, and says so rather than letting it fall off the board.
