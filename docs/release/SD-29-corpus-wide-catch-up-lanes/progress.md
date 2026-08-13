@@ -12014,3 +12014,284 @@ The regeneration was therefore reverted rather than committed as a timestamp-onl
 stability across a concurrent lane's ingest is itself the check: this cycle's 84 and the monster
 lane's Ultimate Psionics units are genuinely file-disjoint, which is what the kind-lane partition
 promises and what a merge is the first real opportunity to falsify.
+
+## Cycle SD29-E5-F2-011 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 10 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r12` · **Date:** 2026-08-13 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-19`)
+**Branch-point:** `e13a43dd` · **Commits:** ``612004df` (the ingest, twelve registration points, the `CR:0` fix and the checked-in bundle scan), `eeafe60a` (the twelfth registration point, found by a red frontend gate), `de010f2e` (merge of `origin/tranche/9` through companion round 8), `3b0a414c` (work-inventory regenerated on the merged tree), plus this receipt's own closing commit`
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message** — see §7.
+**Kanban status left at:** `READY — round 11.`
+**Gate: `VERIFY_EXIT=0` on run 3, the authoritative run** — all 14 stages green — `root-lib` 1,748, `root-full` **6,316 passed across 544 suites with all 525 `tests/*.rs` suites executed**, `desktop` 445, `reach` 27, `clippy` 0 errors (root 54 / desktop 7 warnings), `pi-sweep` 10 hits / 10 baseline rows, `class-dump` 31/31 computing. Three runs, each
+one's reason recorded in §6; nothing was excused as environmental without an attribution.
+
+**This receipt does not claim the lane is done.** 34 units landed — the whole of the largest
+remaining reachable book. The REAL ceiling after this round is **10 by the classifier's terms**
+across two books, plus **229** in the ownership class this round measured corpus-wide for the first
+time (§4b). Full detail in `decisions.md §64`.
+
+### 0. Worktree integrity — the predicted failure, hit a THIRTEENTH time
+
+`git log --oneline -1` → `7d9f1c4f Merge pull request #23 from electricm0nk/develop`, the same
+2026-06-28 ancestor rounds 2-9 each landed on. Every required read and every re-derivation command
+in the brief would have run against a tree with no `docs/release/SD-29-…` package at all.
+
+Recovered before any other action: `git status --porcelain` empty first, then
+`git merge-base --is-ancestor origin/tranche/9 HEAD` → **false**, `git fetch origin tranche/9`,
+`git reset --hard origin/tranche/9` → `e13a43dd`. Thirteenth consecutive instance; a harness
+condition, not an agent error. Retro `incident` emitted with `--recurrence-key wrong-base-worktree`.
+
+### 1b. Re-derivation — what the brief got right, and what it got wrong for the ninth time
+
+Round 9's closing figures were **reproduced EXACTLY at cycle start before being moved**: raw
+remaining `monster` 52 + `monster_ability` 1,497 = **1,549**; grounded 1,218 and 1,610; classifier
+reachable **109**; REAL ceiling **44**. The brief's own headline ("the previous round reported 44
+remaining — if your derivation disagrees, yours wins") therefore survived re-derivation — the fourth
+consecutive round in which it has.
+
+The brief's other figures did not. **"monster ~305, monster_ability ~852, against grounded 62 and
+20" was wrong for the NINTH round running**; `decisions.md §46.1`, `§50.7`, `§52`, `§55`, `§57.0`,
+`§58.0`, `§60.0` and `§62.0` each corrected the identical pair. Retro `correction` emitted,
+blast-radius naming all eight prior corrections.
+
+Commands, both recorded in `decisions.md §64.0`: the per-kind sum over `docs/work-inventory.json`
+for the denominators, and `python3 scripts/classify_monster_ability_rows.py` for the per-book shape.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` → PASS, 23% used, 746G available. Disk was not a
+constraint at any point in this cycle. `CARGO_TARGET_DIR` claimed immediately on creation
+(`echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"`), **twice** — the root workspace and the separate
+`apps/desktop/src-tauri` workspace get one directory each, per `AGENTS.md`'s "one directory per
+agent *per source tree*".
+
+### 2. Card claimed
+
+`epic-5-monster-lane-extend`, card 8, status `READY — round 10`. Decision section **§64 reserved at
+claim time** rather than renumbered on merge — the fix this board asked for after `§47`/`§49` and
+again after `§60`/`§62` collided between concurrently dispatched lanes.
+
+### 3. Book selection, and the scan that came before the ingest
+
+**Round 10's first action was not the ingest.** `decisions.md §62.4` closed with a standing
+instruction — scan the corpus for `ABILITY:Internal|AUTOMATIC|` tokens on monster rows, a hop
+neither ownership pass follows — and flagged it unrun. It was run first, because a scope finding
+that changes what "done" means for this card is worth more than a book. See §4b.
+
+Book taken: **`ultimate_psionics`**, re-confirmed rather than trusted, exactly as `§45.1` requires:
+
+```
+$ python3 scripts/classify_monster_ability_rows.py ultimate_psionics
+book                mon  abil row-named prefix ORPHAN   PI COPY
+ultimate_psionics    21    79         3     10     66    0    0
+reachable remainder (units - orphans - PI - COPY): 34
+```
+
+Trap report, before a line of ingest code (`cycle mechanics 0b`):
+`cargo run --locked --bin v06_corpus_trap_report -- ultimate_psionics` → `up_races.lst` DECLARES
+**23**, `.COPY=` 0, `.MOD` 0, `#OFF` 0; `up_abilities_race.lst` DECLARES 438 with 64 `.MOD`. The
+23-vs-21 gap on the races file is two rows carrying no `CR:` token, which `v06_work_inventory` files
+as `race` — not a miscount.
+
+**No hard stop applied.** The brief's zero-monster hazard (Bestiary 5, Bestiary 6, Monster Codex)
+does not reach this book: it carries 21 monster rows, re-derived above.
+
+### 4. What landed — 34 records, the whole reachable book
+
+**21 monsters + 13 monster abilities**, against corpus unit counts of 21 and 79 — every one of the
+book's monster rows ships, and the 66 unshipped abilities are orphans no monster row of this book
+claims. The classifier and the transcriber agree on composition as well as on the total (66 orphans
+and 0 Product Identity rows on both screens), which `inner_sea_gods` did not manage (`§62.5`).
+
+**The cheapest registration this lane has done.** **Twelve** registration points and **not one of
+them a new `RuleSetId`, a new corpus directory or a new work-inventory book entry** —
+`RuleSetId::Upsi` has served this book's feats, equipment and archetypes since SD-28 E29. Enumerated
+in `decisions.md §64.4` so a successor counts rather than remembers.
+
+**Twelve, not the eleven every prior receipt in this lane records.** The twelfth is the frontend
+test's own `SERVED_BOOKS` constant, and it was found by a red `frontend-test` stage after every Rust
+stage had passed — see §6. It is the one registration point a Rust-only sweep cannot see.
+
+Denominators, re-derived after the ingest as well as before it (`§49`'s lesson — the run that ADDS
+records is exactly where a demotion hides):
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 52 | **31** | −21 |
+| `monster_ability` remaining | 1,497 | **1,484** | −13 |
+| raw remaining total | 1,549 | **1,515** | −34 |
+| `monster` grounded | 1,218 | **1,239** | +21 |
+| `monster_ability` grounded | 1,610 | **1,623** | +13 |
+
+**Nothing but the two monster kinds moved**, and that is derived rather than asserted — a whole-file
+diff of per-kind status counts against `git show HEAD:docs/work-inventory.json` returns exactly four
+changed rows and an unchanged unit total of 38,540. Command in `decisions.md §64.0`.
+
+### 4b. The round's largest output is a scope finding, and it moves the ceiling UP
+
+`§62.4` measured an ownership class at **16 rows in one file of one book** and asked a successor to
+scan for it. **The class is 229 rows across six books, five of which are already registered.**
+
+```
+$ python3 scripts/scan_monster_ability_bundle_rows.py
+bestiary 63 · bestiary_2 15 · bestiary_3 9 · bestiary_4 61 · inner_sea_gods 79 · ultimate_psionics 2
+orphan rows the `ABILITY:Internal|AUTOMATIC|` hop would reach: 229
+```
+
+The scan reproduces `§62.4`'s 16 **exactly** as the `support/` subset of `inner_sea_gods`' real 79,
+which is what makes this a correction of the same measurement rather than a competing one.
+
+**Deliberately not closed in this round**, for `§62.4`'s own reason now that the size is known:
+following the hop widens an *ownership* pass, and ownership decides which records five registered
+books emit. Unattended-mode default taken — **derive it, check the derivation in, pin it, hand it
+forward** — and pinned by an executing test
+(`rules_tables::ultimate_psionics::monster_tests::no_internal_bundle_ability_ships_yet`) rather than
+by prose, so the round that widens the pass is told this arithmetic is stale.
+
+**The scan is checked in** as `scripts/scan_monster_ability_bundle_rows.py`, not left in a scratch
+path — `§45.1`'s finding is that an ephemeral path is not a citation. It imports the lane's own
+classifier and reuses `classify_book`'s orphan set rather than defining `orphan` a second time.
+
+### 4c. A player-visible defect eleven books could not produce
+
+`up_races.lst:47` states **`CR:0`** for Psicrystal — the first zero challenge rating this catalog has
+ever served. The frontend rendered it as **`CR 1/Infinity`** (`Math.round(1 / 0)`), and two Rust
+guards went red on a *correct* transcription because both asserted `challenge_rating > 0.0`.
+
+Neither guard was weakened. Both were sharpened to the property they were reaching for: the catalog
+test now asserts the token↔value correspondence (a parsed zero is admissible exactly when the corpus
+token is literally `"0"`, so a silent parse fallback still fails), and the response test pins the
+zero-CR key set the same way it already pins the two Bestiary 3 rows that state no `SOURCEPAGE:`.
+The frontend fix and its test came with it. `decisions.md §64.3`.
+
+Same shape as the correction Bestiary 2 forced on the ability-key uniqueness test three books
+earlier in the same file: **a guard can encode an accidental property of the books registered when
+it was written**, and the tell is that it fires on data nobody disputes.
+
+### 4d. The panel row `§63.4` predicted, fixed prospectively
+
+`corpus_ingest_diagnostic::ultimate_psionics_counts()` is a per-book counts function of exactly the
+shape `§63.4` found had hidden 327 companion records from the Corpus Ingest panel since the day they
+landed. It now **chains `chassis_book_counts("ultimate_psionics")`** rather than inserting two more
+literals, so the map carries every family the book has, whoever adds the next one.
+
+### 5. Provenance
+
+Verified against the files rather than copied from the row above: `ultimate_psionics.pcc:21` declares
+`ISOGL:YES`, `grep -c '^COPYRIGHT:'` → **29**, and a real 10,418-byte `OGL.txt` sits beside it.
+`grep -c NAMEISPI:YES up_races.lst up_abilities_race.lst` → **0, 0**, and the classifier's Product
+Identity screen returns 0 — what `ogl-pi-blacklist.md` §2.1's per-record predicate predicts for a
+book whose creatures are generic psionic species rather than named personae.
+
+`LICENSE.json` records `records_processed: 34`, `records_redacted: 0` — **derived from disk** by
+`count_on_disk_redactions` (`§63.2`), not hardcoded. `grep -rl 'redacted PI' data/corpus/ultimate_psionics/`
+returns only `LICENSE.json` itself, which carries the marker as the redaction policy's own field.
+
+### 6. Gate
+
+`./scripts/verify.sh` **full**, exit code captured directly and never through a pipe — a wrapper
+script writes `$?` to a file on the line after the invocation, so no pipeline can swallow it.
+
+**Run 3 is the authoritative one: `VERIFY_EXIT=0`, all 14 stages green — `root-lib` 1,748, `root-full` **6,316 passed across 544 suites with all 525 `tests/*.rs` suites executed**, `desktop` 445, `reach` 27, `clippy` 0 errors (root 54 / desktop 7 warnings), `pi-sweep` 10 hits / 10 baseline rows, `class-dump` 31/31 computing.** It ran on the merged tree
+that was pushed, with no source edit after it started.
+
+**Run 1 was ABANDONED BY ME, not by a failure, and that is worth stating plainly.** It had reached
+`root-full` when I made two doc-comment edits to `.rs` files (§4b's correction of two stale prose
+claims about `inner_sea_gods`). A gate that is racing an edit can compile a mixed snapshot and return
+a plausible wrong answer, so I killed it rather than cite a result whose input I could not name. Its
+completed stages were green (`root-lib` 1,748).
+
+**Run 2 finished `VERIFY_EXIT=1` with TWO red stages, and neither was excused:**
+
+* **`frontend-test` — a real defect of this round's diff, now fixed** (commit `eeafe60a`).
+  `SERVED_BOOKS` in `MonsterCatalogScreen.test.ts` pins the wire codes the catalog serves, and `UPSI`
+  was missing: `BOOK_LABELS names exactly the served books: expected …ISWG,MC, got …ISWG,MC,UPSI`.
+  **This is the TWELFTH registration point** and it is the one a Rust-only sweep cannot see — a test
+  constant, in no production registry. Every prior receipt in this lane says eleven. `count change
+  needs a sweep, not just a build`, in its exact documented form.
+* **`driver-selftest` — attributed to a concurrent agent, not to this diff, and the attribution is
+  named rather than asserted.** The failing case is `readiness ignores an app process on another
+  agent's display`, and it failed because `_app_pid` for `:80` found **pid 2348462**, a *real* live
+  desktop app — not the test's own decoy, whose pid would have been six orders of magnitude fresher.
+  Another SD-29 lane was running its app on this box at that moment; the same lane's commit
+  `bcbb12f1` (merged into this round) documents its half of the collision. The stage passed on run 1,
+  before that app existed, and again on run 3.
+
+**Two baselines were stale and are updated deliberately**, per the gate's own "not failures — update
+deliberately" note: `BASELINE_ROOT_LIB_TESTS` and `BASELINE_ROOT_FULL_TESTS`. They were already
+behind before this round (1,738 recorded against 1,743 reported by round 9), so the update carries
+both lanes' additions, and the values written are the ones run 3 measured rather than arithmetic on
+the old ones.
+
+Two baselines updated in `scripts/verify-baselines.env` from run 3's own measurements: `BASELINE_ROOT_LIB_TESTS` 1,738 → **1,748** (4 of the 10 are this round's `ultimate_psionics::monster_tests`; the rest are the companion lane's, merged in) and `BASELINE_ROOT_FULL_TESTS` 6,306 → **6,316**. `BASELINE_DESKTOP_TESTS` stays 445 — this round's two desktop changes sharpened existing tests rather than adding any.
+
+### 7. Push, verified BY CONTENT
+
+`git push origin HEAD:tranche/9` → `bcbb12f1..3b0a414c`, after merging `origin/tranche/9` (which had moved three commits ahead, through companion round 8) and regenerating `docs/work-inventory.json` on the merged tree. The merge's only conflict was that generated file; resolved by taking origin's copy and regenerating, the round-9 precedent, rather than hand-merging two unit lists. Denominators re-derived after the merge and unchanged: `monster` 31 remaining / 1,239 grounded, `monster_ability` 1,484 / 1,623.
+
+Verified BY CONTENT on the remote rather than by a push message:
+
+```
+git cat-file -p origin/tranche/9:src/rules_core/rules_tables/ultimate_psionics/monster_data.rs \
+  | grep -c 'MonsterStatBlock {'      -> 21
+  | grep -c 'MonsterAbilityRecord {'  -> 13
+```
+
+### 8. On-screen verification (DoD item 8)
+
+**PASS on BOTH artifacts**, clipboard-extracted and machine-verdicted against the live app, in
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-011/item8/`:
+
+* **`monster / Psicrystal`** (`upsi-monster-psicrystal.png` + `.verify.md`) — the load-bearing one.
+  It proves three separate things in one record: the new book on screen (`Ultimate Psionics p.48,448`
+  in the row's own citation line, and the screen's auto-derived blurb now naming twelve books and
+  **1,239 monsters**, which is exactly this receipt's grounded `monster` figure read off a player's
+  screen); **`CR 0` rendered correctly** — the `§64.3` defect, which without the fix reads
+  `CR 1/Infinity`; and a chassis ability rendering underneath its monster (`Telepathic Link`, one of
+  twelve shown). Filtered count on screen: `1 matching monster.`
+* **`monster / Astral Swarm`** (`upsi-monster-astral-swarm.png` + `.verify.md`) — a second book row
+  with the book's one non-Psicrystal ability, `Ectoplasmic Poison`.
+
+**The first attempt FAILED and the failure is worth recording.** On a cold launch the harness
+navigated correctly (the Monster Catalog marker and the twelve-book blurb were both extracted) but
+the search returned `No monsters match.` — the filtered-count gate refusing to screenshot rather
+than passing on an unfiltered list. It reproduced on a *reused* app only because my own probing had
+navigated that app away from the hub, which produced a second, unrelated failure on the character
+screen. A `--fresh` relaunch passed first time. **Read as: this screen now hydrates 1,239 rows, and
+the harness's fixed post-navigation sleep is at the edge of that.** The `SEARCH_Y=311` constant was
+**not** the cause and was not changed — the harness's own diagnostic distinguishes the two, because a
+missed search box leaves the counter reading `1239 matching` while a miss on hydration removes the
+counter entirely. A successor should expect to pass `--fresh` on this family's first record.
+
+**One cosmetic residue observed on screen and deliberately not fixed:** `Power Resistance` renders as
+*"The psicrystal has power resistance ."* — its `DESC:` is `power resistance %1` with variable `SR`,
+and `decisions.md §24` rules that a formula `%N` is **dropped, never guessed**, because this repo has
+no formula interpreter. The ruling is right; the dangling space before the full stop is its residue,
+it is shared by every registered book, and tightening it means touching `render_pcgen_desc` for all
+twelve. Handed forward rather than changed in this round's gate.
+
+### 9. Reclaim
+
+`scripts/reclaim.sh --apply` at cycle end, and both claimed `CARGO_TARGET_DIR`s
+(`codex-target-sd29-monster-r12`, `codex-target-sd29-monster-r12-desktop`) deleted.
+
+### 10. What round 11 inherits
+
+Raw remaining **1,515**, classifier reachable **75**, **REAL ceiling 10 by the classifier's terms**
+(`horror_adventures` 9, `occult_adventures` 1) **and 239 counting §64.1's class**. Full queue table
+in `decisions.md §64.5`.
+
+**A successor must not read this as "10 left."** Only 10 units remain that need nothing but
+registration, and one of the two books holding them costs a whole new `RuleSetId` for a single
+record. Against that, 229 units in six books — five already registered — are reachable in the corpus
+and unreachable by any pass this repo runs. **For the first time in this lane the mechanism work is
+larger than the ingest work**, and it is one mechanism, scanned, counted and checked in.
+
+**Unattended-mode defaults taken this round** (recorded per the operating protocol, not raised):
+(a) did **not** close `§64.1`'s ownership widening in the same gate as the ingest, taking `§62.4`'s
+own deferral reasoning now that the number is known; (b) registered the monster wire code as `UPSI`
+rather than the book's `SOURCESHORT:UP`, because the app already serves this book's equipment and
+feats under `UPSI` and one book must not carry two codes across two screens (`decisions.md §64.2`);
+(c) sharpened rather than deleted the two challenge-rating guards `CR:0` turned red, pinning the
+zero-CR key set so the completeness check survives.
