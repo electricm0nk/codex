@@ -1102,7 +1102,12 @@ struct EngineFacts {
     /// [`probe_equipment_effect_wiring`]. A lower bound in the same
     /// documented direction as `feat_effect_wired`: gated on a real
     /// on-disk JSON record existing under `data/corpus/<book>/equipment/`.
-    equipment_effect_wired: BTreeSet<String>,
+    ///
+    /// `(engine_book, key)`, because the observation is book-scoped: the
+    /// probe resolves each book's catalog keys against that book's own corpus
+    /// alone, so a key shared by two books' reprints of *different* items
+    /// grounds only the book whose record was actually read.
+    equipment_effect_wired: BTreeSet<(String, String)>,
     /// Every feat key the catalog holds, per book.
     feat_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every spell key the catalog holds, per book, with whether the engine
@@ -1671,28 +1676,99 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
 /// weapon-enhancement) produces an all-`None` per-item effect and correctly
 /// stays unwired -- see
 /// `equipment_effect_probe_never_promotes_a_text_only_item_with_no_mechanical_tokens`.
-fn probe_equipment_effect_wiring(repo_root: &Path) -> BTreeSet<String> {
-    let mut wired = BTreeSet::new();
-    let book_dirs: Vec<PathBuf> = book_corpus_roots(repo_root);
-    let roots: Vec<BookCorpusRoot> = OBSERVABLE_BOOK_DIRS
+///
+/// **Book-scoped, and the result is keyed `(engine_book, key)`.** Each book's
+/// catalog keys are resolved against **that book's own corpus, loaded alone**,
+/// never against a merged corpus of every observable book. Two independent
+/// reasons, both of them the same recorded defect this repo already fixed once
+/// for `race_trait` (`modelled_race_of_race_trait`'s doc comment, SD-28 §56):
+///
+///   * A merged corpus lets a book with **no** corpus of its own ground on
+///     another book's record purely because the two share a key. Widening the
+///     key universe to the whole catalog surfaced this immediately: Ultimate
+///     Equipment has no `data/corpus/ultimate_equipment` at all, yet six of
+///     its units grounded off ARG/CRB rows. `Celestial Shield` is the proof
+///     that a shared key is not a shared item -- ARG's
+///     (`arg_equip_arms_armor.lst:22`) is a **heavy** shield, 13,170 gp,
+///     `ACCHECK:0`, `SPELLFAILURE:0`; UE's (`ue_equip_arms_armor.lst:126`) is
+///     a **light** shield, 4,020 gp, `ACCHECK:-1`, `SPELLFAILURE:5`, with a
+///     `BONUS:COMBAT|AC` chain of its own. Reporting UE's unit as grounded on
+///     ARG's numbers is the over-claim, not a hedge.
+///   * Even between two books that both have a corpus, resolution order
+///     decided which record answered. Scoping makes the attribution a rule
+///     rather than a coincidence of iteration order.
+///
+/// A book with a catalog but no corpus directory therefore gets no probe
+/// coverage at all and its units stay `ingested-magnitude`. That is the honest
+/// result: nothing observed it, so nothing may claim it.
+/// Every equipment key the probe asks the wiring question of.
+///
+/// **Derived from the engine catalog, never hand-listed.** `classify()`'s
+/// `Kind::Equipment`/`Kind::EquipmentModifier` arm decides `known` from
+/// `facts.equipment_keys`, which is built from
+/// `equipment_resolver::equipment_catalog_rows()` (SD-28-E15 rebuilt it that
+/// way for exactly this reason). The probe's key universe was four
+/// hand-maintained `.extend()` calls over `crb`/`apg`/`acg`/`beastiary1`'s
+/// compiled tables — so every key the catalog holds from any *other* source
+/// was never examined at all, and its unit could only ever report
+/// `equipment_table_entry_with_corpus_magnitude`. Two populations were
+/// invisible to the probe this way:
+///
+///   * the four books' own **gap rows** — `equipment_gap_tables` supplies 335
+///     `core_rulebook` records the hand-authored CRB table does not hold
+///     (`CLOTH`, `LEATHER`, `MWORKW`, … — equipment *modifiers*, the largest
+///     `in-progress` population on the board), plus APG/ACG/ARG rows;
+///   * every book with a catalog but no entry in the four calls — ARG, PU,
+///     UM, UC, UI, UE, UPSI, UW.
+///
+/// This is Decision 36's pattern (two lists of the same fact, never
+/// reconciled) one function over from where SD-28-E15 already fixed it, and
+/// [`the_probe_examines_every_key_the_engine_catalog_holds`] pins it closed.
+///
+/// **This widens what is ASKED, not what counts as an answer.** The bar is
+/// still [`equipment_key_is_wired`], unchanged: the item must resolve against
+/// the real on-disk corpus and produce at least one non-`None` mechanical
+/// stat effect. A key from a book whose corpus is not loaded resolves to
+/// nothing and stays unwired, which is the honest result rather than a
+/// promotion.
+fn probe_equipment_key_universe() -> BTreeSet<&'static str> {
+    equipment_resolver::equipment_catalog_rows()
         .iter()
-        .zip(book_dirs.iter())
-        .map(|(id, dir)| BookCorpusRoot { book_id: id, dir })
-        .collect();
-    let corpus = load_equipment_corpus(&roots);
-    if corpus.is_empty() {
-        return wired;
+        .map(|row| row.key)
+        .collect()
+}
+
+/// [`probe_equipment_key_universe`], partitioned by the engine book whose
+/// catalog supplied each key.
+fn probe_equipment_keys_by_book() -> BTreeMap<&'static str, BTreeSet<&'static str>> {
+    let mut by_book: BTreeMap<&'static str, BTreeSet<&'static str>> = BTreeMap::new();
+    for row in equipment_resolver::equipment_catalog_rows() {
+        by_book.entry(equipment_book_slug_for(row.book)).or_default().insert(row.key);
     }
+    by_book
+}
 
-    let mut keys: BTreeSet<&'static str> = BTreeSet::new();
-    keys.extend(crb_equipment_tables::equipment_tables().iter().map(|e| e.key));
-    keys.extend(apg::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
-    keys.extend(acg::equipment_tables::equipment_tables().iter().map(|e| e.key));
-    keys.extend(beastiary1::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+fn probe_equipment_effect_wiring(repo_root: &Path) -> BTreeSet<(String, String)> {
+    let mut wired = BTreeSet::new();
+    let keys_by_book = probe_equipment_keys_by_book();
 
-    for &key in &keys {
-        if equipment_key_is_wired(key, &corpus) {
-            wired.insert(key.to_string());
+    for (dir_name, dir) in OBSERVABLE_BOOK_DIRS.iter().zip(book_corpus_roots(repo_root)) {
+        let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else {
+            continue;
+        };
+        let Some(keys) = keys_by_book.get(engine_book) else {
+            continue;
+        };
+        // One book's corpus, alone. See this function's doc comment.
+        let roots = [BookCorpusRoot { book_id: engine_book, dir: &dir }];
+        let corpus = load_equipment_corpus(&roots);
+        if corpus.is_empty() {
+            continue;
+        }
+        for &key in keys {
+            if equipment_key_is_wired(key, &corpus) {
+                wired.insert((engine_book.to_string(), key.to_string()));
+            }
         }
     }
     wired
@@ -2235,9 +2311,17 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                     engine_book: engine_book_field,
                 };
             }
-            if facts.equipment_effect_wired.contains(&unit.key)
-                || facts.equipment_effect_wired.contains(&unit.name)
-            {
+            // `(engine_book, key)`, never a bare key: the probe observed this
+            // delta on ONE book's corpus record, and only that book's unit may
+            // claim it. See `probe_equipment_effect_wiring`'s doc comment for
+            // the `Celestial Shield` case that proves a shared key is not a
+            // shared item.
+            let observed = |candidate: &str| {
+                facts
+                    .equipment_effect_wired
+                    .contains(&(engine_book.clone(), candidate.to_string()))
+            };
+            if observed(&unit.key) || observed(&unit.name) {
                 return Verdict {
                     status: "grounded",
                     evidence: "equipment_effect_probe_observed_computed_delta".to_string(),
@@ -3414,6 +3498,119 @@ mod e14_harness_tests {
     }
 
     // ----- F2: equipment probe -----
+
+    /// The probe must ask its wiring question of **every** key the engine
+    /// catalog holds, because `classify()` decides `known` from that same
+    /// catalog (`facts.equipment_keys`, built from
+    /// `equipment_catalog_rows()`). Any catalog key the probe never examines
+    /// is a unit that can only ever report
+    /// `equipment_table_entry_with_corpus_magnitude` — not because the engine
+    /// computes nothing from it, but because nobody asked.
+    ///
+    /// This is the guard, not the fix: it fails against the previous
+    /// four-hand-table key universe, which omitted every gap row and every
+    /// book past `crb`/`apg`/`acg`/`beastiary1`.
+    ///
+    /// It deliberately pins **coverage of the question**, never the answer.
+    /// `equipment_key_is_wired` — the bar — is untouched by it.
+    #[test]
+    fn the_probe_examines_every_key_the_engine_catalog_holds() {
+        let universe = probe_equipment_key_universe();
+        let unexamined: Vec<&str> = equipment_resolver::equipment_catalog_rows()
+            .iter()
+            .map(|row| row.key)
+            .filter(|key| !universe.contains(key))
+            .collect();
+        assert!(
+            unexamined.is_empty(),
+            "{} equipment catalog key(s) are never asked the wiring question, \
+             e.g. {:?}",
+            unexamined.len(),
+            &unexamined[..unexamined.len().min(10)]
+        );
+    }
+
+    /// The observation is book-scoped, and a shared key is not a shared item.
+    ///
+    /// `Celestial Shield` is printed in BOTH Ultimate Equipment and the
+    /// Advanced Race Guide under the same key, and the two rows are different
+    /// items: ARG's is a heavy shield (`ACCHECK:0`, `SPELLFAILURE:0`), UE's is
+    /// a light shield (`ACCHECK:-1`, `SPELLFAILURE:5`). Only ARG has a
+    /// `data/corpus/` directory, so a book-agnostic probe grounds UE's unit on
+    /// ARG's numbers — the name-coincidence defect
+    /// `modelled_race_of_race_trait` already records for `race_trait`.
+    ///
+    /// This pins the *attribution*, and it is a strictly HIGHER bar than the
+    /// bare-key form it replaced: it can only ever withhold a grounding, never
+    /// grant one.
+    #[test]
+    fn a_key_two_books_share_grounds_only_the_book_whose_corpus_was_read() {
+        let wired = probe_equipment_effect_wiring(&repo_root());
+        assert!(
+            wired.contains(&(
+                "advanced_race_guide".to_string(),
+                "Celestial Shield".to_string()
+            )),
+            "ARG owns a real corpus record for this key and must still ground"
+        );
+        assert!(
+            !wired.contains(&(
+                "ultimate_equipment".to_string(),
+                "Celestial Shield".to_string()
+            )),
+            "Ultimate Equipment has no corpus directory at all -- nothing observed \
+             ITS record, so nothing may claim it"
+        );
+        // Structural, not just this one pair: no book without a
+        // `data/corpus/<book>/equipment` directory may appear at all.
+        let observable: BTreeSet<&'static str> = OBSERVABLE_BOOK_DIRS
+            .iter()
+            .filter_map(|dir| engine_book_for_corpus_dir(dir))
+            .collect();
+        let unobservable: BTreeSet<&String> = wired
+            .iter()
+            .map(|(book, _)| book)
+            .filter(|book| !observable.contains(book.as_str()))
+            .collect();
+        assert!(
+            unobservable.is_empty(),
+            "these books have no loaded corpus yet appear in the probe result: {unobservable:?}"
+        );
+    }
+
+    /// Control for the test above: proves the universe is genuinely wider
+    /// than the four compiled tables it used to be built from, so that guard
+    /// cannot pass vacuously by both sides shrinking together.
+    #[test]
+    fn the_probe_key_universe_is_wider_than_the_four_compiled_tables() {
+        let universe = probe_equipment_key_universe();
+        let mut four_tables: BTreeSet<&'static str> = BTreeSet::new();
+        four_tables.extend(crb_equipment_tables::equipment_tables().iter().map(|e| e.key));
+        four_tables.extend(apg::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+        four_tables.extend(acg::equipment_tables::equipment_tables().iter().map(|e| e.key));
+        four_tables.extend(beastiary1::equipment_tables::EQUIPMENT_TABLE.iter().map(|e| e.key));
+        // Printed, not pinned: the two sizes are the RED evidence for the
+        // widening (how many catalog keys went unexamined), and pinning
+        // either as a literal would turn every future table addition into an
+        // unrelated red test — the count-pin hazard this repo already tracks.
+        eprintln!(
+            "probe key universe: {} keys; four compiled tables alone: {} keys; \
+             previously unexamined: {}",
+            universe.len(),
+            four_tables.len(),
+            universe.len() - four_tables.len()
+        );
+        assert!(
+            universe.len() > four_tables.len(),
+            "universe {} must exceed the four hand tables' {}",
+            universe.len(),
+            four_tables.len()
+        );
+        assert!(
+            four_tables.iter().all(|k| universe.contains(k)),
+            "the widened universe must still contain every key the four tables held"
+        );
+    }
 
     /// Positive: CRB's real, on-disk Padded Armor (Base) carries real
     /// AC/max-dex/spell-failure/ACP tokens, resolves against the real

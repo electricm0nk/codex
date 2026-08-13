@@ -68,8 +68,8 @@ a=collections.defaultdict(collections.Counter); \
 
 **38,540 units across 38 book directories** (37 in scope, 38,521 in-scope
 units; `beginner_box`'s 19 units are excluded per
-`corpus-work-channels.md §10.2`). By status: `grounded` **4,699**,
-`ingested-magnitude` **6,545**, `text-complete` **2,391**, `not-ingested`
+`corpus-work-channels.md §10.2`). By status: `grounded` **4,726**,
+`ingested-magnitude` **6,518**, `text-complete` **2,391**, `not-ingested`
 **17,209**, `not-started` **4,113**, `unknown` **3,547**,
 `deferred-with-reason` **36**.
 
@@ -80,18 +80,30 @@ Grounded moved **491 → 4,699** across SD-29 — a gain of **4,208**, and
 largest coverage event in the bundle, and the rescinded closure would have
 shipped none of it.
 
+Since SD-29 closed, grounded moved **4,699 → 4,726** (+27): the equipment
+consumer-delta probe stopped asking its question of only four hand-listed
+compiled tables and now asks it of every key the engine catalog holds
+(`probe_equipment_key_universe`, derived from
+`equipment_resolver::equipment_catalog_rows()` — 6,395 keys, of which 3,123
+had never been examined at all). `equipment` +12 (133 → 145),
+`equipment_modifier` +15 (40 → 55). The bar itself — `equipment_key_is_wired`,
+"resolves against the real on-disk corpus and produces a non-`None` mechanical
+stat effect" — is byte-for-byte unchanged; the same widening also made the
+observation **book-scoped**, which is strictly stricter (see
+`probe_equipment_effect_wiring`'s `Celestial Shield` note).
+
 Per kind (`grounded` / total):
 
 | Kind | Total | Grounded | Note |
 |---|---|---|---|
 | `class_feature` | 15,472 | 109 | Tier-3 deferral, out of SD-29 scope (`decisions.md §38.4`); owned by SD-30 |
-| `equipment` | 6,227 | 133 | 4,814 `ingested-magnitude` — the deepest proven-path kind |
+| `equipment` | 6,227 | 145 | 4,802 `ingested-magnitude` — the deepest proven-path kind |
 | `race_trait` | 3,447 | 513 | Lane `DRY`. 2,876 of the remainder is chassis-blocked residue — see below |
 | `monster_ability` | 3,107 | 1,629 | Lane `DRY`. 1,406 of the remainder is orphan rows no monster can own |
 | `spell` | 2,843 | 0 | 1,260 `ingested-magnitude`, 22 `text-complete` |
 | `feat` | 2,610 | 77 | 1,229 `text-complete` |
 | `companion` | 1,696 | 922 | Lane `DRY`. Built from nothing in this bundle — see below |
-| `equipment_modifier` | 1,580 | 40 | 841 `text-complete` |
+| `equipment_modifier` | 1,580 | 55 | 841 `text-complete` |
 | `monster` | 1,270 | 1,242 | Lane `DRY` at 97.8% |
 | `class` | 185 | 27 | |
 | `race` | 103 | 7 | The 7 `race_tables::race_traits()` rows; the *ingest* chassis models 18 races (below) |
