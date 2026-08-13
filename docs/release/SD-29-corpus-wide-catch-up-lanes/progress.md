@@ -10588,3 +10588,294 @@ actually happened, not as it was predicted.
 
 **`BASELINE_ROOT_FULL_TESTS` is raised from run 3 (6286 → 6293) and NOT from run 2**, even though run
 2 measured a number too: a floor set from a run that did not pass is a floor set from nothing.
+
+## Cycle — epic-7-companion-lane-extend, ROUND 6 (SD29-E7-F2-007)
+
+**Claimed-by** `sd29-companion-r10` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §61` (claimed as §60, renumbered in `cea8fa9c` because the monster lane claimed §60 concurrently in `0d9fb586`) · **Commits** `ae3dad3a` (ingest + three mechanisms + five tests), `cea8fa9c` (the renumber), `2799bc08` (three stale-upward baselines), plus this receipt · **Branch** pushed to `origin/tranche/9`
+
+**Outcome: 327 units ingested, all 327 grounded. Companion grounded 357 → 684. Honest remainder 239
+across 6 books.**
+
+Ultimate Wilderness — the largest companion block in the corpus. Its 169 creature rows are more than
+every previously registered companion book combined (166).
+
+### 0. The dispatch brief was materially stale for the THIRD consecutive round, and the base was wrong for the third
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that the lane is "a NEW MECHANISM with no corpus-wide precedent", and that
+this round should build the mechanism on a pinned `inner_sea_combat` pilot. `decisions.md §56 §0` and
+`§59 §0` each record the *same* text one and two rounds earlier.
+
+```
+git log --oneline -3 origin/tranche/9
+  -> e478cd15 chore(retro): companion round 5 cycle-end reclaim event
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1339, 'grounded': 357})
+```
+
+Five rounds had landed; ten books were registered; the card read `READY (round 6)`. The brief's one
+checkable figure — **566** remaining — was re-derived and **reproduced EXACTLY** before this round's
+work superseded it (§4).
+
+`HEAD` was `7d9f1c4f`: no `docs/release/` directory at all, not an ancestor of `origin/tranche/9`.
+Fixed with `git fetch origin tranche/9 && git reset --hard e478cd15` before any work. A
+`recurrence-key=wrong-base-worktree` incident is in the retro shard.
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`§59.4` ranked `ultimate_wilderness` first at 327 reachable with a free `RuleSetId`. Both halves were
+re-checked rather than trusted:
+
+```
+python3 scripts/classify_companion_rows.py ultimate_wilderness | tail -6
+  total companion units in scope : 575
+  orphan ability rows            : 247
+  `.COPY=`/`.MOD` delta rows the chassis refuses : 2
+  distinct excluded rows (the UNION, not the sum) : 248
+  reachable remainder            : 327
+
+grep -n 'Uw' src/rules_core/rules_tables/mod.rs   ->  62:    Uw,
+```
+
+`RuleSetId::Uw` is compiled (SD-28 Epic 26), so registration cost no scope flip.
+
+**And `§45.1` as amended by `§56.1` was applied — the 247 rows the classifier was about to throw away
+were read before committing.** For the first time in four rounds it did NOT move the ceiling up; it
+found the opposite (§3b).
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `ultimate_wilderness` (Ultimate Wilderness, wire code `UW`) |
+| Units ingested | **327** of 575 — 169 creature rows, 158 ability rows |
+| Grounded | **327 of 327** |
+| Source files | 2 — `uw_races_companion.lst` 169, `uw_abilities_companion.lst` 158 |
+| New `RuleSetId` | none (`Uw`, SD-28 Epic 26) |
+| Other kinds' units moved | **0** |
+| `OPEN_FINDINGS` | none added — the family IS surfaced (§3b explains why the 248 do not belong there) |
+
+The same eight surfaces every book pays: `companion_chassis::COMPANION_BOOKS` row,
+`gen_book_cache::COMPANION_BOOK_SPECS` `CompanionBookSpec`, `ultimate_wilderness/mod.rs` accessors,
+`companion_catalog`'s `"ultimate_wilderness" => "UW"` wire code, `CompanionCatalogScreen.tsx`
+`BOOK_LABELS`, its test's `SERVED_BOOK_CODES`, an `("ultimate_wilderness", "companions")`
+`reach_gate` claim, and `v06_work_inventory` grounding through the registry — plus a ninth this book
+needed, `reach_gate::CORPUS_BOOK_IDS`, because `data/corpus/ultimate_wilderness/` did not exist
+before this round (SD-28 landed the book's 136 feats as a table only).
+
+**Nothing of any other kind moved, and it is measured rather than asserted** — a structural diff of
+every unit's status against `HEAD`:
+
+```
+status changes: 327
+added: 0 removed: 0
+Counter({('ultimate_wilderness', 'companion', 'not-ingested', 'grounded'): 327})
+```
+
+The **`SERVED_SIZE_CODES`** pin moved from `['T','M','L']` to `['D','T','S','M','L']` and was derived,
+not guessed: `grep -o 'size: Some("[A-Z]")' …/ultimate_wilderness/companion_data.rs | sort | uniq -c`
+→ D 28, L 2, M 24, S 48, T 67. This is the first companion book with Diminutive and Small creatures.
+
+### 3. The mechanism: a row can state its rules text once per condition
+
+`parse_desc` refused any row carrying several `DESC:` tokens not resolvable by
+`PRERULE:1,DisplayFullAbility` — *"the transcriber refuses to pick one by position. Widen it
+deliberately."* That refusal had never fired. This book fires it 22 times, on `Poison`, `Constrict`,
+`Breath Weapon`, `Spray`, `Camouflage`, `Saber-Toothed Bite` — the abilities that make a companion a
+companion. `Spitting Cobra ~ Poison` states *blurred vision* below
+`PREVARLT:CompanionAdvancement,1` and *blindness* at or above it.
+
+All tokens are carried, none evaluated, each with its gate verbatim, in
+`CompanionAbilityRecord::description_variants`. `description` stays the single UNGATED token when
+there is exactly one — so every previously shipped record is byte-identical — and is `None` when
+every token is conditional. All 8 shipped Ultimate Wilderness rows are that second shape, so a
+screen reading only `description` would show a Spitting Cobra's poison as having no rules text at
+all; `reach_gate::companions_reach`'s payload predicate was widened for the same reason.
+
+**Each variant keeps ITS OWN `%N` argument list**, which a flatter model would have lost: the
+cobra's two tokens carry `10+HD/2+CON` and `10+HD/2+CON.` — the same formula with a stray full stop.
+
+Gates reach the player as prose through a **closed set** (`PREVARGTEQ`, `PREVARLT`, `PREALIGN` — the
+three the book's rows carry, derived by counting them) and the renderer panics on anything else.
+
+**8 shipped, 22 in the file, and that is the finding rather than a discrepancy** — the other 14 are
+archetype rows (§3b). The chassis test pins 8; a test pinned to 22 would assert a fact about a
+`.lst`, not about the table.
+
+### 3b. The first book in this lane whose shortfall is bigger than its ingest — and it is a different KIND
+
+248 of 575 do not ship. Every earlier registered book had ZERO orphans. Grouping the 247 orphans by
+their key's namespace prefix is what showed they are structured:
+
+```
+   39  Animal Trick            33  Animal Companion Feat
+   16  Companion Archetype     14  Familiar Archetype
+   12  Draconic Companion       7  Infiltrator / Mascot / Prankster / Valet (7 each)   …
+awk -F'\t' '/CATEGORY:Archetype/{…KEY…}' uw_abilities_companion.lst | wc -l   -> 30
+```
+
+**30** are the archetype rows themselves; **119** are ability rows namespaced under those archetypes'
+DISPLAY names — ownership shape 5 exactly, except the owner is an archetype rather than a creature;
+**72** are the generic option groups `Animal Trick ~ …` and `Animal Companion Feat ~ …`, which attach
+to ANY animal companion.
+
+**That is a real ownership relation and this round deliberately did not take it.** An archetype has
+no `SIZE:`, `MOVE:` or `MONSTERCLASS:`, so `CompanionRecord` cannot hold one and the catalog has no
+section that would show one. Widening the predicate would have made 149 rows "reachable" and shipped
+them under a creature they do not belong to — the stub class `§44.2` describes, arriving by the exact
+route `§45.1` exists to prevent. A `deferral` event carrying the remedy is in the retro shard.
+
+**They are also NOT an `OPEN_FINDINGS` entry, and the transcriber's own generated boilerplate had
+been claiming otherwise since round 4.** That list is keyed by (book, FAMILY) and
+`unsurfaced_families_are_exactly_the_recorded_findings` fails an entry for a family that DOES reach a
+player. The sentence was unfalsifiable while every registered book had zero orphans; the first book
+with orphans is the first that could falsify it. Corrected at the source — the generator — so no
+future book ships the false claim.
+
+### 3c. A renderer and its own leak guard had contradicted each other for the whole program
+
+`gen_book_cache` shipped the book and 13 desktop tests then panicked on one record:
+
+```
+companion ability "Seaweed Leshy ~ Water Jet": rendered description still carries
+unsubstituted '%N' argument reference. Raw token: "… must make a DC %%1 Fortitude save …"
+```
+
+`render_pcgen_desc_with_values` documented `%%` as *"never an argument reference"* and emitted `%`
+then `1`; `leaked_pcgen_syntax` rejects `%1`. Both shipped, both cannot be right, and nothing had
+caught it because no ingested record carried the shape:
+
+```
+grep -rl '%%[0-9]' --include='*.lst' ~/workspace/repos/pcgen/data/pathfinder/paizo/
+  -> 3 files, 4 tokens, all "… must make a DC %%1 Fortitude save …|<DC variable>"
+grep -rl '%%[0-9]' data/corpus/ | wc -l   -> 0   (before this round)
+```
+
+Each row's argument list supplies exactly the argument the doubled escape hides — an upstream
+escaping typo. **The narrow reading ships:** `%%N` is an argument only when argument N exists.
+`20%% spell failure chance` is untouched.
+
+**It needed a change in two places and the second is the transferable half.** `max_arg_reference`
+skipped past `%%` without counting the digit, so "does argument N exist" was decided by a function
+that had already discarded the question, and the new renderer branch was unreachable. **The test
+asserting the render was RED for that exact reason before it was green** — writing the test first is
+the only reason the second half was found rather than shipped as a no-op.
+
+A **second, quieter defect** surfaced with it: `serve_ability_description` was handing the renderer
+the `DESC:` prose ALONE, because the transcriber splits a token into `description` and
+`description_variables` and the wire only ever read the first. For every registered book that made no
+difference (no argument is an integer literal, so the placeholder is dropped either way and the text
+is byte-identical); for `%%1` it made all the difference. The two are now rejoined before rendering.
+
+The served text is `"… must make a DC Fortitude save …"` — the unresolvable formula dropped, never
+guessed, exactly as `bestiary_2/monster_ability/aeon_aging_strike.json` has rendered the same shape
+since Epic 5 — and the literal per cent one clause earlier (`[20% miss chance]`) survives intact,
+which is the assertion proving the reading is narrow rather than a blanket rewrite.
+
+### 3d. `SpecialQuaility` — a typoed `TYPE:` segment in 15 rows, recorded rather than laundered
+
+15 of the 158 shipped ability rows spell the segment `SpecialQuaility`, one transposition from the
+modelled `SpecialQuality`, so their `facet` is `None`. Corpus-wide unmodelled-facet records go 5 →
+20, wire rows 7 → 121 (the catalog nests an ability under every owning creature and these are shared
+racial traits). **Not corrected into the facet**: the transcriber emits substrings of the cited row,
+mapping a misspelling onto an enum variant is inference, and doing it silently makes the corpus's own
+spelling invisible. `type_segments` carries it verbatim to the screen. Both the chassis test and the
+wire test pin the count AND the spelling.
+
+### 4. Denominators, every one re-derived this round
+
+```
+python3 scripts/classify_companion_rows.py | tail -7
+  total companion units in scope : 1696
+  distinct excluded rows (the UNION, not the sum) : 773
+  reachable remainder            : 923
+
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1012, 'grounded': 684})
+```
+
+**Ceiling unchanged at 923** — the first round in four that did not move it, and §3b is why.
+**Honest remainder `923 − 684` = 239** across **6** books. Raw `not-ingested` is 1,012 and that is
+NOT the workload.
+
+The two derivations close exactly:
+
+```
+python3 scripts/classify_companion_rows.py core_essentials core_rulebook ultimate_magic \
+        advanced_race_guide advanced_players_guide book_of_the_damned_volume_1 | tail -2
+  distinct excluded rows (the UNION, not the sum) : 521
+  reachable remainder            : 239
+```
+
+| book | units | excluded | **reachable** |
+|---|---|---|---|
+| `core_essentials` | 145 | 42 | **103** |
+| `core_rulebook` | 170 | 86 | **84** |
+| `ultimate_magic` | 170 | 138 | **32** |
+| `advanced_race_guide` | 32 | 18 | **14** |
+| `advanced_players_guide` | 212 | 208 | **4** |
+| `book_of_the_damned_volume_1` | 31 | 29 | **2** |
+
+`103 + 84 + 32 + 14 + 4 + 2 = 239`.
+
+**A `PRECAMPAIGN` gate this round checked and correctly did NOT count.**
+`_ultimate_wilderness.pcc:92` loads `support/uw_abilities_companion_pu.lst` under
+`PRECAMPAIGN:1,INCLUDES=Pathfinder Unchained`, which `UNINGESTED_CAMPAIGN_GATES` does not name — and
+that is right, because `pathfinder_unchained` IS ingested (`ls data/corpus/pathfinder_unchained`,
+`RuleSetId::Pu`). All 17 of its rows are orphans anyway, which is why the book's spec names one
+abilities file rather than two. The five `support/uw_races_companion_{arg,b3,b4,b5,b6}.lst` files are
+`.MOD` overlays and are not inventory units.
+
+### 5. A generator defect this round caused and fixed
+
+`transcribe_companion_tables.main` opened its output file BEFORE calling `transcribe()`, so a run
+that then refused left an EMPTY generated module behind in a directory it had just created. A
+mistyped book id (`beastiary`, the corpus-directory spelling, where the inventory says `bestiary`)
+produced exactly that: `src/rules_core/rules_tables/beastiary/companion_data.rs`, zero bytes.
+**Nothing in the gate would have caught it** — an unreferenced module compiles fine. Removed, and the
+generator now transcribes before it opens.
+
+### 5b. The gate went RED first, and both stages were this round's own
+
+Run 1 (`/tmp/codex-verify-dljeB7`) failed two stages. Neither was environmental and neither was
+inherited; both were attributed by content and fixed at the source rather than baselined away.
+
+| stage | failure | attribution |
+|---|---|---|
+| `root-full` | `sd24_wired_integration_audit::placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral` — one hit: `companion_catalog.rs:801: "an unresolvable formula placeholder must not reach the screen: {:?}"` | this round's own new test's assertion message. The word is a stub MARKER to that audit; the sentence is the opposite — an anti-fabrication explanation. Reworded to `"an unresolvable \`%N\` formula reference…"` rather than widening the audit's allow-list, because widening it for a word that had a precise alternative would have spent a permanent exemption on a wording choice |
+| `frontend-typecheck` | 3 × `TS2741: Property 'descriptionVariants' is missing … but required in type 'CompanionAbilityDto'` in `companionCatalogRuntime.ts` | the new required DTO field, in the runtime's own three fallback fixtures. Added as `[]`, which is what the corpus states for every one of them |
+
+The transferable half is that `root-lib`, `desktop` and both frontend suites were run individually
+before the gate and all four were green — `frontend-typecheck` is a stage those four do not cover,
+and a type error in a fixture file no test imports is invisible to every one of them.
+
+### 6. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `./scripts/verify.sh` exits 0 | **PASS** — `VERIFY_EXIT=0`, `RESULT: PASS`, 14/14 stages, `root-full` 6296 passed across 544 suites, `root-lib` 1729, `desktop` 444, clippy at its 54 ceiling, logs `/tmp/codex-verify-3tYQhI`. **Two full runs, and both are recorded rather than only the green one:** run 1 FAILED on `root-full` + `frontend-typecheck`, both attributable to this round and both fixed at the source (§5b); run 2 PASS 14/14 |
+| 2 | `reach` stage passes with a claim for this book's families | **PASS** — `reach (27 passed)`, and the claim is this book's own: `("ultimate_wilderness", "companions") => companions_reach("ultimate_wilderness", "UW")`. Not a pass by absence — the book also needed a `CORPUS_BOOK_IDS` row before the gate could even name its corpus directory |
+| 3 | `v06_corpus_trap_report --audit` exits 0 | **PASS** — `AUDIT_EXIT=0`, "No defects: every ingested record's citation agrees with the line it names" |
+| 4 | `v06_work_inventory` regenerates; units leave `not-started`; second run changes only `generated_at` | **PASS** — 327 units `not-ingested` → `grounded`; a second run diffed over the whole document with `generated_at` popped compares `True`, and `git diff` on the file is the one timestamp line |
+| 5 | Four-check wired-integration audit clean | **PASS** — no stub: the 327 records are corpus reads, `CompanionCatalogScreen` renders them (including the new conditional-variant paragraphs), the reach claim executes IPC, and item 8 shows a conditional-variant record on screen |
+| 6 | `OPEN_FINDINGS` entry for any family that could not be surfaced | **N/A** — `ultimate_wilderness/companions` IS surfaced; §3b states why the 248 dropped rows are counted in `docs/work-inventory.json` rather than there, and why the generator's boilerplate claiming otherwise was corrected |
+| 7 | Baseline movements a separate reviewable commit | **PASS** — three stale-UPWARD floors in their own commit `2799bc08`: `BASELINE_ROOT_LIB_TESTS` 1726 → 1729, `BASELINE_ROOT_FULL_TESTS` 6293 → 6296, `BASELINE_DESKTOP_TESTS` 442 → 444. Evidence is the passing run's own `BASELINE NOTES` block, quoted in the file, with the five new tests named rather than counted. **Run 1 measured root-full 6295 and FAILED; that figure is deliberately not recorded** — a floor set from a run that did not pass is a floor set from nothing |
+| 8 | On-screen verification | **PASS** — `artifacts/SD29-E7-F2-007/item8/uw-companion-spitting-cobra.png` + `.verify.md`. **The record chosen is the mechanism's own proof**: `Companion (Spitting Cobra)`, and the screen renders `companion advancement 1 or higher: Spit; frequency 1 round [6]; effect blindness 1 round; cure 1 save; Fort DC` — a conditional `DESC:` variant with its gate rendered as prose, the unresolvable formula dropped rather than guessed, verified by a player-visible pixel and not only by a passing test. Also on screen: `Ultimate Wilderness (169)`, `Ultimate Wilderness p.182`, and the blurb's book list now ending `… Bestiary 4 and Ultimate Wilderness — 335 creatures`. `SEARCH_Y` held without recalibration at 11 registered books |
+
+### 7. What round 7 inherits
+
+**6 books, 239 reachable units.** `core_essentials` (103) is the largest and cheapest left; it needs
+a NEW `RuleSetId` — **check before writing one**, the race-trait lane added `RuleSetId::Ce` in `§49`
+— and it is the book that will first exercise the `mod_only` half of `§59.2`'s delta screen, still
+**stated, not exercised**. `advanced_players_guide` (4 of 212) and `book_of_the_damned_volume_1` (2
+of 31) remain FLOORS, not queued work.
+
+**The archetype block is the biggest thing this lane now knows about and cannot take** — 149 rows in
+this book alone, plus whatever the other five carry of the same shape. It is a NEW RECORD TYPE
+(`CompanionArchetypeRecord`) plus a screen section, not a wider ownership predicate. A round that
+takes it should declare that up front.
+
+**The lane is NOT done and this receipt does not claim it is.**
