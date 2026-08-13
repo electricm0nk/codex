@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:05:33Z",
+  "data": {
+    "corpus_key": "Water Elemental ~ Drench",
+    "delivery": "Extraordinary",
+    "description": "The elemental's touch puts out nonmagical flames of Large size or smaller. The creature can dispel magical fire it touches as Dispel Magic (caster level %1).",
+    "description_variables": [
+      "TL"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "core_essentials:companion:water_elemental_drench",
+    "name": "Drench",
+    "owners": [
+      "core_essentials:companion:elemental_water_small"
+    ],
+    "record_type": "ability",
+    "source_page": "p.126",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Special Attack",
+      "Special Ability",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_cr.lst",
+    "sha256": "c61a43a8081bb87f50c6ffb1c48855ba71bb0312907c0fedca151b5dc0fcfe60",
+    "line": 121,
+    "record_key": "Water Elemental ~ Drench"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

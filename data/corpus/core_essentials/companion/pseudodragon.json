@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:05:33Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Pseudodragon",
+    "external_ability_refs": [],
+    "key": "core_essentials:companion:pseudodragon",
+    "monster_class": "Dragon:2",
+    "name": "Pseudodragon",
+    "natural_armor": null,
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Dragon",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.229",
+    "speeds": [
+      {
+        "feet": 15,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Dragon"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87",
+    "line": 87,
+    "record_key": "Pseudodragon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

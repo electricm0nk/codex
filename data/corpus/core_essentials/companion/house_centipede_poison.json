@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:05:33Z",
+  "data": {
+    "corpus_key": "House Centipede ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite - injury; save Fort DC %1; frequency 1/round for 2 rounds; effect daze 1 round; cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "core_essentials:companion:house_centipede_poison",
+    "name": "Poison",
+    "owners": [
+      "core_essentials:companion:house_centipede"
+    ],
+    "record_type": "ability",
+    "source_page": "p.119",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_um.lst",
+    "sha256": "2e2684f82f63e6c6e025c74d820a2ce2bd121254e8394fc4563806852b8d4eaa",
+    "line": 24,
+    "record_key": "House Centipede ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

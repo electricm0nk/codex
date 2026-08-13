@@ -458,6 +458,20 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         companions: super::ultimate_wilderness::companions_static(),
         companion_abilities: super::ultimate_wilderness::companion_abilities_static(),
     },
+    // SD-29 Epic 7 round 7 (`SD29-E7-F2-008`). Core Essentials — the book that
+    // carries the `.COPY=` shape on its CREATURE rows, which no registered book
+    // had (`decisions.md §62.1`). 103 of its 145 rows ship; the 42 that do not
+    // are 22 `.COPY=` creature deltas, the 4 `.MOD` ability overlays `§59.2`
+    // predicted this book would be the first to exercise, and 16 orphans.
+    //
+    // No new `RuleSetId`: `RuleSetId::Ce` was compiled by the race-trait lane
+    // in `§49`. The dispatching row said this book "needs a NEW `RuleSetId`"
+    // and told the round to check rather than assume; checked, and it does not.
+    CompanionBook {
+        corpus_book: "core_essentials",
+        companions: super::core_essentials::companions_static(),
+        companion_abilities: super::core_essentials::companion_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -624,13 +638,30 @@ mod tests {
             }
         }
         assert_eq!(
-            unmodelled, 20,
+            unmodelled, 31,
             "expected Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows, \
-             Bestiary 4's two `TYPE:Communicate.SpellLike` rows, and Ultimate Wilderness's \
+             Bestiary 4's two `TYPE:Communicate.SpellLike` rows, Ultimate Wilderness's \
              15 `TYPE:SpecialQuaility` rows -- an UPSTREAM TYPO of the modelled \
              `SpecialQuality`, deliberately not corrected into the facet \
-             (`decisions.md §61.4`); a change here means a book's shape moved"
+             (`decisions.md §61.4`) -- and Core Essentials's 11 (round 7); \
+             a change here means a book's shape moved"
         );
+        // Core Essentials's 11, derived rather than inferred from the delta:
+        // `python3` over its own generated table, grouping the `facet: None`
+        // rows by `type_segments`, reports 10 x ("Special Ability",
+        // "Extraordinary") and 1 x ("Weakness", "Extraordinary"). Neither
+        // leading segment is a `CompanionAbilityFacet` variant -- the enum
+        // models `CompanionAdvancement`, `SpecialQuality` and `SpecialAttack`
+        // -- and `Special Ability` is PCGen's CATEGORY name appearing in a
+        // `TYPE:` token, not a misspelling of one of them. Carried verbatim in
+        // `type_segments` for the same reason `SpecialQuaility` is.
+        let ce = companion_book("core_essentials").expect("registered book");
+        let ce_unmodelled = ce
+            .companion_abilities
+            .iter()
+            .filter(|a| a.facet.is_none())
+            .count();
+        assert_eq!(ce_unmodelled, 11, "Core Essentials's unmodelled-facet rows");
         // Ultimate Wilderness's typoed segment, pinned by count and by
         // spelling. A successor that decides to model the typo must delete this
         // assertion deliberately rather than discover it as a mystery failure.
@@ -925,6 +956,61 @@ mod tests {
             ability_files,
             vec!["b3_abilities_companion.lst", "b3_abilities_familiar.lst"]
         );
+    }
+
+    /// Core Essentials is the first registered book whose CREATURE rows carry
+    /// the `.COPY=` delta shape, and none of the 22 ships (`decisions.md
+    /// §62.1`).
+    ///
+    /// `every_registered_creature_states_its_monster_class_token_verbatim`
+    /// above is what caught them — `ce_races_familiar_cr.lst:33` reads
+    /// `Bat.COPY=Bat (Celestial)` and carries no `MONSTERCLASS:` at all, so
+    /// registering the book before the screen was widened turned that test red
+    /// on all 22 at once. This test pins the fix from the other side: it names
+    /// the excluded keys, so a successor who re-widens the screen has to delete
+    /// an assertion deliberately rather than discover the regression as 22
+    /// blank creature cards.
+    ///
+    /// The eleven Core Rulebook familiars each appear twice in that file, once
+    /// `(Celestial)` and once `(Fiendish)`, and the BASE row of each pair is
+    /// declared in Core Rulebook rather than here — so dropping the deltas
+    /// drops no creature this book actually defines.
+    #[test]
+    fn core_essentials_ships_no_copy_delta_creature_row() {
+        let book = companion_book("core_essentials").expect("Core Essentials is registered");
+        assert_eq!(book.companions.len(), 58, "58 declared creature rows ship");
+        assert_eq!(book.companion_abilities.len(), 44, "44 owned ability rows ship");
+
+        // 145 corpus units - 22 `.COPY=` creatures - 4 `.MOD` abilities - 16
+        // orphans = 103, which is `classify_companion_rows.py`'s own `reachable
+        // remainder` for this book. **102 ship, not 103**, and the one-row gap
+        // is a stated finding rather than a miscount: `Pseudodragon ~ Tail` is
+        // OWNED — the classifier is right — and states nothing this chassis
+        // models, so `decisions.md §62.3` drops it. Reachability is a fact
+        // about ownership; shippability is a fact about the record type, and
+        // this is the first book where the two differ.
+        assert_eq!(book.companions.len() + book.companion_abilities.len(), 102);
+        assert!(
+            book.companion_ability_resolve("Pseudodragon ~ Tail").is_none(),
+            "`Pseudodragon ~ Tail` carries no TYPE:, no DESC: and no BONUS: — only an \
+             ASPECT: no chassis in this program models. Shipping it puts a card on screen \
+             that reads as a name over a page number"
+        );
+
+        for species in [
+            "Bat", "Cat", "Hawk", "Lizard", "Monkey", "Owl", "Rat", "Raven", "Toad", "Viper",
+            "Weasel",
+        ] {
+            for template in ["Celestial", "Fiendish"] {
+                let delta = format!("{species} ({template})");
+                assert!(
+                    book.companion_resolve(&delta).is_none(),
+                    "{delta} is a `.COPY=` row stating a delta on {species}, not a creature; \
+                     transcribed verbatim it ships a card with no SIZE, no MOVE and no \
+                     MONSTERCLASS"
+                );
+            }
+        }
     }
 
     /// chassis's bare-prefix rule would have reported as an orphan.

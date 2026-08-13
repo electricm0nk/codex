@@ -287,6 +287,55 @@ fn count_on_disk_records(book_dir: &Path) -> usize {
     count
 }
 
+/// How many of this book's on-disk records carry a redaction marker.
+///
+/// The companion to [`count_on_disk_records`], and it exists for the same
+/// reason (`decisions.md §62.2`): every `LICENSE.json` this binary writes states
+/// `records_processed` as the **book-wide on-disk count across every lane that
+/// has ingested it**, and then stated `records_redacted: 0` as a literal. For a
+/// book only this binary has ever written, the literal was true and read as
+/// though it were general. It is not: `core_essentials` was ingested first by
+/// the race-trait lane, which redacted **9** of its 64 heritage-trait records,
+/// and running any generator here over that directory silently rewrote the 9 to
+/// a 0 while all nine `[redacted PI]` markers stayed on disk — a book-wide claim
+/// that no record was redacted, published over the evidence that nine were.
+///
+/// Derived from the same walk as the numerator it must agree with, so the two
+/// can never disagree about which files are in scope. Verified against the
+/// declaration the race-trait lane wrote by hand:
+/// `grep -rl 'redacted PI' data/corpus/core_essentials/race_trait/ | wc -l` → 9.
+fn count_on_disk_redactions(book_dir: &Path) -> usize {
+    fn walk(dir: &Path, count: &mut usize) {
+        let Ok(entries) = fs::read_dir(dir) else { return };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                let is_internal = path
+                    .file_name()
+                    .and_then(|f| f.to_str())
+                    .is_some_and(|n| n.starts_with('_'));
+                if !is_internal {
+                    walk(&path, count);
+                }
+            } else if path.extension().and_then(|e| e.to_str()) == Some("json")
+                && path.file_name().and_then(|f| f.to_str()) != Some("LICENSE.json")
+                && fs::read_to_string(&path)
+                    .is_ok_and(|raw| raw.contains(PI_REDACTION_MARKER))
+            {
+                *count += 1;
+            }
+        }
+    }
+    let mut count = 0;
+    walk(book_dir, &mut count);
+    count
+}
+
+/// The marker every lane writes in place of redacted Product Identity prose.
+/// Named once so the counter above and the `redaction_policy.marker` field
+/// every `LICENSE.json` publishes cannot drift apart.
+const PI_REDACTION_MARKER: &str = "[redacted PI]";
+
 fn write_record<T: serde::Serialize>(path: &Path, record: &CorpusRecordV1<T>) {
     fs::create_dir_all(path.parent().expect("record path must have a parent dir")).expect("failed to create output dir");
     let json = serde_json::to_string_pretty(record).expect("record must serialize");
@@ -517,6 +566,7 @@ fn gen_pathfinder_unchained() {
     // the self-contradiction `tests/sd27_book_license_record_counts.rs`'s
     // `the_screening_note_quotes_the_same_count_the_field_states` checks for).
     let records_processed = count_on_disk_records(&out_root);
+    let records_redacted = count_on_disk_redactions(&out_root);
     let license_json = serde_json::json!({
         "book": "pathfinder_unchained",
         "license_declaration": {
@@ -525,7 +575,7 @@ fn gen_pathfinder_unchained() {
             "product_identity_note": "Named deities, NPCs, and unique places are Product Identity per the book's own OGL Section 15 declaration; this book's own feat and equipment-modifier MECHANICS are Open Game Content."
         },
         "redaction_policy": {
-            "marker": "[redacted PI]",
+            "marker": PI_REDACTION_MARKER,
             "schema_preserving": true,
             "pi_field_recorded": true,
             "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -539,7 +589,7 @@ fn gen_pathfinder_unchained() {
         "classified_at": ingested_at,
         "classified_by_cycle": "E2.2",
         "records_processed": records_processed,
-        "records_redacted": 0,
+        "records_redacted": records_redacted,
         "operator_sign_off": {
             "signed_off": false,
             "signed_off_at": null,
@@ -822,6 +872,7 @@ fn gen_advanced_race_guide() {
     // See gen_pathfinder_unchained()'s own comment: computed once so
     // `records_processed` and the note's prose can never disagree.
     let records_processed = count_on_disk_records(&out_root);
+    let records_redacted = count_on_disk_redactions(&out_root);
     let license_json = serde_json::json!({
         "book": "advanced_race_guide",
         "license_declaration": {
@@ -830,7 +881,7 @@ fn gen_advanced_race_guide() {
             "product_identity_note": "Named deities, NPCs, and unique places are Product Identity per the book's own OGL Section 15 declaration; core spell/equipment/feat and racial-trait MECHANICS are Open Game Content."
         },
         "redaction_policy": {
-            "marker": "[redacted PI]",
+            "marker": PI_REDACTION_MARKER,
             "schema_preserving": true,
             "pi_field_recorded": true,
             "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -843,7 +894,7 @@ fn gen_advanced_race_guide() {
         "classified_at": ingested_at,
         "classified_by_cycle": "E2.1",
         "records_processed": records_processed,
-        "records_redacted": 0,
+        "records_redacted": records_redacted,
         "operator_sign_off": {
             "signed_off": false,
             "signed_off_at": null,
@@ -1095,6 +1146,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
     }
 
     let records_processed = count_on_disk_records(&out_root);
+    let records_redacted = count_on_disk_redactions(&out_root);
     let license_path = out_root.join("LICENSE.json");
     // A book can be ingested by more than one lane. Monster Codex's
     // `race_trait/` records were written by `ingest_race_traits.rs` first, and
@@ -1148,7 +1200,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
             "product_identity_note": "Named deities, NPCs and unique places are Product Identity; monster stat blocks and their special-ability rules text are Open Game Content."
         })),
         "redaction_policy": {
-            "marker": "[redacted PI]",
+            "marker": PI_REDACTION_MARKER,
             "schema_preserving": true,
             "pi_field_recorded": true,
             "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -1159,7 +1211,7 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         "classified_at": ingested_at,
         "classified_by_cycle": spec.classified_by_cycle,
         "records_processed": records_processed,
-        "records_redacted": 0,
+        "records_redacted": records_redacted,
         "operator_sign_off": {
             "signed_off": false,
             "signed_off_at": null,
@@ -1354,6 +1406,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
     }
 
     let records_processed = count_on_disk_records(&out_root);
+    let records_redacted = count_on_disk_redactions(&out_root);
     let license_path = out_root.join("LICENSE.json");
     // Same preservation rule `gen_monster_book` states: Monster Codex and
     // Horror Adventures were both ingested by earlier lanes, whose LICENSE.json
@@ -1405,7 +1458,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             "product_identity_note": "Named deities, NPCs and unique places are Product Identity; companion and familiar stat blocks and their special-ability rules text are Open Game Content."
         })),
         "redaction_policy": {
-            "marker": "[redacted PI]",
+            "marker": PI_REDACTION_MARKER,
             "schema_preserving": true,
             "pi_field_recorded": true,
             "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
@@ -1416,7 +1469,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
         "classified_at": ingested_at,
         "classified_by_cycle": spec.classified_by_cycle,
         "records_processed": records_processed,
-        "records_redacted": 0,
+        "records_redacted": records_redacted,
         "operator_sign_off": {
             "signed_off": false,
             "signed_off_at": null,
@@ -1601,6 +1654,48 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_wilderness.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Wilderness, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-007",
+    },
+    // SD-29 Epic 7 round 7. Core Essentials.
+    //
+    // The two citation fields below are the ONLY ones in this table that do not
+    // use the "the book's own `<x>.pcc` carries a live COPYRIGHT block plus a
+    // real OGL.txt" formula, and that is deliberate: for this book the formula
+    // is FALSE. `_core_essentials.pcc` has its `ISOGL:YES` (line 16) and every
+    // one of its `COPYRIGHT:` lines (19 onward) prefixed with `#` — commented
+    // out, not absent — and the directory ships no `OGL.txt` at all
+    // (`ls ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/ | grep -i ogl`
+    // → nothing). Read alone the book makes no active declaration.
+    //
+    // What makes it recoverable is the inclusion path, which the race-trait
+    // lane derived and recorded in this book's existing `LICENSE.json`
+    // (`SD29-E6-F2-005`): `core_rulebook.pcc` line 43 unconditionally includes
+    // `_core_essentials.pcc`, and Core Rulebook carries its own live `ISOGL:YES`
+    // and `COPYRIGHT` block. These strings restate that derivation rather than
+    // asserting a stronger one.
+    //
+    // In practice the generator will use NEITHER: `gen_companion_book`
+    // preserves a prior `license_declaration` (`decisions.md §54.4`) and this
+    // book has one. They are written correctly anyway, because a fallback that
+    // is only correct while it stays unreached is how `§59.2`'s `mod_only` half
+    // sat wrong-and-unexercised for two rounds.
+    CompanionBookSpec {
+        corpus_book: "core_essentials",
+        book_relative: "pathfinder/paizo/roleplaying_game/core_essentials",
+        races_lsts: &[
+            "ce_races_familiar_apg.lst",
+            "ce_races_familiar_cr.lst",
+            "ce_races_familiar_um.lst",
+        ],
+        abilities_lsts: &[
+            "ce_abilities_familiar_apg.lst",
+            "ce_abilities_familiar_cr.lst",
+            "ce_abilities_familiar_race_cr.lst",
+            "ce_abilities_familiar_race_um.lst",
+            "ce_abilities_familiar_um.lst",
+        ],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inherited from the including core_rulebook.pcc per docs/governance/license-matrix.md §'Unestablished: 1 of 37'. core_essentials' own _core_essentials.pcc has its ISOGL:YES (line 16) and every COPYRIGHT: line (19 onward) commented out and ships no OGL.txt, so read alone it makes no active declaration; core_rulebook.pcc line 43 includes it unconditionally and carries a live declaration of its own.",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game Core Rulebook, OGL §15 Product Identity section (core_essentials is distributed as part of that book's data set)",
+        classified_by_cycle: "SD29-E7-F2-008",
     },
 ];
 

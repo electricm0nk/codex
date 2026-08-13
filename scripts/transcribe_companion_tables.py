@@ -225,6 +225,21 @@ def parse_natural_armor(row: list[str]) -> int | None:
     return None
 
 
+def row_states_modelled_content(row: list[str]) -> bool:
+    """Does this ability row state anything `CompanionAbilityRecord` can hold?
+
+    The three tokens that become content on the card: `TYPE:` (which is also
+    where `facet` and `delivery` are read from), `DESC:` (the rules text, gated
+    or not) and `BONUS:` (the stat adjustments).  `SOURCEPAGE:` is deliberately
+    NOT one of them -- a citation says where to read the rule, not what it says
+    -- and neither is `ASPECT:`, which says a great deal but which no chassis in
+    this program models yet.  See the screen in `transcribe` for both.
+    """
+    return any(
+        field.startswith(("TYPE:", "DESC:", "BONUS:")) for field in row
+    )
+
+
 def parse_type_segments(row: list[str]) -> list[str]:
     raw = token(row, "TYPE:") or ""
     return [s for s in raw.split(".") if s]
@@ -341,6 +356,55 @@ def transcribe(book: str) -> str:
         )
     if not creatures:
         raise SystemExit(f"{book} carries no companion creature rows")
+
+    # ---- delta-row screen, CREATURE half (`decisions.md §62.1`) ----
+    #
+    # `§59.2` built this screen for ABILITY rows and ran it over `abilities`
+    # alone, because Bestiary 4 -- the book that forced it -- carries `.COPY=`
+    # only there. `core_essentials` is the first companion book whose CREATURE
+    # rows carry it, 22 of them: `ce_races_familiar_cr.lst:33` reads
+    # `Bat.COPY=Bat (Celestial)` and carries `OUTPUTNAME:`, `TEMPLATE:` and
+    # `KIT:` -- no `SIZE:`, no `MOVE:`, no `MONSTERCLASS:`. Transcribed verbatim
+    # it ships a creature card with a name and nothing else, which is the exact
+    # stub class the ability half exists to prevent.
+    #
+    # Screened HERE rather than beside the ability screen below, because every
+    # ownership index downstream is derived from `creatures`, and two of them
+    # are actively wrong if a delta row is in the set:
+    #
+    # * `creature_display` (shape 5) keys on `OUTPUTNAME:`, and all 22 of these
+    #   rows carry the BASE creature's display name -- `Bat (Celestial)` and
+    #   `Bat (Fiendish)` both say `OUTPUTNAME:Bat`. Left in, they overwrite each
+    #   other in a dict and an ability keyed `Bat ~ …` would be attributed to
+    #   whichever delta row was read last.
+    # * `creature_species` (shape 3) maps `bare_species` -> every claimant, so a
+    #   delta row would stand as an owner of record for rows it does not define.
+    #
+    # An ability reachable ONLY from a dropped creature therefore loses its last
+    # owner here and falls through to the orphan pass below, which is the right
+    # disposition: it is a row this book's shipped creatures do not reach.
+    creature_deltas = sorted(
+        u["corpus_key"] for u in creatures if u.get("origin") in ("copy", "mod_only")
+    )
+    creature_delta_kinds = {
+        u["corpus_key"]: u["origin"]
+        for u in creatures
+        if u.get("origin") in ("copy", "mod_only")
+    }
+    if creature_deltas:
+        dropped = set(creature_deltas)
+        creatures = [u for u in creatures if u["corpus_key"] not in dropped]
+        if not creatures:
+            raise SystemExit(
+                f"{book}: every companion creature row is a `.COPY=`/`.MOD` delta; "
+                "there is no record for this chassis to transcribe"
+            )
+        print(
+            f"{book}: {len(creature_deltas)} delta CREATURE row(s) NOT transcribed "
+            "(a `.COPY=`/`.MOD` row states a delta on another record, not a record): "
+            + ", ".join(creature_deltas),
+            file=sys.stderr,
+        )
 
     creature_keys = {u["corpus_key"] for u in creatures}
     # `<species>` -> EVERY creature row claiming it, in row order. A list rather
@@ -541,6 +605,63 @@ def transcribe(book: str) -> str:
     if orphans:
         abilities = [u for u in abilities if u["corpus_key"] not in orphan_keys]
 
+    # ---- empty-payload screen (`decisions.md §62.3`) ----
+    #
+    # A row can be perfectly OWNED and still state nothing this chassis is able
+    # to hold.  `core_essentials`' `Pseudodragon ~ Tail`
+    # (`ce_abilities_familiar_race_cr.lst:215`) is the first, and across all
+    # twelve registered books it is the ONLY one: it carries `KEY:`,
+    # `CATEGORY:Special Ability`, `SOURCEPAGE:p.229` and
+    # `ASPECT:ReachAttack|5 ft.` -- no `TYPE:`, no `DESC:`, no `BONUS:`.
+    # Transcribed, every modelled field comes out empty and the card a player
+    # opens reads "Tail" over a page number.
+    #
+    # `ASPECT:` is the one token that says what the row DOES, and no chassis in
+    # this program models it -- not this one and not `monster_chassis`
+    # (`grep -rn aspect src/rules_core/rules_tables/monster_chassis.rs
+    # scripts/transcribe_monster_tables.py` -> nothing).  Modelling it is a real
+    # widening and worth doing: 27 of the 394 grounded ability rows across the
+    # twelve registered books carry an `ASPECT:` that is being dropped today.
+    # The other 26 also carry a `TYPE:`, so they are diminished by the omission
+    # rather than emptied by it, which is why this round states the measurement
+    # and takes the narrow disposition instead of widening the record type on
+    # the way past.
+    #
+    # The disposition is `§61.2`'s, already settled one round earlier for
+    # Ultimate Wilderness's archetype rows: a row this chassis is the wrong
+    # SHAPE for is dropped, named here and in the module doc, and left honestly
+    # `not-ingested` in `docs/work-inventory.json` -- never shipped as a card
+    # with nothing on it.
+    #
+    # The predicate is `reach_gate::companions_reach`'s own ability payload rule
+    # with `source_page` REMOVED, and that difference is the finding rather than
+    # an inconsistency: a page citation tells a player where to read the rule,
+    # not what it is.  The gate counts it, so this row would have passed the
+    # reach gate while showing nothing -- a gate agreeing with a stub is exactly
+    # the twin problem `AGENTS.md` names, and screening at the generator is the
+    # fix at the source rather than at the instrument.
+    empty = sorted(
+        u["corpus_key"]
+        for u in abilities
+        if not row_states_modelled_content(
+            read_row(resolve_source_file(directory, u["source_file"]), u["source_line"])
+        )
+    )
+    if empty:
+        empty_keys = set(empty)
+        abilities = [u for u in abilities if u["corpus_key"] not in empty_keys]
+        for key in empty_keys:
+            owners.pop(key, None)
+        # Same both-directions obligation the delta screen carries: a creature
+        # must never name a record this table does not define.
+        for creature_key, keys in creature_ability_keys.items():
+            creature_ability_keys[creature_key] = [k for k in keys if k not in empty_keys]
+        print(
+            f"{book}: {len(empty)} owned ability row(s) NOT transcribed (the row states "
+            "nothing this chassis models -- no TYPE:, no DESC:, no BONUS:): " + ", ".join(empty),
+            file=sys.stderr,
+        )
+
     out: list[str] = []
     out.append(f"//! {book} companion tables, transcribed verbatim from the book's own")
     out.append("//! PCGen `.lst` rows.")
@@ -612,6 +733,46 @@ def transcribe(book: str) -> str:
         out.append("//! screen). Their owners no longer name them:")
         for key in deltas:
             out.append(f"//!   * `{key}` (`origin: {delta_kinds[key]}`)")
+    if creature_deltas:
+        out.append("//!")
+        out.append(
+            "//! NOT transcribed -- CREATURE rows that state a DELTA on another record"
+        )
+        out.append(
+            "//! (`decisions.md §62.1`). PCGen copies the base creature whole and applies"
+        )
+        out.append(
+            "//! the few tokens the copy row carries, so the row itself states no `SIZE:`,"
+        )
+        out.append(
+            "//! no `MOVE:` and no `MONSTERCLASS:` -- transcribed verbatim it is a creature"
+        )
+        out.append(
+            "//! card with a name and nothing else. Any ability reachable only from one of"
+        )
+        out.append("//! these is carried as an orphan above, not shipped unowned:")
+        for key in creature_deltas:
+            out.append(f"//!   * `{key}` (`origin: {creature_delta_kinds[key]}`)")
+    if empty:
+        out.append("//!")
+        out.append(
+            "//! NOT transcribed -- OWNED rows that state nothing this chassis models"
+        )
+        out.append(
+            "//! (`decisions.md §62.3`). The row carries no `TYPE:`, no `DESC:` and no"
+        )
+        out.append(
+            "//! `BONUS:`, so every modelled field transcribes empty and the card reads as"
+        )
+        out.append(
+            "//! a name over a page number. What each one DOES state is an `ASPECT:`, which"
+        )
+        out.append(
+            "//! no chassis in this program models yet -- the disposition is `§61.2`'s:"
+        )
+        out.append("//! dropped, named here, left honestly `not-ingested`:")
+        for key in empty:
+            out.append(f"//!   * `{key}`")
     if gated:
         out.append("//!")
         out.append(

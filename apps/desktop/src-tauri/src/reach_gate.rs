@@ -1332,6 +1332,25 @@ fn reach_of(family: &Family) -> Option<Reach> {
             Some(companions_reach("ultimate_wilderness", "UW"))
         }
 
+        // SD-29 Epic 7 round 7. Core Essentials's companions and familiars —
+        // the SECOND claim this book carries, beside the 64 heritage
+        // `race_traits` the race-trait lane landed (`("core_essentials",
+        // "race_traits")` above, same `CE` wire code, same corpus directory).
+        // `CORPUS_BOOK_IDS` already names the directory for that reason and
+        // needed no entry this round.
+        //
+        // 103 of the book's 145 companion units ship — its whole `reachable
+        // remainder` per `scripts/classify_companion_rows.py`. The 42 that do
+        // not are not in this gate's denominator, because they were never
+        // ingested: 22 `.COPY=` CREATURE delta rows (`decisions.md §62.1`, the
+        // first companion book to carry the delta shape on its creature half),
+        // the 4 `.MOD` ability overlays `§59.2` predicted this book would first
+        // exercise, and 16 orphans. They stay counted in
+        // `docs/work-inventory.json`, and get no `OPEN_FINDINGS` entry for the
+        // reason `§61.2` states: that list is keyed by FAMILY, and this family
+        // does reach a player.
+        ("core_essentials", "companions") => Some(companions_reach("core_essentials", "CE")),
+
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
         // carrying that record's own corpus `KEY:` token, and the character

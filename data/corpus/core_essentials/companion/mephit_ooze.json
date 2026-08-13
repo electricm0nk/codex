@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:05:33Z",
+  "data": {
+    "ability_keys": [
+      "core_essentials:companion:ooze_mephit_breath_weapon",
+      "core_essentials:companion:ooze_mephit_fast_healing"
+    ],
+    "corpus_key": "Mephit (Ooze)",
+    "external_ability_refs": [],
+    "key": "core_essentials:companion:mephit_ooze",
+    "monster_class": "Outsider (Ref/Will):3",
+    "name": "Mephit, Ooze",
+    "natural_armor": null,
+    "natural_attacks": [],
+    "race_subtype": "Water",
+    "race_type": "Outsider",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.202",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Outsider"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst",
+    "sha256": "d702c902a162f7e319b0aff6bed67c2611c6790c629a8dc30de1e503e1fe0a87",
+    "line": 83,
+    "record_key": "Mephit (Ooze)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

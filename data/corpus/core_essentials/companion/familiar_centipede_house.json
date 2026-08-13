@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:05:33Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Centipede (House))",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Giant Centipede Companion ~ Poison"
+    ],
+    "key": "core_essentials:companion:familiar_centipede_house",
+    "monster_class": "Vermin:1",
+    "name": "Familiar (Centipede (House))",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.43",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -9
+      },
+      {
+        "ability": "DEX",
+        "amount": 8
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      },
+      {
+        "ability": "INT",
+        "amount": -9
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_apg.lst",
+    "sha256": "2503bc54689a1f20beedf12c51d9563f24e91b74788d24bc73567c483fa004ec",
+    "line": 6,
+    "record_key": "Familiar (Centipede (House))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

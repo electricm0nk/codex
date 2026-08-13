@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:05:33Z",
+  "data": {
+    "corpus_key": "Hedgehog ~ Spiny Defense",
+    "delivery": "Extraordinary",
+    "description": "As a move action, a hedgehog can roll itself up into a spiny ball. While rolled up, it gains a +1 enhancement bonus to its existing natural armor, and any creature attempting to grapple the hedgehog takes 1d3 damage on making a grapple check. While rolled up, a hedgehog cannot take any action other than leaving this state. The hedgehog can leave this state as a move action.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "core_essentials:companion:hedgehog_spiny_defense",
+    "name": "Spiny Defense",
+    "owners": [
+      "core_essentials:companion:familiar_hedgehog",
+      "core_essentials:companion:hedgehog"
+    ],
+    "record_type": "ability",
+    "source_page": "p.119",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/ce_abilities_familiar_race_um.lst",
+    "sha256": "2e2684f82f63e6c6e025c74d820a2ce2bd121254e8394fc4563806852b8d4eaa",
+    "line": 20,
+    "record_key": "Hedgehog ~ Spiny Defense"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

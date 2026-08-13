@@ -82,6 +82,11 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // SD-29 Epic 7 round 6. Ultimate Wilderness — the book's second family,
         // beside the 136 feats SD-28 Epic 26 landed. Same wire code either way.
         "ultimate_wilderness" => "UW",
+        // SD-29 Epic 7 round 7. Core Essentials — the book's second family,
+        // beside the 64 heritage race traits the race-trait lane landed in
+        // `SD29-E6-F2-005`. Same wire code either way: it names the BOOK, and
+        // `CE` is already what `reach_gate`'s `race_traits` claim passes.
+        "core_essentials" => "CE",
         other => panic!(
             "companion_catalog: no wire code for companion book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
