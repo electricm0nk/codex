@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shadow Demon ~ Sprint",
+    "delivery": "Extraordinary",
+    "description": "Once per minute, a shadow demon increase its fly speed to 240 feet for 1 round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:shadow_demon_sprint",
+    "name": "Sprint",
+    "owners": [
+      "beastiary:monster:demon_shadow"
+    ],
+    "source_page": "p.67",
+    "traits": [
+      "ModifyMovement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 306,
+    "record_key": "Shadow Demon ~ Sprint"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

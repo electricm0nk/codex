@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Hell Hound ~ Fire",
+    "delivery": null,
+    "description": "A Hell Hound's bite deals an additional %1d6 fire damage.",
+    "description_variables": [
+      "HellHoundDice"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:hell_hound_fire",
+    "name": "Fire",
+    "owners": [
+      "beastiary:monster:hell_hound_nessian"
+    ],
+    "source_page": "p.173",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 768,
+    "record_key": "Hell Hound ~ Fire"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

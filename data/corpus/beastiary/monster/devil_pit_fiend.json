@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:pit_fiend_devil_shaping",
+      "beastiary:monster_ability:pit_fiend_disease",
+      "beastiary:monster_ability:pit_fiend_poison"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Devil (Pit Fiend)",
+    "external_ability_refs": [
+      "Constrict",
+      "Flight Maneuverability",
+      "Grab",
+      "Regeneration ~ Good"
+    ],
+    "key": "beastiary:monster:devil_pit_fiend",
+    "monster_class": "Outsider (Fort/Ref):20",
+    "name": "Devil (Pit Fiend)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Wing"
+      },
+      {
+        "damage_dice": "4d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.80",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 113,
+    "record_key": "Devil (Pit Fiend)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

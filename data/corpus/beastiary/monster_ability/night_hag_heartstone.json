@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Night Hag ~ Heartstone",
+    "delivery": "Supernatural",
+    "description": "All night hags carry a heartstone, a special gemstone worth at least 1,800 gp that is worn as a periapt. A heartstone's magic is fueled by the hag's spirit and proximity; once separated from its owner (or upon the hag's death), a heartstone retains its magic for only 24 hours before becoming a nonmagical gem again. The heartstone instantly cures any disease contracted by the holder. In addition, a heartstone provides a +2 resistance bonus on all saving throws (this bonus is included in the statistics block above). A night hag that loses this charm can no longer use etherealness or soul bind until it finds a replacement gemstone.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:night_hag_heartstone",
+    "name": "Heartstone",
+    "owners": [
+      "beastiary:monster:night_hag"
+    ],
+    "source_page": "p.215",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 983,
+    "record_key": "Night Hag ~ Heartstone"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

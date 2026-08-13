@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Wyvern ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting--injury; save DC 17; frequency 1/round for 6 rounds; effect 1d4 Constitution damage; cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:wyvern_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:wyvern"
+    ],
+    "source_page": "p.282",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1262,
+    "record_key": "Wyvern ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

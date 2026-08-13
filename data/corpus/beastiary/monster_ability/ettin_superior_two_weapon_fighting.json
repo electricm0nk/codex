@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ettin ~ Superior Two-Weapon Fighting",
+    "delivery": "Extraordinary",
+    "description": "An ettin fights with a flail or javelin in each hand. Because each of its two heads controls an arm, the ettin does not take a penalty on attack or damage rolls for attacking with two weapons.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ettin_superior_two_weapon_fighting",
+    "name": "Superior Two-Weapon Fighting",
+    "owners": [
+      "beastiary:monster:ettin"
+    ],
+    "source_page": "p.130",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 606,
+    "record_key": "Ettin ~ Superior Two-Weapon Fighting"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

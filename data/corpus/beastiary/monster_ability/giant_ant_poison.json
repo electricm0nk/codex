@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Giant Ant ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Injury; Save Fort DC %1; Frequency 1/round for 4 rounds; Effect 1d2 Str; Cure 1 save.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_ant_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:ant_giant",
+      "beastiary:monster:ant_drone",
+      "beastiary:monster:ant_queen"
+    ],
+    "source_page": "p.16",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 95,
+    "record_key": "Giant Ant ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

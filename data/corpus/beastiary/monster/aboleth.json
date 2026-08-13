@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:aboleth_mucus_cloud",
+      "beastiary:monster_ability:aboleth_slime"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Aboleth",
+    "external_ability_refs": [
+      "Can't Be Tripped"
+    ],
+    "key": "beastiary:monster:aboleth",
+    "monster_class": "Aberration:8",
+    "name": "Aboleth",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Aberration",
+    "size": "H",
+    "source_page": "p.8",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 7,
+    "record_key": "Aboleth"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

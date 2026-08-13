@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Dark Stalker ~ Death Throes",
+    "delivery": "Supernatural",
+    "description": "When a dark stalker is slain, its body combusts in a flash of white-hot flame. This acts like a fireball that deals 3d6 points of fire damage to all creatures within a 20-foot-radius burst. A DC %1 Reflex save halves this damage. A dark stalker's gear and treasure are unaffected by this explosion.",
+    "description_variables": [
+      "DeathThroesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:dark_stalker_death_throes",
+    "name": "Death Throes",
+    "owners": [
+      "beastiary:monster:dark_stalker"
+    ],
+    "source_page": "p.54",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 262,
+    "record_key": "Dark Stalker ~ Death Throes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

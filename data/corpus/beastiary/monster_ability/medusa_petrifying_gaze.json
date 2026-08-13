@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Medusa ~ Petrifying Gaze",
+    "delivery": "Supernatural",
+    "description": "Turn to stone permanently, 30 feet, Fortitude DC %1 negates.",
+    "description_variables": [
+      "PetrifyingGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:medusa_petrifying_gaze",
+    "name": "Petrifying Gaze",
+    "owners": [
+      "beastiary:monster:medusa"
+    ],
+    "source_page": "p.201",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 882,
+    "record_key": "Medusa ~ Petrifying Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

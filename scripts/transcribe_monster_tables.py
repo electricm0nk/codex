@@ -124,7 +124,45 @@ BOOKS = {
     # (`decisions.md §57.1`) predicts for a `campaign_setting/` book, whose
     # creatures are Golarion-specific personae rather than generic SRD species.
     "inner_sea_bestiary": "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
+    # SD-29 Epic 5 extend, round 8. Bestiary 1 -- the book `decisions.md §58.3`
+    # ruled on and deliberately did not execute in the round that ruled. It is
+    # the first book in this lane whose monster rows are ALREADY served, in
+    # part, by a DIFFERENT compiled table: SD-22's `rules_tables::beastiary1`
+    # holds 46 of the book's 330 rows. The ruling is that this chassis sits
+    # ALONGSIDE that table and takes the book's COMPLEMENT -- see
+    # `CROSS_TABLE_MONSTER_RECORDS` below for the mechanism and
+    # `rules_tables::bestiary` for the derivation.
+    #
+    # Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py bestiary` ->
+    # `bestiary  284  523  375  2  146  0  0`, i.e. 661 classifier-reachable
+    # over a monster set that includes all 330 corpus rows while counting only
+    # the 284 remaining ones. 607 ship; the 54-unit residue is the cross-table
+    # class this screen names.
+    "bestiary": "pathfinder/paizo/roleplaying_game/bestiary",
 }
+
+# Books part of whose monster rows another compiled table of THIS repo already
+# serves, keyed by the `data/corpus/` directory that table's records live in.
+#
+# Bestiary 1 is the only such book and `decisions.md §58.3` is the ruling that
+# makes it one: SD-22's `rules_tables::beastiary1` already serves 46 of the
+# book's 330 monster rows, under the `beastiary1:monster:<slug>` key space, out
+# of the same `data/corpus/beastiary/monster/` directory this chassis writes to.
+# Absorbing them would mean emitting 46 records the catalog already serves under
+# the same wire code -- a duplicate a player can see -- so this chassis takes the
+# complement instead.
+#
+# The exclusion is derived from the OTHER table's own shipped records rather
+# than from a hand-written name list or from the work inventory's `status`
+# field, for two reasons. It is the same denominator `reach_gate::monsters_reach`
+# reads, so the two can never disagree; and it is stable under this generator's
+# own output, because the two record shapes are distinguishable -- SD-22's
+# records carry their identity as `data.id` (they predate the `key` convention),
+# every chassis record carries `data.key`. Re-running the transcriber after
+# `gen_book_cache` has written the chassis half therefore excludes the same 46
+# rows, not all 330.
+CROSS_TABLE_MONSTER_RECORDS = {"bestiary": "beastiary"}
 
 # The `TYPE:` first segment that names which facet of `monster_ability` a row
 # is. Spelled exactly as the corpus spells it.
@@ -418,6 +456,24 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
     refuses. `isb_abilities_race.lst:203`/`:204`/`:206` are exactly that -- they
     carry `%N` variables and state alternatives rather than a continuation -- and
     they are still refused by this parser rather than joined.
+
+    **Two further shapes, widened in round 8 (Bestiary 1), one row each.** Both
+    are the round-3 summary-vs-full pair in a row that carries NO gate, and both
+    are selections between two verbatim corpus texts on a criterion the corpus
+    itself states -- never a composition, never a positional guess:
+
+    * **superset** -- one token's text literally begins with every other token's,
+      so the long one contains the short one whole. `b1_abilities_race.lst:1183`.
+    * **variable-bearing** -- exactly one token carries a pipe entry, and every
+      entry it carries names a variable this row's own `DEFINE:` declares, so the
+      row's `DEFINE:`/`BONUS:VAR` machinery exists to fill that token's `%N` and
+      no other's. `b1_abilities_race.lst:1068`, whose ungated summary drops the
+      severing AC, the Fortitude DC and the Strength damage.
+
+    Scope derived, not assumed: over every book in `BOOKS`, 54 ability rows carry
+    several `DESC:` tokens -- 34 gated-full, 4 continuation, 1 superset, 1
+    variable-bearing, and 14 that remain refused. Not one of the 14 is a row any
+    book ships; every one is an orphan or a Product Identity row.
     """
     descs = [f[len("DESC:") :] for f in row if f.startswith("DESC:")]
     if not descs:
@@ -431,17 +487,53 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
                 for entry in d.split("|")[1:]
             )
         ]
-        if len(full) != 1:
+        if len(full) == 1:
+            descs = full
+        else:
             if all("|" not in d for d in descs) and all(
                 d.startswith(" ") for d in descs[1:]
             ):
                 return "".join(descs), []
-            raise UnmodelledDesc(
-                f"row carries {len(descs)} DESC: tokens and {len(full)} of them are gated on "
-                f"{FULL_ABILITY_RULE}; the transcriber refuses to pick one by position. "
-                f"Widen it deliberately. Tokens: {descs!r}"
-            )
-        descs = full
+            texts = [d.split("|")[0] for d in descs]
+            longest = max(texts, key=len)
+            if all(longest.startswith(t) for t in texts):
+                # SUPERSET shape. One token's text literally BEGINS with every
+                # other token's, so the long one contains the short one whole
+                # and selecting it drops not one corpus word. No composition, no
+                # positional guess, and no criterion of this script's invention
+                # -- the containment is the corpus's own statement.
+                descs = [descs[texts.index(longest)]]
+            else:
+                piped = [d for d in descs if "|" in d]
+                defines = {
+                    f[len("DEFINE:") :].split("|")[0]
+                    for f in row
+                    if f.startswith("DEFINE:")
+                }
+                entries = (
+                    [e for e in piped[0].split("|")[1:] if e] if len(piped) == 1 else []
+                )
+                if entries and all(e in defines for e in entries):
+                    # VARIABLE-BEARING shape. Exactly one token carries a pipe
+                    # entry, and every entry it carries names a variable this
+                    # row's own `DEFINE:` declares -- the row's `DEFINE:` /
+                    # `BONUS:VAR` machinery exists to fill that token's `%N`
+                    # placeholders and nothing else's. So the corpus states which
+                    # of the two texts is the complete one, exactly as the
+                    # `DisplayFullAbility` gate does above, in a row that carries
+                    # no gate. `b1_abilities_race.lst:1068` is the whole of this
+                    # shape corpus-wide; its ungated summary stops at "as ranged
+                    # touch attacks" and drops the severing AC, the save and the
+                    # Strength damage -- `decisions.md §46`'s loss again.
+                    descs = piped
+                else:
+                    raise UnmodelledDesc(
+                        f"row carries {len(descs)} DESC: tokens, none gated on "
+                        f"{FULL_ABILITY_RULE}, no continuation, no superset and no single "
+                        "token bearing this row's own DEFINEd variables; the transcriber "
+                        f"refuses to pick one by position. Tokens: {descs!r}"
+                    )
+        assert len(descs) == 1, "every branch above narrows to exactly one token"
     parts = descs[0].split("|")
     return parts[0], [p for p in parts[1:] if p and not is_prerequisite(p)]
 
@@ -466,6 +558,37 @@ def parse_type(row: list[str]) -> tuple[str, str | None, list[str]]:
             "models SpecialAttack/SpecialQuality only; widen it deliberately"
         )
     return facet, delivery, traits
+
+
+def cross_table_served_monster_keys(corpus_dir: str) -> set[str]:
+    """Monster corpus keys another compiled table of the same book already ships.
+
+    Reads `data/corpus/<corpus_dir>/monster/` and returns the `source.record_key`
+    of every record written in the pre-`key` Shape B v1 shape -- `data.id` and no
+    `data.key`. That is precisely SD-22's `beastiary1` output and precisely not
+    this generator's, so the set is stable under re-running the chassis pass over
+    the same directory.
+
+    An empty result is a hard stop rather than an empty exclusion: an exclusion
+    that silently becomes a no-op would ship 46 duplicate stat blocks, and a
+    duplicate under one wire code is a defect a player can see.
+    """
+    root = os.path.join("data/corpus", corpus_dir, "monster")
+    served: set[str] = set()
+    for name in sorted(os.listdir(root)):
+        if not name.endswith(".json"):
+            continue
+        with open(os.path.join(root, name), encoding="utf-8") as handle:
+            record = json.load(handle)
+        data = record.get("data", {})
+        if "id" in data and "key" not in data:
+            served.add(record["source"]["record_key"])
+    if not served:
+        raise SystemExit(
+            f"{root} holds no `data.id`-shaped records, so the cross-table "
+            "exclusion would be a no-op -- refusing to ship duplicates"
+        )
+    return served
 
 
 def transcribe(book: str) -> str:
@@ -691,6 +814,88 @@ def transcribe(book: str) -> str:
             file=sys.stderr,
         )
 
+    # ---- `.MOD`-only screen, beside the `.COPY=` screen and for its reason ----
+    #
+    # A `<Record>.MOD` row does not state a stat block either. It states a DELTA
+    # on a record defined elsewhere, and the work inventory has always said so in
+    # its own `origin` field: `declared` for a row that defines a record,
+    # `mod_only` for a unit whose every corpus row is an overlay. This screen
+    # reads that field rather than re-deriving it, because the inventory's parser
+    # is what decided the unit existed at all.
+    #
+    # Transcribing one verbatim yields the delta's few tokens under the record's
+    # name -- the same blank card `.COPY=` produces -- and
+    # `gen_book_cache::verified_citation_line` refuses it outright anyway,
+    # because the row's first column reads `<Record>.MOD` and not the record's
+    # name. Resolving the delta means composing across the base row and every
+    # overlay, under ONE `source_file`/`source_line` pair, which is the
+    # stale-citation defect that function exists to catch.
+    #
+    # Scope derived, not assumed. Over every book in the inventory:
+    #   python3 -c "import json, collections; d=json.load(open('docs/work-inventory.json'));
+    #   print(collections.Counter(u.get('origin') for u in d['units']
+    #   if u['kind'] in ('monster','monster_ability')))"
+    # -> `declared 4371, mod_only 4, copy 2`. All 4 `mod_only` units are this
+    # book's monster rows; not one ability row in any book carries the shape.
+    mod_monsters = [u for u in monsters if u.get("origin") == "mod_only"]
+    if mod_monsters:
+        mod_keys = {u["corpus_key"] for u in mod_monsters}
+        monsters = [u for u in monsters if u["corpus_key"] not in mod_keys]
+        for key in mod_keys:
+            monster_ability_keys.pop(key, None)
+            external.pop(key, None)
+        for ability_key in owners:
+            owners[ability_key] = [o for o in owners[ability_key] if o not in mod_keys]
+        print(
+            f"{book}: {len(mod_monsters)} `.MOD`-only monster row(s) NOT transcribed "
+            "(an overlay row states a delta on a record defined elsewhere): "
+            + ", ".join(f"{u['source_file']}:{u['source_line']}" for u in mod_monsters),
+            file=sys.stderr,
+        )
+
+    # ---- cross-table-owner screen, between the `.COPY=` screen and the orphan
+    # pass ----
+    #
+    # `decisions.md §58.3`'s ruling, executed. A monster row this repo ALREADY
+    # ships out of a different compiled table is not this chassis's to emit: two
+    # records for one creature, under one wire code, in one catalog, is a
+    # duplicate the player sees. So the row is dropped here -- and the drop
+    # cascades exactly as the Product Identity and `.COPY=` drops above it do,
+    # except that the abilities it strands are NOT orphans and must not be
+    # reported as such.
+    #
+    # An orphan is a row nothing in the book owns. A CROSS-TABLE OWNER row is
+    # well-formed and owned; it is unreachable from here only because its owner
+    # lives in the other table, which has no ability family at all. That is a
+    # different remedy (widen the other table, or migrate it), so it is a
+    # different class, counted and cited separately in the header below.
+    cross_table_monsters: list[dict] = []
+    cross_table_abilities: list[dict] = []
+    other_table_dir = CROSS_TABLE_MONSTER_RECORDS.get(book)
+    if other_table_dir:
+        served = cross_table_served_monster_keys(other_table_dir)
+        cross_table_monsters = [u for u in monsters if u["corpus_key"] in served]
+        cross_keys = {u["corpus_key"] for u in cross_table_monsters}
+        monsters = [u for u in monsters if u["corpus_key"] not in cross_keys]
+        for key in cross_keys:
+            monster_ability_keys.pop(key, None)
+            external.pop(key, None)
+        stranded: set[str] = set()
+        for ability_key in owners:
+            before = owners[ability_key]
+            after = [o for o in before if o not in cross_keys]
+            if before and not after:
+                stranded.add(ability_key)
+            owners[ability_key] = after
+        cross_table_abilities = [u for u in abilities if u["corpus_key"] in stranded]
+        abilities = [u for u in abilities if u["corpus_key"] not in stranded]
+        print(
+            f"{book}: cross-table screen withheld {len(cross_table_monsters)} monster row(s) "
+            f"already served by `data/corpus/{other_table_dir}/monster` and "
+            f"{len(cross_table_abilities)} ability row(s) owned only by them",
+            file=sys.stderr,
+        )
+
     # An ability row no monster row of this book claims is an ORPHAN: the
     # catalog renders an ability underneath its owning monster, so a record with
     # no owner would load and never be shown -- the stub class `decisions.md
@@ -813,6 +1018,53 @@ def transcribe(book: str) -> str:
         out.append("//! the chassis, deliberately widened, not an ingest round's side effect:")
         for unit in copy_monsters:
             out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}`")
+    if mod_monsters:
+        out.append("//!")
+        out.append(
+            f"//! {len(mod_monsters)} monster row(s) of this book are `<Record>.MOD` OVERLAY"
+        )
+        out.append(
+            "//! rows and are NOT transcribed, for the reason above: an overlay states a delta"
+        )
+        out.append(
+            "//! on a record defined elsewhere, not a stat block. The work inventory classes"
+        )
+        out.append(
+            "//! them `origin: mod_only` itself, and this screen reads that field rather than"
+        )
+        out.append("//! re-deriving it:")
+        for unit in mod_monsters:
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}`")
+    if cross_table_monsters or cross_table_abilities:
+        out.append("//!")
+        out.append(
+            f"//! {len(cross_table_monsters)} monster row(s) of this book are already shipped by"
+        )
+        out.append(
+            "//! ANOTHER compiled table of this repo and are deliberately NOT transcribed here"
+        )
+        out.append(
+            "//! (`decisions.md §58.3`: this chassis sits ALONGSIDE that table and takes the"
+        )
+        out.append(
+            "//! book's complement -- emitting them too would put two records for one creature"
+        )
+        out.append(
+            f"//! under one wire code). {len(cross_table_abilities)} further ability row(s) are"
+        )
+        out.append(
+            "//! CROSS-TABLE OWNER rows: well-formed and owned, unreachable from here only"
+        )
+        out.append(
+            "//! because every monster that names them is one of those rows. They are NOT"
+        )
+        out.append(
+            "//! orphans and their remedy is not the orphans' remedy. Cited by corpus line:"
+        )
+        for unit in cross_table_monsters:
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` (monster row)")
+        for unit in cross_table_abilities:
+            out.append(f"//!   * `{unit['source_file']}:{unit['source_line']}` (ability row)")
     if orphans:
         out.append("//!")
         out.append(

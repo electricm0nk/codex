@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Archon Deflection",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:archon_deflection",
+    "name": "+2 deflection to AC vs. evil",
+    "owners": [
+      "beastiary:monster:archon_hound",
+      "beastiary:monster:archon_lantern",
+      "beastiary:monster:archon_trumpet"
+    ],
+    "source_page": "p.20",
+    "traits": [
+      "ModifyAC"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 104,
+    "record_key": "Archon Deflection"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Army Ant Swarm ~ Cling",
+    "delivery": "Extraordinary",
+    "description": "If a creature leaves an army ant swarm's square, the swarm suffers 1d6 points of damage to reflect the loss of its numbers as several of the crawling pests continue to cling tenaciously to the victim. A creature with army ants clinging to him takes 3d6 points of damage at the end of his turn each round. As a full-round action, he can remove the ants with a DC %1 Reflex save. High wind or any amount of damage from an area effect destroys all clinging ants.",
+    "description_variables": [
+      "ClingDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:army_ant_swarm_cling",
+    "name": "Cling",
+    "owners": [
+      "beastiary:monster:ant_army_swarm"
+    ],
+    "source_page": "p.16",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 99,
+    "record_key": "Army Ant Swarm ~ Cling"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

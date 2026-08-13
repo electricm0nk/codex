@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Wood Golem ~ Splintering",
+    "delivery": "Supernatural",
+    "description": "As a free action once every 1d4+1 rounds, a wood golem can launch a barrage of razor-sharp wooden splinters from its body in a 20-foot-radius burst. All creatures caught within this area take 6d6 points of slashing damage (Reflex DC %1 halves).",
+    "description_variables": [
+      "SplinteringDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:wood_golem_splintering",
+    "name": "Splintering",
+    "owners": [
+      "beastiary:monster:golem_wood"
+    ],
+    "source_page": "p.164",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 743,
+    "record_key": "Wood Golem ~ Splintering"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

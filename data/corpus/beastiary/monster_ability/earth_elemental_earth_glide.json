@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Earth Elemental ~ Earth Glide",
+    "delivery": "Extraordinary",
+    "description": "A burrowing earth elemental can pass through stone, dirt, or almost any other sort of earth except metal as easily as a fish swims through water. If protected against fire damage, it can even glide through lava. Its burrowing leaves behind no tunnel or hole, nor does it create any ripple or other sign of its presence. A Move Earth spell cast on an area containing a burrowing earth elemental flings the elemental back 30 feet, stunning the creature for 1 round unless it succeeds on a DC 15 Fortitude save.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:earth_elemental_earth_glide",
+    "name": "Earth Glide",
+    "owners": [
+      "beastiary:monster:elemental_earth_medium",
+      "beastiary:monster:elemental_earth_large",
+      "beastiary:monster:elemental_earth_huge",
+      "beastiary:monster:elemental_earth_greater",
+      "beastiary:monster:elemental_earth_elder"
+    ],
+    "source_page": "p.122",
+    "traits": [
+      "Special Ability",
+      "ModifyMovement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 589,
+    "record_key": "Earth Elemental ~ Earth Glide"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

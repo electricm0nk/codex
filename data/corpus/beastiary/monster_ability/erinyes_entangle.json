@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Erinyes ~ Entangle",
+    "delivery": "Supernatural",
+    "description": "Each erinyes carries a 50-foot-long rope that entangles opponents of any size as an animate rope spell (CL 16th, DC %1). An erinyes can hurl its rope 30 feet with no range penalty. An erinyes's rope functions only for the erinyes who made it and no other.",
+    "description_variables": [
+      "EntangleDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:erinyes_entangle",
+    "name": "Entangle",
+    "owners": [
+      "beastiary:monster:devil_erinyes"
+    ],
+    "source_page": "p.75",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 348,
+    "record_key": "Erinyes ~ Entangle"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

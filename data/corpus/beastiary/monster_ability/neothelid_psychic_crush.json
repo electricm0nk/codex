@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Neothelid ~ Psychic Crush",
+    "delivery": "Supernatural",
+    "description": "As a standard action up to three times a day, a neothelid can attempt to crush the mind of a single creature within 60 feet. The target must make a DC %1 Will save or collapse, becoming unconscious and dying at -1 hit points. If the target succeeds on the save, it takes 6d6 points of damage and is sickened for 1 round. This is a mind-affecting effect. The save DC is Charisma-based.",
+    "description_variables": [
+      "NeothelidPsychicCrushDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:neothelid_psychic_crush",
+    "name": "Psychic Crush",
+    "owners": [
+      "beastiary:monster:neothelid"
+    ],
+    "source_page": "p.214",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 974,
+    "record_key": "Neothelid ~ Psychic Crush"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Hydra Traits",
+    "delivery": "Extraordinary",
+    "description": "A hydra can be killed by severing all of its heads or slaying its body. Any attack that is not an attempt to sever a head affects the body, including area attacks or attacks that cause piercing or bludgeoning damage. To sever a head, an opponent must make a sunder attempt with a slashing weapon targeting a head. A head is considered a separate weapon with hardness 0 and hit points equal to the hydra's HD. To sever a head, an opponent must inflict enough damage to reduce the head's hit points to 0 or less. Severing a head deals damage to the hydra's body equal to the hydra's current HD. A hydra can't attack with a severed head, but takes no other penalties.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:hydra_traits",
+    "name": "Hydra Traits",
+    "owners": [
+      "beastiary:monster:hydra"
+    ],
+    "source_page": "p.178",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 782,
+    "record_key": "Hydra Traits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

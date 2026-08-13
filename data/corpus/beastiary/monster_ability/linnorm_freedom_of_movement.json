@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Linnorm ~ Freedom of Movement",
+    "delivery": "Extraordinary",
+    "description": "A linnorm is under the constant effect of Freedom of Movement, as per the spell of the same name. This effect cannot be dispelled.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:linnorm_freedom_of_movement",
+    "name": "Freedom of Movement",
+    "owners": [
+      "beastiary:monster:linnorm_crag",
+      "beastiary:monster:linnorm_ice",
+      "beastiary:monster:linnorm_tarn"
+    ],
+    "source_page": "p.190",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 837,
+    "record_key": "Linnorm ~ Freedom of Movement"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

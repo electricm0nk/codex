@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gray Ooze ~ Acid",
+    "delivery": "Extraordinary",
+    "description": "The digestive acid that covers a gray ooze dissolves metals and organic material, but not stone. Each slam and constrict attack deals 1d6 additional acid damage. Armor or clothing worn by a creature grappled by a gray ooze takes the same amount of acid damage unless the wearer succeeds on a DC %1 Reflex saving throw. A wooden or metal weapon that strikes a gray ooze takes 1d6 acid damage unless the weapon's wielder succeeds on a DC %1 Reflex save. The ooze's touch deals 12 points of acid damage per round to wooden or metal objects, but the ooze must remain in contact with the material for 1 full round in order to deal this damage.",
+    "description_variables": [
+      "AcidGrayOozeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gray_ooze_acid",
+    "name": "Acid",
+    "owners": [
+      "beastiary:monster:gray_ooze",
+      "beastiary:monster:gray_ooze_crystal_ooze",
+      "beastiary:monster:gray_ooze_id_ooze"
+    ],
+    "source_page": "p.166",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 751,
+    "record_key": "Gray Ooze ~ Acid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

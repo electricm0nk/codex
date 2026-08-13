@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Animated Object ~ Hardness",
+    "delivery": null,
+    "description": "The Animated Object can ignore the first %1 points of damage from an attack.",
+    "description_variables": [
+      "Hardness"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:animated_object_hardness",
+    "name": "Hardness",
+    "owners": [
+      "beastiary:monster:animated_object_tiny",
+      "beastiary:monster:animated_object_small",
+      "beastiary:monster:animated_object_medium",
+      "beastiary:monster:animated_object_large",
+      "beastiary:monster:animated_object_huge",
+      "beastiary:monster:animated_object_gargantuan",
+      "beastiary:monster:animated_object_colossal"
+    ],
+    "source_page": "p.14",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 69,
+    "record_key": "Animated Object ~ Hardness"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

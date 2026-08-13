@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shaitan ~ Earth Mastery",
+    "delivery": "Extraordinary",
+    "description": "A shaitan gains a +1 bonus on attack and damage rolls and a +2 bonus on opposed Strength based checks if both it and its foe are touching the ground. It takes a -4 penalty on attack and damage rolls against airborne or waterborne opponents.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:shaitan_earth_mastery",
+    "name": "Earth Mastery",
+    "owners": [
+      "beastiary:monster:genie_shaitan",
+      "beastiary:monster:genie_shaitan_noble"
+    ],
+    "source_page": "p.143",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 661,
+    "record_key": "Shaitan ~ Earth Mastery"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

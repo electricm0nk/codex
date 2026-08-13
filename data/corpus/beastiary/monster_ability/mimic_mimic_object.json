@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Mimic ~ Mimic Object",
+    "delivery": "Extraordinary",
+    "description": "A mimic can assume the general shape of any Medium object, such as a massive chest, a stout bed, or a door. The creature cannot substantially alter its size, though. A mimic's body is hard and has a rough texture, no matter what appearance it might present. A mimic gains a +20 racial bonus on Disguise checks when imitating an object in this manner. Disguise is always a class skill for a mimic.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:mimic_mimic_object",
+    "name": "Mimic Object",
+    "owners": [
+      "beastiary:monster:mimic"
+    ],
+    "source_page": "p.205",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 922,
+    "record_key": "Mimic ~ Mimic Object"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

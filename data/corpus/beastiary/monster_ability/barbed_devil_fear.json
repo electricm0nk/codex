@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Barbed Devil ~ Fear",
+    "delivery": "Supernatural",
+    "description": "A barbed devil's fear attack affects any creature it damages with its claws. A DC %1 Will save resists this effect, otherwise the victim becomes frightened for 1d4 rounds. This is a mind-affecting fear effect.",
+    "description_variables": [
+      "FearDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:barbed_devil_fear",
+    "name": "Fear",
+    "owners": [
+      "beastiary:monster:devil_barbed"
+    ],
+    "source_page": "p.72",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 333,
+    "record_key": "Barbed Devil ~ Fear"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

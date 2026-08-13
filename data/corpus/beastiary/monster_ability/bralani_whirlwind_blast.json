@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Bralani ~ Whirlwind Blast",
+    "delivery": "Supernatural",
+    "description": "When in wind form, a bralani can attack with a scouring blast of wind, dealing 3d6 points of damage in a 20-foot line (Reflex DC %1 half ).",
+    "description_variables": [
+      "WhirlwindBlastDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bralani_whirlwind_blast",
+    "name": "Whirlwind Blast",
+    "owners": [
+      "beastiary:monster:azata_bralani"
+    ],
+    "source_page": "p.24",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 129,
+    "record_key": "Bralani ~ Whirlwind Blast"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Bebilith ~ Rot",
+    "delivery": "Supernatural",
+    "description": "A bebilith's bite causes a horrible withering and weakening of the flesh, resulting in a hideous melting and foul rotting effect. This catastrophic withering begins on the round the creature is bitten and continues for another 4 rounds thereafter, for 5 rounds of withering in all. Each round the rot persists, the target must succeed on a DC %1 Fortitude save or take 2 points of Constitution damage. If the target makes two consecutive saving throws in a row, the effect is cured. Heal can also halt the rot effect.",
+    "description_variables": [
+      "RotDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:bebilith_rot",
+    "name": "Rot",
+    "owners": [
+      "beastiary:monster:bebilith"
+    ],
+    "source_page": "p.32",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 161,
+    "record_key": "Bebilith ~ Rot"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

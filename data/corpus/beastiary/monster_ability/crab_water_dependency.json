@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Crab ~ Water Dependency",
+    "delivery": "Extraordinary",
+    "description": "Giant crabs can survive out of the water for 1 hour per point of Constitution. Beyond this limit, a giant crab runs the risk of suffocation, as if it were drowning.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:crab_water_dependency",
+    "name": "Water Dependency",
+    "owners": [
+      "beastiary:monster:crab_giant",
+      "beastiary:monster:crab_giant_king",
+      "beastiary:monster:crab_giant_coconut",
+      "beastiary:monster:crab_giant_rock",
+      "beastiary:monster:crab_giant_shark_eating",
+      "beastiary:monster:crab_giant_reef",
+      "beastiary:monster:crab_giant_shipwrecker"
+    ],
+    "source_page": "p.50",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 238,
+    "record_key": "Crab ~ Water Dependency"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

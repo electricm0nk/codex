@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Couatl ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Injury--bite; save Fortitude DC 16; frequency 1/minute for 10 minutes; effect 1d4 Str; cure 2 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:couatl_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:couatl"
+    ],
+    "source_page": "p.49",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 234,
+    "record_key": "Couatl ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Iron Golem ~ Immunity to Magic",
+    "delivery": "Extraordinary",
+    "description": "An iron golem is immune to spells or spell-like abilities that allow spell resistance. Certain spells and effects function differently against it, as noted below. * A magical attack that deals electricity damage slows an iron golem (as the slow spell) for 3 This iron automaton stands twice as tall as a normal human. Its heavy footfalls shake the ground with bone-jarring force. rounds, with no saving throw. * A magical attack that deals fire damage breaks any slow effect on the golem and heals 1 point of damage for each 3 points of damage the attack would otherwise deal. If the amount of healing would cause the golem to exceed its full normal hit points, it gains any excess as temporary hit points. An iron golem gets no saving throw against fire effects. * An iron golem is affected normally by rust attacks, such as those of a rust monster or a rusting grasp spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:iron_golem_immunity_to_magic",
+    "name": "Immunity to Magic",
+    "owners": [
+      "beastiary:monster:golem_iron"
+    ],
+    "source_page": "p.162",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 732,
+    "record_key": "Iron Golem ~ Immunity to Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

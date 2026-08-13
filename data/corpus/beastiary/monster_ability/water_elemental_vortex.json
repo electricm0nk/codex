@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Water Elemental ~ Vortex",
+    "delivery": "Supernatural",
+    "description": "A water elemental can create a whirlpool as a standard action, at will. This ability functions identically to the whirlwind special attack (see page Bestiary Appendix 3: Universal Monster Rules), but can only form underwater and cannot leave the water.&nl;Some creatures can transform themselves into vortexes and remain in that form for up to 1 round for every 2 HD they have. If the creature has a swim speed, it can continue to swim at that same speed while in vortex form, otherwise it gains a swim speed equal to its base land speed while in vortex form.&nl;The vortex is always 5 feet wide at its base, but its height and width at the top vary from creature to creature (minimum 10 feet high). A vortex's width at its peak is always equal to half of its height. The creature controls the exact height, but it must be at least 10 feet high.&nl;The vortex form does not provoke attacks of opportunity, even if the creature enters the space another creature occupies. Another creature might be caught in the vortex if it touches or enters the vortex, or if the vortex moves into or through a creature's space. A creature in vortex form cannot make its normal attacks and does not threaten the area around it.&nl;Creatures one or more size categories smaller than the vortex might take damage when caught in the vortex (generally damage equal to the monster's slam attack for a creature of its size) and may be lifted into the air. An affected creature must succeed on a Reflex save (DC 10 + half monster's HD + the monster's Strength modifier) when it comes into contact with the vortex or take damage as if it were hit by the vortex creature's slam attack. It must also succeed on a second Reflex save or be picked up bodily and held suspended in the powerful currents, automatically taking the indicated damage each round. A creature that can swim is allowed a Reflex save each round to escape the vortex. The creature still takes damage but can leave if the save is successful.&nl;Creatures trapped in the vortex cannot move except to go where the vortex carries them or to escape the vortex. Trapped creatures can otherwise act normally, but must succeed on a concentration check (DC 15 + spell level) to cast a spell. Creatures caught in the vortex take a -4 penalty to Dexterity and a -2 penalty on attack rolls. The vortex can have only as many creatures trapped inside at one time as will fit inside the vortex's volume. The vortex can eject any carried creatures whenever it wishes as a free action, depositing them in its space.&nl;If the vortex's base touches the ground, it creates a swirling cloud of debris. This cloud is centered on the creature and has a diameter equal to half the vortex's height. The cloud obscures all vision, including darkvision, beyond 5 feet. Creatures 5 feet away have concealment, while those farther away have total concealment. Those caught in the cloud of debris must succeed on a concentration check (DC 15 + spell level) to cast a spell.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:water_elemental_vortex",
+    "name": "Vortex",
+    "owners": [
+      "beastiary:monster:elemental_water_medium",
+      "beastiary:monster:elemental_water_large",
+      "beastiary:monster:elemental_water_huge",
+      "beastiary:monster:elemental_water_greater",
+      "beastiary:monster:elemental_water_elder"
+    ],
+    "source_page": "p.126",
+    "traits": [
+      "Special Attack",
+      "Special Ability",
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 595,
+    "record_key": "Water Elemental ~ Vortex"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:prose_expr"
+  ]
+}

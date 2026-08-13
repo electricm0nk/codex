@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Pit Fiend ~ Disease",
+    "delivery": "Supernatural",
+    "description": "Devil Chills: Bite--injury; save Fort DC %1; onset immediate; frequency 1/day; effect 1d4 Str damage; cure 3 consecutive saves.",
+    "description_variables": [
+      "DiseaseDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:pit_fiend_disease",
+    "name": "Disease",
+    "owners": [
+      "beastiary:monster:devil_pit_fiend"
+    ],
+    "source_page": "p.80",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 368,
+    "record_key": "Pit Fiend ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

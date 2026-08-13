@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Wraith ~ Lifesense",
+    "delivery": "Supernatural",
+    "description": "A wraith notices and locates living creatures within 60 feet, just as if it possessed the blindsight ability.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:wraith_lifesense",
+    "name": "Lifesense",
+    "owners": [
+      "beastiary:monster:wraith"
+    ],
+    "source_page": "p.281",
+    "traits": [
+      "Sense"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1256,
+    "record_key": "Wraith ~ Lifesense"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

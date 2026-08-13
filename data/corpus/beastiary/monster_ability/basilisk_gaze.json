@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Basilisk ~ Gaze",
+    "delivery": "Extraordinary",
+    "description": "Turn to stone permanently (as flesh to stone), range 30 feet, Fortitude DC %1 negates. A creature petrified in this matter that is then coated (not just splashed) with fresh basilisk blood (taken from a basilisk no more than 1 hour dead) is instantly restored to flesh. A single basilisk contains enough blood to coat 1d3 Medium creatures in this manner.",
+    "description_variables": [
+      "BasiliskGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:basilisk_gaze",
+    "name": "Gaze",
+    "owners": [
+      "beastiary:monster:basilisk"
+    ],
+    "source_page": "p.29",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 151,
+    "record_key": "Basilisk ~ Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

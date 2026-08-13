@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Bralani ~ Wind Form",
+    "delivery": "Supernatural",
+    "description": "A bralani can shift between its humanoid body and a body made of wind and mist as a standard action. In humanoid form, it cannot fly or use its whirlwind blast. In wind form, it functions as if under the effects of a wind walk spell. It can make slam attacks and use spelllike abilities in either form. A bralani remains in one form until it chooses to assume its other form. A change in form cannot be dispelled, nor does the bralani revert to any particular form when killed (both shapes are its true form). A true seeing spell reveals both forms simultaneously.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:bralani_wind_form",
+    "name": "Wind Form",
+    "owners": [
+      "beastiary:monster:azata_bralani"
+    ],
+    "source_page": "p.24",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 130,
+    "record_key": "Bralani ~ Wind Form"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

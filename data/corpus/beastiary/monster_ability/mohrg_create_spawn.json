@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Mohrg ~ Create Spawn",
+    "delivery": "Supernatural",
+    "description": "Humanoid creatures killed by a mohrg rise immediately as fast zombies under the mohrg's control. The sudden bloom of unlife when a mohrg's victim dies and becomes a zombie causes a surge of negative energy to flow through the mohrg. Whenever a mohrg creates a zombie in this manner, it is healed 1d6 hit points per HD possessed by the slain creature and acts as if hasted for the round immediately following the spawn's creation.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:mohrg_create_spawn",
+    "name": "Create Spawn",
+    "owners": [
+      "beastiary:monster:mohrg"
+    ],
+    "source_page": "p.208",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 938,
+    "record_key": "Mohrg ~ Create Spawn"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "ambiguous:prose_scaling_phrase",
+    "display:no_magnitude_token"
+  ]
+}

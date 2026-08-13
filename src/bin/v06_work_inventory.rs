@@ -1223,11 +1223,17 @@ impl EngineFacts {
             // module (`crb::race_tables`, `beastiary1`), so the book gate is
             // part of the fact -- without it a shared-library race would be
             // credited to whichever host happened to be tried first.
+            // Bestiary 1 is served by TWO tables and both ground it: SD-22's
+            // `beastiary1` (46 hand-modelled stat blocks, joined by display
+            // name) and, since SD-29 Epic 5 round 8, the chassis holding the
+            // book's other 284 rows (`decisions.md §58.3`). A UNION, not a
+            // precedence: an early return on `monster_names` would report all
+            // 284 chassis rows `not-ingested` while the registry held them, and
+            // consulting only the chassis would demote the 46. Both halves have
+            // to answer, because the book really is in both places.
             Kind::Monster => {
-                if book == "bestiary_1" {
-                    return self.monster_names.contains(&name.to_lowercase());
-                }
-                hit_lowercase(self.chassis_monster_keys.get(book))
+                (book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()))
+                    || hit_lowercase(self.chassis_monster_keys.get(book))
             }
             Kind::MonsterAbility => hit_lowercase(self.chassis_monster_ability_keys.get(book)),
             Kind::Companion => hit_lowercase(self.chassis_companion_keys.get(book)),
@@ -1840,13 +1846,32 @@ fn gather_engine_facts(
     let mut chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
     let mut chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>> =
         BTreeMap::new();
+    //
+    // Keyed by the ENGINE book, translated from the registry's corpus
+    // directory, exactly as `chassis_companion_keys` below is and for the same
+    // reason: the `Kind::Monster` / `Kind::MonsterAbility` verdict arms have an
+    // `engine_book` in hand (`rule_set_id`), never a corpus directory. For the
+    // first nine registered monster books the two strings are identical, so a
+    // raw `book.corpus_book` key worked by COINCIDENCE rather than by rule --
+    // the same latent defect `decisions.md §54.3` records the companion lane
+    // finding in its own copy of this loop. Bestiary 1 is where the coincidence
+    // ends: its corpus directory is `beastiary`, its engine book is
+    // `bestiary_1`, and an untranslated key would have reported all 607 of its
+    // chassis records as `not-ingested` while the registry held them.
     for book in monster_chassis::MONSTER_BOOKS {
+        let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
+            panic!(
+                "monster book {:?} is registered in MONSTER_BOOKS but resolves to no rule \
+                 set; add it to CORPUS_DIR_ALIASES or register its RuleSetId",
+                book.corpus_book
+            )
+        });
         chassis_monster_keys.insert(
-            book.corpus_book,
+            engine_book,
             book.monsters.iter().map(|m| m.key.to_lowercase()).collect(),
         );
         chassis_monster_ability_keys.insert(
-            book.corpus_book,
+            engine_book,
             book.monster_abilities.iter().map(|a| a.key.to_lowercase()).collect(),
         );
     }

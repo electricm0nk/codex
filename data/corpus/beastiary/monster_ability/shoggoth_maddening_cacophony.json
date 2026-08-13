@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shoggoth ~ Maddening Cacophony",
+    "delivery": "Supernatural",
+    "description": "As a free action, a shoggoth can give voice to sounds and words sane life was not meant to hear. All creatures in a 60-foot radius must make a DC %1 Will save or be confused for 1d6 rounds. Each round a creature is affected it takes 1d6 points of Wisdom damage. A creature that saves cannot be affected by this shoggoth's maddening cacophony for 24 hours. This is a sonic mind-affecting effect.",
+    "description_variables": [
+      "CacophonySaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:shoggoth_maddening_cacophony",
+    "name": "Maddening Cacophony",
+    "owners": [
+      "beastiary:monster:shoggoth"
+    ],
+    "source_page": "p.249",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1123,
+    "record_key": "Shoggoth ~ Maddening Cacophony"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

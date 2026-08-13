@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Trumpet Archon ~ Trumpet",
+    "delivery": "Supernatural",
+    "description": "All creatures except archons within 100 feet of the trumpet's blast must succeed on a DC %1 Fortitude save or be paralyzed for 1d4 rounds. The archon can also command its trumpet to become a +4 greatsword as a free action. Out of the archon's hands, it is a chunk of useless metal.",
+    "description_variables": [
+      "TrumpetDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:trumpet_archon_trumpet",
+    "name": "Trumpet",
+    "owners": [
+      "beastiary:monster:archon_trumpet"
+    ],
+    "source_page": "p.21",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 120,
+    "record_key": "Trumpet Archon ~ Trumpet"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

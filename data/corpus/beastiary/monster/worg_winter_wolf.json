@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "5",
+    "corpus_key": "Worg (Winter Wolf)",
+    "external_ability_refs": [
+      "Breath Weapon ~ Cone of Cold",
+      "Scent",
+      "Trip"
+    ],
+    "key": "beastiary:monster:worg_winter_wolf",
+    "monster_class": "Magical Beast:6",
+    "name": "Worg (Winter Wolf)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Cold",
+    "race_type": "Magical Beast",
+    "size": "L",
+    "source_page": "p.280",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 419,
+    "record_key": "Worg (Winter Wolf)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

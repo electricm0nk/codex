@@ -485,8 +485,31 @@ fn book_of(root: &Path, path: &Path) -> Option<String> {
     // belongs to no book — so requiring a second component is what makes
     // `first` a directory name.
     components.next()?;
-    Some(first.as_os_str().to_string_lossy().into_owned())
+    let dir = first.as_os_str().to_string_lossy().into_owned();
+    Some(
+        RULES_TABLES_BOOK_IDS
+            .iter()
+            .find(|(module, _)| *module == dir)
+            .map(|(_, book_id)| (*book_id).to_owned())
+            .unwrap_or(dir),
+    )
 }
+
+/// `rules_tables` module directory -> the `book_id` this gate joins on, for the
+/// modules whose directory name is not that id.
+///
+/// One entry, and it exists because one book is served by two modules.
+/// `rules_tables::bestiary` holds Bestiary 1's chassis complement beside
+/// `rules_tables::beastiary1`'s hand-modelled 46 (`decisions.md §58.3`), and
+/// both write to `data/corpus/beastiary/`, which [`CORPUS_BOOK_IDS`] already
+/// names `beastiary1`. Without this the source scan would invent a
+/// `bestiary/monsters` family that no corpus directory and no diagnostic row
+/// backs, and demand a claim for a book that already has one under its real
+/// name — a phantom, which is the opposite of what this gate is for.
+///
+/// It is a rename, not an exemption: the module's records still have to be
+/// claimed, under `beastiary1`.
+const RULES_TABLES_BOOK_IDS: &[(&str, &str)] = &[("bestiary", "beastiary1")];
 
 /// Extracts `Foo` from a line declaring a record table, in either of the two
 /// shapes the ingest tools generate:
@@ -1125,6 +1148,18 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // block is computed by `pilot_compute`'s own
         // `ground_*_companion_stat_block`, not read from these tables.
         ("beastiary1", "monsters") => Some(monsters_reach()),
+        // SD-29 Epic 5 extend, round 8. Bestiary 1's monster ABILITIES — a
+        // family this book has never had a claim for, because until round 8 it
+        // had no ability table. The chassis registered under `corpus_book:
+        // "beastiary"` writes them to `data/corpus/beastiary/monster_ability/`
+        // and `list_monster_catalog` serves them flattened under the monster
+        // that owns them, exactly as every other chassis book's are. The
+        // monster half stays on `monsters_reach` above, which unions the two
+        // tables serving that family; the ability half has only one table and
+        // uses the shared helper unchanged.
+        ("beastiary1", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("beastiary", "B1"))
+        }
 
         // SD-29 Epic 5 pilot — Bonus Bestiary's two families, both served by
         // the same `list_monster_catalog` command the Bestiary 1 claim above
@@ -1623,22 +1658,43 @@ fn race_traits_reach(wire_book: &'static str, book_dir: &str) -> Reach {
 /// different places — the ingested record files on disk versus the IPC response
 /// the screen renders. (Those records carry their identity as `data.id`; see
 /// [`corpus_record_ids`].)
+/// Bestiary 1's monster family — **both** tables that serve it.
+///
+/// SD-29 Epic 5 round 8 (`decisions.md §58.3`) put a second table behind this
+/// one family: SD-22's hand-modelled 46 write their identity as `data.id` (they
+/// predate the `key` convention), the chassis's 284 write `data.key`. One family
+/// key, one wire code, one screen — so one claim, over the union of both
+/// denominators, rather than two claims the gate cannot both declare.
+///
+/// Unioning is also what keeps the claim honest. Reading only `data.id` would
+/// judge 46 records and silently ignore 284; reading only `data.key` would do
+/// the reverse. Either half alone is a claim that passes while checking a third
+/// of the book.
 fn monsters_reach() -> Reach {
-    let ingested = corpus_record_ids("beastiary", "monster");
+    let mut ingested = corpus_record_ids("beastiary", "monster");
+    ingested.extend(corpus_record_keys("beastiary", "monster"));
 
     let response = crate::monster_catalog::build_monster_catalog();
     let mut with_payload = BTreeSet::new();
     let mut identity_only = BTreeSet::new();
     for entry in response.entries.iter().filter(|entry| entry.book == "B1") {
         // The catalog row prints the monster's name, its size and creature
-        // type, its challenge rating, its land speed and source page, and its
-        // natural attacks. `key` is the `beastiary1:monster:<slug>` identity
-        // and the name is derived from it, so neither counts as payload: a row
-        // reaches the player when it carries something about the creature.
+        // type, its challenge rating, its movement and source page, its
+        // `MONSTERCLASS:` token, its natural attacks and its abilities. `key`
+        // is the corpus identity and the name is derived from it, so neither
+        // counts as payload: a row reaches the player when it carries something
+        // about the creature. The two tables fill different subsets of those
+        // fields, so the rule is their union — the SD-22 half carries no
+        // `speeds`/`monster_class`/`abilities` and the chassis half carries no
+        // `natural_attacks` provenance, and neither absence is a failure to
+        // reach.
         let has_payload = !entry.race_type.trim().is_empty()
             || !entry.size.trim().is_empty()
             || !entry.source_page.trim().is_empty()
-            || !entry.natural_attacks.is_empty();
+            || !entry.speeds.is_empty()
+            || entry.monster_class.is_some()
+            || !entry.natural_attacks.is_empty()
+            || !entry.abilities.is_empty();
         if has_payload {
             with_payload.insert(entry.key.clone());
         } else {
@@ -3833,13 +3889,26 @@ mod tests {
     /// with each other.
     #[test]
     fn bestiary_1_monsters_reach_the_monster_catalog_record_by_record() {
-        let ingested = corpus_record_ids("beastiary", "monster");
+        // Both tables serving this book, exactly as `monsters_reach` unions
+        // them (SD-29 Epic 5 round 8, `decisions.md §58.3`). The two halves are
+        // pinned separately so neither can vanish behind the other's total: 46
+        // SD-22 records carrying `data.id`, 280 chassis records carrying
+        // `data.key`.
+        let sd22 = corpus_record_ids("beastiary", "monster");
+        let chassis = corpus_record_keys("beastiary", "monster");
         assert_eq!(
-            ingested.len(),
+            sd22.len(),
             46,
-            "Bestiary 1's 46 ingested monster records, counted on disk (SD28-E16 subset 09 \
+            "Bestiary 1's 46 SD-22 monster records, counted on disk (SD28-E16 subset 09 \
              raised this from 41)"
         );
+        assert_eq!(
+            chassis.len(),
+            280,
+            "the chassis complement, counted on disk -- see rules_tables::bestiary"
+        );
+        let mut ingested = sd22;
+        ingested.extend(chassis);
 
         // Filtered to this book (SD-29 Epic 5): the catalog now serves Bonus
         // Bestiary from the same command, and comparing the whole response
@@ -3858,8 +3927,19 @@ mod tests {
         );
 
         match reach_of(&Family::new("beastiary1", "monsters")).expect("a claim is declared") {
-            Reach::Surfaced { records, .. } => assert_eq!(records, 46),
-            other => panic!("expected all 46 to reach, got {other:?}"),
+            Reach::Surfaced { records, .. } => assert_eq!(records, 326),
+            other => panic!("expected all 326 to reach, got {other:?}"),
+        }
+
+        // The book's monster ABILITIES, a family it has had records for only
+        // since round 8. Same shape as every other chassis book's claim.
+        let abilities = corpus_record_keys("beastiary", "monster_ability");
+        assert_eq!(abilities.len(), 323, "the chassis's owned ability records on disk");
+        match reach_of(&Family::new("beastiary1", "monster_abilities"))
+            .expect("a claim is declared")
+        {
+            Reach::Surfaced { records, .. } => assert_eq!(records, 323),
+            other => panic!("expected all 323 abilities to reach, got {other:?}"),
         }
     }
 

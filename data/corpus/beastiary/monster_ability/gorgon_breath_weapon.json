@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gorgon ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "A gorgon can use its breath weapon once every 1d4+1 rounds to create a 60-foot cone of green gas. Those caught in the area of the gas can attempt a DC %1 Fortitude save to resist the effects, but those who fail the save are immediately petrified. This petrification is temporary--each round, a petrified creature can attempt a new DC %1 Fortitude save to recover from the petrification as long as it is not caught within the area of effect of the gorgon's breath weapon a second time while petrified. A creature exposed to the gorgon's breath a second time while already petrified becomes permanently petrified, and can no longer attempt to make additional Fortitude saves to recover naturally.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gorgon_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "beastiary:monster:gorgon"
+    ],
+    "source_page": "p.165",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 747,
+    "record_key": "Gorgon ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

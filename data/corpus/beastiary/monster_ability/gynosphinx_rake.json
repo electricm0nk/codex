@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gynosphinx ~ Rake",
+    "delivery": "Extraordinary",
+    "description": "You gain extra natural attacks under certain conditions, typically when you grapple foes. In addition to the options available to all grapplers, a monster with the rake ability gains two additional claw attacks that it can use only against a grappled foe. A monster with the rake ability must begin its turn already grappling to use its rake--it can't begin a grapple and rake in the same turn.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gynosphinx_rake",
+    "name": "Rake",
+    "owners": [
+      "beastiary:monster:sphinx_gynosphinx"
+    ],
+    "source_page": "p.257",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1145,
+    "record_key": "Gynosphinx ~ Rake"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Yeti ~ Frightful Gaze",
+    "delivery": "Supernatural",
+    "description": "Creatures within 30 feet that meet a yeti's gaze must succeed on a DC %1 Will save or stand paralyzed in fear for 1 round. This is a mind-affecting fear paralysis effect. A creature that successfully saves cannot be affected again by the frightful gaze of that yeti for 1 day.",
+    "description_variables": [
+      "FrightfulGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:yeti_frightful_gaze",
+    "name": "Frightful Gaze",
+    "owners": [
+      "beastiary:monster:yeti"
+    ],
+    "source_page": "p.287",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1289,
+    "record_key": "Yeti ~ Frightful Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

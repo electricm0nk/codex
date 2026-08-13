@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Will-o'-Wisp ~ Natural Invisibility",
+    "delivery": "Extraordinary",
+    "description": "Will-o'-wisps have the ability to extinguish their natural glow as a move action, effectively becoming invisible, as per the spell.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:will_o_wisp_natural_invisibility",
+    "name": "Natural Invisibility",
+    "owners": [
+      "beastiary:monster:will_o_wisp"
+    ],
+    "source_page": "p.277",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1246,
+    "record_key": "Will-o'-Wisp ~ Natural Invisibility"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

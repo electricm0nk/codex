@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:lamia_undersized_weapons",
+      "beastiary:monster_ability:lamia_wisdom_drain"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Lamia",
+    "external_ability_refs": [],
+    "key": "beastiary:monster:lamia",
+    "monster_class": "Monstrous Humanoid:9",
+    "name": "Lamia",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "0",
+        "name": "Touch (1d4 Wisdom drain)"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Monstrous Humanoid",
+    "size": "L",
+    "source_page": "p.186",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 266,
+    "record_key": "Lamia"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

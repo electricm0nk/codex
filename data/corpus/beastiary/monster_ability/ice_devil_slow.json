@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ice Devil ~ Slow",
+    "delivery": "Supernatural",
+    "description": "A hit from an ice devil's tail or spear induces numbing cold. The opponent must succeed on a DC %1 Fortitude save or be affected as though by a slow spell for 1d6 rounds. This effect comes from the devil in the case of its weapon; it is not a quality possessed by the spear itself.",
+    "description_variables": [
+      "SlowDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ice_devil_slow",
+    "name": "Slow",
+    "owners": [
+      "beastiary:monster:devil_ice"
+    ],
+    "source_page": "p.77",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 358,
+    "record_key": "Ice Devil ~ Slow"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

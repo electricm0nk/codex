@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gibbering Mouther ~ Amorphous",
+    "delivery": "Extraordinary",
+    "description": "Your body is malleable and shapeless. You are immune to precision damage (like sneak attacks) and critical hits, and can move through an area as small as one-quarter of your space without squeezing or one eighth of your space when squeezing.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:gibbering_mouther_amorphous",
+    "name": "Amorphous",
+    "owners": [
+      "beastiary:monster:gibbering_mouther"
+    ],
+    "source_page": "p.153",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 698,
+    "record_key": "Gibbering Mouther ~ Amorphous"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
