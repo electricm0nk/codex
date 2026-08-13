@@ -634,10 +634,17 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             companion_book_counts("inner_sea_intrigue"),
             &races,
         ),
+        // SD-29 Epic 5 extend, FINAL round, changed this row from
+        // `companion_book_counts` to the merged helper: this book stopped being
+        // companion-ONLY when the monster lane registered its 3 monsters and 6
+        // abilities. Reporting only the companion registry would under-state a
+        // book the tester is looking at, which is `decisions.md §63.4`'s finding
+        // -- and that finding is about THIS function, so leaving the row alone
+        // would have repeated it in the file that records it.
         book_status(
             "horror_adventures",
             "src/rules_core/rules_tables/horror_adventures",
-            companion_book_counts("horror_adventures"),
+            monster_and_companion_book_counts("horror_adventures"),
             &races,
         ),
         // SD-29 Epic 7 round 2 (companion lane, extend). Three more books whose

@@ -346,6 +346,26 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monsters: super::ultimate_psionics::monsters_static(),
         monster_abilities: super::ultimate_psionics::monster_abilities_static(),
     },
+    // SD-29 Epic 5 extend, FINAL round. Horror Adventures -- 3 monsters and 6
+    // owned abilities, the smallest row in this registry and the last book in
+    // the lane with any workable unit at all.
+    //
+    // Like `ultimate_psionics` its `RuleSetId` was already compiled for other
+    // kinds (`RuleSetId::Ha`: `race_trait` since Epic 6 round 3, `companion`
+    // since Epic 7), so registering its monsters adds no rule set, no corpus
+    // directory and no work-inventory book entry.
+    //
+    // It is the first book in this registry whose monster rows state part of
+    // their ATTACK list through the `ABILITY:Internal|AUTOMATIC|` bundle token
+    // rather than through `NATURALATTACKS:` -- `ha_races.lst:4` prices one Claw
+    // attack and names Bite and Tail Slap only in the bundle. That is the same
+    // token `decisions.md §64.1` measures corpus-wide for OWNERSHIP; here it is
+    // read for its attack segments, and the two uses are independent.
+    MonsterBook {
+        corpus_book: "horror_adventures",
+        monsters: super::horror_adventures::monsters_static(),
+        monster_abilities: super::horror_adventures::monster_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.

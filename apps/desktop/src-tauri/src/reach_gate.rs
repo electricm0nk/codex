@@ -1272,6 +1272,21 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("ultimate_psionics", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("ultimate_psionics", "UPSI"))
         }
+        // SD-29 Epic 5 extend, FINAL round. Horror Adventures -- the same two
+        // claim functions, under the wire code `HA` this app already serves the
+        // book's races and companions with (`monster_catalog::BOOK_HA`).
+        //
+        // This is the FOURTH family this book claims reach for, after
+        // `race_traits` (Epic 6 round 3) and `companions` (Epic 7). The
+        // denominator is `data/corpus/horror_adventures/monster*/`, which the
+        // generator writes beside the two directories already there -- so the
+        // book's other claims are untouched by this one.
+        ("horror_adventures", "monsters") => {
+            Some(chassis_monsters_reach("horror_adventures", "HA"))
+        }
+        ("horror_adventures", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("horror_adventures", "HA"))
+        }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every
         // one is served by `list_companion_catalog` and rendered by

@@ -188,6 +188,32 @@ BOOKS = {
     # psionics rules supplement whose creatures are generic species (Blue,
     # Dromite, Elan, Maenad, Ophiduan, Xeph) rather than named personae.
     "ultimate_psionics": "pathfinder/dreamscarred_press/ultimate_psionics",
+    # SD-29 Epic 5 extend, FINAL round, and the last book in this lane with any
+    # workable unit at all. Nine units -- 3 monster rows and the 6 ability rows
+    # namespaced to them -- and they are the entire REAL remainder of the
+    # monster lane. Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py horror_adventures` ->
+    # `horror_adventures  3  71  0  6  65  0  0`, i.e. 9 reachable against 65
+    # orphans.
+    #
+    # Like `ultimate_psionics` this book's `RuleSetId` was already compiled for
+    # other kinds -- `RuleSetId::Ha` has served its `race_trait` family since
+    # Epic 6 round 3 and its `companion` family since Epic 7 -- so registering
+    # it costs no new rule set and no new corpus directory.
+    #
+    # Both files sit at the book ROOT and both load UNCONDITIONALLY:
+    # `grep -n 'ha_races.lst\|ha_abilities_race.lst' _horror_adventures.pcc` ->
+    # `63:ABILITY:ha_abilities_race.lst` and `77:RACE:ha_races.lst`, neither
+    # carrying a `PRECAMPAIGN` gate. That is the check round 9 made load-bearing
+    # and the one that disqualified this lane's OTHER nominally-workable book --
+    # see `decisions.md`'s negated-gate finding for `occult_adventures`.
+    #
+    # Zero Product Identity rows in either signal (`grep -c NAMEISPI:YES
+    # ha_races.lst ha_abilities_race.lst` -> 0, 0), which is what
+    # `ogl-pi-blacklist.md` §2.1's PER-RECORD predicate predicts: the three rows
+    # are a generic hive-insect species set (Hive Larva Swarm, Hive Queen, Hive
+    # Warrior), not named personae.
+    "horror_adventures": "pathfinder/paizo/roleplaying_game/horror_adventures",
 }
 
 # Books part of whose monster rows another compiled table of THIS repo already

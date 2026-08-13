@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:17:26Z",
+  "data": {
+    "corpus_key": "Hive Warrior ~ Acid Spit",
+    "delivery": "Extraordinary",
+    "description": "A hive warrior can spray acid as a ranged touch attack out to a maximum range of 20 feet. Creatures struck by this spray takes %1d6 acid damage. Additionally, creatures damaged by a hive warrior's acid spit continue to take the same amount of acid damage for the next 1d3 rounds. A successful Reflex save (DC %2) halves the initial damage and negates the ongoing damage.",
+    "description_variables": [
+      "HD",
+      "10+HD/2+DEX"
+    ],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:hive_warrior_acid_spit",
+    "name": "Acid Spit",
+    "owners": [
+      "horror_adventures:monster:hive_warrior"
+    ],
+    "source_page": "p.237",
+    "traits": [
+      "HiveWarrior"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 285,
+    "record_key": "Hive Warrior ~ Acid Spit"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,4 +1,5 @@
-//! Horror Adventures (`SOURCESHORT:HA`) — `companion`.
+//! Horror Adventures (`SOURCESHORT:HA`) — `companion` + `monster` +
+//! `monster_ability`.
 //!
 //! # The second family this book contributes, and the first compiled one
 //!
@@ -25,6 +26,11 @@
 //! chassis dedupes on the key.
 
 mod companion_data;
+mod monster_data;
+
+pub use super::monster_chassis::{
+    MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
+};
 
 pub use super::companion_chassis::{
     CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,
@@ -49,6 +55,26 @@ pub fn companions() -> &'static [CompanionRecord] {
 /// Every companion ability record this book defines, in corpus row order.
 pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
     companion_abilities_static()
+}
+
+/// Every monster stat block this book defines, in corpus row order.
+pub const fn monsters_static() -> &'static [MonsterStatBlock] {
+    monster_data::MONSTERS
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub const fn monster_abilities_static() -> &'static [MonsterAbilityRecord] {
+    monster_data::MONSTER_ABILITIES
+}
+
+/// Every monster stat block this book defines, in corpus row order.
+pub fn monsters() -> &'static [MonsterStatBlock] {
+    monsters_static()
+}
+
+/// Every monster-ability record this book defines, in corpus row order.
+pub fn monster_abilities() -> &'static [MonsterAbilityRecord] {
+    monster_abilities_static()
 }
 
 #[cfg(test)]
@@ -92,5 +118,109 @@ mod tests {
         assert_eq!(companion.ability_keys, &["Companion Advancement ~ Devolved Humanoid"]);
         let advancement = &companion_abilities()[0];
         assert_eq!(advancement.owners, &["Companion (Devolved Humanoid)"]);
+    }
+
+    /// The whole REAL remainder of SD-29's monster lane, pinned.
+    ///
+    /// From `docs/work-inventory.json`'s own units for this book:
+    /// `python3 scripts/classify_monster_ability_rows.py horror_adventures` ->
+    /// `horror_adventures  3  71  0  6  65  0  0`, i.e. 3 monster rows and 6 of
+    /// 71 ability rows owned by one of them. The other 65 are orphans and are
+    /// pinned by line in `monster_data`'s header rather than shipped as records
+    /// no screen can reach.
+    #[test]
+    fn the_book_defines_three_monsters_and_six_owned_abilities() {
+        assert_eq!(monsters().len(), 3);
+        assert_eq!(monster_abilities().len(), 6);
+    }
+
+    /// The `ABILITY:Internal|AUTOMATIC|` bundle token, read for its ATTACK
+    /// segments on a monster row that carries them.
+    ///
+    /// `ha_races.lst:4` states Hive Queen's attacks in two places: a
+    /// `NATURALATTACKS:Claw,...,*2,1d10` token, and
+    /// `ABILITY:Internal|AUTOMATIC|Race Traits ~ Hive Queen|Bite|Tail Slap`,
+    /// whose trailing segments are two further attacks the corpus prices
+    /// nowhere. A reader of `NATURALATTACKS:` alone serves a hive queen with one
+    /// attack when the corpus states three. The two undiced attacks are recorded
+    /// as named attacks with no `damage_dice`, never as attacks whose damage
+    /// prints as an empty string.
+    #[test]
+    fn the_hive_queen_carries_the_two_attacks_only_its_bundle_token_states() {
+        let queen = monsters()
+            .iter()
+            .find(|m| m.key == "Hive Queen")
+            .expect("Hive Queen is in this book");
+        assert_eq!(queen.source_line, 4);
+        assert_eq!(queen.size, Some("H"));
+        assert_eq!(queen.challenge_rating, Some("10"));
+        assert_eq!(queen.monster_class, Some("Aberration:15"));
+        assert_eq!(queen.race_subtype, Some("Hive"));
+        assert_eq!(queen.source_page, Some("p.236"));
+        let names: Vec<&str> = queen.natural_attacks.iter().map(|a| a.name).collect();
+        assert_eq!(names, vec!["Claw", "Bite", "Tail Slap"]);
+        assert_eq!(queen.natural_attacks[0].damage_dice, Some("1d10"));
+        assert_eq!(queen.natural_attacks[1].damage_dice, None);
+        assert_eq!(queen.natural_attacks[2].damage_dice, None);
+    }
+
+    /// Every ability row this book ships reaches a monster row of this book, and
+    /// every monster row's `ability_keys` resolves. An unreachable record is the
+    /// stub class `decisions.md §44.2` was written about, and this book's 65
+    /// orphans are exactly the rows that would have produced it.
+    #[test]
+    fn every_shipped_ability_is_owned_by_a_shipped_monster() {
+        for ability in monster_abilities() {
+            assert!(
+                !ability.owners.is_empty(),
+                "{} ships with no owner",
+                ability.key
+            );
+            for owner in ability.owners {
+                assert!(
+                    monsters().iter().any(|m| m.key == *owner),
+                    "{} names owner {owner}, which this book does not ship",
+                    ability.key
+                );
+            }
+        }
+        for monster in monsters() {
+            for key in monster.ability_keys {
+                assert!(
+                    monster_abilities().iter().any(|a| a.key == *key),
+                    "{} names ability {key}, which this book does not ship",
+                    monster.key
+                );
+            }
+            assert!(
+                monster.external_ability_refs.is_empty(),
+                "{} names an ability outside this book",
+                monster.key
+            );
+        }
+    }
+
+    /// The two `DESC:` formula shapes, both present in this book's six rows.
+    /// `Hive Warrior ~ Acid Spit` carries TWO `%n` slots against two variables;
+    /// `Hive Queen ~ Egg Layer` carries none. The variables stay verbatim —
+    /// `decisions.md §24` rules out the formula interpreter that would resolve
+    /// them, so the record carries the corpus's own expression.
+    #[test]
+    fn description_variables_are_carried_verbatim_and_positionally() {
+        let spit = monster_abilities()
+            .iter()
+            .find(|a| a.key == "Hive Warrior ~ Acid Spit")
+            .expect("the namespaced key resolves");
+        assert_eq!(spit.source_line, 285);
+        assert_eq!(spit.facet, MonsterAbilityFacet::SpecialAttack);
+        assert_eq!(spit.delivery, Some(MonsterAbilityDelivery::Extraordinary));
+        assert_eq!(spit.description_variables, &["HD", "10+HD/2+DEX"]);
+
+        let eggs = monster_abilities()
+            .iter()
+            .find(|a| a.key == "Hive Queen ~ Egg Layer")
+            .expect("the namespaced key resolves");
+        assert_eq!(eggs.facet, MonsterAbilityFacet::SpecialQuality);
+        assert!(eggs.description_variables.is_empty());
     }
 }

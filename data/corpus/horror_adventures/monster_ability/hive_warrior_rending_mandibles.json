@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:17:26Z",
+  "data": {
+    "corpus_key": "Hive Warrior ~ Rending Mandibles",
+    "delivery": "Extraordinary",
+    "description": "When a hive warrior confirms a critical hit with its bite, it deals equal damage to the creature's armor.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "horror_adventures:monster_ability:hive_warrior_rending_mandibles",
+    "name": "Rending Mandibles",
+    "owners": [
+      "horror_adventures:monster:hive_warrior"
+    ],
+    "source_page": "p.237",
+    "traits": [
+      "HiveWarrior"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/horror_adventures/ha_abilities_race.lst",
+    "sha256": "63d4d7024f3fea15adb5b626c17f3f1dc4c40e4fc4bef4616a1d36be77a9fe00",
+    "line": 286,
+    "record_key": "Hive Warrior ~ Rending Mandibles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -139,6 +139,17 @@ const BOOK_ISG: &str = "ISG";
 /// `decisions.md §64.2`.
 const BOOK_UPSI: &str = "UPSI";
 
+/// Horror Adventures, the thirteenth (SD-29 Epic 5 extend, FINAL round) and the
+/// smallest, at 3 monsters and 6 abilities.
+///
+/// Its wire code is the book's own `SOURCESHORT:HA`, and — unlike `BOOK_UPSI` —
+/// that is also the code this app already serves the same book under on three
+/// other screens: `race_catalog::BOOK_HA`, `companion_catalog`'s
+/// `"horror_adventures" => "HA"`, and `reach_gate`'s race-trait and companion
+/// rows. Convention and precedent agree here, which is why this constant needs
+/// no ruling of its own.
+const BOOK_HA: &str = "HA";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -173,6 +184,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "inner_sea_bestiary" => "Inner Sea Bestiary",
         "inner_sea_gods" => "Inner Sea Gods",
         "ultimate_psionics" => "Ultimate Psionics",
+        "horror_adventures" => "Horror Adventures",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -197,6 +209,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "inner_sea_bestiary" => BOOK_ISB,
         "inner_sea_gods" => BOOK_ISG,
         "ultimate_psionics" => BOOK_UPSI,
+        "horror_adventures" => BOOK_HA,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
