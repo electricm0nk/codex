@@ -1118,7 +1118,18 @@ for the `by_status` figures (subject: this package's own Decision §33; the orch
 `static`/`derived` shipments; the `computed` bucket still has none; SD-30 builds neither, uses both
 (2026-08-13)
 
-**Status:** New. Doc-maintenance pass, resolving whether SD-30's Epic 4/Epic 6 acceptance criteria
+> **CLOSED UNDER THE FOLD — 2026-08-13, later same day (`decisions.md §43`, corrective doc pass).**
+> This decision's closing paragraph and its "flagged for the operator, not decided here" question —
+> whether a `class_feature` consumer-delta probe should be built inside SD-30 or requested of SD-32 —
+> is **CLOSED**, not left open. Decision §43 folds SD-32 as a package into SD-30; there is no longer
+> a second bundle to request the probe of, so the ownership question this decision deferred
+> dissolves by construction. Building the still-missing `computed`-bucket consumer-delta probes
+> (`class_feature` and any other kind that needs one) is now squarely SD-30's own scope — see
+> Decision §43 point 2 and `epic-breakdown.md`'s Epic 0/Epic 4-5. The coverage table and analysis
+> below remain accurate as a record of what existed on 2026-08-13 and are left uncorrected in body,
+> per this project's correct-in-place convention.
+
+**Status:** New (open question CLOSED by Decision §43, 2026-08-13, same day — see box above). Doc-maintenance pass, resolving whether SD-30's Epic 4/Epic 6 acceptance criteria
 should plan to build a static-sweep or evaluator-vs-fixture instrument of their own, now that SD-32
 has landed both, corpus-wide, on this branch.
 

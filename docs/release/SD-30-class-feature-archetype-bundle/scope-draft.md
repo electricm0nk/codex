@@ -145,6 +145,22 @@ retired history.**
   instrument/gate tooling — `corpus_literal_sweep`, the derived-evaluator check, `wiring_class.rs`,
   and every `probe_*` function in `v06_work_inventory.rs` — SD-30 consumes these, does not build or
   modify them (`decisions.md §41-§42`, 2026-08-13).
+
+  > **CORRECTED IN PLACE — 2026-08-13, later same day (`decisions.md §43`, corrective doc pass).**
+  > The first sentence above — "every other kind, in every book — SD-29's corpus-wide lanes own
+  > them" — is **SUPERSEDED**, not merely stale. SD-29 closed, and the operator has since ruled
+  > ("widen SD-30 to drive all kinds to closure") that SD-30 is now **in scope for all kinds,
+  > corpus-wide**, not just `class_feature`; SD-29's prior ownership claim over other kinds is no
+  > longer live and SD-30 inherits closure responsibility for all of them. This is a genuine
+  > widening of the charter, not a restatement of SD-29's boundary — a prior corrective pass
+  > (commit `1834fd90`) added the "Widened charter" section below without coming back to annotate
+  > this specific bullet, leaving the stale "out of scope" claim uncorrected in place; this note
+  > closes that gap. The remaining out-of-scope items in this bullet (the old sixteen-book list's
+  > non-`class_feature` content as a *list*, Epic 14's harness widening, Bestiary 1, Update-UI
+  > remediation, and SD-32's instrument/gate *tooling* itself as opposed to its output) are
+  > unaffected by this correction and remain accurate. See the "Widened charter" section below for
+  > the operative in-scope statement and `README.md`'s widened Purpose section for the mirrored
+  > restatement.
 - **Gating relationship, not just sequencing:** Epic 4 (per-class measurement) must clear a specific
   class before Epic 5 (mechanism) or Epic 6 (chassis sweep) can schedule a cycle against that class —
   `decisions.md §37`. This replaces the old scope's "sixteen books, dispatch in any order post-Epic 2"
