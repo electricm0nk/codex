@@ -5283,7 +5283,7 @@ here — by luck of the wire code, not by a fix.
 What a shared wire code did break is every assertion that used `book == BOOK_B1` to mean "the SD-22
 table". Seven tests across three files, and the fix in each is the same one the Epic 5 pilot applied
 when Bonus Bestiary first widened these denominators, one level finer: **there a book code separated
-the two tables; here only the key namespace does.** `monster_catalog::tests::sd22_rows` is that
+the two tables; here only the key namespace does.** `monster_catalog::tests::hand_modelled_rows` is that
 filter, written once. Two more consumers needed structural changes rather than filters:
 
 * `reach_gate::monsters_reach` now **unions** the two denominators (`corpus_record_ids` +

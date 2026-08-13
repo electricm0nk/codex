@@ -10774,7 +10774,7 @@ cargo test --locked  (apps/desktop/src-tauri)                              → 4
 
 Ten desktop-crate tests were red on the first run and every one was this round's own — seven of them
 one defect wearing ten hats: `book == BOOK_B1` had meant "the SD-22 table" and now means "the book".
-The fix is the Epic 5 pilot's fix one level finer (`monster_catalog::tests::sd22_rows`), plus two
+The fix is the Epic 5 pilot's fix one level finer (`monster_catalog::tests::hand_modelled_rows`), plus two
 structural changes (`monsters_reach` unions the denominators; `book_of` maps the module directory).
 None was waved through and none was environmental.
 
@@ -10865,3 +10865,41 @@ chassis half while silently dropping the other. `Ankheg` (`beastiary1:monster:an
 directory.
 
 `driver.sh stop` run at cycle end.
+
+### 5.2 Gate — run 2, and the one line that made it a third run
+
+`RESULT: FAIL`, `VERIFY_EXIT=1`, logs `/tmp/codex-verify-H2jRrA`. **13 of 14 again, `root-full`
+again — and the attribution is NOT run 1's.** `root-full` reports `cargo exit 101; 6302 passed across
+544 suites` with exactly one failure,
+`sd26_identifier_discipline_audit::no_bundle_tag_identifier_leaks_in_scripts_and_data`, and one
+offending line:
+
+```
+scripts/verify-baselines.env:1176:# two test names (the identifier-discipline audit rejecting `sd22_…`, fixed
+```
+
+**The note §5.1 wrote about the removed identifier named the removed identifier**, in a file that is
+inside the audit's own scan path (`apps/desktop/`, `src/`, `scripts/`, `data/`). That is
+`decisions.md §52.5` exactly — *"a comment recording a FALSE positive instantiates the name as surely
+as one recording a removal"* — which that decision recorded for `pi-sweep`, in a different sweep and
+a different file, and which this round re-paid anyway one commit after fixing the thing the comment
+was about.
+
+**`§39`'s recurrence rule is checked and NOT engaged**, and the check is the point: the rule fires on
+a stage failing twice *with the same attribution*. Run 1's was a bundle-tagged **identifier** in
+`apps/desktop/src-tauri/src/monster_catalog.rs`; run 2's is a **comment** in `scripts/`, caught by a
+different one of the two audit tests. Same doctrine, different defect, and it was attributed by
+reading `root-full.log`'s own failure block rather than by assuming the first cause had recurred.
+Retro `incident` emitted with `recurrence-key
+comment-naming-a-removed-identifier-trips-its-own-sweep`.
+
+Fixed by naming the audit and the commit rather than the identifier, then swept:
+`grep -rn '<the identifier>' src/ apps/ scripts/ data/ tests/` → 0. (Four `docs/release/` hits remain
+and are correct: two are this receipt's own history of what was rejected, and the two that stated the
+CURRENT helper name were corrected to it.) Verified individually before re-running the gate:
+`cargo test --locked --test sd26_identifier_discipline_audit` → 1 passed;
+`--test sd24_identifier_discipline_audit` → 1 passed.
+
+### 5.3 Gate — run 3, final
+
+Recorded below with the exit code captured directly.
