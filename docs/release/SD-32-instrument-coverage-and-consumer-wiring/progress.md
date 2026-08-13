@@ -183,3 +183,194 @@ RESULT: PASS
    near-misses, 7 with no record under their key); the other 295 are not
    examined at all because their book has no ingested corpus, and the probe now
    says so instead of grounding them off another book's reprint.
+
+---
+
+## Cycle 5 — Adversarial verification of the run's movement (2026-08-13)
+
+- **Card:** `verify-the-movement` (dispatched card; discharges AT-32-002 over
+  the work landed so far). **The kanban's `e8-code-review` row is deliberately
+  left `READY (gated on e2, e3, e4, e7)`** — e3, e4 and e7 have not run, so the
+  bundle-wide review card is not closable and claiming it would be out of
+  protocol. This receipt covers the diff that exists today.
+- **Actor:** `doneness-verify`
+- **Base:** `origin/tranche/9` @ `8c554745`, fast-forwarded from `4ca63846`
+  (11 commits behind, zero local commits — no divergence to reconcile)
+- **Outcome:** COMPLETE. **No number moved because a bar moved. Nothing
+  reverted.** One reporting defect corrected (below), two under-asserting
+  verification floors raised.
+
+### Finding 1 (corrected here) — the bundle's headline is +18; the branch tip is −8
+
+`Cycle 2`'s receipt and `decisions.md §9` both report `done` 3,426 → 3,444
+(**+18**), and both were correct at `5ed6bdc0`. Neither accounts for the
+wiring-class classifier fix that landed after them (`99efb504`, regenerated at
+`8d00d0b1`), which moved 975 `display` → `derived`, 77 `static` → `derived` and
+14 `ambiguous` → `derived`. 26 of those 975 were `display`+`text-complete` —
+the one cell in the verdict table that reads `done` for `display` — so they
+became `derived`+`text-complete`, which reads `held`. **`done` 3,444 → 3,418.**
+
+Re-derived by importing the producer's own `doneness_verdict()` rather than
+transcribing it, over the inventory at each commit:
+
+```
+python3 - <<'PY'   # full script in this cycle's scratch; the shape is:
+importlib.util.spec_from_file_location('prod', PRODUCER).loader.exec_module(m)
+json.loads(git show <ref>:docs/work-inventory.json)  # per commit
+Counter(m.doneness_verdict(u['wiring_class'], u['status'], u['kind'])
+        for u in units if u['book'] not in m.EXCLUDED_BOOKS)
+PY
+```
+
+| commit | `done` | `held` | `in-progress` | what happened |
+|---|---:|---:|---:|---|
+| `f601c43d` (branch point) | 3,426 | 9,475 | 734 | — |
+| `8452090a` | 3,426 | 9,475 | 734 | scope card, no code |
+| `5ed6bdc0` | **3,444** | 9,475 | **716** | equipment probe widened: +18 |
+| `8d00d0b1` | **3,418** | **9,501** | 716 | classifier fix: **−26** |
+| `8c554745` (tip) | 3,418 | 9,501 | 716 | — |
+
+**Branch-tip net against the branch point: `done` −8, `held` +26,
+`in-progress` −18.** That is the honest figure and it is a *smaller* gain than
+the receipts read — because the classifier fix took `done` away, for the right
+reason. It is recorded here rather than left to be discovered, since `progress.md`
+is what E9 reads.
+
+The −26 is not a §1 violation and must not be reversed. Under the verdict table
+the only two cells producing `done` are `display`+`text-complete` and
+`computed`+`grounded`; `derived` reads `held` for every status. So
+`display` → `derived` is a move to a **strictly harder** bar, and every one of
+the 26 units really does carry the magnitude the old classifier could not see —
+hand-checked against upstream rows, e.g. `ui_feats.lst:16` "Brilliant Planner"
+(`...spend up to %1 gp...|TL*50`) and `uw_feats.lst:29` "Cover Tracks"
+(`...tracks of %1 allies...|WIS+TL`). Both state a character-scalar-dependent
+magnitude in PCGen's `%N` substitution syntax.
+
+### AT-32-002 — the bar is unmodified. Every clause discharged by command.
+
+| clause | result | command |
+|---|---|---|
+| `equipment_key_is_wired()` byte-identical to the branch point | **PASS** | function body extracted from `git show f601c43d:src/bin/v06_work_inventory.rs` and from the tip, compared — identical |
+| No `#[ignore]`, `#[cfg(ignore)]`, skipped suite or loosened assertion | **PASS** | `git diff f601c43d 8c554745 -- '*.rs' '*.sh' '*.ts' '*.tsx' \| grep '^+' \| grep -iE '#\[ignore\|\.skip(\|xit('` → only prose and `args.skip(1)`; `git diff … \| grep '^-' \| grep -E '#\[test\]\|assert'` → **empty**, no test or assertion removed anywhere in the run |
+| No file under `/home/ubuntu/swarm-observer/` or the producer skill dir modified | **PASS** | `find ~/.hermes/profiles/god-emporer/skills/release-swarm-observer -newermt '2026-08-13 10:00' -type f` → empty; producer `mtime` 05:15:50, before the run started |
+| `doneness_verdict()`, `DONENESS_MEANING`, `DONENESS_VALUES`, `NO_GROUNDING_PROBE`, `EXCLUDED_BOOKS` unmodified | **PASS** | same `find`; the file carrying all five is untouched |
+| No `wiring_class` assigned by a hand-written exception list | **PASS** | the classifier diff adds one predicate over token text (`has_prose_formula_segment`); `grep -nE 'const [A-Z_]+: &\[' src/rules_core/wiring_class.rs` shows no unit/key list added |
+| No corpus or rules data authored to satisfy a check | **PASS** | `git diff --stat f601c43d 8c554745 -- data/` → **empty** |
+
+### The instruments were made to fail. By running them, not by reading them.
+
+An instrument's only value is its proven ability to say NO, so each new gate was
+handed deliberately corrupted input and had to go red for the intended reason.
+
+**`corpus_literal_sweep`** — run against a synthetic repo root (a copy of ARG's
+356 records) so the real tree was never mutated; baseline `CLEAN`, exit 0:
+
+| corruption | exit | what it said |
+|---|---:|---|
+| one token value, `COST:13170` → `13171` | **1** | `token not byte-present in corpus token closure: COST:13171` |
+| `source.sha256` zeroed | **1** | `digest drift: record claims 000…, file is 34bf37d2…` |
+| `source.line` 22 → 23 | **1** | 9 findings, every token off the wrong row |
+| empty record population | **2** | `no JSON records under …` |
+| malformed JSON | **2** | `invalid JSON: key must be a string at line 1 column 3` |
+| corpus root pointed elsewhere | **2** | `corpus not found at … -- set PCGEN_CORPUS_ROOT` |
+
+Restoring each mutation returned it to `CLEAN`/exit 0.
+
+**`derived_evaluator_fixture_check`** — prebuilt binary, real tree, each
+mutation reverted immediately (`git status` clean after):
+
+| corruption | exit | what it said |
+|---|---:|---|
+| one fixture `expected.bonus` +1 | **101** | 2 of 5 tests red: `corpus row "BONUS:STAT\|STR\|2\|TYPE=Enhancement" states ["STR"] +3, evaluator produced ["STR"] +2`, and the re-derivability test independently |
+| `upstream_lst_sha256` zeroed | **101** | `… now hashes to 215c5804…, fixture recorded 000…` |
+| `upstream_line` +1 | **101** | pinned field no longer on the pinned row |
+
+**The equipment probe — the instrument that produced the whole +18.** Stripped
+`raw_bonus_chains`/`BONUS` tokens from one real record
+(`data/corpus/pathfinder_unchained/equipment/1_abp_enhancement_to_ammunition.json`)
+and regenerated the inventory in an isolated `CARGO_TARGET_DIR`. Exactly one
+unit changed: `pathfinder_unchained:equipment_modifier:special_ability_abp_1_ammunition`,
+`grounded` → `ingested-magnitude`, evidence
+`equipment_effect_probe_observed_computed_delta` →
+`equipment_table_entry_with_corpus_magnitude`; `done` −1, `in-progress` +1.
+The grounding is a live observation of that record, not a constant. Record
+restored, `git diff -- data/` empty.
+
+### The fixtures are not authored from the output of the code they test.
+
+Checked independently of the generator's claim, straight off the upstream bytes:
+all **94** entries' `upstream_lst_sha256` match the real PCGen `.lst` files
+(94/94); the pinned `corpus_field` is present as a tab field of the pinned line
+in 94/94; and every `expected` value re-derives from that field by PCGen's own
+`BONUS:STAT|<abilities>|<value>` grammar with **0** discrepancies and no engine
+module involved.
+
+### `docs/work-inventory.json` is generator output, not a hand-edited artifact.
+
+Regenerated from scratch in a separate `CARGO_TARGET_DIR`
+(`cargo run --locked --release --bin v06_work_inventory -- --stdout-only`) and
+compared to the committed file: **the whole document is identical apart from
+`generated_at`**, all 38,540 unit rows equal in order and content.
+
+### Finding 2 (corrected here) — two verification floors were left under-asserting
+
+The run added 27 tests and 2 test binaries, and raised only
+`BASELINE_ROOT_LIB_TESTS`. `verify.sh` said so itself:
+
+```
+BASELINE NOTES (not failures — update deliberately):
+  - BASELINE_ROOT_FULL_TESTS baseline is stale: 6316 recorded, 6343 measured.
+  - BASELINE_ROOT_TEST_BINARIES baseline is stale: 544 recorded, 546 measured.
+  - BASELINE_CLIPPY_WARNINGS_ROOT ceiling is loose: 54 recorded, 45 measured.
+```
+
+Raised `BASELINE_ROOT_FULL_TESTS` 6316 → 6343 and `BASELINE_ROOT_TEST_BINARIES`
+544 → 546, reconciled line by line in `scripts/verify-baselines.env`. Both are
+tightenings: the old floors could have absorbed the silent deletion of every
+test this run added. The clippy ceiling is left alone and recorded — it was
+loose before this run and lowering it would red two concurrent siblings for
+something this card did not cause. Count-pin sweep run before the commit:
+`grep -rn '\b6316\b\|\b544\b\|\b6343\b\|\b546\b' tests/ src/ apps/ scripts/`
+→ the only baseline-bearing hits are in `verify-baselines.env`; every other
+match is an unrelated `source_line`/`.lst` line number.
+
+### Units moved by this card
+
+**0, by design.** An adversarial-verification card moves no units; it
+establishes that the ones already moved were moved legitimately. `held` is
+reported separately and never summed with `done` (AT-32-010).
+
+### Verification
+
+`./scripts/verify.sh` (FULL), launched to a log and its exit code captured
+directly on the next line, never through a pipe.
+
+```
+VERIFY_EXIT=0
+RESULT: PASS   passed: 16/16
+preflight-disk · pi-sweep (10/10) · audit-selftest (28) · reclaim-selftest (10)
+driver-selftest (7) · corpus-sweep-selftest (15) · root-lib (1773)
+root-full (6343 across 546 suites, all 526 tests/*.rs executed) · desktop (445)
+reach (27) · corpus-sweep (3516 records, 36105 tokens, 8903 digests, 0 findings)
+frontend-install · frontend-test (99/99) · frontend-typecheck
+clippy (root:45 desktop:7 warnings, 0 errors) · class-dump (31/31 computing)
+```
+
+### Four-check no-stub audit (`AGENTS.md` §6)
+
+1. *Does every code path do what it claims?* Yes — and each claim was tested by
+   corrupting its input, not by reading it.
+2. *Any fixture-only data in a production path?* No. `data/` is untouched by
+   the whole run; the one fixture added lives under `tests/fixtures/` and is
+   anchored to upstream `.lst` bytes by `sha256`.
+3. *Any user-facing affordance wired to nothing?* None added.
+4. *Any operation reporting success without doing the work?* Specifically hunted
+   here. The two candidates — the two new gates — were both proven capable of
+   failing, and two floors that were reporting success without asserting it have
+   been raised.
+
+### Files written
+
+- `scripts/verify-baselines.env` (two floors raised, reconciled)
+- `docs/release/SD-32-instrument-coverage-and-consumer-wiring/progress.md` (this receipt)
+- `docs/retro/events/doneness-verify.jsonl`
