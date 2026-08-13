@@ -44,6 +44,7 @@ Rows are in claim-priority order, matching `scope-draft.md §5`'s dispatch order
 | `e9-closure` | READY (gated on every other claimable card) | Closure | — | — | — | — | — |
 | `spell-consumer-delta-probe` | COMPLETE | Spell Consumer-Delta Probe (instrument only) | 0 (by design — instrument build) | — | probe-spell | 2026-08-13 | `aafd492c` |
 | `ground-spell-units` | COMPLETE | Apply the Spell Consumer-Delta Probe | 623 keys wired (real ceiling **46** to `done`) | — / 623 grounded, 46 to `done` | probe-spell-ground | 2026-08-13 | `90bd9975` |
+| `verify-this-run` | COMPLETE | Adversarial Verification of the Determinism + Spell-Probe Run | 0 (by design — verification only) | — / 0 moved, 0 reversed | probe-verify | 2026-08-13 | `verify-this-run` |
 
 ### A note on `inventory-determinism`
 
@@ -66,6 +67,21 @@ ceiling is stated two ways because only one of them is `done`: **623** keys
 clear the probe's bar, but only the **46** whose `wiring_class` is `computed`
 reach `done` under the producer's verdict table. The other 577 land on `held`,
 which is not `done`.
+
+### A note on `verify-this-run`
+
+Adversarial verification of `inventory-determinism`,
+`spell-consumer-delta-probe` and `ground-spell-units`, run against the whole
+window `0dbbcf4d..21cf3998` rather than against their receipts. Ceiling **0 by
+design**: a cycle that verifies the board and also moves it proves nothing.
+**Nothing was reversed** — every `grounded` unit in the window was admitted on
+an observed consumer delta whose refusal paths were made to fire by deliberate
+mutation, no bar moved anywhere in the window, and the run's true net is
+`done` **+46** / `held` **−46** / everything else **+0**, independently
+re-derived through the producer's own `doneness_verdict()`. Five findings
+recorded, none of them a reversal, headed by `F-DASHBOARD-STALE` (the board was
+reading a checkout 12 commits behind, so the earned +46 was not visible on it).
+See `progress.md`.
 
 ## Not on this board, deliberately
 

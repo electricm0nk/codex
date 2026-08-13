@@ -965,3 +965,271 @@ they reproduce this receipt's remainder table exactly — including that
 1286 − 101 (UI, the book with no `data/corpus/` tree) = **1,185**, the precise
 number of keys `--spell-probe` reports examining. The ceiling table was derived
 from the generator; the app agrees with it without being asked.
+
+---
+
+## Cycle — `verify-this-run` — COMPLETE (2026-08-13, `probe-verify`)
+
+**Card:** `verify-this-run` — adversarial verification of the three cards
+`inventory-determinism`, `spell-consumer-delta-probe`, `ground-spell-units`.
+
+**Window audited:** `0dbbcf4d..21cf3998` (12 commits). Every figure below was
+re-derived by this cycle's own command against that window; none was
+transcribed from a receipt. Where a receipt's figure and this cycle's
+derivation agree, that is stated as *reproduced*, not assumed.
+
+**Units moved by this cycle: 0 — by design.** A verification cycle that also
+moved the thing it measures proves nothing. Nothing was reversed, because
+nothing was found that needed reversing.
+
+### 1. The run's TRUE net effect on the board — reproduced independently
+
+Derived by importing the *producer's own* `doneness_verdict()` and replaying
+the producer's aggregation loop over `git show <ref>:docs/work-inventory.json`
+at both ends of the window — not by reading any receipt:
+
+```
+python3 <scratch>/rederive_doneness.py wi-branchpoint.json wi-tip.json
+  # imports pf1e_dashboard_producer.doneness_verdict(wiring_class, status, kind)
+
+                 0dbbcf4d      21cf3998      net
+  done               3418          3464      +46
+  held               9501          9455      -46
+  in-progress         716           716       +0
+  not-started       21322         21322       +0
+  unmeasurable       3547          3547       +0
+  deferred             36            36       +0
+```
+
+**The true net effect of this run is `done` +46 / `held` −46, and nothing
+else.** It reproduces `decisions.md §5`'s retraction and the
+`ground-spell-units` receipt exactly.
+
+**Correction to the dispatch brief.** The card line
+"`ground-spell-units`: complete (**+623 grounded**)" is true *as a statement
+about `status`* — 623 spell units moved `ingested-magnitude` -> `grounded`,
+reproduced below — but it is not a `done` figure and must not be read as one.
+Only the **46** whose `wiring_class` is `computed` reach a `done` cell; the
+other **577** land on `held`, which `decisions.md §1` forbids reporting as
+done. The bundle's own kanban and `decisions.md` already state this split
+correctly; the risk lives in the one-line card summary, not in the package.
+
+### 2. Every unit transition in the window, enumerated
+
+Keyed on `(book, kind, corpus_key, source_file, source_line)` rather than on
+`id`, because `id` was not unique at the branch point (see §4) and an id-keyed
+diff would manufacture transitions:
+
+```
+python3 <scratch>/transitions.py wi-branchpoint.json wi-tip.json
+  keys only in A: 0   only in B: 0
+  STATUS:        (spell, ingested-magnitude -> grounded)  623   [the only one]
+  WIRING_CLASS:  (none)
+  DONENESS:      (spell, held -> done)  46                      [the only one]
+  EVIDENCE:      (spell, spell_list_entry_with_resolved_level
+                      -> spell_effect_probe_observed_computed_delta)  623
+```
+
+**Zero `wiring_class` transitions in the entire window.** This independently
+confirms the `inventory-determinism` cycle's own claim that sorting
+`wiring_class::build_mod_index`'s file walk and `corpus_loader::find_json_files`
+moves no unit's class either way. **Zero units moved into a worse bucket.**
+
+### 3. The anti-gaming clause (`decisions.md §1`), discharged by direct
+inspection of the diff — not by trusting the receipts
+
+| forbidden act | check run over `0dbbcf4d..21cf3998` | result |
+|---|---|---|
+| a check weakened, skipped or `#[ignore]`d | `git diff \| grep -E '^\+.*(#\[ignore\]\|\.skip\(\|xfail\|todo!\|unimplemented!)'` | 0 hits in code (2 hits, both prose in `progress.md`) |
+| a test or assertion removed | `git diff \| grep -E '^-.*fn [a-z_]+\(\)'`; `git diff \| grep -cE '^-.*assert'` | 0 and 0 |
+| corpus or fixture data authored | `git diff --stat -- data/` | empty |
+| a unit reclassified into an easier class | transition table, §2 | 0 `wiring_class` moves |
+| a threshold or floor lowered | `git diff -- scripts/verify-baselines.env` | floors **raised**: `ROOT_LIB` 1773->1776, `ROOT_FULL` 6343->6371. No value lowered. Both in their own commits (`e07cc202`, `d1593801`) carrying measured actuals |
+| the measurement pipeline edited | `find ~/.hermes/.../release-swarm-observer -newermt '2026-08-13 14:00'` | empty. `pf1e_dashboard_producer.py` mtime `2026-08-13 05:15:50`, md5 `5a6ba995…` — untouched, and the window opened at 14:11 |
+| `doneness_meaning` / `status_vocabulary` / `DONENESS_VALUES` / bucket rules edited | `git diff -- src/ scripts/ \| grep -E '(doneness_meaning\|status_vocabulary\|DONENESS_VALUES\|doneness_verdict)'` | 0 edits; only comment text mentioning `wiring_class` |
+| `artifacts/derive-movable-mass.py` (the bundle's "one command") edited | diffstat of the window | not in it |
+
+One item is recorded rather than cleared: `BASELINE_CLIPPY_WARNINGS_ROOT` was
+**deliberately left loose at 54 against 46 measured** (`d1593801`'s note). That
+is a ceiling not tightened, not a bar lowered — no unit passed anything it
+would otherwise have failed — and the reasoning given (a shared branch, debt
+this cycle did not pay) is the same one already recorded for the held-back
+floor. Left as-is; named here so the next cycle can take it with its own
+actuals.
+
+### 4. The committed inventory is what the code produces — not a hand edit
+
+Rebuilt `v06_work_inventory` at `21cf3998` in a clean worktree and regenerated:
+
+```
+v06_work_inventory --stdout-only > genA1.json
+python3 -c "d=json.load(...); d['generated_at']='X'; json.dumps(d,sort_keys=True,indent=1)"
+md5  fd106d9679828587c320e647cf415ebe  genA1.norm.json
+md5  fd106d9679828587c320e647cf415ebe  <committed docs/work-inventory.json>.norm
+```
+
+Byte-identical modulo `generated_at`. The artifact every number on the board is
+read from was produced by the code in the tree, not authored.
+
+### 5. Determinism — reproduced, and extended past what the card claimed
+
+- **Same tree, twice:** `genA1.norm` == `genA2.norm` (md5 above). Raw files
+  differ at byte 37, line 2 — `generated_at`, and nothing else.
+- **A second, independent checkout** (`git worktree add --detach 21cf3998`, its
+  own `CARGO_TARGET_DIR`, different inodes and a different `read_dir` order):
+  `genB1.norm` md5 `fd106d967…` — **identical to the first tree's**. This is
+  the cross-checkout case the sorts were added for, and it is the one the
+  card's own five-run loop could not exercise from a single tree.
+- `id` uniqueness, re-derived: `0dbbcf4d` 38,540 units / **38,511** distinct ids
+  (29 colliding groups, **27** disagreeing on `wiring_class`:
+  `{(computed,display): 19, (computed,static): 6, (ambiguous,display): 1}`);
+  `21cf3998` 38,540 units / **38,540** distinct ids, 0 duplicates. **58** id
+  strings changed. Every figure in that cycle's receipt reproduced exactly.
+
+### 6. The spell probe can FAIL — proven by three live mutations
+
+A gate that cannot fail proves nothing, and on the live corpus the probe's
+three strictest gates never fire (§7). So each was made to fire, by corrupting
+the thing it guards, in a scratch worktree — **none of it committed**:
+
+| mutation | what it breaks | `--spell-probe` result |
+|---|---|---|
+| baseline | *(unmutated control)* | **wired: 623** |
+| A — `PilotSpellbookViewModel::from_coverage` returns `None` | the magnitude reaches no consumer | **wired: 0**, `no_save_dc_on_view_model: 623` |
+| B — `spellbook.rs`'s DC `+ 1` | the number no longer matches the oracle | **wired: 0**, `dc_disagrees_with_oracle: 623` |
+| C — the probe's baseline posture also selects the spell | no delta attributable to the spell | **wired: 0**, `baseline_already_carries_a_dc: 623` |
+
+All three refusal paths are live and load-bearing. A spell whose magnitude
+reaches no consumer is refused (A); an unexplained number is refused (B); a
+number not attributable to selecting the spell is refused (C).
+
+The consumer itself was verified by content, end to end:
+`spellbook::compute_spellbook_coverage` -> `pf1_adapter.rs:1141`
+(`PilotSpellbookViewModel::from_coverage`) -> `character_hub.rs:837`
+(`SpellSaveDcDto`) -> `CharacterSheet.tsx:1074` (`DC {entry.dc}`). A real
+number on a real screen, not a phantom.
+
+### 7. Findings recorded, none of them a reversal
+
+**F-PROBE-CEILING — the probe's in-corpus discriminating power sits in its two
+early gates, not its three strict ones.** `--spell-probe` over the live corpus:
+1,185 keys examined, `no_casting_class_has_it` 217, `no_table_effect` 345,
+`wired` 623. **Every key that survives to the DC comparison is wired — 623 of
+623.** `probe_spell_key`'s own doc comment warns that SD-28-E14-F1's retracted
+attempt failed by "building a predicate that reduced to *this spell resolves*",
+and the shape is worth naming out loud: in production this predicate reduces to
+*a casting class has it AND the table store holds it*. That is **not** a §1
+violation — the baseline/oracle/provenance gates are real, they are proven to
+fire (§6), and the grounding evidence genuinely is an observed delta on a
+rendered surface. But the honest statement of the instrument is that the corpus
+supplies no case that exercises its strictest third. Recorded so no later cycle
+mistakes 623/623 for evidence of strictness.
+
+**F-NAME-FALLBACK — a latent name-twin path in `classify()`'s new spell arm.**
+The arm admits on `observed(&unit.key) || observed(&unit.name)`. The
+`|| observed(&unit.name)` clause is **inert today** — derived over the tip
+inventory: of 2,843 spell units, **0** have `corpus_key != name`, and there are
+**0** `(book, name)` collisions among spell units, so it can currently admit
+nothing the key clause does not. But it is the same shape as the defect
+`5fb94067` had just removed for equipment (`Shoes` grounding on
+`Artisan's Tools (Shoes)`'s tokens), and a future book whose display name and
+`KEY:` diverge would reach it. Recommend narrowing to key-only, or gating the
+name clause on `corpus_key == name`. Not actioned here: this cycle does not
+write production code.
+
+**F-SCREEN-RESIDUAL — the on-screen artifact proves the catalog row, not the DC
+cell.** `crb-barkskin-grounded.png` proves `Barkskin` / `CRB` /
+`Transmutation` / `Level 2` on the Spell Catalog screen; the grounding
+magnitude is the save DC, which lives on the Character Sheet's Spells tab and
+which the harness's five hub-catalog families do not reach. The
+`ground-spell-units` receipt states this limitation itself, plainly, and this
+cycle confirms the statement is accurate rather than generous. The DC's
+strongest evidence remains code-level plus
+`resolve_unified_pilot_snapshot_surfaces_a_real_spell_save_dc`. Successor: the
+first cycle that extends the harness to a saved-character screen.
+
+**F-FLAKE-UNEXPLAINED — one `root-full` red in the window was excused as a flake
+without a mechanism.** `probe-spell` recorded `verify.sh full: FAIL` at
+`20:24:29Z` (`sd17_b_spells::parse_lst_spell_file_carries_source_line_numbers_for_every_record`,
+0 records from a 50-row temp LST), then `PASS` in isolation. This cycle looked
+for a mechanism and did not find one: `write_temp_lst` nonces on pid +
+nanoseconds, `verify.sh` does not export `TMPDIR` (so `reclaim.sh`'s
+`codex-verify-*` sweep cannot reach the fixture), and that sweep is in any case
+guarded by an age threshold *and* an `any_verify_running` check. AGENTS.md's
+rule is that a stage red for more than one run is a blocker; it has not been
+red twice. Recorded, unexplained, not excused.
+
+**F-DASHBOARD-STALE — the +46 this run earned is not on the operator's board,
+and the cause is a stale checkout, not the run.** The producer reads
+`/home/ubuntu/workspace/repos/codex/docs/work-inventory.json` (hard-coded,
+`pf1e_dashboard_producer.py:2551`). That checkout was **12 commits behind
+`origin/tranche/9`** for the whole window. Consequently
+`/home/ubuntu/swarm-observer/PF1e-dashboard.json`, regenerated at `21:50:01Z`,
+still reports `done 3418 / held 9501 / in-progress 716` — the *branch-point*
+numbers this cycle derived in §1, not the tip's. The run is not at fault and no
+number is wrong; the board is simply reading an older commit. Actioned: the
+main checkout was fast-forwarded to `origin/tranche/9` at the end of this cycle
+(pure `--ff-only`, no local commits to preserve), so the next producer pass
+publishes the earned `+46`. Recorded because the failure mode is silent — a
+correct run can look like it did nothing.
+
+**F-SCOPE — three surfaces were written that `README.md`'s "Writable" list does
+not name.** The package grants `src/bin/v06_work_inventory.rs`,
+`src/rules_core/**` *equipment-effect surfaces*, `tests/**`, and the package
+itself. The window also wrote `scripts/verify-baselines.env` (floors — and
+raising a floor is required by the gate, so the grant is arguably incomplete
+rather than the write wrong), `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`
+(the `SEARCH_Y` calibration, which closed a deferral the harness itself
+recorded), and `src/rules_core/wiring_class.rs` + `corpus_loader.rs` (inside
+`src/rules_core/**` but not equipment-effect surfaces). **None of it touched
+the absolutely-read-only surface** — `/home/ubuntu/swarm-observer/PF1e-dashboard.html`
+is unmodified since `07:19`, and the producer since `05:15:50`, both before the
+window opened — and every write is disclosed in its own receipt. Recorded as
+grant drift for `e8-code-review` to either bless or narrow, not as a violation.
+
+### 8. Verification
+
+`./scripts/verify.sh` (FULL, default mode), run in this cycle's own detached
+worktree at `21cf3998` with its own `CARGO_TARGET_DIR`, exit code captured
+directly to a file and never through a pipe:
+
+```
+nohup ./scripts/verify.sh > verify.log 2>&1; echo $? > verify.exit
+cat verify.exit  ->  0
+```
+
+**`VERIFY_EXIT=0`, `RESULT: PASS`, 16/16 stages.** Logs `/tmp/codex-verify-6q15Gr`.
+
+```
+PASS preflight-disk        PASS root-lib   (1776 passed)
+PASS pi-sweep              PASS root-full  (6371 passed across 546 suites,
+PASS audit-selftest                         all 526 tests/*.rs suites executed)
+PASS reclaim-selftest      PASS desktop    (445 passed)
+PASS driver-selftest       PASS reach      (27 passed)
+PASS corpus-sweep-selftest PASS corpus-sweep (3516 records examined of 9328 read,
+PASS frontend-install                        36105 tokens compared, 8903 digests
+PASS frontend-test  (99/99)                  checked, 0 findings)
+PASS frontend-typecheck    PASS clippy     (root:46 desktop:7 warnings, 0 errors)
+PASS class-dump (31/31 computing)
+```
+
+`root-lib` 1776 and `root-full` 6371 land exactly on the floors `e07cc202` and
+`d1593801` raised — the floors are met by measurement, not by slack. The one
+baseline note is the deliberately-loose clippy ceiling already recorded in §3;
+it is a note, not a failure, and this cycle did not take it either (it removed
+no warning).
+
+**`sd17_b_spells::parse_lst_spell_file_carries_source_line_numbers_for_every_record`
+did not reproduce** — the suite passed inside a full 546-suite parallel sweep on
+this run. That is one non-reproduction, not a root cause; `F-FLAKE-UNEXPLAINED`
+stands.
+
+### 9. Verdict
+
+**Nothing was reversed, because nothing needed reversing.** Every unit that
+became `grounded` in this window did so on an observed consumer delta whose
+refusal paths this cycle proved can fire (§6), against a rendered surface it
+traced by content (§6), on an artifact it proved the code produces (§4), with
+no bar moved anywhere in the window (§3). The run's honest net is **`done` +46,
+`held` −46, everything else +0** — smaller than the card headline reads, and
+correct.
