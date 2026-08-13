@@ -632,6 +632,17 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // written by TWO lanes (SD-28 E29 put its feats and equipment there), and
     // this entry names the directory rather than a family, so it covers both.
     ("ultimate_psionics", "ultimate_psionics"),
+    // SD-29 Epic 7 round 9 (companion lane, final pass). Ultimate Magic. The
+    // ONLY entry of the round: `advanced_race_guide`, `advanced_players_guide`
+    // and `book_of_the_damned_volume_1` are already above, put there by earlier
+    // lanes, and this table names the DIRECTORY rather than a family so no
+    // second row is wanted for their companions.
+    //
+    // Ultimate Magic is different because it had no `data/corpus/ultimate_magic/`
+    // directory at all before this round — SD-28 Epic 28 compiled its 144 feats
+    // into `rules_tables` without ever writing corpus JSON for them — so the
+    // companion family is the first content this book serves off disk.
+    ("ultimate_magic", "ultimate_magic"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1407,6 +1418,43 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // type, which is named in `crb/mod.rs`'s module doc rather than split
         // across 86 rows here.
         ("crb", "companions") => Some(companions_reach("core_rulebook", "CRB")),
+
+        // SD-29 Epic 7 round 9 (companion lane, FINAL PASS). Four books at
+        // once, and the shortfall behind all four is ONE finding.
+        //
+        // 52 units ship between them — Ultimate Magic 32, Advanced Race Guide
+        // 14, Advanced Player's Guide 4, Book of the Damned Volume 1 2 — and
+        // each figure is exactly the `reachable remainder`
+        // `python3 scripts/classify_companion_rows.py <book>` prints for that
+        // book. The 393 that do not ship are absent from this gate's
+        // denominator because they were never ingested; they stay counted in
+        // `docs/work-inventory.json` and get no `OPEN_FINDINGS` entry, for the
+        // reason `§61.2` states — that list is keyed by FAMILY, and every one
+        // of these four families does reach a player.
+        //
+        // THE ONE FINDING: 361 of the 393 are the summoner's evolution pool
+        // (`Evolution ~ …`, `Temp Evolution ~ …`, `<Archetype> Eidolon ~ …`,
+        // `WCEvolution ~ …`) and the bladebound magus's `Black Blade ~ …`
+        // records. Both hang off a CLASS FEATURE rather than off any creature
+        // row, which is the same missing record type round 8 named for Core
+        // Rulebook's 84 `Animal Companion ~ …` orphans (`decisions.md §65`).
+        // The remaining 32 are 27 Book-of-the-Damned `Imp Companion ~ …`
+        // orphans of the same shape plus 5 `*_classes_companion.lst` CLASS rows
+        // (`§65.1`), which is that same type seen from the other side.
+        //
+        // Note the key on the left is the ENGINE book id and the first argument
+        // is the CORPUS directory. They differ only for the APG, whose module
+        // has been `apg` since long before this lane; `CORPUS_BOOK_IDS` already
+        // carried `("advanced_players_guide", "apg")` for the book's older
+        // families, so no entry was needed this round.
+        ("ultimate_magic", "companions") => Some(companions_reach("ultimate_magic", "UM")),
+        ("advanced_race_guide", "companions") => {
+            Some(companions_reach("advanced_race_guide", "ARG"))
+        }
+        ("apg", "companions") => Some(companions_reach("advanced_players_guide", "APG")),
+        ("book_of_the_damned_volume_1", "companions") => {
+            Some(companions_reach("book_of_the_damned_volume_1", "BOTD1"))
+        }
 
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,

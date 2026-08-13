@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "data": {
+    "ability_keys": [
+      "advanced_race_guide:companion:companion_advancement_crawling_vine",
+      "advanced_race_guide:companion:crawling_vine_constrict"
+    ],
+    "corpus_key": "Companion (Crawling Vine)",
+    "external_ability_refs": [
+      "Grab",
+      "Scent"
+    ],
+    "key": "advanced_race_guide:companion:companion_crawling_vine",
+    "monster_class": "Companion:2",
+    "name": "Companion (Crawling Vine)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.26",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [],
+    "type_segments": [
+      "Companion",
+      "PlantCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
+    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58",
+    "line": 15,
+    "record_key": "Companion (Crawling Vine)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -496,6 +496,48 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         companions: super::crb::companions_static(),
         companion_abilities: super::crb::companion_abilities_static(),
     },
+    // SD-29 Epic 7 round 9 (`SD29-E7-F2-010`) — the lane's FINAL PASS, and the
+    // four rows below land together because they are one finding, not four
+    // books.
+    //
+    // Between them Ultimate Magic, Advanced Player's Guide and Advanced Race
+    // Guide carry 361 orphan ability rows, and every one of them belongs to the
+    // summoner's EVOLUTION POOL or the bladebound magus's BLACK BLADE — class
+    // features, not creatures. That is the same missing record type round 8
+    // named for Core Rulebook's 84 `Animal Companion ~ …` orphans
+    // (`decisions.md §65`), seen three more times. Naming it once here is why
+    // these three books' shortfall is not three separate `OPEN_FINDINGS`
+    // entries.
+    //
+    // None of the four needed a new `RuleSetId` — `Um`, `Apg`, `Arg` and
+    // `Botd1` were all compiled by earlier bundles or earlier lanes — so
+    // registering them moved no other kind's status. That is what the closure
+    // run 2 receipt meant by "5 books, chassis already registered".
+    CompanionBook {
+        corpus_book: "ultimate_magic",
+        companions: super::ultimate_magic::companions_static(),
+        companion_abilities: super::ultimate_magic::companion_abilities_static(),
+    },
+    CompanionBook {
+        corpus_book: "advanced_race_guide",
+        companions: super::advanced_race_guide::companions_static(),
+        companion_abilities: super::advanced_race_guide::companion_abilities_static(),
+    },
+    // The corpus book is `advanced_players_guide`; the engine module is `apg`.
+    // `MODULE_DIR` in the transcriber carries the mapping — added by round 8 for
+    // exactly this row, so no second `rules_tables/advanced_players_guide/`
+    // module was created here.
+    CompanionBook {
+        corpus_book: "advanced_players_guide",
+        companions: super::apg::companions_static(),
+        companion_abilities: super::apg::companion_abilities_static(),
+    },
+    // The first book carrying BOTH the monster chassis and this one.
+    CompanionBook {
+        corpus_book: "book_of_the_damned_volume_1",
+        companions: super::book_of_the_damned_volume_1::companions_static(),
+        companion_abilities: super::book_of_the_damned_volume_1::companion_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -662,15 +704,51 @@ mod tests {
             }
         }
         assert_eq!(
-            unmodelled, 32,
+            unmodelled, 35,
             "expected Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows, \
              Bestiary 4's two `TYPE:Communicate.SpellLike` rows, Ultimate Wilderness's \
              15 `TYPE:SpecialQuaility` rows -- an UPSTREAM TYPO of the modelled \
              `SpecialQuality`, deliberately not corrected into the facet \
-             (`decisions.md §61.4`) -- Core Essentials's 11 (round 7), and Core \
-             Rulebook's single `TYPE:NaturalAttack.…` row (round 8, `§65.2`); \
+             (`decisions.md §61.4`) -- Core Essentials's 11 (round 7), Core \
+             Rulebook's single `TYPE:NaturalAttack.…` row (round 8, `§65.2`), and \
+             round 9's three: Advanced Race Guide's two \
+             `TYPE:RaceAbility.SpecialAbility` rows and the Advanced Player's \
+             Guide's one `TYPE:SkillChoice` row; \
              a change here means a book's shape moved"
         );
+        // Round 9's three, named so the count above cannot be satisfied by a
+        // different three. Both shapes are genuinely unmodelled CONCEPTS rather
+        // than typos or CATEGORY names:
+        //
+        // * `RaceAbility.SpecialAbility` — the leading segment is PCGen's
+        //   RACE-side ability class. These two rows are the poison and the
+        //   double-damage attack of ARG's plant companions, defined on the race
+        //   side because a Ghoran's companion IS a plant creature; neither
+        //   `SpecialQuality` nor `SpecialAttack` states that.
+        // * `SkillChoice` — the Eidolon's `Skills` row, which is a CHOICE the
+        //   player makes rather than a quality the creature has. Mapping it onto
+        //   any facet variant would claim the eidolon has a special quality it
+        //   does not.
+        //
+        // Both SHIP rather than being dropped, on round 8's distinction
+        // (`§65.2`): an unmodelled FACET is not an empty RECORD. All three rows
+        // carry a `TYPE:`, and the ARG pair carry `DESC:` prose a player reads.
+        for (book_id, key, segments) in [
+            ("advanced_race_guide", "Puffball ~ Poison", &["RaceAbility", "SpecialAbility"][..]),
+            (
+                "advanced_race_guide",
+                "Sapling Treant ~ Double Damage",
+                &["RaceAbility", "SpecialAbility"][..],
+            ),
+            ("advanced_players_guide", "Eidolon ~ Skills", &["SkillChoice"][..]),
+        ] {
+            let book = companion_book(book_id).expect("registered book");
+            let ability = book
+                .companion_ability_resolve(key)
+                .unwrap_or_else(|| panic!("{book_id} does not define {key}"));
+            assert!(ability.facet.is_none(), "{key} now states a modelled facet");
+            assert_eq!(ability.type_segments, segments, "{key}");
+        }
         // Core Essentials's 11, derived rather than inferred from the delta:
         // `python3` over its own generated table, grouping the `facet: None`
         // rows by `type_segments`, reports 10 x ("Special Ability",
@@ -818,11 +896,37 @@ mod tests {
             }
         }
         assert_eq!(
-            rows_with_variants, 8,
-            "Ultimate Wilderness is the only book carrying multi-DESC rows. Its `.lst` has 22 \
-             of them; 8 are SHIPPED, because the other 14 are archetype rows this chassis \
-             drops as orphans. The two numbers answering different questions is the point -- \
-             a test pinned to 22 would be asserting a fact about a file, not about the table"
+            rows_with_variants, 11,
+            "8 from Ultimate Wilderness plus round 9's 3 from Ultimate Magic. UW's `.lst` has \
+             22 multi-DESC rows and ships 8, because the other 14 are archetype rows this \
+             chassis drops as orphans. The two numbers answering different questions is the \
+             point -- a test pinned to 22 would be asserting a fact about a file, not about \
+             the table"
+        );
+
+        // Round 9: Ultimate Magic is the SECOND book to carry the shape, and
+        // the first whose multi-`DESC:` rows are not all shaped the same way.
+        // Named individually, because the count above would otherwise be
+        // satisfiable by any three rows, and because the split is the finding:
+        // two of the three DO have an unconditional token and one does not, so
+        // `description` is `Some` for two and `None` for the third — which is
+        // exactly the property the loop above pins and the reason it is a
+        // property rather than a constant.
+        let um = companion_book("ultimate_magic").expect("registered book");
+        let um_variants: Vec<(&str, usize, bool)> = um
+            .companion_abilities
+            .iter()
+            .filter(|a| !a.description_variants.is_empty())
+            .map(|a| (a.key, a.description_variants.len(), a.description.is_some()))
+            .collect();
+        assert_eq!(
+            um_variants,
+            vec![
+                ("Giant Leech Companion ~ Blood Drain", 3, true),
+                ("Giant Scorpion Companion ~ Poison", 3, true),
+                ("Giant Slug Companion ~ Acid", 2, false),
+            ],
+            "Ultimate Magic's multi-DESC rows"
         );
 
         let uw = companion_book("ultimate_wilderness").expect("registered book");

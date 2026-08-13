@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "data": {
+    "ability_keys": [],
+    "corpus_key": "Familiar (Parrot)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "advanced_race_guide:companion:familiar_parrot",
+    "monster_class": "Animal:1",
+    "name": "Familiar (Parrot)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+    "race_type": "Animal",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.133",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -8
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": -2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
+    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58",
+    "line": 9,
+    "record_key": "Familiar (Parrot)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

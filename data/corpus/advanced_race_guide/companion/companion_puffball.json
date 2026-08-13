@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "data": {
+    "ability_keys": [
+      "advanced_race_guide:companion:puffball_poison",
+      "advanced_race_guide:companion:companion_advancement_puffball"
+    ],
+    "corpus_key": "Companion (Puffball)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "advanced_race_guide:companion:companion_puffball",
+    "monster_class": "Companion:2",
+    "name": "Companion (Puffball)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Thorn"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.26",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [],
+    "type_segments": [
+      "Companion",
+      "PlantCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
+    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58",
+    "line": 16,
+    "record_key": "Companion (Puffball)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
