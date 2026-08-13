@@ -1179,6 +1179,12 @@ fn pcc_includes(book_dir: &Path, known_books: &BTreeSet<String>) -> BTreeSet<Str
 // ---------------------------------------------------------------------------
 
 /// Everything the engine can prove, gathered once.
+///
+/// `Default` is derived so a test can state the ONE fact it is exercising and
+/// leave every other field empty. Every field is a collection whose empty
+/// value means "the engine proved nothing here", which is the correct and
+/// conservative starting point: a defaulted `EngineFacts` grounds nothing.
+#[derive(Default)]
 struct EngineFacts {
     /// Feat keys whose presence genuinely changes a computed number, observed
     /// by running the real compute pipeline twice per feat.
@@ -1196,6 +1202,25 @@ struct EngineFacts {
     /// alone, so a key shared by two books' reprints of *different* items
     /// grounds only the book whose record was actually read.
     equipment_effect_wired: BTreeSet<(String, String)>,
+    /// SD-32 `ground-spell-units`: spell keys whose own corpus record was
+    /// observed producing a real save-DC magnitude on
+    /// `PilotSpellbookViewModel.spell_save_dc` — the field
+    /// `pf1_adapter::resolve_unified_pilot_snapshot` puts on the snapshot and
+    /// `CharacterSheet.tsx` renders as `DC {entry.dc}`. Populated by
+    /// [`probe_spell_effect_wiring`] through
+    /// [`spell_effect_wired_from_outcomes`], which admits only
+    /// [`SpellProbeOutcome::Wired`].
+    ///
+    /// `(engine_book, key)` for the same book-scoping reason as
+    /// `equipment_effect_wired`, and here it bites: every per-school resolver
+    /// stamps `RuleSetId::Crb`, so a non-CRB book's same-named record is
+    /// refused at the probe (`SpellProbeOutcome::ForeignBookTable`) and must
+    /// not be re-admitted by a bare-key lookup here.
+    ///
+    /// A lower bound in the same documented direction as the other two probes:
+    /// it can only reach a book with an on-disk `data/corpus/<book>/spell/`
+    /// tree in [`OBSERVABLE_BOOK_DIRS`].
+    spell_effect_wired: BTreeSet<(String, String)>,
     /// Every feat key the catalog holds, per book.
     feat_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every spell key the catalog holds, per book, with whether the engine
@@ -2172,6 +2197,34 @@ fn probe_spell_effect_wiring(
     outcomes
 }
 
+/// The `(engine_book, key)` pairs [`classify`] may ground: exactly the probe's
+/// [`SpellProbeOutcome::Wired`] verdicts, and nothing else.
+///
+/// A named function rather than an inline `filter` at the one call site so the
+/// admission rule has somewhere to be tested against every refusal variant
+/// (`only_wired_outcomes_enter_the_fact_set`). The match is exhaustive and
+/// deliberately not a `_ =>` catch-all: a future outcome variant must be
+/// classified as promoting or refusing by hand, not defaulted into either.
+fn spell_effect_wired_from_outcomes(
+    outcomes: &BTreeMap<(String, String), SpellProbeOutcome>,
+) -> BTreeSet<(String, String)> {
+    outcomes
+        .iter()
+        .filter(|(_, outcome)| match outcome {
+            SpellProbeOutcome::Wired { .. } => true,
+            SpellProbeOutcome::NoCastingClassHasIt
+            | SpellProbeOutcome::AbsentFromBookCorpus
+            | SpellProbeOutcome::SchoolNotRecognized
+            | SpellProbeOutcome::NoTableEffect
+            | SpellProbeOutcome::ForeignBookTable
+            | SpellProbeOutcome::NoSaveDcOnViewModel
+            | SpellProbeOutcome::DcDisagreesWithOracle { .. }
+            | SpellProbeOutcome::BaselineAlreadyCarriesADc => false,
+        })
+        .map(|(pair, _)| pair.clone())
+        .collect()
+}
+
 /// The probe's ceiling, printed by `--spell-probe`: how many catalog spell
 /// keys it legitimately reaches and, for every one it does not, the reason it
 /// refused. Grounding no unit, moving no number -- this is the instrument
@@ -2449,6 +2502,9 @@ fn gather_engine_facts(
     EngineFacts {
         feat_effect_wired: probe_feat_effect_wiring(fixture),
         equipment_effect_wired: probe_equipment_effect_wiring(repo_root),
+        spell_effect_wired: spell_effect_wired_from_outcomes(&probe_spell_effect_wiring(
+            fixture, repo_root,
+        )),
         feat_keys,
         spell_levels,
         equipment_keys,
@@ -2685,18 +2741,41 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             });
             match level_known {
                 None => not_ingested("spell_key_absent_from_spell_list"),
-                // SD28-E14-F1: NOT promoted. See the doc comment above
-                // `probe_equipment_effect_wiring` (the removed
-                // `probe_spell_effect_wiring`'s replacement note) -- no
-                // currently-wired consumer reads a spell's magnitude, so
-                // every resolved-level spell stays `ingested-magnitude`
-                // exactly as before this epic touched this arm.
-                Some(true) => Verdict {
-                    status: "ingested-magnitude",
-                    evidence: "spell_list_entry_with_resolved_level".to_string(),
-                    reason: None,
-                    engine_book: engine_book_field,
-                },
+                // SD28-E14-F1 recorded that this arm could not promote,
+                // because no wired consumer read a spell's magnitude. That
+                // finding is SUPERSEDED, not overruled: `epic-31-spell-wiring`
+                // (2026-08-07) wired `spellbook::compute_spellbook_coverage`
+                // into `pf1_adapter::resolve_unified_pilot_snapshot`, so a
+                // spell's own level now reaches a number the character sheet
+                // prints. See the block comment above `probe_spell_key`.
+                //
+                // `(engine_book, key)`, never a bare key: the probe observed
+                // this DC against ONE book's corpus record, and only that
+                // book's unit may claim it -- the `Celestial Shield`
+                // discipline the equipment arm below already follows. It is
+                // load-bearing here, because every per-school resolver stamps
+                // `RuleSetId::Crb`.
+                Some(true) => {
+                    let observed = |candidate: &str| {
+                        facts
+                            .spell_effect_wired
+                            .contains(&(engine_book.clone(), candidate.to_string()))
+                    };
+                    if observed(&unit.key) || observed(&unit.name) {
+                        return Verdict {
+                            status: "grounded",
+                            evidence: "spell_effect_probe_observed_computed_delta".to_string(),
+                            reason: None,
+                            engine_book: engine_book_field,
+                        };
+                    }
+                    Verdict {
+                        status: "ingested-magnitude",
+                        evidence: "spell_list_entry_with_resolved_level".to_string(),
+                        reason: None,
+                        engine_book: engine_book_field,
+                    }
+                }
                 Some(false) => Verdict {
                     status: "text-complete",
                     evidence: "spell_list_entry_with_description_but_no_corpus_level".to_string(),
@@ -5108,5 +5187,153 @@ mod spell_probe_tests {
              delta — that is exactly the retracted 1,067-of-1,067 failure",
             outcomes.len()
         );
+    }
+}
+
+/// SD-32 `ground-spell-units`: the proofs for wiring the spell probe's verdict
+/// into `classify()`.
+///
+/// The probe-building cycle deliberately stopped short of this — it built and
+/// proved the instrument and left `classify()`'s `Kind::Spell` arm
+/// byte-identical, so no unit moved. This module is the second half: it pins
+/// that a spell reaches `grounded` ONLY on the probe's own book-scoped
+/// observation, and that every path that was not observed lands exactly where
+/// it landed before.
+///
+/// Every assertion here is phrased as "this unit legitimately reaches its
+/// bar", never "the count rises" (`decisions.md §1`).
+#[cfg(test)]
+mod spell_grounding_tests {
+    use super::*;
+
+    fn spell_unit(book: &str, key: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            kind: Kind::Spell,
+            key: key.to_string(),
+            name: key.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "spells.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// Facts holding exactly one book's spell catalog entry, with a resolved
+    /// level, so the unit under test is `ingested-magnitude` before any
+    /// grounding question is asked.
+    fn facts_with_catalog_level(book: &'static str, key: &str) -> EngineFacts {
+        let mut facts = EngineFacts::default();
+        facts.spell_levels.entry(book).or_default().insert(key.to_string(), true);
+        facts
+    }
+
+    // ----- The promotion, and its exact evidence -----
+
+    /// A spell the probe observed producing a real save DC on the surface the
+    /// character sheet renders reaches `grounded`, carrying the probe's own
+    /// evidence token — the spell-side sibling of
+    /// `equipment_effect_probe_observed_computed_delta`.
+    #[test]
+    fn a_spell_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
+        let mut facts = facts_with_catalog_level("core_rulebook", "Shield");
+        facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
+        let verdict = classify(&spell_unit("core_rulebook", "Shield"), &facts, &BTreeSet::new());
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(verdict.evidence, "spell_effect_probe_observed_computed_delta");
+    }
+
+    // ----- The refusals. These are the load-bearing half. -----
+
+    /// A spell whose level the catalog resolves but which the probe did NOT
+    /// observe stays exactly where it was. This is the guard against the
+    /// retracted SD-28-E14-F1 shape, where "the engine knows this spell"
+    /// silently became "a player sees its magnitude".
+    #[test]
+    fn a_catalog_spell_the_probe_did_not_observe_stays_ingested_magnitude() {
+        let facts = facts_with_catalog_level("core_rulebook", "Alarm");
+        let verdict = classify(&spell_unit("core_rulebook", "Alarm"), &facts, &BTreeSet::new());
+        assert_eq!(verdict.status, "ingested-magnitude");
+        assert_eq!(verdict.evidence, "spell_list_entry_with_resolved_level");
+    }
+
+    /// The `Celestial Shield` discipline, spell side: the observation is
+    /// `(engine_book, key)`, so a book whose OWN record was never probed
+    /// cannot claim another book's magnitude just by sharing the name.
+    ///
+    /// Not hypothetical. `Shield` is a real CRB record, and the probe's own
+    /// `the_probe_never_grounds_one_books_unit_on_another_books_table` proves
+    /// an APG record of the same name is refused at the probe. This pins that
+    /// `classify()` does not undo that refusal.
+    #[test]
+    fn one_books_observation_never_grounds_another_books_spell_of_the_same_name() {
+        let mut facts = facts_with_catalog_level("advanced_players_guide", "Shield");
+        facts.spell_effect_wired.insert(("core_rulebook".to_string(), "Shield".to_string()));
+        let verdict =
+            classify(&spell_unit("advanced_players_guide", "Shield"), &facts, &BTreeSet::new());
+        assert_eq!(verdict.status, "ingested-magnitude");
+    }
+
+    /// A spell with no resolved corpus level is `text-complete`, and an
+    /// observation must not overrule that: the probe's verdict is consulted
+    /// only on the branch that already had a magnitude to explain.
+    #[test]
+    fn an_observation_does_not_promote_a_spell_with_no_resolved_level() {
+        let mut facts = EngineFacts::default();
+        facts
+            .spell_levels
+            .entry("core_rulebook")
+            .or_default()
+            .insert("Prestidigitation".to_string(), false);
+        facts
+            .spell_effect_wired
+            .insert(("core_rulebook".to_string(), "Prestidigitation".to_string()));
+        let verdict =
+            classify(&spell_unit("core_rulebook", "Prestidigitation"), &facts, &BTreeSet::new());
+        assert_eq!(verdict.status, "text-complete");
+    }
+
+    /// A spell absent from the catalog stays `not-ingested` even if some
+    /// stale observation names it: the catalog gate runs first, and an
+    /// observation can never manufacture ingestion.
+    #[test]
+    fn an_observation_never_manufactures_ingestion_for_an_uncatalogued_spell() {
+        let mut facts = EngineFacts::default();
+        facts
+            .spell_effect_wired
+            .insert(("core_rulebook".to_string(), "Invented Spell".to_string()));
+        let verdict =
+            classify(&spell_unit("core_rulebook", "Invented Spell"), &facts, &BTreeSet::new());
+        assert_eq!(verdict.status, "not-ingested");
+    }
+
+    // ----- The fact set is exactly the probe's `Wired` verdicts -----
+
+    /// Only `SpellProbeOutcome::Wired` enters the fact set. Every refusal
+    /// reason the probe can return is fed in here, so a refusal cannot be
+    /// silently treated as a promotion.
+    #[test]
+    fn only_wired_outcomes_enter_the_fact_set() {
+        let refusals = [
+            SpellProbeOutcome::NoCastingClassHasIt,
+            SpellProbeOutcome::AbsentFromBookCorpus,
+            SpellProbeOutcome::SchoolNotRecognized,
+            SpellProbeOutcome::NoTableEffect,
+            SpellProbeOutcome::ForeignBookTable,
+            SpellProbeOutcome::NoSaveDcOnViewModel,
+            SpellProbeOutcome::DcDisagreesWithOracle { observed: 99, oracle: 15 },
+            SpellProbeOutcome::BaselineAlreadyCarriesADc,
+        ];
+        let mut outcomes: BTreeMap<(String, String), SpellProbeOutcome> = BTreeMap::new();
+        for (i, refusal) in refusals.into_iter().enumerate() {
+            outcomes.insert(("core_rulebook".to_string(), format!("Refused {i}")), refusal);
+        }
+        outcomes.insert(
+            ("core_rulebook".to_string(), "Shield".to_string()),
+            SpellProbeOutcome::Wired { class_id: "class:wizard", level: 1, dc: 15 },
+        );
+        let wired = spell_effect_wired_from_outcomes(&outcomes);
+        assert_eq!(wired, BTreeSet::from([("core_rulebook".to_string(), "Shield".to_string())]));
     }
 }
