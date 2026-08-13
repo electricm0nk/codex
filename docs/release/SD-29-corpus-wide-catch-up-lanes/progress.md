@@ -10794,3 +10794,74 @@ Two books are now reachable-exhausted rather than done: `bestiary` (58 classifie
 and `inner_sea_bestiary` (7, 0). `occult_adventures` is a ONE-monster book — a full registration cost
 for a single record, which a round that takes it should state up front rather than discover at the
 ceiling table.
+
+### 5.1 Gate — run 1
+
+`./scripts/verify.sh` (FULL, `RETRO_ACTOR=sd29-monster-r10`, exit code captured directly, never
+through a pipe). Logs `/tmp/codex-verify-vLWr5e`.
+
+**`RESULT: FAIL` — 13 of 14 stages passed; `root-full` red.** Passed: `preflight-disk`, `pi-sweep`,
+`audit-selftest`, `reclaim-selftest`, `driver-selftest`, `root-lib` (1,735), `desktop` (443), `reach`,
+`frontend-install`, `frontend-test` (99/99), `frontend-typecheck`, `clippy`, `class-dump`.
+
+**`root-full`: `cargo exit 101`, 6,301 passed across 544 suites, exactly two failures and both are
+one defect.** `sd24_identifier_discipline_audit::no_bundle_tag_identifier_leaks_in_shipping_source`
+and `sd26_identifier_discipline_audit::no_bundle_tag_identifier_leaks_in_scripts_and_data` both
+rejected `monster_catalog::tests::sd22_rows` — the helper this round added to separate Bestiary 1's
+two tables now that a shared wire code no longer does. The audit is right and the name was wrong for
+the audit's own reason: what the helper selects is the **hand-modelled** half; "SD-22" names the
+bundle that wrote it rather than the thing. Renamed to `hand_modelled_rows`, and
+`tests/sd26_cache_beastiary.rs`'s `load_sd22_monsters` renamed with it even though the audit does not
+scan `tests/`.
+
+**Fixed and pushed the moment it existed (`0b4b3703`) rather than held to cycle end**, because
+`e70d39fc` was already on `origin/tranche/9` where this turns a CONCURRENT lane's gate red through no
+fault of its own — the cost `§52.5` records and the mitigation `§57.5(b)` states. Verified
+individually before re-running the gate, rather than re-running the whole gate hopefully:
+`cargo test --locked --test sd24_identifier_discipline_audit` → 1 passed;
+`--test sd26_identifier_discipline_audit` → 1 passed; `--test sd26_cache_beastiary` → 12 passed.
+
+**Nothing was accepted as environmental.** No stage failed twice with the same attribution, so
+`§39`'s recurrence rule is not engaged.
+
+**Two baselines flagged stale UPWARD by run 1 and raised in `scripts/verify-baselines.env`, both from
+stages that PASSED in that run:** `BASELINE_ROOT_LIB_TESTS` 1726 → **1735** (+9, this round's
+`rules_tables::bestiary` tests) and `BASELINE_DESKTOP_TESTS` 442 → **443** (+1,
+`no_bestiary_1_creature_reaches_the_wire_twice`). `BASELINE_ROOT_FULL_TESTS` was deliberately NOT
+raised from run 1 — that stage was red, and a floor must never be set from a run that did not pass.
+
+### 6.1 Item 8 — on screen, machine-verdicted, BOTH tables
+
+DoD item 8 is not waivable and this round surfaces a player-visible family, so it gets an on-screen
+artifact. Run with the proven harness rather than hand-rolled, and **not** concurrently with
+`verify.sh` (22 GiB, no swap):
+
+```
+RUN_DESKTOP_AGENT=sd29-monster-r10 \
+  ./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Aboleth" \
+  --expect "Aboleth" --expect "Aberration" --expect "Mucus Cloud" \
+  --out docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-009/item8 \
+  --slug bestiary-1-aboleth
+```
+
+**PASS**, at `HEAD 0b4b3703`. The rendered lines the harness read back off the live app's clipboard:
+
+```
+14:Aberration (80)
+30:AbolethHuge Aberration (Aquatic)
+32:Speed 10 ft., swim 60 ft. · Bestiary 1 p.8 · Hit dice Aberration:8
+35:Mucus Cloud — Special Attack (Ex)p.8
+```
+
+That one record proves **both** new families: `Aboleth` is one of the 280 chassis monster rows, and
+`Mucus Cloud` is one of the 323 chassis ability rows, rendered underneath the monster that owns it.
+
+**A second record was verified for a reason specific to this round: the SD-22 half had to be proven
+still on screen.** This round changed `monsters_reach`, `book_wire_code`, `book_display_name` and
+`holds_key` on the path both tables share, and every one of those changes could have served the
+chassis half while silently dropping the other. `Ankheg` (`beastiary1:monster:ankheg`) → **PASS**,
+`bestiary-1-ankheg-sd22-half.png` + `.verify.md`. Four artifacts, no `.FAILED.*` file in the
+directory.
+
+`driver.sh stop` run at cycle end.
