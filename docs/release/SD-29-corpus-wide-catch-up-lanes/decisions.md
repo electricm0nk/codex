@@ -6011,6 +6011,258 @@ either pays a full book's registration cost for a handful of records and should 
 (c) The `ASPECT:` widening above and Ultimate Wilderness's 149-row archetype block are both **new
 record types**, not wider predicates, and neither is reachable by another ownership shape.
 
+## Decision 64 — Monster / Monster-Ability Lane, extend: round 10 (2026-08-13, `sd29-monster-r12`, card `epic-5-monster-lane-extend`)
+
+Round 10 took **Ultimate Psionics — 34 units, the whole of the lane's largest remaining reachable
+book** — and, before touching it, ran the corpus-wide scan `§62.4` handed forward. The scan is the
+round's most valuable output: the ownership class `§62.4` measured at **16** is **229**.
+
+Section number **reserved at claim time**, per the board's note after `§47`/`§49` and `§60`/`§62`
+both collided between concurrent lanes.
+
+**This decision does not claim the lane is done.** The REAL ceiling by the classifier's terms is now
+**10**; the honest ceiling including `§64.1`'s class is **239**.
+
+### 64.0 Every figure, command first
+
+Lane denominators, over the regenerated `docs/work-inventory.json`, by the command rounds 1-9 record:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 52 | **31** | −21 |
+| `monster_ability` remaining | 1,497 | **1,484** | −13 |
+| raw remaining total | 1,549 | **1,515** | −34 |
+| `monster` grounded | 1,218 | **1,239** | +21 |
+| `monster_ability` grounded | 1,610 | **1,623** | +13 |
+| classifier `reachable remainder` | 109 | **75** | −34 |
+| **REAL ceiling (classifier terms)** | 44 | **10** | −34 |
+
+`1549 − 34 = 1515` closes exactly, and the REAL ceiling moves by exactly the units ingested — the
+**second consecutive round** in which those two agree.
+
+**Round 9's closing figures were reproduced EXACTLY at cycle start before being moved** — raw
+remaining 1,549, classifier reachable 109, REAL ceiling 44, grounded 1,218 / 1,610 — the fourth
+consecutive round in which a prior round's published numbers survived re-derivation.
+
+**Nothing but the two monster kinds moved.** Derived rather than asserted, by diffing the whole
+inventory's per-kind status counts against `git show HEAD:docs/work-inventory.json`:
+
+```
+python3 -c "
+import json,collections
+a=json.load(open('/tmp/.../inv-before.json')); b=json.load(open('docs/work-inventory.json'))
+g=lambda d: collections.Counter((u['kind'],u['status']) for u in d['units'])
+ca,cb=g(a),g(b)
+for k in sorted(set(ca)|set(cb)):
+    if ca[k]!=cb[k]: print(k, ca[k],'->',cb[k])
+print('units total', len(a['units']),'->',len(b['units']))"
+  ('monster', 'grounded')            1218 -> 1239
+  ('monster', 'not-ingested')          51 -> 30
+  ('monster_ability', 'grounded')    1610 -> 1623
+  ('monster_ability', 'not-ingested') 1473 -> 1460
+  units total 38540 -> 38540
+```
+
+**The dispatch brief's "monster ~305, monster_ability ~852, against grounded 62 and 20" was wrong
+for the NINTH round running.** `§46.1`, `§50.7`, `§52`, `§55`, `§57.0`, `§58.0`, `§60.0` and `§62.0`
+each corrected the identical pair; the round-10 brief repeated it verbatim again. That pair is near
+`bestiary`'s book subtotal, not the corpus-wide figure. The brief's one *correct* inherited figure
+was `44`, labelled "the previous round reported 44 remaining — if your derivation disagrees, yours
+wins". It did not disagree.
+
+### 64.1 The class `§62.4` measured at 16 is 229, and the scan is now checked in
+
+`§62.4` closed with a standing instruction:
+
+> **The predicate to scan other books for is an `ABILITY:Internal|AUTOMATIC|` token on a monster
+> row.** Unscanned as of this round; scanning it is cheap and is the next round's first move.
+
+It was this round's first move, before any ingest. The result:
+
+```
+$ python3 scripts/scan_monster_ability_bundle_rows.py
+book                        orphans  bundle-reachable
+bestiary                        146                63
+bestiary_2                       65                15
+bestiary_3                       13                 9
+bestiary_4                      225                61
+inner_sea_gods                   81                79
+ultimate_psionics                66                 2
+
+orphan rows the `ABILITY:Internal|AUTOMATIC|` hop would reach: 229
+```
+
+**§62.4 was right about the shape and wrong about the size by an order of magnitude, and the reason
+is worth more than the number.** It measured the class in the file it was reading —
+`support/isg_abilities_races_b4.lst`, 16 rows — and stated the finding as a property of that file.
+The scan reproduces those 16 **exactly** as a subset (`Counter` over the reached rows' source files
+→ `{'isg_abilities_races.lst': 63, 'support/isg_abilities_races_b4.lst': 16}`), which is what makes
+this a correction of the same measurement rather than a competing one. Inner Sea Gods' real figure
+is **79**, and five other books carry the shape. This is `§62.4`'s own lesson — a finding recorded
+as a property of the artefact you were looking at rather than of the corpus — one level out, and it
+is the third time this lane has paid for that shape (`§62.1` is the second, `§60.3` the first).
+
+**Five of the six books are already registered.** The class is therefore not "books this lane has
+not reached"; it is **records already-shipped books do not ship**, which is the more expensive kind
+of gap.
+
+**Not closed in this round, deliberately, and for `§62.4`'s own reason now that the number is
+known.** Following the hop widens an *ownership* pass; ownership decides which records five
+registered books emit, so it is the `count-change-needs-a-sweep` hazard at its worst. Unattended-mode
+default taken: **derive it, check the derivation in, pin it, hand it forward.**
+
+Pinned by an **executing test** on this round's own book —
+`rules_tables::ultimate_psionics::monster_tests::no_internal_bundle_ability_ships_yet` — which fails
+the moment a later round widens the pass, telling that round that this section's arithmetic is
+stale. `inner_sea_gods` already carries the equivalent (`no_support_directory_ability_ships_yet`),
+and that test's message must be read as `§62.4`-scoped: it guards one file of the six-book class.
+
+**The scan is checked in as `scripts/scan_monster_ability_bundle_rows.py`, not left in a scratch
+path.** `§45.1`'s finding is that an ephemeral path is not a citation — round 1's shape table was
+derived by a `/tmp` script that no longer exists and no successor could re-derive it. The script
+imports `classify_monster_ability_rows.py` and reuses its `classify_book` for the orphan set rather
+than defining `orphan` a second time, so the two screens cannot drift and the finding stays
+falsifiable.
+
+### 64.2 A wire code that is deliberately NOT the book's `SOURCESHORT`
+
+Every other book in `monster_catalog` carries its own `SOURCESHORT` as its wire code, and `§62.5`
+records that convention being followed by derivation rather than invention. This book breaks it:
+`ultimate_psionics.pcc:17` declares `SOURCESHORT:UP`, and the code registered is **`UPSI`**.
+
+The convention exists to stop a code being *invented*. Here both candidates are real, and the
+question is which one a player already sees: this app has served the same book's equipment under
+`equipment_resolver::EQUIPMENT_BOOK_UPSI` = `"UPSI"` and its feats under the `Upsi` source token
+since SD-28 E29. Serving one book as `UP` on the monster screen and `UPSI` on the equipment screen
+is exactly the mislabelling the convention protects against. **Recorded rather than silently
+chosen**, in `monster_catalog::BOOK_UPSI`'s own doc comment, so a later reader does not "fix" it
+back and split the book across two codes.
+
+This is the first book in the lane whose `RuleSetId` was already compiled for other kinds, and the
+divergence is a consequence of that: registration cost no new rule set, no new corpus directory and
+no new work-inventory book entry, but it did inherit another lane's naming.
+
+### 64.3 `CR 1/Infinity` — a player-visible defect eleven books could not produce
+
+`up_races.lst:47` states `CR:0` for Psicrystal. It is the first row in this catalog with a
+challenge rating of zero, and the frontend rendered it as **`CR 1/Infinity`**:
+
+```ts
+export function formatChallengeRating(rating: number): string {
+  if (rating >= 1) return `CR ${…}`;
+  const denominator = Math.round(1 / rating);   // Math.round(1/0) === Infinity
+  return `CR 1/${denominator}`;
+}
+```
+
+**Two Rust guards were red before the screen was ever opened, and both were wrong in the same way.**
+`every_chassis_row_states_a_readable_challenge_rating` and
+`every_row_carries_the_fields_the_screen_renders` each asserted `challenge_rating > 0.0`. That
+assertion caught a token that failed to parse and fell back to zero — but it could only ever mean
+that while no registered book had a row whose real CR *is* zero, and it flagged a correct
+transcription as a defect the moment one did.
+
+**Neither guard was weakened; both were sharpened to the property they were reaching for.** The
+catalog test now asserts the token↔value correspondence — a parsed zero is admissible exactly when
+the corpus token is literally `"0"` — so a silent fallback still fails. The response test pins the
+set of zero-CR served keys (`ZERO_CHALLENGE_RATING`) the same way it already pins the two Bestiary 3
+rows that state no `SOURCEPAGE:`, so a pinned row *gaining* a rating is as much a signal as a new
+one losing it. This is the same correction Bestiary 2 forced on that file's ability-key uniqueness
+test, recorded three books earlier in the same module: **a guard can encode an accidental property
+of the books registered when it was written**, and the tell is that it fires on data nobody disputes.
+
+The frontend fix and its test came with it (`formatChallengeRating(0) === 'CR 0'`). Without the
+ingest, no test in the repo could have reached the `Infinity` branch.
+
+### 64.4 Registration, and the panel row `§63.4` predicted
+
+**TWELVE registration points, and for the first time in this lane not one of them is a new
+`RuleSetId`, a new corpus directory or a new work-inventory book entry** — `RuleSetId::Upsi` has
+been compiled for this book's feats, equipment and archetypes since SD-28 E29, and
+`corpus_ingest_diagnostic`'s `book_status` row for it already existed. The eleven, enumerated so a
+successor counts rather than remembers: the transcriber's `BOOKS` row; `mod monster_data` plus the
+two `*_static()` accessors in the book module; `monster_chassis::MONSTER_BOOKS`;
+`gen_book_cache::MONSTER_BOOK_SPECS`; `monster_catalog::BOOK_UPSI`; `book_display_name`;
+`book_wire_code`; the frontend's `BOOK_LABELS`; **the frontend test's own `SERVED_BOOKS`
+constant**; `reach_gate::CORPUS_BOOK_IDS`; the two `reach_gate` claim arms; and
+`corpus_ingest_diagnostic`'s per-book counts.
+
+**The twelfth was found by the gate, not by this list, and that is the point.** Every prior receipt
+in this lane says eleven. `SERVED_BOOKS` is a *test* constant, so it appears in no production
+registry a successor would grep, and it is the one point in the set that a Rust-only sweep cannot
+see — `frontend-test` went red with
+`BOOK_LABELS names exactly the served books: expected …ISWG,MC, got …ISWG,MC,UPSI` after every Rust
+stage had passed. This is the `count-change-needs-a-sweep` hazard in its exact documented form, and
+it is recorded here as **twelve** so the next round does not re-learn it from a red gate.
+
+`corpus_ingest_diagnostic::ultimate_psionics_counts()` is the one that would have gone wrong.
+`§63.4` found that `ultimate_wilderness_counts()` "inserts only `feats`", so **round 6's 327
+companion records had been absent from the Corpus Ingest panel since the day they landed** — a
+per-book counts function lists the families that existed when it was written, and the next lane adds
+its book to the *row list* and never looks at the function. This book has such a function for the
+same reason. It now **chains `chassis_book_counts("ultimate_psionics")`** rather than inserting two
+more literals, so the map carries every family the book has, whoever adds the next one.
+
+Provenance verified against the files rather than copied from the row above:
+`ultimate_psionics.pcc:21` declares `ISOGL:YES`, `grep -c '^COPYRIGHT:'` → **29**, and a real
+10,418-byte `OGL.txt` sits beside it. `grep -c NAMEISPI:YES up_races.lst up_abilities_race.lst` →
+**0, 0**, and the classifier's Product Identity screen returns 0 — which is what
+`ogl-pi-blacklist.md` §2.1's per-record predicate predicts for a book whose creatures are generic
+psionic species (Blue, Dromite, Elan, Half-Giant, Maenad, Noral, Ophiduan, Xeph) rather than named
+personae. `records_redacted` is 0 and **derived from disk** by `count_on_disk_redactions`
+(`§63.2`), not hardcoded; `grep -rl 'redacted PI' data/corpus/ultimate_psionics/` returns only
+`LICENSE.json` itself, which carries the marker as the policy's own `"marker"` field.
+
+The two screens agree on composition as well as on the total here — classifier 66 orphans / 0
+Product Identity, transcriber 66 orphans / 0 Product Identity — unlike `inner_sea_gods`, where they
+agreed only on the sum (`§62.5`).
+
+`up_races_apg.lst` exists in the book directory and contributes **zero** `monster` units. It cannot
+leak in: the transcriber's unit set is the inventory's, never a file glob. Trap report, run before
+any ingest code (`cycle mechanics 0b`): `up_races.lst` DECLARES 23, `.COPY=` 0, `.MOD` 0, `#OFF` 0 —
+23 declarations against 21 `monster` units, the two-row difference being rows with no `CR:` token,
+which `v06_work_inventory` files as `race`.
+
+### 64.5 Round-11 queue, from ONE command
+
+`python3 scripts/classify_monster_ability_rows.py`, raw remaining **1,515**, classifier reachable
+**75**, REAL ceiling **10 by the classifier's terms** and **239 counting §64.1's class**:
+
+| book | remaining units | orphans | PI | classifier reachable | REAL | note |
+|---|---|---|---|---|---|---|
+| `horror_adventures` | 74 | 65 | 0 | **9** | **9** | the lane's largest remaining reachable book. `RuleSetId::Ha` exists; already a race-trait-lane book; both files at the book root. `Ha`'s own doc comment scopes it to the main `ha_abilities_race.lst` and excludes `support/ha_abilities_race_oa.lst` under `PRECAMPAIGN:1,INCLUDES=Occult Adventures` — a gate this repo still does not satisfy. Its 4 `ABILITY:Internal|AUTOMATIC|` monster rows reach **0** orphans (scanned this round), so the bundle class does not apply here |
+| `occult_adventures` | 4 | 3 | 0 | **1** | **1** | a ONE-monster book needing a whole new `RuleSetId` for one record. Its monster row is `support/oa_races_b3.lst`, so `§62.2`'s resolver is what makes it reachable at all. A round that takes it pays a full registration for one record and should say so up front |
+| `inner_sea_gods` | 84 | 81 | 3 | 0 | **79** | §64.1's class, corrected up from §62.4's 16 |
+| `bestiary` | 204 | 146 | 0 | 58 | **63** | reachable-exhausted by `§60.2`; the 63 are §64.1's class |
+| `bestiary_4` | 239 | 225 | 14 | 0 | **61** | §64.1's class only |
+| `bestiary_2` · `bestiary_3` | 67 · 13 | 65 · 13 | 0 · 0 | 0 · 0 | **15 · 9** | §64.1's class only |
+| `inner_sea_bestiary` | 40 | 26 | 7 | 7 | **0** | reachable-exhausted, `§58.1`; zero bundle rows |
+| `ultimate_psionics` | 66 | 66 | 0 | 0 | **2** | this round's book, now monster-exhausted; the 2 are §64.1's class |
+
+**Thirteen books now hold 866 orphan abilities and zero remaining monsters** (up from 12/800 —
+`ultimate_psionics` joined that set the moment its last monster grounded), re-derived rather than
+incremented.
+
+**The lane's shape has changed and a successor must not read this as "10 left."** Only **10 units**
+remain that need nothing but registration, and they sit in two books, one of which costs a whole new
+`RuleSetId` for a single record. Against that, **229 units in six books — five already registered —
+are reachable in the corpus and unreachable by any pass this repo runs.** For the first time in this
+lane the mechanism work is larger than the ingest work, and it is one mechanism, scanned, counted
+and checked in.
+
 ## Decision 65 — Companion Lane, extend: round 8 (2026-08-13, `sd29-companion-r12`, card `epic-7-companion-lane-extend`)
 
 Round 8 ingested **Core Rulebook** end-to-end — 84 records, all 84 grounded and reaching a player —
