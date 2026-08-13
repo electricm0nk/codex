@@ -460,7 +460,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
     },
     // SD-29 Epic 7 round 7 (`SD29-E7-F2-008`). Core Essentials — the book that
     // carries the `.COPY=` shape on its CREATURE rows, which no registered book
-    // had (`decisions.md §62.1`). 103 of its 145 rows ship; the 42 that do not
+    // had (`decisions.md §63.1`). 103 of its 145 rows ship; the 42 that do not
     // are 22 `.COPY=` creature deltas, the 4 `.MOD` ability overlays `§59.2`
     // predicted this book would be the first to exercise, and 16 orphans.
     //
@@ -960,7 +960,7 @@ mod tests {
 
     /// Core Essentials is the first registered book whose CREATURE rows carry
     /// the `.COPY=` delta shape, and none of the 22 ships (`decisions.md
-    /// §62.1`).
+    /// §63.1`).
     ///
     /// `every_registered_creature_states_its_monster_class_token_verbatim`
     /// above is what caught them — `ce_races_familiar_cr.lst:33` reads
@@ -986,7 +986,7 @@ mod tests {
         // remainder` for this book. **102 ship, not 103**, and the one-row gap
         // is a stated finding rather than a miscount: `Pseudodragon ~ Tail` is
         // OWNED — the classifier is right — and states nothing this chassis
-        // models, so `decisions.md §62.3` drops it. Reachability is a fact
+        // models, so `decisions.md §63.3` drops it. Reachability is a fact
         // about ownership; shippability is a fact about the record type, and
         // this is the first book where the two differ.
         assert_eq!(book.companions.len() + book.companion_abilities.len(), 102);

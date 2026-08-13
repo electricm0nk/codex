@@ -20,7 +20,7 @@
 //! module doc, and both keep their honest `not-ingested` status in
 //! `docs/work-inventory.json`.
 //!
-//! * **22 `.COPY=` CREATURE rows** (`decisions.md §62.1`). This is the first
+//! * **22 `.COPY=` CREATURE rows** (`decisions.md §63.1`). This is the first
 //!   companion book whose *creature* rows carry the delta shape.
 //!   `ce_races_familiar_cr.lst:33` reads `Bat.COPY=Bat (Celestial)` and carries
 //!   `OUTPUTNAME:`, `TEMPLATE:` and `KIT:` -- and nothing else. No `SIZE:`, no

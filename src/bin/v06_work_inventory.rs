@@ -903,6 +903,9 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     // SD-29 Epic 5 extend, round 7 (monster lane). The engine id and the corpus
     // directory are spelled the same, unlike `bestiary` -> `bestiary_1`.
     RuleSetId::Isb,
+    // SD-29 Epic 5 extend, round 9 (monster lane). Engine id and corpus
+    // directory are spelled the same.
+    RuleSetId::Isg,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -940,6 +943,7 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::B3 => "bestiary_3",
         RuleSetId::B4 => "bestiary_4",
         RuleSetId::Isb => "inner_sea_bestiary",
+        RuleSetId::Isg => "inner_sea_gods",
     }
 }
 
@@ -991,6 +995,7 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::B3 => "bestiary_3",
         RuleSetId::B4 => "bestiary_4",
         RuleSetId::Isb => "inner_sea_bestiary",
+        RuleSetId::Isg => "inner_sea_gods",
     }
 }
 
@@ -3365,12 +3370,19 @@ mod rule_set_mapping_tests {
     /// A book the engine has not compiled must still report honestly.
     #[test]
     fn uncompiled_books_stay_none() {
-        // `ultimate_psionics` moved from uncompiled to compiled in SD28-E29
-        // (`epic-29-upsi-complete`) -- `rule_set_for` now correctly returns
-        // `Some(RuleSetId::Upsi)` for it, so it is no longer a valid
-        // uncompiled example. `inner_sea_gods` remains genuinely
-        // uncompiled (SD-30's own book set, out of this bundle).
-        assert_eq!(rule_set_for("inner_sea_gods"), None);
+        // This test needs a book the engine genuinely has not compiled, and it
+        // has now outlived TWO of them: `ultimate_psionics` moved to compiled
+        // in SD28-E29 (`epic-29-upsi-complete`), and `inner_sea_gods` in SD-29
+        // Epic 5 extend round 9, which registered `RuleSetId::Isg` for its
+        // monster / monster_ability families. The comment this replaces also
+        // stated a reason that was wrong by the time it was read --
+        // "`inner_sea_gods` ... (SD-30's own book set, out of this bundle)" --
+        // and `decisions.md §38` had already re-scoped SD-29 corpus-wide.
+        //
+        // `occult_adventures` is uncompiled by DERIVATION, not by assumption:
+        // `corpus_dir_for` is exhaustive over `RuleSetId` and carries no arm
+        // returning it, so no `COMPILED_RULE_SETS` member can map to it.
+        assert_eq!(rule_set_for("occult_adventures"), None);
     }
 }
 

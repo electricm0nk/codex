@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "The Old Man ~ Monk Abilities",
+    "delivery": null,
+    "description": "The Old Man has the following abilities of a 16th-level monk: AC bonus (+4), fast movement (50 ft.), flurry of blows, high jump, ki pool (18 points, adamantine, cold iron, lawful, magic, silver), quivering palm (DC 28), slow fall (80 ft.), stunning fist (blinded, deafened, fatigued, staggered, or stunned), unarmed strike",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:the_old_man_monk_abilities",
+    "name": "Monk Abilities",
+    "owners": [
+      "inner_sea_gods:monster:the_old_man"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 192,
+    "record_key": "The Old Man ~ Monk Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

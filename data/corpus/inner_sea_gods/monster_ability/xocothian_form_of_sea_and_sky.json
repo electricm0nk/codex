@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Xocothian ~ Form of Sea and Sky",
+    "delivery": "Supernatural",
+    "description": "Once per hour, a xocothian can transform itself into two Small elementals (one air and one water) for up to 7 minutes. These elementals appear in adjacent squares. Each have half of the xocothian's current hit points and share the same mind. They can reform into the xocothian as a standard action if they are adjacent to each other - the reformed xocothian's hit points are equal to the total of the two elementals' hit points. If either elemental is slain, the xocothian must use its standard action on its next turn to reform (treat a slain elemental's hit points as 0 when determining the reformed xocothian's total hit points).",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:xocothian_form_of_sea_and_sky",
+    "name": "Form of Sea and Sky",
+    "owners": [
+      "inner_sea_gods:monster:xocothian"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 177,
+    "record_key": "Xocothian ~ Form of Sea and Sky"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

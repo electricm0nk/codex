@@ -61,6 +61,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Bat (Sootwing)"],
+        source_file: "mc_abilities_race.lst",
         source_line: 71,
     },
     MonsterAbilityRecord {
@@ -73,6 +74,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Seru"],
+        source_file: "mc_abilities_race.lst",
         source_line: 85,
     },
     MonsterAbilityRecord {
@@ -85,6 +87,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Seru"],
+        source_file: "mc_abilities_race.lst",
         source_line: 86,
     },
 ];

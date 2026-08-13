@@ -48,7 +48,7 @@
 //!   * `Universal Monster Rule ~ Poison (Extraordinary)` (`origin: mod_only`)
 //!
 //! NOT transcribed -- CREATURE rows that state a DELTA on another record
-//! (`decisions.md §62.1`). PCGen copies the base creature whole and applies
+//! (`decisions.md §63.1`). PCGen copies the base creature whole and applies
 //! the few tokens the copy row carries, so the row itself states no `SIZE:`,
 //! no `MOVE:` and no `MONSTERCLASS:` -- transcribed verbatim it is a creature
 //! card with a name and nothing else. Any ability reachable only from one of
@@ -77,7 +77,7 @@
 //!   * `Weasel (Fiendish)` (`origin: copy`)
 //!
 //! NOT transcribed -- OWNED rows that state nothing this chassis models
-//! (`decisions.md §62.3`). The row carries no `TYPE:`, no `DESC:` and no
+//! (`decisions.md §63.3`). The row carries no `TYPE:`, no `DESC:` and no
 //! `BONUS:`, so every modelled field transcribes empty and the card reads as
 //! a name over a page number. What each one DOES state is an `ASPECT:`, which
 //! no chassis in this program models yet -- the disposition is `§61.2`'s:

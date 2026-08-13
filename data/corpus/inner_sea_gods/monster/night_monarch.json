@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_gods:monster_ability:night_monarch_no_breath",
+      "inner_sea_gods:monster_ability:night_monarch_immunity_to_cold",
+      "inner_sea_gods:monster_ability:night_monarch_breath_weapon",
+      "inner_sea_gods:monster_ability:night_monarch_poison_flesh",
+      "inner_sea_gods:monster_ability:night_monarch_dream_dust",
+      "inner_sea_gods:monster_ability:night_monarch_languages"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Night Monarch",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:night_monarch",
+    "monster_class": "Outsider (Fort/Will):18",
+    "name": "Night Monarch",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Wing"
+      }
+    ],
+    "race_subtype": "Chaotic|Extraplanar|Good|Herald",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.284",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 120,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
+    "line": 22,
+    "record_key": "Night Monarch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

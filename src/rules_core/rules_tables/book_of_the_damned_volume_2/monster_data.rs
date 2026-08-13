@@ -93,6 +93,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 7,
     },
     MonsterAbilityRecord {
@@ -105,6 +106,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponDice", "BreathWeaponDC"],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 8,
     },
     MonsterAbilityRecord {
@@ -117,6 +119,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 9,
     },
     MonsterAbilityRecord {
@@ -129,6 +132,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 10,
     },
     MonsterAbilityRecord {
@@ -141,6 +145,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SmokeAuraRange", "SmokeAuraDC"],
         source_page: Some("p.56"),
         owners: &["Demon (Brimorak)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 11,
     },
     MonsterAbilityRecord {
@@ -153,6 +158,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 15,
     },
     MonsterAbilityRecord {
@@ -165,6 +171,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 16,
     },
     MonsterAbilityRecord {
@@ -177,6 +184,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GazeAuraRange", "GazeAuraDC"],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 17,
     },
     MonsterAbilityRecord {
@@ -189,6 +197,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 18,
     },
     MonsterAbilityRecord {
@@ -201,6 +210,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.58"),
         owners: &["Demon (Seraptis)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 19,
     },
     MonsterAbilityRecord {
@@ -213,6 +223,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponDice", "BreathWeaponDC"],
         source_page: Some("p.60"),
         owners: &["Demon (Vavakia)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 23,
     },
     MonsterAbilityRecord {
@@ -225,6 +236,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VavakiaWoundDC"],
         source_page: Some("p.60"),
         owners: &["Demon (Vavakia)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 24,
     },
     MonsterAbilityRecord {
@@ -237,6 +249,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VavakiaStunDC"],
         source_page: Some("p.60"),
         owners: &["Demon (Vavakia)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 25,
     },
     MonsterAbilityRecord {
@@ -249,6 +262,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 29,
     },
     MonsterAbilityRecord {
@@ -261,6 +275,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 30,
     },
     MonsterAbilityRecord {
@@ -273,6 +288,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 31,
     },
     MonsterAbilityRecord {
@@ -285,6 +301,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.54"),
         owners: &["Demon (Vermlek)"],
+        source_file: "botd2_abilities_race.lst",
         source_line: 32,
     },
 ];

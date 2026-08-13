@@ -357,7 +357,7 @@ def transcribe(book: str) -> str:
     if not creatures:
         raise SystemExit(f"{book} carries no companion creature rows")
 
-    # ---- delta-row screen, CREATURE half (`decisions.md §62.1`) ----
+    # ---- delta-row screen, CREATURE half (`decisions.md §63.1`) ----
     #
     # `§59.2` built this screen for ABILITY rows and ran it over `abilities`
     # alone, because Bestiary 4 -- the book that forced it -- carries `.COPY=`
@@ -605,7 +605,7 @@ def transcribe(book: str) -> str:
     if orphans:
         abilities = [u for u in abilities if u["corpus_key"] not in orphan_keys]
 
-    # ---- empty-payload screen (`decisions.md §62.3`) ----
+    # ---- empty-payload screen (`decisions.md §63.3`) ----
     #
     # A row can be perfectly OWNED and still state nothing this chassis is able
     # to hold.  `core_essentials`' `Pseudodragon ~ Tail`
@@ -739,7 +739,7 @@ def transcribe(book: str) -> str:
             "//! NOT transcribed -- CREATURE rows that state a DELTA on another record"
         )
         out.append(
-            "//! (`decisions.md §62.1`). PCGen copies the base creature whole and applies"
+            "//! (`decisions.md §63.1`). PCGen copies the base creature whole and applies"
         )
         out.append(
             "//! the few tokens the copy row carries, so the row itself states no `SIZE:`,"
@@ -759,7 +759,7 @@ def transcribe(book: str) -> str:
             "//! NOT transcribed -- OWNED rows that state nothing this chassis models"
         )
         out.append(
-            "//! (`decisions.md §62.3`). The row carries no `TYPE:`, no `DESC:` and no"
+            "//! (`decisions.md §63.3`). The row carries no `TYPE:`, no `DESC:` and no"
         )
         out.append(
             "//! `BONUS:`, so every modelled field transcribes empty and the card reads as"

@@ -130,7 +130,23 @@ pub struct MonsterAbilityRecord {
     /// Every monster in this book whose row (or whose namespace, for a
     /// `<Monster> ~ <Ability>` key) claims this ability.
     pub owners: &'static [&'static str],
-    /// The 1-based abilities-`.lst` line this record was read from.
+    /// The abilities-`.lst` file this record was read from, as a bare file
+    /// name relative to the book directory.
+    ///
+    /// The exact counterpart of [`MonsterStatBlock::source_file`], and added
+    /// for the same reason one book later: a book is not guaranteed one
+    /// abilities file either. Inner Sea Gods splits its 161 ability rows 145/16
+    /// across `isg_abilities_races.lst` and `support/isg_abilities_races_b4.lst`
+    /// — so `source_line` alone does not identify a row, and the generator that
+    /// re-reads the cited line to verify it must be told which file to open.
+    ///
+    /// Until this field existed the generator took the abilities file from a
+    /// single per-book spec string (`MonsterBookSpec::abilities_lst`), which is
+    /// correct only for a one-file book; the nine books registered before it
+    /// were all one-file, so the singular spelling was right by coincidence
+    /// rather than by rule.
+    pub source_file: &'static str,
+    /// The 1-based line of [`Self::source_file`] this record was read from.
     pub source_line: u32,
 }
 
@@ -279,6 +295,20 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "inner_sea_bestiary",
         monsters: super::inner_sea_bestiary::monsters_static(),
         monster_abilities: super::inner_sea_bestiary::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- 39 monsters and 77 owned
+    // abilities. The first book in this registry whose corpus rows do not all
+    // live in the book's root directory: 3 monster rows come from
+    // `support/isg_races_b4.lst`, which is why both the transcriber and the
+    // generator now RESOLVE a `source_file` basename against the book tree
+    // instead of joining it onto the root. Its module header records the
+    // 16-row `Race Traits ~` bundle finding -- abilities with a real owner that
+    // the ownership pass cannot see because the corpus states the link through
+    // a `CATEGORY:Internal` row rather than on the monster row itself.
+    MonsterBook {
+        corpus_book: "inner_sea_gods",
+        monsters: super::inner_sea_gods::monsters_static(),
+        monster_abilities: super::inner_sea_gods::monster_abilities_static(),
     },
     // SD-29 Epic 5 extend, round 8. Bestiary 1 -- 284 monsters and 323 owned
     // abilities, the largest single row in this registry and the only book

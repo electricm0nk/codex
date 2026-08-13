@@ -5600,7 +5600,237 @@ Ultimate Wilderness rows plus whatever the other five books carry of the same sh
 RECORD TYPE (`CompanionArchetypeRecord`) plus a screen section, not a wider ownership predicate, and
 a round that takes it should say so up front rather than discover it at the ceiling table.
 
-## Decision 62 — Companion Lane, extend: round 7 (2026-08-13, `sd29-companion-r11`, card `epic-7-companion-lane-extend`)
+## Decision 62 — Monster / Monster-Ability Lane, extend: round 9 (2026-08-13, `sd29-monster-r11`, card `epic-5-monster-lane-extend`)
+
+Round 9 took **Inner Sea Gods — 116 units, 73% of the lane's REAL remainder** — and executed the
+mechanism widening `§58.5` named and `§60.7` carried forward unverified. The widening was necessary;
+the *reason* both prior rounds gave for it was not the reason it was necessary, and that correction
+is this round's most transferable finding.
+
+**This decision does not claim the lane is done.** The REAL ceiling after this round is **44 by the
+classifier's terms**, and **at least 16 further units are reachable by a mechanism no screen
+follows** — §62.4.
+
+### 62.0 Every figure, command first
+
+Lane denominators, over the regenerated `docs/work-inventory.json`, by the command rounds 1-8 record:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 91 | **52** | −39 |
+| `monster_ability` remaining | 1,574 | **1,497** | −77 |
+| raw remaining total | 2,268 → 1,665 | **1,549** | −116 |
+| `monster` grounded | 1,179 | **1,218** | +39 |
+| `monster_ability` grounded | 1,533 | **1,610** | +77 |
+| classifier `reachable remainder` | 225 | **109** | −116 |
+| **REAL ceiling** | 160 | **44** | −116 |
+
+`1665 − 116 = 1549` closes exactly, and the REAL ceiling moves by exactly the units ingested — the
+first round in this lane where those two agree, because this round found no new instrument defect in
+the *downward* direction. It found one in the upward direction instead (§62.4).
+
+**Round 8's closing figures were reproduced EXACTLY at cycle start before being moved** — raw
+remaining 1,665, classifier reachable 225, REAL ceiling 160 — the third consecutive round in which a
+prior round's published numbers survived re-derivation.
+
+**The dispatch brief's "monster ~305, monster_ability ~852, against grounded 62 and 20" was wrong for
+the EIGHTH round running.** `§46.1`, `§50.7`, `§52`, `§55`, `§57.0`, `§58.0` and `§60.0` each
+corrected the identical pair; the round-9 brief repeated it verbatim again. That pair is near
+`bestiary`'s book subtotal (284/523), not the corpus-wide figure. Retro event emitted, with the
+blast-radius field naming all seven prior corrections.
+
+The brief's one *correct* inherited figure was `160`, and it was labelled "the previous round
+reported 160 remaining — if your derivation disagrees, yours wins". It did not disagree.
+
+### 62.1 The carried-forward blocker was real about the corpus and wrong about what bound
+
+`§58.5` stated the blocker and `§60.7` reproduced it verbatim, flagging it unverified:
+
+> Needs `MonsterAbilityRecord` to carry a `source_file`: its rows live in **two** ability files
+> (`isg_abilities_races.lst` 145, `support/isg_abilities_races_b4.lst` 16) and
+> `MonsterBookSpec::abilities_lst` is singular.
+
+Every clause is true about the corpus. **None of it binds on a shipped record.** All 77 shipped
+abilities come from `isg_abilities_races.lst`; **zero** come from the support file, because all 16 of
+its rows fall out as orphans (§62.4). A singular `abilities_lst` naming the main file would have
+produced the same 116 records.
+
+What actually blocked the book is a file the blocker statement never mentions:
+**`support/isg_races_b4.lst`, which holds 3 of the book's 39 MONSTER rows.** `MonsterStatBlock` has
+carried a `source_file` since `§50` — the ability side was the half everyone was looking at — but
+both sides carry a **bare basename**, which is what `v06_work_inventory` records, and the transcriber
+and the generator each joined that basename onto the book root. For the nine books before this one
+the basename *was* the location, so the join was correct **by coincidence rather than by rule**.
+
+```
+find ~/workspace/repos/pcgen/data -ipath '*inner_sea_gods*' -name '*races*'
+  isg_races.lst
+  isg_abilities_races.lst
+  support/isg_races_b4.lst
+  support/isg_abilities_races_b4.lst
+```
+
+Both misses would have been LOUD (`FileNotFoundError`), never silent, which is the one mercy in the
+shape and the reason this is a widening rather than a corpus-integrity incident.
+
+**The generalisable finding is the shape of the error, not the file.** A blocker inherited across two
+rounds was recorded as a property of the *mechanism* (`abilities_lst` is singular) when the binding
+constraint was a property of the *data* (a citation is a basename, not a path). Both statements point
+at the same book; only one predicts what happens when you run it. The lane has now paid twice for a
+claim about which of two structurally identical halves is broken — `§60.3` records the same shape one
+level up, a fix applied to one of two parallel generators reading as done.
+
+### 62.2 `resolve_book_file`, and the two cases it refuses rather than resolves
+
+Written once on each side, matching term for term so the transcriber and the generator cannot
+disagree about which file a citation names. Each searches the book tree for the basename and refuses:
+
+* **Not found anywhere** — the citation names a file the book does not have, so everything derived
+  from it is fiction.
+* **Found in more than one place** — a bare basename matching two real files does not identify a row,
+  and picking either is a coin flip on which rules text ships.
+
+**No book trips the second case, and that is derived rather than hoped.** Over all fourteen books
+this lane has considered — the ten registered plus the four on the round-9 queue — every one has
+**zero** duplicate `.lst` basenames (an `os.walk` counting basenames per book directory). So the
+ambiguity check costs nothing today, and is what makes the first book that does trip it fail loudly
+instead of shipping the wrong rules text.
+
+The generator additionally carries the **resolved sub-path** into the record's `path` citation, so a
+reader following the citation reaches the file the `sha256` was taken over:
+`data/corpus/inner_sea_gods/monster/the_first_blade.json` cites
+`pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst:6`, not a root path that
+does not exist.
+
+The ability side was widened too — `MonsterAbilityRecord::source_file` and
+`MonsterBookSpec::abilities_lsts` — because the chassis being correct *by rule* rather than by
+coincidence is the point, and the companion chassis has had exactly this shape since `§54`. It is
+recorded here as **not load-bearing for this book's shipped records**, so a later round does not
+credit it with an unblocking it did not do.
+
+### 62.3 The widening is additive, proven rather than asserted
+
+All nine previously registered books were re-transcribed. Across the ten `monster_data.rs` files:
+**1,533 insertions, 0 deletions, and zero non-`source_file` diff lines**:
+
+```
+git diff --numstat -- 'src/rules_core/rules_tables/*/monster_data.rs'
+git diff -U0 -- 'src/rules_core/rules_tables/*/monster_data.rs' \
+  | grep '^[+-]' | grep -v '^[+-][+-]' | grep -vc 'source_file:'   -> 0
+```
+
+**1,533 is exactly the lane's pre-round grounded `monster_ability` count.** Every shipped ability
+record gained precisely one line and not one record value moved — a cross-check the two numbers
+perform on each other, which is stronger than either alone.
+
+`bonus_bestiary` was patched **by hand** rather than regenerated, keeping `§60.5`'s ruling: it is the
+pilot's hand-written table, and regenerating it costs a real provenance note (why identity is the
+`KEY:` token and never the display name) for an otherwise header-only diff.
+
+### 62.4 The 16 `Race Traits ~` bundle rows — the ceiling is UNDER-stated, not over-stated
+
+Every prior round in this lane found its instrument over-reporting: `§58.1`'s 7-row Product Identity
+residue, `§60.2`'s 54 cross-table owners and 4 `.MOD` overlays. **This round found the opposite**, and
+it is the first time the classifier has been wrong in the expensive direction.
+
+Zero of the 16 `support/isg_abilities_races_b4.lst` ability rows ship. Both screens call them orphans,
+and by each screen's own predicate that is correct. **The corpus states their owner anyway**, one hop
+further out than either screen looks:
+
+```
+support/isg_races_b4.lst:6           The First Blade
+    ABILITY:Internal|AUTOMATIC|Race Traits ~ First Blade
+support/isg_abilities_races_b4.lst:8 Race Traits ~ First Blade    CATEGORY:Internal
+    ABILITY:Special Ability|AUTOMATIC|…|First Blade ~ Powerful Blows (Slam)
+        |First Blade ~ Regeneration|First Blade ~ Bladed Slam|…
+```
+
+The monster row names a `CATEGORY:Internal` **bundle** row; the bundle row names the individual
+abilities. The transcriber's row-named pass reads `ABILITY:Special Ability|AUTOMATIC|` tokens **on
+monster rows**, and its prefix pass matches an ability's namespace against a monster **key** — and
+here the namespaces are the creature's short name (`First Blade`, `Skein Steward`, `Ahmuuth`) while
+the monster keys are longer (`The First Blade`, `Steward of the Skein`, `Psychopomp (Ahmuuth)`).
+Neither pass reaches them. This is the mirror image of `corpus-identifier-scope-collisions`: there a
+shared name did not imply a shared thing; here a *different* name IS the same thing.
+
+**Deliberately not fixed in this round.** This round already widened file resolution on both sides; a
+second mechanism change in the same gate is how a round goes red, and widening an *ownership* pass
+changes which records every one of ten books ships — the "count change needs a sweep" hazard at its
+worst. Unattended-mode default taken: **derive it, pin it, hand it forward with its corpus lines.**
+
+It is pinned by an **executing test** rather than by prose alone
+(`rules_tables::inner_sea_gods::tests::no_support_directory_ability_ships_yet`), which fails the
+moment a later round widens the pass — telling that round that this decision's arithmetic is stale,
+instead of letting a stale header outlive the state it describes. That is the countermeasure to
+`shipped-prose-is-not-a-source-of-truth`, applied to this decision's own claim.
+
+**The predicate to scan other books for is an `ABILITY:Internal|AUTOMATIC|` token on a monster row.**
+Unscanned as of this round; scanning it is cheap and is the next round's first move.
+
+### 62.5 Registration, and the test that had outlived two of its own subjects
+
+Eleven registration points and one new `RuleSetId::Isg`. Wire code `ISG` verified against the book's
+own `SOURCESHORT:ISG` rather than invented.
+
+`v06_work_inventory`'s `uncompiled_books_stay_none` asserted `rule_set_for("inner_sea_gods") == None`
+and had to be re-pointed — the **second** subject that one test has outlived (`ultimate_psionics` was
+the first, in SD28-E29, and its comment says so). Its comment also carried a reason `decisions.md §38`
+had already invalidated: "`inner_sea_gods` remains genuinely uncompiled (SD-30's own book set, out of
+this bundle)" — SD-29 was re-scoped corpus-wide on 2026-08-10. It was re-pointed at
+`occult_adventures` **by derivation** — `corpus_dir_for` is exhaustive over `RuleSetId` and carries no
+arm returning it, so no `COMPILED_RULE_SETS` member can map to it — rather than by picking a book that
+merely looked un-ingested.
+
+Provenance verified against the files rather than copied from the row above: `_inner_sea_gods.pcc:17`
+declares `ISOGL:YES`, the pcc carries 18 `COPYRIGHT` lines, and a real 9,547-byte `OGL.txt` sits
+beside it. **Zero** `NAMEISPI:YES` across all four `.lst` files; the 5 ability rows the transcriber
+drops are dropped for a blacklisted deity name in an **emitted value**, which is what
+`ogl-pi-blacklist.md` §2.1's per-record predicate predicts for a `campaign_setting/` book about
+deities. `pi-sweep` passed at 10 hits against a 10-row baseline.
+
+The two screens disagree on composition and agree on the total: the classifier counts 81 orphans + 3
+Product Identity, the transcriber drops 79 orphans + 5 Product Identity. Both sum to 84, so 116 ships
+either way — the same predicate difference `§57.2` records for `inner_sea_bestiary`, with the
+transcriber screening what it is about to **emit** and the classifier screening the row's own key and
+name.
+
+### 62.6 Round-10 queue, from ONE command
+
+`python3 scripts/classify_monster_ability_rows.py`, raw remaining **1,549**, classifier reachable
+**109**, REAL ceiling **44 by the classifier's terms** and **at least 60 counting §62.4's class**:
+
+| book | remaining units | orphans | PI | classifier reachable | REAL | note |
+|---|---|---|---|---|---|---|
+| `ultimate_psionics` | 100 | 66 | 0 | **34** | **34** | the lane's largest remaining reachable book. `RuleSetId::Upsi` exists; both files sit at the book root (`up_races.lst`, `up_abilities_race.lst`), so no resolution work and no new rule set |
+| `horror_adventures` | 74 | 65 | 0 | **9** | **9** | `RuleSetId::Ha` exists; already a race-trait-lane book. Both files at the book root. Note `Ha`'s own doc comment scopes it to the main `ha_abilities_race.lst` and excludes `support/ha_abilities_race_oa.lst` under `PRECAMPAIGN:1,INCLUDES=Occult Adventures` — a gate this repo still does not satisfy |
+| `occult_adventures` | 4 | 3 | 0 | **1** | **1** | a ONE-monster book needing a whole new `RuleSetId` for one record. Its monster row is `support/oa_races_b3.lst`, so **this round's resolver is what makes it reachable at all**. A round that takes it should say so rather than discover it at the ceiling table |
+| `inner_sea_gods` | 84 | 81 | 3 | 0 | **≥16** | §62.4's bundle-row class: unreachable by any current pass, reachable in fact |
+| `bestiary` | 204 | 146 | 0 | 58 | **0** | reachable-exhausted, `§60.2` |
+| `inner_sea_bestiary` | 40 | 26 | 7 | 7 | **0** | reachable-exhausted, `§58.1` |
+| `bestiary_2` · `inner_sea_world_guide` | 67 · 21 | 65 · 13 | 0 · 8 | 0 · 0 | **0** | floor |
+
+**Twelve books still hold 800 orphan abilities and zero monsters**, re-derived this round rather than
+incremented (`of which in ZERO-monster books: 800 across 12 books`) — up from 11 books / 716 because
+`inner_sea_gods` joined that set the moment its last monster grounded.
+
+**Three books and 44 units** are what the classifier still calls reachable, and not one of the three
+needs a mechanism this repo lacks: the whole remaining cost is registration. The lane's real remainder
+is larger than 44 and far smaller than the raw 1,549, and §62.4 is the only *known* term between them.
+
+## Decision 63 — Companion Lane, extend: round 7 (2026-08-13, `sd29-companion-r11`, card `epic-7-companion-lane-extend`)
 
 Ingested **Core Essentials** — 102 of its 145 `companion` corpus units (58 creature rows,
 44 ability rows), all 102 grounded and served. Companion grounded **684 → 786**.
@@ -5614,7 +5844,7 @@ structural diff of every unit's status against HEAD reports exactly two changes,
 `core_essentials|companion|grounded 0 → 102` and
 `core_essentials|companion|not-ingested 145 → 43`, and nothing of any other kind moved.
 
-### §62.1 — The delta screen's CREATURE half
+### §63.1 — The delta screen's CREATURE half
 
 `§59.2` built the `.COPY=`/`.MOD` screen one round earlier and ran it over `abilities` alone,
 because Bestiary 4 — the book that forced it — carries the shape only there. **Core Essentials
@@ -5665,7 +5895,7 @@ provoked it holds for that book and quietly does nothing for the next one.** Wid
 **not one byte** of the eleven registered books — all eleven regenerated and
 `git status --porcelain` listed none of their `companion_data.rs` files.
 
-### §62.2 — `records_redacted` was a hardcoded literal in four licence writers
+### §63.2 — `records_redacted` was a hardcoded literal in four licence writers
 
 Every `LICENSE.json` `gen_book_cache` writes states `records_processed` as the **book-wide
 on-disk count across every lane that has ingested the book**, and then stated
@@ -5696,7 +5926,7 @@ file carries `records_redacted: 9` and `records_processed: 166` (64 race_trait +
 same file. This was the third field, still lossy — which is the pattern: **a preservation rule
 applied field by field leaves the fields nobody has needed yet.**
 
-### §62.3 — An OWNED row that states nothing the chassis models
+### §63.3 — An OWNED row that states nothing the chassis models
 
 `Pseudodragon ~ Tail` (`ce_abilities_familiar_race_cr.lst:215`) is owned — the classifier is
 right, by relay through `Racial Traits ~ Pseudodragon` — and carries `KEY:`,
@@ -5727,7 +5957,7 @@ the omission rather than emptied by it — which is exactly why this round state
 and takes the narrow disposition instead of widening a program-wide record type on the way past.
 A round that takes it should declare it up front, as `§61` asks of the archetype block.
 
-### §62.4 — A NINTH registration point, and a family the panel had been dropping since round 6
+### §63.4 — A NINTH registration point, and a family the panel had been dropping since round 6
 
 The gate found a surface eight rounds of this lane had never touched.
 `corpus_ingest_diagnostic::every_book_landed_in_rules_tables_is_reported` went red naming
@@ -5754,7 +5984,7 @@ and the only reason it surfaced now is that a red test asked it out loud.
 
 ### Ceiling
 
-**923 → 922**, down by the one row `§62.3` drops, and the honest remainder is
+**923 → 922**, down by the one row `§63.3` drops, and the honest remainder is
 `922 − 786 = 136` across **5** books. The two derivations close exactly:
 
 ```

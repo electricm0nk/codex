@@ -117,6 +117,13 @@ const BOOK_B4: &str = "B4";
 /// either. See `rules_tables::inner_sea_bestiary` for the derivation.
 const BOOK_ISB: &str = "ISB";
 
+/// Inner Sea Gods, the eleventh (SD-29 Epic 5 extend, round 9). Its wire code
+/// is the book's own `SOURCESHORT:ISG`. It is the first book in this catalog
+/// whose corpus rows are not all at the book root -- 3 of its 39 monsters come
+/// from `support/isg_races_b4.lst`, loaded under
+/// `PRECAMPAIGN:1,INCLUDES=Bestiary 4`. See `rules_tables::inner_sea_gods`.
+const BOOK_ISG: &str = "ISG";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -149,6 +156,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         // another. `decisions.md §58.3`.
         "beastiary" => "Bestiary 1",
         "inner_sea_bestiary" => "Inner Sea Bestiary",
+        "inner_sea_gods" => "Inner Sea Gods",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -171,6 +179,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // whose wire code is shared with a table outside the registry.
         "beastiary" => BOOK_B1,
         "inner_sea_bestiary" => BOOK_ISB,
+        "inner_sea_gods" => BOOK_ISG,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."

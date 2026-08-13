@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_gods:monster_ability:pavbagha_stunning_claw",
+      "inner_sea_gods:monster_ability:pavbagha_fade"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Pavbagha",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:pavbagha",
+    "monster_class": "Outsider (Fort/Will):5",
+    "name": "Pavbagha",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.295",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
+    "line": 45,
+    "record_key": "Pavbagha"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

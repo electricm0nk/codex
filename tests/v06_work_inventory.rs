@@ -793,6 +793,16 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // cannot be emitted either, plus the 5 abilities orphaned by losing them).
     // A book's scope is `in_scope` the moment any of its units are grounded.
     "inner_sea_bestiary",
+    // SD-29 monster lane round 9: 39 `monster` + 77 `monster_ability` records.
+    // A PARTIAL ingest for the same reason as the two above -- 84 of its 200
+    // monster-family units are deliberately not ingested (79 orphan ability
+    // rows and 5 Product Identity ability rows) -- and it belongs here anyway,
+    // because a book's scope is `in_scope` the moment any of its units are
+    // grounded. Every one of its 39 corpus monster rows ships, which is a first
+    // for this lane. 16 of the 79 orphans have a real owner the corpus states
+    // through a `CATEGORY:Internal` bundle row that no ownership pass follows
+    // yet; see `rules_tables::inner_sea_gods`'s header.
+    "inner_sea_gods",
 ];
 
 const SD30_CAMPAIGN_SETTING_BOOKS: &[&str] = &[

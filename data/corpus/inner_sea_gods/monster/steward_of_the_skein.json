@@ -1,0 +1,48 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "15",
+    "corpus_key": "Steward of the Skein",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:steward_of_the_skein",
+    "monster_class": "Outsider (Ref/Will):19",
+    "name": "Steward of the Skein",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d10",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Extraplanar|Herald|Psychopomp|Shapechanger",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.302",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 150,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst",
+    "sha256": "3b8742b6d620ef3ed9e8b6170b4413872d594c5d5b857ba99919dfd2f8173494",
+    "line": 10,
+    "record_key": "Steward of the Skein"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ]
+}

@@ -5133,6 +5133,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BlackCloudDC", "BlackCloudDC"],
         source_page: Some("p.7"),
         owners: &["Achaierai"],
+        source_file: "b2_abilities_race.lst",
         source_line: 6,
     },
     MonsterAbilityRecord {
@@ -5145,6 +5146,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SoulSiphoningDC"],
         source_page: Some("p.9"),
         owners: &["Aeon (Akhana)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 10,
     },
     MonsterAbilityRecord {
@@ -5157,6 +5159,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AgingStrikeDC"],
         source_page: Some("p.10"),
         owners: &["Aeon (Bythos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 14,
     },
     MonsterAbilityRecord {
@@ -5169,6 +5172,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.10"),
         owners: &["Aeon (Bythos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 15,
     },
     MonsterAbilityRecord {
@@ -5181,6 +5185,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ConfusionGazeDC"],
         source_page: Some("p.10"),
         owners: &["Aeon (Bythos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 16,
     },
     MonsterAbilityRecord {
@@ -5193,6 +5198,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TemporalStrikeDC"],
         source_page: Some("p.10"),
         owners: &["Aeon (Bythos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 17,
     },
     MonsterAbilityRecord {
@@ -5205,6 +5211,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.12"),
         owners: &["Aeon (Pleroma)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 22,
     },
     MonsterAbilityRecord {
@@ -5217,6 +5224,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SphereofCreationDC"],
         source_page: Some("p.12"),
         owners: &["Aeon (Pleroma)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 23,
     },
     MonsterAbilityRecord {
@@ -5229,6 +5237,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SphereofOblivionDC"],
         source_page: Some("p.12"),
         owners: &["Aeon (Pleroma)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 24,
     },
     MonsterAbilityRecord {
@@ -5241,6 +5250,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FateDrainDC"],
         source_page: Some("p.14"),
         owners: &["Aeon (Theletos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 28,
     },
     MonsterAbilityRecord {
@@ -5253,6 +5263,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WreathofFateDC", "WreathofFateCL"],
         source_page: Some("p.14"),
         owners: &["Aeon (Theletos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 29,
     },
     MonsterAbilityRecord {
@@ -5265,6 +5276,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CetacealShockwaveDC"],
         source_page: Some("p.17"),
         owners: &["Agathion (Cetaceal)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 38,
     },
     MonsterAbilityRecord {
@@ -5277,6 +5289,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CetacealStunDC"],
         source_page: Some("p.17"),
         owners: &["Agathion (Cetaceal)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 39,
     },
     MonsterAbilityRecord {
@@ -5289,6 +5302,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.18"),
         owners: &["Agathion (Draconal)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 45,
     },
     MonsterAbilityRecord {
@@ -5301,6 +5315,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.18"),
         owners: &["Agathion (Draconal)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 46,
     },
     MonsterAbilityRecord {
@@ -5313,6 +5328,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["LeonalRoarDC"],
         source_page: Some("p.20"),
         owners: &["Agathion (Leonal)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 65,
     },
     MonsterAbilityRecord {
@@ -5325,6 +5341,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.23"),
         owners: &["Akata"],
+        source_file: "b2_abilities_race.lst",
         source_line: 74,
     },
     MonsterAbilityRecord {
@@ -5337,6 +5354,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AkataVoidBiteDC"],
         source_page: Some("p.23"),
         owners: &["Akata"],
+        source_file: "b2_abilities_race.lst",
         source_line: 76,
     },
     MonsterAbilityRecord {
@@ -5349,6 +5367,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.24"),
         owners: &["Amoeba (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 84,
     },
     MonsterAbilityRecord {
@@ -5361,6 +5380,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AmphisbaenaPoisonDC"],
         source_page: Some("p.25"),
         owners: &["Amphisbaena"],
+        source_file: "b2_abilities_race.lst",
         source_line: 91,
     },
     MonsterAbilityRecord {
@@ -5373,6 +5393,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["2*STR"],
         source_page: Some("p.27"),
         owners: &["Angel (Monadic Deva)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 96,
     },
     MonsterAbilityRecord {
@@ -5385,6 +5406,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.29"),
         owners: &["Animate Dream"],
+        source_file: "b2_abilities_race.lst",
         source_line: 106,
     },
     MonsterAbilityRecord {
@@ -5397,6 +5419,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AnimateDreamNightmareCurseDC"],
         source_page: Some("p.29"),
         owners: &["Animate Dream"],
+        source_file: "b2_abilities_race.lst",
         source_line: 107,
     },
     MonsterAbilityRecord {
@@ -5409,6 +5432,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.30"),
         owners: &["Aranea"],
+        source_file: "b2_abilities_race.lst",
         source_line: 111,
     },
     MonsterAbilityRecord {
@@ -5421,6 +5445,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AraneaPoisonDC"],
         source_page: Some("p.30"),
         owners: &["Aranea"],
+        source_file: "b2_abilities_race.lst",
         source_line: 112,
     },
     MonsterAbilityRecord {
@@ -5433,6 +5458,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.31"),
         owners: &["Archon (Shield)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 116,
     },
     MonsterAbilityRecord {
@@ -5445,6 +5471,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.31"),
         owners: &["Archon (Shield)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 117,
     },
     MonsterAbilityRecord {
@@ -5457,6 +5484,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.31"),
         owners: &["Archon (Shield)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 118,
     },
     MonsterAbilityRecord {
@@ -5469,6 +5497,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SmiteEvilTimes", "SmiteEvilAttackBonus", "SmiteEvilDamageBonus", "SmiteEvilDamageBonus*2", "SmiteEvilACBonus"],
         source_page: Some("p.60"),
         owners: &["Archon (Star)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 123,
     },
     MonsterAbilityRecord {
@@ -5481,6 +5510,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AthachPoisonDC"],
         source_page: Some("p.33"),
         owners: &["Athach"],
+        source_file: "b2_abilities_race.lst",
         source_line: 127,
     },
     MonsterAbilityRecord {
@@ -5493,6 +5523,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BAB+STR-2", "STR"],
         source_page: Some("p.33"),
         owners: &["Athach"],
+        source_file: "b2_abilities_race.lst",
         source_line: 128,
     },
     MonsterAbilityRecord {
@@ -5505,6 +5536,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AtticWhispererStealBreathDC"],
         source_page: Some("p.34"),
         owners: &["Attic Whisperer"],
+        source_file: "b2_abilities_race.lst",
         source_line: 133,
     },
     MonsterAbilityRecord {
@@ -5517,6 +5549,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AtticWhispererStealVoiceDC"],
         source_page: Some("p.34"),
         owners: &["Attic Whisperer"],
+        source_file: "b2_abilities_race.lst",
         source_line: 134,
     },
     MonsterAbilityRecord {
@@ -5529,6 +5562,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.35"),
         owners: &["Aurumvorax"],
+        source_file: "b2_abilities_race.lst",
         source_line: 139,
     },
     MonsterAbilityRecord {
@@ -5541,6 +5575,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.36"),
         owners: &["Axiomite"],
+        source_file: "b2_abilities_race.lst",
         source_line: 143,
     },
     MonsterAbilityRecord {
@@ -5553,6 +5588,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.36"),
         owners: &["Axiomite"],
+        source_file: "b2_abilities_race.lst",
         source_line: 144,
     },
     MonsterAbilityRecord {
@@ -5565,6 +5601,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.37"),
         owners: &["Azata (Brijidine)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 149,
     },
     MonsterAbilityRecord {
@@ -5577,6 +5614,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.37"),
         owners: &["Azata (Brijidine)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 150,
     },
     MonsterAbilityRecord {
@@ -5589,6 +5627,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.37"),
         owners: &["Azata (Brijidine)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 151,
     },
     MonsterAbilityRecord {
@@ -5601,6 +5640,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BansheeTerrorDC"],
         source_page: Some("p.41"),
         owners: &["Banshee"],
+        source_file: "b2_abilities_race.lst",
         source_line: 162,
     },
     MonsterAbilityRecord {
@@ -5613,6 +5653,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BansheeWailDC"],
         source_page: Some("p.41"),
         owners: &["Banshee"],
+        source_file: "b2_abilities_race.lst",
         source_line: 163,
     },
     MonsterAbilityRecord {
@@ -5625,6 +5666,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Banshee"],
+        source_file: "b2_abilities_race.lst",
         source_line: 164,
     },
     MonsterAbilityRecord {
@@ -5637,6 +5679,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MobatScreechDC"],
         source_page: Some("p.42"),
         owners: &["Bat (Mobat)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 168,
     },
     MonsterAbilityRecord {
@@ -5649,6 +5692,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SkavelingScreechDC"],
         source_page: Some("p.42"),
         owners: &["Bat (Skaveling)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 172,
     },
     MonsterAbilityRecord {
@@ -5661,6 +5705,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SkavelingDiseaseDC"],
         source_page: Some("p.42"),
         owners: &["Bat (Skaveling)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 173,
     },
     MonsterAbilityRecord {
@@ -5673,6 +5718,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GiantBeePoisonDC"],
         source_page: Some("p.43"),
         owners: &["Bee (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 179,
     },
     MonsterAbilityRecord {
@@ -5685,6 +5731,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GiantQueenBeePoisonDC"],
         source_page: Some("p.43"),
         owners: &["Bee (Giant Queen)", "Bumblebee (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 180,
     },
     MonsterAbilityRecord {
@@ -5697,6 +5744,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.44"),
         owners: &["Beetle (Slicer)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 186,
     },
     MonsterAbilityRecord {
@@ -5709,6 +5757,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BelkerSmokeClawsDC"],
         source_page: Some("p.45"),
         owners: &["Belker"],
+        source_file: "b2_abilities_race.lst",
         source_line: 190,
     },
     MonsterAbilityRecord {
@@ -5721,6 +5770,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.45"),
         owners: &["Belker"],
+        source_file: "b2_abilities_race.lst",
         source_line: 191,
     },
     MonsterAbilityRecord {
@@ -5733,6 +5783,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BlindheimBlindingGazeDC"],
         source_page: Some("p.46"),
         owners: &["Blindheim"],
+        source_file: "b2_abilities_race.lst",
         source_line: 195,
     },
     MonsterAbilityRecord {
@@ -5745,6 +5796,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BodakDeathGazeDC"],
         source_page: Some("p.48"),
         owners: &["Bodak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 201,
     },
     MonsterAbilityRecord {
@@ -5757,6 +5809,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BunyipRoarDC"],
         source_page: Some("p.50"),
         owners: &["Bunyip"],
+        source_file: "b2_abilities_race.lst",
         source_line: 207,
     },
     MonsterAbilityRecord {
@@ -5769,6 +5822,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.51"),
         owners: &["Carnivorous Blob"],
+        source_file: "b2_abilities_race.lst",
         source_line: 212,
     },
     MonsterAbilityRecord {
@@ -5781,6 +5835,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Carnivorous Blob"],
+        source_file: "b2_abilities_race.lst",
         source_line: 214,
     },
     MonsterAbilityRecord {
@@ -5793,6 +5848,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CatoblepasPoisonBreathDC"],
         source_page: Some("p.52"),
         owners: &["Catoblepas"],
+        source_file: "b2_abilities_race.lst",
         source_line: 219,
     },
     MonsterAbilityRecord {
@@ -5805,6 +5861,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ChaosBeastCorporealInstabilityDC"],
         source_page: Some("p.54"),
         owners: &["Chaos Beast"],
+        source_file: "b2_abilities_race.lst",
         source_line: 234,
     },
     MonsterAbilityRecord {
@@ -5817,6 +5874,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ChardaBlackBileDC"],
         source_page: Some("p.55"),
         owners: &["Charda"],
+        source_file: "b2_abilities_race.lst",
         source_line: 239,
     },
     MonsterAbilityRecord {
@@ -5829,6 +5887,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Charda"],
+        source_file: "b2_abilities_race.lst",
         source_line: 240,
     },
     MonsterAbilityRecord {
@@ -5841,6 +5900,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.55"),
         owners: &["Charda"],
+        source_file: "b2_abilities_race.lst",
         source_line: 241,
     },
     MonsterAbilityRecord {
@@ -5853,6 +5913,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.55"),
         owners: &["Charda"],
+        source_file: "b2_abilities_race.lst",
         source_line: 242,
     },
     MonsterAbilityRecord {
@@ -5865,6 +5926,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Charybdis"],
+        source_file: "b2_abilities_race.lst",
         source_line: 246,
     },
     MonsterAbilityRecord {
@@ -5877,6 +5939,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CharybdisVortexDC"],
         source_page: Some("p.56"),
         owners: &["Charybdis"],
+        source_file: "b2_abilities_race.lst",
         source_line: 247,
     },
     MonsterAbilityRecord {
@@ -5889,6 +5952,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.56"),
         owners: &["Chupacabra"],
+        source_file: "b2_abilities_race.lst",
         source_line: 252,
     },
     MonsterAbilityRecord {
@@ -5901,6 +5965,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.59"),
         owners: &["Crawling Hand"],
+        source_file: "b2_abilities_race.lst",
         source_line: 258,
     },
     MonsterAbilityRecord {
@@ -5913,6 +5978,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.59"),
         owners: &["Crawling Hand", "Crawling Hand (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 259,
     },
     MonsterAbilityRecord {
@@ -5925,6 +5991,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CrawlingHandPusBurstDC"],
         source_page: Some("p.59"),
         owners: &["Crawling Hand (Giant)", "Crawling Hand"],
+        source_file: "b2_abilities_race.lst",
         source_line: 260,
     },
     MonsterAbilityRecord {
@@ -5937,6 +6004,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CryptThingTeleportingBurstDC"],
         source_page: Some("p.60"),
         owners: &["Crypt Thing"],
+        source_file: "b2_abilities_race.lst",
         source_line: 264,
     },
     MonsterAbilityRecord {
@@ -5949,6 +6017,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["STR*1.5"],
         source_page: Some("p.61"),
         owners: &["Crysmal"],
+        source_file: "b2_abilities_race.lst",
         source_line: 270,
     },
     MonsterAbilityRecord {
@@ -5961,6 +6030,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AstradaemonDevourSoulDC"],
         source_page: Some("p.63"),
         owners: &["Daemon (Astradaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 275,
     },
     MonsterAbilityRecord {
@@ -5973,6 +6043,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CeustodaemonBreathWeaponDC"],
         source_page: Some("p.64"),
         owners: &["Daemon (Ceustodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 281,
     },
     MonsterAbilityRecord {
@@ -5985,6 +6056,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.64"),
         owners: &["Daemon (Ceustodaemon)", "Daemon (Ceustodaemon/Lesser)", "Daemon (Ceustodaemon/Greater)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 282,
     },
     MonsterAbilityRecord {
@@ -5997,6 +6069,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["LesserCeustodaemonBreathWeaponDC"],
         source_page: Some("p.64"),
         owners: &["Daemon (Ceustodaemon/Lesser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 283,
     },
     MonsterAbilityRecord {
@@ -6009,6 +6082,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GreaterCeustodaemonBreathWeaponDC"],
         source_page: Some("p.64"),
         owners: &["Daemon (Ceustodaemon/Greater)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 284,
     },
     MonsterAbilityRecord {
@@ -6021,6 +6095,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.66"),
         owners: &["Daemon (Derghodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 289,
     },
     MonsterAbilityRecord {
@@ -6033,6 +6108,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.67"),
         owners: &["Daemon (Hydrodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 294,
     },
     MonsterAbilityRecord {
@@ -6045,6 +6121,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["LeukodaemonBreathOfFliesDC"],
         source_page: Some("p.68"),
         owners: &["Daemon (Leukodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 300,
     },
     MonsterAbilityRecord {
@@ -6057,6 +6134,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["LeukodaemonContagionDC"],
         source_page: Some("p.68"),
         owners: &["Daemon (Leukodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 301,
     },
     MonsterAbilityRecord {
@@ -6069,6 +6147,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.69"),
         owners: &["Daemon (Meladaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 306,
     },
     MonsterAbilityRecord {
@@ -6081,6 +6160,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MeladaemonDiseaseDC"],
         source_page: Some("p.69"),
         owners: &["Daemon (Meladaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 307,
     },
     MonsterAbilityRecord {
@@ -6093,6 +6173,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.70"),
         owners: &["Daemon (Olethrodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 312,
     },
     MonsterAbilityRecord {
@@ -6105,6 +6186,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["OlethrodaemonDrainSoulDC"],
         source_page: Some("p.70"),
         owners: &["Daemon (Olethrodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 313,
     },
     MonsterAbilityRecord {
@@ -6117,6 +6199,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["OlethrodaemonSoulDrainedBreathDC"],
         source_page: Some("p.70"),
         owners: &["Daemon (Olethrodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 314,
     },
     MonsterAbilityRecord {
@@ -6129,6 +6212,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.72"),
         owners: &["Daemon (Piscodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 318,
     },
     MonsterAbilityRecord {
@@ -6141,6 +6225,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["PiscodaemonPoisonDC"],
         source_page: Some("p.72"),
         owners: &["Daemon (Piscodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 319,
     },
     MonsterAbilityRecord {
@@ -6153,6 +6238,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.73"),
         owners: &["Daemon (Purrodaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 323,
     },
     MonsterAbilityRecord {
@@ -6165,6 +6251,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.74"),
         owners: &["Daemon (Thanadaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 327,
     },
     MonsterAbilityRecord {
@@ -6177,6 +6264,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ThanadaemonFearGazeDC"],
         source_page: Some("p.74"),
         owners: &["Daemon (Thanadaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 328,
     },
     MonsterAbilityRecord {
@@ -6189,6 +6277,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.74"),
         owners: &["Daemon (Thanadaemon)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 329,
     },
     MonsterAbilityRecord {
@@ -6201,6 +6290,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DarkSlayerDeathThroesDC"],
         source_page: Some("p.75"),
         owners: &["Dark Slayer"],
+        source_file: "b2_abilities_race.lst",
         source_line: 333,
     },
     MonsterAbilityRecord {
@@ -6213,6 +6303,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.75"),
         owners: &["Dark Slayer"],
+        source_file: "b2_abilities_race.lst",
         source_line: 334,
     },
     MonsterAbilityRecord {
@@ -6225,6 +6316,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.75"),
         owners: &["Dark Slayer"],
+        source_file: "b2_abilities_race.lst",
         source_line: 335,
     },
     MonsterAbilityRecord {
@@ -6237,6 +6329,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DeathWormBreathWeaponDC"],
         source_page: Some("p.76"),
         owners: &["Death Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 339,
     },
     MonsterAbilityRecord {
@@ -6249,6 +6342,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DeathWormCorrosiveBloodDC"],
         source_page: Some("p.76"),
         owners: &["Death Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 340,
     },
     MonsterAbilityRecord {
@@ -6261,6 +6355,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.76"),
         owners: &["Death Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 341,
     },
     MonsterAbilityRecord {
@@ -6273,6 +6368,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DeathWormPoisonDC"],
         source_page: Some("p.76"),
         owners: &["Death Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 342,
     },
     MonsterAbilityRecord {
@@ -6285,6 +6381,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.76"),
         owners: &["Death Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 343,
     },
     MonsterAbilityRecord {
@@ -6297,6 +6394,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.77"),
         owners: &["Decapus"],
+        source_file: "b2_abilities_race.lst",
         source_line: 348,
     },
     MonsterAbilityRecord {
@@ -6309,6 +6407,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["KalavakusEnslaveSoulDC"],
         source_page: Some("p.78"),
         owners: &["Demon (Kalavakus)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 352,
     },
     MonsterAbilityRecord {
@@ -6321,6 +6420,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.78"),
         owners: &["Demon (Kalavakus)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 353,
     },
     MonsterAbilityRecord {
@@ -6333,6 +6433,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.79"),
         owners: &["Demon (Omox)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 359,
     },
     MonsterAbilityRecord {
@@ -6345,6 +6446,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Demon (Omox)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 360,
     },
     MonsterAbilityRecord {
@@ -6357,6 +6459,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ShemhazianParalyzingGazeDC"],
         source_page: Some("p.80"),
         owners: &["Demon (Shemhazian)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 364,
     },
     MonsterAbilityRecord {
@@ -6369,6 +6472,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ShemhazianStrengthDrainDC"],
         source_page: Some("p.80"),
         owners: &["Demon (Shemhazian)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 365,
     },
     MonsterAbilityRecord {
@@ -6381,6 +6485,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VrolikaiBlackFlameKnivesDC"],
         source_page: Some("p.81"),
         owners: &["Demon (Vrolikai)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 369,
     },
     MonsterAbilityRecord {
@@ -6393,6 +6498,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VorlikaiDeathStealingGazeDC"],
         source_page: Some("p.81"),
         owners: &["Demon (Vrolikai)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 370,
     },
     MonsterAbilityRecord {
@@ -6405,6 +6511,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VrolikaiMadnessDC"],
         source_page: None,
         owners: &["Demon (Vrolikai)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 371,
     },
     MonsterAbilityRecord {
@@ -6417,6 +6524,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.81"),
         owners: &["Demon (Vrolikai)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 372,
     },
     MonsterAbilityRecord {
@@ -6429,6 +6537,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DenizenOfLengDexterityDrainDC"],
         source_page: Some("p.82"),
         owners: &["Denizen of Leng"],
+        source_file: "b2_abilities_race.lst",
         source_line: 376,
     },
     MonsterAbilityRecord {
@@ -6441,6 +6550,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DestrachanDestructiveHarmonicsDC"],
         source_page: Some("p.83"),
         owners: &["Destrachan"],
+        source_file: "b2_abilities_race.lst",
         source_line: 382,
     },
     MonsterAbilityRecord {
@@ -6453,6 +6563,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.84"),
         owners: &["Devil (Accuser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 387,
     },
     MonsterAbilityRecord {
@@ -6465,6 +6576,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AccuserDevilDiseaseDC"],
         source_page: Some("p.84"),
         owners: &["Devil (Accuser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 388,
     },
     MonsterAbilityRecord {
@@ -6477,6 +6589,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.84"),
         owners: &["Devil (Accuser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 389,
     },
     MonsterAbilityRecord {
@@ -6489,6 +6602,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.85"),
         owners: &["Devil (Belier)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 393,
     },
     MonsterAbilityRecord {
@@ -6501,6 +6615,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.86"),
         owners: &["Devil (Handmaiden)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 397,
     },
     MonsterAbilityRecord {
@@ -6513,6 +6628,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TentacleCageAC", "TentacleCageHP"],
         source_page: Some("p.86"),
         owners: &["Devil (Handmaiden)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 398,
     },
     MonsterAbilityRecord {
@@ -6525,6 +6641,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.87"),
         owners: &["Devil (Immolation)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 402,
     },
     MonsterAbilityRecord {
@@ -6537,6 +6654,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DevilfishPoisonDC"],
         source_page: Some("p.88"),
         owners: &["Devilfish"],
+        source_file: "b2_abilities_race.lst",
         source_line: 406,
     },
     MonsterAbilityRecord {
@@ -6549,6 +6667,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.88"),
         owners: &["Devilfish"],
+        source_file: "b2_abilities_race.lst",
         source_line: 407,
     },
     MonsterAbilityRecord {
@@ -6561,6 +6680,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DevilfishUnholyBloodDC"],
         source_page: Some("p.88"),
         owners: &["Devilfish"],
+        source_file: "b2_abilities_race.lst",
         source_line: 408,
     },
     MonsterAbilityRecord {
@@ -6573,6 +6693,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.88"),
         owners: &["Devilfish"],
+        source_file: "b2_abilities_race.lst",
         source_line: 409,
     },
     MonsterAbilityRecord {
@@ -6585,6 +6706,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.104"),
         owners: &["Dragon Horse"],
+        source_file: "b2_abilities_race.lst",
         source_line: 419,
     },
     MonsterAbilityRecord {
@@ -6597,6 +6719,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DragonHorseBreathWeaponsDC"],
         source_page: Some("p.104"),
         owners: &["Dragon Horse"],
+        source_file: "b2_abilities_race.lst",
         source_line: 420,
     },
     MonsterAbilityRecord {
@@ -6609,6 +6732,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.104"),
         owners: &["Dragon Horse"],
+        source_file: "b2_abilities_race.lst",
         source_line: 421,
     },
     MonsterAbilityRecord {
@@ -6621,6 +6745,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.104"),
         owners: &["Dragon Horse"],
+        source_file: "b2_abilities_race.lst",
         source_line: 423,
     },
     MonsterAbilityRecord {
@@ -6633,6 +6758,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.105"),
         owners: &["Dragonfly (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 427,
     },
     MonsterAbilityRecord {
@@ -6645,6 +6771,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.105"),
         owners: &["Dragonfly Nymph (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 431,
     },
     MonsterAbilityRecord {
@@ -6657,6 +6784,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.106"),
         owners: &["Drake (Flame)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 435,
     },
     MonsterAbilityRecord {
@@ -6669,6 +6797,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FlameDrakeFireballBreathDC"],
         source_page: Some("p.106"),
         owners: &["Drake (Flame)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 436,
     },
     MonsterAbilityRecord {
@@ -6681,6 +6810,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.106"),
         owners: &["Drake (Flame)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 437,
     },
     MonsterAbilityRecord {
@@ -6693,6 +6823,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.107"),
         owners: &["Drake (Forest)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 441,
     },
     MonsterAbilityRecord {
@@ -6705,6 +6836,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ForestDrakeAcidicCloudDC"],
         source_page: Some("p.107"),
         owners: &["Drake (Forest)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 442,
     },
     MonsterAbilityRecord {
@@ -6717,6 +6849,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.107"),
         owners: &["Drake (Forest)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 443,
     },
     MonsterAbilityRecord {
@@ -6729,6 +6862,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.108"),
         owners: &["Drake (Frost)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 447,
     },
     MonsterAbilityRecord {
@@ -6741,6 +6875,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FrostDrakeFreezingMistBreathDC"],
         source_page: Some("p.108"),
         owners: &["Drake (Frost)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 448,
     },
     MonsterAbilityRecord {
@@ -6753,6 +6888,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.108"),
         owners: &["Drake (Frost)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 449,
     },
     MonsterAbilityRecord {
@@ -6765,6 +6901,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.108"),
         owners: &["Drake (Frost)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 450,
     },
     MonsterAbilityRecord {
@@ -6777,6 +6914,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.108"),
         owners: &["Drake (Sea)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 456,
     },
     MonsterAbilityRecord {
@@ -6789,6 +6927,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SeaDrakeBallLightningBreathDC", "TL"],
         source_page: Some("p.109"),
         owners: &["Drake (Sea)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 457,
     },
     MonsterAbilityRecord {
@@ -6801,6 +6940,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.109"),
         owners: &["Drake (Sea)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 458,
     },
     MonsterAbilityRecord {
@@ -6813,6 +6953,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.109"),
         owners: &["Drake (Sea)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 459,
     },
     MonsterAbilityRecord {
@@ -6825,6 +6966,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DraugrNauseaDC"],
         source_page: Some("p.110"),
         owners: &["Draugr"],
+        source_file: "b2_abilities_race.lst",
         source_line: 510,
     },
     MonsterAbilityRecord {
@@ -6837,6 +6979,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DraugrNegativeLevelDC"],
         source_page: Some("p.110"),
         owners: &["Draugr Captain", "Draugr"],
+        source_file: "b2_abilities_race.lst",
         source_line: 511,
     },
     MonsterAbilityRecord {
@@ -6849,6 +6992,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.111"),
         owners: &["Dullahan", "Dullahan (Coach of the Silent)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 515,
     },
     MonsterAbilityRecord {
@@ -6861,6 +7005,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DullahanDeathsCallingDC"],
         source_page: Some("p.111"),
         owners: &["Dullahan"],
+        source_file: "b2_abilities_race.lst",
         source_line: 516,
     },
     MonsterAbilityRecord {
@@ -6873,6 +7018,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.111"),
         owners: &["Dullahan", "Dullahan (Coach of the Silent)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 517,
     },
     MonsterAbilityRecord {
@@ -6885,6 +7031,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DullahanDeathsCallingDC"],
         source_page: Some("p.111"),
         owners: &["Dullahan (Coach of the Silent)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 518,
     },
     MonsterAbilityRecord {
@@ -6897,6 +7044,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DustDiggerSinkholeDC"],
         source_page: Some("p.112"),
         owners: &["Dust Digger"],
+        source_file: "b2_abilities_race.lst",
         source_line: 522,
     },
     MonsterAbilityRecord {
@@ -6909,6 +7057,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DziriakDazzlingBurstDC"],
         source_page: Some("p.113"),
         owners: &["D'ziriak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 526,
     },
     MonsterAbilityRecord {
@@ -6921,6 +7070,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.113"),
         owners: &["D'ziriak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 527,
     },
     MonsterAbilityRecord {
@@ -6933,6 +7083,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.122"),
         owners: &["Faceless Stalker"],
+        source_file: "b2_abilities_race.lst",
         source_line: 532,
     },
     MonsterAbilityRecord {
@@ -6945,6 +7096,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.122"),
         owners: &["Faceless Stalker"],
+        source_file: "b2_abilities_race.lst",
         source_line: 533,
     },
     MonsterAbilityRecord {
@@ -6957,6 +7109,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GiantFlyDiseaseDC"],
         source_page: Some("p.124"),
         owners: &["Fly (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 537,
     },
     MonsterAbilityRecord {
@@ -6969,6 +7122,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GiantMaggotRegurgitateDC"],
         source_page: Some("p.124"),
         owners: &["Maggot (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 538,
     },
     MonsterAbilityRecord {
@@ -6981,6 +7135,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.126"),
         owners: &["Frost Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 553,
     },
     MonsterAbilityRecord {
@@ -6993,6 +7148,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.126"),
         owners: &["Frost Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 554,
     },
     MonsterAbilityRecord {
@@ -7005,6 +7161,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FrostWormDeathThroesDC"],
         source_page: Some("p.126"),
         owners: &["Frost Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 555,
     },
     MonsterAbilityRecord {
@@ -7017,6 +7174,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FrostWormTrillDC"],
         source_page: Some("p.126"),
         owners: &["Frost Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 556,
     },
     MonsterAbilityRecord {
@@ -7029,6 +7187,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.126"),
         owners: &["Frost Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 557,
     },
     MonsterAbilityRecord {
@@ -7041,6 +7200,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.127"),
         owners: &["Fungal Crawler"],
+        source_file: "b2_abilities_race.lst",
         source_line: 561,
     },
     MonsterAbilityRecord {
@@ -7053,6 +7213,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FungalCrawlerPoisonDC"],
         source_page: Some("p.127"),
         owners: &["Fungal Crawler"],
+        source_file: "b2_abilities_race.lst",
         source_line: 563,
     },
     MonsterAbilityRecord {
@@ -7065,6 +7226,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.130"),
         owners: &["Giant (Rune)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 570,
     },
     MonsterAbilityRecord {
@@ -7077,6 +7239,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RuneGiantRunesDC"],
         source_page: Some("p.130"),
         owners: &["Giant (Rune)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 571,
     },
     MonsterAbilityRecord {
@@ -7089,6 +7252,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RuneGiantSparkShowerDC"],
         source_page: Some("p.130"),
         owners: &["Giant (Rune)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 572,
     },
     MonsterAbilityRecord {
@@ -7101,6 +7265,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.131"),
         owners: &["Giant (Taiga)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 576,
     },
     MonsterAbilityRecord {
@@ -7113,6 +7278,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GloomwingConfusionDC"],
         source_page: Some("p.133"),
         owners: &["Gloomwing"],
+        source_file: "b2_abilities_race.lst",
         source_line: 582,
     },
     MonsterAbilityRecord {
@@ -7125,6 +7291,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GloomwingImplantDC"],
         source_page: Some("p.133"),
         owners: &["Gloomwing"],
+        source_file: "b2_abilities_race.lst",
         source_line: 583,
     },
     MonsterAbilityRecord {
@@ -7137,6 +7304,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GloomwingPheromonesDC"],
         source_page: Some("p.133"),
         owners: &["Gloomwing"],
+        source_file: "b2_abilities_race.lst",
         source_line: 584,
     },
     MonsterAbilityRecord {
@@ -7149,6 +7317,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["STR"],
         source_page: Some("p.134"),
         owners: &["Golem (Adamantine)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 588,
     },
     MonsterAbilityRecord {
@@ -7161,6 +7330,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AlchemicalGolemAlchemyDC"],
         source_page: Some("p.135"),
         owners: &["Golem (Alchemical)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 594,
     },
     MonsterAbilityRecord {
@@ -7173,6 +7343,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.135"),
         owners: &["Golem (Alchemical)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 595,
     },
     MonsterAbilityRecord {
@@ -7185,6 +7356,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.135"),
         owners: &["Golem (Alchemical)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 596,
     },
     MonsterAbilityRecord {
@@ -7197,6 +7369,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CarrionGolemDiseaseDC"],
         source_page: Some("p.136"),
         owners: &["Golem (Carrion)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 602,
     },
     MonsterAbilityRecord {
@@ -7209,6 +7382,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ClockworkGolemDeathBurstDC"],
         source_page: Some("p.137"),
         owners: &["Golem (Clockwork)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 607,
     },
     MonsterAbilityRecord {
@@ -7221,6 +7395,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["STR*1.5"],
         source_page: Some("p.137"),
         owners: &["Golem (Clockwork)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 608,
     },
     MonsterAbilityRecord {
@@ -7233,6 +7408,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ClockworkGolemWallOfGearsDC"],
         source_page: Some("p.137"),
         owners: &["Golem (Clockwork)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 609,
     },
     MonsterAbilityRecord {
@@ -7245,6 +7421,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GlassGolemDazzlingBrightnessDC"],
         source_page: Some("p.138"),
         owners: &["Golem (Glass)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 614,
     },
     MonsterAbilityRecord {
@@ -7257,6 +7434,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.139"),
         owners: &["Golem (Mithral)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 620,
     },
     MonsterAbilityRecord {
@@ -7269,6 +7447,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.139"),
         owners: &["Golem (Mithral)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 621,
     },
     MonsterAbilityRecord {
@@ -7281,6 +7460,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.140"),
         owners: &["Gray Render"],
+        source_file: "b2_abilities_race.lst",
         source_line: 626,
     },
     MonsterAbilityRecord {
@@ -7293,6 +7473,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.142"),
         owners: &["Gremlin (Jinkin)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 630,
     },
     MonsterAbilityRecord {
@@ -7305,6 +7486,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.143"),
         owners: &["Gremlin (Nuglub)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 634,
     },
     MonsterAbilityRecord {
@@ -7317,6 +7499,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.145"),
         owners: &["Gremlin (Vexgit)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 642,
     },
     MonsterAbilityRecord {
@@ -7329,6 +7512,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.145"),
         owners: &["Gremlin (Vexgit)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 643,
     },
     MonsterAbilityRecord {
@@ -7341,6 +7525,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GrigFiddleDC"],
         source_page: Some("p.147"),
         owners: &["Grig"],
+        source_file: "b2_abilities_race.lst",
         source_line: 649,
     },
     MonsterAbilityRecord {
@@ -7353,6 +7538,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.148"),
         owners: &["Grindylow"],
+        source_file: "b2_abilities_race.lst",
         source_line: 653,
     },
     MonsterAbilityRecord {
@@ -7365,6 +7551,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.150"),
         owners: &["Gryph"],
+        source_file: "b2_abilities_race.lst",
         source_line: 659,
     },
     MonsterAbilityRecord {
@@ -7377,6 +7564,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["HangmanTreeHallucinatorySporesDC"],
         source_page: Some("p.152"),
         owners: &["Hangman Tree"],
+        source_file: "b2_abilities_race.lst",
         source_line: 665,
     },
     MonsterAbilityRecord {
@@ -7389,6 +7577,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.152"),
         owners: &["Hangman Tree"],
+        source_file: "b2_abilities_race.lst",
         source_line: 666,
     },
     MonsterAbilityRecord {
@@ -7401,6 +7590,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CONSCORE"],
         source_page: Some("p.155"),
         owners: &["Hippocampus", "Hippocampus (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 682,
     },
     MonsterAbilityRecord {
@@ -7413,6 +7603,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.158"),
         owners: &["Hound of Tindalos"],
+        source_file: "b2_abilities_race.lst",
         source_line: 689,
     },
     MonsterAbilityRecord {
@@ -7425,6 +7616,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["HoundOfTindalosOtherworldlyMindDC"],
         source_page: Some("p.158"),
         owners: &["Hound of Tindalos"],
+        source_file: "b2_abilities_race.lst",
         source_line: 690,
     },
     MonsterAbilityRecord {
@@ -7437,6 +7629,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["HoundOfTindalosRippingGazeDC"],
         source_page: Some("p.158"),
         owners: &["Hound of Tindalos"],
+        source_file: "b2_abilities_race.lst",
         source_line: 691,
     },
     MonsterAbilityRecord {
@@ -7449,6 +7642,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["HowlerHowlDC"],
         source_page: None,
         owners: &["Howler"],
+        source_file: "b2_abilities_race.lst",
         source_line: 696,
     },
     MonsterAbilityRecord {
@@ -7461,6 +7655,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["HowlerPainDC"],
         source_page: Some("p.159"),
         owners: &["Howler"],
+        source_file: "b2_abilities_race.lst",
         source_line: 697,
     },
     MonsterAbilityRecord {
@@ -7473,6 +7668,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WIS"],
         source_page: Some("p.164"),
         owners: &["Inevitable (Lhaksharut)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 706,
     },
     MonsterAbilityRecord {
@@ -7485,6 +7681,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.164"),
         owners: &["Inevitable (Lhaksharut)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 709,
     },
     MonsterAbilityRecord {
@@ -7497,6 +7694,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.164"),
         owners: &["Inevitable (Lhaksharut)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 710,
     },
     MonsterAbilityRecord {
@@ -7509,6 +7707,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.164"),
         owners: &["Inevitable (Lhaksharut)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 711,
     },
     MonsterAbilityRecord {
@@ -7521,6 +7720,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MarutFistsOfLightningAndThunderDC"],
         source_page: Some("p.166"),
         owners: &["Inevitable (Marut)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 715,
     },
     MonsterAbilityRecord {
@@ -7533,6 +7733,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some(".167"),
         owners: &["Inevitable (Zelekhut)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 719,
     },
     MonsterAbilityRecord {
@@ -7545,6 +7746,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["JabberwockBurbleDC"],
         source_page: Some("p.168"),
         owners: &["Jabberwock", "Jabberwock (Lesser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 723,
     },
     MonsterAbilityRecord {
@@ -7557,6 +7759,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.168"),
         owners: &["Jabberwock", "Jabberwock (Lesser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 724,
     },
     MonsterAbilityRecord {
@@ -7569,6 +7772,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.168"),
         owners: &["Jabberwock", "Jabberwock (Lesser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 726,
     },
     MonsterAbilityRecord {
@@ -7581,6 +7785,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.168"),
         owners: &["Jabberwock", "Jabberwock (Lesser)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 727,
     },
     MonsterAbilityRecord {
@@ -7593,6 +7798,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["JellyfishPoisonDC"],
         source_page: Some("p.170"),
         owners: &["Jellyfish (Death's Head)", "Jellyfish (Crimson)", "Jellyfish (Giant)", "Jellyfish (Sapphire)", "Jellyfish (Vampire)", "Jellyfish (Whaler)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 731,
     },
     MonsterAbilityRecord {
@@ -7605,6 +7811,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["JellyfishSwarmPoisonDC"],
         source_page: Some("p.170"),
         owners: &["Jellyfish Swarm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 735,
     },
     MonsterAbilityRecord {
@@ -7617,6 +7824,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.171"),
         owners: &["Jyoti"],
+        source_file: "b2_abilities_race.lst",
         source_line: 739,
     },
     MonsterAbilityRecord {
@@ -7629,6 +7837,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.171"),
         owners: &["Jyoti"],
+        source_file: "b2_abilities_race.lst",
         source_line: 741,
     },
     MonsterAbilityRecord {
@@ -7641,6 +7850,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["KelpieCaptivatingLureDC"],
         source_page: Some("p.172"),
         owners: &["Kelpie"],
+        source_file: "b2_abilities_race.lst",
         source_line: 748,
     },
     MonsterAbilityRecord {
@@ -7653,6 +7863,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["KorredAnimatedHairDC"],
         source_page: Some("p.173"),
         owners: &["Korred"],
+        source_file: "b2_abilities_race.lst",
         source_line: 752,
     },
     MonsterAbilityRecord {
@@ -7665,6 +7876,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.173"),
         owners: &["Korred"],
+        source_file: "b2_abilities_race.lst",
         source_line: 753,
     },
     MonsterAbilityRecord {
@@ -7677,6 +7889,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["KorredStunningLaughDC"],
         source_page: Some("p.173"),
         owners: &["Korred"],
+        source_file: "b2_abilities_race.lst",
         source_line: 754,
     },
     MonsterAbilityRecord {
@@ -7689,6 +7902,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["KrensharSkullfaceDC"],
         source_page: Some("p.174"),
         owners: &["Krenshar"],
+        source_file: "b2_abilities_race.lst",
         source_line: 758,
     },
     MonsterAbilityRecord {
@@ -7701,6 +7915,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["LamiaMatriarchWisdomDrainDC"],
         source_page: Some("p.175"),
         owners: &["Lamia Matriarch"],
+        source_file: "b2_abilities_race.lst",
         source_line: 762,
     },
     MonsterAbilityRecord {
@@ -7713,6 +7928,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["LengSpiderPoisonDC"],
         source_page: Some("p.176"),
         owners: &["Leng Spider"],
+        source_file: "b2_abilities_race.lst",
         source_line: 768,
     },
     MonsterAbilityRecord {
@@ -7725,6 +7941,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.176"),
         owners: &["Leng Spider"],
+        source_file: "b2_abilities_race.lst",
         source_line: 769,
     },
     MonsterAbilityRecord {
@@ -7737,6 +7954,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.177"),
         owners: &["Leprechaun"],
+        source_file: "b2_abilities_race.lst",
         source_line: 773,
     },
     MonsterAbilityRecord {
@@ -7749,6 +7967,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["LeucrottaLureDC", "TL"],
         source_page: Some("p.178"),
         owners: &["Leucrotta"],
+        source_file: "b2_abilities_race.lst",
         source_line: 777,
     },
     MonsterAbilityRecord {
@@ -7761,6 +7980,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.178"),
         owners: &["Leucrotta"],
+        source_file: "b2_abilities_race.lst",
         source_line: 778,
     },
     MonsterAbilityRecord {
@@ -7773,6 +7993,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.180"),
         owners: &["Lurker in Light"],
+        source_file: "b2_abilities_race.lst",
         source_line: 787,
     },
     MonsterAbilityRecord {
@@ -7785,6 +8006,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ShadowEssencePoisonDC"],
         source_page: Some("p.180"),
         owners: &["Lurker in Light"],
+        source_file: "b2_abilities_race.lst",
         source_line: 788,
     },
     MonsterAbilityRecord {
@@ -7797,6 +8019,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.180"),
         owners: &["Lurker in Light"],
+        source_file: "b2_abilities_race.lst",
         source_line: 789,
     },
     MonsterAbilityRecord {
@@ -7809,6 +8032,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.184"),
         owners: &["Magma Ooze"],
+        source_file: "b2_abilities_race.lst",
         source_line: 800,
     },
     MonsterAbilityRecord {
@@ -7821,6 +8045,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MagmaOozeLavaBodyDC"],
         source_page: None,
         owners: &["Magma Ooze"],
+        source_file: "b2_abilities_race.lst",
         source_line: 801,
     },
     MonsterAbilityRecord {
@@ -7833,6 +8058,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["PoisonousMagmaOozePoisonDC"],
         source_page: Some("p.185"),
         owners: &["Mandragora"],
+        source_file: "b2_abilities_race.lst",
         source_line: 809,
     },
     MonsterAbilityRecord {
@@ -7845,6 +8071,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MandragoraShriekDC"],
         source_page: Some("p.185"),
         owners: &["Mandragora"],
+        source_file: "b2_abilities_race.lst",
         source_line: 810,
     },
     MonsterAbilityRecord {
@@ -7857,6 +8084,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.188"),
         owners: &["Mercane"],
+        source_file: "b2_abilities_race.lst",
         source_line: 820,
     },
     MonsterAbilityRecord {
@@ -7869,6 +8097,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.190"),
         owners: &["Mihstu"],
+        source_file: "b2_abilities_race.lst",
         source_line: 827,
     },
     MonsterAbilityRecord {
@@ -7881,6 +8110,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.190"),
         owners: &["Mihstu"],
+        source_file: "b2_abilities_race.lst",
         source_line: 828,
     },
     MonsterAbilityRecord {
@@ -7893,6 +8123,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MoonflowerLightPulseDC"],
         source_page: Some("p.192"),
         owners: &["Moonflower"],
+        source_file: "b2_abilities_race.lst",
         source_line: 838,
     },
     MonsterAbilityRecord {
@@ -7905,6 +8136,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.192"),
         owners: &["Moonflower"],
+        source_file: "b2_abilities_race.lst",
         source_line: 839,
     },
     MonsterAbilityRecord {
@@ -7917,6 +8149,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.192"),
         owners: &["Moonflower"],
+        source_file: "b2_abilities_race.lst",
         source_line: 840,
     },
     MonsterAbilityRecord {
@@ -7929,6 +8162,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MalariaDC"],
         source_page: Some("p.193"),
         owners: &["Mosquito (Giant)", "Mosquito Swarm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 845,
     },
     MonsterAbilityRecord {
@@ -7941,6 +8175,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MothmanMindWarpingGazeDC"],
         source_page: Some("p.194"),
         owners: &["Mothman"],
+        source_file: "b2_abilities_race.lst",
         source_line: 852,
     },
     MonsterAbilityRecord {
@@ -7953,6 +8188,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["MuSporeSporeCoughDC"],
         source_page: Some("p.195"),
         owners: &["Mu Spore"],
+        source_file: "b2_abilities_race.lst",
         source_line: 857,
     },
     MonsterAbilityRecord {
@@ -7965,6 +8201,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NecrophidiusDanceOfDeathDC"],
         source_page: Some("p.196"),
         owners: &["Necrophidius"],
+        source_file: "b2_abilities_race.lst",
         source_line: 861,
     },
     MonsterAbilityRecord {
@@ -7977,6 +8214,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NecrophidiusParalysisDC"],
         source_page: Some("p.196"),
         owners: &["Necrophidius"],
+        source_file: "b2_abilities_race.lst",
         source_line: 862,
     },
     MonsterAbilityRecord {
@@ -7989,6 +8227,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.197"),
         owners: &["Neh-Thalggu"],
+        source_file: "b2_abilities_race.lst",
         source_line: 866,
     },
     MonsterAbilityRecord {
@@ -8001,6 +8240,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NehThalgguPoisonDC"],
         source_page: Some("p.197"),
         owners: &["Neh-Thalggu"],
+        source_file: "b2_abilities_race.lst",
         source_line: 867,
     },
     MonsterAbilityRecord {
@@ -8013,6 +8253,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.197"),
         owners: &["Neh-Thalggu"],
+        source_file: "b2_abilities_race.lst",
         source_line: 868,
     },
     MonsterAbilityRecord {
@@ -8025,6 +8266,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NereidDrowningKissDC"],
         source_page: Some("p.198"),
         owners: &["Nereid"],
+        source_file: "b2_abilities_race.lst",
         source_line: 873,
     },
     MonsterAbilityRecord {
@@ -8037,6 +8279,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NereidPoisonDC"],
         source_page: Some("p.198"),
         owners: &["Nereid"],
+        source_file: "b2_abilities_race.lst",
         source_line: 874,
     },
     MonsterAbilityRecord {
@@ -8049,6 +8292,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.198"),
         owners: &["Nereid"],
+        source_file: "b2_abilities_race.lst",
         source_line: 879,
     },
     MonsterAbilityRecord {
@@ -8061,6 +8305,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.200"),
         owners: &["Nightshade (Nightcrawler)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 885,
     },
     MonsterAbilityRecord {
@@ -8073,6 +8318,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NightcrawlerPoisonDC"],
         source_page: Some("p.200"),
         owners: &["Nightshade (Nightcrawler)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 886,
     },
     MonsterAbilityRecord {
@@ -8085,6 +8331,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.200"),
         owners: &["Nightshade (Nightcrawler)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 887,
     },
     MonsterAbilityRecord {
@@ -8097,6 +8344,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NightwalkerFearGazeDC"],
         source_page: Some("p.201"),
         owners: &["Nightshade (Nightwalker)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 891,
     },
     MonsterAbilityRecord {
@@ -8109,6 +8357,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.201"),
         owners: &["Nightshade (Nightwalker)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 892,
     },
     MonsterAbilityRecord {
@@ -8121,6 +8370,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.201"),
         owners: &["Nightshade (Nightwalker)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 893,
     },
     MonsterAbilityRecord {
@@ -8133,6 +8383,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.202"),
         owners: &["Nightshade (Nightwave)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 897,
     },
     MonsterAbilityRecord {
@@ -8145,6 +8396,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.202"),
         owners: &["Nightshade (Nightwave)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 898,
     },
     MonsterAbilityRecord {
@@ -8157,6 +8409,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NightwingMagicDrainDC"],
         source_page: Some("p.203"),
         owners: &["Nightshade (Nightwing)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 903,
     },
     MonsterAbilityRecord {
@@ -8169,6 +8422,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.203"),
         owners: &["Nightshade (Nightwing)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 904,
     },
     MonsterAbilityRecord {
@@ -8181,6 +8435,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.206"),
         owners: &["Pech"],
+        source_file: "b2_abilities_race.lst",
         source_line: 929,
     },
     MonsterAbilityRecord {
@@ -8193,6 +8448,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.206"),
         owners: &["Pech"],
+        source_file: "b2_abilities_race.lst",
         source_line: 930,
     },
     MonsterAbilityRecord {
@@ -8205,6 +8461,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.206"),
         owners: &["Pech"],
+        source_file: "b2_abilities_race.lst",
         source_line: 931,
     },
     MonsterAbilityRecord {
@@ -8217,6 +8474,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["PerytonHorrificCriticalDC"],
         source_page: Some("p.207"),
         owners: &["Peryton"],
+        source_file: "b2_abilities_race.lst",
         source_line: 935,
     },
     MonsterAbilityRecord {
@@ -8229,6 +8487,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["PerytonShadowMarkDC"],
         source_page: Some("p.207"),
         owners: &["Peryton"],
+        source_file: "b2_abilities_race.lst",
         source_line: 936,
     },
     MonsterAbilityRecord {
@@ -8241,6 +8500,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.208"),
         owners: &["Petitioner (Human)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 940,
     },
     MonsterAbilityRecord {
@@ -8253,6 +8513,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.210"),
         owners: &["Phycomid"],
+        source_file: "b2_abilities_race.lst",
         source_line: 954,
     },
     MonsterAbilityRecord {
@@ -8265,6 +8526,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["PhycomidSporesDC"],
         source_page: Some("p.210"),
         owners: &["Phycomid"],
+        source_file: "b2_abilities_race.lst",
         source_line: 955,
     },
     MonsterAbilityRecord {
@@ -8277,6 +8539,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["PoltergeistFrightenerDC"],
         source_page: Some("p.211"),
         owners: &["Poltergeist"],
+        source_file: "b2_abilities_race.lst",
         source_line: 959,
     },
     MonsterAbilityRecord {
@@ -8289,6 +8552,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.211"),
         owners: &["Poltergeist"],
+        source_file: "b2_abilities_race.lst",
         source_line: 961,
     },
     MonsterAbilityRecord {
@@ -8301,6 +8565,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TL", "TL*25", "PoltergeistTelekinesisDC"],
         source_page: Some("p.211"),
         owners: &["Poltergeist"],
+        source_file: "b2_abilities_race.lst",
         source_line: 962,
     },
     MonsterAbilityRecord {
@@ -8313,6 +8578,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.212"),
         owners: &["Primate (Monkey Swarm)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 968,
     },
     MonsterAbilityRecord {
@@ -8325,6 +8591,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ImenteshWarpwaveDC"],
         source_page: Some("p.214"),
         owners: &["Protean (Imentesh)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 972,
     },
     MonsterAbilityRecord {
@@ -8337,6 +8604,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.214"),
         owners: &["Protean (Imentesh)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 973,
     },
     MonsterAbilityRecord {
@@ -8349,6 +8617,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["KeketarWarpwaveDC"],
         source_page: Some("p.215"),
         owners: &["Protean (Keketar)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 977,
     },
     MonsterAbilityRecord {
@@ -8361,6 +8630,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["19+CHA"],
         source_page: Some("p.215"),
         owners: &["Protean (Keketar)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 978,
     },
     MonsterAbilityRecord {
@@ -8373,6 +8643,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.215"),
         owners: &["Protean (Keketar)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 980,
     },
     MonsterAbilityRecord {
@@ -8385,6 +8656,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.216"),
         owners: &["Protean (Naunet)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 984,
     },
     MonsterAbilityRecord {
@@ -8397,6 +8669,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.216"),
         owners: &["Protean (Naunet)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 985,
     },
     MonsterAbilityRecord {
@@ -8409,6 +8682,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["NaunetConfusionDC"],
         source_page: Some("p.216"),
         owners: &["Protean (Naunet)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 986,
     },
     MonsterAbilityRecord {
@@ -8421,6 +8695,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.216"),
         owners: &["Protean (Naunet)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 987,
     },
     MonsterAbilityRecord {
@@ -8433,6 +8708,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.219"),
         owners: &["Qlippoth (Augnagar)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 993,
     },
     MonsterAbilityRecord {
@@ -8445,6 +8721,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["AugnagarRottingCurseDC"],
         source_page: Some("p.219"),
         owners: &["Qlippoth (Augnagar)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 994,
     },
     MonsterAbilityRecord {
@@ -8457,6 +8734,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.220"),
         owners: &["Qlippoth (Chernobue)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 998,
     },
     MonsterAbilityRecord {
@@ -8469,6 +8747,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ChernobuePoisonDC"],
         source_page: Some("p.220"),
         owners: &["Qlippoth (Chernobue)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 999,
     },
     MonsterAbilityRecord {
@@ -8481,6 +8760,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.220"),
         owners: &["Qlippoth (Chernobue)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1000,
     },
     MonsterAbilityRecord {
@@ -8493,6 +8773,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.222"),
         owners: &["Qlippoth (Iathavos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1008,
     },
     MonsterAbilityRecord {
@@ -8505,6 +8786,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["IathavosAbyssalTransformationDC"],
         source_page: Some("p.222"),
         owners: &["Qlippoth (Iathavos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1009,
     },
     MonsterAbilityRecord {
@@ -8517,6 +8799,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["IathavosEntropicBeamsDC"],
         source_page: Some("p.222"),
         owners: &["Qlippoth (Iathavos)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1010,
     },
     MonsterAbilityRecord {
@@ -8529,6 +8812,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.224"),
         owners: &["Qlippoth (Nyogoth)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1016,
     },
     MonsterAbilityRecord {
@@ -8541,6 +8825,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.224"),
         owners: &["Qlippoth (Nyogoth)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1017,
     },
     MonsterAbilityRecord {
@@ -8553,6 +8838,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.225"),
         owners: &["Qlippoth (Shoggti)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1022,
     },
     MonsterAbilityRecord {
@@ -8565,6 +8851,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.225"),
         owners: &["Qlippoth (Shoggti)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1023,
     },
     MonsterAbilityRecord {
@@ -8577,6 +8864,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.226"),
         owners: &["Qlippoth (Thulgant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1027,
     },
     MonsterAbilityRecord {
@@ -8589,6 +8877,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ThulgantAbilityDrainDC"],
         source_page: Some("p.226"),
         owners: &["Qlippoth (Thulgant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1028,
     },
     MonsterAbilityRecord {
@@ -8601,6 +8890,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ThulgantSavageStingersDC"],
         source_page: Some("p.226"),
         owners: &["Qlippoth (Thulgant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1029,
     },
     MonsterAbilityRecord {
@@ -8613,6 +8903,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.226"),
         owners: &["Qlippoth (Thulgant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1030,
     },
     MonsterAbilityRecord {
@@ -8625,6 +8916,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.226"),
         owners: &["Qlippoth (Thulgant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1031,
     },
     MonsterAbilityRecord {
@@ -8637,6 +8929,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.228"),
         owners: &["Quickwood"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1043,
     },
     MonsterAbilityRecord {
@@ -8649,6 +8942,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RastParalyzingGazeDC"],
         source_page: Some("p.229"),
         owners: &["Rast"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1049,
     },
     MonsterAbilityRecord {
@@ -8661,6 +8955,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.233"),
         owners: &["Redcap"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1065,
     },
     MonsterAbilityRecord {
@@ -8673,6 +8968,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.233"),
         owners: &["Redcap"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1066,
     },
     MonsterAbilityRecord {
@@ -8685,6 +8981,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.233"),
         owners: &["Redcap"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1068,
     },
     MonsterAbilityRecord {
@@ -8697,6 +8994,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.234"),
         owners: &["Reefclaw"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1072,
     },
     MonsterAbilityRecord {
@@ -8709,6 +9007,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.233"),
         owners: &["Reefclaw"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1073,
     },
     MonsterAbilityRecord {
@@ -8721,6 +9020,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ReefclawPoisonDC"],
         source_page: Some("p.234"),
         owners: &["Reefclaw"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1074,
     },
     MonsterAbilityRecord {
@@ -8733,6 +9033,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RevenantBalefulShriekDC"],
         source_page: Some("p.235"),
         owners: &["Revenant"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1078,
     },
     MonsterAbilityRecord {
@@ -8745,6 +9046,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.235"),
         owners: &["Revenant"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1079,
     },
     MonsterAbilityRecord {
@@ -8757,6 +9059,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.236"),
         owners: &["Sandman"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1085,
     },
     MonsterAbilityRecord {
@@ -8769,6 +9072,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SandmanSleepDC"],
         source_page: Some("p.236"),
         owners: &["Sandman"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1086,
     },
     MonsterAbilityRecord {
@@ -8781,6 +9085,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.237"),
         owners: &["Sard"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1093,
     },
     MonsterAbilityRecord {
@@ -8793,6 +9098,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SardPoisonDC"],
         source_page: Some("p.237"),
         owners: &["Sard"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1094,
     },
     MonsterAbilityRecord {
@@ -8805,6 +9111,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.237"),
         owners: &["Sard"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1095,
     },
     MonsterAbilityRecord {
@@ -8817,6 +9124,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ScarecrowFascinatingGazeDC"],
         source_page: Some("p.238"),
         owners: &["Scarecrow"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1099,
     },
     MonsterAbilityRecord {
@@ -8829,6 +9137,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ScarecrowFearDC"],
         source_page: Some("p.238"),
         owners: &["Scarecrow"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1100,
     },
     MonsterAbilityRecord {
@@ -8841,6 +9150,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.239"),
         owners: &["Sceaduinar"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1105,
     },
     MonsterAbilityRecord {
@@ -8853,6 +9163,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.241"),
         owners: &["Scylla"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1119,
     },
     MonsterAbilityRecord {
@@ -8865,6 +9176,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SerpentfolkPoisonDC"],
         source_page: Some("p.242"),
         owners: &["Serpentfolk", "Serpentfolk (Degenerate)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1123,
     },
     MonsterAbilityRecord {
@@ -8877,6 +9189,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.243"),
         owners: &["Seugathi"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1128,
     },
     MonsterAbilityRecord {
@@ -8889,6 +9202,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.243"),
         owners: &["Seugathi"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1129,
     },
     MonsterAbilityRecord {
@@ -8901,6 +9215,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SeugathiPoisonDC"],
         source_page: None,
         owners: &["Seugathi"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1130,
     },
     MonsterAbilityRecord {
@@ -8913,6 +9228,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.244"),
         owners: &["Shantak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1135,
     },
     MonsterAbilityRecord {
@@ -8925,6 +9241,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.244"),
         owners: &["Shantak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1137,
     },
     MonsterAbilityRecord {
@@ -8937,6 +9254,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.245"),
         owners: &["Shining Child"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1142,
     },
     MonsterAbilityRecord {
@@ -8949,6 +9267,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.245"),
         owners: &["Shining Child"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1143,
     },
     MonsterAbilityRecord {
@@ -8961,6 +9280,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.245"),
         owners: &["Shining Child"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1144,
     },
     MonsterAbilityRecord {
@@ -8973,6 +9293,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.246"),
         owners: &["Sinspawn (Wrathspawn)", "Sinspawn (Envyspawn)", "Sinspawn (Gluttonspawn)", "Sinspawn (Greedspawn)", "Sinspawn (Lustspawn)", "Sinspawn (Pridespawn)", "Sinspawn (Slothspawn)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1148,
     },
     MonsterAbilityRecord {
@@ -8985,6 +9306,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SinspawnSinfulBiteDC"],
         source_page: Some("p.246"),
         owners: &["Sinspawn (Wrathspawn)", "Sinspawn (Envyspawn)", "Sinspawn (Gluttonspawn)", "Sinspawn (Greedspawn)", "Sinspawn (Lustspawn)", "Sinspawn (Pridespawn)", "Sinspawn (Slothspawn)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1150,
     },
     MonsterAbilityRecord {
@@ -8997,6 +9319,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.247"),
         owners: &["Siren"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1160,
     },
     MonsterAbilityRecord {
@@ -9009,6 +9332,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.247"),
         owners: &["Siren"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1161,
     },
     MonsterAbilityRecord {
@@ -9021,6 +9345,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.248"),
         owners: &["Skulk"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1165,
     },
     MonsterAbilityRecord {
@@ -9033,6 +9358,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.248"),
         owners: &["Skulk"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1166,
     },
     MonsterAbilityRecord {
@@ -9045,6 +9371,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FungalRotDC"],
         source_page: Some("p.249"),
         owners: &["Slime Mold"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1170,
     },
     MonsterAbilityRecord {
@@ -9057,6 +9384,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SlitheringTrackerParalysisDC"],
         source_page: Some("p.250"),
         owners: &["Slithering Tracker"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1174,
     },
     MonsterAbilityRecord {
@@ -9069,6 +9397,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.250"),
         owners: &["Slithering Tracker"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1175,
     },
     MonsterAbilityRecord {
@@ -9081,6 +9410,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.251"),
         owners: &["Slurk"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1179,
     },
     MonsterAbilityRecord {
@@ -9093,6 +9423,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.251"),
         owners: &["Slurk"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1180,
     },
     MonsterAbilityRecord {
@@ -9105,6 +9436,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.251"),
         owners: &["Slurk"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1181,
     },
     MonsterAbilityRecord {
@@ -9117,6 +9449,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["EmperorCobraPoisonDC"],
         source_page: Some("p.252"),
         owners: &["Snake (Emperor Cobra)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1185,
     },
     MonsterAbilityRecord {
@@ -9129,6 +9462,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.254"),
         owners: &["Soul Eater"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1193,
     },
     MonsterAbilityRecord {
@@ -9141,6 +9475,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.254"),
         owners: &["Soul Eater"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1194,
     },
     MonsterAbilityRecord {
@@ -9153,6 +9488,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SoulEaterSoulDrainDC"],
         source_page: Some("p.254"),
         owners: &["Soul Eater"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1195,
     },
     MonsterAbilityRecord {
@@ -9165,6 +9501,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.254"),
         owners: &["Soul Eater"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1196,
     },
     MonsterAbilityRecord {
@@ -9177,6 +9514,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.255"),
         owners: &["Soulbound Doll"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1201,
     },
     MonsterAbilityRecord {
@@ -9189,6 +9527,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.255"),
         owners: &["Soulbound Doll"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1202,
     },
     MonsterAbilityRecord {
@@ -9201,6 +9540,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GiantBlackWidowSpiderPoisonDC"],
         source_page: Some("p.256"),
         owners: &["Spider (Giant Black Widow)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1206,
     },
     MonsterAbilityRecord {
@@ -9213,6 +9553,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.256"),
         owners: &["Spider (Giant Black Widow)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1207,
     },
     MonsterAbilityRecord {
@@ -9225,6 +9566,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.257"),
         owners: &["Spriggan"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1216,
     },
     MonsterAbilityRecord {
@@ -9237,6 +9579,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.257"),
         owners: &["Spriggan"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1218,
     },
     MonsterAbilityRecord {
@@ -9249,6 +9592,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.257"),
         owners: &["Spriggan"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1219,
     },
     MonsterAbilityRecord {
@@ -9261,6 +9605,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ParalysisDC"],
         source_page: Some("p.259"),
         owners: &["Tendriculos"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1224,
     },
     MonsterAbilityRecord {
@@ -9273,6 +9618,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.260"),
         owners: &["Tenebrous Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1228,
     },
     MonsterAbilityRecord {
@@ -9285,6 +9631,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TenebrousWormPoisonDC"],
         source_page: Some("p.260"),
         owners: &["Tenebrous Worm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1230,
     },
     MonsterAbilityRecord {
@@ -9297,6 +9644,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TentamortPoisonDC"],
         source_page: Some("p.261"),
         owners: &["Tentamort"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1234,
     },
     MonsterAbilityRecord {
@@ -9309,6 +9657,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ThrasfyrEntanglingChainsDC"],
         source_page: Some("p.263"),
         owners: &["Thrasfyr"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1242,
     },
     MonsterAbilityRecord {
@@ -9321,6 +9670,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.263"),
         owners: &["Thrasfyr"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1243,
     },
     MonsterAbilityRecord {
@@ -9333,6 +9683,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.263"),
         owners: &["Thrasfyr"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1244,
     },
     MonsterAbilityRecord {
@@ -9345,6 +9696,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ThunderbirdThunderboltDC"],
         source_page: None,
         owners: &["Thunderbird"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1248,
     },
     MonsterAbilityRecord {
@@ -9357,6 +9709,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.265"),
         owners: &["Tick (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1254,
     },
     MonsterAbilityRecord {
@@ -9369,6 +9722,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RedAcheDC"],
         source_page: Some("p.265"),
         owners: &["Tick (Giant)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1255,
     },
     MonsterAbilityRecord {
@@ -9381,6 +9735,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BubonicPlagueDC"],
         source_page: Some("p.265"),
         owners: &["Tick Swarm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1260,
     },
     MonsterAbilityRecord {
@@ -9393,6 +9748,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.266"),
         owners: &["Titan (Elysian)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1264,
     },
     MonsterAbilityRecord {
@@ -9405,6 +9761,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.267"),
         owners: &["Titan (Thanatotic)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1268,
     },
     MonsterAbilityRecord {
@@ -9417,6 +9774,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ThanatoticTitanGodslayerDC"],
         source_page: Some("p.267"),
         owners: &["Titan (Thanatotic)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1269,
     },
     MonsterAbilityRecord {
@@ -9429,6 +9787,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.268"),
         owners: &["Toad (Glacier)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1282,
     },
     MonsterAbilityRecord {
@@ -9441,6 +9800,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.268"),
         owners: &["Toad (Glacier)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1285,
     },
     MonsterAbilityRecord {
@@ -9453,6 +9813,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TotenmaskeCharismaDrainDC"],
         source_page: Some("p.269"),
         owners: &["Totenmaske"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1289,
     },
     MonsterAbilityRecord {
@@ -9465,6 +9826,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TotenmaskeFleshdrinkDC"],
         source_page: None,
         owners: &["Totenmaske"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1290,
     },
     MonsterAbilityRecord {
@@ -9477,6 +9839,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TotenmaskeShapeFleshDC"],
         source_page: Some("p.269"),
         owners: &["Totenmaske"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1291,
     },
     MonsterAbilityRecord {
@@ -9489,6 +9852,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.269"),
         owners: &["Totenmaske"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1292,
     },
     MonsterAbilityRecord {
@@ -9501,6 +9865,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TotenmaskeDevourMemoriesDC"],
         source_page: None,
         owners: &["Totenmaske"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1294,
     },
     MonsterAbilityRecord {
@@ -9513,6 +9878,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.273"),
         owners: &["Turtle (Snapping)", "Turtle (Giant Snapping)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1305,
     },
     MonsterAbilityRecord {
@@ -9525,6 +9891,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.273"),
         owners: &["Turtle (Giant Snapping)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1309,
     },
     MonsterAbilityRecord {
@@ -9537,6 +9904,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.274"),
         owners: &["Twigjack"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1313,
     },
     MonsterAbilityRecord {
@@ -9549,6 +9917,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TwigjackSplintersprayDC"],
         source_page: Some("p.274"),
         owners: &["Twigjack"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1314,
     },
     MonsterAbilityRecord {
@@ -9561,6 +9930,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["UrdefhanDaemonicPactDC"],
         source_page: Some("p.276"),
         owners: &["Urdefhan"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1319,
     },
     MonsterAbilityRecord {
@@ -9573,6 +9943,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["UrdefhanStrengthDamageDC"],
         source_page: Some("p.276"),
         owners: &["Urdefhan"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1320,
     },
     MonsterAbilityRecord {
@@ -9585,6 +9956,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["CONSCORE"],
         source_page: Some("p.277"),
         owners: &["Vampiric Mist"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1324,
     },
     MonsterAbilityRecord {
@@ -9597,6 +9969,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.277"),
         owners: &["Vampiric Mist"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1325,
     },
     MonsterAbilityRecord {
@@ -9609,6 +9982,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.277"),
         owners: &["Vampiric Mist"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1326,
     },
     MonsterAbilityRecord {
@@ -9621,6 +9995,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["VemerakBreathWeaponDC"],
         source_page: Some("p.278"),
         owners: &["Vemerak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1331,
     },
     MonsterAbilityRecord {
@@ -9633,6 +10008,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["TL"],
         source_page: Some("p.278"),
         owners: &["Vemerak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1332,
     },
     MonsterAbilityRecord {
@@ -9645,6 +10021,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["STR/2", "STR"],
         source_page: Some("p.278"),
         owners: &["Vemerak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1334,
     },
     MonsterAbilityRecord {
@@ -9657,6 +10034,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["ViperVineCaptivatingCloudDC"],
         source_page: Some("p.279"),
         owners: &["Viper Vine"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1338,
     },
     MonsterAbilityRecord {
@@ -9669,6 +10047,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.279"),
         owners: &["Viper Vine"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1340,
     },
     MonsterAbilityRecord {
@@ -9681,6 +10060,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.280"),
         owners: &["Water Orm"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1345,
     },
     MonsterAbilityRecord {
@@ -9693,6 +10073,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.281"),
         owners: &["Wendigo"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1349,
     },
     MonsterAbilityRecord {
@@ -9705,6 +10086,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.281"),
         owners: &["Wendigo"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1350,
     },
     MonsterAbilityRecord {
@@ -9717,6 +10099,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WendigoHowlDC"],
         source_page: Some("p.281"),
         owners: &["Wendigo"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1351,
     },
     MonsterAbilityRecord {
@@ -9729,6 +10112,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WendigoPsychosisDC"],
         source_page: Some("p.281"),
         owners: &["Wendigo"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1352,
     },
     MonsterAbilityRecord {
@@ -9741,6 +10125,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WendigoWindWalkDC"],
         source_page: Some("p.281"),
         owners: &["Wendigo"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1353,
     },
     MonsterAbilityRecord {
@@ -9753,6 +10138,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RendDamageDice", "RendDamageDieSize", "RendBonusDamage"],
         source_page: Some("p.281"),
         owners: &["Wendigo"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1354,
     },
     MonsterAbilityRecord {
@@ -9765,6 +10151,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.282"),
         owners: &["Whale", "Whale (Great White)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1358,
     },
     MonsterAbilityRecord {
@@ -9777,6 +10164,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["GreatWhiteWhaleSmashingBreachDC", "STR*1.5"],
         source_page: Some("p.282"),
         owners: &["Whale (Great White)"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1362,
     },
     MonsterAbilityRecord {
@@ -9789,6 +10177,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WinterwightBlightfireDC"],
         source_page: Some("p.283"),
         owners: &["Winterwight"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1367,
     },
     MonsterAbilityRecord {
@@ -9801,6 +10190,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.301"),
         owners: &["Witchfire"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1372,
     },
     MonsterAbilityRecord {
@@ -9813,6 +10203,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.285"),
         owners: &["Witchwyrd"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1377,
     },
     MonsterAbilityRecord {
@@ -9825,6 +10216,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.288"),
         owners: &["Xacarba"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1388,
     },
     MonsterAbilityRecord {
@@ -9837,6 +10229,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.288"),
         owners: &["Xacarba"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1390,
     },
     MonsterAbilityRecord {
@@ -9849,6 +10242,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Xacarba"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1392,
     },
     MonsterAbilityRecord {
@@ -9861,6 +10255,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["DevourSaveDC"],
         source_page: Some("p.289"),
         owners: &["Xtabay"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1400,
     },
     MonsterAbilityRecord {
@@ -9873,6 +10268,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SoporificPollenSaveDC"],
         source_page: Some("p.289"),
         owners: &["Xtabay"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1402,
     },
     MonsterAbilityRecord {
@@ -9885,6 +10281,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.289"),
         owners: &["Xtabay"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1404,
     },
     MonsterAbilityRecord {
@@ -9897,6 +10294,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.290"),
         owners: &["Yrthak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1410,
     },
     MonsterAbilityRecord {
@@ -9909,6 +10307,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.290"),
         owners: &["Yrthak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1412,
     },
     MonsterAbilityRecord {
@@ -9921,6 +10320,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.290"),
         owners: &["Yrthak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1414,
     },
     MonsterAbilityRecord {
@@ -9933,6 +10333,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.289"),
         owners: &["Yrthak"],
+        source_file: "b2_abilities_race.lst",
         source_line: 1416,
     },
 ];

@@ -446,7 +446,7 @@ fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
 /// `ultimate_wilderness::feat_tables`'s own doc comment for the catalog.
 /// SD-29 Epic 7 round 6 added this book's `companion` family and did NOT add it
 /// here, so the panel reported Ultimate Wilderness's 135 feats and none of its
-/// 327 companion records (`decisions.md §62.4`). Corrected in round 7, which
+/// 327 companion records (`decisions.md §63.4`). Corrected in round 7, which
 /// found it only because registering ITS book turned
 /// `every_book_landed_in_rules_tables_is_reported` red — that test asks whether
 /// a book appears at all, and Ultimate Wilderness already did.
@@ -679,6 +679,14 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             chassis_book_counts("inner_sea_bestiary"),
             &races,
         ),
+        // SD-29 Epic 5 extend, round 9. Monster registry only, like the rows
+        // above it.
+        book_status(
+            "inner_sea_gods",
+            "src/rules_core/rules_tables/inner_sea_gods",
+            chassis_book_counts("inner_sea_gods"),
+            &races,
+        ),
         book_status(
             "book_of_the_damned_volume_1",
             "src/rules_core/rules_tables/book_of_the_damned_volume_1",
@@ -889,6 +897,9 @@ mod tests {
                 // SD-29 Epic 5 extend round 7 -- monster registry only, like
                 // `bestiary_4` above.
                 "inner_sea_bestiary",
+                // SD-29 Epic 5 extend round 9 -- monster registry only, like
+                // `inner_sea_bestiary` above.
+                "inner_sea_gods",
                 // SD-29 Epic 5 extend round 2 -- the two Book of the Damned
                 // volumes, kept next to the other chassis books.
                 "book_of_the_damned_volume_1",
