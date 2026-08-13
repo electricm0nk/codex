@@ -11567,3 +11567,173 @@ for kind in ('monster', 'monster_ability'):
 cost is registration**. Plus `inner_sea_gods`' **≥16** bundle-row class (§4b). `occult_adventures`'
 one monster row is `support/oa_races_b3.lst`, so this round's resolver is what makes it reachable at
 all. Twelve books hold 800 orphan abilities and zero monsters — the floor.
+
+## Cycle — epic-7-companion-lane-extend, ROUND 7 (SD29-E7-F2-008)
+
+**Claimed-by** `sd29-companion-r11` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §63` (claimed as §62, renumbered in the merge commit because the monster
+lane claimed §62 concurrently in `4d2d4ce3` — the same collision round 6 hit at §60) ·
+**Commits** `fb873737` (ingest + three mechanisms + one test), `380db42d` (the ninth registration
+point + a stale-upward wire pin), `a8f720d6` (merge of `origin/tranche/9` + the §62→§63 renumber),
+`2bbbeff0` (inventory regenerated on the merged tree), `17121fdb` (the two unmodelled `TYPE:` shapes),
+plus this receipt · **Branch** pushed to `origin/tranche/9`
+
+**Outcome: 102 units ingested, all 102 grounded. Companion grounded 684 → 786. Honest remainder 136
+across 5 books. Full gate `VERIFY_EXIT=0`, all 14 stages, on run 3. Item 8 PASS.**
+
+### 0. The dispatch brief was materially stale for the FOURTH consecutive round
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that this is "a NEW MECHANISM with no corpus-wide precedent", and that the
+round should build the mechanism on a pinned `inner_sea_combat` pilot. `§56 §0`, `§59 §0` and `§61 §0`
+each record the *same* text one, two and three rounds earlier.
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1012, 'grounded': 684})
+```
+
+Six rounds had landed; eleven books were registered; the card read `READY (round 7)`. The brief's one
+checkable figure — **239** remaining — was re-derived and **reproduced EXACTLY** before this round's
+work superseded it.
+
+`HEAD` was `7d9f1c4f`: an ancient commit with no `docs/`, `scripts/` or `data/` at all, not an
+ancestor of `origin/tranche/9`. Fixed with `git fetch origin tranche/9 && git reset --hard
+origin/tranche/9` before any work. This is the second consecutive round to be handed a wrong base.
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`§61`'s queue ranked `core_essentials` first at 103 reachable. Re-derived rather than trusted:
+
+```
+python3 scripts/classify_companion_rows.py core_essentials core_rulebook ultimate_magic \
+  advanced_race_guide advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  total companion units in scope : 760
+  distinct excluded rows (the UNION, not the sum) : 521
+  reachable remainder            : 239        <- reproduces the brief's figure exactly
+```
+
+**And the round's stated hazard was checked rather than assumed.** The kanban row said
+`core_essentials` "needs a NEW `RuleSetId`, and you must check rather than assume". Checked:
+`grep -n 'Ce\b' src/rules_core/rules_tables/mod.rs` → `150:    Ce,` — the race-trait lane compiled it
+in `§49`. **It does not.** A retro `correction` event records it.
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `core_essentials` (Core Essentials, wire code `CE`) |
+| Units ingested | **102** of 145 — 58 creature rows, 44 ability rows |
+| Grounded | **102 of 102** |
+| Source files | 8 — 3 `ce_races_familiar_*.lst`, 5 `ce_abilities_familiar_*.lst` |
+| New `RuleSetId` | **none** (`Ce`, race-trait lane `§49`) |
+| Other kinds' units moved | **0** — measured, not asserted |
+| `OPEN_FINDINGS` | none added — the family IS surfaced |
+
+Zero scope flip, measured by a structural diff of every unit's status against HEAD: exactly two
+changes, `core_essentials|companion|grounded 0 → 102` and
+`core_essentials|companion|not-ingested 145 → 43`.
+
+**The lane's per-book cost is NINE surfaces, not the eight every prior receipt has claimed** — see §5.
+
+### 3. Three mechanisms, and the one that was a compliance defect
+
+* **`§63.1` — the delta screen's CREATURE half.** `§59.2` built the `.COPY=`/`.MOD` screen one round
+  earlier and ran it over `abilities` alone. This is the first companion book whose CREATURE rows
+  carry it, 22 of them (`Bat.COPY=Bat (Celestial)` — `OUTPUTNAME:`, `TEMPLATE:`, `KIT:` and nothing
+  else). The RED was an existing test:
+  `every_registered_creature_states_its_monster_class_token_verbatim` went red on all 22 at once.
+  Screened where the creature set is BUILT, because `creature_display` and `creature_species` are
+  both derived from it and both are actively wrong with a delta row present. `§59.2`'s `mod_only`
+  half — shipped as "stated, not exercised", naming this book — is now **exercised** (the 4
+  `Universal Monster Rule ~ …` overlays). Widening changed **not one byte** of the eleven registered
+  books.
+
+* **`§63.2` — a PI compliance defect this round would have shipped.** All four `LICENSE.json` writers
+  hardcoded `"records_redacted": 0` beside a `records_processed` derived from disk. `core_essentials`
+  was ingested first by the race-trait lane, which redacted **9** records; running the generator
+  rewrote the 9 to a 0 while all nine `[redacted PI]` markers stayed on disk. Caught by reading the
+  existing `LICENSE.json` before running the generator. `count_on_disk_redactions` now derives it
+  from the same walk as the numerator. `records_redacted: 9`, `records_processed: 166`.
+
+* **`§63.3` — an OWNED row that states nothing the chassis models.** `Pseudodragon ~ Tail` carries no
+  `TYPE:`, no `DESC:`, no `BONUS:` — only `SOURCEPAGE:` and an `ASPECT:`. Across all twelve
+  registered books it is the ONLY one, of 394 grounded ability rows checked. **102 ship against 103
+  reachable**, and the gap is a finding: reachability is a fact about ownership, shippability a fact
+  about the record type. The screen is `companions_reach`'s own payload predicate **minus
+  `source_page`** — so this row would have PASSED the reach gate while showing a player nothing.
+
+**Deferred and measured, not hand-waved:** `ASPECT:` is modelled by no chassis in this program, and
+**27 of the 394 grounded ability rows carry one that is dropped today**. Only this one row is
+*emptied* by the omission; the other 26 are diminished. A `deferral` event records it.
+
+### 4. The gate — three runs, VERIFY_EXIT=0 on run 3, and every red this round's own
+
+Never excused as environmental; each failure attributed back to a named test.
+
+| run | result | attribution |
+|---|---|---|
+| 1 | `1` — `desktop` | `every_book_landed_in_rules_tables_is_reported` (the ninth surface, §5) and a stale 121/20 wire count pin |
+| 2 | `1` — `desktop` | `king_crab_water_dependency` carrying `["Weakness","Extraordinary"]` — a shape the allowlist did not know, **masked in run 1 because the test asserts a count before it asserts structure** |
+| 3 | **`0`** | all 14 stages: `root-full` **6312 passed across 544 suites, all 525 `tests/*.rs` suites executed**; `desktop` 445; `reach` 27; `frontend-test` 99/99; `clippy` 0 errors; `class-dump` 31/31 |
+
+The run-1/run-2 ordering is the transferable half: **a count assertion placed ahead of a structural
+one hides the structural one for exactly as long as the count is stale.** An `incident` event with
+`recurrence-key=own-ingest-turns-gate-red` records it.
+
+### 5. `§63.4` — a NINTH registration point, and a family the panel had been dropping since round 6
+
+`corpus_ingest_diagnostic::every_book_landed_in_rules_tables_is_reported` went red naming
+`core_essentials`. The Corpus Ingest panel states it shows every rule book landed in `rules_tables`,
+so an unreported book reads to a tester as an un-ingested book. **Core Essentials is the first
+companion book whose `rules_tables/` directory did not already exist for another family's sake**, so
+this is the first round that could have found it.
+
+Reading that failure turned up a second one the test cannot see: it asks whether a book APPEARS, and
+Ultimate Wilderness already did on the strength of its 135 feats — but `ultimate_wilderness_counts()`
+inserts `feats` and nothing else, so **round 6's 327 companion records have been absent from that
+panel since the day they landed.** Both fixed.
+
+### 6. Item 8 — PASS, on the live app
+
+`companion / Stirge`, artifact
+`artifacts/SD29-E7-F2-008/item8/ce-companion-stirge.png` + `.verify.md`, HEAD `17121fdb`. The screen
+renders the `Core Essentials (58)` book chip and a fully-populated card: `Tiny Magical Beast`,
+`Walk 10 ft., fly 40 ft.`, `Hit dice Magical Beast:1`, the `BONUS:STAT` adjustments, and all three
+abilities with their full rules text — `Attach`, `Blood Drain`, `Diseased`, each with its `p.260`
+citation. Run only after the gate finished; never concurrently (OOM).
+
+### 7. Denominators, re-derived at the end of this round
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 910, 'grounded': 786})
+
+python3 scripts/classify_companion_rows.py core_rulebook ultimate_magic advanced_race_guide \
+  advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  -> 615 units / 479 excluded / 136 reachable
+```
+
+`companion` **1,696 total / 786 grounded / 910 remaining by status. 910 is NOT the lane's workload.**
+The REAL ceiling is **922** — `§61`'s 923 minus the one row `§63.3` drops — so the honest remainder is
+**136**. `922 − 786 = 136`, and the five remaining books' reachable counts sum to 136 independently.
+The two derivations close exactly.
+
+Ranked: `core_rulebook` 170 / 86 / **84**, `ultimate_magic` 170 / 138 / **32**, `advanced_race_guide`
+32 / 18 / **14**, `advanced_players_guide` 212 / 208 / **4**, `book_of_the_damned_volume_1`
+31 / 29 / **2**.
+
+**Three hazards for round 8.** (a) `core_rulebook` at 84 is the only book left above 40; it,
+`ultimate_magic` and `book_of_the_damned_volume_1` still carry the 7 `*_classes_companion.lst` class
+rows the transcriber refuses **by name**. (b) `advanced_players_guide` (4 of 212) and
+`book_of_the_damned_volume_1` (2 of 31) remain **FLOORS, not queued work**. (c) The `ASPECT:`
+widening and Ultimate Wilderness's 149-row archetype block are both **new record types**, not wider
+predicates — a round taking either should declare it up front.
+
+**Unattended-mode defaults taken this round** (recorded per the operating protocol, not raised):
+took `§61.2`'s drop-and-name disposition for `Pseudodragon ~ Tail` rather than widening the record
+type mid-round; renumbered this lane's decision §62 → §63 on the merge collision, following round 6's
+precedent of the companion lane yielding; resolved the generated `docs/work-inventory.json` conflict
+by taking origin's copy and re-deriving rather than hand-merging two unit lists.
