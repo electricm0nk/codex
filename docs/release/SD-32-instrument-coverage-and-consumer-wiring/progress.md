@@ -596,6 +596,15 @@ Logs `/tmp/codex-verify-maxZzI`. Stage tallies: `root-lib` 1776, `root-full`
 
 `BASELINE_ROOT_TEST_BINARIES` (546) is untouched: no new test file was added.
 
+**Confirmation run on the tightened floors**, so the receipt's exit code covers
+the tree that is actually committed rather than the tree the cycle started on:
+`./scripts/verify.sh --only root-lib --only root-full --show-actuals`,
+**`CONFIRM_EXIT=0`, `RESULT: PASS`**, `root-lib` 1776, `root-full` 6365.
+`BASELINE_ROOT_LIB_TESTS` no longer appears in `BASELINE NOTES` — it is now
+exact. `BASELINE_ROOT_FULL_TESTS` still reports stale (6354 recorded, 6365
+measured), which is the deliberate eleven-test gap held for `aafd492c` and is
+recorded as such rather than left to look like an oversight.
+
 **Count-pin check.** `tests/fixtures/rules_core/derived-evaluator-fixtures.json`
 is the only artifact in the repo that pins `unit_id`s. All 94 of its entries
 still resolve against the regenerated inventory — none was one of the 29
