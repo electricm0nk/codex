@@ -12922,12 +12922,37 @@ decision.
 ./scripts/verify.sh > verify-closure-r2.log 2>&1 ; echo "VERIFY_EXIT=$?"
 ```
 
-`VERIFY_EXIT=PENDING (gate in flight at this commit; the follow-up commit on this branch carries the exit code)` · stages `PENDING`
+**`VERIFY_EXIT=0`** · **14 of 14 stages PASS**, none skipped
 
-PENDING — see the follow-up commit.
+```
+preflight-disk    PASS  (disk budget OK)
+pi-sweep          PASS  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+audit-selftest    PASS  (28 passed, 0 failed)
+reclaim-selftest  PASS  (10 passed, 0 failed)
+driver-selftest   PASS  (7 passed, 0 failed)
+root-lib          PASS  (1748 passed)
+root-full         PASS  (6316 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop           PASS  (445 passed)
+reach             PASS  (27 passed)
+frontend-install  PASS  (node_modules present)
+frontend-test     PASS  (99/99 files)
+frontend-typecheck PASS (tsc --noEmit clean)
+clippy            PASS  (root:54 desktop:7 warnings, 0 errors)
+class-dump        PASS  (31/31 computing)
 
-Run on the **merged** tip `0ddfc126`, not on either parent. The Epic 10 run-2 gate (`VERIFY_EXIT=0`
-at `de303fd0`) covered `origin`'s side only; the merge added two commits nothing had gated together.
+RESULT: PASS      logs in /tmp/codex-verify-KgdJg6      VERIFY_EXIT=0
+```
+
+`root-full`'s **525 of 525 `tests/*.rs` suites executed** is the check `decisions.md §40` added,
+and it is the line that matters here rather than the pass count: a merge is exactly the change that
+can leave a suite un-built while the summary still reads complete.
+
+Launched against the **merged** tip `0ddfc126`, not against either parent. The Epic 10 run-2 gate
+(`VERIFY_EXIT=0` at `de303fd0`) covered `origin`'s side only; the merge brought two commits — the
+magnitude-fidelity decision and the `site/` landing page — that nothing had ever gated *together*
+with the three lanes' work. The only edits made while it ran were to
+`docs/release/SD-29-corpus-wide-catch-up-lanes/*.md` and `docs/retro/events/*.jsonl`; no compiled or
+tested path changed under the running gate, so the result attaches to the tree it was launched on.
 
 ### 4. Definition-of-done item 8 (on-screen) — disposition
 
