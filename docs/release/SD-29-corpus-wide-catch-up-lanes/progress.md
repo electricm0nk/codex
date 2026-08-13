@@ -13206,12 +13206,27 @@ citation, the size/type/subtype triple, and `Speed 50 ft., climb 20 ft.` — the
 from `MOVE:Walk,50,Climb,20`. Evidence at
 `artifacts/SD29-E5-F2-012/item8/monster-hive-queen.{png,verify.md}`.
 
-**One FAIL is recorded rather than hidden.** A second pass (`Hive Warrior` / `Rending Mandibles`,
-proving a chassis ability renders) failed its launch with
+A **second** pass, proving a chassis ABILITY renders, at the merged tip `b9403983`:
+
+```
+--family monster --record "Hive Warrior" --expect "Rending Mandibles"
+-> PASS: monster / Hive Warrior
+
+30:Hive WarriorMedium Aberration (Hive)
+42:Rending Mandibles — Special Attack (Ex)p.237
+```
+
+`Special Attack (Ex)` is the `TYPE:SpecialAttack.Extraordinary.HiveWarrior` facet/delivery pair
+rendered, and `p.237` its own `SOURCEPAGE:` — so the ability record reaches the screen with its own
+fields rather than as a bare name under its owner.
+
+**One FAIL is recorded rather than hidden**, and its verdict file is committed
+(`monster-hive-warrior.FAILED.verify.md`). The first attempt at this second pass lost its launch to
 `Info File src-tauri/src/companion_catalog.rs changed. Rebuilding application...` — the companion
-lane's round 9 merge landed in this worktree while the tauri dev watcher was live, and the harness
-correctly refused rather than screenshotting a half-rebuilt app. Re-run on the stable merged tip.
-The item-8 requirement is already satisfied by the Hive Queen pass above.
+lane's round 9 merge landed in this worktree while the tauri dev watcher was live. The harness
+refused rather than screenshotting a half-rebuilt app, which is the behaviour worth having; the
+lesson is that **`verify-on-screen.sh` must not be run across a merge into its own worktree**, a
+sibling of the standing "never concurrent with `verify.sh`" rule and not previously recorded.
 
 ### 6. What remains, re-derived at cycle end
 
