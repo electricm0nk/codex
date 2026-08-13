@@ -19,6 +19,79 @@ gates chassis sweep. 9 epics total, matching `kanban.md`'s 9 cards.
 Epic 1 fires FIRST. Closure fires LAST. Epic 4 (measurement) gates Epic 5 (mechanism) and Epic 6
 (chassis sweep) **per class**, not bundle-wide — see `decisions.md §37`.
 
+**Widened 2026-08-13 (`decisions.md §43`).** SD-30's charter now drives all kinds, corpus-wide, to
+`done`, absorbing SD-32's former package. A new epic, **Epic 0 (SD30-E0) — Apply Existing Instruments
+to `held`**, is inserted ahead of Epic 1 because it moves the most units to `done` per unit of effort
+in the entire bundle: the corpus-sweep, derived-evaluator, and spell-probe instruments already exist
+(landed by the former SD-32) and the 9,455 `held` units already have their data sitting in the
+engine — no new ingest, no new corpus content, just applying/building the missing `done` rungs and
+consumer-delta probes. This is cheaper than any per-book ingest work in every other epic below, so it
+is ordered first. Everything from Epic 1 onward (the `class_feature`-specific 9-epic chain) is
+unchanged and continues to operate exactly as before the widening — Epic 0 does not gate or delay it,
+the two tracks are independent (Epic 0 touches instrument/dashboard-producer code and cross-kind
+application; Epics 1-9 touch `class_feature` content only) and may run concurrently once dispatched.
+
+## Epic 0 (SD30-E0) — Apply Existing Instruments to `held` (NEW, 2026-08-13, `decisions.md §43`)
+
+**Objective:** Close the gap between `held` (9,455 units, data already in the engine) and `done` by
+building the still-missing `done` rungs and consumer-delta probes, then applying them, corpus-wide,
+across every kind — not just `class_feature`.
+
+**Derived from:** `decisions.md §43` (operator ruling, widened charter); the movable-mass bucket
+breakdown in `scope-draft.md`'s "Widened charter" section.
+
+**Ordering rationale:** cheapest lever in the bundle. No new ingest required. Ordered ahead of Epic 1
+because unlike identifier cleanup (process hygiene) this epic moves real `done`-count mass, and ahead
+of the `class_feature` chain (Epics 4-6) because those gate on per-class hand measurement, a slower
+and more expensive path than applying an instrument that already exists.
+
+### Feature seeds
+
+#### SD30-E0-F1 — `static`/`derived` `done` rung
+
+Acceptance:
+
+- The dashboard producer's `doneness_verdict()` table gains a `done` rung for `wiring_class in
+  (static, derived)` when the corpus-sweep / derived-evaluator gate has actually examined and passed
+  the record (not merely `held`).
+- Re-running `derive-movable-mass.py` after the rung lands shows the `static`/`derived` `held`
+  population (6,619 units, per the B3 bucket in this session's run) move to `done` for records the
+  gate has passed.
+- No relaxation of what "passed" means — a record the gate has not examined stays `held`, not `done`.
+
+#### SD30-E0-F2 — `computed`-bucket consumer-delta probes, corpus-wide
+
+Acceptance:
+
+- For every kind with a `computed`-wiring-class population and no existing `probe_*` function in
+  `src/bin/v06_work_inventory.rs` (starting with `class_feature`, the largest such population at
+  4,178 units; extending to any other kind found lacking one), a consumer-delta probe is built,
+  modeled on `probe_spell_effect_wiring`'s shape.
+- The `NO_GROUNDING_PROBE` cap (`spell`, `companion`) is removed for a kind once its probe lands and
+  is confirmed reaching a nonzero `grounded` count under the `computed` class for that kind.
+- This absorbs the flagged-not-decided question former Decision §41 raised (owned outright by SD-30
+  now, no cross-bundle ownership question remains).
+
+#### SD30-E0-F3 — `unknown`-residue characterization, corpus-wide
+
+Acceptance:
+
+- `feat`'s 329-unit `unknown` residue (previously uncharacterized — `class_feature`'s 3,218-unit
+  residue already has a method, Decision §38) gets a characterization pass using the same
+  option-pool/genuinely-unreachable/unclustered-remainder method Decision §38 established.
+- Any other kind's `unknown` residue found nonzero at a future re-derivation gets the same treatment.
+- PI-gate discipline is not touched by this feature — characterization is a read-only classification
+  pass, not ingest.
+
+#### SD30-E0-F4 — Re-derivation and reporting
+
+Acceptance:
+
+- Every cycle in this epic re-runs `derive-movable-mass.py` before and after its change and cites both
+  runs in its `progress.md` receipt.
+- `acceptance-and-verification.md AT-30-015`'s per-kind floor table is updated at epic closure with
+  the actual `done` figures achieved.
+
 ## Epic 1 (SD30-E1) — Code-Side Identifier Cleanup
 
 **Objective:** Establish identifier discipline across all code this bundle introduces.

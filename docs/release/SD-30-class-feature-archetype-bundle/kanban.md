@@ -39,8 +39,15 @@ never fully "completes" in the sense of blocking dispatch — it clears classes
 incrementally and epic-5/epic-6 cycles begin per class as soon as their class
 is cleared).
 
+**Widened 2026-08-13 (`decisions.md §43`):** `epic-0-instrument-apply` is inserted at the top of the
+claim-priority order — cheapest lever in the bundle (data already in the engine, instruments already
+built by the former SD-32, no new ingest required). It runs independently of the `epic-1`..`epic-9`
+`class_feature` chain below (different files: dashboard-producer/instrument code and cross-kind
+application vs. `class_feature` rules-tables content) and does not gate or get gated by it.
+
 | ID | Status | Epic | Cycle-type | Claimed-by | Claimed-at | Cycle-id |
 |----|--------|------|-----------|------------|------------|----------|
+| `epic-0-instrument-apply` | READY | Apply Existing Instruments to `held` | `done`-rung build (static/derived) + computed-bucket consumer-delta probes, corpus-wide + `unknown`-residue characterization (`feat`) + re-derivation reporting | — | — | — |
 | `epic-1-identifier` | READY | Code-Side Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY (gated on epic-1) | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | — | — | — |
 | `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |

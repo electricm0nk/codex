@@ -175,6 +175,86 @@ retired history.**
   unclustered remainder, both at SD-28's last snapshot) are unchanged by this pass; Epic 4 re-derives
   both at time of use per the "generated, never hand-maintained" rule (`decisions.md §12`).
 
+## Widened charter (operator ruling, 2026-08-13, `decisions.md §43`)
+
+**This section is now the operative top-level scope statement for the bundle; the "Re-scoped
+`class_feature` scope" section above is not retired — it remains fully operative as this charter's
+first and largest-funded lane — but it is no longer the whole of SD-30's scope.**
+
+SD-32 (`docs/release/SD-32-instrument-coverage-and-consumer-wiring/`) should never have existed as a
+separate package. Its content stands unreverted; its package folds into SD-30. SD-30's charter widens
+from `class_feature`-only to **driving every kind, corpus-wide, to `done`** — not `grounded`, not
+`ingested`. The distinction (`decisions.md §43`): `grounded` means the engine holds a record matching
+the corpus; `done` additionally requires the unit to clear its own `wiring_class` bar (a `display`
+unit needs `text-complete`; a `computed` unit needs a consumer that actually reads the magnitude; a
+`static`/`derived` unit needs a `done` rung the dashboard's `doneness_verdict()` table does not yet
+have for those two classes).
+
+**Live kind roster (re-derived, `docs/work-inventory.json`, this session):** `class`, `class_feature`,
+`companion`, `equipment`, `equipment_modifier`, `feat`, `monster`, `monster_ability`, `race`,
+`race_trait`, `spell`.
+
+**Per-kind `grounded` vs. `done`, re-derived this session** (command: `cargo run --locked --bin
+v06_work_inventory` then `python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py`,
+validated against the live dashboard cache):
+
+| kind | total | grounded | done | done % | held | not-started+not-ingested | unknown |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| class | 185 | 27 | 27 | 14.6% | 0 | 158 | 0 |
+| class_feature | 15,472 | 109 | 18 | 0.1% | 91 | 12,111 | 3,218 |
+| companion | 1,696 | 922 | 416 | 24.5% | 506 | 774 | 0 |
+| equipment | 6,208 | 145 | 277 | 4.5% | 4,676 | 962 | 0 |
+| equipment_modifier | 1,580 | 55 | 896 | 56.7% | 34 | 228 | 0 |
+| feat | 2,610 | 77 | 1,178 | 45.1% | 127 | 973 | 329 |
+| monster | 1,270 | 1,242 | 7 | 0.6% | 1,235 | 28 | 0 |
+| monster_ability | 3,107 | 1,629 | 334 | 10.7% | 1,295 | 1,478 | 0 |
+| race | 103 | 7 | 0 | 0.0% | 7 | 96 | 0 |
+| race_trait | 3,447 | 513 | 264 | 7.7% | 249 | 2,934 | 0 |
+| spell | 2,843 | 623 | 47 | 1.7% | 1,235 | 1,561 | 0 |
+| **TOTAL** | **38,521** | **5,349** | **3,464** | **9.0%** | **9,455** | **21,303** | **3,547** |
+
+Every operator-cited figure this doc pass was asked to verify was checked against this table and
+matched exactly or within the operator's own stated `~` tolerance (`decisions.md §43` "Verification
+of the operator's cited figures" — no correction needed this session). One clarification is recorded
+there: "classes ~15% done" refers to the `class` kind (14.6%), a distinct kind from `class_feature`
+(0.1% done) — both exist in the corpus and neither should be read as standing in for the other.
+
+**Recoverable-work split:** `held` 9,455 — the cheapest lever, since the corpus-sweep, derived-
+evaluator, and spell-probe instruments already exist and only need to be *applied* to the remaining
+kinds/units, not built from scratch. `not-ingested`/`not-started` 21,303 combined (17,209 +
+4,094) — needs real per-book ingest, the expensive lane, unchanged ownership split with SD-29 for
+non-`class_feature` content. `unknown` 3,547 — unmeasurable by any instrument today; **not evenly
+distributed**: concentrated almost entirely in `class_feature` (3,218, Decision §38's existing method
+applies unchanged) and `feat` (329, no characterization pass has been run for this kind yet — new
+SD-30 scope, unassigned to an epic in this doc pass, flagged in `epic-breakdown.md`). Every other kind
+in the roster has zero `unknown` residue.
+
+**Honest ceiling, no new ingest:** applying every existing/still-to-build instrument to every `held`
+unit raises `done` from 3,464 to at most 3,464 + 9,455 = **12,919 (33.5% of 38,521)** — and only once
+every kind's missing `done` rung (the `static`/`derived` classes, corpus-wide, no rung exists in the
+verdict table yet) and missing consumer-delta probe (`class_feature`'s `computed` bucket, and any
+other kind's `computed` bucket lacking one) are built and applied. Today, with none of those gaps
+closed, `held` is inert — a lever named, not yet pulled. Beyond that ceiling, `done` cannot move
+further without real per-book ingest closing the 21,303-unit `not-started`/`not-ingested` gap and a
+per-kind classification pass resolving as much of the 3,547-unit `unknown` residue as is genuinely
+classifiable.
+
+**Epic ordering consequence (see `epic-breakdown.md`/`kanban.md`):** apply-existing-instruments-to-
+`held` work is now scheduled ahead of new per-book ingest, corpus-wide, not just within
+`class_feature` — it moves the most units to `done` per unit of effort, since the instruments exist
+and the data is already in the engine. New per-book ingest (the `not-ingested`/`not-started` 21,303)
+comes after. The PI-screening provenance gate (`decisions.md §39`) remains hard-blocking on all
+ingest regardless of this reordering — closure pressure from the widened charter does not relax a
+licensing constraint.
+
+**What this widening does NOT authorize (flagged for operator confirmation, not assumed):** whether
+SD-30 should also absorb SD-29's per-book ingest *ownership* for non-`class_feature` kinds (as opposed
+to the done-closure work this decision clearly assigns) is not decided here — the operator's ruling
+widens SD-30 to "driving all kinds to closure" via the SD-32-shaped instrument-application lane, and
+folds SD-32's package in; it does not say SD-29's ingest lanes fold in too. This doc pass treats
+SD-29's ingest ownership as unchanged and flags any further consolidation as a separate operator
+decision.
+
 ## Ingest and surfacing are one unit of work
 
 Content that is ingested but reaches no player surface is the dominant defect

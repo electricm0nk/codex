@@ -65,6 +65,17 @@ move-not-copy publish already landed under the old name; the rename does not re-
 
 ## Objective
 
+**Widened 2026-08-13** (operator ruling; `decisions.md §43`, correcting `decisions.md §42`). SD-30's
+charter is no longer `class_feature`-only. SD-32 (a separate package covering corpus-wide instrument
+coverage and consumer wiring) should never have existed as its own bundle — that was a dispatch error
+— and its package folds into SD-30, which now owns driving **all kinds, corpus-wide, to `done`** (not
+`grounded`, not `ingested` — see `decisions.md §43` for the `grounded` != `done` distinction and the
+re-derived per-kind figures). SD-32's already-merged content (the corpus-literal sweep, the
+derived-evaluator check, the spell consumer-delta probe, the `wiring_class` fix, the inventory-
+determinism fix) is unreverted and stands. The `class_feature` objective below is the superset's first
+and largest-funded lane, unchanged and still operative in full; it does not shrink or get
+deprioritized by the widening.
+
 Close the collision with SD-29, then execute `class_feature` in dependency order:
 
 1. **Per-class measurement** (gates everything else, per `§63`'s proof that sizing cannot be
@@ -82,6 +93,16 @@ Close the collision with SD-29, then execute `class_feature` in dependency order
 
 ## In scope
 
+**Widened 2026-08-13 (`decisions.md §43`):** all kinds, corpus-wide, driven to `done` — `class`,
+`class_feature`, `companion`, `equipment`, `equipment_modifier`, `feat`, `monster`, `monster_ability`,
+`race`, `race_trait`, `spell` (the live kind roster per `docs/work-inventory.json`, re-derived this
+session). This absorbs SD-32's former scope (corpus-wide instrument coverage: the `computed`-bucket
+consumer-delta probes not yet built, the `static`/`derived` missing `done` rung, and any further
+instrument work) directly — see `scope-draft.md`'s "Widened charter" section for the operative
+per-kind figures, honest ceiling, and epic ordering. Everything below this point in this section was
+written for the `class_feature`-only era and remains fully in scope, unchanged, as the widened
+charter's first and largest-funded lane:
+
 - `class_feature`, corpus-wide: 23 books (`advanced_class_guide`, `advanced_players_guide`,
   `ultimate_psionics`, `ultimate_combat`, `ultimate_magic`, `occult_adventures`, `core_rulebook`,
   `ultimate_wilderness`, `ultimate_intrigue`, `adventurers_guide`, `advanced_race_guide`,
@@ -98,7 +119,14 @@ Close the collision with SD-29, then execute `class_feature` in dependency order
 
 ## Out of scope
 
-- Every other kind, every book — SD-29's corpus-wide lanes own them (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`).
+- **Correction, 2026-08-13 (`decisions.md §43`):** the bullet below ("every other kind... SD-29's
+  corpus-wide lanes own them") described the pre-widening scope split and is now only partially true.
+  SD-29's per-book *content-ingest* ownership for non-`class_feature` kinds is unchanged — SD-30 does
+  not take over SD-29's ingest cycles. What SD-30 now additionally owns is driving those kinds'
+  already-`held`/already-`grounded` units to `done` via instrument application (the former SD-32
+  territory), which is a different axis from SD-29's ingest lane and does not collide with it. See
+  `scope-draft.md`'s "Widened charter" section for the boundary as it now stands.
+- Every other kind's *ingest* — SD-29's corpus-wide lanes own that (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`).
 - The former sixteen-book content-ingest scope for kinds other than `class_feature` — dissolved,
   see `decisions.md §35` (collision closure).
 - Epic 14's harness widening (`ingested-magnitude` ceiling for `spell`/`equipment`) — not

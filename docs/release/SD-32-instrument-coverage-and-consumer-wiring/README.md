@@ -12,6 +12,25 @@ build_version_target: 0.<tranche>.<build> (set at launch, per SD-22 tranche rule
 
 # SD-32 — Instrument Coverage and Consumer Wiring
 
+> **RETIRED, 2026-08-13.** The operator has ruled that SD-32 should never have existed as a separate
+> package — its creation was a dispatch error, not a durable scope split. **This package's content is
+> not reverted and not in question**: everything already merged on `tranche/9` under this bundle's
+> name (the corpus-literal byte-equality sweep and `corpus-sweep`/`corpus-sweep-selftest` `verify.sh`
+> stages, the evaluator-vs-fixture derived check, the spell consumer-delta probe grounding the 623 CRB
+> spells, the `wiring_class` %N-placeholder fix, the `v06_work_inventory` inventory-determinism fix)
+> stands exactly as landed. What changes: **SD-32 as a package folds into
+> `SD-30-class-feature-archetype-bundle`**, which now owns this work's continuation directly — see
+> `SD-30-class-feature-archetype-bundle/decisions.md §43` for the ruling and
+> `SD-30-class-feature-archetype-bundle/epic-breakdown.md`'s new Epic 0 for where the continuation
+> work (the still-missing `static`/`derived` `done` rung, the still-missing `computed`-bucket
+> consumer-delta probes for kinds other than `spell`, and any further corpus-wide instrument work) now
+> lives. This package's remaining files (`decisions.md`, `scope-draft.md`, `epic-breakdown.md`,
+> `acceptance-and-verification.md`, `kanban.md`, `progress.md`, `technical-design.md`,
+> `forward-scope-register.md`, `artifacts/`) are left in place as history, unmodified except for this
+> notice and the forward-scope-register.md cross-reference correction dated the same day — do not
+> dispatch new cycles against this package's own `kanban.md`; new work in this territory is claimed
+> through SD-30's `kanban.md` (Epic 0) from here forward.
+
 ## Purpose
 
 The operator has reworked the PF1e dashboard from engineering-focused to

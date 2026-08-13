@@ -224,6 +224,46 @@ Evidence: cycle's `verify.sh` full-run log shows `corpus-sweep`, `corpus-sweep-s
 `derived_evaluator_fixture_check` test suite passing over a corpus that includes the cycle's new
 records (examined-record count increases, per `scripts/verify.sh`'s own floor checks).
 
+## AT-30-015 — Widened charter: criteria are `done`, never `ingested`/`grounded`, corpus-wide (NEW, 2026-08-13, `decisions.md §43`)
+
+Given the widened charter (`decisions.md §43`, `scope-draft.md`'s "Widened charter" section) —
+SD-30 now drives all kinds, corpus-wide, to `done`, not merely `grounded` or `ingested`.
+
+When any cycle or bundle-level closure claim cites a movable-mass or progress figure for any kind.
+
+Then:
+
+- The figure MUST be a `done`-verdict count (per the dashboard producer's `doneness_verdict()` table,
+  transcribed and re-validated by `SD-32-.../artifacts/derive-movable-mass.py`), never a `status ==
+  "grounded"` count, `status == "ingested-magnitude"` count, or any other process-step count cited as
+  if it were closure.
+- A receipt or closure claim that reports "`grounded`" or "ingested" figures as evidence of progress
+  without also reporting the corresponding `done` figure is a protocol violation, flagged at the next
+  Bundle Code Review (Epic 8).
+- Per-kind `done` floors below are the closure bar; a kind at 0% `done` (e.g. `race`, `class_feature`
+  at effectively 0.1%) is a **structural closure blocker**, not a kind the bundle can silently skip
+  while reporting overall progress on kinds that move faster.
+
+**Per-kind `done` floors/targets (re-derived 2026-08-13, `decisions.md §43`; re-derive at each
+cycle-0 per the standing "generated, never hand-maintained" rule, `decisions.md §12`):**
+
+| kind | total units | `done` today | `done` floor for bundle closure | rationale |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 (14.6%) | 185 (100%) | small population, already instrument-covered, cheapest full closure in the roster |
+| class_feature | 15,472 | 18 (0.1%) | measured per-class via Epic 4 gate, not a blanket % — `decisions.md §37` | population too large and heterogeneous for a flat floor; Epic 4's per-class measurement is the closure instrument |
+| companion | 1,696 | 416 (24.5%) | 922 (54.4%, = current `grounded`) | `NO_GROUNDING_PROBE`-capped kind; floor is the `held` ceiling until a companion consumer-delta probe is built |
+| equipment | 6,208 | 277 (4.5%) | 4,953 (79.8%, = today's done+held) | dominated by the missing `static`/`derived` done rung (4,511 held) |
+| equipment_modifier | 1,580 | 896 (56.7%) | 930 (58.9%, = today's done+held) | already the best-covered kind; floor closes the remaining held units |
+| feat | 2,610 | 1,178 (45.1%) | 1,305 (50.0%, done+held) + `unknown` (329) classified | second-best-covered kind; `unknown` residue needs its own characterization pass (new scope, unassigned) |
+| monster | 1,270 | 7 (0.6%) | 1,242 (97.8%, = today's done+held) | almost entirely `held`, blocked on the `derived` done rung |
+| monster_ability | 3,107 | 334 (10.7%) | 1,629 (52.4%, done+held) | same rung gap as monster |
+| race | 103 | 0 (0.0%) | 103 (100%) | smallest population in the roster; 0% done is a structural blocker per this criterion, not skippable |
+| race_trait | 3,447 | 264 (7.7%) | 513 (14.9%, = today's `grounded`, the `held` ceiling) | classifier-lever-capped (`ambiguous`/`display` mix); see B1/B2 buckets in the movable-mass tool |
+| spell | 2,843 | 47 (1.7%) | 1,235 (43.4%, = today's done+held, `NO_GROUNDING_PROBE`-capped) | no consumer reads a spell magnitude corpus-wide; floor is the `held` ceiling until that changes |
+
+Evidence: per-cycle receipt re-runs the movable-mass derivation command and cites the resulting
+`done`/`held`/`floor` figures for the kind(s) it touched, cross-referenced against this table.
+
 ## Exit gate checklist
 
 - [ ] All Epic 3+ per-book cycles complete with reach-gate claims.
@@ -239,3 +279,4 @@ records (examined-record count increases, per `scripts/verify.sh`'s own floor ch
 - [ ] `release-notes.md` populated.
 - [ ] `forward-scope-register.md` reviewed for successor work.
 - [ ] The four deferred books (NPC Codex, Planar Adventures, Occult Origins, Haunted Heroes) recorded as future-acquisition candidates.
+- [ ] AT-30-015 (NEW, 2026-08-13) per-kind `done` figures re-derived and checked against the floor table for every kind touched this closure; no kind sitting at or near 0% `done` reported as "in progress" without naming it a structural blocker.

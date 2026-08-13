@@ -317,7 +317,17 @@ for k,v in sorted(b.items()):
     if len(v)>1: print(k, [x['corpus_key'] for x in v], [x['wiring_class'] for x in v])"
 ```
 
-## Cross-reference — SD-30 (2026-08-13)
+## Cross-reference — SD-30 (2026-08-13, CORRECTED IN PLACE 2026-08-13 later same day)
+
+> **Correction, 2026-08-13 (later same day).** The paragraph below, as originally written, described
+> SD-30 as a peer/consumer bundle sitting across an instrument-vs-content boundary from this package.
+> That is now false: the operator has ruled that SD-32 should never have existed as a separate
+> package, and **this package's own scope folds into SD-30**, which now owns this work's continuation
+> directly — not across a cross-bundle boundary. `SD-30-class-feature-archetype-bundle/decisions.md
+> §41-§42` (the instrument-vs-content boundary rule cited below) is itself corrected in place at
+> `decisions.md §43` on SD-30's side. The original paragraph is left below, uncorrected, per this
+> project's correct-in-place convention — it accurately describes the state of affairs as it stood
+> earlier on 2026-08-13, before the operator's ruling landed.
 
 `SD-30-class-feature-archetype-bundle` owns the `class_feature` kind, corpus-wide (15,472 units,
 `SD-30 decisions.md §33, §40`). It consumes this bundle's corpus-wide `static`/`derived` gates

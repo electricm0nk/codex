@@ -1193,7 +1193,21 @@ session); `src/bin/v06_work_inventory.rs` (probe function inventory, grepped thi
 ## Decision 42 — Boundary with SD-32: instruments vs. content, the same no-dual-ownership shape as the
 SD-29 boundary (2026-08-13)
 
-**Status:** New. SD-30 has not previously mentioned SD-32 anywhere in this package. SD-32 landed on
+> **CORRECTED IN PLACE — 2026-08-13, later same day.** The operator has ruled that SD-32 should never
+> have existed as a separate package — its creation was a dispatch error, not a durable scope split.
+> This decision's entire premise (SD-32 as a coexisting sibling bundle with its own instrument-vs-
+> content ownership lane) is **wrong** under that ruling. SD-32's *content* is not reverted and not
+> in question — the corpus-literal sweep, the derived-evaluator check, the spell consumer-delta
+> probe, the `wiring_class` %N fix, and the inventory-determinism fix all stand exactly as landed and
+> exactly as described below. What changes is the **package boundary**: SD-32 folds into SD-30, which
+> now owns this work's continuation directly, not across a cross-bundle boundary. There is no longer
+> a "which bundle builds the `class_feature` consumer-delta probe" question of the kind this
+> decision's closing paragraph flags — SD-30 owns it outright. See Decision §43 for the operator
+> ruling and its consequences. Left visible below, uncorrected in its body text, per this project's
+> correct-in-place convention (`decisions.md §12` normalizes this — never delete a decision, cite over
+> it).
+
+**Status:** New (superseded in part by Decision §43, 2026-08-13, same day — see box above). SD-30 has not previously mentioned SD-32 anywhere in this package. SD-32 landed on
 this branch (`tranche/9`) today, 2026-08-13, and both bundles now touch the same
 `docs/work-inventory.json`-derived surface (SD-32 by kind-agnostic instrument coverage, SD-30 by the
 `class_feature` kind specifically), so the same collision shape Decision §35 resolved against SD-29
@@ -1236,3 +1250,127 @@ collision); `SD-32-instrument-coverage-and-consumer-wiring/README.md` ("Authorit
 `SD-32-instrument-coverage-and-consumer-wiring/decisions.md §7`. Cross-reference pointer added to
 `SD-32-instrument-coverage-and-consumer-wiring/forward-scope-register.md` in this same change (small
 pointer only, no scope duplicated there).
+
+## Decision 43 — Operator ruling: SD-30 widens to drive ALL kinds to `done`, corpus-wide; SD-32's
+package folds into SD-30, its content unreverted (2026-08-13)
+
+**Status:** New. Operator ruling, issued after Decision §42 landed on `tranche/9`, superseding it in
+part (see the correction box prepended to §42 above).
+
+**The ruling, verbatim shape:**
+
+1. SD-32 should never have existed as a separate package — its creation was a dispatch error, not a
+   durable scope split. Its **content**, already merged on `tranche/9`, is **not reverted and not in
+   question**: the corpus-literal byte-equality sweep and `corpus-sweep`/`corpus-sweep-selftest`
+   `verify.sh` stages (`3ad45909`), the evaluator-vs-fixture derived check
+   (`527d1db6`/`7f70c45d`), the spell consumer-delta probe grounding the 623 CRB spells (`90bd9975`),
+   the `wiring_class` %N-placeholder fix (`99efb504`), and the `v06_work_inventory` determinism fix
+   (`44a6af61`) all stand exactly as landed.
+2. **SD-32 as a package folds into SD-30.** SD-30 now owns that work's continuation — building the
+   still-missing `computed`-bucket consumer-delta probes (`class_feature` and any other kind that
+   needs one, modeled on `probe_spell_effect_wiring`), the still-open `static`/`derived` "no `done`
+   rung" dashboard-producer question named in former Decision §41, and any further corpus-wide
+   instrument work — directly, not across a cross-bundle boundary. Decision §42's boundary rule (SD-32
+   owns instruments, SD-30 owns content, neither touches the other's surface) is void: there is only
+   one bundle now, so there is no boundary to keep.
+3. **SD-30's charter widens** from `class_feature`-only to **driving ALL KINDS to `done`, corpus-wide**
+   — not just `class_feature`. This is a superset, not a replacement: `class_feature`'s existing Epic
+   1-9 structure, measurement gate, and 23-book scope (Decision §33) stand unchanged and continue: See
+   `scope-draft.md`'s new "Widened charter" section and `README.md`'s widened Purpose/In-scope
+   sections for the operative restatement.
+
+**The crux this decision records, re-derived from live data, not the operator's transcribed figures
+alone (see re-derivation below): `grounded` != `done`.** `grounded` means the engine holds the record
+and the corpus-side value has been observed matching (`status_vocabulary`). `done` additionally
+requires the unit to clear its own `wiring_class` bar — the dashboard producer's `doneness_verdict()`
+table (transcribed and validated live, `SD-32-.../artifacts/derive-movable-mass.py`): a `display` unit
+is `done` only at `text-complete` (grounded-but-not-text-complete is `held`, not `done`); a `computed`
+unit is `done` only when a consumer has actually read the magnitude (`status == "grounded"` under the
+`computed` wiring class specifically, gated per-kind by whether a consumer-delta probe exists at all —
+`spell` and `companion` have none, so their `computed`/`in-progress` units are capped to `held`, not
+counted `in-progress`, by the `NO_GROUNDING_PROBE` rule); a `static` or `derived` unit is `held`, never
+`done`, until a `done` rung is added to the verdict table (the open question former Decision §41
+flagged — still open, now SD-30's own question, not a cross-bundle one).
+
+**Re-derivation, this session, against the live inventory — command run:**
+
+```sh
+cargo run --locked --bin v06_work_inventory   # regenerated docs/work-inventory.json, stamp 2026-08-13T20:45:47Z
+python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py
+```
+
+validated (`transcription validated against live dashboard: True`) against the live dashboard's
+`work_inventory.by_doneness` payload at the same inventory stamp — the re-derived `by_doneness` split
+and the dashboard's own cache agree exactly:
+
+`done` 3,464 · `held` 9,455 · `in-progress` 716 · `not-started` 21,303 · `unmeasurable` 3,547 ·
+`deferred` 36 (sums to 38,521 units after the `beginner_box`-excluded-book convention). Separately,
+overall `grounded`-status units (a `status`, not a `verdict`) = **5,349** — this is the figure the
+operator's brief cites as "overall grounded"; it is not the same axis as `by_doneness` and the two do
+not sum against each other (a `grounded` unit can resolve to `done`, `held`, or `in-progress`
+depending on its `wiring_class` and kind).
+
+**Per-kind `grounded` vs. `done`, re-derived this session (`grounded` = status count; `done` = verdict
+count; `%` = done/total-units-of-that-kind):**
+
+| kind | total units | grounded | done | done % |
+|---|---:|---:|---:|---:|
+| class | 185 | 27 | 27 | 14.6% |
+| class_feature | 15,472 | 109 | 18 | 0.1% |
+| companion | 1,696 | 922 | 416 | 24.5% |
+| equipment | 6,208 | 145 | 277 | 4.5% |
+| equipment_modifier | 1,580 | 55 | 896 | 56.7% |
+| feat | 2,610 | 77 | 1,178 | 45.1% |
+| monster | 1,270 | 1,242 | 7 | 0.6% |
+| monster_ability | 3,107 | 1,629 | 334 | 10.7% |
+| race | 103 | 7 | 0 | 0.0% |
+| race_trait | 3,447 | 513 | 264 | 7.7% |
+| spell | 2,843 | 623 | 47 | 1.7% |
+| **TOTAL** | **38,521** | **5,349** | **3,464** | **9.0%** |
+
+**Verification of the operator's cited figures (do not trust blindly, per this dispatch's own
+instruction — checked against the table above):** overall grounded 5,349 (**exact match**) vs. done
+~3,464 (**exact match**); races 7 grounded / 0 done (**exact match**); spells 623 grounded / ~46 done
+(re-derived: 47 — **matches within the operator's own "~"**); classes ~15% done (re-derived: the
+`class` kind, not `class_feature`, is 14.6% done — **matches**, and this decision flags explicitly
+that "classes" in the operator's brief means the `class` kind, a distinct corpus kind from
+`class_feature`, which is 0.1% done, not ~15%); races ~0% done (**exact match**); spells ~1.7% done
+(**exact match**). **No operator figure was found wrong this session** — all verified against a fresh
+`v06_work_inventory` regeneration and the live dashboard cache, not transcribed from a prior report.
+
+**Recoverable-work split, re-derived and confirmed exact:** `held` 9,455 (engine holds real data,
+unproven — the largest cheap lever, since `corpus_literal_sweep`, the derived-evaluator check, and the
+spell-probe pattern already exist and need only be *applied*, not built); `not-ingested` 17,209 (needs
+real per-book ingest, expensive — `status == "not-ingested"` summed corpus-wide); `unknown` 3,547
+(unmeasurable by any instrument, `status_vocabulary`'s "could not classify" bucket — **not** assumed
+uniformly unreachable; per-kind residue is `class_feature` 3,218, `feat` 329, with every other kind at
+0, meaning the `unknown` bucket is **not evenly distributed** and is concentrated almost entirely in
+the two kinds SD-30 already measures by hand, `class_feature`'s Decision §38 method applies to that
+3,218 directly, `feat`'s 329 needs its own characterization pass — not yet done, flagged as new SD-30
+scope below).
+
+**Honest ceiling — how far `done` can go via instrument-application alone, no new ingest:** the 9,455
+`held` units are exactly the units `done` can reach without new per-book ingest, *if and only if* every
+kind's missing `done` rung and missing consumer-delta probe gets built and applied. That ceiling is
+not uniform: `equipment`'s 4,676 `held` units are `static`/`computed` blocked on a `static`/`derived`
+`done` rung (4,511 of them) or a compiled-table probe-universe gap (A1/A2, 715 units, `equipment`/
+`equipment_modifier` combined); `monster`/`monster_ability`/`companion`'s 3,036 combined `held` units
+are `derived`/`static` blocked the same way; `spell`'s 1,235 `held` are capped by the
+`NO_GROUNDING_PROBE` rule (no consumer reads a spell magnitude corpus-wide, `grounded == 0` for that
+kind regardless of `status`); `class_feature`'s 91 `held` are the same `static`/`derived` rung gap.
+**Ceiling via instrument-application alone: `done` could rise from 3,464 to at most 3,464 + 9,455 =
+12,919 (33.5% of 38,521)** — and only once every rung/probe gap above is closed; today, with none of
+them closed, `held` is inert. Beyond that ceiling, the remaining 21,303 `not-started` (17,209
+`not-ingested` + 4,094 `not-started`-status) and 3,547 `unmeasurable` units require real per-book
+ingest and, for `unknown`, per-kind classification work — no instrument fixes those without new
+content landing in the corpus.
+
+**PI-gate discipline, restated, not relaxed:** the PI-screening provenance gate (`decisions.md §39`,
+Epic 3 cards SD30-E3-F2/F3/F4) remains hard-blocking on all ingest regardless of this widened charter
+or any closure-pressure argument. Widening the charter to all kinds does not create license to ingest
+before F2 clears; it only widens which kinds' ingest cycles are subject to the same gate.
+
+**Authority:** `cargo run --locked --bin v06_work_inventory` (this session, stamp
+2026-08-13T20:45:47Z); `python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py`
+(this session, output captured, validated against the live dashboard payload); operator ruling,
+2026-08-13, transcribed in the dispatch brief for this doc pass.
