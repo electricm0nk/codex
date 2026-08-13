@@ -1,0 +1,1739 @@
+{
+  "schema": 1,
+  "generated_by": "scripts/derive_derived_evaluator_fixtures.py",
+  "pcgen_corpus_relative_root": "pathfinder/paizo/roleplaying_game",
+  "token_family": "BONUS:STAT",
+  "derivation": "PCGen `BONUS:STAT|<comma-separated ability list>|<integer value>[|<extra qualifiers>]`. `expected.abilities` is the ability list split on commas; `expected.bonus` is the integer value. Trailing qualifiers (`TYPE=Enhancement`, ...) select a stacking type and do not change the magnitude. Read straight out of the upstream PCGen `.lst` bytes named by `upstream_lst`/`upstream_line`.",
+  "independence": "Every value here is a function of the upstream PCGen `.lst` bytes alone. The generator imports no engine module, runs no engine binary, and opens no file under `data/corpus/` -- which is the ingest the engine actually evaluates, and therefore the artifact this fixture must stay independent of. `docs/work-inventory.json` is read for unit identity and source-line provenance only. This fixture is committed before the check that consumes it is written (SD-32 E6-F1).",
+  "entries": [
+    {
+      "unit_id": "advanced_players_guide:equipment:spindle_of_perfect_knowledge",
+      "book": "advanced_players_guide",
+      "kind": "equipment",
+      "record_key": "Spindle of Perfect Knowledge",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/advanced_players_guide/apg_equip_magic_items.lst",
+      "upstream_lst_sha256": "215c58046b3919dd191b8e605dc59e881507ee8133aabaacf6be105124a0add3",
+      "upstream_line": 13,
+      "corpus_field": "BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_giant_strength_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Giant Strength +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 38,
+      "corpus_field": "BONUS:STAT|STR|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_giant_strength_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Giant Strength +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 39,
+      "corpus_field": "BONUS:STAT|STR|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_giant_strength_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Giant Strength +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 40,
+      "corpus_field": "BONUS:STAT|STR|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_incredible_dexterity_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Incredible Dexterity +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 41,
+      "corpus_field": "BONUS:STAT|DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_incredible_dexterity_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Incredible Dexterity +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 42,
+      "corpus_field": "BONUS:STAT|DEX|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_incredible_dexterity_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Incredible Dexterity +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 43,
+      "corpus_field": "BONUS:STAT|DEX|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_mighty_constitution_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Mighty Constitution +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 44,
+      "corpus_field": "BONUS:STAT|CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_mighty_constitution_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Mighty Constitution +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 45,
+      "corpus_field": "BONUS:STAT|CON|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_mighty_constitution_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Mighty Constitution +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 46,
+      "corpus_field": "BONUS:STAT|CON|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (DEX/CON) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 53,
+      "corpus_field": "BONUS:STAT|DEX,CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX",
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (DEX/CON) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 54,
+      "corpus_field": "BONUS:STAT|DEX,CON|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX",
+          "CON"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_dex_con_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (DEX/CON) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 55,
+      "corpus_field": "BONUS:STAT|DEX,CON|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX",
+          "CON"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (STR/CON) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 50,
+      "corpus_field": "BONUS:STAT|STR,CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (STR/CON) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 51,
+      "corpus_field": "BONUS:STAT|STR,CON|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "CON"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_con_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (STR/CON) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 52,
+      "corpus_field": "BONUS:STAT|STR,CON|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "CON"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (STR/DEX) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 47,
+      "corpus_field": "BONUS:STAT|STR,DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (STR/DEX) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 48,
+      "corpus_field": "BONUS:STAT|STR,DEX|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_might_str_dex_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Might (STR/DEX) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 49,
+      "corpus_field": "BONUS:STAT|STR,DEX|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Perfection +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 56,
+      "corpus_field": "BONUS:STAT|STR,DEX,CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX",
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Perfection +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 57,
+      "corpus_field": "BONUS:STAT|STR,DEX,CON|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX",
+          "CON"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:belt_of_physical_perfection_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Belt of Physical Perfection +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 58,
+      "corpus_field": "BONUS:STAT|STR,DEX,CON|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX",
+          "CON"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_alluring_charisma_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Alluring Charisma +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 187,
+      "corpus_field": "BONUS:STAT|CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_alluring_charisma_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Alluring Charisma +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 188,
+      "corpus_field": "BONUS:STAT|CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_alluring_charisma_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Alluring Charisma +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 189,
+      "corpus_field": "BONUS:STAT|CHA|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_inspired_wisdom_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Inspired Wisdom +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 190,
+      "corpus_field": "BONUS:STAT|WIS|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_inspired_wisdom_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Inspired Wisdom +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 191,
+      "corpus_field": "BONUS:STAT|WIS|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_inspired_wisdom_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Inspired Wisdom +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 192,
+      "corpus_field": "BONUS:STAT|WIS|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (INT/CHA) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 196,
+      "corpus_field": "BONUS:STAT|INT,CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (INT/CHA) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 197,
+      "corpus_field": "BONUS:STAT|INT,CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_cha_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (INT/CHA) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 198,
+      "corpus_field": "BONUS:STAT|INT,CHA|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "CHA"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (INT/WIS) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 193,
+      "corpus_field": "BONUS:STAT|INT,WIS|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (INT/WIS) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 194,
+      "corpus_field": "BONUS:STAT|INT,WIS|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_int_wis_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (INT/WIS) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 195,
+      "corpus_field": "BONUS:STAT|INT,WIS|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (WIS/CHA) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 199,
+      "corpus_field": "BONUS:STAT|WIS,CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (WIS/CHA) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 200,
+      "corpus_field": "BONUS:STAT|WIS,CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_prowess_wis_cha_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Prowess (WIS/CHA) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 201,
+      "corpus_field": "BONUS:STAT|WIS,CHA|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Superiority +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 202,
+      "corpus_field": "BONUS:STAT|INT,WIS,CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Superiority +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 203,
+      "corpus_field": "BONUS:STAT|INT,WIS,CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_mental_superiority_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Superiority +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 204,
+      "corpus_field": "BONUS:STAT|INT,WIS,CHA|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_vast_intelligence_2",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Vast Intelligence +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 205,
+      "corpus_field": "BONUS:STAT|INT|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_vast_intelligence_4",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Vast Intelligence +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 206,
+      "corpus_field": "BONUS:STAT|INT|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:headband_of_vast_intelligence_6",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Headband of Vast Intelligence +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 207,
+      "corpus_field": "BONUS:STAT|INT|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_deep_red_sphere",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Ioun Stone (Deep red Sphere)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 228,
+      "corpus_field": "BONUS:STAT|DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_incandescent_blue_sphere",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Ioun Stone (Incandescent blue Sphere)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 229,
+      "corpus_field": "BONUS:STAT|WIS|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_pale_blue_rhomboid",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Ioun Stone (Pale blue Rhomboid)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 230,
+      "corpus_field": "BONUS:STAT|STR|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_pink_and_green_sphere",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Ioun Stone (Pink and green Sphere)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 232,
+      "corpus_field": "BONUS:STAT|CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_pink_rhomboid",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Ioun Stone (Pink Rhomboid)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 231,
+      "corpus_field": "BONUS:STAT|CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:ioun_stone_scarlet_and_blue_sphere",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Ioun Stone (Scarlet and blue Sphere)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 233,
+      "corpus_field": "BONUS:STAT|INT|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "core_rulebook:equipment:rod_splendor",
+      "book": "core_rulebook",
+      "kind": "equipment",
+      "record_key": "Rod (Splendor)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_equip_magic_items.lst",
+      "upstream_lst_sha256": "c9ace4c0c819aa38b785364b9196c4e1b088ab6c1fbc15d850c2281c4ea7b8d1",
+      "upstream_line": 461,
+      "corpus_field": "BONUS:STAT|CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:anaconda_s_coils",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Anaconda's Coils",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 434,
+      "corpus_field": "BONUS:STAT|STR|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_mighty_hurling_greater",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Belt of Mighty Hurling (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 449,
+      "corpus_field": "BONUS:STAT|STR|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_mighty_hurling_lesser",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Belt of Mighty Hurling (Lesser)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 450,
+      "corpus_field": "BONUS:STAT|STR|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_the_weasel",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Belt of the Weasel",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 467,
+      "corpus_field": "BONUS:STAT|DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_thunderous_charging",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Belt of Thunderous Charging",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 465,
+      "corpus_field": "BONUS:STAT|STR|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:belt_of_weakness",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Belt of Weakness",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 9,
+      "corpus_field": "BONUS:STAT|CON|-4",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": -4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:cord_of_stubborn_resolve",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Cord of Stubborn Resolve",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 471,
+      "corpus_field": "BONUS:STAT|CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:elemental_earth_belt",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Elemental Earth Belt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 472,
+      "corpus_field": "BONUS:STAT|CON|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gauntlets_of_fumbling",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Gauntlets of Fumbling",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 22,
+      "corpus_field": "BONUS:STAT|DEX|-2",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": -2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:gorgon_belt",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Gorgon Belt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 474,
+      "corpus_field": "BONUS:STAT|STR|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_cha_2",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (CHA) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 724,
+      "corpus_field": "BONUS:STAT|CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_cha_4",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (CHA) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 727,
+      "corpus_field": "BONUS:STAT|CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_cha_6",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (CHA) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 730,
+      "corpus_field": "BONUS:STAT|CHA|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_int_2",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (INT) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 722,
+      "corpus_field": "BONUS:STAT|INT|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_int_4",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (INT) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 725,
+      "corpus_field": "BONUS:STAT|INT|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_int_6",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (INT) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 728,
+      "corpus_field": "BONUS:STAT|INT|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_wis_2",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (WIS) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 723,
+      "corpus_field": "BONUS:STAT|WIS|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_wis_4",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (WIS) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 726,
+      "corpus_field": "BONUS:STAT|WIS|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_aerial_agility_wis_6",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Aerial Agility (WIS) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 729,
+      "corpus_field": "BONUS:STAT|WIS|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_mental_resilience",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Mental Resilience",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 754,
+      "corpus_field": "BONUS:STAT|INT,WIS,CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT",
+          "WIS",
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_ponderous_recollection",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Ponderous Recollection",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 759,
+      "corpus_field": "BONUS:STAT|INT|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_stupidity",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Stupidity",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 25,
+      "corpus_field": "BONUS:STAT|INT|-4",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": -4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:headband_of_unshakeable_resolve",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Headband of Unshakeable Resolve",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 761,
+      "corpus_field": "BONUS:STAT|WIS|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:minotaur_belt",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Minotaur Belt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 478,
+      "corpus_field": "BONUS:STAT|STR|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:monkey_belt",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Monkey Belt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 479,
+      "corpus_field": "BONUS:STAT|DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:monkey_belt_greater",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Monkey Belt (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 480,
+      "corpus_field": "BONUS:STAT|STR,DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:pauldrons_of_the_jackass",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Pauldrons of the Jackass",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 31,
+      "corpus_field": "BONUS:STAT|DEX|-4",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": -4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:plague_rat_belt",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Plague Rat Belt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 481,
+      "corpus_field": "BONUS:STAT|CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:plague_rat_belt_greater",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Plague Rat Belt (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 482,
+      "corpus_field": "BONUS:STAT|DEX,CON|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX",
+          "CON"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:ring_of_clumsiness",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Ring of Clumsiness",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 36,
+      "corpus_field": "BONUS:STAT|DEX|-4",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": -4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:serpent_belt_greater",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Serpent Belt (Greater)",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 486,
+      "corpus_field": "BONUS:STAT|STR,DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "STR",
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shadowform_belt",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shadowform Belt",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 487,
+      "corpus_field": "BONUS:STAT|DEX|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_cha_2",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (CHA) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 774,
+      "corpus_field": "BONUS:STAT|CHA|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_cha_4",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (CHA) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 777,
+      "corpus_field": "BONUS:STAT|CHA|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_cha_6",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (CHA) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 780,
+      "corpus_field": "BONUS:STAT|CHA|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "CHA"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_int_2",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (INT) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 772,
+      "corpus_field": "BONUS:STAT|INT|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_int_4",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (INT) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 775,
+      "corpus_field": "BONUS:STAT|INT|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_int_6",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (INT) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 778,
+      "corpus_field": "BONUS:STAT|INT|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_wis_2",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (WIS) +2",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 773,
+      "corpus_field": "BONUS:STAT|WIS|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_wis_4",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (WIS) +4",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 776,
+      "corpus_field": "BONUS:STAT|WIS|4|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 4
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:shifter_s_headband_wis_6",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Shifter's Headband (WIS) +6",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 779,
+      "corpus_field": "BONUS:STAT|WIS|6|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": 6
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:snakeskin_tunic",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Snakeskin Tunic",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 544,
+      "corpus_field": "BONUS:STAT|DEX|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "DEX"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:staff_of_mithral_might",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Staff of Mithral Might",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 397,
+      "corpus_field": "BONUS:STAT|INT|2|TYPE=Enhancement",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "INT"
+        ],
+        "bonus": 2
+      }
+    },
+    {
+      "unit_id": "ultimate_equipment:equipment:talons_of_leng",
+      "book": "ultimate_equipment",
+      "kind": "equipment",
+      "record_key": "Talons of Leng",
+      "upstream_lst": "pathfinder/paizo/roleplaying_game/ultimate_equipment/ue_equip_magic_items.lst",
+      "upstream_lst_sha256": "c0d9b21e5e0969b0a22a5ca50f3ea3a8705765aa1a3f5a89ebd91aee4580e291",
+      "upstream_line": 671,
+      "corpus_field": "BONUS:STAT|WIS|-2",
+      "token_family": "BONUS:STAT",
+      "multi_stat_row": false,
+      "expected": {
+        "abilities": [
+          "WIS"
+        ],
+        "bonus": -2
+      }
+    }
+  ]
+}
