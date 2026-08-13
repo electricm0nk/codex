@@ -90,12 +90,13 @@ const UNCLEARED: &[(&str, &str)] = &[(
     "this repo's ingest of the record is a `web_second_source` scrape carrying no \
      mechanical tokens at all, so the evaluator has nothing to evaluate and the \
      corpus row's `BONUS:STAT|INT,WIS,CHA|4` reaches no player. Not a property of \
-     this one item: APG's equipment ingest is 331 such records against 7 real \
-     `lst_token` ones (`data/corpus/advanced_players_guide/equipment/**/*.json`, \
-     counted by `source.kind`), because 0 of its 338 rows carry a native `DESC:` \
-     token (`tests/sd26_cache_apg.rs`) and the whole book was taken from a web \
-     second source — which dropped its `BONUS:` chains along with its prose. \
-     Remedying it is an ingest-lane change, not a change to this check.",
+     this one item, and not a small gap: of APG's 338 ingested equipment records, \
+     331 have `source.kind == web_second_source` against 7 `lst_token`, and 332 \
+     carry neither `raw_tokens` nor `raw_bonus_chains` — so `corpus_loader` \
+     reconstructs a thin record for almost the whole book and every per-category \
+     resolver correctly returns `None`. Counted over \
+     `data/corpus/advanced_players_guide/equipment/**/*.json`. Remedying it is an \
+     ingest-lane change, not a change to this check.",
 )];
 
 /// The reason recorded for `unit_id`, if it is a known-uncleared unit.
