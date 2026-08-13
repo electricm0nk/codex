@@ -356,6 +356,14 @@ frontend-install · frontend-test (99/99) · frontend-typecheck
 clippy (root:45 desktop:7 warnings, 0 errors) · class-dump (31/31 computing)
 ```
 
+**Confirmation run on the tightened floors.** Re-ran `./scripts/verify.sh`
+(FULL) after raising `BASELINE_ROOT_FULL_TESTS` and
+`BASELINE_ROOT_TEST_BINARIES`, so the receipt's exit code covers the tree that
+is actually committed, not the tree the audit started on. **`VERIFY_EXIT=0`,
+`RESULT: PASS`, 16/16**, identical stage tallies, and both stale-floor notes
+are gone from the `BASELINE NOTES` block — only the deliberately-untouched
+clippy ceiling remains listed. Logs `/tmp/codex-verify-ppCy2k`.
+
 ### Four-check no-stub audit (`AGENTS.md` §6)
 
 1. *Does every code path do what it claims?* Yes — and each claim was tested by
