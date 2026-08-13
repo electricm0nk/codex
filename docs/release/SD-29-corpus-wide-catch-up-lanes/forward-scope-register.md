@@ -667,3 +667,9 @@ condition.
   seven books before concluding §3 is complete.**
 - `docs/retro/events/deferral-mining.jsonl`, `docs/retro/events/tranche7-retro-synthesis.jsonl` —
   the corrections behind §7.1–§7.4, each with its `verified_by` command.
+
+## 7.9 New owner of record (2026-08-13, pointer only — no scope duplicated here)
+
+SD-29 is closed (`decisions.md §70`). Its per-book ingest lanes have been folded into SD-30 by
+operator ruling — see `../SD-30-class-feature-archetype-bundle/decisions.md §44` for the ruling and
+the new dispatchable cards.

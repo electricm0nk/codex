@@ -1385,3 +1385,101 @@ before F2 clears; it only widens which kinds' ingest cycles are subject to the s
 2026-08-13T20:45:47Z); `python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/derive-movable-mass.py`
 (this session, output captured, validated against the live dashboard payload); operator ruling,
 2026-08-13, transcribed in the dispatch brief for this doc pass.
+
+## Decision 44 — Operator ruling: SD-29's per-book ingest lanes fold into SD-30 too, closing the
+question Decision §43 left open (2026-08-13)
+
+**Status:** New. Operator ruling, issued the same day as Decision §43, closing the "What this
+widening does NOT authorize" flag §43 raised and `scope-draft.md`'s "Widened charter" section left
+open pending a separate operator decision.
+
+**The ruling, verbatim shape:** "yes, fold the ingest lanes into SD-30 too." Concretely: SD-30 now
+owns not just instrument-application-to-`done` (Decision §43's widening) but also the per-book
+*ingest* work that used to live in SD-29's corpus-wide lanes (`SD-29-corpus-wide-catch-up-lanes/decisions.md
+§38`, the kind-lane re-cut). This closes the exact question §43 flagged and left undecided.
+
+**Why — re-derived this session, not trusted from the dispatch brief's transcribed figures alone.**
+Re-ran the inventory and re-confirmed §43's own table is still current (no material drift since the
+20:45:47Z stamp — spot-checked `done`/`grounded`/`held` per kind against the live
+`docs/work-inventory.json`, unchanged at the digit §43 already recorded):
+
+- **The ceiling via instrument-application alone is 12,919 of 38,521 (33.5%)** — `done` 3,464 +
+  `held` 9,455, per §43's own derivation. That ceiling is real but it is a ceiling: it cannot move
+  `done` past it, because the remaining 21,303 `not-started`/`not-ingested` units and 3,547
+  `unmeasurable` units have no data in the engine for any instrument to apply to. Only real per-book
+  ingest closes that gap.
+- **The kinds the operator is most unhappy about are precisely the ingest-blocked ones**, not the
+  instrument-blocked ones — per §43's per-kind table: `monster` 1,242 grounded but only 7 `done`
+  (0.6%; 1,235 of the 1,242 sit `held`, capped by the missing `derived`/`static` `done` rung, and the
+  remaining ~28 are genuinely `not-started` — the *grounding* itself came from ingest, and most of
+  the population, 21,303 corpus-wide-`not-started` units, never got that far); `spell` 47/2,843 done
+  (1.7%, and per §43, `spell`'s `computed` bucket has no consumer-delta probe at all —
+  `NO_GROUNDING_PROBE` caps it regardless of ingest); `race` 0/103 done (0.0%, 7 grounded, the
+  smallest and most starkly ingest-starved kind in the corpus); `class_feature` 18/15,472 done
+  (0.1%) — already SD-30's own Epic 6 chassis-sweep lane, unaffected by this fold, cited here only
+  because it is the fourth kind the operator named. None of these four move meaningfully without new
+  ingest; instrument-application alone (Decision §43) tops out at moving `held` units, and three of
+  the four kinds above have most of their population sitting in `not-started`, not `held`.
+- **SD-29 is CLOSED** (`SD-29-corpus-wide-catch-up-lanes/decisions.md §70`, "SD-29 IS CLOSED. Every
+  lane is at a *measured* ceiling, not an argued one"). Its ingest lanes have had **no live owner**
+  since that closure landed — SD-29's own closure decision states each lane closed at a measured
+  ceiling, not that the corpus-wide ingest need was exhausted (§70's own table still shows
+  `not-started`/chassis-blocked residue in every lane it measured). **SD-30 inherits these lanes by
+  default, not because a new successor bundle was spun up to receive them** — there is no other
+  package positioned to take them, and letting them sit ownerless while the operator's stated
+  priority (closing exactly these kinds) goes unaddressed is worse than the widening this decision
+  authorizes.
+
+**What SD-30 inherits, concretely — SD-29's hard-won operating lessons, not a blank restart:**
+
+1. **Raw remainder is not workload** (`SD-29-corpus-wide-catch-up-lanes/decisions.md §44.4`, refined
+   by `§45.1`/`§49.2`): of the corpus's 3,447 `race_trait` units, only 553 carry a
+   `TYPE:<Race> Racial Trait` component naming one of the 18 races the engine models; the other 2,894
+   belong to races with no chassis and **no amount of ingest grounds them** — `RaceCorpus::resolve`
+   returns `None` without a chassis. Every ingest-lane card SD-30 opens must run the same
+   raw-vs-workable split before planning cycles against it, and record the command used.
+2. **Screen before committing a round** (`SD-29-corpus-wide-catch-up-lanes/decisions.md §45.1`, "the
+   queue was backwards, and the correction is the round's most reusable output"): run the checked-in
+   classifiers — `scripts/classify_race_trait_rows.py`, `scripts/classify_companion_rows.py`,
+   `scripts/screen_pcc_load_gates.py` (all three verified present in this repo's `scripts/` this
+   session) — against a candidate book *before* committing a cycle to it, not after.
+3. **Corpus shape traps are hard stops, not silent skips.** `SD-29-corpus-wide-catch-up-lanes/decisions.md
+   §34`/`§36` (independently re-verified at `§35`, "not merely re-cited"): `bestiary_5` and
+   `bestiary_6` carry **zero** monster records — both are player-options datasets (race/feat/
+   companion-mod `.lst` files only). A per-monster cycle dispatched against either book is a
+   reportable hard stop. Separately, `SD-29-corpus-wide-catch-up-lanes/decisions.md §68`/`§68.1`
+   found negated PCC load gates exclude **719** units corpus-wide (`scripts/screen_pcc_load_gates.py`,
+   verified present) — units a naive count would treat as workable but that PCGen's own load rules
+   never surface; this exclusion gets *more* likely to fire as more books land, so every new ingest
+   card must screen for it, not assume it stays constant.
+4. **The PI gate stays hard-blocking — this fold makes it more important, not less.** This package's
+   own `decisions.md §39` (Epic 3, cards SD30-E3-F2/F3/F4) already found 464 declared-PI (
+   `NAMEISPI`/`DESCISPI`) rows across 6 books in the `class_feature` source alone that nothing in this
+   repo currently reads, and that `scripts/verify.sh`'s `pi-sweep` stage does not catch them (it is a
+   term-blacklist sweep, not a declared-PI reader). `SD-29-corpus-wide-catch-up-lanes/decisions.md
+   §50.1` independently found the same gap corpus-wide (`NAMEISPI:YES` read by nothing in this repo).
+   Folding SD-29's ingest lanes in widens which kinds' ingest cycles are subject to this gate — it
+   does not relax it. No ingest card opened under this decision may claim before its book's
+   declared-PI screen (SD30-E3-F2/F3) is clean.
+
+**Disposition:** `epic-breakdown.md` and `kanban.md` gain a new Epic 10 (SD30-E10, "Corpus-Wide
+Ingest Lanes, folded from SD-29") carrying dispatchable per-kind cards for `monster`, `spell`,
+`race`, and `race_trait` (the kinds with the largest `not-started`/chassis-open residue per §43's
+table that are not already covered by SD-30's own Epic 6 `class_feature` lane), each required to
+apply lessons 1-4 above before its first cycle claims. `scope-draft.md` gains a restated combined
+ceiling (instruments + ingest together) — see its "Combined ceiling" section, added this pass — which
+does not claim 100% is reachable; a bounded chassis-blocked/mechanism-blocked/`unknown` residue
+remains structurally unreachable regardless of ingest effort.
+
+**Open-question closure:** this decision closes the question `scope-draft.md`'s "Widened charter"
+section left open ("What this widening does NOT authorize... not decided here") and supersedes the
+README.md `decisions.md §43` correction box's claim that "SD-29's per-book content-ingest ownership
+for non-`class_feature` kinds is unchanged." Both files get a dated correction box pointing here; the
+original text stays visible per this package's standing convention.
+
+**Authority:** operator ruling, 2026-08-13 (same day as §43, later in the day), transcribed in the
+dispatch brief for this doc pass; `SD-29-corpus-wide-catch-up-lanes/decisions.md §70` (closure
+record), `§44.4`/`§45.1`/`§49.2` (race-trait chassis split), `§34`/`§35`/`§36` (zero-monster books),
+`§68`/`§68.1` (negated-PCC-gate 719-unit finding), `§50.1` (declared-PI corpus-wide finding); this
+package's own `decisions.md §39` (PI-screening gate, 464-row finding) and `§43` (ceiling table,
+re-verified unchanged this session).

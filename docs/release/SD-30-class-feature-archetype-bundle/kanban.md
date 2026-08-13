@@ -57,6 +57,7 @@ application vs. `class_feature` rules-tables content) and does not gate or get g
 | `epic-7-version` | READY (gated on epic-1) | Build Version Numbering | first concrete value `0.10.<build>` | — | — | — |
 | `epic-8-code-review` | READY (gated on epic-5, epic-6, epic-7) | Bundle Code Review | full-bundle diff review vs. branch point (`decisions.md §26`) | — | — | — |
 | `epic-9-closure` | READY (gated on every other card) | Closure Epilogue | tranche promotion PR | — | — | — |
+| `epic-10-ingest-lanes` | READY (gated on epic-1, epic-2; each F-card hard-blocked on epic-3 for its target book, `decisions.md §44`) | Corpus-Wide Ingest Lanes, folded from SD-29 | per-kind ingest: SD30-E10-F1 `monster`, F2 `spell`, F3 `race`, F4 `race_trait` — each runs the raw-vs-workable split + pre-cycle classifier screen before claiming a book (SD-29 lessons, `decisions.md §44`) | — | — | — |
 
 ## Retired cards (sixteen-book era, 2026-08-01 to 2026-08-10) — historical record, not claimable
 
@@ -86,6 +87,14 @@ When a cycle claims a card:
    clearance before claiming — the card-level `IN-FLIGHT`/`COMPLETE` status
    tracks the epic as a whole; individual class slices are tracked in
    `progress.md`.
+
+## Ordering check (2026-08-13, `decisions.md §44`) — Epic 10 fold
+
+`epic-10-ingest-lanes` and its four F-cards are hard-gated on `epic-3-pi-gate` exactly as
+`epic-6-chassis-sweep` is — the fold widens which kinds' ingest is subject to the PI-screening gate,
+it does not create a bypass. `epic-10` is otherwise independent of the `class_feature` E4/E5/E6 chain
+(different kinds; file-disjoint in the common case) and does not gate or get gated by it, mirroring
+`epic-0-instrument-apply`'s standing independence.
 
 ## Ordering check (2026-08-13, `decisions.md §41-§42`)
 

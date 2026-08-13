@@ -126,7 +126,17 @@ charter's first and largest-funded lane:
   already-`held`/already-`grounded` units to `done` via instrument application (the former SD-32
   territory), which is a different axis from SD-29's ingest lane and does not collide with it. See
   `scope-draft.md`'s "Widened charter" section for the boundary as it now stands.
-- Every other kind's *ingest* — SD-29's corpus-wide lanes own that (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`).
+  - **Correction, 2026-08-13, later same day (`decisions.md §44`):** the correction above is itself
+    now superseded in part. The operator ruled "yes, fold the ingest lanes into SD-30 too" — SD-29's
+    per-book ingest ownership is **no longer unchanged**. SD-29 is closed
+    (`SD-29-corpus-wide-catch-up-lanes/decisions.md §70`) and its ingest lanes had no live owner;
+    SD-30 inherits them by default, carrying forward SD-29's operating lessons (raw-remainder
+    splitting, pre-cycle screening, corpus-shape hard stops, the PI gate staying hard-blocking). See
+    `decisions.md §44` for the full ruling, reasoning, and the new Epic 10 ingest-lane cards this
+    creates in `epic-breakdown.md`/`kanban.md`.
+- Every other kind's *ingest* — **superseded 2026-08-13, `decisions.md §44`: SD-30 now owns this
+  too**, inherited from SD-29's closed corpus-wide lanes. The original claim below is left visible as
+  history: SD-29's corpus-wide lanes own that (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`).
 - The former sixteen-book content-ingest scope for kinds other than `class_feature` — dissolved,
   see `decisions.md §35` (collision closure).
 - Epic 14's harness widening (`ingested-magnitude` ceiling for `spell`/`equipment`) — not

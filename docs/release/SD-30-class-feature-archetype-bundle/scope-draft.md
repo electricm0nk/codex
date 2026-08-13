@@ -161,6 +161,13 @@ retired history.**
   > unaffected by this correction and remain accurate. See the "Widened charter" section below for
   > the operative in-scope statement and `README.md`'s widened Purpose section for the mirrored
   > restatement.
+  >
+  > **FURTHER CORRECTED — 2026-08-13, later still (`decisions.md §44`).** The sentence "SD-29's prior
+  > ownership claim over other kinds is no longer live" above was written for instrument-application
+  > closure only; SD-29's per-book *ingest* ownership was still treated as unchanged at that point.
+  > The operator has since ruled the ingest lanes fold in too — SD-30 now owns SD-29's former ingest
+  > lanes outright, not just the closure-to-`done` work. See `decisions.md §44` and the "Combined
+  > ceiling" section below for the restated scope and the honest structurally-unreachable residue.
 - **Gating relationship, not just sequencing:** Epic 4 (per-class measurement) must clear a specific
   class before Epic 5 (mechanism) or Epic 6 (chassis sweep) can schedule a cycle against that class —
   `decisions.md §37`. This replaces the old scope's "sixteen books, dispatch in any order post-Epic 2"
@@ -263,13 +270,69 @@ comes after. The PI-screening provenance gate (`decisions.md §39`) remains hard
 ingest regardless of this reordering — closure pressure from the widened charter does not relax a
 licensing constraint.
 
-**What this widening does NOT authorize (flagged for operator confirmation, not assumed):** whether
-SD-30 should also absorb SD-29's per-book ingest *ownership* for non-`class_feature` kinds (as opposed
-to the done-closure work this decision clearly assigns) is not decided here — the operator's ruling
-widens SD-30 to "driving all kinds to closure" via the SD-32-shaped instrument-application lane, and
-folds SD-32's package in; it does not say SD-29's ingest lanes fold in too. This doc pass treats
-SD-29's ingest ownership as unchanged and flags any further consolidation as a separate operator
-decision.
+> **CLOSED, 2026-08-13 (`decisions.md §44`, operator directive, verbatim: "yes, fold the ingest lanes
+> into SD-30 too").** The paragraph below is retained for the audit trail, not because it is still
+> accurate. The question it flagged is answered **yes**: SD-30 now owns the full path to `done` for
+> every kind — instrument application (Decision §43) **and** per-book ingest (Decision §44). SD-29 is
+> closed (its `decisions.md §70`, closure run 3) and its ingest lanes have no live owner; SD-30
+> inherits them by succession, not by reopening or re-scoping SD-29's closed package. See
+> `decisions.md §44` for the ruling, the reasoning (SD-30's own Decision §43 ceiling — instrument
+> application alone tops out at 12,919/38,521, 33.5% — cannot move `monster` (0.6%), `spell` (1.7%),
+> `race` (0.0%), or `class_feature` (0.1%) past their measured floors without real ingest), and the
+> dispatchable cards in `epic-breakdown.md`/`kanban.md` (Epic 10, gated behind the Epic 3 PI-screening
+> provenance gate exactly as `class_feature`'s own Epic 6 already is).
+
+**What this widening did NOT originally authorize (superseded above, kept verbatim for the record):**
+whether SD-30 should also absorb SD-29's per-book ingest *ownership* for non-`class_feature` kinds (as
+opposed to the done-closure work this decision clearly assigns) is not decided here — the operator's
+ruling widens SD-30 to "driving all kinds to closure" via the SD-32-shaped instrument-application
+lane, and folds SD-32's package in; it does not say SD-29's ingest lanes fold in too. This doc pass
+treats SD-29's ingest ownership as unchanged and flags any further consolidation as a separate
+operator decision.
+
+## Combined ceiling — instruments + ingest together (2026-08-13, `decisions.md §44`)
+
+**SD-30's real ceiling is no longer just the 12,919-unit instrument-application figure (Decision
+§43).** With SD-29's ingest lanes folded in, `done` can in principle reach every unit that is not
+structurally unreachable — but "in principle" is doing real work in that sentence, and this section
+is honest about what is and is not reachable rather than claiming 100%.
+
+**Structurally unreachable, regardless of ingest effort (chassis/mechanism-blocked):**
+
+- `race_trait`: of 3,447 units, only 553 carry a `TYPE:<Race> Racial Trait` component naming one of
+  the 18 races the engine models (`SD-29-corpus-wide-catch-up-lanes/decisions.md §44.4`, re-confirmed
+  at `§49.2`: the true ceiling inside the 553-shaped predicate is 571 once subrace rows are counted).
+  The other **2,894** belong to races with no chassis in the engine — `RaceCorpus::resolve` returns
+  `None` without one — and no amount of ingest grounds them. This is the single largest
+  structurally-unreachable block in the corpus.
+- `unmeasurable`/`unknown`: 3,547 units corpus-wide per Decision §43's table, concentrated almost
+  entirely in `class_feature` (3,218, already characterized per `decisions.md §38`'s method) and
+  `feat` (329, no characterization pass run yet — flagged as new SD-30 scope, unassigned to an epic
+  in this pass).
+- `spell`'s `computed` bucket has no consumer-delta probe (`NO_GROUNDING_PROBE`, Decision §43) — this
+  is a mechanism gap, not an ingest gap, and sits inside the instrument-application ceiling already
+  counted, not the ingest ceiling below.
+
+**Workable via ingest (the actually-movable remainder):** of the 21,303 `not-started`/`not-ingested`
+units, subtracting the 2,894 chassis-blocked `race_trait` units above leaves an estimated **~18,409
+units genuinely workable by ingest**, corpus-wide, once each kind's own book-by-book screening
+(lesson 2 in `decisions.md §44`) is run to find further per-book traps of the same shape (zero-content
+books, negated PCC-gate exclusions, PI-declared rows) — this estimate is **bounded, not precise**: it
+subtracts the one large known structural block this pass could verify (`race_trait`'s 2,894) but does
+not claim every other kind's `not-started` residue is fully workable; each kind's own Epic 10 card is
+required to re-derive its own split before cycles are planned against it, per lesson 1.
+
+**Combined honest ceiling, stated as a range rather than a false-precision point figure:** `done`
+3,464 (today) + up to 9,455 (`held`, instrument-application, Decision §43) + up to ~18,409
+(ingest-workable estimate above) = **at most ~31,328 of 38,521 (~81%)**, and only once every rung/
+probe gap (§43) and every book-level ingest trap (§44) is closed. The remaining ~7,193 units (2,894
+`race_trait` chassis-blocked + 3,547 `unmeasurable`/`unknown` + the residual imprecision in the
+ingest-workable estimate above) are the honest floor of what this bundle cannot close without new
+engine capability (a race-chassis lane) or a classification pass this bundle has not yet scoped
+(`feat`'s 329 `unknown`). **This is a bounded estimate, not a re-derived point figure** — deriving the
+precise per-kind ingest-workable count requires running each kind's own screening
+classifier/`screen_pcc_load_gates.py` corpus-wide, which is Epic 10's own first-cycle work, not
+something this doc pass can responsibly claim to have already done.
 
 ## Ingest and surfacing are one unit of work
 
