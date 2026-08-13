@@ -7106,3 +7106,122 @@ Recorded so nobody re-derives it: **there is no next book.** All 16 books with a
 companion row are registered, and the corpus-wide ceiling and the grounded count differ by the single
 `ASPECT:`-only row above. A future round is a CHASSIS round — model `ASPECT:`, or model the
 class-progression record type that would unlock the 735 orphans — never a book round.
+
+---
+
+## Decision 70 — SD-29 IS CLOSED. Every lane is at a *measured* ceiling, not an argued one, and the closure states what it could not clean (2026-08-13, `sd29-closure-r3`, card `epic-11-closure-run3`)
+
+Closure run 2 refused to close this bundle with 63 workable units outstanding and left cards `READY`,
+PR #360 open, `docs/architecture/` unrefreshed and `release-notes.md`'s "Known issues" un-rewritten.
+That condition has cleared. Run 3 re-derived every figure with the same checked-in classifiers, found
+**0 workable units in every lane**, and closed.
+
+### 70.1 The three splits, re-derived before anything else — and one of them corrected the brief
+
+The dispatch brief carried closure run 2's figures (`companion` 53 workable, `monster` 10 workable).
+Both were true when run 2 wrote them and both are **stale**: cards 12 and 8 landed their final passes
+between the two runs. Re-derived at this tip against `docs/work-inventory.json`
+(`generated_at 2026-08-13T09:33:16Z`):
+
+| lane | raw remainder | classifier-reachable | **REAL workable** | why the reachable figure is not workload |
+|---|---|---|---|---|
+| `companion` | 774 | **1** | **0** | `core_essentials / Pseudodragon ~ Tail` needs an `ASPECT:` chassis (C1.6) |
+| `monster` + `monster_ability` | 1,506 | **66** | **0** | 54 cross-table owners + 4 `.MOD` overlays (`bestiary`), 7 PI residue (`inner_sea_bestiary`), 1 negated-PCC-gate row (`occult_adventures`) |
+| `race_trait` | 2,934 | **58** inside a 571-row ceiling | **0** | 49 APG `KEY:` republications, 3 needing a race-VARIANT chassis, 2 `PREABILITY` subrace selectors, 1 HA, 2 ISR (1 declared PI, 1 upstream gap), 1 mechanism-blocked |
+
+Every cell above is a command, not a claim:
+
+```
+python3 scripts/classify_companion_rows.py            # + the per-book status intersection, §65
+python3 scripts/classify_monster_ability_rows.py
+python3 scripts/screen_pcc_load_gates.py monster monster_ability
+python3 scripts/scan_monster_ability_bundle_rows.py
+python3 scripts/race_trait_ceiling.py
+```
+
+**Two independent checks were run before trusting the `.MOD` class**, because it is the one term in
+the monster split that a classifier does not compute: the work inventory's own `origin` field gives
+`Counter({'declared': 4371, 'mod_only': 4, 'copy': 2})` over `monster` + `monster_ability`, and all 4
+`mod_only` rows are `bestiary`'s. The instrument and the data agree.
+
+### 70.2 The closure states what it could NOT clean, in the release notes rather than in a receipt
+
+`decisions.md §66` set a standing condition on any closure statement: the bundle-scope
+`scripts/wired-integration-audit.sh` run is **not** clean. It still is not. Re-run at this tip with
+the exit code captured directly rather than through a pipe:
+
+```
+./scripts/wired-integration-audit.sh > wia.log 2>&1 ; echo "WIA_EXIT=$?"
+  -> WIA_EXIT=1, 13 `placeholder` hits
+```
+
+`13` reproduces `§66` exactly. Closure run 1 reported this clean; **run 3 reports it red, in
+`release-notes.md` §Known issues 1, as the first item** — a closure that buries its one red
+instrument in a receipt is the same failure as a closure that does not run it. The remedy is parity
+between the shell script and `tests/sd24_wired_integration_audit.rs`'s three reviewed filters, not
+leniency, and it is owned at C1.4b.
+
+### 70.3 One known issue is deliberately left WITHOUT an owner, and that is the honest disposition
+
+Decision 27 requires every deferred *review finding* to name an owner, and all four run-2 findings do
+(C1.4a-d, owner SD-31), as do C1.5 (the 229-row bundle hop) and C1.6 (`ASPECT:`). **The race-VARIANT
+chassis has no owner and is not given a false one.** It is not a review finding; it is a structural
+ceiling that sits outside any SD-29 or SD-30 epic, and assigning it to SD-31 to make the register
+look complete would be exactly the taxonomy abuse that produced the 2026-08-11 premature closure —
+routing unfunded work through a disposition state to make a board read as finished. It is stated as a
+real ceiling in `release-notes.md` §Known issues 2 with "Owner: unassigned — needs an operator scope
+decision" written out.
+
+### 70.4 The `release-notes.md` rewrite, and what "Known issues" is now allowed to mean
+
+The rescinded closure's "Known issues" section disposed of three undispatched lanes by writing them up
+as shipped issues. The rewritten section carries only two kinds of entry, and the distinction is
+stated in the section's own header so a successor cannot re-blur it: **a known issue is something the
+bundle decided about; an outstanding lane is something the bundle never dispatched.** Twelve entries
+survive that test — one red instrument, three structural ceilings with their measurements, four owned
+review deferrals, one Tier-3 deferral, one decision-blocked epic routed to retrofit, the standing
+`OPEN_FINDINGS` set, and baseline headroom.
+
+### 70.5 `docs/architecture/` was refreshed against the source, not against this package
+
+Every figure the 2026-08-11 pass wrote was stale, because that pass belonged to the rescinded closure
+and sixteen lane rounds ran afterwards. Refreshed at `c584318b` by re-deriving from the code and the
+corpus rather than from any receipt: `RuleSetId` 14 → **30**
+(`sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs`), JSON corpus cache 7 → **26**
+book directories / **9,354** files, `grounded` 491 → **4,699**, and the whole corpus-coverage section.
+
+**One of those corrections is a conflation the old text made and the new text names.** `status.md`
+said the race-trait ceiling was "the engine models exactly 7 races". Two different surfaces were being
+read as one: `crb::race_tables::race_traits()` models 7 races and is the **compute** surface;
+`ingest_race_traits::IN_SCOPE_RACES` is `[&str; 18]` (asserted by that file's own test) and is the
+**ingest** surface the race-trait lane is actually bounded by. The lane's ceiling is 571 rows over 18
+races, not over 7 — a 2.5× difference in the stated ceiling of a lane this bundle ran to that ceiling.
+
+### 70.6 Item 8 on-screen: three PASSes, and three FAILED artifacts kept rather than deleted
+
+DoD item 8 is not waivable and was not waived. All three reopened lanes were verified on the live app
+at the closing tip: `monster` / `Hive Queen`, `companion` / `Companion (Leech (Giant))`, `race_trait`
+/ `Elf (27)` — machine-verdicted by clipboard extraction, not by screenshot.
+
+The race-trait pass took **four attempts**, and the three failures are committed as
+`*.FAILED.verify.md` rather than removed. All three were **operator error, not product defects**:
+the race-trait alternates view needs `--tab alternate --no-search`, which the family's default
+navigation does not supply, and two attempts at working around that with a broader search query hit
+the harness's "the filter did not narrow to one row" refusal. The harness naming failures so they can
+never be cited as passes is the reason this is legible at all, and the flags are recorded here so a
+fifth attempt is not needed by anyone else.
+
+### 70.7 Nothing is stranded — verified BY CONTENT, which is the only verification that works here
+
+`git branch -a --no-merged tranche/9` returns exactly two refs, and both are accounted for:
+
+* `worktree-wf_9029acd8-6b0-6` — one commit, `b49c603a`, the companion chassis + Inner Sea Combat
+  pilot ingest, orphaned by the server crash `§65 §5b` records. **Its content is fully present at
+  `tranche/9`**: every file of the commit exists there, and `inner_sea_combat`'s 10 companion units
+  are `grounded` in the work inventory. The branch is redundant, not stranded. Commit-count and
+  merge-base checks would both have been ambiguous here; only the content check answers.
+* `origin/update-index` — the release channel's long-lived update-manifest branch. Unrelated to any
+  bundle, correctly never merged into a tranche.
+
+This bundle lost work to stranded branches three times. The check is cheap and it is now part of the
+closure procedure rather than part of a post-mortem.

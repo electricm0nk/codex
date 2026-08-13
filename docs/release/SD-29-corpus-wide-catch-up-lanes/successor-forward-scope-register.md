@@ -21,6 +21,32 @@ SD-29-specific retrofits land in **Class 3**.
 > list is now a *subset* of SD-29's corpus-wide lane scope, a collision rather than a
 > dependency. See `risks-and-open-questions.md` R-29-009/OQ-29-004; not resolved here.
 
+## Ownership audit at SD-29's closure (2026-08-13, `decisions.md §70`)
+
+Decision 27 requires every deferred finding to name an owner; an unowned deferral is not a valid
+disposition. Audited entry by entry at closure run 3, and every deferral in this register carries
+one:
+
+| Entry | What it is | Owner |
+|---|---|---|
+| C1.4a | Frontend preview fixtures are hand-authored, not corpus-derived (`companionCatalogRuntime.ts`) | **SD-31** |
+| C1.4b | `wired-integration-audit.sh` ↔ `sd24_wired_integration_audit.rs` `placeholder` parity — the bundle's one RED instrument | **SD-31** |
+| C1.4c | Decision 41 does not say whether NEW `tests/` files may carry a bundle tag — needs a ruling | **SD-31** |
+| C1.4d | `equipment` and `spell` `SEARCH_Y` constants are uncalibrated in `verify-on-screen.sh` | **SD-31** |
+| C1.5 | The `ABILITY:Internal\|AUTOMATIC\|` bundle hop — 229 monster rows across six books | **SD-31** |
+| C1.6 | `ASPECT:` is modelled by no chassis — 34 grounded companion rows diminished, 1 emptied | **SD-31** |
+| C1.3 | `class_feature`, 15,472 units | **SD-30** |
+| C3.1 | DM Toolkit extension as retrofit (Epic 8's `decision-blocked` ruling) | **operator-on-request** |
+| C3.3 | Retroactive magnitude-fidelity sweep over already-landed `static` units | routed 2026-08-12 |
+
+**One ceiling is deliberately NOT in this register, and that is the honest disposition.** The
+**race-variant chassis** — the mechanism the 3 `bestiary` Drow Noble rows and the 2 `core_essentials`
+`PREABILITY`-gated subrace selectors need — has **no owner**. It is not a review finding; it is a
+structural ceiling outside any SD-29 or SD-30 epic, and it needs an operator scope decision before it
+has one. Adding it here under SD-31 to make this table look complete would be the same taxonomy abuse
+that produced the premature 2026-08-11 closure. It is stated as a real, measured ceiling in
+`release-notes.md` §Known issues 2 with `Owner: unassigned` written out (`decisions.md §70.3`).
+
 ## Class 0 — Doctrinal anchors (always-on)
 
 | Anchor | Path | Note |
