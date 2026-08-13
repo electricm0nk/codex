@@ -73,11 +73,41 @@ pub fn equipment_id_resolve<'a>(
         })
         .collect();
 
+    // A record's corpus IDENTITY is its `KEY:` token when it carries one and
+    // its NAME when it does not -- the same rule `equipment_catalog_rows()`
+    // uses to mint the very keys this function is asked to resolve. Matching on
+    // identity first is what makes the answer a rule rather than a coincidence
+    // of corpus scan order.
+    //
+    // This pass used to test the `KEY:` token alone, so a needle naming a
+    // KEYLESS record fell through to the bare-name pass below -- where a record
+    // that merely DISPLAYS that name, while being identified as something else
+    // entirely, could answer first purely because the filesystem handed it over
+    // first. `corpus_loader::find_json_files` walks with `read_dir`, whose
+    // order is stable for one directory on one machine and not stable across
+    // two checkouts of the same corpus, so the winner was a property of the
+    // disk rather than of the data.
+    //
+    // CRB's `Shoes` is the live instance and it moved a doneness number:
+    // `equipment/general/shoes.json` is the item (no `KEY:`, so its identity is
+    // `Shoes`; `TYPE`/`COST`/`WT`/`SLOTS`/`MODS`/`QUALITY` and not one
+    // mechanical token), while `equipment/equipmods/artisan_s_tools_shoes.json`
+    // is an equipment MODIFIER whose identity is `Artisan's Tools (Shoes)` and
+    // whose display name is also `Shoes`. Resolving `Shoes` to the modifier
+    // makes `equipment_key_is_wired` report a mechanical effect for an item
+    // that has none, promoting `core_rulebook:equipment:shoes` to `grounded` on
+    // a different record's tokens. That is the name-coincidence over-claim
+    // `modelled_race_of_race_trait` and this probe's own book-scoping already
+    // exist to prevent, here appearing INSIDE one book.
+    //
+    // 38 equipment names across CRB/ACG/ARG are decided this way. `Potion` is
+    // the widest: `general/potion.json` (the empty flask) against fifty-odd
+    // `Potion of ...`/`Oil of ...` magic items whose display name is likewise
+    // `Potion`. Identity resolves every one of them to the right record.
     for equip in &records {
-        if let Some(key) = equipment_key_token(equip)
-            && (key == needle || key == item_id)
-        {
-            return Some((equip, table_cell_for(rule_set, key)));
+        let identity = equipment_key_token(equip).unwrap_or(&equip.name);
+        if identity == needle || identity == item_id {
+            return Some((equip, table_cell_for(rule_set, identity)));
         }
     }
 
@@ -521,6 +551,99 @@ Improvised Weapon (1d4)\tTYPE:Weapon.Melee.Improvised\tCOST:0\tWT:2
         let (record, _) = equipment_id_resolve("Improvised Weapon (1d2)", RuleSetId::Crb, &corpus)
             .expect("expected 'Improvised Weapon (1d2)' to resolve");
         assert_eq!(record.name, "Improvised Weapon (1d2)");
+    }
+
+    /// The two real CRB records behind the `Shoes` defect, as their `.lst`
+    /// rows: the item (KEY-less, so its corpus identity is its name, and it
+    /// carries no mechanical token) and the equipment MODIFIER that merely
+    /// displays the same name while being identified as
+    /// `Artisan's Tools (Shoes)`.
+    const SHOES_ITEM: &str = "Shoes\tTYPE:Feet.Shoes\tCOST:0\tWT:0\tSLOTS:2\tMODS:REQUIRED\n";
+    const SHOES_MODIFIER: &str =
+        "Shoes\tKEY:Artisan's Tools (Shoes)\tTYPE:EQMODARTISAN\tCOST:0\tVISIBLE:QUALITY\n";
+
+    /// A needle must resolve to the record whose corpus IDENTITY it is, never
+    /// to a record that merely DISPLAYS that name while being identified as
+    /// something else.
+    ///
+    /// Both orders are asserted, and that is the whole point: before the
+    /// identity pass existed the answer was first-match-wins over the corpus in
+    /// `read_dir` order, so which record answered was a property of the
+    /// filesystem rather than of the data — stable on one machine, different in
+    /// another checkout of the same corpus. Sorting that scan (which this cycle
+    /// also did) flipped `core_rulebook:equipment:shoes` from
+    /// `ingested-magnitude` to a FALSE `grounded`, because
+    /// `equipment_key_is_wired` then read the modifier's tokens and reported a
+    /// mechanical effect for an item that has none. Determinism alone would
+    /// have frozen the wrong answer; this rule makes it the right one either
+    /// way.
+    #[test]
+    fn a_needle_resolves_to_the_record_whose_identity_it_is_not_to_a_name_twin() {
+        for (label, text) in [
+            ("item first", format!("{SHOES_ITEM}{SHOES_MODIFIER}")),
+            ("modifier first", format!("{SHOES_MODIFIER}{SHOES_ITEM}")),
+        ] {
+            let corpus = corpus_from(&text);
+            let (record, _) = equipment_id_resolve("Shoes", RuleSetId::Crb, &corpus)
+                .expect("expected 'Shoes' to resolve");
+            assert_eq!(
+                equipment_key_token(record),
+                None,
+                "[{label}] 'Shoes' must resolve to the KEY-less item whose identity is 'Shoes', \
+                 not to the modifier identified as \"Artisan's Tools (Shoes)\""
+            );
+            assert!(
+                record.tokens.iter().any(|t| t.key == "SLOTS"),
+                "[{label}] resolved the wrong record: the item carries SLOTS, the modifier does not"
+            );
+        }
+    }
+
+    /// The other half of the same rule: the name-twin is still reachable, by
+    /// its own identity. Fixing the collision must not make a real record
+    /// unresolvable.
+    #[test]
+    fn the_name_twin_is_still_reachable_by_its_own_corpus_key() {
+        for (label, text) in [
+            ("item first", format!("{SHOES_ITEM}{SHOES_MODIFIER}")),
+            ("modifier first", format!("{SHOES_MODIFIER}{SHOES_ITEM}")),
+        ] {
+            let corpus = corpus_from(&text);
+            let (record, _) =
+                equipment_id_resolve("Artisan's Tools (Shoes)", RuleSetId::Crb, &corpus)
+                    .expect("expected the modifier to resolve by its own KEY");
+            assert_eq!(
+                equipment_key_token(record),
+                Some("Artisan's Tools (Shoes)"),
+                "[{label}] the modifier must still be reachable by its identity"
+            );
+        }
+    }
+
+    /// The widest instance of the same shape in the real corpus: CRB's
+    /// `general/potion.json` (the empty flask, KEY-less) against fifty-odd
+    /// `Potion of ...` / `Oil of ...` magic items that all display as `Potion`.
+    /// Asking for `Potion` must yield the flask, not whichever potion the disk
+    /// offered first.
+    #[test]
+    fn a_keyless_generic_wins_over_its_many_specific_name_twins() {
+        let text = "\
+Potion\tKEY:Potion of Fly\tTYPE:Magic.Potion\tCOST:750
+Potion\tTYPE:Item.Potion\tCOST:0\tWT:0
+Potion\tKEY:Potion of Blur\tTYPE:Magic.Potion\tCOST:300
+";
+        let corpus = corpus_from(text);
+        let (record, _) = equipment_id_resolve("Potion", RuleSetId::Crb, &corpus)
+            .expect("expected 'Potion' to resolve");
+        assert_eq!(
+            equipment_key_token(record),
+            None,
+            "'Potion' must resolve to the KEY-less flask whose identity is 'Potion'"
+        );
+        // ... and each specific potion stays reachable by its own identity.
+        let (fly, _) = equipment_id_resolve("Potion of Fly", RuleSetId::Crb, &corpus)
+            .expect("expected 'Potion of Fly' to resolve");
+        assert_eq!(equipment_key_token(fly), Some("Potion of Fly"));
     }
 
     /// Control: the legacy `"item:longsword"`-style fixture namespace

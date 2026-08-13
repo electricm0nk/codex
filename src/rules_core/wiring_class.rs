@@ -709,6 +709,18 @@ pub fn build_mod_index(
                 }
             }
         }
+        // Sorted, so the `Vec<String>` of `.MOD` rows this index hands back is
+        // in corpus-path order rather than in the filesystem's `read_dir`
+        // order. Today `closure_signals_with_rules` unions its rows into a
+        // `BTreeSet` and asks `.any()`, so `determine_closure` cannot see this
+        // order and no `wiring_class` moves either way -- verified, and the
+        // reason this is hardening rather than a bug fix. But `read_dir` order
+        // is stable only for one directory on one machine, so leaving it
+        // unsorted leaves a caller free to become order-sensitive later and
+        // acquire a nondeterminism no test would attribute to it.
+        // `v06_work_inventory::enumerate_book` sorts its own identical walk for
+        // exactly this reason.
+        files.sort();
         for path in files {
             let Ok(text) = std::fs::read_to_string(&path) else { continue };
             for raw in text.split('\n') {
