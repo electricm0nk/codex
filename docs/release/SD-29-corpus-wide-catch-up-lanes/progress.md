@@ -11217,3 +11217,50 @@ this book alone, plus whatever the other five carry of the same shape. It is a N
 takes it should declare that up front.
 
 **The lane is NOT done and this receipt does not claim it is.**
+
+### 8. The post-merge gate, and the exit code captured directly
+
+`§6` item 1 records this round's own pre-merge run. Merging `origin/tranche/9` twice — first
+`e6583289` (the monster lane's round 8, Bestiary 1's 603-record chassis), then `447a960d` (its gate
+record) — produced a tree neither lane had tested, so the gate was re-run on it rather than reasoned
+about:
+
+```
+./scripts/verify.sh > <log> 2>&1; echo "VERIFY_EXIT=$?" >> <log>
+  RESULT: PASS
+  passed: 14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib
+              root-full desktop reach frontend-install frontend-test frontend-typecheck clippy
+              class-dump
+  VERIFY_EXIT=0                                   (logs /tmp/codex-verify-aJyw2z)
+```
+
+**Not a pipe, and not inferred from `RESULT:`** — the exit status is echoed by the same shell that
+ran the script.
+
+**Four conflicted files, and only one of them was resolved by choosing a side.** `decisions.md` and
+`progress.md` are append-only records and both lanes appended at the same end, so both hunks are
+concatenations, theirs first (the monster lane's `§60` must precede this round's renumbered `§61`).
+`docs/work-inventory.json` was REGENERATED from the merged tree rather than hand-merged — a merged
+inventory is a claim about which tables compile, and no textual resolution of it can be true by
+construction. It reports `companion` 684 grounded and `monster` 1,179, both lanes' work present.
+
+**`scripts/verify-baselines.env` is the one that needed arithmetic, and the interesting part is the
+arithmetic that was deliberately NOT done.** Both lanes raised floors from the same parent (1726
+root-lib / 6293 root-full / 442 desktop) having never seen each other's tests, so neither block
+described the merged tree. The merge recorded the ELEMENTWISE MAXIMUM rather than the sum — floors
+fail the gate when set too high and merely print a note when set too low — and wrote down the sums
+(1738 / 6306 / 445) as *expected*, explicitly declining to record them until a run measured them.
+
+**The run measured exactly those three numbers.** They are recorded now because a passing run
+produced them, not because the arithmetic worked out; that the two agree is a useful check on the
+merge rather than the source of the figure — a discrepancy would have meant one lane's tests were
+not executing.
+
+Final state on `origin/tranche/9`, verified BY CONTENT rather than by commit count:
+
+```
+git cat-file -p origin/tranche/9:src/rules_core/rules_tables/ultimate_wilderness/companion_data.rs \
+  | grep -c 'CompanionRecord {'          -> 169
+  | grep -c 'CompanionAbilityRecord {'   -> 158
+git cat-file -p origin/tranche/9:docs/release/.../decisions.md | grep -c '^## Decision 61'  -> 1
+```
