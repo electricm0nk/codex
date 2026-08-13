@@ -13307,6 +13307,154 @@ filtered-count gate is what makes the stale state visible instead of silent.
 
 `verify-on-screen.sh` was run to completion and the app stopped (`driver.sh stop`, verified by
 `pgrep`) **before** `scripts/verify.sh` was launched. The two must never overlap on this box.
+
+### 8. Gate — `./scripts/verify.sh` FULL, exit code captured directly
+
+```
+CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-companion-final-r1 \
+  ./scripts/verify.sh > verify-companion-r9.log 2>&1 ; echo "VERIFY_EXIT=$?"
+```
+
+**`VERIFY_EXIT=0`** · **14 of 14 stages PASS**, none skipped, at `231ee0d5`:
+
+```
+preflight-disk     PASS  (disk budget OK)
+pi-sweep           PASS  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+audit-selftest     PASS  (28 passed, 0 failed)
+reclaim-selftest   PASS  (10 passed, 0 failed)
+driver-selftest    PASS  (7 passed, 0 failed)
+root-lib           PASS  (1752 passed)
+root-full          PASS  (6313 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop            PASS  (445 passed)
+reach              PASS  (27 passed)
+frontend-install   PASS  (node_modules present)
+frontend-test      PASS  (99/99 files)
+frontend-typecheck PASS  (tsc --noEmit clean)
+clippy             PASS  (root:45 desktop:7 warnings, 0 errors)
+class-dump         PASS  (31/31 computing)
+
+RESULT: PASS      logs in /tmp/codex-verify-hus3mk      VERIFY_EXIT=0
+```
+
+`all 525 tests/*.rs suites executed` is the line that matters rather than the pass count
+(`decisions.md §40`): this cycle merged twice, and a merge is exactly the change that can leave a
+suite un-built while the summary still reads complete.
+
+#### The first full run came back RED, and the red was a real finding
+
+`RESULT: FAIL`, 13 of 14 stages PASS, **zero test failures and zero suites that never ran**:
+
+```
+root full tests: 6313, baseline floor is 6320 — tests were LOST
+FAIL  root-full  (6313 passed across 544 suites, 0 suite(s) never ran)
+```
+
+`verify-baselines.env`'s header is explicit that a dropped floor means tests were deleted, "which is
+the finding, not the fix", so the finding was established before the floor was touched.
+
+**7 tests were being counted twice, and `§69.4`'s `#[path]` retirement stopped it.** A
+`#[path]`-included module is compiled INTO the including crate, so
+`advanced_race_guide::archetype_tables`'s 7 unit tests were built and run once in the lib suite and
+again inside the `gen_book_cache` bin target. `root-full` counts every target.
+
+De-duplication, not deletion, and both halves are checkable:
+
+```
+grep -c 'advanced_race_guide::archetype_tables::tests::' root-full.log   -> 7
+```
+
+each exactly once, under the lib suite —
+
+```
+catalog_has_59_records, keys_are_unique_within_book,
+every_master_record_carries_a_real_description,
+the_type_and_ability_lists_genuinely_disagree,
+every_grant_names_a_real_level_and_key,
+no_internal_category_bookkeeping_grant_is_present,
+resolved_grant_descriptions_are_the_real_count
+```
+
+**`BASELINE_ROOT_LIB_TESTS` is unchanged at 1752**, which is the corroborating measurement: had the
+7 been deleted rather than de-duplicated, the lib floor would have moved by the same 7 and it did
+not. `6320 − 7 = 6313`.
+
+The uncomfortable half, recorded rather than buried: **the floor over-counted by 7 for as long as the
+duplicate existed, so it would have absorbed the real deletion of 7 root tests without going red.**
+Emitted as a `correction` event with `--blast-radius` rather than left in this prose. The clippy
+ceiling's slack also widened for the same reason — 54 recorded, 45 measured, because a duplicated
+module produced duplicated warnings — and is deliberately NOT ratcheted here: it is a `BASELINE
+NOTES` line, not a failure, and lowering another lane's ceiling on the way past is the scope creep
+`AGENTS.md` forbids.
+
+#### One earlier full run was killed deliberately, and it is named so it is not read as a gate
+
+A run launched at `3ce4a1d4` reached `root-lib PASS (1752)` and was **killed mid-`root-full`** once
+the count-pin sweep found `tests/sd27_book_license_record_counts.rs` red (see §9). Gating a tree the
+cycle had already changed would have produced a result attached to nothing. It is not cited as
+evidence anywhere.
+
+### 9. Count-pin sweep — the ingest shrank a pinned exemption set
+
+`AGENTS.md`'s rule that a record-count change compiles clean while leaving OTHER files' hardcoded
+assertions red, run as a sweep rather than discovered by the gate.
+
+`tests/sd27_book_license_record_counts.rs` pinned an EXACT set of two books whose `LICENSE.json`
+states no `records_processed`: `advanced_class_guide` and `advanced_players_guide`. This round
+ingested APG's `companion` family, and `gen_book_cache`'s companion generator writes a **derived**
+`records_processed` as a matter of course — so APG now states one and the pin correctly went red.
+
+Fixed in the direction the pin's own failure message asks for: APG moves OUT of
+`BOOKS_WITHOUT_A_STATED_RECORD_COUNT` and into the file's ordinary count coverage, and the test is
+renamed `exactly_the_one_known_book_omits_a_stated_record_count`. The stated count checks out
+against the files on disk:
+
+```
+find data/corpus/advanced_players_guide -mindepth 2 -name '*.json' -not -path '*/_parity/*' | wc -l
+  -> 646        # LICENSE.json states records_processed: 646
+```
+
+**This is a 2026-08-01 deferral closing under its own guard.**
+`docs/retro/events/sd29-scope-and-debt.jsonl` recorded the exemption with the reasoning "either of
+these two gaining it also fails and forces the exemption list to shrink". It shrank.
+`advanced_class_guide` is the last book still exempt.
+
+Two prose sites also stated ARG's corpus size as 635; it is 649 now that the book's 14 companion
+records are on disk. `corpus_ingest_diagnostic`'s module doc made that a LIVE claim about a guarded
+artifact and is corrected; the test file's narrative is a record of a past measurement and is
+annotated as such, with the reason it is safe to leave standing — nothing in that file READS either
+number.
+
+### 10. Final re-derivation, after everything landed
+
+```
+python3 -c "<the per-book classifier intersection from §2(a)>"
+  -> core_essentials 1 ['Pseudodragon ~ Tail']
+     COMPANION CLASSIFIER-REACHABLE REMAINING = 1
+     companion status: {'not-ingested': 774, 'grounded': 922}
+```
+
+**`units_ingested` = 52. `units_remaining` (WORKABLE) = 0** — the classifier's 1 is the
+chassis-blocked row of §5, and the lane is DRY.
+
+### 11. Unattended-mode defaults taken this cycle (recorded, not raised)
+
+1. **Reset rather than merged** on finding the checkout 3,390 behind and 0 ahead. The opposite call
+   from closure run 2's, for the opposite reason: nothing local was at risk.
+2. **Took four books in one round** rather than one. The brief's figures reproduced exactly, all four
+   chassis were registered and none needed a new `RuleSetId`, so a per-book cadence would have cost
+   four gates for one lane's tail.
+3. **Did NOT model `ASPECT:`** to close the last unit. Named, measured and routed to C1.6 instead —
+   the card's instruction on mechanisms is explicit.
+4. **Lowered a test floor**, which this repo's own header warns against, and did it only after
+   establishing the 7 tests still run and the lib floor did not move.
+5. **Did not ratchet the clippy ceiling** (54 recorded, 45 measured) even though this cycle caused
+   the slack. It is another lane's number and a `BASELINE NOTES` line, not a failure.
+6. **Did not touch `release-notes.md` or `docs/architecture/`.** Closure run 2 §6.2/§6.3 names both as
+   closure tasks, and this is not a closure.
+7. **Committed the `verify.sh`-emitted retro event** (`docs/retro/events/wf_e11fed1d-58e-1.jsonl`),
+   which the tool writes under the worktree name rather than `RETRO_ACTOR`. Leaving it uncommitted is
+   how the run's own verification record gets lost.
+
 ---
 ## Cycle SD29-E5-F2-012 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 11, FINAL PASS**)
 
