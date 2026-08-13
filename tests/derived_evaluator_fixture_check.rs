@@ -104,7 +104,8 @@ fn uncleared_reason(unit_id: &str) -> Option<&'static str> {
 }
 
 /// Asserts the observed failing set is exactly [`UNCLEARED`], in both
-/// directions, and returns the report line for the receipt.
+/// directions. `what` names the leg being checked, so a failure says which of
+/// the two independent comparisons produced it.
 fn assert_uncleared_set_is_exact(observed: &BTreeMap<String, String>, what: &str) {
     let expected: BTreeSet<&str> = UNCLEARED.iter().map(|(id, _)| *id).collect();
     let actual: BTreeSet<&str> = observed.keys().map(String::as_str).collect();
@@ -112,10 +113,9 @@ fn assert_uncleared_set_is_exact(observed: &BTreeMap<String, String>, what: &str
     let stale: Vec<&&str> = expected.difference(&actual).collect();
     assert!(
         unexpected.is_empty(),
-        "{what}: {} unit(s) fail their `derived` bar without being on the record. \
-         Either the engine regressed, or a real defect was found — put it in \
-         `UNCLEARED` with its structural reason, or fix it. Never widen the \
-         comparison to make it pass:\n{}",
+        "{what}: {} unit(s) failed without being on the record. Either the engine \
+         regressed, or a real defect was found — put it in `UNCLEARED` with its \
+         structural reason, or fix it. Never widen the comparison to make it pass:\n{}",
         unexpected.len(),
         unexpected
             .iter()
@@ -125,10 +125,16 @@ fn assert_uncleared_set_is_exact(observed: &BTreeMap<String, String>, what: &str
     );
     assert!(
         stale.is_empty(),
-        "{what}: {stale:?} is recorded in `UNCLEARED` but now clears its bar. \
-         Delete the entry — a stale excuse left in place is how an exemption list \
-         starts."
+        "{what}: {stale:?} is recorded in `UNCLEARED` but now passes. Delete the \
+         entry — a stale excuse left in place is how an exemption list starts."
     );
+    for (id, observed_reason) in observed {
+        eprintln!(
+            "{what}: {id} did NOT pass and is not counted as done.\n  observed: \
+             {observed_reason}\n  recorded: {}",
+            uncleared_reason(id).expect("exact-set equality was just asserted")
+        );
+    }
 }
 
 /// One fixture row, in the shape the committed JSON carries.
