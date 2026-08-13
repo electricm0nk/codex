@@ -65,6 +65,16 @@ const SERVED_BOOKS = [
   'B4',
   'ISB',
   'ISG',
+  // SD-29 Epic 5 extend, round 10. Ultimate Psionics, under the `UPSI` code the
+  // app already serves this book's equipment and feats with rather than its own
+  // `SOURCESHORT:UP` — see `monster_catalog.rs`'s `BOOK_UPSI` and
+  // `decisions.md §64.2`.
+  //
+  // This constant is the TWELFTH registration point for a monster book and the
+  // one a Rust-only sweep cannot see: it is a test constant, so it appears in
+  // no production registry. Round 10 found it by a red `frontend-test` stage
+  // after every Rust stage had passed (`decisions.md §64.4`).
+  'UPSI',
 ] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */
