@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:totenmaske_change_shape",
+      "bestiary_2:monster_ability:totenmaske_charisma_drain",
+      "bestiary_2:monster_ability:totenmaske_fleshdrink",
+      "bestiary_2:monster_ability:totenmaske_shape_flesh",
+      "bestiary_2:monster_ability:totenmaske_devour_memories"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Totenmaske",
+    "external_ability_refs": [
+      "Resistance to Cold"
+    ],
+    "key": "bestiary_2:monster:totenmaske",
+    "monster_class": "Undead:10",
+    "name": "Totenmaske",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Shapechanger",
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.269",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 867,
+    "record_key": "Totenmaske"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

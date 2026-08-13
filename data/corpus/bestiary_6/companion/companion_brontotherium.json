@@ -1,0 +1,78 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T14:58:50Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_6:companion:companion_advancement_brontotherium"
+    ],
+    "corpus_key": "Companion (Brontotherium)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "bestiary_6:companion:companion_brontotherium",
+    "monster_class": "Companion:2",
+    "name": "Companion (Brontotherium)",
+    "natural_armor": 8,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d10",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.311",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 6
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_6/b6_races_companion.lst",
+    "sha256": "79889f4840da7eaffeefbe9ef7b91c349dc58f66e3fad9730e88d773cc345aa3",
+    "line": 5,
+    "record_key": "Companion (Brontotherium)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

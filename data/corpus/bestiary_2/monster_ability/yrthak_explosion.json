@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Yrthak ~ Explosion",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, a yrthak can fire its sonic lance at the ground, a large rock, a stone wall, or a similar nonmagical object within 60 feet to create an explosion.  This attack deals 2d6 points of piercing damage to all within 10 feet of the effect's center.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:yrthak_explosion",
+    "name": "Explosion",
+    "owners": [
+      "bestiary_2:monster:yrthak"
+    ],
+    "source_page": "p.289",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1416,
+    "record_key": "Yrthak ~ Explosion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

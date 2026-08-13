@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:nabasu_consume_life",
+      "beastiary:monster_ability:nabasu_death_stealing_gaze"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Demon (Nabasu)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Immunity to Death Effects",
+      "Immunity to Paralysis",
+      "Sneak Attack"
+    ],
+    "key": "beastiary:monster:demon_nabasu",
+    "monster_class": "Outsider (Ref/Will):9",
+    "name": "Demon (Nabasu)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Native",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.64",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 98,
+    "record_key": "Demon (Nabasu)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

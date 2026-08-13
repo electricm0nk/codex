@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Saguaroi ~ Produce Water",
+    "delivery": "Extraordinary",
+    "description": "As a standard action once per hour, a saguaroi can cut itself (taking 1 point of damage) to produce 1 gallon of water. After producing 4 gallons, it becomes fatigued. After producing 8 gallons, it becomes exhausted and cannot produce more water for 24 hours.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:saguaroi_produce_water",
+    "name": "Produce Water",
+    "owners": [
+      "bestiary_4:monster:saguaroi"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1215,
+    "record_key": "Saguaroi ~ Produce Water"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

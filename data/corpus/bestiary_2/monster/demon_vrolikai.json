@@ -1,0 +1,66 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:vrolikai_black_flame_knives",
+      "bestiary_2:monster_ability:vrolikai_death_stealing_gaze",
+      "bestiary_2:monster_ability:vrolikai_madness",
+      "bestiary_2:monster_ability:vrolikai_multiweapon_mastery"
+    ],
+    "challenge_rating": "19",
+    "corpus_key": "Demon (Vrolikai)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Immunity to Death Effects",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:demon_vrolikai",
+    "monster_class": "Outsider (Ref/Will):19",
+    "name": "Demon (Vrolikai)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.81",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 269,
+    "record_key": "Demon (Vrolikai)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

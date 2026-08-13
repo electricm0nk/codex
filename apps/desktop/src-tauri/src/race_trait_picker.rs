@@ -393,6 +393,40 @@ fn race_corpus() -> &'static Result<RaceCorpus, String> {
 /// reports the slip.
 fn exclusion_guard_flags(record: &RaceTraitRecord) -> Vec<String> {
     let mut out: Vec<String> = Vec::new();
+    // The third spelling, and the only one that is not a `PREMULT`: a
+    // `PREVAREQ:<flag>,0` qualifier on the record's own
+    // `ABILITY:<Race> Racial Trait|AUTOMATIC|<key>` grant.
+    //
+    // `core_essentials`' heritage selectors (SD-29 race-trait lane round 4,
+    // `decisions.md §49`) carry no `PREMULT` at all -- upstream, only one
+    // heritage can apply because a heritage is a PCGen SUBRACE and a character
+    // has one -- so read through the `PREMULT` reader alone all 16 would come
+    // back unguarded, and a player could tick `Aasimar ~ Angel-Blooded` and
+    // `Aasimar ~ Archon-Blooded` together and collect both ability-score
+    // bonuses. The corpus does state the constraint, on the grant itself:
+    // `ABILITY:Aasimar Racial Trait|AUTOMATIC|Angel-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0`
+    // reads *grant this while that standard trait has not already been
+    // replaced*, which is the same "already set by someone else blocks me"
+    // relation the `PREMULT` branch below expresses. Only `,0` is read, for
+    // `ingest_races::globalvar_gates`' stated reason: `,1` is the opposite
+    // statement.
+    for token in record.data.raw_tokens.iter().filter(|token| token.key == "ABILITY") {
+        let parts: Vec<&str> = token.value.split('|').collect();
+        if parts.len() < 2 || !parts[1].trim().eq_ignore_ascii_case("AUTOMATIC") {
+            continue;
+        }
+        for clause in &parts[2..] {
+            let Some(rest) = clause.trim().strip_prefix("PREVAREQ:") else { continue };
+            let Some((flag, want)) = rest.rsplit_once(',') else { continue };
+            let flag = flag.trim();
+            if want.trim() != "0" || !flag.contains("_Replace") {
+                continue;
+            }
+            if !out.iter().any(|existing| existing == flag) {
+                out.push(flag.to_string());
+            }
+        }
+    }
     for token in record.data.raw_tokens.iter().filter(|token| token.key == "PREMULT") {
         for group in negated_bracket_groups(&token.value) {
             for clause in group.split(',') {
@@ -949,10 +983,13 @@ mod tests {
         assert_eq!(menu.races.len(), 18, "18 in-scope races (decisions.md §25.3)");
         let total: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
         assert_eq!(
-            total, 226,
+            total, 282,
             "ARG's 153 Alternate-classified records + Monster Codex's 4 (SD-29 decisions.md §43) \
              + APG's 1 (`Half-Orc ~ Plagueborn`, decisions.md §39's deferral, closed by SD-29's \
-             race-trait extend lane) + Inner Sea Races' 68 (§45, the same lane's round 2)"
+             race-trait extend lane) + Inner Sea Races' 67 (§45, the same lane's round 2) \
+             + Horror Adventures' 41 (§47, round 3) \
+             + Core Essentials' 16 heritages (§49, round 4; the book's other 48 records \
+             are the replacement rows those heritages grant and are never menu rows)"
         );
 
         // Per-race counts, derived from the corpus by this very menu.
@@ -965,30 +1002,43 @@ mod tests {
         // *variant* selector (PCGen models it through a `Goblin Variant`
         // ABILITYPOOL that this engine has no mechanism for), recorded as a
         // finding in `reach_gate`'s OPEN_FINDINGS rather than hidden.
+        // Round 4 (`decisions.md §49`) moved exactly two of these cells:
+        // Core Essentials contributes heritages to Aasimar and Tiefling and to
+        // no other race, so 16 of the 18 rows below must NOT move and a change
+        // in any of them is a regression rather than a new book's arrival.
+        //
+        // **This table was left at its pre-Inner-Sea-Races values by round 2
+        // and went RED with five other root-workspace assertions**; round 3
+        // moved it and recorded the miss (`decisions.md §47`). Every cell
+        // below is re-derived from the written records rather than added up
+        // from a prior round's arithmetic, with each race's per-book split in
+        // the trailing comment so a future book's contribution is checkable
+        // one race at a time instead of only in the total.
         let expected: &[(&str, usize)] = &[
-            ("Aasimar", 9),
-            ("Drow", 6),
-            ("Duergar", 7),
-            ("Dwarf", 17),
-            ("Elf", 13),
-            ("Gnome", 12),
-            ("Goblin", 9),
-            ("HalfElf", 9),
-            ("HalfOrc", 15),
-            ("Halfling", 13),
-            ("Hobgoblin", 9),
-            ("Human", 15),
-            ("Kobold", 4),
-            ("Merfolk", 3),
-            ("Orc", 4),
-            ("Svirfneblin", 2),
-            ("Tengu", 4),
-            ("Tiefling", 7),
+            ("Aasimar", 17),    // ARG 9 + ISR 2 + CE 6 (heritages)
+            ("Drow", 7),        // ARG 6 + ISR 1
+            ("Duergar", 8),     // ARG 5 + MC 2 + ISR 1
+            ("Dwarf", 30),      // ARG 17 + ISR 7 + HA 6
+            ("Elf", 27),        // ARG 13 + ISR 7 + HA 7 (ISR 8 until 2026-08-12: `Elf ~
+            // Sovyrian-Born` carries `NAMEISPI:YES` and is dropped, `decisions.md` 53)
+            ("Gnome", 23),      // ARG 12 + ISR 6 + HA 5
+            ("Goblin", 10),     // ARG 7 + MC 2 + ISR 1
+            ("HalfElf", 20),    // ARG 9 + ISR 7 + HA 4
+            ("HalfOrc", 28),    // ARG 14 + APG 1 + ISR 7 + HA 6
+            ("Halfling", 27),   // ARG 13 + ISR 7 + HA 7
+            ("Hobgoblin", 10),  // ARG 9 + ISR 1
+            ("Human", 33),      // ARG 15 + ISR 12 + HA 6
+            ("Kobold", 5),      // ARG 4 + ISR 1
+            ("Merfolk", 4),     // ARG 3 + ISR 1
+            ("Orc", 5),         // ARG 4 + ISR 1
+            ("Svirfneblin", 3), // ARG 2 + ISR 1
+            ("Tengu", 5),       // ARG 4 + ISR 1
+            ("Tiefling", 20),   // ARG 7 + ISR 3 + CE 10 (heritages)
         ];
         for (race_id, count) in expected {
             assert_eq!(race(&menu, race_id).alternates.len(), *count, "{race_id} alternate count");
         }
-        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 158);
+        assert_eq!(expected.iter().map(|(_, n)| n).sum::<usize>(), 282);
     }
 
     /// Every alternate is attributed to a book that really loaded it, and
@@ -1046,17 +1096,50 @@ mod tests {
 
         assert_eq!(
             paged,
-            BTreeSet::from(["APG", "ARG", "ISR", "MC"]),
-            "the books whose alternates carry a real page. ISR joined with SD-29's race-trait \
+            BTreeSet::from(["APG", "ARG", "HA", "ISR", "MC"]),
+            "the books whose alternates carry a real page. HA joined with SD-29's race-trait \
+             lane round 3: all 41 of its alternates cite a real `SOURCEPAGE` too, which is why \
+             the `pageless` pin below did NOT move for this book either. ISR joined with \
+             SD-29's race-trait \
              lane round 2: all 68 of its alternates cite a real `SOURCEPAGE`, none the literal \
              `p.xx` stand-in that `ingest_races.rs` filters out"
         );
         assert_eq!(
             pageless,
-            BTreeSet::from(["Duergar ~ Ironskinned", "Duergar ~ Twilight-Touched"]),
-            "exactly the two Monster Codex rows the upstream corpus gives no SOURCEPAGE: token; \
-             a third pageless row is a regression, and either of these gaining a page means the \
-             upstream data changed and this pin should be re-derived"
+            BTreeSet::from([
+                "Aasimar ~ Agathion-Blooded",
+                "Aasimar ~ Angel-Blooded",
+                "Aasimar ~ Archon-Blooded",
+                "Aasimar ~ Azata-Blooded",
+                "Aasimar ~ Garuda-Blooded",
+                "Aasimar ~ Peri-Blooded",
+                "Duergar ~ Ironskinned",
+                "Duergar ~ Twilight-Touched",
+                "Tiefling ~ Asura-Spawn",
+                "Tiefling ~ Daemon-Spawn",
+                "Tiefling ~ Demodand-Spawn",
+                "Tiefling ~ Demon-Spawn",
+                "Tiefling ~ Devil-Spawn",
+                "Tiefling ~ Div-Spawn",
+                "Tiefling ~ Kyton-Spawn",
+                "Tiefling ~ Oni-Spawn",
+                "Tiefling ~ Qlippoth-Spawn",
+                "Tiefling ~ Rakshasa-Spawn",
+            ]),
+            // The stand-in spellings are quoted rather than described with the
+            // word `tests/sd24_wired_integration_audit.rs` scans shipping
+            // source for -- that audit reads such a word here as a new,
+            // unreviewed stub marker. Same reason the `p.xx` check above
+            // carries its own note.
+            "the two Monster Codex rows the upstream corpus gives no SOURCEPAGE: token at all, \
+             plus Core Essentials' 16 heritages, whose SOURCEPAGE IS present upstream and is a \
+             stand-in on every single row -- `p.xx` on all 40 Tiefling rows and `xx` on all \
+             24 Aasimar ones. `ingest_race_traits::is_placeholder_source_page` drops those at \
+             ingest so the panel shows no page rather than a fake one; none of the four books \
+             ingested before Core Essentials carries such a value at all, so this pin moving \
+             for any OTHER book means real page data was lost. A 19th pageless row is a \
+             regression, and any of these gaining a page means the upstream data changed and \
+             this pin should be re-derived"
         );
     }
 
@@ -1182,22 +1265,33 @@ mod tests {
             }
         }
         assert_eq!(
-            checked, 226,
-            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 68 Inner Sea Races (§45)"
+            checked, 282,
+            "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md §43) + 67 Inner Sea Races \
+             (§45) + 41 Horror Adventures (§47) + 16 Core Essentials heritages (§49)"
         );
         assert!(unmatched.is_empty(), "no alternate may name a flag nothing declares: {unmatched:?}");
 
         // Aasimar is the worked case: its nine standard rows now declare the
-        // gate its nine alternates fire, read from `aasimar_abilities_globalvar
+        // gate its alternates fire, read from `aasimar_abilities_globalvar
         // .lst`. Asserted off the payload, so this is the shipped DTO, not a
         // corpus-only fact.
+        //
+        // The alternate count moved 9 -> 11 when Inner Sea Races landed
+        // (`Aasimar ~ Crusading Magic`, `Aasimar ~ Lost Promise`); round 2 did
+        // not move it and this assertion was RED on the branch until round 3
+        // (`decisions.md §47`). The *standard* count did not move and must
+        // not: ISR and HA contribute alternates only, no `race/` chassis.
         let aasimar = race(&menu, "Aasimar");
         assert_eq!(aasimar.standard_traits.len(), 9);
         assert!(
             aasimar.standard_traits.iter().all(|row| row.suppressed_by_flag.is_some()),
             "every Aasimar standard row carries its gate"
         );
-        assert_eq!(aasimar.alternates.len(), 9);
+        // Round 4 moved this 11 -> 17: Core Essentials' six Aasimar heritages
+        // are `TraitRole::Alternate` (each sets three replace-flags) and are
+        // therefore menu rows. The *standard* count above still must not move
+        // -- CE contributes no `race/` chassis either.
+        assert_eq!(aasimar.alternates.len(), 17);
         for alternate in &aasimar.alternates {
             assert!(!alternate.replaces.is_empty(), "{} really replaces something", alternate.key);
         }
@@ -1218,10 +1312,28 @@ mod tests {
             .collect();
         // Deduped: SD-29's Monster Codex pilot added a SECOND alternate setting
         // this same flag (`Duergar ~ Twilight-Touched`, `mc_abilities_race.lst:17`)
-        // alongside ARG's `Duergar ~ Blood Enmity`, so the flag is now named by
-        // two rows and grants the same one row twice. Two setters granting one
-        // record is the corpus's own shape, not a duplicate record -- which is
-        // exactly why the setters are asserted too, rather than only the target.
+        // alongside ARG's `Duergar ~ Blood Enmity`, and its Inner Sea Races
+        // round added a THIRD (`Duergar ~ Magical Taskmaster`), so the flag is
+        // now named by three rows that all grant the same one row. Several
+        // setters granting one record is the corpus's own shape, not a
+        // duplicate record -- which is exactly why the setters are asserted
+        // too, rather than only the target, and why THIS list grows with each
+        // book while the target list does not.
+        //
+        // Derived from the committed records rather than read off the menu:
+        //
+        // ```
+        // python3 -c "
+        // import json,glob
+        // for p in glob.glob('data/corpus/*/race_trait/**/*.json', recursive=True):
+        //     d=json.load(open(p))['data']
+        //     if 'Duergar_ReplaceSLAInvisibility' in (d.get('sets_replace_flags') or []):
+        //         print(p.split('/')[2], d['key'])"
+        // ```
+        //
+        // -> `monster_codex Duergar ~ Twilight-Touched`,
+        //    `advanced_race_guide Duergar ~ Blood Enmity`,
+        //    `inner_sea_races Duergar ~ Magical Taskmaster`.
         let setters: BTreeSet<&str> = duergar
             .alternates
             .iter()
@@ -1232,13 +1344,23 @@ mod tests {
             .collect();
         assert_eq!(
             setters,
-            BTreeSet::from(["Duergar ~ Blood Enmity", "Duergar ~ Twilight-Touched"]),
-            "both books' setters of Duergar_ReplaceSLAInvisibility"
+            BTreeSet::from([
+                "Duergar ~ Blood Enmity",
+                // Inner Sea Races, SD-29 race-trait lane round 2. A THIRD
+                // setter of the same flag. Round 2 did not move this pin and
+                // it was RED on the branch until round 3 reached it -- behind
+                // two earlier assertions in this same test, which is why the
+                // cascade only surfaced once those were fixed
+                // (`decisions.md §47.3`).
+                "Duergar ~ Magical Taskmaster",
+                "Duergar ~ Twilight-Touched",
+            ]),
+            "all three books' setters of Duergar_ReplaceSLAInvisibility"
         );
         assert_eq!(
             grants.iter().copied().collect::<BTreeSet<&str>>(),
             BTreeSet::from(["Duergar ~ Spell-Like Ability ~ Enlarge Person"]),
-            "and both grant the one row the flag gates"
+            "and all three grant the one row the flag gates"
         );
     }
 
@@ -1290,6 +1412,68 @@ mod tests {
         assert!(applied.contains("Saltbeard ~ Dwarf ~ Greed"), "ARG's Greed took its place");
         assert!(applied.contains("Dwarf ~ Saltbeard"), "the chosen alternate itself applies");
         assert_eq!(after.applied_traits.len(), 12 - 4 + 1 + 1);
+    }
+
+    /// The exact selection SD-29 `progress.md` §8b screenshotted, asserted at
+    /// the DTO layer the screen actually reads.
+    ///
+    /// **This test exists to decide an attribution, not to guard a number.**
+    /// `§8b` recorded that with `Half-Orc ~ Plagueborn` ticked, the picker's
+    /// left panel still read *"9 traits apply. No alternate selected, so
+    /// nothing is replaced."*, and diagnosed it a *render* bug on the grounds
+    /// that *"the right-hand column does update ('1 selected. 0 further options
+    /// locked out.'), so the IPC round trip happened"*.
+    ///
+    /// **That inference is unsound.** `AlternateTraitPicker.tsx` builds that
+    /// sentence from `selected.length` — local React state, updated
+    /// synchronously by the checkbox and needing no backend at all — and from
+    /// `blocked.size`, which is **0 when `selection` is `null`**. So the
+    /// reported right-hand text is exactly what renders when the resolve call
+    /// has *not* answered yet. The two panels are one symptom, not two.
+    ///
+    /// That leaves two candidate causes, and this test kills one of them: if
+    /// the backend genuinely returned no suppressions for this selection, the
+    /// defect would be here and not in any render path. It does not. What
+    /// survives is the timing reading — a screenshot captured between the
+    /// click's commit and the effect's `setSelection(null)` — which is a
+    /// harness settle-wait, not a product defect. Round 6 starts from that
+    /// rather than from the label.
+    #[test]
+    fn plagueborn_really_suppresses_both_standard_traits_its_flags_name_so_8b_is_not_a_backend_gap() {
+        let corpus = race_corpus().as_ref().expect("corpus");
+
+        let before = resolve_selection(corpus, "Half-Orc", &[], &[]);
+        assert!(before.errors.is_empty(), "{:?}", before.errors);
+        assert!(before.suppressions.is_empty());
+        assert_eq!(before.applied_traits.len(), 9, "Half-Orc's 9 racial defaults — §8b's screenshot said 9");
+
+        let after = resolve_selection(corpus, "Half-Orc", &["Half-Orc ~ Plagueborn".to_string()], &[]);
+        assert!(after.errors.is_empty(), "{:?}", after.errors);
+        assert!(after.unmatched_selections.is_empty(), "{:?}", after.unmatched_selections);
+        assert!(after.inert_flags.is_empty(), "{:?}", after.inert_flags);
+
+        let suppressed: Vec<&str> = after.suppressions.iter().map(|s| s.suppressed_trait_key.as_str()).collect();
+        assert_eq!(
+            suppressed,
+            vec!["Half-Orc ~ Intimidating", "Half-Orc ~ Weapon Familiarity"],
+            "the two standard traits `HalfOrc_ReplaceIntimidating`/`HalfOrc_ReplaceWeaponFamiliarity` name"
+        );
+        for suppression in &after.suppressions {
+            assert_eq!(suppression.set_by_trait_key, "Half-Orc ~ Plagueborn");
+        }
+        // 9 - 2 + 1: the screen's own caption should read 8, not 9.
+        assert_eq!(after.applied_traits.len(), 8);
+
+        // ...and the lock-out count the right panel prints is NOT 0 either,
+        // which is the other half of the same evidence: every sibling alternate
+        // whose guard names a flag Plagueborn fired is blocked. A rendered
+        // "0 further options locked out." alongside a selection is therefore a
+        // `selection == null` render, not a resolved one.
+        assert!(
+            !after.blocked_alternates.is_empty(),
+            "Plagueborn fires two flags other Half-Orc alternates guard on; a resolved response \
+             cannot report zero lock-outs"
+        );
     }
 
     /// The `PREMULT` guard is honoured: with Saltbeard taken, no other Dwarf
@@ -1600,9 +1784,17 @@ mod tests {
         // ARG/CRB/Bestiary) never moves.
         let standard: usize = menu.races.iter().map(|race| race.standard_traits.len()).sum();
         let alternates: usize = menu.races.iter().map(|race| race.alternates.len()).sum();
-        assert_eq!((standard, alternates), (173, 226));
+        // Round 3 (`decisions.md §47`) added Horror Adventures' 41 alternates.
+        // `standard` did not move for the same reason APG never moved it: HA
+        // contributes no `race/` chassis, only alternates onto races CRB and
+        // Bestiary 1 already declare. Round 4 (`§49`) added Core Essentials'
+        // 16 heritages on the same terms -- and note that this test counts
+        // *menu rows*, so the book's other 48 records are correctly absent
+        // here while being fully present in `reach_gate`'s claim, which reads
+        // what each selection grants as well as what it offers.
+        assert_eq!((standard, alternates), (173, 282));
         assert_eq!(checked, standard + alternates);
-        assert_eq!(checked, 399);
+        assert_eq!(checked, 455);
 
         // What rendering changed for a player *with no character*, measured
         // against the stored `data.description` this module used to transcribe.

@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:keketar_change_shape",
+      "bestiary_2:monster_ability:keketar_reshape_reality",
+      "bestiary_2:monster_ability:keketar_warpwave"
+    ],
+    "challenge_rating": "17",
+    "corpus_key": "Protean (Keketar)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Detect Law ~ Constant",
+      "Fast Healing",
+      "Flight Maneuverability",
+      "Keketar ~ Spatial Riptide",
+      "Telepathy",
+      "Tongues ~ Constant"
+    ],
+    "key": "bestiary_2:monster:protean_keketar",
+    "monster_class": "Outsider (Fort/Will):23",
+    "name": "Protean (Keketar)",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Tail Slap"
+      }
+    ],
+    "race_subtype": "Chaotic|Extraplanar|Protean|Shapechanger",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.215",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      },
+      {
+        "feet": 40,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 699,
+    "record_key": "Protean (Keketar)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

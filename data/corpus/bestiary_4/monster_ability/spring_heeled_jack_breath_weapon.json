@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Spring-Heeled Jack ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "%1' Cone of Fire %2d%3 Fire, DC %4, usable every 2d4 rounds. Breath weapons allow a Reflex save for half damage. You are immune to your own breath weapon.",
+    "description_variables": [
+      "BreathWeaponCone",
+      "BreathWeaponDice",
+      "BreathWeaponDamageDie",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:spring_heeled_jack_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "bestiary_4:monster:spring_heeled_jack"
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "BreathWeapon"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1330,
+    "record_key": "Spring-Heeled Jack ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

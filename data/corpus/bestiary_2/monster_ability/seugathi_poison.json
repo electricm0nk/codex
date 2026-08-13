@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Seugathi ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite - injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Wis and deafness; cure 2 consecutive saves.  Deafness persists as long as the ability damage caused by the poison lasts.",
+    "description_variables": [
+      "SeugathiPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:seugathi_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:seugathi"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1130,
+    "record_key": "Seugathi ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

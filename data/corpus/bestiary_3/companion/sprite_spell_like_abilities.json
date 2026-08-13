@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Sprite ~ Spell-Like Abilities",
+    "delivery": "SpellLike",
+    "description": "(CL 5th; concentration +5) Constant-detect evil, detect good At will-dancing lights, daze (DC 10) 1/day-color spray (DC 11)",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:companion:sprite_spell_like_abilities",
+    "name": "Spell-Like Abilities",
+    "owners": [
+      "bestiary_3:companion:sprite"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpriteRacialAbility",
+      "SpecialQuality",
+      "SpellLike"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
+    "line": 80,
+    "record_key": "Sprite ~ Spell-Like Abilities"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

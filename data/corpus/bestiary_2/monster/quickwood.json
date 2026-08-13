@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:quickwood_roots"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Quickwood",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Immunity to Electricity",
+      "Immunity to Fire",
+      "Pull ~ Quickwood",
+      "Quickwood ~ Fear Aura",
+      "Quickwood ~ Oaksight",
+      "Quickwood ~ Spell Absorption"
+    ],
+    "key": "bestiary_2:monster:quickwood",
+    "monster_class": "Plant:10",
+    "name": "Quickwood",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Root"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "H",
+    "source_page": "p.228",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 739,
+    "record_key": "Quickwood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

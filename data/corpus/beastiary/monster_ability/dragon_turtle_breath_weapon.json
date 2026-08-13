@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Dragon Turtle ~ Breath Weapon",
+    "delivery": "Supernatural",
+    "description": "Cloud of steam 20 feet high, 25 feet wide, and 50 feet long, once every 1d4 rounds, damage %1d6 fire, Reflex DC %2 half; effective both on the surface and underwater.",
+    "description_variables": [
+      "BreathWeaponDice",
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:dragon_turtle_breath_weapon",
+    "name": "Breath Weapon",
+    "owners": [
+      "beastiary:monster:dragon_turtle"
+    ],
+    "source_page": "p.112",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 509,
+    "record_key": "Dragon Turtle ~ Breath Weapon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

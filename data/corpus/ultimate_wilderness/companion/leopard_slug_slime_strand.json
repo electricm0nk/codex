@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Leopard Slug ~ Slime Strand",
+    "delivery": "Extraordinary",
+    "description": "A leopard slug can turn its mucus into a 30-foot-long strand, much like a spider's silk. It can hang from this strand indefinitely, and lower itself safely at a rate of 5 feet per round. It can climb back up the strand at the same rate. Once the slug breaks contact with the strand, the mucus disintegrates in 1d4 rounds.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:leopard_slug_slime_strand",
+    "name": "Slime Strand",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_leopard_slug"
+    ],
+    "record_type": "ability",
+    "source_page": "p.200",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "LeopardSlugRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 262,
+    "record_key": "Leopard Slug ~ Slime Strand"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

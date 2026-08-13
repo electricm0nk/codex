@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Shredskin ~ Enshroud",
+    "delivery": "Supernatural",
+    "description": "A shredskin that successfully pins a creature can wrap itself around that target like a shirt. The target gains the pinned condition, but the shredskin has neither the grappled or pinned condition, and can move itself and the target as if it controlled the target's body. The shredskin deals constrict damage to the target on its turn each round (no combat maneuver check needed). Attacking the shredskin while it's using this ability damages both it and the target as described in the control body ability. The shredskin can release the target as a free action.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:shredskin_enshroud",
+    "name": "Enshroud",
+    "owners": [
+      "bestiary_4:monster:shredskin"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1281,
+    "record_key": "Shredskin ~ Enshroud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

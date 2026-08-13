@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "corpus_key": "Electric Eel ~ Electricity",
+    "delivery": "Extraordinary",
+    "description": "An electric eel can produce a powerful jolt of electricity from its tail, delivering the jolt with a successful touch attack. On a critical hit, the creature struck must make a DC %1 Fortitude save or be stunned for 1d4 rounds.",
+    "description_variables": [
+      "ElectricityDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:companion:electric_eel_electricity",
+    "name": "Electricity",
+    "owners": [
+      "beastiary:companion:companion_eel_electric"
+    ],
+    "record_type": "ability",
+    "source_page": "p.119",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
+    "line": 33,
+    "record_key": "Electric Eel ~ Electricity"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

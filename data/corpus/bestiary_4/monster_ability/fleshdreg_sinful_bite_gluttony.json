@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Fleshdreg ~ Sinful Bite (Gluttony)",
+    "delivery": "Supernatural",
+    "description": "A gluttony fleshdreg's bite attack can wither and weaken the body of the creature it attacks. Any creature that takes damage from a gluttony fleshdreg's bite attack must succeed at a DC %1 Fortitude save or become fatigued. Subsequent uses of this ability do not cause a bitten creature to become exhausted.10+CHA",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:fleshdreg_sinful_bite_gluttony",
+    "name": "Sinful Bite (Gluttony)",
+    "owners": [
+      "bestiary_4:monster:fleshdreg"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 655,
+    "record_key": "Fleshdreg ~ Sinful Bite (Gluttony)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

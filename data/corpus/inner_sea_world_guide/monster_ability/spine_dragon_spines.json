@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T15:01:53Z",
+  "data": {
+    "corpus_key": "Spine Dragon ~ Spines",
+    "delivery": "Extraordinary",
+    "description": "A spine dragon's body is covered with long, crystalling spines. It can fire up to four of these spines/round as a full-attack action (or one as a standard action). A creature that attacks a spine dragon with a melee weapon, unarmed strike, or natural weapon must make a DC %1 Reflex save or take 2d8+%2 points of piercing damage from the spines.",
+    "description_variables": [
+      "10+(HD/2)+DEX",
+      "STR"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_world_guide:monster_ability:spine_dragon_spines",
+    "name": "Spines",
+    "owners": [
+      "inner_sea_world_guide:monster:dragon_spine"
+    ],
+    "source_page": "p.313",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_world_guide/iswg_abilities_race.lst",
+    "sha256": "776debf1cea780aac4b3518c47baf43523d6b06deb0aea80de08b640ffc03c15",
+    "line": 57,
+    "record_key": "Spine Dragon ~ Spines"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

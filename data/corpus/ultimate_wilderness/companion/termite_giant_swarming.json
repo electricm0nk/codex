@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Termite (Giant) ~ Swarming",
+    "delivery": "Extraordinary",
+    "description": "Two giant termites can share the same space, and if they both attack the same target, they are considered to be flanking that foe.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:termite_giant_swarming",
+    "name": "Swarming",
+    "owners": [
+      "ultimate_wilderness:companion:companion_termite_giant"
+    ],
+    "record_type": "ability",
+    "source_page": "p.185",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "GiantTermiteRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 374,
+    "record_key": "Termite (Giant) ~ Swarming"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

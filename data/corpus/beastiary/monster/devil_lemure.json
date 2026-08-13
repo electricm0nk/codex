@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1",
+    "corpus_key": "Devil (Lemure)",
+    "external_ability_refs": [
+      "Aligned (Evil)",
+      "Aligned (Lawful)",
+      "Devil ~ See in Darkness",
+      "Immunity to Fire",
+      "Immunity to Poison",
+      "Resistance to Acid",
+      "Resistance to Cold"
+    ],
+    "key": "beastiary:monster:devil_lemure",
+    "monster_class": "Outsider (Mindless):2",
+    "name": "Devil (Lemure)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.79",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 112,
+    "record_key": "Devil (Lemure)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

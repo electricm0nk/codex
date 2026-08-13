@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Death Worm ~ Corrosive Blood",
+    "delivery": "Extraordinary",
+    "description": "A death worm's blood can corrode metal on contact. If a creature damages a death worm with a piercing or slashing weapon made of metal, the creature's blood deals 3d6 points of acid damage to the metal weapon (unlike most forms of energy damage, this damage is not halved when applied to a metal object, although it does still have to penetrate the metal's hardness). The weapon's wielder can halve the damage the weapon takes by making a successful DC %1 Reflex save. Creatures made of metal that deal slashing or piercing damage to a death worm with a natural attack take 3d6 points of acid damage (a DC %1 Reflex save halves this damage). The corrosive elements of the blood fade 1 round after it leaves the worm's body or the worm dies.",
+    "description_variables": [
+      "DeathWormCorrosiveBloodDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:death_worm_corrosive_blood",
+    "name": "Corrosive Blood",
+    "owners": [
+      "bestiary_2:monster:death_worm"
+    ],
+    "source_page": "p.76",
+    "traits": [
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 340,
+    "record_key": "Death Worm ~ Corrosive Blood"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

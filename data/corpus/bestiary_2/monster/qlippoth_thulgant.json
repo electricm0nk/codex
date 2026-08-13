@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:thulgant_ability_drain",
+      "bestiary_2:monster_ability:thulgant_acid",
+      "bestiary_2:monster_ability:thulgant_demon_hunter",
+      "bestiary_2:monster_ability:thulgant_horrific_appearance",
+      "bestiary_2:monster_ability:thulgant_savage_stingers"
+    ],
+    "challenge_rating": "18",
+    "corpus_key": "Qlippoth (Thulgant)",
+    "external_ability_refs": [
+      "Cloak of Chaos ~ Constant",
+      "Displacement ~ Constant",
+      "Evasion",
+      "Fast Healing",
+      "Fly ~ Constant",
+      "Freedom of Movement ~ Constant",
+      "Immunity to Acid",
+      "True Seeing ~ Constant"
+    ],
+    "key": "bestiary_2:monster:qlippoth_thulgant",
+    "monster_class": "Outsider (Fort/Ref):20",
+    "name": "Qlippoth (Thulgant)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Sting"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.226",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 736,
+    "record_key": "Qlippoth (Thulgant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T18:45:25Z",
+  "data": {
+    "corpus_key": "Octopus ~ Ink Cloud",
+    "delivery": "Extraordinary",
+    "description": "An octopus can emit a 10ft radius sphere of ink once per minute as a free action. The ink provides total concealment in water, and persists for 1 minute.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:companion:octopus_ink_cloud",
+    "name": "Ink Cloud",
+    "owners": [
+      "beastiary:companion:companion_octopus"
+    ],
+    "record_type": "ability",
+    "source_page": "p.219",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "Defensive"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_companion.lst",
+    "sha256": "7c9627b88fbb96c3e12c1002985e0d5f71a2665ca6fa995f669f67744db9a9d8",
+    "line": 38,
+    "record_key": "Octopus ~ Ink Cloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:dragon_time_alien_presence",
+      "bestiary_4:monster_ability:dragon_time_immortal",
+      "bestiary_4:monster_ability:dragon_time_read_the_threads",
+      "bestiary_4:monster_ability:dragon_time_shifting_breath",
+      "bestiary_4:monster_ability:dragon_time_second_chance",
+      "bestiary_4:monster_ability:dragon_time_time_travel"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Dragon (Time)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:dragon_time",
+    "monster_class": "Dragon:9",
+    "name": "Time Dragon",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Dragon",
+    "size": "S",
+    "source_page": "p.70",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 54,
+    "record_key": "Dragon (Time)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Rokurokubi ~ Nightfall Aura",
+    "delivery": "Supernatural",
+    "description": "A rokurokubi can create an aura of darkness and silence (CL 12th) with a radius of 15 feet. The rokurokubi is immune to the effects of her aura, and can activate or suppress this ability as a free action. These aura effects can be dispelled as if they were spells.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:rokurokubi_nightfall_aura",
+    "name": "Nightfall Aura",
+    "owners": [
+      "bestiary_4:monster:rokurokubi"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1203,
+    "record_key": "Rokurokubi ~ Nightfall Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

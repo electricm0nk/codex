@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Chaneque ~ Steal Soul",
+    "delivery": "Supernatural",
+    "description": "As a ranged attack, a chaneque can pelt an opponent with a ritually prepared, soul-stealing fey skull. If the skull strikes its target, she must succeed at a DC %1 Will saving throw to prevent it from ripping her soul from her body. If the victim fails the saving throw, the skull temporarily devours her soul, leaving her vulnerable to the commands of whoever holds the skull. Thereafter, the skull's possessor can use it to command the victim, as the dominate person spell. The soul remains stolen until the possessor chooses to release the victim or the skull is destroyed. While a chaneque can carry multiple skulls on its belt, it can only manipulate single soul at one time.",
+    "description_variables": [
+      "12+WIS"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:chaneque_steal_soul",
+    "name": "Steal Soul",
+    "owners": [
+      "bestiary_4:monster:chaneque"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 372,
+    "record_key": "Chaneque ~ Steal Soul"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

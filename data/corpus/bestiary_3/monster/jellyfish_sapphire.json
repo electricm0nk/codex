@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "11",
+    "corpus_key": "Jellyfish (Sapphire)",
+    "external_ability_refs": [],
+    "key": "bestiary_3:monster:jellyfish_sapphire",
+    "monster_class": "Vermin:12",
+    "name": "Sapphire Jellyfish",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Tentacles"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Vermin",
+    "size": "H",
+    "source_page": "p.154",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 152,
+    "record_key": "Jellyfish (Sapphire)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

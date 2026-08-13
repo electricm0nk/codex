@@ -1,0 +1,84 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:woundwyrm_breath_weapon",
+      "inner_sea_bestiary:monster_ability:woundwyrm_entropic_breath",
+      "inner_sea_bestiary:monster_ability:woundwyrm_maw_of_the_abyss",
+      "inner_sea_bestiary:monster_ability:woundwyrm_spell_like_abilities"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Woundwyrm",
+    "external_ability_refs": [
+      "Immunity to Acid",
+      "Immunity to Gaze Attacks",
+      "Immunity to Illusions",
+      "Immunity to Paralysis",
+      "Immunity to Poison",
+      "Immunity to Polymorph",
+      "Immunity to Sleep",
+      "Immunity to Visual Effects",
+      "Maneuverability (Average)"
+    ],
+    "key": "inner_sea_bestiary:monster:woundwyrm",
+    "monster_class": "Dragon:18",
+    "name": "Woundwyrm",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Tail Slap"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Wing"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      },
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil",
+    "race_type": "Dragon",
+    "size": "H",
+    "source_page": "p.61",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Burrow"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 101,
+    "record_key": "Woundwyrm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

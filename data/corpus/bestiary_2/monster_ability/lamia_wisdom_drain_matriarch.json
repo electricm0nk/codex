@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Lamia ~ Wisdom Drain Matriarch",
+    "delivery": "Supernatural",
+    "description": "A lama matriarch drains 1d4 points of Wisdom each time she hits with her melee touch attack.  The first time each round that she strikes a foe with a melee weapon, she also drains 1 point of Wisdom.  A DC %1 Will save negates the Wisdom drain.  Unlike with other kinds of ability drain attacks, a lamia matriarch does not heal damage when she uses her Wisdom drain.",
+    "description_variables": [
+      "LamiaMatriarchWisdomDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:lamia_wisdom_drain_matriarch",
+    "name": "Wisdom Drain",
+    "owners": [
+      "bestiary_2:monster:lamia_matriarch"
+    ],
+    "source_page": "p.175",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 762,
+    "record_key": "Lamia ~ Wisdom Drain Matriarch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

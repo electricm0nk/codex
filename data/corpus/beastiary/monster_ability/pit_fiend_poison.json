@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Pit Fiend ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite--injury; save Fort DC 32; frequency 1/round for 10 rounds; effect 1d6 Con damage; cure 3 consecutive saves.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:pit_fiend_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:devil_pit_fiend"
+    ],
+    "source_page": "p.80",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 369,
+    "record_key": "Pit Fiend ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

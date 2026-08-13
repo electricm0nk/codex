@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_gods:monster_ability:yhohm_holy_fire",
+      "inner_sea_gods:monster_ability:yhohm_self_resurrection",
+      "inner_sea_gods:monster_ability:yhohm_shroud_of_flame"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Yhohm",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:yhohm",
+    "monster_class": "Outsider (Fort/Will):5",
+    "name": "Yhohm",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d2",
+        "name": "Talon"
+      }
+    ],
+    "race_subtype": "Extraplanar|Fire|Good",
+    "race_type": "Outsider",
+    "size": "T",
+    "source_page": "p.307",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
+    "line": 69,
+    "record_key": "Yhohm"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

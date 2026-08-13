@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Crag Linnorm ~ Poison",
+    "delivery": null,
+    "description": "Bite - Injury; Save Fort DC %1; Frequency 1/round for 10 rounds; Effect 2d6 fire damage and 1d4 Con drain; Cure 2 consecutive saves.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:crag_linnorm_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:linnorm_crag"
+    ],
+    "source_page": "p.190",
+    "traits": [
+      "Supernatrual"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 843,
+    "record_key": "Crag Linnorm ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

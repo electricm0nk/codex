@@ -33,6 +33,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Incorporeal touch", damage_dice: Some("0") }],
         ability_keys: &["Babble", "Madness", "Touch of Insanity"],
         external_ability_refs: &["Channel Resistance", "Flight Maneuverability"],
+        source_file: "bb_races.lst",
         source_line: 6,
     },
     MonsterStatBlock {
@@ -48,6 +49,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Sand Trap"],
         external_ability_refs: &["Grab"],
+        source_file: "bb_races.lst",
         source_line: 7,
     },
     MonsterStatBlock {
@@ -63,6 +65,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &[],
         external_ability_refs: &["Flight Maneuverability"],
+        source_file: "bb_races.lst",
         source_line: 8,
     },
     MonsterStatBlock {
@@ -78,6 +81,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Slam", damage_dice: None }],
         ability_keys: &["Spores"],
         external_ability_refs: &["Resistance to Electricity", "Resistance to Fire", "Trample"],
+        source_file: "bb_races.lst",
         source_line: 9,
     },
     MonsterStatBlock {
@@ -93,6 +97,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Sudden Charge"],
         external_ability_refs: &[],
+        source_file: "bb_races.lst",
         source_line: 10,
     },
     MonsterStatBlock {
@@ -108,6 +113,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[],
         ability_keys: &["Caryatid Column ~ Immunity to Magic", "Shatter Weapons", "Statue"],
         external_ability_refs: &[],
+        source_file: "bb_races.lst",
         source_line: 11,
     },
     MonsterStatBlock {
@@ -123,6 +129,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Faerie Dragon ~ Breath Weapon"],
         external_ability_refs: &["Flight Maneuverability", "Immunity to Paralysis", "Immunity to Sleep"],
+        source_file: "bb_races.lst",
         source_line: 12,
     },
     MonsterStatBlock {
@@ -138,6 +145,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Roar"],
         external_ability_refs: &["Flight Maneuverability", "Pounce", "Scent"],
+        source_file: "bb_races.lst",
         source_line: 13,
     },
     MonsterStatBlock {
@@ -153,6 +161,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }, NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &[],
         external_ability_refs: &["Grab", "Rend"],
+        source_file: "bb_races.lst",
         source_line: 14,
     },
     MonsterStatBlock {
@@ -168,6 +177,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Faithless", "Huecuva ~ Disease"],
         external_ability_refs: &[],
+        source_file: "bb_races.lst",
         source_line: 15,
     },
     MonsterStatBlock {
@@ -183,6 +193,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Claw", damage_dice: None }],
         ability_keys: &["Magic Circle against Evil"],
         external_ability_refs: &["Flight Maneuverability", "Pounce", "Rake"],
+        source_file: "bb_races.lst",
         source_line: 16,
     },
     MonsterStatBlock {
@@ -198,6 +209,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Water Naga ~ Poison"],
         external_ability_refs: &[],
+        source_file: "bb_races.lst",
         source_line: 17,
     },
     MonsterStatBlock {
@@ -213,6 +225,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[],
         ability_keys: &[],
         external_ability_refs: &["Wild Empathy"],
+        source_file: "bb_races.lst",
         source_line: 18,
     },
     MonsterStatBlock {
@@ -228,6 +241,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: None }],
         ability_keys: &["Shadow Mastiff ~ Bay", "Shadow Mastiff ~ Shadow Blend"],
         external_ability_refs: &["Scent", "Trip"],
+        source_file: "bb_races.lst",
         source_line: 19,
     },
 ];
@@ -244,6 +258,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BabbleDC"],
         source_page: Some("p.4"),
         owners: &["Allip"],
+        source_file: "bb_abilities_race.lst",
         source_line: 6,
     },
     MonsterAbilityRecord {
@@ -256,6 +271,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.4"),
         owners: &["Allip"],
+        source_file: "bb_abilities_race.lst",
         source_line: 7,
     },
     MonsterAbilityRecord {
@@ -268,6 +284,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.4"),
         owners: &["Allip"],
+        source_file: "bb_abilities_race.lst",
         source_line: 8,
     },
     MonsterAbilityRecord {
@@ -280,6 +297,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.5"),
         owners: &["Ant Lion (Giant)"],
+        source_file: "bb_abilities_race.lst",
         source_line: 12,
     },
     MonsterAbilityRecord {
@@ -292,6 +310,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["SporesDC"],
         source_page: Some("p.6"),
         owners: &["Ascomoid"],
+        source_file: "bb_abilities_race.lst",
         source_line: 16,
     },
     MonsterAbilityRecord {
@@ -304,6 +323,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.7"),
         owners: &["Axe Beak"],
+        source_file: "bb_abilities_race.lst",
         source_line: 20,
     },
     MonsterAbilityRecord {
@@ -316,6 +336,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.8"),
         owners: &["Caryatid Column"],
+        source_file: "bb_abilities_race.lst",
         source_line: 24,
     },
     MonsterAbilityRecord {
@@ -328,6 +349,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.8"),
         owners: &["Caryatid Column"],
+        source_file: "bb_abilities_race.lst",
         source_line: 25,
     },
     MonsterAbilityRecord {
@@ -340,6 +362,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.8"),
         owners: &["Caryatid Column"],
+        source_file: "bb_abilities_race.lst",
         source_line: 26,
     },
     MonsterAbilityRecord {
@@ -352,6 +375,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponDC"],
         source_page: Some("p.9"),
         owners: &["Dragon (Faerie)"],
+        source_file: "bb_abilities_race.lst",
         source_line: 30,
     },
     MonsterAbilityRecord {
@@ -364,6 +388,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["RoarDC"],
         source_page: Some("p.10"),
         owners: &["Dragonne"],
+        source_file: "bb_abilities_race.lst",
         source_line: 34,
     },
     MonsterAbilityRecord {
@@ -376,6 +401,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["HuecuvaDiseaseDC"],
         source_page: Some("p.12"),
         owners: &["Huecuva"],
+        source_file: "bb_abilities_race.lst",
         source_line: 38,
     },
     MonsterAbilityRecord {
@@ -388,6 +414,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.12"),
         owners: &["Huecuva"],
+        source_file: "bb_abilities_race.lst",
         source_line: 39,
     },
     MonsterAbilityRecord {
@@ -400,6 +427,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Lammasu"],
+        source_file: "bb_abilities_race.lst",
         source_line: 43,
     },
     MonsterAbilityRecord {
@@ -412,6 +440,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["WaterNagaPoisonDC"],
         source_page: Some("p.14"),
         owners: &["Naga (Water)"],
+        source_file: "bb_abilities_race.lst",
         source_line: 47,
     },
     MonsterAbilityRecord {
@@ -424,6 +453,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BayDC"],
         source_page: Some("p.16"),
         owners: &["Shadow Mastiff"],
+        source_file: "bb_abilities_race.lst",
         source_line: 51,
     },
     MonsterAbilityRecord {
@@ -436,6 +466,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.16"),
         owners: &["Shadow Mastiff"],
+        source_file: "bb_abilities_race.lst",
         source_line: 52,
     },
 ];

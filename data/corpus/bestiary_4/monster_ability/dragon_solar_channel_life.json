@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Dragon (Solar) ~ Channel Life",
+    "delivery": "Supernatural",
+    "description": "A solar dragon can channel positive energy %1 times per day, as a %2 level cleric. This energy can be used only to heal living creatures.",
+    "description_variables": [
+      "3+CHA",
+      "DragonAgeCategory+2"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:dragon_solar_channel_life",
+    "name": "Channel Life",
+    "owners": [
+      "bestiary_4:monster:dragon_solar"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 523,
+    "record_key": "Dragon (Solar) ~ Channel Life"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

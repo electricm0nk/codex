@@ -1,0 +1,64 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:piscodaemon_augmented_critical",
+      "bestiary_2:monster_ability:piscodaemon_poison"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Daemon (Piscodaemon)",
+    "external_ability_refs": [
+      "Amphibious",
+      "Bleed",
+      "Constrict",
+      "Detect Good ~ Constant",
+      "Detect Magic ~ Constant",
+      "Grab ~ Claw",
+      "See Invisibility ~ Constant"
+    ],
+    "key": "bestiary_2:monster:daemon_piscodaemon",
+    "monster_class": "Outsider (Fort/Will):11",
+    "name": "Daemon (Piscodaemon)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d10",
+        "name": "Tentacles"
+      }
+    ],
+    "race_subtype": "Aquatic|Daemon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.72",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 245,
+    "record_key": "Daemon (Piscodaemon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

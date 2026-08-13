@@ -5851,3 +5851,6886 @@ render lag needs marker-polling, not fixed sleeps.
   live-verified; wrong values fail loudly, first equipment/spell lane cycle calibrates.
 
 Retro shard: `docs/retro/events/item8-harness.jsonl` (2 corrections, 1 incident, 1 deferral).
+
+## Cycle SD29-E5-F2-003 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 2 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r3` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-2`)
+**Branch-point:** `e1f0bdd9` · **Commits:** `44d1b4c5` (ingest), `b08479e6` (inherited-RED fix),
+`5f04bbcf` (merge of `origin/tranche/9`'s concurrent round-3 race-trait landing)
+**Kanban status left at:** `READY — round 3. 62 units ingested, 4,233 remaining by raw count and
+2,906 by the lane's real ceiling. Card stays READY.`
+
+**This receipt does not claim the lane is done, and the numbers below say so.**
+
+### 0. Worktree integrity — the predicted failure, hit a fifth time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-2`; `git log -1 --format=%ci` →
+**2026-06-28**, i.e. the worktree was created on `7d9f1c4f`, the same unrelated ancestor round 1's
+receipt named as the fourth instance and predicted for this one. Recovered before any other action
+with `git reset --hard e1f0bdd9` (`origin/tranche/9`'s tip at cycle start). Round 1's handoff item 5
+predicted this exactly and it is now the **fifth** recorded instance — a harness condition, not an
+agent error.
+
+A second repo-health condition, recorded because it affects anyone pushing from this checkout:
+`git fetch` prints `fatal: bad object refs/heads/worktree-wf_9029acd8-6b0-6` and
+`error: object file .git/objects/3c/534e50… is empty`. The stale worktree branch left by the dead
+`wf_9029acd8` workflow points at a corrupt object. Fetch still updates `origin/tranche/9` and
+`git push` succeeds, so it did not block this cycle; it is left for the operator rather than repaired
+unilaterally, because deleting a ref in a shared checkout is not this card's write scope.
+
+### 1b. Every figure re-derived, command first, value second
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same
+command round 1's receipt records:
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+tm=ta=0
+for b in d['books']:
+    if b['scope']=='out_of_scope': continue
+    m=b['kinds'].get('monster',{}).get('by_status',{}); a=b['kinds'].get('monster_ability',{}).get('by_status',{})
+    tm+=m.get('not-ingested',0)+m.get('not-started',0); ta+=a.get('not-ingested',0)+a.get('not-started',0)
+print(tm,ta)"
+```
+
+* **Before this cycle:** `1208 3087` → **4,295**. Round 1's closing figure, reproduced exactly
+  before being moved.
+* **After this cycle (post-merge):** `1199 3034` → **4,233 remaining**. `units_ingested` = **62**.
+* **Grounded**, same file: `monster` **62 → 71**, `monster_ability` **20 → 73**. The card's stated
+  starting pair (62 and 20) is **correct and is confirmed, not corrected**.
+
+**The card's raw-remaining figure is wrong and is corrected here.** It states *"monster ~305,
+monster_ability ~852"*. The re-derived pair is 1,208 / 3,087. The brief's pair is close to
+`bestiary`'s own book subtotal (284 / 523, which the brief separately quotes correctly), not to the
+corpus-wide figure this card is scoped to. `correction` emitted with the command as `--verified-by`.
+
+**Per-book unit counts** for the two ingested books come from the inventory's units, never a line
+count over the `.lst`:
+
+```
+python3 -c "import json; d=json.load(open('docs/work-inventory.json'));
+print(sum(1 for u in d['units'] if u['book']=='book_of_the_damned_volume_1' and u['kind']=='monster'),
+      sum(1 for u in d['units'] if u['book']=='book_of_the_damned_volume_1' and u['kind']=='monster_ability'))"
+```
+
+→ `5 36` for Volume 1 and `4 17` for Volume 2. Both are each book's **entire** monster family.
+
+### 1c. Preflight and environment
+
+`df -h /` → **968G total, 151G used, 818G available, 16% used** at cycle start. Disk is no longer a
+constraint on this box. `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r3`,
+claimed with a `.reclaim-claim` file the moment it was created, plus a second dir
+(`…-r3-desktop`) for the desktop crate — which is a **separate cargo workspace**, so sharing one
+target dir between them is the recorded shared-target-dir hazard. A third
+(`…-r3-baseline`) was created for the attribution worktree in §6b. All three deleted at cycle end.
+`nproc` → 4.
+
+### 2. The scope finding, which is worth more than the ingest
+
+See `decisions.md §46.1` for the full statement. In brief, and re-derived by a **checked-in**
+command rather than a `/tmp` script:
+
+```bash
+python3 scripts/classify_monster_ability_rows.py
+```
+
+```
+remaining monster+monster_ability units : 4233
+orphan monster_ability rows             : 1327
+  of which in ZERO-monster books        : 703 across 10 books (no monster in the book to own them)
+reachable remainder (units - orphans)   : 2906
+```
+
+A `monster_ability` record reaches a player only underneath the monster that owns it. **1,327 of the
+4,233 remaining units have no owner in their own book and no per-monster cycle can ground them**;
+703 sit in ten books carrying no monster row at all, which is `loop-instruction.md`'s named hard stop
+reproduced at scale. **The lane's REAL ceiling is 2,906.** `deferral` emitted.
+
+The script mirrors `scripts/transcribe_monster_tables.py`'s own link predicates, so it predicts what
+a transcription would produce rather than describing something adjacent to it. This is `§45.1`'s
+lesson applied to this kind, and checking it in is `§45.1`'s *other* lesson — an ephemeral path is
+not a citation.
+
+### 3. What landed
+
+| book | monsters | abilities | orphans | scope-flip collateral |
+|---|---|---|---|---|
+| `book_of_the_damned_volume_1` | 5 | 36 | **0** | 49 units across 5 other kinds |
+| `book_of_the_damned_volume_2` | 4 | 17 | **0** | 233 units across 6 other kinds |
+
+Both were `future_state`; each needed a `RuleSetId` (`Botd1`, `Botd2`). The scope-flip cost round 1
+flagged as unmeasured is **measured here for the first time** — it moves other kinds from
+`not-started` to `not-ingested` and so does not move this lane's denominator, but it does move other
+lanes' figures.
+
+Eight registration points per book, exactly as round 1's handoff predicted: transcriber `BOOKS`,
+`monster_chassis::MONSTER_BOOKS`, `gen_book_cache::MONSTER_BOOK_SPECS`, a wire code + display name in
+`monster_catalog.rs`, two `reach_gate` claim arms plus a `CORPUS_BOOK_IDS` row, a
+`corpus_ingest_diagnostic` row, and a frontend label. `BOTD1`/`BOTD2` are the first wire codes wider
+than two characters; nothing in the frontend's map assumed a width, and a test now says so.
+
+### 4. Two transcriber defects a third and fourth book found
+
+Full statement in `decisions.md §46.3`. Both were found by *transcribing* a new book — the mechanism
+the loop instruction ranks first — and neither was findable by any existing test.
+
+1. **A row may carry TWO `DESC:` tokens.** 15 of Volume 2's 17 ability rows do, one gated
+   `!PRERULE:1,DisplayFullAbility` (a summary) and one gated `PRERULE:1,DisplayFullAbility` (the full
+   rules text). The parser took the first, i.e. the summary. `Seraptis ~ Gaze of Despair` would have
+   shipped without its Will save, its Charisma drain or its duration.
+2. **`!PRERULE:` was recorded as a formula variable.** `PRERULE:` was filtered from
+   `description_variables` and its negated spelling was not. Corpus-wide the shape occurs on **650**
+   `DESC:` tokens across the `*_abilities_race*.lst` files.
+
+Regenerating Monster Codex under both fixes reproduces its table **byte-for-byte** — the check that
+neither fix moved an already-shipped book. Bonus Bestiary's *records* reproduce identically as well;
+its committed file is deliberately not regenerated, because the pilot hand-authored a module header
+the generator does not produce, and regenerating would delete prose for zero data gain. Recorded here
+rather than left as an unexplained skip.
+
+### 5. Definition of done
+
+| # | Item | State |
+|---|---|---|
+| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | **PASS. `VERIFY_EXIT=0`, `RESULT: PASS`, all 14 stages green on the final tree** — run 3 below. Runs 1 and 2 are reported too, red and stopped-early respectively, rather than only the run that passed |
+| 2 | Reach claims for this card's families — zero matched tests is a hard failure | **PASS, by claim not by absence.** `reach` runs **22** (was 18). Four new claims, asserted per record against the files on disk: BotD1 **5** monsters + **36** abilities, BotD2 **4** + **17**, all `Reach::Surfaced` on `list_monster_catalog` |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | **PASS. `AUDIT_EXIT=0`**, 259 trap rows, 0 defects, *"every ingested record's citation agrees with the line it names."* Exit code captured by redirecting to a file and reading `$?` on the next statement, never through a pipe |
+| 4 | `v06_work_inventory` regenerated; the books' units leave `not-started` | **PASS.** Both books read `monster` and `monster_ability` **fully `grounded`** (5/5 + 36/36, 4/4 + 17/17). Second run differs in **`generated_at` only** — proven by comparing the two runs' parsed JSON key by key, not by eyeballing a diff |
+| 5 | Four-check wired-integration audit | **Clean.** No stub tokens, no no-op handlers, no fixture-only data, no "would have" strings. The places a placeholder could have shipped all serve `None` plus the reason: 3 natural attacks the corpus never prices, and the Lesser Host Devil's genuinely empty attack list |
+| 6 | Unsurfaced families carry an `OPEN_FINDINGS` entry | **`OPEN_FINDINGS` unchanged, and nothing was owed** — both books' families reach the catalog record by record, which is the property that made them the correct pair. The 1,327 orphan rows are NOT an `OPEN_FINDINGS` debt of this cycle: they belong to books this cycle did not ingest, and `§46.1` records them as a lane ceiling instead |
+| 7 | Baseline movements are a separate commit | **None made.** `scripts/verify-baselines.env` untouched |
+| 8 | On-screen verification for player-visible families | **PASS, both books**, via the checked-in harness — see **On screen** below. The Seraptis capture is the two-`DESC:` fix proven on a player's screen |
+
+### 6b. The branch tip was RED before this cycle touched it — attributed, then fixed
+
+`origin/tranche/9`'s tip `e1f0bdd9` failed **3** `race_trait_picker` tests. Attribution is **proven,
+not asserted**, per `decisions.md §39`:
+
+```bash
+git worktree add /home/ubuntu/workspace/sd29-monster-r3-baseline e1f0bdd9 --detach
+cd /home/ubuntu/workspace/sd29-monster-r3-baseline/apps/desktop/src-tauri
+cargo test --locked --bin codex-desktop race_trait_picker
+```
+
+→ `test result: FAILED. 13 passed; 3 failed`, the **identical three**, with none of this cycle's
+changes present. The merge commit that created that tip says so itself: *"Gate not yet re-run across
+the merge; the resumed lane cycle verifies."*
+
+Two were count pins Inner Sea Races legitimately moved and `c8e2d6ad` missed — they sit **after** the
+aggregate pins it did move, inside the same test functions, so they never executed until those
+passed. Fixing an assertion reveals the next one, and a suite run once after a fix is not a suite run.
+
+**The third was a PI-redaction bypass on a shipped screen** (`decisions.md §46.5`):
+`pi_screening` redacts `data.description` and deliberately leaves `raw_tokens` verbatim, and
+`race_resolver::RaceTraitRecord::render_description` reads the tokens — so all **12** PI-redacted
+Inner Sea Races descriptions rendered **un-redacted** on the alternate racial trait picker. The
+redaction held on disk and was defeated where it matters.
+
+This cycle fixed it (`b08479e6`, with a corpus-wide two-directional regression test). **The
+race-trait lane's round 3 found and fixed the same defect concurrently and independently**, landing
+`bd98b9fe` while this cycle's gate was in flight. The merge resolved `race_resolver.rs` and
+`race_trait_picker.rs` **in favour of that lane** — it owns those files and its fix is the same fix —
+so the package carries one implementation, not two. `incident` + `correction` emitted.
+
+### 6. Retro events (`docs/retro/events/sd29-monster-r3.jsonl`)
+
+1 × `incident` (`merged-without-rerunning-the-gate` — the inherited RED, with the baseline-worktree
+command as `--detected-by`), 3 × `correction` (the PI bypass; this lane's own transcriber on both
+`DESC:` shapes; this cycle's dispatch brief on the lane's remaining figure), 1 × `deferral` (the
+1,327 orphan rows and the surface decision they need), plus `verify.sh`'s auto-emitted `verification`
+events.
+
+### Merge to `tranche/9`
+
+`origin/tranche/9` advanced by 1 commit (`bd98b9fe`, the race-trait lane's round 3) while this cycle
+ran. **Merged, not rebased**, per this checkout's shared-branch discipline. Seven conflicts, all of
+them two lanes appending a different arm to the same exhaustive match or list — resolved **by union**
+in five files (`rules_tables/mod.rs`, `v06_work_inventory.rs`, `v06_content_state_dump.rs`,
+`reach_gate.rs`), in favour of the owning lane in two (`race_resolver.rs`,
+`race_trait_picker.rs`), and by **regeneration** for `docs/work-inventory.json` rather than by
+picking a side. Picking a side on any of the union files would have silently dropped one lane's book.
+
+**Pushed to `origin/tranche/9` at `5f04bbcf`.** PR #360 remains open and unmerged, as the card
+requires — the bundle is not done.
+
+### 0b. Trap report — cycle mechanics step 0b, and what it reconciles
+
+`cargo run --locked --bin v06_corpus_trap_report -- <book_dir>` for each book, exit `0` both times.
+
+| file | DECLARES | `.COPY=` | `.MOD` | `#OFF` | units the inventory counts |
+|---|---|---|---|---|---|
+| `botd1_races.lst` | 5 | 0 | 0 | 0 | **5 monster** |
+| `botd1_abilities_race.lst` | 37 | 0 | 0 | 0 | **36 monster_ability** |
+| `botd2_races.lst` | 4 | 0 | 0 | 0 | **4 monster** |
+| `botd2_abilities_race.lst` | 18 | 0 | 0 | 0 | **17 monster_ability** |
+
+**Both ability files declare exactly one row more than the inventory counts, and neither delta is a
+dropped record.** Each was chased to its own row rather than waved at:
+
+* Volume 1's 37th is `Warmonger Devil ~ Trample` (`botd1_abilities_race.lst:46`), `TYPE:Internal` —
+  excluded by the inventory's `internal_namespace` trap. It is carried as an
+  `external_ability_refs` entry on the Warmonger Devil's stat block and pinned in both directions by
+  `an_internal_typed_ability_stays_an_external_reference`.
+* Volume 2's 18th is `Smoking Wound` at `:36`, `TYPE:Ability Focus` — a feat-interaction record, not
+  one of `monster_ability`'s two facets, so the chassis correctly does not model it. The creature's
+  own `Vavakia ~ Smoking Wound` row IS ingested.
+
+This is the reconciliation the playbook asks for: a count that disagrees with a line count is
+explained by naming the rows, not by preferring whichever number is convenient.
+
+Neither book's trap report flags a defect. Volume 1's notable shapes are 8 `KEY:` namespaces (which
+is why nothing here joins on a bare leaf) and 5 `ASPECT`-alongside-`BONUS` rows in files this lane
+does not touch; Volume 2's are 48 `.MOD` rows and 2 `#OFF` rows, all in `botd2_deities.lst`, likewise
+outside this lane.
+
+### Gate — run 1, and the six failures it found
+
+Superseding the "IN FLIGHT" note above. `./scripts/verify.sh` FULL, run through a wrapper that
+assigns `code=$?` on the statement immediately after the command and writes it to a file — never
+through a pipe.
+
+**Run 1 (post-merge tree, commit `5f04bbcf`): `VERIFY_EXIT=1`. `RESULT: FAIL`. 3 of 14 stages red.**
+
+| Stage | Run 1 |
+|---|---|
+| preflight-disk | PASS (disk budget OK) |
+| **pi-sweep** | **FAIL** — 11 hits over `src/rules_core/rules_tables`, 10 baseline rows |
+| audit-selftest | PASS (28) |
+| reclaim-selftest | PASS (10) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (**1635**) |
+| **root-full** | **FAIL** — cargo exit 101; **6195 passed across 543 suites**, 5 failing |
+| **desktop** | **FAIL** — cargo exit 101; 427 passed, 1 failed |
+| reach | PASS (**22** — up from round 1's 18; the four new claims are this cycle's) |
+| frontend-install / frontend-test / frontend-typecheck | PASS / PASS (98/98) / PASS |
+| clippy | PASS (root:54 desktop:7 warnings, 0 errors) |
+| class-dump | PASS (31/31 computing) |
+
+`decisions.md §39` forbids calling a red stage environmental without naming what did not execute.
+Nothing failed to execute here: `root-full` ran **543 suites** and reports its own `comm -23`
+non-execution check clean. All six failures were real, and each is attributed individually rather
+than bucketed — §40's rule.
+
+**Two were this cycle's:**
+
+1. `pi-sweep` — a doc comment **this cycle wrote** in
+   `src/rules_core/rules_tables/book_of_the_damned_volume_1/mod.rs:27` named the campaign setting
+   outright, putting a blacklisted term in a `rules_tables` source file. **Removed, not baselined:**
+   a doc comment does not need the proper noun to make its point, and baselining would have spent the
+   exemption on prose. The sweep is a hard stop by design and behaved correctly.
+2. `tests/v06_work_inventory.rs` — an SD-30 test pinned all twelve `campaign_setting` books as
+   `future_state`, which is an assertion that **nobody will ever ingest one**. Three lanes since have.
+   (This one was already red at the branch point on `inner_sea_races` alone; this cycle's two books
+   made it red twice over.)
+
+**Three were inherited**, all from lanes that landed on `tranche/9` without a gate run across the
+merge: `ingest_race_traits.rs`'s 233-record pin (Horror Adventures' 43), the Duergar test's
+duplicated `RACE_CORPUS_BOOKS` copy, and a hardcoded `/home/ubuntu` in a `reclaim` self-test comment.
+
+**And one this cycle caused by its own merge resolution, which is the most transferable of the six.**
+Resolving `race_trait_picker.rs` with `git checkout --theirs` kept the race-trait lane's PI fix and
+**silently discarded this cycle's `Duergar_ReplaceSLAInvisibility` setter fix**, which that lane had
+not made. Picking a side on a file two lanes both fixed drops whichever fix the other side did not
+make, and only a gate run against the *merged* tree can see it — the pre-merge desktop suite was
+green at 427/0 with that fix in place.
+
+All six fixed at the source in `5c5de84c`; none relaxed, none `#[ignore]`d, no baseline moved.
+
+### Gate — run 2, stopped deliberately, and what it had already proven
+
+**Run 2 was killed by this cycle at `root-full`+1, and the receipt says so rather than quoting its
+partial table as a result.** `VERIFY_EXIT=143` is SIGTERM, not a verdict.
+
+The reason is a real hazard worth naming: **`verify.sh` reads the working tree, not a commit**, and
+`origin/tranche/9` advanced twice while run 2 was in flight (the race-trait lane's round 3, working
+the same files). Merging mid-run would have produced a result whose early stages were measured
+against one tree and whose late stages were measured against another — a green that answers no
+question. Stopping and re-running is the only defensible move, and it costs a full gate.
+
+**What run 2 did establish before it was stopped**, on the tree carrying all six fixes:
+
+| Stage | Run 2 (partial) |
+|---|---|
+| preflight-disk | PASS |
+| **pi-sweep** | **PASS (10 hits / 10 baseline rows)** — was red in run 1 |
+| audit-selftest | PASS (28) |
+| reclaim-selftest | PASS (10) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (1635) |
+| **root-full** | **PASS — 6200 passed across 543 suites, all 524 `tests/*.rs` suites executed** — was red in run 1 |
+| desktop and later | not reached |
+
+Both stages that run 1 failed came back green, and `root-full`'s own `comm -23` non-execution check
+reports **all 524 suites executed** — so the green is a green, not an absence.
+
+### Gate — run 3, on the final tree
+
+**`VERIFY_EXIT=0`. `RESULT: PASS`. All 14 stages green**, on the final tree — commit `0588801a`,
+which is `origin/tranche/9` plus this cycle's last doc commit and nothing else. Exit code taken from
+`code=$?` on the statement immediately after the command and written to a file; never through a pipe.
+
+| Stage | Run 3 |
+|---|---|
+| preflight-disk | PASS (disk budget OK) |
+| pi-sweep | PASS (10 hits / 10 baseline rows) |
+| audit-selftest | PASS (28) |
+| reclaim-selftest | PASS (10) |
+| driver-selftest | PASS (7) |
+| root-lib | PASS (**1635**) |
+| **root-full** | **PASS — 6200 passed across 543 suites, all 524 `tests/*.rs` suites executed** |
+| desktop | PASS (**428**) |
+| **reach** | **PASS (22)** — 18 before this cycle; see DoD item 2 |
+| frontend-install | PASS |
+| frontend-test | PASS (98/98 files) |
+| frontend-typecheck | PASS (`tsc --noEmit` clean) |
+| clippy | PASS (root:54 desktop:7 warnings, **0 errors**) |
+| class-dump | PASS (31/31 computing) |
+
+`root-full`'s non-execution check — the `comm -23` between the derived expected-suite list and the
+log's own `Running` lines, which `decisions.md §40` requires and which `root-full` runs on every
+invocation — reports **all 524 `tests/*.rs` suites executed**. The green is a green, not an absence.
+
+**DoD item 2 is satisfied by claim, not by absence.** `reach` runs **22** tests, up from round 1's 18:
+the four new ones are this cycle's, and `both_book_of_the_damned_volumes_reach_the_catalog_record_by_record`
+asserts each book's two families **per record** against the files on disk —
+`("book_of_the_damned_volume_1","monsters")` → **5**,
+`…"monster_abilities"` → **36**, `("book_of_the_damned_volume_2","monsters")` → **4**,
+`…"monster_abilities"` → **17**, every one `Reach::Surfaced` on `list_monster_catalog`. The suite also
+runs `unsurfaced_families_are_exactly_the_recorded_findings`, which computes the unsurfaced set from
+live behaviour and would fail if any of the four reached nothing.
+
+**Independently re-run against the same final tree, each with its exit code captured directly** — so
+no single instrument is the only witness:
+
+* `cargo test --locked --workspace` (repo root) → **`ROOT_WS_EXIT=0`**, **544** `test result: ok`
+  lines, **0** `test result: FAILED`.
+* `cargo test --locked` in `apps/desktop/src-tauri` → **`DESKTOP_FINAL_EXIT=0`, 428 passed**.
+* `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`AUDIT_EXIT=0`**, 259 trap rows,
+  0 defects.
+* `BASE_BRANCH=e1f0bdd9 bash scripts/wired-integration-audit.sh` → **`WIRED_EXIT=0`, all four checks
+  clean** over this cycle's diff. At its default `origin/develop` base it exits 1 on check 1, and
+  this receipt says so rather than quoting only the passing invocation: all 8 hits are pre-existing
+  bundle-wide false positives — 7 doc comments using the word *placeholder* to say a value is never
+  one, and one HTML `placeholder=` input attribute.
+* `v06_work_inventory` run twice → the two outputs differ in **`generated_at` only**, compared key by
+  key on the parsed JSON rather than eyeballed.
+
+
+### On screen — DoD item 8, both books, PASS
+
+`RUN_DESKTOP_AGENT=sd29-monster-r3` (unique to this cycle, per the SKILL's concurrent-agent rule),
+via the checked-in harness rather than a hand-rolled drive. Artifacts:
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/sd29-monster-r3/item8/`.
+
+**What the screen confirms, on the captured images and in the clipboard extraction:**
+
+* The catalog header reads ***"across Bestiary 1, Bonus Bestiary, Monster Codex, Book of the Damned,
+  Volume 1 and Book of the Damned, Volume 2 — 71 monsters"*** — the derived book list picking up both
+  new books, and **71 = 46 + 14 + 2 + 5 + 4**. The size and type facet chips re-derive too
+  (Outsider 12, of which this cycle's 9 are new).
+* **`Demon (Seraptis)`** (`monster-botd2-seraptis.png`) — *Medium Outsider (Chaotic, Demon, Evil,
+  Extraplanar) · CR 15 · Speed 50 ft. · **Book of the Damned, Volume 2 p.58** · Hit dice Outsider
+  (Fort/Will):15*, four natural attacks each tagged `(corpus row)`, and all five abilities with facet,
+  delivery and rules text. **This is the two-`DESC:`-token fix, proven on screen:** `Gaze of Despair`
+  renders the *full* rules text — the Will save, the 1d6 Charisma drain, the staggered duration, the
+  suicidal-state clause — where the pre-fix ingest would have shown the one-line summary and stopped
+  at "…soul-crushing despair."
+* **`Devil, Lesser Host (Gaav)`** (`monster-botd1-lesser-host-devil.png`) — *Small Outsider · **CR 3**
+  · Speed 5 ft., fly 60 ft. · **Book of the Damned, Volume 1 p.58*** and, in place of an attack list,
+  ***"No natural attack on this corpus row — this creature fights with manufactured weapons."*** That
+  row's corpus line carries no `NATURALATTACKS:` token at all, and the screen says so in a sentence
+  rather than showing a blank.
+
+**One honest observation the screenshot makes and the receipt will not round away.** Seraptis' Gaze of
+Despair renders as *"those within  feet"* and *"a DC  Will save"* — the `%1`/`%2` magnitudes are
+**dropped, not guessed**, which is `decisions.md §24`'s standing treatment for this program (there is
+no formula interpreter, and the values are `BONUS:VAR` chains this ingest deliberately does not
+compute). It is pre-existing lane behaviour, identical to Bonus Bestiary's `Babble` DC, and not a
+regression from this cycle — but a player does read a sentence with a gap in it, and that is a known
+cost of the lane rather than a thing this receipt should let pass unmentioned.
+
+**A process finding from the first attempt, recorded because it is not the documented one.** The
+harness header forbids running concurrently with `verify.sh` on memory grounds (22 GiB, no swap). This
+box now has **45 GB with 40 GB available**, so that constraint no longer binds — but the first attempt
+still failed, with `sh: 1: vite: not found`: the gate's own `frontend-install` stage runs `npm ci`,
+which had `apps/desktop/node_modules` mid-reinstall when the app launched. The harness failed loudly
+and named its artifacts `.FAILED.*`, exactly as designed. **The rule still holds; its reason has
+changed from memory to `npm ci` racing the launch.** Both records passed on a re-run with the gate
+idle.
+
+### Disposition and handoff to round 3
+
+**The lane is NOT done and this receipt does not say it is.**
+
+* `units_ingested` = **62**. `units_remaining` = **4,233** raw, re-derived by the §1b command at cycle
+  end over the merged tree.
+* **The number that should drive round 3 is 2,906**, the reachable remainder after removing the 1,327
+  orphan ability rows (`decisions.md §46.1`). Re-derive both with
+  `python3 scripts/classify_monster_ability_rows.py` rather than trusting this line.
+
+Round 3 starts here, in this order:
+
+1. **`inner_sea_world_guide`** — 44 units, 14 monsters, **5 orphans**. The cheapest book with monsters
+   left. It is `future_state`, so budget a `RuleSetId` and a scope flip.
+2. **`inner_sea_bestiary`** — 230 units, 40 monsters, 26 orphans; a real bestiary and the largest
+   fully-linked-enough book remaining.
+3. **`bestiary_2`** — 782 units, 316 monsters, **64 orphans — 8% of its units**, the
+   lowest orphan share of the three big bestiaries (`bestiary_4` 988 units / 152 orphans,
+   `bestiary` 807 / 146). The first of the big three and the cleanest of them.
+4. **Do NOT shape `ultimate_psionics`, or any of the ten zero-monster books (703 units), as a
+   per-monster cycle.** They need a surface decision. `ultimate_psionics` additionally carries a third
+   link shape (Astral Construct menu selections in the `TYPE:` token) that the chassis does not model
+   — round 1's deferral stands and this round reproduces its 66-orphan figure independently.
+5. **Each book with orphans needs a decision before its cycle, not during it:** a whole-book reach
+   claim is not available for a book whose ability rows do not all have owners. Either the claim is
+   scoped to the linked subset with an `OPEN_FINDINGS` entry for the rest, or the book waits. This
+   round dodged the question by taking the only two books with zero orphans; round 3 cannot.
+6. **The dispatch worktree will land on `7d9f1c4f` again** — five instances now.
+   `git reset --hard origin/tranche/9` before anything else.
+7. **Expect to merge, not rebase, and expect the race-trait lane to be live in the same files.** This
+   cycle merged `origin/tranche/9` twice mid-flight and both times the other lane had independently
+   fixed something this one had also fixed. Resolve by union for pure additions; **never
+   `--theirs` a whole file both lanes edited** — see the Gate section.
+
+**Pending; appended below.** Cannot run concurrently with `verify.sh` on this box (22 GiB, no swap —
+the harness's own header records the OOM).
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 3 (SD29-E6-F2-004)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), round 3 of a loop-until-dry lane.
+**Actor:** `sd29-racetrait-r3`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-1`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §47` (written as §46 — see §0c).
+**PR:** #360, open and NOT merged.
+**Commits:** `bd98b9fe` (ingest + 8 inherited reds), `eee7f34c` (5 more gate reds), `fc32108d`
+(decision record), `c6185e88` (merge of the monster lane), `be05927c` (inventory regen), plus this
+receipt's own commit. All pushed to `origin/tranche/9`.
+
+**Round 3 ingested Horror Adventures — 43 records, all 43 reaching a player — and, by re-running
+round 2's gate before trusting it, found that round 2 had left `origin/tranche/9` RED, that the PI
+screen was being defeated on the shipped surface, and that five alternates across two books were
+offered while moving no number.** The lane is now **dry for no-new-mechanism work**; every one of
+the 51 workable units left needs a mechanism this card did not build.
+
+### 0a. Worktree integrity — RECOVERY WAS REQUIRED (a sixth time)
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| recovery | `git fetch origin tranche/9 && git reset --hard origin/tranche/9` | `e1f0bdd9`, docs present |
+
+**Sixth consecutive cycle at `7d9f1c4f`.** Round 2's receipt called this "perfectly reproducible"; it
+still is. `git fetch` also prints `error: … did not send all necessary objects`, referring to the
+dead worktree ref the monster lane's receipt names — cosmetic here too: refs updated, reset resolved,
+and every `git push` this cycle made succeeded.
+
+### 0b. A shared-scratchpad collision, recorded because it cost real work
+
+This cycle's `progress.md` receipt draft was written to the session scratchpad and **overwritten by a
+sibling agent (`sd29-monster-r3`) writing its own `receipt.md` to the same path**. The scratchpad is
+documented as session-isolated and is not. Recovered by rewriting under a uniquely-named path. This
+is the recorded "shared scratchpad clobbering a verification artifact" incident class, hit again.
+
+### 0c. A decision-number collision, recorded rather than quietly fixed
+
+Both lanes wrote **Decision 46** concurrently in separate worktrees; the monster lane pushed first.
+This round's section is renumbered **§47** and carries its own header note. `bd98b9fe`'s and
+`eee7f34c`'s commit messages, which are already committed, say §46 and cannot be rewritten; every
+code comment was updated to §47. Same failure class as the `SD29-E4-F1-001` cycle-id collision the
+kanban already records. **Unattended-mode default:** renumber the later-pushed section, keep both,
+explain the discrepancy where a reader following a stale reference will land.
+
+### 1. Merged-ness verified by content, not by anyone's say-so
+
+Round 2's chassis verified present on the reset tree **before** being used:
+
+```
+$ grep -n 'inner_sea_races' src/bin/ingest_race_traits.rs      → 146: corpus_book: "inner_sea_races"
+$ find data/corpus/inner_sea_races/race_trait -name '*.json' | wc -l   → 72
+$ grep -n 'RuleSetId::Isr' src/rules_core/rules_tables/mod.rs src/bin/v06_work_inventory.rs → present
+```
+
+Round 1's and round 2's own figures then reproduced exactly (§3).
+
+**But "merged" and "verified" are independent questions, and this lane has now been bitten by both.**
+Round 2's work is genuinely on the branch AND its gate was red. §6a is the second half.
+
+### 2. Preflight and trap-report (cycle mechanics 1c, 0b)
+
+* `./scripts/verify.sh --only preflight-disk` → **EXIT 0**, 16% used / 817G available.
+* `cargo run --locked --bin v06_corpus_trap_report -- horror_adventures` → ran clean. 133
+  `governing-token-hidden-by-filter` findings (`TEMPBONUS`/`ASPECT` alongside `BONUS`/`PRE`) and a
+  long `KEY:` namespace list dominated by the book's Corruption families. **None of it touches the
+  race-trait rows**, which is why the ingest needed no parser change.
+
+### 3. Every figure re-derived (cycle mechanics 1b)
+
+**`§44.4`'s ceiling, re-derived independently and reproducing EXACTLY.** Each `race_trait` unit
+walked back to its own row by `(book, source_file, source_line)`, `.MOD` filtered on field 0 only,
+`TYPE:` tokens read — the predicates `parse_row` and `race_resolver::classify` use:
+
+```
+units whose own row is in-scope-race and non-.MOD: 553
+  core_essentials        {'grounded': 175, 'not-ingested': 48}
+  advanced_race_guide    {'grounded': 156}
+  inner_sea_races        {'grounded': 71,  'not-ingested': 1}
+  advanced_players_guide {'grounded': 1,   'not-ingested': 49}
+  horror_adventures      {'not-started': 44}
+  monster_codex          {'grounded': 4,   'not-ingested': 1}
+  bestiary               {'not-ingested': 3}
+TOTAL by status: {'grounded': 407, 'not-ingested': 102, 'not-started': 44}
+```
+
+**553 confirmed; 3,447 − 553 = 2,894 chassis-blocked, confirmed.** `§44.4` was right and is now
+re-derived rather than transcribed.
+
+**`§45.1`'s method applied BEFORE committing the round**, which is why that script is checked in:
+
+```
+$ python3 scripts/classify_race_trait_rows.py ha_abilities_race.lst ha_abilities_race_oa.lst
+ha_abilities_race.lst            in-scope 43 | default 0 | alternate 41 | flag_granted 0 | unclassified 2
+support/ha_abilities_race_oa.lst in-scope  1 | default 0 | alternate  1 | flag_granted 0 | unclassified 0
+```
+
+`§45.5`'s "44, 42 replace-flag alternates" confirmed, correctly split 43 + 1 across two files.
+
+**A figure this cycle got wrong and corrected against disk.** The first distinct-flag derivation was
+arithmetic over a set difference and reported HA adding 29 new flags. Re-running it against the
+written records gives **90 without HA, 91 with — exactly ONE new flag** (`Halfling_ReplaceLanguages`);
+28 of HA's 29 were already declared. The gate independently produced the same `91` (`left: 91,
+right: 90`), which is what caught it. Recorded because "re-derive at the point of use" means against
+the data, not against another derivation.
+
+### 4. The bounded work
+
+* `RuleSetId::Ha` + four arms. The exhaustive match forced every one.
+* One `BOOK_SOURCES` row → **43 records**, `0` PCGen-syntax leaks, `0` unresolved `DESC:` args,
+  `0` out-of-scope rows, `0` `.MOD` rows carrying a race TYPE. 7 races: Dwarf 6, Elf 7, Gnome 5,
+  Half-Elf 4, Half-Orc 6, Halfling 9, Human 6.
+* `data/corpus/horror_adventures/LICENSE.json` — **0 of 43 redacted**, verified on the written tree
+  (`grep -rl 'redacted PI' data/corpus/horror_adventures/race_trait/ | wc -l` → `0`) against ISR's
+  12 of 72. Book class (`BOOKTYPE:Supplement`), not a weaker screen.
+* 41 `ALTERNATE_TRAIT_REPLACE_FLAGS` rows; reach claim `("horror_adventures", "race_traits")`
+  asserting a plain `Reach::Surfaced`; **no** `OPEN_FINDINGS` entry, because there is no shortfall.
+* `race_catalog::RACE_CORPUS_BOOKS` += `horror_adventures`, `BOOK_HA = "HA"`.
+
+**RED first, deliberately**, per `§45.3`: the book was added to `RACE_CORPUS_BOOKS` with its records
+on disk and *before* its flag-table rows, and `every_alternate_the_app_offers_is_one_the_engine_can_place`
+went red naming all 41 keys the picker offers and `pilot_compute` would refuse.
+
+### 5. DELIBERATE NON-SCOPE: the book's second racial-ability file (1 unit)
+
+`support/ha_abilities_race_oa.lst` is **not** ingested. The pcc loads it as
+`ABILITY:support/ha_abilities_race_oa.lst|PRECAMPAIGN:1,INCLUDES=Occult Adventures`
+(`_horror_adventures.pcc:91`), and Occult Adventures is not ingested here.
+
+**The gate is on the pcc load line, not inside the `.lst`** — `grep PRECAMPAIGN` over the `.lst`
+returns 0. First time this lane has stood in the trap `loop-instruction.md` records for
+`bestiary_5/support/*_oa.lst`. **Unattended-mode default taken and recorded:** ingest the base file
+only; the alternative manufactures a record for a book nobody has audited. 1 unit of evidenced
+non-scope, not gap.
+
+### 6. THE GATE — three full runs, the last one green, and what re-running round 2's found
+
+#### 6a. Round 2 left `origin/tranche/9` RED, across TWO gate stages
+
+Round 2's receipt records its full gate as *in flight*; no result ever landed. Re-running it here
+found **thirteen failing assertions**, in two waves — the second wave only reachable once the first
+was fixed, because several sit *after* an earlier assertion in the same test function:
+
+| wave | file | assertion | held | correct |
+|---|---|---|---|---|
+| 1 | `tests/sd27_alternate_racial_trait_reachability.rs` | 5 pins (158→267 ×3, 337→452 ×2) + the reachable-bonus set | | |
+| 1 | `tests/sd27_aasimar_globalvar_gate_…rs` | Aasimar 9→11, sweep 158→267 | | |
+| 1 | `apps/desktop/src-tauri/src/race_trait_picker.rs` | per-race table, Aasimar 9→11, changed-description list | | |
+| 2 | `src/bin/ingest_race_traits.rs` | leak-guard TOTAL 233→276 | | **this round's own** |
+| 2 | `tests/duergar_invisibility_sla_…rs` | `LOADED_BOOKS` two books stale | 5 | 7 |
+| 2 | `tests/v06_work_inventory.rs` | ISR must be `future_state` | | now `in_scope` |
+| 2 | `apps/desktop/…/race_trait_picker.rs` | `Duergar_ReplaceSLAInvisibility` setters | 2 | 3 |
+| 2 | `scripts/tests/test_reclaim_orphan_targets.sh` | literal `/home/ubuntu` in a comment | | pre-existing, `c8ff0885` |
+
+**Attribution checked, not assumed.** Horror Adventures contributes **0** Aasimar alternates and
+**0** entries to the changed-description list; every wave-1 delta is exactly Inner Sea Races' 72
+records / 68 alternates. Wave 2 is one of mine (the leak-guard total, which caught my own omission —
+the test states a per-book map *and* a total precisely so a book that stops writing fails by name),
+three round 2's, and one pre-existing and unrelated.
+
+**"N failures" is a floor, not a count.** The second wave was invisible until the first was fixed.
+A cycle that fixes a gate must re-run it, not reason about it.
+
+Every pin moved **with its reason**; none relaxed, none `#[ignore]`d, ceiling not lowered. Two test
+names carrying counts renamed to carry none (`§44.5`'s rule).
+
+Emitted as a retro `correction` against `sd29-racetrait-r2`.
+
+#### 6b. The PI screen was defeated on the shipped surface (silent, 12 records)
+
+`pi_screening` redacts `data.description`; `RaceTraitRecord::render_description` renders from the
+record's **`DESC:` raw tokens**, which hold the upstream prose verbatim. All 12 of ISR's redacted
+records were rendering the Product Identity back to the Race Traits panel:
+
+```
+data/corpus/inner_sea_races/race_trait/dwarf/dwarf_stoic_negotiator.json
+  description : [redacted PI]
+  raw DESC    : Some dwarves, especially those who hail from the town of Peddlegate in Druma, …
+```
+
+Fixed at the source: `RaceTraitRecord` carries `description_redacted`, read from the envelope's
+`pi_field`/`pi_marker`, and a redacted record serves its marker rather than re-rendering.
+`a_pi_redacted_description_is_never_rendered_back_from_its_raw_desc_tokens` pins it over all 12 in
+both directions and pins the count so it cannot pass by finding nothing. Retro `incident`,
+`--silent`, recurrence key `pi-redaction-defeated-downstream`.
+
+**The monster lane found the identical defect independently, within hours** (`b08479e6`,
+`description_pi_redacted`). The merge kept this branch's field; verified rather than assumed —
+`grep -rn description_pi_redacted --include='*.rs' .` returns nothing, so no dangling reference to
+the dropped name survives, and the lib builds clean. That two agents found the same silent PI leak
+concurrently is itself the finding: it was reachable from two unrelated entry points.
+
+**Generalisation NOT verified by this card, recorded for a successor:** any kind whose ingest screens
+a free-text field while its surface re-renders from raw tokens has this defect shape.
+
+#### 6c. Five alternates were offered and moved nothing
+
+`HALF_ELF_DUAL_MINDED_WILL_SAVE_BONUS` — a single hardcoded constant documented as "the one
+alternate across all 153 whose declared bonus lands on a saving throw" — is now
+`ALTERNATE_TRAIT_SAVE_BONUSES`, carrying ISR's `Dwarf ~ Unstoppable` (+1 Fort) and HA's
+`Half-Elf ~ Mismatched` (−2 Reflex). Three ISR skill-bonus alternates (`Gnome ~ Intrepid Settler`,
+`Half-Elf ~ Sea Legs`, `Hobgoblin ~ Authoritative`) were missing from the skill table for the same
+reason and are added. All three save explanations now name their contribution.
+
+The saves **sum** where the skills **maximise**, because one contribution is a penalty and maximising
+would discard it; the invariant that makes summing correct — no race moves one save twice — is now
+derived from the corpus by `no_race_contributes_two_alternate_trait_bonuses_to_one_save`. The
+reachability test's own delta check had **no arm for Fortitude or Reflex** despite declaring both;
+its `other =>` arm panics rather than skipping, so the gap was fail-loud rather than a green test
+checking nothing, and it is closed rather than worked around.
+
+#### 6d. Full gate results — exit codes captured directly, never through a pipe
+
+`RETRO_ACTOR=sd29-racetrait-r3 ./scripts/verify.sh` (FULL).
+
+| run | tree | result |
+|---|---|---|
+| 1 | `bd98b9fe` | **EXIT 1** — 12 PASS, `root-full` + `desktop` FAIL. Wave 2 above. `root-full` 6186 passed / 543 suites. |
+| 2 | `be05927c` (post-merge) | **EXIT 1** — 12 PASS. `pi-sweep` + `root-full` FAIL, both from the merge rather than from either lane alone: a doc comment naming a PI term, and an SD-30 roster test pinning a book the monster lane had just ingested. `desktop` **428 passed**, `reach` **22 passed** — this round's HA claim among them. |
+| 3 | `a0bc4fc9` | **EXIT 0** — PASS |
+
+Run 1's stage list, recorded rather than summarised: PASS `preflight-disk`, `pi-sweep` (10 hits / 10
+baseline rows), `audit-selftest` (28), `reclaim-selftest` (10), `driver-selftest` (7), `root-lib`
+(1625), `reach` (21 — this round's HA claim among them), `frontend-install`, `frontend-test`
+(98/98), `frontend-typecheck`, `clippy` (root 54 / desktop 7 warnings, **0 errors**), `class-dump`
+(31/31 computing).
+
+
+**Run 3 stage-by-stage** (`a0bc4fc9`, the tree that ships):
+
+| stage | verdict | detail |
+|---|---|---|
+| `preflight-disk` | **PASS** | disk budget OK |
+| `pi-sweep` | **PASS** | 10 hits over src/rules_core/rules_tables, 10 baseline rows |
+| `audit-selftest` | **PASS** | 28 passed, 0 failed |
+| `reclaim-selftest` | **PASS** | 10 passed, 0 failed |
+| `driver-selftest` | **PASS** | 7 passed, 0 failed |
+| `root-lib` | **PASS** | 1635 passed |
+| `root-full` | **PASS** | 6200 passed across 543 suites, all 524 tests/*.rs suites executed |
+| `desktop` | **PASS** | 428 passed |
+| `reach` | **PASS** | 22 passed |
+| `frontend-install` | **PASS** | node_modules present |
+| `frontend-test` | **PASS** | 98/98 files |
+| `frontend-typecheck` | **PASS** | tsc --noEmit clean |
+| `clippy` | **PASS** | root:54 desktop:7 warnings, 0 errors |
+| `class-dump` | **PASS** | 31/31 computing |
+
+### 7. DoD item 8 — on-screen verification
+
+Item 8 is **PASS, twice**, using the proven harness rather than a hand-rolled driver, run alone and
+never concurrently with `verify.sh`. Artifacts in
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/sd29-racetrait-r3/item8/`.
+
+**Artifact 1 — the round's own ingest reaches a player.**
+
+```
+RUN_DESKTOP_AGENT=sd29-racetrait-r3 \
+./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family race_trait --tab alternate --no-search --record "Reptilian Ancestry" \
+  --expect "Reptilian Ancestry" \
+  --expect "nictitating membranes or patches of scaly skin" \
+  --expect "Psychic Defense" --expect "Rationalize" \
+  --out .../artifacts/sd29-racetrait-r3/item8 --slug race-trait-ha-human-alternates
+```
+
+→ **PASS**, `race-trait-ha-human-alternates.png` + `.verify.md`. Rendered lines, extracted from the
+live webview rather than read off a screenshot by eye:
+
+```
+148:Psychic DefenseHA p.41
+152:RationalizeHA p.41
+156:Reptilian AncestryHA p.41
+158:Humans with reptoid or serpentfolk ancestry sometimes have nictitating membranes or patches of
+    scaly skin. They gain a +2 racial bonus on saving throws against mind-affecting effects and
+    poisons. This racial trait replaces the bonus feat trait.
+```
+
+Three separate facts land in one artifact: the **records** render, the **`HA` book code** this round
+added renders beside each, and the **`p.41` page citation** renders — the last being the on-screen
+counterpart of the `paged` assertion that put `HA` in `{APG, ARG, HA, ISR, MC}`. The same screen's
+header reads **"267 alternate racial traits across 18 races"** and lists **"Dwarf (30)"**,
+**"Human (33)"** — this round's own re-derived figures, printed by the product.
+
+**Artifact 2 — the PI fix is proven on screen, not only in a test.**
+
+```
+  --record "Unstoppable Magic" --expect "Unstoppable Magic" --expect "[redacted PI]" \
+  --expect "Self-Made Fate" --slug race-trait-isr-pi-redaction-holds-on-screen
+```
+
+→ **PASS**. The Inner Sea Races records whose descriptions were redacted now render the **marker**
+where they previously rendered the upstream Golarion prose (§6b). A unit test proves
+`render_description` returns the marker; this proves the marker is what a player actually sees, which
+is exactly the gap between "the gate is green" and "the screen is right" that item 8 exists for.
+
+**A harness finding, recorded rather than worked around.** The race_trait family's default
+(search-box) path **cannot reach alternate racial traits on the current app**, and this is not
+specific to this round's records: the harness's own documented example, `--record "Ironskinned"`,
+which passed on 2026-08-11 at HEAD `8b621552` and whose artifact is checked in at
+`artifacts/item8-harness/race-trait-mc-duergar-ironskinned.verify.md`, **fails today** with
+`no 'N matching' counter in rendered text`. Run as a deliberate control before concluding anything
+about Horror Adventures. The search box itself works — `--record "Dwarf"` filters and reports
+`13 rows`, which is the Dwarf **standard**-trait count — so the search path is scoped to the standard
+tab, and alternates require `--tab alternate --no-search`. Something changed between 2026-08-11 and
+today; **this round did not diagnose which change**, and says so rather than guessing. The failed
+first attempt is left in place as `race-trait-ha-dwarf-barrow-warden.FAILED.verify.md`, per the
+harness's own rule that a failure can never be cited as passing evidence.
+
+**Consequence for a successor:** `verify-on-screen.sh`'s usage block still documents the search form
+for `race_trait` (`--record "Ironskinned"`), and that form is now wrong for alternates. Updating the
+harness is not this card's write scope; it is recorded here and belongs with the item-8-harness card.
+
+
+### 8. The remainder — THIS LANE IS DRY FOR NO-NEW-MECHANISM WORK
+
+Same join as §3, re-run at the end of the round **on the merged tree**:
+
+```
+TOTAL by status: {'grounded': 450, 'not-ingested': 103}
+  core_essentials        {'grounded': 175, 'not-ingested': 48}
+  advanced_race_guide    {'grounded': 156}
+  inner_sea_races        {'grounded': 71,  'not-ingested': 1}
+  advanced_players_guide {'grounded': 1,   'not-ingested': 49}
+  horror_adventures      {'grounded': 43,  'not-ingested': 1}
+  monster_codex          {'grounded': 4,   'not-ingested': 1}
+  bestiary               {'not-ingested': 3}
+```
+
+Corpus-wide `race_trait` from the regenerated `docs/work-inventory.json`:
+**3,447 total / 450 grounded / 1,634 `not-ingested` + 1,363 `not-started`** (was 407 / 1,583 /
+1,457). The `not-ingested`/`not-started` shift beyond this lane's 43 is the monster lane's two
+scope flips, which move other kinds between those two states without touching `grounded`.
+
+**`units_ingested` = 43. `units_remaining` = 51**, and the split matters more than the number:
+
+| | units | |
+|---|---|---|
+| workable, needs a `PREABILITY`-grant mechanism | 48 | `core_essentials` (+ its 16 non-`race_trait`-typed selector rows) |
+| workable, needs a race-variant chassis | 3 | `bestiary` Drow Noble |
+| **workable total** | **51** | **none of it is ordinary ingest** |
+| not gap — ARG key collisions (`§39`) | 49 | `advanced_players_guide` |
+| not gap — upstream data gap (`§45.4`) | 1 | ISR `Human ~ Tribalistic Languages` |
+| not gap — ability-pool mechanism (`§43`) | 1 | MC `Oversized Goblin` |
+| not gap — `PRECAMPAIGN` conditional (`§47.2`) | 1 | HA Occult Adventures row |
+| **chassis-blocked, NOT this card** | **2,894** | needs a race-chassis lane |
+
+**Round 3 consumed the last book in `§45.5`'s queue that needed no new mechanism.** A round 4 on
+this card cannot make progress by ingesting; it must first build one of two mechanisms, which is a
+different cycle shape than rounds 1–3.
+
+**Still open and still owned by this lane:** `§8b`'s Race Traits browse-screen render bug (the
+standard-trait column does not recompute when an alternate is selected). Round 3 did not reach it
+either, and says so rather than letting it disappear.
+
+### 9. Verification, environment, deviations
+
+* **Retro shard mis-actored, corrected rather than deleted.** The first `verify.sh --only
+  preflight-disk` ran before `RETRO_ACTOR` was exported, so its verification event landed in
+  `docs/retro/events/wf_924a22ca-f35-1.jsonl` — a shard named after an ephemeral worktree, which
+  `forward-scope-register.md` reads as an *actor*. Re-filed into
+  `docs/retro/events/sd29-racetrait-r3.jsonl` with `actor` corrected and `actor_source` recording
+  the re-file; the worktree-named file removed. Default taken: keep the data, publish no phantom
+  actor.
+* `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-r3`, claimed with
+  `.reclaim-claim` at creation; a **second** dir `…-r3-desktop` for `apps/desktop/src-tauri`, which
+  is a separate cargo workspace — AGENTS.md's one-dir-per-agent-**per-source-tree** rule. Both
+  deleted at cycle end.
+* Disk was never a constraint: 16% used, 817G available throughout.
+* `verify.sh` and the on-screen harness were never run concurrently (OOM).
+* Retro shard `docs/retro/events/sd29-racetrait-r3.jsonl`: 1 re-filed verification, 2 corrections
+  (one against round 2, one against **this cycle's own** first flag-count derivation), 3 incidents
+  (the silent PI leak, `concurrent-lane-duplication`, `shared-scratchpad-clobber`), 1 **escaped**
+  near-miss (the five browse-only alternates, which had already reached the branch), plus
+  verify.sh's own derived events for all three full runs.
+* **Three full gate runs, and the last one is the claim.** Runs 1 and 2 are recorded above with
+  their failures rather than discarded, because "how many rounds it took" is the measurement that
+  says whether the fixes were understood or guessed at. Run 3: `RESULT: PASS`, `VERIFY_EXIT=0`, all
+  14 stages, `root-full` **all 524 `tests/*.rs` suites executed** — the non-execution check
+  `decisions.md §40` requires, satisfied by name rather than by an aggregate count.
+
+---
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 4 (SD29-E6-F2-005)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), round 4 of a loop-until-dry lane.
+**Actor:** `sd29-racetrait-r4`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-4`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §49` (written as §48 — see §0b).
+**PR:** #360, open and NOT merged.
+**Commits:** `9176f869` (ingest + engine + gate pins), `499b75e8` (merge of the companion lane),
+`c8416f33` (inventory regen over the merged tree), `7a3c0bdf` (the two stages `origin/tranche/9` was
+RED on, this round's own gate reds, and the decision record), plus this receipt's own commit and the
+baseline commit. All pushed to `origin/tranche/9`.
+**Gate:** `./scripts/verify.sh` full — **`VERIFY_EXIT=0`, all 14 stages PASS** (§8).
+
+**Round 4 ingested Core Essentials' Aasimar and Tiefling heritages — 64 records, all 64 reaching a
+player — and found that `§47.8`'s "needs a new mechanism" verdict on them was wrong: the book needed
+no engine change at all.** It also found that giving that book a `RuleSetId` silently demoted 155
+unrelated records, and closed a mutual-exclusion hole that would have let a player take two
+heritages at once. **The lane is now DRY: 3 workable units remain and all three need a race
+chassis, not race-trait work.**
+
+### 0a. Worktree integrity — RECOVERY WAS REQUIRED (a seventh time)
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| recovery | `git fetch origin tranche/9 && git reset --hard origin/tranche/9` | `03acb5a5`, docs present |
+
+**Seventh consecutive cycle at `7d9f1c4f`.** Rounds 2 and 3 both called this reproducible; it still
+is. `git fetch` also prints `fatal: bad object refs/heads/worktree-wf_9029acd8-6b0-6` and
+`fatal: failed to run repack`, from a zero-length object file
+(`.git/objects/3c/534e505be2e82ffb325fbe86320fd90120fc45`, 0 bytes, dated 2026-08-11 19:47) behind a
+dead worktree branch. **Cosmetic but not free:** the remote-tracking ref updates and every push this
+cycle made succeeded, but the same message appears on `git commit` and on `git fetch`, and it is
+noise a future cycle will have to re-diagnose. Left alone deliberately — deleting another agent's
+ref is not this card's write scope — and recorded here so the next reader does not spend the same
+ten minutes.
+
+### 0b. A decision-number collision, for the second time in this lane
+
+The companion lane's `sd29-companion-r4` wrote **Decision 48** concurrently in a separate worktree
+and pushed first. This round's section is renumbered **§49** and carries its own header note;
+`9176f869`'s and `c8416f33`'s commit messages, already pushed, say §48 and cannot be rewritten;
+every code comment was updated to §49. Identical to `§47`'s note. **Unattended-mode default:**
+renumber the later-pushed section, keep both, explain the discrepancy where a reader following a
+stale reference will land.
+
+### 0c. A gate run thrown away, on purpose
+
+The full gate was launched on the pre-merge tree, then `origin/tranche/9` was found to have moved
+(the companion lane's `bac2f569`). The running gate was **killed rather than allowed to finish**: a
+green result on a tree that is not the tree being pushed is exactly the "receipt records a gate that
+proved something else" failure `§47.3` is about. Cost ~8 minutes of build; the alternative was a
+result that would have had to be discarded anyway, or worse, quoted.
+
+### 1. Merged-ness verified by content, not by anyone's say-so
+
+Round 3's work verified present on the reset tree **before** being used:
+
+```
+$ grep -c 'horror_adventures' src/bin/ingest_race_traits.rs                    → 4 (BookSource + its note)
+$ find data/corpus/horror_adventures/race_trait -name '*.json' | wc -l         → 43
+$ grep -n 'RuleSetId::Ha' src/rules_core/rules_tables/mod.rs                   → present
+$ grep -n 'description_redacted' src/rules_core/race_resolver.rs               → present (§47.4's fix)
+$ grep -n 'ALTERNATE_TRAIT_SAVE_BONUSES' src/rules_core/*.rs                   → present (§47.5's fix)
+```
+
+Round 3's own gate result was reproduced too: `cargo test --lib race_resolver` and the two `sd27_*`
+race-trait integration tests were green on the reset tree before any edit.
+
+### 2. Preflight and trap-report (cycle mechanics 1c, 0b)
+
+* `./scripts/verify.sh --only preflight-disk` → **EXIT 0**, 17% used / 810G available.
+* `cargo run --locked --bin v06_corpus_trap_report -- core_essentials` — **not run, and the reason
+  is a scope fact rather than a skip.** `core_essentials` has no `.pcc` this bundle loads
+  standalone; it is reachable only through `core_rulebook.pcc:43`'s unconditional inclusion
+  (`license-matrix.md`'s own finding, quoted in the book's `LICENSE.json`). The two files this round
+  ingests were instead read row-by-row by `scripts/classify_race_trait_rows.py` before the round
+  committed to the book (§3), which is the check that actually decides a race-trait cycle's shape.
+  **Unattended-mode default, recorded rather than silently taken.**
+
+### 3. Every figure re-derived (cycle mechanics 1b)
+
+**`§45.1`'s method applied BEFORE committing the round:**
+
+```
+$ python3 scripts/classify_race_trait_rows.py \
+    aasimar_abilities_race_subrace.lst tiefling_abilities_race_subrace.lst
+aasimar_abilities_race_subrace.lst   in-scope rows 18 | default 0 | alternate 0 | flag_granted 18 | unclassified 0
+tiefling_abilities_race_subrace.lst  in-scope rows 30 | default 0 | alternate 0 | flag_granted 30 | unclassified 0
+   => 0 of 48 rows need no new mechanism
+```
+
+`§47.8`'s 48 confirmed. **And "0 of 48" is what sent this round looking for the other end of the
+transaction instead of budgeting for a new engine feature** — see §5.
+
+**The ceiling, re-derived independently and reproducing `§44.4`/`§47.1` EXACTLY, then corrected
+upward.** Checked in this round as `scripts/race_trait_ceiling.py` rather than left in a scratchpad,
+which is `§45.1`'s own lesson applied to this round's derivation:
+
+```
+$ python3 scripts/race_trait_ceiling.py
+CEILING
+  TYPE:<one of 18 races> Racial Trait rows : 553      ← §44.4's figure, reproduced
+  TYPE:<one of 18 races> Subrace rows      : 18       ← the category that derivation could not see
+  total                                    : 571
+
+STATUS, joined by (book, source_file, source_line)
+  units matched into the ceiling : 571
+  by status                      : {'grounded': 514, 'not-ingested': 57}
+
+  advanced_players_guide     {'not-ingested': 49, 'grounded': 1}
+  advanced_race_guide        {'grounded': 156}
+  bestiary                   {'not-ingested': 3}
+  core_essentials            {'grounded': 239, 'not-ingested': 2}
+  horror_adventures          {'grounded': 43, 'not-ingested': 1}
+  inner_sea_races            {'grounded': 71, 'not-ingested': 1}
+  monster_codex              {'grounded': 4, 'not-ingested': 1}
+
+chassis-blocked residue: 3447 race_trait units - 571 ceiling = 2876 that no race-trait ingest can ground
+```
+
+**553 confirmed. 571 is the honest ceiling** — the 18 `TYPE:<Race> Subrace` heritage-selector rows
+are `race_trait`-kinded units in the work inventory exactly like the 553, so they were in the lane's
+denominator and out of its ceiling. `§44.4`'s 2,894 residue becomes **2,876**, superseded by those
+18 rather than corrected.
+
+**Corpus-wide denominator, re-derived over `docs/work-inventory.json` at both ends of the round:**
+
+```
+$ python3 -c "…sum by_status over every book's race_trait kind…"
+BEFORE  TOTAL units 3447  grounded 450  remaining 2997
+AFTER   TOTAL units 3447  grounded 514  remaining 2933
+```
+
+**Round 3's own figures reproduced before being moved** (3,447 / 450), so the two rounds are
+commensurable. `units_ingested` = **64**.
+
+**The prior round reported 51 workable remaining; this round derives 3, and the two agree.** 51 was
+48 (`core_essentials`) + 3 (`bestiary` Drow Noble). This round took the 48. The 3 that remain are
+the same 3.
+
+### 4. What landed
+
+* **64 records** at `data/corpus/core_essentials/race_trait/{aasimar,tiefling}/` — 16 heritage
+  selectors a player picks (Aasimar 6, Tiefling 10) plus the 48 `<Race> Racial Trait`-typed
+  replacement rows they grant. 0 PCGen-syntax leaks, 0 unresolved `DESC:` args, 0 out-of-scope rows.
+* `data/corpus/core_essentials/LICENSE.json`. **8 of 64 descriptions PI-redacted** —
+  Kyton-, Oni-, Devil- and Rakshasa-Spawn, each twice (the heritage row and its Ability Scores
+  replacement row carry the same prose). Aasimar's 24 hit 0 terms. Verified on the written tree:
+  `grep -rl 'redacted PI' data/corpus/core_essentials/race_trait/ | wc -l` → **8**;
+  `find data/corpus/core_essentials/race_trait -name '*.json' | wc -l` → **64**.
+* `RuleSetId::Ce` + `COMPILED_RULE_SETS` + `corpus_dir_for`/`rule_set_id` + the content-state-dump
+  arm + `RACE_CORPUS_BOOKS` + `book_code` + the reach-gate book row and claim.
+* `ingest_race_traits::subrace_grants`, `is_placeholder_source_page`, the `TYPE:<Race> Subrace` arm
+  in `parse_row`, and `BookSource.lst_relatives` as a **list** (see §6).
+* **16** `ALTERNATE_TRAIT_REPLACE_FLAGS` rows, adding exactly **2** distinct flags to the corpus's 91
+  (`Aasimar_ReplaceAbilityScores`, `Tiefling_ReplaceAbilityScores`). Derived, not reasoned:
+  `python3 -c "…union of sets_replace_flags over data/corpus/*/race_trait/*/*.json…"` → 93 total, and
+  the CE-only set minus the everything-else set → exactly those two. No earlier book's alternate
+  replaces a race's ability-score row.
+* A reach claim `("core_essentials", "race_traits")` asserting a plain `Reach::Surfaced`, with **no**
+  `OPEN_FINDINGS` / `UNREACHED_RECORD_FINDINGS` entry, because there is no shortfall.
+* `race_trait` grounded **450 → 514**.
+
+### 5. The finding: `§47.8` named a mechanism the book did not need
+
+`§47.8` recorded these 48 rows as needing *"a `PREABILITY`-grant mechanism **and** the 16
+non-`race_trait`-typed subrace selector rows"*. The second half is right. The first is not, and the
+shape of the error is the round's most reusable output.
+
+The rows do carry a positive `PREABILITY:1,CATEGORY=Special Ability,<Race> ~ <Heritage>` gate that
+`race_resolver::classify` cannot read. But PCGen states the same transaction a second time, from the
+other end, in a file this lane had never opened:
+
+```
+CATEGORY=Special Ability|Aasimar ~ Agathion-Blooded.MOD
+    ABILITY:Aasimar Racial Trait|AUTOMATIC|Agathion-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0
+```
+
+(`core_essentials/races/aasimar/aasimar_abilities_globalvar_subrace.lst`) — which is
+`ABILITY:<cat>|AUTOMATIC|<key>`, **the third grant shape `link_automatic_grants` has resolved since
+SD-27**. The heritage names its replacements outright and the `PREVAREQ:<flag>,0` qualifier names the
+standard trait each one displaces. So the book cost one ~40-line ingest-side reader and **zero
+resolver changes**.
+
+**`§45.1` one level further out.** That decision established that a lane must classify corpus *rows*
+rather than the inventory's evidence token. This round shows classifying the rows *of one file* is
+still not classifying the corpus: the file that made these rows ordinary was three directories away,
+and `ingest_races::globalvar_gates` had been reading the non-subrace half of that same file family
+since SD-27. Emitted as a retro `correction` against `§47.8` with the command behind it.
+
+### 6. Three defects fixed at the source, each found by this round's own work
+
+**(a) Giving a storage directory a rule set demoted 155 records that had not changed.**
+`v06_work_inventory`'s `race_trait` verdict required the corpus probe's observed book to *equal* the
+unit's own book's rule set. `core_essentials` is the one book whose rows are routinely filed under a
+different book — `race_trait_engine_book`'s own doc comment says so — and while it had no rule set
+the shared-library path resolved the equality to the real host. Adding `RuleSetId::Ce` broke it:
+**155 Core Rulebook and Bestiary 1 standard racial traits dropped from `grounded` to
+`race_trait_record_loaded_but_never_applies`**, an evidence token asserting the opposite of what the
+probe had just observed, and `race_trait` grounded went **450 → 359 in the run that ADDED 64
+records**. Caught by re-deriving the denominator *after* the ingest as well as before it; the number
+moved the wrong way. The probe's observation now grounds on its own and reports the observed book as
+the attribution. Emitted as a retro `incident`, recurrence key
+`storage-book-gains-rule-set-demotes-its-tenants`. **The generalisation is live for the other
+lanes:** any kind whose units are stored under a different book than the one that owns them will
+demote silently the day that directory gets a rule set.
+
+**(b) Sixteen heritages, no mutual-exclusion guard.** A heritage carries no `PREMULT`, so
+`race_trait_picker::exclusion_guard_flags` returned nothing for all 16 and a player could tick
+`Aasimar ~ Angel-Blooded` and `Aasimar ~ Archon-Blooded` together and collect both ability-score
+bonuses. The corpus states the constraint on the grant (`PREVAREQ:<flag>,0`), so the ingest carries
+that qualifier through and the picker reads it as a third spelling.
+`every_alternate_has_a_readable_exclusion_guard_including_the_preability_spelling` went RED and came
+back green **with its unguarded-set pin unmoved** — which is the evidence these 16 are guarded rather
+than exempted.
+
+**(c) A placeholder page cite is not a page.** All 64 rows carry one — `p.xx` on Tiefling's 40, `xx`
+on Aasimar's 24. The picker already refused `p.xx`; `xx` would have rendered beside the trait as a
+real citation. Dropped at ingest by an exact-match list of the two spellings the corpus uses, not a
+pattern. None of the four books ingested before this one carries a placeholder at all:
+`grep -oh 'SOURCEPAGE:[^\t]*' <their four .lst files> | sort -u | grep -i x` → no output.
+
+**(d) A structural hazard the previous rounds dodged by luck.** `ingest_book` rebuilds
+`data/corpus/<book>/race_trait/` per book, so two `BookSource` rows sharing one `corpus_book` would
+have had the second silently erase the first's records. `BookSource.lst_relatives` is now a list.
+Horror Adventures already had two racial-ability files and avoided this only by ingesting one.
+
+### 7. Definition of done
+
+| # | item | result |
+|---|---|---|
+| 1 | `./scripts/verify.sh` full, exit captured directly | **`VERIFY_EXIT=0`, all 14 stages** (§8) |
+| 2 | `reach` passes **with a claim for this book's families** | `("core_essentials", "race_traits")` → `Reach::Surfaced`, pinned at 64 records AND 16 menu rows |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | in the gate (`trap-audit` stage) |
+| 4 | `v06_work_inventory` regenerated, units leave `not-started`, second run changes only `generated_at` | regenerated; `core_essentials` `race_trait` grounded 175 → 239 |
+| 5 | four-check wired-integration audit clean | in the gate (`wired-integration` stage); no stub added, and (b) above removes one this round would otherwise have shipped |
+| 6 | any unsurfaced family has an `OPEN_FINDINGS` entry | **none needed** — no shortfall for this book |
+| 7 | baseline movements in `verify-baselines.env` | none |
+| 8 | on-screen verification | **2 PASS artifacts, §9** |
+
+### 8. The gate — GREEN, all 14 stages
+
+```
+$ ./scripts/verify.sh          # full, exit captured directly, not through a pipe
+SUMMARY
+  passed:  14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+               root-lib root-full desktop reach frontend-install frontend-test
+               frontend-typecheck clippy class-dump
+RESULT: PASS — logs in /tmp/codex-verify-RDgc6p
+VERIFY_EXIT=0
+```
+
+`root-full` **6,224 passed across 543 suites, all 524 `tests/*.rs` suites executed** — the
+executed-suite check, not just the total, because `0 passed across 0 suites` is what this stage
+reported twice earlier in this cycle. `desktop` 438, `reach` **24**, `clippy` 0 errors,
+`class-dump` 31/31.
+
+**It went RED twice first, and both reds were worth having.**
+
+* **Run 1 (discarded, not quoted).** Launched on the pre-merge tree, then `origin/tranche/9` was
+  found to have moved to the companion lane's `bac2f569`. Killed rather than allowed to finish: a
+  green result on a tree that is not the tree being pushed is exactly `§47.3`'s failure. Cost ~8
+  minutes.
+* **Run 2 — `origin/tranche/9` was RED, and not from this lane.** `bac2f569` was pushed with two
+  stages failing. `root-full`: `v06_content_state_dump.rs`'s exhaustive `match table.rule_set`
+  gained no arms for `RuleSetId::Isc`/`Isi`, so that bin does not compile and the stage reported
+  **`0 passed across 0 suites`** — `AGENTS.md`'s own "one broken bin meant 0 of 502 suites ran".
+  `desktop`: three books gained a `src/rules_core/rules_tables/<book>/` directory with no
+  `corpus_ingest_diagnostic` row, so `every_book_landed_in_rules_tables_is_reported` — the drift
+  guard written for exactly that defect — was red. **Third instance of `§47.3`'s class in this
+  bundle.** Both fixed at the source here; neither is this card's content.
+* **Run 3 — this round's own reds**, all four fixed at the source, ceiling not raised, nothing
+  `#[ignore]`d: `ingest_race_traits`' per-book map and its total (276 → 340, the pin that exists
+  because round 3 moved the map and forgot the total); the hardcoded `LOADED_BOOKS` copy in
+  `duergar_invisibility_sla_reaches_a_player_via_monster_codex` (**the test whose entire job is
+  stopping that copy drifting, red for the same reason in round 2**); and a test message using the
+  literal word `sd24_wired_integration_audit` scans shipping source for, which that audit correctly
+  read as a new unreviewed stub marker.
+
+**Baselines (DoD item 7).** Five moved, in their own commit, each carrying the run that measured it:
+`BASELINE_ROOT_LIB_TESTS` 1604 → 1659 and `BASELINE_FRONTEND_TEST_FILES` 98 → 99 before the green
+run; `BASELINE_ROOT_FULL_TESTS` 6138 → 6224, `BASELINE_ROOT_TEST_BINARIES` 539 → 543 and
+`BASELINE_DESKTOP_TESTS` 413 → 438 after it, since those three stages could not report an actual
+until they stopped failing. All five are the numbers the green run itself printed, and both lanes
+contributed to every one of them.
+
+### 9. DoD item 8 — on-screen, on the merged tree
+
+`RUN_DESKTOP_AGENT=sd29-racetrait-r4`, harness
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`, never concurrently with `verify.sh`.
+Artifacts in `docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E6-F2-005/item8/`.
+
+**Two FAILED runs are kept alongside the passes, because both were real navigation findings and the
+harness renamed their artifacts so they cannot be cited as passing evidence.** The first ran without
+`--tab alternate` and landed on the Standard traits tab (`No race traits match.`); the second added
+the tab but not the race chip and landed on Human's 33 alternates. Neither was a defect in the
+ingest, and the extraction in each `.FAILED.verify.md` proves it.
+
+**Artifact 1 — the heritages a player picks.**
+
+```
+RUN_DESKTOP_AGENT=sd29-racetrait-r4 \
+./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family race_trait --tab alternate --no-search --nav-click "1366,351" \
+  --record "Agathion-Blooded" \
+  --expect "Agathion-Blooded" --expect "Idyllkin possess bestial aspects" \
+  --expect "Peri-Blooded" \
+  --out .../artifacts/SD29-E6-F2-005/item8 --slug race-trait-ce-aasimar-heritages
+```
+
+→ **PASS**. Rendered lines, extracted from the live webview rather than read off a screenshot:
+
+```
+58:Agathion-Blooded (Idyllkin)CE
+60:Idyllkin possess bestial aspects and calm dispositions, and often act as peaceful intermediaries between lawful and chaotic agents of good.
+114:Peri-Blooded (Emberkin)CE
+```
+
+**Artifact 2 — the Tiefling half, and the PI redaction holding on the shipped surface.**
+
+```
+… --nav-click "1246,351" --record "Kyton-Spawn" \
+  --expect "Kyton-Spawn" --expect "[redacted PI]" --expect "Rakshasa-Spawn" \
+  --slug race-trait-ce-tiefling-heritages-pi-redaction
+```
+
+→ **PASS**:
+
+```
+86:[redacted PI]
+96:Kyton-Spawn (Shackleborn)CE
+98:[redacted PI]
+110:[redacted PI]
+124:Rakshasa-Spawn (Beastbrood)CE
+126:[redacted PI]
+```
+
+Four `[redacted PI]` lines, which is exactly the four redacted Tiefling heritages — `§47.4`'s fix
+holding for a second book, proven on screen rather than on disk.
+
+The alternate-traits screen's own header read **"283 alternate racial traits across 18 races"** with
+**Aasimar (17)** and **Tiefling (20)** chips, against 267 / 11 / 10 before this round.
+
+### 10. The remainder — this lane is DRY
+
+| book | units | what it needs | class |
+|---|---|---|---|
+| `advanced_players_guide` | 49 | nothing — same `KEY:` as already-ingested ARG records (`§39`) | **not gap** |
+| `bestiary` (Drow Noble) | 3 | a race-variant chassis | **workable, needs a chassis** |
+| `core_essentials` | 2 | nothing — `Aasimar ~ Default` / `Tiefling ~ Default`, the no-heritage baseline the engine's no-selection state already is (`§49.2`) | **not gap** |
+| `horror_adventures` | 1 | `Half-Elf ~ Starchild`, the `PRECAMPAIGN` Occult Adventures row (`§47.2`) | **not gap** |
+| `inner_sea_races` | 1 | `Human ~ Tribalistic Languages`, upstream data gap (`§45.4`) | **not gap** |
+| `monster_codex` | 1 | `Oversized Goblin`, ability-pool variant mechanism (`§43`) | **not gap** |
+| | **57** | | **3 workable / 54 not gap** |
+
+**`units_remaining` for this card is 3**, and they are not race-trait work: `RaceCorpus::resolve`
+returns `None` for Drow Noble, so ingesting its three rows produces records that load and never
+apply whatever this lane does next. Read this card as dry rather than as 3 short.
+
+**Chassis-blocked residue: 2,876 units.** Command in §3.
+
+**Scope finding for a successor, outside this bundle.** `scripts/race_trait_ceiling.py --whole-tree`
+returns **897** against 571 in scope. Of the 326 extra rows, **291 are ordinary Pathfinder alternate
+racial traits for the 18 races this product already models** — 288 across twelve `player_companion/`
+books (`blood_of_fiends` 102, `blood_of_angels` 101, `blood_of_shadows` 19, and nine smaller) and 3
+in two `campaign_setting/` books — i.e. no-new-mechanism ingest of exactly the shape rounds 2 and 3
+did, two of those books individually larger than anything this lane has taken since ARG. The other
+35 are `starfinder/` and correctly out of scope. Those books are not in
+`corpus-work-channels.md §10.2`'s 37 and are not this bundle's to take.
+
+**`§8b`'s browse-screen render bug is still open and still owned by this lane** — round 4 did not
+reach it either, and says so rather than letting it fall off the board.
+
+## Cycle — epic-7-companion-lane, ROUND 1 (SD29-E7-F1-002)
+
+**Card:** `epic-7-companion-lane-pilot` + `epic-7-companion-lane-extend` (Orders 11 and 12), round 1
+of a loop-until-dry lane. Both cards are served by one cycle because the pilot's whole output is a
+mechanism and the extend half is that mechanism applied three more times.
+**Actor:** `sd29-companion-r4`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-3`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §48`.
+**PR:** #360, open and NOT merged.
+**Commits:** `bac2f569` (the mechanism + 4 books + `§48` + item-8 artifacts + retro events),
+`63359234` (the two reds gate run 1 found), `de4811a3` (merge: race-trait lane round 4),
+`3cfcb097` (the three inherited reds gate run 2 found), `cddd1734` (merge: the race-trait lane's own
+fix for the same three, 5 conflicts resolved by union), `268ccacf` (this receipt), `edd2adaf`
+(merge: round 4's receipt and baseline move). All pushed to `origin/tranche/9`; the pushed tip is
+`edd2adaf` and its own full gate is green (§4, run 4).
+
+**The companion lane had NOTHING landed** — its round 1 refused at `preflight-disk` (91% used, twice)
+and its round 2 died with its workflow having produced no commits. This round built the kind's entire
+mechanism and ingested **four books, 38 units, all 38 grounded, all four verified on screen**. The
+lane is **not** dry and this round does not claim it is.
+
+### 0a. Worktree integrity — recovery was required (a seventh time)
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/` | **`No such file or directory`** |
+| recovery | `git fetch origin tranche/9 && git reset --hard origin/tranche/9` | `03acb5a5`, docs present |
+
+**Seventh consecutive cycle at `7d9f1c4f`.** Rounds 2 and 3 of the race-trait lane both called this
+"perfectly reproducible"; it still is. `git fetch` also prints
+`error: … did not send all necessary objects` / `fatal: failed to run repack`, naming dead worktree
+refs — cosmetic here too: refs updated, resets resolved, and every `git push` this cycle made
+succeeded.
+
+### 0b. Merged-ness verified by content before anything was built on it
+
+| dependency | command | result |
+|---|---|---|
+| the desktop driver is fixed | `driver.sh launch` | `Ready. DISPLAY=:82` |
+| the on-screen harness exists | `ls apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` | present, and used five times |
+| `reclaim.sh` knows `codex-target-*` | `scripts/reclaim.sh` (dry run) | lists and skips live target dirs correctly |
+| the race-trait lane's classifier fix landed | `grep -n 'companion.*familiar' src/bin/v06_work_inventory.rs` | `file_kind` types an `_abilities_race*companion*` basename `Kind::Companion` |
+| that fix's units are really there | `python3 -c "…kind=='companion' and book=='inner_sea_intrigue'…"` | **11** |
+
+### 1. Step 0/0b — shape and traps
+
+`cargo run --locked --bin v06_work_inventory` regenerated the inventory; the four books' `books[]`
+entries were read before any ingest. Trap report at DoD time:
+`cargo run --locked --bin v06_corpus_trap_report -- --audit` → **`TRAP 259 / DEFECT 0`**, EXIT 0,
+*"No defects: every ingested record's citation agrees with the line it names."*
+
+### 2. Step 1b — every figure re-derived, with the command
+
+| figure | command | result |
+|---|---|---|
+| companion units, corpus-wide | `python3 -c "import json; d=json.load(open('docs/work-inventory.json')); print(len([x for x in d['units'] if x['kind']=='companion']))"` | **1,696** |
+| grounded before this round | same, filtered `status=='grounded'` | **0** |
+| orphan ability rows, per book | `python3 scripts/classify_companion_rows.py` | **808** |
+| orphans corpus-wide (claimed by no creature in ANY book) | the same script's predicates applied across books | **765** |
+| the four books' units | `python3 scripts/classify_companion_rows.py inner_sea_combat monster_codex inner_sea_intrigue horror_adventures` | 10 / 15 / 11 / 2, **ORPHAN 0** for all four |
+| corpus records written | `ls data/corpus/<book>/companion \| wc -l` per book | 10 / 15 / 11 / 2 = **38** |
+| grounded after | `python3 -c "…Counter(x['status'] …)"` | **38 grounded**, 1,394 `not-ingested`, 264 `not-started` |
+| round 2's queue | `python3 scripts/classify_companion_rows.py bestiary_5 bestiary_6 bestiary_2` | 57 / 26 / 16 = **99**, ORPHAN **0** |
+
+**The dispatch brief's "~1,233 in-scope companion units" reproduces under no predicate this cycle
+could find** and is corrected to 1,696 total / 888 reachable. `correction` event emitted with both
+commands as `--verified-by`.
+
+### 3. Step 3 — what was built
+
+**The chassis** (`src/rules_core/rules_tables/companion_chassis.rs`) mirrors `monster_chassis` — same
+record/registry/link-test shape — with three differences the corpus forces, each documented at its
+definition: `PRERACE:` ownership (no `monster_ability` analogue; every `TYPE:CompanionAdvancement`
+row uses it), prefix ownership resolved through the `Companion (<Species>)` / `Familiar (<Species>)`
+wrapper, and an `Option`al `facet` beside verbatim `type_segments`.
+
+**The transcriber** (`scripts/transcribe_companion_tables.py`) takes its unit set from
+`docs/work-inventory.json`, never a line count over the `.lst`, and emits only substrings of the
+cited row. Its `use` line is derived from the symbols the emitted rows actually name, because Horror
+Adventures' single ability row carries no delivery segment and a fixed import line would be an unused
+import under a clippy stage that denies warnings.
+
+**The row classifier** (`scripts/classify_companion_rows.py`) is checked in rather than left in a
+scratchpad — `§45.1`'s own finding is that an ephemeral path is not a citation, and this session's
+scratchpad is the same shared path a sibling agent clobbered last cycle.
+
+**The corpus generator** writes ONE directory per book, `data/corpus/<book>/companion/`, holding both
+structural shapes with each record stating its `record_type`. Invoked as
+`gen_book_cache companion:<book>` rather than a bare book name, because three of the four books are
+also monster or race-trait books and a bare name would silently run whichever generator matched
+first.
+
+**The surface**: `companion_catalog.rs` + `CompanionCatalogScreen.tsx` + a hub link, in
+`monster_catalog.rs`'s shape. `BONUS:STAT` is served as an *adjustment* under a caption that says so;
+`MONSTERCLASS:` is carried verbatim and hit points/AC/saves are not computed.
+
+### 4. Step 4 — the gate ran THREE times, and the first two are reported rather than discarded
+
+#### Run 1 — VOID, and it found two of this lane's own reds
+
+1. **`v06_content_state_dump.rs` did not compile.** Its `RuleSetId` match is exhaustive on purpose,
+   so `RuleSetId::Isc`/`::Isi` broke it — the enum doing its designed job, exactly as `§45.2` records
+   happening when `Isr` was added. **`cargo build --bin v06_work_inventory` does not reach this
+   binary**, which is why it survived every pre-gate build this cycle ran and surfaced only at
+   `root-full` — where one broken bin means `0 passed across 0 suites` for the whole stage.
+2. **The Corpus Ingest panel did not report three books it now ships.** Its caption states it shows
+   every rule book landed in `rules_tables`, so an unreported book reads to a tester as an
+   un-ingested book — the exact defect `every_book_landed_in_rules_tables_is_reported` exists to
+   catch, and it caught it. Fixing it revealed `reports_every_landed_book_in_a_stable_order`, which
+   only executes once the first passes.
+
+Fixed in `63359234`. **Run 1 is VOID and is reported as void rather than cited**: it was still inside
+`frontend-test` when those fixes landed in the working tree, and `verify.sh` reads the **tree, not a
+commit** (`§46.6`). A green whose early stages measured one tree and whose late stages measured
+another answers no question.
+
+#### Run 2 — `VERIFY_EXIT=1`, and all three failures were INHERITED
+
+Before run 2, `origin/tranche/9` had advanced: the race-trait lane's round 4 landed Core Essentials
+(`9176f869`, `499b75e8`, `c8416f33`). Merged as `de4811a3`.
+
+Run 2 stages: `preflight-disk` PASS, `pi-sweep` PASS, `audit-selftest` PASS, `reclaim-selftest` PASS,
+`driver-selftest` PASS, `root-lib` PASS (1,659), **`root-full` FAIL (6,221 passed across 543
+suites, 3 failures)**, `desktop` PASS (438), `reach` PASS (24), `frontend-install` PASS,
+`frontend-test` PASS (99/99), `frontend-typecheck` PASS, `clippy` PASS (0 errors), `class-dump` PASS
+(31/31).
+
+**Attribution PROVEN by content, not asserted.**
+`git log --oneline 03acb5a5..HEAD -- src/bin/ingest_race_traits.rs apps/desktop/src-tauri/src/race_trait_picker.rs`
+returns exactly one commit, `9176f869`. None of this lane's commits touches either file, and the two
+remaining failures are in test files this lane never edited; all three name `core_essentials`, a book
+present only via that commit. They were RED on `origin/tranche/9` at `c8416f33` before the merge.
+
+Fixed here anyway in `3cfcb097` — they are on this branch's tip and DoD item 1 requires exit 0 —
+each widened **with its reason**, none relaxed:
+
+* `ingest_race_traits.rs`'s per-book count table did not know Core Essentials (`+64`, re-derived on
+  disk). Fixing it revealed the aggregate pin below it (276 → 340): **the third time in this one
+  cycle that fixing an assertion revealed the next one** (`§46.5`).
+* `duergar_invisibility_sla_reaches_a_player_via_monster_codex.rs`'s `LOADED_BOOKS` drifted from the
+  app's `RACE_CORPUS_BOOKS` — the **second** time this exact test caught this exact omission from
+  this exact lane; its own comment records the first.
+* `sd24_wired_integration_audit.rs` flagged two `placeholder` hits in `race_trait_picker.rs`'s
+  assertion message. That message is bucket E's shape exactly — prose ABOUT PCGen's upstream
+  `SOURCEPAGE:p.xx` token, which the ingest DROPS, the opposite of a stub marker. Bucket E's
+  scoped-path list was widened to that file with the `p.xx` literal requirement unchanged.
+
+`near-miss` event emitted. **The transferable finding is `§46.6` rule 2's corollary: a lane pushing
+to the shared branch before a full gate covers its own diff makes the NEXT lane pay for it.**
+
+#### Run 3 — the result, on the twice-merged tree
+
+`origin/tranche/9` advanced again while run 2 was in flight (`7a3c0bdf`), with the race-trait lane's
+own fix for the same three reds. Merged as `cddd1734`, **5 conflicts, every one resolved by union
+rather than by picking a side** (`§46.6` rule 1) — and the merge then demonstrated exactly why that
+rule has a second half. Two blocks auto-merged **without** conflicting and were silently
+**duplicated**: three `book_status(..)` rows and their entry in the stable-order pin, added
+independently by both lanes. Nothing in the conflict markers showed it. Found by reading the
+non-conflicting hunks of the side not taken, and de-duplicated; the surviving copy carries both
+lanes' reasons, and the race-trait lane's note that `monster_codex`'s companion counts were NOT
+merged into its row is corrected rather than dropped, because this tree's
+`monster_and_companion_book_counts` does merge them.
+
+**`verify.sh` FULL, exit code captured directly and never through a pipe:**
+
+```
+VERIFY_EXIT=0
+```
+
+**All 14 stages PASS**, on `cddd1734`:
+
+| stage | result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK) |
+| `pi-sweep` | PASS (10 hits over `src/rules_core/rules_tables`, 10 baseline rows) |
+| `audit-selftest` | PASS (28 passed, 0 failed) |
+| `reclaim-selftest` | PASS (10 passed, 0 failed) |
+| `driver-selftest` | PASS (7 passed, 0 failed) |
+| `root-lib` | PASS (1,659 passed) |
+| `root-full` | PASS (**6,224 passed across 543 suites, all 524 `tests/*.rs` suites executed**) |
+| `desktop` | PASS (438 passed) |
+| `reach` | PASS (24 passed) |
+| `frontend-install` | PASS |
+| `frontend-test` | PASS (99/99 files) |
+| `frontend-typecheck` | PASS (`tsc --noEmit` clean) |
+| `clippy` | PASS (root 54 / desktop 7 warnings, **0 errors**) |
+| `class-dump` | PASS (31/31 computing) |
+
+`root-full`'s non-execution check (`decisions.md §40`) reports **all 524 `tests/*.rs` suites
+executed** — the aggregate count is not trusted on its own, which is the whole reason that check
+exists.
+
+#### Run 4 — the confirmation run, on the pushed tip `edd2adaf`
+
+`origin/tranche/9` advanced once more while run 3 was in flight (`5c21ef75`, `82d34353`: the
+race-trait lane's round-4 receipt and its baseline move). Merged as `edd2adaf`; the merge's only
+conflict was `progress.md`, where both lanes appended a receipt at the end, and it was resolved by
+**keeping both receipts in full** rather than picking a side — round 4's first, then this one's.
+
+That merge touches no code (`progress.md`, `scripts/verify-baselines.env`, one retro shard), but
+`§46.6` rule 2 does not carve an exception for docs, and `verify-baselines.env` is read by the gate.
+So the gate was run a fourth time on the exact pushed tip: **`VERIFY_EXIT=0`, `RESULT: PASS`, all 14
+stages**, `root-full` 6,224 across 543 suites with all 524 executed — the same figures the other
+lane's baseline move had just pinned, measured independently here.
+
+### 5. Definition of done
+
+| item | evidence |
+|---|---|
+| 1. `verify.sh` exits 0 | run 3 `VERIFY_EXIT=0` on `cddd1734`, and run 4 `VERIFY_EXIT=0` on the pushed tip `edd2adaf`. Exit code captured directly, never through a pipe |
+| 2. `reach` passes with a claim for this cycle's families | 4 new claims, all `Reach::Surfaced`: `inner_sea_combat/companions` 10, `monster_codex/companions` 15, `inner_sea_intrigue/companions` 11, `horror_adventures/companions` 2. `every_ingested_companion_book_reaches_the_catalog_record_by_record` asserts the corpus denominator, the served numerator and the claim independently, so a table that stopped reaching the wire fails rather than agreeing with itself |
+| 3. trap report `--audit` | EXIT 0, 259 traps / 0 defects |
+| 4. inventory regenerated, units leave `not-started`, second run changes only `generated_at` | 38 units → `grounded`; two consecutive runs diffed with `generated_at` stripped → **byte-identical** |
+| 5. four-check wired-integration audit | no stubs: every served field is a corpus token; no fixture data in the production path (`build_companion_catalog` reads the compiled tables, `reach_gate` reads the corpus directory); the hub link is wired to a real screen; the browser-preview fixture is behind `hasTauriRuntime()` and transcribed from real committed records. `sd24_wired_integration_audit` green |
+| 6. `OPEN_FINDINGS` for anything unsurfaced | **none needed for these four books** — all 38 records reach a player. The kind's 765 corpus-wide orphan ability rows are a *scope* finding recorded in `§48.1` with a `deferral` event, not a per-book shortfall of an ingested book |
+| 7. baseline movements | none by this lane |
+| 8. on-screen verification | **4 PASS artifacts**, one per book, under `artifacts/SD29-E7-F1-002/item8/` |
+
+### 6. Item 8 — four passes, and the near-miss the harness caught
+
+| book | record | proven on screen |
+|---|---|---|
+| Inner Sea Combat | `Companion (Griffon)` | `Companion:2`, `Magical Beast`, `fly 40 ft.`, `STR +6`, `Companion Advancement (Griffon)` |
+| Inner Sea Intrigue | `Familiar (Clockwork Familiar)` | `Construct:3`, `Clockwork`, `Potion Installation`, `ClockworkFamiliarInstalledItem`, `reach 0 ft.` |
+| Monster Codex | `Companion (Yzobu)` | `Stampede`, `SpecialAttack`, `Monster Codex` |
+| Horror Adventures | `Companion (Devolved Humanoid)` | `Horror Adventures`, `climb 30 ft.`, `Companion Advancement (Devolved Humanoid)`, `p.50` |
+
+The harness gained a `companion` family. Its `SEARCH_Y` had to be **calibrated live at 247**: the
+`285` every other single-chip-row family uses lands below this screen's search box, so the query never
+applied and the run was refused by the harness's own filtered-count gate with *"still shows 15 rows —
+filter did not apply"*. Without that gate the run would have screenshotted the **unfiltered** list,
+found the record name in a whole-page extraction, and written a PASS proving nothing about the
+specific record — exactly the class of defect item 8 exists to catch, caught by item 8's own harness
+on a family it had never seen. `near-miss` event emitted. The refused run's
+`isc-companion-griffon.FAILED.verify.md` is kept beside the passing artifacts rather than deleted.
+
+`driver.sh stop` was run before any `verify.sh` invocation; the app and the gate never overlapped.
+
+### 7. Step 7 — retro events
+
+Under `docs/retro/events/sd29-companion-r4.jsonl`, plus `verify.sh`'s own auto-emitted `verification`
+events:
+
+* `correction` — the brief's 1,233 vs the derived 1,696 / 888, with both commands as `--verified-by`.
+* `near-miss` — the `SEARCH_Y` calibration, `--caught-by` the harness's filtered-count gate.
+* `near-miss` — the three inherited `root-full` reds, `--caught-by` this lane's own gate over the
+  merged tree, with the push-before-gate finding.
+* `deferral` — the 765 corpus-wide orphan ability rows, with the per-book breakdown and the operator
+  question they need answered.
+
+### 8. Step 8 — reclaim
+
+`scripts/reclaim.sh --apply` at cycle end; `CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-companion-r4`
+(claimed at creation with a `.reclaim-claim` file) removed.
+
+### 9. The remainder, re-derived — round 2's starting point
+
+`companion` is **1,696 total / 38 grounded / 1,658 remaining by status**. **1,658 is not the lane's
+workload.** Subtracting the 765 corpus-wide orphans leaves **893 reachable in principle**, of which 38
+are done: the honest remainder is **855**, and only part of that is ordinary ingest.
+
+**Round 2's queue — zero-orphan, no new mechanism, a `RuleSetId` and a registry row each:**
+
+| book | companion units | shape |
+|---|---|---|
+| `bestiary_5` | 57 | 35 creatures / 22 abilities, ORPHAN 0 |
+| `bestiary_6` | 26 | 14 / 12, ORPHAN 0 |
+| `bestiary_2` | 16 | 15 / 1, ORPHAN 0 |
+| **total** | **99** | |
+
+Not taken this round deliberately: each flips its book `future_state` → `in_scope` and moves several
+hundred units of other kinds `not-started` → `not-ingested`, and this round already carried two such
+sweeps (`inner_sea_combat` 388, `inner_sea_intrigue` 245). After those three, every remaining book
+carries orphans and needs a per-book judgement — register it and record its orphans as an
+`OPEN_FINDINGS` shortfall, or wait on `§48.1`'s operator ruling — rather than another repetition of
+this round's shape.
+
+**This round did not finish the lane and does not claim to.**
+
+---
+
+## Cycle SD29-E5-F2-004 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 3 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r5` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-5`)
+**Branch-point:** `d27107d7` · **Commits:** `d81e80ab` (ingest + both screens), plus the receipt
+commit carrying this section
+**Kanban status left at:** `READY — round 4. 23 units ingested, 4,210 remaining by raw count.
+Card stays READY.`
+
+**This receipt does not claim the lane is done, and the numbers below say so.** It also reports a
+book whose ingest is *smaller* than its unit count on purpose, and a PI defect in another lane's
+shipped output that it did not fix.
+
+### 0. Worktree integrity — the predicted failure, hit a sixth time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-5`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, an ancestor from **2026-06-28**. Round 2's receipt predicted
+this exactly and it is now the **sixth** recorded instance — a harness condition, not an agent
+error. Recovered before any other action with `git fetch origin tranche/9` +
+`git reset --hard origin/tranche/9` (`d27107d7`).
+
+The `.git` object corruption round 2 reported is still live and still non-blocking:
+`git fetch` prints `error: object file .git/objects/3c/534e50… is empty` and `fatal: failed to run
+repack`, and both `fetch` and `push` complete anyway. Left for the operator, as round 2 left it —
+deleting a ref in a shared checkout is not this card's write scope.
+
+### 1b. Every figure re-derived, command first, value second
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same
+command rounds 1 and 2 recorded:
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+tm=ta=0
+for b in d['books']:
+    if b['scope']=='out_of_scope': continue
+    m=b['kinds'].get('monster',{}).get('by_status',{}); a=b['kinds'].get('monster_ability',{}).get('by_status',{})
+    tm+=m.get('not-ingested',0)+m.get('not-started',0); ta+=a.get('not-ingested',0)+a.get('not-started',0)
+print(tm,ta)"
+```
+
+* **Before this cycle:** `1199 3034` → **4,233**. Round 2's closing figure, reproduced exactly
+  before being moved.
+* **After this cycle:** `1190 3020` → **4,210 remaining**. `units_ingested` = **23**.
+* **Grounded**, same file: `monster` **71 → 80**, `monster_ability` **73 → 87**.
+
+**The card's raw-remaining figure is wrong for the second round running, and is corrected here
+again.** The dispatch brief states *"monster ~305, monster_ability ~852, against grounded 62 and
+20"*. The re-derived pair was 1,199 / 3,034 and grounded was 71 / 73. `§46.1` already corrected the
+identical error in round 2's brief; the brief for round 3 repeated it verbatim, which is worth
+recording as a fact about the dispatch path rather than about either round. `correction` emitted
+with the command as `--verified-by`.
+
+**The lane's REAL ceiling, re-derived rather than inherited** — the check `§45.1` says to run
+*before* committing a round to a book, on the checked-in script rather than a `/tmp` one:
+
+```bash
+python3 scripts/classify_monster_ability_rows.py
+```
+
+```
+remaining monster+monster_ability units : 4233
+orphan monster_ability rows             : 1327
+  of which in ZERO-monster books        : 703 across 10 books (no monster in the book to own them)
+reachable remainder (units - orphans)   : 2906
+```
+
+Run at cycle start on the script **as round 2 left it**, this reproduces `§46.1`'s 2,906
+**exactly**. The previous round's reported remainder is confirmed, not corrected.
+
+**And then the instrument itself turned out to be wrong, in the direction that over-reports work.**
+The classifier resolved every ability's link against every monster ROW in the book, including rows
+that carry `NAMEISPI:YES` and can therefore never be shipped by any cycle. For Inner Sea World
+Guide it reported 11 of the 16 remaining abilities as reachable when their owners are the five PI
+rows — and the 5 PI monsters and 3 PI abilities themselves were counted as reachable units too.
+**16 units of over-reported reachability in one book.**
+
+`scripts/classify_monster_ability_rows.py` now reads Product Identity first (both signals, the term
+list parsed out of `pi_screening.rs` rather than copied) and resolves links against **shippable**
+monsters only. Over the merged tree:
+
+```
+book                    mon  abil row-named prefix ORPHAN   PI
+bestiary_4              220   768         0    543    225   14
+bestiary                284   523       375      2    146    0
+bestiary_2              316   466       398      4     64    0
+...
+inner_sea_bestiary       40   190       157      0     26    7
+inner_sea_gods           39   161         0     77     81    3
+inner_sea_world_guide     5    16         0      0     13    8
+
+remaining monster+monster_ability units : 4210
+orphan monster_ability rows             : 1405
+  of which in ZERO-monster books        : 703 across 10 books (no monster in the book to own them)
+Product Identity rows (never shippable)  : 32
+reachable remainder (units - orphans - PI): 2773
+```
+
+**The lane's REAL ceiling is 2,773, not 2,906.** Inner Sea World Guide now reads **0** reachable
+units remaining, which is the correct reading of a book this round finished as far as it can be
+finished. `bestiary_4` gained 73 orphans from its own 14 PI rows — a book nobody has looked at yet,
+where the same cascade is already visible.
+
+### 1c. Preflight and environment
+
+`df -h /` → **968G total, 161G used, 807G available, 17% used** at cycle start. `nproc` → **8** on
+this box, not the 4 the brief states; `verify.sh` self-limits to `-j 2` regardless.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r5`, claimed with a
+`.reclaim-claim` file the moment it was created, plus `…-r5-desktop` for the desktop crate — a
+separate cargo workspace, so sharing one target dir between them is the recorded shared-target-dir
+hazard. Both deleted at cycle end.
+
+### 2. The scope finding, which is worth more than the ingest
+
+Full statement in `decisions.md §50`. **`NAMEISPI:YES` is an upstream, per-record Product Identity
+declaration that no ingest path in this repository has ever read.**
+
+Inner Sea World Guide is the first book in this lane to carry it:
+
+```bash
+grep -c 'NAMEISPI:YES' iswg_races.lst iswg_races_bestiary.lst   # -> 3, 2
+```
+
+| row | file:line | why it is Product Identity on its face |
+|---|---|---|
+| `Daughter of Urgathoa` | `iswg_races.lst:13` | a named Golarion deity |
+| `Sandpoint Devil` | `iswg_races.lst:14` | a named Golarion town |
+| `Treerazer` | `iswg_races.lst:16` | a unique named NPC |
+| `Boar (Sargavan)` | `iswg_races_bestiary.lst:13` | a named Golarion nation |
+| `Herd Animal (Storval Aurochs)` | `iswg_races_bestiary.lst:14` | a named Golarion region |
+
+**The marker and an independent reading agree**, which is what makes the marker usable rather than
+merely present — the proxy is validated where it makes its confident claim, not adjacent to it.
+Only *three* of the five would have been caught by `PI_BLACKLIST_TERMS`; two — `Boar (Sargavan)` and
+`Herd Animal (Storval Aurochs)` — carry place names the 55-term list does not contain, and would
+have shipped. `near-miss` emitted.
+
+**Already-shipped monster books are clean.** `grep -c 'NAMEISPI:YES'` over the races `.lst` of
+`bonus_bestiary`, `monster_codex`, `book_of_the_damned_volume_1` and `book_of_the_damned_volume_2`
+returns **0** for all four. Nothing this lane has shipped is affected.
+
+**The corpus-wide picture is NOT clean, and this cycle did not fix it.**
+`grep -rl 'NAMEISPI:YES'` over every ingested book's tree finds the token in
+`inner_sea_races/isr_abilities_race.lst:67` — `Elf ~ Sovyrian-Born` — and
+`grep -rl 'Sovyrian' data/corpus/` finds
+**`data/corpus/inner_sea_races/race_trait/elf/elf_sovyrian_born.json`, shipped on `tranche/9`
+today**. "Sovyrian" is a Golarion place name and is not in `PI_BLACKLIST_TERMS`, so no screen fired.
+
+**Not fixed here, deliberately, and the reason is the safer default rather than the cheaper one.**
+Adding a term to `PI_BLACKLIST_TERMS` is corpus-wide: it changes what every book's generator
+redacts, and the affected file is the race-trait lane's ingest territory. `§46.6`'s rule 1 exists
+because two lanes editing the same files cost this bundle a whole gate run. The blast radius of a
+term addition cannot be verified inside this card's write scope, so it is reported with its command
+and its file path instead. `incident` emitted, `recurrence-key pi-declaration-token-unread`.
+
+### 2b. What was ingested, and what was deliberately left
+
+| | corpus units | ingested | left, and why |
+|---|---|---|---|
+| `monster` | 14 | **9** | 5 carry `NAMEISPI:YES` |
+| `monster_ability` | 30 | **14** | 3 carry `Urgathoa` in their own KEY; 13 are owned by no shipped monster |
+
+**A key cannot be redacted.** `pi_screening` redacts a `description`; `[redacted PI]` as a monster's
+key is a record nobody can look up, and a record whose *identity* is the PI is not a redaction
+problem but a scope one. So PI rows are dropped, not screened, and reclassifying a term is
+`docs/governance/ogl-pi-blacklist.md` §3's per-book override — an operator decision, not a
+transcriber's. `deferral` emitted.
+
+**The orphans, and how the two screens interact.** `classify_monster_ability_rows.py` reported 5
+orphans for this book *before* the PI screen ran — the `Nascent Demon Lord ~ …` and
+`Clockwork ~ …` rows, namespaced to `iswg_templates.lst` templates the chassis does not model.
+Dropping 5 monsters produced **8 more**, because an ability whose only owner is gone reaches
+nothing either. 13 total. The transcriber runs the PI screen first and the orphan screen second for
+exactly this reason: run the other way round, `Constant ~ Desecrate` is reported as a PI hit on its
+*owner's* name when the true reason is that it has become an orphan.
+
+**This is the divergence from the card's literal instruction, and it is recorded rather than
+smoothed over.** The card says a book with orphans lands *"the claim scoped to the linked subset
+with an `OPEN_FINDINGS` entry for the rest."* The first half is what happened; the second is not
+available, and the reason is mechanical. `reach_gate`'s own finding test
+(`apps/desktop/src-tauri/src/reach_gate.rs`, the `stale` assertion in the `OPEN_FINDINGS` test)
+fails when a recorded finding names a family that **does** reach a surface:
+
+```
+"these families now reach a surface — delete their OPEN_FINDINGS entries: {}"
+```
+
+`inner_sea_world_guide/monster_abilities` reaches `list_monster_catalog` for all 14 of its shipped
+records, so an entry for it would be `stale` by that test's own definition and would fail the gate.
+Writing one would have meant weakening the gate to satisfy a doc. The excluded rows are instead
+held by **three named tests** — `the_five_product_identity_names_are_not_records`,
+`no_shipped_ability_is_an_orphan`, `every_owner_named_by_a_shipped_ability_is_a_shipped_monster` —
+plus a fourth, `no_shipped_field_carries_a_product_identity_term`, which checks the property
+against the live blacklist rather than against a list of names, so a term added later fails there
+instead of shipping quietly. Every excluded row is named by key in the generated module header with
+its file:line and its reason.
+
+### 3. Two mechanism gaps this book found, both fixed at the source
+
+**A book's monsters may live in more than one file, and the line numbers collide.**
+Inner Sea World Guide splits its 14 monster rows 7/7 across `iswg_races.lst` and
+`iswg_races_bestiary.lst`, and:
+
+```
+iswg_races.lst:10          -> Aluum
+iswg_races_bestiary.lst:10 -> Fennec (Firefoot)
+```
+
+`MonsterStatBlock` carried a `source_line` and `gen_book_cache` took the *file* from a single
+per-book spec string, so every row of one file would have been citation-checked against the other —
+`verified_citation_line` compares the cited line's first column to the record's name, so this would
+have surfaced as a confusing citation failure rather than as the modelling gap it is.
+`MonsterStatBlock::source_file` is new, `MonsterBookSpec::races_lst` became `races_lsts: &[&str]`,
+and the generator looks the file up per record and panics by name if a record cites a file the spec
+does not list. `the_two_races_files_carry_colliding_line_numbers` is the regression.
+
+**The transcriber's PI screen must read the values it EMITS, not the row.** The first draft screened
+every token of the monster's corpus row and dropped the Sandpoint Devil for
+`AUTO:LANG|Abyssal|Varisian` — a language grant that never reaches a record — because the blacklist
+term `Varisia` is a substring of `Varisian`. Over-exclusion is a real cost in the other direction:
+it silently deletes corpus content nothing was going to publish. The screen now reads exactly the
+fields the transcription emits, which is exactly what `gen_book_cache` serializes and screens in
+turn. `correction` emitted. (The Sandpoint Devil is excluded anyway — by `NAMEISPI:YES`, which is
+the right reason.)
+
+**The term list is read out of the Rust, never re-typed.** `pi_blacklist_terms()` parses
+`pi_screening::PI_BLACKLIST_TERMS` out of `src/rules_core/pi_screening.rs` and refuses to run if it
+parses fewer than 20 terms. A copy in Python would drift the first time `ogl-pi-blacklist.md` §3's
+per-book override adds one — which is precisely the mechanism the Sovyrian finding above will need.
+
+**Neither fix moved an already-shipped book.** Regenerating Monster Codex and both Book of the
+Damned volumes under all of the above changes their record bodies by **exactly the one new
+`source_file` field and nothing else** — checked by a unified diff of the two versions' table
+bodies, not by eyeballing `git diff --stat`. Bonus Bestiary's table reproduces identically too (same
+check, 63 diff lines, every one of them the new field); its committed file keeps the pilot's
+hand-authored header, so the field was inserted into it rather than the file being regenerated,
+which is round 2's own recorded treatment of that file.
+
+### 2c. The instrument that measured the ceiling was itself over-reporting
+
+`§46.1` established the lane's ceiling with `classify_monster_ability_rows.py`, and `§45.1`'s rule
+is that a lane classifies corpus ROWS before committing a round to a book. Both hold. What this
+round adds is that **the classifier was blind to exactly the thing that stopped this book** — a row
+whose identity is Product Identity is not merely un-ingested, it is un-ingestable, and every ability
+it owns is an orphan.
+
+The corrected script reports a `PI` column and subtracts it. Its effect is not confined to this
+book: `bestiary_4`, the largest unstarted book in the lane, carries **14** PI rows whose removal
+turns **73** of its abilities into orphans (152 → 225). `inner_sea_bestiary` carries 7 and
+`inner_sea_gods` 3. Round 4 gets an honest queue from the same one command rather than discovering
+this per book.
+
+### 4. Definition of done
+
+| # | Item | State |
+|---|---|---|
+| 1 | `./scripts/verify.sh` FULL exits 0, captured directly | See **§5** below — exit code captured by redirecting to a file and reading `$?` on the next statement, never through a pipe |
+| 2 | Reach claims for this card's families — zero matched tests is a hard failure | **PASS, by claim not by absence.** Two new claims asserted per record against the files on disk: `inner_sea_world_guide` **9** monsters + **14** abilities, both `Reach::Surfaced` on `list_monster_catalog`. The test also asserts the 5 PI names and the 5 template orphans are **absent** from the response — a claim that only counted arrivals would pass equally well if a PI name had quietly been ingested |
+| 3 | `v06_corpus_trap_report -- --audit` exits 0 | See **§5** |
+| 4 | `v06_work_inventory` regenerated; the book's units leave `not-started` | **PASS, partially by design.** `inner_sea_world_guide` reads `monster` 9 `grounded` / 5 `not-ingested`, `monster_ability` 14 `grounded` / 16 `not-ingested`. The 21 that stayed are the PI and orphan rows named above; `not-ingested` is their honest status and this receipt says so rather than reporting a whole-book move |
+| 5 | Four-check wired-integration audit | **Clean.** No stub tokens, no no-op handlers, no fixture-only data, no "would have" strings. The one place a placeholder could have shipped is `damage_dice` on attacks the corpus does not price, which stays `None` |
+| 6 | Unsurfaced families carry an `OPEN_FINDINGS` entry | **Nothing owed, and the reason is stated rather than assumed** — see §2b. Both of this book's families reach the catalog record by record, so an `OPEN_FINDINGS` entry for either would fail the gate's own `stale` check. The excluded rows are held by four named tests and by the generated header, per row, with reasons |
+| 7 | Baseline movements are a separate commit | **None made.** `scripts/verify-baselines.env` untouched |
+| 8 | On-screen verification for player-visible families | See **§6** |
+
+### 5. The gate — **`VERIFY_EXIT=0`, `RESULT: PASS`, all 14 stages** (run 4)
+
+Exit code captured by redirecting `verify.sh` to a log and reading `$?` on the very next statement,
+never through a pipe.
+
+```
+passed: 14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib
+            root-full desktop reach frontend-install frontend-test frontend-typecheck clippy
+            class-dump
+root-full : 6244 passed across 543 suites, all 524 tests/*.rs suites executed
+reach     : 25 passed  (was 22 at round 2's close; +2 are this round's, +1 the companion lane's)
+RESULT: PASS
+```
+
+**Four runs, and the three that did not produce this line are reported rather than discarded.**
+
+* **Run 1** was launched on the pre-merge tree and **deliberately abandoned** at `root-full` when
+  `origin/tranche/9` advanced with the companion lane's round 2. `§46.6` rule 2: a gate run that
+  spans a merge is void, because `verify.sh` reads the **working tree, not a commit**. Killing it
+  early was cheaper than believing it.
+* **Run 2**, on the merged tree, **failed `root-full` with three tests** — and finding them is what
+  the run was for. All three are named, attributed and fixed in `37dba464`; see §5b.
+* **Run 3 was killed by SIGTERM**, mid-`root-full` (`cargo exit 143`, **0** suites executed), and
+  `verify.sh` itself died before writing its summary. Proven rather than guessed: there is no exit
+  file, and `/tmp/codex-verify-8tJ2PH/desktop.log` shows a stage that had already passed 439 tests
+  and was never reported. A sibling SD-29 lane was gating on the same box. **`pkill -f verify.sh` is
+  not agent-scoped** — stopping your own void run stops every sibling's too, and this round did
+  exactly that to its own run 1 twenty minutes earlier. `incident` emitted with
+  `recurrence-key pkill-verify-hits-every-agent`. ~25 minutes.
+* **Run 4 is the result**, on `64e946cb`, with nothing in the tree changed between runs 3 and 4.
+
+**Baseline notes, deliberately not acted on** (DoD item 7). Run 4 printed three stale baselines
+(`ROOT_LIB` 1659→1679, `ROOT_FULL` 6224→6244, `DESKTOP` 438→439). They are notes, not failures, and
+under two lanes landing tests concurrently any value this round wrote would be stale before it was
+read. The companion lane's `86aab1a3` then updated all three to **exactly** the numbers run 4
+measured — which is also independent confirmation of run 4's counts from a second lane's gate.
+
+**Run 5, on the post-merge tree, is recorded in §7.** `86aab1a3` is not docs-only — it carries
+`verify-on-screen.sh` and `scripts/verify-baselines.env` — so `§46.6` rule 2 applies and run 4's
+green attests to `64e946cb`, not to the merged tree.
+
+### 5b. The three reds run 2 found — two this round's, one inherited
+
+| test | whose | fix |
+|---|---|---|
+| `pi_table_sweep::rules_tables_carry_no_unbaselined_product_identity_hits` | **this round's** | The generated header, this cycle's module doc and its exclusion tests all spelled the Product Identity names they were recording the removal of. The sweep does not read intent and is right not to. Every checked-in citation is now `FILE:LINE` — which is also the stronger pin, surviving an upstream rename of the very name that makes the row excluded. `reach_gate`'s ISWG test now checks against the **live** `PI_BLACKLIST_TERMS` rather than a hand-written slug list. This is `§47.3`'s finding in a new place |
+| `v06_work_inventory::sd30_campaign_setting_books_appear_…` | **this round's** | `inner_sea_world_guide` is `in_scope` now that 23 of its units are grounded. Added to `SD29_INGESTED_CAMPAIGN_SETTING_BOOKS` as its own stated exemption, exactly as `§47.3` added `inner_sea_races` — not by relaxing the check |
+| `v06_work_inventory::every_corpus_book_appears_in_the_inventory` | **inherited, proven** | It asserted `unstarted_books.len() >= 15` — a floor this bundle's own success walks through. `git show 5164bf36:docs/work-inventory.json` reads **12** un-ingested books with none of this round's changes present: it went red when the companion lane grounded three bestiaries. **A test failing for a job well done.** The property needs no constant — *no in-scope book is enumerated and then left unmeasured* — and is now checked per book |
+
+### 6. On screen — **PASS, two records**
+
+Via the checked-in harness, `RUN_DESKTOP_AGENT=sd29-monster-r5`, both machine-verdicted by
+select-all/copy off the live webview rather than by a human re-reading an image:
+
+```
+verify-on-screen.sh --family monster --record "Aluum" \
+  --expect "Aluum" --expect "Inner Sea World Guide" --expect "Soul Shriek"
+verify-on-screen.sh --family monster --record "Calikang" \
+  --expect "Calikang" --expect "Inner Sea World Guide" --expect "Suspend Animation"
+```
+
+Artifacts: `artifacts/SD29-E5-F2-004/item8/iswg-aluum.{png,verify.md}` and
+`iswg-calikang.{png,verify.md}`.
+
+**The Aluum capture proves both of this round's mechanism fixes on a player's screen at once.** Its
+rendered line reads:
+
+```
+32:Speed 30 ft. · Inner Sea World Guide p.306 · Hit dice Construct:14
+38:Soul Shriek — Special Attack (Su)p.307
+```
+
+`p.306` is the citation `gen_book_cache` verified against `iswg_races.lst:10` — the line number that
+also names a different creature in `iswg_races_bestiary.lst`, and the reason `source_file` exists.
+`Soul Shriek` is an ability reached through the chassis link, rendered underneath its owning monster,
+which is the property that makes an *un*owned ability unreachable.
+
+The catalog blurb in the same capture derives its book list from the served rows and reads *"…and
+Inner Sea World Guide — 80 monsters"*, matching the re-derived grounded figure exactly.
+
+### 6b. DoD item 3 — trap report
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit    # AUDIT_EXIT=0
+259 trap rows, 0 defects: "every ingested record's citation agrees with the line it names."
+```
+
+Cycle mechanics step 0b, this book specifically:
+`cargo run --locked --bin v06_corpus_trap_report -- <iswg dir>` → exit 0. `iswg_abilities_race.lst`
+carries **30 DECLARES and 21 `.MOD`** rows — the `.MOD` overlays the inventory correctly excludes
+from the unit set, which is exactly why the transcriber's unit set is the inventory and never a line
+count. 77 namespaces, the largest at 3 rows each.
+
+### 7. Run record — gate run 5, on the post-merge tree: **`VERIFY_EXIT=0`, all 14 stages**
+
+`origin/tranche/9` advanced once more while run 4 was in flight, with the companion lane's round-2
+receipt (`86aab1a3`). **That commit is not docs-only** — `git diff --stat 64e946cb origin/tranche/9`
+shows `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` (24 lines) and
+`scripts/verify-baselines.env` (26) alongside the receipt — so `§46.6` rule 2 applies and run 4's
+green attests to `64e946cb` rather than to the merged tree. Merged (not rebased), **zero conflicts**,
+and re-gated:
+
+```
+passed: 14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib
+            root-full desktop reach frontend-install frontend-test frontend-typecheck clippy
+            class-dump
+root-full : 6244 passed across 543 suites, all 524 tests/*.rs suites executed
+desktop   : 439 · reach: 25 · frontend: 99/99 · clippy: 0 errors · class-dump: 31/31 computing
+RESULT: PASS      VERIFY_EXIT=0
+```
+
+The three baseline notes run 4 printed are **gone** — the companion lane's `86aab1a3` set
+`ROOT_LIB=1679`, `ROOT_FULL=6244`, `DESKTOP=439`, exactly the figures run 4 measured. Two lanes'
+independent gates agreeing on the same three counts is worth more than either lane's own note.
+
+**The decision numbering collided and the merge resolved it correctly without help.** Both lanes
+wrote a `## Decision 50` against a tree whose highest was §49; the companion lane's is now §51 and
+this round's is §50. Verified by content (`grep -n '^## Decision 5'`), not assumed.
+
+### 8. Branch state at cycle end
+
+| | |
+|---|---|
+| commits | `d81e80ab` (ingest + both screens), `7bbce854` (receipt + `§50`), `63d6b6b5` (ceiling instrument fix + merge), `37dba464` (the three gate reds), `64e946cb` (item-8 artifacts), `3bdfc9e8` (retro), `7f823f11` (gate record), plus two merges of `origin/tranche/9` |
+| pushed | **yes, incrementally, after every commit** — no cycle's only copy lived on a worktree branch at any point |
+| PR #360 | open and unmerged, as the card requires |
+| card | `epic-5-monster-lane-extend` stays **READY — round 4**. The lane is not dry |
+| target dirs | `codex-target-sd29-monster-r5` and `-r5-desktop`, both claimed on creation and deleted at cycle end |
+
+**This round did not finish the lane and does not claim to.** 23 units ingested against a re-derived
+remainder of 4,210 raw / **2,773 reachable** — and the reachable figure moved further from the
+instrument fix (133 units) than from the ingest (23), which is the round's honest headline.
+
+## Cycle — epic-7-companion-lane-extend, ROUND 2 (SD29-E7-F2-003)
+
+**Card:** `epic-7-companion-lane-extend` (Order 12), round 2 of a loop-until-dry lane.
+**Actor:** `sd29-companion-r5`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-6`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §51` (drafted as §50; the monster lane pushed its own §50 mid-round, so this one was renumbered BEFORE landing rather than in a merge).
+**PR:** #360, open and NOT merged.
+**Commits:** `b2fdc69d` (the three books' ingest + chassis/registry/surface wiring + the classifier
+fix + retro events), `81445762` (merge: the monster lane's Inner Sea World Guide ingest), `5164bf36`
+(work-inventory regenerated over the merged tree — the merge's only conflict, and it is a generated
+file, so it was resolved by re-running the generator rather than by picking a side), `aea31c4e`
+(item-8 artifacts + the harness recalibration), `18f0d5af` (merge: the monster lane's round-3 fixes,
+which is what turned this branch's `pi-sweep` green again — see §4).
+**Every one pushed to `origin/tranche/9` as it landed**, before the gate was launched. No part of
+this cycle's work has ever existed only on a worktree branch.
+
+**97 units ingested end to end across three books, all 97 grounded** — `bestiary_5` 55,
+`bestiary_6` 26, `bestiary_2` 16. `decisions.md §48.6` queued exactly these three and they needed no
+new mechanism. **The lane is NOT dry and this round does not claim it is**: the honest remainder is
+744, re-derived below.
+
+### 0a. Worktree integrity — recovery required, an eighth consecutive time, plus a repo-level finding
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| recovery | `git -c gc.auto=0 fetch origin tranche/9 && git reset --hard origin/tranche/9` | `d27107d7`, docs present |
+
+**Eighth consecutive cycle at `7d9f1c4f`.** The companion lane's round 1 called it "perfectly
+reproducible"; it still is.
+
+**New this cycle, and it is not cosmetic.** The shared object store carries a **zero-byte object
+file**, `.git/objects/3c/534e505be2e82ffb325fbe86320fd90120fc45`, which
+`refs/heads/worktree-wf_9029acd8-6b0-6` (a dead worktree branch, packed in `packed-refs`) points at.
+Every `fetch` prints `bad object` and `did not send all necessary objects`; every automatic repack
+aborts with `fatal: failed to run repack`, and `.git/worktrees/*/gc.log` now blocks automatic
+cleanup repo-wide.
+
+`git ls-remote origin` shows that branch was **never pushed**, so the object is not recoverable from
+the remote and no work is retrievable from it. **It was deliberately left alone** (the safer default
+under UNATTENDED MODE, recorded here rather than acted on): nothing this cycle needed failed because
+of it — the fetch updated `origin/tranche/9` correctly, `git rev-list --count origin/tranche/9`
+returned 3,323, and all three `git push`es succeeded. Deleting a ref in a shared `.git` while five
+sibling worktrees are live is a bigger risk than the noise. An `incident` event records it with the
+commands; the one-line repair, for whoever owns the checkout, is
+`git update-ref -d refs/heads/worktree-wf_9029acd8-6b0-6` followed by `git gc --prune=now`.
+
+### 0b. Merged-ness verified by content before anything was built on it
+
+| dependency | command | result |
+|---|---|---|
+| the companion chassis really landed | `ls src/rules_core/rules_tables/companion_chassis.rs` + `grep -n 'COMPANION_BOOKS' ` | present, 4 books registered |
+| round 1's 38 records are really on the branch | `python3 -c "…kind=='companion' and status=='grounded'…"` over `docs/work-inventory.json` at `d27107d7` | **38** |
+| the on-screen harness exists and knows `companion` | `grep -n 'companion' verify-on-screen.sh` | present, `SEARCH_Y` 247 |
+| `reclaim.sh` knows `codex-target-*` | inspected before claiming | claim file written to both target dirs |
+
+**The dispatch brief's "NOTHING has landed / all ~1,233 in-scope companion units are not-ingested, 0
+grounded" is false and was checked rather than believed.** Round 1 landed 38 grounded units and the
+whole mechanism (`decisions.md §48`, commit `bac2f569`). The brief predates it.
+
+### 1. Step 1c — preflight
+
+`./scripts/verify.sh --only preflight-disk` → **`RESULT: PASS`, EXIT 0**, 17% used, 806G available.
+(The brief's "disk expanded to 968G" reproduces; the "22 GiB RAM, no swap" note in the run-desktop
+skill does not — `free -g` reports **45** GiB total.)
+
+### 2. Step 1b — every figure re-derived, with the command
+
+| figure | command | result |
+|---|---|---|
+| `companion` units, corpus-wide | `python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json')); u=[x for x in d['units'] if x['kind']=='companion']; print(len(u), collections.Counter(x['status'] for x in u))"` | **1,696**, `not-ingested` 1,394 / `not-started` 264 / `grounded` 38 — reproduces `§48.6` exactly |
+| orphan ability rows | `python3 scripts/classify_companion_rows.py` | **808** — reproduces `§48.1` exactly |
+| the three queued books | `python3 scripts/classify_companion_rows.py bestiary_5 bestiary_6 bestiary_2` | 57 / 26 / 16 = **99**, `ORPHAN` **0** for all three — reproduces `§48.6`'s queue |
+| **`PRECAMPAIGN`-gated on an uningested campaign** | the same script, after this cycle's fix | **2** (both Bestiary 5) — **new**, see `§51.2` |
+| **`*_classes_companion.lst` class rows** | `python3 scripts/classify_companion_rows.py` `clas` column summed | **7** (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_volume_1` 2) — the chassis models creature and ability rows only |
+| **the lane's REAL ceiling** | 1,696 − 808 − 2 − 7 | **879**, not `§48.6`'s 888 |
+| the gate on B5's excluded file | `grep -n 'companion_oa' bestiary_5/*.pcc` | `_bestiary_5.pcc:69 RACE:support/b5_races_companion_oa.lst\|PRECAMPAIGN:1,Occult Adventures` |
+| corpus records written | `ls data/corpus/<book>/companion \| wc -l` | 55 / 26 / 16 = **97** |
+| grounded after | the first command again | **135 grounded**, 1,396 `not-ingested`, 165 `not-started` |
+| **honest remainder** | 879 − 135 | **744**, not the brief's 855 |
+
+**The brief's and `§48.6`'s 855 is corrected to 744.** 97 of the 111-unit difference is this round's
+ingest; 9 is measurement — the classifier's reachable line subtracted orphans only.
+
+**Two `correction` events, and the second corrects the first** (`--corrects` set, per the retro
+schema). The first moved the ceiling 888 → **886**, having found the two `PRECAMPAIGN`-gated rows and
+stopped there — subtracting two exclusions instead of one, and still not three. The 7
+`*_classes_companion.lst` class rows surfaced afterwards while deriving round 3's queue. **This round
+reproduced, against itself, the exact error it was writing up** (`§51.1`): "subtract the exclusion
+you just found" feels like completing a derivation when the derivation is only complete once you have
+enumerated where exclusions come from. Nothing downstream ever carried 886 — the receipt,
+`decisions.md §51` and `kanban.md` card 12 all say **879 / 744**.
+
+### 3. Step 3 — what was built
+
+**Three books, no new mechanism.** Per book: a `RuleSetId` variant, a `COMPANION_BOOKS` row, a
+`COMPANION_BOOK_SPECS` row, a `companion_catalog` wire code, a frontend `BOOK_LABELS` entry, a
+`reach_gate` `CORPUS_BOOK_IDS` row and claim arm, a `corpus_ingest_diagnostic` row, and a
+`v06_content_state_dump` arm. Exactly the cost `§48.3` promised.
+
+**The classifier fix is the round's real output** (`§51.2`). `classify_companion_rows.classify()` ran
+`if not os.path.exists(path): continue` over any source file it could not open. The inventory records
+`source_file` as a **basename**, so a `.lst` PCGen loads out of `support/` is not where the join puts
+it: two of Bestiary 5's 57 units were counted into the denominator and never read, and the run still
+printed `ORPHAN 0`. It was caught by `transcribe_companion_tables.py` crashing on the same path,
+because it had no equivalent skip. Both scripts now share `resolve_source_file`, which resolves a
+basename anywhere under the book and **raises** when it is nowhere or ambiguous. `near-miss` emitted.
+
+**Those two rows are excluded by a gate read from the pcc, not by a list** (`§51.3`). Occult
+Adventures is not an ingested book; `decisions.md §47.2` already ruled this for Horror Adventures'
+`ha_abilities_race_oa.lst`. The exclusion is stated three times where a reader will meet it — the
+generated module's own doc header, `RuleSetId::B5`'s doc comment, and `reach_gate`'s per-record test
+— and pinned **by name** in `rules_tables::bestiary_5`, not by a count that any two missing records
+would satisfy.
+
+**`§48.1`'s ownership predicates were re-confirmed, not trusted.** All three books are `ORPHAN 0`
+under the row-named / prerace / prefix rules, so all three are registerable under
+`monster_chassis`'s "a book is registered when EVERY one of its ability rows has an owner".
+
+### 4. Step 4 — the gate ran twice, and the first run is reported as VOID rather than cited
+
+#### Run 1 — VOID, and the red it found was 100% INHERITED
+
+Stages: `preflight-disk` PASS, **`pi-sweep` FAIL**, `audit-selftest` PASS, `reclaim-selftest` PASS,
+`driver-selftest` PASS, `root-lib` PASS (1,678) — killed during `root-full`.
+
+`pi-sweep` reported **11 unbaselined Product-Identity hits, every one of them in
+`src/rules_core/rules_tables/inner_sea_world_guide/`** (`Daughter of Urgathoa` ×9, `Golarion` ×1,
+plus the doc-comment copies).
+
+**Attribution PROVEN by content, not asserted:**
+
+```bash
+git log --oneline d27107d7..HEAD -- src/rules_core/rules_tables/inner_sea_world_guide/
+#   -> d81e80ab   (exactly one commit, and it is not this lane's)
+```
+
+`d81e80ab` is the monster lane's Inner Sea World Guide ingest, which **this cycle inherited by
+merging `origin/tranche/9`** at `81445762`. No commit of this lane touches that directory or any
+file the sweep named. **`origin/tranche/9` was RED at `d81e80ab` when it was merged** — `§46.6`
+rule 2 again, one lane pushing before a full gate covers its own diff and the next lane paying for
+it.
+
+**The fix already existed upstream, and finding that out cost one `git show`:**
+
+```bash
+git show origin/tranche/9:src/rules_core/rules_tables/inner_sea_world_guide/mod.rs | grep -c Urgathoa
+#   -> 0        (fixed by 63d6b6b5 / 37dba464, both landed while run 1 was in flight)
+```
+
+So run 1 was **stopped rather than finished**, and is reported void rather than cited. `verify.sh`
+reads the **tree, not a commit** (`§46.6`): merging the upstream fix mid-run would have produced a
+result whose early stages measured one tree and whose late stages measured another, and running
+`root-full` to completion on a tree already known to be superseded is 30 minutes bought for nothing.
+Before killing it, `ps`/`/proc/<pid>/environ` were checked so the concurrent monster lane's build
+(`CARGO_TARGET_DIR=…-sd29-monster-r5`, cwd `wf_924a22ca-f35-5`) was **not** killed with it.
+
+#### Run 2 — the result, on the twice-merged tree `18f0d5af`
+
+Merged `origin/tranche/9` again (`18f0d5af`, no conflicts). Re-running `v06_work_inventory` over the
+twice-merged tree changed **only `generated_at`** — the merged inventory was already correct, which
+independently re-confirms DoD item 4's idempotence a second time, on a different tree.
+
+**`verify.sh` FULL, exit code captured directly and never through a pipe:**
+
+```
+VERIFY_EXIT=0
+```
+
+**All 14 stages PASS**, on `18f0d5af`:
+
+| stage | result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK, 22% used) |
+| `pi-sweep` | PASS (**10 hits, 10 baseline rows** — the 11 inherited hits are gone) |
+| `audit-selftest` | PASS (28 passed, 0 failed) |
+| `reclaim-selftest` | PASS (10 passed, 0 failed) |
+| `driver-selftest` | PASS (7 passed, 0 failed) |
+| `root-lib` | PASS (1,679 passed) |
+| `root-full` | PASS (**6,244 passed across 543 suites, all 524 `tests/*.rs` suites executed**) |
+| `desktop` | PASS (439 passed) |
+| `reach` | PASS (25 passed) |
+| `frontend-install` | PASS |
+| `frontend-test` | PASS (99/99 files) |
+| `frontend-typecheck` | PASS (`tsc --noEmit` clean) |
+| `clippy` | PASS (root 54 / desktop 7 warnings, **0 errors**) |
+| `class-dump` | PASS (31/31 computing) |
+
+`root-full`'s non-execution check (`decisions.md §40`) reports **all 524 `tests/*.rs` suites
+executed**; the aggregate count is not trusted on its own, which is why that check exists.
+
+**Three baseline notes (not failures) were raised and are moved in their own commit** — DoD item 7:
+`BASELINE_ROOT_LIB_TESTS` 1,659 → 1,679, `BASELINE_ROOT_FULL_TESTS` 6,224 → 6,244,
+`BASELINE_DESKTOP_TESTS` 438 → 439. Each carries the run's own summary line and log path as its
+evidence, and each says **which lane's tests moved it**: 12 of the 20 root-lib tests are this round's
+three `rules_tables::bestiary_*` modules, the other 8 and the single desktop test came in with the
+monster lane's merge. `BASELINE_ROOT_TEST_BINARIES` does not move — neither lane added a `tests/*.rs`
+file, and the suite count held at 543.
+
+### 5. Definition of done
+
+| item | evidence |
+|---|---|
+| 1. `verify.sh` exits 0 | **`VERIFY_EXIT=0`** on the pushed tip `18f0d5af`, all 14 stages. Exit code captured directly into a file, never through a pipe |
+| 2. `reach` passes with a claim for this cycle's families | **3 new claims, all `Reach::Surfaced`**: `bestiary_5/companions` 55, `bestiary_6/companions` 26, `bestiary_2/companions` 16. `every_ingested_companion_book_reaches_the_catalog_record_by_record` asserts the corpus denominator, the served numerator and the claim **independently**, so a table that stopped reaching the wire fails rather than agreeing with itself. Stage reports 25 passed, not 0 |
+| 3. trap report `--audit` | `cargo run --locked --bin v06_corpus_trap_report -- --audit` → **EXIT 0**, `TRAP 259 / DEFECT 0`, *"No defects: every ingested record's citation agrees with the line it names."* |
+| 4. inventory regenerated, units leave `not-started`, second run changes only `generated_at` | 97 units → `grounded` (`not-started` 264 → 165). Two consecutive runs diffed with `generated_at` stripped → **byte-identical**; re-confirmed a second time on the twice-merged tree, where the only diff was the timestamp |
+| 5. four-check wired-integration audit | no stubs: every served field is a corpus token read from the compiled table; no fixture data in the production path (`build_companion_catalog` reads `COMPANION_BOOKS`, `reach_gate` reads `data/corpus/<book>/companion/`); the three new books reach the same real screen and hub link round 1 wired. `sd24_wired_integration_audit` green inside `root-full` |
+| 6. `OPEN_FINDINGS` for anything unsurfaced | **none needed for these three books** — all 97 ingested records reach a player. Bestiary 5's two Occult-Adventures-gated rows are **not** a shortfall of an ingested book: they are outside this rule set by construction (`§51.3`), stated in three places and pinned by name. The kind's 808 corpus-wide orphan ability rows remain `§48.1`'s *scope* finding with its `deferral`, not a per-book shortfall |
+| 7. baseline movements | **3, in their own commit** with the measuring run's summary line and log path, and per-lane attribution — see §4 |
+| 8. on-screen verification | **3 PASS artifacts**, one per book, under `artifacts/SD29-E7-F2-003/item8/`, plus the refused run's `.FAILED.verify.md` kept beside them — see §6 |
+
+### 6. Item 8 — three passes, and a second calibration drift the harness caught on itself
+
+| book | record | proven on screen |
+|---|---|---|
+| Bestiary 5 | `Companion (Cameroceras)` | `Bestiary 5 p.312`, `Walk 5 ft., swim 20 ft., jet 90 ft. · reach 5 ft. · Hit dice Companion:2 · Natural armor +1`, `Companion Advancement (Cameroceras) — CompanionAdvancement` |
+| Bestiary 6 | `Companion (Amargasaurus)` | `Bestiary 6`, `Hit dice Companion:2`, `Companion Advancement (Amargasaurus)` |
+| Bestiary 2 | `Familiar (Snapping Turtle)` | `Bestiary 2`, `Shell`, `SpecialQuality`, and the ability's real rules text — *"armor bonus from natural armor increases by +4"* |
+
+Artifacts: `docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E7-F2-003/item8/`.
+
+**The finding is in how the first run failed, again.** `decisions.md §48.5` calibrated the
+`companion` family's `SEARCH_Y` live at **247** one round ago, because `285` — every other
+single-chip-row family's value — landed BELOW this screen's search box. Registering three more books
+**wrapped the facet-chip row to two lines** (Bestiary 2's chip starts a second row), pushing the box
+back down, so 247 now lands ABOVE it. The first run was refused:
+
+```
+FAIL: search for 'Companion (Cameroceras)' still shows 77 rows — filter did not apply
+```
+
+Same gate, opposite direction, one round apart. Without it the run would have screenshotted the
+**unfiltered 77-row list**, found `Cameroceras` in a select-all extraction of the whole page, and
+written a PASS proving nothing about the record — exactly the class of defect item 8 exists to catch,
+caught twice now by item 8's own harness on the family it was written for.
+
+**The transferable part is that this constant is not a constant.** It is a function of how many books
+the lane has registered, so it moves every time this lane lands a round. The harness comment now says
+so and carries both calibrations with their dates; **round 3 should expect to recalibrate.** The
+refused run's `b5-companion-cameroceras.FAILED.verify.md` is kept beside the passing artifacts rather
+than deleted, per the harness's own naming discipline — a failure named so it can never be cited as
+evidence is worth having.
+
+`near-miss` event emitted.
+
+### 6b. The concurrent lane's `NAMEISPI:YES` finding, checked against this round's own files
+
+`decisions.md §51.1` (monster lane, round 3, merged onto this branch mid-round) found that PCGen's
+per-record `NAMEISPI:YES` Product-Identity declaration is read by **nothing** in this repository, and
+that two Inner Sea World Guide records would have shipped on that gap. Checked here rather than
+assumed:
+
+```bash
+grep -c 'NAMEISPI:YES' bestiary_5/b5_races_companion.lst bestiary_5/b5_abilities_companion.lst \
+  bestiary_6/b6_races_companion.lst bestiary_6/b6_abilities_companion.lst \
+  bestiary_2/b2_races_familiar.lst  bestiary_2/b2_abilities_familiar_race.lst
+#   -> 0 for all six
+grep -rl 'NAMEISPI:YES' bestiary_5 bestiary_6 bestiary_2
+#   -> bestiary_6/b6_deities.lst   (carries no companion unit)
+```
+
+**Zero.** This round's 97 records are unaffected. Recorded because "our book was clean" is worth
+exactly what the command behind it is worth.
+
+### 7. Scope-flip collateral, measured (`§51.6`)
+
+| book | other-kind units moved `not-started` → `not-ingested` | breakdown |
+|---|---|---|
+| `bestiary_2` | 958 | `monster_ability` 466, `monster` 316, `race_trait` 162, `equipment` 8, `race` 6 |
+| `bestiary_5` | 108 | `race_trait` 63, `monster_ability` 39, `race` 6 |
+| `bestiary_6` | 33 | `class_feature` 18, `monster_ability` 13, `spell` 2 |
+| **total** | **1,099** | |
+
+Derived by diffing the pre- and post-run inventories unit-by-unit
+(`git show HEAD:docs/work-inventory.json` vs the regenerated file, joined on `id`), not by
+subtracting book totals. None of it moves this lane's denominator; all of it moves other lanes'
+`not-ingested` figures.
+
+**One unit went to `unknown`, not `not-ingested`, and it is left standing.**
+`bestiary_6:class_feature:domain_power_serpent_companion` now reads
+`class_feature_group_names_no_class_at_all` — an existing predicate reaching a record it could not
+previously judge, with its reason stated. Suppressing it would be inventing a judgement.
+
+### 8. Defaults taken under UNATTENDED MODE, recorded rather than asked
+
+1. **The corrupt git object was left in place** (§0a). Repairing a shared `.git` with five live
+   sibling worktrees is the larger risk, and nothing this cycle needed failed because of it.
+2. **A stray retro shard was re-sharded, not deleted.** `verify.sh`'s preflight run auto-emitted a
+   `verification` event before `RETRO_ACTOR` was exported, landing in
+   `docs/retro/events/wf_924a22ca-f35-6.jsonl` — a shard named after a checkout, which is exactly
+   what `loop-instruction.md` says makes the by-actor breakdown meaningless. The line was moved
+   verbatim into `docs/retro/events/sd29-companion-r5.jsonl` with only `actor` corrected;
+   `actor_source: "worktree"` is left untouched so a reader can still see it was derived rather than
+   declared. Deleting it would have lost a real verification datapoint from the denominator.
+3. **Bestiary 2 was taken despite the monster lane naming it a round-3 target.** `RuleSetId::B2`
+   compiles the `companion` family and nothing else, its doc comment says so, and the two lanes
+   adding tables to one book id is the designed path (`§51.5`). The alternative — holding 16 units
+   for a round that may not come — costs more than a merge.
+4. **`§48.6`'s queue was worked in its stated order** rather than re-ranked, because re-deriving it
+   reproduced it: all three are `ORPHAN 0` and none needs a mechanism.
+5. **Gate run 1 was killed rather than finished** once its only red was proven inherited AND proven
+   already fixed on `origin/tranche/9`. `verify.sh` measures the tree, so a run whose early stages
+   saw the pre-merge tree could not have been cited for the post-merge one; finishing it would have
+   spent ~30 minutes to produce a result nothing could use (§4).
+6. **The three stale baselines were moved rather than left**, following the race-trait lane's round-4
+   precedent (`5c21ef75`), even though the concurrent monster lane may move the same three lines.
+   A three-line union conflict is cheaper than a baseline that is knowably wrong on the pushed tip.
+
+### 9. The remainder, re-derived — this is round 3's starting point (`§51.7`)
+
+`companion` totals **1,696 / 135 grounded / 1,561 remaining by status**. **1,561 is not the lane's
+workload.** Subtracting 808 orphans, 2 `PRECAMPAIGN`-gated rows and 7 class rows leaves **879
+reachable**, of which 135 are done, so the honest remainder is **744**.
+
+**Every remaining book carries orphans** — the wall `§48.6` predicted. Round 3's first decision is a
+*reach* decision, not a book choice: a whole-book `Reach::Surfaced` claim is not available for a book
+with orphans, so the claim must be scoped to the linked subset with an `OPEN_FINDINGS` entry naming
+the rest, or the book waits on `§48.1`'s operator ruling. The monster lane has already taken that
+disposition once inside this bundle (Inner Sea World Guide, 5 orphans, `OPEN_FINDINGS`), so the
+precedent exists.
+
+| book | units | orphans | reachable | class rows |
+|---|---|---|---|---|
+| `ultimate_wilderness` | 575 | 249 (43%) | **326** | 0 |
+| `core_essentials` | 145 | 51 (35%) | **94** | 0 |
+| `core_rulebook` | 170 | 88 (52%) | **80** | 2 |
+| `bestiary_4` | 80 | 5 (**6%**) | **75** | 0 |
+| `bestiary_3` | 85 | 19 (22%) | **66** | 0 |
+| `bestiary` | 59 | 5 (**8%**) | **54** | 0 |
+| `ultimate_magic` | 170 | 138 (81%) | **29** | 3 |
+| `advanced_race_guide` | 32 | 18 (56%) | **14** | 0 |
+| `advanced_players_guide` | 212 | 208 (98%) | **4** | 0 |
+| `book_of_the_damned_volume_1` | 31 | 27 (87%) | **2** | 2 |
+| **total** | **1,559** | **808** | **744** | **7** |
+
+Ranked by orphan **share** rather than size, `bestiary_4` (6%) and `bestiary` (8%) are the cheapest —
+129 reachable units for two `OPEN_FINDINGS` entries of 5 records each.
+
+**Two hazards named so round 3 does not pay to discover them:**
+
+1. **`bestiary` is spelled `beastiary` on the engine side.** Inventory book id `bestiary`,
+   `corpus_dir_for(RuleSetId::Bestiary1)` → `"bestiary"`, rules-table module `beastiary1`. `§44`
+   records this exact split silently under-reporting 108 Bestiary 1 records once already. It is also
+   the first companion book that needs **no** scope flip (the rule set already exists) and the first
+   whose registration touches a rule set another family already owns.
+2. **`ultimate_wilderness`, `core_rulebook` and `ultimate_magic` carry `*_classes_companion.lst`
+   rows.** `transcribe_companion_tables` refuses the book outright — a hard stop, not a silent drop —
+   with *"carries N `*_classes_companion.lst` rows; the chassis models creature and ability rows
+   only. Widen it deliberately."*
+
+## Cycle — epic-6-race-trait-lane-extend, ROUND 5 (SD29-E6-F2-006)
+
+**Card:** `epic-6-race-trait-lane-extend` (Order 10), round 5 of a loop-until-dry lane.
+**Actor:** `sd29-racetrait-r6`. **Branch:** `tranche/9`. **Date:** 2026-08-12.
+**Decision record:** `decisions.md §53` (number reserved at claim time — §51 was already held by the
+companion lane's round 2; this is the first round in this lane not to renumber on merge).
+**PR:** #360, open and NOT merged.
+
+### 0. What this round is, in one paragraph
+
+`§49.8` ruled the lane **dry for ingest**, and that ruling **reproduces exactly** — re-derived before
+touching anything, with the instrument round 4 checked in. So round 5 did not ingest. It fixed a
+defect in what the lane had already shipped: **this program's Product-Identity screen is a 55-term
+heuristic, and PCGen has been declaring the answer per record, in tokens the ingest path never read.**
+26 shipped `race_trait` records declare `DESCISPI:YES`; the blacklist caught 18 of them by
+coincidence and **published the other 8**. One declares `NAMEISPI:YES` and shipped a Product Identity
+NAME. The monster lane found this for its own kind, reported it as corpus-wide, and `kanban.md` card
+8 handed it to this lane by name.
+
+### 1. Re-derivation at round start — every figure, with its command
+
+**The lane ceiling and remainder, before any change** (`scripts/race_trait_ceiling.py`, checked in by
+round 4):
+
+```
+CEILING
+  TYPE:<one of 18 races> Racial Trait rows : 553
+  TYPE:<one of 18 races> Subrace rows      : 18
+  total                                    : 571
+STATUS, joined by (book, source_file, source_line)
+  units matched into the ceiling : 571
+  by status                      : {'not-ingested': 57, 'grounded': 514}
+```
+
+**Identical to `§49.8`, cell for cell**, including the per-book split
+(`advanced_players_guide` 49 / `bestiary` 3 / `core_essentials` 2 / `horror_adventures` 1 /
+`inner_sea_races` 1 / `monster_codex` 1). **The dispatch brief's "race_trait now shows 232+ grounded"
+and "continue from round 2" are both stale** — rounds 3 and 4 landed after that text was written, and
+the live figure was **514**, not 232. Corrected here rather than carried.
+
+**`§44.4`'s ceiling finding, verified rather than relied on:** 3,447 total `race_trait` units,
+571-row ceiling, chassis-blocked residue **2,876**. Holds.
+
+**The defect, in one command** (over `data/corpus/*/race_trait/*/*.json`, counting `raw_tokens` keys
+against the record's own `pi_marker`):
+
+```
+{('DESCISPI', 'redacted'): 18, ('DESCISPI', None): 8, ('NAMEISPI', None): 1}
+```
+
+The 8 published descriptions name `Kodar Mountains`, `Earthfall`, `Ekujae`, `Gogpodda`, `Omesta`,
+`Droskar`, `Abaddon` and `Inner Sea`. None is on the 55-term list, and the list was never going to
+have them.
+
+### 2. Cycle mechanics 0-8
+
+* **0/0b — Shape / trap-report.** Not re-run: this round ingested no new book, and the two books it
+  regenerated (`inner_sea_races`, `core_essentials`) were shaped and trap-reported by rounds 2 and 4.
+  Recorded as a deliberate skip with its reason, per the unattended-mode default-and-flag rule.
+* **1c — Preflight.** `./scripts/verify.sh --only preflight-disk` → `RESULT: PASS`, `PREFLIGHT_EXIT=0`
+  (18% used, 795G available).
+* **2 — Claim.** `epic-6-race-trait-lane-extend`, round 5.
+* **3 — Do.** TDD: `tests/sd29_declared_product_identity_in_shipped_race_traits.rs` written first and
+  run RED, naming all 9 offenders by key; then `pi_screening`'s reader (7 unit tests, RED→GREEN);
+  then the ingest wiring; then the regeneration; then the nine count re-pins.
+* **4 — Verify.** `./scripts/verify.sh` FULL, exit code captured directly. See §6.
+* **5/6 — Commit and receipt.** See §7.
+* **7 — Retro.** One `correction` event emitted with `--verified-by`
+  (`docs/retro/events/sd29-racetrait-r6.jsonl`). The stray `verification` event the preflight wrote
+  under the worktree-directory fallback actor was **re-attributed to `sd29-racetrait-r6` rather than
+  left**, because a shard named after a checkout makes the log's by-actor breakdown meaningless —
+  which is the exact reason `loop-instruction.md` requires `RETRO_ACTOR`.
+* **8 — Reclaim + on-screen.** See §5 and §8.
+
+### 3. The ruling: a declared PI name is dropped, a declared PI description is redacted
+
+A description can become `[redacted PI]` and the record still works — key, flags, bonuses and page
+cite untouched. **A name cannot.** It is the picker checkbox's text, the Race Traits panel's heading,
+and half of the record's key. So `Elf ~ Sovyrian-Born` (`isr_abilities_race.lst:67`) is **dropped**,
+not screened.
+
+This is the identical ruling `§50` reached independently for Inner Sea World Guide's five
+`NAMEISPI:YES` monster rows, from a different kind and a different lane. It is now written **once**,
+in `pi_screening`, instead of twice in two hand-built tables.
+
+Reclassifying a declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book override, an
+operator decision. Unattended mode: safer default taken (drop), recorded here.
+
+### 4. Nine counts moved, and one deliberately did not
+
+| pin | was | now |
+|---|---|---|
+| `ALTERNATE_TRAIT_REPLACE_FLAGS` / `TraitRole::Alternate` / `selectable_alternate_trait_keys()` | 283 | **282** |
+| whole race corpus, all roles | 516 | **515** |
+| picker menu total / `race_catalog` alternates / reachability `checked` | 283 | **282** |
+| picker per-race, Elf | 28 | **27** |
+| picker menu rows + standard rows | 456 | **455** |
+| `character_hub` alternates creation accepts (7 CRB races) | 189 | **188** |
+| `reach_gate` ISR ingested / reached | 72 / 71 | **71 / 70** |
+| `ingest_race_traits` per-book record count, `inner_sea_races` | 72 | **71** |
+| `work-inventory` `race_trait` grounded | 514 | **513** |
+
+**The orphan-flag assertion did not move, and that is a result rather than an omission.** The row
+fired `Elf_ReplaceElvenMagic` and `Elf_ReplaceKeenSenses`; both are still claimed by other ISR and ARG
+alternates, so no flag became an orphan. Checked, not assumed.
+
+**`race_trait` grounded going DOWN is the correct direction here.** `§49.3` caught a real defect
+because a count moved the wrong way; this round *expected* the drop and would have found a defect if
+it had not appeared. A denominator taken twice works in both directions.
+
+### 5. Regeneration scope — derived, not assumed
+
+Only `inner_sea_races` and `core_essentials` were regenerated, because they are the only two books
+whose sources carry either token:
+
+```bash
+grep -rl 'DESCISPI:YES' core_essentials/races/
+#  -> tiefling/tiefling_abilities_race_subrace.lst   (ingested)
+#     skinwalker/skinwalker_abilities_race_subrace.lst (a race this product does not model)
+grep -c 'NAMEISPI:YES' arg_abilities_race.lst mc_abilities_race.lst ha_abilities_race.lst
+#  -> 0, 0, 0
+grep -c 'NAMEISPI:YES' isr_abilities_race.lst      # -> 1
+```
+
+`core_rulebook`'s 67 and `beastiary`'s 108 shipped `race_trait` records carry **no** `ISPI` token
+(scanned: 175 records, 0 hits) and neither do their sources. **136 files changed; 9 of them
+substantively** (8 descriptions redacted, 1 record deleted). The rest are `ingested_at` restamps —
+the binary stamps `date -u` on every run, and the restamp is honest: those records really were
+rewritten. Recorded rather than reverted, because pinning the old timestamp back would claim a file
+was produced at a time it was not.
+
+### 6. Gate
+
+`./scripts/verify.sh` (FULL, not `--quick`), exit code captured directly — assigned from `$?` on the
+line after the command, never read through a pipe
+(`/tmp/.../run-gate.sh`, `verify-exit.txt`):
+
+```
+VERIFY_EXIT=0        RESULT: PASS        run 3, at tree 99df2e36
+```
+
+**All 14 stages green**, and `root-full` states its own coverage rather than only its count:
+
+```
+PASS preflight-disk · PASS pi-sweep (10 hits, 10 baseline rows) · PASS audit-selftest (28)
+PASS reclaim-selftest (10) · PASS driver-selftest (7) · PASS root-lib (1692)
+PASS root-full (6259 passed across 544 suites, all 525 tests/*.rs suites executed)
+PASS desktop (441) · PASS reach (26) · PASS frontend-install · PASS frontend-test (99/99)
+PASS frontend-typecheck · PASS clippy (root:54 desktop:7 warnings, 0 errors) · PASS class-dump (31/31)
+```
+
+**Three runs, and the two that were not green are recorded rather than dropped**, because a receipt
+that reports only the passing run is reporting a filtered sample:
+
+| run | result | why |
+|---|---|---|
+| 1 | killed | `pi-sweep` RED on the monster lane's `bestiary_2/mod.rs` doc comments (§8d). Killed mid-`root-full` once the tree moved under it rather than left to produce a verdict about a tree that no longer existed |
+| 2 | `VERIFY_EXIT=1` | `root-full` the **only** red stage, with three failures, **all of them this round's**: the `ingest_race_traits` total pin `340 != 339` (the map moved, the constant did not — the third consecutive round to make exactly that mistake, which is why the assertion's own message warns about it), and both books' `LICENSE.json` restating counts the drop and the new redactions had moved. Every other stage green |
+| 3 | **`VERIFY_EXIT=0`** | after those three fixes. This is the gate record |
+
+**Run 2's failures were the gate doing its job on this round's own work**, not environmental, and are
+fixed at the source: a `LICENSE.json` is an OGL redistribution record, so its own failure message
+instructs restating the number rather than adjusting the test, and both books' *screening notes* were
+rewritten with the numbers so the prose and the integer cannot drift apart.
+
+**One concurrency note the branch protocol does not cover.** The monster lane's round-4 gate hit the
+identical three failures at the same time and fixed them independently (`39f87cf2`), reaching the
+same four numbers — 339, 71, 18, 9 — by its own derivation. The merge conflicted on both
+`LICENSE.json` files and was resolved in favour of this lane's text, which explains the *mechanism*
+behind each number; the numbers themselves were already agreed by two independent derivations, which
+is better evidence than either alone.
+
+Component runs on the way there, each green before the full gate was launched:
+
+* `cargo test --locked --lib` → **1686 passed, 0 failed** (1692 by run 3, after the merges)
+* `cargo test --locked --tests` (root integration) → **exit 0**
+* `cargo test --locked --bin codex-desktop` (the separate `apps/desktop/src-tauri` workspace the root
+  sweep does not reach) → **439 passed, 0 failed** (441 by run 3)
+
+### 7. The remainder — this card is still DRY, and the residue gains a class
+
+Re-derived AFTER the change by the same script:
+
+```
+units matched into the ceiling : 571
+by status                      : {'grounded': 513, 'not-ingested': 58}
+```
+
+58 = `§49.8`'s 57 + `Elf ~ Sovyrian-Born`, whose class is new to this lane:
+
+| book | units | class |
+|---|---|---|
+| `advanced_players_guide` | 49 | not gap — ARG key collisions (`§39`) |
+| `bestiary` (Drow Noble) | 3 | **workable, needs a race-variant chassis — NOT this card** |
+| `core_essentials` | 2 | not gap — the no-heritage baseline (`§49.2`) |
+| `horror_adventures` | 1 | not gap — `PRECAMPAIGN`-gated on Occult Adventures (`§47.2`) |
+| `inner_sea_races` | 1 | not gap — `Human ~ Tribalistic Languages`, upstream (`§45.4`) |
+| `inner_sea_races` | 1 | **not gap — `Elf ~ Sovyrian-Born`, declared Product Identity (`§53.2`)** |
+| `monster_codex` | 1 | not gap — ability-pool variant mechanism (`§43`) |
+| | **58** | **3 workable / 55 not gap** |
+
+**`units_remaining` for this card is 3**, unchanged, and none of the 3 is race-trait work — all need
+a race *variant chassis*, which is a different card. Chassis-blocked residue is unchanged at
+**3,447 − 571 = 2,876**.
+
+### 8. The two findings this round hands forward
+
+**(a) `§8b` was misattributed for three rounds, and this round narrowed it with a test.** The
+round-1 receipt argued *"the right-hand column does update ('1 selected. 0 further options locked
+out.'), so the IPC round trip happened"*. `AlternateTraitPicker.tsx` renders that sentence from
+`selected.length` — **local React state, updated synchronously by the checkbox, needing no backend at
+all** — and from `blocked.size`, which is **0 when `selection` is `null`**. The two panels are one
+symptom, not two.
+
+That left two candidates, and the backend one is now **dead by test**, not by argument.
+`race_trait_picker::plagueborn_really_suppresses_both_standard_traits_its_flags_name_so_8b_is_not_a_backend_gap`
+resolves the exact selection `§8b` screenshotted:
+
+```
+before: 9 applied, 0 suppressions   # matches the screenshot's "9 traits apply"
+after:  8 applied, suppressions = [Half-Orc ~ Intimidating, Half-Orc ~ Weapon Familiarity],
+        blocked_alternates NON-EMPTY
+```
+
+The caption should read 8, and the lock-out count should not be 0 — so the rendered *"0 further
+options locked out."* is itself evidence of a `selection == null` render. What survives is the timing
+reading: a screenshot captured between the click's commit and the effect's `setSelection(null)`,
+which is a harness settle-wait rather than a product defect. **Round 6 reproduces that live before
+writing any fix.** The general lesson is `§45.1`'s in a new register — this program re-derives a
+receipt's *figures* at the point of use and inherits its *attributions* on trust, and the attribution
+cost three rounds of deferral.
+
+**(b) The declaration gap is corpus-wide and much larger than one kind — with a hard obstacle named.**
+
+```bash
+grep -rho "NAMEISPI:YES\|DESCISPI:YES" --include="*.lst" ~/workspace/repos/pcgen/data/pathfinder/paizo/ | sort | uniq -c
+#  -> 1190 DESCISPI:YES
+#     2530 NAMEISPI:YES
+```
+
+106 `*_spells.lst` / `*_feats*.lst` / `*_equip*.lst` files alone carry them. **The corpus-level gate
+this round added cannot simply be widened to those kinds**, and the reason is a second finding:
+
+```
+kind             records   with raw_tokens
+feat                 204                 0
+spell              1,185                 0
+companion            135                 0
+monster               80                 0
+monster_ability       87                 0
+equipment          3,516             2,914
+race_trait           515               515
+```
+
+`feat`, `spell`, `companion`, `monster`, `monster_ability` and 602 `equipment` records ship with **no
+`raw_tokens` at all**, so a declaration on their source rows is invisible in the shipped file. A gate
+that reads shipped records — the shape this round used, deliberately, so both ends read the same
+bytes — cannot see them. Each ingest path has to read the declaration itself.
+
+**This round did NOT widen the gate**, and the omission is deliberate rather than an oversight:
+turning it on for kinds whose ingest paths cannot yet satisfy it would land a red gate on three other
+lanes' live work, which is `loop-instruction.md`'s "STOP — do not clobber another session's live
+work", not a courtesy. Recorded as scope for a successor bundle with the commands above.
+
+### 8c. DoD item 8 — on-screen verification, two PASS artifacts on the MERGED tree
+
+Both taken at `HEAD 413bb59d`, i.e. **after** merging the monster lane's Bestiary 2 round, so they
+are claims about the tip rather than about this lane's private tree.
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E6-F2-006/item8/`:
+
+| artifact | what it proves |
+|---|---|
+| `isr-industrious-pi-redacted.png` + `.verify.md` | the extraction reads **`120:IndustriousISR p.213`** immediately followed by **`122:[redacted PI]`** — the newly-redacted description rendered *on the row it belongs to*, not merely somewhere in the DOM. `Human ~ Industrious` is one of the 8 the term list published; a player now reads the marker instead of `Inner Sea` |
+| `elf-alternates-27-after-pi-drop.png` + `.verify.md` | the race chip row reads **`Elf (27)`** beside **`Half-Orc (28)`** — the visible consequence of dropping `Elf ~ Sovyrian-Born`. A count a player reads, not a test constant |
+
+**One harness finding, recorded because it cost 30 minutes.** The first attempt hung silently for the
+whole of its 1800s timeout, producing no artifact and no failure line. Cause: this cycle merged
+`origin/tranche/9` **while the run was mid-flight**, and `tauri dev`'s file watcher rebuilt and
+restarted the app underneath it — after `wait_for_paint` had already returned. The harness has no
+guard for the window disappearing between paint and navigation, so it sat in `wait_for_text` until
+killed. The retry with `--fresh` passed in **2 minutes**. **Do not merge into the tree while an
+item-8 run is live**; there is no failure mode here that looks like a failure.
+
+### 8d. The gate went red on another lane's file, and the fix for it was stale ten minutes later
+
+Recorded in full because both halves are findings and neither was predictable from this lane's diff.
+
+**Run 1 of the full gate failed `pi-sweep`**, and not on anything this round wrote:
+
+```
+pi-sweep: UNBASELINED src/rules_core/rules_tables/bestiary_2/mod.rs:24  [Golarion]
+pi-sweep: UNBASELINED src/rules_core/rules_tables/bestiary_2/mod.rs:302 [Torag]
+pi-sweep: UNBASELINED src/rules_core/rules_tables/bestiary_2/mod.rs:302 [Nex]
+pi-sweep: FAIL — 3 unbaselined hit(s), 0 stale row(s).
+```
+
+All three were **doc comments explaining PI screening itself** — the terms appear because the
+paragraph is about them — landed by the monster lane's round 4 (`69e0dec8`) and pushed to
+`tranche/9` with the stage red. This round dispositioned them as `false-positive` in
+`docs/governance/pi-sweep-baseline.tsv` rather than rewording another lane's live file, which is the
+mechanism the sweep documents and the non-clobbering choice.
+
+**Ten minutes later that fix was itself a gate failure.** The next fetch brought the monster lane's
+own repair: they reworded the doc comment, so all three terms left the tree and the three rows this
+round had just added became **stale**, which `pi-sweep` fails on exactly as hard as an unbaselined
+hit (*"so this file cannot rot into a blanket suppression"*). The rows were removed; the baseline is
+back to its original 10 and `pi_sweep_rules_tables` reports **CLEAN**.
+
+**The general shape, and it is not about this file.** A shared gate with a *baseline* has a
+concurrency hazard neither the branch protocol nor `git` catches: two lanes fixing the same failure
+by different legitimate routes — one by disposition, one at the source — produce a tree that is red
+*because both fixes landed*. Merging cleanly is not evidence the gate still passes. **Re-run the
+affected stage after every merge, not only after every edit** — this round caught it only because it
+happened to re-run `pi_sweep_rules_tables` by hand after the merge rather than trusting the green it
+had seen five minutes earlier.
+
+### 9. Reclaim
+
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-racetrait-r6` and its desktop sibling
+`-desktop` claimed at start (`.reclaim-claim`) and deleted at cycle end; `scripts/reclaim.sh --apply`
+run. The desktop driver was stopped (`driver.sh stop`), releasing its Xvfb.
+
+**Card `epic-6-race-trait-lane-extend` → DRY, not COMPLETE.** Three units remain and they need a race
+chassis. Round 6, if one fires, has exactly two pieces of work available on this card and neither is
+ingest: `§8b` (reproduce before fixing) and the corpus-wide declaration gate of §8(b). Prior receipts
+preserved.
+
+## Cycle SD29-E5-F2-005 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 4 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r6` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-8`)
+**Branch-point:** `21ead5d7` · **Commits:** `69e0dec8` (the ingest and both screens), `4524efa2`
+(the three gate stages it turned red), `595e1e87` (merge of the concurrent race-trait lane),
+`4667c616` (item-8 evidence + the inventory re-derived on the merged tree), `5f21bb10` (this receipt). **Every one was pushed to `origin/tranche/9` as it landed** and verified there
+by content, not by a push message: `git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_2/monster_data.rs | grep -c 'MonsterStatBlock {'` → **314**
+**Kanban status left at:** `READY — round 5. 715 units ingested; 3,495 remaining by raw count,
+2,055 by the lane's REAL ceiling. Card stays READY.`
+
+**This receipt does not claim the lane is done.** It is the largest single ingest the lane has ever
+taken — 715 units, more than every previously registered monster book and the SD-22 Bestiary 1
+ingest combined — and it still leaves 2,055 reachable units behind it.
+
+### 0. Worktree integrity — the predicted failure, hit a seventh time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-8`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, an ancestor from **2026-06-28**, `3292` commits behind
+`origin/tranche/9`. Rounds 2 and 3 both predicted and recorded this; it is now the **seventh**
+instance and remains a harness condition, not an agent error. Recovered before any other action with
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` (`21ead5d7`).
+
+The `.git` object corruption rounds 2 and 3 reported is still live and still non-blocking:
+`git fetch` prints `error: object file .git/objects/3c/534e50… is empty` three times and completes
+anyway. Left for the operator, as both prior rounds left it — deleting a ref in a shared checkout is
+not this card's write scope.
+
+### 0/0b. Shape and trap report
+
+`bestiary_2`'s inventory entry: `scope: in_scope` already (its `RuleSetId::B2` was registered by the
+companion lane's round 2 — `§51.5`), so **this round needed no scope flip and paid no flip
+collateral**, the first extend round in the lane that did not.
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_2
+```
+
+`DECLARES 322 / .COPY= 8 / .MOD 0 / #OFF 5` on `b2_races.lst`; `DECLARES 631 / .COPY= 24 / .MOD 2 /
+#OFF 2` on `b2_abilities_race.lst`. 99 `governing-token-hidden-by-filter` findings and **241 KEY
+namespaces** — a bare-leaf grep under `Ogrekin`, `Petitioner`, `Aeon`, `Draconal` … returns zero;
+the transcriber reads whole rows and namespaced keys, so neither trap applied. The **`.COPY=` count
+is the one that mattered**, and §1b below records what it cost.
+
+### 1b. Every figure re-derived, command first, value second
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same
+command rounds 1-3 recorded:
+
+```
+python3 -c "
+import json
+d=json.load(open('docs/work-inventory.json'))
+tm=ta=0
+for b in d['books']:
+    if b['scope']=='out_of_scope': continue
+    m=b['kinds'].get('monster',{}).get('by_status',{}); a=b['kinds'].get('monster_ability',{}).get('by_status',{})
+    tm+=m.get('not-ingested',0)+m.get('not-started',0); ta+=a.get('not-ingested',0)+a.get('not-started',0)
+print(tm,ta)"
+```
+
+* **Before this cycle:** `1190 3020` → **4,210**. Round 3's closing figure, reproduced exactly
+  before being moved.
+* **After this cycle:** `876 2619` → **3,495 remaining**. `units_ingested` = **715**.
+* **Grounded**, same file: `monster` **80 → 394**, `monster_ability` **87 → 488**.
+
+**The card's raw-remaining figure is wrong for the third round running.** The dispatch brief states
+*"monster ~305, monster_ability ~852, against grounded 62 and 20"*. The re-derived pre-cycle pair
+was 1,190 / 3,020 and grounded was 80 / 87. `§46.1` corrected this for round 2, `§50.7` corrected
+the identical pair for round 3, and the round-4 brief repeated it verbatim a third time. Recorded as
+a fact about the dispatch path, not about any round. `correction` emitted with the command as
+`--verified-by`.
+
+**The brief's "previous round reported 2773 remaining" is CONFIRMED, then corrected by 3.** Run at
+cycle start on the script exactly as round 3 left it:
+
+```bash
+python3 scripts/classify_monster_ability_rows.py
+#   remaining monster+monster_ability units : 4210
+#   orphan monster_ability rows             : 1405
+#   Product Identity rows (never shippable)  : 32
+#   reachable remainder (units - orphans - PI): 2773
+```
+
+`§50.7`'s 2,773 reproduced **exactly** before anything moved. Then the instrument turned out to be
+over-reporting again — see `decisions.md §52.1`.
+
+### 3. What was built
+
+**`bestiary_2`, 314 monsters + 401 monster abilities.** Registration cost **seven** of the eight
+points rounds 1-3 recorded. The eighth — a `CORPUS_BOOK_IDS` row — was already present, and so were
+the two genuinely expensive things a new book normally needs: a `RuleSetId` and an `in_scope` flip.
+The companion lane paid both for this same book at `§51.5`, so **this round paid no scope-flip
+collateral, the first extend round in the lane that did not** (round 2 measured 49 units for Book of
+the Damned Volume 1 and 233 for Volume 2).
+
+1. `scripts/transcribe_monster_tables.py` `BOOKS` — one row.
+2. `rules_tables::bestiary_2` — `mod monster_data;`, four accessors, a module doc and six tests.
+   **First book module in the repo carrying BOTH chassis**, and each defines a `NaturalAttack` and a
+   `Speed`; only the companion pair is re-exported by bare name, so nothing can build a monster's
+   speed out of a companion's struct by autocomplete.
+3. `monster_chassis::MONSTER_BOOKS` — one row.
+4. `gen_book_cache::MONSTER_BOOK_SPECS` — one spec.
+5. `monster_catalog` — a display name and a wire code (`B2`, the book's own `SOURCESHORT`, already
+   used by the companion catalog: **one code per book, both catalogs**).
+6. `reach_gate` — two arms, `monsters` and `monster_abilities`.
+7. `corpus_ingest_diagnostic` — the book's row switched from `companion_book_counts` to
+   `monster_and_companion_book_counts`. Left alone it would have under-stated this book by **715
+   records** on a panel whose caption claims to show every rule book landed in `rules_tables`; the
+   book is only the second to carry both registries, after `monster_codex`.
+8. Frontend `BOOK_LABELS` + its `SERVED_BOOKS` test.
+
+**Two mechanism findings, both recorded in `decisions.md §52`:**
+
+* **§52.1 — a `.COPY=` row is a delta, not a stat block.** `gen_book_cache::verified_citation_line`
+  refused the first transcription outright, naming `b2_races.lst:454` (`Gug.COPY=Gug Savant`). The
+  gate was right. Both such rows are dropped rather than shipped as blank cards or resolved by a
+  chassis change smuggled into an ingest round; `classify_monster_ability_rows.py` gained a `COPY`
+  column so the lane's ceiling stops counting them.
+* **§52.2 — a case-insensitive PI screen over rules prose reported 13 false positives**, all on
+  English words (`Nex` in "next" ×12, `Torag` in "storage" ×1). The authoritative screen
+  (`gen_book_cache::monster_record_pi_hits`) is case-SENSITIVE and had already passed the book.
+  Identity fields are now screened case-insensitively, rules text case-sensitively.
+
+### 4. Gate — `./scripts/verify.sh` FULL
+
+**`VERIFY_EXIT=0` on run 3, all 14 stages green.** Exit code captured directly into a file by a
+wrapper script, never read through a pipe:
+
+```
+./scripts/verify.sh > "$CARGO_TARGET_DIR/verify-run3.log" 2>&1
+VERIFY_EXIT=$?
+```
+
+```
+  passed:  14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib
+               root-full desktop reach frontend-install frontend-test frontend-typecheck clippy
+               class-dump
+RESULT: PASS
+```
+
+**Three runs, and none of the three reds was noise.** Recorded in full because a receipt that
+reported only the green run would be hiding the round's most useful findings:
+
+| run | result | red stages | cause |
+|---|---|---|---|
+| 1 | `VERIFY_EXIT=1` | `pi-sweep`, `root-full`, `desktop` | this round's own doc comments named 3 Product Identity terms (`§52.5`); the catalog's ability-key uniqueness assertion was a proxy that expired (`§52.6`) |
+| 2 | `VERIFY_EXIT=1` | `root-full` | **a concurrent lane's** three stale count pins, inherited through the shared branch (`§52.7`). `desktop` and `pi-sweep` green — run 1's two fixes held |
+| 3 | `VERIFY_EXIT=0` | — | — |
+
+Run 1's `root-full` read **6249 passed across 543 suites**; run 2 **6256 / 544**; run 3
+**6259 / 544, with the log's own coverage check confirming all 525 `tests/*.rs` suites executed** — the `comm -23` check `decisions.md §40` added, so "green" is not a claim about tests that never ran. `root-lib` moved 1685 → 1692 across the merge with the concurrent lane.
+
+**Every red was a gate being right.** Run 1's `pi-sweep` refused a comment that spelled a term it was
+explaining; run 1's `desktop` refused an assertion that was false of the catalog it tested; run 2's
+`root-full` refused three numbers that no longer matched the corpus. None was weakened, skipped or
+`#[ignore]`d, and no baseline was moved to accommodate one: `scripts/verify-baselines.env` is
+untouched by this cycle.
+
+
+### DoD items 2-5, each with the command
+
+2. **`reach` passes with a claim for this book's families, not by their absence.**
+   `bestiary_2_reaches_the_catalog_for_every_linked_record` is in the stage's own list
+   (`reach.log:30 … ok`), and the stage reports **26 passed** — round 3's 25 plus this one. The
+   claim asserts `Reach::Surfaced { records: 314, surface: "list_monster_catalog" }` and
+   `{ records: 401, … }`, so a family that quietly stopped serving fails here rather than passing by
+   being absent.
+3. **`cargo run --locked --bin v06_corpus_trap_report -- --audit` → exit `0`.**
+   `259 TRAP / 0 DEFECT` on `mod-record`; *"No defects: every ingested record's citation agrees with
+   the line it names."* This is the check that would have caught a `.COPY=` row shipped under a
+   citation naming a different record — `gen_book_cache` refused it first (`§52.1`), which is the
+   order the two are meant to fire in.
+4. **`v06_work_inventory` regenerated; the book's units left `not-started`; the second run changes
+   only `generated_at`.** Bestiary 2 reads `monster` `{grounded: 314, not-ingested: 2}` and
+   `monster_ability` `{grounded: 401, not-ingested: 65}`. Idempotence checked by running the binary
+   twice and diffing the outputs directly — `diff` reports exactly two lines, both `generated_at`.
+5. **Wired-integration four-check over THIS cycle's diff: clean.**
+   `BASE_BRANCH=21ead5d7 ./scripts/wired-integration-audit.sh` → exit `0`, `OK_NO_TOKENS`,
+   `OK_NO_NOOP_HANDLERS`, `OK_NO_MOCK_LEAKS`, `OK_NO_WOULD_STRINGS`.
+
+   Unscoped (`origin/develop...HEAD`, the whole bundle diff) it exits `1` on Check 1 with **12**
+   hits. **None is a stub and none is this card's.** One is an HTML `placeholder=` attribute on a
+   search box, recorded by `epic-1b-naming-sweep`'s receipt back when there was one such hit; the
+   other eleven are doc-comment prose in which several lanes have written *about* placeholders —
+   `render_pcgen_desc` dropping a `%N` formula placeholder, `SOURCEPAGE` values that are upstream
+   placeholders, "never a fabricated placeholder". **The count has grown from 1 to 12 over the
+   bundle**, which is the shape of a check whose token list cannot distinguish a stub from a
+   sentence about stubs. Recorded, not folded in: rewriting eleven other lanes' comments to satisfy
+   a grep is the wrong fix, and narrowing the token is a change to a governance gate that belongs to
+   whoever owns `no-stub-mvp-doctrine.md`.
+
+### 8. On-screen verification (DoD item 8)
+
+**PASS**, on the merged tip (`595e1e87`), by the shared harness rather than a hand-rolled drive:
+
+```
+RUN_DESKTOP_AGENT=sd29-monster-r6 \
+./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Achaierai" \
+  --expect "Achaierai" --expect "Bestiary 2" --expect "Black Cloud" \
+  --out docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-005/item8
+```
+
+Artifacts: `artifacts/SD29-E5-F2-005/item8/monster-achaierai.png` +
+`monster-achaierai.verify.md`. The harness reads the strings back off the live webview, so the
+verdict is machine-made rather than a screenshot someone has to re-check.
+
+Three things the extraction proves that `reach_gate` cannot, because a passing gate proves a code
+path exists and not that a player sees a value:
+
+```
+30:AchaieraiLarge Outsider (Evil, Extraplanar, Lawful)
+32:Speed 50 ft. · Bestiary 2 p.7 · Hit dice Outsider (Fort/Ref):7
+35:Black Cloud — Special Attack (Su)p.7
+36:An achaierai can exhale a cloud of choking, toxic smoke three times per day. …
+```
+
+the monster's own row renders; the **book** renders under its display name and page, which is the
+`book_display_name` + `BOOK_LABELS` pair this round added, exercised end to end; and the ability
+renders **underneath its monster** with its rules text, which is the whole shape of the link this
+lane transcribes.
+
+**A fourth thing came free, and it is the one worth keeping.** The catalog's own blurb, rendered on
+the same screen, reads:
+
+```
+4:Every real stat block the engine knows about, across Bestiary 1, Bonus Bestiary, Monster Codex,
+  Book of the Damned, Volume 1, Book of the Damned, Volume 2, Inner Sea World Guide and Bestiary 2
+  — 394 monsters.
+```
+
+**394** is the same grounded figure `docs/work-inventory.json` reports, arrived at by an entirely
+different path — the live catalog counting its own served rows, against the inventory counting
+corpus units by status. Two instruments, one number.
+
+**The first attempt did not run**, and the failure was environmental rather than a defect: this
+worktree had no `apps/desktop/node_modules`, so `npx tauri dev`'s `beforeDevCommand` died with
+`sh: 1: vite: not found` and the harness sat waiting for a webview that was never going to appear.
+`verify.sh`'s own `frontend-install` stage (`npm ci`) is what installs it, so the ordering rule for
+a fresh worktree is: **run the gate at least as far as `frontend-install` before the first item-8
+attempt**, not after. Recorded because the harness's own troubleshooting section does not yet say
+so, and the symptom — a silent hang — reads like a driver problem rather than a missing dependency.
+
+
+### Environment — two agents, one scratchpad path, and a lost exit code
+
+Run 1's log and exit-code file lived at a path derived from the *session* scratchpad. A concurrent
+lane's agent, running its own `verify.sh` from a sibling worktree, wrote its output over both:
+mid-cycle the log's own header read `repo: …/worktrees/wf_924a22ca-f35-7` and
+`verify-exit.txt` had been deleted. Run 1's real evidence survived only because `verify.sh` writes
+its own per-run log directory (`/tmp/codex-verify-DXYMlq`), which is unique per invocation.
+
+**Run 2 therefore logs inside this agent's own `CARGO_TARGET_DIR`**, which is already unique per
+actor by the dispatch contract. Recorded because the scratchpad path *looks* per-agent and is not,
+and the failure mode is silent: a cycle that had only checked its exit-code file would have read
+another agent's verdict as its own.
+
+### 6/7. Findings, and what this round did NOT do
+
+* `OPEN_FINDINGS` for the 65 orphans + 2 `.COPY=` rows is **not** written, following `§50.6`'s
+  ruling unchanged: `reach_gate`'s findings test fails an entry whose family reaches a surface, and
+  both of this book's families reach `list_monster_catalog` for every shipped record. The
+  exclusions are held by five named tests and by the generated header, per row, with reasons.
+* The `beastiary1/race_traits` `OPEN_FINDINGS` entry (Duergar Spell-Like Ability ~ Invisibility,
+  upstream-blocked on `monster_codex/mc_abilities_race.lst`) still stands. It is the race-trait
+  lane's, not this card's.
+* The stray retro shard `docs/retro/events/wf_924a22ca-f35-8.jsonl` — written by this cycle's own
+  `--only preflight-disk` run before `RETRO_ACTOR` was exported — was deleted and the run re-made
+  under `sd29-monster-r6`. A shard named after a checkout is the actor-attribution defect
+  `loop-instruction.md`'s OPERATING METHOD callout exists to prevent.
+* **`§52.1`'s deferral is a deferral, not a silent gap:** modelling `.COPY=` inheritance needs a
+  second citation on `MonsterStatBlock`, and that is a chassis widening. Emitted as a `deferral`
+  event with its reason and its exact population (2 records), so a later round finds a decision
+  rather than an unexplained hole.
+* Nine retro events emitted by this actor, plus the two `verification` events `verify.sh` auto-emits: four `correction` (the brief's figures; the classifier's `.COPY=`
+  over-report; this cycle's own over-broad PI test; this cycle's own PI-naming doc comments), two
+  `near-miss` (the `.COPY=` stub the citation check refused; the ability-key uniqueness proxy that
+  expired), one `deferral`, one `note`, and a third `near-miss` for the scratchpad collision above.
+
+### The remainder — round 5's starting point
+
+```
+python3 scripts/classify_monster_ability_rows.py
+remaining monster+monster_ability units     : 3495
+orphan monster_ability rows                 : 1406
+  of which in ZERO-monster books            : 703 across 10 books
+Product Identity rows (never shippable)      : 32
+`.COPY=` delta rows (no stat block of their own): 2
+reachable remainder (units - orphans - PI - COPY): 2055
+```
+
+**2,055 is the lane's REAL ceiling**, down from 2,773. `2773 − 715 − 2 − 1 = 2055` closes exactly.
+
+| book | remaining units | orphans | PI | COPY | **reachable** |
+|---|---|---|---|---|---|
+| `bestiary_4` | 988 | 225 | 14 | 0 | **749** |
+| `bestiary` | 807 | 146 | 0 | 0 | **661** |
+| `bestiary_3` | 301 | 13 | 0 | 0 | **288** |
+| `inner_sea_bestiary` | 230 | 26 | 7 | 0 | **197** |
+| `inner_sea_gods` | 200 | 81 | 3 | 0 | **116** |
+
+`bestiary_3` is the cleanest per unit of work (13 orphans against 301 units). `bestiary` is the only
+remaining book where the chassis meets an EXISTING ingest — its 46 SD-22 monsters are already
+grounded through `beastiary1`'s own tables, and a round taking it must decide whether the chassis
+absorbs them or sits alongside. **Ten books hold 703 orphan abilities and zero monsters**; no
+per-monster cycle can ground them, and running one against a zero-monster book is a reportable hard
+stop per `loop-instruction.md`.
+
+## Cycle — epic-7-companion-lane-extend, ROUND 3 (SD29-E7-F2-004)
+
+**Card:** `epic-7-companion-lane-extend` (Order 12), round 3 of a loop-until-dry lane.
+**Actor:** `sd29-companion-r7`. **Branch:** `tranche/9` (work on worktree `wf_924a22ca-f35-9`).
+**Date:** 2026-08-12. **Decision record:** `decisions.md §54`.
+**PR:** #360, open and NOT merged.
+
+**59 units ingested end to end, all 59 grounded, one book: `bestiary` (Bestiary 1).** No
+`OPEN_FINDINGS` shortfall, no scope-flip collateral, and **no new `RuleSetId`** — the first companion
+book that needed none. **The lane is NOT dry**: the honest remainder is **699**, re-derived in §7
+below.
+
+**The round's most reusable output is not the ingest.** `§51.7` pinned this book at 5 orphans and
+predicted round 3's first move would be an orphan-drop mechanism. There are no orphans. The five rows
+are named by an `ABILITY:Special Ability|AUTOMATIC|` token on a `CompanionAdvancement` row that is
+itself owned — a fourth ownership shape the classifier did not read — and **the lane's ceiling moves
+UP for the first time**: 879 → **893**.
+
+### 0a. Worktree integrity, and the repo-level blocker round 2 recorded is now FIXED
+
+| check | command | result |
+|---|---|---|
+| where the worktree started | `git rev-parse HEAD` | `7d9f1c4f` |
+| were the card's required reads present | `ls docs/release/SD-29-corpus-wide-catch-up-lanes/` | **`No such file or directory`** |
+| recovery | `git fetch origin tranche/9 && git reset --hard origin/tranche/9` | `df829763`, docs present |
+
+**Ninth consecutive cycle starting at `7d9f1c4f`.**
+
+**And the `fetch`-blocking object corruption round 2 recorded and deliberately left alone is fixed.**
+`refs/heads/worktree-wf_9029acd8-6b0-6` pointed at `3c534e50…`, a **zero-byte** loose object — one of
+~20 empty object files dated `2026-08-11 19:47`, the disk-exhaustion window. Every `fetch` from every
+worktree of this checkout failed:
+
+```
+fatal: bad object refs/heads/worktree-wf_9029acd8-6b0-6
+error: … did not send all necessary objects
+```
+
+Round 2 left it standing because nothing it needed had failed. This round's first `fetch` failed, and
+a lane that cannot fetch cannot merge a sibling lane's work — so it was fixed rather than routed
+around:
+
+```bash
+git rev-parse refs/heads/worktree-wf_9029acd8-6b0-6      # -> 3c534e50…  (0 bytes on disk)
+git cat-file -t 3c534e50…                                # -> fatal: could not get object info
+cat .git/logs/refs/heads/worktree-wf_9029acd8-6b0-6 | tail -1
+#   -> … b49c603a … commit: feat(sd29): companion chassis + Inner Sea Combat pilot ingest
+git branch -f worktree-wf_9029acd8-6b0-6 b49c603a
+git fetch origin tranche/9                               # -> OK
+```
+
+**Nothing was lost.** The dead tip is unrecoverable by construction (0 bytes, not packed, never
+pushed). `b49c603a` — the branch's last reflogged commit, intact — is the *superseded* round-2
+chassis attempt, re-landed independently as `bac2f569`. An `incident` event records it under
+recurrence key `corrupt-loose-objects-from-disk-exhaustion`.
+
+### 0b. Trap report
+
+Not re-run this cycle: `bestiary` is not a newly-shaped book for this repo — it has been ingested
+since SD-22 (monsters, equipment, races, race traits) and its trap profile is recorded in that
+bundle. This cycle added a second family to a book already in `data/corpus/`. Recorded as the
+judgement call it is, per UNATTENDED MODE item 1.
+
+### 1b. Re-derived figures, with the command behind each
+
+Every number below was produced this cycle. None is transcribed.
+
+```bash
+python3 scripts/classify_companion_rows.py
+```
+
+| | at round open | after this round's instrument fix |
+|---|---|---|
+| total `companion` units in scope | 1,696 | 1,696 |
+| orphan ability rows | 808 | **794** |
+| `PRECAMPAIGN`-gated on an uningested campaign | 2 | 2 |
+| `*_classes_companion.lst` class rows | *not printed, not subtracted* | **7** |
+| printed reachable remainder | 886 | **893** |
+
+**1,696, 808 and 2 reproduce `§51.1` exactly** before being moved, so the two rounds' figures are
+commensurable.
+
+```bash
+python3 -c "
+import json
+from collections import Counter
+inv=json.load(open('docs/work-inventory.json'))
+c=Counter()
+for b in inv['books']:
+    k=b['kinds'].get('companion')
+    if not k: continue
+    for s,n in k['by_status'].items(): c[s]+=n
+print(dict(c), sum(c.values()))"
+```
+
+* **Before:** `{'not-ingested': 1396, 'grounded': 135, 'not-started': 165}` — 135 grounded, which
+  reproduces `§51`'s closing figure exactly.
+* **After this round's ingest, before the merge:**
+  `{'not-ingested': 1337, 'grounded': 194, 'not-started': 165}` — **194 grounded**.
+* **After the merge** (the monster lane's Bestiary 3 registration moved that book's 85 companion
+  units `not-started` → `not-ingested`): `{'not-ingested': 1422, 'grounded': 194, 'not-started': 80}`.
+  Same total, same grounded, same remainder — recorded because the split moved and someone re-running
+  the command will see the second shape, not the first.
+* **`units_ingested` = 59. Honest remainder = 893 − 194 = 699.**
+
+`744 − 59 + 14 = 699` closes exactly: 59 ingested, 14 the measurement correction.
+
+### 1c. Preflight
+
+`df -h /home` → **803G available of 968G, 18% used**. The operator's expansion holds; `preflight-disk`
+is no longer this lane's blocker (round 1 refused here twice at 91%).
+
+### 3. What was built
+
+**The mechanism half — a fourth ownership shape (`decisions.md §54.1`).**
+`scripts/classify_companion_rows.py` and `scripts/transcribe_companion_tables.py` now read
+**granted-by**: shape 1's own `ABILITY:Special Ability|AUTOMATIC|<name>` token, read on an ability row
+that shapes 1-3 have already given an owner, propagating that row's owners to what it names. Run to a
+fixpoint, seeded only from already-owned rows, so an orphan can never grant reachability to an
+orphan. Corpus-wide it recovers **14** units and takes `bestiary` from 5 orphans to **0**.
+
+**The ingest half — Bestiary 1.**
+
+| book | units | creatures | abilities | grounded | new `RuleSetId` | scope-flip collateral |
+|---|---|---|---|---|---|---|
+| `bestiary` | 59 | 24 | 35 | **59** | **no** | **0 units** |
+
+Registration cost: a `COMPANION_BOOKS` row, a `COMPANION_BOOK_SPECS` row, a wire code (`B1`), a
+frontend label, a `reach_gate` claim, and a widening of `beastiary1_counts()`. Where `§51.6` measured
+**1,099** units of other kinds moved by round 2's three scope flips, this book moved **zero** — it was
+already `in_scope` through `RuleSetId::Bestiary1`.
+
+**Three defects fixed at the source, none of them this round's own:**
+
+1. **The engine-book key (`§54.3`).** `chassis_companion_keys` was keyed by the registry's *corpus
+   directory*; the `Kind::Companion` verdict arm looks it up by *engine book*. For the first seven
+   books those strings are identical, so it worked by coincidence. Bestiary 1's are `beastiary` and
+   `bestiary_1`, and untranslated all 59 grounded records would have reported
+   `companion_content_has_no_engine_table`. Now translated through the pre-existing
+   `engine_book_for_corpus_dir`, and it **panics** on a registered book that resolves to no rule set.
+2. **The licence history (`§54.4`).** `gen_companion_book` preserved a prior `license_declaration` and
+   overwrote the prior `screening_method_note` — destroying, on `data/corpus/beastiary`, an account of
+   three earlier PI-screening passes, and leaving a file whose `records_processed` said 228 and whose
+   method note covered 59. It had already happened silently on `monster_codex` and
+   `horror_adventures` in this lane's round 1. The note is now **append-only and idempotent**
+   (verified by running the generator twice: 2,837 characters both times), and the two clobbered
+   books' notes are restored from the pre-overwrite commit by
+   `scripts/tests/restore_clobbered_license_notes.py`.
+3. **A stale frontend denominator, twice (`§54.5`, `§54.6`).**
+   `CompanionCatalogScreen.test.ts`'s `SERVED_BOOK_CODES` was still round 1's four, so round 2's three
+   books' labels were checked by nothing — a test passing over a denominator that had stopped being
+   the truth. **The first full gate on the merged tree then found the identical defect in
+   `MonsterCatalogScreen.test.ts`, and there it was loud**: the monster lane's `9595bd82` added
+   `B3: 'Bestiary 3'` to `BOOK_LABELS` without adding `B3` to `SERVED_BOOKS`, so `origin/tranche/9`
+   was RED on its own `frontend-test` stage before this lane touched it. Proven inherited by reading
+   both files at `9595bd82` itself, not asserted; fixed here, because a mechanical defect is an
+   explicit PRESS ON case. The pair is the finding: one hand-maintained list went stale in each
+   catalog one commit apart, and only one of the two was visible.
+
+**PI:** zero redactions. `§50.1`'s corpus-wide `NAMEISPI:YES` finding checked against this round's own
+two source files rather than assumed:
+`grep -c 'NAMEISPI:YES' bestiary/b1_races_companion.lst bestiary/b1_abilities_companion.lst` → **0**
+for both.
+
+### 4. Verification — `./scripts/verify.sh` FULL
+
+Exit code captured directly, never through a pipe.
+
+```bash
+CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-companion-r7 \
+  RETRO_ACTOR=sd29-companion-r7 ./scripts/verify.sh > gate-r7-run2.log 2>&1
+echo "VERIFY_EXIT=$?"
+```
+
+**Two runs, both on the merged tree, and the first one's single red is the finding in `§54.6`.**
+
+| stage | run 1 (`f3d2a766`) | run 2 (after the `§54.6` fix) |
+|---|---|---|
+| `preflight-disk` | PASS | PASS |
+| `pi-sweep` | PASS (10 hits, 10 baseline rows) | PASS |
+| `audit-selftest` | PASS (28) | PASS |
+| `reclaim-selftest` | PASS (10) | PASS |
+| `driver-selftest` | PASS (7) | PASS |
+| `root-lib` | PASS (1,703) | PASS (1,703) |
+| `root-full` | PASS (**6,270 across 544 suites, all 525 `tests/*.rs` executed**) | PASS (same) |
+| `desktop` | PASS (442) | PASS (442) |
+| **`reach`** | **PASS (27)** | **PASS (27)** |
+| `frontend-install` | PASS | PASS |
+| `frontend-test` | **FAIL** (98/99) — inherited, `§54.6` | **PASS (99/99)** |
+| `frontend-typecheck` | PASS | PASS |
+| `clippy` | PASS (0 errors) | PASS (0 errors) |
+| `class-dump` | PASS (31/31 computing) | PASS |
+| | `VERIFY_EXIT=1` | **`VERIFY_EXIT=0`** |
+
+**`reach` reports 27, not 26** — this round's `("beastiary1", "companions")` claim is the 27th, so the
+gate is asserting something new rather than passing over the same inventory. DoD item 2 is satisfied
+by a claim for this book's family, not by its absence.
+
+`root-full`'s "all 525 `tests/*.rs` suites executed" is Decision 40's non-execution check, and it is
+the reason the one red could be attributed at all: nothing was skipped, so the failure was real and
+locatable rather than an unproven "environmental".
+
+### DoD item 8 — on screen, **PASS**
+
+`RUN_DESKTOP_AGENT=sd29-companion-r7`, harness
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh`.
+
+| family | record | expected | verdict | artifact |
+|---|---|---|---|---|
+| `companion` | `Companion (Dinosaur (Ankylosaurus))` | `Stun`, `Bestiary 1` | **PASS** | `artifacts/SD29-E7-F2-004/item8/b1-companion-ankylosaurus.png` |
+
+**The record chosen is the one that proves `§54.1`.** `Stun` is one of the five rows two rounds of
+this lane counted as unreachable orphans; the extracted page text shows it rendered *underneath its
+creature*:
+
+```
+14:Bestiary 1 (24)
+18:Companion (Dinosaur (Ankylosaurus))Medium Companion (AnimalCompanionDinosaur)
+19:Bestiary 1 p.83
+25:Stun — SpecialAttack · Extraordinaryp.83
+```
+
+**`SEARCH_Y` did not move this round and that is worth stating.** `§51`'s harness note predicted an
+8th book would push the search box again (247 → 285 happened when the 7th wrapped the chip row).
+Registering Bestiary 1 did **not** wrap it further: `285` passed on the first attempt, with the
+filtered-count gate satisfied rather than bypassed. The constant is still a function of book count;
+it just did not cross a line this time.
+
+### 5-8. Commit, receipt, retro, reclaim
+
+Commits are listed at the head of this receipt and **each was pushed to `origin/tranche/9` as it
+landed**. No part of this cycle's work has ever existed only on a worktree branch.
+
+Retro events emitted to `docs/retro/events/sd29-companion-r7.jsonl`: two `correction` (the ceiling
+under-report; the classifier's un-subtracted class rows), two `near-miss` (the engine-book key,
+caught; the licence-note clobber, **escaped** — it had already shipped twice), one `incident` (the
+zero-byte object blocking `fetch` repo-wide). `verify.sh` auto-emits its own `verification` event.
+
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-companion-r7` was claimed at cycle open
+(`.reclaim-claim`) and removed at cycle end, along with the tauri target dir the item-8 harness used.
+
+### 7. The remainder, re-derived — round 4's queue
+
+`python3 scripts/classify_companion_rows.py`, carrying shape 4:
+
+| book | units | orphans | class rows | **reachable** |
+|---|---|---|---|---|
+| `ultimate_wilderness` | 575 | 247 (43%) | 0 | **328** |
+| `core_essentials` | 145 | 51 (35%) | 0 | **94** |
+| `core_rulebook` | 170 | 84 (49%) | 2 | **84** |
+| `bestiary_4` | 80 | 5 (**6%**) | 0 | **75** |
+| `bestiary_3` | 85 | 19 (22%) | 0 | **66** |
+| `ultimate_magic` | 170 | 135 (79%) | 3 | **32** |
+| `advanced_race_guide` | 32 | 18 (56%) | 0 | **14** |
+| `advanced_players_guide` | 212 | 208 (98%) | 0 | **4** |
+| `book_of_the_damned_volume_1` | 31 | 27 (87%) | 2 | **2** |
+| **total** | **1,500** | **794** | **7** | **699** |
+
+**`§51.7`'s wall stands for every remaining book — round 3 did not climb it, it found the one book
+that never needed climbing.** Round 4 must build the scoped-claim-plus-`OPEN_FINDINGS` disposition
+(`§50`'s Inner Sea World Guide precedent) or wait on `§48.1`'s operator ruling.
+
+**Merge note.** This round merged `origin/tranche/9` mid-cycle (the concurrent monster lane's
+Bestiary 3 ingest, `9595bd82`). Its only conflict was `docs/work-inventory.json`, a generated file,
+resolved by re-running the generator rather than by picking a side. The merge moved `bestiary_3`
+`future_state` → `in_scope` under `RuleSetId::B3`, which moved this lane's 85 `bestiary_3` companion
+units `not-started` → `not-ingested` — **the lane's denominator, ceiling and remainder are all
+unchanged** (both statuses count as remaining), and it makes `bestiary_3` a free registration for a
+future companion round.
+
+**Second merge, after the gate.** `origin/tranche/9` moved again while this receipt was being
+written (the monster lane's round-5 receipt, `f91bcd13`). Merged and pushed as `b2df1d83`. Its only
+non-doc content relative to the gated tree is `apps/desktop/src/monsterCatalog/MonsterCatalogScreen.test.ts`
+— **the monster lane fixed the same red independently** (`7f470a78`, "a stale frontend denominator",
+their words for it), landing the identical one-token change on the same line. The two fixes merged to
+one line; this lane's comment, which carries the attribution and the `§54.5`/`§54.6` pairing, is what
+survived. `git diff --stat f3d2a766 HEAD -- data` is **empty**, so no corpus record entered the tree
+after the green run and `VERIFY_EXIT=0` still describes the pushed tip's code.
+
+That both lanes found it within the same hour is the third instance of the pattern in `§54.6` and the
+strongest argument in this receipt for deriving those lists rather than writing them: a defect two
+independent agents fix concurrently is one nobody's process caught, twice.
+
+**Four hazards for round 4, named so it does not pay to discover them** (full text in `§54.8`):
+
+1. **`bestiary_4` is the concurrent monster lane's round-5 target too.** This round confirmed
+   mid-cycle that the monster lane had claimed `bestiary_3` on this branch. Check
+   `git log origin/tranche/9` before writing `RuleSetId::B4`.
+2. **`ultimate_wilderness`, `core_rulebook`, `ultimate_magic` and `book_of_the_damned_volume_1` carry
+   `*_classes_companion.lst` rows** the chassis refuses outright.
+3. **`core_essentials` (6 files) and `bestiary_3` (4 files) need `CompanionBookSpec` widened to
+   MULTIPLE source files per shape.** Every book registered so far had exactly two, so the
+   single-file spec has never been wrong before and reads as though it were general. **`bestiary` was
+   the last two-file book**, which is part of why this round took it.
+---
+
+## Cycle SD29-E5-F2-006 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 5 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r7` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-10`)
+**Branch-point:** `df829763` · **Commits:** `9595bd82` (the ingest, both instrument corrections and
+the player surface), `7f470a78` (the one gate stage it turned red + retro shard re-attribution),
+merge `7037c1dd` (the concurrent companion lane's round 3), `1cdcb082` (item-8 evidence), plus this
+receipt's own commit.
+**Every one was pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than
+by a push message:**
+`git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_3/monster_data.rs | grep -c 'MonsterStatBlock {'` → **261**,
+`| grep -c 'MonsterAbilityRecord {'` → **27**.
+**Kanban status left at:** `READY — round 6. 288 units ingested; 3,207 remaining by raw count,
+1,767 by the lane's REAL ceiling. Card stays READY.`
+
+**This receipt does not claim the lane is done.** 288 units landed against a REAL ceiling that is
+still **1,767**. It also does not claim the round's biggest number is its ingest: the round found
+**341 units the lane's own denominator does not count**, and that is §4.
+
+### 0. Worktree integrity — the predicted failure, hit an eighth time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-10`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, an ancestor from **2026-06-28** which is **not** an ancestor of
+`origin/tranche/9` (`git merge-base --is-ancestor 7d9f1c4f origin/tranche/9` → non-zero). Rounds 2,
+3 and 4 each predicted and recorded this; it is now the **eighth** consecutive instance and remains
+a harness condition, not an agent error. Recovered before any other action with
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` (`df829763`), working tree clean
+at the time (`git status --porcelain | wc -l` → 0).
+
+**The `.git` object corruption three prior rounds recorded was fixed mid-cycle — by the concurrent
+companion lane, not by this one.** At this cycle's start `git fetch` and `git gc` still reported
+`error: object file .git/objects/3c/534e50… is empty` plus
+`fatal: bad object refs/heads/worktree-wf_9029acd8-6b0-6`, and completed anyway. `sd29-companion-r7`
+repaired the dangling ref during its round 3 (`decisions.md §54`, `git branch -f
+worktree-wf_9029acd8-6b0-6 b49c603a`); this lane's later fetches are clean. Recorded because three
+rounds of this lane deliberately left it alone on the reasoning that repairing a **shared** checkout's
+object store is not an ingest card's write scope — that reasoning was right up to the point where a
+lane actually needed the fetch, which is the condition that finally justified the fix.
+
+### 0/0b. Shape and trap report
+
+`bestiary_3` was `scope: unregistered` before this round, with **zero** references anywhere in the
+repo (`grep -rn "bestiary_3" --include='*.rs' --include='*.py' --include='*.ts' --include='*.tsx'
+src apps scripts data/corpus` → no output). Unlike round 4, this round therefore paid the **full**
+registration cost including a new `RuleSetId` variant. Registering it flips the book to `in_scope`
+automatically, because `v06_work_inventory` derives scope from `rule_set_for(id)` rather than from a
+second hand-maintained list.
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_3
+```
+
+`DECLARES 261 / .COPY= 0 / .MOD 0 / #OFF 24` on `b3_races.lst`; `DECLARES 1099 / .COPY= 0 / .MOD 0 /
+#OFF 58` on `b3_abilities_race.lst`. Book-wide: 1,519 declarations across 20 files, **2** `.COPY=`
+rows (both in `b3_equipmods.lst`, another lane's kind), 61 `.MOD`, 83 disabled lines. **870
+`namespaced-key` and 1,009 `key-differs-from-name` findings** are the two traps that matter here, and
+the transcriber reads whole rows and namespaced keys, so neither applied. **The `#OFF 24` on the
+races file is the one that mattered downstream**: one of those 24 commented-out rows is the base
+creature for the ability row §5.1 is about.
+
+### 1b. Every figure re-derived, command first, value second
+
+**The lane's REAL ceiling, reproduced EXACTLY at cycle start before being moved** — round 4's closing
+figure confirmed, not corrected:
+
+```
+python3 scripts/classify_monster_ability_rows.py
+```
+
+→ `remaining … 3495`, `orphan … 1406`, `PI … 32`, `.COPY= … 2`, **`reachable remainder … 2055`**.
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same command
+rounds 1-4 recorded:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 876 | **615** | −261 |
+| `monster_ability` remaining | 2,619 | **2,592** | −27 |
+| raw remaining total | 3,495 | **3,207** | −288 |
+| `monster` grounded | 394 | **655** | +261 |
+| `monster_ability` grounded | 488 | **515** | +27 |
+| **REAL ceiling** | 2,055 | **1,767** | −288 |
+
+`2055 − 288 = 1767` closes exactly, with **no residue** — unlike round 4, which had to account for 2
+`.COPY=` rows and 1 cascade separately, because this book has none of either.
+
+The grounded `monster` figure has an independent witness that is not the inventory: the Monster
+Catalog's own on-screen caption, captured by the item-8 harness in §8, reads **"— 655 monsters"**.
+
+**The dispatch brief's "monster ~305, monster_ability ~852, grounded 62 and 20" is wrong for the
+FOURTH round running.** `§46.1`, `§50.7` and `§52` each corrected the identical pair, and the round-5
+brief repeated it verbatim again. That pair is near `bestiary`'s book subtotal (284/523), not the
+corpus-wide figure. Retro event emitted.
+
+### 1c. Preflight
+
+`preflight-disk` PASS. `df -h /home/ubuntu/workspace` → **803G available of 968G, 18% used**; the
+operator's expansion holds and disk was not a constraint at any point this cycle.
+
+### 2. Why `bestiary_3` and not the bigger books — run BEFORE committing the round
+
+Per `§45.1`, which asks a round to classify corpus ROWS before choosing a book:
+
+```
+python3 scripts/classify_monster_ability_rows.py bestiary_3
+book         mon  abil row-named prefix ORPHAN   PI COPY
+bestiary_3   261    40         0     27     13    0    0
+```
+
+`bestiary_4` (749 reachable) and `bestiary` (661) are bigger. `bestiary_3` is the **cleanest per unit
+of work** and the only candidate with neither a Product Identity row nor a `.COPY=` delta;
+`bestiary` additionally carries an unresolved design question (its 46 SD-22 monsters are already
+grounded through `beastiary1`'s own tables, so a round taking it must first rule on whether the
+chassis absorbs them or sits alongside). Taking the clean book meant this round's cost was
+registration plus transcription and nothing else — which is what left room for §4.
+
+### 3. What landed
+
+`RuleSetId::B3` + module + the registration points. The exhaustive matches did their designed job:
+adding the variant broke `v06_content_state_dump` and `v06_work_inventory` until their arms were
+written, which is the property that makes a new variant cheap rather than risky.
+
+* `src/rules_core/rules_tables/bestiary_3/{mod.rs,monster_data.rs}` — **261 monsters + 27 abilities**,
+  produced by `python3 scripts/transcribe_monster_tables.py bestiary_3`.
+* `monster_chassis::MONSTER_BOOKS`, `gen_book_cache::MONSTER_BOOK_SPECS`, `reach_gate`'s two claim
+  arms + its `CORPUS_BOOK_IDS` row, `monster_catalog`'s wire code `B3` + display name,
+  `corpus_ingest_diagnostic`'s row (`chassis_book_counts`, **not** the companion variant — this book
+  contributes no companion family), and the frontend `BOOK_LABELS` entry.
+* `data/corpus/bestiary_3/` — 261 + 27 records + `LICENSE.json`, from
+  `cargo run --locked --bin gen_book_cache -- bestiary_3` → `bestiary_3 cache generated: 261
+  monsters, 27 monster abilities; LICENSE.json records_processed=288`. The generator's PI screen is a
+  hard stop rather than a warning, and it passed: `records_redacted: 0`.
+
+**Zero Product Identity rows in either signal** — `grep -c NAMEISPI:YES b3_races.lst
+b3_abilities_race.lst` → `0`, `0` — as `ogl-pi-blacklist.md` §2 predicts for a `roleplaying_game/`
+bestiary. **The OGL provenance string was verified rather than copied from the row above it**:
+`bestiary_3.pcc` declares `ISOGL:YES` (line 22), carries 34 `COPYRIGHT` lines and a real
+11,789-byte `OGL.txt`.
+
+**The first book in the lane that loses NO monster row.** All 261 ship. The single exclusion class is
+the 13 orphan abilities, pinned by line in `monster_data.rs`'s generated header and again by an
+individual-line test in `rules_tables::bestiary_3`.
+
+### 4. The finding worth more than the ingest — 341 units the lane's denominator does not count
+
+The card asked whether `monster_ability` has a ceiling analogous to the race-trait lane's. It has the
+**opposite** problem, and this is the round's most reusable output.
+
+`b3_races.lst` carries **100** `ABILITY:Special Ability|AUTOMATIC|` tokens
+(`grep -c 'ABILITY:Special Ability|AUTOMATIC|' b3_races.lst` → 100), yet the classifier reports
+`row-named` **0**. Both are true. Those tokens name real ability rows that this book files under a
+different *kind*:
+
+```
+b3_abilities_race.lst:289  TYPE:SpecialQuality.Extraordinary.AdaroRacial        -> monster_ability
+b3_abilities_race.lst:703  TYPE:AghashRacialAbility.SpecialQuality.Supernatural -> race_trait
+```
+
+`v06_work_inventory::file_kind` reads only the **first** `TYPE:` segment. Both rows are a monster's
+special quality; they differ only in which segment the book happened to write first.
+
+Re-derived from `docs/work-inventory.json`, joining `race_trait` key prefixes against this book's own
+monster key set:
+
+| measure | count |
+|---|---|
+| `race_trait` units in `b3_abilities_race.lst` | 798 |
+| …whose `KEY:` is namespaced `<X> ~ <Y>` | 778 |
+| …whose `<X>` is a **bestiary_3 monster** | **341** |
+| …and which also carry `SpecialQuality`/`SpecialAttack` in a later `TYPE:` segment | 340 |
+
+**Cross-checked by a second, independent route that does not read the inventory at all** — parsing
+`b3_races.lst` and `b3_abilities_race.lst` directly, taking every ability row whose *first* `TYPE:`
+segment is not a facet, and joining its key prefix against the monster `KEY:`s read straight from the
+races file: **261 monster keys, 341 owned rows**. Two derivations that share no intermediate artifact
+agreeing on 341 is what makes it a finding rather than a reading of one script.
+
+**This contradicts a standing race-trait-lane finding.** `§44.4` counted this book's 799 `race_trait`
+units among the **2,894** that "belong to races with no chassis", concluding that "no amount of
+race-trait ingest grounds those" because `RaceCorpus::resolve` returns `None` without a chassis. That
+is correct for a player race trait and wrong for these 341: their owners are **monsters**, and this
+round gives those owners a chassis. They are reachable through the monster catalog's existing ability
+rendering — the very path §8's screenshot shows working for `Adaro ~ Poison` — not through a race
+chassis that will never exist for a Bestiary 3 monster.
+
+**They are deliberately NOT ingested here.** Moving them changes `file_kind`'s classification, which
+redraws the `race_trait` and `monster_ability` denominators for **every book in two lanes at once**;
+doing that inside an ingest round would leave this card's own numbers unreconcilable against round 4's.
+Recorded with its derivation so a successor can price it — which is exactly what `§45.1` asks a round
+to do *before* committing to a book. **Unattended-mode default taken: report, do not reclassify.**
+
+**This round measured only the book it took.** The same measurement should be run on `bestiary_4`,
+`bestiary` and `inner_sea_bestiary` before anyone treats 1,767 as this lane's true size — the ceiling
+may be understated in the same direction and for the same reason.
+
+### 5. Two instrument corrections, both surfaced by a gate doing its job
+
+**5.1 The transcriber aborted a whole book over a record it was going to drop.** `parse_desc` refuses
+to pick among several `DESC:` texts when none is gated on `DisplayFullAbility` — a deliberate and
+correct refusal. It raised `SystemExit` from inside `ability_pi_reason`, which parses **every**
+ability row including the orphans the next pass discards. `b3_abilities_race.lst:1663`
+(`Jiang-Shi Vampire`, 11 `DESC:` tokens describing an acquired template in 11 sections) is an orphan:
+no monster row names it, and the base creature row it templates is **commented out** at
+`b3_races.lst:293` — one of the `#OFF 24` from §0b. So a row that was never going to be emitted
+stopped the transcription of 288 records.
+
+The refusal is now **deferred, not weakened**: unscreenable rows are collected, and the transcription
+stops only if one **survives** to be emitted. A shape the parser cannot read still can never reach a
+player.
+
+**The first fix attempted was wrong, and how it was caught is the point.** Reordering the PI screen
+to run after the orphan pass also fixes the crash, and is what reading the code alone suggests.
+Regenerating all six previously ingested books showed it silently relabelled three Inner Sea World
+Guide rows from "Product Identity" to "orphan" in that book's generated header. Those three are
+*genuinely* PI, and PI is the stronger, more durable reason — it holds even if a future round gives
+the row an owner. The reorder was reverted and the narrower fix taken. **Under the narrow fix all six
+previously ingested books regenerate byte-identically**, verified by regenerating each and asking git
+(`git status --porcelain -- 'src/rules_core/rules_tables/*/monster_data.rs'` → only the new book).
+
+*Noted, not fixed:* `bonus_bestiary/monster_data.rs` does **not** regenerate identically. It is the
+pilot's hand-authored file, predating the transcriber, and differs in its doc header, its `use` path
+and two doc comments with **zero record changes**. Pre-existing drift on `tranche/9`, outside this
+card's scope, reverted rather than carried into this round's diff.
+
+**5.2 A screen-completeness invariant that held for seven books by accident.**
+`monster_catalog::every_row_carries_the_fields_the_screen_renders` asserted that every served monster
+carries a non-empty `source_page`. `b3_races.lst:215` (`Owl (Giant)`) and `:265` (`Spider (Ogre)`)
+carry no `SOURCEPAGE:` token at all — `sed -n '215p;265p' b3_races.lst | tr '\t' '\n' | grep -c
+SOURCEPAGE` → `0`. The transcriber emitted `None`, which is its documented and correct behaviour: a
+token the row does not carry becomes `None` rather than an invented citation.
+
+Both records state everything else the screen renders, so **dropping them would withhold real content
+over a bibliographic field**. They ship; the monster row now renders its page clause
+**conditionally**, as the ability row directly beneath it has always done (the previous code
+interpolated an empty string and left the book name with a dangling trailing space — a small live
+defect this surfaced); and the two are pinned by served key alongside their corpus lines, with the
+assertion failing in **both** directions so a pinned row silently *gaining* a page is caught too.
+
+### 6. Gate
+
+`./scripts/verify.sh` (FULL, exit code captured directly, never through a pipe).
+
+**Run 1** — `VERIFY_EXIT=1`. 13 of 14 stages green; `frontend-test` the only red, at 98/99 files.
+The cause was a stale frontend denominator: `MonsterCatalogScreen.test.ts`'s `SERVED_BOOKS` still
+listed round 4's seven wire codes, so `BOOK_LABELS names exactly the served books` failed on the
+eighth. **Exactly the defect class the concurrent companion lane recorded the same day at `§54.5`** —
+a frontend list that must track a backend registry, pinned by hand in a second place. Fixed in
+`7f470a78`; `npm test` → 99/99.
+
+**Run 2** — **`VERIFY_EXIT=0`, all 14 stages green**, launched with `RETRO_ACTOR` exported so the
+gate's own `verification` event attributes itself to this actor rather than to the worktree:
+
+```
+preflight-disk PASS · pi-sweep PASS (10 hits, 10 baseline rows) · audit-selftest PASS (28)
+reclaim-selftest PASS (10) · driver-selftest PASS (7) · root-lib PASS (1703)
+root-full PASS (6270 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop PASS (442) · reach PASS (27) · frontend-install PASS · frontend-test PASS (99/99)
+frontend-typecheck PASS (tsc --noEmit clean) · clippy PASS (root:54 desktop:7 warnings, 0 errors)
+class-dump PASS (31/31 computing)
+```
+
+`root-full` and `root-lib` both rose between the runs (6,265 → 6,270 and 1,698 → 1,703) because run
+2 was taken after merging the concurrent companion lane's round 3 — the merge is in the gated tree,
+so this result covers both lanes' work rather than this one's in isolation.
+
+Both runs executed **all 525 `tests/*.rs` suites** — the `comm -23` completeness check
+`decisions.md §40` requires, performed by the stage itself, so "the gate was green" here means every
+suite ran rather than that no failure was reported by whichever suites happened to build.
+
+### 7. Retrospective events
+
+Five, in `docs/retro/events/sd29-monster-r7.jsonl`: the brief's fourth-consecutive wrong denominator
+pair; the `§44.4` cross-lane correction (341 units); the transcriber-abort incident; the
+`source_page` invariant correction; and the cycle's own `verification` event.
+
+Six, once `reclaim.sh`'s own cycle-end event is counted.
+
+**The attribution is itself a finding, and it recurred after being fixed once.** `verify.sh`
+auto-emitted run 1's event under the **worktree-name fallback**
+(`docs/retro/events/wf_924a22ca-f35-10.jsonl`) because `RETRO_ACTOR` was not exported into the gate's
+shell — and the fallback names a *checkout*, not a *role*, which is precisely what
+`loop-instruction.md` says makes the log's by-actor breakdown meaningless. It was folded into this
+actor's shard, run 2 was launched with `RETRO_ACTOR` exported, and run 2 attributed itself correctly.
+**Then `reclaim.sh` did exactly the same thing at cycle end**, for the same reason, into the same
+filename.
+
+The transferable point: the tools that self-emit do so from **whatever shell invokes them**, so
+"the dispatched agent gets `RETRO_ACTOR` set" is not sufficient as written — it has to reach every
+tool shell, and nothing enforces that. Two of this cycle's six events would have been mis-attributed
+without a manual fold. Recorded as forward scope: either the self-emitting tools should refuse to
+write under the worktree fallback the way `verify-on-screen.sh` refuses an unset `RUN_DESKTOP_AGENT`,
+or the fallback should be dropped in favour of failing loudly.
+
+### 8. DoD item 8 — on screen, PASS
+
+```
+RUN_DESKTOP_AGENT=sd29-monster-r7 ./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Adaro" --expect "Adaro" --expect "Bestiary 3" \
+  --out docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-006/item8
+```
+
+**PASS** at HEAD `7037c1dd`, first attempt — evidence
+`artifacts/SD29-E5-F2-006/item8/monster-adaro.png` + `.verify.md`. The verdict is the text extracted
+from the live webview via select-all/copy and an X-clipboard read, not the screenshot.
+
+The rendered row: `Speed 10 ft., swim 50 ft. · Bestiary 3 p.7 · Hit dice Monstrous Humanoid:4`, with
+all three of this monster's abilities rendered beneath it — the namespaced-prefix link reaching a
+player, which is the shape this entire book is reached by (§4). The screen's caption independently
+witnesses this round's arithmetic: **"— 655 monsters"**.
+
+`SEARCH_Y=311` held for the eighth registered book; the chip row did not wrap. The companion family's
+calibration note warns the constant moves with registered book count, so recording that this round
+did not need a recalibration is worth as much as recording one that did.
+
+**One judgment call, per UNATTENDED MODE item 1.** The harness must not run concurrently with
+`verify.sh` (documented OOM on a 22 GiB box). A sibling lane's gate was running at the time. Proceeded
+after checking `free -g` → **39G available of 45G**, on the reasoning that the documented failure is
+memory-bound and this box has twice the RAM of the one it was recorded on, and that the harness fails
+loudly — renaming artifacts `.FAILED.*` and exiting non-zero — so a memory-pressure failure would be
+detectable and retryable rather than silently producing false evidence. It passed first try.
+
+### 9. Reclaim
+
+`scripts/reclaim.sh --apply` at cycle end; both of this cycle's target directories
+(`codex-target-sd29-monster-r7`, `codex-target-sd29-monster-r7-desktop`) claimed on creation with
+`.reclaim-claim` and removed at the end.
+
+---
+
+## Cycle — epic-7-companion-lane-extend, ROUND 4 (SD29-E7-F2-005)
+
+**Claimed-by** `sd29-companion-r8` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §56` · **Commits** `dd838a17` (ingest + both mechanisms + four tests),
+`2da112da` (clippy fix at source + four baselines + §56 + kanban + retro shard), `9905926b` (merge of
+the monster lane's Bestiary 4), plus this receipt · **Branch** pushed to `origin/tranche/9` and
+verified BY CONTENT:
+`git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_3/companion_data.rs` →
+**31** `CompanionRecord {` and **54** `CompanionAbilityRecord {`.
+
+**Outcome: 85 units ingested, all 85 grounded. Companion grounded 194 → 279. Honest remainder 658.**
+
+### 0. The dispatch brief was materially stale, and was corrected by content before anything was built
+
+The brief stated **"NOTHING has landed"** for this lane, that all ~1,233 in-scope companion units
+were not-ingested with 0 grounded, and that the round should "build the mechanism on a small pilot
+first" against a pinned `inner_sea_combat`.
+
+None of that was true at dispatch. `git log origin/tranche/9` showed companion rounds 1-3 already
+landed, and the mechanism the brief asked for already existed and was verified by content before use:
+`src/rules_core/rules_tables/companion_chassis.rs`, `scripts/classify_companion_rows.py`,
+`scripts/transcribe_companion_tables.py`, a `gen_book_cache companion:<book>` generator, a
+`CompanionCatalogScreen.tsx`, and 8 registered books. The card's real state was
+**`READY (round 4)`** in `kanban.md`, which the brief did not reflect.
+
+**Also corrected: this worktree was cut from the wrong base.** `HEAD` was `7d9f1c4f`, a commit with
+no `docs/release/` directory at all and not an ancestor of `origin/tranche/9`. Reset to
+`origin/tranche/9` (`fd86b090`) before any work. Had this gone unnoticed the round would have
+rebuilt, from scratch, a mechanism that already existed — and pushed it as new.
+
+Nothing was taken from the brief on trust after that. The one figure it carried that could be
+checked, `§54`'s **699** honest remainder, was re-derived and **reproduced exactly** (§4).
+
+### 1. Book selection — derived, not taken from the pin
+
+`§54` left round 4 ranked by orphan share with `bestiary_4` first (75 reachable) and `bestiary_3`
+second (66). **`bestiary_3` was chosen over the higher-count book deliberately**, on two grounds the
+round verified rather than assumed:
+
+* `bestiary_4` is the concurrent monster lane's next target (`§52.8`) and needs a **new
+  `RuleSetId::B4`**; `§54` hazard (a) names the collision. Two lanes must not add the same variant in
+  the same hour.
+* `bestiary_3`'s `RuleSetId::B3` was **already compiled** by the monster lane's `9595bd82`
+  (verified: `git log --oneline -12 origin/tranche/9`), so registering its companions costs **no
+  scope flip and no new rule set** — the same free registration `bestiary` had in round 3.
+
+Under UNATTENDED MODE the safer default wins: fewer units, zero collision risk, zero collateral.
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `bestiary_3` (Bestiary 3, wire code `B3`) |
+| Units ingested | **85** — 31 creature rows, 54 ability rows |
+| Grounded | **85 of 85**; no `OPEN_FINDINGS` shortfall |
+| Source files | 4 — `b3_races_companion.lst` 16, `b3_races_familiar.lst` 15, `b3_abilities_companion.lst` 24, `b3_abilities_familiar.lst` 30 |
+| New `RuleSetId` | none (B3 already compiled) |
+| Other kinds' units moved | **0** |
+
+Surfaces wired: `companion_chassis::COMPANION_BOOKS` row, `CompanionBookSpec`,
+`bestiary_3/mod.rs` accessors, `companion_catalog`'s `"bestiary_3" => "B3"` wire code,
+`CompanionCatalogScreen.tsx` `BOOK_LABELS`, its test's `SERVED_BOOK_CODES` (the `§54.5` defect —
+adding a label without adding the code leaves the label checked by nothing), and a
+`("bestiary_3", "companions")` `reach_gate` claim.
+
+### 3. Two mechanisms, one of which cancelled the other
+
+**Multi-file books (`§56.2`).** First registered book with two files per shape.
+`CompanionBookSpec`'s `races_lst`/`abilities_lst` became `races_lsts`/`abilities_lsts` lists
+following `MonsterBookSpec`'s existing plural precedent, and both record types gained a
+`source_file`. Without it `verified_citation_line` would check a record's line against the wrong
+file. All 8 previously-registered books were **regenerated, not hand-edited**, and proven additive:
+
+```
+git diff -U0 -- 'src/rules_core/rules_tables/*/companion_data.rs' \
+  | grep -E "^[+-].*(CompanionRecord \{|CompanionAbilityRecord \{)"
+```
+→ **no output**: not one record added or lost across the eight.
+
+**Ownership shape 5 (`§56.1`).** The round was dispatched to build `§50`'s orphan-drop disposition
+for Bestiary 3's 19 orphans. It built it — and then found the 19 are not orphans. Six creature rows
+carry an `OUTPUTNAME:` differing from their `KEY:` (`KEY:Kyton (Augur)` → `Augur`) and their
+abilities namespace by the display name. **This was caught by checking a claim before shipping it**:
+the draft `OPEN_FINDINGS` entry asserted the six species were Bestiary 3 *monsters*; the check
+(`grep` of `monster_data.rs`'s key set) returned **False for all six**, which is what sent the round
+to the corpus rows and found the real shape. The false entry was written and then removed; it never
+shipped.
+
+Corpus-wide shape 5 recovers **44** units. **The lane's REAL ceiling moved UP for the second
+consecutive round: 893 → 937.**
+
+### 4. Every figure re-derived, with its command
+
+Honest remainder **before** shape 5, over `§54`'s nine remaining books —
+**reproduces `§54`'s 699 exactly**:
+
+```
+python3 scripts/classify_companion_rows.py bestiary_4 bestiary_3 core_essentials \
+  ultimate_wilderness core_rulebook advanced_race_guide ultimate_magic \
+  book_of_the_damned_volume_1 advanced_players_guide
+```
+→ `total 1500 · orphan 794 · class 7 · reachable remainder 699`
+
+**After** shape 5, corpus-wide over all 17 books carrying companion units:
+
+```
+python3 scripts/classify_companion_rows.py inner_sea_combat monster_codex inner_sea_intrigue \
+  horror_adventures bestiary_5 bestiary_6 bestiary_2 bestiary bestiary_3 bestiary_4 \
+  core_essentials ultimate_wilderness core_rulebook advanced_race_guide ultimate_magic \
+  book_of_the_damned_volume_1 advanced_players_guide
+```
+→ `total 1696 · orphan 750 · PRECAMPAIGN-gated 2 · class rows 7 · reachable remainder 937`
+
+Grounded, from the regenerated inventory:
+
+```
+python3 -c "import json,collections; inv=json.load(open('docs/work-inventory.json')); \
+print(collections.Counter(x['status'] for x in inv['units'] if x['kind']=='companion'))"
+```
+→ **post-merge**: `grounded 279 · not-ingested 1417`; `bestiary_3` → **85 grounded, 0 other**.
+Pre-merge the same command read `grounded 279 · not-ingested 1337 · not-started 80`; the 80 are
+Bestiary 4's, flipped from `not-started` into scope by the monster lane's `RuleSetId::B4` (§10). The
+grounded figure is identical either way, and the lane ceiling is unaffected because the classifier
+reads corpus rows, not status.
+
+| measure | value |
+|---|---|
+| companion units in scope | 1,696 |
+| lane REAL ceiling (reachable) | **937** |
+| grounded after this round | **279** (194 + 85) |
+| **honest remainder** | **658** |
+
+**658 is confirmed twice independently**: `937 − 279`, and the sum of the eight remaining books'
+per-book reachable counts (`§56.5` table). The naive `1,696 − 279 = 1,417` is NOT the workload —
+759 of it is ceiling.
+
+### 5. Tests added
+
+Four, in `companion_chassis`: `a_namespaced_key_owns_through_the_creature_s_display_name` (shape 5
+pinned by name for all six species — the failure it guards is silent, not loud),
+`every_shipped_ability_row_is_owned_by_a_creature_of_its_own_book` (the predicate that survived the
+registration-rule change), `every_record_names_the_file_it_was_read_from`, and
+`bestiary_3_ships_all_eighty_five_units_from_four_files`. `cargo test --lib companion_chassis` →
+**12 passed, 0 failed**.
+
+### 6. Gate — **RESULT: PASS, all 14 stages green**
+
+`RETRO_ACTOR=sd29-companion-r8 ./scripts/verify.sh`, full, run on the MERGED tree (see §10), output
+to a log with no pipe on the verified command.
+
+```
+passed: 14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest
+            root-lib root-full desktop reach frontend-install frontend-test
+            frontend-typecheck clippy class-dump
+RESULT: PASS
+```
+
+`root-lib` 1,715 · `root-full` 6,282 across 544 suites, all 525 `tests/*.rs` executed ·
+`desktop` 442 · **`reach` 27** · `frontend-test` 99/99 · `clippy` root:54 desktop:7, 0 errors ·
+`class-dump` 31/31 computing.
+
+**The first run of this gate FAILED and was fixed at the source, not waived.** Clippy measured **55**
+against a ceiling of **54**. The one new warning was this round's own — `items after a test module`,
+because `bestiary_3/mod.rs` had its companion accessors appended below the `#[cfg(test)]` block. The
+accessors were moved above it and the count re-measured the way `verify.sh` counts (`^warning:` minus
+cargo's per-target "generated N warnings" summary lines) → exactly 54. **The ceiling was not raised
+to meet the code.**
+
+Six baselines were reported stale in the UPWARD direction across the two runs and all were raised
+deliberately, with the attribution recorded in `verify-baselines.env`: `BASELINE_ROOT_LIB_TESTS`
+1679 → 1715, `BASELINE_ROOT_FULL_TESTS` 6244 → 6282, `BASELINE_ROOT_TEST_BINARIES` 543 → 544,
+`BASELINE_DESKTOP_TESTS` 439 → 442. **Only 4 of that delta is this round's** (the four
+`companion_chassis` tests); the rest belongs to the monster lane's `9595bd82`/`52da4bc3` and the
+companion lane's own `5d6c48df`, which added tests without moving the recorded figures. A raise can
+only make a future regression fail sooner. `BASELINE_CLIPPY_WARNINGS_ROOT` is untouched.
+
+### 7. Honest shortfall — stated, not hidden
+
+`§50`'s orphan-drop disposition **ships but is not exercised by this round's book**, because shape 5
+left Bestiary 3 with nothing to drop. It is live code on the path every future book takes, and
+`bestiary_4` (5 orphans) will be the first to prove it. A successor must not read "the disposition is
+built" as "the disposition is proven on a real book" (`§56.3`).
+
+### 8. Definition of done item 8 — on screen: **PASS**
+
+`RUN_DESKTOP_AGENT=sd29-companion-r8 verify-on-screen.sh --family companion --record "Kyton, Augur"
+--expect "Unnerving Gaze" --expect "Bestiary 3"` → **PASS, exit 0, first attempt**, at HEAD
+`9905926b`. Evidence `artifacts/SD29-E7-F2-005/item8/b3-companion-kyton-augur.png` +
+`.verify.md`. The verdict is text extracted from the live webview by select-all/copy and an X
+clipboard read, not the screenshot.
+
+**The record was chosen to put this round's finding on screen rather than to pass easily.**
+`Kyton (Augur)` is one of the six `OUTPUTNAME:`-namespaced creature rows, and `Unnerving Gaze` is one
+of the 19 rows the round was dispatched to write off as orphans. The extracted lines:
+
+```
+15:Bestiary 3 (31)
+19:Kyton, AugurTiny Outsider (Evil, Extraplanar, Kyton, Lawful)
+20:Bestiary 3 p.170
+24:Unnerving Gaze — SpecialQuality · Extraordinaryp.171
+```
+
+Line 24 rendered **underneath** line 19 is ownership shape 5 reaching a player: an ability that under
+shapes 1-4 belonged to nobody, shown beneath the creature the corpus says owns it. Had the round
+shipped its original premise, that line would not exist and the book would have served 66 records.
+
+The screen's caption independently witnesses this round's arithmetic — **"across … Bestiary 2,
+Bestiary 1 and Bestiary 3 — 132 creatures"** — nine registered books, with Bestiary 3's own chip
+reading **"Bestiary 3 (31)"**.
+
+`SEARCH_Y=285` held for the NINTH registered book; the hub's chip row did not wrap, so no
+recalibration was needed. `§51` predicted the constant would move as books accumulate and `§54`
+recorded it holding at eight; recording that it held at nine is worth as much as recording a move.
+
+### 10. Merge taken mid-cycle
+
+`origin/tranche/9` moved twice during this round. The second time it carried the monster lane's
+Bestiary 4 ingest (`52da4bc3`, `009ed85e`, 749 records). Merged before pushing; the **only** conflict
+was the generated `docs/work-inventory.json`, resolved by re-running `v06_work_inventory` rather than
+by hand-editing either side — the same resolution `§54` records for the identical conflict.
+
+The merged inventory carries both lanes: `companion` **279 grounded**, `monster` **861 grounded**.
+The merge moved 80 companion units from `not-started` to `not-ingested` (Bestiary 4's, flipped into
+scope by that book's `RuleSetId::B4`), which changes the STATUS split but not this lane's ceiling —
+the classifier reads corpus rows, not status. Re-derived after the merge: **937**, unchanged. The
+full gate above was run on the merged tree, not on the pre-merge one.
+
+### 9. Reclaim
+
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-companion-r8`, claimed with
+`.reclaim-claim` at creation and removed at cycle end.
+
+---
+
+## Cycle SD29-E5-F2-007 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 6 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r8` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-11`)
+**Branch-point:** `fd86b090` · **Commits:** `52da4bc3` (the ingest, the full eight registration
+points, and the player surface), `009ed85e` (the soft-hyphen normalisation the gate's run 1 caught,
+pushed the moment it existed because it was already turning a concurrent lane's `clippy` red), plus
+this receipt's own commit.
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message:**
+`git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_4/monster_data.rs | grep -c 'MonsterStatBlock {'` → **206**,
+`| grep -c 'MonsterAbilityRecord {'` → **543**.
+**Kanban status left at:** `READY — round 7. 749 units ingested; 2,458 remaining by raw count,
+1,018 by the lane's REAL ceiling. Card stays READY.`
+
+**This receipt does not claim the lane is done.** 749 units landed against a REAL ceiling that is
+still **1,018**, and the whole of the large remainder is one book that cannot be taken without a
+ruling first (§10).
+
+### 0. Worktree integrity — the predicted failure, hit a ninth time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-11`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, an ancestor from **2026-06-28** and **3,320 commits behind**
+`origin/tranche/9` (`git rev-list --count HEAD..origin/tranche/9` → `3320`). The checkout had no
+`docs/release/` directory at all. Rounds 2-5 each predicted and recorded this; it is now the **ninth**
+consecutive instance and remains a harness condition, not an agent error. Recovered before any other
+action with `git fetch origin tranche/9` + `git reset --hard origin/tranche/9` (`fd86b090`), working
+tree clean at the time (`git status --porcelain` → empty).
+
+Round 5 recorded the `.git` object corruption as repaired by the companion lane; this round's fetches
+were clean throughout, confirming that repair held.
+
+### 0/0b. Shape and trap report
+
+`bestiary_4` was unregistered before this round: `grep -rn "bestiary_4" --include='*.rs'
+--include='*.py' --include='*.ts' --include='*.tsx' src apps scripts` returned only **doc-comment
+mentions** (`book_of_the_damned_volume_1/mod.rs`'s header citing its unit count, and an unrelated
+`IR_FORWARDED_B4` diagnostic code). No other lane had touched the book, so this round paid the
+**full** registration cost including a new `RuleSetId::B4`.
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/bestiary_4
+```
+
+`DECLARES 220 / .COPY= 0 / .MOD 0 / #OFF 9` on `b4_races.lst`; `DECLARES 1004 / .COPY= 19 / .MOD 0 /
+#OFF 0` on `b4_abilities_race.lst`. Book-wide: **1,667 declarations across 30 files**, 21 `.COPY=`,
+216 `.MOD`, 9 disabled lines. **939 `key-differs-from-name` and 864 `namespaced-key` findings** are
+the two traps that matter here, and §4 is what happens when a prior round's measurement met the first
+of them and did not recognise it.
+
+Two shape notes from `loop-instruction.md` were checked rather than assumed, and both held: the
+`.pcc` carries a **leading underscore** (`_bestiary_4.pcc`, unlike B1/B2/B3), recorded in the
+`MonsterBookSpec`; and `support/b4_abilities_race_ma.lst` is `PRECAMPAIGN`-gated on Mythic Adventures
+— its 3 units are `race_trait`, not this lane's kind, so no ingest path reached them.
+
+### 1b. Every figure re-derived, command first, value second
+
+**The lane's REAL ceiling, reproduced EXACTLY at cycle start before being moved** — round 5's closing
+figure confirmed, not corrected:
+
+```
+python3 scripts/classify_monster_ability_rows.py
+```
+
+→ `remaining … 3207`, `orphan … 1406`, `PI … 32`, `.COPY= … 2`, **`reachable remainder … 1767`**.
+
+**The brief's own carried figure — "The previous round reported 1767 remaining" — is therefore
+confirmed rather than corrected.** That is the first time in this lane a brief's headline number has
+survived re-derivation, and it is worth recording for the same reason the failures are.
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, summing `not-ingested` +
+`not-started` for both kinds across every book whose `scope` is not `out_of_scope` — the same command
+rounds 1-5 recorded:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 615 | **409** | −206 |
+| `monster_ability` remaining | 2,592 | **2,049** | −543 |
+| raw remaining total | 3,207 | **2,458** | −749 |
+| `monster` grounded | 655 | **861** | +206 |
+| `monster_ability` grounded | 515 | **1,058** | +543 |
+| **REAL ceiling** | 1,767 | **1,018** | −749 |
+
+`1767 − 749 = 1018` closes exactly, **no residue**.
+
+**`units_ingested` = 749.**
+
+**The dispatch brief's "monster ~305, monster_ability ~852, grounded 62 and 20" was wrong for the
+FIFTH round running.** `§46.1`, `§50.7`, `§52` and `§55` each corrected the identical pair. At five
+occurrences this is a brief-template defect, not a per-round slip. Retro event emitted.
+
+### 1c. Preflight
+
+`preflight-disk` PASS, both at step 1c and again inside the gate. `df -h /home` → **799G available of
+968G, 18% used**. Disk was not a constraint at any point.
+
+### 2. Why `bestiary_4` — run BEFORE committing the round, per `§45.1`
+
+```
+python3 scripts/classify_monster_ability_rows.py bestiary_4
+book         mon  abil row-named prefix ORPHAN   PI COPY
+bestiary_4   220   768         0    543    225   14    0
+```
+
+749 reachable — the biggest remaining, and the only large one with no unresolved design question.
+`bestiary` (661 reachable) is comparable in size but cannot be taken without first ruling on whether
+the chassis absorbs its 46 already-grounded SD-22 monsters or sits alongside them; that ruling is a
+scope decision, not an ingest, and taking it inside a loop-until-dry round would have bought less
+real content for more risk. **Unattended-mode default taken: take the book with no open question and
+leave the ruling to be made deliberately.**
+
+### 3. What landed — 749 records
+
+* `src/rules_core/rules_tables/bestiary_4/{mod.rs,monster_data.rs}` — **206 monsters + 543
+  abilities**, produced by `python3 scripts/transcribe_monster_tables.py bestiary_4`.
+* The full eight registration points: `RuleSetId::B4` + module, `monster_chassis::MONSTER_BOOKS`,
+  `gen_book_cache::MONSTER_BOOK_SPECS`, `reach_gate`'s two claim arms + its `CORPUS_BOOK_IDS` row,
+  `monster_catalog`'s wire code `B4` + display name, `corpus_ingest_diagnostic`'s row
+  (`chassis_book_counts` — this book contributes no companion family), and **both** frontend copies
+  of the served-book list.
+* `data/corpus/bestiary_4/` — 749 records + `LICENSE.json`, from
+  `cargo run --locked --bin gen_book_cache -- bestiary_4` → `bestiary_4 cache generated: 206
+  monsters, 543 monster abilities; LICENSE.json records_processed=749`, `records_redacted: 0`.
+
+**`206 + 543 = 749` is exactly the classifier's `reachable remainder`** (`988 − 225 − 14 − 0`) — what
+ships and what the ceiling says should ship, derived by two routes sharing no intermediate artifact.
+Pinned as a test (`the_shipped_total_is_the_classifiers_reachable_remainder`) rather than left as a
+coincidence in prose.
+
+**OGL provenance verified rather than copied from the row above it:** `_bestiary_4.pcc` declares
+`ISOGL:YES` (line 23), carries **17** `COPYRIGHT` lines and a real **9,977-byte** `OGL.txt`.
+
+### 4. The findings — `decisions.md §57`
+
+Three, and the first two are worth more than the ingest.
+
+**§57.1 — a Product Identity predicate two rounds got right by luck.** This is the first
+`roleplaying_game/` bestiary in the lane carrying any `NAMEISPI:YES` row (`grep -c NAMEISPI:YES
+b4_races.lst b4_abilities_race.lst` → **14**, **0**). Rounds 4 and 5 each recorded
+`ogl-pi-blacklist.md` §2's prediction in a **book-location** form — "a `roleplaying_game/` bestiary
+carries zero PI rows" — and each was right about its own book. The blacklist's real predicate is
+**per-record** (§2.1): a generic SRD species name is presumptively Open Game Content, a unique named
+persona is not, and all 14 rows here are unique named personas. The location form would have shipped
+all 14. Refined, not contradicted.
+
+The governance file itself was **not** edited — it is DRAFT and operator-reviewable, and re-wording it
+is not an ingest round's write scope. **Unattended-mode default taken: record the refinement where the
+lane reads it (`rules_tables::bestiary_4`, `RuleSetId::B4`, `decisions.md §57.1`), leave the
+governance file to its owner.**
+
+**§57.2 — 73 of the 225 orphans were created by this round's own screen.** Derived, not assumed: 152
+are orphans in their own right, 73 are well-formed owned rows unreachable only because their owner is
+one of the 14 PI monsters. This independently reproduces the round-4 queue note's `152 → 225`, a
+figure nobody had re-derived. It also makes
+`every_owner_named_by_a_shipped_ability_is_a_shipped_monster` load-bearing for the first time — until
+this book, no book had dropped a monster that owned anything, so it could not diverge from the weaker
+"owners is non-empty" test. Separately, **83 of the 152 live in `b4_abilities_races_ce.lst`, a file
+this book ships nothing from**; checked at the point of the confident claim rather than inferred
+(`grep -c 'ABILITY:Special Ability|AUTOMATIC|Immunity to Calm Emotions' b4_races.lst` → `0`, and the
+file's own second line reads `#This should probably go into ce_abilities_race.lst`).
+
+**§57.3 — the `§55.1` measurement round 5 asked a successor to run, and a correction to its own
+number.** Run on all three books it named. Mis-filed `race_trait` units owned by a monster of the
+same book: `bestiary_4` **61**, `bestiary` **9**, `inner_sea_bestiary` **2** — **72 between them**.
+**The answer is that the understatement is almost entirely `bestiary_3`'s, and 1,767 never needed
+re-drawing.**
+
+And round 5's own **341 is corrected to 625**. 341 reproduces *exactly* under round 5's predicate
+(prefix matched against a monster's `KEY:`), so it was right for what it measured — but this corpus
+namespaces an ability by the monster's **display name** while the `KEY:` carries a taxonomic prefix
+(`Aghash ~ …` → `Div (Aghash)`; `Bone Golem ~ …` → `Golem (Bone)`). That is the
+`key-differs-from-name` trap the trap report raises 1,009 times on that very book. Name-matching is
+the weaker predicate and was **checked before being used**: exactly one monster display name is
+ambiguous across all four books measured. **Not reclassified**, for round 5's reason, which this
+round agrees with. **Unattended-mode default taken: measure and report, do not reclassify.**
+
+### 5. A draft figure the instrument caught before it shipped
+
+The first draft of `decisions.md §57.7` stated "**twelve** books now hold orphan abilities and zero
+remaining monsters", incrementing `§55`'s eleven on the assumption that `bestiary_4` had joined them.
+Re-running `classify_monster_ability_rows.py` instead of incrementing showed **still eleven, 716
+rows** — `bestiary_4` retains **14** remaining monster rows, the PI personas, and is not a
+zero-monster book at all.
+
+Recorded because it is this lane's own rank-1 practice catching this lane: the wrong number came from
+reasoning about the change, the right one from re-running the command. `bestiary_4` is instead a
+**third shape** — reachable-exhausted (`0 reachable`) but not monster-exhausted — which matters for
+round 7's queue, since its 239 remaining units are permanent floor rather than queued work.
+
+### 5a. One gap this round is stating rather than papering over
+
+`bestiary_2` and `bestiary_3` each carry a **verbatim spot-check test** — one record asserted field by
+field against the corpus row it was read from, so a reader can open the `.lst` and confirm it
+(`the_achaierai_matches_its_corpus_row_and_its_one_ability`). **`bestiary_4` does not have one.**
+
+The check itself was performed, by hand, and every field matches:
+
+```
+sed -n '6p' b4_races.lst | tr '\t' '\n' | grep -E "^(Abaia|SIZE|MOVE|TYPE|CR|SOURCEPAGE|RACETYPE|RACESUBTYPE|MONSTERCLASS)"
+Abaia · SIZE:H · MOVE:Walk,20,Swim,80 · MONSTERCLASS:Magical Beast:14 ·
+RACETYPE:Magical Beast · RACESUBTYPE:Aquatic · CR:10 · SOURCEPAGE:p.7
+```
+
+against `data/corpus/bestiary_4/monster/abaia.json`'s `size "H"`, `speeds [Walk 20, Swim 80]`,
+`monster_class "Magical Beast:14"`, `race_type "Magical Beast"`, `race_subtype "Aquatic"`,
+`challenge_rating "10"`, `source_page "p.7"` — the transcriber computes nothing.
+
+**It was not turned into a test, and the reason is the gate's meaning rather than the work.** The gap
+was noticed while run 1 was mid-`root-full`. Run 2 was then launched to cover the soft-hyphen fix, and
+it was already past `root-lib` — the stage that would execute this test — before one could be written.
+Adding it now would put a test in the pushed tree that **neither** gate run executed.
+
+**A green gate that did not cover the tree being pushed is exactly the false assurance this program
+keeps recording**, and it is worth more than one extra assertion. The manual verification above is
+honest about what it is; a test the gate never ran, cited in a receipt as though it had, would not be.
+**Unattended-mode default taken: state the gap, carry the manual check with the command that produced
+it, and do not spend a third 27-78 minute sweep on a nice-to-have while the lane still has 1,018 units
+of real remainder. Forward scope for round 7 — it costs one test and one gate run it will be taking
+anyway.**
+
+### 6. Two concurrency hazards this round hit, neither previously recorded
+
+**6.1 The dispatch scratchpad is SHARED between concurrently dispatched agents, and generic
+filenames collide.** This round wrote its draft receipt to `<scratchpad>/receipt.md` and the
+concurrent companion lane (`sd29-companion-r8`) overwrote it with its own receipt minutes later. No
+repo content was lost — the draft was reconstructed and every figure in it is re-derived from
+commands recorded here, not from the lost file — but a receipt is exactly the artifact a cycle cannot
+afford to lose silently, and nothing warned. The directory holds `verify.log`/`verify1.log`,
+`msg1.txt`, `kanban.py`, `patch1.py`…`patch23.py` and dozens of other generic names from several
+rounds and several lanes.
+
+`AGENTS.md`'s concurrency section mandates one `CARGO_TARGET_DIR` per agent and one worktree per
+agent; it says nothing about the scratchpad, which is shared by every agent working this repo.
+**Mitigation taken: actor-prefixed filenames (`sd29-monster-r8-receipt.md`) for anything this cycle
+could not cheaply regenerate.** Forward scope: the dispatch should give each agent an actor-scoped
+scratchpad subdirectory, the way it already gives each one a target dir.
+
+**6.2 Two lanes drafted `decisions.md` "Decision 56" simultaneously.** Both this lane and the
+companion lane read `§55` as the last section and both numbered next. Neither had pushed at the time
+of writing (`git cat-file -p origin/tranche/9:…/decisions.md | grep '^## Decision 5[5-9]'` → `55`
+only), so it was caught before either landed rather than as a merge conflict.
+
+**Resolution taken, and it is deterministic rather than a race: the LAST lane to push renumbers.**
+Before this round's final push it re-fetched `origin/tranche/9` and checked for an existing
+`## Decision 56`; had one been there, this round's section and every internal `§56.x` reference in
+`decisions.md`, `kanban.md` and this receipt would have been renumbered as part of the merge, per the
+standard "re-read, merge on top of newer content, publish again" flow rather than a force-push.
+Recorded because a duplicate section number in a shared doc is silent — nothing in the gate reads
+`decisions.md` — and two lanes on one branch will keep meeting this.
+
+### 7. Gate
+
+`./scripts/verify.sh` (FULL, exit code captured directly, never through a pipe), launched with
+`RETRO_ACTOR` exported so the gate's own `verification` event attributes to this actor rather than to
+the worktree — the mis-attribution `§55` recorded twice.
+
+**Run 1 — `VERIFY_EXIT=1`.** 13 of 14 stages green; **`clippy` the only red, and it was this round's
+own defect, not an environment quirk**: three Bestiary 4 `DESC:` texts carried **U+00AD SOFT
+HYPHEN**, an invisible character inside a word, and `clippy::invisible_characters` is deny-by-default.
+`decisions.md §57.5` carries the fix and both of its transferable points — that `grep -P '\xc2\xad'`
+reported `0` for a file provably holding three (the scoping had to be redone in Python), and that the
+fix was pushed the moment it existed because the bad characters were already on `origin/tranche/9`
+turning a **concurrent** lane's `clippy` red.
+
+Run 1's other stages, recorded because they are this round's real coverage:
+`root-full` **PASS** — 6,278 passed across 544 suites, **all 525 `tests/*.rs` suites executed**
+(the `comm -23` completeness check `decisions.md §40` requires, performed by the stage itself);
+`root-lib` 1,711; `desktop` 442; `reach` 27; `frontend-test` 99/99; `frontend-typecheck` clean;
+`pi-sweep` 10 hits / 10 baseline rows; `class-dump` 31/31 computing.
+
+The four `BASELINE NOTES` the run printed are **explicitly not failures** and were read as such
+rather than chased: `BASELINE_ROOT_LIB_TESTS` 1679→1711, `BASELINE_ROOT_FULL_TESTS` 6244→6278,
+`BASELINE_ROOT_TEST_BINARIES` 543→544, `BASELINE_DESKTOP_TESTS` 439→442. Every one moved **up**,
+which is what a round that adds tests and merges a sibling lane's should do. **Not updated by this
+round**: `scripts/verify-baselines.env` is shared with the concurrent companion lane, whose tests are
+inside those same numbers, and pinning them mid-flight would record a figure that is already moving.
+**Unattended-mode default taken: read the notes, state them, leave the shared file alone.**
+
+**Run 2 — after the fix, over the tree actually pushed:**
+
+**`VERIFY_EXIT=0`**, 14 of 14 stages green.
+
+* `preflight-disk` **PASS** — disk budget OK
+* `pi-sweep` **PASS** — 10 hits over src/rules_core/rules_tables, 10 baseline rows
+* `audit-selftest` **PASS** — 28 passed, 0 failed
+* `reclaim-selftest` **PASS** — 10 passed, 0 failed
+* `driver-selftest` **PASS** — 7 passed, 0 failed
+* `root-lib` **PASS** — 1711 passed
+* `root-full` **PASS** — 6278 passed across 544 suites, all 525 tests/*.rs suites executed
+* `desktop` **PASS** — 442 passed
+* `reach` **PASS** — 27 passed
+* `frontend-install` **PASS** — node_modules present
+* `frontend-test` **PASS** — 99/99 files
+* `frontend-typecheck` **PASS** — tsc --noEmit clean
+* `clippy` **PASS** — root:54 desktop:7 warnings, 0 errors
+* `class-dump` **PASS** — 31/31 computing
+
+Pre-gate targeted checks, run before launching the full sweep rather than discovering a red at 30-78
+minutes: `cargo test --lib rules_tables::bestiary_4` → **8 passed, 0 failed**; `cargo test
+--manifest-path apps/desktop/src-tauri/Cargo.toml` → **442 passed, 0 failed** (every `reach_gate`
+test included); `npm test` → **99/99 test files passed**. The frontend pair is the specific defect
+`§55` and `§54.5` both recorded, and this round updated `BOOK_LABELS` and `SERVED_BOOKS` in the same
+edit rather than re-paying it.
+
+### 8. Retrospective events
+
+**Six** in `docs/retro/events/sd29-monster-r8.jsonl`, counted from the shard rather than from memory
+of what was emitted:
+
+```
+python3 -c "
+import json
+for l in open('docs/retro/events/sd29-monster-r8.jsonl'):
+    if l.strip(): print(json.loads(l)['type'])"
+```
+
+→ `correction` ×3, `incident` ×1, `verification` ×2.
+
+Three corrections — the brief's fifth-consecutive wrong denominator pair; the `ogl-pi-blacklist.md`
+§2 predicate refinement; the `§55.1` 341 → 625 predicate correction. One incident — the shared
+scratchpad collision (`§57.6`(a)). Two `verification` events, because the gate ran twice: run 1's
+`FAIL (clippy failed)` and run 2's `PASS`. **A draft of this section said "four" and named the two
+gate runs as one event**; counting the shard corrected it, which is the same re-derive-don't-reason
+lesson `§5` records against a different number in the same cycle.
+
+`RETRO_ACTOR` was exported into every tool shell this cycle, including both `verify.sh` invocations,
+so **both** verification events attributed to this actor and neither landed under the worktree-name
+fallback — the mis-attribution `§55` recorded twice, and did not recur here.
+
+### 9. DoD item 8 — on screen
+
+```
+RUN_DESKTOP_AGENT=sd29-monster-r8 ./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Abaia" \
+  --expect "Abaia" --expect "Bestiary 4" --expect "Eldritch Gizzard" \
+  --out docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-007/item8
+```
+
+**PASS**, first attempt, harness exit **0**, at HEAD `52da4bc3` — evidence
+`artifacts/SD29-E5-F2-007/item8/monster-abaia.png` + `.verify.md`. The verdict is the text
+extracted from the live webview via select-all/copy and an X-clipboard read, not the
+screenshot.
+
+The rendered row: `Abaia · Huge Magical Beast (Aquatic) · CR 10 · Speed 20 ft., swim 80 ft. ·
+Bestiary 4 p.7 · Hit dice Magical Beast:14`, with `Bite 3d6` and `Tail Slap 6d6` each labelled
+`(corpus row)`, and all four of this monster's abilities rendered beneath it with their full
+rules text — `Eldritch Gizzard`, `Endless Coils`, `Wave Rider`, `Spell Resistance`. That is
+**the namespaced-prefix link reaching a player**, which is the shape every one of this book's
+543 shipped abilities is reached by (`row-named 0 / prefix 543`).
+
+**The screen independently witnesses this round's arithmetic.** Its caption reads
+**"— 861 monsters"** and its size chip reads **`All sizes (861)`** — the same 861 the work
+inventory reports as `monster` grounded, derived by a completely different path.
+
+**One judgment call, per UNATTENDED MODE item 1.** The harness must not run concurrently with
+`verify.sh` (documented OOM on a 22 GiB box). Run 1 of the gate was in progress. Proceeded after
+checking `free -g` → **38G available of 45G**, on the same reasoning round 5 recorded: the
+documented failure is memory-bound and this box has twice the RAM of the one it was recorded on,
+and the harness fails loudly — renaming artifacts `.FAILED.*` and exiting non-zero — so a
+memory-pressure failure would be detectable and retryable rather than silently producing false
+evidence. It passed first try. `SEARCH_Y` held for the ninth registered book; the chip row did
+not wrap, so no recalibration was needed. The app was stopped with `driver.sh stop` before the
+gate was re-run, so run 2 had the box to itself.
+
+
+### 10. Round-7 queue, and the ruling it has to make first
+
+From ONE command (`python3 scripts/classify_monster_ability_rows.py`), raw remaining **2,458**, REAL
+ceiling **1,018**:
+
+| book | remaining units | orphans | PI | **reachable** |
+|---|---|---|---|---|
+| `bestiary` | 807 | 146 | 0 | **661** |
+| `inner_sea_bestiary` | 230 | 26 | 7 | **197** |
+| `inner_sea_gods` | 200 | 81 | 3 | **116** |
+
+**`bestiary` (Bestiary 1) is now 65% of the lane's entire reachable remainder, and it cannot be taken
+without a ruling first**: its 46 SD-22 monsters are already grounded through `beastiary1`'s own
+tables, so round 7 must decide whether the chassis absorbs them or sits alongside them. That is the
+last structural question this lane has; after it the remainder is two small campaign-setting books.
+
+`bestiary_4` now reads **0 reachable** and is finished as far as it can be finished, as
+`inner_sea_world_guide` was at `§52`. **Eleven books still hold 716 orphan abilities and zero
+remaining monsters.** Do NOT shape any of them, or `bestiary_4`, as a per-monster cycle.
+
+### 11. Reclaim
+
+`scripts/reclaim.sh --apply` at cycle end; both target directories
+(`codex-target-sd29-monster-r8`, `codex-target-sd29-monster-r8-desktop`) claimed on creation with
+`.reclaim-claim` and removed at the end.
+
+## Cycle SD29-E5-F2-008 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 7 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r9` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-13`)
+**Branch-point:** `af0f2e9b` · **Commits:** `378b7b70` (the ingest, all eight registration points and
+the player surface), `92d346a7` (this receipt + `decisions.md §58` + the kanban move), `cacf35d8`
+(the item-8 PASS artifacts and two receipt corrections), `0090e273` (the three gate stages the ingest
+turned red, pushed the moment they existed because two of them turn a CONCURRENT lane's gate red),
+plus this receipt's own closing commit.
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message:**
+`git cat-file -p origin/tranche/9:src/rules_core/rules_tables/inner_sea_bestiary/monster_data.rs | grep -c 'MonsterStatBlock {'` → **38**,
+`| grep -c 'MonsterAbilityRecord {'` → **152**.
+**Kanban status left at:** `READY — round 8.` **Gate: `VERIFY_EXIT=0` on run 2** (run 1 was `1`,
+three red stages, all three this round's own and all three fixed and pushed in `0090e273` — §5.1).
+
+**This receipt does not claim the lane is done.** 190 units landed against a REAL ceiling that is
+still **821**, and the whole of the large remainder is one book whose ruling this round made and
+whose execution it deliberately did not take (§7).
+
+### 0. Worktree integrity — the predicted failure, hit a TENTH time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-13`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, the same 2026-06-28 ancestor rounds 2-6 each landed on. The
+checkout had no `docs/release/SD-29-…` directory at all. Recovered before any other action with
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` (`af0f2e9b`), working tree clean
+at the time (`git status --porcelain` → empty). Tenth consecutive instance; a harness condition, not
+an agent error.
+
+### 0/0b. Shape and trap report
+
+`inner_sea_bestiary` was unregistered before this round:
+`grep -rn "inner_sea_bestiary" --include='*.rs' --include='*.py' --include='*.ts' --include='*.tsx' src apps scripts`
+returned only `v06_work_inventory`'s corpus-root list and two doc-comment mentions in
+`rules_tables/bestiary_4/mod.rs` (`§57.3`'s measurement table). No other lane had touched the book, so
+this round paid the **full** registration cost including a new `RuleSetId::Isb`.
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- inner_sea_bestiary
+```
+
+`DECLARES 40 / .COPY= 0 / .MOD 5 / #OFF 0` on `isb_races.lst`; `DECLARES 194 / .COPY= 0 / .MOD 50 /
+#OFF 0` on `isb_abilities_race.lst`. Book-wide: **242 declarations across 7 files**, 0 `.COPY=`, 59
+`.MOD`, 0 disabled lines. **186 `key-differs-from-name` and 186 `namespaced-key`** findings are the
+two traps that matter, and the chassis keys on `KEY:` throughout, which is what the identity rule in
+`monster_chassis`'s header exists for.
+
+Shape notes checked rather than assumed, and the third one **corrected a claim this receipt's own
+first draft made**: the `.pcc` carries **no** leading underscore (`inner_sea_bestiary.pcc`, the
+B1/B2/B3 shape rather than B4/B5/B6's); a `_pfs/` subtree exists (`_pfs/_.pcc`) and contributes no
+`monster`/`monster_ability` unit — every unit of this book cites `isb_races.lst` or
+`isb_abilities_race.lst`; and the draft's "no `.lst` of this book is `PRECAMPAIGN`-gated" was
+**wrong**, caught by running `grep -c PRECAMPAIGN …/*.pcc` → **7** rather than asserting it. Six are
+BOOK-level prerequisites (`inner_sea_bestiary.pcc:9-14`) gating the whole book on Core Rules, the
+Advanced Player's Guide, Bestiary 1, the Inner Sea World Guide, Ultimate Combat and Ultimate Magic —
+**all six are books this repo has ingested, so the gate is satisfied rather than waived**. The
+seventh is file-level (`:43`) and gates `isb_kits_race_b1.lst`, a KIT file no unit of this lane comes
+from. Neither `isb_races.lst` nor `isb_abilities_race.lst` is gated.
+
+### 1b. Every figure re-derived, command first, value second
+
+**The lane's REAL ceiling, reproduced EXACTLY at cycle start before being moved** — round 6's closing
+figure confirmed, not corrected:
+
+```
+python3 scripts/classify_monster_ability_rows.py
+```
+
+→ `remaining … 2458`, `orphan … 1406`, `PI … 32`, `.COPY= … 2`, **`reachable remainder … 1018`**.
+
+**The brief's carried figure — "The previous round reported 1018 remaining" — is confirmed rather
+than corrected**, the second time in this lane a brief's headline number has survived re-derivation.
+
+**Lane denominators**, over the regenerated `docs/work-inventory.json`, the same command rounds 1-6
+recorded:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 409 | **371** | −38 |
+| `monster_ability` remaining | 2,049 | **1,897** | −152 |
+| raw remaining total | 2,458 | **2,268** | −190 |
+| `monster` grounded | 861 | **899** | +38 |
+| `monster_ability` grounded | 1,058 | **1,210** | +152 |
+| classifier `reachable remainder` | 1,018 | **828** | −190 |
+| **REAL ceiling** (`828 − 7`, §4) | 1,018 | **821** | −197 |
+
+`1018 − 190 = 828` closes exactly, **no residue**.
+
+**`units_ingested` = 190. `units_remaining` (lane REAL ceiling) = 821.**
+
+**The dispatch brief's "monster ~305, monster_ability ~852, against grounded 62 and 20" was wrong for
+the SIXTH round running.** `§46.1`, `§50.7`, `§52`, `§55` and `§57.0` each corrected the identical
+pair. The pair is near `bestiary`'s own book subtotal (284/523) — a brief-template defect, not a
+per-round slip. Retro event emitted.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` PASS at step 1c and again inside the full gate.
+`df -h /home` → **795G available of 968G, 18% used**. Disk was not a constraint at any point.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r9`, claimed with a
+`.reclaim-claim` file the moment it was created, per `scripts/reclaim.sh`'s convention.
+
+### 2. Why `inner_sea_bestiary` — run BEFORE committing the round, per `§45.1`
+
+```
+python3 scripts/classify_monster_ability_rows.py inner_sea_bestiary inner_sea_gods
+book                 mon  abil row-named prefix ORPHAN   PI COPY
+inner_sea_bestiary    40   190       157      0     26    7    0
+inner_sea_gods        39   161         0     77     81    3    0
+```
+
+`bestiary` (661 classifier-reachable) is larger and was ruled on rather than taken — see §7.
+`inner_sea_gods` (116) needs `MonsterAbilityRecord` to carry a `source_file`: its ability rows live in
+**two** files and `MonsterBookSpec::abilities_lst` is singular. `inner_sea_bestiary` is the largest
+book left that needs no new mechanism, and it is one races file and one abilities file.
+**Unattended-mode default taken: take the book that needs no chassis change, and record what the
+other two need.**
+
+### 3. What landed — 190 records
+
+* `src/rules_core/rules_tables/inner_sea_bestiary/{mod.rs,monster_data.rs}` — **38 monsters + 152
+  abilities**, produced by `python3 scripts/transcribe_monster_tables.py inner_sea_bestiary`.
+* The full eight registration points: `RuleSetId::Isb` + module, `monster_chassis::MONSTER_BOOKS`,
+  `gen_book_cache::MONSTER_BOOK_SPECS`, `reach_gate`'s two claim arms + its `CORPUS_BOOK_IDS` row,
+  `monster_catalog`'s wire code `ISB` + display name, `corpus_ingest_diagnostic`'s two rows, and
+  **both** frontend copies of the served-book list (`BOOK_LABELS` in `MonsterCatalogScreen.tsx`,
+  `SERVED_BOOKS` in `MonsterCatalogScreen.test.ts`) — the pair `§54.5`/`§55`/`§57.4` each record going
+  stale.
+* `v06_content_state_dump`'s exhaustive `RuleSetId` match, which went red on the new variant exactly
+  as `§45.2` records it doing. That match going red is the enum doing its designed job; a missing arm
+  is a compile error in a bin and therefore `0 passed across 0 suites` for the whole `root-full`
+  stage.
+* `data/corpus/inner_sea_bestiary/` — 190 records + `LICENSE.json`, from
+  `cargo run --locked --bin gen_book_cache -- inner_sea_bestiary` → `inner_sea_bestiary cache
+  generated: 38 monsters, 152 monster abilities; LICENSE.json records_processed=190`,
+  `records_redacted: 0`.
+
+**OGL provenance verified against the file rather than copied from the row above it:**
+`inner_sea_bestiary.pcc` declares `ISOGL:YES` at line 23, carries **4** `COPYRIGHT` lines and a real
+**6,739-byte** `OGL.txt` in the book's own directory.
+
+### 4. The findings — `decisions.md §58`
+
+**§58.1 — the lane's ceiling instrument over-reports, and the over-count is exactly 7, all of it this
+book's.** The classifier reports 197 reachable; 190 ship. The classifier screens a monster row's own
+key and name; the transcriber screens the values it EMITS, which for a monster include the keys of
+the abilities it names. Two monster rows of this book name seven deity-namespaced abilities, so
+neither can be emitted, and their 5 remaining abilities are orphaned in turn — `2 + 5 = 7`. That is
+`§57.2`'s cascade running **backwards**, from ability to owner. Measured corpus-wide rather than
+asserted for one book (script in the scratchpad, reproduced in `§58.1`): **every other book scores
+zero**, so the lane's REAL ceiling is `828 − 7 = 821`. The classifier was deliberately **not**
+changed — it is wrong only in the safe direction, and rewriting a queue instrument is not an ingest
+round's side effect.
+
+**§58.2 — a third `DESC:` shape, widened deliberately.** Three *shipping* rows carry two ungated
+`DESC:` tokens that are one description split across tokens, each continuation beginning with a
+space. `parse_desc` refused them and was right to; taking the first alone would have served the
+trigger and dropped the effect. The widening requires every token to carry no pipe entry at all and
+every continuation to begin with a space, so the same file's three rows stating *alternatives* under
+`%N` variables are still refused. **Additivity proved, not assumed:** all eight previously registered
+books were re-transcribed after the change and
+`git status --porcelain -- 'src/rules_core/rules_tables/*/monster_data.rs'` listed only this round's
+new file. (`bonus_bestiary`'s pilot-era hand-written header does rewrite under the checked-in
+transcriber — header prose only, zero record changes — and was reverted as out of this round's
+scope.)
+
+**§58.4 — a test the table cannot carry, caught by running it rather than reasoning about it.** A
+draft test asserting the classifier's `row-named 157 / prefix 0` split from the shipped table fails
+at 96 of 152 rows, and all 96 are correct: `owners == [prefix]` is indistinguishable in the table
+from a prefix-only reach. Recorded in the module rather than deleted silently.
+
+### 5. Definition of done
+
+1. **`./scripts/verify.sh` full, TWICE** — exit code captured directly, never through a pipe.
+
+   **Run 1: `VERIFY_EXIT=1`, 12 of 15 stages green.** `pi-sweep`, `root-full` and `clippy` red.
+   **All three were this round's own defects, none was environmental, and each was a different kind
+   of thing.** Attribution is by named test and named warning, not by bucket:
+
+   | stage | what failed | why |
+   |---|---|---|
+   | `pi-sweep` | 2 unbaselined hits, both in this round's own doc comments | a comment EXPLAINING why a Product Identity record was dropped named the term. `decisions.md §52.5` records exactly this: `pi-sweep` does not read intent. Rewritten to name the screen (`pi_screening::PI_BLACKLIST_TERMS`), not the term. |
+   | `root-full` | `sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books` (1 of 6,288) | it asserts `inner_sea_bestiary` is `future_state`; it is now `in_scope` because this round ingested it. Closed the way `§47.3` ruled and three lanes have closed it before — the book joins `SD29_INGESTED_CAMPAIGN_SETTING_BOOKS` as a stated claim, rather than the roster being relaxed. |
+   | `clippy` | `root: 55 warnings exceeds recorded ceiling 54` | `identity_op` on `230 - 26 - 7 - 0`, where `- 0` was the classifier's `.COPY=` term written out to keep the four-term arithmetic legible. It is a comment now. |
+
+   Fixed in `0090e273` and **pushed the moment it existed rather than held to cycle end**: the bad
+   content was already on `origin/tranche/9` in `378b7b70`, where `pi-sweep` and `clippy` turn a
+   CONCURRENT lane's gate red through no fault of its own — the 22-minute cost `§52.5` records and
+   `§57.5(b)` states this exact mitigation for. Each fix was verified individually first
+   (`cargo test --locked --test pi_table_sweep` → 6 passed;
+   `cargo test --locked --test v06_work_inventory sd30_campaign_setting_books` → 1 passed;
+   `cargo clippy --locked --tests -j 2 | grep -c inner_sea_bestiary` → 0) rather than by re-running
+   the whole gate hopefully.
+
+   **Run 2: `VERIFY_EXIT=0`, 14 of 14 stages green** — `root-full` 6,289 passed across 544 suites with all 525 `tests/*.rs` suites executed (`decisions.md §40`'s no-suite-silently-skipped check), `desktop` 442, `reach` **27**, `frontend-test` 99/99, `clippy` root:54 desktop:7 back at the recorded ceiling, `class-dump` 31/31 computing.
+
+   No stage failed twice with the same attribution, so `decisions.md §39`'s recurrence rule is not
+   engaged and nothing here was accepted as environmental.
+2. **`reach` stage claims this book's families** — `("inner_sea_bestiary", "monsters")` and
+   `("inner_sea_bestiary", "monster_abilities")` are live claim arms, not absences.
+3. **`v06_corpus_trap_report -- --audit`** — run inside the gate.
+4. **`v06_work_inventory`** — regenerated; the book's 190 units left `not-started` (38 `monster` +
+   152 `monster_ability` now `grounded`, 40 honestly `not-ingested`). Idempotence checked rather
+   than asserted: a second run was diffed against the first key by key, and
+   **`['generated_at']` is the only key that differs** — the run's own churn was then reverted, so
+   the committed artifact is the gate's.
+5. **Four-check wired-integration audit** — clean: the records are compiled tables, the generator
+   re-reads and verifies every cited corpus line, the catalog serves them under a real wire code, and
+   the frontend renders them (item 8 below).
+6. **`OPEN_FINDINGS`** — this book's 26 orphan ability rows, 7 Product Identity ability rows and the
+   2 monster rows those drag with them stay `not-ingested`, which is their honest status; they are
+   recorded here and in `rules_tables::inner_sea_bestiary` rather than shipped as records nothing can
+   reach.
+7. **`verify-baselines.env`** — unmoved this round.
+8. **On-screen verification — PASS.** `RUN_DESKTOP_AGENT=sd29-monster-r9
+   apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh --family monster --record "Cayhound"
+   --expect "Cayhound" --expect "Inner Sea Bestiary" --expect "Thunderous Bark"`. Artifacts:
+   `artifacts/SD29-E5-F2-008/item8/monster-cayhound.png` + `.verify.md`. The harness extracts the
+   rendered text rather than trusting the image, and the catalog's own header line is the best
+   evidence in this receipt that the ingest reached a player:
+
+   > *Every real stat block the engine knows about, across Bestiary 1, Bonus Bestiary, Monster Codex,
+   > Book of the Damned, Volume 1, Book of the Damned, Volume 2, Inner Sea World Guide, Bestiary 2,
+   > Bestiary 3, Bestiary 4 **and Inner Sea Bestiary** — **899 monsters**.*
+
+   899 is the same number the work-inventory reports as `monster grounded`, arrived at from the
+   running app rather than from the inventory.
+
+   **The first attempt FAILED and the failure is kept rather than deleted**
+   (`monster-cayhound.FAILED.verify.md`, which the harness names so it can never be cited as passing
+   evidence). Cause: `vite: not found` — the dispatch worktree has no `apps/desktop/node_modules`,
+   so `tauri dev`'s `beforeDevCommand` died and the launch timed out after 900s. Fixed with
+   `npm ci` in `apps/desktop`, then re-run with `--fresh` and
+   `RUN_DESKTOP_LAUNCH_TIMEOUT=1500` (the desktop crate's first build in a fresh
+   `CARGO_TARGET_DIR` is ~496 crates and does not finish inside the 900s default). **Forward note
+   for the dispatch:** a worktree-isolated agent gets its own `CARGO_TARGET_DIR` by convention and
+   its own `node_modules` by nobody, and item 8 is not waivable — `npm ci` in `apps/desktop` belongs
+   in the worktree setup the way the target dir already does.
+
+### 6. Reclaim
+
+`scripts/reclaim.sh --apply` at cycle end; `CARGO_TARGET_DIR` deleted.
+
+### 7. The `bestiary` ruling, and why it is a ruling rather than an ingest
+
+`§57.7` asked round 7 to decide whether the chassis absorbs Bestiary 1's 46 already-grounded SD-22
+monsters or sits alongside them. **Ruled: alongside**, taking the book's complement — `284 + 323 =
+607` units, with a new named exclusion class (**cross-table owner**, 54 rows) for the abilities whose
+only owner is one of the 46. Full derivation, including the two lines in
+`v06_work_inventory.rs` that make a naive registration a 46-unit *regression*, is `decisions.md
+§58.3`. Round 8 opens with it and re-derives nothing.
+## Cycle — epic-7-companion-lane-extend, ROUND 5 (SD29-E7-F2-006)
+
+**Claimed-by** `sd29-companion-r9` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §59` · **Commits** `2481e31e` (ingest + both mechanisms + three tests + two corrected pins), `c6225c82` (the two stale-upward baselines), plus this receipt · **Branch** pushed to
+`origin/tranche/9` and verified BY CONTENT: `git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary_4/companion_data.rs | grep -c 'CompanionRecord {'` -> **34**, `| grep -c 'CompanionAbilityRecord {'` -> **44**
+
+**Outcome: 78 units ingested, all 78 grounded. Companion grounded 279 → 357. Honest remainder 566.**
+
+### 0. The dispatch brief was materially stale for the SECOND consecutive round, and was corrected by content
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that the lane is "a NEW MECHANISM with no corpus-wide precedent", and that
+the round should "build the mechanism on a small pilot first" against a pinned `inner_sea_combat`.
+
+None of that was true at dispatch, and `decisions.md §56 §0` records round 4 receiving the **same**
+brief text one round earlier. Re-derived before anything was built:
+
+```
+git log --oneline -12 origin/tranche/9
+  -> dd838a17 feat(sd29): companion lane round 4 — Bestiary 3, ...
+  -> b0cdc3fe docs(sd29): companion round 4 receipt — VERIFY_EXIT=0, reach 27, item 8 PASS
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1417, 'grounded': 279})
+```
+
+Four rounds had landed. `companion_chassis.rs`, `classify_companion_rows.py`,
+`transcribe_companion_tables.py`, a `gen_book_cache companion:<book>` generator,
+`CompanionCatalogScreen.tsx` and **9 registered books** all existed and were verified by content
+before use. The card's real state in `kanban.md` was **`READY (round 5)`**.
+
+**Also corrected: this worktree was cut from the wrong base again.** `HEAD` was `7d9f1c4f` — no
+`docs/release/` directory at all, and not an ancestor of `origin/tranche/9`. Every required read named
+by the brief was absent from the checkout. Fixed with `git fetch origin tranche/9 && git merge
+FETCH_HEAD` before any work. This is the *same* base round 4 was handed
+(`decisions.md §56 §0`), so it is a recurring dispatch defect, not a one-off; a
+`recurrence-key=wrong-base-worktree` incident is in the retro shard.
+
+The one figure the brief carried that could be checked — **658** remaining — was re-derived and
+**reproduced EXACTLY** before this round's own findings superseded it (§4).
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`§56`'s ranking put `bestiary_4` first at 75 reachable / 6% orphan share. Its hazard (a) — that
+`bestiary_4` was the monster lane's next target and needed a new `RuleSetId::B4` — was checked and
+found **closed**: the monster lane took the book in `52da4bc3` (round 6, `§57`) and `RuleSetId::B4`
+is compiled at `src/rules_core/rules_tables/mod.rs:211`. So the book's registration is free of any
+scope flip, the same way `bestiary` (round 3) and `bestiary_3` (round 4) were.
+
+```
+python3 scripts/classify_companion_rows.py bestiary_4
+book                              crea  abil  clas  named  prerace  prefix  relay  granted  ORPHAN
+bestiary_4                          34    46     0     12       10      30     24        0       0
+
+total companion units in scope : 80
+orphan ability rows            : 0
+PRECAMPAIGN-gated on an uningested campaign : 0
+`*_classes_companion.lst` class rows the chassis refuses : 0
+`.COPY=`/`.MOD` delta rows the chassis refuses : 2
+distinct excluded rows (the UNION, not the sum) : 2
+reachable remainder            : 78
+```
+
+That is the output **after** this round's two mechanisms. Before them it read `ORPHAN 5` /
+`reachable remainder 75`, exactly as `§56` predicted — and both numbers were wrong, in opposite
+directions.
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `bestiary_4` (Bestiary 4, wire code `B4`) |
+| Units ingested | **78** of 80 — 34 creature rows, 44 ability rows |
+| Grounded | **78 of 78**; **zero** orphans dropped; 2 `.COPY=` delta rows excluded |
+| Source files | 3 — `b4_races_companion.lst` 34, `b4_abilities_companion.lst` 40, `b4_abilities_race_ce_companion.lst` 4 |
+| New `RuleSetId` | none (`B4` compiled by the monster lane's `52da4bc3`) |
+| Other kinds' units moved | **0** |
+| `OPEN_FINDINGS` | none added — the family IS surfaced, and that list is per family |
+
+Surfaces wired (the same eight points round 4 paid): `companion_chassis::COMPANION_BOOKS` row,
+`gen_book_cache::COMPANION_BOOK_SPECS` `CompanionBookSpec`, `bestiary_4/mod.rs` accessors,
+`companion_catalog`'s `"bestiary_4" => "B4"` wire code, `CompanionCatalogScreen.tsx` `BOOK_LABELS`,
+its test's `SERVED_BOOK_CODES`, a `("bestiary_4", "companions")` `reach_gate` claim, and
+`v06_work_inventory` grounding through the registry.
+
+**Nothing of any other kind moved, and that is measured rather than asserted** — a structural diff of
+every unit's status against `HEAD`:
+
+```
+status changes: 78
+added: 0 removed: 0
+Counter({('bestiary_4', 'companion', 'not-ingested', 'grounded'): 78})
+```
+
+### 3. Two mechanisms, and the second cancelled part of the first
+
+**`§59.1` — ownership shape 6, RELAY ROWS.** `b4_races_companion.lst:22` `Familiar (Giant Flea)`
+never names `Flea (Giant) ~ Disease`. It names `Racial Traits ~ Flea (Giant)`, a `CATEGORY:Internal`
+row at `b4_abilities_companion.lst:56`, and THAT row carries
+`ABILITY:Special Ability|AUTOMATIC|Flea (Giant) ~ Disease|Flea (Giant) ~ Uncanny Leap|…`. Shape 4 is
+exactly this closure and cannot see it, because **the middle row is not an inventory unit** —
+`v06_work_inventory` does not count `CATEGORY:Internal` rows, so it is absent from the list shape 4
+walks. `Familiar (Pipefox)` and `Familiar (Ratling)` reach the three `~ Constant` rows of
+`b4_abilities_race_ce_companion.lst` the same way. Those five rows are the whole ORPHAN list the
+classifier printed for this book.
+
+The first hop is read under ANY `ABILITY:<Category>|AUTOMATIC|` category, because the creature's own
+token says `Internal`; shape 1 keeps its narrower `Special Ability` predicate, so nothing that was a
+non-owner becomes an owner by a looser read of an existing link. **The token was already being
+parsed** — `parse_natural_attacks` has read `ABILITY:Internal|AUTOMATIC|` since round 1 and skips the
+entries containing ` ~ `, which are precisely the relays.
+
+Corpus-wide shape 6 recovers **15** units (5 `bestiary_4`, 10 `core_essentials` — 26 orphans → 16)
+and changes **not one byte** of the nine already-registered books. All nine were REGENERATED, not
+hand-edited, and the proof is a command rather than a claim:
+
+```
+for b in inner_sea_combat monster_codex inner_sea_intrigue horror_adventures bestiary_5 \
+         bestiary_6 bestiary_2 bestiary bestiary_3; do
+  python3 scripts/transcribe_companion_tables.py $b; done
+git status --porcelain -- 'src/rules_core/rules_tables/*/companion_data.rs'
+  -> ?? src/rules_core/rules_tables/bestiary_4/companion_data.rs      (and nothing else)
+```
+
+`bestiary_3` reports `relay 5`, but those five rows were already owned through shapes 3 and 5 and
+`owners` is an append-if-absent list — so the finding is additive at the corpus level and inert at
+the record level, which is the strongest form the claim can take.
+
+**`§59.2` — `.COPY=` delta rows, and a ceiling that was ADDING its exclusions.** `gen_book_cache`
+refused the book on its first run and was right to:
+
+```
+b4_abilities_companion.lst:99 names "CATEGORY=Special Ability|Change Shape.COPY=Pooka ~ Change Shape",
+not "Pooka ~ Change Shape" -- the table's recorded line is stale and must be re-transcribed
+```
+
+`verified_citation_line` caught it. Bestiary 4 is the first companion book with `.COPY=` rows; the
+monster lane has screened them since Bestiary 2 and the reasoning transfers unchanged — a
+`<Base>.COPY=<Variant>` row states a DELTA on a base record elsewhere, so transcribed verbatim
+`Pooka ~ Change Shape` ships an `ASPECT` and nothing else. Independently confirmed by the trap
+report, which counts the shapes without knowing what the transcriber did:
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- bestiary_4
+  DECLARES  .COPY=  .MOD  #OFF  file
+        63       2     0     0  bestiary_4/b4_abilities_companion.lst
+        34       0     0     0  bestiary_4/b4_races_companion.lst
+         4       0     0     0  bestiary_4/b4_abilities_race_ce_companion.lst
+```
+
+The transcriber now screens `origin in ("copy","mod_only")`, names the dropped rows in the generated
+module header, and scrubs them from their owners' `ability_keys` so
+`the_chassis_link_resolves_in_both_directions_for_every_book` stays closed. The `mod_only` half is
+**stated, not exercised** (`core_essentials` 4, `ultimate_wilderness` 1) — `§56.3`'s discipline.
+
+And the ceiling itself was being computed as a **sum** of exclusions that are not disjoint. `§51.1`
+and `§54.2` each added a missing TERM; this fixes the arithmetic. Exactly one row corpus-wide is both
+an orphan and a delta.
+
+### 4. Denominators, every one re-derived this round
+
+```
+python3 scripts/classify_companion_rows.py
+total companion units in scope : 1696
+orphan ability rows            : 735
+PRECAMPAIGN-gated on an uningested campaign : 2
+`*_classes_companion.lst` class rows the chassis refuses : 7
+`.COPY=`/`.MOD` delta rows the chassis refuses : 30
+distinct excluded rows (the UNION, not the sum) : 773
+reachable remainder            : 923
+
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1339, 'grounded': 357})
+```
+
+**Ceiling 937 → 923** (shape 6 **+15**, delta screen **−29**). **Honest remainder `923 − 357` = 566**
+across 7 books. Raw `not-ingested` is 1,339 and that is NOT the workload.
+
+The two derivations close exactly, which is the check that caught a bad ceiling table in each of the
+last two rounds: the nine GROUNDED books' reachable counts sum to **357** — the grounded figure to
+the unit — and the seven remaining books' to **644 − 78 = 566**.
+
+| book | units | excluded | **reachable** |
+|---|---|---|---|
+| `ultimate_wilderness` | 575 | 248 | **327** |
+| `core_essentials` | 145 | 42 | **103** |
+| `core_rulebook` | 170 | 86 | **84** |
+| `ultimate_magic` | 170 | 138 | **32** |
+| `advanced_race_guide` | 32 | 18 | **14** |
+| `advanced_players_guide` | 212 | 208 | **4** |
+| `book_of_the_damned_volume_1` | 31 | 29 | **2** |
+
+`327 + 103 + 84 + 32 + 14 + 4 + 2 = 566`.
+
+### 5. The gate found two stale pins, and both were moved WITH the new records named
+
+`root-lib` went red on the first full run:
+
+```
+companion_chassis::tests::an_ability_with_no_modelled_facet_still_states_its_type_segments
+  left: 5  right: 3
+```
+
+and `apps/desktop/src-tauri` went red on its wire-side twin with `left: 7, right: 3`. **The two
+numbers are different because they count different things**, which is the finding rather than the
+fix: the chassis test counts RECORDS, the catalog test counts WIRE ROWS, and the catalog nests
+abilities under each owning creature — Bestiary 4's two `TYPE:Communicate.SpellLike` rows are each
+owned by both `Familiar (Pipefox)`/`Pipefox` and `Familiar (Ratling)`/`Ratling`, so 5 records become
+7 rows. Pinning both to one number was asserting that no record ever has two owners.
+
+Neither was bumped to green. The chassis test now names the two new records and asserts their exact
+segments; the catalog test asserts 7 rows over 5 distinct keys and that every unmodelled row carries
+one of the two known shapes. `Read Magic ~ Constant`, one file-line away from the other two, says
+`TYPE:SpecialQuality.SpellLike` and IS fully modelled — three adjacent rows splitting two ways, which
+is exactly why `type_segments` keeps everything verbatim rather than trusting the enum.
+
+### 5b. A third finding, caught after the first gate had already passed
+
+Renumbering this decision from §58 to §59 (the monster lane's round 7 claimed §58 in a push that
+landed while this round was committing) meant regenerating `bestiary_4/companion_data.rs` for a
+one-word comment change. **The regeneration produced a different file** — from an inventory proven
+byte-identical for this book:
+
+```
+- owners: &["Nycar", "Familiar (Nycar)"],
++ owners: &["Familiar (Nycar)", "Nycar"],
+```
+
+`creature_species = {bare_species(k): k for k in creature_keys}` is a dict comprehension over a
+**set**, and Bestiary 4 is the first book shipping a bare species AND its wrapper as two creature
+rows (`Almiraj`/`Familiar (Almiraj)`, and the same for `Beheaded`, `Isitoq`, `Nycar`, `Pipefox`,
+`Pooka`, `Ratling`). Which of the two won the map entry was decided by Python's per-process
+randomized string hash. **The lane's whole "regenerate and diff to prove it additive" method assumes
+that generator is a function of its input; for one book it was not** (`decisions.md §59.3`).
+
+The non-determinism was the smaller half. In the version committed as `2481e31e` the losing side
+shipped visibly broken: the creature row `Beheaded` carried `ability_keys: &[]` while
+`Familiar (Beheaded)` held all six Beheaded variants — a player opening `Beheaded` would have seen a
+creature with no abilities. `species_index()` now maps a species to EVERY creature row claiming it, in
+row order.
+
+Verified: three consecutive regenerations in three separate processes are byte-identical, and the nine
+already-registered books still regenerate byte-identical (no other book collides). **The full gate was
+re-run from scratch on the corrected tree rather than reasoned about** — §6 below reports the second
+run, not the first.
+
+**The check that caught it was not a test.** A test asserting "44 ability records" passes on both
+sides of a coin flip. It was regenerating a generated file and diffing it, and the lesson generalises:
+whenever a round changes a generator, regenerate TWICE and diff.
+
+### 6. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `./scripts/verify.sh` exits 0 | **PASS** — `VERIFY_EXIT=0`, `RESULT: PASS`, 14/14 stages, `root-full` 6293 passed across 544 suites with all 525 `tests/*.rs` suites executed, clippy at its 54 ceiling, logs `/tmp/codex-verify-4mYfTf`. Exit code captured directly, never through a pipe. **Three full runs, and §8 records all three rather than only the green one:** run 1 (pre-merge, this round's work alone) PASS 14/14; run 2 (after merging `cacf35d8`) FAIL on four INHERITED stages; run 3 (after merging the monster lane's own fix `0090e273`) PASS 14/14 |
+| 2 | `reach` stage passes with a claim for this book's families | **PASS in BOTH runs** — `reach (27 passed)`, and the claim is this book's own: `("bestiary_4", "companions") => companions_reach("bestiary_4", "B4")`, the SECOND claim the book carries beside the monster lane's. Not a pass by absence |
+| 3 | `v06_corpus_trap_report --audit` exits 0 | **PASS** — `AUDIT_EXIT=0`, "No defects: every ingested record's citation agrees with the line it names" |
+| 4 | `v06_work_inventory` regenerates; units leave `not-started`; second run changes only `generated_at` | **PASS** — 78 units `not-ingested` → `grounded`; second run diff over the whole document with `generated_at` popped compares `True` |
+| 5 | Four-check wired-integration audit clean | **PASS** — no stub: the records are corpus reads, the catalog screen renders them, the reach claim executes IPC, and item 8 shows a relay-owned record on screen |
+| 6 | `OPEN_FINDINGS` entry for any family that could not be surfaced | **N/A** — none; `bestiary_4/companions` is surfaced, and adding a surfaced family would fail `unsurfaced_families_are_exactly_the_recorded_findings` in the other direction |
+| 7 | Baseline movements a separate reviewable commit | **PASS** — two stale-UPWARD floors, raised in their own commit `c6225c82`: `BASELINE_ROOT_LIB_TESTS 1715 -> 1719`, `BASELINE_ROOT_FULL_TESTS 6282 -> 6286`. Evidence is the run's own `BASELINE NOTES` block quoted verbatim in the file, which is the same instrument `--show-actuals` prints from; that flag was NOT run separately, because it means a second ~25-minute full gate to reprint two numbers this run already measured. Stated, not implied |
+| 8 | On-screen verification | **PASS** — `docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E7-F2-006/item8/b4-companion-familiar-giant-flea.png` + `.verify.md`. **The record chosen is the mechanism's own proof**: `Familiar (Giant Flea)`, and the expected string `Uncanny Leap` is a RELAY-owned ability -- the screen renders `Uncanny Leap — SpecialQuality · Extraordinary` under it, so shape 6 is verified by a player-visible pixel and not only by a passing test. Also on screen: `Bestiary 4 (34)`, `Bestiary 4 p.99`, and the blurb's book list now ending `... Bestiary 3 and Bestiary 4 — 166 creatures`. **`SEARCH_Y=285` held without recalibration** at 10 registered books -- the harness comment predicts this constant will move again and it did not this time, which is worth recording because the prediction is right in general and was wrong here |
+
+### 7. What round 6 inherits
+
+**7 books, 566 reachable units.** Hazards, all derived this round:
+
+* **`ultimate_wilderness` is the largest block left (327) and needs NO new `RuleSetId`**
+  (`RuleSetId::Uw`, SD-28 Epic 26) — but it carries **169** creature rows, more than every registered
+  book combined.
+* **`core_essentials` (103) is the book shape 6 most changed** and the first that will exercise the
+  `mod_only` half of `§59.2`'s screen (6 companion `.lst` files, 22 `.COPY=`, 4 `mod_only`). It needs
+  a NEW `RuleSetId` — nothing in `src/` compiles it today; check before writing one.
+* `core_rulebook`, `ultimate_magic` and `book_of_the_damned_volume_1` still carry the 7
+  `*_classes_companion.lst` class rows the chassis refuses outright.
+* **`advanced_players_guide` (4 reachable of 212) and `book_of_the_damned_volume_1` (2 of 31) are
+  FLOORS, not queued work** — the reachable-exhausted shape `§57` recorded for `bestiary_4`'s monster
+  half. A round taking either pays a full book's registration cost for a handful of records.
+
+**The lane is NOT done and this receipt does not claim it is.** `§45.1` as amended by `§56.1` is now
+three-for-three: classify before committing to a book, then read the rows the classifier is about to
+throw away. Every one of the last three rounds found the instrument wrong by doing exactly that.
+
+### 8. `origin/tranche/9`'s tip was RED for ~35 minutes, and the lane that turned it red fixed it
+
+**This round's own tree passed the full gate 14/14 (`VERIFY_EXIT=0`, logs `/tmp/codex-verify-7lOxmj`)
+before any merge.** Merging `origin/tranche/9` at `cacf35d8` (the monster lane's round 7 / Inner Sea
+Bestiary ingest) turned four stages red, and every one was attributed to that lane by CONTENT — read
+out of `cacf35d8` itself, not inferred from timing:
+
+| stage | failure | proof it was inherited |
+|---|---|---|
+| `pi-sweep`, `root-full` | `rules_tables_carry_no_unbaselined_product_identity_hits`: 2 unbaselined `Golarion` hits | `git show cacf35d8:src/rules_core/rules_tables/inner_sea_bestiary/mod.rs \| sed -n '31p'` and `git show cacf35d8:src/rules_core/rules_tables/mod.rs \| sed -n '223p'` both print the flagged lines verbatim |
+| `root-full` | `sd30_campaign_setting_books_appear_in_the_inventory_as_not_started_books`: `inner_sea_bestiary` is `in_scope`, test wanted `future_state` | `origin/tranche/9`'s OWN committed `docs/work-inventory.json` already recorded `scope: in_scope` — this round's regeneration reproduced it, it did not cause it |
+| `clippy` | root 55 vs ceiling 54: `identity_op` at `inner_sea_bestiary/mod.rs:118`, `230 - 26 - 7 - 0` | same `git show` on `cacf35d8` prints the line |
+| `desktop` | `last_ingested_at_is_a_real_git_derived_timestamp_when_available` for `inner_sea_bestiary` | reads git history for `data/corpus/inner_sea_bestiary/`, which arrived here as an uncommitted merge payload |
+
+`git diff --name-only 2481e31e~1 2481e31e` lists this round's 90 changed paths; the count matching
+`inner_sea_bestiary|rules_tables/mod.rs|corpus_ingest_diagnostic` is **0**.
+
+**They were not fixed here, deliberately, and that call was right.** Two of the four were the other
+lane's *judgements* rather than mechanical defects: baselining a Product-Identity hit is a governance
+act under `docs/governance/ogl-pi-blacklist.md`, and whether `inner_sea_bestiary` is SD-30
+`future_state` or SD-29 `in_scope` is a roster ruling. Rewriting another in-flight lane's decision
+prose to make a gate green is the shape of thing this program's doctrine exists to prevent, and that
+lane was pushing to the same branch minutes earlier. Under UNATTENDED MODE the safer default was to
+attribute precisely and hand it back.
+
+**And it came back.** `sd29-monster-r9` pushed `0090e273` — "the three gate stages round 7's own
+ingest turned red" — while this receipt was being written. Merged, and **run 3 of the full gate on the
+combined tree is `RESULT: PASS`, `VERIFY_EXIT=0`, 14/14** (`/tmp/codex-verify-4mYfTf`). Both lanes'
+work is on the branch and the branch is green.
+
+**The transferable finding is not the red, it is the arithmetic of waiting.** The cost of not editing
+another lane's files was one extra ~25-minute gate run. The cost of editing them would have been a
+merge conflict in decision prose plus a governance ruling made by the wrong agent. A
+`recurrence-key=red-tip-pushed` incident is in the retro shard with the resolution recorded as it
+actually happened, not as it was predicted.
+
+**`BASELINE_ROOT_FULL_TESTS` is raised from run 3 (6286 → 6293) and NOT from run 2**, even though run
+2 measured a number too: a floor set from a run that did not pass is a floor set from nothing.
+
+## Cycle SD29-E5-F2-009 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 8 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r10` · **Date:** 2026-08-12 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-16`)
+**Branch-point:** `e478cd15` · **Commits:** `e70d39fc` (the ingest, all eight registration points,
+the two generator fixes and the player surface), plus this receipt's own closing commit.
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message:**
+`git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary/monster_data.rs | grep -c 'MonsterStatBlock {'` → **280**,
+`| grep -c 'MonsterAbilityRecord {'` → **323**.
+**Kanban status left at:** `READY — round 9.` **Gate: `VERIFY_EXIT=0` on run 3** (runs 1 and 2 were `1`; both reds were this round's own identifier-discipline defects, both fixed and pushed the moment they existed — §5.1, §5.2).
+
+**This receipt does not claim the lane is done.** 603 units landed; the REAL ceiling after this round
+is **160** across four books, and one of those books is 73% of it.
+
+### 0. Worktree integrity — the predicted failure, hit an ELEVENTH time
+
+`git rev-parse --abbrev-ref HEAD` → `worktree-wf_924a22ca-f35-16`; `git log -1 --oneline` →
+`7d9f1c4f Merge pull request #23 …`, the same 2026-06-28 ancestor rounds 2-7 each landed on. The
+checkout had no `docs/release/SD-29-…` directory. Recovered before any other action with
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` (`e478cd15`), working tree clean
+at the time (`git status --porcelain` → empty). Eleventh consecutive instance; a harness condition,
+not an agent error.
+
+### 0/0b. Shape and trap report
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- bestiary
+```
+
+`b1_races.lst`: `DECLARES 335 / .COPY= 6 / .MOD 6 / #OFF 21`. `b1_abilities_race.lst`:
+`DECLARES 620 / .COPY= 0 / .MOD 34 / #OFF 26`. Book-wide **1,108 declarations across 26 files**, 6
+`.COPY=`, 159 `.MOD`, 49 disabled lines. 259 `KEY:` namespaces, the largest being
+`Companion Advancement` (22) and `Animated Object` (18) — the namespaced-key trap this chassis's
+prefix pass is built for.
+
+**The `.COPY=`/`.MOD` columns are about the FILE, not about this lane's units**, and the difference is
+this round's second finding (§4b). Of the book's 330 `monster` units the inventory declares, **0**
+cite a `.COPY=` row — every one of `b1_races.lst`'s 6 copies belongs to a kind this lane does not
+take — and **4** cite a `.MOD` row. Derived rather than read off the trap report:
+`collections.Counter(u.get('origin') …)` over the inventory → `declared 326, mod_only 4` for this
+book, `declared 4371, mod_only 4, copy 2` corpus-wide.
+
+Shape notes checked rather than assumed: the `.pcc` carries no leading underscore (`bestiary.pcc`,
+the B1/B2/B3 shape); this book's monster and ability units come from exactly two files
+(`b1_races.lst`, `b1_abilities_race.lst`), so the multi-file hazard `§58.5` flags for
+`inner_sea_gods` does not apply here; `b1_races_pc.lst` and `b1_abilities_race_pc.lst` are pure
+`.MOD` overlay files (0 DECLARES, 11 and 106 `.MOD`) and contribute no unit.
+
+### 1b. Every figure re-derived, command first, value second
+
+**The lane's REAL ceiling, reproduced EXACTLY at cycle start before being moved:**
+
+```
+python3 scripts/classify_monster_ability_rows.py
+```
+
+→ `remaining … 2268`, `orphan … 1406`, `PI … 32`, `.COPY= … 2`, **`reachable remainder … 828`**;
+`828 − 7` (`§58.1`) = **821**. **The brief's carried figure — "The previous round reported 821
+remaining" — is confirmed rather than corrected**, the second consecutive round in which that has
+been true.
+
+**The brief's other figures were wrong for the seventh round running.** Claimed "monster ~305,
+monster_ability ~852, against grounded 62 and 20"; the command below returns `monster remaining 371
+grounded 899`, `monster_ability remaining 1897 grounded 1210`. Retro `correction` emitted naming all
+six prior sections that corrected the identical pair.
+
+**Lane denominators**, before and after, the command rounds 1-7 record:
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 371 | **91** | −280 |
+| `monster_ability` remaining | 1,897 | **1,574** | −323 |
+| raw remaining total | 2,268 | **1,665** | −603 |
+| `monster` grounded | 899 | **1,179** | +280 |
+| `monster_ability` grounded | 1,210 | **1,533** | +323 |
+| classifier `reachable remainder` | 828 | **225** | −603 |
+| **REAL ceiling** | 821 | **160** | −661 |
+
+`2268 − 603 = 1665` closes exactly. The extra 58 on the REAL line is §4b's instrument correction, not
+ingest.
+
+**The book's own split**, re-derived independently before a line of code was written and matching
+`§58.3`'s table exactly:
+
+```
+python3 -c "
+import json, collections
+d=json.load(open('docs/work-inventory.json'))
+u=[x for x in d['units'] if x['book']=='bestiary' and x['kind'] in ('monster','monster_ability')]
+print(collections.Counter((x['kind'],x['status']) for x in u))"
+```
+
+→ before: `monster_ability not-ingested 523`, `monster not-ingested 284`, `monster grounded 46`.
+After: `monster grounded 326`, `monster_ability grounded 323`, `monster_ability not-ingested 200`,
+`monster not-ingested 4`.
+
+### 2. Card claimed
+
+`epic-5-monster-lane-extend`, the queue head `§58.5` names: `bestiary`, 807 remaining units, 661
+classifier-reachable, "needs the `holds_key` fix FIRST".
+
+### 3. What landed
+
+**280 monsters + 323 owned abilities = 603 records**, `rules_tables::bestiary` +
+`data/corpus/beastiary/{monster,monster_ability}/`.
+
+```
+cargo run --locked --bin gen_book_cache -- beastiary
+→ beastiary cache generated: 280 monsters, 323 monster abilities; LICENSE.json records_processed=831
+```
+
+Eight registration points, **no new `RuleSetId`** and **no frontend change** (`B1` was already in both
+hand-maintained served-book lists — by luck of the shared wire code, not by a fix):
+`rules_tables::bestiary` + `mod.rs`, `monster_chassis::MONSTER_BOOKS` (`corpus_book: "beastiary"`),
+`gen_book_cache::MONSTER_BOOK_SPECS`, `v06_work_inventory`'s registry loop **and** `holds_key`,
+`reach_gate`'s merged `monsters_reach` + the new `("beastiary1","monster_abilities")` claim +
+`RULES_TABLES_BOOK_IDS`, `monster_catalog`'s wire code and display name, and
+`corpus_ingest_diagnostic::beastiary1_counts`.
+
+Nine new tests in `rules_tables::bestiary`, and the one that matters most is
+`no_creature_is_served_by_both_bestiary_1_tables` — two records for one creature under one wire code
+is the defect `§58.3` chose ALONGSIDE to avoid, and it has no natural detector.
+
+### 4. The two findings, and where each was caught
+
+**(a) `§54.4`'s fix had been applied to one of two structurally identical generators.** Caught by
+reading `gen_monster_book` before running it — this is the first book in the lane whose
+`data/corpus/` directory another lane had already populated, so neither defect was reachable until
+now. Its `fs::remove_dir_all` would have deleted the 46 shipped SD-22 monster records on every run;
+its `screening_method_note` write would have destroyed that file's four-pass history. Both fixed,
+the note logic lifted into one shared `compose_screening_note`. Verified after the run: 46 `data.id`
+records and 280 `data.key` records on disk, note 2,837 → 3,479 characters with the prior text intact.
+Retro `near-miss` emitted with `recurrence-key fix-applied-to-one-of-two-parallel-generators`.
+
+**(b) 58 of the 821 units round 7 called the REAL ceiling were never reachable**, all 58 in this
+book. 54 `cross-table owner` ability rows — well-formed and owned, unreachable from here only because
+every monster naming them is one of the 46 the other table serves — and 4 `.MOD`-only overlay monster
+rows. The `.MOD` term was found by `gen_book_cache::verified_citation_line` refusing the row outright
+(`b1_races.lst:239 names "Hydra (Cryohydra).MOD", not "Hydra (Cryohydra)"`), which is that guard doing
+exactly its job. Full derivation in `decisions.md §60.2`.
+
+**(c) `chassis_monster_keys` was keyed by corpus directory while its verdict arms look up by engine
+book** — identical strings for nine books, so it worked by coincidence, the same latent defect
+`§54.3` records the companion lane finding in its own copy of that loop. Fixed through the existing
+translation. `holds_key`'s Bestiary 1 arm is now a UNION of the two tables; either half alone silently
+reports the other half's whole table as `not-ingested`.
+
+**(d) Two `DESC:` shapes widened, one row each**, both `§46`'s summary-versus-full pair in a row with
+no gate: **superset** (`:1183`) and **variable-bearing** (`:1068`). Scope derived first — 54
+multi-`DESC:` rows corpus-wide, 34 gated-full, 4 continuation, 1 superset, 1 variable-bearing, 14
+still refused, none of the 14 shipped by any book. Additivity proven by re-transcribing all nine
+previously registered books: zero records moved.
+
+### 5. Verification
+
+`./scripts/verify.sh` (FULL, exit code captured directly, never through a pipe) — result recorded in
+§5.1 below with the exit code and the stage tally.
+
+Pre-gate, per-crate, with the commands and their real results:
+
+```
+cargo test --locked -p codex --lib rules_core::rules_tables::bestiary::   → 9 passed, 0 failed
+cargo test --locked --test sd26_cache_beastiary                            → 12 passed, 0 failed
+cargo test --locked --test v06_work_inventory                              → 4 passed, 0 failed
+cargo test --locked --test v06_corpus_trap_report                          → 25 passed, 0 failed
+cargo test --locked --test sd27_book_license_record_counts                 → 6 passed, 0 failed
+cargo test --locked  (apps/desktop/src-tauri)                              → 443 passed, 0 failed
+```
+
+Ten desktop-crate tests were red on the first run and every one was this round's own — seven of them
+one defect wearing ten hats: `book == BOOK_B1` had meant "the SD-22 table" and now means "the book".
+The fix is the Epic 5 pilot's fix one level finer (`monster_catalog::tests::hand_modelled_rows`), plus two
+structural changes (`monsters_reach` unions the denominators; `book_of` maps the module directory).
+None was waved through and none was environmental.
+
+### 6. Item 8 — on-screen
+
+Recorded in §6.1 below, with the harness command and the artifact paths.
+
+### 7. What round 9 inherits
+
+REAL ceiling **160** across four books: `inner_sea_gods` 116, `ultimate_psionics` 34,
+`horror_adventures` 9, `occult_adventures` 1. Full table with each book's hazard in
+`decisions.md §60.7`. `inner_sea_gods` is 73% of it and needs `MonsterAbilityRecord` to carry a
+`source_file` — a chassis widening no round has done, carried forward from `§58.5` and **not**
+verified by this round.
+
+Two books are now reachable-exhausted rather than done: `bestiary` (58 classifier-reachable, 0 REAL)
+and `inner_sea_bestiary` (7, 0). `occult_adventures` is a ONE-monster book — a full registration cost
+for a single record, which a round that takes it should state up front rather than discover at the
+ceiling table.
+
+### 5.1 Gate — run 1
+
+`./scripts/verify.sh` (FULL, `RETRO_ACTOR=sd29-monster-r10`, exit code captured directly, never
+through a pipe). Logs `/tmp/codex-verify-vLWr5e`.
+
+**`RESULT: FAIL` — 13 of 14 stages passed; `root-full` red.** Passed: `preflight-disk`, `pi-sweep`,
+`audit-selftest`, `reclaim-selftest`, `driver-selftest`, `root-lib` (1,735), `desktop` (443), `reach`,
+`frontend-install`, `frontend-test` (99/99), `frontend-typecheck`, `clippy`, `class-dump`.
+
+**`root-full`: `cargo exit 101`, 6,301 passed across 544 suites, exactly two failures and both are
+one defect.** `sd24_identifier_discipline_audit::no_bundle_tag_identifier_leaks_in_shipping_source`
+and `sd26_identifier_discipline_audit::no_bundle_tag_identifier_leaks_in_scripts_and_data` both
+rejected `monster_catalog::tests::sd22_rows` — the helper this round added to separate Bestiary 1's
+two tables now that a shared wire code no longer does. The audit is right and the name was wrong for
+the audit's own reason: what the helper selects is the **hand-modelled** half; "SD-22" names the
+bundle that wrote it rather than the thing. Renamed to `hand_modelled_rows`, and
+`tests/sd26_cache_beastiary.rs`'s `load_sd22_monsters` renamed with it even though the audit does not
+scan `tests/`.
+
+**Fixed and pushed the moment it existed (`0b4b3703`) rather than held to cycle end**, because
+`e70d39fc` was already on `origin/tranche/9` where this turns a CONCURRENT lane's gate red through no
+fault of its own — the cost `§52.5` records and the mitigation `§57.5(b)` states. Verified
+individually before re-running the gate, rather than re-running the whole gate hopefully:
+`cargo test --locked --test sd24_identifier_discipline_audit` → 1 passed;
+`--test sd26_identifier_discipline_audit` → 1 passed; `--test sd26_cache_beastiary` → 12 passed.
+
+**Nothing was accepted as environmental.** No stage failed twice with the same attribution, so
+`§39`'s recurrence rule is not engaged.
+
+**Two baselines flagged stale UPWARD by run 1 and raised in `scripts/verify-baselines.env`, both from
+stages that PASSED in that run:** `BASELINE_ROOT_LIB_TESTS` 1726 → **1735** (+9, this round's
+`rules_tables::bestiary` tests) and `BASELINE_DESKTOP_TESTS` 442 → **443** (+1,
+`no_bestiary_1_creature_reaches_the_wire_twice`). `BASELINE_ROOT_FULL_TESTS` was deliberately NOT
+raised from run 1 — that stage was red, and a floor must never be set from a run that did not pass.
+
+### 6.1 Item 8 — on screen, machine-verdicted, BOTH tables
+
+DoD item 8 is not waivable and this round surfaces a player-visible family, so it gets an on-screen
+artifact. Run with the proven harness rather than hand-rolled, and **not** concurrently with
+`verify.sh` (22 GiB, no swap):
+
+```
+RUN_DESKTOP_AGENT=sd29-monster-r10 \
+  ./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+  --family monster --record "Aboleth" \
+  --expect "Aboleth" --expect "Aberration" --expect "Mucus Cloud" \
+  --out docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-009/item8 \
+  --slug bestiary-1-aboleth
+```
+
+**PASS**, at `HEAD 0b4b3703`. The rendered lines the harness read back off the live app's clipboard:
+
+```
+14:Aberration (80)
+30:AbolethHuge Aberration (Aquatic)
+32:Speed 10 ft., swim 60 ft. · Bestiary 1 p.8 · Hit dice Aberration:8
+35:Mucus Cloud — Special Attack (Ex)p.8
+```
+
+That one record proves **both** new families: `Aboleth` is one of the 280 chassis monster rows, and
+`Mucus Cloud` is one of the 323 chassis ability rows, rendered underneath the monster that owns it.
+
+**A second record was verified for a reason specific to this round: the SD-22 half had to be proven
+still on screen.** This round changed `monsters_reach`, `book_wire_code`, `book_display_name` and
+`holds_key` on the path both tables share, and every one of those changes could have served the
+chassis half while silently dropping the other. `Ankheg` (`beastiary1:monster:ankheg`) → **PASS**,
+`bestiary-1-ankheg-sd22-half.png` + `.verify.md`. Four artifacts, no `.FAILED.*` file in the
+directory.
+
+`driver.sh stop` run at cycle end.
+
+### 5.2 Gate — run 2, and the one line that made it a third run
+
+`RESULT: FAIL`, `VERIFY_EXIT=1`, logs `/tmp/codex-verify-H2jRrA`. **13 of 14 again, `root-full`
+again — and the attribution is NOT run 1's.** `root-full` reports `cargo exit 101; 6302 passed across
+544 suites` with exactly one failure,
+`sd26_identifier_discipline_audit::no_bundle_tag_identifier_leaks_in_scripts_and_data`, and one
+offending line:
+
+```
+scripts/verify-baselines.env:1176:# two test names (the identifier-discipline audit rejecting `sd22_…`, fixed
+```
+
+**The note §5.1 wrote about the removed identifier named the removed identifier**, in a file that is
+inside the audit's own scan path (`apps/desktop/`, `src/`, `scripts/`, `data/`). That is
+`decisions.md §52.5` exactly — *"a comment recording a FALSE positive instantiates the name as surely
+as one recording a removal"* — which that decision recorded for `pi-sweep`, in a different sweep and
+a different file, and which this round re-paid anyway one commit after fixing the thing the comment
+was about.
+
+**`§39`'s recurrence rule is checked and NOT engaged**, and the check is the point: the rule fires on
+a stage failing twice *with the same attribution*. Run 1's was a bundle-tagged **identifier** in
+`apps/desktop/src-tauri/src/monster_catalog.rs`; run 2's is a **comment** in `scripts/`, caught by a
+different one of the two audit tests. Same doctrine, different defect, and it was attributed by
+reading `root-full.log`'s own failure block rather than by assuming the first cause had recurred.
+Retro `incident` emitted with `recurrence-key
+comment-naming-a-removed-identifier-trips-its-own-sweep`.
+
+Fixed by naming the audit and the commit rather than the identifier, then swept:
+`grep -rn '<the identifier>' src/ apps/ scripts/ data/ tests/` → 0. (Four `docs/release/` hits remain
+and are correct: two are this receipt's own history of what was rejected, and the two that stated the
+CURRENT helper name were corrected to it.) Verified individually before re-running the gate:
+`cargo test --locked --test sd26_identifier_discipline_audit` → 1 passed;
+`--test sd24_identifier_discipline_audit` → 1 passed.
+
+### 5.3 Gate — run 3, final: `VERIFY_EXIT=0`
+
+`./scripts/verify.sh` (FULL, `RETRO_ACTOR=sd29-monster-r10`), exit code captured directly into the
+log and never through a pipe:
+
+```
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+**14 of 14 stages green** — `preflight-disk`, `pi-sweep`, `audit-selftest`, `reclaim-selftest`,
+`driver-selftest`, `root-lib`, `root-full`, `desktop`, `reach`, `frontend-install`, `frontend-test`,
+`frontend-typecheck`, `clippy`, `class-dump`. Logs `/tmp/codex-verify-UV3MgS`.
+
+`root-full` **6,303 passed across 544 suites**, with all 525 `tests/*.rs` suites executed
+(`grep -c "Running tests/" root-full.log` → 525, the check `§40` requires and `root-full` runs on
+every invocation). `reach` **27**. `clippy` at its ceiling.
+
+**`BASELINE_ROOT_FULL_TESTS` raised 6293 → 6303 from this run**, which is the first of the three in
+which that stage passed. The +10 are this round's own: 9 in `rules_tables::bestiary` and 1 in
+`tests/sd26_cache_beastiary::the_directory_holds_both_tables_records`.
+
+**No stage failed twice with the same attribution across the three runs**, so `§39`'s recurrence rule
+was never engaged, and nothing was accepted as environmental. Both reds were this round's own, both
+were the identifier-discipline doctrine, and the second was `§52.5`'s comment shape rather than the
+first's identifier shape.
+Recorded below with the exit code captured directly.
+## Cycle — epic-7-companion-lane-extend, ROUND 6 (SD29-E7-F2-007)
+
+**Claimed-by** `sd29-companion-r10` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §61` (claimed as §60, renumbered in `cea8fa9c` because the monster lane claimed §60 concurrently in `0d9fb586`) · **Commits** `ae3dad3a` (ingest + three mechanisms + five tests), `cea8fa9c` (the renumber), `2799bc08` (three stale-upward baselines), plus this receipt · **Branch** pushed to `origin/tranche/9`
+
+**Outcome: 327 units ingested, all 327 grounded. Companion grounded 357 → 684. Honest remainder 239
+across 6 books.**
+
+Ultimate Wilderness — the largest companion block in the corpus. Its 169 creature rows are more than
+every previously registered companion book combined (166).
+
+### 0. The dispatch brief was materially stale for the THIRD consecutive round, and the base was wrong for the third
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that the lane is "a NEW MECHANISM with no corpus-wide precedent", and that
+this round should build the mechanism on a pinned `inner_sea_combat` pilot. `decisions.md §56 §0` and
+`§59 §0` each record the *same* text one and two rounds earlier.
+
+```
+git log --oneline -3 origin/tranche/9
+  -> e478cd15 chore(retro): companion round 5 cycle-end reclaim event
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1339, 'grounded': 357})
+```
+
+Five rounds had landed; ten books were registered; the card read `READY (round 6)`. The brief's one
+checkable figure — **566** remaining — was re-derived and **reproduced EXACTLY** before this round's
+work superseded it (§4).
+
+`HEAD` was `7d9f1c4f`: no `docs/release/` directory at all, not an ancestor of `origin/tranche/9`.
+Fixed with `git fetch origin tranche/9 && git reset --hard e478cd15` before any work. A
+`recurrence-key=wrong-base-worktree` incident is in the retro shard.
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`§59.4` ranked `ultimate_wilderness` first at 327 reachable with a free `RuleSetId`. Both halves were
+re-checked rather than trusted:
+
+```
+python3 scripts/classify_companion_rows.py ultimate_wilderness | tail -6
+  total companion units in scope : 575
+  orphan ability rows            : 247
+  `.COPY=`/`.MOD` delta rows the chassis refuses : 2
+  distinct excluded rows (the UNION, not the sum) : 248
+  reachable remainder            : 327
+
+grep -n 'Uw' src/rules_core/rules_tables/mod.rs   ->  62:    Uw,
+```
+
+`RuleSetId::Uw` is compiled (SD-28 Epic 26), so registration cost no scope flip.
+
+**And `§45.1` as amended by `§56.1` was applied — the 247 rows the classifier was about to throw away
+were read before committing.** For the first time in four rounds it did NOT move the ceiling up; it
+found the opposite (§3b).
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `ultimate_wilderness` (Ultimate Wilderness, wire code `UW`) |
+| Units ingested | **327** of 575 — 169 creature rows, 158 ability rows |
+| Grounded | **327 of 327** |
+| Source files | 2 — `uw_races_companion.lst` 169, `uw_abilities_companion.lst` 158 |
+| New `RuleSetId` | none (`Uw`, SD-28 Epic 26) |
+| Other kinds' units moved | **0** |
+| `OPEN_FINDINGS` | none added — the family IS surfaced (§3b explains why the 248 do not belong there) |
+
+The same eight surfaces every book pays: `companion_chassis::COMPANION_BOOKS` row,
+`gen_book_cache::COMPANION_BOOK_SPECS` `CompanionBookSpec`, `ultimate_wilderness/mod.rs` accessors,
+`companion_catalog`'s `"ultimate_wilderness" => "UW"` wire code, `CompanionCatalogScreen.tsx`
+`BOOK_LABELS`, its test's `SERVED_BOOK_CODES`, an `("ultimate_wilderness", "companions")`
+`reach_gate` claim, and `v06_work_inventory` grounding through the registry — plus a ninth this book
+needed, `reach_gate::CORPUS_BOOK_IDS`, because `data/corpus/ultimate_wilderness/` did not exist
+before this round (SD-28 landed the book's 136 feats as a table only).
+
+**Nothing of any other kind moved, and it is measured rather than asserted** — a structural diff of
+every unit's status against `HEAD`:
+
+```
+status changes: 327
+added: 0 removed: 0
+Counter({('ultimate_wilderness', 'companion', 'not-ingested', 'grounded'): 327})
+```
+
+The **`SERVED_SIZE_CODES`** pin moved from `['T','M','L']` to `['D','T','S','M','L']` and was derived,
+not guessed: `grep -o 'size: Some("[A-Z]")' …/ultimate_wilderness/companion_data.rs | sort | uniq -c`
+→ D 28, L 2, M 24, S 48, T 67. This is the first companion book with Diminutive and Small creatures.
+
+### 3. The mechanism: a row can state its rules text once per condition
+
+`parse_desc` refused any row carrying several `DESC:` tokens not resolvable by
+`PRERULE:1,DisplayFullAbility` — *"the transcriber refuses to pick one by position. Widen it
+deliberately."* That refusal had never fired. This book fires it 22 times, on `Poison`, `Constrict`,
+`Breath Weapon`, `Spray`, `Camouflage`, `Saber-Toothed Bite` — the abilities that make a companion a
+companion. `Spitting Cobra ~ Poison` states *blurred vision* below
+`PREVARLT:CompanionAdvancement,1` and *blindness* at or above it.
+
+All tokens are carried, none evaluated, each with its gate verbatim, in
+`CompanionAbilityRecord::description_variants`. `description` stays the single UNGATED token when
+there is exactly one — so every previously shipped record is byte-identical — and is `None` when
+every token is conditional. All 8 shipped Ultimate Wilderness rows are that second shape, so a
+screen reading only `description` would show a Spitting Cobra's poison as having no rules text at
+all; `reach_gate::companions_reach`'s payload predicate was widened for the same reason.
+
+**Each variant keeps ITS OWN `%N` argument list**, which a flatter model would have lost: the
+cobra's two tokens carry `10+HD/2+CON` and `10+HD/2+CON.` — the same formula with a stray full stop.
+
+Gates reach the player as prose through a **closed set** (`PREVARGTEQ`, `PREVARLT`, `PREALIGN` — the
+three the book's rows carry, derived by counting them) and the renderer panics on anything else.
+
+**8 shipped, 22 in the file, and that is the finding rather than a discrepancy** — the other 14 are
+archetype rows (§3b). The chassis test pins 8; a test pinned to 22 would assert a fact about a
+`.lst`, not about the table.
+
+### 3b. The first book in this lane whose shortfall is bigger than its ingest — and it is a different KIND
+
+248 of 575 do not ship. Every earlier registered book had ZERO orphans. Grouping the 247 orphans by
+their key's namespace prefix is what showed they are structured:
+
+```
+   39  Animal Trick            33  Animal Companion Feat
+   16  Companion Archetype     14  Familiar Archetype
+   12  Draconic Companion       7  Infiltrator / Mascot / Prankster / Valet (7 each)   …
+awk -F'\t' '/CATEGORY:Archetype/{…KEY…}' uw_abilities_companion.lst | wc -l   -> 30
+```
+
+**30** are the archetype rows themselves; **119** are ability rows namespaced under those archetypes'
+DISPLAY names — ownership shape 5 exactly, except the owner is an archetype rather than a creature;
+**72** are the generic option groups `Animal Trick ~ …` and `Animal Companion Feat ~ …`, which attach
+to ANY animal companion.
+
+**That is a real ownership relation and this round deliberately did not take it.** An archetype has
+no `SIZE:`, `MOVE:` or `MONSTERCLASS:`, so `CompanionRecord` cannot hold one and the catalog has no
+section that would show one. Widening the predicate would have made 149 rows "reachable" and shipped
+them under a creature they do not belong to — the stub class `§44.2` describes, arriving by the exact
+route `§45.1` exists to prevent. A `deferral` event carrying the remedy is in the retro shard.
+
+**They are also NOT an `OPEN_FINDINGS` entry, and the transcriber's own generated boilerplate had
+been claiming otherwise since round 4.** That list is keyed by (book, FAMILY) and
+`unsurfaced_families_are_exactly_the_recorded_findings` fails an entry for a family that DOES reach a
+player. The sentence was unfalsifiable while every registered book had zero orphans; the first book
+with orphans is the first that could falsify it. Corrected at the source — the generator — so no
+future book ships the false claim.
+
+### 3c. A renderer and its own leak guard had contradicted each other for the whole program
+
+`gen_book_cache` shipped the book and 13 desktop tests then panicked on one record:
+
+```
+companion ability "Seaweed Leshy ~ Water Jet": rendered description still carries
+unsubstituted '%N' argument reference. Raw token: "… must make a DC %%1 Fortitude save …"
+```
+
+`render_pcgen_desc_with_values` documented `%%` as *"never an argument reference"* and emitted `%`
+then `1`; `leaked_pcgen_syntax` rejects `%1`. Both shipped, both cannot be right, and nothing had
+caught it because no ingested record carried the shape:
+
+```
+grep -rl '%%[0-9]' --include='*.lst' ~/workspace/repos/pcgen/data/pathfinder/paizo/
+  -> 3 files, 4 tokens, all "… must make a DC %%1 Fortitude save …|<DC variable>"
+grep -rl '%%[0-9]' data/corpus/ | wc -l   -> 0   (before this round)
+```
+
+Each row's argument list supplies exactly the argument the doubled escape hides — an upstream
+escaping typo. **The narrow reading ships:** `%%N` is an argument only when argument N exists.
+`20%% spell failure chance` is untouched.
+
+**It needed a change in two places and the second is the transferable half.** `max_arg_reference`
+skipped past `%%` without counting the digit, so "does argument N exist" was decided by a function
+that had already discarded the question, and the new renderer branch was unreachable. **The test
+asserting the render was RED for that exact reason before it was green** — writing the test first is
+the only reason the second half was found rather than shipped as a no-op.
+
+A **second, quieter defect** surfaced with it: `serve_ability_description` was handing the renderer
+the `DESC:` prose ALONE, because the transcriber splits a token into `description` and
+`description_variables` and the wire only ever read the first. For every registered book that made no
+difference (no argument is an integer literal, so the placeholder is dropped either way and the text
+is byte-identical); for `%%1` it made all the difference. The two are now rejoined before rendering.
+
+The served text is `"… must make a DC Fortitude save …"` — the unresolvable formula dropped, never
+guessed, exactly as `bestiary_2/monster_ability/aeon_aging_strike.json` has rendered the same shape
+since Epic 5 — and the literal per cent one clause earlier (`[20% miss chance]`) survives intact,
+which is the assertion proving the reading is narrow rather than a blanket rewrite.
+
+### 3d. `SpecialQuaility` — a typoed `TYPE:` segment in 15 rows, recorded rather than laundered
+
+15 of the 158 shipped ability rows spell the segment `SpecialQuaility`, one transposition from the
+modelled `SpecialQuality`, so their `facet` is `None`. Corpus-wide unmodelled-facet records go 5 →
+20, wire rows 7 → 121 (the catalog nests an ability under every owning creature and these are shared
+racial traits). **Not corrected into the facet**: the transcriber emits substrings of the cited row,
+mapping a misspelling onto an enum variant is inference, and doing it silently makes the corpus's own
+spelling invisible. `type_segments` carries it verbatim to the screen. Both the chassis test and the
+wire test pin the count AND the spelling.
+
+### 4. Denominators, every one re-derived this round
+
+```
+python3 scripts/classify_companion_rows.py | tail -7
+  total companion units in scope : 1696
+  distinct excluded rows (the UNION, not the sum) : 773
+  reachable remainder            : 923
+
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1012, 'grounded': 684})
+```
+
+**Ceiling unchanged at 923** — the first round in four that did not move it, and §3b is why.
+**Honest remainder `923 − 684` = 239** across **6** books. Raw `not-ingested` is 1,012 and that is
+NOT the workload.
+
+The two derivations close exactly:
+
+```
+python3 scripts/classify_companion_rows.py core_essentials core_rulebook ultimate_magic \
+        advanced_race_guide advanced_players_guide book_of_the_damned_volume_1 | tail -2
+  distinct excluded rows (the UNION, not the sum) : 521
+  reachable remainder            : 239
+```
+
+| book | units | excluded | **reachable** |
+|---|---|---|---|
+| `core_essentials` | 145 | 42 | **103** |
+| `core_rulebook` | 170 | 86 | **84** |
+| `ultimate_magic` | 170 | 138 | **32** |
+| `advanced_race_guide` | 32 | 18 | **14** |
+| `advanced_players_guide` | 212 | 208 | **4** |
+| `book_of_the_damned_volume_1` | 31 | 29 | **2** |
+
+`103 + 84 + 32 + 14 + 4 + 2 = 239`.
+
+**A `PRECAMPAIGN` gate this round checked and correctly did NOT count.**
+`_ultimate_wilderness.pcc:92` loads `support/uw_abilities_companion_pu.lst` under
+`PRECAMPAIGN:1,INCLUDES=Pathfinder Unchained`, which `UNINGESTED_CAMPAIGN_GATES` does not name — and
+that is right, because `pathfinder_unchained` IS ingested (`ls data/corpus/pathfinder_unchained`,
+`RuleSetId::Pu`). All 17 of its rows are orphans anyway, which is why the book's spec names one
+abilities file rather than two. The five `support/uw_races_companion_{arg,b3,b4,b5,b6}.lst` files are
+`.MOD` overlays and are not inventory units.
+
+### 5. A generator defect this round caused and fixed
+
+`transcribe_companion_tables.main` opened its output file BEFORE calling `transcribe()`, so a run
+that then refused left an EMPTY generated module behind in a directory it had just created. A
+mistyped book id (`beastiary`, the corpus-directory spelling, where the inventory says `bestiary`)
+produced exactly that: `src/rules_core/rules_tables/beastiary/companion_data.rs`, zero bytes.
+**Nothing in the gate would have caught it** — an unreferenced module compiles fine. Removed, and the
+generator now transcribes before it opens.
+
+### 5b. The gate went RED first, and both stages were this round's own
+
+Run 1 (`/tmp/codex-verify-dljeB7`) failed two stages. Neither was environmental and neither was
+inherited; both were attributed by content and fixed at the source rather than baselined away.
+
+| stage | failure | attribution |
+|---|---|---|
+| `root-full` | `sd24_wired_integration_audit::placeholder_findings_are_ui_text_prose_or_the_one_documented_deferral` — one hit: `companion_catalog.rs:801: "an unresolvable formula placeholder must not reach the screen: {:?}"` | this round's own new test's assertion message. The word is a stub MARKER to that audit; the sentence is the opposite — an anti-fabrication explanation. Reworded to `"an unresolvable \`%N\` formula reference…"` rather than widening the audit's allow-list, because widening it for a word that had a precise alternative would have spent a permanent exemption on a wording choice |
+| `frontend-typecheck` | 3 × `TS2741: Property 'descriptionVariants' is missing … but required in type 'CompanionAbilityDto'` in `companionCatalogRuntime.ts` | the new required DTO field, in the runtime's own three fallback fixtures. Added as `[]`, which is what the corpus states for every one of them |
+
+The transferable half is that `root-lib`, `desktop` and both frontend suites were run individually
+before the gate and all four were green — `frontend-typecheck` is a stage those four do not cover,
+and a type error in a fixture file no test imports is invisible to every one of them.
+
+### 6. Definition of done
+
+| # | Item | Result |
+|---|---|---|
+| 1 | `./scripts/verify.sh` exits 0 | **PASS** — `VERIFY_EXIT=0`, `RESULT: PASS`, 14/14 stages, `root-full` 6296 passed across 544 suites, `root-lib` 1729, `desktop` 444, clippy at its 54 ceiling, logs `/tmp/codex-verify-3tYQhI`. **Two full runs, and both are recorded rather than only the green one:** run 1 FAILED on `root-full` + `frontend-typecheck`, both attributable to this round and both fixed at the source (§5b); run 2 PASS 14/14 |
+| 2 | `reach` stage passes with a claim for this book's families | **PASS** — `reach (27 passed)`, and the claim is this book's own: `("ultimate_wilderness", "companions") => companions_reach("ultimate_wilderness", "UW")`. Not a pass by absence — the book also needed a `CORPUS_BOOK_IDS` row before the gate could even name its corpus directory |
+| 3 | `v06_corpus_trap_report --audit` exits 0 | **PASS** — `AUDIT_EXIT=0`, "No defects: every ingested record's citation agrees with the line it names" |
+| 4 | `v06_work_inventory` regenerates; units leave `not-started`; second run changes only `generated_at` | **PASS** — 327 units `not-ingested` → `grounded`; a second run diffed over the whole document with `generated_at` popped compares `True`, and `git diff` on the file is the one timestamp line |
+| 5 | Four-check wired-integration audit clean | **PASS** — no stub: the 327 records are corpus reads, `CompanionCatalogScreen` renders them (including the new conditional-variant paragraphs), the reach claim executes IPC, and item 8 shows a conditional-variant record on screen |
+| 6 | `OPEN_FINDINGS` entry for any family that could not be surfaced | **N/A** — `ultimate_wilderness/companions` IS surfaced; §3b states why the 248 dropped rows are counted in `docs/work-inventory.json` rather than there, and why the generator's boilerplate claiming otherwise was corrected |
+| 7 | Baseline movements a separate reviewable commit | **PASS** — three stale-UPWARD floors in their own commit `2799bc08`: `BASELINE_ROOT_LIB_TESTS` 1726 → 1729, `BASELINE_ROOT_FULL_TESTS` 6293 → 6296, `BASELINE_DESKTOP_TESTS` 442 → 444. Evidence is the passing run's own `BASELINE NOTES` block, quoted in the file, with the five new tests named rather than counted. **Run 1 measured root-full 6295 and FAILED; that figure is deliberately not recorded** — a floor set from a run that did not pass is a floor set from nothing |
+| 8 | On-screen verification | **PASS** — `artifacts/SD29-E7-F2-007/item8/uw-companion-spitting-cobra.png` + `.verify.md`. **The record chosen is the mechanism's own proof**: `Companion (Spitting Cobra)`, and the screen renders `companion advancement 1 or higher: Spit; frequency 1 round [6]; effect blindness 1 round; cure 1 save; Fort DC` — a conditional `DESC:` variant with its gate rendered as prose, the unresolvable formula dropped rather than guessed, verified by a player-visible pixel and not only by a passing test. Also on screen: `Ultimate Wilderness (169)`, `Ultimate Wilderness p.182`, and the blurb's book list now ending `… Bestiary 4 and Ultimate Wilderness — 335 creatures`. `SEARCH_Y` held without recalibration at 11 registered books |
+
+### 7. What round 7 inherits
+
+**6 books, 239 reachable units.** `core_essentials` (103) is the largest and cheapest left; it needs
+a NEW `RuleSetId` — **check before writing one**, the race-trait lane added `RuleSetId::Ce` in `§49`
+— and it is the book that will first exercise the `mod_only` half of `§59.2`'s delta screen, still
+**stated, not exercised**. `advanced_players_guide` (4 of 212) and `book_of_the_damned_volume_1` (2
+of 31) remain FLOORS, not queued work.
+
+**The archetype block is the biggest thing this lane now knows about and cannot take** — 149 rows in
+this book alone, plus whatever the other five carry of the same shape. It is a NEW RECORD TYPE
+(`CompanionArchetypeRecord`) plus a screen section, not a wider ownership predicate. A round that
+takes it should declare that up front.
+
+**The lane is NOT done and this receipt does not claim it is.**
+
+### 8. The post-merge gate, and the exit code captured directly
+
+`§6` item 1 records this round's own pre-merge run. Merging `origin/tranche/9` twice — first
+`e6583289` (the monster lane's round 8, Bestiary 1's 603-record chassis), then `447a960d` (its gate
+record) — produced a tree neither lane had tested, so the gate was re-run on it rather than reasoned
+about:
+
+```
+./scripts/verify.sh > <log> 2>&1; echo "VERIFY_EXIT=$?" >> <log>
+  RESULT: PASS
+  passed: 14  preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib
+              root-full desktop reach frontend-install frontend-test frontend-typecheck clippy
+              class-dump
+  VERIFY_EXIT=0                                   (logs /tmp/codex-verify-aJyw2z)
+```
+
+**Not a pipe, and not inferred from `RESULT:`** — the exit status is echoed by the same shell that
+ran the script.
+
+**Four conflicted files, and only one of them was resolved by choosing a side.** `decisions.md` and
+`progress.md` are append-only records and both lanes appended at the same end, so both hunks are
+concatenations, theirs first (the monster lane's `§60` must precede this round's renumbered `§61`).
+`docs/work-inventory.json` was REGENERATED from the merged tree rather than hand-merged — a merged
+inventory is a claim about which tables compile, and no textual resolution of it can be true by
+construction. It reports `companion` 684 grounded and `monster` 1,179, both lanes' work present.
+
+**`scripts/verify-baselines.env` is the one that needed arithmetic, and the interesting part is the
+arithmetic that was deliberately NOT done.** Both lanes raised floors from the same parent (1726
+root-lib / 6293 root-full / 442 desktop) having never seen each other's tests, so neither block
+described the merged tree. The merge recorded the ELEMENTWISE MAXIMUM rather than the sum — floors
+fail the gate when set too high and merely print a note when set too low — and wrote down the sums
+(1738 / 6306 / 445) as *expected*, explicitly declining to record them until a run measured them.
+
+**The run measured exactly those three numbers.** They are recorded now because a passing run
+produced them, not because the arithmetic worked out; that the two agree is a useful check on the
+merge rather than the source of the figure — a discrepancy would have meant one lane's tests were
+not executing.
+
+Final state on `origin/tranche/9`, verified BY CONTENT rather than by commit count:
+
+```
+git cat-file -p origin/tranche/9:src/rules_core/rules_tables/ultimate_wilderness/companion_data.rs \
+  | grep -c 'CompanionRecord {'          -> 169
+  | grep -c 'CompanionAbilityRecord {'   -> 158
+git cat-file -p origin/tranche/9:docs/release/.../decisions.md | grep -c '^## Decision 61'  -> 1
+```
+
+## Cycle SD29-E5-F2-010 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 9 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r11` · **Date:** 2026-08-13 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-17`)
+**Branch-point:** `f655275d` · **Commits:** `1c7d8ef9` (the ingest, the file-resolution widening on
+both sides, all eleven registration points and the re-transcription of nine books), plus this
+receipt's own closing commit.
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message** — see §7.
+**Kanban status left at:** `READY — round 10.`
+**Gate: `VERIFY_EXIT=0` on run 1** — 14 of 14 stages, no red at any point.
+
+**This receipt does not claim the lane is done.** 116 units landed; the REAL ceiling after this round
+is **44 by the classifier's terms** across three books, plus **at least 16** in a class this round
+discovered and deliberately did not close (§4b). Full detail in `decisions.md §62`.
+
+### 0. Worktree integrity — the predicted failure, hit a TWELFTH time
+
+`git log --oneline -3` → `7d9f1c4f Merge pull request #23 from electricm0nk/develop`, the same
+2026-06-28 ancestor rounds 2-8 each landed on. `ls` returned 8 entries where the repo root has 13 —
+no `docs/`, no `scripts/`, no `data/`, no `schemas/`. Every required read and every re-derivation
+command in the brief would have failed against it.
+
+Recovered before any other action: `git merge-base --is-ancestor 7d9f1c4f origin/tranche/9` (a
+genuine ancestor, so a reset loses nothing), `git status --porcelain` empty, then
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` → `f655275d`. Twelfth consecutive
+instance; a harness condition, not an agent error. Retro `incident` emitted with
+`--recurrence-key wrong-base-worktree`.
+
+### 1b. Re-derivation — what the brief got right and what it got wrong for the eighth time
+
+Round 8's closing figures were **reproduced EXACTLY at cycle start before being moved**: raw remaining
+`monster` 91 + `monster_ability` 1,574 = **1,665**, classifier reachable **225**, REAL ceiling **160**.
+The brief's own headline ("the previous round reported 160 remaining") therefore survived
+re-derivation — the third consecutive round in which it has.
+
+The brief's other figures did not. **"monster ~305, monster_ability ~852, against grounded 62 and 20"
+was wrong for the EIGHTH round running**; `decisions.md §46.1`, `§50.7`, `§52`, `§55`, `§57.0`,
+`§58.0` and `§60.0` each corrected the identical pair. It is near `bestiary`'s book subtotal, not the
+corpus-wide figure. Retro `correction` emitted, blast-radius naming all seven prior corrections.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` → PASS, 22% used, 759G available. No reclaim needed.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r11` created and **claimed**
+(`.reclaim-claim` written immediately, per `loop-instruction.md`'s standing obligation).
+
+### 0/0b. Shape and trap report — a process deviation, recorded rather than hidden
+
+**Cycle mechanics step 0b was run AFTER the ingest, not before it.** The book's shape was established
+first by four other derivations (the classifier, a `find` over the book tree, `grep -c NAMEISPI:YES`
+over all four `.lst` files, and the pcc's own load lines), each recorded below, so no ingest decision
+rested on an unshaped book — but the ordering the playbook mandates was not followed and this receipt
+says so rather than presenting the trap report as though it had led.
+
+Trap report output is in §4c.
+
+Shape notes checked rather than assumed:
+
+* The `.pcc` **carries a leading underscore** (`_inner_sea_gods.pcc`), the B4/B5/B6 shape — a flat
+  `bestiary_*.pcc`-style glob would have missed it.
+* This book's monster and ability units come from **four** files, not two, and **two of the four are
+  under `support/`** — the first book in this lane where that is true. This is the multi-file hazard
+  `§58.5` flagged, and it is not the one `§58.5` described (§4a).
+* The `support/` pair is gated on the **pcc load line**, not inside the `.lst`:
+  `_inner_sea_gods.pcc:68` `ABILITY:support/isg_abilities_races_b4.lst|PRECAMPAIGN:1,INCLUDES=Bestiary 4`
+  and `:70` the same for `RACE:support/isg_races_b4.lst`. `grep PRECAMPAIGN` over the two `.lst`
+  files themselves returns **0** — a lane that checks the file for its own gate concludes, wrongly,
+  that it is ungated. Round 6 registered `bestiary_4`, so this repo **satisfies** the gate and the 19
+  units are in scope.
+
+### 2. Card claimed
+
+`epic-5-monster-lane-extend`, round 9. Book selected by the queue `decisions.md §60.7` published and
+this round re-derived: `inner_sea_gods`, **116 REAL — 73% of the lane's remainder**, the largest
+single item on the board and the one carrying a mechanism no round had executed.
+
+### 3. The bounded work — 116 units
+
+**39 monsters + 77 monster abilities.** Derived, never assumed:
+
+```
+python3 scripts/classify_monster_ability_rows.py inner_sea_gods
+  -> inner_sea_gods  39  161  0  77  81  3  0     reachable remainder 116
+```
+
+116 is exactly what ships. **Every one of the book's 39 corpus monster rows ships** — a first for this
+lane: no `NAMEISPI:YES` anywhere in the book, no `.COPY=`, no `.MOD`, and no cascade from a Product
+Identity ability a monster names.
+
+The two screens disagree on composition and agree on the total: the classifier counts 81 orphans + 3
+Product Identity, the transcriber drops 79 orphans + 5. Both sum to 84. The transcriber screens the
+values it is about to **emit**; the classifier screens the row's own key and name — the same predicate
+difference `§57.2` records for `inner_sea_bestiary`.
+
+### 4a. The blocker two rounds carried was real about the corpus and wrong about what bound
+
+`§58.5` named it and `§60.7` repeated it verbatim, flagged unverified: *"needs `MonsterAbilityRecord`
+to carry a `source_file`: its rows live in two ability files … and `MonsterBookSpec::abilities_lst` is
+singular."*
+
+Every clause is true about the corpus. **None binds on a shipped record.** All 77 shipped abilities
+come from `isg_abilities_races.lst`; **zero** from the support file, because all 16 of its rows are
+orphans (§4b):
+
+```
+grep -c 'source_file: "isg_abilities_races.lst"'    .../inner_sea_gods/monster_data.rs  -> 77
+grep -c 'source_file: "isg_abilities_races_b4.lst"' .../inner_sea_gods/monster_data.rs  ->  0
+```
+
+What actually blocked the book is a file the blocker statement never mentions:
+**`support/isg_races_b4.lst`, holding 3 of the book's 39 MONSTER rows.** `MonsterStatBlock` has
+carried a `source_file` since `§50`; both sides carry a **bare basename**, which is what the inventory
+records, and both the transcriber and the generator joined that basename onto the book root. Correct
+by coincidence for nine books; `FileNotFoundError` here.
+
+`resolve_book_file` is that widening, written once on each side and matching term for term. It refuses
+two cases rather than resolving them — a basename found nowhere, and one found in more than one place.
+**No book trips the second, derived rather than hoped:** over all fourteen books this lane has
+considered, every one has zero duplicate `.lst` basenames. The generator carries the **resolved
+sub-path** into each record's `path`, so the citation leads to the file the `sha256` was taken over:
+
+```
+python3 -c "…" over data/corpus/inner_sea_gods/monster/*.json
+  -> pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst | 6  | The First Blade
+  -> …/support/isg_races_b4.lst | 10 | Steward of the Skein
+  -> …/support/isg_races_b4.lst | 11 | Psychopomp (Ahmuuth)
+```
+
+The ability side was widened too, and is recorded as **not load-bearing for this book's shipped
+records**, so a later round does not credit it with an unblocking it did not do.
+
+**The re-transcription of all nine previously registered books is additive, proven not asserted:**
+
+```
+git diff --numstat -- 'src/rules_core/rules_tables/*/monster_data.rs'
+  -> 1,533 insertions, 0 deletions across 10 files
+git diff -U0 -- 'src/rules_core/rules_tables/*/monster_data.rs' \
+  | grep '^[+-]' | grep -v '^[+-][+-]' | grep -vc 'source_file:'   -> 0
+```
+
+**1,533 is exactly the lane's pre-round grounded `monster_ability` count** — every shipped ability
+record gained precisely one line and not one record value moved. `bonus_bestiary` was patched by hand
+rather than regenerated, keeping `§60.5`'s ruling.
+
+### 4b. Scope finding — 16 abilities have an owner no pass follows, and the ceiling is UNDER-stated
+
+Every prior round in this lane found its instrument **over**-reporting (`§58.1`'s 7, `§60.2`'s 58).
+This round found the opposite, which is the expensive direction.
+
+Zero of the 16 `support/isg_abilities_races_b4.lst` rows ship, and both screens call them orphans. The
+corpus states their owner anyway, one hop further out than either screen looks:
+
+```
+support/isg_races_b4.lst:6            The First Blade
+    ABILITY:Internal|AUTOMATIC|Race Traits ~ First Blade
+support/isg_abilities_races_b4.lst:8  Race Traits ~ First Blade   CATEGORY:Internal
+    ABILITY:Special Ability|AUTOMATIC|…|First Blade ~ Powerful Blows (Slam)|…
+```
+
+The monster row names a `CATEGORY:Internal` **bundle** row; the bundle names the abilities. The
+row-named pass reads tokens on monster rows; the prefix pass matches a namespace against a monster
+**key** — and the namespaces are short names (`First Blade`) while the keys are long
+(`The First Blade`). Neither reaches them.
+
+**Deliberately not closed this round.** Unattended-mode default taken and recorded: this round already
+widened file resolution on both sides, and widening an *ownership* pass changes which records all ten
+books ship. Pinned by an **executing test** (`no_support_directory_ability_ships_yet`) so the round
+that does close it is told by a red test that this receipt's arithmetic is stale, rather than leaving
+a stale header to outlive the state it describes. Retro `deferral` emitted.
+
+### 4c. Trap report
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- inner_sea_gods
+```
+
+| DECLARES | `.COPY=` | `.MOD` | `#OFF` | file |
+|---|---|---|---|---|
+| 208 | 0 | 3 | 0 | `inner_sea_gods/isg_abilities_races.lst` |
+| 36 | 0 | 0 | 0 | `inner_sea_gods/isg_races.lst` |
+| 20 | 0 | 0 | 0 | `support/isg_abilities_races_b4.lst` |
+| 3 | 0 | 0 | 0 | `support/isg_races_b4.lst` |
+
+Book-wide **1,462 declarations across 18 files**, 53 `.COPY=`, 1,101 `.MOD`, 18 disabled lines.
+Findings: `key-differs-from-name` 608, `namespaced-key` 606, `mod-record` 1,101,
+`governing-token-hidden-by-filter` 96, `shared-name-distinct-records` 95, `copy-record` 53,
+`define-zero-value-elsewhere` 5.
+
+**The `.COPY=`/`.MOD` columns are about the FILE, not this lane's units.** All 53 `.COPY=` and 1,098
+of the 1,101 `.MOD` rows belong to kinds this lane does not take; the 3 `.MOD` rows in
+`isg_abilities_races.lst` declare nothing and contribute no unit. **Zero** of this book's 200
+monster-family units carry a `mod_only` or `copy` origin, which is why every one of its 39 corpus
+monster rows was eligible to ship.
+
+The book's largest `KEY:` namespaces are `Trait` (115), `Temp Bonus` (63) and the three Boon families
+(60 each) — none of them this lane's kinds. The monster-family namespaces are small and per-creature
+(`Thyrlien` 9, `Adoration Spirit` 7, `First Blade` 7, `Grim White Stag` 7, `Skein Steward` 6), which
+is the shape the chassis's prefix pass is built for and the reason 77 of the book's ability rows reach
+an owner through it (`prefix 77`, `row-named 0`).
+
+### 5. Registration — eleven points, one new rule set
+
+`RuleSetId::Isg`; wire code `ISG` **verified against the book's own `SOURCESHORT:ISG`** rather than
+invented. Points: transcriber `BOOKS`; `rules_tables/mod.rs` (`pub mod` + enum variant);
+`rules_tables/inner_sea_gods/mod.rs` (new, with five tests); `monster_chassis::MONSTER_BOOKS`;
+`gen_book_cache::MONSTER_BOOK_SPECS`; `v06_work_inventory` (`COMPILED_RULE_SETS`, `corpus_dir_for`,
+`rule_set_id`); `v06_content_state_dump`; `monster_catalog` (const, display name, wire code);
+`reach_gate` (`CORPUS_BOOK_IDS` + two arms); `corpus_ingest_diagnostic` (row + roster);
+`MonsterCatalogScreen.tsx` + its test's `SERVED_BOOKS`; `tests/v06_work_inventory.rs`.
+
+**A test that had outlived two of its own subjects.** `uncompiled_books_stay_none` asserted
+`rule_set_for("inner_sea_gods") == None` — the second subject it has outlived (`ultimate_psionics` was
+the first). Its comment also carried a reason `decisions.md §38` had already invalidated ("SD-30's own
+book set, out of this bundle"). Re-pointed at `occult_adventures` **by derivation**: `corpus_dir_for`
+is exhaustive over `RuleSetId` and has no arm returning it, so no `COMPILED_RULE_SETS` member can map
+to it.
+
+**Provenance**, verified against the files rather than copied from the row above:
+`_inner_sea_gods.pcc:17` declares `ISOGL:YES`, 18 `COPYRIGHT` lines, a real 9,547-byte `OGL.txt`.
+`grep -c NAMEISPI:YES` over all four `.lst` files → `0 0 0 0`. The 5 dropped ability rows are dropped
+for a blacklisted deity name in an emitted value — `ogl-pi-blacklist.md` §2.1's per-record predicate,
+exactly as predicted for a `campaign_setting/` book about deities.
+
+### 6. Verification
+
+```
+RETRO_ACTOR=sd29-monster-r11 CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r11 \
+  ./scripts/verify.sh          # FULL, exit captured directly, never through a pipe
+```
+
+**`VERIFY_EXIT=0` on run 1 — 14 of 14 stages, no red at any point in the cycle.**
+
+| stage | result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK) |
+| `pi-sweep` | PASS (10 hits over `src/rules_core/rules_tables`, 10 baseline rows) |
+| `audit-selftest` | PASS (28 passed, 0 failed) |
+| `reclaim-selftest` | PASS (10 passed, 0 failed) |
+| `driver-selftest` | PASS (7 passed, 0 failed) |
+| `root-lib` | PASS (1,743 passed) |
+| `root-full` | PASS (**6,311 passed across 544 suites, all 525 `tests/*.rs` suites executed**) |
+| `desktop` | PASS (445 passed) |
+| `reach` | PASS (27 passed) |
+| `frontend-install` | PASS (`npm ci`) |
+| `frontend-test` | PASS (99/99 files) |
+| `frontend-typecheck` | PASS (`tsc --noEmit` clean) |
+| `clippy` | PASS (root 54 / desktop 7 warnings, **0 errors**) |
+| `class-dump` | PASS (31/31 computing) |
+
+`root-full` moved 6,303 → **6,311** (+8: this book's five module tests plus three registration-roster
+assertions widening by a row). `pi-sweep` holding at 10 hits against a 10-row baseline is the load-
+bearing one for a book of deities — the 5 dropped ability rows are exactly the screen doing its job.
+
+**DoD item 8 — on-screen, both artifacts PASS**, driven through the real app by
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` with `RUN_DESKTOP_AGENT=sd29-monster-r11`
+(clipboard-extracted, machine-verdicted — not a screenshot a human must re-check). Artifacts in
+`artifacts/SD29-E5-F2-010/item8/`:
+
+* **`monster / The First Blade`** (`isg-the-first-blade.png` + `.verify.md`) — expects
+  `The First Blade`, `Inner Sea Gods`, `Outsider`. **This is the load-bearing artifact of the round:**
+  its corpus row lives in `support/isg_races_b4.lst`, so a player seeing it on screen proves the whole
+  chain end to end — `resolve_book_file` → transcriber → `MonsterStatBlock::source_file` → generator
+  citation → chassis → catalog → wire code `ISG` → frontend label.
+* **`monster / Arcanotheign`** (`isg-arcanotheign.png` + `.verify.md`) — expects `Arcanotheign`,
+  `Inner Sea Gods`, `Change Shape`, proving a chassis **ability** renders and not just a stat block.
+
+The app was left running between the two verifications and stopped once at cycle end, per the
+harness's own guidance.
+
+### 7. Denominators, re-derived after the ingest
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 91 | **52** | −39 |
+| `monster_ability` remaining | 1,574 | **1,497** | −77 |
+| raw remaining total | 1,665 | **1,549** | −116 |
+| `monster` grounded | 1,179 | **1,218** | +39 |
+| `monster_ability` grounded | 1,533 | **1,610** | +77 |
+| classifier `reachable remainder` | 225 | **109** | −116 |
+| **REAL ceiling** | 160 | **44** | −116 |
+
+`1665 − 116 = 1549` closes exactly. `inner_sea_gods` reports `grounded 116, not-ingested 84`.
+
+**Round-10 queue** (`decisions.md §62.6`): `ultimate_psionics` **34**, `horror_adventures` **9**,
+`occult_adventures` **1** — three books, 44 units, **no mechanism this repo lacks; the whole remaining
+cost is registration**. Plus `inner_sea_gods`' **≥16** bundle-row class (§4b). `occult_adventures`'
+one monster row is `support/oa_races_b3.lst`, so this round's resolver is what makes it reachable at
+all. Twelve books hold 800 orphan abilities and zero monsters — the floor.
+
+## Cycle — epic-7-companion-lane-extend, ROUND 7 (SD29-E7-F2-008)
+
+**Claimed-by** `sd29-companion-r11` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §63` (claimed as §62, renumbered in the merge commit because the monster
+lane claimed §62 concurrently in `4d2d4ce3` — the same collision round 6 hit at §60) ·
+**Commits** `fb873737` (ingest + three mechanisms + one test), `380db42d` (the ninth registration
+point + a stale-upward wire pin), `a8f720d6` (merge of `origin/tranche/9` + the §62→§63 renumber),
+`2bbbeff0` (inventory regenerated on the merged tree), `17121fdb` (the two unmodelled `TYPE:` shapes),
+plus this receipt · **Branch** pushed to `origin/tranche/9`
+
+**Outcome: 102 units ingested, all 102 grounded. Companion grounded 684 → 786. Honest remainder 136
+across 5 books. Full gate `VERIFY_EXIT=0`, all 14 stages, on run 3. Item 8 PASS.**
+
+### 0. The dispatch brief was materially stale for the FOURTH consecutive round
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that this is "a NEW MECHANISM with no corpus-wide precedent", and that the
+round should build the mechanism on a pinned `inner_sea_combat` pilot. `§56 §0`, `§59 §0` and `§61 §0`
+each record the *same* text one, two and three rounds earlier.
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 1012, 'grounded': 684})
+```
+
+Six rounds had landed; eleven books were registered; the card read `READY (round 7)`. The brief's one
+checkable figure — **239** remaining — was re-derived and **reproduced EXACTLY** before this round's
+work superseded it.
+
+`HEAD` was `7d9f1c4f`: an ancient commit with no `docs/`, `scripts/` or `data/` at all, not an
+ancestor of `origin/tranche/9`. Fixed with `git fetch origin tranche/9 && git reset --hard
+origin/tranche/9` before any work. This is the second consecutive round to be handed a wrong base.
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`§61`'s queue ranked `core_essentials` first at 103 reachable. Re-derived rather than trusted:
+
+```
+python3 scripts/classify_companion_rows.py core_essentials core_rulebook ultimate_magic \
+  advanced_race_guide advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  total companion units in scope : 760
+  distinct excluded rows (the UNION, not the sum) : 521
+  reachable remainder            : 239        <- reproduces the brief's figure exactly
+```
+
+**And the round's stated hazard was checked rather than assumed.** The kanban row said
+`core_essentials` "needs a NEW `RuleSetId`, and you must check rather than assume". Checked:
+`grep -n 'Ce\b' src/rules_core/rules_tables/mod.rs` → `150:    Ce,` — the race-trait lane compiled it
+in `§49`. **It does not.** A retro `correction` event records it.
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `core_essentials` (Core Essentials, wire code `CE`) |
+| Units ingested | **102** of 145 — 58 creature rows, 44 ability rows |
+| Grounded | **102 of 102** |
+| Source files | 8 — 3 `ce_races_familiar_*.lst`, 5 `ce_abilities_familiar_*.lst` |
+| New `RuleSetId` | **none** (`Ce`, race-trait lane `§49`) |
+| Other kinds' units moved | **0** — measured, not asserted |
+| `OPEN_FINDINGS` | none added — the family IS surfaced |
+
+Zero scope flip, measured by a structural diff of every unit's status against HEAD: exactly two
+changes, `core_essentials|companion|grounded 0 → 102` and
+`core_essentials|companion|not-ingested 145 → 43`.
+
+**The lane's per-book cost is NINE surfaces, not the eight every prior receipt has claimed** — see §5.
+
+### 3. Three mechanisms, and the one that was a compliance defect
+
+* **`§63.1` — the delta screen's CREATURE half.** `§59.2` built the `.COPY=`/`.MOD` screen one round
+  earlier and ran it over `abilities` alone. This is the first companion book whose CREATURE rows
+  carry it, 22 of them (`Bat.COPY=Bat (Celestial)` — `OUTPUTNAME:`, `TEMPLATE:`, `KIT:` and nothing
+  else). The RED was an existing test:
+  `every_registered_creature_states_its_monster_class_token_verbatim` went red on all 22 at once.
+  Screened where the creature set is BUILT, because `creature_display` and `creature_species` are
+  both derived from it and both are actively wrong with a delta row present. `§59.2`'s `mod_only`
+  half — shipped as "stated, not exercised", naming this book — is now **exercised** (the 4
+  `Universal Monster Rule ~ …` overlays). Widening changed **not one byte** of the eleven registered
+  books.
+
+* **`§63.2` — a PI compliance defect this round would have shipped.** All four `LICENSE.json` writers
+  hardcoded `"records_redacted": 0` beside a `records_processed` derived from disk. `core_essentials`
+  was ingested first by the race-trait lane, which redacted **9** records; running the generator
+  rewrote the 9 to a 0 while all nine `[redacted PI]` markers stayed on disk. Caught by reading the
+  existing `LICENSE.json` before running the generator. `count_on_disk_redactions` now derives it
+  from the same walk as the numerator. `records_redacted: 9`, `records_processed: 166`.
+
+* **`§63.3` — an OWNED row that states nothing the chassis models.** `Pseudodragon ~ Tail` carries no
+  `TYPE:`, no `DESC:`, no `BONUS:` — only `SOURCEPAGE:` and an `ASPECT:`. Across all twelve
+  registered books it is the ONLY one, of 394 grounded ability rows checked. **102 ship against 103
+  reachable**, and the gap is a finding: reachability is a fact about ownership, shippability a fact
+  about the record type. The screen is `companions_reach`'s own payload predicate **minus
+  `source_page`** — so this row would have PASSED the reach gate while showing a player nothing.
+
+**Deferred and measured, not hand-waved:** `ASPECT:` is modelled by no chassis in this program, and
+**27 of the 394 grounded ability rows carry one that is dropped today**. Only this one row is
+*emptied* by the omission; the other 26 are diminished. A `deferral` event records it.
+
+### 4. The gate — three runs, VERIFY_EXIT=0 on run 3, and every red this round's own
+
+Never excused as environmental; each failure attributed back to a named test.
+
+| run | result | attribution |
+|---|---|---|
+| 1 | `1` — `desktop` | `every_book_landed_in_rules_tables_is_reported` (the ninth surface, §5) and a stale 121/20 wire count pin |
+| 2 | `1` — `desktop` | `king_crab_water_dependency` carrying `["Weakness","Extraordinary"]` — a shape the allowlist did not know, **masked in run 1 because the test asserts a count before it asserts structure** |
+| 3 | **`0`** | all 14 stages: `root-full` **6312 passed across 544 suites, all 525 `tests/*.rs` suites executed**; `desktop` 445; `reach` 27; `frontend-test` 99/99; `clippy` 0 errors; `class-dump` 31/31 |
+
+The run-1/run-2 ordering is the transferable half: **a count assertion placed ahead of a structural
+one hides the structural one for exactly as long as the count is stale.** An `incident` event with
+`recurrence-key=own-ingest-turns-gate-red` records it.
+
+### 5. `§63.4` — a NINTH registration point, and a family the panel had been dropping since round 6
+
+`corpus_ingest_diagnostic::every_book_landed_in_rules_tables_is_reported` went red naming
+`core_essentials`. The Corpus Ingest panel states it shows every rule book landed in `rules_tables`,
+so an unreported book reads to a tester as an un-ingested book. **Core Essentials is the first
+companion book whose `rules_tables/` directory did not already exist for another family's sake**, so
+this is the first round that could have found it.
+
+Reading that failure turned up a second one the test cannot see: it asks whether a book APPEARS, and
+Ultimate Wilderness already did on the strength of its 135 feats — but `ultimate_wilderness_counts()`
+inserts `feats` and nothing else, so **round 6's 327 companion records have been absent from that
+panel since the day they landed.** Both fixed.
+
+### 6. Item 8 — PASS, on the live app
+
+`companion / Stirge`, artifact
+`artifacts/SD29-E7-F2-008/item8/ce-companion-stirge.png` + `.verify.md`, HEAD `17121fdb`. The screen
+renders the `Core Essentials (58)` book chip and a fully-populated card: `Tiny Magical Beast`,
+`Walk 10 ft., fly 40 ft.`, `Hit dice Magical Beast:1`, the `BONUS:STAT` adjustments, and all three
+abilities with their full rules text — `Attach`, `Blood Drain`, `Diseased`, each with its `p.260`
+citation. Run only after the gate finished; never concurrently (OOM).
+
+### 7. Denominators, re-derived at the end of this round
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 910, 'grounded': 786})
+
+python3 scripts/classify_companion_rows.py core_rulebook ultimate_magic advanced_race_guide \
+  advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  -> 615 units / 479 excluded / 136 reachable
+```
+
+`companion` **1,696 total / 786 grounded / 910 remaining by status. 910 is NOT the lane's workload.**
+The REAL ceiling is **922** — `§61`'s 923 minus the one row `§63.3` drops — so the honest remainder is
+**136**. `922 − 786 = 136`, and the five remaining books' reachable counts sum to 136 independently.
+The two derivations close exactly.
+
+Ranked: `core_rulebook` 170 / 86 / **84**, `ultimate_magic` 170 / 138 / **32**, `advanced_race_guide`
+32 / 18 / **14**, `advanced_players_guide` 212 / 208 / **4**, `book_of_the_damned_volume_1`
+31 / 29 / **2**.
+
+**Three hazards for round 8.** (a) `core_rulebook` at 84 is the only book left above 40; it,
+`ultimate_magic` and `book_of_the_damned_volume_1` still carry the 7 `*_classes_companion.lst` class
+rows the transcriber refuses **by name**. (b) `advanced_players_guide` (4 of 212) and
+`book_of_the_damned_volume_1` (2 of 31) remain **FLOORS, not queued work**. (c) The `ASPECT:`
+widening and Ultimate Wilderness's 149-row archetype block are both **new record types**, not wider
+predicates — a round taking either should declare it up front.
+
+**Unattended-mode defaults taken this round** (recorded per the operating protocol, not raised):
+took `§61.2`'s drop-and-name disposition for `Pseudodragon ~ Tail` rather than widening the record
+type mid-round; renumbered this lane's decision §62 → §63 on the merge collision, following round 6's
+precedent of the companion lane yielding; resolved the generated `docs/work-inventory.json` conflict
+by taking origin's copy and re-deriving rather than hand-merging two unit lists.
+
+## Cycle — epic-7-companion-lane-extend, ROUND 8 (SD29-E7-F2-009)
+
+**Claimed-by** `sd29-companion-r12` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §65` (number RESERVED at claim time per `§53`, leaving `§64` for the
+concurrently-running monster lane rather than renumbering on merge) ·
+**Commits** `240c1865` (ingest + the class-row screen + the `MODULE_DIR` fix + two test pins),
+`736dfd3d` (decision `§65` + a classifier label that stopped being true), `bcbb12f1` (the per-agent
+vite dev port, the frontend test roster, and the item-8 artifacts), plus this receipt ·
+**Branch** pushed to `origin/tranche/9`
+
+**Outcome: 84 units ingested, all 84 grounded. Companion grounded 786 → 870. Honest remainder 52
+across 4 books. Full gate `VERIFY_EXIT=0`, all 14 stages. Item 8 PASS — after two FALSE failures
+that turned out to be a harness defect, not a content one.**
+
+### 0. The dispatch brief was materially stale for the FIFTH consecutive round
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that this is "a NEW MECHANISM with no corpus-wide precedent", and that the
+round should pilot `inner_sea_combat`. `§56 §0`, `§59 §0`, `§61 §0` and `§63 §0` each record the
+*same* text one, two, three and four rounds earlier. Seven rounds had landed; twelve books were
+registered.
+
+The brief's one checkable figure — **136** remaining — was re-derived and **reproduced EXACTLY**
+before any work:
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 910, 'grounded': 786})
+
+python3 scripts/classify_companion_rows.py core_rulebook ultimate_magic advanced_race_guide \
+  advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  -> 615 units / 479 excluded / 136 reachable
+```
+
+`HEAD` was `7d9f1c4f` — an ancient commit carrying no `docs/`, `scripts/` or `data/` at all (though
+it IS an ancestor of `origin/tranche/9`). Fixed with `git fetch origin tranche/9 && git reset --hard
+origin/tranche/9` before any work. **Third consecutive round handed a wrong base.**
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`core_rulebook` at 84 reachable was the largest remaining book and the only one left above 40.
+Re-derived per book rather than trusted from `§63`'s ranking table:
+
+```
+python3 scripts/classify_companion_rows.py core_rulebook | tail -6
+  -> 170 units / 86 excluded / 84 reachable
+```
+
+Header row: `crea 38 · abil 130 · clas 2 · ORPHAN 84`, and `38 + (130 − 84) = 84` — the shipped count
+reconstructed from the shape rather than read off the summary line.
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `core_rulebook` (Core Rulebook, wire code `CRB`, engine module `crb`) |
+| Units ingested | **84** of 170 — 38 creature rows, 46 ability rows |
+| Grounded | **84 of 84** |
+| Source files | 2 — `cr_races_companion.lst`, `cr_abilities_companion.lst` |
+| New `RuleSetId` | **none** (`RuleSetId::Crb` is the oldest in the enum) |
+| Other kinds' units moved | **0** — measured, not asserted |
+| `OPEN_FINDINGS` | none added — the family IS surfaced |
+
+Zero scope flip, measured by a structural diff of every unit's status against HEAD: exactly two
+changes, `core_rulebook|companion|grounded 0 → 84` and
+`core_rulebook|companion|not-ingested 170 → 86`.
+
+On-disk record count agrees with the table: `ls data/corpus/core_rulebook/companion/*.json | wc -l`
+→ **84**.
+
+### 3. Three findings, and the first one is why this book sat unstarted for seven rounds
+
+* **`§65.1` — the class-row refusal, widened deliberately.** The transcriber has carried
+  `raise SystemExit(... "Widen it deliberately.")` for any book holding `*_classes_companion.lst`
+  rows since round 1. That refusal — not the record count, not a missing mechanism — is why the
+  lane's **largest remaining book** was never taken. The deliberate answer is **drop-and-name**, not
+  "model them": a PCGen monster class is a hit-dice progression, so every field this chassis models
+  transcribes empty, which is the stub class the `.COPY=` screens exist to prevent. Modelling it is a
+  new record type; **declared and NOT taken**, per `§63`'s own instruction. The widening changed no
+  book's shipped output — the classifier had always counted these rows as excluded.
+
+* **`§65.3` — a second module that would have been reachable from nothing.** `MODULE_DIR` mapped only
+  `bestiary → beastiary1`. Core Rulebook's corpus id is `core_rulebook`, its engine module is `crb`;
+  an unmapped run would have written `rules_tables/core_rulebook/companion_data.rs`, a second module
+  for a book that already has one — compiling, passing its own tests, referenced by nothing. **Caught
+  by reading the transcriber's own comment before running it**, because the gate cannot see an
+  unreferenced module. `advanced_players_guide → apg` added in the same edit; it carries the
+  identical split and is next in the queue.
+
+* **`§65.2` — the sixth unmodelled-facet shape.**
+  `cr_abilities_companion.lst:191` reads `TYPE:NaturalAttack.NaturalAttackSecondary.Secondary`. It
+  **ships**, where `§63.3`'s `Pseudodragon ~ Tail` was dropped, and the distinction is the reusable
+  half: that row carried no `TYPE:`, no `DESC:` and no `BONUS:`; this one carries a `TYPE:`, four
+  `BONUS:WEAPONPROF=Tail Slap` tokens and `SOURCEPAGE:p.301`. **An unmodelled FACET is not an empty
+  RECORD.**
+
+**`§65.4` — the shortfall is ONE finding, not 86.** The 84 orphan ability rows are the generic
+`Animal Companion ~ …` / `Animal Trick ~ …` / `Animal Training ~ …` records, and they are orphans
+*precisely because* they hang off the Animal Companion **class** rather than any creature — the same
+missing record type as the 2 class rows, seen from the other side. First registered book whose
+shortfall is a single missing type rather than per-row accidents.
+
+### 4. The gate — `VERIFY_EXIT=0`, all 14 stages, and an honest account of run 1
+
+| run | result | attribution |
+|---|---|---|
+| 1 | **killed, not failed** | Died mid-`root-full` compile with no `RESULT:` line; log last written 22:47, process absent, no OOM record in `dmesg`, no `test result: FAILED` anywhere in the log. Launched with `nohup ... &` from a harness background task. **Not excused as environmental — attributed:** zero tests had reported failure at the point it stopped. Relaunched under `setsid` and it ran to completion, which is consistent with process-group reaping rather than any repo condition. |
+| 2 | **`0`** | all 14 stages |
+
+```
+preflight-disk PASS · pi-sweep PASS (10 hits, 10 baseline rows) · audit-selftest PASS (28)
+reclaim-selftest PASS (10) · driver-selftest PASS (7) · root-lib PASS (1744)
+root-full PASS (6312 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop PASS (445) · reach PASS (27) · frontend-install PASS · frontend-test PASS (99/99)
+frontend-typecheck PASS (tsc --noEmit clean) · clippy PASS (0 errors) · class-dump PASS (31/31)
+```
+
+`driver-selftest` passing matters this round specifically: `driver.sh` was modified (§6 below).
+
+### 5. Item 8 — PASS, and the two FALSE failures that preceded it are the round's biggest finding
+
+`companion / Companion (Crocodile (Alligator))`, artifact
+`artifacts/SD29-E7-F2-009/item8/crb-companion-crocodile.png` + `.verify.md`, HEAD `736dfd3d`. On
+screen: the `Core Rulebook (38)` book chip, `Core Rulebook p.56`, `Walk 20 ft., swim 30 ft. · reach
+5 ft. · Hit dice Companion:2 · Natural armor +4`, the six `BONUS:STAT` adjustments, and all five
+abilities including **`Tail Slap — NaturalAttack · NaturalAttackSecondary · Secondary p.301`** —
+which verifies `§65.2` on the player's screen, not just in a table.
+
+**It failed twice first, and the cause was not this cycle's content** (`§65.7`). The app rendered
+`CRB (38)` beside `Core Essentials (58)` and eleven other spelled-out names, while `Core Rulebook`
+was present in the committed `CompanionCatalogScreen.tsx` and the frontend suite passed 99/99.
+`38` is this round's creature count, so the backend was this tree's. The frontend was not:
+
+```
+pgrep -af vite
+  -> node /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_924a22ca-f35-19/apps/desktop/node_modules/.bin/vite
+```
+
+`vite.config.ts` pinned `port: 1420, strictPort: true` for **every** agent, so this cycle's vite could
+not bind, died, and `tauri dev` attached to a **sibling worktree's** dev server. The prior mitigation
+in `driver.sh` was `lsof -ti:1420 | xargs kill -9`, i.e. clobber the sibling instead. Both available
+outcomes were wrong.
+
+**This class is expensive because it is silent and plausible.** Item 8 exists precisely because
+`reach_gate` passing does not prove a player sees the value; a false item-8 PASS retires that last
+check while looking like the strongest evidence in the receipt. **This round caught it only by luck
+of shape** — the new book label happened to be the one string differing between the two trees. A
+round that ingested records without changing any frontend string would have taken the PASS and cited
+it.
+
+The two `.FAILED.*` artifacts are **kept, not deleted**: they are the evidence for `§65.7`, and the
+harness's own naming makes them uncitable as a pass.
+
+### 6. Fixed at the source, in the harness, not worked around in this cycle
+
+`driver.sh` derives `CODEX_DEV_PORT` from the same `DISPLAY_NUM` that already uniquifies the display
+(`default` keeps 1420, so a solo run is byte-identical to before); `vite.config.ts` reads it; and
+`tauri dev` is passed a matching `--config {"build":{"devUrl":"http://localhost:<port>"}}`. The
+port-clearing line is now scoped to the agent's own port. `strictPort` stays **true** deliberately —
+falling back to a free port restores the ambiguity, because tauri is told exactly one `devUrl` and a
+vite that quietly moved is indistinguishable from one that never started. Re-run PASSed on port
+**14279**.
+
+**The second-order lesson.** `RUN_DESKTOP_AGENT` was set correctly and uniquely by this cycle, exactly
+as the loop instruction demands. The guard did what it documents — uniquify the display and the state
+file — and the collision happened anyway, in a resource the variable was never wired to. **A
+concurrency guard protects the resources it enumerates, not the concept of "this agent's app."**
+
+`§65.8`: `CompanionCatalogScreen.test.ts`'s `SERVED_BOOK_CODES` roster gained `CRB`. The suite passed
+99/99 with the book shipping and unlabelled, because the roster held twelve codes and `CRB` was not
+one — a test whose stated job is "every served book", scoped to a hand-maintained list that does not
+know about the new book. Third instance of `§44.2`'s defect class in this bundle.
+
+### 7. DoD item 3 is RED, it is NOT this lane's, and no prior round reported it
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit   # exit captured directly, not through a pipe
+  -> TRAP_AUDIT_EXIT=2
+```
+
+Three `[wiring-class-mismatch]` defects, all `monster/` records under `inner_sea_gods`:
+`psychopomp_ahmuuth`, `steward_of_the_skein`, `the_first_blade`. All three landed in `1c7d8ef9`
+("Inner Sea Gods monster ingest"), which **predates companion round 7**, and round 7's receipt does
+not mention item 3 at all.
+
+**Zero defects are in companion or `core_rulebook` territory**, and this cycle touches none of those
+files: `git diff e13a43dd...HEAD --name-only | grep -c inner_sea_gods` → **0**. The records and their
+corpus sources are byte-identical to this cycle's base, so the audit's verdict on them is unchanged
+by anything here. `scripts/verify.sh` does not run `--audit`, which is how this stayed invisible to a
+green gate.
+
+**Reported, not fixed** — fixing it means editing the concurrently-running monster lane's live
+records, which is the "would clobber another session's live work" stop condition. Recorded as a retro
+`note` tagged `dod-item-3`/`cross-lane` so it is attributable rather than folded into this lane's
+result.
+
+### 8. Wired-integration four-check audit — clean
+
+```
+OK_NO_TOKENS · OK_NO_NOOP_HANDLERS · OK_NO_MOCK_LEAKS · OK_NO_WOULD_STRINGS
+```
+
+### 9. Denominators, re-derived at the end of this round
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'grounded': 870, 'not-ingested': 826})
+
+python3 scripts/classify_companion_rows.py ultimate_magic advanced_race_guide \
+  advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  -> 445 units / 393 excluded / 52 reachable
+```
+
+`companion` **1,696 total / 870 grounded / 826 remaining by status. 826 is NOT the lane's workload.**
+The REAL ceiling is **922** (`§63`'s figure, unchanged — this round dropped no row from it), so the
+honest remainder is **52**. `922 − 870 = 52`, and the four books' reachable counts sum to 52
+independently. The two derivations close exactly.
+
+Ranked: `ultimate_magic` 170 / 138 / **32**, `advanced_race_guide` 32 / 18 / **14**,
+`advanced_players_guide` 212 / 208 / **4**, `book_of_the_damned_volume_1` 31 / 29 / **2**.
+
+**Three hazards for round 9.** (a) **No book above 40 remains** — `ultimate_magic` at 32 is the
+largest, and the lane has crossed from big-block ingest into per-book fixed-cost work; cost is now
+dominated by the nine-surface registration, not by record count. (b) `advanced_players_guide`
+(4 of 212) and `book_of_the_damned_volume_1` (2 of 31) remain **FLOORS, not queued work**.
+(c) `ultimate_magic` and `book_of_the_damned_volume_1` both carry `*_classes_companion.lst` rows —
+`§65.1`'s screen now handles them silently, so neither needs a mechanism decision, only the ingest.
+
+**The lane is NOT dry.** This round does not claim it is.
+
+**Unattended-mode defaults taken this round** (recorded per the operating protocol, not raised):
+widened `§65.1`'s refusal to drop-and-name rather than deferring the book an eighth time; reserved
+decision number `§65` at claim time per `§53` rather than renumbering on merge; added
+`advanced_players_guide` to `MODULE_DIR` alongside `core_rulebook` rather than leaving a
+known-identical trap; fixed the shared-dev-port defect in the harness itself rather than working
+around it for this cycle alone, because a false item-8 PASS is not a companion-lane problem and every
+future cycle on this box inherits it; kept the two `.FAILED.*` item-8 artifacts as evidence rather
+than deleting them; and reported DoD item 3's red rather than entering the monster lane's live
+territory to fix it.
+
+### 10. Post-merge gate, on the tree that is actually on `origin/tranche/9`
+
+`origin/tranche/9` moved while this cycle's receipt was being written — the monster lane pushed
+Ultimate Psionics (`612004df`, `eeafe60a`, `de010f2e`, `3b0a414c`). Merged at `75e2711f` and the
+**full gate re-run on the merged tree**, because a gate result on a tree nobody ships is worth
+nothing (`decisions.md §63`'s lineage; the same reason round 7 re-ran after its own merge).
+
+```
+VERIFY_EXIT=0 — all 14 stages
+preflight-disk PASS · pi-sweep PASS (10 hits, 10 baseline rows) · audit-selftest PASS (28)
+reclaim-selftest PASS (10) · driver-selftest PASS (7) · root-lib PASS (1748)
+root-full PASS (6316 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop PASS (445) · reach PASS (27) · frontend-install PASS · frontend-test PASS (99/99)
+frontend-typecheck PASS (tsc --noEmit clean) · clippy PASS (0 errors) · class-dump PASS (31/31)
+```
+
+`root-lib` 1744 → 1748 and `root-full` 6312 → 6316 are the monster lane's four new tests, not this
+lane's. Both lanes touched `corpus_ingest_diagnostic.rs` and `reach_gate.rs` in the same window; the
+merge was textual and every one of this cycle's four registration points was re-verified by content
+on the merged tree afterwards rather than assumed:
+
+```
+grep -n 'companion_book_counts("core_rulebook")' apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs  -> 241
+grep -c '("crb", "companions")'                  apps/desktop/src-tauri/src/reach_gate.rs               -> 1
+grep -c 'corpus_book: "core_rulebook"'           src/rules_core/rules_tables/companion_chassis.rs       -> 1
+grep -c CODEX_DEV_PORT  apps/desktop/vite.config.ts  apps/desktop/.claude/skills/run-desktop/driver.sh  -> 2, 2
+```
+
+**The inventory was regenerated on the merged tree and changed only `generated_at`** — companion
+still `Counter({'grounded': 870, 'not-ingested': 826})`, no unit of any kind moved across the merge.
+The regeneration was therefore reverted rather than committed as a timestamp-only diff, and the
+stability across a concurrent lane's ingest is itself the check: this cycle's 84 and the monster
+lane's Ultimate Psionics units are genuinely file-disjoint, which is what the kind-lane partition
+promises and what a merge is the first real opportunity to falsify.
+
+## Cycle SD29-E5-F2-011 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 10 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r12` · **Date:** 2026-08-13 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-19`)
+**Branch-point:** `e13a43dd` · **Commits:** ``612004df` (the ingest, twelve registration points, the `CR:0` fix and the checked-in bundle scan), `eeafe60a` (the twelfth registration point, found by a red frontend gate), `de010f2e` (merge of `origin/tranche/9` through companion round 8), `3b0a414c` (work-inventory regenerated on the merged tree), plus this receipt's own closing commit`
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message** — see §7.
+**Kanban status left at:** `READY — round 11.`
+**Gate: `VERIFY_EXIT=0` on run 3, the authoritative run** — all 14 stages green — `root-lib` 1,748, `root-full` **6,316 passed across 544 suites with all 525 `tests/*.rs` suites executed**, `desktop` 445, `reach` 27, `clippy` 0 errors (root 54 / desktop 7 warnings), `pi-sweep` 10 hits / 10 baseline rows, `class-dump` 31/31 computing. Three runs, each
+one's reason recorded in §6; nothing was excused as environmental without an attribution.
+
+**This receipt does not claim the lane is done.** 34 units landed — the whole of the largest
+remaining reachable book. The REAL ceiling after this round is **10 by the classifier's terms**
+across two books, plus **229** in the ownership class this round measured corpus-wide for the first
+time (§4b). Full detail in `decisions.md §64`.
+
+### 0. Worktree integrity — the predicted failure, hit a THIRTEENTH time
+
+`git log --oneline -1` → `7d9f1c4f Merge pull request #23 from electricm0nk/develop`, the same
+2026-06-28 ancestor rounds 2-9 each landed on. Every required read and every re-derivation command
+in the brief would have run against a tree with no `docs/release/SD-29-…` package at all.
+
+Recovered before any other action: `git status --porcelain` empty first, then
+`git merge-base --is-ancestor origin/tranche/9 HEAD` → **false**, `git fetch origin tranche/9`,
+`git reset --hard origin/tranche/9` → `e13a43dd`. Thirteenth consecutive instance; a harness
+condition, not an agent error. Retro `incident` emitted with `--recurrence-key wrong-base-worktree`.
+
+### 1b. Re-derivation — what the brief got right, and what it got wrong for the ninth time
+
+Round 9's closing figures were **reproduced EXACTLY at cycle start before being moved**: raw
+remaining `monster` 52 + `monster_ability` 1,497 = **1,549**; grounded 1,218 and 1,610; classifier
+reachable **109**; REAL ceiling **44**. The brief's own headline ("the previous round reported 44
+remaining — if your derivation disagrees, yours wins") therefore survived re-derivation — the fourth
+consecutive round in which it has.
+
+The brief's other figures did not. **"monster ~305, monster_ability ~852, against grounded 62 and
+20" was wrong for the NINTH round running**; `decisions.md §46.1`, `§50.7`, `§52`, `§55`, `§57.0`,
+`§58.0`, `§60.0` and `§62.0` each corrected the identical pair. Retro `correction` emitted,
+blast-radius naming all eight prior corrections.
+
+Commands, both recorded in `decisions.md §64.0`: the per-kind sum over `docs/work-inventory.json`
+for the denominators, and `python3 scripts/classify_monster_ability_rows.py` for the per-book shape.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` → PASS, 23% used, 746G available. Disk was not a
+constraint at any point in this cycle. `CARGO_TARGET_DIR` claimed immediately on creation
+(`echo $$ > "$CARGO_TARGET_DIR/.reclaim-claim"`), **twice** — the root workspace and the separate
+`apps/desktop/src-tauri` workspace get one directory each, per `AGENTS.md`'s "one directory per
+agent *per source tree*".
+
+### 2. Card claimed
+
+`epic-5-monster-lane-extend`, card 8, status `READY — round 10`. Decision section **§64 reserved at
+claim time** rather than renumbered on merge — the fix this board asked for after `§47`/`§49` and
+again after `§60`/`§62` collided between concurrently dispatched lanes.
+
+### 3. Book selection, and the scan that came before the ingest
+
+**Round 10's first action was not the ingest.** `decisions.md §62.4` closed with a standing
+instruction — scan the corpus for `ABILITY:Internal|AUTOMATIC|` tokens on monster rows, a hop
+neither ownership pass follows — and flagged it unrun. It was run first, because a scope finding
+that changes what "done" means for this card is worth more than a book. See §4b.
+
+Book taken: **`ultimate_psionics`**, re-confirmed rather than trusted, exactly as `§45.1` requires:
+
+```
+$ python3 scripts/classify_monster_ability_rows.py ultimate_psionics
+book                mon  abil row-named prefix ORPHAN   PI COPY
+ultimate_psionics    21    79         3     10     66    0    0
+reachable remainder (units - orphans - PI - COPY): 34
+```
+
+Trap report, before a line of ingest code (`cycle mechanics 0b`):
+`cargo run --locked --bin v06_corpus_trap_report -- ultimate_psionics` → `up_races.lst` DECLARES
+**23**, `.COPY=` 0, `.MOD` 0, `#OFF` 0; `up_abilities_race.lst` DECLARES 438 with 64 `.MOD`. The
+23-vs-21 gap on the races file is two rows carrying no `CR:` token, which `v06_work_inventory` files
+as `race` — not a miscount.
+
+**No hard stop applied.** The brief's zero-monster hazard (Bestiary 5, Bestiary 6, Monster Codex)
+does not reach this book: it carries 21 monster rows, re-derived above.
+
+### 4. What landed — 34 records, the whole reachable book
+
+**21 monsters + 13 monster abilities**, against corpus unit counts of 21 and 79 — every one of the
+book's monster rows ships, and the 66 unshipped abilities are orphans no monster row of this book
+claims. The classifier and the transcriber agree on composition as well as on the total (66 orphans
+and 0 Product Identity rows on both screens), which `inner_sea_gods` did not manage (`§62.5`).
+
+**The cheapest registration this lane has done.** **Twelve** registration points and **not one of
+them a new `RuleSetId`, a new corpus directory or a new work-inventory book entry** —
+`RuleSetId::Upsi` has served this book's feats, equipment and archetypes since SD-28 E29. Enumerated
+in `decisions.md §64.4` so a successor counts rather than remembers.
+
+**Twelve, not the eleven every prior receipt in this lane records.** The twelfth is the frontend
+test's own `SERVED_BOOKS` constant, and it was found by a red `frontend-test` stage after every Rust
+stage had passed — see §6. It is the one registration point a Rust-only sweep cannot see.
+
+Denominators, re-derived after the ingest as well as before it (`§49`'s lesson — the run that ADDS
+records is exactly where a demotion hides):
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 52 | **31** | −21 |
+| `monster_ability` remaining | 1,497 | **1,484** | −13 |
+| raw remaining total | 1,549 | **1,515** | −34 |
+| `monster` grounded | 1,218 | **1,239** | +21 |
+| `monster_ability` grounded | 1,610 | **1,623** | +13 |
+
+**Nothing but the two monster kinds moved**, and that is derived rather than asserted — a whole-file
+diff of per-kind status counts against `git show HEAD:docs/work-inventory.json` returns exactly four
+changed rows and an unchanged unit total of 38,540. Command in `decisions.md §64.0`.
+
+### 4b. The round's largest output is a scope finding, and it moves the ceiling UP
+
+`§62.4` measured an ownership class at **16 rows in one file of one book** and asked a successor to
+scan for it. **The class is 229 rows across six books, five of which are already registered.**
+
+```
+$ python3 scripts/scan_monster_ability_bundle_rows.py
+bestiary 63 · bestiary_2 15 · bestiary_3 9 · bestiary_4 61 · inner_sea_gods 79 · ultimate_psionics 2
+orphan rows the `ABILITY:Internal|AUTOMATIC|` hop would reach: 229
+```
+
+The scan reproduces `§62.4`'s 16 **exactly** as the `support/` subset of `inner_sea_gods`' real 79,
+which is what makes this a correction of the same measurement rather than a competing one.
+
+**Deliberately not closed in this round**, for `§62.4`'s own reason now that the size is known:
+following the hop widens an *ownership* pass, and ownership decides which records five registered
+books emit. Unattended-mode default taken — **derive it, check the derivation in, pin it, hand it
+forward** — and pinned by an executing test
+(`rules_tables::ultimate_psionics::monster_tests::no_internal_bundle_ability_ships_yet`) rather than
+by prose, so the round that widens the pass is told this arithmetic is stale.
+
+**The scan is checked in** as `scripts/scan_monster_ability_bundle_rows.py`, not left in a scratch
+path — `§45.1`'s finding is that an ephemeral path is not a citation. It imports the lane's own
+classifier and reuses `classify_book`'s orphan set rather than defining `orphan` a second time.
+
+### 4c. A player-visible defect eleven books could not produce
+
+`up_races.lst:47` states **`CR:0`** for Psicrystal — the first zero challenge rating this catalog has
+ever served. The frontend rendered it as **`CR 1/Infinity`** (`Math.round(1 / 0)`), and two Rust
+guards went red on a *correct* transcription because both asserted `challenge_rating > 0.0`.
+
+Neither guard was weakened. Both were sharpened to the property they were reaching for: the catalog
+test now asserts the token↔value correspondence (a parsed zero is admissible exactly when the corpus
+token is literally `"0"`, so a silent parse fallback still fails), and the response test pins the
+zero-CR key set the same way it already pins the two Bestiary 3 rows that state no `SOURCEPAGE:`.
+The frontend fix and its test came with it. `decisions.md §64.3`.
+
+Same shape as the correction Bestiary 2 forced on the ability-key uniqueness test three books
+earlier in the same file: **a guard can encode an accidental property of the books registered when
+it was written**, and the tell is that it fires on data nobody disputes.
+
+### 4d. The panel row `§63.4` predicted, fixed prospectively
+
+`corpus_ingest_diagnostic::ultimate_psionics_counts()` is a per-book counts function of exactly the
+shape `§63.4` found had hidden 327 companion records from the Corpus Ingest panel since the day they
+landed. It now **chains `chassis_book_counts("ultimate_psionics")`** rather than inserting two more
+literals, so the map carries every family the book has, whoever adds the next one.
+
+### 5. Provenance
+
+Verified against the files rather than copied from the row above: `ultimate_psionics.pcc:21` declares
+`ISOGL:YES`, `grep -c '^COPYRIGHT:'` → **29**, and a real 10,418-byte `OGL.txt` sits beside it.
+`grep -c NAMEISPI:YES up_races.lst up_abilities_race.lst` → **0, 0**, and the classifier's Product
+Identity screen returns 0 — what `ogl-pi-blacklist.md` §2.1's per-record predicate predicts for a
+book whose creatures are generic psionic species rather than named personae.
+
+`LICENSE.json` records `records_processed: 34`, `records_redacted: 0` — **derived from disk** by
+`count_on_disk_redactions` (`§63.2`), not hardcoded. `grep -rl 'redacted PI' data/corpus/ultimate_psionics/`
+returns only `LICENSE.json` itself, which carries the marker as the redaction policy's own field.
+
+### 6. Gate
+
+`./scripts/verify.sh` **full**, exit code captured directly and never through a pipe — a wrapper
+script writes `$?` to a file on the line after the invocation, so no pipeline can swallow it.
+
+**Run 3 is the authoritative one: `VERIFY_EXIT=0`, all 14 stages green — `root-lib` 1,748, `root-full` **6,316 passed across 544 suites with all 525 `tests/*.rs` suites executed**, `desktop` 445, `reach` 27, `clippy` 0 errors (root 54 / desktop 7 warnings), `pi-sweep` 10 hits / 10 baseline rows, `class-dump` 31/31 computing.** It ran on the merged tree
+that was pushed, with no source edit after it started.
+
+**Run 1 was ABANDONED BY ME, not by a failure, and that is worth stating plainly.** It had reached
+`root-full` when I made two doc-comment edits to `.rs` files (§4b's correction of two stale prose
+claims about `inner_sea_gods`). A gate that is racing an edit can compile a mixed snapshot and return
+a plausible wrong answer, so I killed it rather than cite a result whose input I could not name. Its
+completed stages were green (`root-lib` 1,748).
+
+**Run 2 finished `VERIFY_EXIT=1` with TWO red stages, and neither was excused:**
+
+* **`frontend-test` — a real defect of this round's diff, now fixed** (commit `eeafe60a`).
+  `SERVED_BOOKS` in `MonsterCatalogScreen.test.ts` pins the wire codes the catalog serves, and `UPSI`
+  was missing: `BOOK_LABELS names exactly the served books: expected …ISWG,MC, got …ISWG,MC,UPSI`.
+  **This is the TWELFTH registration point** and it is the one a Rust-only sweep cannot see — a test
+  constant, in no production registry. Every prior receipt in this lane says eleven. `count change
+  needs a sweep, not just a build`, in its exact documented form.
+* **`driver-selftest` — attributed to a concurrent agent, not to this diff, and the attribution is
+  named rather than asserted.** The failing case is `readiness ignores an app process on another
+  agent's display`, and it failed because `_app_pid` for `:80` found **pid 2348462**, a *real* live
+  desktop app — not the test's own decoy, whose pid would have been six orders of magnitude fresher.
+  Another SD-29 lane was running its app on this box at that moment; the same lane's commit
+  `bcbb12f1` (merged into this round) documents its half of the collision. The stage passed on run 1,
+  before that app existed, and again on run 3.
+
+**Two baselines were stale and are updated deliberately**, per the gate's own "not failures — update
+deliberately" note: `BASELINE_ROOT_LIB_TESTS` and `BASELINE_ROOT_FULL_TESTS`. They were already
+behind before this round (1,738 recorded against 1,743 reported by round 9), so the update carries
+both lanes' additions, and the values written are the ones run 3 measured rather than arithmetic on
+the old ones.
+
+Two baselines updated in `scripts/verify-baselines.env` from run 3's own measurements: `BASELINE_ROOT_LIB_TESTS` 1,738 → **1,748** (4 of the 10 are this round's `ultimate_psionics::monster_tests`; the rest are the companion lane's, merged in) and `BASELINE_ROOT_FULL_TESTS` 6,306 → **6,316**. `BASELINE_DESKTOP_TESTS` stays 445 — this round's two desktop changes sharpened existing tests rather than adding any.
+
+### 7. Push, verified BY CONTENT
+
+`git push origin HEAD:tranche/9` → `bcbb12f1..3b0a414c`, after merging `origin/tranche/9` (which had moved three commits ahead, through companion round 8) and regenerating `docs/work-inventory.json` on the merged tree. The merge's only conflict was that generated file; resolved by taking origin's copy and regenerating, the round-9 precedent, rather than hand-merging two unit lists. Denominators re-derived after the merge and unchanged: `monster` 31 remaining / 1,239 grounded, `monster_ability` 1,484 / 1,623.
+
+Verified BY CONTENT on the remote rather than by a push message:
+
+```
+git cat-file -p origin/tranche/9:src/rules_core/rules_tables/ultimate_psionics/monster_data.rs \
+  | grep -c 'MonsterStatBlock {'      -> 21
+  | grep -c 'MonsterAbilityRecord {'  -> 13
+```
+
+### 8. On-screen verification (DoD item 8)
+
+**PASS on BOTH artifacts**, clipboard-extracted and machine-verdicted against the live app, in
+`docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts/SD29-E5-F2-011/item8/`:
+
+* **`monster / Psicrystal`** (`upsi-monster-psicrystal.png` + `.verify.md`) — the load-bearing one.
+  It proves three separate things in one record: the new book on screen (`Ultimate Psionics p.48,448`
+  in the row's own citation line, and the screen's auto-derived blurb now naming twelve books and
+  **1,239 monsters**, which is exactly this receipt's grounded `monster` figure read off a player's
+  screen); **`CR 0` rendered correctly** — the `§64.3` defect, which without the fix reads
+  `CR 1/Infinity`; and a chassis ability rendering underneath its monster (`Telepathic Link`, one of
+  twelve shown). Filtered count on screen: `1 matching monster.`
+* **`monster / Astral Swarm`** (`upsi-monster-astral-swarm.png` + `.verify.md`) — a second book row
+  with the book's one non-Psicrystal ability, `Ectoplasmic Poison`.
+
+**The first attempt FAILED and the failure is worth recording.** On a cold launch the harness
+navigated correctly (the Monster Catalog marker and the twelve-book blurb were both extracted) but
+the search returned `No monsters match.` — the filtered-count gate refusing to screenshot rather
+than passing on an unfiltered list. It reproduced on a *reused* app only because my own probing had
+navigated that app away from the hub, which produced a second, unrelated failure on the character
+screen. A `--fresh` relaunch passed first time. **Read as: this screen now hydrates 1,239 rows, and
+the harness's fixed post-navigation sleep is at the edge of that.** The `SEARCH_Y=311` constant was
+**not** the cause and was not changed — the harness's own diagnostic distinguishes the two, because a
+missed search box leaves the counter reading `1239 matching` while a miss on hydration removes the
+counter entirely. A successor should expect to pass `--fresh` on this family's first record.
+
+**One cosmetic residue observed on screen and deliberately not fixed:** `Power Resistance` renders as
+*"The psicrystal has power resistance ."* — its `DESC:` is `power resistance %1` with variable `SR`,
+and `decisions.md §24` rules that a formula `%N` is **dropped, never guessed**, because this repo has
+no formula interpreter. The ruling is right; the dangling space before the full stop is its residue,
+it is shared by every registered book, and tightening it means touching `render_pcgen_desc` for all
+twelve. Handed forward rather than changed in this round's gate.
+
+### 9. Reclaim
+
+`scripts/reclaim.sh --apply` at cycle end, and both claimed `CARGO_TARGET_DIR`s
+(`codex-target-sd29-monster-r12`, `codex-target-sd29-monster-r12-desktop`) deleted.
+
+### 10. What round 11 inherits
+
+Raw remaining **1,515**, classifier reachable **75**, **REAL ceiling 10 by the classifier's terms**
+(`horror_adventures` 9, `occult_adventures` 1) **and 239 counting §64.1's class**. Full queue table
+in `decisions.md §64.5`.
+
+**A successor must not read this as "10 left."** Only 10 units remain that need nothing but
+registration, and one of the two books holding them costs a whole new `RuleSetId` for a single
+record. Against that, 229 units in six books — five already registered — are reachable in the corpus
+and unreachable by any pass this repo runs. **For the first time in this lane the mechanism work is
+larger than the ingest work**, and it is one mechanism, scanned, counted and checked in.
+
+**Unattended-mode defaults taken this round** (recorded per the operating protocol, not raised):
+(a) did **not** close `§64.1`'s ownership widening in the same gate as the ingest, taking `§62.4`'s
+own deferral reasoning now that the number is known; (b) registered the monster wire code as `UPSI`
+rather than the book's `SOURCESHORT:UP`, because the app already serves this book's equipment and
+feats under `UPSI` and one book must not carry two codes across two screens (`decisions.md §64.2`);
+(c) sharpened rather than deleted the two challenge-rating guards `CR:0` turned red, pinning the
+zero-CR key set so the completeness check survives.
+
+---
+
+## Epic 10 — Bundle Code Review, RUN 2 (2026-08-13, `sd29-review-r2`, card `epic-10-review-run2`)
+
+Run 1's review passed against a state that was not final. The bundle was reopened (`§42`) and three
+lanes have worked since. This run reviews the **whole-bundle diff against its branch point**, per
+`decisions.md` Decision 27.
+
+**Reviewed tree:** `origin/tranche/9` @ `de303fd0`, in a dedicated detached worktree
+(`/home/ubuntu/workspace/sd29-review-r2-wt`). **Branch point** `a1295856` (`git merge-base HEAD
+origin/develop`) — **246 commits, 4,632 files, +305,921 / −15,513**:
+
+```bash
+git merge-base HEAD origin/develop                 # -> a1295856
+git rev-list --count a1295856..HEAD                # -> 246
+git diff --stat a1295856..HEAD | tail -1           # -> 4632 files changed, 305921 insertions(+), 15513 deletions(-)
+```
+
+**Shared-checkout hazard found before any review work, recorded because it is not the bundle's
+defect but would have made this review wrong.** The main checkout
+`/home/ubuntu/workspace/repos/codex` was on `tranche/9` **141 commits behind `origin/tranche/9`** and
+2 ahead with unrelated local commits (`git rev-list --count HEAD..origin/tranche/9` -> `141`).
+Reviewing there would have reviewed a tree with none of the last three lanes' work. This review
+therefore ran in its own worktree pinned to the pushed tip; the main checkout was not touched.
+
+### 1. The gate — PRECONDITION, and it ran on the tree this receipt ships
+
+`./scripts/verify.sh` (FULL), exit code captured directly, never through a pipe. Run at **`4d22ecbb`**
+— `de303fd0` plus this review's own two fixes (§6 F1, F2) — so the gate covers what lands, not the
+tree before the review touched it:
+
+```
+VERIFY_EXIT=0
+```
+
+All stages, read off the run's own summary lines:
+
+```
+    PASS  preflight-disk  (disk budget OK)
+    PASS  pi-sweep  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+    PASS  audit-selftest  (28 passed, 0 failed)
+    PASS  reclaim-selftest  (10 passed, 0 failed)
+    PASS  driver-selftest  (7 passed, 0 failed)
+    PASS  root-lib  (1748 passed)
+    PASS  root-full  (6316 passed across 544 suites, all 525 tests/*.rs suites executed)
+    PASS  desktop  (445 passed)
+    PASS  reach  (27 passed)
+    PASS  frontend-install  (npm ci)
+    PASS  frontend-test  (99/99 files)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+    PASS  clippy  (root:54 desktop:7 warnings, 0 errors)
+    PASS  class-dump  (31/31 computing)
+RESULT: PASS
+```
+
+
+### 2. The standing dual-audit, run at BUNDLE scope (Decision 27's mechanism)
+
+`BASE_BRANCH=origin/develop`, both scripts' own default triple-dot comparison.
+
+| audit | result | note |
+|---|---|---|
+| `./scripts/identifier-discipline-audit.sh` | **`OK_NO_BUNDLE_TAGS`, exit 0** | and its detection power is not assumed: `audit-selftest` (28 cases, PASS inside the gate) is what proves the path-tag, infix and `Ge`/`Sd` PascalCase forms are still caught |
+| `./scripts/wired-integration-audit.sh` | **exit 1 on Check 1**; Checks 2/3/4 `OK_NO_NOOP_HANDLERS` / `OK_NO_MOCK_LEAKS` / `OK_NO_WOULD_STRINGS` | 14 Check-1 hits. **One was a mechanical defect in the script — FIXED (F1). The other 13 are all the `placeholder` alternative, hand-classified below, and none is a stub** |
+
+**Run 1 reported this audit clean. It was not clean, and the reason is worth more than the result:**
+every lane cycle that reported "four-check clean" either ran the script with `BASE_BRANCH` set to its
+*own* cycle base (`BASE_BRANCH=e1f0bdd9`, `BASE_BRANCH=21ead5d7` — both live in this file) or reported
+the Rust sweep `tests/sd24_wired_integration_audit.rs` instead. Both are legitimate; neither is the
+bundle-scope run Decision 27 specifies, so no cycle had actually executed it.
+
+**All 13 surviving Check-1 hits, classified by hand — zero are unfinished-work markers:**
+
+| class | n | examples |
+|---|---|---|
+| JSX/HTML `placeholder=` **attribute** (a DOM affordance, not a claim about the code) | 2 | `placeholder="Search by name…"`; `placeholder="e.g. authoring workbench"` |
+| engineering **prose** about upstream corpus placeholders (`%N` substitution, `SOURCEPAGE`) in doc comments | 10 | `/// True for a SOURCEPAGE value that is an upstream placeholder rather than a` ; `//! fabricated placeholder. prerequisites is every top-level PRE-family` |
+| a `#[cfg(test)]` **assertion message** inside a shipping file (`monster_catalog.rs:911`) | 1 | `"{}'s description serves a raw substitution placeholder: {description}"` |
+
+These are exactly the three classes `tests/sd24_wired_integration_audit.rs` already documents and
+encodes as filters for its repo-wide sweep. **The shell script does not share those filters.** That
+divergence is F5 below — recorded, not papered over, and explicitly NOT fixed by loosening the token
+list.
+
+### 3. Reach claims are REAL, not passing-by-absence (DoD item 2)
+
+Checked as a mechanism, not as an exit code. Five independent guards, each read in source:
+
+* `full_inventory()` (`reach_gate.rs:2834`) is the **union of three live sources** —
+  `diagnostic_inventory()` (the app's own ingest diagnostic), `scanned_inventory()` (a source scan of
+  `src/rules_core/rules_tables`), `corpus_inventory()` (a directory scan of `data/corpus`). A new
+  book is discovered by the corpus scan, so a family cannot be omitted by forgetting to list it.
+* `the_inventory_is_populated_from_all_three_live_sources` floors **each** source at 10, asserts
+  `corpus_inventory()`'s `unnamed` set is empty, and asserts the sources genuinely differ — so no
+  source can silently degenerate to a subset.
+* `every_declared_claim_actually_carries_the_records` ends `assert!(proven >= 10, "only {proven}
+  claims were executed; the gate is barely checking anything")`. **Zero matched claims fails.**
+* `unreached_records_are_exactly_the_recorded_findings` pins `UNREACHED_RECORD_FINDINGS` **both
+  ways** — an unlisted gap fails, and a gap that got fixed fails until its key is deleted — plus
+  `assert_eq!(families_with_a_pin, UNREACHED_RECORD_FINDINGS.len())`, so an entry naming a family the
+  inventory does not have cannot sit there.
+* `scripts/verify.sh`'s `reach` stage: `stage_fail reach "0 tests matched the reach_gate filter — the
+  gate is not running at all"`.
+
+**The findings list did not rot into a suppression list over the bundle.** Its delta across the whole
+246 commits is **+3 / −1** entries:
+
+```bash
+extract() { git show "$1:apps/desktop/src-tauri/src/reach_gate.rs" \
+  | awk '/^(static|const) UNREACHED_RECORD_FINDINGS/{f=1} f{print} f&&/^\];/{exit}'; }
+diff <(extract origin/develop | grep -E '^\s+"' | sed 's/^ *//' | sort) \
+     <(extract HEAD          | grep -E '^\s+"' | sed 's/^ *//' | sort) | grep -c '^>'   # -> 3
+#  ... | grep -c '^<'                                                                    # -> 1
+```
+
+All three additions carry a named upstream or mechanism cause in a comment beside the key
+(`monster_codex / Oversized Goblin`, `inner_sea_races / Human ~ Tribalistic Languages`, plus the
+`acg / archetypes` whole-family shape). One entry was **removed** because the record now reaches —
+which is the pin working in the direction that is easy to forget.
+
+### 4. DoD item 8 — per player-visible family
+
+**97 artifact files across 23 directories** before this review; **101 across 24** after §4b. Every player-visible family this bundle surfaced has at
+least one PASS artifact driven through the real app:
+
+```bash
+find docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts -type f | wc -l    # -> 97
+```
+
+| family | item-8 dirs | verdict |
+|---|---|---|
+| `monster` / `monster_ability` | 9 (`SD29-E5-F2-004`…`-011`, `sd29-monster-r3`) | covered |
+| `race_trait` | 4 (`SD29-E6-F2-005`, `-006`, `sd29-racetrait-r3`, `race-trait-extend-round-1`) | covered |
+| `companion` | 9 (`SD29-E7-F1-002`, `SD29-E7-F2-003`…`-009`) | covered |
+| `equipment`, `spell` | Epic 4's `e4-spell-catalog-{before,after}-ui-chip.png` and `desktop-driver-fix/02-equipment-catalog.png` | **pre-harness**, see below |
+
+**No family shipped without an on-screen artifact.** Seven `.FAILED.verify.md` records are kept
+beside their eventual passes (plus the harness's own two deliberate failure-mode artifacts under
+`item8-harness/failure-modes/`). Those are the harness *refusing*, not an item being waived — which
+is the behaviour item 8 exists for, and the reason a `.FAILED.*` name can never be cited as passing
+evidence.
+
+**Standing hazard, not a shipped gap:** Epic 4 (equipment/spell) predates `verify-on-screen.sh`, so
+**no equipment or spell cycle has ever run under the harness** and their `SEARCH_Y` values remain
+by-analogy and uncalibrated. The first equipment/spell cycle after this bundle must calibrate them
+before trusting a PASS.
+
+### 4b. The review's OWN on-screen pass (Decision 27 requires it, not just item 8)
+
+`§27` does not let the review read reach off an exit code: it requires *"driving the running desktop
+app … and reading the value off a screenshot, per `loop-instruction.md`'s Definition of done item 8,
+with `RUN_DESKTOP_AGENT` set to a value unique to this review."* Done, on the merged tip at
+`4d22ecbb`, `RUN_DESKTOP_AGENT=sd29-review-r2` (its own Xvfb `:88`, its own vite port `14288` — the
+`§65.7` fix confirmed working under a 21st concurrent worktree). **Two records the lanes did NOT
+screenshot**, so the pass adds information rather than repeating a lane's:
+
+| family | record | expected | verdict | artifact |
+|---|---|---|---|---|
+| `companion` | `Companion (Cat (Small (Cheetah)))` | `Core Rulebook`, `Sprint`, `p.56` | **PASS** | `artifacts/sd29-review-r2/item8/crb-companion-cheetah.png` + `.verify.md` |
+| `monster` | `Dromite` | `Ultimate Psionics`, `1/2`, `p.10` | **PASS** | `artifacts/sd29-review-r2/item8/upsi-monster-dromite.png` + `.verify.md` |
+
+**The monster screen is the review's strongest single cross-check.** Its auto-derived blurb reads
+*"…and Ultimate Psionics — **1239** monsters"*, and that is **exactly** the `monster` grounded count I
+re-derived independently from `docs/work-inventory.json` in §8 (`Counter({'grounded': 1239, …})`).
+A corpus-side denominator and a pixel a player reads agree to the unit, through the whole engine and
+IPC path, with no shared derivation between them.
+
+The companion screen carries the same property one level down: 13 spelled-out book names ending
+`Core Essentials and Core Rulebook — 431 creatures`, with `Core Rulebook (38)` as a facet row — so
+`§65.8`'s `CRB`-unlabelled defect is confirmed *fixed on screen*, not merely fixed in a roster. The
+Cheetah's `Sprint` renders with its own citation (`p.40`) beneath the creature's (`p.56`), which is
+the owned-ability relationship the lane's chassis claims.
+
+### 5. Nothing is stranded on an unmerged branch — every result accounted for
+
+This bundle lost work to an unmerged worktree branch twice. Checked against the **pushed tip**, not
+the stale local branch:
+
+```bash
+git branch -a --no-merged origin/tranche/9
+#  -> tranche/9   (LOCAL, 141 behind origin — the stale checkout above, no unique content)
+#  -> worktree-wf_9029acd8-6b0-6
+#  -> remotes/origin/update-index
+```
+
+* **`worktree-wf_9029acd8-6b0-6`** — one commit, `b49c603a` "companion chassis + Inner Sea Combat
+  pilot ingest (Epic 7 round 2)", 29 files. **Every one of the 29 is present on `origin/tranche/9`**,
+  with later blobs (the lane re-landed and evolved it). Verified by content, file by file, not by a
+  prior agent's word:
+
+  ```bash
+  git diff --name-only origin/tranche/9...worktree-wf_9029acd8-6b0-6 \
+    | while read f; do git cat-file -e "origin/tranche/9:$f" 2>/dev/null || echo "MISSING $f"; done
+  #  -> (no output)
+  ```
+
+* **`remotes/origin/update-index`** — the release-channel index branch (`channel-index: alpha …`
+  commits, `update-manifest.json` only). Unmerged **by design**; it is not a work branch.
+* The 20 `worktree-wf_924a22ca-f35-*` branches are all merged into `origin/tranche/9`; they only
+  appear unmerged against the **local** `tranche/9`, which is the 141-commit staleness above, not
+  stranded work.
+
+### 6. Findings
+
+#### F1 — `wired-integration-audit.sh` reported REMOVED tokens as violations. FIXED (mechanical).
+
+All four checks scanned the raw diff, so a `-` line — a forbidden token being **deleted** — was a
+failure. At bundle scope one of the 14 Check-1 hits was the `-` side of
+`placeholder="e.g. GE08 authoring workbench"`: a bundle tag **this bundle's own naming sweep had
+correctly removed**, reported as though the sweep had added it. This is the identical defect
+`scripts/identifier-discipline-audit.sh` already records and fixed for its own regex; its
+`added_lines_only` is the form copied here.
+
+**Proven not a weakening** by a mutation test on a temp commit (planting
+`/// STUB not yet implemented` in `src/lib.rs`, committing, running the patched gate, then
+`git reset --hard` back): `MUTANT_EXIT=1` and the planted line named in the output. Hits at bundle
+scope: 14 -> 13, all 13 now on `+` lines.
+
+#### F2 — `verify-baselines.env`: 34 assignments for 8 keys, and `verify.sh` SOURCES it. FIXED (mechanical).
+
+```bash
+grep -cE '^[A-Za-z_][A-Za-z0-9_]*=' scripts/verify-baselines.env                      # -> 34
+grep -oE '^[A-Za-z_][A-Za-z0-9_]*=' scripts/verify-baselines.env | sort -u | wc -l    # -> 8
+```
+
+`BASELINE_ROOT_FULL_TESTS` alone had **ten** live assignments. Two real consequences: no reader could
+tell which line was the gate's actual floor without simulating a shell's last-wins rule; and a
+revision written into the **middle** of the file rather than appended was **dead on arrival and
+silently so** — nothing in the file or in `verify.sh` said appending was load-bearing.
+
+Fixed by prefixing every historical assignment `#   (historical)` (the dated record is preserved
+verbatim) and adding one `LIVE BASELINES` block. **No floor was lowered and no ceiling raised** —
+sourcing before and after produces byte-identical values (`diff` clean, recorded in the file header).
+
+Both F1 and F2 landed in commit `4d22ecbb`, **before** the gate run in §1, so the gate above ran on
+the fixed tree.
+
+#### F3 — the companion browser-preview fixture is not the faithful transcription it claims. DEFERRED.
+
+`apps/desktop/src/companionCatalog/companionCatalogRuntime.ts`'s `buildPreviewCatalog()` states:
+*"Every value below is transcribed from the real ingested record … so the preview never shows a
+companion the corpus does not contain or a number it does not state."* For `Familiar (Clockwork Spy)`
+that is not true:
+
+| | fixture serves | corpus record states |
+|---|---|---|
+| `statAdjustments` | 1 — `DEX +2` | 6 — incl. **`CHA −10`** |
+| `abilities` | 1 — `clockwork_spy_tinkering` | 3 — `record_audio`, `self_destruct`, `tinkering` |
+
+```bash
+python3 -c "import json;d=json.load(open('data/corpus/inner_sea_intrigue/companion/familiar_clockwork_spy.json'))['data'];print(d['stat_adjustments']);print(d['ability_keys'])"
+```
+
+The backend does **no** filtering — `companion_catalog.rs` maps every `stat_adjustment` straight
+through — so the desktop app and the browser preview disagree on rules content. (The `Griffon` entry
+in the same fixture **is** faithful; checked field by field against
+`data/corpus/inner_sea_combat/companion/companion_griffon.json`.)
+
+**Not a shipping-path stub:** the branch is behind `if (!hasTauriRuntime())`, never taken in the
+desktop product, and follows the pre-existing `monsterCatalogRuntime.ts` convention. **But nothing
+pins it:**
+
+```bash
+grep -rn 'buildPreviewCatalog' apps/desktop/src --include=*.test.ts    # -> (no output)
+```
+
+**This is the FOURTH instance of one root cause, and the first with a rules-content consequence.**
+The bundle already records three: `§54.5` (companion `SERVED_BOOK_CODES` stale and silent), `§54.6`
+(monster `SERVED_BOOKS` stale and loud), `§65.8` (`CRB` shipping unlabelled while the suite passed
+99/99). All three are **test rosters** — a list that decides what gets checked. This one is
+**rendered content**: the browser preview draws a Clockwork Spy whose stat line the corpus
+contradicts. Each of the three closed by naming the real fix and not taking it, most recently
+`§65.8`: *"deriving the roster from the served response rather than maintaining it by hand is the
+real fix and is named here, not taken."* **Four instances is where renewing that deferral stops being
+free.**
+
+**Nothing is red today** — both hand lists are currently IN SYNC, verified this review: 13/13
+companion codes and 12/12 monster codes against the backend registries. The defect is that nothing
+would say so if they were not, and that the fourth artifact in the family was never checked at all
+because it is not a roster and no one was looking for it there.
+
+**Disposition: deferred, owner named — SD-31**, recorded at `successor-forward-scope-register.md` C1.4a
+(an unowned deferral is not a valid disposition under Decision 27). It needs
+a design decision this review's scope does not carry — how a frontend preview derives from the corpus
+without a fixture pipeline — and a hand-transcription of five more numbers would move the drift
+rather than remove it. **`decision-blocked`, recorded per the unattended-mode protocol, not raised.**
+
+#### F4 — Decision 41's convention and the gate that enforces it disagree about NEW `tests/` files. DEFERRED.
+
+`tests/sd29_declared_product_identity_in_shipped_race_traits.rs` is a **new** file added by the
+race-trait lane, carrying an SD-NN tag, **after** Decision 41 made function-based naming *"binding on
+Epics 3-11 … same rule for modules, structs, consts, test module names, and directories."* Decision
+41 exempts **existing** `tests/` names because 531 of them are load-bearing citation targets; it does
+not license new ones.
+
+**The audit is not defective here, and this is the finding I nearly got wrong.** Its self-test
+encodes the `tests/` exemption *deliberately and by name* — `scripts/tests/test_identifier_discipline_audit.sh:115`,
+`run_case 'tests/ path is not a path tag' 0 tests/sd13_progression.rs` — one of 28 cases that pass
+inside the gate (`audit-selftest`). So this is a **doctrine-vs-gate divergence**, not a gate hole:
+Decision 41 made function-based naming binding on Epics 3-11, and the gate is tested to permit
+exactly what Epic 6 then did.
+
+```bash
+git diff --name-only --diff-filter=AR origin/develop...HEAD \
+  | grep -E '(^|/)([A-Za-z0-9]+_)*(sd|SD|Sd|ge|GE|Ge)[0-9]+([_-][A-Za-z0-9_.-]*)?(/|$|\.)' \
+  | grep -v '^docs/'
+#  -> tests/sd29_declared_product_identity_in_shipped_race_traits.rs   (the only one)
+```
+
+4 citations exist (`src/bin/ingest_race_traits.rs:946` plus 3 in release docs). **Deferred rather than
+renamed here**, because the resolution is a ruling, not an edit: either Decision 41 grows an explicit
+"new `tests/` files too" clause and the self-test's case 115 is split into *existing* vs *added*, or
+Decision 41 concedes `tests/` entirely. Changing a tested gate's scope inside a review cycle, on my
+own reading of a decision, is the kind of unilateral gate edit this card forbids. Severity low.
+
+#### F5 — the wired-integration shell audit and its Rust twin disagree about `placeholder`. DEFERRED.
+
+`tests/sd24_wired_integration_audit.rs` documents `placeholder` as *"the one noisy term in the
+canonical pattern"* and encodes **three** reviewed exclusion filters for it, so the repo-wide sweep is
+green inside `root-full`. `scripts/wired-integration-audit.sh` has none of them, so at bundle scope it
+is red on 13 hits that the Rust gate has already adjudicated as not-stubs. The two instruments state
+different verdicts about the same doctrine.
+
+**Deliberately NOT fixed by loosening the token list.** The correct fix is to give the shell script
+the same three documented filters the Rust gate already carries — parity with a reviewed gate, not
+new leniency — and that is a gate change with its own test obligation. Deferred with that remedy
+named. Until it lands, **Decision 27's bundle-scope shell run cannot be reported as clean, and this
+review does not report it as clean.**
+
+### 7. Verified clean, where run 1 did not look
+
+* **APG's 49-row `race_trait` exclusion is REAL, not an accounting convenience.** `§44.4`/`§49.8`
+  exclude 49 `advanced_players_guide` rows as *"same `KEY:` as an already-ingested ARG record —
+  republished, not new."* Checked independently against the corpus, not against the claim:
+
+  ```bash
+  # index all 515 committed race_trait records by data.key, then look up the 49
+  python3 -c "import json,glob;have={};
+  [have.setdefault(json.load(open(f))['data']['key'],[]).append(f.split('/')[2]) for f in glob.glob('data/corpus/*/race_trait/**/*.json',recursive=True)];
+  keys=[l.strip() for l in open('apg49.txt') if l.strip()];
+  print(len(keys), sum(k in have for k in keys))"
+  #  -> 49 49      (all 49 present, every one owned by advanced_race_guide)
+  ```
+
+* **No hand-authored rules data reached a shipping frontend path.** The only rules-shaped literals the
+  bundle added to `apps/desktop/src/` are the two preview fixtures, both behind `hasTauriRuntime()`
+  (F3 covers their fidelity).
+* **The identifier audit's detection power is tested, not assumed.** The card asks specifically
+  whether path tags and PascalCase/infix forms are still caught. `scripts/tests/test_identifier_discipline_audit.sh`
+  carries named cases for all of them — `pascal bundle tag (Sd29)`, `pascal grand-epic tag (Ge08)`,
+  `infix bundle tag (kind_is_sd17_b3)`, `infix grand-epic tag`, `path tag in file name`, `path tag in
+  directory name`, `tag in top-level src/lib.rs` — and 28/28 pass inside `verify.sh`'s `audit-selftest`
+  stage. It also carries the negative cases that keep it from being noise (`doc slug SD-29 in a
+  comment`, `epic citation SD28-E14-F1`, `tests/ citation in doc comment`).
+* **Receipt figures carry their commands — the two that looked wrong both survived checking.** The
+  card asks for figures published without a command behind them. Two were auditable from the dispatch
+  brief's own receipt chain and both are re-derivations, not errors: (a) the monster lane's
+  `left=44 -> left=239` **rise** after a `+34` round is `§64.1`'s ceiling correction, and
+  `10 + 229 = 239` reproduces (`python3 scripts/scan_monster_ability_bundle_rows.py` -> `229`); (b)
+  the companion lane's `239 - 102 = 137` against a published `left=136` is the ceiling moving
+  `923 -> 922` for the one row `§63.3` drops, so `922 - 786 = 136`. The current figure closes the same
+  way from the other end: `922 - 870 = 52`, and my independent classifier run returns `52`.
+* **Corpus correctness, sampled.** `ultimate_psionics:monster:psicrystal` (the newest book's
+  load-bearing record) checked corpus JSON -> engine table -> raw PCGen row
+  (`up_races.lst:47`): `SIZE:D`, `MOVE:Walk,30,Climb,20`, `RACETYPE:Construct`, `CR:0`,
+  `SOURCEPAGE:p.48,448`, `MONSTERCLASS:Construct:1` all transcribed exactly, `natural_attacks` empty
+  because the row carries no attack token. `inner_sea_combat:companion:companion_griffon` checked
+  field by field against its corpus record — exact.
+* **Test quality, sampled rather than counted.** `monster_catalog.rs`'s
+  `no_ability_description_serves_raw_pcgen_substitution_syntax` is the shape the doctrine asks for: it
+  loops, and then ends `assert_eq!(checked, 16)` with the corpus reason for 16 written beside it — it
+  cannot pass by iterating nothing.
+
+### 8. Re-derived figures — every number in this receipt has its command
+
+Nothing below is transcribed from a lane receipt or from the dispatch brief.
+
+| lane | raw remainder | REAL ceiling / honest remainder | command |
+|---|---|---|---|
+| `companion` | 826 `not-ingested` of 1,696 | **52** | `python3 scripts/classify_companion_rows.py ultimate_magic advanced_race_guide advanced_players_guide book_of_the_damned_volume_1` -> `445 units / 393 excluded / 52 reachable` |
+| `monster` + `monster_ability` | **1,515** | **10** registration-only **+ 229** mechanism-blocked = **239** | `python3 scripts/classify_monster_ability_rows.py` -> `1515 / orphans 1406 / PI 32 / COPY 2 / reachable 75`; `python3 scripts/scan_monster_ability_bundle_rows.py` -> `229` |
+| `race_trait` | 2,743 `not-ingested` of 3,447 | **9** not-ingested inside the 571 ceiling, of which **3** workable (Drow Noble, needs a race chassis) and 6 not-gap; **2,876** chassis-blocked | `python3 scripts/race_trait_ceiling.py` -> `ceiling 571`, `{'not-ingested': 58, 'grounded': 513}`, `3447 - 571 = 2876` |
+
+**One correction to `§49.8`, and it is the lane's own instrument agreeing with itself.** `§49.8`
+published `{'grounded': 514, 'not-ingested': 57}`; re-derived at this tip it is
+**`{'grounded': 513, 'not-ingested': 58}`**. The difference is exactly the one row `§53.3` records
+dropping for a declared-PI name (`Elf ~ Sovyrian-Born`) — the ninth of the nine pins that section
+moved. The **DRY** claim survives: 49 of the 58 are ARG republications (proven in §7 above), 6 are
+recorded not-gap, and the 3 workable rows are race-chassis work, not race-trait work.
+
+**Corpus-side denominators, re-derived from `docs/work-inventory.json` at this tip:**
+
+```bash
+python3 -c "import json,collections;d=json.load(open('docs/work-inventory.json'));
+ [print(k, collections.Counter(u['status'] for u in d['units'] if u['kind']==k)) for k in ('companion','monster','monster_ability','race_trait')]"
+#  companion        Counter({'grounded': 870, 'not-ingested': 826})
+#  monster          Counter({'grounded': 1239, 'not-ingested': 30, 'not-started': 1})
+#  monster_ability  Counter({'grounded': 1623, 'not-ingested': 1460, 'not-started': 24})
+#  race_trait       Counter({'not-ingested': 2743, 'grounded': 513, 'not-started': 191})
+```
+
+### 9. Unattended-mode defaults taken this cycle (recorded, not raised)
+
+1. **Reviewed in a dedicated worktree pinned to `origin/tranche/9`** rather than in the shared
+   checkout, which was 141 commits stale. The safer default: reviewing the stale tree would have
+   silently excluded three lanes' work.
+2. **Did not rewrite `wired-integration-audit.sh`'s `placeholder` semantics** to make Check 1 green.
+   Narrowing a stub gate inside a review cycle is the shape of a weakened gate; F5 names the correct
+   parity fix instead.
+3. **Did not hand-transcribe the missing Clockwork Spy values** (F3). It would have moved the drift
+   rather than removed it, and it would have required a second full gate run to land safely.
+4. **Did not rename the SD-tagged test file** (F4). The durable fix is a gate-scope ruling, not a
+   rename.
+5. **One self-inflicted incident, recorded rather than hidden.** A mutation test proving F1's fix was
+   run with `git reset --hard` while the FIRST gate run was in flight; the reset discarded the
+   uncommitted fix and perturbed the in-flight build. That run was **terminated** (`VERIFY_EXIT=143`,
+   SIGTERM — not a gate result), the fixes were committed, and the gate in §1 is a clean run on the
+   committed tree from stage 1. Emitted to the retrospective log.
+
+### 10. Disposition summary (Decision 27's triage)
+
+| # | severity | disposition | owner |
+|---|---|---|---|
+| F1 the wired audit flagged REMOVED tokens as violations | medium | **fixed-in-bundle** (`4d22ecbb`) | — |
+| F2 `verify-baselines.env`: 34 assignments for 8 keys | medium | **fixed-in-bundle** (`4d22ecbb`) | — |
+| F3 preview-fixture fidelity — 4th instance of the §54.5 root cause, 1st with a rules-content consequence | medium | **deferred / `decision-blocked`** | **SD-31**, register **C1.4a** |
+| F5 shell audit vs its Rust twin disagree on `placeholder` | medium | **deferred**, remedy named (parity, not leniency) | **SD-31**, register **C1.4b** |
+| F4 `§41` vs the gate on NEW `tests/` files carrying a bundle tag | low | **deferred** — a ruling, not an edit | **SD-31**, register **C1.4c** |
+| D1 `equipment`/`spell` `SEARCH_Y` never calibrated (debt, not a defect) | low | **deferred** | **SD-31**, register **C1.4d** |
+
+**The Closure Epilogue card (`epic-11-closure`) is not blocked by any of these** — every one is
+deferred with a named owner, which is a valid disposition under Decision 27, and none is a
+shipped-path defect. It **is** conditioned on one sentence this review will not soften:
+
+> Decision 27's bundle-scope `scripts/wired-integration-audit.sh` run is **NOT clean** (exit 1, 13
+> `placeholder` hits, every one hand-classified here as a non-stub, remedy named in C1.4b).
+
+Any closure statement that reports it clean repeats exactly the error run 1 made.

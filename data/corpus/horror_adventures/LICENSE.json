@@ -1,0 +1,26 @@
+{
+  "book": "horror_adventures",
+  "classified_at": "2026-08-12T18:45:16Z",
+  "classified_by_cycle": "SD29-E7-F1-002",
+  "license_declaration": {
+    "open_game_content": "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _horror_adventures.pcc declares ISOGL:YES (line 26) and carries a live COPYRIGHT block (lines 38-56, ending in 'Pathfnder Roleplaying Game Horror Adventures Copyright 2016, Paizo Inc.' — the misspelling is upstream's, reproduced verbatim) plus a real OGL.txt",
+    "product_identity_note": "Horror Adventures is a rules supplement (BOOKTYPE:Supplement), not a campaign-setting book: its alternate-racial-trait prose is mechanical rules text with no Golarion nation, deity or ethnicity names in it. 0 of this run's 43 records hit a blacklist term, against 12 of 72 for the campaign-setting book the prior round ingested (inner_sea_races) — the difference is the book class, not a weaker screen; the identical screen ran over every field of every record.",
+    "product_identity_source": "Paizo Pathfinder Roleplaying Game: Horror Adventures, OGL §15 Product Identity section"
+  },
+  "operator_sign_off": {
+    "note": "Set true only after an operator has reviewed this book's classification pass, per docs/governance/ogl-pi-blacklist.md's DRAFT header.",
+    "signed_off": false,
+    "signed_off_at": null
+  },
+  "records_processed": 45,
+  "records_redacted": 0,
+  "redaction_policy": {
+    "blacklist_source": "docs/governance/ogl-pi-blacklist.md",
+    "blacklist_version_reviewed": "2026-07-27",
+    "marker": "[redacted PI]",
+    "pi_field_recorded": true,
+    "schema_preserving": true
+  },
+  "redistribution_posture": "ogl-notice-attached",
+  "screening_method_note": "Every field of the 43 alternate-racial-trait records this run wrote was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md by src/rules_core/pi_screening.rs, which the ingest binary calls per record. 0 descriptions hit a term, verified on the written tree rather than assumed: `grep -rl 'redacted PI' data/corpus/horror_adventures/race_trait/ | wc -l` -> 0, and the same grep for a non-null pi_field -> 0. records_processed is 43, the real on-disk count for this book's only ingested kind (`find data/corpus/horror_adventures/race_trait -name '*.json' | wc -l` -> 43). SCOPE NOTE: this book's second racial-ability file, support/ha_abilities_race_oa.lst, is deliberately not ingested — the pcc loads it only under PRECAMPAIGN:1,INCLUDES=Occult Adventures — so this declaration covers ha_abilities_race.lst alone. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see. PASS -- SD29-E7-F1-002 (companion lane), 2026-08-12T18:45:16Z: every field of the 2 records this run wrote (1 companion creatures + 1 companion abilities) was screened against the bounded, documented term list in docs/governance/ogl-pi-blacklist.md, zero hits. A hit is a hard stop in this generator, not a warning. records_processed is 45: the real on-disk count for this book across every kind any lane has ingested, which for a book ingested by more than one lane is larger than this run's own output. This is NOT an exhaustive human legal review; it is a bounded substring scan and does not prove the absence of PI beyond what that scan can see."
+}

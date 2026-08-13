@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T11:18:46Z",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_2:monster_ability:seraptis_bloodless",
+      "book_of_the_damned_volume_2:monster_ability:seraptis_compelling_domination",
+      "book_of_the_damned_volume_2:monster_ability:seraptis_gaze_of_despair",
+      "book_of_the_damned_volume_2:monster_ability:seraptis_grab",
+      "book_of_the_damned_volume_2:monster_ability:seraptis_ravenous_embrace"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Demon (Seraptis)",
+    "external_ability_refs": [
+      "Deathwatch ~ Constant",
+      "True Seeing ~ Constant",
+      "Unholy Aura ~ Constant"
+    ],
+    "key": "book_of_the_damned_volume_2:monster:demon_seraptis",
+    "monster_class": "Outsider (Fort/Will):15",
+    "name": "Demon (Seraptis)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw (Primary)"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw (with weapon attack)"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Gore (primary)"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Gore (with weapon attack)"
+      }
+    ],
+    "race_subtype": "Chaotic|Demon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.58",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2/botd2_races.lst",
+    "sha256": "837eb03a72aedd5790bab3fc53ffd3a19f7e66f3d75e32fdad653697abef6dd7",
+    "line": 9,
+    "record_key": "Demon (Seraptis)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

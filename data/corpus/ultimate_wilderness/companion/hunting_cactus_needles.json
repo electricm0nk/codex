@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Hunting Cactus ~ Needles",
+    "delivery": "Extraordinary",
+    "description": "A creature grappling a hunting cactus or attacking it with a natural attack or unarmed strike takes 1d4 points of piercing damage",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:hunting_cactus_needles",
+    "name": "Needles",
+    "owners": [
+      "ultimate_wilderness:companion:companion_hunting_cactus"
+    ],
+    "record_type": "ability",
+    "source_page": "p.183",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "HuntingCactusRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 246,
+    "record_key": "Hunting Cactus ~ Needles"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

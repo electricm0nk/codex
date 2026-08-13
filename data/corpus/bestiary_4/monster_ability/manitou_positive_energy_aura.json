@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Manitou ~ Positive Energy Aura",
+    "delivery": "Supernatural",
+    "description": "Living creatures within the manitou's aura heal 5 hit points on its turn each round. A manitou can exclude %1 creatures from the aura's effect, and can cease or resume the aura as a free action.",
+    "description_variables": [
+      "CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:manitou_positive_energy_aura",
+    "name": "Positive Energy Aura",
+    "owners": [
+      "bestiary_4:monster:manitou"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1072,
+    "record_key": "Manitou ~ Positive Energy Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:golem_blood_blood_drain",
+      "bestiary_4:monster_ability:golem_blood_clotted_skin",
+      "bestiary_4:monster_ability:golem_blood_immunity_to_magic",
+      "bestiary_4:monster_ability:golem_blood_vulnerable_to_bleed"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Golem (Blood)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:golem_blood",
+    "monster_class": "Construct:8",
+    "name": "Blood Golem",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "M",
+    "source_page": "p.130",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 105,
+    "record_key": "Golem (Blood)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

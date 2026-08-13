@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Giant Gecko",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "facet": "CompanionAdvancement",
+    "key": "bestiary_3:companion:companion_advancement_giant_gecko",
+    "name": "4th-Level Advancement ~ Companion (Giant Gecko)",
+    "owners": [
+      "bestiary_3:companion:companion_giant_gecko"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_companion.lst",
+    "sha256": "127e931f9e9ccc8d0d0acf688627f76fb4145f18c94255db994a5c902456dc15",
+    "line": 16,
+    "record_key": "Companion Advancement ~ Giant Gecko"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

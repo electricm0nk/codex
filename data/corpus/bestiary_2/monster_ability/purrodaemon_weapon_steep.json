@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Purrodaemon ~ Weapon Steep",
+    "delivery": "Supernatural",
+    "description": "A purrodaemon can sheathe a weapon in its flesh as a swift action.  This does no damage to the daemon.  If a weapon remains sheathed in its body for at least 24 hours, the weapon absorbs some of its essence and gains magical enhancements.  A purrodaemon can have up to a dozen weapons lodged in its body at a time, but only one can possess magical enhancements at a time.  The total enhancements cannot exceed a +4 effective enhancement - most purrodaemons opt to create +2 wounding weapons in this manner.  A weapon's enhancements vanish as soon as the purrodaemon dies or releases the weapon.  A purrodaemon gains Weapon Focus and Improved Critical as bonus feats as long as it wields a weapon benefiting from its weapon steep ability.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:purrodaemon_weapon_steep",
+    "name": "Weapon Steep",
+    "owners": [
+      "bestiary_2:monster:daemon_purrodaemon"
+    ],
+    "source_page": "p.73",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 323,
+    "record_key": "Purrodaemon ~ Weapon Steep"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

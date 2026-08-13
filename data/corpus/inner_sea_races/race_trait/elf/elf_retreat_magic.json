@@ -1,7 +1,7 @@
 {
   "population": "in_scope",
   "completeness": "full",
-  "ingested_at": "2026-08-11T22:08:40Z",
+  "ingested_at": "2026-08-12T16:47:16Z",
   "data": {
     "key": "Elf ~ Retreat Magic",
     "name": "Retreat Magic",
@@ -19,7 +19,7 @@
     "sets_replace_flags": [
       "Elf_ReplaceElvenMagic"
     ],
-    "description": "Elves raised in the traditions of those who protected elven holdings before, during, and shortly after Earthfall specialize in magic that fools foes into misjudging elven numbers and locations. These elves gain a +1 racial bonus to their caster levels for the purpose of determining the range and duration of all conjuration and illusion spells that they cast. This racial trait replaces elven magic.",
+    "description": "[redacted PI]",
     "source_page": "p.211",
     "raw_tokens": [
       {
@@ -76,9 +76,9 @@
     "line": 66,
     "record_key": "Elf ~ Retreat Magic"
   },
-  "license": "OGL",
-  "pi_field": null,
-  "pi_marker": null,
+  "license": "PI-REDACTED",
+  "pi_field": "description",
+  "pi_marker": "redacted",
   "wiring_class": "computed",
   "wiring_class_signals": [
     "computed:pre_guard"

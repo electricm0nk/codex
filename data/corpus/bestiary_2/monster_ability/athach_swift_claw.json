@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Athach ~ Swift Claw",
+    "delivery": "Supernatural",
+    "description": "An athach can attack with its claw as a swift action, even when the creature's movement would normally restrict it to one attack.  This attack is made at a +%1 bonus and deals 1d10+%2 points of damage, regardless of what other attacks are made on the athach's turn.",
+    "description_variables": [
+      "BAB+STR-2",
+      "STR"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:athach_swift_claw",
+    "name": "Swift Claw",
+    "owners": [
+      "bestiary_2:monster:athach"
+    ],
+    "source_page": "p.33",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 128,
+    "record_key": "Athach ~ Swift Claw"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

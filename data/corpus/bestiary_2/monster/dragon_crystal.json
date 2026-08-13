@@ -1,0 +1,47 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Dragon (Crystal)",
+    "external_ability_refs": [],
+    "key": "bestiary_2:monster:dragon_crystal",
+    "monster_class": "Dragon:3",
+    "name": "Dragon (Crystal)",
+    "natural_attacks": [],
+    "race_subtype": "Extraplanar|Earth",
+    "race_type": "Dragon",
+    "size": "T",
+    "source_page": "p.98",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Burrow"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 310,
+    "record_key": "Dragon (Crystal)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

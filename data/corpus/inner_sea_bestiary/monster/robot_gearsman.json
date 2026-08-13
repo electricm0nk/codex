@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:gearsman_adaptive_learning",
+      "inner_sea_bestiary:monster_ability:gearsman_charge_weapon",
+      "inner_sea_bestiary:monster_ability:gearsman_self_repair",
+      "inner_sea_bestiary:monster_ability:robot_critical_hit_vulnerability",
+      "inner_sea_bestiary:monster_ability:robot_electricity_vulnerability",
+      "inner_sea_bestiary:monster_ability:robot_intelligent"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Robot (Gearsman)",
+    "external_ability_refs": [],
+    "key": "inner_sea_bestiary:monster:robot_gearsman",
+    "monster_class": "Construct:4",
+    "name": "Robot (Gearsman)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Robot",
+    "race_type": "Construct",
+    "size": "M",
+    "source_page": "p.44",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 72,
+    "record_key": "Robot (Gearsman)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

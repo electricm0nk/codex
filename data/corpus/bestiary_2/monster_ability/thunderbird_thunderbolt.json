@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Thunderbird ~ Thunderbolt",
+    "delivery": "Supernatural",
+    "description": "A thunderbird can fire a ray of thunder and lightning from its outspread wings as a standard action, dealing 6d6 electricity damage and 6d6 sonic damage.  This attack has a range of 200 feet with no range increment, and requires a ranged touch attack to hit.  A creature critically hit by a thunderbolt is stunned and deafened for 1 round if it fails a DC %1 Fortitude save.",
+    "description_variables": [
+      "ThunderbirdThunderboltDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:thunderbird_thunderbolt",
+    "name": "Thunderbolt",
+    "owners": [
+      "bestiary_2:monster:thunderbird"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1248,
+    "record_key": "Thunderbird ~ Thunderbolt"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

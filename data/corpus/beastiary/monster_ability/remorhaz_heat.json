@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Remorhaz ~ Heat",
+    "delivery": "Supernatural",
+    "description": "An enraged remorhaz generates heat so intense that anything touching its body takes 8d6 points of fire damage. Creatures striking a remorhaz with natural attacks or unarmed strikes are subject to this damage, but creatures striking with melee weapons are not. The heat can melt or burn weapons; any weapon that strikes a remorhaz is allowed a DC %1 Fortitude save to avoid taking damage.",
+    "description_variables": [
+      "HeatDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:remorhaz_heat",
+    "name": "Heat",
+    "owners": [
+      "beastiary:monster:remorhaz"
+    ],
+    "source_page": "p.233",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1057,
+    "record_key": "Remorhaz ~ Heat"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

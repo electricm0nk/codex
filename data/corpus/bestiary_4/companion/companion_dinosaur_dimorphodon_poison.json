@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Companion (Dinosaur (Dimorphodon)) ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite-injury; save Fort DC %1; frequency 1/round for 6 rounds; effect 1 Str; cure 1 save.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:companion:companion_dinosaur_dimorphodon_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_4:companion:companion_dinosaur_dimorphodon"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 19,
+    "record_key": "Companion (Dinosaur (Dimorphodon)) ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Axe Beak ~ Sudden Charge",
+    "delivery": "Extraordinary",
+    "description": "When making a charge attack, an axe beak makes a single bite attack. If successful, it may also attempt to trip its opponent as a free action without provoking an attack of opportunity. If the attempt fails, the axe beak cannot be tripped in return.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:companion:axe_beak_sudden_charge",
+    "name": "Sudden Charge",
+    "owners": [
+      "bestiary_3:companion:companion_axe_beak"
+    ],
+    "record_type": "ability",
+    "source_page": "p.29",
+    "stat_adjustments": [],
+    "type_segments": [
+      "AxeBeakRacialAbility",
+      "SpecialQuality",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_companion.lst",
+    "sha256": "127e931f9e9ccc8d0d0acf688627f76fb4145f18c94255db994a5c902456dc15",
+    "line": 29,
+    "record_key": "Axe Beak ~ Sudden Charge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

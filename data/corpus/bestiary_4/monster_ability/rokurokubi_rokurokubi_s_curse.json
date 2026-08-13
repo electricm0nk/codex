@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Rokurokubi ~ Rokurokubi's Curse",
+    "delivery": "Supernatural",
+    "description": "Bite-injury; save Will DC %1; frequency 1 day; effect 1 Cha damage and permanently silenced after 4 Cha damage. Fully healing the Cha damage cures the silence.",
+    "description_variables": [
+      "CHA+18"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:rokurokubi_rokurokubi_s_curse",
+    "name": "Rokurokubi's Curse",
+    "owners": [
+      "bestiary_4:monster:rokurokubi"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1205,
+    "record_key": "Rokurokubi ~ Rokurokubi's Curse"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

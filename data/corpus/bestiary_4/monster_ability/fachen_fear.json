@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Fachen ~ Fear",
+    "delivery": "Supernatural",
+    "description": "Each creature within a 30-foot radius that sees a fachen must succeed at a DC 15 Will save or be paralyzed by fear for 1d4 rounds. A creature that successfully saves is not subject to the same fachen's fear aura for 24 hours. This is a paralysis effect and a mind-affecting fear effect.",
+    "description_variables": [
+      "13+CHA"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:fachen_fear",
+    "name": "Fear",
+    "owners": [
+      "bestiary_4:monster:fachen"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 641,
+    "record_key": "Fachen ~ Fear"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

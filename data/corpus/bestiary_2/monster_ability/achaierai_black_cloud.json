@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Achaierai ~ Black Cloud",
+    "delivery": "Supernatural",
+    "description": "An achaierai can exhale a cloud of choking, toxic smoke three times per day. All creatures within 10 feet of the achaierai immediately take 2d6 points of damage as their flesh melts and rots away. The cloud erodes sanity as well as flesh, and anyone who takes damage from the black cloud must also make a DC %1 Fortitude save or become confused. Every round, the victim may attempt another DC %2 Fortitude save to recover from the confusion; otherwise it persists, lasting indefinitely until the condition is removed or the victim eventually makes her saving throw. The confusion element of a black cloud is a mind-affecting effect. This is a poison effect. Achaierais are immune to this ability",
+    "description_variables": [
+      "BlackCloudDC",
+      "BlackCloudDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:achaierai_black_cloud",
+    "name": "Black Cloud",
+    "owners": [
+      "bestiary_2:monster:achaierai"
+    ],
+    "source_page": "p.7",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 6,
+    "record_key": "Achaierai ~ Black Cloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

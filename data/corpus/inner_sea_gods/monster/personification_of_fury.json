@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_gods:monster_ability:personification_of_fury_water_mastery",
+      "inner_sea_gods:monster_ability:personification_of_fury_change_shape",
+      "inner_sea_gods:monster_ability:personification_of_fury_energy_ray"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Personification of Fury",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:personification_of_fury",
+    "monster_class": "Outsider (Fort/Ref):17",
+    "name": "Personification of Fury",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Ray"
+      },
+      {
+        "damage_dice": "2d10",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Air|Elemental|Extraplanar|Herald|Water",
+    "race_type": "Outsider",
+    "size": "H",
+    "source_page": "p.290",
+    "speeds": [
+      {
+        "feet": 100,
+        "mode": "Fly"
+      },
+      {
+        "feet": 90,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
+    "line": 35,
+    "record_key": "Personification of Fury"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

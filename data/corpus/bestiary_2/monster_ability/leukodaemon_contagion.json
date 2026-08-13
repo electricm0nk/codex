@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Leukodaemon ~ Contagion",
+    "delivery": "Supernatural",
+    "description": "Any arrow a leukodaemon fires from a bow is tainted with disease.  If a creature is damaged by a leukodaemon's arrow, it must make a DC %1 Fortitude save or be affected as if by the spell contagion.  A leukodaemon can manifest arrows at will and never runs out of ammunition.",
+    "description_variables": [
+      "LeukodaemonContagionDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:leukodaemon_contagion",
+    "name": "Contagion",
+    "owners": [
+      "bestiary_2:monster:daemon_leukodaemon"
+    ],
+    "source_page": "p.68",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 301,
+    "record_key": "Leukodaemon ~ Contagion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

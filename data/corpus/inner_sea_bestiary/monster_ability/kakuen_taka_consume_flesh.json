@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Kakuen-Taka ~ Consume Flesh",
+    "delivery": "Supernatural",
+    "description": "Once per round, when a kakuen-taka kills or reduces a creature to negative hit points with its swarm attack, it automatically attempts to consume the target's flesh as a free action (Fortitude DC 24 negates). If the target fails its save, its body is destroyed and the kakuen-taka gains the benefits of a death knell spell. This is a death attack.[DC %1]",
+    "description_variables": [
+      "ConsumeFleshDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:kakuen_taka_consume_flesh",
+    "name": "Consume Flesh",
+    "owners": [
+      "inner_sea_bestiary:monster:kakuen_taka"
+    ],
+    "source_page": "p.20",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 148,
+    "record_key": "Kakuen-Taka ~ Consume Flesh"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

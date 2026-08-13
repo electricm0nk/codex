@@ -1,0 +1,34 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Jabberwock ~ Whiffling",
+    "delivery": "Extraordinary",
+    "description": "A jabberwock's wings and violent motions create a significant amount of wind whenever it makes a full attack action.  These winds surround the monster to a radius of 30 feet, and are treated as severe winds - ranged attacks take a -4 penalty when targeting a jabberwock while it is whiffling, and Medium creatures must make a DC 10 Strength check to approach the creature.  Small or smaller creatures in this area that fail a DC 15 Strength check are blown away.  See page 439 of the Pathfinder RPG Core Rulebook for further details on the effects of severe winds.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:jabberwock_whiffling",
+    "name": "Whiffling",
+    "owners": [
+      "bestiary_2:monster:jabberwock",
+      "bestiary_2:monster:jabberwock_lesser"
+    ],
+    "source_page": "p.168",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 727,
+    "record_key": "Jabberwock ~ Whiffling"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

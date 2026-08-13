@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Leanan Sidhe ~ Spell Blessing",
+    "delivery": "Supernatural",
+    "description": "A leanan sidhe may enhance the magic of a willing humanoid spellcaster by touching him for 1 full round. The blessing allows the target to recall a number of spell levels each day equal to twice the leanan sidhe's mythic rank. This recalling works like a pearl of power, except it works for spellcasters of any class (spontaneous casters recover spent spell slots). The leanan sidhe can end this blessing as a standard action at any range. The number of blessed creatures she can have at the same time is %1.",
+    "description_variables": [
+      "Mythic_Rank"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:leanan_sidhe_spell_blessing",
+    "name": "Spell Blessing",
+    "owners": [
+      "bestiary_4:monster:leanan_sidhe"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1015,
+    "record_key": "Leanan Sidhe ~ Spell Blessing"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

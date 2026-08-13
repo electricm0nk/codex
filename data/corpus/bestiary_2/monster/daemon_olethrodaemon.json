@@ -1,0 +1,67 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:olethrodaemon_adamantine_claws",
+      "bestiary_2:monster_ability:olethrodaemon_drain_soul",
+      "bestiary_2:monster_ability:olethrodaemon_soul_drained_breath"
+    ],
+    "challenge_rating": "20",
+    "corpus_key": "Daemon (Olethrodaemon)",
+    "external_ability_refs": [
+      "Air Walk ~ Constant",
+      "Grab ~ Bite/Claw",
+      "Trample",
+      "True Seeing ~ Constant",
+      "Unholy Aura ~ Constant"
+    ],
+    "key": "bestiary_2:monster:daemon_olethrodaemon",
+    "monster_class": "Outsider (Fort/Will):20",
+    "name": "Daemon (Olethrodaemon)",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "2d8",
+        "name": "Gore"
+      }
+    ],
+    "race_subtype": "Daemon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "G",
+    "source_page": "p.70",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Burrow"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 242,
+    "record_key": "Daemon (Olethrodaemon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

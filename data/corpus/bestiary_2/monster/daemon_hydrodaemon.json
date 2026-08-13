@@ -1,0 +1,68 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:hydrodaemon_glide"
+    ],
+    "challenge_rating": "8",
+    "corpus_key": "Daemon (Hydrodaemon)",
+    "external_ability_refs": [
+      "Amphibious",
+      "Detect Magic ~ Constant",
+      "Flight Maneuverability",
+      "Grab ~ Bite",
+      "Hydrodaemon ~ Rake",
+      "Hydrodaemon ~ Sleep Spittle",
+      "Immunity to Waters of the River Styx",
+      "Water Walk ~ Constant"
+    ],
+    "key": "bestiary_2:monster:daemon_hydrodaemon",
+    "monster_class": "Outsider (Fort/Ref):10",
+    "name": "Daemon (Hydrodaemon)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Aquatic|Daemon|Evil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.67",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      },
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 221,
+    "record_key": "Daemon (Hydrodaemon)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

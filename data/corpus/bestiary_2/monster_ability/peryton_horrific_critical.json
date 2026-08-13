@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Peryton ~ Horrific Critical",
+    "delivery": "Extraordinary",
+    "description": "A peryton's gore attack threatens a critical hit on an 18-20.  If a peryton kills a humanoid foe with a critical hit, it can tear out the victim's heart with its wolf-like teeth as a free action.  Any creature that witnesses this savage event must make a DC %1 Fortitude save or be shaken for 1 round.  This is a mind-affecting fear effect.",
+    "description_variables": [
+      "PerytonHorrificCriticalDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:peryton_horrific_critical",
+    "name": "Horrific Critical",
+    "owners": [
+      "bestiary_2:monster:peryton"
+    ],
+    "source_page": "p.207",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 935,
+    "record_key": "Peryton ~ Horrific Critical"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

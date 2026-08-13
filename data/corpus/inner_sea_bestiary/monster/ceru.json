@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:ceru_luckbringer",
+      "inner_sea_bestiary:monster_ability:ceru_poison"
+    ],
+    "challenge_rating": "2",
+    "corpus_key": "Ceru",
+    "external_ability_refs": [
+      "Fast Healing",
+      "Immunity to Poison",
+      "Resistance to Acid",
+      "Resistance to Electricity"
+    ],
+    "key": "inner_sea_bestiary:monster:ceru",
+    "monster_class": "Magical Beast:3",
+    "name": "Ceru",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Gore"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Magical Beast",
+    "size": "T",
+    "source_page": "p.9",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 19,
+    "record_key": "Ceru"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

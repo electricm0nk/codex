@@ -1,0 +1,132 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:47:21Z",
+  "data": {
+    "key": "Aasimar ~ Garuda-Blooded",
+    "name": "Garuda-Blooded (Plumekith)",
+    "race_key": "Aasimar",
+    "category": "Special Ability",
+    "type_tokens": [
+      "Aasimar Subrace"
+    ],
+    "is_racial_default": false,
+    "suppressed_by_flag": null,
+    "sets_replace_flags": [
+      "Aasimar_ReplaceAbilityScores",
+      "Aasimar_ReplaceSkilled",
+      "Aasimar_ReplaceSpellLikeAbility"
+    ],
+    "description": "Their shimmering avian features make plumekith instantly recognizable. Though they can act rashly, plumekith never shirk their duty after making a commitment.",
+    "source_page": null,
+    "raw_tokens": [
+      {
+        "key": "KEY",
+        "value": "Aasimar ~ Garuda-Blooded"
+      },
+      {
+        "key": "SORTKEY",
+        "value": "1e"
+      },
+      {
+        "key": "CATEGORY",
+        "value": "Special Ability"
+      },
+      {
+        "key": "TYPE",
+        "value": "Aasimar Subrace"
+      },
+      {
+        "key": "DESC",
+        "value": "Their shimmering avian features make plumekith instantly recognizable. Though they can act rashly, plumekith never shirk their duty after making a commitment."
+      },
+      {
+        "key": "TEMPLATE",
+        "value": "Aasimar ~ Garuda-Blooded"
+      },
+      {
+        "key": "SOURCEPAGE",
+        "value": "xx"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Ancestry|Garuda"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Typical Alignment|CG"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Wis"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Skill Modifiers|Acrobatics, Fly"
+      },
+      {
+        "key": "ASPECT",
+        "value": "Alternate Spell-Like Ability|Plumekith gain see invisibility as a spell-like ability."
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceAbilityScores|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceSkilled|True"
+      },
+      {
+        "key": "FACT",
+        "value": "Aasimar_ReplaceSpellLikeAbility|True"
+      },
+      {
+        "key": "INFO",
+        "value": "Ancestry|Garuda"
+      },
+      {
+        "key": "INFO",
+        "value": "Typical Alignment|CG"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Ability Modifiers|+2 Dex, +2 Wis"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Skill Modifiers|Acrobatics, Fly"
+      },
+      {
+        "key": "INFO",
+        "value": "Alternate Spell-Like Ability|Plumekith gain see invisibility as a spell-like ability."
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Garuda-Blooded ~ Ability Scores|PREVAREQ:Aasimar_ReplaceAbilityScores,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Garuda-Blooded ~ Skilled|PREVAREQ:Aasimar_ReplaceSkilled,0"
+      },
+      {
+        "key": "ABILITY",
+        "value": "Aasimar Racial Trait|AUTOMATIC|Garuda-Blooded ~ Spell-Like Ability|PREVAREQ:Aasimar_ReplaceSpellLikeAbility,0"
+      }
+    ],
+    "raw_bonus_chains": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_essentials/races/aasimar/aasimar_abilities_race_subrace.lst",
+    "sha256": "b0df1e60ce6ee7ac82342e430304020abd174aaa065cca5b608a0a2f4ab0ea9e",
+    "line": 14,
+    "record_key": "Aasimar ~ Garuda-Blooded"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

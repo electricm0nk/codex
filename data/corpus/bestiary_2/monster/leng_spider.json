@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:leng_spider_poison",
+      "bestiary_2:monster_ability:leng_spider_web_weaponry"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Leng Spider",
+    "external_ability_refs": [
+      "Arcane Sight ~ Constant",
+      "Fast Healing",
+      "Freedom of Movement ~ Constant",
+      "Immunity to Cold",
+      "Immunity to Confusion and Insanity Effects",
+      "Immunity to Poison",
+      "Immunity to Sonic",
+      "Tongues ~ Constant",
+      "Web"
+    ],
+    "key": "bestiary_2:monster:leng_spider",
+    "monster_class": "Magical Beast:15",
+    "name": "Leng Spider",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Magical Beast",
+    "size": "H",
+    "source_page": "p.176",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 576,
+    "record_key": "Leng Spider"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

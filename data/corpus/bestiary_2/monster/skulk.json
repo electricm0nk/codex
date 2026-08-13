@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:skulk_camouflaged_step",
+      "bestiary_2:monster_ability:skulk_chameleon_skin"
+    ],
+    "challenge_rating": "1",
+    "corpus_key": "Skulk",
+    "external_ability_refs": [
+      "Sneak Attack"
+    ],
+    "key": "bestiary_2:monster:skulk",
+    "monster_class": "Humanoid (Reflex):3",
+    "name": "Skulk",
+    "natural_attacks": [],
+    "race_subtype": "Skulk",
+    "race_type": "Humanoid",
+    "size": "M",
+    "source_page": "p.248",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 803,
+    "record_key": "Skulk"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

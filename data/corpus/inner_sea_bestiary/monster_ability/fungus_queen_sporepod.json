@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Fungus Queen ~ Sporepod",
+    "delivery": "Supernatural",
+    "description": "The Fungus Queen can instantly travel to one of her spore pods or use them to make tentacle attacks. The Fungus Queen can maintain %1 spore pods.",
+    "description_variables": [
+      "CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:fungus_queen_sporepod",
+    "name": "Sporepod",
+    "owners": [
+      "inner_sea_bestiary:monster:fungus_queen"
+    ],
+    "source_page": "p.12",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 78,
+    "record_key": "Fungus Queen ~ Sporepod"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Shoggti ~ Braincloud",
+    "delivery": "Supernatural",
+    "description": "Once per round, in place of a melee attack with a tentacle, a shoggti can make a melee touch attack with the pincer on the end of the tentacle.  If it hits, the target takes 1d4 points of Wisdom damage.  Shoggti use this ability to mentally debilitate their victims so they can more easily use their charm spell-like abilities against them.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:shoggti_braincloud",
+    "name": "Braincloud",
+    "owners": [
+      "bestiary_2:monster:qlippoth_shoggti"
+    ],
+    "source_page": "p.225",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1023,
+    "record_key": "Shoggti ~ Braincloud"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

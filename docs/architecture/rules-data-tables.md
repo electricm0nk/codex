@@ -159,10 +159,38 @@ pub enum RuleSetId {
 }
 ```
 
-`BonusBestiary` is the newest arm and the only one that carries the merged
-`monster` + `monster_ability` chassis (`corpus-work-channels.md §9.2`); it is
-SD-29's Epic 5 pilot book, and every remaining monster-bearing book inherits
-that chassis rather than rebuilding it.
+`BonusBestiary` was the first arm to carry the merged `monster` +
+`monster_ability` chassis (`corpus-work-channels.md §9.2`); it is SD-29's Epic 5
+pilot book, and every monster-bearing book since has inherited that chassis
+rather than rebuilding it. The registry is
+`rules_tables::monster_chassis::MONSTER_BOOKS`, and it is iterated by every
+consumer — the work inventory, the corpus cache generator, the monster catalog,
+the reach gate — so registering a book there is the whole of the wiring cost.
+
+**One book is served by two tables, deliberately.** Bestiary 1's records live in
+`rules_tables::beastiary1` (SD-22: 46 hand-modelled stat blocks with
+natural-attack provenance, keyed `beastiary1:monster:<slug>`) *and* in
+`rules_tables::bestiary` (SD-29 Epic 5 round 8: the book's other 280 rows in the
+ordinary chassis shape, keyed `beastiary:monster:<slug>`). The two are disjoint
+and both reach the player under one wire code, `B1`. `decisions.md §58.3` records
+why the chassis sits alongside rather than absorbing: absorbing means retiring a
+shipped, grounded, player-visible key space across bundles. Three consequences
+are load-bearing for anyone touching this area:
+
+* `data/corpus/beastiary/monster/` holds **both** tables' records. They are told
+  apart by field — SD-22's carry `data.id`, chassis records carry `data.key` —
+  and `gen_book_cache` sweeps only the records whose key is in its own namespace
+  rather than clearing the directory.
+* `v06_work_inventory::EngineFacts::holds_key` grounds `bestiary_1` monsters from
+  the **union** of the two tables. Either half alone silently reports the other
+  half's records as `not-ingested`.
+* Assertions written about "Bestiary 1" before round 8 mean "the SD-22 table";
+  the wire code no longer separates them, so those tests filter on the key
+  namespace.
+
+The counts in this section's Bestiary 1 paragraphs below (41 monsters, subsets
+01-08) predate SD28-E16 subset 09 and this round; they are flagged rather than
+edited here, and `beastiary1::mod.rs`'s own roster doc comments are current.
 
 Each book's resolver function takes a book-scoped ID enum plus a
 `RuleSetId` and returns `None` immediately if the `RuleSetId` does not

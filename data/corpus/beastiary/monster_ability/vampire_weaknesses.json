@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Vampire Weaknesses",
+    "delivery": null,
+    "description": "Vampires cannot tolerate the strong odor of garlic and will not enter an area laced with it. Similarly, they recoil from mirrors or strongly presented holy symbols. These things don't harm the vampire--they merely keep it at bay. A recoiling vampire must stay at least 5 feet away from the mirror or holy symbol and cannot touch or make melee attacks against that creature. Holding a vampire at bay takes a standard action. After 1 round, a vampire can overcome its revulsion of the object and function normally each round it makes a DC 25 Will save. Vampires cannot enter a private home or dwelling unless invited in by someone with the authority to do so. Reducing a vampire's hit points to 0 or lower incapacitates it but doesn't always destroy it (see fast healing). However, certain attacks can slay vampires. Exposing any vampire to direct sunlight staggers it on the first round of exposure and destroys it utterly on the second consecutive round of exposure if it does not escape. Each round of immersion in running water inflicts damage on a vampire equal to onethird of its maximum hit points--a vampire reduced to 0 hit points in this manner is destroyed. Driving a wooden stake through a helpless vampire's heart instantly slays it (this is a full-round action). However, it returns to life if the stake is removed, unless the head is also severed and anointed with holy water.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:vampire_weaknesses",
+    "name": "Vampire Weaknesses",
+    "owners": [
+      "beastiary:monster:vampire_spawn"
+    ],
+    "source_page": "p.270",
+    "traits": [
+      "Weakness"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1220,
+    "record_key": "Vampire Weaknesses"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

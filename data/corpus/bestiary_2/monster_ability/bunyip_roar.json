@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Bunyip ~ Roar",
+    "delivery": "Supernatural",
+    "description": "A bunyip's roar is supernaturally loud and horrifying.  When a bunyip roars (a standard action the creature can perform at will), all hearing creatures with 4 or fewer HD within a 100-foot spread must succeed on a DC %1 Will save or become panicked for 2d4 rounds.  Whether or not the save is successful, creatures in the area are immune to the roar of that bunyip for 24 hours.  This is a sonic, mind-affecting fear effect.",
+    "description_variables": [
+      "BunyipRoarDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:bunyip_roar",
+    "name": "Roar",
+    "owners": [
+      "bestiary_2:monster:bunyip"
+    ],
+    "source_page": "p.50",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 207,
+    "record_key": "Bunyip ~ Roar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

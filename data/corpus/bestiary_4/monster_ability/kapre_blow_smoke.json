@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Kapre ~ Blow Smoke",
+    "delivery": "Supernatural",
+    "description": "Smoke constantly drifts from a kapre's mouth, and as a standard action it can exhale a 30-foot cone of smoke. Any creature in the area must succeed at a DC %1 Fortitude save or be nauseated for 1 round. This is a poison effect.",
+    "description_variables": [
+      "CON+17"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:kapre_blow_smoke",
+    "name": "Blow Smoke",
+    "owners": [
+      "bestiary_4:monster:kapre"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 982,
+    "record_key": "Kapre ~ Blow Smoke"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

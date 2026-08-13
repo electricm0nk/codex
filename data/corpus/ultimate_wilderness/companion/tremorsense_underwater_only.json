@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Tremorsense (underwater only)",
+    "delivery": "Extraordinary",
+    "description": "Range %1 ft.; A creature with tremorsense automatically senses the location of anything that is in contact with the water and within range.If no straight path exists through the water from the creature to those that it's sensing, then the range defines the maximum distance of the shortest indirect path. It must itself be in contact with the water, and the creatures must be moving. As long as the other creatures are taking physical actions, including casting spells with somatic components, they're considered moving; they don't have to move from place to place for a creature with tremorsense to detect them.",
+    "description_variables": [
+      "UnderwaterTremorsenseRange"
+    ],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:tremorsense_underwater_only",
+    "name": "Tremorsense (underwater only)",
+    "owners": [
+      "ultimate_wilderness:companion:companion_salamander_giant"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "Vision"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 410,
+    "record_key": "Tremorsense (underwater only)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

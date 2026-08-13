@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:dark_slayer_death_throes",
+      "bestiary_2:monster_ability:dark_slayer_magical_knack",
+      "bestiary_2:monster_ability:dark_slayer_soul_harvest"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Dark Slayer",
+    "external_ability_refs": [
+      "Dark Folk ~ Poison Use",
+      "Dark Folk ~ See in Darkness",
+      "Detect Magic ~ Constant",
+      "Light Blindness",
+      "Sneak Attack"
+    ],
+    "key": "bestiary_2:monster:dark_slayer",
+    "monster_class": "Humanoid:4",
+    "name": "Dark Slayer",
+    "natural_attacks": [],
+    "race_subtype": "Dark Folk",
+    "race_type": "Humanoid",
+    "size": "S",
+    "source_page": "p.75",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 256,
+    "record_key": "Dark Slayer"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

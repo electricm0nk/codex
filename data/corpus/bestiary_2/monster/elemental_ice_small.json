@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "1",
+    "corpus_key": "Elemental (Ice/Small)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Ice Elemental ~ Burrow",
+      "Ice Elemental ~ Cold",
+      "Ice Elemental ~ Ice Glide",
+      "Ice Elemental ~ Icewalking",
+      "Ice Elemental ~ Numbing Cold",
+      "Ice Elemental ~ Snow Vision"
+    ],
+    "key": "bestiary_2:monster:elemental_ice_small",
+    "monster_class": "Outsider (Fort/Ref):2",
+    "name": "Elemental (Ice/Small)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Air|Cold|Elemental|Extraplanar|Water",
+    "race_type": "Outsider",
+    "size": "S",
+    "source_page": "p.114",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 335,
+    "record_key": "Elemental (Ice/Small)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

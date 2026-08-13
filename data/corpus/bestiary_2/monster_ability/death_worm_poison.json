@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Death Worm ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Bite--injury or Skin--Contact; save Fort DC %1; frequency 1/round for 6 rounds; effect 1d2 Con damage; cure 2 saves.",
+    "description_variables": [
+      "DeathWormPoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:death_worm_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:death_worm"
+    ],
+    "source_page": "p.76",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 342,
+    "record_key": "Death Worm ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

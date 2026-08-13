@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Leprechaun Magic",
+    "delivery": "SpellLike",
+    "description": "When a leprechaun uses any of its spell-like abilities to deceive, trick, or humiliate a creature (at the GM's discretion), the spell-like ability resolves at caster level 8th rather than 4th.  If a leprechaun uses its spell-like abilities in this manner, it has a bonus of +11 on concentration checks.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:leprechaun_magic",
+    "name": "Leprechaun Magic",
+    "owners": [
+      "bestiary_2:monster:leprechaun"
+    ],
+    "source_page": "p.177",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 773,
+    "record_key": "Leprechaun Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

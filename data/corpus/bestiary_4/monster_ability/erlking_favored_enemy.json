@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Erlking ~ Favored Enemy",
+    "delivery": "Extraordinary",
+    "description": "Erlkings gain a +10 bonus on Bluff, Knowledge, Perception, Sense Motive, and Survival checks when using these skills against all humanoids. Likewise, they get a +10 bonus on weapon attack and damage rolls against such creatures. They may make Knowledge Skill checks untrained to identify such creatures.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:erlking_favored_enemy",
+    "name": "Favored Enemy",
+    "owners": [
+      "bestiary_4:monster:erlking"
+    ],
+    "source_page": null,
+    "traits": [
+      "FavoredEnemy"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 636,
+    "record_key": "Erlking ~ Favored Enemy"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -4791,11 +4791,15 @@ mod tests {
             }
         }
         assert_eq!(
-            accepted, 148,
-            "the 7 CRB races' alternates: 24+21+18+16+22+20+27, i.e. the previous \
-             17+13+12+9+15+13+15 plus Inner Sea Races' 7+8+6+7+7+7+12 (SD-29's race-trait \
-             extend lane, round 2). Half-Orc's 22 includes APG's `Half-Orc ~ Plagueborn`, \
-             landed by the same lane's round 1 -- and this test is exactly the one that \
+            accepted, 188,
+            "the 7 CRB races' alternates: 30+27+23+20+28+27+33 (**Elf 28 -> 27 on 2026-08-12**, \
+             SD-29 `decisions.md` 53: ISR's `Elf ~ Sovyrian-Born` carries `NAMEISPI:YES` and is \
+             dropped at ingest, because a name cannot be redacted), i.e. round 2's \
+             24+21+18+16+22+20+27 plus Horror Adventures' 6+7+5+4+6+7+6 (SD-29's race-trait \
+             extend lane, round 3). Round 2's own figure was the previous \
+             17+13+12+9+15+13+15 plus Inner Sea Races' 7+8+6+7+7+7+12. Half-Orc's total \
+             includes APG's `Half-Orc ~ Plagueborn`, landed by the same lane's round 1 -- \
+             and this test is exactly the one that \
              would have caught either book being shipped without its \
              `ALTERNATE_TRAIT_REPLACE_FLAGS` rows, because it saves a real character \
              holding each alternate in turn and reloads it"

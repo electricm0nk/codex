@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:leanan_sidhe_life_drain",
+      "bestiary_4:monster_ability:leanan_sidhe_skill_blessing",
+      "bestiary_4:monster_ability:leanan_sidhe_spell_blessing",
+      "bestiary_4:monster_ability:leanan_sidhe_unearthly_grace"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Leanan Sidhe",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:leanan_sidhe",
+    "monster_class": "Fey:11",
+    "name": "Leanan Sidhe",
+    "natural_attacks": [
+      {
+        "damage_dice": "0",
+        "name": "Touch"
+      }
+    ],
+    "race_subtype": "Mythic",
+    "race_type": "Fey",
+    "size": "M",
+    "source_page": "p.180",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 149,
+    "record_key": "Leanan Sidhe"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

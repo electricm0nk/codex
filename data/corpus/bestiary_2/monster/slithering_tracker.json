@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:slithering_tracker_paralysis",
+      "bestiary_2:monster_ability:slithering_tracker_transparent"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Slithering Tracker",
+    "external_ability_refs": [
+      "Blood Drain",
+      "Can't Be Tripped",
+      "Cannot Speak",
+      "Grab ~ Colossal",
+      "Immunity to Mind-Affecting Effects",
+      "Ooze Traits ~ Not Blind"
+    ],
+    "key": "bestiary_2:monster:slithering_tracker",
+    "monster_class": "Ooze:4",
+    "name": "Slithering Tracker",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Ooze",
+    "size": "S",
+    "source_page": "p.250",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 805,
+    "record_key": "Slithering Tracker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

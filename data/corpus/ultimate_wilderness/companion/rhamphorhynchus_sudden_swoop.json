@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Rhamphorhynchus ~ Sudden Swoop",
+    "delivery": "Extraordinary",
+    "description": "If a rhamphorhynchus makes a charge attack while flying, it does not provoke attacks of opportunity when it enters an opponent's space to make a melee attack. It also gains a +2 bonus on damage rolls with its bite attack when it makes a sudden swoop.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:rhamphorhynchus_sudden_swoop",
+    "name": "Sudden Swoop",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_rhamphorhynchus",
+      "ultimate_wilderness:companion:rhamphorhynchus"
+    ],
+    "record_type": "ability",
+    "source_page": "p.204",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "RhamphorhynchusRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 335,
+    "record_key": "Rhamphorhynchus ~ Sudden Swoop"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

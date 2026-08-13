@@ -1,0 +1,72 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:sceaduinar_entropic_touch"
+    ],
+    "challenge_rating": "7",
+    "corpus_key": "Sceaduinar",
+    "external_ability_refs": [
+      "Energy Drain",
+      "Entropic Shield ~ Constant",
+      "Flight Maneuverability",
+      "Hide from Undead ~ Constant",
+      "Immunity to Cold",
+      "Immunity to Death Effects",
+      "Immunity to Disease",
+      "Immunity to Energy Drain",
+      "Immunity to Poison",
+      "Lifesense",
+      "Negative Energy Affinity",
+      "Resistance to Acid",
+      "Resistance to Electricity",
+      "Resistance to Sonic",
+      "Sceaduinar ~ Entropic Flesh",
+      "Sceaduinar ~ Void Child"
+    ],
+    "key": "bestiary_2:monster:sceaduinar",
+    "monster_class": "Outsider (Fort/Ref):9",
+    "name": "Sceaduinar",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d6",
+        "name": "Wing"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.239",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 90,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 759,
+    "record_key": "Sceaduinar"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

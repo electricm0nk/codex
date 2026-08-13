@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Flowering Lattice ~ Bountiful Fruits",
+    "delivery": "Extraordinary",
+    "description": "Once per week, a flowering lattice produces a handful of small fruits or berries that remain ripe for 1 week. Eating all of the fruit takes 1 minute and affects the eater as if she had consumed a berry affected by goodberry.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:flowering_lattice_bountiful_fruits",
+    "name": "Bountiful Fruits",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_flowering_lattice",
+      "ultimate_wilderness:companion:flowering_lattice"
+    ],
+    "record_type": "ability",
+    "source_page": "p.196",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "FloweringLatticeRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 237,
+    "record_key": "Flowering Lattice ~ Bountiful Fruits"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

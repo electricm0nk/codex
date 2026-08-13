@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Kelpie ~ Captivating Lure",
+    "delivery": "Supernatural",
+    "description": "Once per day, a kelpie can use a powerful mental attack to lure in a single creature within 60 feet.  The target must make a DC %1 Will saving throw or become captivated by the kelpie, thinking it is a desirable woman in mortal danger or (if in hippocampus or horse form) a valuable steed.  A victim under the effects of the captivating lure moves toward the kelpie using the most direct means available.  If the path leads it into a dangerous area such as through fire or off a cliff, that creature receives a second saving throw to end the effect before moving into peril; the victim does not consider water a dangerous area, and will enter the water even if it cannot swim or breathe.  A captivated creature can take no actions other than to move toward the kelpie and defend itself, even if it is drowning.  A victim within 5 feet of the kelpie simply stands and offers no resistance to its attacks.  This effect continues as long as the kelpie is alive and the victim is within 1 mile of the kelpie.  This is a mind-affecting charm effect.",
+    "description_variables": [
+      "KelpieCaptivatingLureDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:kelpie_captivating_lure",
+    "name": "Captivating Lure",
+    "owners": [
+      "bestiary_2:monster:kelpie"
+    ],
+    "source_page": "p.172",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 748,
+    "record_key": "Kelpie ~ Captivating Lure"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

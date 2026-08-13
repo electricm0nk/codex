@@ -1,0 +1,57 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:jack_o_lantern_explode",
+      "bestiary_4:monster_ability:jack_o_lantern_fear_aura",
+      "bestiary_4:monster_ability:jack_o_lantern_pumpkin_form",
+      "bestiary_4:monster_ability:jack_o_lantern_strangling_ensnare"
+    ],
+    "challenge_rating": "1",
+    "corpus_key": "Jack-o'-Lantern",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:jack_o_lantern",
+    "monster_class": "Plant:2",
+    "name": "Jack-o'-Lantern",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "M",
+    "source_page": "p.160",
+    "speeds": [
+      {
+        "feet": 15,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 134,
+    "record_key": "Jack-o'-Lantern"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

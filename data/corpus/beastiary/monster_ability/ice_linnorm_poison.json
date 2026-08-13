@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ice Linnorm ~ Poison",
+    "delivery": null,
+    "description": "Bite--injury; save Fort DC %1; frequency 1/round for 10 rounds; effect 4d6 cold damage and 1d6 Con drain; cure 3 consecutive saves.",
+    "description_variables": [
+      "PoisonSaveDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ice_linnorm_poison",
+    "name": "Poison",
+    "owners": [
+      "beastiary:monster:linnorm_ice"
+    ],
+    "source_page": "p.191",
+    "traits": [
+      "Supernatrual"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 849,
+    "record_key": "Ice Linnorm ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

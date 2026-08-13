@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Xacarba ~ Redirect Spell",
+    "delivery": "Supernatural",
+    "description": "Any creature that attempts to cast a spell within 30 feet of a xacarba must cast the spell defensively.  If the caster fails the concentration check to do so (or if the caster opts to not cast defensively), the xacarba can choose the target of the spell as a swift action.  The new target must be a legal target - if there's no legal alternative target to choose from, this ability cannot be used.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:xacarba_redirect_spell",
+    "name": "Redirect Spell",
+    "owners": [
+      "bestiary_2:monster:xacarba"
+    ],
+    "source_page": "p.288",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1388,
+    "record_key": "Xacarba ~ Redirect Spell"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

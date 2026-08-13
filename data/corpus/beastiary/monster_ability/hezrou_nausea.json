@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Hezrou ~ Nausea",
+    "delivery": "Extraordinary",
+    "description": "The noxious vapors and foul fluids that constantly weep and seethe from a hezrou's body are particularly heinous to those the creature grapples. Each round a creature is grappled by a hezrou, the grappled foe must make a DC %1 Fortitude save to avoid becoming nauseated. A creature nauseated in this manner remains nauseated until he succeeds on a DC %1 Fortitude save, or until a minute has passed during which he is not grappled by the hezrou, whichever condition comes first.",
+    "description_variables": [
+      "NauseaDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:hezrou_nausea",
+    "name": "Nausea",
+    "owners": [
+      "beastiary:monster:demon_hezrou"
+    ],
+    "source_page": "p.62",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 282,
+    "record_key": "Hezrou ~ Nausea"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

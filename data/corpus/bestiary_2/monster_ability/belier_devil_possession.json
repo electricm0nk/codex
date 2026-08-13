@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Belier Devil ~ Possession",
+    "delivery": "Supernatural",
+    "description": "When a belier devil uses its magic jar spell-like ability, it can identify and pinpoint life forces accurately, allowing it to select its victims with ease.  It does not require a receptacle to use magic jar.  If it uses magic jar on a host while in the Material Plane, its own body becomes ethereal for the duration of the possession and the magic jar effect lasts until the effect is dispelled, the devil ends the effect, it is forced out of the host body, or it or its host body is slain.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:belier_devil_possession",
+    "name": "Possession",
+    "owners": [
+      "bestiary_2:monster:devil_belier"
+    ],
+    "source_page": "p.85",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 393,
+    "record_key": "Belier Devil ~ Possession"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

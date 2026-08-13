@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Nependis ~ Abduct",
+    "delivery": "Extraordinary",
+    "description": "When a nependis successfully grabs a Medium or smaller opponent, on that turn it can spend a swift action to move up to its speed. This movement provokes attacks of opportunity as normal. A nependis that succeeds at a second grapple check against the opponent can move up to its full speed as a swift action instead of up to half its speed.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:nependis_abduct",
+    "name": "Abduct",
+    "owners": [
+      "bestiary_4:monster:nependis"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 1107,
+    "record_key": "Nependis ~ Abduct"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

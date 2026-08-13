@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Astradaemon ~ Devour Soul",
+    "delivery": "Supernatural",
+    "description": "As a standard action, an astradaemon that begins its turn with a grappled opponent can attempt to draw out and consume the soul of its victim, killing it instantly.  This ability only works on living creatures, which may resist with a DC %1 Fortitude saving throw.  For every 5 HD of the slain creature, the daemon gets a +1 profane bonus on attacks, saving throws, and checks for 24 hours.  This ability does not consume all of the soul, and pieces of it still exist after the daemon completes its feast (enough to be able to resurrect the slain victim normally).",
+    "description_variables": [
+      "AstradaemonDevourSoulDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:astradaemon_devour_soul",
+    "name": "Devour Soul",
+    "owners": [
+      "bestiary_2:monster:daemon_astradaemon"
+    ],
+    "source_page": "p.63",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 275,
+    "record_key": "Astradaemon ~ Devour Soul"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:choice",
+    "computed:pre_guard",
+    "computed:tempbonus",
+    "derived:bonus"
+  ]
+}

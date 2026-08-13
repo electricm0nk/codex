@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Apostasy Wraith ~ Razmiri Aversion",
+    "delivery": "Extraordinary",
+    "description": "If confronted by a Razmiri priest or anyone successfully disguised in that garb, the apostasy wraith must make a Will save equal to 10 + 1/2 the Hit Dice + the Charisma modifier of the highest-level Razmiri priest present.If the saving throw fails, the apostasy wraith is forced to flee as if affected by the Turn Undead feat. If the save is successful, it overcomes its aversion and gains a +2 bonus on attack rolls and deals double damage against Razmiri priests (or those disguised as such) for the duration of the encounter.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_bestiary:monster_ability:apostasy_wraith_razmiri_aversion",
+    "name": "Razmiri Aversion",
+    "owners": [
+      "inner_sea_bestiary:monster:apostasy_wraith"
+    ],
+    "source_page": "p.4",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 31,
+    "record_key": "Apostasy Wraith ~ Razmiri Aversion"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

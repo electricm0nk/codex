@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Grendel ~ Frightful Presence",
+    "delivery": "Supernatural",
+    "description": "Grendel is less frightening to other mythic beings. The DC for his frightful presence is reduced to %1 against such foes.",
+    "description_variables": [
+      "FrightfulPresenceDC-4"
+    ],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:grendel_frightful_presence",
+    "name": "Frightful Presence",
+    "owners": [
+      "bestiary_4:monster:grendel"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 839,
+    "record_key": "Grendel ~ Frightful Presence"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

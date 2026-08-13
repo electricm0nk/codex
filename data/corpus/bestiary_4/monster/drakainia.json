@@ -1,0 +1,70 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:drakainia_birth_spawn",
+      "bestiary_4:monster_ability:drakainia_gestation_aura",
+      "bestiary_4:monster_ability:drakainia_impregnate_surrogate",
+      "bestiary_4:monster_ability:drakainia_invert_birth",
+      "bestiary_4:monster_ability:drakainia_polymorphism",
+      "bestiary_4:monster_ability:drakainia_razor_claws",
+      "bestiary_4:monster_ability:drakainia_transfer_suffering",
+      "bestiary_4:monster_ability:drakainia_well_of_life"
+    ],
+    "challenge_rating": "25",
+    "corpus_key": "Drakainia",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:drakainia",
+    "monster_class": "Aberration:25",
+    "name": "Drakainia",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d8",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Gore"
+      },
+      {
+        "damage_dice": null,
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Mythic",
+    "race_type": "Aberration",
+    "size": "H",
+    "source_page": "p.76",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 57,
+    "record_key": "Drakainia"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

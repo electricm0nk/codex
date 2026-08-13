@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "2",
+    "corpus_key": "Azata (Lyrakien)",
+    "external_ability_refs": [
+      "Detect Evil ~ Constant",
+      "Detect Magic ~ Constant",
+      "Flight Maneuverability",
+      "Freedom of Movement ~ Constant",
+      "Lyrakien ~ Starlight Blast",
+      "Lyrakien ~ Traveler's Friend",
+      "Resistance to Cold",
+      "Resistance to Fire"
+    ],
+    "key": "bestiary_2:monster:azata_lyrakien",
+    "monster_class": "Outsider (Ref/Will):3",
+    "name": "Azata (Lyrakien)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d2",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Azata|Chaotic|Extraplanar|Good",
+    "race_type": "Outsider",
+    "size": "T",
+    "source_page": "p.38",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 123,
+    "record_key": "Azata (Lyrakien)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Dragon Horse ~ Shift Planes",
+    "delivery": "Supernatural",
+    "description": "A dragon horse can enter the Ethereal Plane, Astral Plane, Plane of Air, or Material Plane once per day as a standard action.  This functions as plane shift, but the dragon horse can only bring up to two other willing creatures with it, and only if they are on its back.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:dragon_horse_shift_planes",
+    "name": "Shift Planes",
+    "owners": [
+      "bestiary_2:monster:dragon_horse"
+    ],
+    "source_page": "p.104",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 423,
+    "record_key": "Dragon Horse ~ Shift Planes"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

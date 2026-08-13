@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Pech ~ Stone Knowledge",
+    "delivery": "SpellLike",
+    "description": "A pech's knowledge of earth and stone grants a +1 racial bonus on attack and damage rolls and the benefits of the Improved Critical feat against creatures and objects made of stone or earth or with the earth subtype.  Knowledge (Dungeoneering), Knowledge (Engineering), and Profession (Miner) are always class skills for a pech.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:pech_stone_knowledge",
+    "name": "Stone Knowledge",
+    "owners": [
+      "bestiary_2:monster:pech"
+    ],
+    "source_page": "p.206",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 931,
+    "record_key": "Pech ~ Stone Knowledge"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

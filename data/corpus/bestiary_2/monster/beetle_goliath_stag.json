@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "8",
+    "corpus_key": "Beetle (Goliath Stag)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Trample"
+    ],
+    "key": "bestiary_2:monster:beetle_goliath_stag",
+    "monster_class": "Vermin:11",
+    "name": "Beetle (Goliath Stag)",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d8",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "H",
+    "source_page": "p.44",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 141,
+    "record_key": "Beetle (Goliath Stag)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

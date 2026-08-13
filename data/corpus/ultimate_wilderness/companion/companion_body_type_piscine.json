@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Companion Body Type ~ Piscine",
+    "delivery": null,
+    "description": "Available Magic Item Slots; belt, chest (saddle), eyes",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "ultimate_wilderness:companion:companion_body_type_piscine",
+    "name": "Piscine",
+    "owners": [
+      "ultimate_wilderness:companion:companion_anglerfish",
+      "ultimate_wilderness:companion:companion_armorfish",
+      "ultimate_wilderness:companion:companion_hammerhead_shark",
+      "ultimate_wilderness:companion:familiar_lamprey",
+      "ultimate_wilderness:companion:familiar_popoto_dolphin",
+      "ultimate_wilderness:companion:familiar_pufferfish",
+      "ultimate_wilderness:companion:familiar_seal"
+    ],
+    "record_type": "ability",
+    "source_page": "p.176",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuaility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 394,
+    "record_key": "Companion Body Type ~ Piscine"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

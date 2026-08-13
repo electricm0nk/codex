@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Lurker in Light ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Lurkers typically coat their daggers with shadow essence poison.  Shadow essence poison: Injury; save Fortitude DC %1; frequency 1/round for 6 rounds; initial effect 1 Str drain; secondary effect 1d3 Str damage; cure 1 save.",
+    "description_variables": [
+      "ShadowEssencePoisonDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:lurker_in_light_poison",
+    "name": "Poison",
+    "owners": [
+      "bestiary_2:monster:lurker_in_light"
+    ],
+    "source_page": "p.180",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 788,
+    "record_key": "Lurker in Light ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

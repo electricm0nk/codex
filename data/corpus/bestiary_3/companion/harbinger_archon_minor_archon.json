@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:01:26Z",
+  "data": {
+    "corpus_key": "Harbinger Archon ~ Minor Archon",
+    "delivery": "Extraordinary",
+    "description": "Harbinger archons lack the aura of menace and teleport abilities of more powerful archons.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_3:companion:harbinger_archon_minor_archon",
+    "name": "Minor Archon",
+    "owners": [
+      "bestiary_3:companion:archon_harbinger"
+    ],
+    "record_type": "ability",
+    "source_page": "p.18",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_abilities_familiar.lst",
+    "sha256": "175d62aece1cac131ef71641c57c0118a41340fe0a96e8e3b26e20e5508724ac",
+    "line": 43,
+    "record_key": "Harbinger Archon ~ Minor Archon"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

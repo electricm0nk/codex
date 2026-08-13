@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:lurker_in_light_daylight_door",
+      "bestiary_2:monster_ability:lurker_in_light_poison",
+      "bestiary_2:monster_ability:lurker_in_light_ritual_gate"
+    ],
+    "challenge_rating": "5",
+    "corpus_key": "Lurker in Light",
+    "external_ability_refs": [
+      "Assassin ~ Poison Use",
+      "Flight Maneuverability",
+      "Immunity to Blindness",
+      "Lurker in Light ~ Blend With Light",
+      "Sneak Attack"
+    ],
+    "key": "bestiary_2:monster:lurker_in_light",
+    "monster_class": "Fey:8",
+    "name": "Lurker in Light",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Extraplanar",
+    "race_type": "Fey",
+    "size": "S",
+    "source_page": "p.180",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 587,
+    "record_key": "Lurker in Light"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

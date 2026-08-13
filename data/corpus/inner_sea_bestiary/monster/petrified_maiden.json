@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:can_t_be_disarmed",
+      "inner_sea_bestiary:monster_ability:petrified_maiden_curse_of_stone",
+      "inner_sea_bestiary:monster_ability:petrified_maiden_petrified_body",
+      "inner_sea_bestiary:monster_ability:petrified_maiden_reconstitution",
+      "inner_sea_bestiary:monster_ability:petrified_maiden_weapon_expertise"
+    ],
+    "challenge_rating": "6",
+    "corpus_key": "Petrified Maiden",
+    "external_ability_refs": [
+      "Channel Resistance"
+    ],
+    "key": "inner_sea_bestiary:monster:petrified_maiden",
+    "monster_class": "Undead:9",
+    "name": "Petrified Maiden",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Undead",
+    "size": "M",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 64,
+    "record_key": "Petrified Maiden"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

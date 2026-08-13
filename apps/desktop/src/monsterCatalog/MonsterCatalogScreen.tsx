@@ -40,13 +40,30 @@ export const SIZE_ORDER = ['D', 'T', 'S', 'M', 'L', 'H'] as const;
 
 /**
  * Wire book code -> the book's name. A row that named no book would leave a
- * reader unable to look the creature up, and the catalog now serves three
+ * reader unable to look the creature up, and the catalog now serves six
  * books.
+ *
+ * `BOTD1`/`BOTD2` are the first codes here wider than two characters -- they
+ * are the books' own `SOURCESHORT` tokens, exactly like `B1` and `MC`, and
+ * nothing in this map or in `formatBook` assumes a width.
  */
 export const BOOK_LABELS: Record<string, string> = {
   B1: 'Bestiary 1',
   BB: 'Bonus Bestiary',
   MC: 'Monster Codex',
+  BOTD1: 'Book of the Damned, Volume 1',
+  BOTD2: 'Book of the Damned, Volume 2',
+  ISWG: 'Inner Sea World Guide',
+  B2: 'Bestiary 2',
+  B3: 'Bestiary 3',
+  B4: 'Bestiary 4',
+  ISB: 'Inner Sea Bestiary',
+  ISG: 'Inner Sea Gods',
+  // The one code here that is not its book's own `SOURCESHORT` (`UP`): the app
+  // already serves this book's equipment and feats under `UPSI`, and one book
+  // must not carry two codes across two screens. See `monster_catalog.rs`'s
+  // `BOOK_UPSI` and `decisions.md §64.2`.
+  UPSI: 'Ultimate Psionics',
 };
 
 /** `'BB'` -> `'Bonus Bestiary'`; an unmapped code falls through as itself. */
@@ -94,11 +111,17 @@ export function formatSize(code: string): string {
 
 /**
  * `1` -> `'CR 1'`. Fractional ratings print as fractions the way the book does,
- * so a CR 1/2 record can never render as `CR 0.5`. The current roster is CR
- * 1-3 only; the fraction branch exists because the ingest's own type is `f32`
- * and the sub-CR-1 rows are real Bestiary 1 content the roster may yet take.
+ * so a CR 1/2 record can never render as `CR 0.5`.
+ *
+ * **`0` is a real corpus value and has its own branch.** Ultimate Psionics'
+ * Psicrystal states `CR:0` (`up_races.lst:47`) and is the first such row this
+ * catalog serves. Without the guard below it fell into the fraction branch,
+ * where `Math.round(1 / 0)` is `Infinity` and the screen read `CR 1/Infinity` —
+ * a defect no test caught because for eleven books the value could not occur.
+ * SD-29 Epic 5 extend, round 10; `decisions.md §64.3`.
  */
 export function formatChallengeRating(rating: number): string {
+  if (rating === 0) return 'CR 0';
   if (rating >= 1) return `CR ${rating % 1 === 0 ? rating : rating.toFixed(1)}`;
   const denominator = Math.round(1 / rating);
   return `CR 1/${denominator}`;
@@ -342,7 +365,15 @@ export function MonsterCatalogScreen(props: { onClose: () => void }) {
                   </span>
                 </div>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '0.75rem', margin: '0.25rem 0 0' }}>
-                  {formatSpeedClause(entry)} · {formatBook(entry.book)} {entry.sourcePage}
+                  {/* The page is appended only when the corpus row states one.
+                      Two Bestiary 3 rows carry no `SOURCEPAGE:` token at all
+                      (`b3_races.lst:215` and `:265`), and interpolating an
+                      empty string left the book name with a dangling trailing
+                      space. The ability rows below have always rendered their
+                      page conditionally; this brings the monster row into line
+                      with them. */}
+                  {formatSpeedClause(entry)} · {formatBook(entry.book)}
+                  {entry.sourcePage ? ` ${entry.sourcePage}` : ''}
                   {entry.monsterClass ? ` · Hit dice ${entry.monsterClass}` : ''}
                 </p>
                 {entry.naturalAttacks.length === 0 ? (

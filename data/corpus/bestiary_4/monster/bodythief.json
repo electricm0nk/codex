@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:bodythief_absorb_essence",
+      "bestiary_4:monster_ability:bodythief_spawn_pod_creature",
+      "bestiary_4:monster_ability:bodythief_telepathy",
+      "bestiary_4:monster_ability:bodythief_transfer",
+      "bestiary_4:monster_ability:bodythief_vexing_vines"
+    ],
+    "challenge_rating": "14",
+    "corpus_key": "Bodythief",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:bodythief",
+    "monster_class": "Plant:20",
+    "name": "Bodythief",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d8",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d8",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "G",
+    "source_page": "p.20",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 20,
+    "record_key": "Bodythief"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

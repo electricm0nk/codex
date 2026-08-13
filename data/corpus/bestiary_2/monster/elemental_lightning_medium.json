@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "3",
+    "corpus_key": "Elemental (Lightning/Medium)",
+    "external_ability_refs": [
+      "Flight Maneuverability",
+      "Immunity to Electricity",
+      "Lightning Elemental ~ Electricity",
+      "Lightning Elemental ~ Metal Mastery",
+      "Lightning Elemental ~ Spark Leap"
+    ],
+    "key": "bestiary_2:monster:elemental_lightning_medium",
+    "monster_class": "Outsider (Fort/Ref):4",
+    "name": "Elemental (Lightning/Medium)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Air|Elemental|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.116",
+    "speeds": [
+      {
+        "feet": 100,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 342,
+    "record_key": "Elemental (Lightning/Medium)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T02:27:44Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_psionics:monster_ability:psicrystal_traits",
+      "ultimate_psionics:monster_ability:psicrystal_hardness",
+      "ultimate_psionics:monster_ability:psicrystal_skills",
+      "ultimate_psionics:monster_ability:psicrystal_self_propulsion",
+      "ultimate_psionics:monster_ability:psicrystal_telepathic_link",
+      "ultimate_psionics:monster_ability:psicrystal_share_powers",
+      "ultimate_psionics:monster_ability:psicrystal_deliver_touch_powers",
+      "ultimate_psionics:monster_ability:psicrystal_telepathic_speech",
+      "ultimate_psionics:monster_ability:psicrystal_power_resistance",
+      "ultimate_psionics:monster_ability:psicrystal_sight_link",
+      "ultimate_psionics:monster_ability:psicrystal_channel_power",
+      "ultimate_psionics:monster_ability:psicrystal_sighted"
+    ],
+    "challenge_rating": "0",
+    "corpus_key": "Psicrystal",
+    "external_ability_refs": [],
+    "key": "ultimate_psionics:monster:psicrystal",
+    "monster_class": "Construct:1",
+    "name": "Psicrystal",
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Construct",
+    "size": "D",
+    "source_page": "p.48,448",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/dreamscarred_press/ultimate_psionics/up_races.lst",
+    "sha256": "43c5f5c05027fb8b10b6f593b4adaeec437e249fb9948c426407a0bdf14bc59d",
+    "line": 47,
+    "record_key": "Psicrystal"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

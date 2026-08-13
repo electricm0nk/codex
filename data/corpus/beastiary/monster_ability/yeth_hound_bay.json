@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Yeth Hound ~ Bay",
+    "delivery": "Supernatural",
+    "description": "When a yeth hound howls or barks, all creatures except other evil outsiders within a 300-foot spread must succeed on a DC %1 Will save or become panicked for 2d4 rounds. This is a sonic mindaffecting fear effect. Whether or not the save is successful, an affected creature is immune to the same hound's bay for 24 hours.",
+    "description_variables": [
+      "BayDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:yeth_hound_bay",
+    "name": "Bay",
+    "owners": [
+      "beastiary:monster:yeth_hound"
+    ],
+    "source_page": "p.286",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1283,
+    "record_key": "Yeth Hound ~ Bay"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

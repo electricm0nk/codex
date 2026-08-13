@@ -1,0 +1,53 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T11:18:41Z",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_1:monster_ability:lesser_host_devil_noxious_breath",
+      "book_of_the_damned_volume_1:monster_ability:lesser_host_devil_shared_senses",
+      "book_of_the_damned_volume_1:monster_ability:lesser_host_devil_spell_like_abilities",
+      "book_of_the_damned_volume_1:monster_ability:lesser_host_devil_summon_devil",
+      "book_of_the_damned_volume_1:monster_ability:lesser_host_devil_superior_grappler",
+      "book_of_the_damned_volume_1:monster_ability:lesser_host_devil_swarming"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Devil (Lesser Host)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "book_of_the_damned_volume_1:monster:devil_lesser_host",
+    "monster_class": "Outsider (Fort/Ref):4",
+    "name": "Devil, Lesser Host (Gaav)",
+    "natural_attacks": [],
+    "race_subtype": "Devil|Evil|Extraplanar|Lawful",
+    "race_type": "Outsider",
+    "size": "S",
+    "source_page": "p.58",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_races.lst",
+    "sha256": "7ac566b98c1300b3c9c5d0be1b6940712c130d79ebaddd5efcb2ab223c27c6d6",
+    "line": 11,
+    "record_key": "Devil (Lesser Host)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

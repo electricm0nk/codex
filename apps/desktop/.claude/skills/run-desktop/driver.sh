@@ -39,6 +39,36 @@ case "$AGENT_ID" in
   *) DISPLAY_NUM=$(( 60 + $(cksum <<<"$AGENT_ID" | cut -d' ' -f1) % 30 )) ;;
 esac
 
+# Deterministic per-agent VITE DEV PORT, for exactly the same reason as
+# DISPLAY_NUM above -- and it was missing until SD-29 Epic 7 round 8
+# (`decisions.md §65.7`), which cost that cycle two false item-8 runs.
+#
+# THE FAILURE, precisely: `vite.config.ts` pinned `port: 1420, strictPort: true`
+# for every agent. A second concurrent agent's vite therefore could not bind and
+# died, and `tauri dev` -- which only needs *something* answering on its
+# configured `devUrl` -- happily attached to the FIRST agent's dev server. The
+# result is the worst possible shape of wrong: agent B's Rust backend serving
+# agent B's freshly-ingested records, painted by agent A's frontend source. The
+# window renders, every record is present, and the screenshot is evidence about
+# a tree the agent does not control. Round 8 caught it only because its new book
+# label was missing on screen while its 38 new records were present -- had it
+# changed no frontend string, the false artifact would have passed.
+#
+# The previous mitigation made it worse rather than better: the launch path
+# below used to `kill -9` whatever held 1420, which is a sibling agent's dev
+# server. So the two possible outcomes were "borrow another agent's frontend" or
+# "clobber another agent's app", with nothing in between.
+#
+# `default` keeps 1420 so a solo agent's behaviour is byte-identical to before.
+# Everything else derives from DISPLAY_NUM, which is already the per-agent
+# uniquifier, so two agents collide here only if they already collide there.
+if [ "$AGENT_ID" = "default" ]; then
+  DEV_PORT=1420
+else
+  DEV_PORT=$(( 14200 + DISPLAY_NUM ))
+fi
+export CODEX_DEV_PORT="$DEV_PORT"
+
 STATE_FILE="/tmp/run-desktop-driver-${AGENT_ID}.state"
 WINDOW_TITLE="Codex"
 APP_BIN_NAME="codex-desktop"
@@ -182,13 +212,23 @@ cmd_launch() {
   DISPLAY=":$DISPLAY_NUM" xdotool getdisplaygeometry >/dev/null 2>&1 \
     || { echo "Xvfb did not come up; see $XVFB_LOG_FILE" >&2; exit 1; }
 
-  # Vite's dev port must be free or `tauri dev` fails outright.
+  # Our OWN dev port must be free or `tauri dev` fails outright. Scoped to
+  # $DEV_PORT rather than a hardcoded 1420: this line used to kill whatever held
+  # 1420, which under concurrency is a sibling agent's dev server, not a stale
+  # process of ours (`decisions.md §65.7`). With a per-agent port the only thing
+  # this can now reap is our own leftover.
   local stale_port_pids
-  stale_port_pids="$(lsof -ti:1420 2>/dev/null || true)"
+  stale_port_pids="$(lsof -ti:"$DEV_PORT" 2>/dev/null || true)"
   [ -n "$stale_port_pids" ] && printf '%s\n' "$stale_port_pids" | xargs -r kill -9 2>/dev/null || true
 
-  echo "Launching npx tauri dev (first build can take several minutes) ..." >&2
-  (cd "$app_root" && DISPLAY=":$DISPLAY_NUM" npx tauri dev) >"$LOG_FILE" 2>&1 &
+  echo "Launching npx tauri dev on port $DEV_PORT (first build can take several minutes) ..." >&2
+  # `--config` merges over tauri.conf.json, so the window loads OUR vite rather
+  # than whatever answers on the shared default. `CODEX_DEV_PORT` (exported
+  # above) is what vite.config.ts reads for the matching listen port; both sides
+  # must move together or tauri waits forever on a port nothing serves.
+  (cd "$app_root" && DISPLAY=":$DISPLAY_NUM" \
+     npx tauri dev --config "{\"build\":{\"devUrl\":\"http://localhost:$DEV_PORT\"}}") \
+     >"$LOG_FILE" 2>&1 &
   local tauri_pid=$!
 
   # Readiness is checked by polling for the actual binary process, NOT by

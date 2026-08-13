@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:spriggan_size_alteration",
+      "bestiary_2:monster_ability:spriggan_magic",
+      "bestiary_2:monster_ability:spriggan_skills"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Spriggan",
+    "external_ability_refs": [
+      "Sneak Attack"
+    ],
+    "key": "bestiary_2:monster:spriggan",
+    "monster_class": "Humanoid:4",
+    "name": "Spriggan",
+    "natural_attacks": [],
+    "race_subtype": "Gnome",
+    "race_type": "Humanoid",
+    "size": "S",
+    "source_page": "p.257",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 827,
+    "record_key": "Spriggan"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

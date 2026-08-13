@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Slithering Sundew ~ Constrict",
+    "delivery": "Extraordinary",
+    "description": null,
+    "description_variables": [],
+    "description_variants": [
+      {
+        "conditions": [
+          "PREVARLT:CompanionAdvancement,1"
+        ],
+        "text": "A slithering sundew deals 1d8 acid damage with a successful grapple check.",
+        "variables": []
+      },
+      {
+        "conditions": [
+          "PREVARGTEQ:CompanionAdvancement,1"
+        ],
+        "text": "A slithering sundew deals 2d6 acid damage with a successful grapple check.",
+        "variables": []
+      }
+    ],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:slithering_sundew_constrict",
+    "name": "Constrict",
+    "owners": [
+      "ultimate_wilderness:companion:companion_prionosuchus",
+      "ultimate_wilderness:companion:companion_slithering_sundew",
+      "ultimate_wilderness:companion:familiar_creeper_ivy",
+      "ultimate_wilderness:companion:creeper_ivy",
+      "ultimate_wilderness:companion:companion_squid_giant"
+    ],
+    "record_type": "ability",
+    "source_page": "p.183",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "SlitheringSundewRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 347,
+    "record_key": "Slithering Sundew ~ Constrict"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

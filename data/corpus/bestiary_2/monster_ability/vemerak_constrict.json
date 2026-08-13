@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Vemerak ~ Constrict",
+    "delivery": "Extraordinary",
+    "description": "Tentacles deal 1d6+%1; claws deal 1d8+%2.",
+    "description_variables": [
+      "STR/2",
+      "STR"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:vemerak_constrict",
+    "name": "Constrict",
+    "owners": [
+      "bestiary_2:monster:vemerak"
+    ],
+    "source_page": "p.278",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1334,
+    "record_key": "Vemerak ~ Constrict"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

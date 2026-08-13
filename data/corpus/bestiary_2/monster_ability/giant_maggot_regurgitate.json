@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Giant Maggot ~ Regurgitate",
+    "delivery": "Extraordinary",
+    "description": "Once per day, a giant maggot can empty its putrid stomach upon one creature within 5 feet.  The target must make a DC %1 Fortitude save or be sickened for 1 minute (or until the target spends a full-round action with at least a gallon of water to wash off the filth).",
+    "description_variables": [
+      "GiantMaggotRegurgitateDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:giant_maggot_regurgitate",
+    "name": "Regurgitate",
+    "owners": [
+      "bestiary_2:monster:maggot_giant"
+    ],
+    "source_page": "p.124",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 538,
+    "record_key": "Giant Maggot ~ Regurgitate"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

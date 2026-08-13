@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "ability_keys": [
+      "beastiary:monster_ability:neothelid_breath_weapon",
+      "beastiary:monster_ability:neothelid_mind_thrust",
+      "beastiary:monster_ability:neothelid_psychic_crush",
+      "beastiary:monster_ability:neothelid_swallow_whole",
+      "beastiary:monster_ability:neothelid_trace_teleport"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Neothelid",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Flight Maneuverability",
+      "Aberration Traits Output"
+    ],
+    "key": "beastiary:monster:neothelid",
+    "monster_class": "Aberration:20",
+    "name": "Neothelid",
+    "natural_attacks": [
+      {
+        "damage_dice": "3d6",
+        "name": "Tongue"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Aberration",
+    "size": "G",
+    "source_page": "p.214",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_races.lst",
+    "sha256": "d920e00f5ad74ebada8dafd0049c396d580ebe3a98f236b562c4349e4451cdf9",
+    "line": 305,
+    "record_key": "Neothelid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

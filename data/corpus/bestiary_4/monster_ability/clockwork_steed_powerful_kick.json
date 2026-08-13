@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Clockwork Steed ~ Powerful Kick",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, the clockwork steed can make two hoof attacks with its rear hooves; if both hit, it can perform an awesome blow combat maneuver as the Awesome Blow feat. A clockwork steed gains a +4 racial bonus on this combat maneuver check.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:clockwork_steed_powerful_kick",
+    "name": "Powerful Kick",
+    "owners": [
+      "bestiary_4:monster:clockwork_steed"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 392,
+    "record_key": "Clockwork Steed ~ Powerful Kick"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

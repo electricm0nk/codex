@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Veiled Master ~ Thoughtlance",
+    "delivery": "Supernatural",
+    "description": "Four of a Veiled Master's tentacles end in glowing spheres of light. These spheres deal 2d6 points of electricity damage on a touch attack, and also blast a creature's mind with waves of mental energy.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:veiled_master_thoughtlance",
+    "name": "Thoughtlance",
+    "owners": [
+      "inner_sea_bestiary:monster:veiled_master"
+    ],
+    "source_page": "p.57",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 395,
+    "record_key": "Veiled Master ~ Thoughtlance"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

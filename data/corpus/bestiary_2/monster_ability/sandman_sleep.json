@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Sandman ~ Sleep",
+    "delivery": "Supernatural",
+    "description": "A creature struck by a sandman's slam attack must succeed on a DC %1 Will save or immediately fall asleep, as if affected by a sleep spell (caster level 8th).  There is no limit to the number of Hit Dice a sandman can affect with this ability.",
+    "description_variables": [
+      "SandmanSleepDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:sandman_sleep",
+    "name": "Sleep",
+    "owners": [
+      "bestiary_2:monster:sandman"
+    ],
+    "source_page": "p.236",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1086,
+    "record_key": "Sandman ~ Sleep"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

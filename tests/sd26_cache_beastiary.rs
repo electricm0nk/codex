@@ -48,6 +48,27 @@ fn load_all(kind: &str) -> Vec<(PathBuf, Value)> {
     out
 }
 
+/// The SD-22 half of `data/corpus/beastiary/monster/`.
+///
+/// Since SD-29 Epic 5 round 8 that directory holds TWO tables' records
+/// (`decisions.md §58.3`): these 46, written by `cache_gen::beastiary1` in the
+/// pre-`key` Shape B v1 shape (`data.id`), and 280 written by the monster
+/// chassis in the `data.key` shape. This file's assertions are about the SD-22
+/// records — their `data.id` round-trip, their `speed_ft` scalar, their
+/// `web_second_source` provenance — and every one of them is FALSE of a chassis
+/// record, which carries none of those fields.
+///
+/// Filtering on the field rather than on a filename list is what keeps the split
+/// honest: a chassis record that started carrying `data.id` would be caught
+/// here, and `the_directory_holds_both_tables_records` below pins the two counts
+/// so neither half can quietly vanish behind the other's total.
+fn load_hand_modelled_monsters() -> Vec<(PathBuf, Value)> {
+    load_all("monster")
+        .into_iter()
+        .filter(|(_, v)| v["data"].get("id").is_some())
+        .collect()
+}
+
 const ALLOWED_SOURCE_KINDS: &[&str] = &[
     "lst_token",
     "lst_inherited_copy",
@@ -138,9 +159,44 @@ fn assert_shape_b_record(path: &Path, record: &Value) {
     }
 }
 
+/// The directory holds two tables' records, and neither may hide behind the
+/// other's total.
+///
+/// Every other monster assertion in this file filters to the SD-22 half, which
+/// is correct — those claims are about that table. This one is the guard that
+/// makes the filtering safe: if the chassis half vanished, or if it were written
+/// in the SD-22 shape, the filtered tests would still pass and this would not.
+/// `decisions.md §58.3`.
+#[test]
+fn the_directory_holds_both_tables_records() {
+    let all = load_all("monster");
+    let hand_modelled = load_hand_modelled_monsters();
+    let chassis: Vec<_> =
+        all.iter().filter(|(_, v)| v["data"].get("key").is_some()).collect();
+    assert_eq!(hand_modelled.len(), 46, "the SD-22 hand-modelled roster");
+    assert_eq!(
+        chassis.len(),
+        280,
+        "the SD-29 round 8 chassis complement -- see rules_tables::bestiary"
+    );
+    assert_eq!(
+        all.len(),
+        hand_modelled.len() + chassis.len(),
+        "every record in the directory belongs to exactly one of the two tables"
+    );
+    for (path, record) in &chassis {
+        let key = record["data"]["key"].as_str().unwrap();
+        assert!(
+            key.starts_with("beastiary:monster:"),
+            "{}: chassis key {key:?} is not in this book's chassis namespace",
+            path.display()
+        );
+    }
+}
+
 #[test]
 fn monster_cache_has_all_46_real_monsters_with_chassis_data() {
-    let records = load_all("monster");
+    let records = load_hand_modelled_monsters();
     assert_eq!(records.len(), 46, "expected exactly the 46 real, corrected-roster Bestiary 1 monsters (MonsterId::ALL, decisions.md §11.6, raised from 41 by SD28-E16 subset 09)");
 
     let mut seen_names = HashSet::new();
@@ -206,7 +262,7 @@ fn monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape() {
     // `beastiary1::monster_key_resolve` accepts, so a consumer can
     // round-trip a cache record's id back into a live chassis-data
     // lookup.
-    let records = load_all("monster");
+    let records = load_hand_modelled_monsters();
     for (path, record) in &records {
         let id = record["data"]["id"].as_str().unwrap();
         let expected_prefix = "beastiary1:monster:";
@@ -254,7 +310,7 @@ fn monster_cache_key_round_trips_through_the_real_monster_key_resolve_shape() {
 /// decay.
 #[test]
 fn every_monster_cache_record_matches_its_shipped_stat_block_field_for_field() {
-    let records = load_all("monster");
+    let records = load_hand_modelled_monsters();
     assert_eq!(records.len(), 46, "the real, corrected Bestiary 1 roster is 46 monsters");
 
     for (path, record) in &records {

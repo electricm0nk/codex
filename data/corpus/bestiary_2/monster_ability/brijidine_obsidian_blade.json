@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Brijidine ~ Obsidian Blade",
+    "delivery": "Supernatural",
+    "description": "At will as a free action, a brijidine can create a blade of jagged volcanic glass that functions as a +1 flaming burst keen longsword.  One round after it leaves the brijidine's grasp, the weapon decays into useless powder.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_2:monster_ability:brijidine_obsidian_blade",
+    "name": "Obsidian Blade",
+    "owners": [
+      "bestiary_2:monster:azata_brijidine"
+    ],
+    "source_page": "p.37",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 151,
+    "record_key": "Brijidine ~ Obsidian Blade"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

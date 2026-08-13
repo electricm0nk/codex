@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Tarsier ~ Tarsier's Leap",
+    "delivery": "Extraordinary",
+    "description": "A tarsier's long hind limbs make it an excellent leaper. A tarsier attempts Acrobatics checks to jump as though it had a running start and doesn't take a penalty on Acrobatics checks to jump from having a slow base speed.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:tarsier_tarsier_s_leap",
+    "name": "Tarsier's Leap",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_tarsier",
+      "ultimate_wilderness:companion:tarsier"
+    ],
+    "record_type": "ability",
+    "source_page": "p.207",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "TarsierRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 370,
+    "record_key": "Tarsier ~ Tarsier's Leap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

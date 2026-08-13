@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Dust Digger ~ Sinkhole",
+    "delivery": "Extraordinary",
+    "description": "A dust digger can burrow into sand, loose soil, or dirt to lie in ambush just under the surface.  When it feels (via tremorsense) prey walk into a square it threatens, it can deflate its body as an immediate action, causing the sand and other loose soil above to shift and slide.  All creatures who were standing in the dust digger's reach must make a DC %1 Reflex save or become entangled as long as they remain in the dust digger's reach. All creatures who were standing at least partially in the dust digger's actual space must make a DC %1 Reflex save or become entangled and fall prone - if such a creature makes this save, it immediately moves to the closest adjacent unoccupied square. If this results in more than a 5-foot move, the creature moves that distance and then falls prone.",
+    "description_variables": [
+      "DustDiggerSinkholeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:dust_digger_sinkhole",
+    "name": "Sinkhole",
+    "owners": [
+      "bestiary_2:monster:dust_digger"
+    ],
+    "source_page": "p.112",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 522,
+    "record_key": "Dust Digger ~ Sinkhole"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

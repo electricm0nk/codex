@@ -1,0 +1,56 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:giant_snapping_turtle_armored_stomach",
+      "bestiary_2:monster_ability:snapping_turtle_shell"
+    ],
+    "challenge_rating": "9",
+    "corpus_key": "Turtle (Giant Snapping)",
+    "external_ability_refs": [
+      "Grab ~ Bite",
+      "Hold Breath",
+      "Scent",
+      "Swallow Whole"
+    ],
+    "key": "bestiary_2:monster:turtle_giant_snapping",
+    "monster_class": "Animal:11",
+    "name": "Turtle (Giant Snapping)",
+    "natural_attacks": [
+      {
+        "damage_dice": "4d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Animal",
+    "size": "G",
+    "source_page": "p.273",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 877,
+    "record_key": "Turtle (Giant Snapping)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

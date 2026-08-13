@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Gallowdead ~ Aura of Whispers",
+    "delivery": "Supernatural",
+    "description": "A gallowdead constantly whispers vile secrets and blasphemous chants. Any creature within 30 feet of a gallowdead must succeed at a DC %1 Will save or be shaken for 1d4 rounds. Already shaken creatures that fail this saving throw become nauseated by the secrets revealed. Each round, an affected creature can make a new Will save to recover from the effect-once a creature recovers from a gallowdead's whispers, it is immune to this ability for 24 hours. Each overlapping whisper aura from additional gallowdead increases the save DC by 2. This is a language-based sonic effect.",
+    "description_variables": [
+      "22+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:gallowdead_aura_of_whispers",
+    "name": "Aura of Whispers",
+    "owners": [
+      "bestiary_4:monster:gallowdead"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 735,
+    "record_key": "Gallowdead ~ Aura of Whispers"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

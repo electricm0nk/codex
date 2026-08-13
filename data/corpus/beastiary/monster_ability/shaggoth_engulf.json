@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Shaggoth ~ Engulf",
+    "delivery": "Extraordinary",
+    "description": "To use this ability, the shoggoth must begin its turn grappling a creature or must trample. A shoggoth may attempt to engulf as many creatures as it grapples or tramples in a round. This ability otherwise functions as swallow whole, save that a creature that cuts is way out of a shoggoth leaves no hole in the protoplasmic creature's body.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:shaggoth_engulf",
+    "name": "Engulf",
+    "owners": [
+      "beastiary:monster:shoggoth"
+    ],
+    "source_page": "p.249",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1124,
+    "record_key": "Shaggoth ~ Engulf"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -16,7 +16,7 @@
 #     --expect "Duergar" --expect "+2" \
 #     --out docs/release/<bundle>/artifacts/<cycle>/item8 [--slug duergar-ironskinned]
 #
-# Families: equipment | spell | race_trait | monster  (hub bottom links).
+# Families: equipment | spell | race_trait | monster | companion  (hub bottom links).
 #
 # Outcomes (the ONLY two):
 #   PASS — exit 0; writes <out>/<slug>.png and <out>/<slug>.verify.md
@@ -99,7 +99,29 @@ case "$FAMILY" in
   spell)      HUB_X=781;  HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Spell Catalog";     MATCH_WORD="matching" ;;
   race_trait) HUB_X=1166; HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Race Traits";       MATCH_WORD="matching" ;;
   monster)    HUB_X=1350; HUB_Y=930; SEARCH_Y=311; SCREEN_MARKER="Monster Catalog";   MATCH_WORD="matching" ;;
-  *) echo "FAIL: unknown --family '$FAMILY' (known: equipment spell race_trait monster)" >&2; exit 2 ;;
+  # SD-29 Epic 7 (companion lane). The hub's bottom link row WRAPPED when this
+  # link was added -- "Browse Companion Catalog" sits on a second line at y=971,
+  # and every coordinate above is unchanged, verified on a live screenshot
+  # rather than assumed.
+  #
+  # SEARCH_Y for this family is CALIBRATED LIVE every time the lane registers
+  # books, not copied by analogy, because THIS SCREEN'S CHIP ROW GROWS WITH THE
+  # CORPUS and the box moves with it. Two live calibrations so far:
+  #
+  #   247 — SD-29 Epic 7 round 1, 4 books, chips on ONE line. 285 (the value
+  #         every other single-chip-row family uses) landed BELOW the box; the
+  #         run was refused with "still shows 15 rows — filter did not apply".
+  #   285 — SD-29 Epic 7 round 2, 7 books. The chip row WRAPPED to two lines
+  #         (Bestiary 2's chip starts a second row), pushing the box down ~38px.
+  #         247 then landed ABOVE it and the run was refused with "still shows
+  #         77 rows". Same gate, opposite direction, one round apart.
+  #
+  # Both refusals are the filtered-count gate doing its job rather than
+  # screenshotting an unfiltered list and finding the record name in it. **The
+  # constant is a function of registered book count and WILL move again** — the
+  # next companion round should expect to recalibrate, and the gate will say so.
+  companion)  HUB_X=855;  HUB_Y=971; SEARCH_Y=285; SCREEN_MARKER="Companion Catalog"; MATCH_WORD="matching" ;;
+  *) echo "FAIL: unknown --family '$FAMILY' (known: equipment spell race_trait monster companion)" >&2; exit 2 ;;
 esac
 SEARCH_X=960
 # A neutral left-margin point OUTSIDE every interactive element: clicking it

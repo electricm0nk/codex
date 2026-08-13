@@ -1,0 +1,54 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:good_regeneration",
+      "inner_sea_bestiary:monster_ability:lorthact_infernal_duke_traits",
+      "inner_sea_bestiary:monster_ability:lorthact_intelligence_drain",
+      "inner_sea_bestiary:monster_ability:lorthact_scholastic_masquerade",
+      "inner_sea_bestiary:monster_ability:lorthact_spell_reservoir",
+      "inner_sea_bestiary:monster_ability:lorthact_temporal_anomaly"
+    ],
+    "challenge_rating": "25",
+    "corpus_key": "Lorthact",
+    "external_ability_refs": [
+      "Lorthact ~ Spell-Like Abilities"
+    ],
+    "key": "inner_sea_bestiary:monster:lorthact",
+    "monster_class": "Outsider (Ref/Will):32",
+    "name": "Lorthact",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Evil|Lawful|Devil|Extraplanar",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.26",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 46,
+    "record_key": "Lorthact"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

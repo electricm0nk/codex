@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Vrolikai ~ Death-Stealing Gaze",
+    "delivery": "Supernatural",
+    "description": "1 permanent negative level, 30 ft., DC %1 negates.  Creatures slain by these negative levels become juju zombies (see page 291) under the vrolikai's control.",
+    "description_variables": [
+      "VorlikaiDeathStealingGazeDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:vrolikai_death_stealing_gaze",
+    "name": "Death-Stealing Gaze",
+    "owners": [
+      "bestiary_2:monster:demon_vrolikai"
+    ],
+    "source_page": "p.81",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 370,
+    "record_key": "Vrolikai ~ Death-Stealing Gaze"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

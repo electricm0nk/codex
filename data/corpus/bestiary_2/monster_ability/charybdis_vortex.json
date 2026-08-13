@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Charybdis ~ Vortex",
+    "delivery": "Supernatural",
+    "description": "A charybdis can generate a whirlpool as a standard action at will.  This ability functions identically to the whirlwind special attack (see the Universal Monster Rules in Appendix 3), but the whirlpool can only form underwater and cannot leave the water.  It's a DC %1 Reflex save to avoid being caught by the charybdis's vortex.  The vortex itself is 20 feet across and 120 feet deep, and deals 2d6+12 points of damage per round.",
+    "description_variables": [
+      "CharybdisVortexDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:charybdis_vortex",
+    "name": "Vortex",
+    "owners": [
+      "bestiary_2:monster:charybdis"
+    ],
+    "source_page": "p.56",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 247,
+    "record_key": "Charybdis ~ Vortex"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

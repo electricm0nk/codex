@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "4",
+    "corpus_key": "Dragon (Magma)",
+    "external_ability_refs": [],
+    "key": "bestiary_2:monster:dragon_magma",
+    "monster_class": "Dragon:5",
+    "name": "Dragon (Magma)",
+    "natural_attacks": [],
+    "race_subtype": "Extraplanar|Fire",
+    "race_type": "Dragon",
+    "size": "T",
+    "source_page": "p.100",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 311,
+    "record_key": "Dragon (Magma)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

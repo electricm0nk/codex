@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Aeon ~ Fate Drain",
+    "delivery": "Supernatural",
+    "description": "You possess a pair of flexible crystalline tentacles with which you can drain a creature's sense of fate and destiny. Whenever you strikes a foe with these tentacles, the creature struck must make a DC %1 Will save or take 1d4 points of Charisma damage. Until a creature's Charisma damage from this ability is healed, the victim takes a -2 penalty on all saving throws (regardless of the actual total amount of Charisma damage it takes).",
+    "description_variables": [
+      "FateDrainDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:aeon_fate_drain",
+    "name": "Fate Drain",
+    "owners": [
+      "bestiary_2:monster:aeon_theletos"
+    ],
+    "source_page": "p.14",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 28,
+    "record_key": "Aeon ~ Fate Drain"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

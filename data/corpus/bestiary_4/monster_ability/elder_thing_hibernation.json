@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Elder Thing ~ Hibernation",
+    "delivery": "Extraordinary",
+    "description": "An elder thing can enter a state of hibernation at will; doing so takes 1 minute. While in this state, it can take no actions and is effectively helpless, as if it were in a deep sleep. An elder thing can remain in hibernation for as long as it wishes-while in this state, it does not need to eat or drink, nor does it age. Time effectively stands still for a hibernating elder thing. If it is jostled or damaged while hibernating, an elder thing can attempt a DC 20 Will save. If it succeeds, it awakens in 2d4 rounds. Otherwise, it takes 1d4 days to awaken from hibernation. An elder thing can set the length of its hibernation when it first enters this state, so that it can awaken after a set amount of time has passed. When awakening at a set time in this manner, an elder thing needs only 1d3 rounds to rouse itself, with no Will saving throw necessary.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:elder_thing_hibernation",
+    "name": "Hibernation",
+    "owners": [
+      "bestiary_4:monster:elder_thing"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 606,
+    "record_key": "Elder Thing ~ Hibernation"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:nygoth_acid",
+      "bestiary_2:monster_ability:nyogoth_horrific_appearance"
+    ],
+    "challenge_rating": "10",
+    "corpus_key": "Qlippoth (Nyogoth)",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Flight Maneuverability",
+      "Immunity to Acid",
+      "Nyogoth ~ Acid Spray"
+    ],
+    "key": "bestiary_2:monster:qlippoth_nyogoth",
+    "monster_class": "Outsider (Fort/Ref):10",
+    "name": "Qlippoth (Nyogoth)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "2d6",
+        "name": "Bite 2"
+      }
+    ],
+    "race_subtype": "Chaotic|Evil|Extraplanar|Qlippoth",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.224",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 724,
+    "record_key": "Qlippoth (Nyogoth)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

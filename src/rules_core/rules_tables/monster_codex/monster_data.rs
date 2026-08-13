@@ -28,6 +28,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d6") }, NaturalAttack { name: "Venom", damage_dice: None }],
         ability_keys: &["Seru ~ Poison", "Seru ~ Spit Venom"],
         external_ability_refs: &[],
+        source_file: "mc_races.lst",
         source_line: 5,
     },
     MonsterStatBlock {
@@ -43,6 +44,7 @@ pub(super) static MONSTERS: &[MonsterStatBlock] = &[
         natural_attacks: &[NaturalAttack { name: "Bite", damage_dice: Some("1d3") }],
         ability_keys: &["Bat (Sootwing) ~ Disease"],
         external_ability_refs: &[],
+        source_file: "mc_races.lst",
         source_line: 6,
     },
 ];
@@ -59,6 +61,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Bat (Sootwing)"],
+        source_file: "mc_abilities_race.lst",
         source_line: 71,
     },
     MonsterAbilityRecord {
@@ -71,6 +74,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Seru"],
+        source_file: "mc_abilities_race.lst",
         source_line: 85,
     },
     MonsterAbilityRecord {
@@ -83,6 +87,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: None,
         owners: &["Seru"],
+        source_file: "mc_abilities_race.lst",
         source_line: 86,
     },
 ];

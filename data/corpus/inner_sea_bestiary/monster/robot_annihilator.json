@@ -1,0 +1,62 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_bestiary:monster_ability:annihilator_booster_jets",
+      "inner_sea_bestiary:monster_ability:annihilator_chain_guns",
+      "inner_sea_bestiary:monster_ability:annihilator_combined_arms",
+      "inner_sea_bestiary:monster_ability:annihilator_plasma_lance",
+      "inner_sea_bestiary:monster_ability:annihilator_suppressing_fire",
+      "inner_sea_bestiary:monster_ability:robot_critical_hit_vulnerability",
+      "inner_sea_bestiary:monster_ability:robot_electricity_vulnerability",
+      "inner_sea_bestiary:monster_ability:robot_force_field",
+      "inner_sea_bestiary:monster_ability:robot_intelligent"
+    ],
+    "challenge_rating": "16",
+    "corpus_key": "Robot (Annihilator)",
+    "external_ability_refs": [
+      "Immunity to Cold",
+      "Resistance to Electricity",
+      "Resistance to Fire"
+    ],
+    "key": "inner_sea_bestiary:monster:robot_annihilator",
+    "monster_class": "Construct:20",
+    "name": "Robot (Annihilator)",
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Robot",
+    "race_type": "Construct",
+    "size": "G",
+    "source_page": "p.43",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_races.lst",
+    "sha256": "c121cfae4f68410ffa9610fd753b1bc8769bcab1cd06b49dee364b495f68ed32",
+    "line": 71,
+    "record_key": "Robot (Annihilator)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

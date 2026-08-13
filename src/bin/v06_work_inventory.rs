@@ -60,6 +60,7 @@ use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
 use codex::rules_core::rules_tables::apg::{self, ApgClassId};
 use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
+use codex::rules_core::rules_tables::companion_chassis;
 use codex::rules_core::rules_tables::monster_chassis;
 use codex::rules_core::rules_tables::crb::{
     class_tables::ClassId, equipment_tables as crb_equipment_tables,
@@ -885,6 +886,26 @@ const COMPILED_RULE_SETS: &[RuleSetId] = &[
     RuleSetId::BonusBestiary,
     RuleSetId::MonsterCodex,
     RuleSetId::Isr,
+    RuleSetId::Ha,
+    RuleSetId::Botd1,
+    RuleSetId::Botd2,
+    RuleSetId::Iswg,
+    RuleSetId::Ce,
+    RuleSetId::Isc,
+    RuleSetId::Isi,
+    RuleSetId::B5,
+    RuleSetId::B6,
+    RuleSetId::B2,
+    // SD-29 Epic 5 extend, round 5 (monster lane).
+    RuleSetId::B3,
+    // SD-29 Epic 5 extend, round 6 (monster lane).
+    RuleSetId::B4,
+    // SD-29 Epic 5 extend, round 7 (monster lane). The engine id and the corpus
+    // directory are spelled the same, unlike `bestiary` -> `bestiary_1`.
+    RuleSetId::Isb,
+    // SD-29 Epic 5 extend, round 9 (monster lane). Engine id and corpus
+    // directory are spelled the same.
+    RuleSetId::Isg,
 ];
 
 /// The corpus directory whose records a rule set is compiled from. Exhaustive
@@ -909,6 +930,20 @@ fn corpus_dir_for(rule_set: RuleSetId) -> &'static str {
         RuleSetId::BonusBestiary => "bonus_bestiary",
         RuleSetId::MonsterCodex => "monster_codex",
         RuleSetId::Isr => "inner_sea_races",
+        RuleSetId::Ha => "horror_adventures",
+        RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+        RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+        RuleSetId::Iswg => "inner_sea_world_guide",
+        RuleSetId::Ce => "core_essentials",
+        RuleSetId::Isc => "inner_sea_combat",
+        RuleSetId::Isi => "inner_sea_intrigue",
+        RuleSetId::B5 => "bestiary_5",
+        RuleSetId::B6 => "bestiary_6",
+        RuleSetId::B2 => "bestiary_2",
+        RuleSetId::B3 => "bestiary_3",
+        RuleSetId::B4 => "bestiary_4",
+        RuleSetId::Isb => "inner_sea_bestiary",
+        RuleSetId::Isg => "inner_sea_gods",
     }
 }
 
@@ -945,6 +980,22 @@ fn rule_set_id(rule_set: RuleSetId) -> &'static str {
         RuleSetId::BonusBestiary => "bonus_bestiary",
         RuleSetId::MonsterCodex => "monster_codex",
         RuleSetId::Isr => "inner_sea_races",
+        RuleSetId::Ha => "horror_adventures",
+        RuleSetId::Botd1 => "book_of_the_damned_volume_1",
+        RuleSetId::Botd2 => "book_of_the_damned_volume_2",
+        RuleSetId::Iswg => "inner_sea_world_guide",
+        RuleSetId::Ce => "core_essentials",
+        RuleSetId::Isc => "inner_sea_combat",
+        RuleSetId::Isi => "inner_sea_intrigue",
+        // Unlike `bestiary` -> `bestiary_1`, these three engine ids are spelled
+        // exactly like their corpus directories.
+        RuleSetId::B5 => "bestiary_5",
+        RuleSetId::B6 => "bestiary_6",
+        RuleSetId::B2 => "bestiary_2",
+        RuleSetId::B3 => "bestiary_3",
+        RuleSetId::B4 => "bestiary_4",
+        RuleSetId::Isb => "inner_sea_bestiary",
+        RuleSetId::Isg => "inner_sea_gods",
     }
 }
 
@@ -1075,6 +1126,16 @@ struct EngineFacts {
     /// key, never the display name: namespaced keys (`Seru ~ Poison`,
     /// `Caryatid Column ~ Immunity to Magic`) have leaves that are not unique.
     chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>>,
+    /// Every chassis-book `companion` record the engine holds, keyed by corpus
+    /// book then by lowercase corpus key.
+    ///
+    /// One map for both of the kind's structural shapes (creature rows and
+    /// ability rows), because `Kind::Companion` is one kind: `file_kind` types
+    /// `*_races_companion.lst` and `*_abilities_companion.lst` alike, and a unit
+    /// carries no field that distinguishes them. Built by iterating
+    /// `companion_chassis::COMPANION_BOOKS`, so registering a book there is what
+    /// makes its units classify; nothing here names a book.
+    chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
@@ -1167,13 +1228,20 @@ impl EngineFacts {
             // module (`crb::race_tables`, `beastiary1`), so the book gate is
             // part of the fact -- without it a shared-library race would be
             // credited to whichever host happened to be tried first.
+            // Bestiary 1 is served by TWO tables and both ground it: SD-22's
+            // `beastiary1` (46 hand-modelled stat blocks, joined by display
+            // name) and, since SD-29 Epic 5 round 8, the chassis holding the
+            // book's other 284 rows (`decisions.md §58.3`). A UNION, not a
+            // precedence: an early return on `monster_names` would report all
+            // 284 chassis rows `not-ingested` while the registry held them, and
+            // consulting only the chassis would demote the 46. Both halves have
+            // to answer, because the book really is in both places.
             Kind::Monster => {
-                if book == "bestiary_1" {
-                    return self.monster_names.contains(&name.to_lowercase());
-                }
-                hit_lowercase(self.chassis_monster_keys.get(book))
+                (book == "bestiary_1" && self.monster_names.contains(&name.to_lowercase()))
+                    || hit_lowercase(self.chassis_monster_keys.get(book))
             }
             Kind::MonsterAbility => hit_lowercase(self.chassis_monster_ability_keys.get(book)),
+            Kind::Companion => hit_lowercase(self.chassis_companion_keys.get(book)),
             Kind::Race => book == "core_rulebook" && self.race_names.contains(&name.to_lowercase()),
             // The record's OWN race gates this, not "any modelled race" --
             // see `modelled_race_of_race_trait`.
@@ -1783,15 +1851,65 @@ fn gather_engine_facts(
     let mut chassis_monster_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
     let mut chassis_monster_ability_keys: BTreeMap<&'static str, BTreeSet<String>> =
         BTreeMap::new();
+    //
+    // Keyed by the ENGINE book, translated from the registry's corpus
+    // directory, exactly as `chassis_companion_keys` below is and for the same
+    // reason: the `Kind::Monster` / `Kind::MonsterAbility` verdict arms have an
+    // `engine_book` in hand (`rule_set_id`), never a corpus directory. For the
+    // first nine registered monster books the two strings are identical, so a
+    // raw `book.corpus_book` key worked by COINCIDENCE rather than by rule --
+    // the same latent defect `decisions.md §54.3` records the companion lane
+    // finding in its own copy of this loop. Bestiary 1 is where the coincidence
+    // ends: its corpus directory is `beastiary`, its engine book is
+    // `bestiary_1`, and an untranslated key would have reported all 607 of its
+    // chassis records as `not-ingested` while the registry held them.
     for book in monster_chassis::MONSTER_BOOKS {
+        let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
+            panic!(
+                "monster book {:?} is registered in MONSTER_BOOKS but resolves to no rule \
+                 set; add it to CORPUS_DIR_ALIASES or register its RuleSetId",
+                book.corpus_book
+            )
+        });
         chassis_monster_keys.insert(
-            book.corpus_book,
+            engine_book,
             book.monsters.iter().map(|m| m.key.to_lowercase()).collect(),
         );
         chassis_monster_ability_keys.insert(
-            book.corpus_book,
+            engine_book,
             book.monster_abilities.iter().map(|a| a.key.to_lowercase()).collect(),
         );
+    }
+
+    // Same registry discipline for `companion`: `companion_chassis::COMPANION_BOOKS`
+    // is iterated, never enumerated here. Both structural shapes go into one set
+    // per book because `Kind::Companion` is one kind (see
+    // `EngineFacts::chassis_companion_keys`).
+    //
+    // Keyed by the ENGINE book, translated from the registry's corpus
+    // directory, never by the corpus directory itself. The lookup at the
+    // `Kind::Companion` verdict arm has an `engine_book` in hand
+    // (`rule_set_id`), and for the first seven registered companion books the
+    // two strings happened to be identical, so a raw `book.corpus_book` key
+    // worked by coincidence rather than by rule. Bestiary 1 is where the
+    // coincidence ends: its corpus directory is `beastiary`, its engine book is
+    // `bestiary_1`, and an untranslated key would have reported all 59 of its
+    // grounded records as `companion_content_has_no_engine_table` — the
+    // silent-under-report shape `decisions.md §44` already paid for once.
+    // `engine_book_for_corpus_dir` is the existing translation, not a new one.
+    let mut chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>> = BTreeMap::new();
+    for book in companion_chassis::COMPANION_BOOKS {
+        let mut keys: BTreeSet<String> =
+            book.companions.iter().map(|c| c.key.to_lowercase()).collect();
+        keys.extend(book.companion_abilities.iter().map(|a| a.key.to_lowercase()));
+        let engine_book = engine_book_for_corpus_dir(book.corpus_book).unwrap_or_else(|| {
+            panic!(
+                "companion book {:?} is registered in COMPANION_BOOKS but resolves to no rule \
+                 set; add it to CORPUS_DIR_ALIASES or register its RuleSetId",
+                book.corpus_book
+            )
+        });
+        chassis_companion_keys.insert(engine_book, keys);
     }
 
     let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
@@ -1849,6 +1967,7 @@ fn gather_engine_facts(
         monster_names,
         chassis_monster_keys,
         chassis_monster_ability_keys,
+        chassis_companion_keys,
         class_books,
         race_names,
         race_trait_ids,
@@ -2197,12 +2316,40 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
             // `decisions.md §43.5`. Order matters: nothing the old rule
             // grounded can be demoted, because every record it grounds is
             // also in the loaded corpus.
-            if facts.race_trait_engine_book(unit) == Some(engine_book.as_str()) {
+            //
+            // **The observation grounds on its own; it is not additionally
+            // required to agree with the unit's own book.** This used to read
+            // `== Some(engine_book.as_str())`, which was indistinguishable
+            // from the rule above for every book whose `.lst` rows are filed
+            // under itself -- and silently wrong for `core_essentials`, the
+            // one book whose rows are routinely filed under a *different*
+            // book (`race_trait_engine_book`'s own doc comment says exactly
+            // that). While `core_essentials` had no compiled rule set the
+            // shared-library path above resolved `engine_book` to the real
+            // host and the equality held. SD-29's race-trait lane round 4 gave
+            // the book a rule set of its own, for the 64 heritage records that
+            // genuinely belong to it, and **155 Core Rulebook and Bestiary 1
+            // standard racial traits stored in that directory instantly
+            // dropped from `grounded` to
+            // `race_trait_record_loaded_but_never_applies`** -- an evidence
+            // token asserting the opposite of what the probe had just
+            // observed. Nothing about those records changed; only the book
+            // they are stored in gained an id.
+            //
+            // The probe's answer is the attribution, so it is reported as
+            // such: a record whose observed book differs from its own is
+            // credited to the observed one, exactly as a shared-library record
+            // was before its host book was named. (`decisions.md §49.3`.)
+            if let Some(observed) = facts.race_trait_engine_book(unit) {
                 return Verdict {
                     status: "grounded",
                     evidence: "race_trait_applied_by_the_race_corpus_the_app_loads".to_string(),
                     reason: None,
-                    engine_book: engine_book_field,
+                    engine_book: if own_engine_book == Some(observed) {
+                        engine_book_field
+                    } else {
+                        Some(observed.to_string())
+                    },
                 };
             }
             // FALLBACK: CRB's seven compiled races. Still consulted, because
@@ -2351,6 +2498,22 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
                 return not_ingested("class_feature_owner_matched_by_name_but_record_not_held_by_engine");
             }
             not_ingested("no_explanation_id_and_no_diagnostic_names_this_feature")
+        }
+        // SD-29 Epic 7 (companion lane). Registry-driven exactly as the two
+        // monster arms above are: `companion_chassis::COMPANION_BOOKS` decides,
+        // and the evidence token carries the book so a receipt reader sees which
+        // table answered. A book with no registered companion table falls
+        // through to the arm below, which keeps its original wording.
+        Kind::Companion if facts.chassis_companion_keys.contains_key(engine_book.as_str()) => {
+            if facts.holds_key(&engine_book, &unit.kind, &unit.key, &unit.name) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: format!("{engine_book}_companion_resolve_returned_a_real_record"),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
+            not_ingested_owned(format!("companion_absent_from_{engine_book}_companion_tables"))
         }
         Kind::Companion => not_ingested("companion_content_has_no_engine_table"),
         // SD28-E15 (2026-08-09): no engine table exists for monster
@@ -3207,12 +3370,19 @@ mod rule_set_mapping_tests {
     /// A book the engine has not compiled must still report honestly.
     #[test]
     fn uncompiled_books_stay_none() {
-        // `ultimate_psionics` moved from uncompiled to compiled in SD28-E29
-        // (`epic-29-upsi-complete`) -- `rule_set_for` now correctly returns
-        // `Some(RuleSetId::Upsi)` for it, so it is no longer a valid
-        // uncompiled example. `inner_sea_gods` remains genuinely
-        // uncompiled (SD-30's own book set, out of this bundle).
-        assert_eq!(rule_set_for("inner_sea_gods"), None);
+        // This test needs a book the engine genuinely has not compiled, and it
+        // has now outlived TWO of them: `ultimate_psionics` moved to compiled
+        // in SD28-E29 (`epic-29-upsi-complete`), and `inner_sea_gods` in SD-29
+        // Epic 5 extend round 9, which registered `RuleSetId::Isg` for its
+        // monster / monster_ability families. The comment this replaces also
+        // stated a reason that was wrong by the time it was read --
+        // "`inner_sea_gods` ... (SD-30's own book set, out of this bundle)" --
+        // and `decisions.md §38` had already re-scoped SD-29 corpus-wide.
+        //
+        // `occult_adventures` is uncompiled by DERIVATION, not by assumption:
+        // `corpus_dir_for` is exhaustive over `RuleSetId` and carries no arm
+        // returning it, so no `COMPILED_RULE_SETS` member can map to it.
+        assert_eq!(rule_set_for("occult_adventures"), None);
     }
 }
 

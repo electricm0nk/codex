@@ -1,0 +1,51 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:jellyfish_poison"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Jellyfish (Crimson)",
+    "external_ability_refs": [
+      "Amorphous",
+      "Can't Be Tripped",
+      "Compression"
+    ],
+    "key": "bestiary_2:monster:jellyfish_crimson",
+    "monster_class": "Vermin:5",
+    "name": "Jellyfish (Crimson)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Tentacle"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Vermin",
+    "size": "M",
+    "source_page": "p.170",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 532,
+    "record_key": "Jellyfish (Crimson)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

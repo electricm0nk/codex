@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Totenmaske ~ Fleshdrink",
+    "delivery": "Supernatural",
+    "description": "If a totenmaske hits a single creature with both claw attacks, the hollow claws drain away some of the target's flesh, dealing 1d6 points of Constitution damage and making the victim sickened for 1d4 rounds.  A successful DC %1 Fortitude save negates the Constitution damage and reduces the sickened condition duration to 1 round.",
+    "description_variables": [
+      "TotenmaskeFleshdrinkDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:totenmaske_fleshdrink",
+    "name": "Fleshdrink",
+    "owners": [
+      "bestiary_2:monster:totenmaske"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 1290,
+    "record_key": "Totenmaske ~ Fleshdrink"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

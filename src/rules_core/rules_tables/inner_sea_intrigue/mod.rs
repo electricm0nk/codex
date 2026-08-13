@@ -1,0 +1,146 @@
+//! Inner Sea Intrigue (`SOURCESHORT:ISI`) — `companion`.
+//!
+//! # These are the units the race-trait lane handed back
+//!
+//! `kanban.md`'s Epic 6 note records that all 9 of this book's then-`race_trait`
+//! units came from `isi_abilities_race_companion.lst` and are Clockwork Familiar
+//! / Clockwork Spy *construct-companion* abilities, not racial traits of any
+//! player race — `v06_work_inventory::file_kind` typed the file `race_trait` by
+//! its `_abilities_race` substring. That lane's round-2 fix retyped an
+//! `_abilities_race*` basename carrying a `companion`/`familiar` marker as
+//! `Companion`, moved these 9 rows, and left them with no owning lane; this is
+//! the lane that owns them, and this module is where they land.
+//!
+//! Re-derived for this round rather than inherited:
+//!
+//! ```text
+//! python3 scripts/classify_companion_rows.py inner_sea_intrigue
+//! book                              crea  abil  clas  named  prerace  prefix  ORPHAN
+//! inner_sea_intrigue                   2     9     0      0        0       9       0
+//! ```
+//!
+//! 2 creature rows + 9 ability rows = the 11 units the inventory counts, and
+//! **zero orphans**. Note the `named` and `prerace` columns: this is the only
+//! registered book where *every* link is the namespaced-key shape. A chassis
+//! that knew only the creature row's own `ABILITY:Special Ability` token would
+//! have found no owner for any of the nine.
+//!
+//! # `Tinkering` is defined twice, and the two rows are not the same record
+//!
+//! `Clockwork Spy ~ Tinkering` and `Clockwork Familiar ~ Tinkering` share a
+//! display name and differ in owner and delivery context. Joining on the name
+//! would have merged them and served one creature's ability under the other —
+//! the reason `companion_chassis` keys on the corpus `KEY:` token throughout.
+//!
+//! # Three rows carry a `TYPE:` this chassis does not model
+//!
+//! The `Potion` / `Scroll` / `Wand Installation` rows are
+//! `TYPE:ClockworkFamiliarInstalledItem` — no facet segment at all. They are
+//! recorded with `facet: None` and their segment kept verbatim in
+//! `type_segments`, rather than dropped or forced into `SpecialQuality`. All
+//! three carry real rules text and all three reach a player under their owning
+//! familiar.
+
+mod companion_data;
+
+pub use super::companion_chassis::{
+    CompanionAbilityDelivery, CompanionAbilityFacet, CompanionAbilityRecord, CompanionRecord,
+    NaturalAttack, Speed, StatAdjustment,
+};
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    /// From `docs/work-inventory.json`'s own units for this book: 11 total,
+    /// split 2 creature / 9 ability by `scripts/classify_companion_rows.py`.
+    #[test]
+    fn the_book_defines_two_familiars_and_nine_abilities() {
+        assert_eq!(companions().len(), 2);
+        assert_eq!(companion_abilities().len(), 9);
+    }
+
+    /// The two `Tinkering` rows are distinct records with distinct owners.
+    /// A name-keyed join would have collapsed them.
+    #[test]
+    fn tinkering_is_two_records_not_one() {
+        let tinkering: Vec<_> = companion_abilities()
+            .iter()
+            .filter(|a| a.name == "Tinkering")
+            .collect();
+        assert_eq!(tinkering.len(), 2);
+        let mut owners: Vec<&str> = tinkering.iter().flat_map(|a| a.owners.iter().copied()).collect();
+        owners.sort_unstable();
+        assert_eq!(owners, vec!["Familiar (Clockwork Familiar)", "Familiar (Clockwork Spy)"]);
+    }
+
+    /// The three unmodelled-facet rows, pinned by exact key in both directions:
+    /// they are exactly the `ClockworkFamiliarInstalledItem` rows, they keep
+    /// their segment verbatim, and every one of them carries real rules text a
+    /// player can read.
+    #[test]
+    fn the_installed_item_rows_keep_their_unmodelled_type_verbatim() {
+        let unmodelled: Vec<&str> = companion_abilities()
+            .iter()
+            .filter(|a| a.facet.is_none())
+            .map(|a| a.key)
+            .collect();
+        assert_eq!(
+            unmodelled,
+            vec![
+                "Clockwork Familiar ~ Potion Installation",
+                "Clockwork Familiar ~ Scroll Installation",
+                "Clockwork Familiar ~ Wand Installation",
+            ]
+        );
+        for key in unmodelled {
+            let record = companion_abilities()
+                .iter()
+                .find(|a| a.key == key)
+                .expect("the row is in this book");
+            assert_eq!(record.type_segments, &["ClockworkFamiliarInstalledItem"]);
+            assert!(
+                record.description.is_some_and(|d| !d.trim().is_empty()),
+                "{key} would reach the catalog with nothing to read"
+            );
+        }
+    }
+
+    /// Verbatim spot-check against `isi_races_companion.lst:9`. `Construct:3` is
+    /// carried, never expanded: this ingest computes no hit dice.
+    #[test]
+    fn the_clockwork_familiar_matches_its_corpus_row() {
+        let familiar = companions()
+            .iter()
+            .find(|c| c.key == "Familiar (Clockwork Familiar)")
+            .expect("the Clockwork Familiar is in this book");
+        assert_eq!(familiar.source_line, 9);
+        assert_eq!(familiar.size, Some("T"));
+        assert_eq!(familiar.race_type, Some("Construct"));
+        assert_eq!(familiar.race_subtype, Some("Clockwork"));
+        assert_eq!(familiar.monster_class, Some("Construct:3"));
+        assert_eq!(familiar.source_page, Some("p.47"));
+        assert_eq!(familiar.type_segments, &["Companion", "Familiar", "Construct"]);
+        assert_eq!(familiar.ability_keys.len(), 6);
+    }
+}

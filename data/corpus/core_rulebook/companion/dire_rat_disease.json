@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T02:26:54Z",
+  "data": {
+    "corpus_key": "Dire Rat ~ Disease",
+    "delivery": "Extraordinary",
+    "description": "Filth Fever: Bite injury; Save Fort DC %1; Onset 1d3 days; Frequency 1/day; Effect 1d3 Dex damage and 1d3 Con damage; Cure 2 consecutive saves.",
+    "description_variables": [
+      "DiseaseDC"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "core_rulebook:companion:dire_rat_disease",
+    "name": "Disease",
+    "owners": [
+      "core_rulebook:companion:companion_dire_rat"
+    ],
+    "record_type": "ability",
+    "source_page": "p.232",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 184,
+    "record_key": "Dire Rat ~ Disease"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

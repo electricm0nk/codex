@@ -1,0 +1,60 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:locust_giant_leap",
+      "bestiary_4:monster_ability:locust_giant_spit",
+      "bestiary_4:monster_ability:locust_giant_voracious"
+    ],
+    "challenge_rating": "3",
+    "corpus_key": "Locust (Giant)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:locust_giant",
+    "monster_class": "Vermin:4",
+    "name": "Giant Locust",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d3",
+        "name": "Spit"
+      },
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "M",
+    "source_page": "p.183",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 152,
+    "record_key": "Locust (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

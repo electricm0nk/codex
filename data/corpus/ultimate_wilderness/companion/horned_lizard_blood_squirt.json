@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Horned Lizard ~ Blood Squirt",
+    "delivery": "Extraordinary",
+    "description": "Once per day as a standard action that doesn't provoke attacks of opportunity, a horned lizard can squirt a 5-foot-long stream of blood from the corners of its eyes. The animal's blood contains noxious chemicals, and a creature hit by the blood must succeed at a DC %1 Fortitude save or be sickened for 1d4 rounds.",
+    "description_variables": [
+      "10+HD/2+CON"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:horned_lizard_blood_squirt",
+    "name": "Blood Squirt",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_horned_lizard"
+    ],
+    "record_type": "ability",
+    "source_page": "p.197",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "HornedLizardRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 241,
+    "record_key": "Horned Lizard ~ Blood Squirt"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

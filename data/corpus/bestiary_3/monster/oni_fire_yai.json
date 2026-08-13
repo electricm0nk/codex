@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T18:42:18Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "15",
+    "corpus_key": "Oni (Fire Yai)",
+    "external_ability_refs": [
+      "Flight Maneuverability"
+    ],
+    "key": "bestiary_3:monster:oni_fire_yai",
+    "monster_class": "Outsider (Fort/Will):17",
+    "name": "Fire Yai",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d10",
+        "name": "Slams"
+      }
+    ],
+    "race_subtype": "Fire|Giant|Native|Oni|Shapechanger",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.205",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_3/b3_races.lst",
+    "sha256": "d3c21d94b2f541548084dc2535c51bec50086940a79dfe084b2ef1feb7ca8dcc",
+    "line": 205,
+    "record_key": "Oni (Fire Yai)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Colour Out of Space ~ Disintegrating Touch",
+    "delivery": "Supernatural",
+    "description": "A colour's touch causes a terrible disintegration of flesh and bone. A successful DC %1 Fortitude save halves the damage caused by a colour out of space's touch attack. A creature reduced to 0 hit points by a colour out of space's touch attack must succeed at a DC %1 Fortitude save or be immediately slain and reduced to a pile of fine ash.",
+    "description_variables": [
+      "16+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:colour_out_of_space_disintegrating_touch",
+    "name": "Disintegrating Touch",
+    "owners": [
+      "bestiary_4:monster:colour_out_of_space"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 415,
+    "record_key": "Colour Out of Space ~ Disintegrating Touch"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Mother's Maw ~ Devour Soul",
+    "delivery": "Supernatural",
+    "description": "A creature swallowed by the herald must save every round against slay living (DC %1, caster level %2). The soul of a creature slain by this attack becomes trapped within the herald's skull and the mangled corpse is immediately regurgitated. The creature cannot be brought back to life until the herald's destruction releases its soul. The Maw can hold only one soul at a time. The trapped essence provides the Maw with fast healing 20, lasting 1 round for every Hit Die of the devoured soul. The trapped soul gains 1 permanent negative level for every round it spends within the Maw -- these negative levels remain if the creature is brought back to life (but don't stack with any negative levels imparted by being brought back to life). A soul that is completely consumed may be restored to life only by a miracle or wish spell.",
+    "description_variables": [
+      "DevourSoulDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:mother_s_maw_devour_soul",
+    "name": "Devour Soul",
+    "owners": [
+      "inner_sea_gods:monster:mother_s_maw"
+    ],
+    "source_page": "p.82",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 282,
+    "record_key": "Mother's Maw ~ Devour Soul"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

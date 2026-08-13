@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Bone Devil ~ Fear Aura",
+    "delivery": "Supernatural",
+    "description": "5 Ft., DC %1, 1d6 Rounds",
+    "description_variables": [
+      "FearAuraDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:bone_devil_fear_aura",
+    "name": "Fear Aura",
+    "owners": [
+      "beastiary:monster:devil_bone"
+    ],
+    "source_page": "p.74",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 344,
+    "record_key": "Bone Devil ~ Fear Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

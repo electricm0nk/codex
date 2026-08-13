@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Gray Ooze ~ Paralytic Toxin",
+    "delivery": "Extraordinary",
+    "description": "The crystal ooze secretes a paralytic toxin that causes those whom it strikes to become paralyzed for 3d6 rounds if they fail a Fortitude DC %1 saving throw.",
+    "description_variables": [
+      "ParalyticToxinDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:gray_ooze_paralytic_toxin",
+    "name": "Paralytic Toxin",
+    "owners": [
+      "beastiary:monster:gray_ooze_crystal_ooze",
+      "beastiary:monster:gray_ooze"
+    ],
+    "source_page": "p.166",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 753,
+    "record_key": "Gray Ooze ~ Paralytic Toxin"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

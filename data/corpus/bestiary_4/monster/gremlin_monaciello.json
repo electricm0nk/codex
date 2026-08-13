@@ -1,0 +1,52 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_4:monster_ability:gremlin_monaciello_magic_bag",
+      "bestiary_4:monster_ability:gremlin_monaciello_stymie_channeling"
+    ],
+    "challenge_rating": "1",
+    "corpus_key": "Gremlin (Monaciello)",
+    "external_ability_refs": [],
+    "key": "bestiary_4:monster:gremlin_monaciello",
+    "monster_class": "Fey:2",
+    "name": "Monaciello",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Fey",
+    "size": "S",
+    "source_page": "p.144",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_races.lst",
+    "sha256": "94fe7d7506ee86a8ff84127d7adecbb3d04939a26e573f418547eff3f0be52d1",
+    "line": 115,
+    "record_key": "Gremlin (Monaciello)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

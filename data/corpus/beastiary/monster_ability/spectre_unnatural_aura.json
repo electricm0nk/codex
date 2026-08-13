@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Spectre ~ Unnatural Aura",
+    "delivery": "Supernatural",
+    "description": "Animals, whether wild or domesticated, can sense the unnatural presence of a spectre at a distance of 30 feet. They do not willingly approach nearer than that and panic if forced to do so unless a master succeeds at a DC %1 Handle Animal, Ride, or wild empathy check. A panicked animal remains so as long as it is within 30 feet of the spectre.",
+    "description_variables": [
+      "UnnaturalAuraDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:spectre_unnatural_aura",
+    "name": "Unnatural Aura",
+    "owners": [
+      "beastiary:monster:spectre"
+    ],
+    "source_page": "p.256",
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1141,
+    "record_key": "Spectre ~ Unnatural Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Guardian Dragon ~ Vengeful Seeker",
+    "delivery": "Extraordinary",
+    "description": "A guardian dragon gains the swift tracker and quarry abilities of a ranger when tracking or hunting any creature that has confirmed a critical hit against it, penetrated its spell resistance, or taken any amount of its treasure. Any divination spell-like ability a guardian dragon uses to locate such a creature or its treasure counts as the mythic version of the spell, if appropriate.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:guardian_dragon_vengeful_seeker",
+    "name": "Vengeful Seeker",
+    "owners": [
+      "bestiary_4:monster:guardian_dragon"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 849,
+    "record_key": "Guardian Dragon ~ Vengeful Seeker"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Locust (Sawleg) ~ Leap",
+    "delivery": "Extraordinary",
+    "description": "A sawleg locust can take 10 on Acrobatics checks to jump even if distracted or in danger.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "ultimate_wilderness:companion:locust_sawleg_leap",
+    "name": "Leap",
+    "owners": [
+      "ultimate_wilderness:companion:locust_sawleg"
+    ],
+    "record_type": "ability",
+    "source_page": "p.205",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuaility",
+      "Extraordinary",
+      "SawlegLocustRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 271,
+    "record_key": "Locust (Sawleg) ~ Leap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

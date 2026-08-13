@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Stone Golem ~ Immunity to Magic",
+    "delivery": "Extraordinary",
+    "description": "A stone golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against the creature, as noted below. * A transmute rock to mud spell slows a stone golem (as the slow spell) for 2d6 rounds, with no saving throw, while transmute mud to rock heals all of its lost hit points. * A stone to flesh spell does not actually change the golem's structure but negates its damage reduction and immunity to magic for 1 full round.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "beastiary:monster_ability:stone_golem_immunity_to_magic",
+    "name": "Immunity to Magic",
+    "owners": [
+      "beastiary:monster:golem_stone"
+    ],
+    "source_page": "p.163",
+    "traits": [
+      "Immunity"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 737,
+    "record_key": "Stone Golem ~ Immunity to Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

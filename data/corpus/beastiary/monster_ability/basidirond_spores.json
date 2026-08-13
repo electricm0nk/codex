@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Basidirond ~ Spores",
+    "delivery": "Extraordinary",
+    "description": "Any creature struck by a basidirond's slam attack is coated with spores. The creature struck must make a DC %1 Fortitude save or these spores take root in his flesh, and particularly in his lungs. Basidirond Spores: Disease--inhaled; save Fort DC 16; frequency 1/round for 6 rounds; effect 1d2 Con damage; cure 1 save.",
+    "description_variables": [
+      "SporesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:basidirond_spores",
+    "name": "Spores",
+    "owners": [
+      "beastiary:monster:basidirond"
+    ],
+    "source_page": "p.28",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 146,
+    "record_key": "Basidirond ~ Spores"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

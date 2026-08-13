@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Dragon (Vortex) ~ Collapsing Breath",
+    "delivery": "Supernatural",
+    "description": "Instead of a cone of fire, an ancient or older vortex dragon can suck a single target into its maw. If the target fails its Reflex save (DC %1), it is swallowed whole and takes 6d6 points of bludgeoning damage per round. A creature can cut itself out by dealing 30 points of damage with a light or one-handed piercing or slashing weapon. A vortex dragon's interior has an AC of 26.",
+    "description_variables": [
+      "BreathWeaponDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dragon_vortex_collapsing_breath",
+    "name": "Collapsing Breath",
+    "owners": [
+      "bestiary_4:monster:dragon_vortex"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 545,
+    "record_key": "Dragon (Vortex) ~ Collapsing Breath"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

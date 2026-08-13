@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Dinosaur (Styracosaurus) ~ Reflexive Strike",
+    "delivery": "Extraordinary",
+    "description": "A styracosaurus can make three additional attacks of opportunity each round-combined with its bonus Combat Reflexes feat, this allows the dinosaur to make up to five of these attacks of opportunity per round. The dinosaur makes these attacks with its horned crest, but they are treated as normal gore attacks.",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:dinosaur_styracosaurus_reflexive_strike",
+    "name": "Reflexive Strike",
+    "owners": [
+      "bestiary_4:monster:dinosaur_styracosaurus"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 490,
+    "record_key": "Dinosaur (Styracosaurus) ~ Reflexive Strike"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

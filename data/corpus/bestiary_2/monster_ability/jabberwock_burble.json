@@ -1,0 +1,37 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Jabberwock ~ Burble",
+    "delivery": "Supernatural",
+    "description": "A jabberwock can burble once every 1d4 rounds as a standard action.  This blast of strange noises and shouted nonsense in the various languages known to the jabberwock (and invariably some languages it doesn't know) affects all creatures within a 60-foot-radius spread - these creatures must make a DC %1 Will save or become confused for 1d4 rounds.  Alternatively, the jabberwock can focus its burble attack to create a 60-foot line of sonic energy that deals 20d6 points of sonic damage (DC %1 Reflex save for half).  The confusion effect is mind-affecting; both are sonic effects.",
+    "description_variables": [
+      "JabberwockBurbleDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:jabberwock_burble",
+    "name": "Burble",
+    "owners": [
+      "bestiary_2:monster:jabberwock",
+      "bestiary_2:monster:jabberwock_lesser"
+    ],
+    "source_page": "p.168",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 723,
+    "record_key": "Jabberwock ~ Burble"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

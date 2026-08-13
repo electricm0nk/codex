@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Meerkat ~ Mob",
+    "delivery": "Extraordinary",
+    "description": "If two meerkats in the same square attack the same foe, they are considered to be flanking that foe as if they were in two opposite squares.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:meerkat_mob",
+    "name": "Mob",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_meerkat",
+      "ultimate_wilderness:companion:meerkat"
+    ],
+    "record_type": "ability",
+    "source_page": "p.200",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "MeerkatRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 282,
+    "record_key": "Meerkat ~ Mob"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

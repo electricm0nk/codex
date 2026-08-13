@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T21:32:45Z",
+  "data": {
+    "corpus_key": "Myrmidon ~ Rockets",
+    "delivery": "Extraordinary",
+    "description": "As a standard action, a myrmidon can fire a rocket to a range of 8oo feet. A rocket explodes on impact in a 30-foot-radius burst, dealing 6d6 points of fire damage and 6d6 points of bludgeoning damage to all creatures in the area (Reflex DC 18 halves).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_bestiary:monster_ability:myrmidon_rockets",
+    "name": "Rockets",
+    "owners": [
+      "inner_sea_bestiary:monster:robot_myrmidon"
+    ],
+    "source_page": "p.45",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_bestiary/isb_abilities_race.lst",
+    "sha256": "d7e5ffd6c7f0421a33b7e7c67872d9364a3f1e5ad82daa9b7f727b64ab71c595",
+    "line": 307,
+    "record_key": "Myrmidon ~ Rockets"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:phycomid_acid_pellet",
+      "bestiary_2:monster_ability:phycomid_spores"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Phycomid",
+    "external_ability_refs": [
+      "Can't Be Tripped",
+      "Immunity to Acid"
+    ],
+    "key": "bestiary_2:monster:phycomid",
+    "monster_class": "Plant:6",
+    "name": "Phycomid",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d6",
+        "name": "Acid Pellet"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "size": "S",
+    "source_page": "p.210",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 673,
+    "record_key": "Phycomid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

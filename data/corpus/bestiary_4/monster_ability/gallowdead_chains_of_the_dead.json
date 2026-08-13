@@ -1,0 +1,35 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Gallowdead ~ Chains of the Dead",
+    "delivery": "Supernatural",
+    "description": "When a gallowdead uses its spiked chain, the first attack that hits a foe during the gallowdead's turn deals an extra 12d6 points of negative energy damage (Will DC %1 half). This has no effect on undead creatures. In addition, the gallowdead can make a free combat maneuver check against its target with a +4 racial bonus. If the check succeeds, the target becomes grappled, but the gallowdead doesn't gain the grappled condition. The gallowdead can make a free combat maneuver check each round to maintain its grip on the victim, but can't take any special grapple actions against the victim except the move special action. When grappling a victim in this way, the gallowdead can't attack with its spiked chain.",
+    "description_variables": [
+      "22+CHA"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_4:monster_ability:gallowdead_chains_of_the_dead",
+    "name": "Chains of the Dead",
+    "owners": [
+      "bestiary_4:monster:gallowdead"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 736,
+    "record_key": "Gallowdead ~ Chains of the Dead"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

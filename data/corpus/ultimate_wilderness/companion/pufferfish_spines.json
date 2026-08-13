@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Pufferfish ~ Spines",
+    "delivery": "Extraordinary",
+    "description": "Pufferfish aren't equipped to attack other creatures, but foes that strike a pufferfish with an unarmed strike or a natural attack take 1 point of piercing damage from the fish's toxic spines, and must immediately attempt a saving throw against the pufferfish's poison.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:pufferfish_spines",
+    "name": "Spines",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_pufferfish",
+      "ultimate_wilderness:companion:pufferfish"
+    ],
+    "record_type": "ability",
+    "source_page": "p.204",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "PufferfishRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 315,
+    "record_key": "Pufferfish ~ Spines"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

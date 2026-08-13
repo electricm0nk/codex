@@ -1,0 +1,55 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "ability_keys": [
+      "bestiary_2:monster_ability:giant_tick_grab",
+      "bestiary_2:monster_ability:red_ache_disease"
+    ],
+    "challenge_rating": "1",
+    "corpus_key": "Tick (Giant)",
+    "external_ability_refs": [
+      "Universal Monster Rule ~ Attach",
+      "Blood Drain",
+      "Scent"
+    ],
+    "key": "bestiary_2:monster:tick_giant",
+    "monster_class": "Vermin:2",
+    "name": "Tick (Giant)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Vermin",
+    "size": "S",
+    "source_page": "p.265",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_races.lst",
+    "sha256": "a02e3eb95cf4703accad386e13c74b88d657d3534090004b5c7649f891a51fb2",
+    "line": 841,
+    "record_key": "Tick (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T20:36:34Z",
+  "data": {
+    "corpus_key": "Golem (Junk) ~ Immunity to Magic",
+    "delivery": "Extraordinary",
+    "description": "A junk golem is immune to any spell or spell-like ability that allows spell resistance. In addition, certain spells and effects function differently against a junk golem. A shatter spell causes a junk golem to discorporate and dazes it for 1 round; A grease spell affects the junk golem as if it were haste for 1d6 rounds and ends any slow effect on it; An arcane lock or hold portal spell affects the junk golem as if it were a slow spell for 1d6 rounds and breaks any haste effect on it; A wood shape or rusting grasp spell deals 2d6 points of damage to a junk golem.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:monster_ability:golem_junk_immunity_to_magic",
+    "name": "Immunity to Magic",
+    "owners": [
+      "bestiary_4:monster:golem_junk"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_race.lst",
+    "sha256": "9905c1adfbdc90f2ff807369dff947481adb4b655baaca15715b9175a4ec8533",
+    "line": 786,
+    "record_key": "Golem (Junk) ~ Immunity to Magic"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

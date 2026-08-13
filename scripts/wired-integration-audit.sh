@@ -64,12 +64,28 @@ EXCLUDE_ARGS=(
   ':(exclude,glob)**/*.test.rs'
 )
 
+# ADDED lines only, for every check below.
+#
+# A `-` line is a forbidden token being REMOVED, which is the cure, not the
+# disease. All four checks scanned the raw diff, so a cycle whose whole purpose
+# was deleting a stub failed on its own deletion -- the identical defect
+# `scripts/identifier-discipline-audit.sh` records and fixed for its own regex
+# (see that script's `added_lines_only`). Found live 2026-08-13 at bundle scope
+# by SD-29 Epic 10 run 2: `BASE_BRANCH=origin/develop scripts/wired-integration-audit.sh`
+# produced 14 Check-1 hits, one of which was the `-` side of
+# `placeholder="e.g. GE08 authoring workbench"` -- a bundle tag this bundle's own
+# naming sweep had correctly deleted, reported as though the sweep had added it.
+#
+# `+++` file headers are dropped here; they are path text, not code.
+added_lines_only() { grep -E '^\+' | grep -vE '^\+\+\+'; }
+
 FAIL=0
 
 echo "===== Check 1 — forbidden tokens in shipping code ====="
 if git diff --unified=0 "${BASE_BRANCH}...HEAD" \
     -- ':(glob)apps/desktop/**/*.ts*' ':(glob)apps/desktop/src-tauri/**/*.rs' ':(glob)src/**/*.rs' \
     "${EXCLUDE_ARGS[@]}" \
+    | added_lines_only \
     | grep -nE '\b(STUB|MOCK|placeholder|not yet implemented|todo|fixme|hack)\b'; then
   echo "FAIL: forbidden token(s) above." >&2
   FAIL=1
@@ -81,6 +97,7 @@ echo
 echo "===== Check 2 — empty event handlers on user-facing affordances ====="
 if git diff --unified=0 "${BASE_BRANCH}...HEAD" \
     -- ':(glob)apps/desktop/**/*.tsx' ':(glob)apps/desktop/**/*.jsx' \
+    | added_lines_only \
     | grep -nE 'onClick=\{\s*\(\)\s*=>\s*\{\s*\}\s*\}|onClick=\{undefined'; then
   echo "FAIL: no-op handler(s) above." >&2
   FAIL=1
@@ -94,6 +111,7 @@ if git diff --unified=0 "${BASE_BRANCH}...HEAD" \
     -- ':(glob)apps/desktop/**/*.ts' ':(glob)apps/desktop/**/*.tsx' \
        ':(glob)apps/desktop/**/*.jsx' ':(glob)apps/desktop/**/*.rs' \
     "${EXCLUDE_ARGS[@]}" \
+    | added_lines_only \
     | grep -nE 'mockResolvedValue|mockReturnValue\(|vi\.mock\(|__mocks__'; then
   echo "FAIL: mock leak(s) above." >&2
   FAIL=1
@@ -105,6 +123,7 @@ echo
 echo "===== Check 4 — \"Would …\" return strings (canonical stub pattern) ====="
 if git diff --unified=0 "${BASE_BRANCH}...HEAD" \
     -- ':(glob)apps/desktop/**/*.ts' ':(glob)apps/desktop/**/*.tsx' ':(glob)src/**/*.rs' \
+    | added_lines_only \
     | grep -nE '"Would [^"]*"'; then
   echo "FAIL: stub-shaped return string(s) above." >&2
   FAIL=1

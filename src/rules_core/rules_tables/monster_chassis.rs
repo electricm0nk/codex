@@ -25,10 +25,34 @@
 //!
 //! # Identity is the `KEY:` token, never the display name
 //!
-//! Both books in the registry carry rows whose `KEY:` differs from the first
+//! Every book in the registry carries rows whose `KEY:` differs from the first
 //! column — Bonus Bestiary has 6 (`Caryatid Column ~ Immunity to Magic`),
-//! Monster Codex has all 3 of its abilities (`Seru ~ Poison`). Joining on the
-//! display name would merge `Poison` with every other book's rule of that name.
+//! Monster Codex has all 3 of its abilities (`Seru ~ Poison`), and both Book of
+//! the Damned volumes have all of theirs (`Vermlek ~ Flesh Armor`, whose first
+//! column is just `Flesh Armor`). Joining on the display name would merge
+//! `Poison` — or `Breath Weapon`, which two registered books now both define —
+//! with every other book's rule of that name.
+//!
+//! # Only ability rows WITH an owner are registered
+//!
+//! `monster_ability` records reach a player only underneath the monster that
+//! owns them, so an ability row no monster row claims is a record that loads and
+//! is never shown. `scripts/classify_monster_ability_rows.py` classifies a
+//! candidate book's rows before a round commits to it.
+//!
+//! The first four books here (Bonus Bestiary, Monster Codex, both Book of the
+//! Damned volumes) have **zero** orphans, so registering them registered every
+//! row. Inner Sea World Guide, added in round 3, is the first that does not:
+//! 5 of its 30 ability rows are namespaced to a *template* (`Clockwork ~ …`,
+//! `Nascent Demon Lord ~ …`) that no monster row of this book defines. The rule
+//! from round 3 on is `kanban.md`'s — **transcribe the linked subset, and carry
+//! the orphans as an `OPEN_FINDINGS` entry naming their remedy** — rather than
+//! emitting rows that cannot be reached or skipping the book entirely. Those
+//! rows stay `not-ingested` in the work inventory, which is their honest status.
+//!
+//! That predicate is a ceiling on the lane, not a preference — 1,327 of the
+//! 4,233 remaining units are orphan ability rows, and 703 of those sit in ten
+//! books that carry no monster row at all.
 
 /// One movement mode from the row's `MOVE:` token, e.g. `Walk,30,Burrow,10`.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -106,7 +130,23 @@ pub struct MonsterAbilityRecord {
     /// Every monster in this book whose row (or whose namespace, for a
     /// `<Monster> ~ <Ability>` key) claims this ability.
     pub owners: &'static [&'static str],
-    /// The 1-based abilities-`.lst` line this record was read from.
+    /// The abilities-`.lst` file this record was read from, as a bare file
+    /// name relative to the book directory.
+    ///
+    /// The exact counterpart of [`MonsterStatBlock::source_file`], and added
+    /// for the same reason one book later: a book is not guaranteed one
+    /// abilities file either. Inner Sea Gods splits its 161 ability rows 145/16
+    /// across `isg_abilities_races.lst` and `support/isg_abilities_races_b4.lst`
+    /// — so `source_line` alone does not identify a row, and the generator that
+    /// re-reads the cited line to verify it must be told which file to open.
+    ///
+    /// Until this field existed the generator took the abilities file from a
+    /// single per-book spec string (`MonsterBookSpec::abilities_lst`), which is
+    /// correct only for a one-file book; the nine books registered before it
+    /// were all one-file, so the singular spelling was right by coincidence
+    /// rather than by rule.
+    pub source_file: &'static str,
+    /// The 1-based line of [`Self::source_file`] this record was read from.
     pub source_line: u32,
 }
 
@@ -131,7 +171,17 @@ pub struct MonsterStatBlock {
     pub ability_keys: &'static [&'static str],
     /// Ability names this row cites that this book does not define.
     pub external_ability_refs: &'static [&'static str],
-    /// The 1-based races-`.lst` line this record was read from.
+    /// The races-`.lst` file this record was read from, relative to the book
+    /// directory.
+    ///
+    /// A book is not guaranteed one monster file. Inner Sea World Guide splits
+    /// its 14 monsters 7/7 across `iswg_races.lst` and `iswg_races_bestiary.lst`
+    /// — so `source_line` alone does not identify a row, and the generator that
+    /// re-reads the cited line to verify it must be told which file to open.
+    /// Before this field existed the generator took the file from a single
+    /// per-book spec string, which is correct only for a one-file book.
+    pub source_file: &'static str,
+    /// The 1-based line of [`Self::source_file`] this record was read from.
     pub source_line: u32,
 }
 
@@ -186,6 +236,115 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         corpus_book: "monster_codex",
         monsters: super::monster_codex::monsters_static(),
         monster_abilities: super::monster_codex::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "book_of_the_damned_volume_1",
+        monsters: super::book_of_the_damned_volume_1::monsters_static(),
+        monster_abilities: super::book_of_the_damned_volume_1::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "book_of_the_damned_volume_2",
+        monsters: super::book_of_the_damned_volume_2::monsters_static(),
+        monster_abilities: super::book_of_the_damned_volume_2::monster_abilities_static(),
+    },
+    MonsterBook {
+        corpus_book: "inner_sea_world_guide",
+        monsters: super::inner_sea_world_guide::monsters_static(),
+        monster_abilities: super::inner_sea_world_guide::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 4. Bestiary 2 -- 316 monsters and 402 owned
+    // abilities, four times every book above it put together. The registry
+    // absorbs it as one more row, which is the property the chassis was built
+    // for; the book's own module records why 64 of its 466 ability rows are not
+    // here.
+    MonsterBook {
+        corpus_book: "bestiary_2",
+        monsters: super::bestiary_2::monsters_static(),
+        monster_abilities: super::bestiary_2::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 5. Bestiary 3 -- 261 monsters and 27 owned
+    // abilities, and the first book in the registry to lose no monster row at
+    // all: no Product Identity row, no `.COPY=` delta. Its 13 excluded ability
+    // rows are orphans, pinned by line in `rules_tables::bestiary_3`.
+    MonsterBook {
+        corpus_book: "bestiary_3",
+        monsters: super::bestiary_3::monsters_static(),
+        monster_abilities: super::bestiary_3::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 6. Bestiary 4 -- 206 monsters and 543 owned
+    // abilities, the largest reachable book left in the lane. It is the first
+    // book in the registry to lose monster rows to Product Identity: 14 of its
+    // 220 corpus rows declare `NAMEISPI:YES` and are unique named personas
+    // rather than species. That drop cascades -- 73 of its 225 excluded ability
+    // rows are well-formed and owned, and unreachable only because their owner
+    // is one of the 14. `rules_tables::bestiary_4` derives both figures.
+    MonsterBook {
+        corpus_book: "bestiary_4",
+        monsters: super::bestiary_4::monsters_static(),
+        monster_abilities: super::bestiary_4::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 7. Inner Sea Bestiary -- 38 monsters and 152
+    // owned abilities. The first book in the registry to lose monster rows to
+    // the Product Identity of the abilities they NAME rather than of their own
+    // name: the emitted `ability_keys` array carries the ability's key, so a
+    // monster naming a deity-namespaced ability cannot be emitted either.
+    // `rules_tables::inner_sea_bestiary` derives it, and records that this makes
+    // `classify_monster_ability_rows.py`'s `reachable remainder` an upper bound
+    // rather than an equality for any book with that shape.
+    MonsterBook {
+        corpus_book: "inner_sea_bestiary",
+        monsters: super::inner_sea_bestiary::monsters_static(),
+        monster_abilities: super::inner_sea_bestiary::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- 39 monsters and 77 owned
+    // abilities. The first book in this registry whose corpus rows do not all
+    // live in the book's root directory: 3 monster rows come from
+    // `support/isg_races_b4.lst`, which is why both the transcriber and the
+    // generator now RESOLVE a `source_file` basename against the book tree
+    // instead of joining it onto the root. Its module header records the
+    // 16-row `Race Traits ~` bundle finding -- abilities with a real owner that
+    // the ownership pass cannot see because the corpus states the link through
+    // a `CATEGORY:Internal` row rather than on the monster row itself.
+    MonsterBook {
+        corpus_book: "inner_sea_gods",
+        monsters: super::inner_sea_gods::monsters_static(),
+        monster_abilities: super::inner_sea_gods::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 8. Bestiary 1 -- 284 monsters and 323 owned
+    // abilities, the largest single row in this registry and the only book
+    // served by TWO compiled monster tables. `rules_tables::beastiary1` (SD-22)
+    // holds 46 hand-modelled stat blocks of the same book; this chassis holds
+    // the complement, per `decisions.md §58.3`'s ALONGSIDE ruling, and
+    // `rules_tables::bestiary`'s `no_creature_is_served_by_both_bestiary_1_tables`
+    // is the guard that keeps the two disjoint.
+    //
+    // `corpus_book` is `beastiary`, NOT `bestiary`: every consumer of this field
+    // reads a `data/corpus/` directory -- `gen_book_cache`'s output root and
+    // `reach_gate`'s denominator -- and this book's directory has been spelled
+    // `beastiary` since SD-22. Registering the source spelling would write a
+    // SECOND corpus directory for a book that already has one, which is the
+    // defect `decisions.md §54.3` records the companion lane catching.
+    MonsterBook {
+        corpus_book: "beastiary",
+        monsters: super::bestiary::monsters_static(),
+        monster_abilities: super::bestiary::monster_abilities_static(),
+    },
+    // SD-29 Epic 5 extend, round 10. Ultimate Psionics (Dreamscarred Press) --
+    // 21 monsters and 13 owned abilities, and the first NON-PAIZO book in this
+    // registry. It is also the first whose `RuleSetId` was already compiled for
+    // other kinds: `RuleSetId::Upsi` has served this book's feats, equipment and
+    // archetypes since SD-28 E29, so registering its monsters added no rule set,
+    // no corpus directory and no work-inventory book entry.
+    //
+    // Both `.lst` files sit at the book root, so `resolve_book_file` is not
+    // load-bearing here. Its module header records this book's share of the
+    // `Racial Traits ~` bundle class (`decisions.md §62.4`, measured
+    // corpus-wide in `§64.1`): 2 of its 66 orphans are owned in the corpus
+    // through a `CATEGORY:Internal` row and are pinned by an executing test.
+    MonsterBook {
+        corpus_book: "ultimate_psionics",
+        monsters: super::ultimate_psionics::monsters_static(),
+        monster_abilities: super::ultimate_psionics::monster_abilities_static(),
     },
 ];
 

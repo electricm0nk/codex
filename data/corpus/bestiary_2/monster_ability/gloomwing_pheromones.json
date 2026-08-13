@@ -1,0 +1,36 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T16:51:34Z",
+  "data": {
+    "corpus_key": "Gloomwing ~ Pheromones",
+    "delivery": "Supernatural",
+    "description": "After the first round of combat, a gloomwing can emit a strange, musky scent in a 30-foot radius as a free action.  All creatures within this area (save for other gloomwings or tenebrous worms) must make a DC %1 Fortitude save each round to avoid becoming weakened by the pheromones.  Once a creature fails a save against this effect, it takes a -4 penalty to its Strength score - this penalty lasts for as long as the battle continues and for 1 hour thereafter.  Lesser restoration or any other effect capable of healing ability damage immediately removes this Strength penalty.",
+    "description_variables": [
+      "GloomwingPheromonesDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "bestiary_2:monster_ability:gloomwing_pheromones",
+    "name": "Pheromones",
+    "owners": [
+      "bestiary_2:monster:gloomwing"
+    ],
+    "source_page": "p.133",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_2/b2_abilities_race.lst",
+    "sha256": "2a18dff6c084ca2245b80cda1e917748b9b59564f1993e6bc4cdf12aede61607",
+    "line": 584,
+    "record_key": "Gloomwing ~ Pheromones"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

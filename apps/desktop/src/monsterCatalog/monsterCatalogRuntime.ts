@@ -10,8 +10,9 @@ import { hasTauriRuntime } from '../boundary/runtime';
  * Every value below is transcribed from the real ingested record in
  * `data/corpus/beastiary/monster/`, so the preview never shows a monster the
  * corpus does not contain or a number it does not state. In the desktop app
- * this branch is never taken: `list_monster_catalog` serves all 62 (46
- * Bestiary 1 + 14 Bonus Bestiary + 2 Monster Codex). The figure is a doc
+ * this branch is never taken: `list_monster_catalog` serves all 71 (46
+ * Bestiary 1 + 14 Bonus Bestiary + 2 Monster Codex + 5 Book of the Damned
+ * Volume 1 + 4 Volume 2). The figure is a doc
  * comment, not a pin — the count that is enforced lives in
  * `reach_gate.rs`'s per-record claims, which derive it from the corpus
  * directories rather than from prose.

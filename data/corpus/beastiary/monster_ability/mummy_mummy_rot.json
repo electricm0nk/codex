@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Mummy ~ Mummy Rot",
+    "delivery": "Supernatural",
+    "description": "Curse and disease, make fortitude save (DC %1) every day or lose 1d6 constitution and charisma. Make successful remove curse (DC %2) and magical heal (DC %3). Mummy rot is both a curse and disease and can only be cured if the curse is first removed, at which point the disease can be magically removed. Even after the curse element of mummy rot is lifted, a creature suffering from it cannot recover naturally over time. Anyone casting a conjuration (healing) spell on the afflicted creature must succeed on a DC %1 caster level check, or the spell is wasted and the healing has no effect. Anyone who dies from mummy rot turns to dust and cannot be raised without a resurrection or greater magic. The save DC is Charisma-based.",
+    "description_variables": [
+      "MummyRotDC",
+      "MummyRotRemoveDC",
+      "MummyRotHealDC"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:mummy_mummy_rot",
+    "name": "Mummy Rot",
+    "owners": [
+      "beastiary:monster:mummy"
+    ],
+    "source_page": "p.210",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 951,
+    "record_key": "Mummy ~ Mummy Rot"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

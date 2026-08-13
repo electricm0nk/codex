@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Giant Slug ~ Spit Acid",
+    "delivery": "Extraordinary",
+    "description": "A giant slug can spit acid at an opponent within 60 feet (no range increment). With a successful ranged touch attack, the target takes 10d6 points of acid damage (no save).",
+    "description_variables": [],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:giant_slug_spit_acid",
+    "name": "Spit Acid",
+    "owners": [
+      "beastiary:monster:slug_giant"
+    ],
+    "source_page": "p.254",
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1128,
+    "record_key": "Giant Slug ~ Spit Acid"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

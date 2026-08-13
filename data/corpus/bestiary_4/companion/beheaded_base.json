@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T22:19:24Z",
+  "data": {
+    "corpus_key": "Beheaded ~ Base",
+    "delivery": null,
+    "description": "A neutral evil spellcaster can gain a beheaded as a familiar at 3rd level by taking the Improved Familiar feat. A beheaded familiar loses the mindless trait and has an Intelligence score appropriate for its master's level. A variant beheaded counts as an additional Hit Die toward the maximum Hit Dice of controlled undead.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "bestiary_4:companion:beheaded_base",
+    "name": "Base Beheaded",
+    "owners": [
+      "bestiary_4:companion:familiar_beheaded",
+      "bestiary_4:companion:beheaded"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary_4/b4_abilities_companion.lst",
+    "sha256": "a20b914fee043cb2fb0e74d11f954c8decf967b343c34e6ffe12c4258026eae6",
+    "line": 71,
+    "record_key": "Beheaded ~ Base"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

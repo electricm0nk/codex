@@ -215,8 +215,8 @@ fn the_pure_flag_table_agrees_with_the_disk_backed_resolver_for_every_alternate(
             checked += 1;
         }
     }
-    assert_eq!(checked, 158, "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md 44)");
-    assert_eq!(selectable_alternate_trait_keys().len(), 158, "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md 44)");
+    assert_eq!(checked, 282, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
+    assert_eq!(selectable_alternate_trait_keys().len(), 282, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// The three dependent rows named in this cycle's brief, confirmed by reading
@@ -246,11 +246,16 @@ fn the_three_dependent_rows_are_not_offered_as_choices_and_the_menu_is_exactly_t
         .flat_map(|race| corpus.traits_for(race))
         .filter(|record| record.book_id == "advanced_race_guide")
         .count();
-    assert_eq!(all, 337, "175 standard + 156 ARG + 5 Monster Codex + 1 APG rows");
+    assert_eq!(
+        all,
+        515,
+        "175 standard + 156 ARG + 5 Monster Codex + 1 APG + 71 Inner Sea Races \
+         + 43 Horror Adventures + 64 Core Essentials heritage rows"
+    );
     assert_eq!(arg, 156, "ARG's 156 ingested race-trait records");
 
     let selectable: BTreeSet<&str> = selectable_alternate_trait_keys().into_iter().collect();
-    assert_eq!(selectable.len(), 158, "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md 44)");
+    assert_eq!(selectable.len(), 282, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
     for dependent in ["Feral ~ Languages", "Scion of Humanity ~ Languages", "Saltbeard ~ Dwarf ~ Greed"] {
         assert!(!selectable.contains(dependent), "{dependent} must not be a menu item");
     }
@@ -297,7 +302,7 @@ fn no_ingested_race_trait_key_contains_a_colon_so_the_storage_namespace_is_lossl
             checked += 1;
         }
     }
-    assert_eq!(checked, 337);
+    assert_eq!(checked, 515);
 }
 
 // ---------------------------------------------------------------------------
@@ -490,7 +495,7 @@ fn every_alternate_computes_on_its_own_race_without_an_unknown_key_diagnostic() 
             computed += 1;
         }
     }
-    assert_eq!(computed, 158, "153 ARG + 4 Monster Codex + 1 APG (SD-29 decisions.md 44)");
+    assert_eq!(computed, 282, "153 ARG + 4 Monster Codex + 1 APG + 67 Inner Sea Races + 41 Horror Adventures + 16 Core Essentials heritages (round 4; the book's other 48 records are the replacement rows those heritages grant and are never selectable). The 158 this pin held until 2026-08-12 was round 2's miss, not a smaller corpus: ISR's 68 landed on 2026-08-11 and this assertion went RED unnoticed until round 3 reproduced the gate (SD-29 decisions.md 47)");
 }
 
 /// **The measurement behind this cycle's honesty claim**, re-derived rather
@@ -507,8 +512,15 @@ fn every_alternate_computes_on_its_own_race_without_an_unknown_key_diagnostic() 
 /// If a future cycle widens the engine's totals, this test fails and names the
 /// alternates that became reachable. That is the intent: the list is a
 /// measurement of today's engine, not a permanent verdict on the content.
+///
+/// **The name no longer carries the count** (`decisions.md §44.5` renamed three
+/// tests for the same reason): a new book adds reachable alternates without the
+/// property changing, and a test whose name has to be edited alongside its
+/// expectation invites editing the expectation. Inner Sea Races took the set
+/// from 11 to 15 and Horror Adventures to 16, and the list below is what
+/// changed, not the claim.
 #[test]
-fn exactly_eleven_alternates_carry_a_bonus_that_lands_on_a_total_this_engine_computes() {
+fn every_alternate_whose_bonus_lands_on_a_total_this_engine_computes_is_named_and_really_applies() {
     let corpus = corpus();
     // The names PCGen writes for the six totals this engine actually computes.
     let computed_totals: BTreeMap<&str, &str> = BTreeMap::from([
@@ -557,19 +569,36 @@ fn exactly_eleven_alternates_carry_a_bonus_that_lands_on_a_total_this_engine_com
     assert_eq!(
         reachable,
         vec![
+            // ARG's original 11.
+            ("Dwarf ~ Unstoppable", vec!["total_saves.fortitude +1"]), // ISR
             ("Elf ~ Spirit of the Waters", vec!["selected_skill_modifiers.swim +4"]),
             ("Gnome ~ Explorer", vec!["selected_skill_modifiers.climb +2"]),
+            // ISR: the only alternate in the corpus landing on two different
+            // computed totals at once.
+            (
+                "Gnome ~ Intrepid Settler",
+                vec!["selected_skill_modifiers.climb +2", "selected_skill_modifiers.swim +2"],
+            ),
             ("Goblin ~ Tree Runner", vec!["selected_skill_modifiers.climb +4"]),
             ("Half-Elf ~ Dual Minded", vec!["total_saves.will +2"]),
+            // Horror Adventures' single contribution to this set, and the only
+            // NEGATIVE magnitude in it -- `Half-Elf ~ Mismatched` trades a
+            // reflex save away. The delta check below is therefore exercised
+            // in both directions for the first time.
+            ("Half-Elf ~ Mismatched", vec!["total_saves.reflex -2"]), // HA
+            ("Half-Elf ~ Sea Legs", vec!["selected_skill_modifiers.swim +2"]), // ISR
             ("Half-Elf ~ Water Child", vec!["selected_skill_modifiers.swim +4"]),
             ("Half-Orc ~ Forest Walker", vec!["selected_skill_modifiers.climb +2"]),
             ("Half-Orc ~ Rock Climber", vec!["selected_skill_modifiers.climb +1"]),
+            ("Hobgoblin ~ Authoritative", vec!["selected_skill_modifiers.intimidate +2"]), // ISR
             ("Hobgoblin ~ Bandy-Legged", vec!["selected_skill_modifiers.climb +2"]),
             ("Hobgoblin ~ Fearsome", vec!["selected_skill_modifiers.intimidate +4"]),
             ("Human ~ Heart of the Mountain", vec!["selected_skill_modifiers.climb +2"]),
             ("Human ~ Heart of the Sea", vec!["selected_skill_modifiers.swim +2"]),
         ],
-        "the reachable set is a measurement of today's engine; a change here is a real change"
+        "the reachable set is a measurement of today's engine; a change here is a real change. \
+         Round 2 added ISR's 4 without moving this list, so it was RED on the branch; round 3 \
+         moved it and added HA's 1 (SD-29 decisions.md 47)"
     );
 
     // Every one of them is genuinely wired: the engine's own before/after
@@ -584,6 +613,15 @@ fn exactly_eleven_alternates_carry_a_bonus_that_lands_on_a_total_this_engine_com
             let (total, magnitude) = hit.rsplit_once(' ').expect("'<total> +N'");
             let magnitude: i16 = magnitude.parse().expect("integer magnitude");
             let delta = match total {
+                // `fortitude` and `reflex` were declared in `computed_totals`
+                // above but had no arm here, because no ARG alternate landed on
+                // them. Inner Sea Races' `Dwarf ~ Unstoppable` and Horror
+                // Adventures' `Half-Elf ~ Mismatched` do, and this match's
+                // `other =>` arm panics rather than skipping -- so the gap was
+                // fail-loud, not silent, and is closed rather than worked
+                // around (SD-29 `decisions.md §47`).
+                "total_saves.fortitude" => after.total_saves.fortitude - before.total_saves.fortitude,
+                "total_saves.reflex" => after.total_saves.reflex - before.total_saves.reflex,
                 "total_saves.will" => after.total_saves.will - before.total_saves.will,
                 "selected_skill_modifiers.climb" => {
                     after.selected_skill_modifiers.climb - before.selected_skill_modifiers.climb
@@ -599,6 +637,63 @@ fn exactly_eleven_alternates_carry_a_bonus_that_lands_on_a_total_this_engine_com
             assert_eq!(delta, magnitude, "{key}: {total} must move by exactly {magnitude}");
         }
     }
+}
+
+/// **The invariant that makes summing the save table correct.**
+///
+/// `pilot_compute::alternate_trait_save_bonuses` adds its contributions rather
+/// than maximising them, because one of the three is a *penalty*
+/// (`Half-Elf ~ Mismatched`, -2 Reflex) and maximising would discard it. Summing
+/// is only right while no race can contribute twice to the same save — with two
+/// same-typed racial bonuses on one save, PF1 says the highest applies and the
+/// sum would be wrong.
+///
+/// Derived from the corpus rather than from the table, so a future book that
+/// breaks the invariant fails here even if nobody remembers the table exists.
+/// SD-29 `decisions.md §47`.
+#[test]
+fn no_race_contributes_two_alternate_trait_bonuses_to_one_save() {
+    let corpus = corpus();
+    let mut per_race_save: BTreeMap<(String, String), Vec<String>> = BTreeMap::new();
+    for race_key in corpus.race_keys() {
+        for record in corpus.alternate_traits(race_key) {
+            for chain in &record.data.raw_bonus_chains {
+                let mut q = chain.qualifiers.iter();
+                if q.next().map(String::as_str) != Some("SAVE") {
+                    continue;
+                }
+                let Some(save) = q.next() else { continue };
+                let Some(magnitude) = q.next() else { continue };
+                if magnitude.parse::<i32>().is_err() {
+                    continue;
+                }
+                if !["Fortitude", "Reflex", "Will"].contains(&save.as_str()) {
+                    continue;
+                }
+                per_race_save
+                    .entry((race_key.to_string(), save.clone()))
+                    .or_default()
+                    .push(record.data.key.clone());
+            }
+        }
+    }
+    for ((race, save), keys) in &per_race_save {
+        assert_eq!(
+            keys.len(),
+            1,
+            "{race}'s {save} save is moved by {} alternate racial traits ({keys:?}). \
+             `alternate_trait_save_bonuses` SUMS its contributions, which is only correct while \
+             this is 1. Decide the stacking rule for this pair before ingesting it",
+            keys.len()
+        );
+    }
+    // The scan must find something, or it proves nothing.
+    assert_eq!(
+        per_race_save.len(),
+        3,
+        "Half-Elf/Will (ARG Dual Minded), Dwarf/Fortitude (ISR Unstoppable), Half-Elf/Reflex \
+         (HA Mismatched) -- the three (race, save) pairs any alternate moves"
+    );
 }
 
 /// Two racial bonuses to the same skill do not stack — PF1's rule for same-typed

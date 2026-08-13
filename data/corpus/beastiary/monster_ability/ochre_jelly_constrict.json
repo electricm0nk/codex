@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:15:33Z",
+  "data": {
+    "corpus_key": "Ochre Jelly ~ Constrict",
+    "delivery": "Extraordinary",
+    "description": "You can crush an opponent, dealing %1d%2+%3 bludgeoning damage, when you make a successful grapple check (in addition to any other effects caused by a successful check, including additional damage).",
+    "description_variables": [
+      "ConstrictDice",
+      "ConstrictDieSize",
+      "ConstrictBonusDamage"
+    ],
+    "facet": "SpecialAttack",
+    "key": "beastiary:monster_ability:ochre_jelly_constrict",
+    "name": "Constrict",
+    "owners": [
+      "beastiary:monster:ochre_jelly"
+    ],
+    "source_page": "p.298",
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/bestiary/b1_abilities_race.lst",
+    "sha256": "062fb7ee0b55c7ba620ecf2823b26361413865b672f1401fac2a945d5297b67c",
+    "line": 1007,
+    "record_key": "Ochre Jelly ~ Constrict"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}
