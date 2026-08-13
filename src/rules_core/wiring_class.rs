@@ -449,6 +449,39 @@ fn paren_groups(text: &str) -> Vec<String> {
     out
 }
 
+/// True if `field` contains a PCGen `%N` render-time substitution
+/// placeholder (`%1`, `%2`, ...).
+fn field_has_percent_placeholder(field: &str) -> bool {
+    let b = field.as_bytes();
+    (0..b.len()).any(|i| b[i] == b'%' && b.get(i + 1).is_some_and(u8::is_ascii_digit))
+}
+
+/// A `%N` placeholder in a prose field is a genuine magnitude when the SAME
+/// field later carries, pipe-delimited, the formula PCGen substitutes for
+/// it -- e.g. `DESC:...a DC %1 Strength or Escape Artist check.|CON+18`
+/// (`bestiary_4/b4_abilities_race.lst:1490`, "Zomok Breath Weapon": the DC
+/// is `10+(HD/2)+CON`, stated only via this substitution, not a
+/// `MAGNITUDE_TOKENS` field and not a parenthesised expression
+/// `paren_groups` scans for). Every pipe-delimited segment after the
+/// field's own text is a formula candidate; a `PRE*` guard segment is
+/// excluded (that is a condition, never the substituted value), and a
+/// candidate counts only if it itself carries a scalar or arithmetic
+/// construction (`STR*1.5`, `10+HD/2+CON`) -- a bare cross-reference like
+/// `SpecialArrowDC` (`bestiary/b1_abilities_race.lst:1039`, "Pixie Charm")
+/// names a value defined elsewhere and is left undetermined rather than
+/// guessed.
+fn has_prose_formula_segment(field: &str) -> bool {
+    if !field_has_percent_placeholder(field) {
+        return false;
+    }
+    let mut segments = field.split('|');
+    segments.next(); // the field's own tag/text, never itself the formula
+    segments.any(|seg| {
+        let trimmed = seg.trim();
+        !trimmed.is_empty() && !has_guard(trimmed) && has_scalar_or_arith(trimmed)
+    })
+}
+
 fn has_prose_scaling_phrase(field: &str, rules: &SignalRules) -> bool {
     let lower = field.to_ascii_lowercase();
     if rules.prose_scaling_phrases.iter().any(|p| lower.contains(p)) {
@@ -534,6 +567,9 @@ pub fn signals_with_rules(raw: &str, rules: &SignalRules) -> BTreeSet<String> {
                 if has_scalar(&group) {
                     out.insert("derived:prose_expr".to_string());
                 }
+            }
+            if has_prose_formula_segment(f) {
+                out.insert("derived:prose_formula_segment".to_string());
             }
             if has_prose_scaling_phrase(f, rules) {
                 out.insert("ambiguous:prose_scaling_phrase".to_string());
@@ -971,6 +1007,50 @@ mod tests {
         let (class, reason) = cls("Burning Hands\tSCHOOL:Evocation\tRANGE:Close");
         assert_eq!(class, WiringClass::Derived);
         assert_eq!(reason, "range_keyword");
+    }
+
+    // Real classifier miss found auditing the `display`+`grounded`
+    // contradiction set (2026-08): PCGen's `%N` render-time substitution
+    // syntax states a genuine formula that neither `MAGNITUDE_TOKENS` nor
+    // `paren_groups` sees, so the record fell to `display:no_magnitude_token`
+    // despite carrying a real per-creature magnitude.
+    #[test]
+    fn d3_percent_placeholder_with_trailing_formula_is_derived() {
+        // `bestiary_4/b4_abilities_race.lst:1490` "Zomok Breath Weapon".
+        let (class, reason) = cls(
+            "Breath Weapon\tKEY:Zomok ~ Breath Weapon\tCATEGORY:Special Ability\tTYPE:SpecialAttack.Supernatural\tDESC:A zomok's breath weapon is a cone of flying dirt, bark, stones, and moss. A creature can break free with a DC %1 Strength or Escape Artist check.|CON+18",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "prose_formula_segment");
+    }
+
+    #[test]
+    fn d3_percent_placeholder_formula_survives_a_trailing_pre_guard() {
+        // `ultimate_wilderness/uw_abilities_companion.lst`-shaped row (the
+        // corpus pattern in `assassin_bug_giant_poison` /
+        // `spitting_cobra_poison`): the formula segment is followed by a
+        // `PREVARLT:` guard segment, which must not be mistaken for the
+        // formula or suppress detection of the real one before it.
+        let (class, reason) = cls(
+            "Poison\tKEY:Spitting Cobra ~ Poison\tCATEGORY:Special Ability\tTYPE:SpecialAttack.Extraordinary\tDESC:Fort DC %1|10+HD/2+CON|PREVARLT:CompanionAdvancement,1",
+        );
+        assert_eq!(class, WiringClass::Derived);
+        assert_eq!(reason, "prose_formula_segment");
+    }
+
+    #[test]
+    fn percent_placeholder_without_a_resolvable_formula_segment_stays_display() {
+        // `bestiary/b1_abilities_race.lst:1039` "Pixie Charm": the `%1` is
+        // substituted by `SpecialArrowDC`, a cross-reference to a value
+        // defined elsewhere in the corpus, not a scalar/arithmetic
+        // construction this classifier can itself resolve. Must NOT be
+        // guessed into `derived` -- an unresolvable reference stays
+        // `display`, same standing rule as bare ability-score mentions.
+        let (class, reason) = cls(
+            "Special Charm Arrow\tKEY:Pixie ~ Charm\tCATEGORY:Special Ability\tTYPE:SpecialQuality.Supernatural\tDESC:Charm; The target must succeed on a DC %1 Will save or be affected as though by a Charm Monster spell for 10 minutes.|SpecialArrowDC",
+        );
+        assert_eq!(class, WiringClass::Display);
+        assert_eq!(reason, "no_magnitude_token");
     }
 
     // D4 — ambiguous:prose_scaling_phrase
