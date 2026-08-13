@@ -162,9 +162,10 @@ fn main() -> ExitCode {
             sweep.tally.records_examined += 1;
             let corpus_file = sweep.corpus_root.join(&record.source_path);
             // The base row is taken as an owned String rather than held as a
-            // borrow of the line cache: the digest check below mutates the
-            // same cache-owning struct, and a gate is not the place to fight
-            // the borrow checker for one avoided allocation.
+            // borrow of the line cache: `compare_tokens` below takes the
+            // tally, which lives on the same cache-owning struct, and a gate
+            // is not the place to fight the borrow checker over one avoided
+            // allocation.
             let Some(line_count) = sweep.lines(&corpus_file).map(Vec::len) else {
                 findings.push(Finding::CorpusFileMissing {
                     record: record.record_path.clone(),
@@ -189,6 +190,13 @@ fn main() -> ExitCode {
             findings.extend(compare_tokens(record, &closure, &book_tokens, &mut sweep.tally));
         }
     }
+
+    // A record with no corpus file at all is found once by the provenance
+    // pass and again by the token pass. Both statements are true, but they
+    // are the same fact, and a findings count that double-reports one defect
+    // misleads in the direction this whole gate exists to avoid.
+    findings.sort_by_key(Finding::describe);
+    findings.dedup();
 
     let tally = &sweep.tally;
     if !quiet {
