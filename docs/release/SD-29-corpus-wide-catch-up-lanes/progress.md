@@ -10599,7 +10599,7 @@ the two generator fixes and the player surface), plus this receipt's own closing
 message:**
 `git cat-file -p origin/tranche/9:src/rules_core/rules_tables/bestiary/monster_data.rs | grep -c 'MonsterStatBlock {'` → **280**,
 `| grep -c 'MonsterAbilityRecord {'` → **323**.
-**Kanban status left at:** `READY — round 9.`
+**Kanban status left at:** `READY — round 9.` **Gate: `VERIFY_EXIT=0` on run 3** (runs 1 and 2 were `1`; both reds were this round's own identifier-discipline defects, both fixed and pushed the moment they existed — §5.1, §5.2).
 
 **This receipt does not claim the lane is done.** 603 units landed; the REAL ceiling after this round
 is **160** across four books, and one of those books is 73% of it.
@@ -10900,6 +10900,29 @@ CURRENT helper name were corrected to it.) Verified individually before re-runni
 `cargo test --locked --test sd26_identifier_discipline_audit` → 1 passed;
 `--test sd24_identifier_discipline_audit` → 1 passed.
 
-### 5.3 Gate — run 3, final
+### 5.3 Gate — run 3, final: `VERIFY_EXIT=0`
 
-Recorded below with the exit code captured directly.
+`./scripts/verify.sh` (FULL, `RETRO_ACTOR=sd29-monster-r10`), exit code captured directly into the
+log and never through a pipe:
+
+```
+RESULT: PASS
+VERIFY_EXIT=0
+```
+
+**14 of 14 stages green** — `preflight-disk`, `pi-sweep`, `audit-selftest`, `reclaim-selftest`,
+`driver-selftest`, `root-lib`, `root-full`, `desktop`, `reach`, `frontend-install`, `frontend-test`,
+`frontend-typecheck`, `clippy`, `class-dump`. Logs `/tmp/codex-verify-UV3MgS`.
+
+`root-full` **6,303 passed across 544 suites**, with all 525 `tests/*.rs` suites executed
+(`grep -c "Running tests/" root-full.log` → 525, the check `§40` requires and `root-full` runs on
+every invocation). `reach` **27**. `clippy` at its ceiling.
+
+**`BASELINE_ROOT_FULL_TESTS` raised 6293 → 6303 from this run**, which is the first of the three in
+which that stage passed. The +10 are this round's own: 9 in `rules_tables::bestiary` and 1 in
+`tests/sd26_cache_beastiary::the_directory_holds_both_tables_records`.
+
+**No stage failed twice with the same attribution across the three runs**, so `§39`'s recurrence rule
+was never engaged, and nothing was accepted as environmental. Both reds were this round's own, both
+were the identifier-discipline doctrine, and the second was `§52.5`'s comment shape rather than the
+first's identifier shape.
