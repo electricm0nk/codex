@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:27Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_magic:companion:companion_susceptible_to_salt",
+      "ultimate_magic:companion:giant_slug_companion_acid",
+      "ultimate_magic:companion:giant_slug_companion_spit_acid",
+      "ultimate_magic:companion:companion_advancement_slug_giant"
+    ],
+    "corpus_key": "Companion (Slug (Giant))",
+    "external_ability_refs": [
+      "Can't Be Tripped"
+    ],
+    "key": "ultimate_magic:companion:companion_slug_giant",
+    "monster_class": "Companion:2",
+    "name": "Companion (Slug (Giant))",
+    "natural_armor": 4,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Tongue"
+      },
+      {
+        "damage_dice": null,
+        "name": "Giant Slug Blindsense"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": -2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -9
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_races_companion.lst",
+    "sha256": "61005c5cf385d4bb7f86d9a1432f07457aa33a9fa415023aafa2649fa520f950",
+    "line": 16,
+    "record_key": "Companion (Slug (Giant))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

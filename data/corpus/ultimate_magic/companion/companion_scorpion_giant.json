@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:27Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_magic:companion:giant_scorpion_companion_poison",
+      "ultimate_magic:companion:companion_advancement_scorpion_giant"
+    ],
+    "corpus_key": "Companion (Scorpion (Giant))",
+    "external_ability_refs": [
+      "Grab"
+    ],
+    "key": "ultimate_magic:companion:companion_scorpion_giant",
+    "monster_class": "Companion:2",
+    "name": "Companion (Scorpion (Giant))",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": "1d4",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_races_companion.lst",
+    "sha256": "61005c5cf385d4bb7f86d9a1432f07457aa33a9fa415023aafa2649fa520f950",
+    "line": 15,
+    "record_key": "Companion (Scorpion (Giant))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

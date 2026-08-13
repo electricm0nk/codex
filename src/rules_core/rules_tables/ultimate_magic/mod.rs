@@ -5,6 +5,70 @@
 //! auto-grant wrappers excluded, four real feats with a mechanic but no
 //! corpus prose kept with a dedicated `effect` field rather than dropped).
 
+//!
+//! SD-29 Epic 7 round 9 (`SD29-E7-F2-010`) added `companion_data` -- this
+//! book's `companion` family, and the largest single block left in the lane
+//! after Core Rulebook.
+//!
+//! 32 of the book's 170 `companion` corpus rows ship (10 creature rows, 22
+//! ability rows), which is exactly the `reachable remainder`
+//! `python3 scripts/classify_companion_rows.py ultimate_magic` prints. Shipped
+//! count and lane ceiling, derived two independent ways, agree.
+//!
+//! No new `RuleSetId`: `RuleSetId::Um` was compiled by SD-28 Epic 28 for this
+//! book's feats. Zero units of any other kind moved status.
+//!
+//! ---------------------------------------------------------------------------
+//! THE 138 ROWS THAT DO NOT SHIP, both groups named row by row in
+//! `companion_data`'s module doc and keeping their honest `not-ingested` status
+//! in `docs/work-inventory.json`:
+//!
+//! * **135 orphan ability rows**, carried per the monster lane's disposition
+//!   (`decisions.md §50`). They are one finding rather than 135, and it is the
+//!   SAME finding Core Rulebook's 84 orphans are (`crb/mod.rs`): the block is
+//!   the `Evolution ~ …` / `Temp Evolution ~ …` eidolon evolution pool plus the
+//!   `Black Blade ~ …` magus records, and both hang off a CLASS feature -- the
+//!   summoner's eidolon and the bladebound magus's black blade -- rather than
+//!   off any creature row of `um_races_companion.lst`. No creature row names
+//!   one and none carries a `PRERACE:` back to a creature, because they apply
+//!   to an eidolon a player builds rather than to a species the book defines.
+//!
+//! * **3 `*_classes_companion.lst` CLASS rows** -- `1`, `Black Blade` and
+//!   `Vermin Companion` (`decisions.md §65.1`). A PCGen monster class is a
+//!   hit-dice progression, not a creature and not an ability; the chassis drops
+//!   and names them rather than emitting a card whose every modelled field is
+//!   empty.
+//!
+//! 135 + 3 = 138, and 138 is also the `distinct excluded rows (the UNION, not
+//! the sum)` the classifier prints -- sum and union agree for this book. They
+//! have not always (`§59.2`), which is why this states the check rather than
+//! the arithmetic.
+//! ---------------------------------------------------------------------------
+
+mod companion_data;
+
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
+
 pub mod archetype_tables;
 pub mod equipment_tables;
 pub mod feat_tables;

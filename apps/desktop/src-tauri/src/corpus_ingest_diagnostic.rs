@@ -242,6 +242,10 @@ fn crb_counts() -> BTreeMap<String, u32> {
     counts
 }
 
+/// SD-29 Epic 7 round 9 adds this book's `companion` family. The lookup key is
+/// the CORPUS book `advanced_players_guide`, not the engine module `apg` this
+/// function is named for — `companion_chassis::COMPANION_BOOKS` keys on the
+/// `data/corpus/` spelling, the same split `beastiary1_counts` documents.
 fn apg_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("classes".to_string(), ApgClassId::ALL.len() as u32);
@@ -251,6 +255,7 @@ fn apg_counts() -> BTreeMap<String, u32> {
         "equipment".to_string(),
         apg::equipment_tables::EQUIPMENT_TABLE.len() as u32,
     );
+    counts.extend(companion_book_counts("advanced_players_guide"));
     counts
 }
 
@@ -380,6 +385,8 @@ fn pu_class_feature_count() -> u32 {
         + pu::summoner_features::UnchainedSummonerFeature::ALL.len()) as u32
 }
 
+/// SD-29 Epic 7 round 9 adds this book's `companion` family, merged in rather
+/// than hand-inserted for the reason `ultimate_wilderness_counts` records.
 fn advanced_race_guide_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), arg::feats::feat_tables().len() as u32);
@@ -388,6 +395,7 @@ fn advanced_race_guide_counts() -> BTreeMap<String, u32> {
         "equipment".to_string(),
         arg::equipment_tables::equipment_tables().len() as u32,
     );
+    counts.extend(companion_book_counts("advanced_race_guide"));
     counts
 }
 
@@ -492,10 +500,16 @@ fn ultimate_combat_counts() -> BTreeMap<String, u32> {
 /// own doc comment for the catalog. SD-28-E15's second slice adds 26
 /// equipment records (24 General + 2 ArmsArmor) -- see
 /// `ultimate_magic::equipment_tables`'s own doc comment.
+/// SD-29 Epic 7 round 9 adds this book's `companion` family, MERGED in via
+/// `companion_book_counts` rather than hand-inserted — the drift round 7 found
+/// in `ultimate_wilderness_counts` came from exactly the hand-built shape this
+/// function otherwise has, and a book that already reports two families is the
+/// most likely to gain a third silently.
 fn ultimate_magic_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), um::feat_tables::feat_tables().len() as u32);
     counts.insert("equipment".to_string(), um::equipment_tables::equipment_tables().len() as u32);
+    counts.extend(companion_book_counts("ultimate_magic"));
     counts
 }
 
@@ -712,10 +726,15 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             chassis_book_counts("inner_sea_gods"),
             &races,
         ),
+        // SD-29 Epic 7 round 9 gave this book a `companion` family beside its
+        // monsters, so its row moves from `chassis_book_counts` to
+        // `monster_and_companion_book_counts` — the function that exists
+        // precisely because reporting one half of a two-chassis book under-states
+        // it by the size of the other.
         book_status(
             "book_of_the_damned_volume_1",
             "src/rules_core/rules_tables/book_of_the_damned_volume_1",
-            chassis_book_counts("book_of_the_damned_volume_1"),
+            monster_and_companion_book_counts("book_of_the_damned_volume_1"),
             &races,
         ),
         book_status(

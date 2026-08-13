@@ -1,0 +1,59 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "data": {
+    "ability_keys": [
+      "advanced_race_guide:companion:companion_advancement_carnivorous_flower"
+    ],
+    "corpus_key": "Companion (Carnivorous Flower)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "advanced_race_guide:companion:companion_carnivorous_flower",
+    "monster_class": "Companion:2",
+    "name": "Companion (Carnivorous Flower)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.26",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [],
+    "type_segments": [
+      "Companion",
+      "PlantCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
+    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58",
+    "line": 14,
+    "record_key": "Companion (Carnivorous Flower)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

@@ -111,10 +111,24 @@ use codex::rules_core::rules_tables::pathfinder_unchained;
 // path inside `archetype_tables.rs` resolves against this binary's own
 // crate root (where `advanced_race_guide` sits directly, not under a
 // `rules_tables` parent) and fails to find it.
-#[path = "../rules_core/rules_tables/archetype_swap.rs"]
-mod archetype_swap;
-#[path = "../rules_core/rules_tables/advanced_race_guide/mod.rs"]
-mod advanced_race_guide;
+// SD-29 Epic 7 round 9: the two `#[path]` duplicates above are RETIRED and this
+// binary now reaches Advanced Race Guide through the library crate, exactly as
+// line 103 already reached `pathfinder_unchained`.
+//
+// The duplicates were a write-scope workaround from an era when
+// `rules_tables/mod.rs` was outside the cycle's granted surface (see this
+// file's doc comment). That premise expired long ago — `rules_tables/mod.rs`
+// declares `pub mod advanced_race_guide;` and `pub mod archetype_swap;` today —
+// and the duplication became load-bearing in the wrong direction the moment ARG
+// gained a `companion` family: a `#[path]`-included `mod.rs` resolves its
+// `super::` against THIS binary's crate root, where there is no
+// `companion_chassis`, so `mod companion_data;` inside ARG failed to compile
+// here while compiling fine in the library.
+//
+// Retiring it is smaller than the alternative, which was duplicating
+// `companion_chassis` and `monster_chassis` into this binary as well and
+// carrying two copies of the companion tables in one build.
+use codex::rules_core::rules_tables::advanced_race_guide;
 
 const BOOK_RELATIVE: &str = "pathfinder/paizo/roleplaying_game/pathfinder_unchained";
 
@@ -1787,6 +1801,60 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own core_rulebook.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game Core Rulebook, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-009",
+    },
+    // SD-29 Epic 7 round 9 (`SD29-E7-F2-010`) — the lane's final pass, four
+    // books at once.
+    //
+    // Every one of the four was CHECKED rather than pattern-matched, per round
+    // 7's finding that the standard formula was false for Core Essentials: each
+    // `.pcc` carries a live `ISOGL:YES` and an uncommented `COPYRIGHT:` block,
+    // and each directory ships a real `OGL.txt`. Verified by reading the files
+    // (`grep -n 'ISOGL|^COPYRIGHT' <book>/*.pcc`, `ls <book>/OGL.txt`), not by
+    // copying the row above.
+    //
+    // As with every registered book the generator will use NEITHER string where
+    // a `license_declaration` already exists on disk (`decisions.md §54.4`);
+    // they are written correctly anyway, per `§63`'s note that a fallback which
+    // is only correct while it stays unreached is how `§59.2`'s `mod_only` half
+    // sat wrong for two rounds.
+    CompanionBookSpec {
+        corpus_book: "ultimate_magic",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_magic",
+        races_lsts: &["um_races_companion.lst"],
+        abilities_lsts: &["um_abilities_companion.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own ultimate_magic.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game Ultimate Magic, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-010",
+    },
+    CompanionBookSpec {
+        corpus_book: "advanced_race_guide",
+        book_relative: "pathfinder/paizo/roleplaying_game/advanced_race_guide",
+        races_lsts: &["arg_races_companion.lst"],
+        abilities_lsts: &["arg_abilities_companion.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own advanced_race_guide.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game Advanced Race Guide, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-010",
+    },
+    CompanionBookSpec {
+        corpus_book: "advanced_players_guide",
+        book_relative: "pathfinder/paizo/roleplaying_game/advanced_players_guide",
+        races_lsts: &["apg_races_companion.lst"],
+        abilities_lsts: &["apg_abilities_companion.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own advanced_players_guide.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game Advanced Player's Guide, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-010",
+    },
+    // The only one of the four under `campaign_setting/` rather than
+    // `roleplaying_game/`, and the only registered book whose companion and
+    // monster families both come from this generator.
+    CompanionBookSpec {
+        corpus_book: "book_of_the_damned_volume_1",
+        book_relative: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
+        races_lsts: &["botd1_races_companion.lst"],
+        abilities_lsts: &["botd1_abilities_companion.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own book_of_the_damned_volume_1.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Book of the Damned, Volume 1 — Princes of Darkness, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-010",
     },
 ];
 

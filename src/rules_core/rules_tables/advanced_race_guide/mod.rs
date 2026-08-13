@@ -42,8 +42,56 @@
 //! spells/equipment/feats layered onto existing classes/races), so unlike
 //! `rules_tables::acg::mod`, there is no `class_chassis_resolve` here.
 
+//!
+//! SD-29 Epic 7 round 9 (`SD29-E7-F2-010`) added `companion_data` -- this
+//! book's `companion` family.
+//!
+//! 14 of the book's 32 `companion` corpus rows ship (7 creature rows, 7 ability
+//! rows), which is exactly the `reachable remainder`
+//! `python3 scripts/classify_companion_rows.py advanced_race_guide` prints.
+//!
+//! No new `RuleSetId`: `RuleSetId::Arg` predates this lane. Zero units of any
+//! other kind moved status.
+//!
+//! The 18 rows that do not ship are all orphan ability rows, and they are the
+//! same finding as Ultimate Magic's and Core Rulebook's: the
+//! `<Archetype> Eidolon ~ …` and `WCEvolution ~ …` records hang off the
+//! summoner's eidolon CLASS feature rather than off any creature row of
+//! `arg_races_companion.lst`. Carried per `decisions.md §50`, named row by row
+//! in `companion_data`'s module doc, and keeping their honest `not-ingested`
+//! status in `docs/work-inventory.json`.
+//!
+//! This book is also where the chassis's unmodelled-facet allowlist gained the
+//! `RaceAbility.SpecialAbility` shape (`Puffball ~ Poison`,
+//! `Sapling Treant ~ Double Damage`) -- see
+//! `companion_catalog::an_unmodelled_facet_reaches_the_wire_with_its_type_segments`.
+
 pub mod archetype_tables;
 pub mod class_spell_levels;
+mod companion_data;
+
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
+
 pub mod equipment_data;
 pub mod equipment_tables;
 pub mod feat_data;

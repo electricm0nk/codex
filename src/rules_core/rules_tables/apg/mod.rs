@@ -13,8 +13,57 @@
 //! and `ultimate_magic/um_classes.lst` respectively, books
 //! `decisions.md §1` explicitly excludes from SD-22.
 
+//!
+//! SD-29 Epic 7 round 9 (`SD29-E7-F2-010`) added `companion_data` -- this
+//! book's `companion` family. **The module is `apg`; the corpus book is
+//! `advanced_players_guide`**, the same split `decisions.md §54.3` recorded for
+//! Bestiary 1 and round 8 for Core Rulebook; `transcribe_companion_tables`'s
+//! `MODULE_DIR` already carried the mapping, added by round 8 in anticipation
+//! of exactly this round.
+//!
+//! 4 of the book's 212 `companion` corpus rows ship (1 creature row -- the
+//! `Eidolon` itself -- and 3 ability rows), which is exactly the
+//! `reachable remainder`
+//! `python3 scripts/classify_companion_rows.py advanced_players_guide` prints.
+//! No new `RuleSetId`: `RuleSetId::Apg` predates this lane.
+//!
+//! **This is the lane's most lopsided book: 208 of its 212 rows do not ship,
+//! and they are ONE finding.** They are the summoner's evolution pool --
+//! `Evolution ~ …` and `Temp Evolution ~ …` -- which hangs off the eidolon
+//! CLASS feature this chassis does not model rather than off the `Eidolon`
+//! creature row. Ultimate Magic and Advanced Race Guide, both landed the same
+//! round, carry the continuation of the same block; the three books' 361
+//! orphans between them are one missing record type seen three times, not 361
+//! per-row accidents. Carried per `decisions.md §50`, named row by row in
+//! `companion_data`'s module doc, and keeping their honest `not-ingested`
+//! status in `docs/work-inventory.json`.
+
 pub mod alchemist_spell_list;
 pub mod archetype_tables;
+mod companion_data;
+
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
+
 pub mod inquisitor_spell_list;
 pub mod witch_spell_list;
 pub mod class_alchemist;

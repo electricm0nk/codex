@@ -94,6 +94,17 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // "CRB"`, so this row makes the companion catalog agree with the three
         // catalogs a player already reads rather than adding a fourth spelling.
         "core_rulebook" => "CRB",
+        // SD-29 Epic 7 round 9 — the lane's final pass. None of these four codes
+        // is invented here: `equipment_catalog` already declares
+        // `const BOOK_UM: &str = "UM"`, `race_catalog` and `spell_catalog`
+        // already declare `BOOK_ARG`/`BOOK_APG`, and `monster_catalog` already
+        // declares `const BOOK_BOTD1: &str = "BOTD1"` for this book's monsters.
+        // Every row here makes the companion catalog agree with a catalog the
+        // player already reads rather than adding a second spelling.
+        "ultimate_magic" => "UM",
+        "advanced_race_guide" => "ARG",
+        "advanced_players_guide" => "APG",
+        "book_of_the_damned_volume_1" => "BOTD1",
         other => panic!(
             "companion_catalog: no wire code for companion book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -325,9 +336,10 @@ fn render_desc_token(key: &str, prose: &str, variables: &[&str]) -> String {
 
 /// Renders one PCGen `PRE…` gate on a conditional `DESC:` token into prose.
 ///
-/// **A closed set, deliberately.** These are the three token kinds Ultimate
-/// Wilderness's 22 multi-`DESC:` rows actually carry, derived rather than
-/// guessed:
+/// **A closed set, deliberately.** These were the three token kinds Ultimate
+/// Wilderness's 22 multi-`DESC:` rows carry, derived rather than guessed; round
+/// 9 added a fourth and its negation for Ultimate Magic (see the
+/// `PREABILITY` arm).
 ///
 /// ```text
 /// python3 - <<'PY'   # over the book's own rows, round 6
@@ -357,6 +369,47 @@ fn serve_desc_condition(token: &str) -> String {
             }
         }
         "PREALIGN" => format!("{} alignment", spell_out_alignment(body)),
+        // SD-29 Epic 7 round 9 (`decisions.md §68.3`). Ultimate Magic is the
+        // second book to carry conditional `DESC:` tokens and the first to gate
+        // them on something other than a variable or an alignment: its three
+        // vermin-companion rows state their poison/acid/blood-drain text once
+        // for a companion that HAS taken its advancement package and once for
+        // one that has not.
+        //
+        // ```text
+        // PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Leech (Giant))
+        // !PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Leech (Giant))
+        // ```
+        //
+        // Widened DELIBERATELY, which is what the panic arm below asks for, and
+        // widened to the NEGATED form too: dropping `!PREABILITY` would leave
+        // the reader holding the "after" text under no condition at all, which
+        // is worse than either showing both or refusing both.
+        //
+        // The `CATEGORY=` segment is not rendered. It names PCGen's internal
+        // ability category, not anything a reader looks up; the ability's own
+        // name is the identifier on the page. Everything else in the token
+        // reaches the reader verbatim.
+        "PREABILITY" | "!PREABILITY" => {
+            let (count, rest) = body.split_once(',').unwrap_or_else(|| {
+                panic!("companion DESC condition {token:?} states no ability after its count")
+            });
+            assert_eq!(
+                count, "1",
+                "companion DESC condition {token:?} requires {count} abilities; this catalog \
+                 renders only the single-ability form. Widen deliberately."
+            );
+            let ability = rest.strip_prefix("CATEGORY=").map_or(rest, |after| {
+                after.split_once(',').map_or(after, |(_category, name)| name)
+            });
+            assert!(
+                !ability.contains(','),
+                "companion DESC condition {token:?} names several abilities; this catalog \
+                 renders only the single-ability form. Widen deliberately."
+            );
+            let preposition = if kind == "PREABILITY" { "with" } else { "without" };
+            format!("{preposition} {ability}")
+        }
         other => panic!(
             "companion DESC condition {token:?} uses gate kind {other:?}, which this catalog does \
              not render. Widen serve_desc_condition deliberately rather than shipping the raw token"
@@ -730,11 +783,16 @@ mod tests {
         // Core Rulebook's single `TYPE:NaturalAttack.NaturalAttackSecondary.
         // Secondary` row, `Crocodile ~ Tail Slap`. Equal deltas again, so this
         // record too is reached through exactly one owner.
-        assert_eq!(unmodelled.len(), 133);
+        // Round 9 (`decisions.md §68.2`): 133 -> 136 and 32 -> 35, moved by
+        // Advanced Race Guide's two `TYPE:RaceAbility.SpecialAbility` rows and
+        // the Advanced Player's Guide's one `TYPE:SkillChoice` row. Equal
+        // deltas a third time, so each of these three is reached through
+        // exactly one owner too.
+        assert_eq!(unmodelled.len(), 136);
         let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
         keys.sort_unstable();
         keys.dedup();
-        assert_eq!(keys.len(), 32, "32 distinct records behind the 133 wire rows");
+        assert_eq!(keys.len(), 35, "35 distinct records behind the 136 wire rows");
         // Named, so neither count above can be satisfied by a different record.
         // Asserted on the WIRE rather than only on the table, because the gap
         // this catches is a row that exists in `rules_tables` and never crosses
@@ -751,6 +809,17 @@ mod tests {
             keys.contains(&"core_rulebook:companion:crocodile_tail_slap"),
             "Core Rulebook's one unmodelled-facet record must reach the wire: {keys:?}"
         );
+        // Round 9's three, named on the wire for the same reason.
+        for key in [
+            "advanced_race_guide:companion:puffball_poison",
+            "advanced_race_guide:companion:sapling_treant_double_damage",
+            "advanced_players_guide:companion:eidolon_skills",
+        ] {
+            assert!(
+                keys.contains(&key),
+                "round 9's unmodelled-facet record {key} must reach the wire: {keys:?}"
+            );
+        }
         for ability in unmodelled {
             assert!(
                 !ability.type_segments.is_empty(),
@@ -820,7 +889,27 @@ mod tests {
                             "NaturalAttack".to_owned(),
                             "NaturalAttackSecondary".to_owned(),
                             "Secondary".to_owned(),
-                        ],
+                        ]
+                    // Round 9 adds the SEVENTH and EIGHTH shapes:
+                    //
+                    // * `RaceAbility.SpecialAbility` (2 rows, Advanced Race
+                    //   Guide's `Puffball ~ Poison` and `Sapling Treant ~
+                    //   Double Damage`) — the leading segment is PCGen's
+                    //   RACE-side ability class. These are the plant
+                    //   companions' poison and double-damage attack, defined
+                    //   on the race side because the companion IS a plant
+                    //   creature. Neither `SpecialQuality` nor `SpecialAttack`
+                    //   states that, and both rows carry `DESC:` prose a
+                    //   player reads, so they ship rather than being dropped.
+                    // * `SkillChoice` (1 row, the Advanced Player's Guide's
+                    //   `Eidolon ~ Skills`) — a CHOICE the player makes, not a
+                    //   quality the creature has. `CompanionAbilityFacet` has
+                    //   no variant for it and inventing one from
+                    //   `SpecialQuality` would claim the eidolon has a special
+                    //   quality it does not.
+                    || ability.type_segments
+                        == vec!["RaceAbility".to_owned(), "SpecialAbility".to_owned()]
+                    || ability.type_segments == vec!["SkillChoice".to_owned()],
                 "{} carries an unrecognised unmodelled shape: {:?}",
                 ability.key,
                 ability.type_segments
@@ -844,6 +933,28 @@ mod tests {
             "draconic companion acid affinity 1 or higher"
         );
         assert_eq!(serve_desc_condition("PREALIGN:TN"), "true neutral alignment");
+        // Round 9's fourth kind and its negation, on the exact tokens Ultimate
+        // Magic's three vermin-companion rows carry. Both directions are
+        // asserted, because rendering only the positive one is how the "after"
+        // text would reach a reader under no condition at all.
+        assert_eq!(
+            serve_desc_condition(
+                "PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Leech (Giant))"
+            ),
+            "with Companion Advancement (Leech (Giant))"
+        );
+        assert_eq!(
+            serve_desc_condition(
+                "!PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Leech (Giant))"
+            ),
+            "without Companion Advancement (Leech (Giant))"
+        );
+        // The multi-ability and count>1 forms are refused rather than
+        // approximated, same discipline as the unknown kind below.
+        let several = std::panic::catch_unwind(|| {
+            serve_desc_condition("PREABILITY:1,CATEGORY=Special Ability,Alpha,Beta")
+        });
+        assert!(several.is_err(), "the multi-ability form must stop rather than reach a screen");
 
         let unknown = std::panic::catch_unwind(|| serve_desc_condition("PRERACE:1,Elf"));
         assert!(unknown.is_err(), "an unrendered gate kind must stop rather than reach a screen");

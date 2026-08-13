@@ -1,0 +1,74 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:27Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_magic:companion:companion_advancement_spider_giant"
+    ],
+    "corpus_key": "Companion (Spider (Giant))",
+    "external_ability_refs": [
+      "Giant Spider Companion ~ Poison"
+    ],
+    "key": "ultimate_magic:companion:companion_spider_giant",
+    "monster_class": "Companion:2",
+    "name": "Companion (Spider (Giant))",
+    "natural_armor": 0,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.37",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_races_companion.lst",
+    "sha256": "61005c5cf385d4bb7f86d9a1432f07457aa33a9fa415023aafa2649fa520f950",
+    "line": 17,
+    "record_key": "Companion (Spider (Giant))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

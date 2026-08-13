@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:20:44Z",
+  "data": {
+    "corpus_key": "Imp Companion ~ Poison",
+    "delivery": "Extraordinary",
+    "description": "Sting - injury; save Fort DC %1; frequency 1/round for 5 minutes; effect 1d2 Dex; cure 1 save.",
+    "description_variables": [
+      "ImpCompPoisonDC"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "book_of_the_damned_volume_1:companion:imp_companion_poison",
+    "name": "Poison",
+    "owners": [
+      "book_of_the_damned_volume_1:companion:companion_imp"
+    ],
+    "record_type": "ability",
+    "source_page": "p.78",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_abilities_companion.lst",
+    "sha256": "e6870bc32ad79bf360b1260e7ef454d98cced32fb23c0eae92262f3dea1ce4a9",
+    "line": 8,
+    "record_key": "Imp Companion ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

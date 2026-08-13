@@ -1,0 +1,58 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "data": {
+    "ability_keys": [
+      "advanced_race_guide:companion:companion_advancement_sapling_treant",
+      "advanced_race_guide:companion:sapling_treant_double_damage"
+    ],
+    "corpus_key": "Companion (Sapling Treant)",
+    "external_ability_refs": [],
+    "key": "advanced_race_guide:companion:companion_sapling_treant",
+    "monster_class": "Companion:2",
+    "name": "Companion (Sapling Treant)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Plant",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.26",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [],
+    "type_segments": [
+      "Companion",
+      "PlantCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_races_companion.lst",
+    "sha256": "9c77f34bfbcfaddbd3de4b2addec5daf9d19c934ddccd78d29217a3381d3ed58",
+    "line": 17,
+    "record_key": "Companion (Sapling Treant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}

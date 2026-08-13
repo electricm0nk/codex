@@ -53,6 +53,10 @@ export const BOOK_LABELS: Record<string, string> = {
   UW: 'Ultimate Wilderness',
   CE: 'Core Essentials',
   CRB: 'Core Rulebook',
+  UM: 'Ultimate Magic',
+  ARG: 'Advanced Race Guide',
+  APG: "Advanced Player's Guide",
+  BOTD1: 'Book of the Damned, Volume 1',
 };
 
 /** `'ISC'` -> `'Inner Sea Combat'`; an unmapped code falls through as itself. */

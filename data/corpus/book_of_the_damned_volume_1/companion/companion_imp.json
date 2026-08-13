@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T09:20:44Z",
+  "data": {
+    "ability_keys": [
+      "book_of_the_damned_volume_1:companion:imp_companion_poison"
+    ],
+    "corpus_key": "Companion (Imp)",
+    "external_ability_refs": [
+      "Detect Good ~ Constant",
+      "Detect Magic ~ Constant",
+      "Flight Maneuverability"
+    ],
+    "key": "book_of_the_damned_volume_1:companion:companion_imp",
+    "monster_class": "Imp Companion:2",
+    "name": "Companion (Imp)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Sting"
+      }
+    ],
+    "race_subtype": "Devil|Lawful|Evil",
+    "race_type": "Outsider",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.78",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 50,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 7
+      },
+      {
+        "ability": "INT",
+        "amount": 3
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1/botd1_races_companion.lst",
+    "sha256": "99fedb040842aff8bc38b925aad0f2f54a79d281e69222a5ad21c9392a8f9a0f",
+    "line": 6,
+    "record_key": "Companion (Imp)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

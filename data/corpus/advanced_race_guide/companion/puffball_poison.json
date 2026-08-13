@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:20:33Z",
+  "data": {
+    "corpus_key": "Puffball ~ Poison",
+    "delivery": null,
+    "description": "(Frequency 1 round [6], Effect 1 Con damage, Cure 1 save, Con-based DC; DC %1).",
+    "description_variables": [
+      "PuffballPoisonDC"
+    ],
+    "description_variants": [],
+    "facet": null,
+    "key": "advanced_race_guide:companion:puffball_poison",
+    "name": "Poison",
+    "owners": [
+      "advanced_race_guide:companion:companion_puffball"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "RaceAbility",
+      "SpecialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/advanced_race_guide/arg_abilities_companion.lst",
+    "sha256": "0970a14a15f2865ee6cc611109e45caf3cc3545d2f2ae717e7143de105b4ea83",
+    "line": 9,
+    "record_key": "Puffball ~ Poison"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

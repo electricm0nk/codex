@@ -60,12 +60,59 @@
 //! `monster_chassis::the_chassis_link_resolves_in_both_directions_for_every_book`
 //! holds that they stay external.
 
+//!
+//! ---------------------------------------------------------------------------
+//! SD-29 Epic 7 round 9 (`SD29-E7-F2-010`) added `companion_data` -- this
+//! book's `companion` family, beside the `monster` family above. It is the
+//! first `campaign_setting/` book to carry BOTH chassis, and the companion half
+//! cost no new `RuleSetId`: `RuleSetId::Botd1` was compiled by the monster
+//! lane's round 2.
+//!
+//! 2 of the book's 31 `companion` corpus rows ship -- the `Companion (Imp)`
+//! creature row and its `Poison` ability -- which is exactly the
+//! `reachable remainder`
+//! `python3 scripts/classify_companion_rows.py book_of_the_damned_volume_1`
+//! prints. The 29 that do not are 27 orphan ability rows (the generic
+//! `Imp Companion ~ Bonus Tricks` / `~ Link` / `~ Share Spells` / `~ Starting
+//! Shape Change` family-of-class records, plus the improved-familiar block) and
+//! 2 `botd1_classes_companion.lst` CLASS rows (`1`, `Imp Companion`;
+//! `decisions.md §65.1`). Both groups are the same missing record type seen
+//! from two sides, exactly as `crb/mod.rs` records for Core Rulebook.
+//!
+//! Note the two identifier spaces this book now has on the companion side: the
+//! ability row's owner is `Companion (Imp)` (the creature row's `KEY:`), while
+//! the dropped class row is `Imp Companion`. They are different records with
+//! confusable names, and the `KEY:` token is what separates them.
+//! ---------------------------------------------------------------------------
+
+mod companion_data;
 mod monster_data;
 
+pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
 pub use super::monster_chassis::{
     MonsterAbilityDelivery, MonsterAbilityFacet, MonsterAbilityRecord, MonsterStatBlock,
     NaturalAttack, Speed,
 };
+
+/// Every companion creature this book defines, in corpus row order.
+pub const fn companions_static() -> &'static [CompanionRecord] {
+    companion_data::COMPANIONS
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub const fn companion_abilities_static() -> &'static [CompanionAbilityRecord] {
+    companion_data::COMPANION_ABILITIES
+}
+
+/// Every companion creature this book defines, in corpus row order.
+pub fn companions() -> &'static [CompanionRecord] {
+    companions_static()
+}
+
+/// Every companion ability record this book defines, in corpus row order.
+pub fn companion_abilities() -> &'static [CompanionAbilityRecord] {
+    companion_abilities_static()
+}
 
 /// Every monster stat block this book defines, in corpus row order.
 pub const fn monsters_static() -> &'static [MonsterStatBlock] {

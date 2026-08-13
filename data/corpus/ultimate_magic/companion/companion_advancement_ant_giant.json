@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T09:20:27Z",
+  "data": {
+    "corpus_key": "Companion Advancement ~ Ant (Giant)",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "CompanionAdvancement",
+    "key": "ultimate_magic:companion:companion_advancement_ant_giant",
+    "name": "Companion Advancement (Ant (Giant))",
+    "owners": [
+      "ultimate_magic:companion:companion_ant_giant"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "CompanionAdvancement"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_magic/um_abilities_companion.lst",
+    "sha256": "a151f524147c1bb94426c32bb6e353a7b2658a39a5bf82331e1e9bf4c549b7a3",
+    "line": 44,
+    "record_key": "Companion Advancement ~ Ant (Giant)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard"
+  ]
+}
