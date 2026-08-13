@@ -1,0 +1,45 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_gods:monster_ability:chalkost_breath_weapon",
+      "inner_sea_gods:monster_ability:chalkost_change_shape",
+      "inner_sea_gods:monster_ability:chalkost_dwarf_blood",
+      "inner_sea_gods:monster_ability:chalkost_shock_cestus"
+    ],
+    "challenge_rating": "4",
+    "corpus_key": "Chalkost",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:chalkost",
+    "monster_class": "Outsider (Fort/Will):5",
+    "name": "Chalkost",
+    "natural_attacks": [],
+    "race_subtype": "Extraplanar|Good|Lawful|Shapechanger",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.311",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
+    "line": 77,
+    "record_key": "Chalkost"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

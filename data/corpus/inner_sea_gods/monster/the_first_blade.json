@@ -1,0 +1,44 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "15",
+    "corpus_key": "The First Blade",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:the_first_blade",
+    "monster_class": "Outsider (Fort/Ref):18",
+    "name": "The First Blade",
+    "natural_attacks": [
+      {
+        "damage_dice": "2d10",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Chaotic|Extraplanar|Herald",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.288",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst",
+    "sha256": "3b8742b6d620ef3ed9e8b6170b4413872d594c5d5b857ba99919dfd2f8173494",
+    "line": 6,
+    "record_key": "The First Blade"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "ambiguous",
+  "wiring_class_signals": [
+    "no_corpus_line"
+  ]
+}

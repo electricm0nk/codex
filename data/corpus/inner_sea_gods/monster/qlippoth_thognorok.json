@@ -1,0 +1,49 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [],
+    "challenge_rating": "4",
+    "corpus_key": "Qlippoth (Thognorok)",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:qlippoth_thognorok",
+    "monster_class": "Outsider (Fort/Will):5",
+    "name": "Qlippoth (Thognorok)",
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Acquatic|Chaotic|Evil|Extraplanar|Qlippoth",
+    "race_type": "Outsider",
+    "size": "M",
+    "source_page": "p.305",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
+    "line": 65,
+    "record_key": "Qlippoth (Thognorok)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

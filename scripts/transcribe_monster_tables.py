@@ -124,6 +124,31 @@ BOOKS = {
     # (`decisions.md §57.1`) predicts for a `campaign_setting/` book, whose
     # creatures are Golarion-specific personae rather than generic SRD species.
     "inner_sea_bestiary": "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
+    # SD-29 Epic 5 extend, round 9, and the FIRST book in this lane whose rows
+    # do not all live in the book's root directory. 3 of its 39 monster rows and
+    # 16 of its 161 ability rows sit under `support/`, and the inventory records
+    # every unit's `source_file` as a BARE BASENAME -- so `os.path.join(root,
+    # name)` (correct by coincidence for the nine books above) raises
+    # FileNotFoundError here. `resolve_book_file` is that widening; the matching
+    # one on the Rust side is `MonsterAbilityRecord::source_file` plus
+    # `MonsterBookSpec::abilities_lsts`, which until this round was singular.
+    # Derived, never assumed:
+    # `find ~/workspace/repos/pcgen/data -ipath '*inner_sea_gods*' -name '*races*'`
+    # -> `isg_races.lst`, `isg_abilities_races.lst`,
+    #    `support/isg_races_b4.lst`, `support/isg_abilities_races_b4.lst`.
+    #
+    # The `support/` pair is NOT unconditionally loaded and is NOT out of scope
+    # either. `_inner_sea_gods.pcc:68` and `:70` gate both on
+    # `PRECAMPAIGN:1,INCLUDES=Bestiary 4` -- a gate this repo satisfies since
+    # round 6 registered `bestiary_4`. That is the `PRECAMPAIGN` hazard
+    # `loop-instruction.md`'s corpus shape notes describe, read from the PCC
+    # LOAD LINE rather than from inside the `.lst` (`grep PRECAMPAIGN` over
+    # those two `.lst` files returns 0).
+    #
+    # `python3 scripts/classify_monster_ability_rows.py inner_sea_gods` ->
+    # `inner_sea_gods  39  161  0  77  81  3  0`, i.e. 116 reachable -- 73% of
+    # the whole lane's REAL remainder at the start of this round.
+    "inner_sea_gods": "pathfinder/paizo/campaign_setting/inner_sea_gods",
     # SD-29 Epic 5 extend, round 8. Bestiary 1 -- the book `decisions.md §58.3`
     # ruled on and deliberately did not execute in the round that ruled. It is
     # the first book in this lane whose monster rows are ALREADY served, in
@@ -212,6 +237,48 @@ def corpus_root() -> str:
     return os.environ.get(
         "PCGEN_CORPUS_ROOT", os.path.expanduser("~/workspace/repos/pcgen/data")
     )
+
+
+def resolve_book_file(root: str, name: str) -> str:
+    """The real path of `name` inside a book directory, which is not always its root.
+
+    ``v06_work_inventory`` records a unit's ``source_file`` as a BARE BASENAME.
+    For the first nine books in this lane that was also the file's location, so
+    ``os.path.join(root, name)`` was correct by coincidence rather than by rule.
+    It is not correct for `inner_sea_gods`, whose 3 monster rows and 16 ability
+    rows live in ``support/isg_races_b4.lst`` and
+    ``support/isg_abilities_races_b4.lst``; nor for `occult_adventures`, whose
+    single monster row lives in ``support/oa_races_b3.lst``.  Derived, not
+    assumed::
+
+        find ~/workspace/repos/pcgen/data -ipath '*inner_sea_gods*' -name '*races*'
+
+    Both misses would have been LOUD (``FileNotFoundError``), not silent, which
+    is why this is a widening rather than a correction.
+
+    Two failure modes are refused rather than resolved:
+
+    * **Not found anywhere** -- the inventory cites a file this book does not
+      have, so every citation derived from it would be fiction.
+    * **Found in more than one place** -- a bare basename that matches two real
+      files does not identify a row, and picking either one is a coin flip on
+      which rules text ships.  No book in the corpus currently trips this; the
+      check exists so that the first one that does fails here rather than
+      shipping the wrong text.
+    """
+    candidates = []
+    for dirpath, _dirnames, filenames in os.walk(root):
+        if name in filenames:
+            candidates.append(os.path.join(dirpath, name))
+    if not candidates:
+        raise SystemExit(f"{name} is not present anywhere under {root}")
+    if len(candidates) > 1:
+        raise SystemExit(
+            f"{name} resolves to {len(candidates)} files under {root} "
+            f"({', '.join(sorted(candidates))}) -- a bare basename that names "
+            "two real files does not identify a row"
+        )
+    return candidates[0]
 
 
 # U+00AD SOFT HYPHEN, a PDF-extraction artifact that reaches the corpus as an
@@ -622,7 +689,7 @@ def transcribe(book: str) -> str:
     external: dict[str, list[str]] = {}
     monster_rows: dict[str, list[str]] = {}
     for unit in monsters:
-        row = read_row(os.path.join(root, unit["source_file"]), unit["source_line"])
+        row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         monster_rows[unit["corpus_key"]] = row
         named = parse_special_ability_refs(row)
         mine = [n for n in named if n in ability_keys]
@@ -698,7 +765,7 @@ def transcribe(book: str) -> str:
     unscreenable: set[str] = set()
 
     def ability_pi_reason(unit: dict) -> str | None:
-        row = read_row(os.path.join(root, unit["source_file"]), unit["source_line"])
+        row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         if token(row, "NAMEISPI:") == "YES":
             return "NAMEISPI:YES"
         _facet, _delivery, traits = parse_type(row)
@@ -1134,7 +1201,7 @@ def transcribe(book: str) -> str:
     out.append(f"/// Every {book} monster-ability record ({len(abilities)} rows).")
     out.append("pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[")
     for unit in abilities:
-        row = read_row(os.path.join(root, unit["source_file"]), unit["source_line"])
+        row = read_row(resolve_book_file(root, unit["source_file"]), unit["source_line"])
         facet, delivery, traits = parse_type(row)
         description, variables = parse_desc(row)
         out.append("    MonsterAbilityRecord {")
@@ -1155,6 +1222,7 @@ def transcribe(book: str) -> str:
         out.append(f"        description_variables: {rust_slice(variables)},")
         out.append(f"        source_page: {rust_opt(token(row, 'SOURCEPAGE:'))},")
         out.append(f"        owners: {rust_slice(owners[unit['corpus_key']])},")
+        out.append(f"        source_file: {rust_str(unit['source_file'])},")
         out.append(f"        source_line: {unit['source_line']},")
         out.append("    },")
     out.append("];")

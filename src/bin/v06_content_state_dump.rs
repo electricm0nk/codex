@@ -847,6 +847,7 @@ fn main() {
             // SD-29 Epic 5 extend, round 7. No feats file this repo compiles;
             // the arm exists for exhaustiveness, as `B4`'s above does.
             RuleSetId::Isb => "inner_sea_bestiary",
+            RuleSetId::Isg => "inner_sea_gods",
         };
         let records = table.entries.len();
         let wired_here = table

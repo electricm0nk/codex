@@ -64,6 +64,7 @@ const SERVED_BOOKS = [
   'B3',
   'B4',
   'ISB',
+  'ISG',
 ] as const;
 
 /** The wire values `NaturalAttackDto.damageDiceSource` can take. */

@@ -36,6 +36,7 @@ pub mod feats_all;
 pub mod horror_adventures;
 pub mod inner_sea_bestiary;
 pub mod inner_sea_combat;
+pub mod inner_sea_gods;
 pub mod inner_sea_intrigue;
 pub mod inner_sea_world_guide;
 pub mod monster_chassis;
@@ -234,4 +235,20 @@ pub enum RuleSetId {
     /// running backwards, from ability to owner. See
     /// `rules_tables::inner_sea_bestiary`'s header.
     Isb,
+    /// Inner Sea Gods. SD-29 Epic 5 extend, round 9 (monster lane;
+    /// `rules_tables::inner_sea_gods`, 39 monsters + 77 monster abilities) —
+    /// the first book in this lane whose corpus rows do NOT all live in the
+    /// book's root directory.
+    ///
+    /// **This rule set compiles the book's `monster` and `monster_ability`
+    /// families.** 3 of its 39 monster rows and 16 of its 161 ability rows sit
+    /// under `support/`, loaded by `_inner_sea_gods.pcc:68`/`:70` under
+    /// `PRECAMPAIGN:1,INCLUDES=Bestiary 4` — a gate this repo satisfies since
+    /// round 6 registered `bestiary_4`, so those rows are in scope rather than
+    /// excluded. The work inventory records every unit's `source_file` as a
+    /// bare basename, so both the transcriber and the generator resolve a
+    /// citation by searching the book directory rather than joining onto its
+    /// root; see `rules_tables::inner_sea_gods`'s header for the derivation and
+    /// for the 16-row `Race Traits ~` bundle finding it records.
+    Isg,
 }

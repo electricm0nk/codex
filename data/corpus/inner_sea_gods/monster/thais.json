@@ -1,0 +1,50 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "ability_keys": [
+      "inner_sea_gods:monster_ability:thais_armor_of_valor",
+      "inner_sea_gods:monster_ability:thais_aura_of_bravery",
+      "inner_sea_gods:monster_ability:thais_luck_domain",
+      "inner_sea_gods:monster_ability:thais_penetrating_gaze",
+      "inner_sea_gods:monster_ability:thais_change_shape"
+    ],
+    "challenge_rating": "15",
+    "corpus_key": "Thais",
+    "external_ability_refs": [],
+    "key": "inner_sea_gods:monster:thais",
+    "monster_class": "Outsider (Fort/Ref):17",
+    "name": "Thais",
+    "natural_attacks": [],
+    "race_subtype": "Chaotic|Extraplanar|Good|Herald|Shapechanger",
+    "race_type": "Outsider",
+    "size": "L",
+    "source_page": "p.282",
+    "speeds": [
+      {
+        "feet": 50,
+        "mode": "Walk"
+      },
+      {
+        "feet": 80,
+        "mode": "Fly"
+      }
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_races.lst",
+    "sha256": "643f4b8d3c05cc66e4496c1b4598fc3bbd2e35bfb52146cd799a3f435bc4ab61",
+    "line": 18,
+    "record_key": "Thais"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:dr"
+  ]
+}

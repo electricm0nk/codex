@@ -208,6 +208,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.307"),
         owners: &["Aluum"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 7,
     },
     MonsterAbilityRecord {
@@ -220,6 +221,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+TL/2+CON"],
         source_page: Some("p.307"),
         owners: &["Aluum"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 8,
     },
     MonsterAbilityRecord {
@@ -232,6 +234,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["8+TL/2+CON"],
         source_page: Some("p.307"),
         owners: &["Aluum"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 9,
     },
     MonsterAbilityRecord {
@@ -244,6 +247,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["FastHealingRate"],
         source_page: Some("p.308"),
         owners: &["Calikang"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 12,
     },
     MonsterAbilityRecord {
@@ -256,6 +260,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.308"),
         owners: &["Calikang"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 13,
     },
     MonsterAbilityRecord {
@@ -268,6 +273,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.308"),
         owners: &["Calikang"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 14,
     },
     MonsterAbilityRecord {
@@ -280,6 +286,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponLine", "BreathWeaponDice", "BreathWeaponDC", "BreathWeaponTimes", "HD"],
         source_page: Some("p.308"),
         owners: &["Calikang"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 15,
     },
     MonsterAbilityRecord {
@@ -292,6 +299,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.308"),
         owners: &["Calikang"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 16,
     },
     MonsterAbilityRecord {
@@ -304,6 +312,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.309"),
         owners: &["Charau-ka"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 19,
     },
     MonsterAbilityRecord {
@@ -316,6 +325,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.309"),
         owners: &["Charau-ka"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 20,
     },
     MonsterAbilityRecord {
@@ -328,6 +338,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["BreathWeaponCone", "BreathWeaponDice", "BreathWeaponDC"],
         source_page: Some("p.313"),
         owners: &["Dragon (Spine)"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 55,
     },
     MonsterAbilityRecord {
@@ -340,6 +351,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.313"),
         owners: &["Dragon (Spine)"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 56,
     },
     MonsterAbilityRecord {
@@ -352,6 +364,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &["10+(HD/2)+DEX", "STR"],
         source_page: Some("p.313"),
         owners: &["Dragon (Spine)"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 57,
     },
     MonsterAbilityRecord {
@@ -364,6 +377,7 @@ pub(super) static MONSTER_ABILITIES: &[MonsterAbilityRecord] = &[
         description_variables: &[],
         source_page: Some("p.310"),
         owners: &["Calikang"],
+        source_file: "iswg_abilities_race.lst",
         source_line: 91,
     },
 ];

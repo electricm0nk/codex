@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Mother's Maw ~ Swallow Whole",
+    "delivery": "Extraordinary",
+    "description": "If the herald begins its turn with an opponent grappled in its mouth, it can attempt a new combat maneuver check. If it succeeds, it swallows its prey, and the opponent takes bite damage. The opponent can be up to one size category smaller than the Maw. Being swallowed causes a creature to take damage each round. A swallowed creature keeps the grappled condition, while the Maw does not. A swallowed creature can try to cut its way free with any light slashing or piercing weapon, or it can just try to escape the grapple. If a swallowed creature cuts its way out, you cannot use swallow whole again until the damage is healed. If the swallowed creature escapes the grapple, success puts it back in the Maw's mouth, where it may be bitten or swallowed again. (see Devour Soul, AC %1, %2 hp)",
+    "description_variables": [
+      "SwallowWholeAC",
+      "SwallowWholeHP"
+    ],
+    "facet": "SpecialAttack",
+    "key": "inner_sea_gods:monster_ability:mother_s_maw_swallow_whole",
+    "name": "Swallow Whole",
+    "owners": [
+      "inner_sea_gods:monster:mother_s_maw"
+    ],
+    "source_page": null,
+    "traits": [
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 286,
+    "record_key": "Mother's Maw ~ Swallow Whole"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

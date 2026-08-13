@@ -617,6 +617,11 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // Bestiary carries a 4-unit `race_trait` family too; this rule set compiles
     // the two monster families and those units stay `not-ingested`.
     ("inner_sea_bestiary", "inner_sea_bestiary"),
+    // SD-29 Epic 5 extend, round 9 (monster lane). Inner Sea Gods. The book
+    // carries a large `race_trait` family too; this rule set compiles the two
+    // monster families and those units stay `not-ingested`, which is their
+    // honest state.
+    ("inner_sea_gods", "inner_sea_gods"),
     // SD-29 Epic 7 extend, round 6 (companion lane). Ultimate Wilderness. The
     // book's `data/corpus/` directory is written by TWO lanes -- SD-28 Epic 26
     // put its 136 feats there -- and this entry names the directory, not the
@@ -1241,6 +1246,14 @@ fn reach_of(family: &Family) -> Option<Reach> {
         }
         ("inner_sea_bestiary", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("inner_sea_bestiary", "ISB"))
+        }
+        // SD-29 Epic 5 extend, round 9. Inner Sea Gods -- the same two claim
+        // functions again. The registration cost of a book whose files are
+        // split across `support/` is paid entirely in the transcriber and the
+        // generator; nothing about a reach claim changes.
+        ("inner_sea_gods", "monsters") => Some(chassis_monsters_reach("inner_sea_gods", "ISG")),
+        ("inner_sea_gods", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("inner_sea_gods", "ISG"))
         }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every

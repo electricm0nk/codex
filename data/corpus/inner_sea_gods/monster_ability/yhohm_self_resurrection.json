@@ -1,0 +1,33 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Yhohm ~ Self-Resurrection",
+    "delivery": "Supernatural",
+    "description": "A slain yhohm remains dead for only 1d4 rounds unless its body is completely destroyed by an effect such as disintegrate. Otherwise, a fully healed yhohm emerges from the remains 1d4 rounds after death, as if brought back to life via Resurrection. The yhohm gains 1 permanent negative level when this occurs. A yhohm can self-resurrect only once per year. If a yhohm dies a second time before that year passes, its death is permanent. A yhohm that dies within the area of a desecrate spell cannot self-resurrect until the desecrate effect ends, at which point the yhohm immediately resurrects. A yhohm brought back to life by other means never gains negative levels as a result.",
+    "description_variables": [],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:yhohm_self_resurrection",
+    "name": "Self-Resurrection",
+    "owners": [
+      "inner_sea_gods:monster:yhohm"
+    ],
+    "source_page": null,
+    "traits": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 248,
+    "record_key": "Yhohm ~ Self-Resurrection"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

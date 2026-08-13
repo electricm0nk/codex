@@ -1,0 +1,38 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T01:02:49Z",
+  "data": {
+    "corpus_key": "Arcanotheign ~ Energy Channel Aura",
+    "delivery": "Supernatural",
+    "description": "On its turn, the herald can channel energy (Will DC %1 half) to deal 2d6 points of acid, cold, electricity, or fire damage to each creature in its aura. A creature struck by its incorporeal touch attack also takes this damage (no saving throw).",
+    "description_variables": [
+      "EnergyChannelDC"
+    ],
+    "facet": "SpecialQuality",
+    "key": "inner_sea_gods:monster_ability:arcanotheign_energy_channel_aura",
+    "name": "Energy Channel Aura",
+    "owners": [
+      "inner_sea_gods:monster:arcanotheign"
+    ],
+    "source_page": null,
+    "traits": [
+      "Aura"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/campaign_setting/inner_sea_gods/isg_abilities_races.lst",
+    "sha256": "b309f3f779ee8d564aacff977e2a9119410a70844107ecd3e6bdc0170fe79ea8",
+    "line": 214,
+    "record_key": "Arcanotheign ~ Energy Channel Aura"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

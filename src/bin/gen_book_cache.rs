@@ -180,13 +180,67 @@ fn load_corpus_file(root: &Path, file_name: &str) -> CorpusFile {
 /// `BOOK_RELATIVE`-shaped prefix -- lets a second (or Nth) book's
 /// generator function share this loader without hardcoding PU's own
 /// `BOOK_RELATIVE` const.
+/// The real location of `file_name` inside a book directory, which is not
+/// always its root, expressed as a path relative to `root`.
+///
+/// A unit's `source_file` is a BARE BASENAME -- that is what
+/// `v06_work_inventory` records, and it is what both `MonsterStatBlock` and
+/// `MonsterAbilityRecord` carry. For the first nine books in this lane the
+/// basename was also the file's location, so joining it onto the book root was
+/// correct by coincidence rather than by rule. `inner_sea_gods` keeps 3 monster
+/// rows and 16 ability rows under `support/`, and `occult_adventures` its one
+/// monster row; joining onto the root there fails outright.
+///
+/// Two failure modes are refused rather than resolved, matching
+/// `transcribe_monster_tables.py::resolve_book_file` term for term so that the
+/// transcriber and the generator cannot disagree about which file a citation
+/// names:
+///
+/// * **Not found** -- the citation names a file this book does not have.
+/// * **Found more than once** -- a bare basename matching two real files does
+///   not identify a row, and picking either is a coin flip on which rules text
+///   ships. No book trips this today; the check is what makes the first one
+///   that does fail here rather than ship the wrong text.
+fn resolve_book_file(root: &Path, file_name: &str) -> String {
+    fn walk(dir: &Path, file_name: &str, prefix: &str, found: &mut Vec<String>) {
+        let entries = match fs::read_dir(dir) {
+            Ok(e) => e,
+            Err(_) => return,
+        };
+        for entry in entries.flatten() {
+            let path = entry.path();
+            let name = entry.file_name().to_string_lossy().to_string();
+            if path.is_dir() {
+                walk(&path, file_name, &format!("{prefix}{name}/"), found);
+            } else if name == file_name {
+                found.push(format!("{prefix}{name}"));
+            }
+        }
+    }
+    let mut found = Vec::new();
+    walk(root, file_name, "", &mut found);
+    found.sort();
+    match found.len() {
+        0 => panic!("{file_name} is not present anywhere under {root:?}"),
+        1 => found.remove(0),
+        n => panic!(
+            "{file_name} resolves to {n} files under {root:?} ({}) -- a bare \
+             basename that names two real files does not identify a row",
+            found.join(", ")
+        ),
+    }
+}
+
 fn load_corpus_file_rel(root: &Path, book_relative: &str, file_name: &str) -> CorpusFile {
-    let full = root.join(file_name);
+    let resolved = resolve_book_file(root, file_name);
+    let full = root.join(&resolved);
     let bytes = fs::read(&full).unwrap_or_else(|e| panic!("failed to read corpus file {full:?}: {e}"));
     let sha256 = sha256_hex(&bytes);
     let text = String::from_utf8_lossy(&bytes).to_string();
     CorpusFile {
-        relative_path: format!("{book_relative}/{file_name}"),
+        // The RESOLVED sub-path, not the bare basename: a record's `path`
+        // citation must lead a reader to the file the sha256 was taken over.
+        relative_path: format!("{book_relative}/{resolved}"),
         sha256,
         lines: text.lines().map(|s| s.to_string()).collect(),
     }
@@ -979,7 +1033,13 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
         .iter()
         .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
         .collect();
-    let abilities_file = load_corpus_file_rel(&root, spec.book_relative, spec.abilities_lst);
+    // Keyed by file name for `races_files`' reason: an ability's `source_line`
+    // is only meaningful together with its `source_file`.
+    let abilities_files: HashMap<&'static str, CorpusFile> = spec
+        .abilities_lsts
+        .iter()
+        .map(|name| (*name, load_corpus_file_rel(&root, spec.book_relative, name)))
+        .collect();
 
     // ---- monsters ----
     let mut monster_written = 0u32;
@@ -1042,7 +1102,15 @@ fn gen_monster_book(spec: &MonsterBookSpec) {
     // ---- monster abilities ----
     let mut ability_written = 0u32;
     for ability in table.monster_abilities {
-        let line = verified_citation_line(&abilities_file, ability.source_line, ability.name);
+        let abilities_file = abilities_files.get(ability.source_file).unwrap_or_else(|| {
+            panic!(
+                "{book_id}:{} cites {}, which is not in this book's \
+                 MonsterBookSpec::abilities_lsts ({:?}) -- a citation this \
+                 generator cannot verify is not a citation",
+                ability.key, ability.source_file, spec.abilities_lsts
+            )
+        });
+        let line = verified_citation_line(abilities_file, ability.source_line, ability.name);
         let data = serde_json::json!({
             "key": format!("{book_id}:monster_ability:{}", slugify(ability.key)),
             "corpus_key": ability.key,
@@ -1638,7 +1706,15 @@ struct MonsterBookSpec {
     /// against, so a transcription that invents a file fails here rather than
     /// citing a line in the wrong one.
     races_lsts: &'static [&'static str],
-    abilities_lst: &'static str,
+    /// Every abilities-`.lst` file this book's ability rows come from.
+    ///
+    /// A slice for `races_lsts`' reason, one book later: Inner Sea Gods splits
+    /// its 161 ability rows 145/16 across `isg_abilities_races.lst` and
+    /// `support/isg_abilities_races_b4.lst`. Each record names its own file in
+    /// `MonsterAbilityRecord::source_file`; this list is what that name is
+    /// checked against, so a transcription that invents a file fails here
+    /// rather than citing a line in the wrong one.
+    abilities_lsts: &'static [&'static str],
     open_game_content: &'static str,
     product_identity_source: &'static str,
     classified_by_cycle: &'static str,
@@ -1649,7 +1725,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bonus_bestiary",
         book_relative: "pathfinder/paizo/roleplaying_game/bonus_bestiary",
         races_lsts: &["bb_races.lst"],
-        abilities_lst: "bb_abilities_race.lst",
+        abilities_lsts: &["bb_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bonus_bestiary.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bonus Bestiary, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F1-001",
@@ -1658,7 +1734,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "monster_codex",
         book_relative: "pathfinder/paizo/roleplaying_game/monster_codex",
         races_lsts: &["mc_races.lst"],
-        abilities_lst: "mc_abilities_race.lst",
+        abilities_lsts: &["mc_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _monster_codex.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Monster Codex, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-002",
@@ -1667,7 +1743,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "book_of_the_damned_volume_1",
         book_relative: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_1",
         races_lsts: &["botd1_races.lst"],
-        abilities_lst: "botd1_abilities_race.lst",
+        abilities_lsts: &["botd1_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own book_of_the_damned_volume_1.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Princes of Darkness, Book of the Damned Volume 1, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-003",
@@ -1676,7 +1752,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "book_of_the_damned_volume_2",
         book_relative: "pathfinder/paizo/campaign_setting/book_of_the_damned_volume_2",
         races_lsts: &["botd2_races.lst"],
-        abilities_lst: "botd2_abilities_race.lst",
+        abilities_lsts: &["botd2_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _book_of_the_damned_volume_2.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Lords of Chaos, Book of the Damned Volume 2, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-003",
@@ -1685,7 +1761,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "inner_sea_world_guide",
         book_relative: "pathfinder/paizo/campaign_setting/inner_sea_world_guide",
         races_lsts: &["iswg_races.lst", "iswg_races_bestiary.lst"],
-        abilities_lst: "iswg_abilities_race.lst",
+        abilities_lsts: &["iswg_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_world_guide.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea World Guide, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-004",
@@ -1694,7 +1770,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_2",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_2",
         races_lsts: &["b2_races.lst"],
-        abilities_lst: "b2_abilities_race.lst",
+        abilities_lsts: &["b2_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_2.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 2, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-005",
@@ -1703,7 +1779,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_3",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_3",
         races_lsts: &["b3_races.lst"],
-        abilities_lst: "b3_abilities_race.lst",
+        abilities_lsts: &["b3_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary_3.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 3, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E5-F2-006",
@@ -1717,7 +1793,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "bestiary_4",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary_4",
         races_lsts: &["b4_races.lst"],
-        abilities_lst: "b4_abilities_race.lst",
+        abilities_lsts: &["b4_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc declares ISOGL:YES and carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section; 14 monster rows additionally declare NAMEISPI:YES per-record and are dropped by the screen",
         classified_by_cycle: "SD29-E5-F2-007",
@@ -1729,7 +1805,7 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "inner_sea_bestiary",
         book_relative: "pathfinder/paizo/campaign_setting/inner_sea_bestiary",
         races_lsts: &["isb_races.lst"],
-        abilities_lst: "isb_abilities_race.lst",
+        abilities_lsts: &["isb_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own inner_sea_bestiary.pcc declares ISOGL:YES at line 23, carries 4 COPYRIGHT lines and a real 6,739-byte OGL.txt",
         product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Bestiary, OGL §15 Product Identity section; 7 ability rows carry a blacklisted proper name in their namespace, and the 2 monster rows that NAME them are dropped with them",
         classified_by_cycle: "SD29-E5-F2-008",
@@ -1746,10 +1822,33 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         corpus_book: "beastiary",
         book_relative: "pathfinder/paizo/roleplaying_game/bestiary",
         races_lsts: &["b1_races.lst"],
-        abilities_lst: "b1_abilities_race.lst",
+        abilities_lsts: &["b1_abilities_race.lst"],
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own bestiary.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, which is what the blacklist's per-record predicate predicts for a roleplaying_game/ bestiary",
         classified_by_cycle: "SD29-E5-F2-009",
+    },
+    // SD-29 Epic 5 extend, round 9. The first book in this registry that needs
+    // BOTH list fields to be plural, and the first whose files are not all at
+    // the book root -- `support/isg_races_b4.lst` and
+    // `support/isg_abilities_races_b4.lst` are loaded by
+    // `_inner_sea_gods.pcc:68`/`:70` under `PRECAMPAIGN:1,INCLUDES=Bestiary 4`,
+    // a gate this repo satisfies since round 6 registered `bestiary_4`. Both
+    // are named here by BARE BASENAME because that is what the inventory (and
+    // therefore every record's `source_file`) carries; `resolve_book_file`
+    // turns each into its real sub-path and the record's `path` citation gets
+    // the resolved form.
+    //
+    // Provenance verified against the file rather than copied from the row
+    // above: `_inner_sea_gods.pcc:17` declares `ISOGL:YES`, the pcc carries 18
+    // COPYRIGHT lines, and a real 9,547-byte OGL.txt sits beside it.
+    MonsterBookSpec {
+        corpus_book: "inner_sea_gods",
+        book_relative: "pathfinder/paizo/campaign_setting/inner_sea_gods",
+        races_lsts: &["isg_races.lst", "isg_races_b4.lst"],
+        abilities_lsts: &["isg_abilities_races.lst", "isg_abilities_races_b4.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _inner_sea_gods.pcc declares ISOGL:YES at line 17, carries 18 COPYRIGHT lines and a real 9,547-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Gods, OGL §15 Product Identity section; zero rows of any of the four .lst files declare NAMEISPI:YES, and the 5 ability rows the screen drops are dropped for a blacklisted deity name in an emitted value",
+        classified_by_cycle: "SD29-E5-F2-010",
     },
 ];
 
