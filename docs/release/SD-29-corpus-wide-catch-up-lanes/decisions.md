@@ -5599,3 +5599,184 @@ units at all.
 Ultimate Wilderness rows plus whatever the other five books carry of the same shape. It is a NEW
 RECORD TYPE (`CompanionArchetypeRecord`) plus a screen section, not a wider ownership predicate, and
 a round that takes it should say so up front rather than discover it at the ceiling table.
+
+## Decision 62 — Companion Lane, extend: round 7 (2026-08-13, `sd29-companion-r11`, card `epic-7-companion-lane-extend`)
+
+Ingested **Core Essentials** — 102 of its 145 `companion` corpus units (58 creature rows,
+44 ability rows), all 102 grounded and served. Companion grounded **684 → 786**.
+
+**No new `RuleSetId`, and this was checked rather than assumed.** The kanban row dispatching
+this round said the book "needs a NEW `RuleSetId`" and told the round to check; `RuleSetId::Ce`
+was already compiled by the race-trait lane in `§49`
+(`grep -n "Ce\b" src/rules_core/rules_tables/mod.rs` → line 150, with a doc comment describing
+`data/corpus/core_essentials/race_trait/`). Registration therefore cost **no scope flip**: a
+structural diff of every unit's status against HEAD reports exactly two changes,
+`core_essentials|companion|grounded 0 → 102` and
+`core_essentials|companion|not-ingested 145 → 43`, and nothing of any other kind moved.
+
+### §62.1 — The delta screen's CREATURE half
+
+`§59.2` built the `.COPY=`/`.MOD` screen one round earlier and ran it over `abilities` alone,
+because Bestiary 4 — the book that forced it — carries the shape only there. **Core Essentials
+is the first companion book whose CREATURE rows carry it**, 22 of them:
+
+```
+$ sed -n '33p' ~/workspace/repos/pcgen/data/pathfinder/paizo/roleplaying_game/core_essentials/ce_races_familiar_cr.lst
+Bat.COPY=Bat (Celestial)		OUTPUTNAME:Bat	TEMPLATE:Celestial Creature	KIT:1|NG
+```
+
+`OUTPUTNAME:`, `TEMPLATE:`, `KIT:` — and nothing else. No `SIZE:`, no `MOVE:`, no
+`MONSTERCLASS:`. PCGen copies the base `Bat` whole and applies the template; the row states a
+delta, not a creature. The eleven Core Rulebook familiars each appear twice, once `(Celestial)`
+and once `(Fiendish)`. Derived from the inventory's own `origin` field rather than by re-deriving
+a classification it already publishes:
+
+```
+$ python3 -c "import json,collections,sys; sys.path.insert(0,'scripts');
+  from classify_companion_rows import row_shape;
+  u=[x for x in json.load(open('docs/work-inventory.json'))['units']
+     if x['kind']=='companion' and x['book']=='core_essentials'];
+  print(collections.Counter((row_shape(x['source_file']), x.get('origin')) for x in u))"
+→ ('ability','declared') 61, ('creature','copy') 22, ('creature','declared') 58, ('ability','mod_only') 4
+```
+
+**The RED was an existing test, not a new one.** Registering the book before widening the screen
+turned `every_registered_creature_states_its_monster_class_token_verbatim` red on all 22 at once
+— they carry `monster_class: None` by construction.
+`core_essentials_ships_no_copy_delta_creature_row` now pins the fix from the other side, naming
+all 22 keys, so a successor who re-widens the screen deletes an assertion deliberately rather
+than discovering 22 blank creature cards.
+
+**Screened where the creature set is BUILT, not beside the ability screen, and the placement is
+load-bearing.** Two ownership indexes are derived from `creatures` and both are actively wrong
+with a delta row in the set:
+
+* `creature_display` (shape 5) keys on `OUTPUTNAME:`, and `Bat (Celestial)` and `Bat (Fiendish)`
+  **both** say `OUTPUTNAME:Bat`. Left in, they overwrite each other in a dict and an ability
+  keyed `Bat ~ …` is attributed to whichever delta row was read last.
+* `creature_species` (shape 3) maps `bare_species` → every claimant, so a delta row would stand
+  as an owner of record for rows it does not define.
+
+**`§59.2`'s `mod_only` half is now exercised.** It shipped as "stated, not exercised" and named
+this book as where it would first bite. It did — the 4 `Universal Monster Rule ~ …` overlays.
+
+**The transferable finding is the shape, not the book: a guard written for the book that
+provoked it holds for that book and quietly does nothing for the next one.** Widening changed
+**not one byte** of the eleven registered books — all eleven regenerated and
+`git status --porcelain` listed none of their `companion_data.rs` files.
+
+### §62.2 — `records_redacted` was a hardcoded literal in four licence writers
+
+Every `LICENSE.json` `gen_book_cache` writes states `records_processed` as the **book-wide
+on-disk count across every lane that has ingested the book**, and then stated
+`"records_redacted": 0` as a literal, at all four call sites. For a book only this binary had
+ever written the literal was true and read as though it were general.
+
+It is not. `core_essentials` was ingested first by the race-trait lane (`SD29-E6-F2-005`), which
+redacted **9** of its 64 heritage-trait records. Running any generator here over that directory
+silently rewrote the 9 to a 0 while all nine markers stayed on disk — **a book-wide claim that
+nothing was redacted, published over the evidence that nine things were**, and it would have
+shipped inside this round's own commit.
+
+```
+$ grep -rl 'redacted PI' data/corpus/core_essentials/race_trait/ | wc -l
+9
+$ grep -h '"records_redacted"' data/corpus/*/LICENSE.json | sort | uniq -c
+     19   "records_redacted": 0,
+      1   "records_redacted": 18,
+      1   "records_redacted": 9,
+```
+
+`count_on_disk_redactions` derives it from the same walk as the numerator it must agree with, so
+the two can never disagree about which files are in scope, and `PI_REDACTION_MARKER` names the
+marker once so the counter and the `redaction_policy.marker` field cannot drift. The regenerated
+file carries `records_redacted: 9` and `records_processed: 166` (64 race_trait + 102 companion).
+
+`§54.4` had already fixed the `license_declaration` and `screening_method_note` halves of this
+same file. This was the third field, still lossy — which is the pattern: **a preservation rule
+applied field by field leaves the fields nobody has needed yet.**
+
+### §62.3 — An OWNED row that states nothing the chassis models
+
+`Pseudodragon ~ Tail` (`ce_abilities_familiar_race_cr.lst:215`) is owned — the classifier is
+right, by relay through `Racial Traits ~ Pseudodragon` — and carries `KEY:`,
+`CATEGORY:Special Ability`, `SOURCEPAGE:p.229` and `ASPECT:ReachAttack|5 ft.` **No `TYPE:`, no
+`DESC:`, no `BONUS:`.** Every modelled field transcribes empty and the card reads as a name over
+a page number. Across all twelve registered books it is the **only** such row, of 394 grounded
+ability rows checked (each row re-read from its cited `.lst` line).
+
+Disposition is `§61.2`'s, already settled for Ultimate Wilderness's archetype rows: dropped,
+named in the generated module doc, left honestly `not-ingested`. So **102 ship against 103
+reachable**, and the one-row gap is a finding rather than a miscount — **reachability is a fact
+about ownership; shippability is a fact about the record type**, and this is the first book where
+the two differ. The classifier is not wrong and is not changed.
+
+**The screen is `reach_gate::companions_reach`'s own ability payload predicate with `source_page`
+REMOVED, and that difference is the finding.** A page citation says where to read the rule, not
+what it is. The gate counts it, so **this row would have PASSED the reach gate while showing a
+player nothing.** A gate agreeing with a stub is the twin problem `AGENTS.md` names; screening at
+the generator fixes the source rather than the instrument.
+
+**`ASPECT:` is the lane's next mechanism, measured rather than asserted.** It is the one token
+this row uses to say what it does, and no chassis in this program models it — not this one and
+not `monster_chassis`
+(`grep -rn "aspect" src/rules_core/rules_tables/monster_chassis.rs scripts/transcribe_monster_tables.py`
+→ nothing). **27 of the 394 grounded ability rows across the twelve registered books carry an
+`ASPECT:` that is dropped today.** The other 26 also carry a `TYPE:`, so they are diminished by
+the omission rather than emptied by it — which is exactly why this round states the measurement
+and takes the narrow disposition instead of widening a program-wide record type on the way past.
+A round that takes it should declare it up front, as `§61` asks of the archetype block.
+
+### §62.4 — A NINTH registration point, and a family the panel had been dropping since round 6
+
+The gate found a surface eight rounds of this lane had never touched.
+`corpus_ingest_diagnostic::every_book_landed_in_rules_tables_is_reported` went red naming
+`core_essentials`: the Corpus Ingest panel states it shows every rule book landed in
+`rules_tables`, so an unreported book reads to a tester as an un-ingested book.
+
+Core Essentials is the first companion book whose `rules_tables/` directory did not already
+exist for some OTHER family's sake — every earlier one was a bestiary, or a book whose feats or
+equipment a prior lane had landed — so this is the first round that could have discovered it.
+**The lane's per-book cost is nine surfaces, not eight**, and the eight-surface figure in `§48`
+and every receipt since is corrected here.
+
+**Reading that failure turned up a second, quieter one the test could not see.** The test asks
+whether a book APPEARS; Ultimate Wilderness already did, on the strength of its 135 feats. But
+`ultimate_wilderness_counts()` inserts `feats` and nothing else, so **round 6's 327 companion
+records have been absent from the panel since the day they landed** — a book present with a
+number that under-states it by a factor of three. Both are fixed here, the second by extending
+that function with the same `companion_book_counts` helper every other companion book already
+uses.
+
+This is `AGENTS.md`'s "`FILES YOU OWN` must be closed under the change it mandates" in its
+literal form: the question "what else must change for this to reach a user" had a ninth answer,
+and the only reason it surfaced now is that a red test asked it out loud.
+
+### Ceiling
+
+**923 → 922**, down by the one row `§62.3` drops, and the honest remainder is
+`922 − 786 = 136` across **5** books. The two derivations close exactly:
+
+```
+$ python3 scripts/classify_companion_rows.py core_rulebook ultimate_magic \
+    advanced_race_guide advanced_players_guide book_of_the_damned_volume_1
+total companion units in scope : 615
+orphan ability rows            : 472
+`*_classes_companion.lst` class rows the chassis refuses : 7
+`.COPY=`/`.MOD` delta rows the chassis refuses : 0
+distinct excluded rows (the UNION, not the sum) : 479
+reachable remainder            : 136
+```
+
+Ranked by reachable count: `core_rulebook` 170 / 86 / **84**, `ultimate_magic` 170 / 138 / **32**,
+`advanced_race_guide` 32 / 18 / **14**, `advanced_players_guide` 212 / 208 / **4**,
+`book_of_the_damned_volume_1` 31 / 29 / **2**.
+
+**Three hazards for round 8.** (a) `core_rulebook` is the largest and the only one left above 40;
+it still carries `*_classes_companion.lst` class rows the chassis refuses **by name** (the
+transcriber raises rather than dropping silently), as do `ultimate_magic` and
+`book_of_the_damned_volume_1` — 7 between them. (b) **`advanced_players_guide` (4 reachable of
+212) and `book_of_the_damned_volume_1` (2 of 31) remain FLOORS, not queued work**; a round taking
+either pays a full book's registration cost for a handful of records and should say so up front.
+(c) The `ASPECT:` widening above and Ultimate Wilderness's 149-row archetype block are both **new
+record types**, not wider predicates, and neither is reachable by another ownership shape.

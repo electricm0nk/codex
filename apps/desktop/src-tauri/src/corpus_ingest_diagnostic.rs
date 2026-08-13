@@ -444,10 +444,30 @@ fn ultimate_equipment_counts() -> BTreeMap<String, u32> {
 /// Ultimate Wilderness: SD-28 Epic 26 (`epic-26-uw-complete`) from-scratch
 /// book ingest, first slice. 135 feat records -- see
 /// `ultimate_wilderness::feat_tables`'s own doc comment for the catalog.
+/// SD-29 Epic 7 round 6 added this book's `companion` family and did NOT add it
+/// here, so the panel reported Ultimate Wilderness's 135 feats and none of its
+/// 327 companion records (`decisions.md §62.4`). Corrected in round 7, which
+/// found it only because registering ITS book turned
+/// `every_book_landed_in_rules_tables_is_reported` red — that test asks whether
+/// a book appears at all, and Ultimate Wilderness already did.
 fn ultimate_wilderness_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), uw::feat_tables::feat_tables().len() as u32);
+    counts.extend(companion_book_counts("ultimate_wilderness"));
     counts
+}
+
+/// Core Essentials: SD-29 Epic 7 round 7 (`SD29-E7-F2-008`) — this book's
+/// `companion` family, 102 records (58 creature rows + 44 ability rows).
+///
+/// Its 64 heritage `race_trait` records are served OFF DISK from
+/// `data/corpus/core_essentials/race_trait/` by the race-trait lane
+/// (`RuleSetId::Ce`, `decisions.md §49`) rather than out of a compiled table,
+/// so they are not readable from `rules_tables` and are deliberately not
+/// counted here — this function reports what this book landed IN
+/// `src/rules_core/rules_tables/`, which is the companion family alone.
+fn core_essentials_counts() -> BTreeMap<String, u32> {
+    companion_book_counts("core_essentials")
 }
 
 /// Ultimate Combat: SD-28 Epic 27 (`epic-27-uc-complete`) from-scratch
@@ -713,6 +733,16 @@ pub fn build_corpus_ingest_diagnostic() -> Vec<BookIngestStatus> {
             ultimate_wilderness_counts(),
             &races,
         ),
+        // SD-29 Epic 7 round 7. Core Essentials — the NINTH registration point
+        // this lane pays per book, and the first round to discover it, because
+        // it is the first companion book whose directory did not already exist
+        // in `rules_tables/` for another family's sake.
+        book_status(
+            "core_essentials",
+            "src/rules_core/rules_tables/core_essentials",
+            core_essentials_counts(),
+            &races,
+        ),
         book_status(
             "ultimate_combat",
             "src/rules_core/rules_tables/ultimate_combat",
@@ -872,6 +902,9 @@ mod tests {
                 "ultimate_intrigue",
                 "ultimate_equipment",
                 "ultimate_wilderness",
+                // SD-29 Epic 7 round 7 -- companions only; this book's 64
+                // heritage race traits are served off disk, not from a table.
+                "core_essentials",
                 "ultimate_combat",
                 "ultimate_magic",
                 "ultimate_psionics"

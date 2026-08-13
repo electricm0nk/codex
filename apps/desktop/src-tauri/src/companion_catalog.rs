@@ -714,11 +714,16 @@ mod tests {
             .flat_map(|e| e.abilities.iter())
             .filter(|a| a.facet.is_none())
             .collect();
-        assert_eq!(unmodelled.len(), 121);
+        // Round 7 (`decisions.md §62`): 121 -> 132 and 20 -> 31, both moved by
+        // Core Essentials's 11 unmodelled-facet records. The two deltas are
+        // EQUAL, and that is the statement worth pinning rather than the totals
+        // alone: 11 new records producing 11 new rows means each is reached
+        // through exactly ONE owner, unlike Bestiary 4's two rows below.
+        assert_eq!(unmodelled.len(), 132);
         let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
         keys.sort_unstable();
         keys.dedup();
-        assert_eq!(keys.len(), 20, "20 distinct records behind the 121 wire rows");
+        assert_eq!(keys.len(), 31, "31 distinct records behind the 132 wire rows");
         for ability in unmodelled {
             assert!(
                 !ability.type_segments.is_empty(),
