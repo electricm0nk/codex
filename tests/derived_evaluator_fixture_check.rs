@@ -46,9 +46,12 @@
 //!    provenance. If either side is regenerated against a different upstream
 //!    revision, this goes red instead of silently comparing two different rows.
 //!
-//! Guarantee 4 is the pin register C1.4a's fixtures lacked, and it is also the
-//! only test in this repo that would catch `data/corpus/` being regenerated or
-//! edited away from the upstream corpus it claims to mirror.
+//! Guarantee 4 is the pin register C1.4a's fixtures lacked. Every other test in
+//! the tree that touches `source.sha256` asserts only that the FIELD IS PRESENT
+//! (`grep -n sha256 tests/sd26_cache_*.rs`); none compares it to anything. So
+//! for the records this fixture covers, guarantee 4 is what would catch
+//! `data/corpus/` being regenerated or edited away from the upstream corpus it
+//! claims to mirror — the "generated artifacts mutated post-hoc" hazard.
 //!
 //! # Coverage is deliberately reported, never quietly narrowed
 //!
@@ -64,6 +67,8 @@
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::path::{Path, PathBuf};
+
+use sha2::{Digest, Sha256};
 
 use codex::rules_core::character_input::{ActiveState, EquipmentSelection};
 use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
@@ -158,6 +163,14 @@ struct Fixture {
 
 fn repo_root() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+}
+
+/// Lowercase hex sha256, the same spelling `gen_book_cache` writes into every
+/// corpus record's `source.sha256`, so the two are directly comparable.
+fn sha256_hex(bytes: &[u8]) -> String {
+    let mut hasher = Sha256::new();
+    hasher.update(bytes);
+    hasher.finalize().iter().map(|b| format!("{b:02x}")).collect()
 }
 
 fn load_fixtures() -> Vec<Fixture> {
@@ -347,8 +360,9 @@ fn fixture_expected_values_are_re_derivable_from_the_pinned_corpus_field() {
 /// expected value derived from one against a number evaluated from the other.
 ///
 /// A disagreement here means `data/corpus/` and the upstream corpus have
-/// drifted — the "generated artifacts mutated post-hoc" hazard, which nothing
-/// else in this repo tests for.
+/// drifted — the "generated artifacts mutated post-hoc" hazard. Needs no
+/// external checkout, which is why it, and not the `.lst` re-read below, is the
+/// load-bearing half of guarantee 4.
 #[test]
 fn engine_ingest_cites_the_same_upstream_bytes_the_fixture_was_read_from() {
     let fixtures = load_fixtures();
@@ -436,17 +450,25 @@ fn pinned_corpus_field_is_byte_identical_to_the_upstream_lst() {
         return;
     }
 
-    let mut file_text: BTreeMap<PathBuf, Vec<String>> = BTreeMap::new();
+    let mut file_text: BTreeMap<PathBuf, (String, Vec<String>)> = BTreeMap::new();
     let mut wrong = Vec::new();
     for fixture in &fixtures {
         let path = data_root.join(&fixture.upstream_lst);
-        let lines = file_text.entry(path.clone()).or_insert_with(|| {
-            std::fs::read_to_string(&path)
-                .unwrap_or_else(|e| panic!("upstream corpus file {path:?} must be readable: {e}"))
-                .split('\n')
-                .map(str::to_string)
-                .collect()
+        let (sha, lines) = file_text.entry(path.clone()).or_insert_with(|| {
+            let bytes = std::fs::read(&path)
+                .unwrap_or_else(|e| panic!("upstream corpus file {path:?} must be readable: {e}"));
+            let sha = sha256_hex(&bytes);
+            let lines =
+                String::from_utf8_lossy(&bytes).split('\n').map(str::to_string).collect();
+            (sha, lines)
         });
+        if sha != &fixture.upstream_lst_sha256 {
+            wrong.push(format!(
+                "{}: {} now hashes to {sha}, fixture recorded {}",
+                fixture.unit_id, fixture.upstream_lst, fixture.upstream_lst_sha256
+            ));
+            continue;
+        }
         let index = usize::try_from(fixture.upstream_line).expect("line number fits in usize");
         let Some(line) = index.checked_sub(1).and_then(|i| lines.get(i)) else {
             wrong.push(format!(
