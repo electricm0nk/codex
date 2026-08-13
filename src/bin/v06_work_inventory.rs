@@ -49,7 +49,7 @@ use codex::rules_core::character_input::{
     AcquisitionMode, ActiveState, CharacterClassLevel, CharacterInput, EquipmentSelection,
     SelectedChoice, SpellSelection, load_character_input_fixture,
 };
-use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus};
+use codex::rules_core::corpus_loader::{BookCorpusRoot, load_equipment_corpus, load_spell_corpus};
 use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
@@ -63,12 +63,17 @@ use codex::rules_core::rules_tables::beastiary1::{self, MonsterId};
 use codex::rules_core::rules_tables::companion_chassis;
 use codex::rules_core::rules_tables::monster_chassis;
 use codex::rules_core::rules_tables::crb::{
-    class_tables::ClassId, equipment_tables as crb_equipment_tables,
+    bard_spell_list as crb_bard_spell_list, class_tables::ClassId,
+    cleric_spell_list as crb_cleric_spell_list, druid_spell_list as crb_druid_spell_list,
+    equipment_tables as crb_equipment_tables, paladin_spell_list as crb_paladin_spell_list,
     race_tables::{RaceId, race_traits},
-    spell_list as crb_spell_list,
+    ranger_spell_list as crb_ranger_spell_list, sorcerer_spell_list as crb_sorcerer_spell_list,
+    spell_list as crb_spell_list, wizard_spell_list as crb_wizard_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
-use codex::rules_core::spell_resolver;
+use codex::rules_core::pilot_view_model::PilotSpellbookViewModel;
+use codex::rules_core::spell_resolver::{self, spell_id_resolve};
+use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
 use codex::rules_core::wiring_class::{self, MAGNITUDE_TOKENS};
 
@@ -1715,6 +1720,19 @@ fn probe_race_trait_corpus(repo_root: &Path) -> RaceTraitProbe {
     probe
 }
 
+// SUPERSEDED 2026-08-13 (SD-32 `spell-consumer-delta-probe`), in its
+// conclusion only. Everything below about the RETRACTED first attempt stands
+// and is the reason this file keeps it: probing `school_coverage` observed
+// resolution, not a magnitude, and promoted 1,067 of 1,067.
+//
+// Its closing conclusion -- "there is currently no wired spell-magnitude
+// consumer to observe at all" -- was true when written and is now false.
+// `epic-31-spell-wiring` (2026-08-07) wired `compute_spellbook_coverage` into
+// `pf1_adapter::resolve_unified_pilot_snapshot`, which is the surface the
+// desktop sheet reads; `contract::build_pilot_receipt` being uncalled, cited
+// below as the blocker, is no longer the only route. `probe_spell_key` (above)
+// observes that wired consumer. See its own block comment.
+//
 // SD28-E14-F1: **NOT implemented as a promoting probe.** An earlier version
 // of this cycle probed `pilot_compute_corpus::compute_pilot_with_corpus`'s
 // `school_coverage` map and promoted any spell that landed in it. Corrected
@@ -1882,6 +1900,317 @@ fn equipment_key_is_wired(
         || item.skill_bonus.is_some()
         || item.ability_bonus.is_some()
         || item.weapon_enhancement_bonus.is_some()
+}
+
+// ---------------------------------------------------------------------------
+// Spell consumer-delta probe
+// ---------------------------------------------------------------------------
+//
+// Why this exists NOW when SD-28-E14-F1 recorded that it could not.
+//
+// That epic's finding (the long note further down this file, and
+// `docs/release/SD-28-ultimate-book-content-ingestion/artifacts/e14-harness-widening.md`)
+// was correct on the day it was written and is now STALE. It said:
+// `spellbook::compute_spellbook_coverage` does read a real spell magnitude
+// (`SpellEffect.level` -> `spell_save_dc`), but it was wired only into
+// `contract::PilotReceipt`, and `contract::build_pilot_receipt` is called by
+// no desktop command -- the "twin problem", a real computation nothing on
+// screen reads.
+//
+// `epic-31-spell-wiring` (2026-08-07) closed exactly that gap.
+// `pf1_adapter::resolve_unified_pilot_snapshot` now calls
+// `compute_spellbook_coverage` itself and projects it through
+// `PilotSpellbookViewModel::from_coverage` onto the `PilotSnapshot` the app
+// renders (`character_hub::map_snapshot_dto` -> `PilotSnapshotDto.spellbook`
+// -> `CharacterSheet.tsx` renders `spellbook.spellSaveDc`). Verify with:
+//
+//   grep -n 'PilotSpellbookViewModel::from_coverage' apps/desktop/src-tauri/src/pf1_adapter.rs
+//   grep -n 'spellSaveDc' apps/desktop/src/characterHub/CharacterSheet.tsx
+//
+// So there IS now a wired consumer that reads a spell's own magnitude, and
+// this probe observes it. It composes the same two engine calls the adapter
+// composes, in the same order -- `compute_spellbook_coverage` then
+// `PilotSpellbookViewModel::from_coverage` -- so what it measures is the value
+// the sheet prints, not a private field beside it.
+//
+// What it does NOT do, stated plainly: it does not drive
+// `resolve_unified_pilot_snapshot` itself. That function lives in
+// `apps/desktop/src-tauri`, a separate cargo workspace this root-crate binary
+// cannot call, and it emits a snapshot only for a build whose receipt is
+// `Computed`. The probe therefore proves "this spell's own level produces the
+// save-DC value the sheet's spellbook cell renders", not "this particular
+// character build reaches Computed". That is the same boundary
+// `probe_equipment_effect_wiring` already sits behind (it calls
+// `compute_equipment_effects` directly, not the adapter).
+
+/// Ability score the spell probe fixes on every casting ability, so the save
+/// DC it observes has exactly one arithmetic explanation. 18 -> modifier +4
+/// (`floor(18/2) - 5`).
+const SPELL_PROBE_ABILITY_SCORE: i16 = 18;
+
+/// [`SPELL_PROBE_ABILITY_SCORE`]'s PF1 ability modifier, stated as the probe's
+/// oracle input rather than read back out of the engine -- the whole point of
+/// the comparison below is that the two sides are derived independently.
+const SPELL_PROBE_ABILITY_MODIFIER: i16 = 4;
+
+/// The casting classes the probe will select a spell through, each paired with
+/// that class's OWN per-class CRB spell-list accessor.
+///
+/// Not "any class". `spellbook::compute_spellbook_coverage` computes a save DC
+/// for whatever `source_class_id` it is handed and never checks that the class
+/// can cast the spell, so probing every spell as a Wizard would produce a real
+/// number for a posture no player can build -- "a magnitude no player can
+/// see", the failure this program has recorded three times. The probe asks
+/// each class's own list first and selects the spell only through a class that
+/// really has it.
+///
+/// These seven are exactly the ids `spellbook::casting_ability_for_class` maps
+/// to a casting ability; a class it does not map yields no DC at all, so
+/// probing through one could observe nothing.
+const SPELL_PROBE_CASTING_CLASSES: &[(&str, fn(&str) -> Option<u8>)] = &[
+    ("class:wizard", crb_wizard_spell_list::wizard_spell_level),
+    ("class:cleric", crb_cleric_spell_list::cleric_spell_level),
+    ("class:druid", crb_druid_spell_list::druid_spell_level),
+    ("class:bard", crb_bard_spell_list::bard_spell_level),
+    ("class:sorcerer", crb_sorcerer_spell_list::sorcerer_spell_level),
+    ("class:paladin", crb_paladin_spell_list::paladin_spell_level),
+    ("class:ranger", crb_ranger_spell_list::ranger_spell_level),
+];
+
+/// Why one spell key did or did not produce an observed consumer delta.
+///
+/// An enum rather than a `bool` because the ceiling report has to say what the
+/// probe *cannot* reach and why, and a boolean can only say "no".
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum SpellProbeOutcome {
+    /// A real save-DC magnitude, attributable to this spell's own level,
+    /// appeared on the very view model the character sheet renders.
+    Wired { class_id: &'static str, level: u8, dc: u8 },
+    /// No CRB casting class has this spell on its own list, so no player can
+    /// put it in a spellbook and any DC it produced would be unreachable.
+    NoCastingClassHasIt,
+    /// The key is in this book's spell catalog but no record of that name
+    /// exists in this book's own on-disk corpus.
+    AbsentFromBookCorpus,
+    /// The corpus record carries no `SCHOOL:` this engine recognizes, so
+    /// `compute_spellbook_coverage` dispatches to no school function.
+    SchoolNotRecognized,
+    /// Resolved, school recognized, but no per-school table record exists for
+    /// the key -- the spell is not in `crb::spell_list::SPELL_LIST` under that
+    /// school, so no `SpellEffect` and so no level is produced.
+    NoTableEffect,
+    /// The magnitude came from a different book's table than the one whose
+    /// unit would claim it. The `Celestial Shield` discipline
+    /// (`probe_equipment_effect_wiring`'s doc comment) applied to spells: a
+    /// shared NAME is not a shared record.
+    ForeignBookTable,
+    /// A `SpellEffect` was produced but the projection the sheet renders
+    /// carried no save DC for the selecting class.
+    NoSaveDcOnViewModel,
+    /// A DC appeared but not the one this spell's own level explains. Never
+    /// promoted: an unexplained number is not an observed magnitude.
+    DcDisagreesWithOracle { observed: u8, oracle: i16 },
+    /// The same character with this spell NOT selected already carried a save
+    /// DC, so nothing about the observed DC is attributable to this spell.
+    /// Never promoted -- this is the "delta" half of consumer-delta.
+    BaselineAlreadyCarriesADc,
+}
+
+/// The first casting class whose own CRB spell list holds `key`.
+fn probe_casting_class_for_spell(key: &str) -> Option<&'static str> {
+    SPELL_PROBE_CASTING_CLASSES
+        .iter()
+        .find(|(_, level_of)| level_of(key).is_some())
+        .map(|(class_id, _)| *class_id)
+}
+
+/// The probe's character posture: the shared fixture with every casting
+/// ability pinned to [`SPELL_PROBE_ABILITY_SCORE`] and exactly the given spell
+/// selection. `compute_spellbook_coverage` reads only `spells_selected` and
+/// `ability_scores`, so nothing else about the fixture can influence what the
+/// probe observes.
+fn spell_probe_input(
+    fixture: &CharacterInput,
+    class_id: &str,
+    spell_id: Option<&str>,
+) -> CharacterInput {
+    let mut input = fixture.clone();
+    input.chosen.ability_scores.intelligence = SPELL_PROBE_ABILITY_SCORE;
+    input.chosen.ability_scores.wisdom = SPELL_PROBE_ABILITY_SCORE;
+    input.chosen.ability_scores.charisma = SPELL_PROBE_ABILITY_SCORE;
+    input.chosen.spells_selected = match spell_id {
+        Some(id) => vec![SpellSelection {
+            spell_id: id.to_string(),
+            source_class_id: class_id.to_string(),
+            acquisition_mode: AcquisitionMode::Prepared,
+        }],
+        None => Vec::new(),
+    };
+    input
+}
+
+/// Whether selecting exactly this spell, alone, for a class that really has
+/// it, against one book's own corpus, produces a save-DC magnitude explained
+/// by that spell's own level on the surface the character sheet renders.
+///
+/// The spell-side sibling of [`equipment_key_is_wired`], and deliberately a
+/// stricter bar than that one: equipment asks only "is some field non-`None`",
+/// while this additionally requires the observed number to equal an
+/// independently-stated oracle (`10 + level + modifier`). It has to be
+/// stricter. A spell selection that merely resolves already has its own status
+/// (`ingested-magnitude`), and SD-28-E14-F1's retracted first attempt failed
+/// precisely by building a predicate that reduced to "this spell resolves"
+/// -- it promoted 1,067 of 1,067.
+fn probe_spell_key(
+    fixture: &CharacterInput,
+    key: &str,
+    corpus: &codex::rules_core::source_content::SourcePackageContent,
+    book_rule_set: RuleSetId,
+) -> SpellProbeOutcome {
+    let Some(class_id) = probe_casting_class_for_spell(key) else {
+        return SpellProbeOutcome::NoCastingClassHasIt;
+    };
+    let Some((record, _)) = spell_id_resolve(key, book_rule_set, corpus) else {
+        return SpellProbeOutcome::AbsentFromBookCorpus;
+    };
+    if record
+        .school
+        .as_deref()
+        .and_then(crb_spell_list::Pf1SchoolId::from_corpus_str)
+        .is_none()
+    {
+        return SpellProbeOutcome::SchoolNotRecognized;
+    }
+
+    // The delta's baseline: the same character, same corpus, this spell NOT
+    // selected. If a DC is already there, the one observed below is not
+    // attributable to this spell and must not be claimed for it.
+    let baseline = compute_spellbook_coverage(&spell_probe_input(fixture, class_id, None), corpus);
+    if PilotSpellbookViewModel::from_coverage(&baseline).is_some() {
+        return SpellProbeOutcome::BaselineAlreadyCarriesADc;
+    }
+
+    let coverage =
+        compute_spellbook_coverage(&spell_probe_input(fixture, class_id, Some(key)), corpus);
+    let Some(prepared) = coverage.spells_prepared.first() else {
+        return SpellProbeOutcome::NoTableEffect;
+    };
+    if prepared.effect.table_cell.rule_set != book_rule_set {
+        return SpellProbeOutcome::ForeignBookTable;
+    }
+    let Some(view) = PilotSpellbookViewModel::from_coverage(&coverage) else {
+        return SpellProbeOutcome::NoSaveDcOnViewModel;
+    };
+    let Some(observed) = view.spell_save_dc.iter().find(|entry| entry.class_id == class_id) else {
+        return SpellProbeOutcome::NoSaveDcOnViewModel;
+    };
+
+    // The oracle: the DC the spell's OWN level explains, built from this
+    // function's own two constants rather than read back out of the value
+    // under test.
+    let oracle = 10i16 + i16::from(prepared.effect.level) + SPELL_PROBE_ABILITY_MODIFIER;
+    if i16::from(observed.dc) != oracle {
+        return SpellProbeOutcome::DcDisagreesWithOracle { observed: observed.dc, oracle };
+    }
+    SpellProbeOutcome::Wired { class_id, level: prepared.effect.level, dc: observed.dc }
+}
+
+// There is deliberately no `spell_key_is_wired` bool wrapper beside
+// [`probe_spell_key`], despite `equipment_key_is_wired` being the model for
+// this probe. Nothing in this binary consults the spell probe's verdict yet
+// (this cycle builds and proves the instrument; `classify()`'s `Kind::Spell`
+// arm is untouched), so a wrapper would ship as dead code and spend a clippy
+// warning against the recorded ceiling for nothing. `probe_spell_key` already
+// carries strictly more information than a bool; the cycle that wires the
+// verdict into `classify()` reads it directly.
+
+/// Every spell key the engine catalog holds, partitioned by the engine book
+/// that supplied it -- the spell-side sibling of
+/// [`probe_equipment_keys_by_book`], derived from the same registry
+/// (`spell_resolver::spell_catalog_rows`) `classify()`'s `Kind::Spell` arm
+/// already decides `known` from, so the probe asks its question of exactly the
+/// population the classifier judges.
+fn probe_spell_keys_by_book() -> BTreeMap<&'static str, BTreeSet<&'static str>> {
+    let mut by_book: BTreeMap<&'static str, BTreeSet<&'static str>> = BTreeMap::new();
+    for row in spell_resolver::spell_catalog_rows() {
+        by_book.entry(spell_book_slug_for(row.book)).or_default().insert(row.key);
+    }
+    by_book
+}
+
+/// The engine rule set whose [`rule_set_id`] is `engine_book`.
+fn rule_set_for_engine_book(engine_book: &str) -> Option<RuleSetId> {
+    COMPILED_RULE_SETS.iter().copied().find(|&rs| rule_set_id(rs) == engine_book)
+}
+
+/// Runs [`probe_spell_key`] over every catalog spell key of every observable
+/// book, against that book's own corpus loaded ALONE -- the same book-scoping
+/// discipline, and for the same recorded reason, as
+/// [`probe_equipment_effect_wiring`].
+///
+/// Returns the full outcome per `(engine_book, key)` rather than only the
+/// wired set, because the ceiling report needs the refusals and their reasons.
+fn probe_spell_effect_wiring(
+    fixture: &CharacterInput,
+    repo_root: &Path,
+) -> BTreeMap<(String, String), SpellProbeOutcome> {
+    let mut outcomes = BTreeMap::new();
+    let keys_by_book = probe_spell_keys_by_book();
+
+    for (dir_name, dir) in OBSERVABLE_BOOK_DIRS.iter().zip(book_corpus_roots(repo_root)) {
+        let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else { continue };
+        let Some(rule_set) = rule_set_for_engine_book(engine_book) else { continue };
+        let Some(keys) = keys_by_book.get(engine_book) else { continue };
+        // One book's corpus, alone. See this function's doc comment.
+        let roots = [BookCorpusRoot { book_id: engine_book, dir: &dir }];
+        let corpus = load_spell_corpus(&roots);
+        for &key in keys {
+            let outcome = probe_spell_key(fixture, key, &corpus, rule_set);
+            outcomes.insert((engine_book.to_string(), key.to_string()), outcome);
+        }
+    }
+    outcomes
+}
+
+/// The probe's ceiling, printed by `--spell-probe`: how many catalog spell
+/// keys it legitimately reaches and, for every one it does not, the reason it
+/// refused. Grounding no unit, moving no number -- this is the instrument
+/// reporting on itself.
+fn spell_probe_ceiling_report(
+    outcomes: &BTreeMap<(String, String), SpellProbeOutcome>,
+) -> String {
+    let mut per_book: BTreeMap<&str, BTreeMap<&'static str, usize>> = BTreeMap::new();
+    let mut totals: BTreeMap<&'static str, usize> = BTreeMap::new();
+    for ((book, _key), outcome) in outcomes {
+        let label = match outcome {
+            SpellProbeOutcome::Wired { .. } => "wired",
+            SpellProbeOutcome::NoCastingClassHasIt => "no_casting_class_has_it",
+            SpellProbeOutcome::AbsentFromBookCorpus => "absent_from_book_corpus",
+            SpellProbeOutcome::SchoolNotRecognized => "school_not_recognized",
+            SpellProbeOutcome::NoTableEffect => "no_table_effect",
+            SpellProbeOutcome::ForeignBookTable => "foreign_book_table",
+            SpellProbeOutcome::NoSaveDcOnViewModel => "no_save_dc_on_view_model",
+            SpellProbeOutcome::DcDisagreesWithOracle { .. } => "dc_disagrees_with_oracle",
+            SpellProbeOutcome::BaselineAlreadyCarriesADc => "baseline_already_carries_a_dc",
+        };
+        *per_book.entry(book.as_str()).or_default().entry(label).or_default() += 1;
+        *totals.entry(label).or_default() += 1;
+    }
+
+    let mut out = String::new();
+    out.push_str("spell consumer-delta probe -- ceiling report\n");
+    out.push_str(&format!("keys examined: {}\n\n", outcomes.len()));
+    for (book, counts) in &per_book {
+        out.push_str(&format!("{book}\n"));
+        for (label, n) in counts {
+            out.push_str(&format!("  {label}: {n}\n"));
+        }
+    }
+    out.push_str("\nTOTAL\n");
+    for (label, n) in &totals {
+        out.push_str(&format!("  {label}: {n}\n"));
+    }
+    out
 }
 
 fn crb_class_name(class_id: ClassId) -> &'static str {
@@ -2810,9 +3139,43 @@ struct InventoryUnit {
     wiring_class_signals: BTreeSet<String>,
 }
 
+/// Reads the shared deterministic pilot input fixture, or exits with the
+/// reason. Extracted from [`main`] so `--spell-probe` can run without also
+/// requiring a `PCGEN_CORPUS_ROOT` checkout it does not read.
+fn load_probe_fixture(repo_root: &Path) -> CharacterInput {
+    let fixture_path = repo_root.join(FIXTURE_RELATIVE_PATH);
+    let fixture_text = match std::fs::read_to_string(&fixture_path) {
+        Ok(t) => t,
+        Err(e) => {
+            eprintln!("could not read {}: {e}", fixture_path.display());
+            std::process::exit(1);
+        }
+    };
+    match load_character_input_fixture(&fixture_text).character_input {
+        Some(fixture) => fixture,
+        None => {
+            eprintln!("fixture {} did not load", fixture_path.display());
+            std::process::exit(1);
+        }
+    }
+}
+
 fn main() {
     let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let args: Vec<String> = std::env::args().collect();
+
+    // The spell consumer-delta probe's own ceiling report. Reads only
+    // `data/corpus/` and the engine's own tables, writes nothing, classifies
+    // nothing, and moves no unit on any board -- it reports what the
+    // instrument can and cannot reach. Deliberately an early return, before
+    // the PCGen-corpus gate below, because it does not read that corpus.
+    if args.iter().any(|a| a == "--spell-probe") {
+        let fixture = load_probe_fixture(&repo_root);
+        let outcomes = probe_spell_effect_wiring(&fixture, &repo_root);
+        print!("{}", spell_probe_ceiling_report(&outcomes));
+        return;
+    }
+
     let summary_only = args.iter().any(|a| a == "--summary");
     // `--summary` never writes the file: a summary is not the artefact, and
     // overwriting the full inventory with one would be a silent data loss.
@@ -2837,18 +3200,7 @@ fn main() {
         std::process::exit(1);
     }
 
-    let fixture_path = repo_root.join(FIXTURE_RELATIVE_PATH);
-    let fixture_text = match std::fs::read_to_string(&fixture_path) {
-        Ok(t) => t,
-        Err(e) => {
-            eprintln!("could not read {}: {e}", fixture_path.display());
-            std::process::exit(1);
-        }
-    };
-    let Some(fixture) = load_character_input_fixture(&fixture_text).character_input else {
-        eprintln!("fixture {} did not load", fixture_path.display());
-        std::process::exit(1);
-    };
+    let fixture = load_probe_fixture(&repo_root);
 
     // --- book roster, from the corpus itself ------------------------------
     // `book_paths` maps a book id (directory basename) to its real directory,
@@ -3600,8 +3952,11 @@ mod rule_set_mapping_tests {
 /// SD28-E14: observation-harness widening tests. F2 (equipment probe) with
 /// a positive proof against the real on-disk corpus and negative proofs
 /// that the probe does NOT promote a unit the engine genuinely does not
-/// wire (F3's anti-gaming binding). F1 (spell probe) is deliberately absent
-/// -- see the doc comment at the bottom of this module for why.
+/// wire (F3's anti-gaming binding). F1 (spell probe) was deliberately absent
+/// when this module was written -- see the doc comment at the bottom of this
+/// module for why, and `mod spell_probe_tests` for the cycle that superseded
+/// that reasoning once `epic-31-spell-wiring` gave the spell magnitude a wired
+/// consumer to observe.
 #[cfg(test)]
 mod e14_harness_tests {
     use super::*;
@@ -3819,6 +4174,13 @@ mod e14_harness_tests {
     }
 
     // ----- F1: spell probe -- NOT implemented, and this is the finding -----
+    //
+    // CONCLUSION SUPERSEDED 2026-08-13 by `mod spell_probe_tests` (SD-32
+    // `spell-consumer-delta-probe`). The retracted-attempt account below still
+    // stands and is why it is kept; the claim that no wired spell-magnitude
+    // consumer exists no longer holds. `epic-31-spell-wiring` (2026-08-07)
+    // wired `compute_spellbook_coverage` into
+    // `pf1_adapter::resolve_unified_pilot_snapshot`.
     //
     // An earlier version of this cycle probed
     // `pilot_compute_corpus::compute_pilot_with_corpus`'s `school_coverage`
@@ -4397,5 +4759,354 @@ mod unit_id_uniqueness_tests {
             }
         }
         assert_eq!(ids.len(), REAL_COLLISIONS.len() * 2);
+    }
+}
+
+/// SD-32 `spell-consumer-delta-probe`: the spell probe's own proofs.
+///
+/// This module is the answer to the `e14_harness_tests` module's closing note
+/// ("F1: spell probe -- NOT implemented, and this is the finding"). That note
+/// is superseded, not contradicted: its blocker was that
+/// `spellbook::compute_spellbook_coverage` reached no surface the player
+/// reads. `epic-31-spell-wiring` wired it to one. See the block comment above
+/// [`probe_spell_key`].
+#[cfg(test)]
+mod spell_probe_tests {
+    use super::*;
+    use codex::rules_core::source_content::SourcePackageContent;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    /// A scratch book directory holding hand-written Shape B v1 spell JSON,
+    /// cleaned up on drop. Loaded through the SAME `load_spell_corpus` the
+    /// probe uses in production, so a negative case is exercised against the
+    /// real loading path rather than a hand-assembled package.
+    struct ScratchSpellBook {
+        root: PathBuf,
+    }
+
+    impl ScratchSpellBook {
+        fn new(name: &str, records: &[(&str, Option<&str>)]) -> Self {
+            let root = std::env::temp_dir()
+                .join(format!("codex_spell_probe_{name}_{}", std::process::id()));
+            let _ = std::fs::remove_dir_all(&root);
+            std::fs::create_dir_all(root.join("spell")).unwrap();
+            for (i, (key, school)) in records.iter().enumerate() {
+                let school_json = match school {
+                    Some(s) => format!("\"{s}\""),
+                    None => "null".to_string(),
+                };
+                std::fs::write(
+                    root.join("spell").join(format!("record_{i}.json")),
+                    format!(
+                        "{{\"data\":{{\"key\":{},\"school\":{school_json}}}}}",
+                        q(key)
+                    ),
+                )
+                .unwrap();
+            }
+            ScratchSpellBook { root }
+        }
+
+        fn corpus(&self) -> SourcePackageContent<'static> {
+            let roots = [BookCorpusRoot { book_id: "scratch", dir: &self.root }];
+            load_spell_corpus(&roots)
+        }
+    }
+
+    impl Drop for ScratchSpellBook {
+        fn drop(&mut self) {
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    fn crb_corpus() -> SourcePackageContent<'static> {
+        let dir = repo_root().join("data/corpus/core_rulebook");
+        let roots = [BookCorpusRoot { book_id: "core_rulebook", dir: &dir }];
+        load_spell_corpus(&roots)
+    }
+
+    // ----- The delta's baseline is real -----
+
+    /// The "delta" in consumer-delta. The probe's own posture, with NO spell
+    /// selected, must carry no save DC at all — otherwise every DC it later
+    /// observes would be unattributable to the spell that was added.
+    #[test]
+    fn the_probes_baseline_posture_carries_no_save_dc_at_all() {
+        let corpus = crb_corpus();
+        let baseline =
+            compute_spellbook_coverage(&spell_probe_input(&fixture(), "class:wizard", None), &corpus);
+        assert!(
+            PilotSpellbookViewModel::from_coverage(&baseline).is_none(),
+            "the no-spell baseline must project no spellbook block at all: {:?}",
+            baseline.spell_save_dc
+        );
+    }
+
+    // ----- Positive: a real magnitude on the surface the sheet renders -----
+
+    /// `Shield` is a real CRB Abjuration record, 1st level, on the real Wizard
+    /// spell list, present in `data/corpus/core_rulebook/spell/`. Selecting it
+    /// alone must put `10 + 1 + 4 = 15` on
+    /// `PilotSpellbookViewModel.spell_save_dc` — the field
+    /// `pf1_adapter::resolve_unified_pilot_snapshot` puts on the snapshot and
+    /// `CharacterSheet.tsx` renders.
+    #[test]
+    fn the_probe_observes_a_real_spells_save_dc_on_the_surface_the_sheet_renders() {
+        let corpus = crb_corpus();
+        let outcome = probe_spell_key(&fixture(), "Shield", &corpus, RuleSetId::Crb);
+        assert_eq!(
+            outcome,
+            SpellProbeOutcome::Wired { class_id: "class:wizard", level: 1, dc: 15 },
+            "Shield must produce a wizard save DC of 10 + level 1 + modifier 4"
+        );
+    }
+
+    // ----- Validation against answers recorded independently in this repo ---
+
+    /// The exercise this program's own recorded lesson demands: reproduce
+    /// answers already recorded elsewhere before trusting the instrument on
+    /// anything new.
+    ///
+    /// `pilot_compute.rs` computes the same PF1 DC formula in a completely
+    /// separate implementation and emits it as
+    /// `class_chassis.wizard.spell_save_dc.spell_level_<N>`. That ladder is
+    /// this probe's oracle. The two are compared on the part that is actually
+    /// in dispute — how much the SPELL'S OWN LEVEL moves the number — by
+    /// subtracting each side's own casting-ability modifier, so the comparison
+    /// does not silently depend on the two paths deriving the same modifier
+    /// (the chassis applies racial bonuses; the probe pins a raw score).
+    ///
+    /// A probe that reported a constant, or that read some other spell's
+    /// level, fails this at the first rung.
+    #[test]
+    fn probe_dcs_reproduce_the_independently_computed_chassis_dc_ladder() {
+        let fixture = fixture();
+        let corpus = crb_corpus();
+
+        // The chassis's own ladder, harvested from a real computation.
+        let computation = compute_pilot_base_chassis(&class_sweep_input(&fixture, "wizard", 20));
+        let mut chassis: BTreeMap<u8, i16> = BTreeMap::new();
+        for e in &computation.explanations {
+            if let Some(rest) = e.id.strip_prefix("class_chassis.wizard.spell_save_dc.spell_level_")
+                && let Ok(level) = rest.parse::<u8>()
+            {
+                chassis.insert(level, e.value);
+            }
+        }
+        assert!(
+            chassis.len() >= 5,
+            "the wizard chassis must publish a DC ladder to compare against: {chassis:?}"
+        );
+        // The chassis's own modifier, read off its own 1st-level rung rather
+        // than assumed: dc = 10 + 1 + modifier.
+        let chassis_modifier = chassis[&1] - 11;
+
+        // One real, unambiguous Wizard spell per level 1-5, each in
+        // `crb::spell_list::SPELL_LIST` at that level.
+        let anchors: &[(&str, u8)] = &[
+            ("Alarm", 1),
+            ("Acid Arrow", 2),
+            ("Arcane Sight", 3),
+            ("Arcane Eye", 4),
+            ("Cone of Cold", 5),
+        ];
+        for &(key, level) in anchors {
+            let outcome = probe_spell_key(&fixture, key, &corpus, RuleSetId::Crb);
+            let SpellProbeOutcome::Wired { dc, level: observed_level, .. } = outcome else {
+                panic!("{key} must be wired, got {outcome:?}");
+            };
+            assert_eq!(observed_level, level, "{key}'s level came from the wrong record");
+            assert_eq!(
+                i16::from(dc) - SPELL_PROBE_ABILITY_MODIFIER,
+                chassis[&level] - chassis_modifier,
+                "{key} (level {level}): the probe's level-dependent DC term must equal the \
+                 independently computed chassis ladder's"
+            );
+        }
+    }
+
+    /// A magnitude, not a flag: two spells that differ ONLY in level must
+    /// produce DCs that differ by exactly that difference. A probe reporting
+    /// "some number appeared" passes the positive test above and fails this.
+    #[test]
+    fn the_observed_dc_moves_with_the_spells_own_level() {
+        let fixture = fixture();
+        let corpus = crb_corpus();
+        let SpellProbeOutcome::Wired { dc: low, level: low_level, .. } =
+            probe_spell_key(&fixture, "Alarm", &corpus, RuleSetId::Crb)
+        else {
+            panic!("Alarm must be wired");
+        };
+        let SpellProbeOutcome::Wired { dc: high, level: high_level, .. } =
+            probe_spell_key(&fixture, "Cone of Cold", &corpus, RuleSetId::Crb)
+        else {
+            panic!("Cone of Cold must be wired");
+        };
+        assert_eq!(
+            i16::from(high) - i16::from(low),
+            i16::from(high_level) - i16::from(low_level),
+            "the DC gap must be exactly the level gap"
+        );
+        assert!(high > low, "a 5th-level spell must not produce the same DC as a 1st-level one");
+    }
+
+    // ----- Negatives: what must stay ungrounded -----
+
+    /// `Burning Hands (Acid)` is a real, ingested CRB record with a real
+    /// school and level — but no class's own spell list holds it (it is an
+    /// elemental-variant row). No player can put it in a spellbook, so any DC
+    /// computed for it would be a magnitude nobody can see. It must not be
+    /// promoted, and the reason must be the intended one.
+    #[test]
+    fn the_probe_never_promotes_a_record_no_casting_class_has() {
+        assert_eq!(
+            probe_spell_key(&fixture(), "Burning Hands (Acid)", &crb_corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::NoCastingClassHasIt
+        );
+        // Control: the base record IS promoted, which proves the refusal above
+        // is about the variant row and not about the harness failing to find
+        // anything at all.
+        assert!(matches!(
+            probe_spell_key(&fixture(), "Burning Hands", &crb_corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::Wired { .. }
+        ));
+    }
+
+    /// A key on a real class list whose book corpus holds no such record must
+    /// stay ungrounded — the "never ingested here" path, distinct from
+    /// "ingested but inert".
+    #[test]
+    fn the_probe_never_promotes_a_spell_absent_from_the_books_own_corpus() {
+        let book = ScratchSpellBook::new("absent", &[("Some Other Spell", Some("Evocation"))]);
+        assert_eq!(
+            probe_spell_key(&fixture(), "Fireball", &book.corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::AbsentFromBookCorpus
+        );
+    }
+
+    /// A record that resolves against the corpus but that the engine's own
+    /// per-school table store does not hold produces no `SpellEffect`, so no
+    /// level and no DC. It must stay ungrounded. This is the population every
+    /// non-CRB book's spells fall into: the spellbook engine's nine per-school
+    /// resolvers read `crb::spell_list::SPELL_LIST` and nothing else.
+    #[test]
+    fn the_probe_never_promotes_a_record_the_table_store_does_not_hold() {
+        // A real APG spell on the real Wizard list, resolved against a corpus
+        // that holds it — but absent from the CRB table store.
+        let book =
+            ScratchSpellBook::new("notable", &[("Aggressive Thundercloud", Some("Evocation"))]);
+        assert!(
+            crb_wizard_spell_list::wizard_spell_level("Aggressive Thundercloud").is_some(),
+            "this anchor must really be on the Wizard list, else the test proves nothing"
+        );
+        assert!(
+            !crb_spell_list::SPELL_LIST.iter().any(|e| e.key == "Aggressive Thundercloud"),
+            "this anchor must really be absent from the CRB table store"
+        );
+        assert_eq!(
+            probe_spell_key(&fixture(), "Aggressive Thundercloud", &book.corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::NoTableEffect
+        );
+    }
+
+    /// A record whose `SCHOOL:` the engine does not recognize dispatches to no
+    /// school function at all and must stay ungrounded.
+    #[test]
+    fn the_probe_never_promotes_a_record_with_an_unrecognized_school() {
+        let book = ScratchSpellBook::new("badschool", &[("Fireball", Some("Thaumaturgy"))]);
+        assert_eq!(
+            probe_spell_key(&fixture(), "Fireball", &book.corpus(), RuleSetId::Crb),
+            SpellProbeOutcome::SchoolNotRecognized
+        );
+    }
+
+    /// The `Celestial Shield` discipline, spell side: a book whose own record
+    /// happens to share a name with a CRB spell must NOT ground on CRB's
+    /// numbers. The magnitude's provenance has to be the claiming unit's own
+    /// book.
+    ///
+    /// The probe's whole non-CRB population sits behind this gate today, and
+    /// that is the honest result rather than a hedge: every per-school
+    /// resolver stamps `RuleSetId::Crb` because every one of them reads CRB's
+    /// table.
+    #[test]
+    fn the_probe_never_grounds_one_books_unit_on_another_books_table() {
+        // A corpus record named exactly like CRB's `Shield`, but presented as
+        // the Advanced Player's Guide's own record.
+        let book = ScratchSpellBook::new("foreign", &[("Shield", Some("Abjuration"))]);
+        let corpus = book.corpus();
+        assert_eq!(
+            probe_spell_key(&fixture(), "Shield", &corpus, RuleSetId::Apg),
+            SpellProbeOutcome::ForeignBookTable,
+            "an APG unit must not claim a magnitude CRB's table supplied"
+        );
+        // Control: the identical record, claimed by the book whose table
+        // really answered, IS wired — so the refusal above is the provenance
+        // gate and not a broken harness.
+        assert!(matches!(
+            probe_spell_key(&fixture(), "Shield", &corpus, RuleSetId::Crb),
+            SpellProbeOutcome::Wired { .. }
+        ));
+    }
+
+    // ----- Coverage of the question, not of the answer -----
+
+    /// The probe must ask its question of every spell key the engine catalog
+    /// holds for an observable book, for the same reason the equipment probe
+    /// must (`the_probe_examines_every_key_the_engine_catalog_holds`): a key
+    /// the probe never examines is a unit that can only ever report its
+    /// pre-probe status, not because nothing was computed but because nobody
+    /// asked. Pins coverage; says nothing about the answer.
+    #[test]
+    fn the_probe_examines_every_catalog_spell_key_of_every_observable_book() {
+        let outcomes = probe_spell_effect_wiring(&fixture(), &repo_root());
+        let keys_by_book = probe_spell_keys_by_book();
+        let mut expected = 0usize;
+        for dir_name in OBSERVABLE_BOOK_DIRS {
+            let Some(engine_book) = engine_book_for_corpus_dir(dir_name) else { continue };
+            if rule_set_for_engine_book(engine_book).is_none() {
+                continue;
+            }
+            let Some(keys) = keys_by_book.get(engine_book) else { continue };
+            for key in keys {
+                assert!(
+                    outcomes.contains_key(&(engine_book.to_string(), (*key).to_string())),
+                    "{engine_book}/{key} was never asked the wiring question"
+                );
+                expected += 1;
+            }
+        }
+        assert_eq!(outcomes.len(), expected, "the probe asked about keys outside the catalog");
+        assert!(expected > 0, "the probe must examine at least one book's keys");
+    }
+
+    /// The anti-gaming guard the retracted SD-28-E14-F1 attempt failed: that
+    /// version promoted 1,067 of 1,067 targets. A probe that says yes to
+    /// everything it examines is measuring nothing. This pins that the probe
+    /// discriminates over the real catalog — it does NOT pin a target count,
+    /// which would be a bar this cycle could later be tempted to move.
+    #[test]
+    fn the_probe_refuses_a_real_share_of_the_catalog_it_examines() {
+        let outcomes = probe_spell_effect_wiring(&fixture(), &repo_root());
+        let wired =
+            outcomes.values().filter(|o| matches!(o, SpellProbeOutcome::Wired { .. })).count();
+        assert!(wired > 0, "the probe must reach something, else it is not an instrument");
+        assert!(
+            wired < outcomes.len(),
+            "a probe that promotes every key it examines ({wired} of {}) is not observing a \
+             delta — that is exactly the retracted 1,067-of-1,067 failure",
+            outcomes.len()
+        );
     }
 }
