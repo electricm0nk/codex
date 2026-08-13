@@ -400,6 +400,92 @@ unrouted as of this writing.
 **Not blocking anything.** No lane, epic, or reach claim in SD-29 waits on this. Deferring it costs
 the bundle nothing; running it inside the bundle would cost the lanes cycles they need.
 
+### C1.6 — `ASPECT:` is modelled by no chassis in this program: 34 grounded companion rows are diminished by it and 1 is emptied
+
+**Owner: SD-31** (`docs/release/SD-31-pcgen-character-import/`), as the next bundle in the program;
+re-assign here if a different successor is cut first. Same owner and same reasoning as C1.4 and C1.5.
+
+**Status at handoff: measured, named, and blocking exactly one unit.** Recorded by SD-29 Epic 7
+round 9, the companion lane's final pass (`decisions.md §69.5`). It is the reason the companion lane
+is `DRY` at 922 of a 923 ceiling rather than at 923 of 923.
+
+#### The number, and the command that produces it
+
+```
+python3 - <<'PY'   # every GROUNDED companion unit, re-read from its own corpus line
+import json, sys, collections
+sys.path.insert(0,'scripts')
+from classify_companion_rows import read_row, resolve_source_file, book_dirs
+inv=json.load(open('docs/work-inventory.json')); dirs=book_dirs()
+n=0; tot=0; per=collections.Counter()
+for u in inv['units']:
+    if u['kind']!='companion' or u['status']!='grounded': continue
+    d=dirs.get(u['book'])
+    if not d: continue
+    row=read_row(resolve_source_file(d,u['source_file']),u['source_line'])
+    tot+=1
+    if any(t.startswith('ASPECT:') for t in row): n+=1; per[u['book']]+=1
+print('grounded companion rows read:',tot); print('of which carry ASPECT: ',n); print(dict(per))
+PY
+
+  grounded companion rows read: 922
+  of which carry ASPECT:  34
+  {'bestiary': 5, 'bestiary_4': 1, 'bestiary_5': 1, 'book_of_the_damned_volume_1': 1,
+   'core_essentials': 14, 'core_rulebook': 2, 'ultimate_magic': 5, 'ultimate_wilderness': 5}
+```
+
+Re-derived on the round-9 tip. `decisions.md §63.3` measured 27 on the twelve-book tree; the figure
+moves with each registered book, so a successor should re-run the command rather than cite either
+number.
+
+#### What the mechanism is
+
+`ASPECT:` is a PCGen token that states what a record DOES in a form meant for display —
+`ASPECT:ReachAttack|5 ft.`, `ASPECT:RacialSkillModifier|+4 Stealth (improves to +8 in forests)`. No
+chassis in this program models it:
+
+```
+grep -rn -i aspect src/rules_core/rules_tables/companion_chassis.rs \
+                   src/rules_core/rules_tables/monster_chassis.rs \
+                   scripts/transcribe_monster_tables.py
+  -> only prose about it being unmodelled; no field, no parse
+```
+
+#### Why it is a ceiling correction rather than a backlog line
+
+**33 of the 34 rows are diminished by the omission; exactly one is emptied by it.** The 33 also carry
+a `TYPE:` and usually a `DESC:`, so they reach a player with real content and merely lose one
+statement. `core_essentials`' `Pseudodragon ~ Tail` (`ce_abilities_familiar_race_cr.lst:215`) carries
+`KEY:`, `CATEGORY:Special Ability`, `SOURCEPAGE:p.229` and `ASPECT:ReachAttack|5 ft.` — no `TYPE:`,
+no `DESC:`, no `BONUS:` — so transcribing it under today's chassis emits a card that reads "Tail"
+over a page number.
+
+That is the stub `docs/governance/no-stub-mvp-doctrine.md` forbids, and the transcriber's
+empty-payload screen (`decisions.md §63.3`) correctly refuses it. **The reach gate would have counted
+it as reached**, which is the twin problem `AGENTS.md` names: the screen and the gate would have
+agreed while the player saw nothing. Screening at the generator is the fix at the source; modelling
+`ASPECT:` is the fix at the cause.
+
+#### What executing it costs
+
+A field on `CompanionAbilityRecord` and on `MonsterAbilityRecord`, a parse in both transcribers, a
+DTO field in `companion_catalog` and `monster_catalog`, a render in both screens, and a regeneration
+of all sixteen registered companion books' and every registered monster book's generated tables —
+with the count pins that move with them (`AGENTS.md`: a record-count change compiles clean and leaves
+OTHER files' hardcoded assertions red).
+
+**Not blocking anything in SD-29.** One companion unit stays honestly `not-ingested`; the lane's
+`DRY` ruling accounts for it explicitly rather than rounding it away.
+
+#### The classifier over-reports this row, and that is worth carrying forward
+
+`scripts/classify_companion_rows.py` asks "is this ability row owned by a creature of its own book?"
+and `Pseudodragon ~ Tail` is owned, so the classifier calls it reachable. The transcriber's
+empty-payload screen is a *different* predicate and drops it. A successor reading `reachable
+remainder − grounded` will therefore compute `1` workable companion unit and find zero. Same
+proxy-defect class as `decisions.md §68`'s two: a screen making a confident claim about something
+other than what it names.
+
 ## Review trigger
 
 Reopen SD-29's forward-scope register when:
@@ -413,5 +499,7 @@ Reopen SD-29's forward-scope register when:
   evaluator-vs-fixture bar is routed to an owner (C3.3).
 - SD-28's per-class archetype measurement (`§9.1`) reaches the classes behind SD-29's deferred
   `class_feature` units (C1.3).
+- A cycle proposes to model PCGen's `ASPECT:` token on either chassis (C1.6) — the companion lane's
+  last unit unblocks with it and 33 already-shipped rows get richer.
 
 Closed-form: the bundle closes when Epic 11 (Closure Epilogue) fires.

@@ -116,11 +116,20 @@ case "$FAMILY" in
   #         247 then landed ABOVE it and the run was refused with "still shows
   #         77 rows". Same gate, opposite direction, one round apart.
   #
+  #   323 — SD-29 Epic 7 round 9, 17 books. The chip row wrapped to a THIRD
+  #         line and 285 landed ON the "Advanced Player's Guide (1)" chip: the
+  #         run came back with "1 matching companion" and the Eidolon on screen
+  #         instead of the searched record. The refusal was the RECORD gate
+  #         rather than the filtered-count gate this time — a chip click is a
+  #         real filter, so the count moved and only the record check caught it.
+  #         Worth recording as its own shape: an off-by-one-row search click
+  #         does not always look like an unfiltered list.
+  #
   # Both refusals are the filtered-count gate doing its job rather than
   # screenshotting an unfiltered list and finding the record name in it. **The
   # constant is a function of registered book count and WILL move again** — the
   # next companion round should expect to recalibrate, and the gate will say so.
-  companion)  HUB_X=855;  HUB_Y=971; SEARCH_Y=285; SCREEN_MARKER="Companion Catalog"; MATCH_WORD="matching" ;;
+  companion)  HUB_X=855;  HUB_Y=971; SEARCH_Y=323; SCREEN_MARKER="Companion Catalog"; MATCH_WORD="matching" ;;
   *) echo "FAIL: unknown --family '$FAMILY' (known: equipment spell race_trait monster companion)" >&2; exit 2 ;;
 esac
 SEARCH_X=960

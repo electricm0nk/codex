@@ -13032,3 +13032,278 @@ Recorded so run 3 does not re-derive the shape:
    log is append-only and its whole value is that it survives a run git does not record; leaving
    another agent's events uncommitted is how they get lost. `docs/release/SD-31-pcgen-character-import/`
    was left untracked — it is a different bundle's package and not this cycle's to land.
+
+---
+
+## Cycle — `epic-7-companion-lane`, ROUND 9 (`SD29-E7-F2-010`) — **COMPANION LANE DRY**
+
+**Actor:** `sd29-companion-final-r1` · **Date:** 2026-08-13 · **Branch:** `tranche/9` ·
+**Commits:** `d8422c30` (ingest), `99c4a6e4` (merge of `origin/tranche/9` `a1ef3a8e`), `3ce4a1d4`
+(work-inventory regenerated on the merged tip) · **Card:** `epic-7-companion-lane`
+
+### 0. THE RULING: the companion lane is DRY, and its last unit is chassis-blocked
+
+52 of the 53 workable units closure run 2 derived are ingested, grounded and served. The 53rd is not
+workable: it is `core_essentials`' `Pseudodragon ~ Tail`, a row the classifier over-reports and the
+transcriber's empty-payload screen correctly drops (`decisions.md §69.5`, successor entry **C1.6**).
+
+Companion grounded **870 → 922**, ceiling **923**.
+
+### 1. Base recovery — the FIFTH consecutive cycle handed a wrong base
+
+The dispatched worktree did not contain
+`docs/release/SD-29-corpus-wide-catch-up-lanes/loop-instruction.md` at all. Checked before anything
+else, per the standing hazard:
+
+```
+git rev-list --left-right --count origin/tranche/9...HEAD
+  -> 3390    0
+```
+
+**3,390 commits behind, 0 ahead.** Nothing local was at risk, so `git reset --hard origin/tranche/9`
+(`dec23815`) rather than a merge — the opposite call from closure run 2's, and for the opposite
+reason: that cycle's checkout carried two commits of real unpushed work and this one carried none.
+Verified after: `0 0`, and `loop-instruction.md` present.
+
+### 2. Every figure re-derived, command first
+
+**(a) The workable set — the brief's `53 across 5 books` reproduced EXACTLY**
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts')
+import classify_companion_rows as C
+inv=json.load(open('docs/work-inventory.json')); dirs=C.book_dirs()
+by=collections.defaultdict(list)
+for u in inv['units']:
+    if u['kind']=='companion': by[u['book']].append(u)
+tot=0
+for book in sorted(by):
+    r=C.classify(book, by[book], dirs[book]); exc=set(r['excluded'])
+    rem=[u for u in by[book] if u['corpus_key'] not in exc
+         and u['status'] in ('not-ingested','not-started')]
+    if rem: print(book, len(rem))
+    tot+=len(rem)
+print('TOTAL companion REACHABLE REMAINING =', tot)"
+
+  advanced_players_guide       4
+  advanced_race_guide         14
+  book_of_the_damned_volume_1  2
+  core_essentials              1
+  ultimate_magic              32
+  TOTAL companion REACHABLE REMAINING = 53
+```
+
+Cross-checked the second way `AGENTS.md` requires: `python3 scripts/classify_companion_rows.py`
+corpus-wide → `1696 units / 773 excluded / 923 reachable`; `923 − 870 grounded = 53`. **This is the
+first companion round in six whose brief was accurate**, and that is what let it take four books
+instead of one.
+
+**(b) Per-book ceilings, each reproduced before the book was committed to**
+
+```
+python3 scripts/classify_companion_rows.py <book> | tail -12
+  ultimate_magic               170 units / 138 excluded /  32 reachable
+  advanced_race_guide           32 units /  18 excluded /  14 reachable
+  advanced_players_guide       212 units / 208 excluded /   4 reachable
+  book_of_the_damned_volume_1   31 units /  29 excluded /   2 reachable
+```
+
+Each book ships **exactly** its reachable remainder: 32 + 14 + 4 + 2 = **52**.
+
+**(c) The status move, measured rather than asserted**
+
+```
+python3 -c "
+import json, collections
+a=json.load(open('<git show HEAD:docs/work-inventory.json>')); b=json.load(open('docs/work-inventory.json'))
+ca=collections.Counter((u['book'],u['kind'],u['status']) for u in a['units'])
+cb=collections.Counter((u['book'],u['kind'],u['status']) for u in b['units'])
+for k in sorted(set(ca)|set(cb)):
+    if ca[k]!=cb[k]: print('|'.join(k), ca[k], '->', cb[k])
+print('units', len(a['units']), '->', len(b['units']))"
+
+  advanced_players_guide|companion|grounded       0 ->   4
+  advanced_players_guide|companion|not-ingested 212 -> 208
+  advanced_race_guide|companion|grounded          0 ->  14
+  advanced_race_guide|companion|not-ingested     32 ->  18
+  book_of_the_damned_volume_1|companion|grounded  0 ->   2
+  book_of_the_damned_volume_1|companion|not-ingested 31 -> 29
+  ultimate_magic|companion|grounded               0 ->  32
+  ultimate_magic|companion|not-ingested         170 -> 138
+  units 38540 -> 38540
+```
+
+**Exactly eight changes, two per book, and no unit of any other kind moved.** No unit was invented or
+lost.
+
+**(d) The remainder AFTER the ingest — the number this cycle is accountable for**
+
+```
+python3 scripts/classify_companion_rows.py | tail -3
+  -> distinct excluded rows (the UNION, not the sum) : 773
+     reachable remainder            : 923
+
+python3 -c "<the per-book intersection in (a), re-run>"
+  -> core_essentials 1 ['Pseudodragon ~ Tail']
+     TOTAL companion WORKABLE REMAINING = 1
+```
+
+**And that 1 is not workable.** See §5.
+
+**(e) Corpus-wide grounded, on the merged tip**
+
+```
+python3 -c "
+import json, collections
+b=json.load(open('docs/work-inventory.json'))
+oos={x['id'] for x in b['books'] if x['scope']=='out_of_scope'}
+c=collections.Counter(u['status'] for u in b['units'] if u['book'] not in oos)
+print('grounded', c['grounded'], 'in-scope total', sum(c.values()))
+for kind in ('companion','monster','monster_ability','race_trait'):
+    k=collections.Counter(u['status'] for u in b['units'] if u['kind']==kind and u['book'] not in oos)
+    print(kind,'total',sum(k.values()),'grounded',k['grounded'],'remaining',k['not-ingested']+k['not-started'])"
+
+  grounded 4699 in-scope total 38521
+  companion       total 1696 grounded  922 remaining  774
+  monster         total 1270 grounded 1242 remaining   28
+  monster_ability total 3107 grounded 1629 remaining 1478
+  race_trait      total 3447 grounded  513 remaining 2934
+```
+
+The monster figures include the concurrent lane's round-11 work, merged in at §3.
+
+### 3. Merge rather than reset, the second time this cycle
+
+`origin/tranche/9` moved twice while this cycle ran — the monster lane's final pass (`568f0756`), its
+row-classifier fix (`a1ef3a8e`) and its Decision 68 (`43ea54a1`). Merged into the worktree branch
+before push, per the standing rule; **one conflict, in `docs/work-inventory.json`, and it was
+resolved by REGENERATING the file on the merged tree rather than by picking a side.** A generated
+inventory reconciled by hand is a number nothing produced. Committed separately as `3ce4a1d4` so the
+regeneration is reviewable apart from the ingest.
+
+**Decision number collision, again.** `§68` was claimed by the monster lane while this cycle was
+mid-flight; this round's decision is `§69`, and the two in-code references written against `§68`
+were corrected before commit. That is the fourth instance of the class `§53` names.
+
+### 4. What shipped — nine surfaces, four books
+
+The four generated tables (`ultimate_magic`, `advanced_race_guide`, `apg`,
+`book_of_the_damned_volume_1` `companion_data.rs`), the four `mod.rs` files, `companion_chassis`'s
+registry, `gen_book_cache`'s `COMPANION_BOOK_SPECS`, `reach_gate` (four claim arms + one
+`CORPUS_BOOK_IDS` entry), `companion_catalog` (four wire codes + the gate widening),
+`corpus_ingest_diagnostic` (four books' counts, all four **merged via `companion_book_counts`** so
+none can drift the way Ultimate Wilderness's did), and the frontend book map.
+
+Three findings worth carrying, each in `decisions.md §69`:
+
+1. **`§69.2` — the 393 rows that do not ship are ONE finding.** 361 are the summoner's evolution pool
+   and the bladebound magus's black blade; both hang off a CLASS FEATURE rather than any creature
+   row. That is round 8's Core Rulebook finding, three more times. The other 32 are 27
+   Book-of-the-Damned orphans of the same shape plus 5 CLASS rows.
+2. **`§69.3` — a new `DESC:` gate kind, widened in BOTH directions.** Ultimate Magic gates three
+   rows on `PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (…)` and its `!PREABILITY`
+   negation. `serve_desc_condition` refused both, as designed. Rendering only the positive one would
+   have left the "after" text on screen under no condition at all.
+3. **`§69.4` — two `#[path]` duplicates retired in `gen_book_cache`.** A `#[path]`-included `mod.rs`
+   resolves `super::` against the BINARY's crate root, where there is no `companion_chassis`, so
+   ARG's new `mod companion_data;` compiled in the library and failed in the generator. The binary
+   now reaches ARG through the library crate exactly as it already reached `pathfinder_unchained`.
+
+### 5. The one remaining unit is chassis-blocked, and the classifier over-reports it
+
+`core_essentials` `ce_abilities_familiar_race_cr.lst:215`:
+
+```
+Tail  KEY:Pseudodragon ~ Tail  CATEGORY:Special Ability  SOURCEPAGE:p.229  ASPECT:ReachAttack|5 ft.
+```
+
+It is OWNED, so the ownership classifier calls it reachable. It carries no `TYPE:`, no `DESC:` and no
+`BONUS:`, so every modelled field of `CompanionAbilityRecord` comes out empty and the card a player
+opens reads "Tail" over a page number — the stub `docs/governance/no-stub-mvp-doctrine.md` forbids,
+**which the reach gate would have counted as reached**. The transcriber's empty-payload screen
+(`§63.3`) drops it and is right to.
+
+The remedy is modelling PCGen's `ASPECT:` token, which no chassis in this program does. Re-measured
+on this tip rather than carried from `§63.3`'s figure of 27:
+
+```
+python3 - <<'PY'   # every GROUNDED companion unit, re-read from its own corpus line
+  grounded companion rows read: 922
+  of which carry ASPECT:  34
+  {'bestiary': 5, 'bestiary_4': 1, 'bestiary_5': 1, 'book_of_the_damned_volume_1': 1,
+   'core_essentials': 14, 'core_rulebook': 2, 'ultimate_magic': 5, 'ultimate_wilderness': 5}
+PY
+```
+
+**33 of the 34 are diminished by the omission; exactly 1 is emptied by it.** That is a chassis
+widening across two chassis, two transcribers, two DTOs, two screens and every registered book's
+generated table. This card's instruction is explicit that a book needing a mechanism is a scope
+finding to record rather than force, so it is recorded: `successor-forward-scope-register.md`
+**C1.6**, owner SD-31, with the command that produces the number.
+
+**There is no next book.** All 16 books with any reachable companion row are registered. A future
+companion round is a CHASSIS round, never a book round.
+
+### 6. F3 (the SD-31-owned companion preview fixture) — this cycle's effect: NEITHER
+
+Checked rather than assumed. F3 says `apps/desktop/src/.../companionPreview` fixture data is not the
+transcription it claims (Clockwork Spy serves 1 of 6 stat adjustments and 1 of 3 abilities). This
+cycle touched **no** preview fixture: its whole frontend diff is four lines in
+`CompanionCatalogScreen.tsx`'s `BOOK_LABELS` map. The four new books' records reach the player
+through the live catalog command, not through any fixture. **Better, worse or neither: neither.** The
+defect is untouched and undeepened, and it stays owned by SD-31 at
+`successor-forward-scope-register.md` C1.4a-d.
+
+### 7. Definition-of-done item 8 (on-screen) — **4 PASS, one per book**
+
+`RUN_DESKTOP_AGENT=sd29-companion-final-r1`, artifacts in
+`artifacts/SD29-E7-F2-010/item8/`. Not a waiver and not a sample: every book this cycle registered
+was proven on a live screen.
+
+| slug | record | expected strings, all rendered |
+|---|---|---|
+| `um-giant-leech` | `Companion (Leech (Giant))` | `Ultimate Magic`, `Blood Drain`, **`without Companion Advancement (Leech (Giant))`** |
+| `arg-puffball` | `Companion (Puffball)` | `Advanced Race Guide`, `Poison`, `RaceAbility` |
+| `botd1-imp` | `Companion (Imp)` | `Book of the Damned`, `Poison` |
+| `apg-eidolon` | `Eidolon` | `Advanced Player's Guide`, `SkillChoice` |
+
+The first row's third expectation is the one worth naming: **`§69.3`'s negated `!PREABILITY` gate
+reaching a reader as prose.** The extracted line is
+
+```
+36:without Companion Advancement (Leech (Giant)): inflicting 1 point of Strength damage.
+```
+
+which is the half of the widening that would have been silently lost had only the positive form been
+rendered — the "after" text would have appeared under no condition at all. A count pin could not have
+caught that; an on-screen extraction did. `arg-puffball`'s `RaceAbility` and `apg-eidolon`'s
+`SkillChoice` are the two new unmodelled-facet shapes reaching the player as the corpus's own
+segments rather than as a laundered facet.
+
+#### The harness needed recalibrating, and the refusal took a NEW shape
+
+`SEARCH_Y` for the `companion` family is a function of the registered book count, and the file's own
+comment predicted it would move again. It did — 285 → **323**, third live calibration:
+
+```
+247 — round 1, 4 books, chips on ONE line
+285 — round 2, 7 books, chip row wrapped to TWO lines
+323 — round 9, 17 books, chip row wrapped to THREE lines
+```
+
+**The new shape is the refusal, not the constant.** The two earlier miscalibrations were caught by
+the FILTERED-COUNT gate ("still shows 15 rows" / "still shows 77 rows") — an unfiltered list. This
+one landed squarely on the `Advanced Player's Guide (1)` chip, which is a real filter: the count
+moved to `1 matching companion` and the screen rendered the Eidolon. **Only the record check caught
+it.** An off-by-one-row search click does not always look like an unfiltered list, and that is now
+recorded in the harness beside the constant.
+
+Two further runs failed with `196 rows` and `11 rows` on a REUSED app after a passing run, and passed
+immediately on `--fresh`: residual search-box text from the prior run. Recorded rather than smoothed
+over — a cycle verifying several records in one session should pass `--fresh` between them, and the
+filtered-count gate is what makes the stale state visible instead of silent.
+
+`verify-on-screen.sh` was run to completion and the app stopped (`driver.sh stop`, verified by
+`pgrep`) **before** `scripts/verify.sh` was launched. The two must never overlap on this box.

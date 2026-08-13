@@ -6903,3 +6903,206 @@ has one.
 
 **A successor must not read `1,506` as a workload.** 1,406 of it is orphan `monster_ability` rows;
 703 of those sit in books with no monster row at all and can never be owned by any pass.
+
+---
+
+## Decision 69 — Companion Lane, extend: round 9, FINAL PASS. Four books in one round, and the lane's last unit is chassis-blocked, not workable (2026-08-13, `sd29-companion-final-r1`, card `epic-7-companion-lane`)
+
+Round 9 ingested the companion families of **Ultimate Magic, Advanced Race Guide, Advanced Player's
+Guide and Book of the Damned Volume 1** — 52 records, all 52 grounded and reaching a player.
+Companion grounded **870 → 922**. The lane is now **DRY**: its reachable ceiling is 923 and 922 of
+those are grounded, and the one remaining row is blocked on a chassis widening this card does not
+own.
+
+### 69.0 The dispatch brief was accurate, for the first time in this lane
+
+Six consecutive rounds were dispatched on materially stale text (`§56 §0`, `§59 §0`, `§61 §0`,
+`§63 §0`, `§65 §0`). This one was not. It stated **53 workable units across 5 books whose chassis is
+already registered**, and re-derivation at the branch tip reproduced both halves exactly:
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts')
+import classify_companion_rows as C
+inv=json.load(open('docs/work-inventory.json')); dirs=C.book_dirs()
+by=collections.defaultdict(list)
+for u in inv['units']:
+    if u['kind']=='companion': by[u['book']].append(u)
+tot=0
+for book in sorted(by):
+    r=C.classify(book, by[book], dirs[book]); exc=set(r['excluded'])
+    rem=[u for u in by[book] if u['corpus_key'] not in exc
+         and u['status'] in ('not-ingested','not-started')]
+    if rem: print(book, len(rem))
+    tot+=len(rem)
+print('TOTAL companion REACHABLE REMAINING =', tot)"
+
+  advanced_players_guide       4
+  advanced_race_guide         14
+  book_of_the_damned_volume_1  2
+  core_essentials              1
+  ultimate_magic              32
+  TOTAL companion REACHABLE REMAINING = 53
+```
+
+Cross-checked the second way `AGENTS.md` requires: `python3 scripts/classify_companion_rows.py`
+corpus-wide reports `1696 units / 773 excluded / 923 reachable`, and `923 − 870 grounded = 53`. Two
+independent derivations agreeing is what let this round skip a discovery phase and take four books at
+once.
+
+### 69.1 Four books, one round, because none of them needed a mechanism
+
+Each book ships exactly its own `reachable remainder`, which is the check that the round transcribed
+the ceiling rather than a convenient subset of it:
+
+| book | units | excluded | reachable | shipped | new `RuleSetId`? |
+|---|---|---|---|---|---|
+| `ultimate_magic` | 170 | 138 | **32** | 32 (10 creature + 22 ability) | no — `Um`, SD-28 E28 |
+| `advanced_race_guide` | 32 | 18 | **14** | 14 (7 + 7) | no — `Arg` |
+| `advanced_players_guide` | 212 | 208 | **4** | 4 (1 + 3) | no — `Apg` |
+| `book_of_the_damned_volume_1` | 31 | 29 | **2** | 2 (1 + 1) | no — `Botd1`, monster lane round 2 |
+
+Measured rather than asserted. A structural diff of every unit's status against the pre-round tip
+reports exactly **eight** changes, two per book, and **no unit of any other kind moved**:
+
+```
+python3 -c "
+import json, collections
+a=json.load(open('<git show HEAD:docs/work-inventory.json>')); b=json.load(open('docs/work-inventory.json'))
+ca=collections.Counter((u['book'],u['kind'],u['status']) for u in a['units'])
+cb=collections.Counter((u['book'],u['kind'],u['status']) for u in b['units'])
+for k in sorted(set(ca)|set(cb)):
+    if ca[k]!=cb[k]: print('|'.join(k), ca[k], '->', cb[k])"
+
+  advanced_players_guide|companion|grounded       0 ->   4   (not-ingested 212 -> 208)
+  advanced_race_guide|companion|grounded          0 ->  14   (not-ingested  32 ->  18)
+  book_of_the_damned_volume_1|companion|grounded  0 ->   2   (not-ingested  31 ->  29)
+  ultimate_magic|companion|grounded               0 ->  32   (not-ingested 170 -> 138)
+```
+
+### 69.2 The 393 rows that do not ship are ONE finding, and it is round 8's finding
+
+361 of the 393 are the summoner's **evolution pool** (`Evolution ~ …`, `Temp Evolution ~ …`,
+`<Archetype> Eidolon ~ …`, `WCEvolution ~ …`) and the bladebound magus's **black blade**
+(`Black Blade ~ …`). Both hang off a CLASS FEATURE rather than off any creature row, which is
+exactly what `§65` said about Core Rulebook's 84 `Animal Companion ~ …` orphans. The other 32 are 27
+Book-of-the-Damned `Imp Companion ~ …` orphans of that same shape plus 5 `*_classes_companion.lst`
+CLASS rows (`§65.1`), which is the same missing record type seen from the other side.
+
+That is why this round writes **one** entry rather than four `OPEN_FINDINGS` rows, and why the APG's
+208-of-212 shortfall is not a per-book failure: the APG is simply where the evolution pool is
+DECLARED. Every dropped row keeps its honest `not-ingested` status in `docs/work-inventory.json`.
+
+Two further shapes landed on the unmodelled-facet allowlist, the seventh and eighth the lane has
+seen, and both SHIP on `§65.2`'s distinction that an unmodelled FACET is not an empty RECORD:
+`TYPE:RaceAbility.SpecialAbility` (ARG's two plant-companion rows, defined on the race side because
+the companion IS a plant creature) and `TYPE:SkillChoice` (the APG Eidolon's `Skills` row — a choice
+the player makes, not a quality the creature has). Both are pinned structurally BESIDE the counts on
+both sides of the wire, per round 7's lesson that a stale count pin checked first hides the
+structural assertion behind it.
+
+### 69.3 A new `DESC:` gate kind, widened in BOTH directions
+
+Ultimate Magic is the second book carrying conditional `DESC:` tokens and the first to gate them on
+anything but a variable or an alignment. Its three vermin companions state their poison / acid /
+blood-drain text once with the advancement package and once without:
+
+```
+PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Leech (Giant))
+!PREABILITY:1,CATEGORY=Special Ability,Companion Advancement (Leech (Giant))
+```
+
+`companion_catalog::serve_desc_condition` refused both, exactly as designed — a gate it cannot read
+is a gate a player would be shown wrong. Widened deliberately, and **widened to the negated form
+too**: rendering only the positive one would have left the "after" text on screen under no condition
+at all, which is worse than showing both or refusing both. Rendered as `with <ability>` /
+`without <ability>`; the `CATEGORY=` segment is dropped because it names PCGen's internal ability
+category, not anything a reader looks up. The count>1 and multi-ability forms still refuse.
+
+### 69.4 Two `#[path]` duplicates retired in `gen_book_cache`, because one became load-bearing the wrong way
+
+The generator carried its own copies of `advanced_race_guide/mod.rs` and `archetype_swap.rs` — a
+write-scope workaround from an era when `rules_tables/mod.rs` sat outside the granted surface. A
+`#[path]`-included `mod.rs` resolves its `super::` against the BINARY's crate root, where there is no
+`companion_chassis`, so ARG's new `mod companion_data;` compiled in the library and failed here.
+
+Retired rather than worked around: the binary now reaches ARG through the library crate exactly as it
+already reached `pathfinder_unchained`. The alternative was duplicating `companion_chassis` AND
+`monster_chassis` into the binary and carrying two copies of the companion tables in one build — the
+"second module reachable from nothing" hazard `§65` records, in a new costume.
+
+### 69.5 THE LANE IS DRY, and its last unit is chassis-blocked rather than workable
+
+Re-derived after the ingest, by both instruments, on the merged tip:
+
+```
+python3 scripts/classify_companion_rows.py | tail -3
+  -> distinct excluded rows (the UNION, not the sum) : 773
+     reachable remainder            : 923
+
+python3 -c "<the per-book intersection in §69.0>"
+  -> core_essentials 1 ['Pseudodragon ~ Tail']
+     TOTAL companion WORKABLE REMAINING = 1
+```
+
+`923 − 922 grounded = 1`, and the two derivations name the same row.
+
+**That row is not workable, and the classifier over-reports it — the same proxy-defect class as
+`§68`'s.** `core_essentials`' `Pseudodragon ~ Tail` (`ce_abilities_familiar_race_cr.lst:215`) is
+OWNED, so a row classifier that asks "is it owned?" counts it reachable. The transcriber's own
+**empty-payload screen** (`§63.3`) drops it, and correctly:
+
+```
+Tail  KEY:Pseudodragon ~ Tail  CATEGORY:Special Ability  SOURCEPAGE:p.229  ASPECT:ReachAttack|5 ft.
+```
+
+No `TYPE:`, no `DESC:`, no `BONUS:`. Every modelled field of `CompanionAbilityRecord` comes out
+empty; the card a player opens reads "Tail" over a page number, which is the stub
+`docs/governance/no-stub-mvp-doctrine.md` forbids and which the reach gate would have counted as
+reached.
+
+**The remedy is a chassis widening and it is named, measured and NOT taken here.** `ASPECT:` is the
+one token that says what this row DOES, and no chassis in this program models it — not
+`companion_chassis` and not `monster_chassis`. Re-measured on this tip rather than carried from
+`§63.3`'s figure of 27:
+
+```
+python3 - <<'PY'   # every GROUNDED companion unit, re-read from its own corpus line
+import json, sys, collections
+sys.path.insert(0,'scripts')
+from classify_companion_rows import read_row, resolve_source_file, book_dirs
+inv=json.load(open('docs/work-inventory.json')); dirs=book_dirs()
+n=0; tot=0; per=collections.Counter()
+for u in inv['units']:
+    if u['kind']!='companion' or u['status']!='grounded': continue
+    d=dirs.get(u['book'])
+    if not d: continue
+    row=read_row(resolve_source_file(d,u['source_file']),u['source_line'])
+    tot+=1
+    if any(t.startswith('ASPECT:') for t in row): n+=1; per[u['book']]+=1
+print('grounded companion rows read:',tot); print('of which carry ASPECT: ',n); print(dict(per))
+PY
+
+  grounded companion rows read: 922
+  of which carry ASPECT:  34
+  {'bestiary': 5, 'bestiary_4': 1, 'bestiary_5': 1, 'book_of_the_damned_volume_1': 1,
+   'core_essentials': 14, 'core_rulebook': 2, 'ultimate_magic': 5, 'ultimate_wilderness': 5}
+```
+
+34 of the 922 grounded rows carry an `ASPECT:` that is dropped today. **33 of them also carry a
+`TYPE:`, so they are diminished by the omission rather than emptied by it; `Pseudodragon ~ Tail` is
+the only row the omission empties.** That is the shape of the widening: a new field on two chassis, a
+transcriber change, a DTO, a frontend surface, and a regeneration of all sixteen registered books'
+tables with the count pins that move with them. It is a mechanism, and this card's instruction is
+explicit that a book needing a mechanism is a **scope finding** to record rather than force.
+
+So the disposition is `§61.2`'s, unchanged: the row stays honestly `not-ingested`, the lane is
+**DRY**, and the successor entry is C1.6 in `successor-forward-scope-register.md`.
+
+### 69.6 What a companion round would need if one is ever dispatched again
+
+Recorded so nobody re-derives it: **there is no next book.** All 16 books with any reachable
+companion row are registered, and the corpus-wide ceiling and the grounded count differ by the single
+`ASPECT:`-only row above. A future round is a CHASSIS round — model `ASPECT:`, or model the
+class-progression record type that would unlock the 735 orphans — never a book round.

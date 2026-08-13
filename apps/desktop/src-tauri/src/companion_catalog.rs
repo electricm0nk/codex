@@ -369,7 +369,7 @@ fn serve_desc_condition(token: &str) -> String {
             }
         }
         "PREALIGN" => format!("{} alignment", spell_out_alignment(body)),
-        // SD-29 Epic 7 round 9 (`decisions.md §68.3`). Ultimate Magic is the
+        // SD-29 Epic 7 round 9 (`decisions.md §69.3`). Ultimate Magic is the
         // second book to carry conditional `DESC:` tokens and the first to gate
         // them on something other than a variable or an alignment: its three
         // vermin-companion rows state their poison/acid/blood-drain text once
@@ -783,7 +783,7 @@ mod tests {
         // Core Rulebook's single `TYPE:NaturalAttack.NaturalAttackSecondary.
         // Secondary` row, `Crocodile ~ Tail Slap`. Equal deltas again, so this
         // record too is reached through exactly one owner.
-        // Round 9 (`decisions.md §68.2`): 133 -> 136 and 32 -> 35, moved by
+        // Round 9 (`decisions.md §69.2`): 133 -> 136 and 32 -> 35, moved by
         // Advanced Race Guide's two `TYPE:RaceAbility.SpecialAbility` rows and
         // the Advanced Player's Guide's one `TYPE:SkillChoice` row. Equal
         // deltas a third time, so each of these three is reached through
