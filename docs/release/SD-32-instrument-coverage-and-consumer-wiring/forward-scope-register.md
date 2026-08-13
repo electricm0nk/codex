@@ -179,3 +179,114 @@ book's reprint of a same-named, different item.
 `data/corpus/<book>/equipment` for those four books. On the day that lands, E2's
 probe covers them with no further instrument work — the keys are already in its
 universe.
+
+---
+
+## F10 — 38 equipment names still resolve by scan order when NEITHER record owns the name
+
+**Recorded by** the `inventory-determinism` cycle (`progress.md`,
+2026-08-13, `probe-determinism`). **Named owner:** the next cycle that touches
+`src/rules_core/equipment_resolver.rs`.
+
+**What landed.** `equipment_id_resolve` now matches a record's corpus
+**identity** first — its `KEY:` token when it has one, its name when it does
+not. That is what a needle naming a KEY-less record needs, and it is what fixed
+CRB's `Shoes` (the item, no `KEY:`) losing to
+`Artisan's Tools (Shoes)` (an equipment modifier with the same display name)
+whenever the corpus was scanned in a different order.
+
+**What is left.** The identity pass only fires when *some* record's identity
+equals the needle. Where several records share a display name and **none** of
+them is identified by that name, the bare-name pass still answers
+first-match-wins over corpus order — now path order rather than `read_dir`
+order, so it is deterministic and checkout-stable, but it is still arbitrary.
+CRB's `Cloth` is the shape: `Artisan's Tools (Cloth)` against
+`Material ~ Cloth`, neither identified as `Cloth`.
+
+**Why it is not urgent, stated no more strongly than it was proved.** What was
+measured is that with the identity pass in place, the generator's whole output
+is byte-identical whether the corpus is scanned in path order or in the
+filesystem order that preceded it — so no unit's doneness moved under either
+order. What was *not* proved is that nothing can reach the bare-name pass with
+an ambiguous needle: `equipment_catalog_rows()` is built from compiled per-book
+tables, and a compiled key that matches no corpus record's identity would fall
+through to exactly that pass. The successor should establish which, rather than
+inherit this paragraph's confidence.
+
+**Successor condition.** Either prove no live caller can reach the bare-name
+pass with an ambiguous needle and delete it, or make it refuse an ambiguous
+match outright — returning `None` rather than a coin-flip is the honest answer
+for a lookup that cannot tell two records apart.
+
+**Derivation.** Two records also share an *identity* outright in CRB
+(`Holy Symbol (Silver)`, `Holy Symbol (Wooden)`), which the identity pass cannot
+disambiguate either; same successor.
+
+```
+python3 -c "
+import json,os,collections
+base='data/corpus'
+tot=0
+for book in sorted(os.listdir(base)):
+    eq=os.path.join(base,book,'equipment')
+    if not os.path.isdir(eq): continue
+    byname=collections.defaultdict(set)
+    for dp,_,fns in os.walk(eq):
+        if '_parity' in dp: continue
+        for fn in fns:
+            if not fn.endswith('.json') or fn=='LICENSE.json': continue
+            d=(json.load(open(os.path.join(dp,fn))).get('data') or {})
+            k=next((t['value'] for t in d.get('raw_tokens') or [] if t.get('key')=='KEY'), None)
+            byname[d.get('name','')].add(k if k is not None else d.get('name',''))
+    n=sum(1 for v in byname.values() if len(v)>1)
+    if n: print(book, n); tot+=n
+print('total', tot)"
+-> advanced_class_guide 18 / advanced_race_guide 1 / core_rulebook 19 / total 38
+```
+
+---
+
+## F11 — 29 pairs of corpus keys differ only in punctuation and may be one record each
+
+**Recorded by** the `inventory-determinism` cycle. **Named owner:** the
+ingestion lane that owns the book each pair belongs to (Ultimate Psionics owns
+20 of the 29), as a **content** ruling — not instrument work.
+
+**What this is.** `units[].id` collisions were fixed by disambiguating the
+*identifier*, deliberately and explicitly without merging the units: two
+distinct corpus keys are two records, and merging them would have changed a
+count this cycle had no authority to change. But the pairs themselves deserve a
+look, because most of them are one feature spelled two ways:
+
+| book | pairs | shape |
+|---|---:|---|
+| `ultimate_psionics` | 20 | `Path Skill Acrobatics` / `Path Skill ~ Acrobatics`, and 15 more skills; `Thrallherd Mind Control` / `Thrallherd ~ Mind Control` |
+| `core_rulebook` | 3 | `MITHRAL_ITEM` / `Mithral (Item)`; `Intelligent Item Purpose (Slay All)` / `Intelligent Item ~ Purpose / Slay All` |
+| `ultimate_combat` | 2 | `Master Of Many Styles ~ Perfect Style` / `Master of Many Styles ~ Perfect Style` — a capital `O` |
+| `advanced_class_guide`, `advanced_players_guide`, `advanced_race_guide`, `adventurers_guide` | 4 | one each |
+
+The Ultimate Psionics `Path Skill` block is the clearest: sixteen skills, each
+appearing once at `up_abilities_class.lst:600-615` with the `~` namespace form
+and once at `:619-634` without it, the two rows landing on different
+`wiring_class` values (`computed` vs `display`) and different `status`
+(`unknown` vs `not-ingested`).
+
+**Why it matters to the board.** If these are duplicates, the board is counting
+each of them twice, and one member of each pair is scoring a `wiring_class` the
+other contradicts. If they are genuinely two records, nothing is wrong and the
+disagreement is real content. Either answer is fine; **not knowing which** is
+what should not persist.
+
+**Successor condition.** A per-pair ruling from whoever owns the book, backed by
+the two `.lst` rows read side by side — not a bulk merge, and explicitly not a
+merge performed to make a count fall.
+
+**Derivation.**
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+b=collections.defaultdict(list)
+for u in d['units']: b[u['id'].split('__')[0]].append(u)
+for k,v in sorted(b.items()):
+    if len(v)>1: print(k, [x['corpus_key'] for x in v], [x['wiring_class'] for x in v])"
+```

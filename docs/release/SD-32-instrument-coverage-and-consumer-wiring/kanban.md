@@ -31,6 +31,7 @@ Rows are in claim-priority order, matching `scope-draft.md §5`'s dispatch order
 
 | ID | Status | Epic | Ceiling (units) | Rank / R | Claimed-by | Claimed-at | Cycle-id |
 |----|--------|------|---:|---|------------|------------|----------|
+| `inventory-determinism` | COMPLETE | Work-Inventory Identity and Scan-Order Fix | 0 (by design — instrument fix) | — | probe-determinism | 2026-08-13 | `5fb94067` |
 | `e1-measurement-gate` | READY | Measurement-Gate Decision Request | 0 (gates 7,479) | — | — | — | — |
 | `e2-probe-coverage` | COMPLETE | Equipment-Effect Probe Coverage Extension | 358 (real ceiling 63) | **1** / 18 moved | doneness-inprogress | 2026-08-13 | `5ed6bdc0` |
 | `e4-classifier-calibration` | READY | Classifier — hand-labelled sample (E4-F1, gate) | 0 (gates 1,776) | 2a | — | — | — |
@@ -41,6 +42,16 @@ Rows are in claim-priority order, matching `scope-draft.md §5`'s dispatch order
 | `e7-structural-report` | READY | Structural-Block Report | 0 (by design) | — | — | — | — |
 | `e8-code-review` | READY (gated on e2, e3, e4, e7) | Bundle Code Review | — | — | — | — | — |
 | `e9-closure` | READY (gated on every other claimable card) | Closure | — | — | — | — | — |
+
+### A note on `inventory-determinism`
+
+It is not one of the scope-authored epics; it was added when the
+wiring-classifier cycle's near-miss made every before/after comparison on this
+board suspect. Its ceiling is **0 units by design** — it fixes the instrument
+that the other cards' numbers are read from, and a cycle that fixed a measuring
+tool and also moved the thing being measured would have proven nothing. It
+closes `COMPLETE` having moved zero units and having *declined* the one (+1
+`grounded`) that a side effect of its own change offered. See `progress.md`.
 
 ## Not on this board, deliberately
 

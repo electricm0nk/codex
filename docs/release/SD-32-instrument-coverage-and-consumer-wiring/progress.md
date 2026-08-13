@@ -382,3 +382,249 @@ clippy ceiling remains listed. Logs `/tmp/codex-verify-ppCy2k`.
 - `scripts/verify-baselines.env` (two floors raised, reconciled)
 - `docs/release/SD-32-instrument-coverage-and-consumer-wiring/progress.md` (this receipt)
 - `docs/retro/events/doneness-verify.jsonl`
+
+---
+
+## Cycle — `inventory-determinism` — COMPLETE (2026-08-13, `probe-determinism`)
+
+**Card:** `inventory-determinism` (instrument fix; added to the board by this
+receipt — it is not one of the scope-authored epics).
+**Actor:** `probe-determinism`. **Branch:** `tranche/9`.
+**Commits:** `ee697c26`, `bb5323d8`, `5fb94067`.
+
+### The brief was wrong, and so was the near-miss that produced it
+
+The card was written to hunt run-to-run nondeterminism in
+`v06_work_inventory`'s unit-to-source-line resolution, on the strength of
+`docs/retro/events/wiring-classifier.jsonl`'s near-miss: *"the SAME id resolved
+to two different source files across runs (`arg_abilities_race.lst:157` vs
+`pfs_arg_abilities_race.lst:10`) with no `wiring_class.rs` change between
+them — pre-existing nondeterminism, likely HashMap iteration order."*
+
+**The generator is deterministic.** Five consecutive runs of one binary over one
+corpus are byte-identical outside `generated_at`, and the artifact committed at
+the branch tip reproduces byte-identically from branch-tip source:
+
+```
+for i in 1 2 3 4 5; do v06_work_inventory --stdout-only > run$i.json; done
+grep -v '"generated_at"' run$i.json | sha256sum
+  -> 5a9d40f66182375ff8ace23cd33709ad763368857c8542a118473a2b713555bf  (x5)
+grep -v '"generated_at"' docs/work-inventory.json | sha256sum
+  -> 5a9d40f66182375ff8ace23cd33709ad763368857c8542a118473a2b713555bf
+grep -n 'HashMap\|HashSet' src/bin/v06_work_inventory.rs src/rules_core/wiring_class.rs
+  -> (no matches)
+```
+
+**What was actually broken was identity.** `units[].id` was not unique.
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+b=collections.defaultdict(list)
+for u in d['units']: b[u['id']].append(u)
+print(len(d['units']), len(b), sum(1 for v in b.values() if len(v)>1))"
+  -> 38540 38511 29
+```
+
+`id` is `<book>:<kind>:<slug(corpus key)>`, `duplicate_identity` de-duplicates on
+the **exact** corpus key, and `slug()` collapses every run of non-alphanumerics
+to one `_`. So two genuinely distinct records in one book+kind landed on one id:
+`Path Skill Acrobatics` / `Path Skill ~ Acrobatics`, `MITHRAL_ITEM` /
+`Mithral (Item)`, `Half-Elf ~ Drow Blooded` / `Half-Elf ~ Drow-Blooded`.
+29 ids carried two units each. **27 of those pairs disagree about
+`wiring_class`, and the disagreement histogram is
+`{(computed,display): 19, (computed,static): 6, (ambiguous,display): 1,
+(display,static): 1}`.**
+
+Nineteen. The near-miss reported *"a `computed->display` transition (19 units)
+that the fix cannot structurally cause."* That is not nondeterminism. Both rows
+are present in **every** run; a consumer that indexes by `id` —
+`{u["id"]: u for u in units}`, `jq INDEX(.id)`, a pandas `set_index` — keeps one
+and drops the other, and which one it drops can differ between two snapshots.
+The hand-diff that saw `arg_abilities_race.lst:157` one time and
+`pfs_arg_abilities_race.lst:10` the next was reading the two halves of one
+collision, not two runs of one generator.
+
+A `correction` event is logged at `docs/retro/events/probe-determinism.jsonl`.
+
+### The fix, and the tie-break rule
+
+`unit_id()` suffixes a colliding slug with an FNV-1a 64 digest of the unit's own
+exact corpus key.
+
+- **Suffix, never merge.** Two distinct corpus keys are two records. Merging
+  would change a count; this is a fix to an identifier, not a ruling about
+  content.
+- **Every colliding unit is suffixed; none keeps the bare slug.** Any rule that
+  picks a winner has to pick on enumeration order, line number or lexical order,
+  all of which make an id that moves when something *else* moves.
+- **The suffix is a digest of the unit's own key**, not an ordinal. An ordinal
+  depends on the set of colliding siblings, so ingesting one new row could
+  renumber a unit that had not changed.
+- **FNV-1a, not `DefaultHasher`**, whose algorithm is documented as unspecified
+  across Rust releases — a toolchain upgrade would silently rewrite every
+  disambiguated id and break the byte-equality contract in the least visible way
+  available. Pinned in a test against FNV-1a's published reference vectors.
+- **`__` is a safe delimiter**: `slug()` can never emit it. Asserted.
+- **Non-colliding units keep the id they have always had.**
+
+The generator now **exits non-zero rather than emit a duplicate id**, and the
+printed `contract` states the guarantee it now keeps.
+
+### The second defect: a name twin that moved a doneness number
+
+Two corpus scans were unsorted — `corpus_loader::find_json_files` and
+`wiring_class::build_mod_index`. `read_dir` order is stable for one directory on
+one machine and **not** stable across two checkouts of the same corpus, which is
+exactly the shape that looks like a code change when two agents compare
+measurements taken in different worktrees.
+
+Sorting them **moved a number, in the wrong direction**: `grounded` 4726 → 4727,
+`ingested-magnitude` 6518 → 6517, one unit, `core_rulebook:equipment:shoes`.
+
+It was not banked. The unit's record,
+`data/corpus/core_rulebook/equipment/general/shoes.json`, carries
+`TYPE`/`COST`/`WT`/`SLOTS`/`MODS`/`QUALITY` and **not one mechanical token** —
+`cost_gp 0.0`, `weight_lbs 0.0`, `raw_bonus_chains []`. A player equipping Shoes
+sees no number change. The magnitude belonged to a different record:
+`equipment/equipmods/artisan_s_tools_shoes.json`, an equipment **modifier**
+identified as `Artisan's Tools (Shoes)` whose display name is also `Shoes`.
+
+`equipment_id_resolve`'s first pass tested the `KEY:` token alone, so a needle
+naming a KEY-less record fell through to a bare-name pass that is
+first-match-wins over the corpus in scan order. Unsorted, the filesystem
+happened to offer the item first and the answer was right **by luck**. Sorted,
+`equipmods/` precedes `general/` and the modifier answered.
+
+**38 equipment names across CRB/ACG/ARG were decided this way.** `Potion` is the
+widest: `general/potion.json`, the empty flask, against fifty-odd
+`Potion of ...`/`Oil of ...` magic items that all display as `Potion`.
+
+The rule landed instead: a record's corpus identity is its `KEY:` token when it
+has one and its name when it does not — the same rule `equipment_catalog_rows()`
+uses to mint the keys this function is asked to resolve. **Match identity
+first.** The twin stays reachable by its own key; the bare-name and
+normalized-name passes are unchanged as fallbacks. This is the name-coincidence
+over-claim `modelled_race_of_race_trait` and this probe's own book-scoping
+already exist to prevent, appearing inside a single book.
+
+A `near_miss` event is logged at `docs/retro/events/probe-determinism.jsonl`.
+
+### Units moved by this card
+
+**Zero, deliberately, and that is the whole result.** This card fixed the
+instrument. It was not entitled to move a unit and it did not.
+
+`decisions.md §1` discharged by command, not by assertion:
+
+| clause | evidence |
+|---|---|
+| no threshold, definition or bucket rule altered | `git diff ee697c26~1..HEAD -- scripts/verify-baselines.env` empty; no edit to `doneness_meaning`, `status_vocabulary`, `DONENESS_VALUES`, `STATUS_VOCABULARY` or any bucket rule |
+| no unit reclassified into an easier `wiring_class` | pre-fix vs post-fix `by_wiring_class`, recomputed independently from the unit rows: identical |
+| no check weakened, skipped or `#[ignore]`d | 11 tests added, 0 removed, 0 ignored; `root-full` count rose |
+| no corpus or fixture data authored | `git diff --stat ee697c26~1..HEAD -- data/` empty |
+| the `+1` available this cycle was refused | see above — `grounded` stays 4726 |
+
+Pre-fix and post-fix runs over the same corpus, compared field-by-field across
+all 38,540 units: `totals` **SAME**, `books` **SAME**, `units_omitted` **SAME**,
+**zero** non-`id` field differences, and `by_status` / `by_wiring_class` /
+`by_kind` / `by_book` / `by_origin` recomputed independently from the unit rows
+all **SAME**. Exactly **58** `id` strings changed — the 29 pairs that were
+broken.
+
+### Units examined and left alone
+
+- `core_rulebook:equipment:shoes` — **reason class: no observable consumer
+  delta.** The record carries no mechanical token; the magnitude that would have
+  promoted it belongs to a different record that merely shares its display name.
+  Stays `ingested-magnitude`, now by rule rather than by ordering luck.
+- The other 37 order-decided equipment names — none currently resolves
+  differently under the identity rule, so none moved. They are now decided by
+  the data instead of by the disk.
+
+### The contract is now proven, not asserted
+
+```
+v06_work_inventory --stdout-only > runA.json ; v06_work_inventory --stdout-only > runB.json
+grep -v '"generated_at"' runX.json | sha256sum
+  -> a27b280e9d60202c3e84c3b0c7032c421c4d6630da1ddad7fee6fd7eaa3add43  (both)
+grep -v '"generated_at"' docs/work-inventory.json | sha256sum
+  -> a27b280e9d60202c3e84c3b0c7032c421c4d6630da1ddad7fee6fd7eaa3add43
+python3 -c "...distinct ids..."  -> 38540 units, 38540 distinct ids, 0 duplicates
+```
+
+Re-verified after rebasing onto `aafd492c` (the spell-probe cycle), so the proof
+covers the tree that is actually committed. Same hash — which independently
+confirms that cycle's own "grounds nothing" claim.
+
+### Tests added (11, all new; none removed, none ignored)
+
+`src/bin/v06_work_inventory.rs::unit_id_uniqueness_tests` (8) — the lossy-slug
+root cause; id distinctness over the real colliding key pairs; the
+sibling-independence property that justifies a digest over an ordinal; the
+unsuffixed-id blast radius; the `__` delimiter claim against adversarial inputs;
+FNV-1a's published reference vectors; digest stability and width; and an
+end-to-end uniqueness mint over the whole real collision set.
+
+`src/rules_core::equipment_resolver::tests` (3) — each asserting **both** corpus
+orders, over the real `Shoes` rows and the real `Potion` shape: the needle
+resolves to the record whose identity it is, the name twin stays reachable by
+its own key, and the KEY-less generic beats its many specific name twins.
+
+### Verification
+
+`./scripts/verify.sh` (FULL), exit code captured directly on the next line,
+never through a pipe: **`VERIFY_EXIT=0`**, `RESULT: PASS`, **16/16 stages**.
+Logs `/tmp/codex-verify-maxZzI`. Stage tallies: `root-lib` 1776, `root-full`
+6365 across 546 suites (all 526 `tests/*.rs` executed), `desktop` 445, `reach`
+27, `corpus-sweep` 0 findings, `frontend-test` 99/99, `clippy` 0 errors,
+`class-dump` 31/31 computing.
+`cargo test --bin v06_work_inventory`: 39/39.
+`cargo test --lib equipment_resolver`: 14/14.
+
+**Two floors raised, in their own commit, from this run's measured actuals**
+(`BASELINE NOTES` flagged both as stale):
+
+- `BASELINE_ROOT_LIB_TESTS` 1773 → **1776**. Exactly this cycle's three
+  `equipment_resolver` tests; fully attributable.
+- `BASELINE_ROOT_FULL_TESTS` 6343 → **6354**, and *deliberately not* to the 6365
+  measured. Eleven of the +22 are this cycle's; the other eleven belong to
+  `aafd492c`, a sibling agent's in-flight commit on this shared branch. Pinning
+  their number would red every tree on the branch if they amend it — the same
+  reasoning the previous cycle recorded for `BASELINE_CLIPPY_WARNINGS_ROOT`.
+  The floor still rises by every test this cycle added, so nothing this cycle
+  contributed can be silently deleted.
+
+`BASELINE_ROOT_TEST_BINARIES` (546) is untouched: no new test file was added.
+
+**Count-pin check.** `tests/fixtures/rules_core/derived-evaluator-fixtures.json`
+is the only artifact in the repo that pins `unit_id`s. All 94 of its entries
+still resolve against the regenerated inventory — none was one of the 29
+colliding ids. Nothing in `tests/`, `src/`, `apps/` or `scripts/` pins a unit
+count or any of the 58 changed ids.
+
+### Four-check no-stub audit (`AGENTS.md` §6)
+
+1. *Does every code path do what it claims?* Yes. The uniqueness guarantee is
+   enforced by a hard non-zero exit in the generator, not only by a test.
+2. *Any fixture-only data in a production path?* No. `git diff --stat -- data/`
+   is empty for this cycle; the new tests build their corpora in-line from
+   `.lst` text.
+3. *Any user-facing affordance wired to nothing?* None added.
+4. *Any operation reporting success without doing the work?* Hunted
+   specifically. The contract line at the top of `docs/work-inventory.json` was
+   the live instance of exactly this — it asserted a guarantee for `id` that the
+   file did not keep. It now keeps it, and the generator refuses to emit a file
+   that does not.
+
+### Files written
+
+- `src/bin/v06_work_inventory.rs` (`key_digest`, `unit_id`, the collision census,
+  the hard uniqueness exit, the strengthened contract string, 8 tests)
+- `src/rules_core/equipment_resolver.rs` (identity-first resolution, 3 tests)
+- `src/rules_core/corpus_loader.rs` (sorted corpus walk)
+- `src/rules_core/wiring_class.rs` (sorted `.MOD` walk)
+- `docs/work-inventory.json` (regenerated)
+- `docs/retro/events/probe-determinism.jsonl` (1 correction, 1 near-miss)
+- `docs/release/SD-32-instrument-coverage-and-consumer-wiring/progress.md` (this receipt)
+- `docs/release/SD-32-instrument-coverage-and-consumer-wiring/kanban.md` (card row)
+- `docs/release/SD-32-instrument-coverage-and-consumer-wiring/forward-scope-register.md` (F-ID, F-NAMETWIN)
