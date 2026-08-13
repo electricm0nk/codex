@@ -78,6 +78,75 @@ now-corpus-wide Epic 4 (proven-path lane scopes only the settled-method kinds). 
 `§9.1` measurement reaches the relevant classes — tracked here so it is not silently dropped, and
 not silently folded into a lane whose method does not fit it.
 
+### C1.4 — Deferred findings from Epic 10, Bundle Code Review RUN 2 (2026-08-13, `decisions.md §66`)
+
+Decision 27 requires every deferred review finding to name an owner; an unowned deferral is not a
+valid disposition. Four items from the run-2 review are deferred here. Two of them are **fixed in
+this bundle** (`§66.2`, commit `4d22ecbb`) and are not listed.
+
+**Owner: SD-31** (`docs/release/SD-31-pcgen-character-import/`), as the next bundle in the program;
+re-assign here if a different successor is cut first. Naming an owner is what makes a deferral a valid
+disposition under Decision 27 — an unowned deferral is not one.
+
+**What depends on SD-29:** nothing. These are defects and debts SD-29 surfaced and chose not to
+close; none of them blocks Epic 8 (Closure Epilogue), and none of them is a shipped-path defect.
+
+#### C1.4a — Frontend preview fixtures are hand-authored rules data with nothing pinning them to the corpus
+
+`apps/desktop/src/companionCatalog/companionCatalogRuntime.ts` and
+`apps/desktop/src/monsterCatalog/monsterCatalogRuntime.ts` both build a browser-preview catalog by
+hand and both declare full transcription fidelity to the corpus. The companion one is **not**
+faithful: `Familiar (Clockwork Spy)` serves 1 of 6 stat adjustments (omitting `CHA −10`) and 1 of 3
+abilities. No test references `buildPreviewCatalog` in either file.
+
+**Why it is deferred and not fixed:** transcribing the missing values by hand moves the drift rather
+than removing it. The fix `§54.5` and `§65.8` both name — derive from the served response — needs a
+fixture pipeline the frontend does not have, and standing that up is a design decision outside a
+review card's scope.
+
+**This is the fourth instance of one root cause in this bundle** (`§54.5`, `§54.6`, `§65.8`, `§66.3`)
+and the first whose consequence is rendered rules content rather than a test roster. A successor that
+touches either file should treat "derive it, don't transcribe it" as the entry condition, not as a
+follow-on.
+
+**Not shipped-path:** the branch is behind `if (!hasTauriRuntime())` and is never taken in the
+desktop product. Severity is medium because of the pattern, not because a player sees it today.
+
+#### C1.4b — `scripts/wired-integration-audit.sh` and `tests/sd24_wired_integration_audit.rs` disagree about `placeholder`
+
+The Rust repo-wide sweep encodes three reviewed exclusion filters for the `placeholder` token and is
+green in the gate. The shell script carries none of them and is therefore red at bundle scope on 13
+hits the Rust gate has already adjudicated as not-stubs (2 JSX `placeholder=` attributes, 10 doc
+comments about upstream corpus placeholders, 1 `#[cfg(test)]` assertion message).
+
+**The remedy is parity, not leniency:** port the Rust gate's three documented filters into the shell
+script, with cases added to a self-test for the shell script (which has none today — only
+`identifier-discipline-audit.sh` has one, at `scripts/tests/`). **Do not fix this by dropping
+`placeholder` from the token list.**
+
+Until it lands, Decision 27's bundle-scope wired-integration run cannot be reported clean.
+
+#### C1.4c — Decision 41 does not say whether NEW `tests/` files may carry a bundle tag
+
+`§41` binds Epics 3-11 to function-based naming including "test module names", and separately exempts
+`tests/` file names because 531 existing ones are load-bearing citation targets. The audit's self-test
+encodes the exemption unconditionally (`scripts/tests/test_identifier_discipline_audit.sh:115`). Epic
+6 then added `tests/sd29_declared_product_identity_in_shipped_race_traits.rs` — permitted by the gate,
+against the convention's stated intent.
+
+**Two valid resolutions, and this is a ruling rather than an edit:** (a) `§41` grows an explicit
+"newly added `tests/` files too" clause and case 115 splits into *existing* (pass) vs *added* (fail),
+with the four existing citations moved; or (b) `§41` concedes `tests/` entirely and drops the "test
+module names" phrase. Severity low. A review cycle should not pick one by rewriting a tested gate.
+
+#### C1.4d — Equipment and spell have never been verified on screen by the harness
+
+Not a defect in anything shipped; a calibration debt. Epic 4 predates `verify-on-screen.sh`, so the
+`equipment` and `spell` families' `SEARCH_Y` constants in the harness are by-analogy and have never
+been exercised. **The first equipment or spell cycle after this bundle must calibrate them before
+citing a PASS** — an uncalibrated `SEARCH_Y` is exactly the silent-plausible-screen failure mode
+`§65.7` describes.
+
 ## Class 2 — Future-acquired (deferred)
 
 ### C2.1 — Bestiary 6 + Bonus Bestiary drop-in [SUPERSEDED — decisions.md §34, 2026-08-02]

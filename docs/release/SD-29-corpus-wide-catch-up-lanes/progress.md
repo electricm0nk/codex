@@ -12295,3 +12295,442 @@ rather than the book's `SOURCESHORT:UP`, because the app already serves this boo
 feats under `UPSI` and one book must not carry two codes across two screens (`decisions.md §64.2`);
 (c) sharpened rather than deleted the two challenge-rating guards `CR:0` turned red, pinning the
 zero-CR key set so the completeness check survives.
+
+---
+
+## Epic 10 — Bundle Code Review, RUN 2 (2026-08-13, `sd29-review-r2`, card `epic-10-review-run2`)
+
+Run 1's review passed against a state that was not final. The bundle was reopened (`§42`) and three
+lanes have worked since. This run reviews the **whole-bundle diff against its branch point**, per
+`decisions.md` Decision 27.
+
+**Reviewed tree:** `origin/tranche/9` @ `de303fd0`, in a dedicated detached worktree
+(`/home/ubuntu/workspace/sd29-review-r2-wt`). **Branch point** `a1295856` (`git merge-base HEAD
+origin/develop`) — **246 commits, 4,632 files, +305,921 / −15,513**:
+
+```bash
+git merge-base HEAD origin/develop                 # -> a1295856
+git rev-list --count a1295856..HEAD                # -> 246
+git diff --stat a1295856..HEAD | tail -1           # -> 4632 files changed, 305921 insertions(+), 15513 deletions(-)
+```
+
+**Shared-checkout hazard found before any review work, recorded because it is not the bundle's
+defect but would have made this review wrong.** The main checkout
+`/home/ubuntu/workspace/repos/codex` was on `tranche/9` **141 commits behind `origin/tranche/9`** and
+2 ahead with unrelated local commits (`git rev-list --count HEAD..origin/tranche/9` -> `141`).
+Reviewing there would have reviewed a tree with none of the last three lanes' work. This review
+therefore ran in its own worktree pinned to the pushed tip; the main checkout was not touched.
+
+### 1. The gate — PRECONDITION, and it ran on the tree this receipt ships
+
+`./scripts/verify.sh` (FULL), exit code captured directly, never through a pipe. Run at **`4d22ecbb`**
+— `de303fd0` plus this review's own two fixes (§6 F1, F2) — so the gate covers what lands, not the
+tree before the review touched it:
+
+```
+VERIFY_EXIT=0
+```
+
+All stages, read off the run's own summary lines:
+
+```
+    PASS  preflight-disk  (disk budget OK)
+    PASS  pi-sweep  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+    PASS  audit-selftest  (28 passed, 0 failed)
+    PASS  reclaim-selftest  (10 passed, 0 failed)
+    PASS  driver-selftest  (7 passed, 0 failed)
+    PASS  root-lib  (1748 passed)
+    PASS  root-full  (6316 passed across 544 suites, all 525 tests/*.rs suites executed)
+    PASS  desktop  (445 passed)
+    PASS  reach  (27 passed)
+    PASS  frontend-install  (npm ci)
+    PASS  frontend-test  (99/99 files)
+    PASS  frontend-typecheck  (tsc --noEmit clean)
+    PASS  clippy  (root:54 desktop:7 warnings, 0 errors)
+    PASS  class-dump  (31/31 computing)
+RESULT: PASS
+```
+
+
+### 2. The standing dual-audit, run at BUNDLE scope (Decision 27's mechanism)
+
+`BASE_BRANCH=origin/develop`, both scripts' own default triple-dot comparison.
+
+| audit | result | note |
+|---|---|---|
+| `./scripts/identifier-discipline-audit.sh` | **`OK_NO_BUNDLE_TAGS`, exit 0** | and its detection power is not assumed: `audit-selftest` (28 cases, PASS inside the gate) is what proves the path-tag, infix and `Ge`/`Sd` PascalCase forms are still caught |
+| `./scripts/wired-integration-audit.sh` | **exit 1 on Check 1**; Checks 2/3/4 `OK_NO_NOOP_HANDLERS` / `OK_NO_MOCK_LEAKS` / `OK_NO_WOULD_STRINGS` | 14 Check-1 hits. **One was a mechanical defect in the script — FIXED (F1). The other 13 are all the `placeholder` alternative, hand-classified below, and none is a stub** |
+
+**Run 1 reported this audit clean. It was not clean, and the reason is worth more than the result:**
+every lane cycle that reported "four-check clean" either ran the script with `BASE_BRANCH` set to its
+*own* cycle base (`BASE_BRANCH=e1f0bdd9`, `BASE_BRANCH=21ead5d7` — both live in this file) or reported
+the Rust sweep `tests/sd24_wired_integration_audit.rs` instead. Both are legitimate; neither is the
+bundle-scope run Decision 27 specifies, so no cycle had actually executed it.
+
+**All 13 surviving Check-1 hits, classified by hand — zero are unfinished-work markers:**
+
+| class | n | examples |
+|---|---|---|
+| JSX/HTML `placeholder=` **attribute** (a DOM affordance, not a claim about the code) | 2 | `placeholder="Search by name…"`; `placeholder="e.g. authoring workbench"` |
+| engineering **prose** about upstream corpus placeholders (`%N` substitution, `SOURCEPAGE`) in doc comments | 10 | `/// True for a SOURCEPAGE value that is an upstream placeholder rather than a` ; `//! fabricated placeholder. prerequisites is every top-level PRE-family` |
+| a `#[cfg(test)]` **assertion message** inside a shipping file (`monster_catalog.rs:911`) | 1 | `"{}'s description serves a raw substitution placeholder: {description}"` |
+
+These are exactly the three classes `tests/sd24_wired_integration_audit.rs` already documents and
+encodes as filters for its repo-wide sweep. **The shell script does not share those filters.** That
+divergence is F5 below — recorded, not papered over, and explicitly NOT fixed by loosening the token
+list.
+
+### 3. Reach claims are REAL, not passing-by-absence (DoD item 2)
+
+Checked as a mechanism, not as an exit code. Five independent guards, each read in source:
+
+* `full_inventory()` (`reach_gate.rs:2834`) is the **union of three live sources** —
+  `diagnostic_inventory()` (the app's own ingest diagnostic), `scanned_inventory()` (a source scan of
+  `src/rules_core/rules_tables`), `corpus_inventory()` (a directory scan of `data/corpus`). A new
+  book is discovered by the corpus scan, so a family cannot be omitted by forgetting to list it.
+* `the_inventory_is_populated_from_all_three_live_sources` floors **each** source at 10, asserts
+  `corpus_inventory()`'s `unnamed` set is empty, and asserts the sources genuinely differ — so no
+  source can silently degenerate to a subset.
+* `every_declared_claim_actually_carries_the_records` ends `assert!(proven >= 10, "only {proven}
+  claims were executed; the gate is barely checking anything")`. **Zero matched claims fails.**
+* `unreached_records_are_exactly_the_recorded_findings` pins `UNREACHED_RECORD_FINDINGS` **both
+  ways** — an unlisted gap fails, and a gap that got fixed fails until its key is deleted — plus
+  `assert_eq!(families_with_a_pin, UNREACHED_RECORD_FINDINGS.len())`, so an entry naming a family the
+  inventory does not have cannot sit there.
+* `scripts/verify.sh`'s `reach` stage: `stage_fail reach "0 tests matched the reach_gate filter — the
+  gate is not running at all"`.
+
+**The findings list did not rot into a suppression list over the bundle.** Its delta across the whole
+246 commits is **+3 / −1** entries:
+
+```bash
+extract() { git show "$1:apps/desktop/src-tauri/src/reach_gate.rs" \
+  | awk '/^(static|const) UNREACHED_RECORD_FINDINGS/{f=1} f{print} f&&/^\];/{exit}'; }
+diff <(extract origin/develop | grep -E '^\s+"' | sed 's/^ *//' | sort) \
+     <(extract HEAD          | grep -E '^\s+"' | sed 's/^ *//' | sort) | grep -c '^>'   # -> 3
+#  ... | grep -c '^<'                                                                    # -> 1
+```
+
+All three additions carry a named upstream or mechanism cause in a comment beside the key
+(`monster_codex / Oversized Goblin`, `inner_sea_races / Human ~ Tribalistic Languages`, plus the
+`acg / archetypes` whole-family shape). One entry was **removed** because the record now reaches —
+which is the pin working in the direction that is easy to forget.
+
+### 4. DoD item 8 — per player-visible family
+
+**97 artifact files across 23 directories** before this review; **101 across 24** after §4b. Every player-visible family this bundle surfaced has at
+least one PASS artifact driven through the real app:
+
+```bash
+find docs/release/SD-29-corpus-wide-catch-up-lanes/artifacts -type f | wc -l    # -> 97
+```
+
+| family | item-8 dirs | verdict |
+|---|---|---|
+| `monster` / `monster_ability` | 9 (`SD29-E5-F2-004`…`-011`, `sd29-monster-r3`) | covered |
+| `race_trait` | 4 (`SD29-E6-F2-005`, `-006`, `sd29-racetrait-r3`, `race-trait-extend-round-1`) | covered |
+| `companion` | 9 (`SD29-E7-F1-002`, `SD29-E7-F2-003`…`-009`) | covered |
+| `equipment`, `spell` | Epic 4's `e4-spell-catalog-{before,after}-ui-chip.png` and `desktop-driver-fix/02-equipment-catalog.png` | **pre-harness**, see below |
+
+**No family shipped without an on-screen artifact.** Seven `.FAILED.verify.md` records are kept
+beside their eventual passes (plus the harness's own two deliberate failure-mode artifacts under
+`item8-harness/failure-modes/`). Those are the harness *refusing*, not an item being waived — which
+is the behaviour item 8 exists for, and the reason a `.FAILED.*` name can never be cited as passing
+evidence.
+
+**Standing hazard, not a shipped gap:** Epic 4 (equipment/spell) predates `verify-on-screen.sh`, so
+**no equipment or spell cycle has ever run under the harness** and their `SEARCH_Y` values remain
+by-analogy and uncalibrated. The first equipment/spell cycle after this bundle must calibrate them
+before trusting a PASS.
+
+### 4b. The review's OWN on-screen pass (Decision 27 requires it, not just item 8)
+
+`§27` does not let the review read reach off an exit code: it requires *"driving the running desktop
+app … and reading the value off a screenshot, per `loop-instruction.md`'s Definition of done item 8,
+with `RUN_DESKTOP_AGENT` set to a value unique to this review."* Done, on the merged tip at
+`4d22ecbb`, `RUN_DESKTOP_AGENT=sd29-review-r2` (its own Xvfb `:88`, its own vite port `14288` — the
+`§65.7` fix confirmed working under a 21st concurrent worktree). **Two records the lanes did NOT
+screenshot**, so the pass adds information rather than repeating a lane's:
+
+| family | record | expected | verdict | artifact |
+|---|---|---|---|---|
+| `companion` | `Companion (Cat (Small (Cheetah)))` | `Core Rulebook`, `Sprint`, `p.56` | **PASS** | `artifacts/sd29-review-r2/item8/crb-companion-cheetah.png` + `.verify.md` |
+| `monster` | `Dromite` | `Ultimate Psionics`, `1/2`, `p.10` | **PASS** | `artifacts/sd29-review-r2/item8/upsi-monster-dromite.png` + `.verify.md` |
+
+**The monster screen is the review's strongest single cross-check.** Its auto-derived blurb reads
+*"…and Ultimate Psionics — **1239** monsters"*, and that is **exactly** the `monster` grounded count I
+re-derived independently from `docs/work-inventory.json` in §8 (`Counter({'grounded': 1239, …})`).
+A corpus-side denominator and a pixel a player reads agree to the unit, through the whole engine and
+IPC path, with no shared derivation between them.
+
+The companion screen carries the same property one level down: 13 spelled-out book names ending
+`Core Essentials and Core Rulebook — 431 creatures`, with `Core Rulebook (38)` as a facet row — so
+`§65.8`'s `CRB`-unlabelled defect is confirmed *fixed on screen*, not merely fixed in a roster. The
+Cheetah's `Sprint` renders with its own citation (`p.40`) beneath the creature's (`p.56`), which is
+the owned-ability relationship the lane's chassis claims.
+
+### 5. Nothing is stranded on an unmerged branch — every result accounted for
+
+This bundle lost work to an unmerged worktree branch twice. Checked against the **pushed tip**, not
+the stale local branch:
+
+```bash
+git branch -a --no-merged origin/tranche/9
+#  -> tranche/9   (LOCAL, 141 behind origin — the stale checkout above, no unique content)
+#  -> worktree-wf_9029acd8-6b0-6
+#  -> remotes/origin/update-index
+```
+
+* **`worktree-wf_9029acd8-6b0-6`** — one commit, `b49c603a` "companion chassis + Inner Sea Combat
+  pilot ingest (Epic 7 round 2)", 29 files. **Every one of the 29 is present on `origin/tranche/9`**,
+  with later blobs (the lane re-landed and evolved it). Verified by content, file by file, not by a
+  prior agent's word:
+
+  ```bash
+  git diff --name-only origin/tranche/9...worktree-wf_9029acd8-6b0-6 \
+    | while read f; do git cat-file -e "origin/tranche/9:$f" 2>/dev/null || echo "MISSING $f"; done
+  #  -> (no output)
+  ```
+
+* **`remotes/origin/update-index`** — the release-channel index branch (`channel-index: alpha …`
+  commits, `update-manifest.json` only). Unmerged **by design**; it is not a work branch.
+* The 20 `worktree-wf_924a22ca-f35-*` branches are all merged into `origin/tranche/9`; they only
+  appear unmerged against the **local** `tranche/9`, which is the 141-commit staleness above, not
+  stranded work.
+
+### 6. Findings
+
+#### F1 — `wired-integration-audit.sh` reported REMOVED tokens as violations. FIXED (mechanical).
+
+All four checks scanned the raw diff, so a `-` line — a forbidden token being **deleted** — was a
+failure. At bundle scope one of the 14 Check-1 hits was the `-` side of
+`placeholder="e.g. GE08 authoring workbench"`: a bundle tag **this bundle's own naming sweep had
+correctly removed**, reported as though the sweep had added it. This is the identical defect
+`scripts/identifier-discipline-audit.sh` already records and fixed for its own regex; its
+`added_lines_only` is the form copied here.
+
+**Proven not a weakening** by a mutation test on a temp commit (planting
+`/// STUB not yet implemented` in `src/lib.rs`, committing, running the patched gate, then
+`git reset --hard` back): `MUTANT_EXIT=1` and the planted line named in the output. Hits at bundle
+scope: 14 -> 13, all 13 now on `+` lines.
+
+#### F2 — `verify-baselines.env`: 34 assignments for 8 keys, and `verify.sh` SOURCES it. FIXED (mechanical).
+
+```bash
+grep -cE '^[A-Za-z_][A-Za-z0-9_]*=' scripts/verify-baselines.env                      # -> 34
+grep -oE '^[A-Za-z_][A-Za-z0-9_]*=' scripts/verify-baselines.env | sort -u | wc -l    # -> 8
+```
+
+`BASELINE_ROOT_FULL_TESTS` alone had **ten** live assignments. Two real consequences: no reader could
+tell which line was the gate's actual floor without simulating a shell's last-wins rule; and a
+revision written into the **middle** of the file rather than appended was **dead on arrival and
+silently so** — nothing in the file or in `verify.sh` said appending was load-bearing.
+
+Fixed by prefixing every historical assignment `#   (historical)` (the dated record is preserved
+verbatim) and adding one `LIVE BASELINES` block. **No floor was lowered and no ceiling raised** —
+sourcing before and after produces byte-identical values (`diff` clean, recorded in the file header).
+
+Both F1 and F2 landed in commit `4d22ecbb`, **before** the gate run in §1, so the gate above ran on
+the fixed tree.
+
+#### F3 — the companion browser-preview fixture is not the faithful transcription it claims. DEFERRED.
+
+`apps/desktop/src/companionCatalog/companionCatalogRuntime.ts`'s `buildPreviewCatalog()` states:
+*"Every value below is transcribed from the real ingested record … so the preview never shows a
+companion the corpus does not contain or a number it does not state."* For `Familiar (Clockwork Spy)`
+that is not true:
+
+| | fixture serves | corpus record states |
+|---|---|---|
+| `statAdjustments` | 1 — `DEX +2` | 6 — incl. **`CHA −10`** |
+| `abilities` | 1 — `clockwork_spy_tinkering` | 3 — `record_audio`, `self_destruct`, `tinkering` |
+
+```bash
+python3 -c "import json;d=json.load(open('data/corpus/inner_sea_intrigue/companion/familiar_clockwork_spy.json'))['data'];print(d['stat_adjustments']);print(d['ability_keys'])"
+```
+
+The backend does **no** filtering — `companion_catalog.rs` maps every `stat_adjustment` straight
+through — so the desktop app and the browser preview disagree on rules content. (The `Griffon` entry
+in the same fixture **is** faithful; checked field by field against
+`data/corpus/inner_sea_combat/companion/companion_griffon.json`.)
+
+**Not a shipping-path stub:** the branch is behind `if (!hasTauriRuntime())`, never taken in the
+desktop product, and follows the pre-existing `monsterCatalogRuntime.ts` convention. **But nothing
+pins it:**
+
+```bash
+grep -rn 'buildPreviewCatalog' apps/desktop/src --include=*.test.ts    # -> (no output)
+```
+
+**This is the FOURTH instance of one root cause, and the first with a rules-content consequence.**
+The bundle already records three: `§54.5` (companion `SERVED_BOOK_CODES` stale and silent), `§54.6`
+(monster `SERVED_BOOKS` stale and loud), `§65.8` (`CRB` shipping unlabelled while the suite passed
+99/99). All three are **test rosters** — a list that decides what gets checked. This one is
+**rendered content**: the browser preview draws a Clockwork Spy whose stat line the corpus
+contradicts. Each of the three closed by naming the real fix and not taking it, most recently
+`§65.8`: *"deriving the roster from the served response rather than maintaining it by hand is the
+real fix and is named here, not taken."* **Four instances is where renewing that deferral stops being
+free.**
+
+**Nothing is red today** — both hand lists are currently IN SYNC, verified this review: 13/13
+companion codes and 12/12 monster codes against the backend registries. The defect is that nothing
+would say so if they were not, and that the fourth artifact in the family was never checked at all
+because it is not a roster and no one was looking for it there.
+
+**Disposition: deferred, owner named — SD-31**, recorded at `successor-forward-scope-register.md` C1.4a
+(an unowned deferral is not a valid disposition under Decision 27). It needs
+a design decision this review's scope does not carry — how a frontend preview derives from the corpus
+without a fixture pipeline — and a hand-transcription of five more numbers would move the drift
+rather than remove it. **`decision-blocked`, recorded per the unattended-mode protocol, not raised.**
+
+#### F4 — Decision 41's convention and the gate that enforces it disagree about NEW `tests/` files. DEFERRED.
+
+`tests/sd29_declared_product_identity_in_shipped_race_traits.rs` is a **new** file added by the
+race-trait lane, carrying an SD-NN tag, **after** Decision 41 made function-based naming *"binding on
+Epics 3-11 … same rule for modules, structs, consts, test module names, and directories."* Decision
+41 exempts **existing** `tests/` names because 531 of them are load-bearing citation targets; it does
+not license new ones.
+
+**The audit is not defective here, and this is the finding I nearly got wrong.** Its self-test
+encodes the `tests/` exemption *deliberately and by name* — `scripts/tests/test_identifier_discipline_audit.sh:115`,
+`run_case 'tests/ path is not a path tag' 0 tests/sd13_progression.rs` — one of 28 cases that pass
+inside the gate (`audit-selftest`). So this is a **doctrine-vs-gate divergence**, not a gate hole:
+Decision 41 made function-based naming binding on Epics 3-11, and the gate is tested to permit
+exactly what Epic 6 then did.
+
+```bash
+git diff --name-only --diff-filter=AR origin/develop...HEAD \
+  | grep -E '(^|/)([A-Za-z0-9]+_)*(sd|SD|Sd|ge|GE|Ge)[0-9]+([_-][A-Za-z0-9_.-]*)?(/|$|\.)' \
+  | grep -v '^docs/'
+#  -> tests/sd29_declared_product_identity_in_shipped_race_traits.rs   (the only one)
+```
+
+4 citations exist (`src/bin/ingest_race_traits.rs:946` plus 3 in release docs). **Deferred rather than
+renamed here**, because the resolution is a ruling, not an edit: either Decision 41 grows an explicit
+"new `tests/` files too" clause and the self-test's case 115 is split into *existing* vs *added*, or
+Decision 41 concedes `tests/` entirely. Changing a tested gate's scope inside a review cycle, on my
+own reading of a decision, is the kind of unilateral gate edit this card forbids. Severity low.
+
+#### F5 — the wired-integration shell audit and its Rust twin disagree about `placeholder`. DEFERRED.
+
+`tests/sd24_wired_integration_audit.rs` documents `placeholder` as *"the one noisy term in the
+canonical pattern"* and encodes **three** reviewed exclusion filters for it, so the repo-wide sweep is
+green inside `root-full`. `scripts/wired-integration-audit.sh` has none of them, so at bundle scope it
+is red on 13 hits that the Rust gate has already adjudicated as not-stubs. The two instruments state
+different verdicts about the same doctrine.
+
+**Deliberately NOT fixed by loosening the token list.** The correct fix is to give the shell script
+the same three documented filters the Rust gate already carries — parity with a reviewed gate, not
+new leniency — and that is a gate change with its own test obligation. Deferred with that remedy
+named. Until it lands, **Decision 27's bundle-scope shell run cannot be reported as clean, and this
+review does not report it as clean.**
+
+### 7. Verified clean, where run 1 did not look
+
+* **APG's 49-row `race_trait` exclusion is REAL, not an accounting convenience.** `§44.4`/`§49.8`
+  exclude 49 `advanced_players_guide` rows as *"same `KEY:` as an already-ingested ARG record —
+  republished, not new."* Checked independently against the corpus, not against the claim:
+
+  ```bash
+  # index all 515 committed race_trait records by data.key, then look up the 49
+  python3 -c "import json,glob;have={};
+  [have.setdefault(json.load(open(f))['data']['key'],[]).append(f.split('/')[2]) for f in glob.glob('data/corpus/*/race_trait/**/*.json',recursive=True)];
+  keys=[l.strip() for l in open('apg49.txt') if l.strip()];
+  print(len(keys), sum(k in have for k in keys))"
+  #  -> 49 49      (all 49 present, every one owned by advanced_race_guide)
+  ```
+
+* **No hand-authored rules data reached a shipping frontend path.** The only rules-shaped literals the
+  bundle added to `apps/desktop/src/` are the two preview fixtures, both behind `hasTauriRuntime()`
+  (F3 covers their fidelity).
+* **The identifier audit's detection power is tested, not assumed.** The card asks specifically
+  whether path tags and PascalCase/infix forms are still caught. `scripts/tests/test_identifier_discipline_audit.sh`
+  carries named cases for all of them — `pascal bundle tag (Sd29)`, `pascal grand-epic tag (Ge08)`,
+  `infix bundle tag (kind_is_sd17_b3)`, `infix grand-epic tag`, `path tag in file name`, `path tag in
+  directory name`, `tag in top-level src/lib.rs` — and 28/28 pass inside `verify.sh`'s `audit-selftest`
+  stage. It also carries the negative cases that keep it from being noise (`doc slug SD-29 in a
+  comment`, `epic citation SD28-E14-F1`, `tests/ citation in doc comment`).
+* **Receipt figures carry their commands — the two that looked wrong both survived checking.** The
+  card asks for figures published without a command behind them. Two were auditable from the dispatch
+  brief's own receipt chain and both are re-derivations, not errors: (a) the monster lane's
+  `left=44 -> left=239` **rise** after a `+34` round is `§64.1`'s ceiling correction, and
+  `10 + 229 = 239` reproduces (`python3 scripts/scan_monster_ability_bundle_rows.py` -> `229`); (b)
+  the companion lane's `239 - 102 = 137` against a published `left=136` is the ceiling moving
+  `923 -> 922` for the one row `§63.3` drops, so `922 - 786 = 136`. The current figure closes the same
+  way from the other end: `922 - 870 = 52`, and my independent classifier run returns `52`.
+* **Corpus correctness, sampled.** `ultimate_psionics:monster:psicrystal` (the newest book's
+  load-bearing record) checked corpus JSON -> engine table -> raw PCGen row
+  (`up_races.lst:47`): `SIZE:D`, `MOVE:Walk,30,Climb,20`, `RACETYPE:Construct`, `CR:0`,
+  `SOURCEPAGE:p.48,448`, `MONSTERCLASS:Construct:1` all transcribed exactly, `natural_attacks` empty
+  because the row carries no attack token. `inner_sea_combat:companion:companion_griffon` checked
+  field by field against its corpus record — exact.
+* **Test quality, sampled rather than counted.** `monster_catalog.rs`'s
+  `no_ability_description_serves_raw_pcgen_substitution_syntax` is the shape the doctrine asks for: it
+  loops, and then ends `assert_eq!(checked, 16)` with the corpus reason for 16 written beside it — it
+  cannot pass by iterating nothing.
+
+### 8. Re-derived figures — every number in this receipt has its command
+
+Nothing below is transcribed from a lane receipt or from the dispatch brief.
+
+| lane | raw remainder | REAL ceiling / honest remainder | command |
+|---|---|---|---|
+| `companion` | 826 `not-ingested` of 1,696 | **52** | `python3 scripts/classify_companion_rows.py ultimate_magic advanced_race_guide advanced_players_guide book_of_the_damned_volume_1` -> `445 units / 393 excluded / 52 reachable` |
+| `monster` + `monster_ability` | **1,515** | **10** registration-only **+ 229** mechanism-blocked = **239** | `python3 scripts/classify_monster_ability_rows.py` -> `1515 / orphans 1406 / PI 32 / COPY 2 / reachable 75`; `python3 scripts/scan_monster_ability_bundle_rows.py` -> `229` |
+| `race_trait` | 2,743 `not-ingested` of 3,447 | **9** not-ingested inside the 571 ceiling, of which **3** workable (Drow Noble, needs a race chassis) and 6 not-gap; **2,876** chassis-blocked | `python3 scripts/race_trait_ceiling.py` -> `ceiling 571`, `{'not-ingested': 58, 'grounded': 513}`, `3447 - 571 = 2876` |
+
+**One correction to `§49.8`, and it is the lane's own instrument agreeing with itself.** `§49.8`
+published `{'grounded': 514, 'not-ingested': 57}`; re-derived at this tip it is
+**`{'grounded': 513, 'not-ingested': 58}`**. The difference is exactly the one row `§53.3` records
+dropping for a declared-PI name (`Elf ~ Sovyrian-Born`) — the ninth of the nine pins that section
+moved. The **DRY** claim survives: 49 of the 58 are ARG republications (proven in §7 above), 6 are
+recorded not-gap, and the 3 workable rows are race-chassis work, not race-trait work.
+
+**Corpus-side denominators, re-derived from `docs/work-inventory.json` at this tip:**
+
+```bash
+python3 -c "import json,collections;d=json.load(open('docs/work-inventory.json'));
+ [print(k, collections.Counter(u['status'] for u in d['units'] if u['kind']==k)) for k in ('companion','monster','monster_ability','race_trait')]"
+#  companion        Counter({'grounded': 870, 'not-ingested': 826})
+#  monster          Counter({'grounded': 1239, 'not-ingested': 30, 'not-started': 1})
+#  monster_ability  Counter({'grounded': 1623, 'not-ingested': 1460, 'not-started': 24})
+#  race_trait       Counter({'not-ingested': 2743, 'grounded': 513, 'not-started': 191})
+```
+
+### 9. Unattended-mode defaults taken this cycle (recorded, not raised)
+
+1. **Reviewed in a dedicated worktree pinned to `origin/tranche/9`** rather than in the shared
+   checkout, which was 141 commits stale. The safer default: reviewing the stale tree would have
+   silently excluded three lanes' work.
+2. **Did not rewrite `wired-integration-audit.sh`'s `placeholder` semantics** to make Check 1 green.
+   Narrowing a stub gate inside a review cycle is the shape of a weakened gate; F5 names the correct
+   parity fix instead.
+3. **Did not hand-transcribe the missing Clockwork Spy values** (F3). It would have moved the drift
+   rather than removed it, and it would have required a second full gate run to land safely.
+4. **Did not rename the SD-tagged test file** (F4). The durable fix is a gate-scope ruling, not a
+   rename.
+5. **One self-inflicted incident, recorded rather than hidden.** A mutation test proving F1's fix was
+   run with `git reset --hard` while the FIRST gate run was in flight; the reset discarded the
+   uncommitted fix and perturbed the in-flight build. That run was **terminated** (`VERIFY_EXIT=143`,
+   SIGTERM — not a gate result), the fixes were committed, and the gate in §1 is a clean run on the
+   committed tree from stage 1. Emitted to the retrospective log.
+
+### 10. Disposition summary (Decision 27's triage)
+
+| # | severity | disposition | owner |
+|---|---|---|---|
+| F1 the wired audit flagged REMOVED tokens as violations | medium | **fixed-in-bundle** (`4d22ecbb`) | — |
+| F2 `verify-baselines.env`: 34 assignments for 8 keys | medium | **fixed-in-bundle** (`4d22ecbb`) | — |
+| F3 preview-fixture fidelity — 4th instance of the §54.5 root cause, 1st with a rules-content consequence | medium | **deferred / `decision-blocked`** | **SD-31**, register **C1.4a** |
+| F5 shell audit vs its Rust twin disagree on `placeholder` | medium | **deferred**, remedy named (parity, not leniency) | **SD-31**, register **C1.4b** |
+| F4 `§41` vs the gate on NEW `tests/` files carrying a bundle tag | low | **deferred** — a ruling, not an edit | **SD-31**, register **C1.4c** |
+| D1 `equipment`/`spell` `SEARCH_Y` never calibrated (debt, not a defect) | low | **deferred** | **SD-31**, register **C1.4d** |
+
+**The Closure Epilogue card (`epic-11-closure`) is not blocked by any of these** — every one is
+deferred with a named owner, which is a valid disposition under Decision 27, and none is a
+shipped-path defect. It **is** conditioned on one sentence this review will not soften:
+
+> Decision 27's bundle-scope `scripts/wired-integration-audit.sh` run is **NOT clean** (exit 1, 13
+> `placeholder` hits, every one hand-classified here as a non-stub, remedy named in C1.4b).
+
+Any closure statement that reports it clean repeats exactly the error run 1 made.

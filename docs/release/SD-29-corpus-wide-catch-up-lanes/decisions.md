@@ -6507,3 +6507,131 @@ rather than renumbering on merge; added `advanced_players_guide` to `MODULE_DIR`
 `core_rulebook` rather than leaving a known-identical trap for the next round to trip over; and fixed the shared-dev-port defect `§65.7` uncovered in the harness itself
 rather than working around it for this cycle alone, because a false item-8 PASS is not a
 companion-lane problem and every future cycle on this box inherits it.
+
+## Decision 66 — Bundle Code Review, RUN 2: the bundle-scope audit had never been run, and one recorded pattern is now on its fourth instance (2026-08-13, `sd29-review-r2`, card `epic-10-review-run2`)
+
+Run 1 reviewed a state that was not final. This run reviews the whole-bundle diff at the pushed tip
+`origin/tranche/9` @ `de303fd0` — **branch point `a1295856`, 246 commits, 4,632 files,
++305,921 / −15,513** (`git merge-base HEAD origin/develop`; `git rev-list --count a1295856..HEAD`).
+Full receipt with every command in `progress.md`. Five findings plus one calibration debt; **two fixed
+here** (`§66.2`), **four deferred with a named owner** (SD-31, via
+`successor-forward-scope-register.md` C1.4a-d). The gate ran at `4d22ecbb` — the tip plus this
+review's own two fixes — so it covers what lands, not the tree before the review touched it.
+
+### 66.1 Decision 27's bundle-scope wired-integration run had never actually happened
+
+`§27` specifies the review runs `scripts/wired-integration-audit.sh` against the **whole-bundle
+diff**. Run 1 reported it clean. It is not clean, and the more useful fact is *why nobody saw that*:
+every lane cycle that recorded "four-check audit clean" had either run the script against **its own
+cycle base** (`BASE_BRANCH=e1f0bdd9`, `BASE_BRANCH=21ead5d7` — both in `progress.md`) or reported the
+Rust repo-wide sweep `tests/sd24_wired_integration_audit.rs` instead. Both are legitimate instruments.
+Neither is the run `§27` names, so the bundle-scope run had no first occurrence until this one.
+
+**The lesson is not "a cycle skipped a step."** It is that a script whose default `BASE_BRANCH` makes
+it *look* bundle-scoped gets overridden per-cycle for good reasons, and the overridden form is what
+lands in every receipt. A gate specified at one scope and habitually run at another reports on the
+scope it was run at, and the receipts read identically either way.
+
+### 66.2 Two mechanical defects in the gates themselves, fixed (commit `4d22ecbb`)
+
+**(a) The audit reported REMOVED tokens as violations.** All four checks scanned the raw diff, so a
+`-` line — a forbidden token being deleted — failed the gate. One of the 14 bundle-scope Check-1 hits
+was the `-` side of `placeholder="e.g. GE08 authoring workbench"`: a bundle tag **this bundle's own
+naming sweep had correctly removed**, reported as though the sweep had added it. This is the identical
+defect `scripts/identifier-discipline-audit.sh` already documents and fixed for its own regex; its
+`added_lines_only` is the form copied over. Proven not a weakening by a mutation test on a temp commit
+(`/// STUB not yet implemented` planted in `src/lib.rs` → gate exits 1 and names the line). 14 → 13
+hits, all now on `+` lines.
+
+**(b) `verify-baselines.env` held 34 assignments for 8 keys and `verify.sh` SOURCES it.**
+`BASELINE_ROOT_FULL_TESTS` alone had ten. Last-wins silently decided every floor, so no reader could
+tell which line was live, and **a revision written into the middle of the file rather than appended
+was dead on arrival** — nothing in the file or in `verify.sh` said appending was load-bearing. The
+dated record is preserved verbatim with each historical assignment prefixed `#   (historical)`; one
+`LIVE BASELINES` block now holds the 8. Sourcing before and after produces byte-identical values: no
+floor lowered, no ceiling raised.
+
+### 66.3 The stale-hand-list pattern reached its FOURTH instance, and this one renders wrong rules
+
+`§54.5`, `§54.6` and `§65.8` each record a hand-maintained frontend list that went stale with nothing
+able to say so, and each closes by naming the real fix (derive it from the served response) and not
+taking it. All three are **test rosters** — lists that decide what gets checked.
+
+The fourth is not a roster. `apps/desktop/src/companionCatalog/companionCatalogRuntime.ts`'s
+`buildPreviewCatalog()` declares *"Every value below is transcribed from the real ingested record …
+so the preview never shows a companion the corpus does not contain or a number it does not state."*
+For `Familiar (Clockwork Spy)` it serves **one** stat adjustment (`DEX +2`) where the corpus states
+**six**, including **`CHA −10`**, and **one** ability where `ability_keys` names **three**. The
+backend does no filtering, so the desktop app and the browser preview disagree about a creature's
+stat line. Nothing pins any `*Runtime.ts` fixture to the corpus
+(`grep -rn 'buildPreviewCatalog' apps/desktop/src --include=*.test.ts` → no output).
+
+**Scope, stated exactly so it is not over- or under-read:** the branch is behind
+`if (!hasTauriRuntime())` and is never taken in the desktop product, and the `Griffon` entry beside it
+**is** faithful. No shipped desktop path is wrong. **But the deferral being renewed is no longer
+"a roster might go stale"; it is "hand-authored rules content in the frontend has drifted, and the
+only reason we know is that a review happened to open the file."**
+
+Deferred to the successor bundle with the remedy named, because hand-transcribing five more numbers
+moves the drift rather than removes it, and the derivation `§54.5`/`§65.8` describe needs a fixture
+pipeline the frontend does not have.
+
+### 66.4 Two divergences between a doctrine and the gate that is supposed to enforce it
+
+**(a) `placeholder`.** `tests/sd24_wired_integration_audit.rs` documents `placeholder` as the one
+noisy term in the canonical pattern and encodes **three reviewed exclusion filters** for it, which is
+why the repo-wide sweep is green inside `root-full`. `scripts/wired-integration-audit.sh` carries none
+of them, so at bundle scope it is red on 13 hits the Rust gate has already adjudicated as not-stubs.
+Hand-classified this review: 2 are JSX `placeholder=` attributes, 10 are engineering prose about
+upstream corpus placeholders, 1 is a `#[cfg(test)]` assertion message. **Zero are unfinished-work
+markers.** The fix is parity — give the shell script the Rust gate's three filters — **not** dropping
+the token, and that is a gate change with its own test obligation. Deferred with the remedy named.
+**Until it lands, `§27`'s bundle-scope run cannot be reported clean, and this review does not report
+it clean.**
+
+**(b) `tests/` naming.** `tests/sd29_declared_product_identity_in_shipped_race_traits.rs` is a **new**
+file carrying an SD-NN tag, added after `§41` made function-based naming *"binding on Epics 3-11 …
+same rule for … test module names."* The audit is **not** defective: its self-test encodes the
+exemption by name (`test_identifier_discipline_audit.sh:115`, `run_case 'tests/ path is not a path
+tag' 0 tests/sd13_progression.rs`), one of 28 cases passing in the gate. `§41` exempts **existing**
+`tests/` names because 531 are load-bearing citation targets; it does not speak to new ones. Either
+`§41` grows an explicit clause and case 115 splits into *existing* vs *added*, or `§41` concedes
+`tests/` entirely. That is a ruling, not an edit, and a review cycle should not make it unilaterally
+by rewriting a tested gate.
+
+### 66.5 What the review confirmed rather than found
+
+* **Nothing is stranded.** `git branch -a --no-merged origin/tranche/9` returns three results and all
+  three are accounted for by content: local `tranche/9` (141 commits **behind** origin, no unique
+  content), `worktree-wf_9029acd8-6b0-6` (one commit, all 29 of its files present on the tip with
+  later blobs), and `origin/update-index` (the release-channel index branch, unmerged by design).
+* **Reach is not passing-by-absence.** `full_inventory()` unions three live sources including a
+  `data/corpus` directory scan, so a new book cannot be omitted by forgetting to list it; each source
+  is floored at 10 and asserted to differ; `every_declared_claim_actually_carries_the_records` ends
+  `assert!(proven >= 10)`; `UNREACHED_RECORD_FINDINGS` is pinned both ways with
+  `assert_eq!(families_with_a_pin, UNREACHED_RECORD_FINDINGS.len())`; and the `reach` stage fails on
+  zero matched tests. Its delta over 246 commits is **+3 / −1**, every addition carrying a named
+  cause.
+* **DoD item 8 covers every family the bundle surfaced** — 97 artifacts, 23 directories, monster 9 /
+  race_trait 4 / companion 9. Equipment and spell predate the harness; **their `SEARCH_Y` values have
+  never been calibrated** and the first equipment/spell cycle after this bundle must do it before
+  trusting a PASS.
+* **`§44.4`'s 49-row APG exclusion is real**, checked against the corpus rather than against the
+  claim: all 49 keys are present under identical keys in `advanced_race_guide`, indexed over all 515
+  committed `race_trait` records.
+* **The two receipt figures that looked wrong are both re-derivations**, not errors — the monster
+  lane's `left=44 → 239` rise is `§64.1`'s ceiling correction (`10 + 229`), and the companion lane's
+  `137` vs published `136` is the ceiling moving `923 → 922` for `§63.3`'s dropped row.
+
+### 66.6 Re-derived remainders (this review's own commands, nothing transcribed)
+
+| lane | REAL remainder | command |
+|---|---|---|
+| `companion` | **52** | `python3 scripts/classify_companion_rows.py ultimate_magic advanced_race_guide advanced_players_guide book_of_the_damned_volume_1` → `445 / 393 excluded / 52 reachable` |
+| `monster` + `monster_ability` | **10** registration-only, **+229** mechanism-blocked = **239** | `python3 scripts/classify_monster_ability_rows.py` → `1515 / 75 reachable`; `python3 scripts/scan_monster_ability_bundle_rows.py` → `229` |
+| `race_trait` | **3** workable (Drow Noble, needs a race chassis); 6 recorded not-gap; 49 ARG republications; **2,876** chassis-blocked | `python3 scripts/race_trait_ceiling.py` → `571 ceiling`, `{'not-ingested': 58, 'grounded': 513}` |
+
+**One correction to `§49.8`.** It published `{'grounded': 514, 'not-ingested': 57}`; at this tip it is
+`{'grounded': 513, 'not-ingested': 58}` — exactly the row `§53.3` records dropping for a declared-PI
+name (`Elf ~ Sovyrian-Born`), the ninth of the nine pins that section moved. The **DRY** ruling
+survives unchanged.
