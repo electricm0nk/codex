@@ -3578,6 +3578,35 @@ mod e14_harness_tests {
         );
     }
 
+    /// Every observable book's catalog keys really reach the probe.
+    ///
+    /// `probe_equipment_effect_wiring` looks the book up by the slug
+    /// `engine_book_for_corpus_dir` returns and skips it on a miss. That miss
+    /// is SILENT — a book whose two slugs stop agreeing simply stops being
+    /// probed, and every one of its units quietly falls back to
+    /// `ingested-magnitude`. Bestiary 1 is the standing trap: its corpus
+    /// directory is `beastiary`, its engine book is `bestiary_1`, and the two
+    /// only meet through `CORPUS_DIR_ALIASES`.
+    #[test]
+    fn every_observable_books_catalog_keys_reach_the_probe() {
+        let keys_by_book = probe_equipment_keys_by_book();
+        for dir in OBSERVABLE_BOOK_DIRS {
+            let engine_book = engine_book_for_corpus_dir(dir).unwrap_or_else(|| {
+                panic!("observable corpus dir {dir:?} resolves to no engine book")
+            });
+            let keys = keys_by_book.get(engine_book).unwrap_or_else(|| {
+                panic!(
+                    "corpus dir {dir:?} -> engine book {engine_book:?} has no catalog keys \
+                     at all; the probe silently skips this whole book"
+                )
+            });
+            assert!(
+                !keys.is_empty(),
+                "{engine_book} contributes an empty key set to the probe"
+            );
+        }
+    }
+
     /// Control for the test above: proves the universe is genuinely wider
     /// than the four compiled tables it used to be built from, so that guard
     /// cannot pass vacuously by both sides shrinking together.
