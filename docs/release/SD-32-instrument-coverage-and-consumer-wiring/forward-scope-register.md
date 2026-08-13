@@ -316,3 +316,18 @@ for u in d['units']: b[u['id'].split('__')[0]].append(u)
 for k,v in sorted(b.items()):
     if len(v)>1: print(k, [x['corpus_key'] for x in v], [x['wiring_class'] for x in v])"
 ```
+
+## Cross-reference — SD-30 (2026-08-13)
+
+`SD-30-class-feature-archetype-bundle` owns the `class_feature` kind, corpus-wide (15,472 units,
+`SD-30 decisions.md §33, §40`). It consumes this bundle's corpus-wide `static`/`derived` gates
+(`corpus-sweep`/`corpus-sweep-selftest`, `tests/derived_evaluator_fixture_check.rs`) rather than
+building sibling instruments of its own, and it does not modify any instrument this package owns
+(`wiring_class.rs`, `corpus_literal_sweep`, any `probe_*` function in `v06_work_inventory.rs`). The
+boundary rule is recorded on SD-30's side at `SD-30-class-feature-archetype-bundle/decisions.md
+§41-§42` (instrument-vs-content ownership, same no-dual-ownership shape as the SD-29/SD-30 boundary at
+that package's own `decisions.md §35`). SD-30's `computed`-bucket population (4,178 units) has no
+consumer-delta probe of its own; whether one gets built inside SD-30 (Epic 4/5's natural territory) or
+requested of this package (which already owns every sibling `probe_*` function) is an open ownership
+question flagged for the operator on SD-30's side, not resolved here. This entry is a pointer only —
+authoritative scope for that question lives in SD-30's package, not duplicated here.

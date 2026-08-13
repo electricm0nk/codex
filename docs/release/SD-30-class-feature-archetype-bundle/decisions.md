@@ -1068,3 +1068,171 @@ no/partial ISPI handling); `docs/governance/ogl-pi-blacklist.md` §§2-3; `scrip
 stage; `docs/work-inventory.json` (23-book `class_feature` population); PCGen source tree
 `~/workspace/repos/pcgen/data/pathfinder/{paizo,dreamscarred_press}/` (per-book `.lst` counts, this
 session, 2026-08-13).
+
+## Decision 40 — Re-derived `class_feature` split (2026-08-13); Decision 33's by-status snapshot is superseded, not wrong
+
+**Status:** New. Doc-maintenance pass, no code change. Every figure below re-derived independently
+against `docs/work-inventory.json` on this checkout (`tranche/9`), not transcribed from the
+dispatching brief (which itself flagged the pattern of transcribed-not-derived figures as this
+program's rank-one recorded defect class).
+
+```bash
+cd ~/workspace/repos/codex
+python3 - <<'PY'
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+U = d['units']
+cf = [u for u in U if u['kind']=='class_feature']
+print('total', len(cf), 'books', len(set(u['book'] for u in cf)))
+print('status', collections.Counter(u.get('status') for u in cf))
+print('wiring_class', collections.Counter(u.get('wiring_class') for u in cf))
+PY
+```
+
+Result: **15,472 `class_feature` units, 23 books** (unchanged from Decision §33 — the population
+itself has not moved).
+
+**`wiring_class` split (not previously recorded in this package):** `display` 7,227, `computed`
+4,178, `derived` 1,792, `static` 1,191, `ambiguous` 1,084 (sums to 15,472).
+
+**`by_status` split — superseded 2026-08-13:** Decision §33 (2026-08-10) recorded `not-ingested`
+9,078, `not-started` 3,293, `unknown` 2,958, `grounded` 109, `deferred-with-reason` 34. Re-derived
+today: `not-ingested` **10,203**, `not-started` **1,908**, `unknown` **3,218**, `grounded` **109**,
+`deferred-with-reason` **34** (sums to 15,472). `grounded` and `deferred-with-reason` are unchanged;
+`not-ingested` is up 1,125, `not-started` is down 1,385, `unknown` is up 260. The corpus population
+did not change — `docs/work-inventory.json` was regenerated multiple times between 2026-08-10 and
+2026-08-13 by sibling-bundle work (SD-32's `wiring_class` %N-placeholder fix, commit `99efb504`, and
+its inventory-determinism fix, commit `44a6af61`), which moved some `class_feature` records across the
+`not-ingested`/`not-started`/`unknown` boundary as a side effect of correcting the classifier and the
+generator elsewhere in the corpus. **This is a correction to Decision §33's snapshot, not a
+retraction** — §33's figures were an accurate read of the inventory as it stood 2026-08-10; the
+inventory itself moved under a sibling bundle's unrelated fix. Re-derive `by_status` at the start of
+Epic 4/Epic 6 cycles rather than citing either snapshot, per the standing "generated, never
+hand-maintained" rule (`decisions.md §12`).
+
+**Verified-by:** the command above, this session, 2026-08-13. `scripts/retro.py correction` emitted
+for the `by_status` figures (subject: this package's own Decision §33; the orchestrator's
+2026-08-13 dispatch brief transcribed the current split correctly and needed no correction).
+
+## Decision 41 — Instrument coverage: SD-32's corpus-wide gates apply to `class_feature`'s future
+`static`/`derived` shipments; the `computed` bucket still has none; SD-30 builds neither, uses both
+(2026-08-13)
+
+**Status:** New. Doc-maintenance pass, resolving whether SD-30's Epic 4/Epic 6 acceptance criteria
+should plan to build a static-sweep or evaluator-vs-fixture instrument of their own, now that SD-32
+has landed both, corpus-wide, on this branch.
+
+**What SD-32 actually landed, verified by commit, not by its own README's prose:**
+
+- `feat(verify): corpus-literal byte-equality sweep, the missing static-unit gate` (`3ad45909`) —
+  `scripts/verify.sh` stages `corpus-sweep` / `corpus-sweep-selftest` run `corpus_literal_sweep`
+  "over every shipped record in `data/corpus/`" (`scripts/verify.sh:876`) — **corpus-wide, all
+  kinds**, not scoped to the equipment/spell content SD-32 itself was funded to move. Wired into
+  both `ALL_STAGES` and `QUICK_STAGES` (`scripts/verify.sh:102-103`).
+- `feat(instruments): evaluator-vs-fixture check, the missing 'derived' bar` (`527d1db6`) +
+  `feat(instruments): corpus-derived fixtures for the derived evaluator check` (`7f70c45d`) —
+  `tests/derived_evaluator_fixture_check.rs`, also corpus-wide by construction (fixtures are derived
+  from the corpus record, not hand-authored per kind).
+- `feat(spell): ground the 623 CRB spells...` (`90bd9975`) — a **spell-specific** consumer-delta
+  probe (`probe_spell_effect_wiring`, `src/bin/v06_work_inventory.rs:2178`). This is a `computed`-
+  bucket instrument, but it is scoped to `Kind::Spell` only (`classify()`'s `Kind::Spell` arm) — it
+  is a **precedent for the shape of a `class_feature` consumer-delta probe, not itself one.**
+  Confirmed by direct grep of `src/bin/v06_work_inventory.rs` this session: `probe_feat_effect_wiring`,
+  `probe_race_trait_corpus`, `probe_equipment_effect_wiring`, `probe_spell_effect_wiring` all exist;
+  no `probe_class_feature_effect_wiring` (or equivalent) exists anywhere in the file.
+- `fix(rules_core): teach wiring_class the %N placeholder...` (`99efb504`) — a `wiring_class`
+  classifier fix, corpus-wide, already reflected in Decision §40's re-derived split above (it is part
+  of why `by_status` moved between 2026-08-10 and today).
+- SD-32 `decisions.md §2` records that `static`/`derived` currently have **no `done` rung** in the
+  dashboard's `doneness_verdict()` table regardless of instrument coverage — that question is
+  explicitly OPEN, gates SD-32's own Epics 5/6 from moving units to `done`, and is unaffected by this
+  decision. SD-30 citing these gates for verification does not require that question to be resolved.
+
+**Disposition — no epic in this package builds a static-sweep or evaluator-vs-fixture gate.** Re-read
+of `epic-breakdown.md` and `acceptance-and-verification.md` (this session) found **neither document
+ever proposed building one** — Epic 4's method is hand-verification with no automated proxy by
+design (`§63`/`§64`, inherited whole), and Epic 6's reach-gate is a different mechanism
+(`apps/desktop/src-tauri/src/reach_gate.rs`, a player-surface check, not a corpus-literal or
+evaluator check). There was no stale acceptance criterion to rewrite. What this decision does instead:
+names, for the record, that once Epic 6 ships `class_feature` records, `scripts/verify.sh`'s
+`corpus-sweep`/`corpus-sweep-selftest` stages and `tests/derived_evaluator_fixture_check.rs` already
+cover those records' `static` (1,191 units, corpus-wide) and `derived` (1,792 units, corpus-wide)
+`wiring_class` populations for free — Epic 6 does not need a bundle-specific sibling test, only to run
+`./scripts/verify.sh` per its own standing Decision §18/`AT-30-002`.
+
+**Coverage count, stated plainly:**
+
+| `wiring_class` | units | existing corpus-wide gate | still needs building |
+|---|---:|---|---|
+| `display` | 7,227 | none (bar is `text-complete`, a display-content check, not this decision's subject) | — |
+| `computed` | 4,178 | **none** — `corpus-sweep` and the derived-evaluator check do not cover `computed`; the spell probe is `Kind::Spell`-only | a `class_feature` consumer-delta probe, modeled on `probe_spell_effect_wiring`, is unbuilt — this is Epic 4/Epic 5's territory (measuring/wiring the archetype supersession and chooser mechanisms IS the consumer), not a new standalone gate |
+| `derived` | 1,792 | `tests/derived_evaluator_fixture_check.rs` (corpus-wide) | none — gate exists |
+| `static` | 1,191 | `scripts/verify.sh` `corpus-sweep`/`corpus-sweep-selftest` (corpus-wide) | none — gate exists |
+| `ambiguous` | 1,084 | none (by definition — resolved by SD-32 Epic 4's classifier work or SD-30's own per-record read, not a gate) | — |
+
+**Of the 15,472 `class_feature` units, 2,983 (`static` + `derived`) have an existing corpus-wide gate
+they will pass through automatically once ingested; 4,178 (`computed`) have none and are not
+gated by anything this decision can point to — Epic 5's supersession/chooser wiring plus the
+reach-gate (`AT-30-002`) is the closest analog SD-30 already owns, and building a dedicated
+consumer-delta probe (spell's shape, applied to `class_feature`) is named here as a candidate for
+whoever schedules Epic 4/5 work, not decided as in-scope by this doc pass.**
+
+**Flagged for the operator, not decided here:** whether a `class_feature` consumer-delta probe
+(mirroring `probe_spell_effect_wiring`) should be built inside SD-30 (natural home — it is Epic 4/5's
+own measurement territory) or requested of SD-32 (natural home — SD-32 already owns the sibling
+probes for every other kind and the anti-gaming discipline, `decisions.md §1`, that governs how such
+a probe must be judged). This document does not resolve that ownership question; see Decision §42
+below for the boundary rule that applies regardless of which bundle eventually builds it.
+
+**Authority:** `docs/work-inventory.json` (this session); `scripts/verify.sh` lines 102-103, 826-938
+(read directly); `tests/derived_evaluator_fixture_check.rs` (existence confirmed, `find`/`grep` this
+session); `src/bin/v06_work_inventory.rs` (probe function inventory, grepped this session);
+`SD-32-instrument-coverage-and-consumer-wiring/decisions.md §2, §9` (read in full); commits
+`3ad45909`, `527d1db6`, `7f70c45d`, `90bd9975`, `99efb504` (`git show --stat`, this session).
+
+## Decision 42 — Boundary with SD-32: instruments vs. content, the same no-dual-ownership shape as the
+SD-29 boundary (2026-08-13)
+
+**Status:** New. SD-30 has not previously mentioned SD-32 anywhere in this package. SD-32 landed on
+this branch (`tranche/9`) today, 2026-08-13, and both bundles now touch the same
+`docs/work-inventory.json`-derived surface (SD-32 by kind-agnostic instrument coverage, SD-30 by the
+`class_feature` kind specifically), so the same collision shape Decision §35 resolved against SD-29
+(`SD-29-corpus-wide-catch-up-lanes/decisions.md §38.4-§38.5`: no (kind, book) cell owned by both
+bundles) needs a sibling statement here, structured the same way.
+
+**The boundary, stated as a rule, not a cell list (instruments aren't kind/book-shaped, so §35's
+exact table doesn't transfer — the axis here is measurement-tooling vs. content):**
+
+- **SD-32 owns the instruments and gates themselves** — `corpus_literal_sweep`, `verify.sh`'s
+  `corpus-sweep`/`corpus-sweep-selftest` stages, `tests/derived_evaluator_fixture_check.rs`, the
+  `wiring_class` classifier (`src/rules_core/wiring_class.rs` and friends), the per-kind consumer-delta
+  probes in `src/bin/v06_work_inventory.rs` (`probe_spell_effect_wiring`, `probe_equipment_effect_wiring`,
+  `probe_race_trait_corpus`, `probe_feat_effect_wiring`), and the dashboard's `doneness_verdict()`
+  table question (`SD-32 decisions.md §2`, still OPEN). Any future `class_feature` consumer-delta
+  probe, if and when it is built, is instrument work under this same ownership rule regardless of
+  which bundle's cycle writes it — see the flagged question at the end of Decision §41.
+- **SD-30 owns `class_feature` content and consumption of those instruments** — the archetype
+  supersession/chooser mechanism (`archetype_resolver.rs`, `pilot_compute.rs`'s `class_feature`
+  branches), the per-class hand-verification measurement (Epic 4), the `class_feature` ingest itself
+  (Epic 6), and running the existing gates against what it ships. SD-30 does not modify
+  `wiring_class.rs`, `corpus_literal_sweep`, or any `probe_*` function in `v06_work_inventory.rs` —
+  if a cycle's work would require touching one of those, per Decision §41 it is a flagged
+  cross-bundle question, not a unilateral SD-30 edit.
+- **Neither bundle builds the other's deliverable.** SD-32 does not ingest `class_feature` content
+  (its own `decisions.md §7`: "`not-started` is content that is not in the engine... belongs to the
+  SD-29/SD-30 lanes, not here"). SD-30 does not build or modify a corpus-wide instrument, even one
+  scoped to `class_feature` alone, without the same flagged-not-decided treatment Decision §41 gives
+  the `computed`-bucket probe question.
+- **No writer collision today.** SD-32's write scope (`README.md` "Authority surface") is
+  `src/bin/v06_work_inventory.rs`, `src/rules_core/**` equipment-effect surfaces, `tests/**`, and its
+  own package — none of it is `class_feature`-specific code or `src/rules_core/rules_tables/<book>/`.
+  SD-30's write scope (`AT-30-001`) is the `class_feature` rules-tables/archetype surface and its own
+  package. The overlap is read-only: both bundles read `docs/work-inventory.json` and cite
+  `scripts/verify.sh`.
+
+**Authority:** `SD-29-corpus-wide-catch-up-lanes/decisions.md §38.4-§38.5` (the precedent shape, read
+in full this session); `decisions.md §35` (this package's own prior resolution of an identical
+collision); `SD-32-instrument-coverage-and-consumer-wiring/README.md` ("Authority surface");
+`SD-32-instrument-coverage-and-consumer-wiring/decisions.md §7`. Cross-reference pointer added to
+`SD-32-instrument-coverage-and-consumer-wiring/forward-scope-register.md` in this same change (small
+pointer only, no scope duplicated there).

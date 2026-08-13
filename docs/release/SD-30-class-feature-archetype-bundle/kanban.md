@@ -80,6 +80,15 @@ When a cycle claims a card:
    tracks the epic as a whole; individual class slices are tracked in
    `progress.md`.
 
+## Ordering check (2026-08-13, `decisions.md §41-§42`)
+
+Re-verified: `epic-3-pi-gate` (PI-screening, including the 2026-08-13 declared-PI cards
+SD30-E3-F2/F3/F4) still hard-blocks `epic-6-chassis-sweep` in the table above, and `epic-4-measurement`
+still gates both `epic-5-mechanism` and `epic-6-chassis-sweep` per class. SD-32's corpus-wide
+`static`/`derived` gates (`decisions.md §41`) do not change this order — they are consumed by running
+`./scripts/verify.sh` per `AT-30-002`, already a standing per-cycle requirement, not a new card. No
+reordering needed.
+
 ## Operator override slot
 
 Operator may add or remove cards directly by editing this file. Cycle

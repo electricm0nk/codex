@@ -200,6 +200,30 @@ Then:
 - Every finding records a disposition: `fixed-in-bundle` or `deferred` with a named owner. No finding is silently dropped.
 - Real defects are fixed in-bundle before Closure Epilogue fires.
 
+## AT-30-014 — `static`/`derived` `class_feature` shipments pass SD-32's corpus-wide gates (NEW, 2026-08-13, `decisions.md §41`)
+
+Given an Epic 6 cycle has shipped `class_feature` records into `data/corpus/<book>/`.
+
+When `./scripts/verify.sh` runs (per `AT-30-002`'s standing per-cycle requirement).
+
+Then:
+
+- The `corpus-sweep`/`corpus-sweep-selftest` stages (`corpus_literal_sweep`) examine the newly-shipped
+  records as part of their whole-corpus sweep — no bundle-specific static-sweep test is written or
+  needed.
+- `tests/derived_evaluator_fixture_check.rs` examines the newly-shipped `derived`-class records the
+  same way — no bundle-specific evaluator-vs-fixture test is written or needed.
+- A cycle whose receipt claims it "needed to build a static-sweep or evaluator-vs-fixture gate for
+  class_feature" is a protocol violation — both already exist, corpus-wide, landed by SD-32
+  (`decisions.md §41`), and duplicating them is scope creep.
+- This criterion does NOT cover the `computed` wiring class (4,178 of 15,472 units) — no gate exists
+  for it; a `computed`-bucket criterion is out of scope until the operator resolves ownership of a
+  `class_feature` consumer-delta probe (`decisions.md §41`'s flagged question).
+
+Evidence: cycle's `verify.sh` full-run log shows `corpus-sweep`, `corpus-sweep-selftest`, and the
+`derived_evaluator_fixture_check` test suite passing over a corpus that includes the cycle's new
+records (examined-record count increases, per `scripts/verify.sh`'s own floor checks).
+
 ## Exit gate checklist
 
 - [ ] All Epic 3+ per-book cycles complete with reach-gate claims.

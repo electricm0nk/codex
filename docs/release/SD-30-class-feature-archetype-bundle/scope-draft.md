@@ -134,17 +134,46 @@ retired history.**
   (10), `bestiary_4` (4). Re-derive at each cycle-0 per `technical-requirements.md TR-30-012` — this
   table is a snapshot (`decisions.md §33`), not a hand-maintained constant.
 - **Also in scope:** the archetype-swap primitive (`archetype_resolver::archetype_claims_slot`) and
-  both its wiring shapes, inherited whole from SD-28 `§60`/`§63`/`§64`; the 2,958-unit `unknown`
-  bucket's per-class characterization; the class-grant boundary with SD-28 for Occultist/
-  Spiritualist/Medium/Mesmerist (unchanged, `decisions.md §5`).
+  both its wiring shapes, inherited whole from SD-28 `§60`/`§63`/`§64`; the ~~2,958-unit~~
+  **superseded 2026-08-13 (`decisions.md §40`): 3,218-unit** `unknown` bucket's per-class
+  characterization; the class-grant boundary with SD-28 for Occultist/Spiritualist/Medium/Mesmerist
+  (unchanged, `decisions.md §5`).
 - **Out of scope:** every other kind, in every book — SD-29's corpus-wide lanes own them
   (`SD-29-corpus-wide-catch-up-lanes/decisions.md §38`). The old sixteen-book list's non-`class_feature`
   content. Epic 14's harness widening (`spell`/`equipment`-shaped, `decisions.md §36`). Bestiary 1
-  (closed in SD-22). Update-UI bug remediation (lifecycle-routed from SD-16, separate).
+  (closed in SD-22). Update-UI bug remediation (lifecycle-routed from SD-16, separate). SD-32's
+  instrument/gate tooling — `corpus_literal_sweep`, the derived-evaluator check, `wiring_class.rs`,
+  and every `probe_*` function in `v06_work_inventory.rs` — SD-30 consumes these, does not build or
+  modify them (`decisions.md §41-§42`, 2026-08-13).
 - **Gating relationship, not just sequencing:** Epic 4 (per-class measurement) must clear a specific
   class before Epic 5 (mechanism) or Epic 6 (chassis sweep) can schedule a cycle against that class —
   `decisions.md §37`. This replaces the old scope's "sixteen books, dispatch in any order post-Epic 2"
   shape entirely.
+- **Instrument coverage (2026-08-13, `decisions.md §41`).** Re-derived `wiring_class` split for the
+  15,472 `class_feature` units: `display` 7,227, `computed` 4,178, `derived` 1,792, `static` 1,191,
+  `ambiguous` 1,084. SD-32 (sibling bundle, landed on `tranche/9` 2026-08-13) built two corpus-wide
+  gates that already cover this bundle's future `static` and `derived` shipments for free:
+  `scripts/verify.sh`'s `corpus-sweep`/`corpus-sweep-selftest` stages (`corpus_literal_sweep`, all
+  shipped records, all kinds) and `tests/derived_evaluator_fixture_check.rs`. Together these cover
+  2,983 of 15,472 units once ingested. The `computed` bucket (4,178 units, the largest) has **no**
+  dedicated gate — SD-32's spell consumer-delta probe (`probe_spell_effect_wiring`) is a precedent
+  for the shape such a probe would take, not a `class_feature` gate itself; none exists in
+  `src/bin/v06_work_inventory.rs` today. Building one is flagged for the operator (SD-30 Epic 4/5 vs.
+  SD-32), not decided by this doc pass — see `decisions.md §41`'s closing paragraph.
+- **`unknown`-bucket residue (2026-08-13, `decisions.md §40`, §38 method unchanged).** Re-derived
+  `by_status` split: `not-ingested` 10,203, `not-started` 1,908, `unknown` 3,218, `grounded` 109,
+  `deferred-with-reason` 34 — superseding Decision §33's 2026-08-10 snapshot (9,078 / 3,293 / 2,958 /
+  109 / 34), moved by a sibling bundle's classifier/generator fixes, not by any `class_feature` work.
+  `unknown` means *unmeasurable by any instrument regardless of `wiring_class`* per
+  `status_vocabulary` — it is not "not yet worked," it is "could not be classified, `reason` says
+  why." Decision §38's method for splitting it (option-pool sub-choice content vs. genuinely-
+  unreachable content needing new engine code vs. residual unclustered content) is unchanged and is
+  the method Epic 4 must apply at time of use — **this doc pass does not re-run that classification**,
+  it only re-confirms the bucket's current size and restates the required method so a future cycle
+  does not treat `unknown` as workload without first applying it. The two named non-workable subsets
+  Decision §38 already carries forward as backlog (303-unit genuinely-unreachable, 1,772-unit
+  unclustered remainder, both at SD-28's last snapshot) are unchanged by this pass; Epic 4 re-derives
+  both at time of use per the "generated, never hand-maintained" rule (`decisions.md §12`).
 
 ## Ingest and surfacing are one unit of work
 

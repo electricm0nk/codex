@@ -284,6 +284,17 @@ Acceptance:
 - Oracle/Arcanist/Sorcerer's measured wireable mechanisms wire through it, proven reachable the same
   way as the supersession shape.
 
+**Instrument-coverage note (2026-08-13, `decisions.md §41`).** Sibling bundle SD-32 landed corpus-wide
+`static`/`derived` gates on `tranche/9` today (`scripts/verify.sh` `corpus-sweep`/
+`corpus-sweep-selftest`; `tests/derived_evaluator_fixture_check.rs`). Neither this epic nor Epic 6 was
+ever scoped to build its own such gate — re-read of this file and `acceptance-and-verification.md`
+found no prior criterion naming one — so there is no stale acceptance criterion to rewrite here.
+Recorded so a future cycle does not duplicate that instrument: once Epic 6 ships `class_feature`
+records, running `./scripts/verify.sh` (already `AT-30-002`/Decision §18's standing requirement)
+exercises both gates against them for free. The `computed` bucket (4,178 of 15,472 `class_feature`
+units) has no equivalent gate — SD-32's spell consumer-delta probe is a precedent for the shape, not
+a `class_feature` instrument — and building one is flagged for the operator, not scheduled here.
+
 ## Epic 6 (SD30-E6) — Per-Class Chassis Sweep (the `class_feature` ingest, gated per class on Epics 4/5)
 
 **Objective:** The actual per-book, per-class `class_feature` ingest cycles across all 23 in-scope
