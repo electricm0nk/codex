@@ -6178,10 +6178,80 @@ entry from this round but still pays nine surfaces for 4 records. (c) `ultimate_
 `book_of_the_damned_volume_1` both carry `*_classes_companion.lst` rows — `§65.1`'s screen now
 handles them silently, so those two books no longer need a mechanism decision, only the ingest.
 
+### 65.7 Two concurrent agents shared one vite port, and one agent's backend was rendered by the other's frontend
+
+**This is the most transferable finding of the round and it is not about companions.** Item 8 failed
+twice with `'Core Rulebook' missing from screen` while the string was present in the committed
+`CompanionCatalogScreen.tsx` and the frontend suite passed 99/99. The extraction showed the app
+rendering `CRB (38)` beside `Core Essentials (58)` and eleven other spelled-out names.
+
+`38` is *this round's* creature count, so the Rust backend was unambiguously this tree's. The
+frontend was not:
+
+```
+pgrep -af vite
+  -> 3630793 node /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_924a22ca-f35-19/apps/desktop/node_modules/.bin/vite
+```
+
+**The mechanism.** `apps/desktop/vite.config.ts` pinned `port: 1420, strictPort: true` for every
+agent. `run-desktop/driver.sh` already derives a per-agent `DISPLAY_NUM` — it knows concurrency is
+normal — but the dev port was machine-global. A second agent's vite therefore cannot bind, dies, and
+`tauri dev` attaches to whatever already answers on `devUrl`. The window renders, every record is
+present, and the screenshot is evidence about a tree the agent does not control.
+
+**Both available outcomes were wrong.** The driver's prior mitigation was
+`lsof -ti:1420 | xargs kill -9` before launch — under concurrency that is not reaping a stale process
+of one's own, it is **clobbering a sibling agent's running app**. So the two possibilities were
+"borrow another agent's frontend" or "kill another agent's work", and this round hit the first.
+
+**Why this class is expensive.** It is silent and it produces a *plausible* screen. Item 8 exists
+precisely because `reach_gate` passing does not prove a player sees the value; a false item-8 PASS
+would have retired that last check while looking like the strongest evidence in the receipt. **This
+round caught it only by luck of shape**: the new book label was the one string that differed between
+the two trees. A round that ingested records without changing any frontend string would have taken a
+PASS on a sibling's frontend and cited it.
+
+**Fixed at the source, both halves together.** `driver.sh` derives `CODEX_DEV_PORT` from the same
+`DISPLAY_NUM` that already uniquifies the display (`default` keeps 1420, so a solo run is unchanged),
+`vite.config.ts` reads it, and `tauri dev` is passed a matching
+`--config {"build":{"devUrl":"http://localhost:<port>"}}`. The port-clearing line is scoped to the
+agent's own port, so it can now only reap the agent's own leftover. `strictPort` stays **true**
+deliberately: falling back to a free port would restore the ambiguity, because tauri is told exactly
+one `devUrl` and a vite that quietly moved is indistinguishable from one that never started.
+
+Re-run: **PASS on port 14279**, artifact
+`artifacts/SD29-E7-F2-009/item8/crb-companion-crocodile.png`. The two `.FAILED.*` artifacts are
+**kept, not deleted** — they are the evidence for this section, and the harness's naming already
+makes them uncitable as a pass.
+
+**The second-order lesson, which is the one worth carrying.** `RUN_DESKTOP_AGENT` was set correctly
+and uniquely by this cycle, exactly as the loop instruction demands. The guard did what it documents
+— it uniquified the display and the state file — and the collision happened anyway, in a resource
+the variable was never wired to. **A concurrency guard protects the resources it enumerates, not the
+concept of "this agent's app."** Any shared fixed port, socket path or lock file that is not derived
+from the same agent id is an unguarded collision wearing a guarded system's clothes.
+
+### 65.8 A test that was green because its roster was short
+
+`CompanionCatalogScreen.test.ts`'s `testEveryServedBookHasARealName` iterates a hand-maintained
+`SERVED_BOOK_CODES` list and asserts each code's label is present and is not the code itself. It
+passed 99/99 with `CRB` shipping and unlabelled, because the roster held twelve codes and `CRB` was
+not among them.
+
+The label map and the roster are two lists that must move together and nothing made them. This is
+`§44.2`'s stale-hardcoded-roots defect in a different language — a test whose stated job is "every
+served book" scoped to a list that does not know about the new book — and it is the third recorded
+instance in this bundle. `CRB` was added to the roster this round; deriving the roster from the served
+response rather than maintaining it by hand is the real fix and is **named here, not taken**, because
+the served response is not available to this test's runner without a fixture that would itself go
+stale.
+
 **Unattended-mode defaults taken this round** (recorded per the operating protocol, not raised):
 widened `§65.1`'s refusal to drop-and-name rather than deferring the book again, because the
 classifier already treated the rows as excluded and the alternative was leaving the lane's largest
 book permanently unreachable behind a guard whose message asked for exactly this; reserved decision
 number **§65** at claim time per `§53`'s precedent, leaving `§64` for the concurrent monster lane
 rather than renumbering on merge; added `advanced_players_guide` to `MODULE_DIR` in the same edit as
-`core_rulebook` rather than leaving a known-identical trap for the next round to trip over.
+`core_rulebook` rather than leaving a known-identical trap for the next round to trip over; and fixed the shared-dev-port defect `§65.7` uncovered in the harness itself
+rather than working around it for this cycle alone, because a false item-8 PASS is not a
+companion-lane problem and every future cycle on this box inherits it.
