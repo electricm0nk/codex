@@ -99,8 +99,8 @@ ONLY_STAGES=()
 # §4.1, 5 of 34) and a ~490-binary root-full build is exactly what tips a box
 # over — it must fail loudly before that build starts, not be discovered by
 # `ld terminated with signal 7 [Bus error]` partway through it.
-ALL_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib root-full desktop reach frontend-install frontend-test frontend-typecheck clippy class-dump)
-QUICK_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
+ALL_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib root-full desktop reach corpus-sweep frontend-install frontend-test frontend-typecheck clippy class-dump)
+QUICK_STAGES=(preflight-disk pi-sweep audit-selftest reclaim-selftest driver-selftest corpus-sweep-selftest root-lib reach frontend-install frontend-test frontend-typecheck class-dump)
 
 usage() {
     sed -n '3,48p' "${BASH_SOURCE[0]}" | sed 's/^# \{0,1\}//'
@@ -822,6 +822,122 @@ run_reclaim_selftest() {
     stage_pass reclaim-selftest "${tally:-$passed cases passed}"
 }
 
+# ---------------------------------------------------------------------------
+# Stage: corpus-sweep-selftest
+#
+# Runs scripts/tests/test_corpus_literal_sweep.sh — the detection self-test
+# for the `corpus_literal_sweep` binary. Same lesson as audit-selftest and
+# reclaim-selftest, and the reason it is a stage rather than something someone
+# remembers to run: the sweep below is the ONLY instrument that can confirm a
+# `static` unit's bar, and an instrument whose ability to say NO is untested
+# emits its CLEAN token with identical confidence whether it is working or
+# dead. Two gates in this repo have already shipped with exactly that defect.
+#
+# Cheap after the first build, and it never reads the real corpus — every case
+# runs against a synthetic repo root and a synthetic PCGen corpus under mktemp.
+# ---------------------------------------------------------------------------
+
+run_corpus_sweep_selftest() {
+    stage_start "corpus-sweep-selftest — scripts/tests/test_corpus_literal_sweep.sh"
+    local log="$LOG_DIR/corpus-sweep-selftest.log"
+    local script="$REPO_ROOT/scripts/tests/test_corpus_literal_sweep.sh"
+
+    if [[ ! -f "$script" ]]; then
+        stage_fail corpus-sweep-selftest "self-test script missing at scripts/tests/test_corpus_literal_sweep.sh"
+        return
+    fi
+
+    bash "$script" >"$log" 2>&1
+    local status=$?
+
+    local tally
+    tally=$(sed -n 's/^passed: \([0-9]*\)  failed: \([0-9]*\)$/\1 passed, \2 failed/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail corpus-sweep-selftest "self-test exit $status${tally:+; $tally} — $log"
+        return
+    fi
+
+    # A self-test that discovers no cases proves nothing — the same guard
+    # audit-selftest and reclaim-selftest each carry.
+    local passed
+    passed=$(sed -n 's/^passed: \([0-9]*\).*$/\1/p' "$log" | tail -1)
+    if [[ -z "$passed" || "$passed" -eq 0 ]]; then
+        stage_fail corpus-sweep-selftest "0 cases ran — the self-test asserts nothing — $log"
+        return
+    fi
+
+    stage_pass corpus-sweep-selftest "${tally:-$passed cases passed}"
+}
+
+# ---------------------------------------------------------------------------
+# Stage: corpus-sweep
+#
+# Runs `corpus_literal_sweep` over every shipped record in `data/corpus/` and
+# the real PCGen corpus. This is the corpus-literal byte-equality check a
+# `static` unit's bar names: `wiring_class` calls a record `static` when its
+# whole token closure is literal magnitudes, which makes "the shipped bytes
+# equal the corpus bytes" a bar that is knowable WITHOUT any consumer-delta
+# probe — and that nothing checked until this stage existed.
+#
+# FULL only, and deliberately a FAILURE rather than a skip when the corpus is
+# absent: `v06_corpus_trap_report` prints `SKIP: no PCGen corpus`, and a skip
+# is exactly how a gate dies without anyone noticing. The corpus location is
+# `PCGEN_CORPUS_ROOT`, defaulting to `$HOME/workspace/repos/pcgen/data` — the
+# same HOME-relative default `v06_work_inventory` uses, per SD-27 decisions.md
+# §30 (workspace/ is Syncthing-synced; an absolute other-user path is not).
+#
+# The record count is a FLOOR in scripts/verify-baselines.env, same direction
+# as the test counts: the population growing is fine, the population silently
+# shrinking is the failure this repo has actually suffered.
+# ---------------------------------------------------------------------------
+
+run_corpus_sweep() {
+    stage_start "corpus-sweep — cargo run --locked --bin corpus_literal_sweep  (repo root)"
+    local log="$LOG_DIR/corpus-sweep.log"
+
+    ( cd "$REPO_ROOT" && exec cargo run --locked --quiet -j "$JOBS" --bin corpus_literal_sweep ) >"$log" 2>&1
+    local status=$?
+
+    local summary
+    summary=$(sed -n 's/^corpus-literal-sweep: \([0-9]* records examined.*\)$/\1/p' "$log" | tail -1)
+
+    if (( status != 0 )); then
+        stage_fail corpus-sweep "byte-level mismatch, absent corpus, or malformed record (exit $status) — $log"
+        return
+    fi
+
+    # Exit 0 without the CLEAN token means the binary took a path nobody
+    # intended — the pi-sweep stage carries the identical guard for the
+    # identical reason.
+    if ! grep -q '^corpus-literal-sweep: CLEAN' "$log"; then
+        stage_fail corpus-sweep "binary exited 0 without reporting CLEAN — $log"
+        return
+    fi
+
+    # A sweep that examined nothing asserts nothing. The binary exits 2 on a
+    # zero population on its own; this is the second, independent reading of
+    # the same fact, because the one failure this check exists to prevent is
+    # the binary silently changing what it counts.
+    local examined tokens
+    examined=$(sed -n 's/^corpus-literal-sweep: \([0-9]*\) records examined.*$/\1/p' "$log" | tail -1)
+    tokens=$(sed -n 's/^corpus-literal-sweep: .* \([0-9]*\) tokens compared.*$/\1/p' "$log" | tail -1)
+    if [[ -z "$examined" || "$examined" -eq 0 || -z "$tokens" || "$tokens" -eq 0 ]]; then
+        stage_fail corpus-sweep "0 records or 0 tokens compared — the sweep asserts nothing — $log"
+        return
+    fi
+    if (( examined < BASELINE_CORPUS_LITERAL_RECORDS )); then
+        stage_fail corpus-sweep "population shrank: $examined records examined, baseline floor is $BASELINE_CORPUS_LITERAL_RECORDS — $log"
+        return
+    fi
+    if (( examined > BASELINE_CORPUS_LITERAL_RECORDS )); then
+        note "BASELINE_CORPUS_LITERAL_RECORDS=$examined (was $BASELINE_CORPUS_LITERAL_RECORDS)"
+    fi
+    actual "BASELINE_CORPUS_LITERAL_RECORDS=$examined"
+
+    stage_pass corpus-sweep "${summary:-clean}"
+}
+
 run_class_dump() {
     stage_start "class-dump — cargo run --locked --bin v06_class_state_dump  (repo root)"
     local log="$LOG_DIR/class-dump.log"
@@ -896,6 +1012,8 @@ for stage in "${SELECTED[@]}"; do
         audit-selftest)      run_audit_selftest ;;
         reclaim-selftest)    run_reclaim_selftest ;;
         driver-selftest)     run_driver_selftest ;;
+        corpus-sweep-selftest) run_corpus_sweep_selftest ;;
+        corpus-sweep)        run_corpus_sweep ;;
         root-lib)            run_root_lib ;;
         root-full)           run_root_full ;;
         desktop)             run_desktop ;;
