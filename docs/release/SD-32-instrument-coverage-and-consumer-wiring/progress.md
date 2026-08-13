@@ -637,3 +637,226 @@ count or any of the 58 changed ids.
 - `docs/release/SD-32-instrument-coverage-and-consumer-wiring/progress.md` (this receipt)
 - `docs/release/SD-32-instrument-coverage-and-consumer-wiring/kanban.md` (card row)
 - `docs/release/SD-32-instrument-coverage-and-consumer-wiring/forward-scope-register.md` (F-ID, F-NAMETWIN)
+
+---
+
+## Cycle — `ground-spell-units` — COMPLETE (2026-08-13, `probe-spell-ground`)
+
+**Card:** `ground-spell-units` (added to the board by this receipt; the
+predecessor card `spell-consumer-delta-probe` built and proved the instrument
+and deliberately grounded nothing).
+**Actor:** `probe-spell-ground`. **Branch:** `tranche/9`.
+**Commits:** `90bd9975`.
+
+### Decision 5 is superseded, and its arithmetic modelled the wrong mechanism
+
+`decisions.md §5` retires `spell` as bucket C, structurally unreachable, on two
+grounds. The first — "`classify()`'s `Kind::Spell` arm cannot return
+`grounded` ... no currently-wired consumer reads a spell's magnitude" — was
+already superseded by `epic-31-spell-wiring` (2026-08-07) and was corrected by
+the `spell-consumer-delta-probe` cycle. The second has not been corrected until
+now, and it is the one that kept the card off the board:
+
+> Building a spell consumer-delta probe would move 178 units from `held` to
+> `in-progress` — a *worse*-looking bucket — and none to `done`.
+
+**That is wrong, and the 178 is traceable to the mechanism it confuses.** 178
+is exactly the number of `spell` units the producer's `NO_GROUNDING_PROBE` cap
+holds down — units whose *uncapped* verdict is `in-progress` and whose capped
+verdict is `held` (162 `computed` + 16 `display`, all non-`grounded`):
+
+```
+python3 <<'PY'   # imports the verdict table from artifacts/derive-movable-mass.py
+... uncapped(wc, st) == 'in-progress' and verdict(wc, st, kind) == 'held'
+PY
+  -> 178   (computed 162, display 16)
+```
+
+Removing `spell` from `NO_GROUNDING_PROBE` — a **producer** edit, which
+`decisions.md §1` and `§6` forbid this bundle — is what would move those 178
+`held` -> `in-progress`. **Grounding** a unit is the opposite operation and
+never passes through that cell: the cap fires only on units that are *not*
+`grounded`, and `computed` + `grounded` is a `done` cell outright. So a
+consumer-delta probe cannot produce the transition §5 predicted.
+
+Re-derived over the real before/after inventories with the same transcribed
+verdict table:
+
+```
+=== corpus-wide doneness buckets ===
+  done             3418 ->   3464   (+46)
+  held             9501 ->   9455   (-46)
+  in-progress       716 ->    716   (+0)
+  not-started     21322 ->  21322   (+0)
+  unmeasurable     3547 ->   3547   (+0)
+  deferred           36 ->     36   (+0)
+
+=== per-unit bucket transitions ===
+      46  spell / computed: held -> done
+  total units whose bucket changed: 46
+  transitions into a WORSE bucket: none
+```
+
+`spell` `grounded` corpus-wide is no longer 0. Bucket C is not 1,281 units.
+
+### Units moved by this card
+
+**623 units: `ingested-magnitude` -> `grounded`.** Every one is `kind=spell`
+and `book=core_rulebook`. **46 of them reach `done`** on the board as its
+verdict table is wired today; the other 577 land on `held`. `held` is not
+`done`, is not aggregated with it, and is not described as "effectively done"
+(`decisions.md §1.4`).
+
+| what moved | count |
+|---|---:|
+| units `ingested-magnitude` -> `grounded` | 623 |
+| of those, reaching `done` (`computed` + `grounded`) | **46** |
+| of those, landing on `held` (`derived` 472, `static` 73, `ambiguous` 32) | 577 |
+| units moved into a worse bucket | **0** |
+| `wiring_class` values changed | **0** |
+| unit ids added or removed (38,540 both sides) | **0** |
+
+Commands, in order, none transcribed:
+
+```
+cargo build --release --bin v06_work_inventory
+./target/release/v06_work_inventory --spell-probe
+  -> keys examined 1185; wired 623, no_table_effect 345, no_casting_class_has_it 217
+./target/release/v06_work_inventory            # regenerates docs/work-inventory.json
+python3 scratch/diff_inv.py                    # before/after unit-by-unit status diff
+  -> 623 status changes, all (ingested-magnitude -> grounded), all spell, all core_rulebook
+  -> grounded 4726 -> 5349; ingested-magnitude 6518 -> 5895
+python3 scratch/bucket_delta.py                # imports artifacts/derive-movable-mass.py's table
+  -> done +46, held -46, worse-bucket transitions: none
+```
+
+### What the bar actually is, and why 623 of 652 CRB keys clear it
+
+A spell reaches `grounded` only on `SpellProbeOutcome::Wired`, which requires
+**all** of: a CRB casting class's own list holds the key (so the posture is one
+a player can build); the key resolves against *that book's* corpus loaded
+alone; the same character with the spell **not** selected carries no save DC at
+all; the magnitude comes from the claiming book's own table
+(`table_cell.rule_set`, the `Celestial Shield` discipline); and the observed DC
+equals an independently-stated `10 + level + modifier` oracle built from the
+probe's own constants.
+
+The consumer chain was verified by content this cycle, not adopted from the
+predecessor's receipt:
+
+- `apps/desktop/src-tauri/src/pf1_adapter.rs:1141` —
+  `spellbook: PilotSpellbookViewModel::from_coverage(&compute_spellbook_coverage(...))`
+- `apps/desktop/src-tauri/src/character_hub.rs:837` — `spell_save_dc` onto the wire DTO
+- `apps/desktop/src/characterHub/CharacterSheet.tsx:1071` — renders `DC {entry.dc}`
+- `src/rules_core/spellbook.rs:315` — `let dc = (10i16 + i16::from(spell_effect.level) + modifier)`,
+  i.e. the magnitude really is a function of the selected spell's own level.
+
+**The 95.6% CRB rate is not a promotion rate.** Corpus-wide the probe promotes
+623 of the 1,185 keys it examines (52.6%) and refuses **every** APG (297), ACG
+(144) and ARG (92) key. CRB clears at a high rate because CRB is the book whose
+spells are fully modelled in the engine's per-school tables — that is the
+honest reading, and it is the opposite shape to the retracted
+SD-28-E14-F1 attempt's 1,067-of-1,067.
+
+### Units examined and left alone — the honest remainder
+
+**637 spell units stay `ingested-magnitude`**, each for a named reason:
+
+| population | units | why it does not clear the bar |
+|---|---:|---|
+| APG | 271 | `no_table_effect` — the key is in no per-school table, so no `SpellEffect` and no level |
+| ACG | 144 | `no_table_effect`, same |
+| ARG | 92 | `no_casting_class_has_it` — no CRB casting class's own list holds it |
+| CRB | 29 | `no_casting_class_has_it` — same |
+| Ultimate Intrigue | 101 | **never asked.** There is no `data/corpus/ultimate_intrigue/`, so the book is not in `OBSERVABLE_BOOK_DIRS` and the probe cannot load its corpus |
+
+A further 967 `not-ingested` and 594 `not-started` spell units sit behind
+*ingestion*, not behind this instrument (`decisions.md §7`).
+
+**Of the whole remainder, only 113 units are `computed`-class** — the only
+wiring class whose grounding can reach `done` under today's verdict table (ARG
+92, ACG 13, APG 7, UI 1). Everything else in the remainder lands on `held` even
+if grounded, so the honest ceiling for further `done` movement on `spell` is
+**113 units, not 637**.
+
+**Deliberately not done, and why each is a bar question rather than a task.**
+
+1. **Not widened `SPELL_PROBE_CASTING_CLASSES`.** The 92 ARG units are refused
+   because no CRB casting class has them; several are on Alchemist/Witch/
+   Magus lists. The seven ids the probe uses are exactly the ones
+   `spellbook::casting_ability_for_class` maps to a casting ability — a class
+   it does not map produces no DC at all. Adding an id to the probe's list
+   without the engine mapping it would observe nothing; adding it *to the
+   engine* is real product work. Recorded as forward scope, not taken here.
+2. **Not relaxed the player-buildability gate.** 217 keys are refused with
+   `no_casting_class_has_it`, and `compute_spellbook_coverage` will compute a
+   DC for *any* `source_class_id` handed to it — so probing every key as a
+   Wizard would convert some share of those refusals into numbers. That is the
+   textbook instance of "a probe that reports a magnitude no player can see",
+   and it is declined. **How many units it would yield is deliberately not
+   derived here**: quantifying it means building the relaxed probe, and a
+   count obtained that way is not a count this bundle may report. Naming the
+   gate is the honest form of the finding.
+
+   *A correction to this receipt's own first draft:* it claimed the APG/ACG
+   remainder was a declined "+441" available by dropping the `Celestial
+   Shield` provenance gate. **That was wrong** and is retracted. The APG and
+   ACG keys are refused at `no_table_effect`, one gate *earlier* — they are in
+   no per-school table at all, so no `SpellEffect` is produced and the
+   provenance gate is never reached. `--spell-probe` reports
+   `foreign_book_table: 0` over the whole real corpus; that gate is proven by
+   `the_probe_never_grounds_one_books_unit_on_another_books_table` against a
+   scratch book, and refuses nothing live. Dropping it would move **0** units.
+   Caught by re-reading the ceiling report instead of trusting the draft.
+3. **Not touched `OBSERVABLE_BOOK_DIRS` to reach Ultimate Intrigue.** The list
+   is the set of books that actually have an on-disk corpus tree; adding UI
+   without the corpus would make the probe load nothing and report
+   `AbsentFromBookCorpus`, moving no unit while making the constant a lie.
+
+### The bar is unmodified. Discharged by command, not by assertion.
+
+- `git diff --stat -- data/` — **empty**. No corpus or fixture data authored.
+- `git diff -- src/bin/v06_work_inventory.rs | grep '^-'` — the **only** removed
+  lines are the superseded SD-28-E14-F1 comment and the unconditional
+  `ingested-magnitude` arm, which survives verbatim as the not-observed branch.
+  No assertion, no test, no threshold removed.
+- `#[ignore]` attributes added: **0**.
+- `wiring_class` changes across 38,540 units: **0**. The classifier is untouched;
+  `src/rules_core/wiring_class.rs` is not in this cycle's diff at all.
+- `doneness_meaning`, `status_vocabulary`, `DONENESS_VALUES`, the bucket
+  definitions, the producer and the dashboard JSON: **not touched**. This cycle's
+  entire diff is two files.
+- No unit was reclassified into an easier wiring class; the promotion is a
+  *status* change on evidence strictly stronger than the status it replaces.
+
+### Tests added (6, all new; none removed, none ignored)
+
+Written first and observed red against the missing field, helper and derive
+(`E0609 no field spell_effect_wired`, `E0425 cannot find spell_effect_wired_from_outcomes`,
+`E0599 no EngineFacts::default`), each failing on its own intended outcome.
+Five of the six pin **refusals**:
+
+1. `a_spell_the_probe_observed_reaches_grounded_on_the_probes_own_evidence`
+2. `a_catalog_spell_the_probe_did_not_observe_stays_ingested_magnitude`
+3. `one_books_observation_never_grounds_another_books_spell_of_the_same_name`
+4. `an_observation_does_not_promote_a_spell_with_no_resolved_level`
+5. `an_observation_never_manufactures_ingestion_for_an_uncatalogued_spell`
+6. `only_wired_outcomes_enter_the_fact_set` — feeds every one of the probe's
+   eight refusal variants in and asserts only `Wired` survives
+
+`spell_effect_wired_from_outcomes` matches the outcome enum **exhaustively**
+with no `_ =>` arm, so a future variant must be hand-classified as promoting or
+refusing rather than defaulting into either.
+
+### Four-check no-stub audit (`AGENTS.md` §6)
+
+1. *Does every code path do what it claims?* Yes. `grounded` is emitted only
+   where the probe returned `Wired` for that `(engine_book, key)`; the evidence
+   token names the probe that observed it.
+2. *Any fixture-only data in a production path?* No. `git diff --stat -- data/`
+   empty; the tests construct their `EngineFacts` in-line.
+3. *Any user-facing affordance wired to nothing?* None added. The affordance
+   this cycle *reports on* — the Spells tab's `DC` cell — was wired by
+   `epic-31-spell-wiring` and was re-verified by reading the four files above.
+4. *Any operation reporting success without doing the work?* Hunted. The live
+   instance found was `decisions.md §5`'s own claim, corrected above.

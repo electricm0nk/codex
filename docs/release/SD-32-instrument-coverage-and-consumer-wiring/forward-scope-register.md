@@ -37,20 +37,46 @@ frequency before any fix is attempted.
 
 ---
 
-## F2 — A spell consumer-delta probe
+## F2 — Spell units the consumer-delta probe cannot reach
 
-**Mass:** would move 178 `spell` units from `held` to `in-progress`, and 0 to
-`done`.
+**CLOSED-AND-REOPENED 2026-08-13.** The original F2 ("a spell consumer-delta
+probe") was **done inside this bundle**, not forwarded: cards
+`spell-consumer-delta-probe` (`aafd492c`) and `ground-spell-units`
+(`90bd9975`). Its rationale was falsified — see the `[SUPERSEDED]` banner on
+`decisions.md §5`. What remains forward is the part the probe genuinely cannot
+reach.
 
-**Why not here.** `decisions.md §5`. `classify()`'s `Kind::Spell` arm cannot
-return `grounded` because no wired consumer reads a spell's magnitude. Building
-the probe without building the consumer moves units into a *worse*-looking
-bucket for no gain — and building the consumer is spellcasting as product work,
-which is a product decision, not a numbers lever.
+~~**Mass:** would move 178 `spell` units from `held` to `in-progress`, and 0 to
+`done`.~~ **Retracted.** Measured outcome of actually building it: `done` +46,
+`held` −46, `in-progress` +0, worse-bucket transitions 0. The 178 was the
+`NO_GROUNDING_PROBE` cap population, which only a *producer* edit moves.
 
-**Successor condition:** spellcasting becomes product scope. Then the probe is
-built as part of it, and the 178 become genuinely `in-progress` on the way to
-`grounded`.
+**Mass now forward: 113 `spell` units** — the `computed`-class remainder, the
+only wiring class whose grounding can reach `done` under today's verdict table.
+By book: ARG 92, ACG 13, APG 7, UI 1. (A further 524 non-`computed`
+`ingested-magnitude` spells exist but would land on `held` even if grounded, so
+they are behind `decisions.md §2`, not behind this item.)
+
+**Why not here — three distinct blockers, none of them a probe-tuning knob:**
+
+1. **ARG 92 + CRB 29 — `no_casting_class_has_it`.** The probe selects a spell
+   only through a class whose own CRB list holds it, and only through the seven
+   ids `spellbook::casting_ability_for_class` maps to a casting ability. A class
+   it does not map yields no DC at all, so widening the probe's list alone
+   observes nothing. Reaching these needs the **engine** to model more casting
+   classes (Alchemist, Witch, Magus, ...). Probing them as a Wizard instead is
+   explicitly declined: it reports a magnitude no player can see.
+2. **APG 271 + ACG 144 — `no_table_effect`.** The key is in no per-school
+   table, so no `SpellEffect` and no level is produced. This is ingestion into
+   `crb::spell_list`'s per-school tables, i.e. content work.
+3. **UI 101 — never asked.** There is no `data/corpus/ultimate_intrigue/`, so
+   the book is not in `OBSERVABLE_BOOK_DIRS` and the probe has no corpus to
+   load. Blocked on the UI corpus landing, not on the instrument.
+
+**Successor condition:** (1) more casting classes reach
+`casting_ability_for_class`; (2) APG/ACG spells reach a per-school table;
+(3) the Ultimate Intrigue corpus lands on disk. Each independently unlocks its
+own slice; none of them is unlocked by changing the probe.
 
 ---
 

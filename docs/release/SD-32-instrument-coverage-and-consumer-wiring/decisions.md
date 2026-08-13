@@ -151,6 +151,45 @@ unmodified.
 
 ## Decision 5 — `spell` is reported as structurally blocked and is not worked for the numbers
 
+**Status:** **[SUPERSEDED 2026-08-13]** — both of its evidential legs were
+falsified, the second one by measurement. Retained verbatim below rather than
+edited, because the shape of the error is the lesson. See
+`progress.md` -> `Cycle — ground-spell-units` for the derivation and
+`docs/retro/events/probe-spell-ground.jsonl` for the correction event.
+
+**Leg 1 — "`classify()`'s `Kind::Spell` arm cannot return `grounded`".** True
+when written, stale by 2026-08-07: `epic-31-spell-wiring` wired
+`spellbook::compute_spellbook_coverage` into
+`pf1_adapter::resolve_unified_pilot_snapshot`, so a spell's own level now
+reaches `CharacterSheet.tsx`'s `DC {entry.dc}` cell. Corrected by the
+`spell-consumer-delta-probe` cycle (`aafd492c`).
+
+**Leg 2 — "would move 178 units from `held` to `in-progress` ... and none to
+`done`".** Wrong, and it modelled a different mechanism. **178** is exactly the
+count of `spell` units the producer's `NO_GROUNDING_PROBE` cap holds down —
+uncapped verdict `in-progress`, capped verdict `held` (162 `computed` + 16
+`display`, all **non-`grounded`**). Only removing `spell` from that tuple — a
+*producer* edit this bundle forbids itself (`§1`, `§6`) — produces the
+`held` -> `in-progress` transition. **Grounding is the opposite operation and
+never passes through that cell**, because the cap fires only on units that are
+not `grounded`, and `computed` + `grounded` is a `done` cell outright.
+
+Measured over the real before/after inventories with the verdict table
+transcribed in `artifacts/derive-movable-mass.py`:
+`done` 3,418 -> 3,464 (**+46**), `held` 9,501 -> 9,455 (**−46**),
+`in-progress` 716 -> 716 (**+0**), units moved into a worse bucket: **0**.
+
+**What replaces it.** `spell` is not bucket C. 623 CRB spell units are
+legitimately `grounded`; 46 of them reach `done`. The honest ceiling for
+further `done` movement on `spell` is **113 units** (the `computed`-class
+remainder), not 637 and not 1,281 — and reaching them needs engine work
+(`spellbook::casting_ability_for_class` mapping more casting classes), not a
+looser probe. `forward-scope-register.md F2` is updated accordingly.
+
+---
+
+**Original text, retained verbatim:**
+
 **Status:** Binding on the whole bundle.
 
 **Decision.** All 1,281 held `spell` units are reported as bucket C,

@@ -28,7 +28,18 @@ against the live payload) shows that of those 10,209:
 |---|---:|---:|---|
 | **A** — reachable with an instrument that EXISTS | **734** | 7.2% | consumer wiring / probe coverage |
 | **B** — reachable once a NAMED missing instrument is built | **8,194** | 80.3% | wiring-class classifier (1,776) + static sweep and derived check (6,418) |
-| **C** — structurally unreachable | **1,281** | 12.5% | every one is a `spell`: no consumer reads a spell magnitude, at all |
+| ~~**C** — structurally unreachable~~ | ~~**1,281**~~ | ~~12.5%~~ | ~~every one is a `spell`: no consumer reads a spell magnitude, at all~~ |
+
+> **Bucket C is retracted (2026-08-13).** Its premise — "no consumer reads a
+> spell magnitude, at all" — was already false when this table was written:
+> `epic-31-spell-wiring` (2026-08-07) put a spell's own level on the save-DC
+> cell `CharacterSheet.tsx` renders. Cards `spell-consumer-delta-probe` and
+> `ground-spell-units` built the probe, proved it, and applied it: **623 spell
+> units are legitimately `grounded`, 46 of them reaching `done`**, with **0**
+> units moved into a worse bucket. See the `[SUPERSEDED]` banner on
+> `decisions.md §5` and the `ground-spell-units` receipt in `progress.md`.
+> The genuinely unreachable remainder is **113** units, not 1,281, and its
+> three blockers are named in `forward-scope-register.md F2`.
 
 and that **6,418 of bucket B additionally require a change to the measurement
 pipeline that nobody has sanctioned** — the producer's `doneness_verdict()`

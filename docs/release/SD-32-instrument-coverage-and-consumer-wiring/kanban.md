@@ -42,6 +42,8 @@ Rows are in claim-priority order, matching `scope-draft.md §5`'s dispatch order
 | `e7-structural-report` | READY | Structural-Block Report | 0 (by design) | — | — | — | — |
 | `e8-code-review` | READY (gated on e2, e3, e4, e7) | Bundle Code Review | — | — | — | — | — |
 | `e9-closure` | READY (gated on every other claimable card) | Closure | — | — | — | — | — |
+| `spell-consumer-delta-probe` | COMPLETE | Spell Consumer-Delta Probe (instrument only) | 0 (by design — instrument build) | — | probe-spell | 2026-08-13 | `aafd492c` |
+| `ground-spell-units` | COMPLETE | Apply the Spell Consumer-Delta Probe | 623 keys wired (real ceiling **46** to `done`) | — / 623 grounded, 46 to `done` | probe-spell-ground | 2026-08-13 | `90bd9975` |
 
 ### A note on `inventory-determinism`
 
@@ -53,10 +55,26 @@ tool and also moved the thing being measured would have proven nothing. It
 closes `COMPLETE` having moved zero units and having *declined* the one (+1
 `grounded`) that a side effect of its own change offered. See `progress.md`.
 
+### A note on the two spell cards
+
+Both were added by their own receipts, and both existed because
+`decisions.md §5` was wrong (see the `[SUPERSEDED]` banner on that decision).
+They are split deliberately: `spell-consumer-delta-probe` built and proved the
+instrument while leaving `classify()` byte-identical, so no unit could move on
+an unproven instrument; `ground-spell-units` then applied it. The second card's
+ceiling is stated two ways because only one of them is `done`: **623** keys
+clear the probe's bar, but only the **46** whose `wiring_class` is `computed`
+reach `done` under the producer's verdict table. The other 577 land on `held`,
+which is not `done`.
+
 ## Not on this board, deliberately
 
-- A spell consumer-delta probe. `decisions.md §5`: it moves 178 units into a
-  *worse* bucket and none to `done`. `forward-scope-register.md F2`.
+- ~~A spell consumer-delta probe. `decisions.md §5`: it moves 178 units into a
+  *worse* bucket and none to `done`.~~ **RETRACTED 2026-08-13** by the
+  `ground-spell-units` receipt. The 178 is the `NO_GROUNDING_PROBE` cap
+  population, which only a *producer* edit could move; grounding never passes
+  through that cell. Measured: `done` +46, `held` −46, **0** units into any
+  worse bucket. Both cards are on the board above and both are `COMPLETE`.
 - Any card that edits the producer, the dashboard JSON, `doneness_meaning`,
   `NO_GROUNDING_PROBE` or `EXCLUDED_BOOKS`. `decisions.md §1`, `§2`, `§6`.
 - The 3,547 `unmeasurable` units. `forward-scope-register.md F1`.
