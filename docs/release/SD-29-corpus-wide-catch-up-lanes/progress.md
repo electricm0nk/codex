@@ -11264,3 +11264,306 @@ git cat-file -p origin/tranche/9:src/rules_core/rules_tables/ultimate_wilderness
   | grep -c 'CompanionAbilityRecord {'   -> 158
 git cat-file -p origin/tranche/9:docs/release/.../decisions.md | grep -c '^## Decision 61'  -> 1
 ```
+
+## Cycle SD29-E5-F2-010 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 9 of a loop-until-dry lane**)
+
+**Actor:** `sd29-monster-r11` · **Date:** 2026-08-13 · **Branch:** `tranche/9`
+(work done on dispatch worktree `.claude/worktrees/wf_924a22ca-f35-17`)
+**Branch-point:** `f655275d` · **Commits:** `1c7d8ef9` (the ingest, the file-resolution widening on
+both sides, all eleven registration points and the re-transcription of nine books), plus this
+receipt's own closing commit.
+**Pushed to `origin/tranche/9` as it landed, and verified there BY CONTENT rather than by a push
+message** — see §7.
+**Kanban status left at:** `READY — round 10.`
+**Gate: `VERIFY_EXIT=0` on run 1** — 14 of 14 stages, no red at any point.
+
+**This receipt does not claim the lane is done.** 116 units landed; the REAL ceiling after this round
+is **44 by the classifier's terms** across three books, plus **at least 16** in a class this round
+discovered and deliberately did not close (§4b). Full detail in `decisions.md §62`.
+
+### 0. Worktree integrity — the predicted failure, hit a TWELFTH time
+
+`git log --oneline -3` → `7d9f1c4f Merge pull request #23 from electricm0nk/develop`, the same
+2026-06-28 ancestor rounds 2-8 each landed on. `ls` returned 8 entries where the repo root has 13 —
+no `docs/`, no `scripts/`, no `data/`, no `schemas/`. Every required read and every re-derivation
+command in the brief would have failed against it.
+
+Recovered before any other action: `git merge-base --is-ancestor 7d9f1c4f origin/tranche/9` (a
+genuine ancestor, so a reset loses nothing), `git status --porcelain` empty, then
+`git fetch origin tranche/9` + `git reset --hard origin/tranche/9` → `f655275d`. Twelfth consecutive
+instance; a harness condition, not an agent error. Retro `incident` emitted with
+`--recurrence-key wrong-base-worktree`.
+
+### 1b. Re-derivation — what the brief got right and what it got wrong for the eighth time
+
+Round 8's closing figures were **reproduced EXACTLY at cycle start before being moved**: raw remaining
+`monster` 91 + `monster_ability` 1,574 = **1,665**, classifier reachable **225**, REAL ceiling **160**.
+The brief's own headline ("the previous round reported 160 remaining") therefore survived
+re-derivation — the third consecutive round in which it has.
+
+The brief's other figures did not. **"monster ~305, monster_ability ~852, against grounded 62 and 20"
+was wrong for the EIGHTH round running**; `decisions.md §46.1`, `§50.7`, `§52`, `§55`, `§57.0`,
+`§58.0` and `§60.0` each corrected the identical pair. It is near `bestiary`'s book subtotal, not the
+corpus-wide figure. Retro `correction` emitted, blast-radius naming all seven prior corrections.
+
+### 1c. Preflight
+
+`./scripts/verify.sh --only preflight-disk` → PASS, 22% used, 759G available. No reclaim needed.
+`CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r11` created and **claimed**
+(`.reclaim-claim` written immediately, per `loop-instruction.md`'s standing obligation).
+
+### 0/0b. Shape and trap report — a process deviation, recorded rather than hidden
+
+**Cycle mechanics step 0b was run AFTER the ingest, not before it.** The book's shape was established
+first by four other derivations (the classifier, a `find` over the book tree, `grep -c NAMEISPI:YES`
+over all four `.lst` files, and the pcc's own load lines), each recorded below, so no ingest decision
+rested on an unshaped book — but the ordering the playbook mandates was not followed and this receipt
+says so rather than presenting the trap report as though it had led.
+
+Trap report output is in §4c.
+
+Shape notes checked rather than assumed:
+
+* The `.pcc` **carries a leading underscore** (`_inner_sea_gods.pcc`), the B4/B5/B6 shape — a flat
+  `bestiary_*.pcc`-style glob would have missed it.
+* This book's monster and ability units come from **four** files, not two, and **two of the four are
+  under `support/`** — the first book in this lane where that is true. This is the multi-file hazard
+  `§58.5` flagged, and it is not the one `§58.5` described (§4a).
+* The `support/` pair is gated on the **pcc load line**, not inside the `.lst`:
+  `_inner_sea_gods.pcc:68` `ABILITY:support/isg_abilities_races_b4.lst|PRECAMPAIGN:1,INCLUDES=Bestiary 4`
+  and `:70` the same for `RACE:support/isg_races_b4.lst`. `grep PRECAMPAIGN` over the two `.lst`
+  files themselves returns **0** — a lane that checks the file for its own gate concludes, wrongly,
+  that it is ungated. Round 6 registered `bestiary_4`, so this repo **satisfies** the gate and the 19
+  units are in scope.
+
+### 2. Card claimed
+
+`epic-5-monster-lane-extend`, round 9. Book selected by the queue `decisions.md §60.7` published and
+this round re-derived: `inner_sea_gods`, **116 REAL — 73% of the lane's remainder**, the largest
+single item on the board and the one carrying a mechanism no round had executed.
+
+### 3. The bounded work — 116 units
+
+**39 monsters + 77 monster abilities.** Derived, never assumed:
+
+```
+python3 scripts/classify_monster_ability_rows.py inner_sea_gods
+  -> inner_sea_gods  39  161  0  77  81  3  0     reachable remainder 116
+```
+
+116 is exactly what ships. **Every one of the book's 39 corpus monster rows ships** — a first for this
+lane: no `NAMEISPI:YES` anywhere in the book, no `.COPY=`, no `.MOD`, and no cascade from a Product
+Identity ability a monster names.
+
+The two screens disagree on composition and agree on the total: the classifier counts 81 orphans + 3
+Product Identity, the transcriber drops 79 orphans + 5. Both sum to 84. The transcriber screens the
+values it is about to **emit**; the classifier screens the row's own key and name — the same predicate
+difference `§57.2` records for `inner_sea_bestiary`.
+
+### 4a. The blocker two rounds carried was real about the corpus and wrong about what bound
+
+`§58.5` named it and `§60.7` repeated it verbatim, flagged unverified: *"needs `MonsterAbilityRecord`
+to carry a `source_file`: its rows live in two ability files … and `MonsterBookSpec::abilities_lst` is
+singular."*
+
+Every clause is true about the corpus. **None binds on a shipped record.** All 77 shipped abilities
+come from `isg_abilities_races.lst`; **zero** from the support file, because all 16 of its rows are
+orphans (§4b):
+
+```
+grep -c 'source_file: "isg_abilities_races.lst"'    .../inner_sea_gods/monster_data.rs  -> 77
+grep -c 'source_file: "isg_abilities_races_b4.lst"' .../inner_sea_gods/monster_data.rs  ->  0
+```
+
+What actually blocked the book is a file the blocker statement never mentions:
+**`support/isg_races_b4.lst`, holding 3 of the book's 39 MONSTER rows.** `MonsterStatBlock` has
+carried a `source_file` since `§50`; both sides carry a **bare basename**, which is what the inventory
+records, and both the transcriber and the generator joined that basename onto the book root. Correct
+by coincidence for nine books; `FileNotFoundError` here.
+
+`resolve_book_file` is that widening, written once on each side and matching term for term. It refuses
+two cases rather than resolving them — a basename found nowhere, and one found in more than one place.
+**No book trips the second, derived rather than hoped:** over all fourteen books this lane has
+considered, every one has zero duplicate `.lst` basenames. The generator carries the **resolved
+sub-path** into each record's `path`, so the citation leads to the file the `sha256` was taken over:
+
+```
+python3 -c "…" over data/corpus/inner_sea_gods/monster/*.json
+  -> pathfinder/paizo/campaign_setting/inner_sea_gods/support/isg_races_b4.lst | 6  | The First Blade
+  -> …/support/isg_races_b4.lst | 10 | Steward of the Skein
+  -> …/support/isg_races_b4.lst | 11 | Psychopomp (Ahmuuth)
+```
+
+The ability side was widened too, and is recorded as **not load-bearing for this book's shipped
+records**, so a later round does not credit it with an unblocking it did not do.
+
+**The re-transcription of all nine previously registered books is additive, proven not asserted:**
+
+```
+git diff --numstat -- 'src/rules_core/rules_tables/*/monster_data.rs'
+  -> 1,533 insertions, 0 deletions across 10 files
+git diff -U0 -- 'src/rules_core/rules_tables/*/monster_data.rs' \
+  | grep '^[+-]' | grep -v '^[+-][+-]' | grep -vc 'source_file:'   -> 0
+```
+
+**1,533 is exactly the lane's pre-round grounded `monster_ability` count** — every shipped ability
+record gained precisely one line and not one record value moved. `bonus_bestiary` was patched by hand
+rather than regenerated, keeping `§60.5`'s ruling.
+
+### 4b. Scope finding — 16 abilities have an owner no pass follows, and the ceiling is UNDER-stated
+
+Every prior round in this lane found its instrument **over**-reporting (`§58.1`'s 7, `§60.2`'s 58).
+This round found the opposite, which is the expensive direction.
+
+Zero of the 16 `support/isg_abilities_races_b4.lst` rows ship, and both screens call them orphans. The
+corpus states their owner anyway, one hop further out than either screen looks:
+
+```
+support/isg_races_b4.lst:6            The First Blade
+    ABILITY:Internal|AUTOMATIC|Race Traits ~ First Blade
+support/isg_abilities_races_b4.lst:8  Race Traits ~ First Blade   CATEGORY:Internal
+    ABILITY:Special Ability|AUTOMATIC|…|First Blade ~ Powerful Blows (Slam)|…
+```
+
+The monster row names a `CATEGORY:Internal` **bundle** row; the bundle names the abilities. The
+row-named pass reads tokens on monster rows; the prefix pass matches a namespace against a monster
+**key** — and the namespaces are short names (`First Blade`) while the keys are long
+(`The First Blade`). Neither reaches them.
+
+**Deliberately not closed this round.** Unattended-mode default taken and recorded: this round already
+widened file resolution on both sides, and widening an *ownership* pass changes which records all ten
+books ship. Pinned by an **executing test** (`no_support_directory_ability_ships_yet`) so the round
+that does close it is told by a red test that this receipt's arithmetic is stale, rather than leaving
+a stale header to outlive the state it describes. Retro `deferral` emitted.
+
+### 4c. Trap report
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- inner_sea_gods
+```
+
+| DECLARES | `.COPY=` | `.MOD` | `#OFF` | file |
+|---|---|---|---|---|
+| 208 | 0 | 3 | 0 | `inner_sea_gods/isg_abilities_races.lst` |
+| 36 | 0 | 0 | 0 | `inner_sea_gods/isg_races.lst` |
+| 20 | 0 | 0 | 0 | `support/isg_abilities_races_b4.lst` |
+| 3 | 0 | 0 | 0 | `support/isg_races_b4.lst` |
+
+Book-wide **1,462 declarations across 18 files**, 53 `.COPY=`, 1,101 `.MOD`, 18 disabled lines.
+Findings: `key-differs-from-name` 608, `namespaced-key` 606, `mod-record` 1,101,
+`governing-token-hidden-by-filter` 96, `shared-name-distinct-records` 95, `copy-record` 53,
+`define-zero-value-elsewhere` 5.
+
+**The `.COPY=`/`.MOD` columns are about the FILE, not this lane's units.** All 53 `.COPY=` and 1,098
+of the 1,101 `.MOD` rows belong to kinds this lane does not take; the 3 `.MOD` rows in
+`isg_abilities_races.lst` declare nothing and contribute no unit. **Zero** of this book's 200
+monster-family units carry a `mod_only` or `copy` origin, which is why every one of its 39 corpus
+monster rows was eligible to ship.
+
+The book's largest `KEY:` namespaces are `Trait` (115), `Temp Bonus` (63) and the three Boon families
+(60 each) — none of them this lane's kinds. The monster-family namespaces are small and per-creature
+(`Thyrlien` 9, `Adoration Spirit` 7, `First Blade` 7, `Grim White Stag` 7, `Skein Steward` 6), which
+is the shape the chassis's prefix pass is built for and the reason 77 of the book's ability rows reach
+an owner through it (`prefix 77`, `row-named 0`).
+
+### 5. Registration — eleven points, one new rule set
+
+`RuleSetId::Isg`; wire code `ISG` **verified against the book's own `SOURCESHORT:ISG`** rather than
+invented. Points: transcriber `BOOKS`; `rules_tables/mod.rs` (`pub mod` + enum variant);
+`rules_tables/inner_sea_gods/mod.rs` (new, with five tests); `monster_chassis::MONSTER_BOOKS`;
+`gen_book_cache::MONSTER_BOOK_SPECS`; `v06_work_inventory` (`COMPILED_RULE_SETS`, `corpus_dir_for`,
+`rule_set_id`); `v06_content_state_dump`; `monster_catalog` (const, display name, wire code);
+`reach_gate` (`CORPUS_BOOK_IDS` + two arms); `corpus_ingest_diagnostic` (row + roster);
+`MonsterCatalogScreen.tsx` + its test's `SERVED_BOOKS`; `tests/v06_work_inventory.rs`.
+
+**A test that had outlived two of its own subjects.** `uncompiled_books_stay_none` asserted
+`rule_set_for("inner_sea_gods") == None` — the second subject it has outlived (`ultimate_psionics` was
+the first). Its comment also carried a reason `decisions.md §38` had already invalidated ("SD-30's own
+book set, out of this bundle"). Re-pointed at `occult_adventures` **by derivation**: `corpus_dir_for`
+is exhaustive over `RuleSetId` and has no arm returning it, so no `COMPILED_RULE_SETS` member can map
+to it.
+
+**Provenance**, verified against the files rather than copied from the row above:
+`_inner_sea_gods.pcc:17` declares `ISOGL:YES`, 18 `COPYRIGHT` lines, a real 9,547-byte `OGL.txt`.
+`grep -c NAMEISPI:YES` over all four `.lst` files → `0 0 0 0`. The 5 dropped ability rows are dropped
+for a blacklisted deity name in an emitted value — `ogl-pi-blacklist.md` §2.1's per-record predicate,
+exactly as predicted for a `campaign_setting/` book about deities.
+
+### 6. Verification
+
+```
+RETRO_ACTOR=sd29-monster-r11 CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-r11 \
+  ./scripts/verify.sh          # FULL, exit captured directly, never through a pipe
+```
+
+**`VERIFY_EXIT=0` on run 1 — 14 of 14 stages, no red at any point in the cycle.**
+
+| stage | result |
+|---|---|
+| `preflight-disk` | PASS (disk budget OK) |
+| `pi-sweep` | PASS (10 hits over `src/rules_core/rules_tables`, 10 baseline rows) |
+| `audit-selftest` | PASS (28 passed, 0 failed) |
+| `reclaim-selftest` | PASS (10 passed, 0 failed) |
+| `driver-selftest` | PASS (7 passed, 0 failed) |
+| `root-lib` | PASS (1,743 passed) |
+| `root-full` | PASS (**6,311 passed across 544 suites, all 525 `tests/*.rs` suites executed**) |
+| `desktop` | PASS (445 passed) |
+| `reach` | PASS (27 passed) |
+| `frontend-install` | PASS (`npm ci`) |
+| `frontend-test` | PASS (99/99 files) |
+| `frontend-typecheck` | PASS (`tsc --noEmit` clean) |
+| `clippy` | PASS (root 54 / desktop 7 warnings, **0 errors**) |
+| `class-dump` | PASS (31/31 computing) |
+
+`root-full` moved 6,303 → **6,311** (+8: this book's five module tests plus three registration-roster
+assertions widening by a row). `pi-sweep` holding at 10 hits against a 10-row baseline is the load-
+bearing one for a book of deities — the 5 dropped ability rows are exactly the screen doing its job.
+
+**DoD item 8 — on-screen, both artifacts PASS**, driven through the real app by
+`apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh` with `RUN_DESKTOP_AGENT=sd29-monster-r11`
+(clipboard-extracted, machine-verdicted — not a screenshot a human must re-check). Artifacts in
+`artifacts/SD29-E5-F2-010/item8/`:
+
+* **`monster / The First Blade`** (`isg-the-first-blade.png` + `.verify.md`) — expects
+  `The First Blade`, `Inner Sea Gods`, `Outsider`. **This is the load-bearing artifact of the round:**
+  its corpus row lives in `support/isg_races_b4.lst`, so a player seeing it on screen proves the whole
+  chain end to end — `resolve_book_file` → transcriber → `MonsterStatBlock::source_file` → generator
+  citation → chassis → catalog → wire code `ISG` → frontend label.
+* **`monster / Arcanotheign`** (`isg-arcanotheign.png` + `.verify.md`) — expects `Arcanotheign`,
+  `Inner Sea Gods`, `Change Shape`, proving a chassis **ability** renders and not just a stat block.
+
+The app was left running between the two verifications and stopped once at cycle end, per the
+harness's own guidance.
+
+### 7. Denominators, re-derived after the ingest
+
+```
+python3 -c "
+import json
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('monster', 'monster_ability'):
+    rem = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status'] in ('not-ingested','not-started'))
+    got = sum(1 for u in d['units'] if u['kind']==kind and u['book'] not in oos
+              and u['status']=='grounded')
+    print(kind, 'remaining', rem, 'grounded', got)"
+```
+
+| | before | after | Δ |
+|---|---|---|---|
+| `monster` remaining | 91 | **52** | −39 |
+| `monster_ability` remaining | 1,574 | **1,497** | −77 |
+| raw remaining total | 1,665 | **1,549** | −116 |
+| `monster` grounded | 1,179 | **1,218** | +39 |
+| `monster_ability` grounded | 1,533 | **1,610** | +77 |
+| classifier `reachable remainder` | 225 | **109** | −116 |
+| **REAL ceiling** | 160 | **44** | −116 |
+
+`1665 − 116 = 1549` closes exactly. `inner_sea_gods` reports `grounded 116, not-ingested 84`.
+
+**Round-10 queue** (`decisions.md §62.6`): `ultimate_psionics` **34**, `horror_adventures` **9**,
+`occult_adventures` **1** — three books, 44 units, **no mechanism this repo lacks; the whole remaining
+cost is registration**. Plus `inner_sea_gods`' **≥16** bundle-row class (§4b). `occult_adventures`'
+one monster row is `support/oa_races_b3.lst`, so this round's resolver is what makes it reachable at
+all. Twelve books hold 800 orphan abilities and zero monsters — the floor.
