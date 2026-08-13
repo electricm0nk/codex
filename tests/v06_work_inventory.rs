@@ -799,9 +799,13 @@ const SD29_INGESTED_CAMPAIGN_SETTING_BOOKS: &[&str] = &[
     // rows and 5 Product Identity ability rows) -- and it belongs here anyway,
     // because a book's scope is `in_scope` the moment any of its units are
     // grounded. Every one of its 39 corpus monster rows ships, which is a first
-    // for this lane. 16 of the 79 orphans have a real owner the corpus states
-    // through a `CATEGORY:Internal` bundle row that no ownership pass follows
-    // yet; see `rules_tables::inner_sea_gods`'s header.
+    // for this lane. **79 of the 81 remaining orphans** have a real owner the
+    // corpus states through a `CATEGORY:Internal` bundle row that no ownership
+    // pass follows yet -- re-derived by round 10 with
+    // `scripts/scan_monster_ability_bundle_rows.py` (`decisions.md §64.1`).
+    // `§62.4` wrote 16 here, which is the `support/isg_abilities_races_b4.lst`
+    // subset it was reading, not the book's figure; see
+    // `rules_tables::inner_sea_gods`'s header.
     "inner_sea_gods",
 ];
 

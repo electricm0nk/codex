@@ -92,6 +92,23 @@
 //! least that much, and the same shape may exist in other books: the predicate
 //! to look for is an `ABILITY:Internal|AUTOMATIC|` token on a monster row.
 //!
+//! ## CORRECTED by round 10 — the class is 229, and 79 of them are this book's
+//!
+//! The scan above asked for was run (`scripts/scan_monster_ability_bundle_rows.py`,
+//! checked in; `decisions.md §64.1`). **Sixteen is the
+//! `support/isg_abilities_races_b4.lst` subset, not this book's figure.** The
+//! hop reaches **79 of this book's 81 remaining orphans** — 63 of them in
+//! `isg_abilities_races.lst`, at the book root, which the section above does
+//! not mention at all — and **229 rows across six books**, five of them already
+//! registered.
+//!
+//! The correction is left beside the original rather than overwriting it,
+//! because the shape of the error is the transferable part: the finding was
+//! stated as a property of the *file being read* rather than of the corpus, and
+//! that is the third time this lane has paid for exactly that (`§60.3`,
+//! `§62.1`, `§64.1`). `no_support_directory_ability_ships_yet` below guards the
+//! subset, not the class.
+//!
 //! # Provenance
 //!
 //! `_inner_sea_gods.pcc:17` declares `ISOGL:YES`; the pcc carries 18 `COPYRIGHT`

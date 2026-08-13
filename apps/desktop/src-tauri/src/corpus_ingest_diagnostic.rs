@@ -497,6 +497,15 @@ fn ultimate_magic_counts() -> BTreeMap<String, u32> {
 /// the license-posture check. SD-28-E15's second slice adds 552 equipment
 /// records (326 equipment + 226 equipmods) -- see
 /// `ultimate_psionics::equipment_tables`'s own doc comment.
+///
+/// SD-29 Epic 5 extend, round 10 adds this book's monster families by CHAINING
+/// [`chassis_book_counts`] rather than by inserting two more literals. That is
+/// `decisions.md §63.4`'s finding applied prospectively: `ultimate_wilderness`
+/// had 327 companion records absent from this panel from the day they landed,
+/// because its per-book counts function listed only the families that existed
+/// when it was written and the row above it was the only place a later lane
+/// looked. Extending the map keeps every family this book has, whoever added
+/// it.
 fn ultimate_psionics_counts() -> BTreeMap<String, u32> {
     let mut counts = BTreeMap::new();
     counts.insert("feats".to_string(), upsi::feat_tables::feat_tables().len() as u32);
@@ -505,6 +514,7 @@ fn ultimate_psionics_counts() -> BTreeMap<String, u32> {
         (upsi::equipment_tables::equipment_tables().len()
             + upsi::equipment_tables::equipmod_tables().len()) as u32,
     );
+    counts.extend(chassis_book_counts("ultimate_psionics"));
     counts
 }
 

@@ -1945,6 +1945,27 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Campaign Setting: Inner Sea Gods, OGL §15 Product Identity section; zero rows of any of the four .lst files declare NAMEISPI:YES, and the 5 ability rows the screen drops are dropped for a blacklisted deity name in an emitted value",
         classified_by_cycle: "SD29-E5-F2-010",
     },
+    // SD-29 Epic 5 extend, round 10. Ultimate Psionics -- the first NON-PAIZO
+    // book in this table, and the first whose `RuleSetId` was already compiled
+    // for other kinds (`RuleSetId::Upsi`, SD-28 E29). Both `.lst` files sit at
+    // the book root, so `resolve_book_file` resolves each in one hop; round 9's
+    // widening is not load-bearing here and this row says so rather than
+    // letting a later reader infer it.
+    //
+    // Provenance verified against the file rather than copied from the row
+    // above: `ultimate_psionics.pcc:21` declares `ISOGL:YES`, the pcc carries
+    // 29 COPYRIGHT lines (the first being the OGL itself and the last the
+    // Dreamscarred Press title), and a real 10,418-byte OGL.txt sits beside it.
+    // `grep -c NAMEISPI:YES up_races.lst up_abilities_race.lst` -> 0, 0.
+    MonsterBookSpec {
+        corpus_book: "ultimate_psionics",
+        book_relative: "pathfinder/dreamscarred_press/ultimate_psionics",
+        races_lsts: &["up_races.lst"],
+        abilities_lsts: &["up_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own ultimate_psionics.pcc declares ISOGL:YES at line 21, carries 29 COPYRIGHT lines and a real 10,418-byte OGL.txt",
+        product_identity_source: "Dreamscarred Press Ultimate Psionics, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, and the classifier's Product Identity screen returns 0 -- which is what the blacklist's per-record predicate predicts for a book whose creatures are generic psionic species rather than named personae",
+        classified_by_cycle: "SD29-E5-F2-011",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

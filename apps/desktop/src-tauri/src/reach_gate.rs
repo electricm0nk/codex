@@ -627,6 +627,11 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // put its 136 feats there -- and this entry names the directory, not the
     // family, so it is written once and covers both.
     ("ultimate_wilderness", "ultimate_wilderness"),
+    // SD-29 Epic 5 extend, round 10 (monster lane). Ultimate Psionics -- the
+    // first non-Paizo book in this table. Its `data/corpus/` directory is
+    // written by TWO lanes (SD-28 E29 put its feats and equipment there), and
+    // this entry names the directory rather than a family, so it covers both.
+    ("ultimate_psionics", "ultimate_psionics"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1254,6 +1259,18 @@ fn reach_of(family: &Family) -> Option<Reach> {
         ("inner_sea_gods", "monsters") => Some(chassis_monsters_reach("inner_sea_gods", "ISG")),
         ("inner_sea_gods", "monster_abilities") => {
             Some(chassis_monster_abilities_reach("inner_sea_gods", "ISG"))
+        }
+        // SD-29 Epic 5 extend, round 10. Ultimate Psionics -- the same two claim
+        // functions again, under the wire code `UPSI` this app already serves
+        // the book's equipment and feats with rather than its own
+        // `SOURCESHORT:UP` (`monster_catalog::BOOK_UPSI`, `decisions.md §64.2`).
+        // This book already had reach claims for `feats`, `equipment` and
+        // `archetypes`; these are the first of its claims this lane owns.
+        ("ultimate_psionics", "monsters") => {
+            Some(chassis_monsters_reach("ultimate_psionics", "UPSI"))
+        }
+        ("ultimate_psionics", "monster_abilities") => {
+            Some(chassis_monster_abilities_reach("ultimate_psionics", "UPSI"))
         }
 
         // SD-29 Epic 7 (companion lane) -- the kind's first reach claims. Every

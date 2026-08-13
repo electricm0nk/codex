@@ -165,6 +165,29 @@ BOOKS = {
     # the 284 remaining ones. 607 ship; the 54-unit residue is the cross-table
     # class this screen names.
     "bestiary": "pathfinder/paizo/roleplaying_game/bestiary",
+    # SD-29 Epic 5 extend, round 10, and the FIRST non-Paizo book in this lane
+    # (Dreamscarred Press). It is also the first book the lane takes whose
+    # `RuleSetId` was already compiled for OTHER kinds -- `RuleSetId::Upsi` has
+    # served this book's 221 feats and 552 equipment records since SD-28 E29 --
+    # so registering it costs no new rule set and no new corpus directory.
+    #
+    # Derived, never assumed:
+    # `python3 scripts/classify_monster_ability_rows.py ultimate_psionics` ->
+    # `ultimate_psionics  21  79  3  10  66  0  0`, i.e. 34 reachable.
+    #
+    # Both files sit at the book ROOT (`up_races.lst`, `up_abilities_race.lst`),
+    # so `resolve_book_file` resolves each in one hop and round 9's widening is
+    # not load-bearing here. `up_races_apg.lst` also exists and contributes ZERO
+    # `monster` units -- the unit set comes from the inventory, not from a glob:
+    # `python3 -c "...Counter((u['kind'],u['source_file']) for u in units if
+    # u['book']=='ultimate_psionics')"` -> only `up_races.lst` (21 monster) and
+    # `up_abilities_race.lst` (79 monster_ability).
+    #
+    # Zero Product Identity rows in either signal, which is what
+    # `ogl-pi-blacklist.md` §2.1's PER-RECORD predicate predicts for a
+    # psionics rules supplement whose creatures are generic species (Blue,
+    # Dromite, Elan, Maenad, Ophiduan, Xeph) rather than named personae.
+    "ultimate_psionics": "pathfinder/dreamscarred_press/ultimate_psionics",
 }
 
 # Books part of whose monster rows another compiled table of THIS repo already

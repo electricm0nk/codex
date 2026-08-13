@@ -124,6 +124,21 @@ const BOOK_ISB: &str = "ISB";
 /// `PRECAMPAIGN:1,INCLUDES=Bestiary 4`. See `rules_tables::inner_sea_gods`.
 const BOOK_ISG: &str = "ISG";
 
+/// Ultimate Psionics, the twelfth (SD-29 Epic 5 extend, round 10) and the first
+/// non-Paizo book in this catalog.
+///
+/// **This is the one wire code here that is NOT the book's own `SOURCESHORT`,
+/// and the divergence is deliberate.** `ultimate_psionics.pcc:17` declares
+/// `SOURCESHORT:UP`, but this app has served the same book's equipment under
+/// `equipment_resolver::EQUIPMENT_BOOK_UPSI` = `"UPSI"` since SD-28 E29, and its
+/// feats under the `Upsi` source token. The convention every other code here
+/// follows exists to stop a code being *invented*; serving one book under `UP`
+/// on the monster screen and `UPSI` on the equipment screen would produce
+/// exactly the mislabelling that convention protects against, so the code the
+/// app already ships for this book wins. Recorded rather than silently chosen —
+/// `decisions.md §64.2`.
+const BOOK_UPSI: &str = "UPSI";
+
 /// Wire code for a chassis book's corpus directory.
 ///
 /// A hard panic rather than a fallback: a book registered in
@@ -157,6 +172,7 @@ fn book_display_name(corpus_book: &str) -> &'static str {
         "beastiary" => "Bestiary 1",
         "inner_sea_bestiary" => "Inner Sea Bestiary",
         "inner_sea_gods" => "Inner Sea Gods",
+        "ultimate_psionics" => "Ultimate Psionics",
         other => panic!(
             "monster_catalog: no display name for chassis book {other:?}. Add one here before \
              registering the book, or a player reads a sentence naming the wrong book."
@@ -180,6 +196,7 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         "beastiary" => BOOK_B1,
         "inner_sea_bestiary" => BOOK_ISB,
         "inner_sea_gods" => BOOK_ISG,
+        "ultimate_psionics" => BOOK_UPSI,
         other => panic!(
             "monster_catalog: no wire code for chassis book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -770,18 +787,42 @@ mod tests {
     /// book. It runs the real parser, not `str::parse`: the old test asserted
     /// `cr.parse::<f32>().is_ok()`, which Monster Codex's `CR:1/2` fails while
     /// being a perfectly correct corpus token.
+    ///
+    /// **What it asserts is the token↔value correspondence, not a magnitude,
+    /// and that is a correction Ultimate Psionics forced.** Until round 10 this
+    /// read `parsed > 0.0` — which caught a token that failed to parse and fell
+    /// back to zero, but only because no registered book had a row whose real
+    /// CR *is* zero. Psicrystal's `up_races.lst:47` states `CR:0`, so the old
+    /// form flagged a correct transcription as a defect. The sharper property
+    /// is the one the old form was reaching for: a value of zero is admissible
+    /// exactly when the corpus token is `"0"`, and never as a silent fallback.
+    /// Same shape as the per-entry uniqueness correction Bestiary 2 forced on
+    /// `every_ability_key_is_the_corpus_key` below — a guard that encoded an
+    /// accidental property of the books registered when it was written.
     #[test]
     fn every_chassis_row_states_a_readable_challenge_rating() {
         for table in monster_chassis::MONSTER_BOOKS {
             for block in table.monsters {
                 let cr = block.challenge_rating.expect("every row carries CR:");
                 let parsed = parse_challenge_rating(table.corpus_book, block.key, cr);
-                assert!(
-                    parsed > 0.0,
-                    "{}/{} reads CR {cr:?} as {parsed}",
-                    table.corpus_book,
-                    block.key
-                );
+                if parsed == 0.0 {
+                    assert_eq!(
+                        cr.trim(),
+                        "0",
+                        "{}/{} reads CR {cr:?} as 0 -- a token that is not literally \"0\" \
+                         must never parse to zero, which is the silent-fallback defect this \
+                         guard exists to catch",
+                        table.corpus_book,
+                        block.key
+                    );
+                } else {
+                    assert!(
+                        parsed > 0.0,
+                        "{}/{} reads CR {cr:?} as {parsed}",
+                        table.corpus_book,
+                        block.key
+                    );
+                }
             }
         }
     }
@@ -1045,7 +1086,15 @@ mod tests {
         const NO_SOURCE_PAGE: &[&str] =
             &["bestiary_3:monster:owl_giant", "bestiary_3:monster:spider_ogre"];
 
+        // The served rows whose challenge rating is genuinely zero, pinned the
+        // same way and for the same reason: a CR of 0 used to be impossible
+        // here, so `> 0.0` doubled as an "it parsed" check. Psicrystal states
+        // `CR:0` on `up_races.lst:47`. Pinning the set keeps that check alive —
+        // a row losing its rating still fails — while admitting the real value.
+        const ZERO_CHALLENGE_RATING: &[&str] = &["ultimate_psionics:monster:psicrystal"];
+
         let mut seen_without_page: Vec<&str> = Vec::new();
+        let mut seen_zero_cr: Vec<&str> = Vec::new();
         let response = build_monster_catalog();
         for entry in &response.entries {
             assert!(!entry.name.trim().is_empty(), "{} has no name", entry.key);
@@ -1066,17 +1115,35 @@ mod tests {
                 );
                 seen_without_page.push(entry.key.as_str());
             }
-            assert!(
-                entry.challenge_rating > 0.0,
-                "{} has no challenge rating",
-                entry.key
-            );
+            if entry.challenge_rating == 0.0 {
+                assert!(
+                    ZERO_CHALLENGE_RATING.contains(&entry.key.as_str()),
+                    "{} serves challenge rating 0, and is not one of the corpus rows known to \
+                     state `CR:0`. Check the row before adding it here: a rating that vanished \
+                     from a row that used to have one is a transcription defect, not a corpus \
+                     fact.",
+                    entry.key
+                );
+                seen_zero_cr.push(entry.key.as_str());
+            } else {
+                assert!(
+                    entry.challenge_rating > 0.0,
+                    "{} has no challenge rating",
+                    entry.key
+                );
+            }
         }
         seen_without_page.sort_unstable();
         assert_eq!(
             seen_without_page, NO_SOURCE_PAGE,
             "the set of records serving no source page changed; a pinned one gaining a page is \
              as much a signal as a new one losing it"
+        );
+        seen_zero_cr.sort_unstable();
+        assert_eq!(
+            seen_zero_cr, ZERO_CHALLENGE_RATING,
+            "the set of records serving challenge rating 0 changed; a pinned one gaining a \
+             rating is as much a signal as a new one losing it"
         );
     }
 

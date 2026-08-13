@@ -329,6 +329,23 @@ pub const MONSTER_BOOKS: &[MonsterBook] = &[
         monsters: super::bestiary::monsters_static(),
         monster_abilities: super::bestiary::monster_abilities_static(),
     },
+    // SD-29 Epic 5 extend, round 10. Ultimate Psionics (Dreamscarred Press) --
+    // 21 monsters and 13 owned abilities, and the first NON-PAIZO book in this
+    // registry. It is also the first whose `RuleSetId` was already compiled for
+    // other kinds: `RuleSetId::Upsi` has served this book's feats, equipment and
+    // archetypes since SD-28 E29, so registering its monsters added no rule set,
+    // no corpus directory and no work-inventory book entry.
+    //
+    // Both `.lst` files sit at the book root, so `resolve_book_file` is not
+    // load-bearing here. Its module header records this book's share of the
+    // `Racial Traits ~` bundle class (`decisions.md §62.4`, measured
+    // corpus-wide in `§64.1`): 2 of its 66 orphans are owned in the corpus
+    // through a `CATEGORY:Internal` row and are pinned by an executing test.
+    MonsterBook {
+        corpus_book: "ultimate_psionics",
+        monsters: super::ultimate_psionics::monsters_static(),
+        monster_abilities: super::ultimate_psionics::monster_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.

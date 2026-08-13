@@ -59,6 +59,11 @@ export const BOOK_LABELS: Record<string, string> = {
   B4: 'Bestiary 4',
   ISB: 'Inner Sea Bestiary',
   ISG: 'Inner Sea Gods',
+  // The one code here that is not its book's own `SOURCESHORT` (`UP`): the app
+  // already serves this book's equipment and feats under `UPSI`, and one book
+  // must not carry two codes across two screens. See `monster_catalog.rs`'s
+  // `BOOK_UPSI` and `decisions.md §64.2`.
+  UPSI: 'Ultimate Psionics',
 };
 
 /** `'BB'` -> `'Bonus Bestiary'`; an unmapped code falls through as itself. */
@@ -106,11 +111,17 @@ export function formatSize(code: string): string {
 
 /**
  * `1` -> `'CR 1'`. Fractional ratings print as fractions the way the book does,
- * so a CR 1/2 record can never render as `CR 0.5`. The current roster is CR
- * 1-3 only; the fraction branch exists because the ingest's own type is `f32`
- * and the sub-CR-1 rows are real Bestiary 1 content the roster may yet take.
+ * so a CR 1/2 record can never render as `CR 0.5`.
+ *
+ * **`0` is a real corpus value and has its own branch.** Ultimate Psionics'
+ * Psicrystal states `CR:0` (`up_races.lst:47`) and is the first such row this
+ * catalog serves. Without the guard below it fell into the fraction branch,
+ * where `Math.round(1 / 0)` is `Infinity` and the screen read `CR 1/Infinity` —
+ * a defect no test caught because for eleven books the value could not occur.
+ * SD-29 Epic 5 extend, round 10; `decisions.md §64.3`.
  */
 export function formatChallengeRating(rating: number): string {
+  if (rating === 0) return 'CR 0';
   if (rating >= 1) return `CR ${rating % 1 === 0 ? rating : rating.toFixed(1)}`;
   const denominator = Math.round(1 / rating);
   return `CR 1/${denominator}`;

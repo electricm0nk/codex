@@ -135,6 +135,10 @@ function testChallengeRatingReadsAsTheBookPrintsIt() {
   // sub-CR-1 rows are real Bestiary 1 content: 0.5 must never print as "CR 0.5".
   assertEqual(formatChallengeRating(0.5), 'CR 1/2', 'a fractional rating');
   assertEqual(formatChallengeRating(1 / 3), 'CR 1/3', 'a third');
+  // Ultimate Psionics' Psicrystal states `CR:0` (`up_races.lst:47`). Before
+  // round 10 this fell into the fraction branch and `Math.round(1 / 0)` printed
+  // `CR 1/Infinity` on screen.
+  assertEqual(formatChallengeRating(0), 'CR 0', "Psicrystal's genuine CR 0");
 }
 
 function testALandSpeedOfZeroIsStatedRatherThanPrintedAsZero() {
