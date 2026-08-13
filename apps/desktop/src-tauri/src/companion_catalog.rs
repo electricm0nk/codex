@@ -739,12 +739,35 @@ mod tests {
             // never an inferred value — and `type_segments` carries the corpus's
             // own spelling to the screen, which is what makes the typo visible
             // to a reader rather than laundered (`decisions.md §61.4`).
+            // Round 7 adds the fourth and fifth shapes, both Core Essentials's
+            // (`decisions.md §63`), and both genuinely unmodelled concepts
+            // rather than typos:
+            //
+            // * `Special Ability.Extraordinary` (10 rows) — PCGen's CATEGORY
+            //   name appearing in a `TYPE:` token. It is not a misspelling of
+            //   `SpecialQuality` or `SpecialAttack`; it is a different axis, and
+            //   collapsing it onto either would state something the row does
+            //   not.
+            // * `Weakness.Extraordinary` (1 row, `King Crab ~ Water
+            //   Dependency`) — a concept `CompanionAbilityFacet` has no variant
+            //   for at all. A companion's *weaknesses* are as real to a player
+            //   as its special attacks, and the honest rendering is the corpus's
+            //   own segment.
+            //
+            // This assertion is why they are named rather than absorbed: the
+            // count pins above moved to 132/31 and would have been satisfied by
+            // ANY eleven new rows. Listing the shapes is what makes the counts
+            // mean something.
             let first = ability.type_segments.first().map(String::as_str);
             assert!(
                 ability.type_segments == vec!["ClockworkFamiliarInstalledItem".to_owned()]
                     || ability.type_segments
                         == vec!["Communicate".to_owned(), "SpellLike".to_owned()]
-                    || first == Some("SpecialQuaility"),
+                    || first == Some("SpecialQuaility")
+                    || ability.type_segments
+                        == vec!["Special Ability".to_owned(), "Extraordinary".to_owned()]
+                    || ability.type_segments
+                        == vec!["Weakness".to_owned(), "Extraordinary".to_owned()],
                 "{} carries an unrecognised unmodelled shape: {:?}",
                 ability.key,
                 ability.type_segments
