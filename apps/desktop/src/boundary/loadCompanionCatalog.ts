@@ -78,7 +78,7 @@ export interface CompanionAbilityDto {
   /**
    * The row's conditional rules texts, each with its gate in prose. Empty for
    * the ordinary row; Ultimate Wilderness is the first book to carry any, and
-   * 22 of its ability rows do (`decisions.md §60.1`).
+   * 22 of its ability rows do (`decisions.md §61.1`).
    */
   descriptionVariants: CompanionDescriptionVariantDto[];
   statAdjustments: CompanionStatAdjustmentDto[];

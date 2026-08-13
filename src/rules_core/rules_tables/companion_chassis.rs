@@ -174,7 +174,7 @@ impl CompanionAbilityDelivery {
 /// different `PRE…` predicate, and the reader is meant to see the text whose
 /// gate its character meets. Ultimate Wilderness is the first companion book
 /// where this occurs at scale — 22 of its ability rows carry between 2 and 9
-/// `DESC:` tokens (`decisions.md §60.1`) — and it is the shape
+/// `DESC:` tokens (`decisions.md §61.1`) — and it is the shape
 /// [`parse_desc`](../../../../scripts/transcribe_companion_tables.py) previously
 /// refused outright rather than resolve by position.
 ///
@@ -452,7 +452,7 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
     // largest companion block in the corpus, and the first registered book
     // whose shortfall is bigger than its ingest: 327 of 575 rows ship, and the
     // 247 that do not are archetype and option-group rows this chassis is the
-    // wrong shape for, not rows it failed to read (`decisions.md §60.2`).
+    // wrong shape for, not rows it failed to read (`decisions.md §61.2`).
     CompanionBook {
         corpus_book: "ultimate_wilderness",
         companions: super::ultimate_wilderness::companions_static(),
@@ -629,7 +629,7 @@ mod tests {
              Bestiary 4's two `TYPE:Communicate.SpellLike` rows, and Ultimate Wilderness's \
              15 `TYPE:SpecialQuaility` rows -- an UPSTREAM TYPO of the modelled \
              `SpecialQuality`, deliberately not corrected into the facet \
-             (`decisions.md §60.4`); a change here means a book's shape moved"
+             (`decisions.md §61.4`); a change here means a book's shape moved"
         );
         // Ultimate Wilderness's typoed segment, pinned by count and by
         // spelling. A successor that decides to model the typo must delete this
@@ -663,7 +663,7 @@ mod tests {
         }
     }
 
-    /// Conditional `DESC:` variants (`decisions.md §60.1`), asserted as a
+    /// Conditional `DESC:` variants (`decisions.md §61.1`), asserted as a
     /// PROPERTY of every registered book plus the two rows that motivated it.
     ///
     /// The property is the one that makes the field trustworthy: a variant list

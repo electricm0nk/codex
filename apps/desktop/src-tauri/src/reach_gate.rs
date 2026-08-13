@@ -1292,7 +1292,7 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // the transcriber failed to read. They get no `OPEN_FINDINGS` entry
         // because that list is per FAMILY and this family reaches a player;
         // `docs/work-inventory.json` is where they stay counted
-        // (`decisions.md §60.2`).
+        // (`decisions.md §61.2`).
         ("ultimate_wilderness", "companions") => {
             Some(companions_reach("ultimate_wilderness", "UW"))
         }

@@ -5088,12 +5088,13 @@ effectively floors, not queued work** — the same reachable-exhausted shape `§
 `bestiary_4`'s monster half. A round that takes either is paying a full book's registration cost for
 a handful of records, and should say so in its receipt rather than discover it at the ceiling table.
 
-## Decision 60 — Companion Lane, extend: round 6 (2026-08-12, `sd29-companion-r10`, card `epic-7-companion-lane-extend`)
+## Decision 61 — Companion Lane, extend: round 6 (2026-08-12, `sd29-companion-r10`, card `epic-7-companion-lane-extend`)
 
 > **Section number claimed at claim time, not at merge.** `§59` was the last written when this round
 > started and the monster lane was in flight on the same branch (it pushed `e70d39fc`, Bestiary 1's
-> monster chassis, while this round was building). If that lane also wrote a `§60`, this one is
-> renumbered in the merge and every reference below moves with it — the convention `§47`, `§49` and
+> monster chassis, while this round was building). If that lane also wrote a `§60`, this one WAS
+> renumbered in the merge (the monster lane claimed §60 for its round 8, `0d9fb586`), and it is
+> filed as **§61** and every reference below moves with it — the convention `§47`, `§49` and
 > `§53` each recorded after paying for it.
 
 **Ultimate Wilderness ingested — 327 of its 575 companion units (169 creature rows, 158 ability
@@ -5124,7 +5125,7 @@ python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'
 
 Five rounds had landed and ten books were registered. The card's real state in `kanban.md` was
 **`READY (round 6)`**. The brief's one checkable figure — **566** remaining — was re-derived and
-**reproduced EXACTLY** before this round's work superseded it (§60.5).
+**reproduced EXACTLY** before this round's work superseded it (§61.5).
 
 **The worktree was again cut from the wrong base.** `HEAD` was `7d9f1c4f`, which has no
 `docs/release/` directory at all and is not an ancestor of `origin/tranche/9`; every required read
@@ -5172,7 +5173,7 @@ as a raw PCGen token. Variable names are split mechanically from camel case (`Ma
 level*); the nine alignment codes are a table, because `TN` split mechanically reads *"t n"*.
 
 **8 shipped, 22 in the file, and the two numbers are the finding rather than a discrepancy.** The
-other 14 multi-`DESC:` rows are archetype rows this chassis drops (§60.2). A test pinned to 22 would
+other 14 multi-`DESC:` rows are archetype rows this chassis drops (§61.2). A test pinned to 22 would
 be asserting a fact about a `.lst` file; the chassis test pins 8.
 
 ### 60.2 The first book in this lane whose shortfall is bigger than its ingest — and it is a different KIND
@@ -5316,7 +5317,7 @@ python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'
   -> Counter({'not-ingested': 1012, 'grounded': 684})
 ```
 
-The ceiling is **unchanged at 923** — the first round in four that did not move it, and §60.2 is
+The ceiling is **unchanged at 923** — the first round in four that did not move it, and §61.2 is
 why. **Honest remainder `923 − 684` = 239** across **6** books. Raw `not-ingested` is 1,012 and that
 is NOT the workload.
 

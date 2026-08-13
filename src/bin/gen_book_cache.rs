@@ -1225,7 +1225,7 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             // the corpus cache for every character on the other side of the
             // gate. Empty for the ordinary single-`DESC:` row, which is why
             // adding it re-generated every previously ingested book's records
-            // byte-identical (`decisions.md §60.1`).
+            // byte-identical (`decisions.md §61.1`).
             "description_variants": ability.description_variants.iter().map(|v| serde_json::json!({
                 "text": v.text,
                 "variables": v.variables,

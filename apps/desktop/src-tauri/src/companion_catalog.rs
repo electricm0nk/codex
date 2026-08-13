@@ -125,7 +125,7 @@ pub struct CompanionStatAdjustmentDto {
 /// the only rendering that is true for every reader. Picking one would be the
 /// same defect as picking one by position, which is what the transcriber
 /// refused outright until Ultimate Wilderness made the refusal load-bearing
-/// (`decisions.md §60.1`).
+/// (`decisions.md §61.1`).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
 pub struct CompanionDescriptionVariantDto {
@@ -172,7 +172,7 @@ pub struct CompanionAbilityDto {
     pub description: Option<String>,
     /// The row's conditional rules texts, each with the condition that selects
     /// it rendered into prose. Empty for the ordinary row. Ultimate Wilderness
-    /// is the first book to carry any (`decisions.md §60.1`).
+    /// is the first book to carry any (`decisions.md §61.1`).
     pub description_variants: Vec<CompanionDescriptionVariantDto>,
     /// The `BONUS:STAT` tokens this advancement package applies.
     pub stat_adjustments: Vec<CompanionStatAdjustmentDto>,
@@ -295,7 +295,7 @@ fn serve_ability_description(
 /// src/rules_core/rules_tables/*/companion_data.rs` returns no integer
 /// literal). For Ultimate Wilderness's `%%1` rows it made all the difference,
 /// because the renderer decides whether `%%N` is an escape or an argument by
-/// asking whether argument N exists — and it never did (`decisions.md §60.3`).
+/// asking whether argument N exists — and it never did (`decisions.md §61.3`).
 fn render_desc_token(key: &str, prose: &str, variables: &[&str]) -> String {
     let raw = if variables.is_empty() {
         prose.to_owned()
@@ -728,7 +728,7 @@ mod tests {
             // facet — the transcriber emits substrings of the cited row and
             // never an inferred value — and `type_segments` carries the corpus's
             // own spelling to the screen, which is what makes the typo visible
-            // to a reader rather than laundered (`decisions.md §60.4`).
+            // to a reader rather than laundered (`decisions.md §61.4`).
             let first = ability.type_segments.first().map(String::as_str);
             assert!(
                 ability.type_segments == vec!["ClockworkFamiliarInstalledItem".to_owned()]

@@ -167,7 +167,7 @@ fn max_arg_reference(raw: &str) -> usize {
             // by this function, so skipping the digit here would make that
             // branch permanently unreachable and leave the four corpus rows
             // that write `DC %%1 … |<DC var>` rendering `DC %1` on a player's
-            // screen (`decisions.md §60.3`).
+            // screen (`decisions.md §61.3`).
             //
             // Counting it is safe in the other direction: a token with no
             // `|` tail yields zero arguments no matter what this returns, so
@@ -515,7 +515,7 @@ pub fn render_pcgen_desc_with_values(raw: &str, values: &PcgenDisplayValues) -> 
         // player's screen -- `leaked_pcgen_syntax` rejects it, and until Ultimate
         // Wilderness's companions landed no ingested book carried one, so the
         // renderer and the guard had been in silent contradiction for the whole
-        // program (`decisions.md §60.3`).
+        // program (`decisions.md §61.3`).
         //
         // The narrow reading is what ships: `%%N` is an argument reference ONLY
         // when argument N exists. Everything else keeps the literal per cent,
@@ -671,7 +671,7 @@ mod tests {
     }
 
     /// The upstream `%%N` escaping defect, and both halves of the narrow
-    /// reading that resolves it (`decisions.md §60.3`).
+    /// reading that resolves it (`decisions.md §61.3`).
     ///
     /// Ultimate Wilderness's `Seaweed Leshy ~ Water Jet` is the row that made
     /// this reachable: read as an escape it renders `DC %1 Fortitude save`,

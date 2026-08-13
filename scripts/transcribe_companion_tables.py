@@ -275,7 +275,7 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str], list[tuple[str, l
     they are the rows that carry `Poison`, `Constrict`, `Breath Weapon` and
     `Camouflage`.  Dropping them would have shipped creature cards whose
     abilities have no text; picking one would have shipped the wrong text for
-    every character on the other side of the gate (`decisions.md §60.1`).
+    every character on the other side of the gate (`decisions.md §61.1`).
 
     So all of them are carried, in row order, each with its own gate verbatim,
     and NONE is evaluated here.  The first return value stays the row's single
@@ -580,7 +580,7 @@ def transcribe(book: str) -> str:
         # reach a player, which every registered book's `companions` family
         # does. A dropped row is also not an ingested record, so it is outside
         # the reach gate's denominator entirely. The honest record of it is
-        # this list plus the book's `mod.rs` (`decisions.md §60.2`).
+        # this list plus the book's `mod.rs` (`decisions.md §61.2`).
         out.append(
             "//! These rows keep their `not-ingested` status in"
         )

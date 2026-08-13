@@ -48,10 +48,10 @@ pub use super::companion_chassis::{CompanionAbilityRecord, CompanionRecord};
 // `ultimate_wilderness/companions` reaches one. A dropped row is also not an
 // ingested record, so it is outside the reach gate's denominator entirely. The
 // shortfall is counted where it is real -- these 247 rows keep their honest
-// `not-ingested` status in `docs/work-inventory.json` (`decisions.md §60.2`).
+// `not-ingested` status in `docs/work-inventory.json` (`decisions.md §61.2`).
 //
 // The mechanism this book DID need is conditional `DESC:` variants
-// (`decisions.md §60.1`): 22 of its ability rows -- including `Poison`,
+// (`decisions.md §61.1`): 22 of its ability rows -- including `Poison`,
 // `Constrict`, `Breath Weapon` and `Camouflage` -- state their rules text
 // between 2 and 9 times, each token gated on a different
 // `PREVARGTEQ:`/`PREVARLT:`/`PREALIGN:` predicate. Every one is carried, gate
