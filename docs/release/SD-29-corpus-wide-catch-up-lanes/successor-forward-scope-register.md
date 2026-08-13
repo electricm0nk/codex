@@ -147,6 +147,106 @@ been exercised. **The first equipment or spell cycle after this bundle must cali
 citing a PASS** — an uncalibrated `SEARCH_Y` is exactly the silent-plausible-screen failure mode
 `§65.7` describes.
 
+### C1.5 — The `ABILITY:Internal|AUTOMATIC|` bundle-ownership hop: 229 units across six books
+
+**Owner: SD-31** (`docs/release/SD-31-pcgen-character-import/`), as the next bundle in the program;
+re-assign here if a different successor is cut first. Same owner and same reasoning as C1.4.
+
+**Status at handoff: fully scanned, counted, checked in and pinned by two executing tests.** This is
+not a discovery a successor has to fund. It is a mechanism change a successor has to *execute*, and
+everything needed to start it is in the repo.
+
+#### The number, and the command that produces it
+
+```
+python3 scripts/scan_monster_ability_bundle_rows.py
+book                        orphans  bundle-reachable
+bestiary                        146                63
+bestiary_2                       65                15
+bestiary_3                       13                 9
+bestiary_4                      225                61
+inner_sea_gods                   81                79
+ultimate_psionics                66                 2
+
+orphan rows the `ABILITY:Internal|AUTOMATIC|` hop would reach: 229
+```
+
+Reproduced unchanged by SD-29 Epic 5's final round, on a tree that had just ingested nine further
+units — the class is stable under ingest and does not decay.
+
+#### What the mechanism is
+
+A monster row may state its abilities **indirectly**, through a `CATEGORY:Internal` bundle row:
+
+```
+support/isg_races_b4.lst:6              The First Blade
+    ABILITY:Internal|AUTOMATIC|Race Traits ~ First Blade
+support/isg_abilities_races_b4.lst:8    Race Traits ~ First Blade   CATEGORY:Internal
+    ABILITY:Special Ability|AUTOMATIC|…|First Blade ~ Powerful Blows (Slam)|…
+```
+
+The monster row names the bundle; the bundle names the abilities. **Neither of the repo's two
+ownership passes follows that hop.** The row-named pass reads
+`ABILITY:Special Ability|AUTOMATIC|` tokens *on monster rows* and never sees the bundle. The
+namespaced-prefix pass matches an ability's `KEY:` namespace against a monster **key**, and here the
+namespace is the creature's short name while the key is longer. Both passes therefore call these
+rows orphans, and an orphan is deliberately not transcribed.
+
+#### Why it is a ceiling correction rather than a backlog line
+
+These are **records already-registered books do not ship** — five of the six books are registered —
+not books the lane never reached. That is the more expensive kind of gap: `bestiary`, `bestiary_2`,
+`bestiary_3`, `bestiary_4`, `inner_sea_gods` and `ultimate_psionics` are all live in
+`monster_chassis::MONSTER_BOOKS` today and each is under-shipping.
+
+#### Exactly what a successor must change
+
+Following the hop widens an **ownership** pass, and ownership decides which records six registered
+books emit. That is the `count-change-needs-a-sweep` hazard at its worst, and it is the reason two
+consecutive SD-29 rounds derived the number and deliberately did not close it.
+
+1. `scripts/transcribe_monster_tables.py` — the ownership pass. It must, for each monster row,
+   follow every `ABILITY:Internal|AUTOMATIC|<bundle-key>` token to the `CATEGORY:Internal` row whose
+   first column is `<bundle-key>` (stripping a `CATEGORY=…|` prefix and a `.MOD` suffix), and read
+   that row's `ABILITY:…|AUTOMATIC|` key list as abilities of the monster.
+   `scan_monster_ability_bundle_rows.py::scan_book` already implements exactly this traversal and is
+   the reference; port it, do not re-derive it.
+2. `scripts/classify_monster_ability_rows.py` — `classify_book` must gain the same pass in the same
+   commit. Its module doc states the invariant that makes it worth having at all: *"a classification
+   that used a looser rule than the transcriber would over-report reachability, which is the
+   direction that ships stubs."* The two must move together or the lane's instrument silently
+   diverges from the lane's output.
+3. Re-run the transcriber for all six books, then `gen_book_cache` for each, then
+   `v06_work_inventory`.
+4. **Sweep the count pins.** Every one of the six books' `rules_tables::<book>::tests` carries an
+   assertion on `monsters().len()` / `monster_abilities().len()`; `reach_gate`'s per-book expectation
+   tables carry on-disk record counts; `corpus_ingest_diagnostic` and `monster_catalog` carry more.
+   Grep the OLD and the NEW count for every book before committing.
+5. **Two tests are designed to go red and must be updated, not weakened.**
+   `rules_tables::ultimate_psionics::monster_tests::no_internal_bundle_ability_ships_yet` and
+   `rules_tables::inner_sea_gods::…::no_support_directory_ability_ships_yet` exist precisely to tell
+   the round that closes this that the surrounding arithmetic is stale. A red there is the mechanism
+   working.
+
+#### The split, as one command pair
+
+```
+python3 scripts/classify_monster_ability_rows.py        # workable now, by the shipped screens
+python3 scripts/scan_monster_ability_bundle_rows.py     # what the hop would additionally reach
+```
+
+The second script imports the first and reuses its `classify_book` orphan set rather than defining
+`orphan` a second time, so the two cannot drift and the finding stays falsifiable.
+
+#### One caution about the classifier's own summary
+
+`classify_monster_ability_rows.py`'s `reachable remainder` line is an **upper bound**, not an
+equality, for any book with a Product-Identity cascade (`rules_tables::inner_sea_bestiary` records
+why). And two of its summary lines were corrected by SD-29 Epic 5's final round — the zero-monster
+bucket now distinguishes *no monster row at all* (703 units / 10 books, structurally unreachable)
+from *every monster row already ships* (228 units / 4 books, which is mostly this class). A successor
+reading a pre-2026-08-13 receipt will find the two conflated.
+
 ## Class 2 — Future-acquired (deferred)
 
 ### C2.1 — Bestiary 6 + Bonus Bestiary drop-in [SUPERSEDED — decisions.md §34, 2026-08-02]

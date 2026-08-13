@@ -2057,6 +2057,38 @@ const MONSTER_BOOK_SPECS: &[MonsterBookSpec] = &[
         product_identity_source: "Dreamscarred Press Ultimate Psionics, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, and the classifier's Product Identity screen returns 0 -- which is what the blacklist's per-record predicate predicts for a book whose creatures are generic psionic species rather than named personae",
         classified_by_cycle: "SD29-E5-F2-011",
     },
+    // SD-29 Epic 5 extend, FINAL round. Horror Adventures -- the last book in
+    // this lane with any workable unit, at 3 monster rows and 6 owned ability
+    // rows.
+    //
+    // Both `.lst` files sit at the book ROOT and both load UNCONDITIONALLY:
+    // `grep -n 'ha_races.lst\|ha_abilities_race.lst' _horror_adventures.pcc`
+    // -> `63:ABILITY:ha_abilities_race.lst`, `77:RACE:ha_races.lst`, neither
+    // carrying a `PRECAMPAIGN` gate. That check is read from the PCC LOAD LINE,
+    // per round 9's finding, and it is the check that disqualified this lane's
+    // other nominally-workable book -- `occult_adventures` loads its one
+    // monster row under a NEGATED gate (`!PRECAMPAIGN:1,INCLUDES=Bestiary 3`)
+    // this repo's campaign set fails, see `decisions.md`.
+    //
+    // `corpus_book` is `horror_adventures`, matching the `data/corpus/` tree
+    // this book's `race_trait` (Epic 6 round 3) and `companion` (Epic 7)
+    // families already write into -- a third family under one directory, not a
+    // fourth directory.
+    //
+    // Provenance verified against the file rather than copied from the
+    // `CompanionBookSpec` row above: `_horror_adventures.pcc:26` declares
+    // `ISOGL:YES`, the pcc carries 19 COPYRIGHT lines, and a real 9,924-byte
+    // OGL.txt sits beside it. `grep -c NAMEISPI:YES ha_races.lst
+    // ha_abilities_race.lst` -> 0, 0.
+    MonsterBookSpec {
+        corpus_book: "horror_adventures",
+        book_relative: "pathfinder/paizo/roleplaying_game/horror_adventures",
+        races_lsts: &["ha_races.lst"],
+        abilities_lsts: &["ha_abilities_race.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _horror_adventures.pcc declares ISOGL:YES at line 26, carries 19 COPYRIGHT lines and a real 9,924-byte OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Horror Adventures, OGL §15 Product Identity section; zero rows of either .lst declare NAMEISPI:YES, and the classifier's Product Identity screen returns 0 -- which is what the blacklist's per-record predicate predicts for three generic hive-insect species rather than named personae",
+        classified_by_cycle: "SD29-E5-F2-012",
+    },
 ];
 
 fn monster_book_spec(book: &str) -> Option<&'static MonsterBookSpec> {

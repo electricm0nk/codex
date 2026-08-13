@@ -320,14 +320,43 @@ def main() -> None:
     total_orphan = sum(r["orphan"] for r in rows)
     total_pi = sum(r["pi"] for r in rows)
     total_copy = sum(r["copy"] for r in rows)
-    zero_monster = [r for r in rows if r["monsters"] == 0]
+    # **`monsters_all`, NOT `monsters`.** `monsters` counts only the book's
+    # REMAINING monster rows, so a book whose monsters have all been INGESTED
+    # reads as zero here -- and this line's own parenthetical then says "no
+    # monster in the book to own them" about a book that ships several.
+    #
+    # The two classes are structurally different and only one of them is a
+    # ceiling. A book with no monster rows AT ALL (Bestiary 5, Bestiary 6) can
+    # never own its ability rows through any pass, and `loop-instruction.md`'s
+    # "Hard stops" names a per-monster cycle against one as a reportable hard
+    # stop. A book whose monsters are all shipped (`horror_adventures` after
+    # SD-29 Epic 5's final round, `inner_sea_gods`, `ultimate_psionics`,
+    # `bestiary_3`) has owners; its orphans are unowned for some OTHER reason --
+    # most of them `scan_monster_ability_bundle_rows.py`'s bundle class.
+    #
+    # Measured, because the size of the error is the argument for the fix: the
+    # single line reported `931 across 14 books` on the tree that split it,
+    # against a real structural figure of `703 across 10`. SD-29's closure run 2
+    # receipt published the same conflation one ingest earlier as `866 across
+    # 13` (= 703 structural + 163 exhausted). An ingest that GROUNDS a book's
+    # monsters used to make this number RISE, which is the signature of a proxy
+    # measuring something other than what it names.
+    zero_monster = [r for r in rows if r["monsters_all"] == 0]
     zero_monster_units = sum(r["abilities"] for r in zero_monster)
+    exhausted = [r for r in rows if r["monsters_all"] > 0 and r["monsters"] == 0]
+    exhausted_units = sum(r["abilities"] for r in exhausted)
     print()
     print(f"remaining monster+monster_ability units     : {total_units}")
     print(f"orphan monster_ability rows                 : {total_orphan}")
     print(
         f"  of which in ZERO-monster books            : {zero_monster_units} "
-        f"across {len(zero_monster)} books (no monster in the book to own them)"
+        f"across {len(zero_monster)} books (no monster row in the book at all, "
+        f"so nothing can ever own them)"
+    )
+    print(
+        f"  of which in monster-EXHAUSTED books       : {exhausted_units} "
+        f"across {len(exhausted)} books (every monster row SHIPS; these orphans "
+        f"are unowned for another reason -- see scan_monster_ability_bundle_rows.py)"
     )
     print(f"Product Identity rows (never shippable)      : {total_pi}")
     print(f"`.COPY=` delta rows (no stat block of their own): {total_copy}")
