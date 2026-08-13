@@ -6739,3 +6739,167 @@ a separately schedulable job instead of a mid-flight scope expansion.
 - **No number moves today.** Until the sweep runs, those 4,582 units should be reported as *held* —
   the engine has the literal, nothing has confirmed it — never as done. A percentage that rises on
   the strength of this decision alone is the over-claim this axis exists to prevent.
+
+## Decision 68 — Monster / Monster-Ability Lane, extend: round 11, FINAL PASS. The lane's REAL workable count was 9, not 10, and both screens that said otherwise were reading the wrong thing (2026-08-13, `sd29-monster-final-r1`, card `epic-5-monster-lane-extend`)
+
+**Round 11 took `horror_adventures` — 9 units, and the lane's monster-ingest work is now DRY.**
+Grounded `monster` 1,239 → **1,242**, `monster_ability` 1,623 → **1,629**. Corpus-wide grounded
+4,638 → **4,647**. Raw remaining `monster` + `monster_ability` 1,515 → **1,506**, which closes
+exactly (`1515 − 9 = 1506`).
+
+`§64`'s REAL ceiling of **10** was reproduced exactly at cycle start, before being moved — and then
+**corrected down to 9**, which is the round's first finding.
+
+### 68.1 A unit three checked-in screens called workable and this repo can never ingest
+
+`§64` queued `occult_adventures` as *"4 remaining / **1** REAL, a ONE-monster book needing a whole
+new `RuleSetId` for one record, reachable at all only because of `§62.2`'s resolver."* The board
+carries the same figure, and SD-29's closure run 2 receipt carried it forward as 1 of the lane's 10
+REAL workable units.
+
+**It is not workable and never was.** The disqualifying fact is one line away from the `.lst` row all
+three screens were reading:
+
+```
+_occult_adventures.pcc:75
+    RACE:support/oa_races_b3.lst|!PRECAMPAIGN:1,INCLUDES=Bestiary 3
+```
+
+A **negated** gate. PCGen loads that file only when Bestiary 3 is ABSENT. Three independent
+confirmations that this is a republication rather than content of its own:
+
+* the file's own header declares `SOURCELONG:Bestiary 3` / `SOURCESHORT:B3`;
+* `bestiary_3/b3_races.lst:161` carries the identical `KEY:Kami (Shikigami)`;
+* `rules_tables::bestiary_3::monster_data` has **shipped** it since round 5.
+
+Ingesting it would have written a second record for one creature under a second book label — the
+duplicate-corpus-directory defect `§54.3` records the companion lane catching, one level out.
+
+**Why every existing screen passed it, and why that is a class rather than an oversight.** `§64`
+made *"read the PCC LOAD LINE, not the `.lst`"* a standing check, and it has been used correctly
+several times since — but always in the POSITIVE direction: `PRECAMPAIGN:1,INCLUDES=<Book>` with the
+book absent, so the file is out of scope (`RuleSetId::Ha`'s `support/ha_abilities_race_oa.lst`,
+`B5`'s `support/b5_races_companion_oa.lst`, `§47.2`). Those are excluded by a book this repo does
+**not** have.
+
+The negated form is excluded by a book this repo **does** have. It therefore gets *more* likely to
+fire as the repo ingests more books, and a screen written for the positive form alone passes it
+silently. **This one only became false when round 5 registered Bestiary 3** — the corpus did not
+change, the repo did.
+
+Checked in as `scripts/screen_pcc_load_gates.py` rather than left as a prose finding, per `§45.1`.
+It screens both directions over every remaining unit of every kind and finds **719** units corpus-wide
+excluded by a load gate, 10 of them in the two monster kinds.
+
+### 68.2 The screen's own two defects, and the only reason they were caught
+
+Written first, it reported **`this repo does NOT have Bestiary`** — about a book this repo ships 330
+monsters from. Two independent bugs:
+
+* it read **one** `.pcc` per book directory, and a PCGen directory routinely declares several
+  campaigns (`bestiary/` carries `bestiary.pcc`, a `(Player Options Only)` variant and a `(PFS)`
+  variant); and a gate spells `Bestiary 3 ~ Player Options Only` where the declaration spells
+  `Bestiary 3 (Player Options Only)`;
+* it treated `PRECAMPAIGN:1,<a>,<b>` as a sequence of conditions when the leading count makes it a
+  **disjunction**.
+
+**Both were caught by running the screen against cases whose answer three other documents already
+record**, not by reading it. It now reproduces all four exactly:
+
+| case | verdict | already recorded by |
+|---|---|---|
+| `bestiary_5/companion/b5_races_companion_oa.lst` (2) | EXCLUDED | `§47.2`, `rules_tables::bestiary_5` |
+| `horror_adventures/race_trait/ha_abilities_race_oa.lst` (1) | EXCLUDED | `RuleSetId::Ha`'s doc comment |
+| `occult_adventures/monster/oa_races_b3.lst` (1) | EXCLUDED | this finding |
+| `inner_sea_gods/support/*` | **not** excluded | `§64`, Bestiary 4 registered |
+
+A screen that makes a confident claim must be tested where it makes the confident claim. This one
+made two false confident claims before it made a true one.
+
+### 68.3 An ingest that grounds a book's monsters used to make the "zero-monster books" number RISE
+
+`classify_monster_ability_rows.py` bucketed its zero-monster line on `monsters` — a book's
+**remaining** monster rows — while the line's own parenthetical read *"no monster in the book to own
+them"*. A book whose monsters have all been **ingested** therefore read as a zero-monster book.
+
+Grounding this round's 3 `horror_adventures` monsters moved the line from `866 across 13 books` to
+`931 across 14`. Nothing about the corpus changed; the book crossed a threshold in the wrong
+direction.
+
+```
+after the fix
+  of which in ZERO-monster books      : 703 across 10 books
+  of which in monster-EXHAUSTED books : 228 across 4 books
+```
+
+`§64`'s published `866 across 13 books` splits exactly: 703 structural + 163 exhausted
+(`bestiary_3` 13 + `inner_sea_gods` 84 + `ultimate_psionics` 66).
+
+**This is not cosmetic.** `loop-instruction.md` makes a per-monster cycle against a genuinely
+zero-monster book a reportable HARD STOP, and this line is how a cycle tells that case apart from a
+book whose monsters all ship and whose orphans are unowned for some other reason — which, for all
+228 of them, is mostly `§64.1`'s bundle class. Now bucketed on `monsters_all`, with both classes
+printed.
+
+### 68.4 `ABILITY:Internal|AUTOMATIC|` read for its ATTACK segments — a second, independent use of `§64.1`'s token
+
+`ha_races.lst:4` states Hive Queen's attacks in two places:
+
+```
+NATURALATTACKS:Claw,Natural.Melee.Finesseable.Weapon,*2,1d10
+ABILITY:Internal|AUTOMATIC|Race Traits ~ Hive Queen|Bite|Tail Slap
+```
+
+A reader of `NATURALATTACKS:` alone serves a hive queen with **one** attack where the corpus states
+three. Both undiced attacks are recorded as named attacks with no `damage_dice`, never as attacks
+whose damage prints as an empty string — the same treatment the lane already gives Monster Codex's
+`Venom`.
+
+The transcriber already handled this; what is new is the observation that **`§64.1`'s token has two
+independent uses** — ownership (the deferred 229) and attack composition (live, and load-bearing on
+two of this round's three monsters). A successor closing `§64.1` must not assume the token is
+untouched today.
+
+`horror_adventures` contributes **0** to `§64.1`'s class:
+`python3 scripts/scan_monster_ability_bundle_rows.py horror_adventures` → 0. Its four `Internal`
+bundle rows name `race_trait`-kind rows, not `monster_ability` rows — which reproduces `§64`'s own
+prediction for this book exactly.
+
+### 68.5 `§63.4`'s finding, applied to the file that records it
+
+`corpus_ingest_diagnostic`'s `horror_adventures` row called `companion_book_counts`. The book stopped
+being companion-only the moment this round registered its monsters, and the row would have
+under-stated it — which is precisely `§63.4` (a per-book counts function listing only the families
+that existed when it was written, which cost Ultimate Wilderness 327 invisible records). Moved to
+`monster_and_companion_book_counts`.
+
+Leaving it would have repeated a recorded finding **in the file that documents it**, one round after
+`§64.4` fixed the same shape prospectively for `ultimate_psionics`.
+
+### 68.6 What is left, and what it is not
+
+**The monster lane's ingest work is DRY.** Re-derived at cycle end:
+
+```
+python3 scripts/classify_monster_ability_rows.py   ->  reachable remainder 66
+python3 scripts/screen_pcc_load_gates.py monster monster_ability
+                                                  ->  10 of those units are gate-excluded
+```
+
+The 66 break down with no workable unit among them:
+
+| book | classifier-reachable | REAL | why |
+|---|---|---|---|
+| `bestiary` | 58 | **0** | instrument over-report, `§60.2`: 54 cross-table owners + 4 `.MOD`-only overlays |
+| `inner_sea_bestiary` | 7 | **0** | Product-Identity cascade, `§57.2` / `§58.1` |
+| `occult_adventures` | 1 | **0** | `§68.1` — negated PCC gate, already shipped from `bestiary_3` |
+| **total** | **66** | **0** | |
+
+Plus **229** in `§64.1`'s bundle class, unchanged by this round's ingest and now owned:
+`successor-forward-scope-register.md` **C1.5**, owner **SD-31**, with the traversal, the six-book
+split, the five-step change list, the two tests designed to go red, and the command pair that splits
+it from the workable set. Under Decision 27 an unowned deferral is not a valid disposition; it now
+has one.
+
+**A successor must not read `1,506` as a workload.** 1,406 of it is orphan `monster_ability` rows;
+703 of those sit in books with no monster row at all and can never be owned by any pass.
