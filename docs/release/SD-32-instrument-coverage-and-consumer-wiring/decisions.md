@@ -289,8 +289,9 @@ itself reads (`artifacts/why-in-progress-equipment-stalls.py`):
 | units | why it cannot clear its bar |
 |---|---|
 | 295 | **No `data/corpus/<book>/equipment` directory exists at all.** UE (190), UPsi (82), UC (22), UI (1) have compiled catalogs but no ingested corpus, so there is no record for any probe to read. Blocked on ingestion, which Decision 7 puts out of this bundle's scope. |
-| 239 | **The record resolves and carries NO bonus chain at all.** Its `magnitude_token_count` comes from `COST`/`WT`-shaped tokens. There is no magnitude for a consumer-delta probe to observe; a probe that promoted these would be measuring nothing. |
-| 174 | **The record carries a bonus chain in a family `equipment_effects.rs` does not read** — `BONUS:VAR` (132 chains), `ITEMCOST` (70), `EQMARMOR` (37), `COMBAT` (29), `SAVE` (8), `EQM` (8), `WEAPON` (7), and a long tail. These need **new consumer wiring in the engine**, not a new instrument. This is the one genuinely addressable population and it is real product work. |
+| 239 | **The record resolves and carries neither a readable token (`MAXDEX`/`SPELLFAILURE`/`ACCHECK`) nor any bonus chain at all.** Its `magnitude_token_count` comes from `COST`/`WT`-shaped tokens. There is no magnitude for a consumer-delta probe to observe; a probe that promoted these would be measuring nothing. |
+| 136 | **The record carries a bonus chain in a family `equipment_effects.rs` does not read** — `BONUS:VAR` (130 chains), `ITEMCOST` (47), `EQMARMOR` (17), `EQM` (8), `SAVE` (7), `WEAPONPROF` (20 across four weapon types), and a tail. These need **new consumer wiring in the engine**, not a new instrument. |
+| 38 | **The record carries a shape the effect model *does* read, and still no delta was observed.** The nearest-miss population, and the most interesting one. 24 are `BONUS:COMBAT\|AC\|<n>\|TYPE=ArmorEnhancement` / `TYPE=ShieldEnhancement` rows (CRB `Special Ability ~ +1..+5 ~ Armor/Shield`, PU's `ABP ~ +N Attunement ~ Armor/Shield`), which `arms_armor::armor_class_bonus_from_bonus_chains` deliberately does not match — it accepts only `TYPE=Armor`/`TYPE=Shield`, the base item's own AC, never a modifier's enhancement on top. The rest are `%CHOICE`-parameterised chains (`BONUS:COMBAT\|AC\|%CHOICE\|TYPE=DEFLECTION`, `BONUS:STAT\|%CHOICE`) whose magnitude is not a literal at all, and weapon `TOHIT`/`DAMAGE` chains gated on `PREVARGT`/`PREEQUIPBOTH` conditions the standalone probe cannot satisfy. |
 | 7 | Book has a corpus, but no record under this unit's key or name. |
 
 Those four rows sum to 715; the 716th `in-progress` unit is a single
@@ -300,10 +301,28 @@ probe.
 The honest total that this card could move with the instrument that exists was
 **18, not 734**. The remaining 716 are recorded rather than forced.
 
-**The named next lever, with its size.** The 174-unit row is the only one that
-is neither an ingestion gap nor an absence of magnitude. It is
-`forward-scope-register` work: widening `ResolvedEquipmentEffect` past its
-seven fields so `BONUS:VAR`/`EQMARMOR`/`COMBAT`/`SAVE` chains reach a real
-consumer. That is engine wiring against a live twin, not instrument work, and
-it is deliberately NOT attempted here — a probe extended to "observe" a chain
-no consumer reads would be a green instrument over an empty screen.
+**The named next lever, with its size.** The 38-unit row is the cheapest real
+lever left and the 136-unit row the next: together 174 units that are neither
+an ingestion gap nor an absence of magnitude. Both are
+`forward-scope-register F8` work — teaching a consumer to read a magnitude the
+record genuinely carries — and both are engine wiring against a live twin, not
+instrument work.
+
+**Why the 38 were not simply taken here, even though the shape is already
+readable.** Two reasons, and both are the same rule.
+
+1. `TYPE=ArmorEnhancement` is a *different bonus type* from `TYPE=Armor` in
+   PF1e, and it stacks on top of the base armor bonus rather than replacing
+   it. Making `armor_class_bonus_from_bonus_chains` accept it changes a
+   character's computed AC. That is a product behaviour change with parity
+   surface, owed a fixture and an oracle comparison, not a one-line widening
+   slipped in under an instrument card.
+2. These are equipment **modifiers**. The probe equips each key standalone with
+   `applied_modifiers: []`, which is the right question for an item and the
+   wrong question for a modifier — a modifier's delta only exists relative to a
+   host item. Reading its chain while it is equipped alone would report a
+   number no player can ever see.
+
+Widening the probe to "observe" either of these without the consumer work is
+precisely the green-instrument-over-an-empty-screen failure this bundle exists
+to avoid, so neither was done.

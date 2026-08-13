@@ -38,6 +38,21 @@ DIR_FOR_BOOK = {
 }
 
 
+# Exactly what the four per-category resolvers under
+# `src/rules_core/equipment_effects/` read, and therefore the complete set of
+# record shapes `equipment_key_is_wired` can observe. Naming both shapes
+# matters: `arms_armor` reads three of its four inputs off RAW TOKENS, not
+# bonus chains, so "carries no bonus chain" alone would be an inaccurate reason
+# to give for a record staying unwired.
+READ_TOKENS = ("MAXDEX", "SPELLFAILURE", "ACCHECK")          # arms_armor.rs
+READ_CHAIN_HEADS = {
+    "COMBAT": "arms_armor.rs, `BONUS:COMBAT|AC|<n>`",
+    "SKILL": "general.rs",
+    "STAT": "magic_items.rs",
+    "WEAPON": "equipmods.rs",
+}
+
+
 def index_book(corpus_dir):
     """key -> record and name -> record, for one book's equipment corpus."""
     idx = {}
@@ -91,15 +106,25 @@ def main():
             reasons["book has a corpus, but no record under this key or name"] += 1
             continue
         chains = record.get("raw_bonus_chains") or []
+        heads = [(chain.get("qualifiers") or [None])[0] for chain in chains]
+        tokens = {t.get("key") for t in (record.get("raw_tokens") or [])}
+        readable = (tokens & set(READ_TOKENS)) or (set(heads) & set(READ_CHAIN_HEADS))
+        if readable:
+            # The record DOES carry something the effect model reads, yet the
+            # probe still observed no delta -- a real anomaly worth a name of
+            # its own rather than being folded into either bucket below.
+            reasons["record carries a shape the effect model reads, yet no "
+                    "delta was observed -- INVESTIGATE"] += 1
+            continue
         if not chains:
-            reasons["record resolves, carries NO bonus chain at all"] += 1
+            reasons["record resolves, carries neither a readable token "
+                    "(MAXDEX/SPELLFAILURE/ACCHECK) nor any bonus chain"] += 1
             continue
         reasons["record resolves, bonus chain in a family the effect model "
                 "does not read"] += 1
-        for chain in chains:
-            quals = chain.get("qualifiers") or []
-            if quals:
-                families[quals[0]] += 1
+        for head in heads:
+            if head:
+                families[head] += 1
 
     print(f"still in-progress equipment / equipment_modifier: {len(stalled)}\n")
     for reason, n in sorted(reasons.items(), key=lambda x: -x[1]):

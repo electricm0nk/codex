@@ -125,10 +125,18 @@ not implement E2/E3/E4 is materially stronger.
 
 **Why recorded.** `decisions.md §10`. After E2 widened the probe, the only
 `in-progress` population that is neither an ingestion gap nor an absence of
-magnitude is 174 equipment/equipment_modifier units whose corpus record carries
-a real `BONUS:` chain in a family `equipment_effects.rs` does not read —
-`BONUS:VAR` (132 chains), `ITEMCOST` (70), `EQMARMOR` (37), `COMBAT` (29),
-`SAVE` (8), `EQM` (8), `WEAPON` (7), and a tail.
+magnitude is 174 equipment/equipment_modifier units, and it splits in two:
+
+- **38 near-misses.** The record carries a shape `equipment_effects.rs` already
+  reads and still produced no delta. 24 of them are
+  `BONUS:COMBAT|AC|<n>|TYPE=ArmorEnhancement`/`TYPE=ShieldEnhancement` rows —
+  CRB `Special Ability ~ +1..+5 ~ Armor/Shield`, PU `ABP ~ +N Attunement ~
+  Armor/Shield` — which `armor_class_bonus_from_bonus_chains` deliberately does
+  not match, accepting only `TYPE=Armor`/`TYPE=Shield`. The rest are
+  `%CHOICE`-parameterised chains and `PREVARGT`/`PREEQUIPBOTH`-gated weapon
+  chains. **This is the cheapest lever left on the equipment kind.**
+- **136 unread families.** `BONUS:VAR` (130 chains), `ITEMCOST` (47),
+  `EQMARMOR` (17), `EQM` (8), `SAVE` (7), `WEAPONPROF` (20), and a tail.
 
 **Why not here.** `ResolvedEquipmentEffect` has exactly seven fields and
 `equipment_key_is_wired` reads all seven — the probe is not under-reading, the
@@ -138,6 +146,14 @@ landing each new magnitude on a twin the player actually reads
 reads"). That is engine work with parity surface, not instrument work, and
 extending the probe to "observe" a chain no consumer reads would be precisely
 the green-instrument-over-an-empty-screen failure this bundle exists to avoid.
+
+**Two extra constraints the successor must carry.** (1) `TYPE=ArmorEnhancement`
+stacks *on top of* the base armor bonus rather than replacing it, so accepting
+it changes computed AC and owes a fixture plus an oracle comparison. (2) These
+are equipment **modifiers**; the probe equips each key standalone with
+`applied_modifiers: []`, which is the wrong question for a modifier. A
+modifier-shaped probe applies the mod to a host item and reads the delta
+against that host. Neither of those is a one-line widening.
 
 **Successor condition:** an E3-shaped card whose ceiling is re-derived to 174,
 not the scope card's 375 — 239 of that 375 carry no bonus chain at all and

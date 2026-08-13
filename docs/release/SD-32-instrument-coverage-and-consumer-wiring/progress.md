@@ -104,10 +104,19 @@ instrument that exists". `decisions.md §10` shows that is false for 716 of the
 ```
 python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/why-in-progress-equipment-stalls.py
 #   295  no data/corpus/<book>/equipment directory exists at all
-#   239  record resolves, carries NO bonus chain at all
-#   174  record resolves, bonus chain in a family the effect model does not read
+#   239  record resolves, carries neither a readable token nor any bonus chain
+#   136  record resolves, bonus chain in a family the effect model does not read
+#    38  record carries a shape the effect model reads, yet no delta observed
 #     7  book has a corpus, but no record under this key or name
 ```
+
+The 38-unit row is the nearest miss and the cheapest remaining lever: 24 of
+them are `BONUS:COMBAT|AC|<n>|TYPE=ArmorEnhancement`/`TYPE=ShieldEnhancement`
+rows that `arms_armor::armor_class_bonus_from_bonus_chains` deliberately does
+not match. Not taken here, for the two reasons `decisions.md §10` records —
+accepting that bonus type changes computed AC (parity surface), and these are
+*modifiers*, whose delta only exists relative to a host item the standalone
+probe never gives them.
 
 **Bar-integrity self-check.** No threshold, classifier, bucket definition or
 `doneness_meaning` text was edited. No test was loosened, skipped or
