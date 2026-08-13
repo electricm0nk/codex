@@ -16,6 +16,27 @@
 >
 > **PR #360 (`tranche/9` → `develop`) stays OPEN and unmerged.** The operator merges it at real
 > closure.
+>
+> ### Still not final after closure RUN 2 — 2026-08-13 (`sd29-closure-r2`, card `epic-11-closure-run2`)
+>
+> Closure run 2 ran, re-derived every lane denominator, and **ruled the bundle NOT CLOSED**. These
+> notes are therefore **not** rewritten by it, deliberately: rewriting "Known issues" into shipped
+> issues now would make this document describe a state the bundle has not reached, which is the
+> precise failure the banner above records.
+>
+> **63 units of workable work remain**, in two lanes whose chassis are already registered —
+> `companion` **53** (card 12) and `monster`/`monster_ability` **10** (card 8), plus **229** monster
+> rows mechanism-blocked on `decisions.md §64.1`'s `ABILITY:Internal|AUTOMATIC|` bundle hop.
+> `race_trait` is **DRY** (3 residual, all needing a race-variant chassis that is not that card).
+> Evidence and the exact commands: `progress.md` `## Cycle SD29-E11-F1-002`.
+>
+> **Every per-kind figure below is now STALE.** It was re-derived against
+> `docs/work-inventory.json` at `generated_at 2026-08-11T10:38:33Z`; sixteen lane rounds have landed
+> since. At tip `0ddfc126` the same commands give `companion` 870 grounded / 826 remaining,
+> `monster` 1,239 / 31, `monster_ability` 1,623 / 1,484, `race_trait` 513 / 2,934. The figures below
+> are left unedited because they are an accurate snapshot of the moment they were written and
+> re-stating them piecemeal is how a rollup starts disagreeing with itself — read them as history,
+> not as current state.
 
 **Populated at the (since-rescinded) closure of 2026-08-11 (Epic 11, Closure Epilogue).** The per-cycle receipts in
 `progress.md` are the per-record evidence; this document is the rollup. Every figure below was
