@@ -43,7 +43,7 @@ is cleared).
 |----|--------|------|-----------|------------|------------|----------|
 | `epic-1-identifier` | READY | Code-Side Identifier Cleanup | identifier-discipline audit pass | — | — | — |
 | `epic-2-prelaunch` | READY (gated on epic-1) | Operator Pre-Launch | local-file dispatch readiness + cycle-0 trap-report + work-inventory (23-book `class_feature` re-derivation) | — | — | — |
-| `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep wired in, standing gate for epic-6 | — | — | — |
+| `epic-3-pi-gate` | READY (gated on epic-1, epic-2) | PI-Screening Provenance Gate | per-class PI-blacklist sweep (SD30-E3-F1) + declared-PI reader wired into class_feature ingest (SD30-E3-F2, `decisions.md §39`) + corpus-wide declared-PI backfill (SD30-E3-F3) + regression gate (SD30-E3-F4) — F2 hard-blocks epic-6, no chassis-sweep cycle may claim a class before F2 is COMPLETE | — | — | — |
 | `epic-4-measurement` | READY (gated on epic-1, epic-2) | Per-Class Archetype Measurement | class inventory + per-class hand-verification + chooser-primitive design + `unknown`-bucket characterization | — | — | — |
 | `epic-5-mechanism` | READY (per-class, gated on epic-3, epic-4 clearing the target class) | Archetype Mechanism | supersession-shape wiring per cleared class; chooser-shape wiring once epic-4-F3 lands | — | — | — |
 | `epic-6-chassis-sweep` | READY (per-class, gated on epic-3, epic-4 and epic-5 clearing the target class) | Per-Class Chassis Sweep | per-class `class_feature` ingest across the 23 in-scope books, reach-gate claim per record | — | — | — |

@@ -104,6 +104,13 @@ now-corpus-wide Epic 4 (proven-path lane scopes only the settled-method kinds). 
 `§9.1` measurement reaches the relevant classes — tracked here so it is not silently dropped, and
 not silently folded into a lane whose method does not fit it.
 
+**PI-declaration pointer (2026-08-13, operator directive "add the pi fix to sd-30").** `§53`'s
+declared-`NAMEISPI`/`DESCISPI` finding (this package, race-trait lane round 5) is corpus-wide per
+`§53.7`'s own scope note — SD-30 owns the largest remaining exposure surface, 464 re-derived
+`class_feature` source rows across 6 of its 23 books. The authoritative scope, cards, and acceptance
+criteria live in `SD-30-class-feature-archetype-bundle/decisions.md §39` (declared-PI reader,
+corpus-wide backfill, regression gate, ordered ahead of Epic 6 ingest) — not duplicated here.
+
 ### C1.4 — Deferred findings from Epic 10, Bundle Code Review RUN 2 (2026-08-13, `decisions.md §66`)
 
 Decision 27 requires every deferred review finding to name an owner; an unowned deferral is not a

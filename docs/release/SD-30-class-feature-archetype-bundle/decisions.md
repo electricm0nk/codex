@@ -908,3 +908,163 @@ unclustered remainder are recorded as Epic 4 backlog items, not silently dropped
 
 **Authority:** `SD-28-ultimate-book-content-ingestion/decisions.md` "SD28-E15" unknown-status decision
 (line 780, 4,172->1,897 fix), `§52`-`§56`, `§61`, `§62`; `docs/work-inventory.json` `status_vocabulary`.
+
+## Decision 39 — Declared-PI reading (`NAMEISPI`/`DESCISPI`) becomes owned, executable SD-30 scope, ahead of any `class_feature` ingest (2026-08-13, operator directive)
+
+**Status:** New. Operator directive 2026-08-13, verbatim: *"add the pi fix to sd-30"*. Every figure
+below was re-derived independently against this checkout at `tranche/9`, not transcribed from the
+dispatching brief — the transcribed-instead-of-derived pattern is this program's rank-one recorded
+defect class (`SD-29-corpus-wide-catch-up-lanes/decisions.md`, ~50 corrections of that shape).
+
+### 39.1 The defect, as SD-29 found it, cited not re-argued
+
+`SD-29-corpus-wide-catch-up-lanes/decisions.md §53` (race-trait lane, round 5) and `§50` (monster
+lane, round 3) independently found the same rule: PCGen declares Product Identity **per record** via
+`NAMEISPI:YES` (the record's name is PI) and `DESCISPI:YES` (its description is PI). Every Pipeline A
+ingest path already parses these into `raw_tokens`; before `§53`, nothing read them. In their place,
+`pi_screening::PI_BLACKLIST_TERMS` — a 55-term hand-maintained list, whose own module doc calls it
+"a bounded, documented heuristic … not an exhaustive legal review" — screens shipped prose by term
+match alone. `§53.1` measured the two disagreeing 69% of the time in `race_trait` alone: 26 shipped
+records declared `DESCISPI:YES`; the blacklist redacted 18 by coincidence and shipped the other 8
+(Kodar Mountains, Earthfall, Ekujae, Gogpodda, Omesta, Droskar, Abaddon, Inner Sea). `§53.2`/`§50.3`
+independently converged on the same disposition for a `NAMEISPI:YES` row: a name cannot be redacted
+without breaking the record's key and cross-references, so the row is **dropped**, not screened.
+
+`§53` fixed this for `race_trait` only: the shared reader (`pi_screening::{DeclaredProductIdentity,
+declared_product_identity, classify_optional_field_declared}`) was placed in the shared module, but
+`§53.7` recorded explicitly that **only `ingest_race_traits` calls it** — every other Pipeline A
+writer, and the entire Python transcription pipeline (Pipeline B: `transcribe_monster_tables.py`,
+`transcribe_companion_tables.py`, `classify_monster_ability_rows.py`), still screens on the term list
+alone or, for companion, not at all. Verified this checkout, not inherited:
+
+```bash
+grep -rln "declared_product_identity\|DeclaredProductIdentity" src/ --include=*.rs
+#  -> src/rules_core/pi_screening.rs (the reader itself), src/bin/ingest_race_traits.rs (the only caller)
+grep -n "DESCISPI" scripts/transcribe_monster_tables.py scripts/transcribe_companion_tables.py
+#  -> no hits: the monster transcriber drops NAMEISPI:YES rows (script lines 780, 818) but has never
+#     read DESCISPI:YES at all; the companion transcriber reads neither token
+```
+
+### 39.2 Re-derived corpus-wide exposure — commands and results, not transcribed figures
+
+**Already-shipped exposure, all kinds, corpus-wide** (does the blacklist currently miss a declared-PI
+row anywhere it has already shipped?):
+
+```bash
+python3 -c "
+import json,glob,collections
+c=collections.Counter()
+for p in glob.glob('data/corpus/*/*/*/*.json'):
+    d=json.load(open(p)); ks={t['key'].upper() for t in (d['data'].get('raw_tokens') or [])}
+    for k in ('NAMEISPI','DESCISPI'):
+        if k in ks: c[(k, d.get('pi_marker'))]+=1
+print(dict(c))"
+```
+
+→ `{('DESCISPI', 'redacted'): 25}` over 4,281 shipped corpus files, all 25 in `core_essentials` (9)
+and `inner_sea_races` (16) — exactly `§53`'s fix and nothing else. **The already-shipped exposure
+outside `race_trait` is currently zero**, because no other kind's ingest path has yet shipped a
+record that carries either token — not because any other path screens correctly. This is a
+point-in-time fact, re-checkable at any future gate run, not a standing guarantee.
+
+**`class_feature`'s future exposure — the number that matters to this bundle.** No `class_feature`
+ingest path exists yet (`ls src/bin/ | grep ingest` and `ls scripts/*.py | grep -E
+'ingest|transcribe'` show no `class_feature` writer). The exposure is therefore entirely upstream, in
+PCGen source, scoped to SD-30's 23-book `class_feature` population (`decisions.md §33`, re-confirmed
+this session via `docs/work-inventory.json`'s `units` where `kind=='class_feature'`, `books` set):
+
+```bash
+# per book, over every *abilities_class*/*classfeats*/*class_abilities* .lst file in that book's
+# PCGen source directory (~/workspace/repos/pcgen/data/pathfinder/{paizo,dreamscarred_press}/...),
+# counting rows (lines) carrying at least one of NAMEISPI:YES / DESCISPI:YES
+```
+
+| book | class-feature `.lst` files | rows w/ ≥1 ISPI token | `NAMEISPI:YES` (drop) | `DESCISPI:YES` (redact) |
+|---|---|---|---|---|
+| `adventurers_guide` | 1 | **276** | 49 | 268 |
+| `inner_sea_magic` | 1 | 67 | 20 | 60 |
+| `inner_sea_world_guide` | 2 | 49 | 29 | 29 |
+| `inner_sea_intrigue` | 2 | 45 | 11 | 43 |
+| `book_of_the_damned_volume_2` | 1 | 18 | 7 | 11 |
+| `inner_sea_combat` | 2 | 9 | 8 | 1 |
+| (other 17 of 23 books) | — | 0 | 0 | 0 |
+| **total** | | **464** | **124** | **412** (some rows carry both) |
+
+**464 of the 23-book `class_feature` population's source rows declare Product Identity that nothing
+in this repo currently reads.** Concentrated in 6 books, dominated by `adventurers_guide` (276 rows,
+adept archetype/rage-power/hex-style content that is exactly the "named ability + flavor description"
+shape both `§50` and `§53` found the term list misses). `ultimate_psionics` is third-party
+(`dreamscarred_press`, not Paizo) and carries none. **Zero of this is shipped yet** — it becomes real
+exposure only when Epic 6's per-class chassis sweep ingests these 6 books, which is exactly why the
+fix must land before that ingest, not after.
+
+**The gate itself does not close this gap.** `scripts/verify.sh`'s `pi-sweep` stage
+(`pi_sweep_rules_tables`) is Pipeline B's term-blacklist sweep over `src/rules_core/rules_tables` —
+the same 55-term heuristic, downstream of ingest, described in this bundle's own Epic 3
+(`epic-breakdown.md` SD30-E3-F1: *"per-class PI-blacklist sweep… or the 55-term blacklist sweep"*).
+It does not read `NAMEISPI`/`DESCISPI` either. A green `pi-sweep` run says nothing about whether a
+declared-PI row shipped.
+
+### 39.3 Disposition: SD-30 is the right home, at the scale this measured
+
+464 rows across 6 of SD-30's 23 books is real but bounded — it does not argue for a standalone
+bundle the way, hypothetically, a five-figure corpus-wide count would. It sits naturally inside
+`epic-3-pi-gate`, which already exists as the standing gate ahead of Epic 6's per-book ingest and
+already cites `§53`'s sibling finding in SD-29 Epic 3 as "a Pipeline-B finding, not a kind-specific
+one." Epic 3's acceptance criteria (`epic-breakdown.md` SD30-E3-F1) currently name only the
+blacklist sweep — that is the gap this decision closes. Cards below (`kanban.md`, `epic-breakdown.md`)
+make the declared-PI reader, the backfill sweep, and the regression gate real, ordered dispatch work
+inside Epic 3, gating Epic 6 exactly as the blacklist sweep already does.
+
+### 39.4 Acceptance shape carried into the cards
+
+- **Production path, not a fixture.** The reader already exists and is unit-tested
+  (`pi_screening::declared_product_identity`, 7 tests) — the fix is wiring it into whichever
+  ingest/transcription path Epic 6 builds for `class_feature`, mirroring `ingest_race_traits`'s
+  pattern (drop `NAMEISPI:YES` before the scope filter, redact `DESCISPI:YES` through the shared
+  reader, both counted by file:line in the cycle's receipt), not a standalone script run by hand.
+- **The two rulings, both required:** `DESCISPI:YES` → redact through `classify_optional_field_declared`
+  (`§53.1`); `NAMEISPI:YES` → drop the row, name it with file:line in the generated module header or
+  run receipt (`§50.3`/`§53.2` — independently converged, now the settled rule, not reargued per
+  cycle). Reclassifying a declared-PI row as shippable remains `ogl-pi-blacklist.md` §3's per-book
+  override, an operator decision, not a cycle's to make.
+- **Backfill, corpus-wide, every already-shipped kind.** `§53.7`'s own scope finding: "only
+  `ingest_race_traits` calls it… the same command that found this, pointed at the whole corpus rather
+  than one kind, is the successor's first move." §39.2's corpus-wide sweep command *is* that first
+  move, re-run at whatever point the backfill cycle executes (currently zero hits outside the already-
+  fixed `race_trait`, but Pipeline B's monster/companion transcribers still lack `DESCISPI` handling
+  entirely, so any future re-ingest of those kinds without this fix reopens the gap silently).
+- **Regression gate.** `pi-sweep` (`scripts/verify.sh`, `pi_sweep_rules_tables`) and
+  `docs/governance/ogl-pi-blacklist.md` are the existing PI machinery; both are term-blacklist only
+  and neither reads the declared tokens. The regression gate belongs alongside them as a sibling
+  check, not folded into either — reading a declaration and scanning for undeclared terms are
+  different questions (`§53.1`'s "the two are now a union"), and `tests/sd29_declared_product_identity_in_shipped_race_traits.rs`
+  is the precedent shape: a corpus-level test reading **shipped files**, extended to walk
+  `*/class_feature/*` once that path exists, so a future `class_feature` ingest cannot reintroduce a
+  declared-PI row without a red gate.
+
+### 39.5 Ordering constraint, stated explicitly
+
+**The declared-PI reader must be wired into `class_feature`'s ingest/transcription path, and the
+corpus-wide backfill sweep run, before Epic 6 schedules its first per-book chassis-sweep cycle.**
+Ingesting `class_feature` content first and screening for declared PI later manufactures exactly the
+exposure this decision exists to prevent — `adventurers_guide`'s 276 rows would ship through the
+55-term blacklist the same way `race_trait`'s 8 undeclared-term rows did before `§53`. `epic-3-pi-gate`
+already gates `epic-6-chassis-sweep` in `kanban.md`; this decision adds the declared-PI work inside
+that existing gate rather than creating a new one, so the ordering `kanban.md` already encodes now
+carries the right acceptance criteria.
+
+### 39.6 Cross-reference
+
+`SD-29-corpus-wide-catch-up-lanes/successor-forward-scope-register.md` carries a pointer to this
+decision rather than a duplicate scope entry — the authoritative PI-declaration scope, corpus-wide,
+lives here.
+
+**Authority:** `SD-29-corpus-wide-catch-up-lanes/decisions.md §50` (monster lane, `NAMEISPI:YES`
+finding, round 3), `§53` (race-trait lane, full ruling + shared-reader landing, round 5);
+`src/rules_core/pi_screening.rs` (reader + tests); `src/bin/ingest_race_traits.rs` (only current
+caller); `scripts/transcribe_monster_tables.py`, `scripts/transcribe_companion_tables.py` (Pipeline B,
+no/partial ISPI handling); `docs/governance/ogl-pi-blacklist.md` §§2-3; `scripts/verify.sh` `pi-sweep`
+stage; `docs/work-inventory.json` (23-book `class_feature` population); PCGen source tree
+`~/workspace/repos/pcgen/data/pathfinder/{paizo,dreamscarred_press}/` (per-book `.lst` counts, this
+session, 2026-08-13).

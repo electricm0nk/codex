@@ -106,6 +106,70 @@ Acceptance:
   `progress.md`.
 - A hit is a hard stop for that record (`loop-instruction.md` "Stop vs. press on"), not routed around.
 
+#### SD30-E3-F2 — Declared-PI reader wired into the `class_feature` ingest/transcription path (2026-08-13, `decisions.md §39`)
+
+**Blocks Epic 6 entirely — no per-book chassis-sweep cycle may claim its class until this feature
+seed is `COMPLETE`.** `decisions.md §39.2` re-derived 464 source rows across 6 of the 23 in-scope
+books (`adventurers_guide` 276, `inner_sea_magic` 67, `inner_sea_world_guide` 49, `inner_sea_intrigue`
+45, `book_of_the_damned_volume_2` 18, `inner_sea_combat` 9) that declare `NAMEISPI:YES` or
+`DESCISPI:YES` in PCGen source and would ship past the 55-term blacklist the same way SD-29's
+race-trait lane's 8 undeclared-term rows did before its own fix (`SD-29-corpus-wide-catch-up-lanes/decisions.md §53`).
+
+Acceptance:
+
+- Whichever ingest binary or Python transcriber Epic 6 builds for `class_feature` calls
+  `pi_screening::{declared_product_identity, classify_optional_field_declared}` (already implemented,
+  7 unit tests, `src/rules_core/pi_screening.rs`) — the same reader `ingest_race_traits` already
+  uses, not a new implementation.
+- `NAMEISPI:YES` rows are dropped **before** the scope filter, named by file:line in the run receipt
+  (mirrors `ingest_race_traits`'s `dropped, NAMEISPI:YES : N` line).
+- `DESCISPI:YES` descriptions are redacted through the shared reader and counted in the receipt
+  (mirrors `descriptions redacted by DESCISPI:YES : N`).
+- This is a **production-path** change to the ingest/transcription binary itself — not a fixture, not
+  a script run by hand outside the pipeline that generates `data/corpus/`.
+- Reclassifying a specific declared-PI row as shippable is `ogl-pi-blacklist.md` §3's per-book
+  override — an operator decision a cycle may request but not make unilaterally.
+
+#### SD30-E3-F3 — Corpus-wide declared-PI backfill sweep, every already-shipped kind
+
+`decisions.md §53.7`'s own scope finding named this as "the successor's first move": the shared
+reader is placed in `pi_screening` but only `ingest_race_traits` calls it; every other Pipeline A
+writer and the entire Pipeline B transcription pipeline (`transcribe_monster_tables.py` — drops
+`NAMEISPI:YES`, per lines 780/818, but has never read `DESCISPI:YES`; `transcribe_companion_tables.py`
+— reads neither token) still screen on the term list alone or not at all.
+
+Acceptance:
+
+- Run `decisions.md §39.2`'s corpus-wide sweep command (`raw_tokens` scan over
+  `data/corpus/*/*/*/*.json`, all kinds) at the start of this feature seed's cycle, not transcribed
+  from `§39.2`'s 2026-08-13 result (currently zero hits outside the already-fixed `race_trait`, but
+  this is a point-in-time fact that must be re-checked at time of use, per this program's own
+  standing-defect pattern).
+- Any hit found is resolved the same way `§53` resolved race-trait's: `DESCISPI:YES` → redact and
+  regenerate that book's corpus files; `NAMEISPI:YES` → drop the row, re-derive every pinned count the
+  drop touches (mirrors `§53.3`'s nine-file re-pin), do not decrement by hand.
+- `transcribe_monster_tables.py` gains `DESCISPI:YES` handling (redaction) alongside its existing
+  `NAMEISPI:YES` drop; `transcribe_companion_tables.py` gains both, scoped to whatever ISPI exposure
+  its own source sweep finds (1 `NAMEISPI:YES` row measured in `decisions.md §39` at
+  `dtt_races_companion.lst`, re-derive at time of use).
+
+#### SD30-E3-F4 — Regression gate: a future ingest cannot reintroduce a declared-PI leak
+
+`scripts/verify.sh`'s `pi-sweep` stage and `docs/governance/ogl-pi-blacklist.md` are both
+term-blacklist mechanisms; neither reads `NAMEISPI`/`DESCISPI`. Reading a declaration and scanning for
+undeclared terms are different questions (`decisions.md §53.1` — "the two are now a union") and need
+a sibling check, not a merge into either existing mechanism.
+
+Acceptance:
+
+- A corpus-level test, following `tests/sd29_declared_product_identity_in_shipped_race_traits.rs`'s
+  shape exactly (reads shipped files, not source rows, so both ends read the same bytes), extended to
+  walk `*/class_feature/*` once that path exists under `data/corpus/`.
+- The test is wired into `scripts/verify.sh` (either as its own stage or folded into an existing
+  full-corpus stage — cycle's choice, but it must run in `verify.sh full`, mirroring `pi-sweep`'s
+  "cheap enough to also run in `quick`" reasoning if the walk stays cheap).
+- The gate fails RED, not warns, if a declared-PI row is found unredacted/undropped in shipped output.
+
 ## Epic 4 (SD30-E4) — Per-Class Archetype Measurement (GATES Epics 5 and 6)
 
 **Objective:** Extend SD-28 `§63`/`§64`'s hand-verification method — find each named archetype slot's
@@ -367,7 +431,9 @@ SD-30 closes when:
   whatever Epic 4 adds, and has either wired or explicitly deferred the chooser-interaction shape for
   Oracle/Arcanist/Sorcerer.
 - Epic 6's chassis sweep has ingested and reach-gated every class Epic 4/5 cleared.
-- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book touched.
+- Epic 3's PI-screening gate ran clean (or recorded and resolved hits) on every book touched,
+  including the declared-PI reader (SD30-E3-F2), the corpus-wide backfill sweep (SD30-E3-F3), and the
+  regression gate (SD30-E3-F4) — not the 55-term blacklist sweep alone (`decisions.md §39`).
 - Epic 8 (Bundle Code Review) closed, all findings triaged with named owners for deferrals.
 - Epic 9 (Closure) fires.
 - `progress.md` carries the closure receipt.
