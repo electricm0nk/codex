@@ -13680,3 +13680,319 @@ Plus 229 mechanism-blocked, owned at C1.5.
 
 **`1,506` is not a workload.** 1,406 of it is orphan `monster_ability` rows and 703 of those sit in
 books with no monster row at all.
+
+---
+## Cycle SD29-E11-F1-003 — `epic-11-closure-run3` (Closure Epilogue, RUN 3) — **SD-29 IS CLOSED**
+
+**Actor:** `sd29-closure-r3` · **Date:** 2026-08-13 · **Branch:** `tranche/9` ·
+**Branch point vs `origin/develop`:** `a1295856` — **272 commits, 4,741 files, +316,061 −15,969**
+(`git diff --shortstat $(git merge-base HEAD origin/develop)..HEAD`)
+
+### 0. THE RULING: every lane is at a **measured** ceiling, and the bundle closes
+
+Closure run 2 correctly refused to close with 63 workable units outstanding (`## Cycle
+SD29-E11-F1-002`). That condition has cleared. Cards 8 and 12 landed their final passes between the
+two runs, and this cycle re-derived all three splits with the same checked-in classifiers before
+planning anything:
+
+| lane | raw remainder | classifier-reachable | **REAL workable** | disposition |
+|---|---|---|---|---|
+| `companion` | 774 | **1** | **0** | `DRY` — the 1 is `ASPECT:`-blocked (C1.6) |
+| `monster` + `monster_ability` | 1,506 | **66** | **0** | `DRY` — + 229 mechanism-blocked (C1.5) |
+| `race_trait` | 2,934 | **58** inside a 571 ceiling | **0** | `DRY` — + 2,876 chassis-blocked |
+| | | | **0 TOTAL** | **CLOSE** |
+
+So this cycle closes properly: `docs/architecture/` refreshed to current-state truth,
+`release-notes.md` §Known issues rewritten, every Decision-27 deferral audited for a named owner, the
+gate run FULL with its exit code captured directly, DoD item 8 satisfied on all three reopened lanes
+at the closing tip, PR #360 **updated in place and NOT merged**, and nothing stranded.
+
+### 1. Base — the FIRST cycle in six handed a checkout that was not diverged
+
+`git status` at cycle start: **0 ahead, 16 behind** `origin/tranche/9` — behind, but a clean
+ancestor, so a fast-forward and not a divergence. One uncommitted file was present
+(`docs/retro/events/codex.jsonl`, the reclaim daemon's 08:00Z sweep event, authored by no agent);
+committed as `9e727b4d` before rebasing rather than discarded, for the reason run 2 §7.7 records —
+the retro log's whole value is surviving a run git does not record.
+
+`git rebase origin/tranche/9` → clean, no conflict. `docs/release/SD-31-pcgen-character-import/` was
+left untracked; it is a different bundle's package and not this cycle's to land.
+
+### 2. Every figure re-derived, command first — and the brief's figures were stale
+
+The dispatch brief carried run 2's `companion 53` / `monster 10` workable figures. Both were correct
+when run 2 wrote them and both are **stale at this tip**: the two lanes' final passes landed in
+between. Re-derived here rather than transcribed.
+
+**(a) Raw per-kind denominators, in-scope books only**, against `docs/work-inventory.json`
+(`generated_at 2026-08-13T09:33:16Z`, regenerated on the merged tip by `3ce4a1d4`):
+
+```
+python3 -c "
+import json, collections
+d = json.load(open('docs/work-inventory.json'))
+oos = {b['id'] for b in d['books'] if b['scope'] == 'out_of_scope'}
+for kind in ('companion','monster','monster_ability','race_trait'):
+    c = collections.Counter(u['status'] for u in d['units'] if u['kind']==kind and u['book'] not in oos)
+    print(kind, 'total', sum(c.values()), 'grounded', c['grounded'],
+          'remaining', c['not-ingested']+c['not-started'], dict(c))"
+```
+
+```
+companion        total=1696  grounded= 922  remaining= 774
+monster          total=1270  grounded=1242  remaining=  28
+monster_ability  total=3107  grounded=1629  remaining=1478
+race_trait       total=3447  grounded= 513  remaining=2934
+```
+
+**The inventory is current at this tip, and that was checked rather than assumed.** Against run 2's
+figures it is `monster` +3 and `monster_ability` +6 — exactly the 9 the monster lane's round 11
+ingested — and `companion` 870 → 922, exactly round 9's +52. Both lanes' work is reflected.
+
+**(b) `companion` REAL workable = 0.** The classifier's exclusion set intersected with unit status
+(the printed `reachable remainder` line does not subtract already-grounded rows):
+
+```
+python3 -c "
+import json, sys, collections
+sys.path.insert(0,'scripts')
+import classify_companion_rows as C
+inv=json.load(open('docs/work-inventory.json')); dirs=C.book_dirs()
+by=collections.defaultdict(list)
+for u in inv['units']:
+    if u['kind']=='companion': by[u['book']].append(u)
+tot=0
+for book in sorted(by):
+    r=C.classify(book, by[book], dirs[book]); exc=set(r['excluded'])
+    rem=[u for u in by[book] if u['corpus_key'] not in exc
+         and u['status'] in ('not-ingested','not-started')]
+    if rem: print(book, len(rem), [u['corpus_key'] for u in rem])
+    tot+=len(rem)
+print('TOTAL companion REACHABLE REMAINING =', tot)"
+  -> core_essentials 1 ['Pseudodragon ~ Tail']
+     TOTAL companion REACHABLE REMAINING = 1
+```
+
+**Run 2's 53 → 1**, and the 1 is `§69`'s `ASPECT:`-blocked row, not a workable unit. The lane is
+`DRY` and its own round-9 receipt's final re-derivation (`## Cycle — epic-7-companion-lane, ROUND 9`
+§10) reproduces exactly.
+
+**(c) `monster` + `monster_ability` REAL workable = 0, mechanism-blocked = 229**
+
+```
+python3 scripts/classify_monster_ability_rows.py
+  -> remaining monster+monster_ability units : 1506
+     orphan monster_ability rows             : 1406
+       of which in ZERO-monster books        : 703 across 10 books
+       of which in monster-EXHAUSTED books   : 228 across 4 books
+     Product Identity rows                   : 32
+     `.COPY=` delta rows                     : 2
+     reachable remainder                     : 66
+
+python3 scripts/screen_pcc_load_gates.py monster monster_ability
+  -> TOTAL remaining units excluded by a PCC load gate: 10
+
+python3 scripts/scan_monster_ability_bundle_rows.py | tail -3
+  -> orphan rows the `ABILITY:Internal|AUTOMATIC|` hop would reach: 229
+```
+
+Per-book reachable, recomputed from the classifier's own columns (`mon + abil − ORPHAN − PI − COPY`)
+rather than read off its summary:
+
+| book | reachable | REAL | why |
+|---|---|---|---|
+| `bestiary` | 58 | **0** | instrument over-report, `§60.2`: 54 cross-table owners + 4 `.MOD`-only overlays |
+| `inner_sea_bestiary` | 7 | **0** | Product-Identity cascade, `§57.2`/`§58.1` |
+| `occult_adventures` | 1 | **0** | `§68.1` — negated PCC gate; `screen_pcc_load_gates.py` names the row (`kami_shikigami`) |
+| **total** | **66** | **0** | |
+
+**Run 2's `horror_adventures` 9 is gone from this table entirely** — round 11 ingested it, and the
+book now shows `0 mon / 65 abil / 65 ORPHAN`, reachable 0. That is the difference between run 2's
+figure and this one, and it closes exactly.
+
+**The `.MOD` term was checked twice before being trusted**, because it is the one term in the split a
+classifier does not compute. The work inventory's own `origin` field:
+
+```
+python3 -c "import json, collections; d=json.load(open('docs/work-inventory.json'));
+print(collections.Counter(u.get('origin') for u in d['units']
+if u['kind'] in ('monster','monster_ability')))"
+  -> Counter({'declared': 4371, 'mod_only': 4, 'copy': 2})
+```
+
+All 4 `mod_only` rows are `bestiary`'s, and they are the 4 the table above calls `.MOD` overlays:
+`Hydra (Cryohydra)`, `Hydra (Pyrohydra)`, `Iron Cobra (Adamantine Cobra)`, `Iron Cobra (Mithral
+Cobra)` — `b1_races.lst:239/:241/:251/:257`, the exact lines `§60.2` cites. Instrument and data agree.
+
+**(d) `race_trait` — `DRY` confirmed, and the ceiling is 18 races, not 7**
+
+```
+python3 scripts/race_trait_ceiling.py
+  -> CEILING 571 (553 Racial Trait rows + 18 Subrace rows over the 18 modelled races)
+     by status {'grounded': 513, 'not-ingested': 58}
+     chassis-blocked residue: 3447 - 571 = 2876
+```
+
+The 58, each with a recorded finding: `advanced_players_guide` 49 (ARG `KEY:` republications, `§39`),
+`bestiary` 3 (Drow Noble — needs a race-**variant** chassis), `core_essentials` 2 (`PREABILITY`-gated
+subrace selectors), `horror_adventures` 1, `inner_sea_races` 2 (one declared PI `§53.3`, one upstream
+gap `§45.4`), `monster_codex` 1 (mechanism-blocked, remedy in its `OPEN_FINDINGS` entry). Card 10's
+`DRY` ruling reproduced rather than transcribed, and `{'grounded': 513, 'not-ingested': 58}`
+reproduces run 2's exactly.
+
+### 3. Gate — `./scripts/verify.sh` FULL, exit code captured directly, launched EARLY
+
+Launched into the background against the tip carrying this cycle's architecture refresh, before any
+of the closure prose was written, per the turn-budget hazard:
+
+```
+./scripts/verify.sh > verify-closure-r3.log 2>&1 ; echo "VERIFY_EXIT=$?"
+```
+
+**`VERIFY_EXIT=0`** · **14 of 14 stages PASS**, none skipped · `RESULT: PASS` · logs
+`/tmp/codex-verify-Zso52B`
+
+```
+preflight-disk     PASS  (disk budget OK)
+pi-sweep           PASS  (10 hits over src/rules_core/rules_tables, 10 baseline rows)
+audit-selftest     PASS  (28 passed, 0 failed)
+reclaim-selftest   PASS  (10 passed, 0 failed)
+driver-selftest    PASS  (7 passed, 0 failed)
+root-lib           PASS  (1752 passed)
+root-full          PASS  (6313 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop            PASS  (445 passed)
+reach              PASS  (27 passed)
+frontend-install   PASS  (node_modules present)
+frontend-test      PASS  (99/99 files)
+frontend-typecheck PASS  (tsc --noEmit clean)
+clippy             PASS  (root:45 desktop:7 warnings, 0 errors)
+class-dump         PASS  (31/31 computing)
+```
+
+**`root-full`'s "all 525 `tests/*.rs` suites executed" is the line that matters**, not the pass
+count — `decisions.md §40` added that check because a summary can read complete while a suite went
+un-built.
+
+**One BASELINE NOTE, and it is deliberately not acted on:** `BASELINE_CLIPPY_WARNINGS_ROOT` is
+recorded at 54 and the tree measures 45. It is a *floor*, so the gate passes. It is another lane's
+number and a `BASELINE NOTES` line rather than a failure, and DoD item 7 makes a baseline move a
+separate reviewable commit carrying `--show-actuals`; a closure card taking it as a drive-by would
+defeat that. Flagged in `release-notes.md` §Known issues 12 so a successor re-pins deliberately.
+
+Only `docs/**/*.md` files were edited while it ran; no compiled or tested path changed under the
+running gate, so the result attaches to the tree it was launched on.
+
+### 4. The bundle's one RED instrument, stated as the FIRST known issue rather than buried
+
+`decisions.md §66` set a standing condition on any closure statement. It is honoured, not softened:
+
+```
+./scripts/wired-integration-audit.sh > wia.log 2>&1 ; echo "WIA_EXIT=$?"
+  -> WIA_EXIT=1
+     Check 1 (forbidden tokens): FAIL — 13 `placeholder` hits
+     Check 2 (empty event handlers): OK_NO_NOOP_HANDLERS
+     Check 3 (mock leaks):           OK_NO_MOCK_LEAKS
+     Check 4 ("Would …" strings):    OK_NO_WOULD_STRINGS
+```
+
+`13` reproduces `§66` exactly. All 13 are hand-classified as not-stubs and the Rust repo-wide sweep
+`tests/sd24_wired_integration_audit.rs` encodes three reviewed filters for exactly them and is green
+in the gate — the two instruments disagree, and the remedy is **parity, not leniency** (C1.4b, owner
+SD-31). **Closure run 1 reported this clean.** This closure reports it red, as
+`release-notes.md` §Known issues **item 1**, because a closure that buries its one red instrument
+inside a receipt is the same failure as one that never ran it.
+
+### 5. Definition-of-done item 8 (on-screen) — **3 PASS, one per reopened lane**, and 3 kept failures
+
+Item 8 is not waivable and was not waived. All three lanes the operator reopened were verified on the
+live app, machine-verdicted by clipboard extraction rather than by screenshot. Artifacts in
+`artifacts/SD29-E11-F1-003/item8/`:
+
+| family | record | expected on screen | verdict |
+|---|---|---|---|
+| `monster` | `Hive Queen` | `Aberration` | **PASS** — `Hive QueenHuge Aberration (Hive)` |
+| `companion` | `Companion (Leech (Giant))` | `Ultimate Magic`, `Blood Drain` | **PASS** |
+| `race_trait` | `Elf (27)` | `Elf (27)`, `Half-Orc (28)` | **PASS** — `17:Half-Orc (28)` / `18:Elf (27)` |
+
+**The race-trait pass took four attempts, and the three failures are committed as `*.FAILED.verify.md`
+rather than deleted.** All three were operator error, not product defects, and the diagnosis is
+recorded so a fifth attempt is not needed by anyone:
+
+1. `--record "Elf (27)"` with the family default → `FAIL: no 'N matching' counter` — the default lands
+   on the **Standard traits** tab, where no row is named `Elf (27)`.
+2. `--record "Elf"` → `FAIL: still shows 20 rows` — the search filter matches trait names, not the
+   race chip, so the query is too broad by construction.
+3. `--record "Svirfneblin"` → `FAIL: still shows 13 rows` — same shape, and it disproved the
+   "narrower race name" theory rather than confirming it.
+4. `--tab alternate --no-search --record "Elf (27)"` → **PASS.** The alternates view is a tab, and its
+   chips are not searchable; `§60`-era receipts record the same flag pair.
+
+`Elf (27)` was checked against `race_trait_picker.rs`'s pinned per-race table before being reused
+from a 2026-08-12 receipt — the count is still 27, so failure 1 was the navigation and not a count
+drift. That check is the reason this is diagnosed rather than guessed.
+
+### 6. Nothing is stranded — `git branch -a --no-merged tranche/9`, both refs accounted for BY CONTENT
+
+```
+git branch -a --no-merged tranche/9
+  -> worktree-wf_9029acd8-6b0-6
+     remotes/origin/update-index
+```
+
+* **`worktree-wf_9029acd8-6b0-6`** — one commit, `b49c603a`, "companion chassis + Inner Sea Combat
+  pilot ingest (Epic 7 round 2)", 29 files. This is the branch the server crash orphaned. **Verified
+  merged BY CONTENT, not by commit count or merge-base:** every file of that commit exists at
+  `tranche/9` (`git cat-file -e tranche/9:<path>` for `companion_chassis.rs`,
+  `inner_sea_combat/companion_data.rs`, `CompanionCatalogScreen.tsx`, and the corpus JSON), and
+  `inner_sea_combat`'s 10 `companion` units are `grounded` in the work inventory. The branch is
+  redundant, not stranded. Heartbeat commits and squash merges make counts lie in both directions;
+  only the content check answers here.
+* **`remotes/origin/update-index`** — the release channel's long-lived update-manifest branch
+  (`channel-index: alpha …` commits, 30 files of `update-manifest.json`). Unrelated to any bundle and
+  correctly never merged into a tranche.
+
+### 7. Closure work landed
+
+1. **`docs/architecture/` refreshed** (`c584318b`) — `status.md` and `rules-data-tables.md`, every
+   figure re-derived from the code and the corpus rather than from any receipt. `RuleSetId` 14 → 30,
+   JSON corpus cache 7 → 26 book directories / 9,354 files, `grounded` 491 → 4,699, the corpus-coverage
+   section rewritten, and one **conflation corrected**: the old text read "the engine models exactly 7
+   races" as the race-trait ceiling. Those are two surfaces — `crb::race_tables::race_traits()` (7,
+   the **compute** surface) and `ingest_race_traits::IN_SCOPE_RACES: [&str; 18]` (18, the **ingest**
+   surface the lane is bounded by). The lane's ceiling is 571 rows over 18 races.
+2. **`release-notes.md` rewritten** — §Known issues is now real shipped issues plus owned
+   structurally-unreachable residue, with the test that separates them stated in the section header.
+3. **`decisions.md §70`** records the ruling, the splits, and the three judgment calls.
+4. **`successor-forward-scope-register.md`** carries an ownership audit table: C1.4a-d, C1.5 and C1.6
+   all name SD-31; C1.3 names SD-30; C3.1 is operator-on-request. **The race-variant chassis is
+   deliberately left unowned and says so** — it is not a review finding, it is outside every current
+   epic, and a false owner to complete a table is the taxonomy abuse that caused the premature closure.
+5. **`kanban.md`** — card 16 `READY` → `COMPLETE`; a closure banner added **above** the reopen banner,
+   which is preserved verbatim.
+
+### 8. PR #360 — UPDATED, never replaced, and NOT merged
+
+PR #360 is `OPEN`, `tranche/9` → `develop`, opened by the rescinded 2026-08-11 closure and kept
+through both later runs. Its body described the bundle's **rescinded** state in every section — a
+"companion lane never started" that is now 922 grounded, a 7-race ceiling that is really 18, a
+`grounded 491` that is now 4,699, and a "Please read before merging — what this bundle did NOT do"
+list of which three items are now done. Its body is **rewritten in place at the same PR number**.
+
+**Not merged, and no second PR opened.** The operator merges. Cutting a new tranche branch is
+explicitly not part of closure.
+
+### 9. Unattended-mode defaults taken this cycle (recorded, not raised)
+
+1. **Rebased rather than merged** on finding the checkout 0 ahead / 16 behind. The opposite call from
+   run 2's, for the opposite reason: a clean ancestor with nothing local at risk.
+2. **Committed a retro event this cycle did not author** (the reclaim daemon's 08:00Z sweep) rather
+   than discarding it or rebasing over it.
+3. **Did not regenerate `docs/work-inventory.json`.** It was regenerated on this tip by `3ce4a1d4`
+   and both lanes' deltas were verified present in it (§2a); a `cargo run` would have contended with
+   the in-flight gate for one `CARGO_TARGET_DIR`.
+4. **Ran the item-8 harness BEFORE launching the gate, never concurrently** — the recorded OOM.
+5. **Kept the three FAILED item-8 artifacts** rather than deleting them, and diagnosed each.
+6. **Left the race-variant chassis unowned** rather than assigning it to SD-31 for tidiness.
+7. **Did not lower, skip or `#[ignore]` anything** to make the wired-integration audit green. It is
+   reported red, first, with its remedy and its owner.
+8. **Did not merge PR #360 and did not open a second one.** The operator merges.
