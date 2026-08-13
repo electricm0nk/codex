@@ -620,8 +620,14 @@ def main() -> None:
     print(f"\ntotal companion units in scope : {total_units}")
     print(f"orphan ability rows            : {total_orphans}")
     print(f"PRECAMPAIGN-gated on an uningested campaign : {total_gated}")
-    print(f"`*_classes_companion.lst` class rows the chassis refuses : {total_classes}")
-    print(f"`.COPY=`/`.MOD` delta rows the chassis refuses : {total_deltas}")
+    # "drops" rather than "refuses", corrected in round 8 (`decisions.md
+    # §65.1`). Until that round the transcriber literally refused -- a
+    # `SystemExit` -- on any book carrying a class row, and this label was
+    # accurate. It now screens them, names them in the emitted module doc and
+    # continues, which is why Core Rulebook could be ingested at all. The
+    # excluded COUNT is unchanged in both cases; only the disposition moved.
+    print(f"`*_classes_companion.lst` class rows the chassis drops : {total_classes}")
+    print(f"`.COPY=`/`.MOD` delta rows the chassis drops : {total_deltas}")
     print(f"distinct excluded rows (the UNION, not the sum) : {total_excluded}")
     print(f"reachable remainder            : {total_units - total_excluded}")
 

@@ -1,0 +1,82 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T02:26:54Z",
+  "data": {
+    "ability_keys": [
+      "core_rulebook:companion:companion_advancement_megafauna_megatherium"
+    ],
+    "corpus_key": "Companion (Megafauna (Megatherium))",
+    "external_ability_refs": [
+      "Animal Traits Output",
+      "Scent"
+    ],
+    "key": "core_rulebook:companion:companion_megafauna_megatherium",
+    "monster_class": "Companion:2",
+    "name": "Companion (Megafauna (Megatherium))",
+    "natural_armor": 5,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.187",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 10,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "AnimalCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
+    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815",
+    "line": 62,
+    "record_key": "Companion (Megafauna (Megatherium))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

@@ -1381,6 +1381,33 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // does reach a player.
         ("core_essentials", "companions") => Some(companions_reach("core_essentials", "CE")),
 
+        // SD-29 Epic 7 round 8. Core Rulebook's companions and familiars — the
+        // SIXTH family this book carries, beside its classes, races, spells,
+        // equipment and race traits.
+        //
+        // The key on the left is the ENGINE book id `crb`, not the corpus
+        // directory `core_rulebook`, and the two arguments to `companions_reach`
+        // are the corpus directory and the wire code. All three spellings differ
+        // here, exactly as they do for Bestiary 1 (`decisions.md §54.3`), and
+        // `CORPUS_BOOK_IDS` already carried `("core_rulebook", "crb")` for the
+        // book's five older families, so no entry was needed this round.
+        //
+        // 84 of the book's 170 companion units ship — its whole `reachable
+        // remainder` per `scripts/classify_companion_rows.py`. The 86 that do
+        // not are absent from this gate's denominator because they were never
+        // ingested: 84 orphan ability rows and the 2 `cr_classes_companion.lst`
+        // CLASS rows (`§65.1`). They stay counted in `docs/work-inventory.json`
+        // and get no `OPEN_FINDINGS` entry, for the reason `§61.2` states —
+        // that list is keyed by FAMILY, and this family does reach a player.
+        //
+        // The shortfall here is ONE finding, not 86: the orphans are the generic
+        // `Animal Companion ~ …` / `Animal Trick ~ …` records, and they are
+        // orphans precisely because they hang off the Animal Companion CLASS
+        // rather than off any creature. Both groups need the same missing record
+        // type, which is named in `crb/mod.rs`'s module doc rather than split
+        // across 86 rows here.
+        ("crb", "companions") => Some(companions_reach("core_rulebook", "CRB")),
+
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
         // carrying that record's own corpus `KEY:` token, and the character

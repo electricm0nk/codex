@@ -53,6 +53,14 @@ const SERVED_BOOK_CODES = [
   'B4',
   'UW',
   'CE',
+  // SD-29 Epic 7 round 8 (`decisions.md §65`). Core Rulebook's 38 companion
+  // creatures. This roster is what makes `testEveryServedBookHasARealName`
+  // mean anything: the label map gained `CRB` and this list did not, so the
+  // whole frontend suite stayed green (99/99) while the running app rendered
+  // the bare code `CRB` beside twelve spelled-out book names. The on-screen
+  // item-8 check caught it; no test could, because the test only asks about
+  // codes named here.
+  'CRB',
 ] as const;
 
 /**

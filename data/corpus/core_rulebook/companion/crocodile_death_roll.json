@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T02:26:54Z",
+  "data": {
+    "corpus_key": "Crocodile ~ Death Roll",
+    "delivery": "Extraordinary",
+    "description": "When grappling a foe of its size or smaller, a crocodile can perform a death roll upon making a successful grapple check. As it clings to its foe, it tucks in its legs and rolls rapidly, twisting and wrenching its victim. The crocodile inflicts its bite damage and knocks the creature prone. If successful, the crocodile maintains its grapple.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "core_rulebook:companion:crocodile_death_roll",
+    "name": "Death Roll",
+    "owners": [
+      "core_rulebook:companion:companion_crocodile_alligator"
+    ],
+    "record_type": "ability",
+    "source_page": "p.51",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Special Attack",
+      "Special Ability",
+      "Extraordinary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 188,
+    "record_key": "Crocodile ~ Death Roll"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

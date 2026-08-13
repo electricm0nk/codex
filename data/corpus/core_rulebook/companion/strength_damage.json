@@ -1,0 +1,39 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T02:26:54Z",
+  "data": {
+    "corpus_key": "Strength Damage",
+    "delivery": "Supernatural",
+    "description": "A shadow's touch deals 1d6 points of Strength damage to a living creature. This is a negative energy effect. A creature dies if this Strength damage equals or exceeds its actual Strength score.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "core_rulebook:companion:strength_damage",
+    "name": "Strength Damage",
+    "owners": [
+      "core_rulebook:companion:companion_shadow"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 128,
+    "record_key": "Strength Damage"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

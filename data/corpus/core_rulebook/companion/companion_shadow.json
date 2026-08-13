@@ -1,0 +1,75 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T02:26:54Z",
+  "data": {
+    "ability_keys": [
+      "core_rulebook:companion:shadow_companion_resistance",
+      "core_rulebook:companion:shadow_companion_saves",
+      "core_rulebook:companion:strength_damage"
+    ],
+    "corpus_key": "Companion (Shadow)",
+    "external_ability_refs": [
+      "Channel Resistance",
+      "Flight Maneuverability"
+    ],
+    "key": "core_rulebook:companion:companion_shadow",
+    "monster_class": "Shadow Companion:3",
+    "name": "Companion (Shadow)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Incorporeal Touch"
+      }
+    ],
+    "race_subtype": "Incorporeal|Undead",
+    "race_type": "Undead",
+    "reach_feet": null,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.245",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -4
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "Companion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
+    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815",
+    "line": 42,
+    "record_key": "Companion (Shadow)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}
