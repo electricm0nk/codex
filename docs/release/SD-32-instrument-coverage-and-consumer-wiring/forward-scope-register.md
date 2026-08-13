@@ -118,3 +118,48 @@ authored under the same pressure that E8 exists to catch. A reviewer that did
 not implement E2/E3/E4 is materially stronger.
 
 **Successor condition:** operator or orchestrator assigns one at E8 dispatch.
+
+---
+
+## F8 — Consumer wiring for the 174 units whose bonus chain no consumer reads
+
+**Why recorded.** `decisions.md §10`. After E2 widened the probe, the only
+`in-progress` population that is neither an ingestion gap nor an absence of
+magnitude is 174 equipment/equipment_modifier units whose corpus record carries
+a real `BONUS:` chain in a family `equipment_effects.rs` does not read —
+`BONUS:VAR` (132 chains), `ITEMCOST` (70), `EQMARMOR` (37), `COMBAT` (29),
+`SAVE` (8), `EQM` (8), `WEAPON` (7), and a tail.
+
+**Why not here.** `ResolvedEquipmentEffect` has exactly seven fields and
+`equipment_key_is_wired` reads all seven — the probe is not under-reading, the
+*engine* does not compute these. Closing it means widening the effect model and
+landing each new magnitude on a twin the player actually reads
+(`AGENTS.md`: "a magnitude is not wired until it moves on the twin the player
+reads"). That is engine work with parity surface, not instrument work, and
+extending the probe to "observe" a chain no consumer reads would be precisely
+the green-instrument-over-an-empty-screen failure this bundle exists to avoid.
+
+**Successor condition:** an E3-shaped card whose ceiling is re-derived to 174,
+not the scope card's 375 — 239 of that 375 carry no bonus chain at all and
+cannot be wired by any effect model.
+
+**Derivation:**
+`python3 docs/release/SD-32-instrument-coverage-and-consumer-wiring/artifacts/why-in-progress-equipment-stalls.py`
+
+---
+
+## F9 — 295 in-progress equipment units have a compiled catalog and no corpus
+
+**Why recorded.** `decisions.md §10`. Ultimate Equipment (190), Ultimate
+Psionics (82), Ultimate Combat (22) and Ultimate Intrigue (1) have compiled
+`equipment_tables` and catalog rows, but no `data/corpus/<book>/equipment`
+directory at all. No consumer-delta probe can ever reach them, and E2's
+book-scoping now says so out loud instead of letting them ground off another
+book's reprint of a same-named, different item.
+
+**Why not here.** Ingestion, which `decisions.md §7` puts out of scope.
+
+**Successor condition:** the SD-29/SD-30 ingestion lanes producing
+`data/corpus/<book>/equipment` for those four books. On the day that lands, E2's
+probe covers them with no further instrument work — the keys are already in its
+universe.

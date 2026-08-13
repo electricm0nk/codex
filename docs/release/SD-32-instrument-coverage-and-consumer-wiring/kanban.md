@@ -32,7 +32,7 @@ Rows are in claim-priority order, matching `scope-draft.md §5`'s dispatch order
 | ID | Status | Epic | Ceiling (units) | Rank / R | Claimed-by | Claimed-at | Cycle-id |
 |----|--------|------|---:|---|------------|------------|----------|
 | `e1-measurement-gate` | READY | Measurement-Gate Decision Request | 0 (gates 7,479) | — | — | — | — |
-| `e2-probe-coverage` | READY | Equipment-Effect Probe Coverage Extension | 358 | **1** / 358 | — | — | — |
+| `e2-probe-coverage` | COMPLETE | Equipment-Effect Probe Coverage Extension | 358 (real ceiling 63) | **1** / 18 moved | doneness-inprogress | 2026-08-13 | `5ed6bdc0` |
 | `e4-classifier-calibration` | READY | Classifier — hand-labelled sample (E4-F1, gate) | 0 (gates 1,776) | 2a | — | — | — |
 | `e3-effect-wiring` | READY (gated on e2-probe-coverage) | Equipment Effect Wiring for Inert Items | 375 | **3** / 125 | — | — | — |
 | `e4-classifier` | READY (gated on e4-classifier-calibration opening the gate) | Wiring-Class Classifier (E4-F2, E4-F3) | 1,776 | **2** / 444 ceiling | — | — | — |
