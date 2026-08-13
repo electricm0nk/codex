@@ -11979,3 +11979,38 @@ around it for this cycle alone, because a false item-8 PASS is not a companion-l
 future cycle on this box inherits it; kept the two `.FAILED.*` item-8 artifacts as evidence rather
 than deleting them; and reported DoD item 3's red rather than entering the monster lane's live
 territory to fix it.
+
+### 10. Post-merge gate, on the tree that is actually on `origin/tranche/9`
+
+`origin/tranche/9` moved while this cycle's receipt was being written — the monster lane pushed
+Ultimate Psionics (`612004df`, `eeafe60a`, `de010f2e`, `3b0a414c`). Merged at `75e2711f` and the
+**full gate re-run on the merged tree**, because a gate result on a tree nobody ships is worth
+nothing (`decisions.md §63`'s lineage; the same reason round 7 re-ran after its own merge).
+
+```
+VERIFY_EXIT=0 — all 14 stages
+preflight-disk PASS · pi-sweep PASS (10 hits, 10 baseline rows) · audit-selftest PASS (28)
+reclaim-selftest PASS (10) · driver-selftest PASS (7) · root-lib PASS (1748)
+root-full PASS (6316 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop PASS (445) · reach PASS (27) · frontend-install PASS · frontend-test PASS (99/99)
+frontend-typecheck PASS (tsc --noEmit clean) · clippy PASS (0 errors) · class-dump PASS (31/31)
+```
+
+`root-lib` 1744 → 1748 and `root-full` 6312 → 6316 are the monster lane's four new tests, not this
+lane's. Both lanes touched `corpus_ingest_diagnostic.rs` and `reach_gate.rs` in the same window; the
+merge was textual and every one of this cycle's four registration points was re-verified by content
+on the merged tree afterwards rather than assumed:
+
+```
+grep -n 'companion_book_counts("core_rulebook")' apps/desktop/src-tauri/src/corpus_ingest_diagnostic.rs  -> 241
+grep -c '("crb", "companions")'                  apps/desktop/src-tauri/src/reach_gate.rs               -> 1
+grep -c 'corpus_book: "core_rulebook"'           src/rules_core/rules_tables/companion_chassis.rs       -> 1
+grep -c CODEX_DEV_PORT  apps/desktop/vite.config.ts  apps/desktop/.claude/skills/run-desktop/driver.sh  -> 2, 2
+```
+
+**The inventory was regenerated on the merged tree and changed only `generated_at`** — companion
+still `Counter({'grounded': 870, 'not-ingested': 826})`, no unit of any kind moved across the merge.
+The regeneration was therefore reverted rather than committed as a timestamp-only diff, and the
+stability across a concurrent lane's ingest is itself the check: this cycle's 84 and the monster
+lane's Ultimate Psionics units are genuinely file-disjoint, which is what the kind-lane partition
+promises and what a merge is the first real opportunity to falsify.
