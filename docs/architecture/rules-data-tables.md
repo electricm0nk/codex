@@ -133,12 +133,16 @@ ingests. Both figures are pinned in `class_spell_levels.rs`'s tests.
 
 ## `RuleSetId` and per-book resolution
 
-`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has **14**
-populated variants. **Corrected 2026-08-11 (SD-29 Epic 11 closure):** this
-section previously read "four populated variants plus a placeholder comment
-for future books" and quoted a four-arm enum with a `// future: Um, ...`
-comment. That went stale across SD-27 and SD-28; re-derived from the source
-with `sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs`:
+`RuleSetId` (`src/rules_core/rules_tables/mod.rs`) currently has **30**
+populated variants. **Corrected twice.** The 2026-08-11 pass raised this from
+"four populated variants plus a placeholder comment for future books" to 14,
+but that pass belonged to a closure the operator rescinded the same day
+(`SD-29 decisions.md §42`); sixteen further lane rounds ran afterwards and
+registered sixteen more rule sets. Re-derived at SD-29's real closure
+(2026-08-13) from the source with
+`sed -n '/pub enum RuleSetId/,/^}/p' src/rules_core/rules_tables/mod.rs` —
+each arm's own doc comment in that file is the authority on what it compiles,
+and several compile only ONE record family:
 
 ```rust
 pub enum RuleSetId {
@@ -155,9 +159,34 @@ pub enum RuleSetId {
     Uc,             // Ultimate Combat              (SD-28)
     Um,             // Ultimate Magic               (SD-28)
     Upsi,           // Ultimate Psionics (Dreamscarred Press, not Paizo)
-    BonusBestiary,  // Bonus Bestiary               (SD-29 Epic 5 pilot)
+    BonusBestiary,  // Bonus Bestiary               (SD-29 E5 pilot: monster + monster_ability)
+    MonsterCodex,   // Monster Codex                (SD-29 E6 pilot; monster + disk-served race_trait)
+    Isr,            // Inner Sea Races              (SD-29 E6 r2; race_trait only)
+    Ha,             // Horror Adventures            (SD-29 E6 r3; race_trait + E5 r11 monster_ability)
+    Botd1,          // Book of the Damned, Vol. 1   (SD-29 E5 r2)
+    Botd2,          // Book of the Damned, Vol. 2   (SD-29 E5 r2)
+    Iswg,           // Inner Sea World Guide        (SD-29 E5 r3)
+    Ce,             // Core Essentials              (SD-29 E6 r4; race_trait heritage rows)
+    Isc,            // Inner Sea Combat             (SD-29 E7 pilot; companion ONLY)
+    Isi,            // Inner Sea Intrigue           (SD-29 E7 pilot extend; familiars)
+    B5,             // Bestiary 5                   (SD-29 E7 r2; companion ONLY — zero monsters)
+    B6,             // Bestiary 6                   (SD-29 E7 r2; companion ONLY — zero monsters)
+    B2,             // Bestiary 2                   (SD-29 E7 r2; companion family only)
+    B3,             // Bestiary 3                   (SD-29 E5 r5; monster + monster_ability)
+    B4,             // Bestiary 4                   (SD-29 E5 r6; monster + monster_ability)
+    Isb,            // Inner Sea Bestiary           (SD-29 E5 r7)
+    Isg,            // Inner Sea Gods               (SD-29 E5 r9)
 }
 ```
+
+**Registering a rule set is not the same as compiling a whole book**, and
+seven of the arms above prove it: `Isc`, `Isi`, `B5`, `B6` and `B2` compile a
+`companion` family and nothing else; `Isr` and `Ce` compile a disk-served
+`race_trait` family and nothing else. A book's presence in this enum states
+which families the engine has ingested from it, not that the book is done.
+Two of them — `B5` and `B6` — carry **zero** monsters at all, which is why
+their "bestiary" names are misleading and why a subtree check that assumes
+otherwise reports a false absence.
 
 `BonusBestiary` was the first arm to carry the merged `monster` +
 `monster_ability` chassis (`corpus-work-channels.md §9.2`); it is SD-29's Epic 5
