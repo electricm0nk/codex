@@ -527,6 +527,89 @@ fn slug(name: &str) -> String {
     out
 }
 
+/// A stable 64-bit FNV-1a digest of one exact corpus key, rendered as sixteen
+/// lowercase hex characters. Used only by [`unit_id`] to disambiguate two
+/// distinct corpus keys whose [`slug`]s collide.
+///
+/// # Why FNV-1a and not [`std::collections::hash_map::DefaultHasher`]
+///
+/// `DefaultHasher`'s algorithm is explicitly documented as unspecified and
+/// free to change between Rust releases. Hanging a field of this file's own
+/// output on it would mean a toolchain upgrade silently rewrites every
+/// disambiguated id — breaking, in the one place it is hardest to notice, the
+/// byte-equality contract this whole function exists to protect. FNV-1a is a
+/// fixed specification with fixed constants, so the digest is a function of
+/// the key alone: same key, same sixteen characters, on any machine, under any
+/// compiler, forever.
+fn key_digest(key: &str) -> String {
+    // FNV-1a, 64-bit: offset basis 0xcbf29ce484222325, prime 0x100000001b3.
+    let mut hash: u64 = 0xcbf2_9ce4_8422_2325;
+    for byte in key.as_bytes() {
+        hash ^= u64::from(*byte);
+        hash = hash.wrapping_mul(0x0000_0100_0000_01b3);
+    }
+    format!("{hash:016x}")
+}
+
+/// One unit's `id` — the handle every downstream consumer keys on — built so
+/// that it is **unique**, which before this function it was not.
+///
+/// # The defect this closes
+///
+/// `id` is `<book>:<kind>:<slug of the corpus key>`, but `duplicate_identity`
+/// de-duplicates on the *exact* corpus key, and [`slug`] is deliberately lossy:
+/// it collapses every run of non-alphanumerics to one `_`. So two genuinely
+/// distinct records in one book+kind could — and did — land on one id.
+/// `Path Skill Acrobatics` and `Path Skill ~ Acrobatics`, `MITHRAL_ITEM` and
+/// `Mithral (Item)`, `Half-Elf ~ Drow Blooded` and `Half-Elf ~ Drow-Blooded`:
+/// twenty-nine ids in the corpus-wide run carried two rows each, and
+/// twenty-seven of those pairs disagreed about `wiring_class`, nineteen of them
+/// as `computed` against `display`.
+///
+/// That is not a cosmetic flaw. Every consumer that indexes the inventory by
+/// `id` — a `{u["id"]: u for u in units}` in Python, a `jq INDEX(.id)`, a
+/// pandas `set_index` — keeps exactly one row per id and drops the other, and
+/// *which* one it keeps is that consumer's own last-wins or first-wins detail.
+/// Point two such indexes at a before snapshot and an after snapshot and the
+/// dropped row can differ between them, manufacturing a `wiring_class`
+/// transition that no code change caused. That is precisely the phantom
+/// nineteen-unit `computed -> display` move recorded as a near-miss in
+/// `docs/retro/events/wiring-classifier.jsonl`, and it was read there as
+/// run-to-run nondeterminism in this generator. It is not: five consecutive
+/// runs of one binary over one corpus are byte-identical. The generator was
+/// deterministic and its output was ambiguous.
+///
+/// # The tie-break rule, and why it is the correct one
+///
+/// * **Suffix, never merge.** Two distinct corpus keys are two records. Making
+///   them one unit would change a count, and this is a fix to an identifier,
+///   not a ruling about content.
+/// * **Every colliding unit is suffixed; none keeps the bare slug.** A rule
+///   that let one member win the unsuffixed id would have to pick a winner, and
+///   every available criterion — enumeration order, line number, lexical order
+///   of the key — makes an id that moves when something *else* moves.
+/// * **The suffix is a digest of the unit's own exact corpus key.** An ordinal
+///   (`__1`, `__2`) would depend on the *set* of colliding siblings, so
+///   ingesting one new row could renumber a unit that had not changed. A digest
+///   of the key alone cannot: a unit's id is a function of its own identity.
+/// * **`__` is an unambiguous delimiter.** [`slug`] collapses every run of
+///   non-alphanumerics to a single `_`, so no slug can ever contain `__`, and no
+///   suffixed id can be mistaken for an unsuffixed one.
+/// * **Non-colliding units keep the id they have always had.** Only the rows
+///   that were actually broken move, so this fix costs no downstream consumer a
+///   re-pin it does not owe.
+///
+/// `collides` is the caller's answer to "does more than one unit in this
+/// book+kind slug to this?", counted over the de-duplicated unit set.
+fn unit_id(book: &str, kind: Kind, key: &str, collides: bool) -> String {
+    let base = slug(key);
+    if collides {
+        format!("{book}:{}:{base}__{}", kind.id(), key_digest(key))
+    } else {
+        format!("{book}:{}:{base}", kind.id())
+    }
+}
+
 /// SD28-E15 (2026-08-09): `_abilities_race.lst`'s own `TYPE:` first-segment
 /// vocabulary that names a monster's own sub-ability rather than a player
 /// racial trait -- PF1's own Bestiary terminology (`NaturalAttack`,
@@ -2930,6 +3013,22 @@ fn main() {
     let mod_index = build_mod_index(&book_paths);
     let mut corpus_lines = CorpusLines::new(&book_paths);
 
+    // --- id uniqueness ------------------------------------------------------
+    // How many de-duplicated units in each book+kind slug to the same thing.
+    // Counted BEFORE any id is minted, over the same unit set the classifier
+    // walks, so `unit_id` can suffix exactly the ids that would otherwise
+    // collide and leave every other id byte-identical to the one it has always
+    // carried. See [`unit_id`] for why the collisions exist and what they broke.
+    let mut slug_population: BTreeMap<(String, Kind, String), usize> = BTreeMap::new();
+    for book in &books {
+        let Some(enumeration) = enumerations.get(&book.id) else { continue };
+        for unit in &enumeration.units {
+            *slug_population
+                .entry((book.id.clone(), unit.kind, slug(&unit.key)))
+                .or_default() += 1;
+        }
+    }
+
     // --- classify ----------------------------------------------------------
     let empty: BTreeSet<String> = BTreeSet::new();
     let mut inventory: Vec<InventoryUnit> = Vec::new();
@@ -2949,8 +3048,11 @@ fn main() {
             );
             let row_refs: Vec<Option<&str>> = rows.iter().map(|r| r.as_deref()).collect();
             let (wc_class, wc_reason, wc_signals) = wiring_class::determine_closure(&row_refs);
+            let collides = slug_population
+                .get(&(book.id.clone(), unit.kind, slug(&unit.key)))
+                .is_some_and(|n| *n > 1);
             inventory.push(InventoryUnit {
-                id: format!("{}:{}:{}", book.id, unit.kind.id(), slug(&unit.key)),
+                id: unit_id(&book.id, unit.kind, &unit.key, collides),
                 unit: unit.clone(),
                 verdict,
                 wiring_class: wc_class,
@@ -2963,6 +3065,29 @@ fn main() {
     inventory.sort_by(|a, b| {
         (&a.unit.book, a.unit.kind, &a.unit.key, &a.id).cmp(&(&b.unit.book, b.unit.kind, &b.unit.key, &b.id))
     });
+
+    // A deterministic ORDER is not the same guarantee as a unique HANDLE, and
+    // every consumer that indexes this file by `id` needs the second one. This
+    // instrument emits no output it cannot stand behind: a residual collision
+    // is a hard failure here, loudly, rather than an ambiguity a downstream
+    // before/after diff silently reports as a wiring_class transition. See
+    // [`unit_id`].
+    let mut minted: BTreeSet<&str> = BTreeSet::new();
+    let mut collisions: Vec<&str> = Vec::new();
+    for item in &inventory {
+        if !minted.insert(item.id.as_str()) {
+            collisions.push(item.id.as_str());
+        }
+    }
+    if !collisions.is_empty() {
+        eprintln!(
+            "unit id uniqueness violated for {} id(s) -- the inventory's own contract. \
+             First offenders: {}",
+            collisions.len(),
+            collisions.iter().take(10).copied().collect::<Vec<_>>().join(", ")
+        );
+        std::process::exit(1);
+    }
 
     // --- aggregate ---------------------------------------------------------
     let mut by_kind: BTreeMap<&str, usize> = BTreeMap::new();
@@ -3032,7 +3157,9 @@ fn main() {
     out.push_str(
         "  \"contract\": \"Every field below is derived from the corpus or observed from the \
          engine. Nothing here is hand-maintained; two consecutive runs over an unchanged corpus \
-         and engine differ only in `generated_at`.\",\n",
+         and engine differ only in `generated_at`. Every `units[].id` is unique: it is safe to \
+         index this file by `id`, and a before/after comparison keyed on `id` compares like with \
+         like. The generator exits non-zero rather than emit a duplicate.\",\n",
     );
 
     out.push_str("  \"status_vocabulary\": {\n");
@@ -4078,5 +4205,197 @@ mod companion_ability_file_classification_tests {
         assert_eq!(file_kind("b2_abilities_familiar_race.lst"), Some(Kind::Companion));
         assert_eq!(file_kind("ce_abilities_familiar_race_cr.lst"), Some(Kind::Companion));
         assert_eq!(file_kind("isi_abilities_companion.lst"), Some(Kind::Companion));
+    }
+}
+
+/// The `units[].id` uniqueness contract.
+///
+/// These tests exist because the contract `docs/work-inventory.json` prints at
+/// the top of itself was, for `id`, false — and false in the one way that
+/// corrupts measurement rather than merely annoying a reader. Twenty-nine ids
+/// in the corpus-wide run carried two units each; twenty-seven of those pairs
+/// disagreed about `wiring_class`. Any before/after comparison keyed on `id`
+/// silently kept one row on one side and the other row on the other, which is
+/// how a nineteen-unit `computed -> display` transition appeared in a diff of a
+/// change that could not structurally cause one
+/// (`docs/retro/events/wiring-classifier.jsonl`). The contract is now enforced
+/// by [`unit_id`], by a hard exit in the generator, and here.
+#[cfg(test)]
+mod unit_id_uniqueness_tests {
+    use super::*;
+
+    /// Real colliding key pairs, read off the corpus-wide run that exposed
+    /// them. Each entry is `(book, kind, key_a, key_b)`, and every pair shares
+    /// one `slug` — which is the whole defect.
+    const REAL_COLLISIONS: &[(&str, Kind, &str, &str)] = &[
+        (
+            "ultimate_psionics",
+            Kind::ClassFeature,
+            "Path Skill Acrobatics",
+            "Path Skill ~ Acrobatics",
+        ),
+        ("core_rulebook", Kind::EquipmentModifier, "MITHRAL_ITEM", "Mithral (Item)"),
+        (
+            "core_rulebook",
+            Kind::EquipmentModifier,
+            "Intelligent Item Purpose (Slay All)",
+            "Intelligent Item ~ Purpose / Slay All",
+        ),
+        (
+            "advanced_race_guide",
+            Kind::RaceTrait,
+            "Half-Elf ~ Drow Blooded",
+            "Half-Elf ~ Drow-Blooded",
+        ),
+        (
+            "ultimate_combat",
+            Kind::ClassFeature,
+            "Master Of Many Styles ~ Perfect Style",
+            "Master of Many Styles ~ Perfect Style",
+        ),
+        (
+            "advanced_class_guide",
+            Kind::ClassFeature,
+            "Arcanist School Void",
+            "Arcanist School ~ Void",
+        ),
+    ];
+
+    /// The root cause, stated as a test rather than as a comment: `slug` is
+    /// lossy, so it is NOT an identity, and an id built from it alone cannot be
+    /// unique. If this ever starts failing, `slug` has been changed and the
+    /// disambiguation below may no longer be reaching the cases it was built
+    /// for — read `unit_id`'s doc comment before touching either.
+    #[test]
+    fn slug_collapses_genuinely_distinct_corpus_keys() {
+        for (_, _, a, b) in REAL_COLLISIONS {
+            assert_ne!(a, b, "these are two different corpus keys");
+            assert_eq!(
+                slug(a),
+                slug(b),
+                "slug() is expected to collapse {a:?} and {b:?} onto one string"
+            );
+        }
+    }
+
+    /// The contract itself: two distinct corpus keys never share an id.
+    #[test]
+    fn colliding_keys_get_distinct_ids() {
+        for (book, kind, a, b) in REAL_COLLISIONS {
+            let id_a = unit_id(book, *kind, a, true);
+            let id_b = unit_id(book, *kind, b, true);
+            assert_ne!(
+                id_a, id_b,
+                "{a:?} and {b:?} in {book}/{} must not share an id",
+                kind.id()
+            );
+        }
+    }
+
+    /// The tie-break rule's defensibility, and the reason it is a key digest
+    /// rather than an ordinal: a unit's id is a function of that unit's own
+    /// identity and of nothing else. Ingesting a new row that happens to
+    /// collide with an existing one must not renumber the existing one, and
+    /// removing a sibling must not renumber its survivor. An `__1`/`__2`
+    /// ordinal fails exactly this test.
+    #[test]
+    fn a_units_id_does_not_depend_on_which_siblings_it_collides_with() {
+        let key = "Path Skill ~ Acrobatics";
+        let alone = unit_id("ultimate_psionics", Kind::ClassFeature, key, true);
+        // Every other colliding key in the corpus, real or hypothetical, is
+        // irrelevant to this unit's id -- there is no argument to `unit_id`
+        // through which a sibling could reach it.
+        for sibling in ["Path Skill Acrobatics", "Path_Skill_Acrobatics", "path skill acrobatics"] {
+            assert_eq!(slug(sibling), slug(key), "test setup: {sibling:?} must collide");
+            let again = unit_id("ultimate_psionics", Kind::ClassFeature, key, true);
+            assert_eq!(alone, again);
+        }
+    }
+
+    /// Blast radius. A unit whose slug is unique keeps the exact id it carried
+    /// before this fix existed, so no consumer owes a re-pin it did not earn.
+    #[test]
+    fn a_non_colliding_unit_keeps_the_unsuffixed_id() {
+        assert_eq!(
+            unit_id("core_rulebook", Kind::Feat, "Power Attack", false),
+            "core_rulebook:feat:power_attack"
+        );
+        assert_eq!(
+            unit_id("advanced_race_guide", Kind::RaceTrait, "Half-Elf ~ Drow-Blooded", false),
+            "advanced_race_guide:race_trait:half_elf_drow_blooded"
+        );
+    }
+
+    /// `__` is claimed as the delimiter on the grounds that `slug` can never
+    /// produce it — it collapses every run of non-alphanumerics to a single
+    /// `_`. If that ever stops being true, a suffixed id becomes ambiguous with
+    /// an unsuffixed one and this test is the alarm.
+    #[test]
+    fn no_slug_can_contain_the_double_underscore_delimiter() {
+        let adversarial = [
+            "Path Skill ~ Acrobatics",
+            "A__B",
+            "A -- B",
+            "  leading and trailing  ",
+            "!!!",
+            "Intelligent Item ~ Purpose / Slay All",
+            "Weapon (+1) ~ Flaming / Burst",
+        ];
+        for s in adversarial {
+            assert!(
+                !slug(s).contains("__"),
+                "slug({s:?}) = {:?} must not contain the reserved delimiter",
+                slug(s)
+            );
+        }
+        for (_, _, a, b) in REAL_COLLISIONS {
+            assert!(!slug(a).contains("__"));
+            assert!(!slug(b).contains("__"));
+        }
+    }
+
+    /// The digest algorithm is pinned, because every disambiguated id is built
+    /// from it and a silent change to it would rewrite those ids wholesale and
+    /// break the byte-equality contract in the least visible way available.
+    /// These are FNV-1a 64's own published reference vectors; a
+    /// re-implementation that passes them is the specified function.
+    #[test]
+    fn key_digest_is_fnv1a_64_against_its_published_vectors() {
+        assert_eq!(key_digest(""), "cbf29ce484222325");
+        assert_eq!(key_digest("a"), "af63dc4c8601ec8c");
+        assert_eq!(key_digest("foobar"), "85944171f73967e8");
+    }
+
+    /// The digest is a pure function of the key's bytes: same key, same
+    /// sixteen characters, every call. Stated separately from the vectors
+    /// because this is the property `unit_id` actually leans on.
+    #[test]
+    fn key_digest_is_stable_and_full_width() {
+        for (_, _, a, b) in REAL_COLLISIONS {
+            for key in [a, b] {
+                let first = key_digest(key);
+                assert_eq!(first.len(), 16, "digest for {key:?} must be 16 hex chars");
+                assert!(first.chars().all(|c| c.is_ascii_hexdigit() && !c.is_ascii_uppercase()));
+                assert_eq!(first, key_digest(key));
+            }
+        }
+    }
+
+    /// End to end over the real collision set: mint every id the way the
+    /// generator mints it and assert the whole set is unique. This is the
+    /// property the generator's own hard exit enforces at run time.
+    #[test]
+    fn the_real_collision_set_mints_a_fully_unique_id_set() {
+        let mut ids: BTreeSet<String> = BTreeSet::new();
+        for (book, kind, a, b) in REAL_COLLISIONS {
+            for key in [a, b] {
+                assert!(
+                    ids.insert(unit_id(book, *kind, key, true)),
+                    "duplicate id minted for {key:?} in {book}/{}",
+                    kind.id()
+                );
+            }
+        }
+        assert_eq!(ids.len(), REAL_COLLISIONS.len() * 2);
     }
 }
