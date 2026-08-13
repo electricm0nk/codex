@@ -472,6 +472,30 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         companions: super::core_essentials::companions_static(),
         companion_abilities: super::core_essentials::companion_abilities_static(),
     },
+    // SD-29 Epic 7 round 8 (`SD29-E7-F2-009`). Core Rulebook — the book the
+    // lane's transcriber had been REFUSING by name since round 1
+    // (`decisions.md §65.1`), and the first registered book whose engine module
+    // is spelled differently from its corpus directory in the OTHER direction
+    // from Bestiary 1: the corpus says `core_rulebook`, the module says `crb`,
+    // and the abbreviation is the older of the two.
+    //
+    // 84 of its 170 rows ship — 38 creature rows, 46 ability rows — and the 86
+    // that do not are ONE finding wearing two shapes. The 2 excluded rows are
+    // `cr_classes_companion.lst`'s `Companion` and `Shadow Companion`, PCGen
+    // monster classes. The 84 excluded ability rows are the generic
+    // `Animal Companion ~ …` / `Animal Companion Feat ~ …` / `Animal Trick ~ …`
+    // / `Animal Training ~ …` records — and they are orphans precisely BECAUSE
+    // they belong to that class rather than to any creature. This is the first
+    // registered book whose shortfall is not a per-row accident but a single
+    // missing record type, and it is the largest orphan block the lane has seen.
+    //
+    // No new `RuleSetId` — `RuleSetId::Crb` is the oldest in the enum — so
+    // registering this family moved no other kind's status.
+    CompanionBook {
+        corpus_book: "core_rulebook",
+        companions: super::crb::companions_static(),
+        companion_abilities: super::crb::companion_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -638,12 +662,13 @@ mod tests {
             }
         }
         assert_eq!(
-            unmodelled, 31,
+            unmodelled, 32,
             "expected Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows, \
              Bestiary 4's two `TYPE:Communicate.SpellLike` rows, Ultimate Wilderness's \
              15 `TYPE:SpecialQuaility` rows -- an UPSTREAM TYPO of the modelled \
              `SpecialQuality`, deliberately not corrected into the facet \
-             (`decisions.md §61.4`) -- and Core Essentials's 11 (round 7); \
+             (`decisions.md §61.4`) -- Core Essentials's 11 (round 7), and Core \
+             Rulebook's single `TYPE:NaturalAttack.…` row (round 8, `§65.2`); \
              a change here means a book's shape moved"
         );
         // Core Essentials's 11, derived rather than inferred from the delta:
@@ -692,6 +717,48 @@ mod tests {
             assert!(ability.facet.is_none(), "{key} now states a modelled facet");
             assert_eq!(ability.type_segments, &["Communicate", "SpellLike"]);
         }
+        // Core Rulebook's one row, round 8 (`decisions.md §65.2`) -- the SIXTH
+        // unmodelled-facet shape and the first that is neither a category name,
+        // a typo, nor a spell-like delivery. `cr_abilities_companion.lst:191`
+        // reads `TYPE:NaturalAttack.NaturalAttackSecondary.Secondary`: the row
+        // is a natural ATTACK, a shape `CompanionAbilityFacet` does not model
+        // at all (it models `CompanionAdvancement`, `SpecialQuality` and
+        // `SpecialAttack`).
+        //
+        // It SHIPS rather than being dropped, and the distinction from `§63.3`'s
+        // `Pseudodragon ~ Tail` is the whole point of stating this here: that row
+        // was dropped because it carried no `TYPE:`, no `DESC:` and no `BONUS:`,
+        // so every modelled field was empty. This one carries a `TYPE:`, four
+        // `BONUS:WEAPONPROF=Tail Slap` tokens and `SOURCEPAGE:p.301`. An
+        // unmodelled FACET is not an empty RECORD.
+        //
+        // Asserted structurally and not only by the count above, because round
+        // 7 learned at the cost of a gate run that a count assertion placed
+        // ahead of a structural one hides the structural one for exactly as
+        // long as the count is stale.
+        let crb = companion_book("core_rulebook").expect("registered book");
+        let crb_unmodelled: Vec<&str> = crb
+            .companion_abilities
+            .iter()
+            .filter(|a| a.facet.is_none())
+            .map(|a| a.key)
+            .collect();
+        assert_eq!(
+            crb_unmodelled,
+            vec!["Crocodile ~ Tail Slap"],
+            "Core Rulebook's unmodelled-facet rows"
+        );
+        let tail_slap = crb
+            .companion_ability_resolve("Crocodile ~ Tail Slap")
+            .expect("its own book defines it");
+        assert_eq!(
+            tail_slap.type_segments,
+            &["NaturalAttack", "NaturalAttackSecondary", "Secondary"]
+        );
+        assert!(
+            tail_slap.source_page.is_some(),
+            "a shipped row states where a reader can check it"
+        );
     }
 
     /// Conditional `DESC:` variants (`decisions.md §61.1`), asserted as a

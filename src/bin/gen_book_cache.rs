@@ -1765,6 +1765,29 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         product_identity_source: "Paizo Pathfinder Roleplaying Game Core Rulebook, OGL §15 Product Identity section (core_essentials is distributed as part of that book's data set)",
         classified_by_cycle: "SD29-E7-F2-008",
     },
+    // SD-29 Epic 7 round 8. Core Rulebook.
+    //
+    // Back to the standard formula, and CHECKED rather than assumed after
+    // round 7 found it false for Core Essentials: `core_rulebook.pcc` carries a
+    // live `ISOGL:YES` (line 19) and an uncommented `COPYRIGHT:` block (31
+    // onward), and the directory ships a real `OGL.txt`. Both verified this
+    // round by reading the file, not by pattern-matching the other eleven rows.
+    //
+    // As with every registered book, the generator will use NEITHER string:
+    // `gen_companion_book` preserves a prior `license_declaration`
+    // (`decisions.md §54.4`) and this book has one from cycle `E2.0.6`. They are
+    // written correctly anyway, per `§63`'s note that a fallback which is only
+    // correct while it stays unreached is how `§59.2`'s `mod_only` half sat
+    // wrong for two rounds.
+    CompanionBookSpec {
+        corpus_book: "core_rulebook",
+        book_relative: "pathfinder/paizo/roleplaying_game/core_rulebook",
+        races_lsts: &["cr_races_companion.lst"],
+        abilities_lsts: &["cr_abilities_companion.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own core_rulebook.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game Core Rulebook, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-009",
+    },
 ];
 
 fn companion_book_spec(book: &str) -> Option<&'static CompanionBookSpec> {

@@ -348,11 +348,40 @@ def transcribe(book: str) -> str:
         (u for u in units if row_shape(u["source_file"]) == "ability"),
         key=lambda u: u["source_line"],
     )
-    classes = [u for u in units if row_shape(u["source_file"]) == "class"]
+    # ---- class-row screen (`decisions.md §65.1`) ----
+    #
+    # Until round 8 this was a `raise SystemExit(... "Widen it deliberately.")`.
+    # It was written as a refusal so that the FIRST book carrying the shape could
+    # not be ingested by accident, and it did its job: three books
+    # (`core_rulebook` 2, `ultimate_magic` 3, `book_of_the_damned_volume_1` 2)
+    # stopped here rather than silently shipping something.
+    #
+    # Widened deliberately now, and the deliberate answer is DROP-AND-NAME, not
+    # "model them". A `*_classes_companion.lst` row is a PCGen monster CLASS --
+    # the hit-dice progression a creature row's `MONSTERCLASS:` token names. It
+    # has no `SIZE:`, no `MOVE:`, no natural attacks; it is not a creature and it
+    # is not an ability. Transcribing one into `CompanionRecord` would emit a
+    # card whose every modelled field is empty, which is precisely the stub class
+    # the `.COPY=` screens above exist to prevent. Modelling it properly is a NEW
+    # RECORD TYPE (a level progression table), which `§63`'s closing note said a
+    # round taking one "should declare up front" -- this round does not take it.
+    #
+    # This changes NO book's shipped output: `classify_companion_rows.py` has
+    # always counted these rows as excluded, so the lane's reachable remainder
+    # already assumed they do not ship. The screen makes the transcriber agree
+    # with the classifier instead of halting in front of it. No filtering of
+    # `units` is needed either -- `row_shape` sorts a `_classes_` file into
+    # neither `creatures` nor `abilities` above, so these rows were already out
+    # of both tables. The only thing that was missing was saying so.
+    classes = sorted(
+        u["corpus_key"] for u in units if row_shape(u["source_file"]) == "class"
+    )
     if classes:
-        raise SystemExit(
-            f"{book} carries {len(classes)} `*_classes_companion.lst` rows; the chassis models "
-            "creature and ability rows only. Widen it deliberately."
+        print(
+            f"{book}: {len(classes)} `*_classes_companion.lst` CLASS row(s) NOT transcribed "
+            "(a monster class is a hit-dice progression, not a creature and not an "
+            "ability): " + ", ".join(classes),
+            file=sys.stderr,
         )
     if not creatures:
         raise SystemExit(f"{book} carries no companion creature rows")
@@ -773,6 +802,29 @@ def transcribe(book: str) -> str:
         out.append("//! dropped, named here, left honestly `not-ingested`:")
         for key in empty:
             out.append(f"//!   * `{key}`")
+    if classes:
+        out.append("//!")
+        out.append(
+            "//! NOT transcribed -- `*_classes_companion.lst` CLASS rows (`decisions.md"
+        )
+        out.append(
+            "//! §65.1`). A PCGen monster class is the hit-dice progression a creature"
+        )
+        out.append(
+            "//! row's `MONSTERCLASS:` token names -- it states no `SIZE:`, no `MOVE:` and"
+        )
+        out.append(
+            "//! no natural attacks, so every field this chassis models transcribes empty."
+        )
+        out.append(
+            "//! Modelling it is a new record type (a level progression table), not a wider"
+        )
+        out.append(
+            "//! predicate on this one. Left honestly `not-ingested`; the creature rows that"
+        )
+        out.append("//! name them ship, and carry the token verbatim:")
+        for key in classes:
+            out.append(f"//!   * `{key}`")
     if gated:
         out.append("//!")
         out.append(
@@ -913,7 +965,23 @@ def transcribe(book: str) -> str:
 # Mapped rather than renamed: renaming `beastiary1` is a repo-wide identifier
 # change with no companion-lane content in it (`AGENTS.md`, "Do not expand
 # scope"). Books absent from this map use their own id.
-MODULE_DIR = {"bestiary": "beastiary1"}
+#
+# SD-29 Epic 7 round 8 added the second and third entries, and they are the same
+# hazard as the first rather than a new one. `core_rulebook` and
+# `advanced_players_guide` are the corpus-directory ids (`data/corpus/` spells
+# both out in full), but their engine modules have carried the abbreviations
+# `crb` and `apg` since long before this lane — `rules_tables/mod.rs` line 3
+# names them that way. Without these rows the transcriber writes
+# `rules_tables/core_rulebook/companion_data.rs`: a SECOND module for a book that
+# already has one, which compiles, passes its own tests, and is reachable from
+# nothing. That is the exact failure the paragraph above describes; it was found
+# by reading this comment before running the tool, not by the gate, because an
+# unreferenced module is invisible to it.
+MODULE_DIR = {
+    "bestiary": "beastiary1",
+    "core_rulebook": "crb",
+    "advanced_players_guide": "apg",
+}
 
 
 def module_dir(book: str) -> str:

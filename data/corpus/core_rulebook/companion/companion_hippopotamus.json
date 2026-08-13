@@ -1,0 +1,76 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-13T02:26:54Z",
+  "data": {
+    "ability_keys": [
+      "core_rulebook:companion:companion_advancement_hippopotamus"
+    ],
+    "corpus_key": "Companion (Hippopotamus)",
+    "external_ability_refs": [
+      "Animal Traits Output",
+      "Hippopotamus ~ Sweat",
+      "Scent",
+      "Hippopotamus Companion Natural Attack",
+      "!PRETEMPLATE:1,Hippopotamus Companion Advancement"
+    ],
+    "key": "core_rulebook:companion:companion_hippopotamus",
+    "monster_class": "Companion:2",
+    "name": "Companion (Hippopotamus)",
+    "natural_armor": 6,
+    "natural_attacks": [],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.157",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -8
+      },
+      {
+        "ability": "CHA",
+        "amount": -6
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "AnimalCompanion"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_races_companion.lst",
+    "sha256": "53f972cdc67f22e719a4eda2f38d69c9190464d1a76d4a8cfe870c549bd80815",
+    "line": 58,
+    "record_key": "Companion (Hippopotamus)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

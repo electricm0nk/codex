@@ -231,6 +231,14 @@ fn crb_counts() -> BTreeMap<String, u32> {
         "equipment".to_string(),
         crb_equipment_tables::equipment_tables().len() as u32,
     );
+    // SD-29 Epic 7 round 8. Merged in rather than inserted by hand, so this
+    // book's companion count is derived from the SAME registry every other
+    // companion book's row reads. Round 7 found Ultimate Wilderness present in
+    // this panel with a number that under-stated it threefold, because its row
+    // inserted `feats` and stopped; a book whose row is hand-built drifts the
+    // moment it gains a family. `crb` had five families before this round and
+    // is the most likely book in the corpus to gain a sixth again.
+    counts.extend(companion_book_counts("core_rulebook"));
     counts
 }
 

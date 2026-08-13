@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-13T02:26:54Z",
+  "data": {
+    "corpus_key": "Crocodile ~ Tail Slap",
+    "delivery": null,
+    "description": null,
+    "description_variables": [],
+    "description_variants": [],
+    "facet": null,
+    "key": "core_rulebook:companion:crocodile_tail_slap",
+    "name": "Tail Slap",
+    "owners": [
+      "core_rulebook:companion:companion_crocodile_alligator"
+    ],
+    "record_type": "ability",
+    "source_page": "p.301",
+    "stat_adjustments": [],
+    "type_segments": [
+      "NaturalAttack",
+      "NaturalAttackSecondary",
+      "Secondary"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/core_rulebook/cr_abilities_companion.lst",
+    "sha256": "87c87e87120de7a272cecce07a89c4d0d5ad1e43ecc8cd89d530640966b1d495",
+    "line": 191,
+    "record_key": "Crocodile ~ Tail Slap"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

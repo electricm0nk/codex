@@ -52,6 +52,7 @@ export const BOOK_LABELS: Record<string, string> = {
   B4: 'Bestiary 4',
   UW: 'Ultimate Wilderness',
   CE: 'Core Essentials',
+  CRB: 'Core Rulebook',
 };
 
 /** `'ISC'` -> `'Inner Sea Combat'`; an unmapped code falls through as itself. */

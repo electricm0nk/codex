@@ -87,6 +87,13 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // `SD29-E6-F2-005`. Same wire code either way: it names the BOOK, and
         // `CE` is already what `reach_gate`'s `race_traits` claim passes.
         "core_essentials" => "CE",
+        // SD-29 Epic 7 round 8. Core Rulebook — the book's SIXTH family, beside
+        // the classes, races, spells, equipment and race traits already landed.
+        // `CRB` is not a new code invented here: `race_catalog`, `spell_catalog`
+        // and `equipment_catalog` each already declare `const BOOK_CRB: &str =
+        // "CRB"`, so this row makes the companion catalog agree with the three
+        // catalogs a player already reads rather than adding a fourth spelling.
+        "core_rulebook" => "CRB",
         other => panic!(
             "companion_catalog: no wire code for companion book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -719,11 +726,31 @@ mod tests {
         // EQUAL, and that is the statement worth pinning rather than the totals
         // alone: 11 new records producing 11 new rows means each is reached
         // through exactly ONE owner, unlike Bestiary 4's two rows below.
-        assert_eq!(unmodelled.len(), 132);
+        // Round 8 (`decisions.md §65.2`): 132 -> 133 and 31 -> 32, both moved by
+        // Core Rulebook's single `TYPE:NaturalAttack.NaturalAttackSecondary.
+        // Secondary` row, `Crocodile ~ Tail Slap`. Equal deltas again, so this
+        // record too is reached through exactly one owner.
+        assert_eq!(unmodelled.len(), 133);
         let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
         keys.sort_unstable();
         keys.dedup();
-        assert_eq!(keys.len(), 31, "31 distinct records behind the 132 wire rows");
+        assert_eq!(keys.len(), 32, "32 distinct records behind the 133 wire rows");
+        // Named, so neither count above can be satisfied by a different record.
+        // Asserted on the WIRE rather than only on the table, because the gap
+        // this catches is a row that exists in `rules_tables` and never crosses
+        // the boundary — which no `companion_chassis` test can see.
+        //
+        // The wire `key` is the corpus ID (`<book>:companion:<slug>`), NOT the
+        // corpus `KEY:` token (`Crocodile ~ Tail Slap`) the chassis-side test
+        // asserts on. Written the other way first, and this assertion failed
+        // while both counts above passed — which is the useful half: had it been
+        // left as a count-only bump, the difference between the two identifier
+        // spaces would not have been established anywhere on this side of the
+        // boundary.
+        assert!(
+            keys.contains(&"core_rulebook:companion:crocodile_tail_slap"),
+            "Core Rulebook's one unmodelled-facet record must reach the wire: {keys:?}"
+        );
         for ability in unmodelled {
             assert!(
                 !ability.type_segments.is_empty(),
@@ -758,6 +785,26 @@ mod tests {
             // count pins above moved to 132/31 and would have been satisfied by
             // ANY eleven new rows. Listing the shapes is what makes the counts
             // mean something.
+            //
+            // Round 8 adds the SIXTH shape (`decisions.md §65.2`):
+            //
+            // * `NaturalAttack.NaturalAttackSecondary.Secondary` (1 row, Core
+            //   Rulebook's `Crocodile ~ Tail Slap`) — the first unmodelled shape
+            //   that is neither a CATEGORY name, an upstream typo, nor a
+            //   spell-like delivery. The row is a natural ATTACK: it carries
+            //   four `BONUS:WEAPONPROF=Tail Slap` tokens and a
+            //   `NATURALATTACKS:` declaration. `CompanionAbilityFacet` models
+            //   `CompanionAdvancement`, `SpecialQuality` and `SpecialAttack`,
+            //   and a secondary natural attack is none of the three — mapping it
+            //   onto `SpecialAttack` would claim the creature has a special
+            //   attack it does not.
+            //
+            // Round 7 learned this assertion's value the expensive way: its
+            // `Weakness.Extraordinary` row got through a whole gate run because
+            // the count pin above it was checked first and was stale. This round
+            // hit this line on the FIRST desktop run instead, because the named
+            // structural assertion added beside the counts fails before the
+            // loop is even reached.
             let first = ability.type_segments.first().map(String::as_str);
             assert!(
                 ability.type_segments == vec!["ClockworkFamiliarInstalledItem".to_owned()]
@@ -767,7 +814,13 @@ mod tests {
                     || ability.type_segments
                         == vec!["Special Ability".to_owned(), "Extraordinary".to_owned()]
                     || ability.type_segments
-                        == vec!["Weakness".to_owned(), "Extraordinary".to_owned()],
+                        == vec!["Weakness".to_owned(), "Extraordinary".to_owned()]
+                    || ability.type_segments
+                        == vec![
+                            "NaturalAttack".to_owned(),
+                            "NaturalAttackSecondary".to_owned(),
+                            "Secondary".to_owned(),
+                        ],
                 "{} carries an unrecognised unmodelled shape: {:?}",
                 ability.key,
                 ability.type_segments
