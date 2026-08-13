@@ -11738,6 +11738,248 @@ type mid-round; renumbered this lane's decision §62 → §63 on the merge colli
 precedent of the companion lane yielding; resolved the generated `docs/work-inventory.json` conflict
 by taking origin's copy and re-deriving rather than hand-merging two unit lists.
 
+## Cycle — epic-7-companion-lane-extend, ROUND 8 (SD29-E7-F2-009)
+
+**Claimed-by** `sd29-companion-r12` · **Card** `epic-7-companion-lane-extend` ·
+**Decision** `decisions.md §65` (number RESERVED at claim time per `§53`, leaving `§64` for the
+concurrently-running monster lane rather than renumbering on merge) ·
+**Commits** `240c1865` (ingest + the class-row screen + the `MODULE_DIR` fix + two test pins),
+`736dfd3d` (decision `§65` + a classifier label that stopped being true), `bcbb12f1` (the per-agent
+vite dev port, the frontend test roster, and the item-8 artifacts), plus this receipt ·
+**Branch** pushed to `origin/tranche/9`
+
+**Outcome: 84 units ingested, all 84 grounded. Companion grounded 786 → 870. Honest remainder 52
+across 4 books. Full gate `VERIFY_EXIT=0`, all 14 stages. Item 8 PASS — after two FALSE failures
+that turned out to be a harness defect, not a content one.**
+
+### 0. The dispatch brief was materially stale for the FIFTH consecutive round
+
+The brief stated **"NOTHING has landed"**, that "all ~1,233 in-scope companion units are
+not-ingested, 0 grounded", that this is "a NEW MECHANISM with no corpus-wide precedent", and that the
+round should pilot `inner_sea_combat`. `§56 §0`, `§59 §0`, `§61 §0` and `§63 §0` each record the
+*same* text one, two, three and four rounds earlier. Seven rounds had landed; twelve books were
+registered.
+
+The brief's one checkable figure — **136** remaining — was re-derived and **reproduced EXACTLY**
+before any work:
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'not-ingested': 910, 'grounded': 786})
+
+python3 scripts/classify_companion_rows.py core_rulebook ultimate_magic advanced_race_guide \
+  advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  -> 615 units / 479 excluded / 136 reachable
+```
+
+`HEAD` was `7d9f1c4f` — an ancient commit carrying no `docs/`, `scripts/` or `data/` at all (though
+it IS an ancestor of `origin/tranche/9`). Fixed with `git fetch origin tranche/9 && git reset --hard
+origin/tranche/9` before any work. **Third consecutive round handed a wrong base.**
+
+### 1. Book selection — the classifier was run BEFORE committing, per `§45.1`
+
+`core_rulebook` at 84 reachable was the largest remaining book and the only one left above 40.
+Re-derived per book rather than trusted from `§63`'s ranking table:
+
+```
+python3 scripts/classify_companion_rows.py core_rulebook | tail -6
+  -> 170 units / 86 excluded / 84 reachable
+```
+
+Header row: `crea 38 · abil 130 · clas 2 · ORPHAN 84`, and `38 + (130 − 84) = 84` — the shipped count
+reconstructed from the shape rather than read off the summary line.
+
+### 2. What shipped
+
+| | |
+|---|---|
+| Book | `core_rulebook` (Core Rulebook, wire code `CRB`, engine module `crb`) |
+| Units ingested | **84** of 170 — 38 creature rows, 46 ability rows |
+| Grounded | **84 of 84** |
+| Source files | 2 — `cr_races_companion.lst`, `cr_abilities_companion.lst` |
+| New `RuleSetId` | **none** (`RuleSetId::Crb` is the oldest in the enum) |
+| Other kinds' units moved | **0** — measured, not asserted |
+| `OPEN_FINDINGS` | none added — the family IS surfaced |
+
+Zero scope flip, measured by a structural diff of every unit's status against HEAD: exactly two
+changes, `core_rulebook|companion|grounded 0 → 84` and
+`core_rulebook|companion|not-ingested 170 → 86`.
+
+On-disk record count agrees with the table: `ls data/corpus/core_rulebook/companion/*.json | wc -l`
+→ **84**.
+
+### 3. Three findings, and the first one is why this book sat unstarted for seven rounds
+
+* **`§65.1` — the class-row refusal, widened deliberately.** The transcriber has carried
+  `raise SystemExit(... "Widen it deliberately.")` for any book holding `*_classes_companion.lst`
+  rows since round 1. That refusal — not the record count, not a missing mechanism — is why the
+  lane's **largest remaining book** was never taken. The deliberate answer is **drop-and-name**, not
+  "model them": a PCGen monster class is a hit-dice progression, so every field this chassis models
+  transcribes empty, which is the stub class the `.COPY=` screens exist to prevent. Modelling it is a
+  new record type; **declared and NOT taken**, per `§63`'s own instruction. The widening changed no
+  book's shipped output — the classifier had always counted these rows as excluded.
+
+* **`§65.3` — a second module that would have been reachable from nothing.** `MODULE_DIR` mapped only
+  `bestiary → beastiary1`. Core Rulebook's corpus id is `core_rulebook`, its engine module is `crb`;
+  an unmapped run would have written `rules_tables/core_rulebook/companion_data.rs`, a second module
+  for a book that already has one — compiling, passing its own tests, referenced by nothing. **Caught
+  by reading the transcriber's own comment before running it**, because the gate cannot see an
+  unreferenced module. `advanced_players_guide → apg` added in the same edit; it carries the
+  identical split and is next in the queue.
+
+* **`§65.2` — the sixth unmodelled-facet shape.**
+  `cr_abilities_companion.lst:191` reads `TYPE:NaturalAttack.NaturalAttackSecondary.Secondary`. It
+  **ships**, where `§63.3`'s `Pseudodragon ~ Tail` was dropped, and the distinction is the reusable
+  half: that row carried no `TYPE:`, no `DESC:` and no `BONUS:`; this one carries a `TYPE:`, four
+  `BONUS:WEAPONPROF=Tail Slap` tokens and `SOURCEPAGE:p.301`. **An unmodelled FACET is not an empty
+  RECORD.**
+
+**`§65.4` — the shortfall is ONE finding, not 86.** The 84 orphan ability rows are the generic
+`Animal Companion ~ …` / `Animal Trick ~ …` / `Animal Training ~ …` records, and they are orphans
+*precisely because* they hang off the Animal Companion **class** rather than any creature — the same
+missing record type as the 2 class rows, seen from the other side. First registered book whose
+shortfall is a single missing type rather than per-row accidents.
+
+### 4. The gate — `VERIFY_EXIT=0`, all 14 stages, and an honest account of run 1
+
+| run | result | attribution |
+|---|---|---|
+| 1 | **killed, not failed** | Died mid-`root-full` compile with no `RESULT:` line; log last written 22:47, process absent, no OOM record in `dmesg`, no `test result: FAILED` anywhere in the log. Launched with `nohup ... &` from a harness background task. **Not excused as environmental — attributed:** zero tests had reported failure at the point it stopped. Relaunched under `setsid` and it ran to completion, which is consistent with process-group reaping rather than any repo condition. |
+| 2 | **`0`** | all 14 stages |
+
+```
+preflight-disk PASS · pi-sweep PASS (10 hits, 10 baseline rows) · audit-selftest PASS (28)
+reclaim-selftest PASS (10) · driver-selftest PASS (7) · root-lib PASS (1744)
+root-full PASS (6312 passed across 544 suites, all 525 tests/*.rs suites executed)
+desktop PASS (445) · reach PASS (27) · frontend-install PASS · frontend-test PASS (99/99)
+frontend-typecheck PASS (tsc --noEmit clean) · clippy PASS (0 errors) · class-dump PASS (31/31)
+```
+
+`driver-selftest` passing matters this round specifically: `driver.sh` was modified (§6 below).
+
+### 5. Item 8 — PASS, and the two FALSE failures that preceded it are the round's biggest finding
+
+`companion / Companion (Crocodile (Alligator))`, artifact
+`artifacts/SD29-E7-F2-009/item8/crb-companion-crocodile.png` + `.verify.md`, HEAD `736dfd3d`. On
+screen: the `Core Rulebook (38)` book chip, `Core Rulebook p.56`, `Walk 20 ft., swim 30 ft. · reach
+5 ft. · Hit dice Companion:2 · Natural armor +4`, the six `BONUS:STAT` adjustments, and all five
+abilities including **`Tail Slap — NaturalAttack · NaturalAttackSecondary · Secondary p.301`** —
+which verifies `§65.2` on the player's screen, not just in a table.
+
+**It failed twice first, and the cause was not this cycle's content** (`§65.7`). The app rendered
+`CRB (38)` beside `Core Essentials (58)` and eleven other spelled-out names, while `Core Rulebook`
+was present in the committed `CompanionCatalogScreen.tsx` and the frontend suite passed 99/99.
+`38` is this round's creature count, so the backend was this tree's. The frontend was not:
+
+```
+pgrep -af vite
+  -> node /home/ubuntu/workspace/repos/codex/.claude/worktrees/wf_924a22ca-f35-19/apps/desktop/node_modules/.bin/vite
+```
+
+`vite.config.ts` pinned `port: 1420, strictPort: true` for **every** agent, so this cycle's vite could
+not bind, died, and `tauri dev` attached to a **sibling worktree's** dev server. The prior mitigation
+in `driver.sh` was `lsof -ti:1420 | xargs kill -9`, i.e. clobber the sibling instead. Both available
+outcomes were wrong.
+
+**This class is expensive because it is silent and plausible.** Item 8 exists precisely because
+`reach_gate` passing does not prove a player sees the value; a false item-8 PASS retires that last
+check while looking like the strongest evidence in the receipt. **This round caught it only by luck
+of shape** — the new book label happened to be the one string differing between the two trees. A
+round that ingested records without changing any frontend string would have taken the PASS and cited
+it.
+
+The two `.FAILED.*` artifacts are **kept, not deleted**: they are the evidence for `§65.7`, and the
+harness's own naming makes them uncitable as a pass.
+
+### 6. Fixed at the source, in the harness, not worked around in this cycle
+
+`driver.sh` derives `CODEX_DEV_PORT` from the same `DISPLAY_NUM` that already uniquifies the display
+(`default` keeps 1420, so a solo run is byte-identical to before); `vite.config.ts` reads it; and
+`tauri dev` is passed a matching `--config {"build":{"devUrl":"http://localhost:<port>"}}`. The
+port-clearing line is now scoped to the agent's own port. `strictPort` stays **true** deliberately —
+falling back to a free port restores the ambiguity, because tauri is told exactly one `devUrl` and a
+vite that quietly moved is indistinguishable from one that never started. Re-run PASSed on port
+**14279**.
+
+**The second-order lesson.** `RUN_DESKTOP_AGENT` was set correctly and uniquely by this cycle, exactly
+as the loop instruction demands. The guard did what it documents — uniquify the display and the state
+file — and the collision happened anyway, in a resource the variable was never wired to. **A
+concurrency guard protects the resources it enumerates, not the concept of "this agent's app."**
+
+`§65.8`: `CompanionCatalogScreen.test.ts`'s `SERVED_BOOK_CODES` roster gained `CRB`. The suite passed
+99/99 with the book shipping and unlabelled, because the roster held twelve codes and `CRB` was not
+one — a test whose stated job is "every served book", scoped to a hand-maintained list that does not
+know about the new book. Third instance of `§44.2`'s defect class in this bundle.
+
+### 7. DoD item 3 is RED, it is NOT this lane's, and no prior round reported it
+
+```
+cargo run --locked --bin v06_corpus_trap_report -- --audit   # exit captured directly, not through a pipe
+  -> TRAP_AUDIT_EXIT=2
+```
+
+Three `[wiring-class-mismatch]` defects, all `monster/` records under `inner_sea_gods`:
+`psychopomp_ahmuuth`, `steward_of_the_skein`, `the_first_blade`. All three landed in `1c7d8ef9`
+("Inner Sea Gods monster ingest"), which **predates companion round 7**, and round 7's receipt does
+not mention item 3 at all.
+
+**Zero defects are in companion or `core_rulebook` territory**, and this cycle touches none of those
+files: `git diff e13a43dd...HEAD --name-only | grep -c inner_sea_gods` → **0**. The records and their
+corpus sources are byte-identical to this cycle's base, so the audit's verdict on them is unchanged
+by anything here. `scripts/verify.sh` does not run `--audit`, which is how this stayed invisible to a
+green gate.
+
+**Reported, not fixed** — fixing it means editing the concurrently-running monster lane's live
+records, which is the "would clobber another session's live work" stop condition. Recorded as a retro
+`note` tagged `dod-item-3`/`cross-lane` so it is attributable rather than folded into this lane's
+result.
+
+### 8. Wired-integration four-check audit — clean
+
+```
+OK_NO_TOKENS · OK_NO_NOOP_HANDLERS · OK_NO_MOCK_LEAKS · OK_NO_WOULD_STRINGS
+```
+
+### 9. Denominators, re-derived at the end of this round
+
+```
+python3 -c "import json,collections; d=json.load(open('docs/work-inventory.json'));
+  print(collections.Counter(u['status'] for u in d['units'] if u['kind']=='companion'))"
+  -> Counter({'grounded': 870, 'not-ingested': 826})
+
+python3 scripts/classify_companion_rows.py ultimate_magic advanced_race_guide \
+  advanced_players_guide book_of_the_damned_volume_1 | tail -6
+  -> 445 units / 393 excluded / 52 reachable
+```
+
+`companion` **1,696 total / 870 grounded / 826 remaining by status. 826 is NOT the lane's workload.**
+The REAL ceiling is **922** (`§63`'s figure, unchanged — this round dropped no row from it), so the
+honest remainder is **52**. `922 − 870 = 52`, and the four books' reachable counts sum to 52
+independently. The two derivations close exactly.
+
+Ranked: `ultimate_magic` 170 / 138 / **32**, `advanced_race_guide` 32 / 18 / **14**,
+`advanced_players_guide` 212 / 208 / **4**, `book_of_the_damned_volume_1` 31 / 29 / **2**.
+
+**Three hazards for round 9.** (a) **No book above 40 remains** — `ultimate_magic` at 32 is the
+largest, and the lane has crossed from big-block ingest into per-book fixed-cost work; cost is now
+dominated by the nine-surface registration, not by record count. (b) `advanced_players_guide`
+(4 of 212) and `book_of_the_damned_volume_1` (2 of 31) remain **FLOORS, not queued work**.
+(c) `ultimate_magic` and `book_of_the_damned_volume_1` both carry `*_classes_companion.lst` rows —
+`§65.1`'s screen now handles them silently, so neither needs a mechanism decision, only the ingest.
+
+**The lane is NOT dry.** This round does not claim it is.
+
+**Unattended-mode defaults taken this round** (recorded per the operating protocol, not raised):
+widened `§65.1`'s refusal to drop-and-name rather than deferring the book an eighth time; reserved
+decision number `§65` at claim time per `§53` rather than renumbering on merge; added
+`advanced_players_guide` to `MODULE_DIR` alongside `core_rulebook` rather than leaving a
+known-identical trap; fixed the shared-dev-port defect in the harness itself rather than working
+around it for this cycle alone, because a false item-8 PASS is not a companion-lane problem and every
+future cycle on this box inherits it; kept the two `.FAILED.*` item-8 artifacts as evidence rather
+than deleting them; and reported DoD item 3's red rather than entering the monster lane's live
+territory to fix it.
+
 ## Cycle SD29-E5-F2-011 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 10 of a loop-until-dry lane**)
 
 **Actor:** `sd29-monster-r12` · **Date:** 2026-08-13 · **Branch:** `tranche/9`
