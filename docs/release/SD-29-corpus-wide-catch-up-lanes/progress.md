@@ -13032,3 +13032,213 @@ Recorded so run 3 does not re-derive the shape:
    log is append-only and its whole value is that it survives a run git does not record; leaving
    another agent's events uncommitted is how they get lost. `docs/release/SD-31-pcgen-character-import/`
    was left untracked — it is a different bundle's package and not this cycle's to land.
+
+## Cycle SD29-E5-F2-012 — `epic-5-monster-lane-extend` (Monster / Monster-Ability Chassis Lane — EXTEND, **round 11, FINAL PASS**)
+
+**Actor:** `sd29-monster-final-r1` · **Date:** 2026-08-13 · **Base:** `origin/tranche/9` @ `dec23815`
+
+**Outcome: the monster lane's ingest work is DRY.** 9 units ingested (`horror_adventures`), the
+lane's REAL workable remainder corrected from 10 to 9 and now **0**, and `§64.1`'s 229-unit
+mechanism class handed forward with a named owner.
+
+### 0. Base recovery — the FIFTH consecutive cycle handed a wrong base
+
+First action, as the brief required:
+
+```
+git merge-base --is-ancestor origin/tranche/9 HEAD   -> exit 1  (DIVERGED)
+git rev-parse HEAD                                   -> 7d9f1c4f
+git rev-parse origin/tranche/9                       -> dec23815
+ls docs/release/SD-29-corpus-wide-catch-up-lanes/loop-instruction.md -> No such file
+```
+
+`git status --porcelain` returned **0 lines**, so a reset lost nothing and was taken:
+`git fetch origin && git reset --hard origin/tranche/9`. This is deliberately the OPPOSITE call from
+closure run 2's, which found 2 real unpushed commits and correctly merged instead — the rule is
+"never destroy work", not "always reset". Emitted to the retro log under
+`--recurrence-key wrong-base-worktree`.
+
+### 1. The split, re-derived before planning — and it disagreed with the brief
+
+The brief's figures were reproduced **exactly** first:
+
+```
+python3 scripts/classify_monster_ability_rows.py | tail -6
+  -> remaining monster+monster_ability units : 1515
+     orphan monster_ability rows             : 1406
+     Product Identity rows                   : 32
+     `.COPY=` delta rows                     : 2
+     reachable remainder                     : 75
+
+python3 scripts/scan_monster_ability_bundle_rows.py | tail -3
+  -> orphan rows the `ABILITY:Internal|AUTOMATIC|` hop would reach: 229
+```
+
+`1515 / 75 / 229` reproduce `§64.5` and the closure run 2 receipt exactly. **Then the 10 did not.**
+
+`decisions.md §68.1` carries the derivation in full. In short: `occult_adventures`'s one monster row
+is loaded by `_occult_adventures.pcc:75` under `!PRECAMPAIGN:1,INCLUDES=Bestiary 3` — a **negated**
+gate this repo fails because it registered Bestiary 3 in round 5 — the file's own header declares
+`SOURCELONG:Bestiary 3` / `SOURCESHORT:B3`, and `rules_tables::bestiary_3::monster_data` has shipped
+`Kami (Shikigami)` since that round. **The lane's REAL workable count was 9.**
+
+### 2. The 9, ingested
+
+`horror_adventures`: 3 monster rows (`ha_races.lst:3-5` — Hive Larva Swarm, Hive Queen, Hive
+Warrior) and the 6 ability rows namespaced to them (`ha_abilities_race.lst:277-286`). The book's
+other 65 ability rows are orphans, pinned by line in `monster_data`'s header rather than shipped as
+records no screen can reach.
+
+`RuleSetId::Ha` already existed (`race_trait` Epic 6 round 3, `companion` Epic 7), so this is the
+second-ever registration in this lane costing **no new rule set, no new corpus directory and no new
+work-inventory book entry** — a third family under one directory.
+
+Both `.lst` files load UNCONDITIONALLY (`_horror_adventures.pcc:63`, `:77`), read from the PCC load
+line. Zero `NAMEISPI:YES` rows in either file.
+
+**Registration points touched (7):** transcriber `BOOKS`; `rules_tables::horror_adventures` (module
++ generated `monster_data.rs` + 4 tests); `monster_chassis::MONSTER_BOOKS`;
+`gen_book_cache::MONSTER_BOOK_SPECS`; `monster_catalog` (`BOOK_HA` + display name + wire code);
+`reach_gate` (two claim arms — `CORPUS_BOOK_IDS` already had the book);
+`corpus_ingest_diagnostic` (row switched to the merged counts helper, `§68.5`).
+
+Measured, not assumed:
+
+```
+cargo run --bin gen_book_cache horror_adventures
+  -> 3 monsters, 6 monster abilities; LICENSE.json records_processed=54
+     (= 43 race_trait + 2 companion + 9 monster; the two prior lanes' PASS
+      declarations APPENDED, not replaced — verified in the diff)
+cargo run --bin v06_work_inventory
+  -> horror_adventures {monster: 3 grounded,
+                        monster_ability: 6 grounded / 65 not-ingested}
+  -> corpus-wide grounded 4,638 -> 4,647
+```
+
+### 3. Three instrument findings, all checked in
+
+`decisions.md §68.1-§68.5` carry these in full. Summarised because each one changes what a successor
+should trust:
+
+* **`scripts/screen_pcc_load_gates.py` (new).** Screens both gate directions over every remaining
+  unit of every kind. Corpus-wide: **719** units excluded by a load gate, 10 in the monster kinds.
+  It made **two false confident claims before it made a true one**, and both were caught only by
+  running it against four cases whose answers three other documents already record — it now
+  reproduces all four exactly.
+* **`classify_monster_ability_rows.py`'s zero-monster line was bucketing on REMAINING monsters.**
+  Grounding this round's 3 monsters made the figure RISE, 866/13 → 931/14. Fixed to `monsters_all`;
+  the real split is **703 across 10 books** structural and **228 across 4 books** monster-exhausted,
+  and `§64`'s published 866 splits exactly into 703 + 163. This is the line
+  `loop-instruction.md`'s zero-monster HARD STOP rule keys on.
+* **`ABILITY:Internal|AUTOMATIC|` has a second, live use** — attack composition, load-bearing on two
+  of this round's three monsters — independent of the deferred ownership hop.
+
+### 4. The 229, stated for a successor to execute
+
+`successor-forward-scope-register.md` **C1.5**, owner **SD-31**. Under Decision 27 an unowned
+deferral is not a valid disposition; it now has one.
+
+It carries the traversal (with `scan_monster_ability_bundle_rows.py::scan_book` named as the
+reference implementation to port rather than re-derive), the six-book split, a five-step change list
+ending in the count-pin sweep, the **two tests designed to go red**
+(`ultimate_psionics::…::no_internal_bundle_ability_ships_yet`,
+`inner_sea_gods::…::no_support_directory_ability_ships_yet`), and the command pair that splits the
+class from the workable set.
+
+**The number is stable under ingest:** re-run after this round's 9 units landed, the scan still
+reports 229 across the same six books. `horror_adventures` contributes 0 to it, which reproduces
+`§64`'s own prediction for the book.
+
+### 5. Gate — `./scripts/verify.sh` FULL, exit code captured directly, launched EARLY
+
+```
+CARGO_TARGET_DIR=/home/ubuntu/workspace/codex-target-sd29-monster-final-r1 \
+  ./scripts/verify.sh > verify-monster-final-r1.log 2>&1 ; echo "VERIFY_EXIT=$?"
+```
+
+**`VERIFY_EXIT=0`** · **RESULT: PASS** · **14 of 14 stages, none skipped**
+
+```
+preflight-disk    PASS            root-full   PASS  (6320 across 544 suites,
+pi-sweep          PASS  (10/10)                      all 525 tests/*.rs executed)
+audit-selftest    PASS  (28)      desktop     PASS  (445)
+reclaim-selftest  PASS  (10)      reach       PASS  (27)
+driver-selftest   PASS  (7)       frontend-*  PASS  (99/99, tsc clean)
+root-lib          PASS  (1752)    clippy      PASS  (root:54 desktop:7, 0 errors)
+                                  class-dump  PASS  (31/31 computing)
+```
+
+Launched against `43ea54a1` **before** the docs work, per the brief's turn-budget
+hazard; the only edits made while it ran were to `scripts/verify-baselines.env` and
+`docs/`, so no compiled or tested path changed under the running gate and the
+result attaches to the tree it was launched on.
+
+`root-full`'s **525 of 525 `tests/*.rs` suites executed** is the check `§40` added, and it is the
+line that matters more than the pass count for a diff that adds a `MonsterBook` registry row.
+
+**Both test floors ratcheted from this run's own measurement**, which the gate itself flagged:
+`BASELINE_ROOT_LIB_TESTS` 1,748 → **1,752**, `BASELINE_ROOT_FULL_TESTS` 6,316 → **6,320**. The +4 on
+both is this round's four new `rules_tables::horror_adventures` monster tests; `root-full` counts the
+lib suite, which is why one change moves both floors by the same amount.
+
+### 5a. Definition-of-done item 8 (on-screen) — PASS, machine-verdicted
+
+Run **after** the gate finished, never concurrent with it (`sd29-driver-fix`'s OOM).
+
+```
+RUN_DESKTOP_AGENT=sd29-monster-final-r1 \
+  ./apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh \
+    --family monster --record "Hive Queen" --expect "Aberration" \
+    --out .../artifacts/SD29-E5-F2-012/item8
+-> PASS: monster / Hive Queen
+```
+
+Rendered lines the harness extracted from the live app, at HEAD `43ea54a1`:
+
+```
+14:Aberration (83)
+30:Hive QueenHuge Aberration (Hive)
+32:Speed 50 ft., climb 20 ft. · HA p.236 · Hit dice Aberration:15
+```
+
+**That third line proves the whole round on one screen**: the new `HA` wire code, the book's page
+citation, the size/type/subtype triple, and `Speed 50 ft., climb 20 ft.` — the two-mode speed read
+from `MOVE:Walk,50,Climb,20`. Evidence at
+`artifacts/SD29-E5-F2-012/item8/monster-hive-queen.{png,verify.md}`.
+
+**One FAIL is recorded rather than hidden.** A second pass (`Hive Warrior` / `Rending Mandibles`,
+proving a chassis ability renders) failed its launch with
+`Info File src-tauri/src/companion_catalog.rs changed. Rebuilding application...` — the companion
+lane's round 9 merge landed in this worktree while the tauri dev watcher was live, and the harness
+correctly refused rather than screenshotting a half-rebuilt app. Re-run on the stable merged tip.
+The item-8 requirement is already satisfied by the Hive Queen pass above.
+
+### 6. What remains, re-derived at cycle end
+
+```
+python3 scripts/classify_monster_ability_rows.py
+  -> remaining monster+monster_ability units     : 1506   (1515 - 9, closes exactly)
+     orphan monster_ability rows                 : 1406
+       of which in ZERO-monster books            : 703 across 10 books
+       of which in monster-EXHAUSTED books       : 228 across 4 books
+     Product Identity rows                       : 32
+     `.COPY=` delta rows                         : 2
+     reachable remainder                         : 66
+
+python3 scripts/screen_pcc_load_gates.py monster monster_ability
+  -> TOTAL remaining units excluded by a PCC load gate: 10
+```
+
+**WORKABLE remainder for this lane: 0.**
+
+| book | classifier-reachable | REAL | why |
+|---|---|---|---|
+| `bestiary` | 58 | **0** | instrument over-report, `§60.2`: 54 cross-table owners + 4 `.MOD`-only overlays |
+| `inner_sea_bestiary` | 7 | **0** | Product-Identity cascade, `§57.2` / `§58.1` |
+| `occult_adventures` | 1 | **0** | `§68.1` — negated PCC gate; already shipped from `bestiary_3` |
+| **total** | **66** | **0** | |
+
+Plus 229 mechanism-blocked, owned at C1.5.
+
+**`1,506` is not a workload.** 1,406 of it is orphan `monster_ability` rows and 703 of those sit in
+books with no monster row at all.
