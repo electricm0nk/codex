@@ -860,3 +860,108 @@ refusing rather than defaulting into either.
    `epic-31-spell-wiring` and was re-verified by reading the four files above.
 4. *Any operation reporting success without doing the work?* Hunted. The live
    instance found was `decisions.md §5`'s own claim, corrected above.
+
+### Verification
+
+`./scripts/verify.sh --full`, exit code captured directly and never through a
+pipe: **`VERIFY_EXIT=0`**, `RESULT: PASS`, **16/16 stages**, 1,412s.
+Logs `/tmp/codex-verify-nAOfUr`. Stage tallies: `root-lib` 1776, `root-full`
+**6371** across 546 suites (all 526 `tests/*.rs` executed), `desktop` 445,
+`reach` 27, `corpus-sweep` 0 findings over 3,516 records, `frontend-test`
+99/99, `frontend-typecheck` clean, `clippy` root 46 / desktop 7 warnings and
+**0 errors**, `class-dump` 31/31 computing.
+
+Targeted, before the full gate:
+`cargo test --bin v06_work_inventory` **56/56**;
+`cargo test --test v06_work_inventory` **16/16**.
+
+**One floor raised, in its own commit** (`d1593801`), carrying its own
+`--show-actuals` output: `BASELINE_ROOT_FULL_TESTS` 6354 -> **6371**. The +17 is
+fully attributed — +11 are the ones the previous revision deliberately held
+back for the then-in-flight `aafd492c` (now merged, so the hold-back reason is
+gone), +6 are this cycle's. `BASELINE_CLIPPY_WARNINGS_ROOT` is deliberately
+**left at 54** although the gate reports 46 measured: this cycle removed no
+warning and cannot attribute the eight, and pinning a ceiling it did not earn
+would red the tree for a sibling's in-flight work on a shared branch.
+
+**Confirmation run on the tightened floor**, so this receipt's exit code covers
+the committed tree rather than the tree the cycle started on:
+`./scripts/verify.sh --only root-lib --only root-full --show-actuals` —
+**`CONFIRM_EXIT=0`, `RESULT: PASS`**, `root-lib` 1776, `root-full` 6371,
+`BASELINE NOTES: none` (the floor is now exact).
+
+**Count-pin check.** `docs/work-inventory.json` unit ids: 38,540 before, 38,540
+after, set-identical. `tests/fixtures/rules_core/derived-evaluator-fixtures.json`
+is the only artifact that pins `unit_id`s; all 94 still resolve and all 94 are
+`kind=equipment`, so none is touched by a spell status change. The `652` pinned
+in five test files is `crb::spell_list::SPELL_LIST.len()`, a table length this
+cycle does not change. Nothing in `tests/`, `src/`, `apps/` or `scripts/` pins
+a status count, a `grounded` total or any spell unit's status.
+
+### A stale definition this cycle deliberately did NOT fix
+
+`status_vocabulary.ingested-magnitude` still reads "this generator observes no
+consumer delta for this kind **(spells, equipment)**". That parenthetical is now
+false for both kinds — equipment has been probe-grounded since SD-28-E14-F2 and
+spells are grounded by this cycle. **It was left exactly as it is.** Editing
+`status_vocabulary` is on the forbidden list, and it is forbidden for a good
+reason: the one artifact that defines what the words mean must not be edited by
+the cycle whose numbers those words are describing. Recorded here as a finding
+for the bundle's review pass (`e8-code-review`), not actioned.
+
+### DoD item 8 — on-screen proof, and the coordinate it had to fix first
+
+`RUN_DESKTOP_AGENT=probe-spell-ground`, run after `verify.sh` had exited and
+never concurrently with it (the harness's own memory warning).
+
+**PASS** — `apps/desktop/.claude/skills/run-desktop/verify-on-screen.sh
+--family spell --record "Barkskin" --expect Barkskin --expect CRB
+--expect Transmutation --expect "Level 2"`. `ITEM8_EXIT=0`. Evidence:
+`artifacts/ground-spell-units/crb-barkskin-grounded.png` and
+`.verify.md`. The extraction shows `1 matching spell.` and the rendered line
+`BarkskinCRBTransmutation` / `Level 2`.
+
+`Barkskin` is not an arbitrary pick: it is `core_rulebook:spell:barkskin`,
+`wiring_class: computed`, `status: grounded` — i.e. one of the **46** units
+this cycle moved all the way to `done`, and its name has exactly one match in
+the whole spell corpus, which the ≤8-row filtered-count gate requires.
+
+**Two refusals before the pass, both from the gate doing its job:**
+
+1. `SEARCH_Y=285` for the `spell` family was **wrong**, and the run was refused
+   with *"search for 'Shield' still shows 1286 rows — filter did not apply"*.
+   This closes the deferral `item8-harness` recorded on 2026-08-11 ("equipment
+   and spell `SEARCH_Y` ... set to 285 by analogy with `race_trait`, not
+   live-verified; **revisit: first lane cycle that verifies an equipment or
+   spell record on screen**"). This is that cycle. Calibrated live against a
+   screenshot of the running app to **311** — the Spell Catalog has TWO chip
+   rows (a 6-book row, and a 10-school row that itself wraps), the same
+   structural reason `monster` already sits at 311. Fixed in the harness with
+   the calibration recorded in-line.
+2. `--record "Shield"` was then refused with *"still shows 13 rows"* — the
+   filter now applied, but `Shield` matches 13 spells (`Shield of Faith`,
+   `Shield Other`, ...) and the gate refuses to hunt a name in a list it cannot
+   prove is narrowed. Re-run with a uniquely-named record.
+
+**What this proves, and what it does not.** It proves a spell this cycle
+grounded is really on a player's screen with its book, school and level. It
+does **not** drive the save-DC cell itself — that lives on the Character
+Sheet's Spells tab, which the harness's five hub-catalog families do not
+reach, and extending it to a saved-character screen is a larger change than
+this card should make unattended. The DC's path to the screen was instead
+verified **by content**, file by file (`pf1_adapter.rs:1141` ->
+`character_hub.rs:837` -> `CharacterSheet.tsx:1071`), and by
+`pf1_adapter::resolve_unified_pilot_snapshot_surfaces_a_real_spell_save_dc`,
+which is a real test over the real adapter. Stated plainly rather than blurred:
+the strongest available evidence for the DC cell is code-level, not pixel-level.
+Recorded as the residual for the first cycle that extends the harness to the
+character sheet.
+
+**An unplanned independent check, worth more than the pass itself.** The
+screen states its own population: `All books (1286)`, `CRB (652)`,
+`APG (297)`, `ACG (144)`, `ARG (92)`, `UI (101)`. Those are the product's own
+counts, computed by a different code path from the inventory generator, and
+they reproduce this receipt's remainder table exactly — including that
+1286 − 101 (UI, the book with no `data/corpus/` tree) = **1,185**, the precise
+number of keys `--spell-probe` reports examining. The ceiling table was derived
+from the generator; the app agrees with it without being asked.

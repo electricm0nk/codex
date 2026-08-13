@@ -96,7 +96,20 @@ fi
 # actually applied (see the filtered-count gate below).
 case "$FAMILY" in
   equipment)  HUB_X=578;  HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Equipment Catalog"; MATCH_WORD="matching" ;;
-  spell)      HUB_X=781;  HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Spell Catalog";     MATCH_WORD="matching" ;;
+  # SEARCH_Y CALIBRATED LIVE 2026-08-13 (SD-32 `ground-spell-units`), 285 -> 311.
+  # 285 was set by analogy with `race_trait` and never driven — the deferral
+  # recorded at `docs/retro/events/item8-harness.jsonl` ("equipment and spell
+  # SEARCH_Y coordinates ... are set to 285 by analogy, not live-verified;
+  # revisit: first lane cycle that verifies an equipment or spell record on
+  # screen"). This is that cycle, and 285 was WRONG: the run was refused with
+  # "search for 'Shield' still shows 1286 rows — filter did not apply".
+  #
+  # The reason is the same one the `companion` note below records: this screen
+  # has TWO chip rows, not one. A book row (All/CRB/APG/ACG/ARG/UI) AND a school
+  # row that itself wraps to two lines (10 schools) sit above the box, putting
+  # it at y=311 — the same value `monster` uses, for the same structural reason.
+  # Verified against a live screenshot of the running app, not by analogy.
+  spell)      HUB_X=781;  HUB_Y=930; SEARCH_Y=311; SCREEN_MARKER="Spell Catalog";     MATCH_WORD="matching" ;;
   race_trait) HUB_X=1166; HUB_Y=930; SEARCH_Y=285; SCREEN_MARKER="Race Traits";       MATCH_WORD="matching" ;;
   monster)    HUB_X=1350; HUB_Y=930; SEARCH_Y=311; SCREEN_MARKER="Monster Catalog";   MATCH_WORD="matching" ;;
   # SD-29 Epic 7 (companion lane). The hub's bottom link row WRAPPED when this
