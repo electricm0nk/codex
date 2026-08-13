@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Spiny Starfish ~ Firm Grip",
+    "delivery": "Extraordinary",
+    "description": "A spiny starfish excels at grappling prey, and it gains a +6 racial bonus on grapple checks (rather than the standard +4 bonus most creatures gain as a result of having the grab ability).",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:spiny_starfish_firm_grip",
+    "name": "Firm Grip",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_spiny_starfish",
+      "ultimate_wilderness:companion:spiny_starfish"
+    ],
+    "record_type": "ability",
+    "source_page": "p.207",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "SpinyStarfishRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 354,
+    "record_key": "Spiny Starfish ~ Firm Grip"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

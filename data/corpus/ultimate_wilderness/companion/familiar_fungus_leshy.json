@@ -1,0 +1,88 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:fungus_leshy_puffball",
+      "ultimate_wilderness:companion:fungus_leshy_spores"
+    ],
+    "corpus_key": "Familiar (Fungus Leshy)",
+    "external_ability_refs": [],
+    "key": "ultimate_wilderness:companion:familiar_fungus_leshy",
+    "monster_class": "Plant:2",
+    "name": "Familiar (Fungus Leshy)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      },
+      {
+        "damage_dice": "1d3",
+        "name": "Claw"
+      },
+      {
+        "damage_dice": null,
+        "name": "Puffball"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented|Leshy|Shapechanger",
+    "race_type": "Plant",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "B3 p.176",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 0
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -4
+      },
+      {
+        "ability": "WIS",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": 4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Plant"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 305,
+    "record_key": "Familiar (Fungus Leshy)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

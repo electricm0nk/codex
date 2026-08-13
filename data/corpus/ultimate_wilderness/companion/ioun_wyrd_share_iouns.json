@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Ioun Wyrd ~ Share Iouns",
+    "delivery": "Supernatural",
+    "description": "A character with an ioun wyrd familiar gains the benefits of its ioun stones as long as he's within 30 feet of the ioun wyrd.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:ioun_wyrd_share_iouns",
+    "name": "Share Iouns",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_ioun_wyrd",
+      "ultimate_wilderness:companion:ioun_wyrd"
+    ],
+    "record_type": "ability",
+    "source_page": "p.197",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Supernatural",
+      "IounWyrdRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 250,
+    "record_key": "Ioun Wyrd ~ Share Iouns"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

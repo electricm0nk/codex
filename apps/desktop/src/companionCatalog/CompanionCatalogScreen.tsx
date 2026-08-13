@@ -50,6 +50,7 @@ export const BOOK_LABELS: Record<string, string> = {
   B1: 'Bestiary 1',
   B3: 'Bestiary 3',
   B4: 'Bestiary 4',
+  UW: 'Ultimate Wilderness',
 };
 
 /** `'ISC'` -> `'Inner Sea Combat'`; an unmapped code falls through as itself. */
@@ -350,7 +351,7 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                           <p style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}>
                             {ability.description}
                           </p>
-                        ) : (
+                        ) : ability.descriptionVariants.length === 0 ? (
                           <p
                             style={{
                               color: 'var(--color-text-faint)',
@@ -362,7 +363,25 @@ export function CompanionCatalogScreen(props: CompanionCatalogScreenProps) {
                             The corpus row states this ability&rsquo;s name and type but carries no
                             rules text.
                           </p>
-                        )}
+                        ) : null}
+                        {/*
+                          A row that states its rules text once per condition
+                          gets every text, each under its own condition. The
+                          catalog has no character to evaluate the gate against,
+                          so showing one and hiding the rest would be wrong for
+                          every reader on the other side of it.
+                        */}
+                        {ability.descriptionVariants.map((variant) => (
+                          <p
+                            key={`${ability.key}:${variant.condition}:${variant.text.slice(0, 24)}`}
+                            style={{ color: 'var(--color-text-muted)', fontSize: '0.72rem', margin: '0.1rem 0 0' }}
+                          >
+                            <span style={{ color: 'var(--color-text-faint)', fontStyle: 'italic' }}>
+                              {variant.condition}:{' '}
+                            </span>
+                            {variant.text}
+                          </p>
+                        ))}
                         {ability.statAdjustments.length > 0 ? (
                           <p style={{ color: 'var(--color-text-faint)', fontSize: '0.7rem', margin: '0.1rem 0 0' }}>
                             {STAT_ADJUSTMENT_CAPTION}:{' '}

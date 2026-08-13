@@ -311,6 +311,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         type_segments: &["SpecialQuality", "Extraordinary"],
         description: Some("As a move action, a snapping turtle can pull its extremities and head into its shell.  It cannot move or attack as long as it remains in this state, but its armor bonus from natural armor increases by +4 as long as it does."),
         description_variables: &[],
+        description_variants: &[],
         stat_adjustments: &[],
         source_page: Some("p.273"),
         owners: &["Familiar (Snapping Turtle)"],

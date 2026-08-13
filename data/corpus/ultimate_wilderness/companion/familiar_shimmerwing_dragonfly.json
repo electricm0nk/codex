@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin"
+    ],
+    "corpus_key": "Familiar (Shimmerwing Dragonfly)",
+    "external_ability_refs": [],
+    "key": "ultimate_wilderness:companion:familiar_shimmerwing_dragonfly",
+    "monster_class": "Vermin:1",
+    "name": "Familiar (Shimmerwing Dragonfly)",
+    "natural_armor": null,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Claw"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+    "race_type": "Vermin",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.206",
+    "speeds": [
+      {
+        "feet": 10,
+        "mode": "Walk"
+      },
+      {
+        "feet": 60,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -4
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Vermin"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 120,
+    "record_key": "Familiar (Shimmerwing Dragonfly)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

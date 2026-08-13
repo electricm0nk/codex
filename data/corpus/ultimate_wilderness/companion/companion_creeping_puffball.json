@@ -1,0 +1,81 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin",
+      "ultimate_wilderness:companion:companion_advancement_creeping_puffball",
+      "ultimate_wilderness:companion:creeping_puffball_defensive_puff",
+      "ultimate_wilderness:companion:creeping_puffball_poison"
+    ],
+    "corpus_key": "Companion (Creeping Puffball)",
+    "external_ability_refs": [
+      "Can't Be Tripped"
+    ],
+    "key": "ultimate_wilderness:companion:companion_creeping_puffball",
+    "monster_class": "Companion:2",
+    "name": "Companion (Creeping Puffball)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d4",
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "PlantCompanion",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.182",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "WIS",
+        "amount": 2
+      },
+      {
+        "ability": "CHA",
+        "amount": -2
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 46,
+    "record_key": "Companion (Creeping Puffball)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

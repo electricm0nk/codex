@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_piscine",
+      "ultimate_wilderness:companion:companion_advancement_armorfish"
+    ],
+    "corpus_key": "Companion (Armorfish)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "ultimate_wilderness:companion:companion_armorfish",
+    "monster_class": "Companion:2",
+    "name": "Companion (Armorfish)",
+    "natural_armor": 6,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "p.178",
+    "speeds": [
+      {
+        "feet": 30,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "WIS",
+        "amount": -2
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 11,
+    "record_key": "Companion (Armorfish)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

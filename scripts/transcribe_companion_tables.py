@@ -75,6 +75,7 @@ IMPORTABLE = (
     "CompanionAbilityDelivery",
     "CompanionAbilityFacet",
     "CompanionAbilityRecord",
+    "CompanionDescriptionVariant",
     "CompanionRecord",
     "NaturalAttack",
     "Speed",
@@ -250,18 +251,42 @@ def is_prerequisite(entry: str) -> bool:
     return entry.lstrip("!").startswith("PRE")
 
 
-def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
-    """The `DESC:` text a player should read, plus the variables its `%N` name.
+def split_desc(raw: str) -> tuple[str, list[str], list[str]]:
+    """One `DESC:` token -> (text, `%N` variables, `PRE…` conditions)."""
+    parts = raw.split("|")
+    variables = [p for p in parts[1:] if p and not is_prerequisite(p)]
+    conditions = [p for p in parts[1:] if p and is_prerequisite(p)]
+    return parts[0], variables, conditions
+
+
+def parse_desc(row: list[str]) -> tuple[str | None, list[str], list[tuple[str, list[str], list[str]]]]:
+    """The `DESC:` text a player should read, its `%N` variables, its variants.
 
     A row carrying two `DESC:` tokens gated on PCGen's own
     `PRERULE:1,DisplayFullAbility` serves the **full rules text**, never the
     summary -- the defect `transcribe_monster_tables.parse_desc` was widened for
-    when Book of the Damned Volume 2 landed. A row carrying several under some
-    other gate stops the transcription rather than being resolved by position.
+    when Book of the Damned Volume 2 landed.
+
+    Any OTHER row carrying several was, until round 6, a hard refusal: the
+    transcriber would not pick one by position and had nowhere else to put the
+    rest.  Ultimate Wilderness is the book that made that refusal load-bearing
+    -- **22** of its ability rows carry between 2 and 9 `DESC:` tokens, each
+    gated on a different `PREVARGTEQ:`/`PREVARLT:`/`PREALIGN:` predicate, and
+    they are the rows that carry `Poison`, `Constrict`, `Breath Weapon` and
+    `Camouflage`.  Dropping them would have shipped creature cards whose
+    abilities have no text; picking one would have shipped the wrong text for
+    every character on the other side of the gate (`decisions.md §60.1`).
+
+    So all of them are carried, in row order, each with its own gate verbatim,
+    and NONE is evaluated here.  The first return value stays the row's single
+    UNGATED token when it has exactly one -- so the ordinary row, and every
+    record the lane already shipped, is byte-identical -- and is ``None`` when
+    every token is conditional, which is the honest state for a row that states
+    no unconditional rules text.
     """
     descs = [f[len("DESC:") :] for f in row if f.startswith("DESC:")]
     if not descs:
-        return None, []
+        return None, [], []
     if len(descs) > 1:
         full = [
             d
@@ -271,15 +296,16 @@ def parse_desc(row: list[str]) -> tuple[str | None, list[str]]:
                 for entry in d.split("|")[1:]
             )
         ]
-        if len(full) != 1:
-            raise SystemExit(
-                f"row carries {len(descs)} DESC: tokens and {len(full)} of them are gated on "
-                f"{FULL_ABILITY_RULE}; the transcriber refuses to pick one by position. "
-                f"Widen it deliberately. Tokens: {descs!r}"
-            )
-        descs = full
-    parts = descs[0].split("|")
-    return parts[0], [p for p in parts[1:] if p and not is_prerequisite(p)]
+        if len(full) == 1:
+            text, variables, _ = split_desc(full[0])
+            return text, variables, []
+        variants = [split_desc(d) for d in descs]
+        ungated = [v for v in variants if not v[2]]
+        if len(ungated) == 1:
+            return ungated[0][0], ungated[0][1], variants
+        return None, [], variants
+    text, variables, _ = split_desc(descs[0])
+    return text, variables, []
 
 
 def transcribe(book: str) -> str:
@@ -544,10 +570,28 @@ def transcribe(book: str) -> str:
             "//! nothing could ever reach them on screen. Dropped rather than emitted"
         )
         out.append(
-            "//! unreachable, and carried as a `reach_gate` `OPEN_FINDINGS` entry naming"
+            "//! unreachable (`decisions.md §50`, adopted from the monster lane; §56.1)."
+        )
+        # NOT "carried as an OPEN_FINDINGS entry", which is what this block said
+        # from round 4 until round 6 -- while every registered book had ZERO
+        # orphans, so the sentence was never checkable. It is false by
+        # construction: `reach_gate::OPEN_FINDINGS` is keyed by (book, FAMILY)
+        # and its consistency test fails an entry naming a family that DOES
+        # reach a player, which every registered book's `companions` family
+        # does. A dropped row is also not an ingested record, so it is outside
+        # the reach gate's denominator entirely. The honest record of it is
+        # this list plus the book's `mod.rs` (`decisions.md §60.2`).
+        out.append(
+            "//! These rows keep their `not-ingested` status in"
         )
         out.append(
-            "//! their remedy (`decisions.md §50`, adopted from the monster lane; §56.1):"
+            "//! `docs/work-inventory.json`, which is where the shortfall is counted; they"
+        )
+        out.append(
+            "//! are NOT a `reach_gate` `OPEN_FINDINGS` entry, because that list is keyed by"
+        )
+        out.append(
+            "//! FAMILY and this book's `companions` family does reach a player:"
         )
         for key in orphans:
             out.append(f"//!   * `{key}`")
@@ -643,7 +687,7 @@ def transcribe(book: str) -> str:
         row = read_row(resolve_source_file(directory, unit["source_file"]), unit["source_line"])
         segments = parse_type_segments(row)
         facet, delivery = read_facet_and_delivery(segments)
-        description, variables = parse_desc(row)
+        description, variables, variants = parse_desc(row)
         adjustments = parse_stat_adjustments(row)
         out.append("    CompanionAbilityRecord {")
         out.append(f"        key: {rust_str(unit['corpus_key'])},")
@@ -661,6 +705,17 @@ def transcribe(book: str) -> str:
         out.append(f"        type_segments: {rust_slice(segments)},")
         out.append(f"        description: {rust_opt(description)},")
         out.append(f"        description_variables: {rust_slice(variables)},")
+        out.append(
+            "        description_variants: &["
+            + ", ".join(
+                "CompanionDescriptionVariant { "
+                f"text: {rust_str(text)}, "
+                f"variables: {rust_slice(vs)}, "
+                f"conditions: {rust_slice(cs)} }}"
+                for text, vs, cs in variants
+            )
+            + "],"
+        )
         out.append(
             "        stat_adjustments: &["
             + ", ".join(
@@ -708,11 +763,19 @@ def main() -> None:
     if len(sys.argv) != 2:
         raise SystemExit(f"usage: {sys.argv[0]} <book>")
     book = sys.argv[1]
+    # Transcribe BEFORE opening the output, never inside the `with`. Opening
+    # for write creates the file, so a run that then refuses -- an unknown book
+    # id, a class row, an unresolvable multi-`DESC:` -- used to leave an EMPTY
+    # generated module behind, in a directory it had just created. Round 6 did
+    # exactly that with a mistyped book id and left an empty
+    # `rules_tables/beastiary/companion_data.rs` on the tree; nothing in the
+    # gate would have caught it, because an unreferenced module compiles fine.
+    contents = transcribe(book)
     directory = f"src/rules_core/rules_tables/{module_dir(book)}"
     os.makedirs(directory, exist_ok=True)
     path = os.path.join(directory, "companion_data.rs")
     with open(path, "w", encoding="utf-8") as handle:
-        handle.write(transcribe(book))
+        handle.write(contents)
     print(f"wrote {path}")
 
 

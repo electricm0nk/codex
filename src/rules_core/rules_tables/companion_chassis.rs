@@ -168,6 +168,32 @@ impl CompanionAbilityDelivery {
     }
 }
 
+/// One conditional `DESC:` token of an ability row that carries several.
+///
+/// PCGen rows may state their rules text more than once, each token gated on a
+/// different `PRE…` predicate, and the reader is meant to see the text whose
+/// gate its character meets. Ultimate Wilderness is the first companion book
+/// where this occurs at scale — 22 of its ability rows carry between 2 and 9
+/// `DESC:` tokens (`decisions.md §60.1`) — and it is the shape
+/// [`parse_desc`](../../../../scripts/transcribe_companion_tables.py) previously
+/// refused outright rather than resolve by position.
+///
+/// **Nothing here is evaluated.** The condition tokens are carried verbatim
+/// from the row and rendered into prose on the wire; this chassis has no
+/// character to evaluate them against, and picking one variant would be the
+/// same lie as picking one by position.
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct CompanionDescriptionVariant {
+    /// The variant's `DESC:` text, exactly as the row states it.
+    pub text: &'static str,
+    /// The `%N` argument list belonging to *this* token, not to the row.
+    pub variables: &'static [&'static str],
+    /// Every `PRE…` entry gating this token, verbatim and in row order.
+    /// Empty is a real state: a row carrying one ungated token plus several
+    /// gated ones states the ungated one unconditionally.
+    pub conditions: &'static [&'static str],
+}
+
 /// One `companion` ability record.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub struct CompanionAbilityRecord {
@@ -188,6 +214,16 @@ pub struct CompanionAbilityRecord {
     /// The `DESC:` token's trailing variable list, which is what the `%N`
     /// placeholders in `description` refer to.
     pub description_variables: &'static [&'static str],
+    /// Every `DESC:` token of a row that carries SEVERAL under differing
+    /// `PRE…` gates, in row order — see [`CompanionDescriptionVariant`].
+    ///
+    /// Empty for the ordinary single-`DESC:` row, which is why registering this
+    /// field changed no already-shipped record's rendered text. When it is
+    /// non-empty, [`description`](Self::description) holds the row's single
+    /// UNGATED token if it has exactly one and `None` otherwise: a row whose
+    /// every token is conditional has no unconditional rules text, and saying
+    /// so is the honest state.
+    pub description_variants: &'static [CompanionDescriptionVariant],
     /// `BONUS:STAT` tokens the advancement package applies. Adjustments, never
     /// scores — see [`StatAdjustment`].
     pub stat_adjustments: &'static [StatAdjustment],
@@ -412,6 +448,16 @@ pub const COMPANION_BOOKS: &[CompanionBook] = &[
         companions: super::bestiary_4::companions_static(),
         companion_abilities: super::bestiary_4::companion_abilities_static(),
     },
+    // SD-29 Epic 7 round 6 (`SD29-E7-F2-007`). Ultimate Wilderness — the
+    // largest companion block in the corpus, and the first registered book
+    // whose shortfall is bigger than its ingest: 327 of 575 rows ship, and the
+    // 247 that do not are archetype and option-group rows this chassis is the
+    // wrong shape for, not rows it failed to read (`decisions.md §60.2`).
+    CompanionBook {
+        corpus_book: "ultimate_wilderness",
+        companions: super::ultimate_wilderness::companions_static(),
+        companion_abilities: super::ultimate_wilderness::companion_abilities_static(),
+    },
 ];
 
 /// The registered book with this corpus directory id.
@@ -578,11 +624,31 @@ mod tests {
             }
         }
         assert_eq!(
-            unmodelled, 5,
-            "expected exactly Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows \
-             plus Bestiary 4's two `TYPE:Communicate.SpellLike` rows to carry no modelled \
-             facet; a change here means a book's shape moved"
+            unmodelled, 20,
+            "expected Inner Sea Intrigue's three ClockworkFamiliarInstalledItem rows, \
+             Bestiary 4's two `TYPE:Communicate.SpellLike` rows, and Ultimate Wilderness's \
+             15 `TYPE:SpecialQuaility` rows -- an UPSTREAM TYPO of the modelled \
+             `SpecialQuality`, deliberately not corrected into the facet \
+             (`decisions.md §60.4`); a change here means a book's shape moved"
         );
+        // Ultimate Wilderness's typoed segment, pinned by count and by
+        // spelling. A successor that decides to model the typo must delete this
+        // assertion deliberately rather than discover it as a mystery failure.
+        let uw = companion_book("ultimate_wilderness").expect("registered book");
+        let typoed: Vec<&str> = uw
+            .companion_abilities
+            .iter()
+            .filter(|a| a.type_segments.first() == Some(&"SpecialQuaility"))
+            .map(|a| a.key)
+            .collect();
+        assert_eq!(typoed.len(), 15, "the corpus's `SpecialQuaility` rows: {typoed:?}");
+        for key in &typoed {
+            let ability = uw.companion_ability_resolve(key).expect("its own book defines it");
+            assert!(
+                ability.facet.is_none(),
+                "{key}: a misspelled TYPE: segment must not be read as the modelled facet"
+            );
+        }
         // Named, so the count above can never be satisfied by a different five.
         for (book_id, key) in [
             ("bestiary_4", "Comprehend Languages ~ Constant"),
@@ -594,6 +660,119 @@ mod tests {
                 .unwrap_or_else(|| panic!("{book_id} does not define {key}"));
             assert!(ability.facet.is_none(), "{key} now states a modelled facet");
             assert_eq!(ability.type_segments, &["Communicate", "SpellLike"]);
+        }
+    }
+
+    /// Conditional `DESC:` variants (`decisions.md §60.1`), asserted as a
+    /// PROPERTY of every registered book plus the two rows that motivated it.
+    ///
+    /// The property is the one that makes the field trustworthy: a variant list
+    /// is either empty or it is the row's WHOLE set of `DESC:` tokens, and
+    /// `description` is exactly the single ungated one when there is exactly
+    /// one. Getting that backwards would ship a row's text twice or lose half
+    /// of it, and no count would notice.
+    #[test]
+    fn a_row_stating_its_text_once_per_condition_carries_every_token_and_promotes_only_the_ungated_one()
+    {
+        let mut rows_with_variants = 0;
+        for book in COMPANION_BOOKS {
+            for ability in book.companion_abilities {
+                if ability.description_variants.is_empty() {
+                    continue;
+                }
+                rows_with_variants += 1;
+                assert!(
+                    ability.description_variants.len() > 1,
+                    "{}: {} carries a single 'variant', which is just a description",
+                    book.corpus_book,
+                    ability.key
+                );
+                let ungated: Vec<&CompanionDescriptionVariant> = ability
+                    .description_variants
+                    .iter()
+                    .filter(|v| v.conditions.is_empty())
+                    .collect();
+                match ungated.len() {
+                    1 => assert_eq!(
+                        ability.description,
+                        Some(ungated[0].text),
+                        "{}: {} has exactly one ungated token, which must BE the description",
+                        book.corpus_book,
+                        ability.key
+                    ),
+                    _ => assert!(
+                        ability.description.is_none(),
+                        "{}: {} has {} ungated tokens, so no one of them is the row's \
+                         unconditional text",
+                        book.corpus_book,
+                        ability.key,
+                        ungated.len()
+                    ),
+                }
+                for variant in ability.description_variants {
+                    assert!(
+                        !variant.text.trim().is_empty(),
+                        "{}: {} carries an empty variant",
+                        book.corpus_book,
+                        ability.key
+                    );
+                }
+            }
+        }
+        assert_eq!(
+            rows_with_variants, 8,
+            "Ultimate Wilderness is the only book carrying multi-DESC rows. Its `.lst` has 22 \
+             of them; 8 are SHIPPED, because the other 14 are archetype rows this chassis \
+             drops as orphans. The two numbers answering different questions is the point -- \
+             a test pinned to 22 would be asserting a fact about a file, not about the table"
+        );
+
+        let uw = companion_book("ultimate_wilderness").expect("registered book");
+
+        // Every token conditional: the two halves of a poison's DC, gated on
+        // whether the companion has advanced. There is no unconditional text.
+        let poison = uw
+            .companion_ability_resolve("Spitting Cobra ~ Poison")
+            .expect("the book defines it");
+        assert_eq!(poison.description, None);
+        assert_eq!(poison.description_variants.len(), 2);
+        assert_eq!(
+            poison.description_variants[0].conditions,
+            &["PREVARLT:CompanionAdvancement,1"]
+        );
+        assert_eq!(
+            poison.description_variants[1].conditions,
+            &["PREVARGTEQ:CompanionAdvancement,1"]
+        );
+        assert!(
+            poison.description_variants[0].text.contains("blurred vision"),
+            "the un-advanced companion's spit blurs vision"
+        );
+        assert!(
+            poison.description_variants[1].text.contains("effect blindness"),
+            "the advanced companion's spit blinds -- the whole reason both tokens must ship"
+        );
+        assert_eq!(
+            poison.description_variants[0].variables,
+            &["10+HD/2+CON"],
+            "each token keeps ITS OWN %N argument list, not the row's"
+        );
+
+        // All 8 shipped rows are this shape -- every token conditional -- so
+        // `description` is `None` for every one of them and a screen reading
+        // only `description` would show a Spitting Cobra's poison as having no
+        // rules text at all.
+        let shipped: Vec<&str> = uw
+            .companion_abilities
+            .iter()
+            .filter(|a| !a.description_variants.is_empty())
+            .map(|a| a.key)
+            .collect();
+        assert_eq!(shipped.len(), 8, "{shipped:?}");
+        for key in &shipped {
+            let record = uw.companion_ability_resolve(key).expect("its own book defines it");
+            assert!(record.description.is_none(), "{key}");
+            assert_eq!(record.description_variants.len(), 2, "{key}");
         }
     }
 

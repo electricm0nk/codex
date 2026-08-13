@@ -79,6 +79,9 @@ fn book_wire_code(corpus_book: &str) -> &'static str {
         // book's second family, beside the monsters the monster lane landed in
         // `52da4bc3`. Same wire code either way: it names the BOOK.
         "bestiary_4" => "B4",
+        // SD-29 Epic 7 round 6. Ultimate Wilderness — the book's second family,
+        // beside the 136 feats SD-28 Epic 26 landed. Same wire code either way.
+        "ultimate_wilderness" => "UW",
         other => panic!(
             "companion_catalog: no wire code for companion book {other:?}. Add one here and its \
              display label in the frontend's book map before registering the book."
@@ -114,6 +117,32 @@ pub struct CompanionStatAdjustmentDto {
     pub amount: i16,
 }
 
+/// One conditional `DESC:` token of an ability row that states its rules text
+/// more than once.
+///
+/// PCGen serves the token whose `PRE…` gate the character meets. This catalog
+/// has no character, so it serves them ALL, each labelled with its condition —
+/// the only rendering that is true for every reader. Picking one would be the
+/// same defect as picking one by position, which is what the transcriber
+/// refused outright until Ultimate Wilderness made the refusal load-bearing
+/// (`decisions.md §60.1`).
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct CompanionDescriptionVariantDto {
+    /// The variant's rules text, rendered for a player by the same renderer and
+    /// under the same leak guard as `description`.
+    pub text: String,
+    /// The gate, in prose (`"master level 15 or higher"`), several gates joined
+    /// with `" and "`. `"unconditionally"` for a row that carries SEVERAL
+    /// ungated tokens — Ultimate Wilderness's two `Breath Weapon` rows each
+    /// carry nine `DESC:` tokens of which two are ungated, so neither can be
+    /// promoted to `description` and both are served here.
+    ///
+    /// Never empty. The single ungated token of a row that has exactly one is
+    /// promoted to `description` and is NOT repeated here.
+    pub condition: String,
+}
+
 /// One companion ability record, served attached to the creature that owns it.
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
 #[serde(rename_all = "camelCase")]
@@ -136,7 +165,15 @@ pub struct CompanionAbilityDto {
     pub type_segments: Vec<String>,
     /// The row's rules text, rendered for a player. `None` where the corpus
     /// carries none — an absence the screen states, never an empty paragraph.
+    ///
+    /// Also `None` where the row states its text ONLY conditionally, which is
+    /// not the same absence: `descriptionVariants` is then non-empty and the
+    /// screen renders those instead.
     pub description: Option<String>,
+    /// The row's conditional rules texts, each with the condition that selects
+    /// it rendered into prose. Empty for the ordinary row. Ultimate Wilderness
+    /// is the first book to carry any (`decisions.md §60.1`).
+    pub description_variants: Vec<CompanionDescriptionVariantDto>,
     /// The `BONUS:STAT` tokens this advancement package applies.
     pub stat_adjustments: Vec<CompanionStatAdjustmentDto>,
     pub source_page: Option<String>,
@@ -240,14 +277,158 @@ fn serve_ability_description(
     record: &companion_chassis::CompanionAbilityRecord,
 ) -> Option<String> {
     let raw = record.description?;
-    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(raw);
+    let rendered = render_desc_token(record.key, raw, record.description_variables);
+    Some(rendered)
+}
+
+/// Renders one `DESC:` prose + argument-list pair the way PCGen states it.
+///
+/// **The two halves are rejoined before rendering, and that is the fix rather
+/// than an implementation detail.** `transcribe_companion_tables.parse_desc`
+/// splits a `DESC:` token into its prose and its `%N` argument list and the
+/// chassis stores them in two fields, so every earlier caller handed
+/// `render_pcgen_desc` the prose ALONE — a token whose argument list is
+/// missing. For the `%N` placeholders every registered book carries that made
+/// no difference (all of their arguments are formulas this engine cannot
+/// evaluate, so the placeholder is dropped either way, and the rendered text is
+/// byte-identical: `grep -rho 'description_variables: &\[[^]]*\]'
+/// src/rules_core/rules_tables/*/companion_data.rs` returns no integer
+/// literal). For Ultimate Wilderness's `%%1` rows it made all the difference,
+/// because the renderer decides whether `%%N` is an escape or an argument by
+/// asking whether argument N exists — and it never did (`decisions.md §60.3`).
+fn render_desc_token(key: &str, prose: &str, variables: &[&str]) -> String {
+    let raw = if variables.is_empty() {
+        prose.to_owned()
+    } else {
+        format!("{prose}|{}", variables.join("|"))
+    };
+    let rendered = codex::rules_core::pcgen_desc::render_pcgen_desc(&raw);
     if let Some(leak) = codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&rendered.text) {
         panic!(
-            "companion ability {:?}: rendered description still carries {leak}. Raw token: {raw:?}",
-            record.key
+            "companion ability {key:?}: rendered description still carries {leak}. Raw token: {raw:?}"
         );
     }
-    Some(rendered.text)
+    rendered.text
+}
+
+/// Renders one PCGen `PRE…` gate on a conditional `DESC:` token into prose.
+///
+/// **A closed set, deliberately.** These are the three token kinds Ultimate
+/// Wilderness's 22 multi-`DESC:` rows actually carry, derived rather than
+/// guessed:
+///
+/// ```text
+/// python3 - <<'PY'   # over the book's own rows, round 6
+/// Counter({'PREVARGTEQ': 36, 'PREVARLT': 12, 'PREALIGN': 5})
+/// PY
+/// ```
+///
+/// Anything else stops here rather than reaching a screen, the same discipline
+/// `serve_ability_description`'s leak panic states: a gate this function cannot
+/// read is a gate a player would be shown wrong, and inventing a fallback
+/// ("some condition applies") would hide the next book's new shape instead of
+/// surfacing it.
+fn serve_desc_condition(token: &str) -> String {
+    let (kind, body) = token.split_once(':').unwrap_or_else(|| {
+        panic!("companion DESC condition {token:?} carries no ':' — not a PCGen PRE token")
+    });
+    match kind {
+        "PREVARGTEQ" | "PREVARLT" => {
+            let (variable, bound) = body.rsplit_once(',').unwrap_or_else(|| {
+                panic!("companion DESC condition {token:?} states no comparison bound")
+            });
+            let comparison = if kind == "PREVARGTEQ" { "or higher" } else { "below" };
+            if kind == "PREVARGTEQ" {
+                format!("{} {bound} {comparison}", spell_out_variable(variable))
+            } else {
+                format!("{} {comparison} {bound}", spell_out_variable(variable))
+            }
+        }
+        "PREALIGN" => format!("{} alignment", spell_out_alignment(body)),
+        other => panic!(
+            "companion DESC condition {token:?} uses gate kind {other:?}, which this catalog does \
+             not render. Widen serve_desc_condition deliberately rather than shipping the raw token"
+        ),
+    }
+}
+
+/// `MasterLevel` -> `master level`. A mechanical camel-case split, so the
+/// variable's own words reach the reader and nothing is invented: PCGen's
+/// variable names ARE English words concatenated, and the alternative — a
+/// hand-written label table — would need an entry per book and would silently
+/// mislabel the one it lacked.
+fn spell_out_variable(variable: &str) -> String {
+    let mut words: Vec<String> = Vec::new();
+    let mut current = String::new();
+    for c in variable.chars() {
+        if c.is_ascii_uppercase() && !current.is_empty() {
+            words.push(std::mem::take(&mut current));
+        }
+        current.push(c.to_ascii_lowercase());
+    }
+    if !current.is_empty() {
+        words.push(current);
+    }
+    words.join(" ")
+}
+
+/// The nine PCGen alignment codes. A closed table because the set IS closed —
+/// unlike the variable names above, these are codes rather than words, and
+/// `TN` split mechanically reads "t n".
+fn spell_out_alignment(code: &str) -> &'static str {
+    match code {
+        "LG" => "lawful good",
+        "LN" => "lawful neutral",
+        "LE" => "lawful evil",
+        "NG" => "neutral good",
+        "TN" => "true neutral",
+        "NE" => "neutral evil",
+        "CG" => "chaotic good",
+        "CN" => "chaotic neutral",
+        "CE" => "chaotic evil",
+        other => panic!("companion DESC condition names alignment code {other:?}, which is not one of PCGen's nine"),
+    }
+}
+
+/// Renders one conditional `DESC:` variant for the wire.
+///
+/// Same renderer and same leak panic as `serve_ability_description` — a variant
+/// is rules text a player reads, so nothing about it may be laxer than the
+/// unconditional case.
+fn serve_desc_variant(
+    record: &companion_chassis::CompanionAbilityRecord,
+    variant: &companion_chassis::CompanionDescriptionVariant,
+) -> CompanionDescriptionVariantDto {
+    let text = render_desc_token(record.key, variant.text, variant.variables);
+    let condition = if variant.conditions.is_empty() {
+        "unconditionally".to_owned()
+    } else {
+        variant
+            .conditions
+            .iter()
+            .map(|c| serve_desc_condition(c))
+            .collect::<Vec<String>>()
+            .join(" and ")
+    };
+    CompanionDescriptionVariantDto { text, condition }
+}
+
+/// Every conditional variant the screen should show, in row order.
+///
+/// The single ungated token of a row that has exactly one is already served as
+/// `description`, so it is dropped here rather than shown twice. Everything
+/// else is served — including the ungated tokens of a row with several, which
+/// have nowhere else to go.
+fn serve_desc_variants(
+    record: &companion_chassis::CompanionAbilityRecord,
+) -> Vec<CompanionDescriptionVariantDto> {
+    let promoted = record.description.is_some();
+    record
+        .description_variants
+        .iter()
+        .filter(|v| !(promoted && v.conditions.is_empty()))
+        .map(|v| serve_desc_variant(record, v))
+        .collect()
 }
 
 fn map_ability(
@@ -261,6 +442,7 @@ fn map_ability(
         delivery: record.delivery.map(|d| d.corpus_token().to_owned()),
         type_segments: record.type_segments.iter().map(|s| (*s).to_owned()).collect(),
         description: serve_ability_description(record),
+        description_variants: serve_desc_variants(record),
         stat_adjustments: record
             .stat_adjustments
             .iter()
@@ -527,26 +709,103 @@ mod tests {
             .flat_map(|e| e.abilities.iter())
             .filter(|a| a.facet.is_none())
             .collect();
-        assert_eq!(unmodelled.len(), 7);
+        assert_eq!(unmodelled.len(), 121);
         let mut keys: Vec<&str> = unmodelled.iter().map(|a| a.key.as_str()).collect();
         keys.sort_unstable();
         keys.dedup();
-        assert_eq!(keys.len(), 5, "5 distinct records behind the 7 wire rows");
+        assert_eq!(keys.len(), 20, "20 distinct records behind the 121 wire rows");
         for ability in unmodelled {
             assert!(
                 !ability.type_segments.is_empty(),
                 "{}: an unmodelled facet with no segments shows the player nothing",
                 ability.key
             );
+            // Three known shapes, and the third is an UPSTREAM TYPO rather than
+            // an unmodelled concept: 15 Ultimate Wilderness rows spell the
+            // segment `SpecialQuaility`, one letter off the `SpecialQuality`
+            // this chassis models, so `read_facet_and_delivery` correctly does
+            // not recognise it. It is NOT silently corrected into the modelled
+            // facet — the transcriber emits substrings of the cited row and
+            // never an inferred value — and `type_segments` carries the corpus's
+            // own spelling to the screen, which is what makes the typo visible
+            // to a reader rather than laundered (`decisions.md §60.4`).
+            let first = ability.type_segments.first().map(String::as_str);
             assert!(
                 ability.type_segments == vec!["ClockworkFamiliarInstalledItem".to_owned()]
                     || ability.type_segments
-                        == vec!["Communicate".to_owned(), "SpellLike".to_owned()],
+                        == vec!["Communicate".to_owned(), "SpellLike".to_owned()]
+                    || first == Some("SpecialQuaility"),
                 "{} carries an unrecognised unmodelled shape: {:?}",
                 ability.key,
                 ability.type_segments
             );
         }
+    }
+
+    /// The gate renderer, over the three token kinds the corpus actually
+    /// carries and one it does not.
+    #[test]
+    fn a_desc_gate_reaches_the_player_as_prose_and_an_unknown_one_stops_here() {
+        assert_eq!(serve_desc_condition("PREVARGTEQ:MasterLevel,15"), "master level 15 or higher");
+        assert_eq!(serve_desc_condition("PREVARLT:MasterLevel,9"), "master level below 9");
+        assert_eq!(
+            serve_desc_condition("PREVARGTEQ:CompanionAdvancement,1"),
+            "companion advancement 1 or higher",
+            "the variable's own words reach the reader; nothing is invented for it"
+        );
+        assert_eq!(
+            serve_desc_condition("PREVARGTEQ:DraconicCompanionAcidAffinity,1"),
+            "draconic companion acid affinity 1 or higher"
+        );
+        assert_eq!(serve_desc_condition("PREALIGN:TN"), "true neutral alignment");
+
+        let unknown = std::panic::catch_unwind(|| serve_desc_condition("PRERACE:1,Elf"));
+        assert!(unknown.is_err(), "an unrendered gate kind must stop rather than reach a screen");
+    }
+
+    /// A row that states its rules text once per condition reaches the wire
+    /// with EVERY text and no duplication — the property that separates this
+    /// from picking one by position.
+    #[test]
+    fn a_conditional_description_reaches_the_wire_once_per_condition() {
+        let response = build_companion_catalog();
+        let cobra = response
+            .entries
+            .iter()
+            .flat_map(|e| e.abilities.iter())
+            .find(|a| a.key == "ultimate_wilderness:companion:spitting_cobra_poison")
+            .expect("the Spitting Cobra's poison reaches the catalog");
+
+        assert_eq!(
+            cobra.description, None,
+            "every one of this row's DESC: tokens is conditional, so it has no unconditional text"
+        );
+        assert_eq!(cobra.description_variants.len(), 2);
+        assert_eq!(cobra.description_variants[0].condition, "companion advancement below 1");
+        assert_eq!(cobra.description_variants[1].condition, "companion advancement 1 or higher");
+        assert!(cobra.description_variants[0].text.contains("blurred vision"));
+        assert!(cobra.description_variants[1].text.contains("effect blindness"));
+        for variant in &cobra.description_variants {
+            assert_eq!(
+                codex::rules_core::pcgen_desc::leaked_pcgen_syntax(&variant.text),
+                None,
+                "a variant is rules text a player reads and is held to the same guard"
+            );
+        }
+
+        // The corpus row writes `Fort DC %1|10+HD/2+CON`, a formula this engine
+        // does not evaluate, so the `%N` reference is DROPPED rather than
+        // guessed — the same treatment the unconditional path already gives it.
+        assert!(
+            cobra.description_variants[0].text.ends_with("Fort DC"),
+            "an unresolvable `%N` formula reference must not reach the screen: {:?}",
+            cobra.description_variants[0].text
+        );
+        assert!(
+            cobra.description_variants[0].text.contains("[20% miss chance]"),
+            "and the row's LITERAL per cent sign, one clause earlier, must survive intact: {:?}",
+            cobra.description_variants[0].text
+        );
     }
 
     /// Every registered book has a wire code, and no two books share one.

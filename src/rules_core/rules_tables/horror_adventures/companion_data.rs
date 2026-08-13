@@ -45,6 +45,7 @@ pub(super) static COMPANION_ABILITIES: &[CompanionAbilityRecord] = &[
         type_segments: &["CompanionAdvancement"],
         description: None,
         description_variables: &[],
+        description_variants: &[],
         stat_adjustments: &[StatAdjustment { ability: "STR", amount: 8 }, StatAdjustment { ability: "DEX", amount: -2 }, StatAdjustment { ability: "CON", amount: 4 }],
         source_page: None,
         owners: &["Companion (Devolved Humanoid)"],

@@ -1,0 +1,46 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Swallow Whole ~ Same Size",
+    "delivery": "Extraordinary",
+    "description": "If you begin your turn with an opponent grappled in your mouth, you can attempt a new combat maneuver check. If you succeed, you swallow your prey, and the opponent takes bite damage. The opponent can be up to the same size category as you. Being swallowed causes a creature to take damage each round. A swallowed creature keeps the grappled condition, while you do not. A swallowed creature can try to cut its way free with any light slashing or piercing weapon (the amount of cutting damage required to get free is equal to 1/10 of your total hit points), or it can just try to escape the grapple. The Armor Class of your interior is normally 10 + 1/2 of your natural armor bonus, with no modifiers for size or Dexterity. If a swallowed creature cuts its way out, you cannot use swallow whole again until the damage is healed. If the swallowed creature escapes the grapple, success puts it back in your mouth, where it may be bitten or swallowed again.  (%1d%2+%3, AC %4, %5 hp)",
+    "description_variables": [
+      "SwallowWholeDice",
+      "SwallowWholeDamageDie",
+      "SwallowWholeBonusDamage",
+      "SwallowWholeAC",
+      "SwallowWholeHP"
+    ],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:swallow_whole_same_size",
+    "name": "Swallow Whole (Same Size)",
+    "owners": [
+      "ultimate_wilderness:companion:companion_anglerfish"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 409,
+    "record_key": "Swallow Whole ~ Same Size"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

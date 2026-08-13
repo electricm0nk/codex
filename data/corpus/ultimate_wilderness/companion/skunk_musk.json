@@ -1,0 +1,43 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Skunk ~ Musk",
+    "delivery": "Extraordinary",
+    "description": "Up to twice per day, a skunk can spray a stream of noxious musk at a single target within 10 feet as a standard action. With a successful ranged touch attack, the creature struck by this spray must make a DC %1 Fortitude save or be nauseated for 1d4 rounds and then sickened for 1d4 minutes by the horrific stench. A successful save reduces the effect to only 1d4 rounds of being sickened. A creature cannot use the scent ability as long as it is affected by this musk.",
+    "description_variables": [
+      "12+HD/2+CON"
+    ],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:skunk_musk",
+    "name": "Musk",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_skunk"
+    ],
+    "record_type": "ability",
+    "source_page": "p.191",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "SkunkRacialTrait",
+      "SkunkRacialAbility"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 341,
+    "record_key": "Skunk ~ Musk"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

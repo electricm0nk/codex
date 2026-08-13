@@ -1,0 +1,79 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_piscine",
+      "ultimate_wilderness:companion:companion_advancement_hammerhead_shark"
+    ],
+    "corpus_key": "Companion (Hammerhead Shark)",
+    "external_ability_refs": [
+      "Scent"
+    ],
+    "key": "ultimate_wilderness:companion:companion_hammerhead_shark",
+    "monster_class": "Companion:2",
+    "name": "Companion (Hammerhead Shark)",
+    "natural_armor": 3,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Aquatic",
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.179",
+    "speeds": [
+      {
+        "feet": 60,
+        "mode": "Walk"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 2
+      },
+      {
+        "ability": "DEX",
+        "amount": 4
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "WIS",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 20,
+    "record_key": "Companion (Hammerhead Shark)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

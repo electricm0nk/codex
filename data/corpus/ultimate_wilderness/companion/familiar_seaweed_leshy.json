@@ -1,0 +1,89 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:seaweed_leshy_air_cyst",
+      "ultimate_wilderness:companion:seaweed_leshy_water_jet",
+      "ultimate_wilderness:companion:seaweed_leshy_spell_like_abilities"
+    ],
+    "corpus_key": "Familiar (Seaweed Leshy)",
+    "external_ability_refs": [],
+    "key": "ultimate_wilderness:companion:familiar_seaweed_leshy",
+    "monster_class": "Plant:4",
+    "name": "Familiar (Seaweed Leshy)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Slam"
+      },
+      {
+        "damage_dice": null,
+        "name": "Water Jet"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented|Leshy|Shapechanger",
+    "race_type": "Plant",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "S",
+    "source_page": "B3 p.179",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": 0
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -2
+      },
+      {
+        "ability": "WIS",
+        "amount": 4
+      },
+      {
+        "ability": "CHA",
+        "amount": 2
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Plant"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 308,
+    "record_key": "Familiar (Seaweed Leshy)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus"
+  ]
+}

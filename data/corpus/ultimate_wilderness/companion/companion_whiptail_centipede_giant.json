@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin",
+      "ultimate_wilderness:companion:companion_advancement_whiptail_centipede_giant",
+      "ultimate_wilderness:companion:whiptail_centipede_giant_poison"
+    ],
+    "corpus_key": "Companion (Whiptail Centipede (Giant))",
+    "external_ability_refs": [
+      "Can't Be Tripped"
+    ],
+    "key": "ultimate_wilderness:companion:companion_whiptail_centipede_giant",
+    "monster_class": "Companion:2",
+    "name": "Companion (Whiptail Centipede (Giant))",
+    "natural_armor": 3,
+    "natural_attacks": [
+      {
+        "damage_dice": "1d6",
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": null,
+    "race_type": "Companion",
+    "reach_feet": 5,
+    "record_type": "creature",
+    "size": "M",
+    "source_page": "p.185",
+    "speeds": [
+      {
+        "feet": 40,
+        "mode": "Walk"
+      },
+      {
+        "feet": 40,
+        "mode": "Climb"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -2
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": []
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 68,
+    "record_key": "Companion (Whiptail Centipede (Giant))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "computed",
+  "wiring_class_signals": [
+    "computed:pre_guard",
+    "derived:bonus"
+  ]
+}

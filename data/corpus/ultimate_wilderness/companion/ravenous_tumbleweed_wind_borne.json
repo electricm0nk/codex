@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Ravenous Tumbleweed ~ Wind-Borne",
+    "delivery": "Extraordinary",
+    "description": "While in an area of moderate wind (11-20 mph), a ravenous tumbleweed's speed increases by 10 feet when it moves in the direction of the wind. In an area of at least strong wind (21+ mph), its speed instead increases by 20 feet when it moves in the direction of the wind, and it gains a +2 dodge bonus to its AC against attacks of opportunity on any round in which it moves in that direction.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:ravenous_tumbleweed_wind_borne",
+    "name": "Wind-Borne",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_ravenous_tumbleweed",
+      "ultimate_wilderness:companion:ravenous_tumbleweed"
+    ],
+    "record_type": "ability",
+    "source_page": "p.205",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "RavenousTumbleweedRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 322,
+    "record_key": "Ravenous Tumbleweed ~ Wind-Borne"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

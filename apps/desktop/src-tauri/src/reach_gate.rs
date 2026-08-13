@@ -594,6 +594,11 @@ const CORPUS_BOOK_IDS: &[(&str, &str)] = &[
     // Bestiary carries a 4-unit `race_trait` family too; this rule set compiles
     // the two monster families and those units stay `not-ingested`.
     ("inner_sea_bestiary", "inner_sea_bestiary"),
+    // SD-29 Epic 7 extend, round 6 (companion lane). Ultimate Wilderness. The
+    // book's `data/corpus/` directory is written by TWO lanes -- SD-28 Epic 26
+    // put its 136 feats there -- and this entry names the directory, not the
+    // family, so it is written once and covers both.
+    ("ultimate_wilderness", "ultimate_wilderness"),
 ];
 
 /// Corpus content-kind directory (singular, as the ingest tools write it) ->
@@ -1272,6 +1277,26 @@ fn reach_of(family: &Family) -> Option<Reach> {
         // direction.
         ("bestiary_4", "companions") => Some(companions_reach("bestiary_4", "B4")),
 
+        // SD-29 Epic 7 round 6. Ultimate Wilderness's companions — the SECOND
+        // claim this book carries, beside the 136-feat catalog SD-28 Epic 26
+        // landed, and the LARGEST companion block in the corpus: 169 creature
+        // rows, more than every previously registered companion book combined.
+        //
+        // 327 of the book's 575 companion units ship — its whole `reachable
+        // remainder` per `scripts/classify_companion_rows.py`. The other 248 are
+        // NOT ingested and therefore not in this gate's denominator: unlike
+        // every earlier book in this lane, the shortfall is a DIFFERENT KIND of
+        // record wearing this kind's file name (30 `CATEGORY:Archetype` rows,
+        // the 119 ability rows namespaced under their display names, and the 72
+        // `Animal Trick`/`Animal Companion Feat` option-group rows), not rows
+        // the transcriber failed to read. They get no `OPEN_FINDINGS` entry
+        // because that list is per FAMILY and this family reaches a player;
+        // `docs/work-inventory.json` is where they stay counted
+        // (`decisions.md §60.2`).
+        ("ultimate_wilderness", "companions") => {
+            Some(companions_reach("ultimate_wilderness", "UW"))
+        }
+
         // PU class features: each of the four Unchained classes emits one
         // roster row per ingested `class_feature` record the character holds,
         // carrying that record's own corpus `KEY:` token, and the character
@@ -1708,6 +1733,13 @@ fn companions_reach(corpus_book: &str, wire_code: &str) -> Reach {
                 || ability.delivery.is_some()
                 || !ability.type_segments.is_empty()
                 || ability.description.as_deref().is_some_and(|d| !d.trim().is_empty())
+                // A row whose rules text is stated ONLY per condition still
+                // shows a player rules text — `description` is `None` for it by
+                // construction (`companion_chassis::CompanionDescriptionVariant`),
+                // so a predicate reading only `description` would judge Ultimate
+                // Wilderness's `Poison` and `Constrict` rows identity-only while
+                // the screen renders four paragraphs under them.
+                || ability.description_variants.iter().any(|v| !v.text.trim().is_empty())
                 || !ability.stat_adjustments.is_empty()
                 || ability.source_page.is_some();
             if has_payload {

@@ -1,0 +1,85 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin",
+      "ultimate_wilderness:companion:tardigrade_giant_hardy"
+    ],
+    "corpus_key": "Familiar (Tardigrade (Giant))",
+    "external_ability_refs": [],
+    "key": "ultimate_wilderness:companion:familiar_tardigrade_giant",
+    "monster_class": "Vermin:1",
+    "name": "Familiar (Tardigrade (Giant))",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Aquatic|Familiar|Augmented Magical Beast|FamiliarBase",
+    "race_type": "Vermin",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "D",
+    "source_page": "p.208",
+    "speeds": [
+      {
+        "feet": 20,
+        "mode": "Walk"
+      },
+      {
+        "feet": 20,
+        "mode": "Climb"
+      },
+      {
+        "feet": 20,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -8
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 6
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Vermin"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 126,
+    "record_key": "Familiar (Tardigrade (Giant))"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

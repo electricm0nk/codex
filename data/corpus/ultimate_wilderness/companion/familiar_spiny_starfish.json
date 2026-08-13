@@ -1,0 +1,90 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin",
+      "ultimate_wilderness:companion:grab_one_size_larger",
+      "ultimate_wilderness:companion:spiny_starfish_firm_grip",
+      "ultimate_wilderness:companion:spiny_starfish_rapid_healing",
+      "ultimate_wilderness:companion:spiny_starfish_master_s_bonus"
+    ],
+    "corpus_key": "Familiar (Spiny Starfish)",
+    "external_ability_refs": [
+      "Can't Be Tripped"
+    ],
+    "key": "ultimate_wilderness:companion:familiar_spiny_starfish",
+    "monster_class": "Vermin:1",
+    "name": "Familiar (Spiny Starfish)",
+    "natural_armor": 2,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Slam"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+    "race_type": "Vermin",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.206",
+    "speeds": [
+      {
+        "feet": 5,
+        "mode": "Walk"
+      },
+      {
+        "feet": 5,
+        "mode": "Climb"
+      },
+      {
+        "feet": 5,
+        "mode": "Swim"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -6
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "CON",
+        "amount": 4
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -8
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Vermin"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 123,
+    "record_key": "Familiar (Spiny Starfish)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

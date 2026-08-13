@@ -1,0 +1,42 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Grab ~ One Size Larger",
+    "delivery": "Extraordinary",
+    "description": "If you hit with the indicated attack (usually a claw or bite attack), you deal normal damage and can attempt to start a grapple as a free action without provoking an attack of opportunity. You have the option to conduct the grapple normally, or simply use the part of your body you used in the grab to hold the opponent. If you choose to do the latter, you takes a -20 penalty on your CMB check to make and maintain the grapple, but do not gain the grappled condition itself. A successful hold does not deal any extra damage unless you also have the constrict special attack. If you do not constrict, each successful grapple check you make during successive rounds automatically deals the damage indicated for the attack that established the hold. Otherwise, you deal constriction damage as well. You receive a +4 bonus on combat maneuver checks made to start and maintain a grapple. This ability can be used on creatures of up to one size category larger than yourself.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:grab_one_size_larger",
+    "name": "Grab (One Size Larger)",
+    "owners": [
+      "ultimate_wilderness:companion:companion_anglerfish",
+      "ultimate_wilderness:companion:familiar_spiny_starfish",
+      "ultimate_wilderness:companion:spiny_starfish"
+    ],
+    "record_type": "ability",
+    "source_page": null,
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "AttackOption"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 407,
+    "record_key": "Grab ~ One Size Larger"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "static",
+  "wiring_class_signals": [
+    "static:literal_magnitudes_only"
+  ]
+}

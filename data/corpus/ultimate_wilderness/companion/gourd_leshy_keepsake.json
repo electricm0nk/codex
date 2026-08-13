@@ -1,0 +1,41 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Gourd Leshy ~ Keepsake",
+    "delivery": "Supernatural",
+    "description": "Gourd leshys can pop off the top of their heads and store a single Fine-sized object such as a dagger or potion inside. While within the leshy's head, the item is warded by nondetection. In addition, after 24 hours, the item within is cleaned and polished, and, if damaged, repaired as if by a mending spell. Both spell effects have a caster level equal to twice the leshy's Hit Dice (CL 2nd for most gourd leshys).",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:gourd_leshy_keepsake",
+    "name": "Keepsake",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_gourd_leshy"
+    ],
+    "record_type": "ability",
+    "source_page": "B3 p.178",
+    "stat_adjustments": [],
+    "type_segments": [
+      "GourdLeshyRacialAbility",
+      "SpecialQuality",
+      "Supernatural"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 729,
+    "record_key": "Gourd Leshy ~ Keepsake"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:prose_expr",
+    "display:no_magnitude_token"
+  ]
+}

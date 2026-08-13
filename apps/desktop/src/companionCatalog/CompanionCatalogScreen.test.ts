@@ -40,10 +40,17 @@ import { assert, assertEqual } from '../testSupport/asserts';
 // this list at round 1's four, which is why B5's, B6's and B2's labels were
 // never checked by anything (`decisions.md §54.5`). Corrected here to the
 // eight the backend serves, B1 included.
-const SERVED_BOOK_CODES = ['ISC', 'MC', 'ISI', 'HA', 'B5', 'B6', 'B2', 'B1', 'B3', 'B4'] as const;
+const SERVED_BOOK_CODES = ['ISC', 'MC', 'ISI', 'HA', 'B5', 'B6', 'B2', 'B1', 'B3', 'B4', 'UW'] as const;
 
-/** The `SIZE:` codes the registered creature rows actually carry. */
-const SERVED_SIZE_CODES = ['T', 'M', 'L'] as const;
+/**
+ * The `SIZE:` codes the registered creature rows actually carry.
+ *
+ * Widened for Ultimate Wilderness (round 6), whose 169 creature rows are the
+ * first to carry `D` and `S`. Derived, not guessed:
+ * `grep -o 'size: Some("[A-Z]")' src/rules_core/rules_tables/ultimate_wilderness/companion_data.rs
+ *  | sort | uniq -c` -> D 28, L 2, M 24, S 48, T 67.
+ */
+const SERVED_SIZE_CODES = ['D', 'T', 'S', 'M', 'L'] as const;
 
 function entry(overrides: Partial<CompanionCatalogEntryDto>): CompanionCatalogEntryDto {
   return {
@@ -166,6 +173,7 @@ function testAnAbilityHeadingReadsTheWayTheBookPrintsIt() {
       delivery: 'Supernatural',
       typeSegments: ['ClockworkSpyRacialAbility', 'SpecialQuality', 'Supernatural'],
       description: null,
+      descriptionVariants: [],
       statAdjustments: [],
       sourcePage: null,
     }),
@@ -180,6 +188,7 @@ function testAnAbilityHeadingReadsTheWayTheBookPrintsIt() {
       delivery: null,
       typeSegments: ['CompanionAdvancement'],
       description: null,
+      descriptionVariants: [],
       statAdjustments: [],
       sourcePage: null,
     }),
@@ -197,6 +206,7 @@ function testAnUnmodelledFacetFallsBackToItsVerbatimSegments() {
       delivery: null,
       typeSegments: ['ClockworkFamiliarInstalledItem'],
       description: 'text',
+      descriptionVariants: [],
       statAdjustments: [],
       sourcePage: null,
     }),
@@ -211,6 +221,7 @@ function testAnUnmodelledFacetFallsBackToItsVerbatimSegments() {
       delivery: null,
       typeSegments: [],
       description: null,
+      descriptionVariants: [],
       statAdjustments: [],
       sourcePage: null,
     }),

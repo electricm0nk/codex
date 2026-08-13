@@ -1218,6 +1218,19 @@ fn gen_companion_book(spec: &CompanionBookSpec) {
             "type_segments": ability.type_segments,
             "description": ability.description,
             "description_variables": ability.description_variables,
+            // Conditional `DESC:` variants, carried on disk for the same reason
+            // they are carried in the table: a row that states its rules text
+            // once per gate has no single description, and writing only the
+            // ungated one (or, worse, the first) would put the wrong text in
+            // the corpus cache for every character on the other side of the
+            // gate. Empty for the ordinary single-`DESC:` row, which is why
+            // adding it re-generated every previously ingested book's records
+            // byte-identical (`decisions.md §60.1`).
+            "description_variants": ability.description_variants.iter().map(|v| serde_json::json!({
+                "text": v.text,
+                "variables": v.variables,
+                "conditions": v.conditions,
+            })).collect::<Vec<_>>(),
             "stat_adjustments": ability.stat_adjustments.iter().map(|a| serde_json::json!({ "ability": a.ability, "amount": a.amount })).collect::<Vec<_>>(),
             "source_page": ability.source_page,
             "owners": ability.owners.iter().map(|o| format!("{book_id}:companion:{}", slugify(o))).collect::<Vec<_>>(),
@@ -1491,6 +1504,27 @@ const COMPANION_BOOK_SPECS: &[CompanionBookSpec] = &[
         open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _bestiary_4.pcc carries a live COPYRIGHT block plus a real OGL.txt",
         product_identity_source: "Paizo Pathfinder Roleplaying Game: Bestiary 4, OGL §15 Product Identity section",
         classified_by_cycle: "SD29-E7-F2-006",
+    },
+    // SD-29 Epic 7 round 6 (`SD29-E7-F2-007`). Ultimate Wilderness, the largest
+    // companion block in the corpus — 169 creature rows, more than every
+    // previously registered companion book combined.
+    //
+    // ONE abilities file, not two. `support/uw_abilities_companion_pu.lst` is
+    // deliberately absent: its 17 rows are Pathfinder-Unchained option rows and
+    // every one of them is an orphan under `classify_companion_rows`, so the
+    // transcriber emits none and a record citing that file cannot exist. Naming
+    // it here would assert a citation surface this book's table never uses.
+    //
+    // Registration cost no scope flip and no new `RuleSetId`: SD-28 Epic 26
+    // compiled `RuleSetId::Uw` for this book's 136 feats.
+    CompanionBookSpec {
+        corpus_book: "ultimate_wilderness",
+        book_relative: "pathfinder/paizo/roleplaying_game/ultimate_wilderness",
+        races_lsts: &["uw_races_companion.lst"],
+        abilities_lsts: &["uw_abilities_companion.lst"],
+        open_game_content: "OGL 1.0a (Wizards of the Coast), inlined verbatim per docs/governance/ogl-pi-blacklist.md §2.2; the book's own _ultimate_wilderness.pcc carries a live COPYRIGHT block plus a real OGL.txt",
+        product_identity_source: "Paizo Pathfinder Roleplaying Game: Ultimate Wilderness, OGL §15 Product Identity section",
+        classified_by_cycle: "SD29-E7-F2-007",
     },
 ];
 

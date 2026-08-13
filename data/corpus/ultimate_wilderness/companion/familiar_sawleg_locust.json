@@ -1,0 +1,80 @@
+{
+  "population": "in_scope",
+  "completeness": "chassis_only",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "ability_keys": [
+      "ultimate_wilderness:companion:companion_body_type_unusual_plant_and_vermin"
+    ],
+    "corpus_key": "Familiar (Sawleg Locust)",
+    "external_ability_refs": [],
+    "key": "ultimate_wilderness:companion:familiar_sawleg_locust",
+    "monster_class": "Vermin:1",
+    "name": "Familiar (Sawleg Locust)",
+    "natural_armor": 1,
+    "natural_attacks": [
+      {
+        "damage_dice": null,
+        "name": "Bite"
+      }
+    ],
+    "race_subtype": "Familiar|Augmented Magical Beast|FamiliarBase",
+    "race_type": "Vermin",
+    "reach_feet": 0,
+    "record_type": "creature",
+    "size": "T",
+    "source_page": "p.205",
+    "speeds": [
+      {
+        "feet": 15,
+        "mode": "Walk"
+      },
+      {
+        "feet": 15,
+        "mode": "Climb"
+      },
+      {
+        "feet": 40,
+        "mode": "Fly"
+      }
+    ],
+    "stat_adjustments": [
+      {
+        "ability": "STR",
+        "amount": -6
+      },
+      {
+        "ability": "DEX",
+        "amount": 2
+      },
+      {
+        "ability": "INT",
+        "amount": -10
+      },
+      {
+        "ability": "CHA",
+        "amount": -4
+      }
+    ],
+    "type_segments": [
+      "Companion",
+      "Familiar",
+      "Vermin"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_races_companion.lst",
+    "sha256": "bb20c4220de9c8af6157ed48ce0d2e1934c912a6bd7d1f1a0c572c0a2dc5c3e5",
+    "line": 117,
+    "record_key": "Familiar (Sawleg Locust)"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "derived",
+  "wiring_class_signals": [
+    "derived:bonus",
+    "derived:cr"
+  ]
+}

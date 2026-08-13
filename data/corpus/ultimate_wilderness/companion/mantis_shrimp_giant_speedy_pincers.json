@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Mantis Shrimp (Giant) ~ Speedy Pincers",
+    "delivery": "Extraordinary",
+    "description": "A giant mantis shrimp can make iterative attacks with one of its pincer attacks.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialAttack",
+    "key": "ultimate_wilderness:companion:mantis_shrimp_giant_speedy_pincers",
+    "name": "Speedy Pincers",
+    "owners": [
+      "ultimate_wilderness:companion:companion_mantis_shrimp_giant"
+    ],
+    "record_type": "ability",
+    "source_page": "p.185",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialAttack",
+      "Extraordinary",
+      "GiantMantisShrimpRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 285,
+    "record_key": "Mantis Shrimp (Giant) ~ Speedy Pincers"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}

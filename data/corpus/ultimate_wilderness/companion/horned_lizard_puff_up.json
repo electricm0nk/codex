@@ -1,0 +1,40 @@
+{
+  "population": "in_scope",
+  "completeness": "full",
+  "ingested_at": "2026-08-12T23:25:37Z",
+  "data": {
+    "corpus_key": "Horned Lizard ~ Puff Up",
+    "delivery": "Extraordinary",
+    "description": "When taking the total defense action, a horned lizard puffs up its body, appearing larger and more horned and gaining an additional +4 bonus to CMD against grapple attempts.",
+    "description_variables": [],
+    "description_variants": [],
+    "facet": "SpecialQuality",
+    "key": "ultimate_wilderness:companion:horned_lizard_puff_up",
+    "name": "Puff Up",
+    "owners": [
+      "ultimate_wilderness:companion:familiar_horned_lizard"
+    ],
+    "record_type": "ability",
+    "source_page": "p.197",
+    "stat_adjustments": [],
+    "type_segments": [
+      "SpecialQuality",
+      "Extraordinary",
+      "HornedLizardRacialTrait"
+    ]
+  },
+  "source": {
+    "kind": "lst_token",
+    "path": "pathfinder/paizo/roleplaying_game/ultimate_wilderness/uw_abilities_companion.lst",
+    "sha256": "16b1baa287437a0c17d3dc05b54ca4949daea1b87e657d3cc01f7534270298e5",
+    "line": 243,
+    "record_key": "Horned Lizard ~ Puff Up"
+  },
+  "license": "OGL",
+  "pi_field": null,
+  "pi_marker": null,
+  "wiring_class": "display",
+  "wiring_class_signals": [
+    "display:no_magnitude_token"
+  ]
+}
