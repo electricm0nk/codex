@@ -32,6 +32,13 @@
 //!      ! -name LICENSE.json -not -path '*/_parity/*' | wc -l   # 635
 //! ```
 //!
+//! Both figures are the ones measured when this file was written and are kept
+//! as the record of that measurement, not as current truth: ARG is 649 as of
+//! SD-29 Epic 7 round 9, which added the book's 14 companion records. Nothing
+//! in this file reads either number — every count it asserts is derived from
+//! the files on disk at test time, which is the property that makes the
+//! narrative above safe to leave standing.
+//!
 //! # Why the guard did not catch core_rulebook and beastiary
 //!
 //! It was asked not to. The previous revision of this file carried
@@ -65,13 +72,20 @@
 //! failed a correctly-classified record. Both literals are now derived by
 //! serialising the enum itself, so the test cannot disagree with the schema.
 //!
-//! Two books — `advanced_class_guide` and `advanced_players_guide` — ship a
-//! `LICENSE.json` that states no `records_processed` at all. That is a real
+//! Two books — `advanced_class_guide` and `advanced_players_guide` — shipped a
+//! `LICENSE.json` that stated no `records_processed` at all. That was a real
 //! third gap, and it is **pinned rather than papered over** by
-//! [`exactly_the_two_known_books_omit_a_stated_record_count`]: a new book
-//! omitting the field fails, and either of those two gaining it also fails,
-//! forcing the exemption list to shrink. Adding the field to those two
-//! artifacts is outside this cycle's granted write scope.
+//! [`exactly_the_one_known_book_omits_a_stated_record_count`]: a new book
+//! omitting the field fails, and a listed book gaining it also fails, forcing
+//! the exemption list to shrink.
+//!
+//! **It shrank.** SD-29 Epic 7 round 9 ingested the Advanced Player's Guide's
+//! `companion` family, and `gen_book_cache`'s companion generator writes a
+//! derived `records_processed` into the book's `LICENSE.json` as a matter of
+//! course. So APG now states its count — **646**, the real on-disk file count
+//! — and it has been moved OUT of the exemption list into this file's ordinary
+//! count coverage, which is exactly the direction the pin exists to force.
+//! `advanced_class_guide` is the last book still exempt.
 
 use std::collections::{BTreeMap, BTreeSet};
 use std::fs;
@@ -127,12 +141,17 @@ fn books_on_disk() -> Vec<String> {
 
 /// Books whose `LICENSE.json` states no `records_processed`.
 ///
-/// These two were classified before the field existed and were not revisited;
-/// their artifacts are outside this cycle's granted write scope. Pinned as an
-/// exact set by [`exactly_the_two_known_books_omit_a_stated_record_count`] so
+/// Classified before the field existed and not revisited since. Pinned as an
+/// exact set by [`exactly_the_one_known_book_omits_a_stated_record_count`] so
 /// the exemption cannot quietly grow, and so closing it forces this list down.
-const BOOKS_WITHOUT_A_STATED_RECORD_COUNT: &[&str] =
-    &["advanced_class_guide", "advanced_players_guide"];
+///
+/// **Down to one.** `advanced_players_guide` left this list in SD-29 Epic 7
+/// round 9: ingesting its `companion` family made `gen_book_cache` rewrite the
+/// book's `LICENSE.json` with a derived `records_processed` of 646, and the
+/// count guard now covers that book like any other. The pin is what surfaced
+/// it — the round's ingest turned this test red, which is the whole point of
+/// asserting an exact set rather than a floor.
+const BOOKS_WITHOUT_A_STATED_RECORD_COUNT: &[&str] = &["advanced_class_guide"];
 
 /// The books this file's count assertions actually run over: everything on
 /// disk that claims a number, which is the only thing a number can be checked
@@ -333,7 +352,7 @@ fn every_counted_record_carries_a_real_license_classification() {
 /// fails too, forcing `BOOKS_WITHOUT_A_STATED_RECORD_COUNT` to shrink and the
 /// count guard to widen.
 #[test]
-fn exactly_the_two_known_books_omit_a_stated_record_count() {
+fn exactly_the_one_known_book_omits_a_stated_record_count() {
     let omitting: BTreeSet<String> = books_on_disk()
         .into_iter()
         .filter(|book| license_json(book).get("records_processed").is_none())
@@ -346,9 +365,9 @@ fn exactly_the_two_known_books_omit_a_stated_record_count() {
     assert_eq!(
         omitting, expected,
         "the set of books whose LICENSE.json states no `records_processed` changed. Either a new \
-         book shipped a compliance artifact without the count (state it), or one of the two known \
-         omissions was filled in (remove it from BOOKS_WITHOUT_A_STATED_RECORD_COUNT so the count \
-         guard covers that book)."
+         book shipped a compliance artifact without the count (state it), or a known omission was \
+         filled in (remove it from BOOKS_WITHOUT_A_STATED_RECORD_COUNT so the count guard covers \
+         that book)."
     );
 }
 

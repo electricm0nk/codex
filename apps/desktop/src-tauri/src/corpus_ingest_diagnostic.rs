@@ -61,8 +61,12 @@
 //! would make that caption false in the other direction.
 //!
 //! They are accounted for elsewhere, so nothing is hidden: their compliance
-//! count is in `data/corpus/advanced_race_guide/LICENSE.json` (635 records,
-//! guarded by `tests/sd27_book_license_record_counts.rs`), and every one of
+//! count is in `data/corpus/advanced_race_guide/LICENSE.json` (649 records as
+//! of SD-29 Epic 7 round 9, which added the book's 14 companion records to the
+//! 635 it carried before; the artifact states the number and
+//! `tests/sd27_book_license_record_counts.rs` derives it from the files on
+//! disk, so neither this comment nor that field is the source of truth), and
+//! every one of
 //! ARG's 153 *alternate* traits reaches the player through
 //! `list_alternate_racial_traits`.
 //!
