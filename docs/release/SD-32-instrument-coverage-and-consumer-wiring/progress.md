@@ -135,3 +135,51 @@ touched. The only classifier-adjacent change is stricter than what it replaced.
   `3,426 / 9,475` this cycle started from, from concurrent wiring-class work.
   The Δ above is same-generator before-vs-after and is unaffected, but a reader
   comparing absolute figures against the live board must reconcile that first.
+
+#### AT-32-003 evidence — E2: coverage widened, bar unchanged
+
+**Verification.** `./scripts/verify.sh --full`, exit code captured directly on
+the next line (`; echo $? > …`), never through a pipe. **Exit code 0, `RESULT:
+PASS`**, all 14 stages green on the final tree (`0ad6e700`):
+
+```
+PASS preflight-disk · pi-sweep (10 hits, 10 baseline rows) · audit-selftest (28)
+PASS reclaim-selftest (10) · driver-selftest (7) · root-lib (1752)
+PASS root-full (6317 passed across 544 suites, all 525 tests/*.rs executed)
+PASS desktop (445) · reach (27) · frontend-install · frontend-test (99/99)
+PASS frontend-typecheck · clippy (root:45 desktop:7 warnings, 0 errors)
+PASS class-dump (31/31 computing)
+RESULT: PASS
+```
+
+**Against each `Then` clause:**
+
+1. *"Key universe enumerated, not hand-listed, covering every book that has
+   one."* Met, and by a stronger source than the criterion names. It is derived
+   from `equipment_resolver::equipment_catalog_rows()` rather than from the
+   compiled `equipment_tables.rs` module tree, because the catalog is what
+   `classify()` itself reads for `known` — deriving from the module tree would
+   have left the 769 corpus-recovered `equipment_gap_tables` rows unexamined and
+   recreated the same two-lists divergence one layer down. Pinned by
+   `the_probe_examines_every_key_the_engine_catalog_holds`.
+2. *"A unit from a book outside the previous four is examined — proven by the
+   RED test that failed before the change."* Met in substance; stated precisely
+   rather than claimed loosely. The guard test cannot literally fail against the
+   old code, because the old code had no key-universe function to call. The
+   equivalent RED evidence is the same fact in measurable form, printed by a
+   test that ships:
+   `cargo test --bin v06_work_inventory the_probe_key_universe -- --nocapture`
+   → `probe key universe: 6395 keys; four compiled tables alone: 3272 keys;
+   previously unexamined: 3123`.
+3. *"Every unit that newly reads `grounded` did so because equipping it alone
+   produced a non-`None` mechanical stat effect."* True by construction — that
+   check is `equipment_key_is_wired`, and the diff does not touch it:
+   `git diff 8452090a..HEAD -- src/bin/v06_work_inventory.rs | grep -E '^[-+].*(fn equipment_key_is_wired|armor_class_bonus|max_dex|spell_failure|armor_check_penalty|skill_bonus|ability_bonus|weapon_enhancement_bonus)'`
+   returns **nothing**.
+4. *"Units the widened probe examines and finds inert remain
+   `ingested-magnitude`, and their count is reported."* Met. 420 of the 715
+   remaining equipment `in-progress` units are examined-and-inert (239 carrying
+   no readable token or chain, 136 carrying an unread bonus family, 38
+   near-misses, 7 with no record under their key); the other 295 are not
+   examined at all because their book has no ingested corpus, and the probe now
+   says so instead of grounding them off another book's reprint.
