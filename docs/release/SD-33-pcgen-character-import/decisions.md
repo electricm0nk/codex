@@ -6,7 +6,7 @@ date: 2026-08-11
 canonical_branch: tranche/11
 ---
 
-# SD-31 Decisions
+# SD-33 Decisions
 
 ## §1 — Bundle exists (operator directive, 2026-08-11)
 
@@ -34,12 +34,12 @@ inventory this repo has been burned by before.
 
 `src/pcgen_character/` is separate from `src/pcgen_import/`. Two reasons, in priority order:
 
-1. It keeps SD-31's edits out of a tree the sibling bundles read.
+1. It keeps SD-33's edits out of a tree the sibling bundles read.
 2. The concerns genuinely differ — `pcgen_import` ingests rules data at build time from a
    trusted checkout; `pcgen_character` reads a user's file at runtime, with untrusted input and
    user-facing errors.
 
-Reuse is by idiom, not linkage. Sharing the tokenizer would save modest work and put SD-31
+Reuse is by idiom, not linkage. Sharing the tokenizer would save modest work and put SD-33
 inside SD-29's read surface.
 
 ## §6 — Import inputs, never outputs
@@ -70,9 +70,9 @@ unsupported and names it in the fidelity report rather than special-casing the b
 silently accepting a dangerous third later. An allowlist for known-inert templates is forward
 scope.
 
-## §9 — The shared test-count baseline is not SD-31's
+## §9 — The shared test-count baseline is not SD-33's
 
-Three bundles editing one integer conflicts on every merge. SD-31 records per-cycle deltas in
+Three bundles editing one integer conflicts on every merge. SD-33 records per-cycle deltas in
 receipts; the tranche-merge cycle reconciles once (`TR-31-003`).
 
 ## §10 — Oracle parity is the definition of done

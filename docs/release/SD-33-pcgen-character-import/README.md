@@ -9,7 +9,17 @@ companion_to: ./scope-draft.md
 build_version_target: 0.11.<build>
 ---
 
-# SD-31 — PCGen Character Import (`.pcg`)
+# SD-33 — PCGen Character Import (`.pcg`)
+
+**Renamed from SD-31, operator ruling 2026-08-14** ("ok, let's split phase 3 and phase 4 into their
+own SD's. SD-31 and SD-32. Take the existing SD-31 and rename it to SD-33"). The `SD-31`/`SD31`
+identifiers throughout this package's own files were renamed in place (`git mv`, history preserved);
+`SD-31` and `SD-32` now name the two packages split out of `SD-30-class-feature-archetype-bundle`
+(`docs/release/SD-31-corpus-closure-grind/`, `docs/release/SD-32-engine-capability-builds/`) — not
+this package. Historical citations to "SD-31" in other packages' closed decision/progress records
+(e.g. `SD-29-corpus-wide-catch-up-lanes/`) predate this rename and are left as-is per this program's
+standing convention (original text stays visible, a correction pointer added where the reference is
+still a live pointer rather than a closed narrative record).
 
 ## Purpose
 
@@ -17,7 +27,7 @@ Codex can read PCGen's **data** (`.lst`/`.pcc`, via `src/pcgen_import/`). It can
 PCGen's **characters**. A user with an existing PF1e character built in PCGen has no path
 into this application except retyping it.
 
-SD-31 builds that path: open a PCGen `.pcg` character file, resolve its references against
+SD-33 builds that path: open a PCGen `.pcg` character file, resolve its references against
 Codex's ingested corpus, recompute the character through the real rules engine, and either
 save it or refuse with named diagnostics.
 
@@ -32,7 +42,7 @@ in flight**:
   `archetype_resolver.rs` and `pilot_compute.rs` (`TR-30-001`).
 
 Neither partition contains `src/pcgen_character/`, `apps/desktop/src/`, or the character-hub
-IPC surface. `TR-31-001` states SD-31's partition and the two shared files it must handle by
+IPC surface. `TR-31-001` states SD-33's partition and the two shared files it must handle by
 protocol rather than by edit.
 
 ## This is not a greenfield build
@@ -40,7 +50,7 @@ protocol rather than by edit.
 The bundle's starting state is four existing assets, verified present at `tranche/9` HEAD
 `3570d735` on 2026-08-11. Cycles cite them; they do not rebuild them.
 
-| Asset | Location | What it gives SD-31 |
+| Asset | Location | What it gives SD-33 |
 |---|---|---|
 | Tokenized-line parser idiom | `src/pcgen_import/lst_parser/` | `.pcg` is the same `KEY:value` line format as `.lst` |
 | Two real `.pcg` fixtures | `docs/release/GE-05-.../artifacts/*.pcg` | Human Fighter L1, Human Wizard L1, sha256-pinned by `tests/ge05_vendored_pcg_fixtures.rs` |

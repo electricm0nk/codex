@@ -1,5 +1,9 @@
 # SD-29 Release Notes — Corpus-Wide Catch-Up Lanes
 
+> **Rename note (2026-08-14).** `Owner: SD-31` below refers to `SD-31-pcgen-character-import`, the
+> package now renamed `SD-33-pcgen-character-import` (operator ruling 2026-08-14). Updated in place;
+> not reassigned to the new SD-31/SD-32 split out of SD-30.
+
 **Populated at the bundle's REAL closure, 2026-08-13 (Epic 11, Closure Epilogue, run 3).** The
 per-cycle receipts in `progress.md` are the per-record evidence; this document is the rollup. Every
 figure below was re-derived at closure by the command shown beside it, not transcribed from a
@@ -202,7 +206,7 @@ five of the new arms compile a `companion` family and nothing else, two compile 
    message — and the Rust repo-wide sweep `tests/sd24_wired_integration_audit.rs` encodes three
    reviewed exclusion filters for exactly these and is green in the gate. **The two instruments
    disagree, and the remedy is parity, not leniency:** port the Rust gate's filters into the shell
-   script with a self-test. **Owner: SD-31** (`successor-forward-scope-register.md` C1.4b). Closure
+   script with a self-test. **Owner: SD-33** (`successor-forward-scope-register.md` C1.4b). Closure
    run 1 reported this clean; that was wrong and is corrected here.
 
 2. **Race chassis is the `race_trait` ceiling — 2,876 units are structurally unreachable.** The
@@ -218,14 +222,14 @@ five of the new arms compile a `companion` family and nothing else, two compile 
 
 3. **`ASPECT:` is modelled by no chassis in this program.** 34 `grounded` companion rows are
    *diminished* by it and 1 is emptied by it (`core_essentials` / `Pseudodragon ~ Tail`, the
-   companion lane's single reachable-and-remaining row). **Owner: SD-31**
+   companion lane's single reachable-and-remaining row). **Owner: SD-33**
    (`successor-forward-scope-register.md` C1.6).
 
 4. **229 monster rows are mechanism-blocked on the `ABILITY:Internal|AUTOMATIC|` bundle hop**,
    across six books. Scanned, counted and checked in
    (`python3 scripts/scan_monster_ability_bundle_rows.py`) with the exact call sites a successor
    must change. This is a **ceiling correction**, not a backlog line: following the hop widens an
-   ownership pass and changes what every registered book ships. **Owner: SD-31**
+   ownership pass and changes what every registered book ships. **Owner: SD-33**
    (`successor-forward-scope-register.md` C1.5).
 
 5. **Frontend preview fixtures are hand-authored rules data with nothing pinning them to the
@@ -233,19 +237,19 @@ five of the new arms compile a `companion` family and nothing else, two compile 
    catalog by hand and both declare full transcription fidelity; the companion one is not faithful
    (`Familiar (Clockwork Spy)` serves 1 of 6 stat adjustments and 1 of 3 abilities). **Not
    shipped-path** — the branch sits behind `if (!hasTauriRuntime())` and is never taken in the
-   desktop product. The fix is a fixture pipeline the frontend does not have. **Owner: SD-31**
+   desktop product. The fix is a fixture pipeline the frontend does not have. **Owner: SD-33**
    (`successor-forward-scope-register.md` C1.4a).
 
 6. **`equipment` and `spell` have never been verified on screen by the harness.** Epic 4 predates
    `verify-on-screen.sh`, so those two families' `SEARCH_Y` constants are by-analogy and have never
    been exercised. **The first equipment or spell cycle after this bundle must calibrate them before
-   citing a PASS.** A calibration debt, not a defect in anything shipped. **Owner: SD-31**
+   citing a PASS.** A calibration debt, not a defect in anything shipped. **Owner: SD-33**
    (`successor-forward-scope-register.md` C1.4d).
 
 7. **Decision 41 does not say whether NEW `tests/` files may carry a bundle tag.** The audit's
    self-test encodes the `tests/` exemption unconditionally, and Epic 6 then added a bundle-tagged
    test file the gate permitted but the convention's stated intent forbids. This needs a **ruling**,
-   not an edit to a tested gate. Severity low. **Owner: SD-31**
+   not an edit to a tested gate. Severity low. **Owner: SD-33**
    (`successor-forward-scope-register.md` C1.4c).
 
 8. **`class_feature` Tier-3 deferral** — 15,472 units corpus-wide, 109 grounded, deferred by

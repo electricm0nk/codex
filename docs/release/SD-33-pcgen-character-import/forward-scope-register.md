@@ -6,7 +6,7 @@ date: 2026-08-11
 canonical_branch: tranche/11
 ---
 
-# SD-31 Forward-Scope Register
+# SD-33 Forward-Scope Register
 
 Work this bundle deliberately does not do. Entries here are **candidates**, not claims on any
 successor — the "scope takeover" failure SD-27's register warns about by name.
@@ -26,9 +26,9 @@ successor — the "scope takeover" failure SD-27's register warns about by name.
 
 ## Routed elsewhere — do not absorb
 
-**Un-ingested corpus content is never SD-31's.** Every `UnresolvedReason::RecordNotIngested`
+**Un-ingested corpus content is never SD-33's.** Every `UnresolvedReason::RecordNotIngested`
 an import produces names content that SD-29 (all kinds but `class_feature`) or SD-30
-(`class_feature`) owns. SD-31 reports these and stops.
+(`class_feature`) owns. SD-33 reports these and stops.
 
 A cycle that ingests a record to make an import succeed has violated `TR-31-001` and taken over
 another bundle's scope, regardless of how small the record is.

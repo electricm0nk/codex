@@ -7,7 +7,7 @@ canonical_branch: tranche/11
 build_version_target: 0.11.<build>
 ---
 
-# SD-31 Release Notes
+# SD-33 Release Notes
 
 > **Status: not yet executed.** This file is the closure surface; it is filled in at Epic 9.
 > Nothing below the line has shipped.
@@ -17,7 +17,7 @@ build_version_target: 0.11.<build>
 Codex can open a PCGen character file.
 
 Until now Codex could read PCGen's *data* (`.lst`/`.pcc`) but not PCGen's *characters*. A user
-with an existing PF1e character had no path in except retyping it. SD-31 builds that path, with
+with an existing PF1e character had no path in except retyping it. SD-33 builds that path, with
 one rule that shapes everything else: **an import either brings your character across intact, or
 tells you exactly what it could not bring and refuses.** No silent losses.
 

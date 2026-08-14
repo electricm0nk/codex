@@ -13030,7 +13030,7 @@ Recorded so run 3 does not re-derive the shape:
 7. **Committed two retro-event files this cycle did not author** (`docs/retro/events/codex.jsonl`,
    `docs/retro/events/sd29-driver-fix.jsonl`), which arrived uncommitted in the shared checkout. The
    log is append-only and its whole value is that it survives a run git does not record; leaving
-   another agent's events uncommitted is how they get lost. `docs/release/SD-31-pcgen-character-import/`
+   another agent's events uncommitted is how they get lost. `docs/release/SD-33-pcgen-character-import/`
    was left untracked — it is a different bundle's package and not this cycle's to land.
 
 ---
@@ -13715,7 +13715,7 @@ ancestor, so a fast-forward and not a divergence. One uncommitted file was prese
 committed as `9e727b4d` before rebasing rather than discarded, for the reason run 2 §7.7 records —
 the retro log's whole value is surviving a run git does not record.
 
-`git rebase origin/tranche/9` → clean, no conflict. `docs/release/SD-31-pcgen-character-import/` was
+`git rebase origin/tranche/9` → clean, no conflict. `docs/release/SD-33-pcgen-character-import/` was
 left untracked; it is a different bundle's package and not this cycle's to land.
 
 ### 2. Every figure re-derived, command first — and the brief's figures were stale

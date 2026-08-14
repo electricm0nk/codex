@@ -7,7 +7,7 @@ canonical_branch: tranche/11
 mirror_of: ./README.md
 ---
 
-# SD-31 Scope Draft
+# SD-33 Scope Draft
 
 ## The shape
 
@@ -39,11 +39,11 @@ and diffed dimension-by-dimension against Codex's recomputation.
 - Non-PF1e game modes — refused with a named diagnostic, not partially parsed.
 - PCGen templates (`§8`).
 - **Any corpus widening.** If a `.pcg` names content Codex has not ingested, that is SD-29's or
-  SD-30's lane. SD-31 reports it and defers it; it never ingests.
+  SD-30's lane. SD-33 reports it and defers it; it never ingests.
 
 ## The boundary that matters
 
-SD-31 imports **inputs, never outputs** (`decisions.md §6`). The `.pcg` carries PCGen's computed
+SD-33 imports **inputs, never outputs** (`decisions.md §6`). The `.pcg` carries PCGen's computed
 values; the importer reads them only to verify parity. Everything the user sees is recomputed by
 the Codex engine.
 
@@ -52,12 +52,12 @@ two engines disagreeing inside one character, discovered only after the user has
 
 ## Relationship to the in-flight bundles
 
-| Bundle | Branch | Owns | SD-31 overlap |
+| Bundle | Branch | Owns | SD-33 overlap |
 |---|---|---|---|
 | SD-29 | `tranche/9` | every corpus kind except `class_feature` | none — `TR-31-001` |
 | SD-30 | `tranche/10` | `class_feature` corpus-wide | none — `TR-31-001` |
-| SD-31 | `tranche/11` | the `.pcg` import path | — |
+| SD-33 | `tranche/11` | the `.pcg` import path | — |
 
-SD-31 is a **consumer** of what SD-29 and SD-30 ingest: the more corpus they land, the fewer
+SD-33 is a **consumer** of what SD-29 and SD-30 ingest: the more corpus they land, the fewer
 `RecordNotIngested` entries an import produces. The dependency runs one way and requires no
 coordination.

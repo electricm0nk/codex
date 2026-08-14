@@ -1,6 +1,6 @@
-# SD-31 — Per-cycle Receipts
+# SD-33 — Per-cycle Receipts
 
-This file carries the per-cycle receipt for SD-31. Each cycle appends a section with its
+This file carries the per-cycle receipt for SD-33. Each cycle appends a section with its
 cycle-id and operator-readable facts. The supervisor reads this file to verify completion
 before the next cycle claim (`loop-instruction.md` Step 6).
 
@@ -9,13 +9,13 @@ Receipts are evidence, not narrative. Keep them short.
 ## Cycle 0.0 — Package Land (planning-ready)
 
 **Date:** 2026-08-11
-**Cycle ID:** `SD31-LAND-1`
+**Cycle ID:** `SD33-LAND-1`
 **Operator:** Todd Hintzmann (directive 2026-08-11)
 **Surface:** this directory
 
 ### What landed
 
-The canonical STC chassis for SD-31, authored against facts verified by command at `tranche/9`
+The canonical STC chassis for SD-33, authored against facts verified by command at `tranche/9`
 HEAD `3570d735` on 2026-08-11.
 
 ### Starting-state facts, each verified by command
@@ -28,7 +28,7 @@ HEAD `3570d735` on 2026-08-11.
 | A safe import landing pad exists (fresh id, engine recompute, `Blocked` rather than persist) | `character_hub.rs:3744` onward |
 | A real PCGen oracle exists | `src/oracle_validation/pcgen_runner.rs` |
 | `src/pcgen_import/` handles `.lst`/`.pcc` data only | module listing: `lst_parser`, `pcc.rs`, `ir_converter.rs`, … |
-| Neither SD-29's nor SD-30's partition contains SD-31's write surface | `TR-29-001`, `TR-30-001` |
+| Neither SD-29's nor SD-30's partition contains SD-33's write surface | `TR-29-001`, `TR-30-001` |
 
 ### Corrections made during authoring
 

@@ -7,7 +7,7 @@ canonical_branch: tranche/11
 companion_to: ./technical-requirements.md
 ---
 
-# SD-31 Acceptance and Verification
+# SD-33 Acceptance and Verification
 
 ## 1. Per-cycle gate
 
@@ -34,7 +34,7 @@ JSON, which `comparator.rs` already knows how to diff.
 So an imported character is verified against **PCGen's own computation of the same file**:
 
 ```
-   fixture.pcg ──┬── SD-31 import → CreateCharacterRequest → Codex engine ──┐
+   fixture.pcg ──┬── SD-33 import → CreateCharacterRequest → Codex engine ──┐
                  │                                                          ├── comparator → parity
                  └── pcgen_runner → real PCGen → normalized dimensions ─────┘
 ```
@@ -42,7 +42,7 @@ So an imported character is verified against **PCGen's own computation of the sa
 A divergence means one of three things, and the cycle must say which:
 
 1. **The importer mapped something wrong** — fix the importer.
-2. **Codex's engine differs from PCGen** — pre-existing, not SD-31's; record it and route it.
+2. **Codex's engine differs from PCGen** — pre-existing, not SD-33's; record it and route it.
 3. **The dimension is not comparable** — narrow the selected dimension set, with a reason.
 
 Silently loosening a tolerance to make parity pass is a cycle defect.

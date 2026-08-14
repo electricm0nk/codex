@@ -6,7 +6,7 @@ date: 2026-08-11
 canonical_branch: tranche/11
 ---
 
-# SD-31 Risks and Open Questions
+# SD-33 Risks and Open Questions
 
 ## R-1 — Collision with SD-29 / SD-30 (the reason this package exists in this shape)
 
@@ -40,13 +40,13 @@ correctness on unseen shapes is bounded by the fidelity report, not by the fixtu
 (a multiclass character, a non-CRB character) and vendored with pinned sha256s? That would
 materially widen coverage. It is not assumed available.
 
-## R-3 — Oracle parity may diverge for reasons that are not SD-31's
+## R-3 — Oracle parity may diverge for reasons that are not SD-33's
 
 **Risk:** Codex's engine and PCGen already disagree on some dimensions, independent of import.
 A parity failure could stall the bundle on a pre-existing defect.
 
 **Mitigation:** `acceptance-and-verification.md §2` requires the cycle to classify a divergence
-into one of three causes and route the non-SD-31 ones out. Narrowing the dimension set is
+into one of three causes and route the non-SD-33 ones out. Narrowing the dimension set is
 allowed **with a recorded reason**; loosening a tolerance silently is a cycle defect.
 
 ## R-4 — PCGen runner availability
@@ -73,7 +73,7 @@ the explicit target of Epic 8's adversarial review.
 
 ## R-6 — CPU contention
 
-**Risk:** SD-31 is a cargo bundle and competes with SD-29's builds on a 4-core box.
+**Risk:** SD-33 is a cargo bundle and competes with SD-29's builds on a 4-core box.
 
 **Mitigation:** scratch `CARGO_TARGET_DIR` per cycle, capped parallelism, and the frontend
 gate (`npm test`, `tsc --noEmit`) is cheap. Note that Epics 2–4 are pure-Rust unit work with a

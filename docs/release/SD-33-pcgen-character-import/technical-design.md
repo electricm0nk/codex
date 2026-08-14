@@ -7,7 +7,7 @@ canonical_branch: tranche/11
 companion_to: ./technical-requirements.md
 ---
 
-# SD-31 Technical Design
+# SD-33 Technical Design
 
 ## 1. The format, read off a real file
 
@@ -72,7 +72,7 @@ points are all recomputed by the real engine downstream.
 This is deliberate and load-bearing. The `.pcg` *contains* PCGen's computed values
 (`HITPOINTS:10`, `SKILLSGAINED:3`). Copying them would produce a character whose numbers came
 from PCGen and whose future edits come from Codex — two engines silently disagreeing inside
-one sheet. **SD-31 imports inputs, never outputs.** PCGen's computed values are read for one
+one sheet. **SD-33 imports inputs, never outputs.** PCGen's computed values are read for one
 purpose only: parity verification (`acceptance-and-verification.md §2`).
 
 ## 3. Reference resolution
@@ -135,7 +135,7 @@ name the book so the answer is actionable.
 
 ## 5. The player surface
 
-Three additions to `apps/desktop/src/`, all inside SD-31's partition:
+Three additions to `apps/desktop/src/`, all inside SD-33's partition:
 
 1. **Import affordance** — extend the existing import entry point in
    `characterHub/LoadCharacterScreen.tsx` (which already wires the JSON import via
@@ -162,10 +162,10 @@ src/pcgen_character/
 ```
 
 A new top-level module rather than a `src/pcgen_import/` submodule, for two reasons: it keeps
-SD-31 off a tree SD-29 and SD-30 read (`TR-31-001`), and the two concerns are genuinely
+SD-33 off a tree SD-29 and SD-30 read (`TR-31-001`), and the two concerns are genuinely
 different — `pcgen_import` ingests *rules data* at build time, `pcgen_character` reads *a
 user's file* at runtime, with untrusted input and user-facing errors.
 
 Reuse across that boundary is by **idiom, not linkage**: the tokenizer follows
 `pcgen_import/lst_parser`'s established shape without depending on it. A shared tokenizer
-would put SD-31 edits inside SD-29's read surface for a modest saving.
+would put SD-33 edits inside SD-29's read surface for a modest saving.

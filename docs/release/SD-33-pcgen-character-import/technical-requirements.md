@@ -8,7 +8,7 @@ build_version_target: 0.11.<build>
 companion_to: ./technical-design.md, ./epic-breakdown.md
 ---
 
-# SD-31 Technical Requirements
+# SD-33 Technical Requirements
 
 ## Objective
 
@@ -24,7 +24,7 @@ observe the file-touch partition.
 
 ## TR-31-001 — Per-cycle file-touch partition
 
-This is the requirement that makes SD-31 safe to run beside SD-29 and SD-30. It is derived by
+This is the requirement that makes SD-33 safe to run beside SD-29 and SD-30. It is derived by
 subtracting `TR-29-001` and `TR-30-001`'s partitions from the repo.
 
 Cycle writes are bounded to:
@@ -36,7 +36,7 @@ Cycle writes are bounded to:
 - `apps/desktop/src-tauri/src/character_hub.rs` and `.../src/main.rs` — **registration only**
   (see `TR-31-002`).
 - `tests/pcgen_character_*.rs` — new integration tests, named per identifier discipline.
-- `docs/release/SD-31-pcgen-character-import/**` — this bundle's own docs and artifacts.
+- `docs/release/SD-33-pcgen-character-import/**` — this bundle's own docs and artifacts.
 
 Cycle writes MUST NOT touch:
 
@@ -46,7 +46,7 @@ Cycle writes MUST NOT touch:
 - `data/corpus/**` — SD-29's Shape-B cache.
 - `src/pcgen_import/**` — read-only, **except** the single `mod.rs` registration line
   `TR-31-002` permits. `corpus_traps.rs` is read-only without exception.
-- `src/oracle_validation/**` — read-only. SD-31 *calls* `pcgen_runner`; it does not modify it.
+- `src/oracle_validation/**` — read-only. SD-33 *calls* `pcgen_runner`; it does not modify it.
 - `apps/desktop/src-tauri/src/reach_gate.rs` — both in-flight bundles depend on it.
 - `docs/work-inventory.json` and `docs/release/v0.6/`.
 
@@ -68,7 +68,7 @@ A cycle touching either file MUST:
 Appending at a list's end keeps the conflict surface to a single line, which resolves
 mechanically if a sibling bundle ever appends there too.
 
-## TR-31-003 — The shared test-count baseline is NOT SD-31's to move
+## TR-31-003 — The shared test-count baseline is NOT SD-33's to move
 
 The root suite's expected-test-count constant is a live collision surface: SD-30 already moved
 it (`5930 → 5933`, commit `3a4a4169`) and SD-29 adds tests continuously. Three bundles editing
@@ -76,7 +76,7 @@ one integer is a guaranteed conflict on every merge.
 
 Therefore:
 
-- SD-31 cycles MUST NOT edit the shared root test-count baseline.
+- SD-33 cycles MUST NOT edit the shared root test-count baseline.
 - Each cycle MUST record its own test-count delta in its `progress.md` receipt.
 - The tranche-merge cycle reconciles the accumulated delta **once**, at merge time, from those
   receipts.

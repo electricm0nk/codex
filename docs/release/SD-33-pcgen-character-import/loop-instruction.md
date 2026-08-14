@@ -6,7 +6,7 @@ date: 2026-08-11
 canonical_branch: tranche/11
 ---
 
-# SD-31 Loop Instruction — Per-Cycle Procedure
+# SD-33 Loop Instruction — Per-Cycle Procedure
 
 The bundle runs unattended. This file is the per-cycle procedure; `kanban.md` is the queue and
 `progress.md` is the receipt layer.
@@ -87,8 +87,8 @@ to ask what to do next — take the next ready card.
 
 - A fixture references content Codex has not ingested. That is an SD-29/SD-30 concern. Record it
   as an `UnresolvedReason::RecordNotIngested` case and a forward-scope entry — **never ingest
-  corpus content from an SD-31 cycle** (`TR-31-001`).
-- The sibling bundles' partitions have widened to overlap SD-31's.
+  corpus content from an SD-33 cycle** (`TR-31-001`).
+- The sibling bundles' partitions have widened to overlap SD-33's.
 - Oracle parity diverges and the cause is Codex's engine rather than the importer.
 
 **Press on** for anything resolvable inside the partition.

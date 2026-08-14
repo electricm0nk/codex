@@ -7,20 +7,20 @@ canonical_branch: tranche/11
 companion_to: ./technical-design.md
 ---
 
-# SD-31 Epic Breakdown
+# SD-33 Epic Breakdown
 
 Dependency-ordered. Each epic's proof is executable; none closes on prose.
 
 ---
 
-## Epic 1 (SD31-E1) — Preflight and Partition Proof
+## Epic 1 (SD33-E1) — Preflight and Partition Proof
 
-**Objective:** Establish that SD-31 can run beside SD-29 and SD-30 without collision, before
+**Objective:** Establish that SD-33 can run beside SD-29 and SD-30 without collision, before
 writing feature code.
 
 ### Feature seeds
 
-#### SD31-E1-F1 — Partition verification
+#### SD33-E1-F1 — Partition verification
 
 Acceptance:
 
@@ -31,7 +31,7 @@ Acceptance:
 - The two `TR-31-002` registration sites are located by command and their exact line numbers
   recorded.
 
-#### SD31-E1-F2 — Fixture inventory
+#### SD33-E1-F2 — Fixture inventory
 
 Acceptance:
 
@@ -42,13 +42,13 @@ Acceptance:
 
 ---
 
-## Epic 2 (SD31-E2) — Layer 1: The Parser
+## Epic 2 (SD33-E2) — Layer 1: The Parser
 
 **Objective:** Turn `.pcg` bytes into a faithful syntactic document. No game meaning.
 
 ### Feature seeds
 
-#### SD31-E2-F1 — Tokenizer
+#### SD33-E2-F1 — Tokenizer
 
 Acceptance:
 
@@ -58,7 +58,7 @@ Acceptance:
 - Round-trip property: tokenizing a fixture and re-serializing yields byte-identical output.
   This is the proof that nothing was silently dropped at Layer 1.
 
-#### SD31-E2-F2 — Malformed-input behaviour
+#### SD33-E2-F2 — Malformed-input behaviour
 
 Acceptance:
 
@@ -68,18 +68,18 @@ Acceptance:
 
 ---
 
-## Epic 3 (SD31-E3) — Layer 2: The Typed Record Model
+## Epic 3 (SD33-E3) — Layer 2: The Typed Record Model
 
 **Objective:** `PcgDocument` → `PcgCharacter`, still in PCGen's vocabulary.
 
 ### Feature seeds
 
-#### SD31-E3-F1 — Core records
+#### SD33-E3-F1 — Core records
 
 Acceptance: `STAT`, `RACE`, `CLASS`/`CLASSABILITIESLEVEL`, `ALIGN`, `SKILL`, `ABILITY`,
 `LANGUAGE`, `EQUIPNAME` typed, with both vendored fixtures parsing to fully-populated models.
 
-#### SD31-E3-F2 — The `EQUIPSET` tree
+#### SD33-E3-F2 — The `EQUIPSET` tree
 
 Acceptance:
 
@@ -87,36 +87,36 @@ Acceptance:
   active set.
 - An orphaned child ID (parent absent) is a typed error, not a dropped item.
 
-#### SD31-E3-F3 — Unknown-token survival
+#### SD33-E3-F3 — Unknown-token survival
 
 Acceptance: a `.pcg` containing a token kind the model does not know parses successfully and
 **retains the token** for the fidelity report. Unknown ≠ discarded (`TR-31-004`).
 
 ---
 
-## Epic 4 (SD31-E4) — Layer 3: Reference Resolution (GATES Epics 5 and 6)
+## Epic 4 (SD33-E4) — Layer 3: Reference Resolution (GATES Epics 5 and 6)
 
 **Objective:** PCGen names → corpus keys, with an honest fidelity report. This is the bundle's
 substance and its risk.
 
 ### Feature seeds
 
-#### SD31-E4-F1 — Resolver per token kind
+#### SD33-E4-F1 — Resolver per token kind
 
 Acceptance: each row of `technical-design.md §3`'s table implemented with its declared failure
 mode. No nearest-match guessing anywhere.
 
-#### SD31-E4-F2 — Parameterized feats resolve as a pair
+#### SD33-E4-F2 — Parameterized feats resolve as a pair
 
 Acceptance: `Weapon Focus|APPLIEDTO:Longsword` resolves the feat **and** its parameter, or
 resolves neither. A test pins that dropping the parameter is impossible by construction.
 
-#### SD31-E4-F3 — Fidelity report
+#### SD33-E4-F3 — Fidelity report
 
 Acceptance: every `UnresolvedReason` variant reachable and covered; `RecordNotIngested` names
 the owning book; raw token text preserved verbatim for user matching.
 
-#### SD31-E4-F4 — `CreateCharacterRequest` construction
+#### SD33-E4-F4 — `CreateCharacterRequest` construction
 
 Acceptance:
 
@@ -126,11 +126,11 @@ Acceptance:
 
 ---
 
-## Epic 5 (SD31-E5) — IPC Command (gated on Epic 4)
+## Epic 5 (SD33-E5) — IPC Command (gated on Epic 4)
 
 ### Feature seeds
 
-#### SD31-E5-F1 — `import_pcgen_character`
+#### SD33-E5-F1 — `import_pcgen_character`
 
 Acceptance:
 
@@ -139,55 +139,55 @@ Acceptance:
   `Saved` | `Blocked` — reusing `import_character`'s invariants rather than re-implementing them.
 - Blocked imports persist **nothing**, proven by a test that inspects storage after a refusal.
 
-#### SD31-E5-F2 — Acknowledged lossy import
+#### SD33-E5-F2 — Acknowledged lossy import
 
 Acceptance: `TR-31-006`'s flag exists, defaults false at every layer, and a test pins that a
 lossy import without it is refused.
 
 ---
 
-## Epic 6 (SD31-E6) — Player Surface (gated on Epic 5)
+## Epic 6 (SD33-E6) — Player Surface (gated on Epic 5)
 
 ### Feature seeds
 
-#### SD31-E6-F1 — Import affordance
+#### SD33-E6-F1 — Import affordance
 
 Acceptance: `.pcg` selectable from the existing import entry point; invokes the real command
 (4-grep audit per `TR-31-008`).
 
-#### SD31-E6-F2 — Mapping-review screen
+#### SD33-E6-F2 — Mapping-review screen
 
 Acceptance: renders the real `FidelityReport` before persistence; unresolved entries show raw
 token text and reason; the acknowledgement control is the only path to a lossy import.
 
-#### SD31-E6-F3 — Imported character reaches the sheet
+#### SD33-E6-F3 — Imported character reaches the sheet
 
 Acceptance: a full import of the Fighter fixture is loadable and its sheet renders, verified
 live rather than by unit test.
 
 ---
 
-## Epic 7 (SD31-E7) — Oracle Parity (the real definition of done)
+## Epic 7 (SD33-E7) — Oracle Parity (the real definition of done)
 
 **Objective:** Prove imports are *correct*, not merely parsed. See
 `acceptance-and-verification.md §2`.
 
 ### Feature seeds
 
-#### SD31-E7-F1 — Parity harness
+#### SD33-E7-F1 — Parity harness
 
 Acceptance: for a fixture, run Codex's import → recompute, and the same `.pcg` through real
 headless PCGen via `oracle_validation::pcgen_runner`, and compare through the existing
 comparator. Read-only use of `oracle_validation` (`TR-31-001`).
 
-#### SD31-E7-F2 — Both vendored fixtures at parity
+#### SD33-E7-F2 — Both vendored fixtures at parity
 
 Acceptance: Fighter L1 and Wizard L1 both pass on the selected dimensions. Any divergence is
 either fixed or recorded as a named, explained deviation — never silently accepted.
 
 ---
 
-## Epic 8 (SD31-E8) — Bundle Code Review
+## Epic 8 (SD33-E8) — Bundle Code Review
 
 Acceptance: adversarial review of the whole import path, with the reviewer explicitly
 tasked to find a token that can be silently dropped (`TR-31-004`) and a path that persists a
@@ -195,7 +195,7 @@ lossy character without acknowledgement (`TR-31-005`).
 
 ---
 
-## Epic 9 (SD31-E9) — Closure Epilogue
+## Epic 9 (SD33-E9) — Closure Epilogue
 
 Acceptance: architecture docs refreshed per the template's §6 obligation; forward-scope
 register updated with what was deferred; release notes; test-count delta reconciled once per
