@@ -54,7 +54,8 @@ use codex::rules_core::race_resolver::{TraitRole, load_race_corpus};
 use codex::rules_core::equipment_effects::compute_equipment_effects;
 use codex::rules_core::equipment_resolver;
 use codex::rules_core::pilot_compute::{
-    PilotBaseChassisComputation, compute_pilot_base_chassis,
+    HeadlessReceiptStatus, PilotBaseChassisComputation, build_pilot_headless_receipt,
+    compute_pilot_base_chassis,
 };
 use codex::rules_core::rules_tables::RuleSetId;
 use codex::rules_core::rules_tables::acg::{self, AcgClassId};
@@ -71,7 +72,7 @@ use codex::rules_core::rules_tables::crb::{
     spell_list as crb_spell_list, wizard_spell_list as crb_wizard_spell_list,
 };
 use codex::rules_core::rules_tables::feats_all::all_feat_tables;
-use codex::rules_core::pilot_view_model::PilotSpellbookViewModel;
+use codex::rules_core::pilot_view_model::{PilotSnapshot, PilotSpellbookViewModel, PilotViewModel};
 use codex::rules_core::spell_resolver::{self, spell_id_resolve};
 use codex::rules_core::spellbook::compute_spellbook_coverage;
 use codex::rules_core::rules_tables::ultimate_campaign::feat_tables as uca_feat_tables;
@@ -1256,6 +1257,21 @@ struct EngineFacts {
     chassis_companion_keys: BTreeMap<&'static str, BTreeSet<String>>,
     /// Every class the engine models, by lowercase name, with its book.
     class_books: BTreeMap<String, &'static str>,
+    /// Every modelled class the class consumer-delta probe OBSERVED producing
+    /// a magnitude attributable to it alone on the snapshot the character
+    /// sheet renders. A subset of `class_books`' keys, never a superset: see
+    /// [`probe_class_name`].
+    class_effect_wired: BTreeSet<String>,
+    /// Every option-pool `class_feature` corpus key the class_feature
+    /// consumer-delta probe OBSERVED moving a rendered fact attributably to
+    /// itself, mapped to the book that models the pool's owning class.
+    ///
+    /// The book is carried, not just the key, for the reason
+    /// `probe_equipment_effect_wiring`'s `Celestial Shield` discipline records
+    /// and `SpellProbeOutcome::ForeignBookTable` enforces: a shared NAME is
+    /// not a shared record. A key is only ever grounded for the book whose
+    /// class the engine actually models.
+    class_feature_effect_wired: BTreeMap<String, &'static str>,
     /// Every race the engine models, by lowercase name.
     race_names: BTreeSet<String>,
     /// Race trait identities the engine grounds, as `<race>.<trait slug>`.
@@ -2266,6 +2282,343 @@ fn spell_probe_ceiling_report(
     out
 }
 
+// ---------------------------------------------------------------------------
+// Class consumer-delta probe
+// ---------------------------------------------------------------------------
+//
+// Why this exists, and what it is allowed to conclude.
+//
+// `classify()`'s `Kind::Class` arm grounded a class unit on ONE test: is this
+// record's name a key of `class_books`, i.e. does some `ClassId`/`ApgClassId`/
+// `AcgClassId` enum name it. That is a membership test on a Rust enum. It
+// observes nothing about what the engine computes, and it would keep saying
+// `grounded` if every class table in the crate were deleted and only the enum
+// variants left behind. `class_modelled_and_swept_through_the_real_compute_pipeline`
+// is the evidence string it emitted; the sweep in `engine_facts` really does
+// run, but its result was unioned into `explanation_ids` for other kinds to
+// consult and the class arm never read it back.
+//
+// This probe replaces that membership test with the same three-part bar the
+// spell consumer-delta probe (`probe_spell_key`) established:
+//
+//   1. A real, creatable character of this class reaches
+//      `HeadlessReceiptStatus::Computed` -- no claim-blocking diagnostic. This
+//      is not a new bar invented here: it is the one this program already
+//      ruled on and recorded, `docs/release/v0.6/risks-and-open-questions.md`
+//      lines 208-210 ("'done' for any of the 24 classes must mean 'genuinely
+//      reaches Computed'"), after a `done` claim was overstated and caught.
+//   2. The magnitude reaches a consumer. The probe reads
+//      `PilotViewModel::from_receipt(..).snapshot`, the projection
+//      `PilotSnapshot::from_receipt` builds and the character sheet renders --
+//      not a private field beside it. A `Blocked` receipt projects `None`.
+//   3. The magnitude is attributable to selecting THIS class. A snapshot that
+//      merely differs from the classless baseline only proves "having some
+//      class computes something"; it cannot tell Fighter from Wizard. So the
+//      probe additionally requires at least one explanation record whose id
+//      names this class in its own dot-segment AND which no other modelled
+//      class produces at that level. That is the `Celestial Shield` discipline
+//      (`probe_equipment_effect_wiring`) in its class form: a shared row is
+//      not this class's row.
+//
+// What it deliberately does NOT do: it does not drive
+// `resolve_unified_pilot_snapshot`, which lives in `apps/desktop/src-tauri`, a
+// separate cargo workspace this root-crate binary cannot call. Same boundary
+// `probe_spell_key` and `probe_equipment_effect_wiring` already sit behind.
+//
+// The direction this probe moves the number is NOT assumed. It is strictly
+// stricter than the membership test it replaces, so it can only confirm or
+// demote the units that test grounded; it can promote nothing, because a class
+// absent from `class_books` is a class the engine models nowhere and no delta
+// can be observed for it. That is a finding about the corpus, not a weakness
+// of the instrument, and `--class-probe` prints it rather than hiding it.
+
+/// The levels the class probe evaluates. Identical to [`SWEEP_LEVELS`], and
+/// deliberately the same postures `engine_facts`' existing class sweep already
+/// walks, so the probe asks its question of exactly the population the
+/// classifier judges.
+const CLASS_PROBE_LEVELS: &[u8] = SWEEP_LEVELS;
+
+/// Why one modelled class did or did not produce an observed consumer delta.
+///
+/// An enum rather than a `bool` for the same reason [`SpellProbeOutcome`] is
+/// one: the ceiling report has to say what the probe *cannot* reach and why.
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum ClassProbeOutcome {
+    /// A real creatable character of this class reached `Computed`, projected
+    /// a snapshot that moved off the classless baseline, and carried at least
+    /// one explanation record attributable to this class alone.
+    Wired { level: u8, attributed_explanations: usize },
+    /// The engine models no class of this name at all, so there is nothing to
+    /// observe a delta against. Never promoted.
+    NotModelledByEngine,
+    /// The compute pipeline panicked at every probed level.
+    PipelinePanicked,
+    /// The pipeline ran but every probed level carried a claim-blocking
+    /// diagnostic, so no level reaches `Computed` and no snapshot is projected.
+    NeverReachesComputed,
+    /// `Computed`, but `PilotViewModel::from_receipt` projected no snapshot --
+    /// the consumer surface carried nothing.
+    NoSnapshotProjected,
+    /// A snapshot was projected but it is numerically identical to the same
+    /// character with no class levels at all, so nothing on the rendered
+    /// surface moved when this class was selected.
+    NoSnapshotDeltaVsClasslessBaseline,
+    /// The snapshot moved, but every explanation record naming this class is
+    /// also produced by another modelled class, so the magnitude is not
+    /// attributable to selecting this class. Never promoted.
+    NoExplanationAttributedToThisClass,
+}
+
+/// The character posture the class probe measures: the shared fixture carrying
+/// exactly this class at this level, with the same canonical creation-time
+/// seeds `compose_character_input` applies. Reuses [`class_sweep_input`]
+/// verbatim rather than forking a second posture builder, so the probe cannot
+/// drift from the sweep whose population it judges.
+fn class_probe_input(fixture: &CharacterInput, class_name: &str, level: u8) -> CharacterInput {
+    class_sweep_input(fixture, class_name, level)
+}
+
+/// The delta's baseline: the same fixture with NO class levels at all. The
+/// class-side equivalent of [`spell_probe_input`]'s `None` arm.
+fn classless_probe_input(fixture: &CharacterInput) -> CharacterInput {
+    let mut input = fixture.clone();
+    input.case_id = Some("v06_work_inventory.classless_baseline".to_string());
+    input.chosen.class_levels = Vec::new();
+    input
+}
+
+/// The numbers a [`PilotSnapshot`] puts on the surface the character sheet
+/// renders, flattened for equality comparison.
+///
+/// Every field here is one the sheet really prints. `ability_modifiers` is
+/// deliberately included even though a class does not move it: leaving it out
+/// would be choosing the comparison to favour a delta, and including a field
+/// that never moves can only make the probe stricter, never looser.
+fn class_snapshot_numbers(snapshot: &PilotSnapshot) -> Vec<i16> {
+    vec![
+        snapshot.ability_modifiers.strength,
+        snapshot.ability_modifiers.dexterity,
+        snapshot.ability_modifiers.constitution,
+        snapshot.base_attack_bonus,
+        snapshot.base_saves.fortitude,
+        snapshot.base_saves.reflex,
+        snapshot.base_saves.will,
+        snapshot.combat.baseline_melee_attack_bonus,
+        snapshot.defense.baseline_armor_class,
+        snapshot.defense.total_save.fortitude,
+        snapshot.defense.total_save.reflex,
+        snapshot.defense.total_save.will,
+        // `damage_reduction` is `Option`; absence and a real 0 are different
+        // states and are encoded as different numbers rather than collapsed.
+        snapshot.defense.damage_reduction.map_or(i16::MIN, |dr| dr),
+    ]
+}
+
+/// True when `explanation_id` names `class_name` in one of its own
+/// dot-separated segments.
+///
+/// Segment equality, never `contains`. `class_chassis.unchained_barbarian.x`
+/// contains the substring `barbarian` while belonging to a different class
+/// entirely, and a substring test would credit Barbarian with Unchained
+/// Barbarian's magnitude -- the corpus-identifier scope collision this program
+/// has already recorded.
+fn explanation_names_class(explanation_id: &str, class_name: &str) -> bool {
+    explanation_id.split('.').any(|segment| segment == class_name)
+}
+
+/// Every explanation id a modelled class produces at `level`, or `None` when
+/// the pipeline panicked for it.
+fn class_explanation_ids_at(
+    fixture: &CharacterInput,
+    class_name: &str,
+    level: u8,
+) -> Option<BTreeSet<String>> {
+    let input = class_probe_input(fixture, class_name, level);
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        compute_pilot_base_chassis(&input)
+    }));
+    std::panic::set_hook(previous_hook);
+    outcome.ok().map(|c| c.explanations.iter().map(|e| e.id.clone()).collect())
+}
+
+/// Whether selecting exactly this class, on a real creatable character,
+/// produces a magnitude attributable to this class alone on the snapshot the
+/// character sheet renders.
+///
+/// `modelled` carries every class the engine models, so the attribution half of
+/// the delta is decided against the real engine rather than against an
+/// assumption about how explanation ids are namespaced.
+fn probe_class_name(
+    fixture: &CharacterInput,
+    class_name: &str,
+    modelled: &BTreeSet<String>,
+    baseline_numbers: Option<&Vec<i16>>,
+) -> ClassProbeOutcome {
+    if !modelled.contains(class_name) {
+        return ClassProbeOutcome::NotModelledByEngine;
+    }
+
+    let mut any_level_ran = false;
+    let mut any_level_computed = false;
+    let mut any_snapshot = false;
+    let mut any_snapshot_delta = false;
+
+    for &level in CLASS_PROBE_LEVELS {
+        let input = class_probe_input(fixture, class_name, level);
+        let previous_hook = std::panic::take_hook();
+        std::panic::set_hook(Box::new(|_| {}));
+        let outcome = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+            build_pilot_headless_receipt(&input)
+        }));
+        std::panic::set_hook(previous_hook);
+        let Ok(receipt) = outcome else { continue };
+        any_level_ran = true;
+        if receipt.status != HeadlessReceiptStatus::Computed {
+            continue;
+        }
+        any_level_computed = true;
+
+        // The consumer surface, reached the way production reaches it.
+        let view = PilotViewModel::from_receipt(&receipt);
+        let Some(snapshot) = view.snapshot.as_ref() else { continue };
+        any_snapshot = true;
+
+        // Delta half one: the rendered numbers moved off the classless
+        // baseline. A baseline that projects no snapshot at all is itself a
+        // delta -- the same reasoning as the spell probe's "no DC at all".
+        let numbers = class_snapshot_numbers(snapshot);
+        if baseline_numbers.is_some_and(|b| *b == numbers) {
+            continue;
+        }
+        any_snapshot_delta = true;
+
+        // Delta half two: attribution. At least one explanation record naming
+        // this class that NO other modelled class produces at this level.
+        let mut others: BTreeSet<String> = BTreeSet::new();
+        for other in modelled.iter().filter(|c| c.as_str() != class_name) {
+            if let Some(ids) = class_explanation_ids_at(fixture, other, level) {
+                others.extend(ids);
+            }
+        }
+        let attributed = receipt
+            .computation
+            .explanations
+            .iter()
+            .filter(|e| explanation_names_class(&e.id, class_name) && !others.contains(&e.id))
+            .count();
+        if attributed > 0 {
+            return ClassProbeOutcome::Wired { level, attributed_explanations: attributed };
+        }
+    }
+
+    if !any_level_ran {
+        ClassProbeOutcome::PipelinePanicked
+    } else if !any_level_computed {
+        ClassProbeOutcome::NeverReachesComputed
+    } else if !any_snapshot {
+        ClassProbeOutcome::NoSnapshotProjected
+    } else if !any_snapshot_delta {
+        ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline
+    } else {
+        ClassProbeOutcome::NoExplanationAttributedToThisClass
+    }
+}
+
+/// The classless baseline's rendered numbers, or `None` when it projects no
+/// snapshot at all (which is itself the strongest possible baseline).
+fn class_probe_baseline_numbers(fixture: &CharacterInput) -> Option<Vec<i16>> {
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    let baseline = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
+        build_pilot_headless_receipt(&classless_probe_input(fixture))
+    }));
+    std::panic::set_hook(previous_hook);
+    baseline
+        .ok()
+        .and_then(|r| PilotViewModel::from_receipt(&r).snapshot.as_ref().map(class_snapshot_numbers))
+}
+
+/// Runs [`probe_class_name`] over every class the engine models.
+///
+/// Returns the full outcome per class rather than only the wired set, because
+/// the ceiling report needs the refusals and their reasons.
+fn probe_class_effect_wiring(
+    fixture: &CharacterInput,
+    modelled: &BTreeSet<String>,
+) -> BTreeMap<String, ClassProbeOutcome> {
+    let baseline_numbers = class_probe_baseline_numbers(fixture);
+    modelled
+        .iter()
+        .map(|class_name| {
+            let outcome =
+                probe_class_name(fixture, class_name, modelled, baseline_numbers.as_ref());
+            (class_name.clone(), outcome)
+        })
+        .collect()
+}
+
+/// The class names [`classify`] may ground: exactly the probe's
+/// [`ClassProbeOutcome::Wired`] verdicts, and nothing else.
+///
+/// The match is exhaustive and deliberately not a `_ =>` catch-all: a future
+/// outcome variant must be classified as promoting or refusing by hand.
+fn class_effect_wired_from_outcomes(
+    outcomes: &BTreeMap<String, ClassProbeOutcome>,
+) -> BTreeSet<String> {
+    outcomes
+        .iter()
+        .filter(|(_, outcome)| match outcome {
+            ClassProbeOutcome::Wired { .. } => true,
+            ClassProbeOutcome::NotModelledByEngine
+            | ClassProbeOutcome::PipelinePanicked
+            | ClassProbeOutcome::NeverReachesComputed
+            | ClassProbeOutcome::NoSnapshotProjected
+            | ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline
+            | ClassProbeOutcome::NoExplanationAttributedToThisClass => false,
+        })
+        .map(|(name, _)| name.clone())
+        .collect()
+}
+
+/// The probe's ceiling, printed by `--class-probe`: which modelled classes it
+/// legitimately reaches and, for every one it does not, the reason it refused.
+/// Grounding no unit, moving no number -- the instrument reporting on itself.
+fn class_probe_ceiling_report(outcomes: &BTreeMap<String, ClassProbeOutcome>) -> String {
+    let mut totals: BTreeMap<&'static str, usize> = BTreeMap::new();
+    let mut out = String::new();
+    out.push_str("class consumer-delta probe -- ceiling report\n");
+    out.push_str(&format!("modelled classes examined: {}\n\n", outcomes.len()));
+    for (name, outcome) in outcomes {
+        let label = match outcome {
+            ClassProbeOutcome::Wired { .. } => "wired",
+            ClassProbeOutcome::NotModelledByEngine => "not_modelled_by_engine",
+            ClassProbeOutcome::PipelinePanicked => "pipeline_panicked",
+            ClassProbeOutcome::NeverReachesComputed => "never_reaches_computed",
+            ClassProbeOutcome::NoSnapshotProjected => "no_snapshot_projected",
+            ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline => {
+                "no_snapshot_delta_vs_classless_baseline"
+            }
+            ClassProbeOutcome::NoExplanationAttributedToThisClass => {
+                "no_explanation_attributed_to_this_class"
+            }
+        };
+        *totals.entry(label).or_default() += 1;
+        match outcome {
+            ClassProbeOutcome::Wired { level, attributed_explanations } => out.push_str(&format!(
+                "  {name}: wired (level {level}, {attributed_explanations} attributed explanations)\n"
+            )),
+            _ => out.push_str(&format!("  {name}: {label}\n")),
+        }
+    }
+    out.push_str("\nTOTAL\n");
+    for (label, n) in &totals {
+        out.push_str(&format!("  {label}: {n}\n"));
+    }
+    out
+}
+
 fn crb_class_name(class_id: ClassId) -> &'static str {
     match class_id {
         ClassId::Barbarian => "barbarian",
@@ -2453,16 +2806,7 @@ fn gather_engine_facts(
         chassis_companion_keys.insert(engine_book, keys);
     }
 
-    let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
-    for id in ClassId::ALL {
-        class_books.insert(crb_class_name(*id).to_string(), "core_rulebook");
-    }
-    for id in ApgClassId::ALL {
-        class_books.insert(id.name().to_string(), "advanced_players_guide");
-    }
-    for id in AcgClassId::ALL {
-        class_books.insert(id.name().to_string(), "advanced_class_guide");
-    }
+    let class_books = modelled_class_books();
 
     let race_names: BTreeSet<String> =
         RaceId::ALL.iter().map(|&r| race_name(r).to_string()).collect();
@@ -2471,6 +2815,14 @@ fn gather_engine_facts(
         .map(|t| format!("{}.{}", race_name(t.race_id), slug(t.trait_name)))
         .collect();
     let race_trait_probe = probe_race_trait_corpus(repo_root);
+
+    // The class consumer-delta probe, over exactly the classes the engine
+    // models. Runs BEFORE the union sweep below because it asks a different
+    // question of the same postures: not "what ids exist anywhere across all
+    // classes" but "which magnitude is attributable to THIS class alone".
+    let modelled_classes: BTreeSet<String> = class_books.keys().cloned().collect();
+    let class_effect_wired =
+        class_effect_wired_from_outcomes(&probe_class_effect_wiring(fixture, &modelled_classes));
 
     // Sweep every modelled class at every SWEEP_LEVELS level through the REAL
     // compute pipeline and union what it says. A panic is caught rather than
@@ -2513,6 +2865,10 @@ fn gather_engine_facts(
         chassis_monster_ability_keys,
         chassis_companion_keys,
         class_books,
+        class_effect_wired,
+        // Filled by `main` after corpus enumeration: the probe's key
+        // population and sibling map are corpus facts, not engine facts.
+        class_feature_effect_wired: BTreeMap::new(),
         race_names,
         race_trait_ids,
         race_trait_probe,
@@ -2956,18 +3312,51 @@ fn classify(unit: &CorpusUnit, facts: &EngineFacts, book_included_by: &BTreeSet<
         }
         Kind::Class => {
             let name = unit.name.to_lowercase();
-            if facts.class_books.contains_key(&name) {
+            // The engine must model a class of this name at all. Unchanged:
+            // a name no class enum carries is a class nothing has ingested.
+            if !facts.class_books.contains_key(&name) {
+                return not_ingested("class_absent_from_ClassId_ALL_and_book_class_id_enums");
+            }
+            // PRIMARY, and the whole of the grounding decision: the class
+            // consumer-delta probe OBSERVED this class put a magnitude
+            // attributable to it alone on the snapshot the character sheet
+            // renders. Strictly stricter than the membership test this
+            // replaced -- see the probe's own section comment for why the
+            // membership test could not tell a modelled class from a deleted
+            // one, and why this change can only confirm or demote.
+            if facts.class_effect_wired.contains(&name) {
                 return Verdict {
                     status: "grounded",
-                    evidence: "class_modelled_and_swept_through_the_real_compute_pipeline"
+                    evidence: "class_probe_observed_computed_delta_on_the_rendered_snapshot"
                         .to_string(),
                     reason: None,
                     engine_book: engine_book_field,
                 };
             }
-            not_ingested("class_absent_from_ClassId_ALL_and_book_class_id_enums")
+            // The honest middle, and a genuinely different fact from "no class
+            // enum names this": the engine DOES model a class of this name and
+            // the probe still observed no magnitude a player can see for it.
+            // Reported as its own evidence rather than collapsed into the
+            // absence above.
+            not_ingested("class_modelled_but_no_observed_delta_on_the_rendered_snapshot")
         }
         Kind::ClassFeature => {
+            // The option-pool consumer-delta observation, asked FIRST because
+            // the branches below cannot reach these records at all: a pool
+            // member's group prefix names no class, so `class_feature_owner`
+            // fails and the record lands `unknown` however wired it is. Only
+            // the book whose class the engine models may claim the key --
+            // `class_feature_effect_wired` carries that book precisely so a
+            // second book's same-named record cannot ride this observation.
+            if facts.class_feature_effect_wired.get(&unit.key) == Some(&unit.book.as_str()) {
+                return Verdict {
+                    status: "grounded",
+                    evidence: "class_feature_probe_observed_a_delta_attributable_to_this_record"
+                        .to_string(),
+                    reason: None,
+                    engine_book: engine_book_field,
+                };
+            }
             let group = unit.key.split(" ~ ").next().unwrap_or(&unit.key);
             let Some(owner) = class_feature_owner(&unit.key, facts.class_books.keys()) else {
                 // The group names no class this engine models. Before calling
@@ -3295,6 +3684,357 @@ fn load_probe_fixture(repo_root: &Path) -> CharacterInput {
     }
 }
 
+/// Every class this engine models, mapped to the book that models it. Shared
+/// by `engine_facts` and the class_feature probe so the two can never disagree
+/// about what "modelled" means.
+fn modelled_class_books() -> BTreeMap<String, &'static str> {
+    let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+    for id in ClassId::ALL {
+        class_books.insert(crb_class_name(*id).to_string(), "core_rulebook");
+    }
+    for id in ApgClassId::ALL {
+        class_books.insert(id.name().to_string(), "advanced_players_guide");
+    }
+    for id in AcgClassId::ALL {
+        class_books.insert(id.name().to_string(), "advanced_class_guide");
+    }
+    class_books
+}
+
+// ---------------------------------------------------------------------------
+// class_feature consumer-delta probe
+// ---------------------------------------------------------------------------
+//
+// Modelled on `probe_spell_key` above, and held to the same bar: a magnitude
+// only counts when it is (a) observed on what a consumer actually renders and
+// (b) *attributable to this record*, not to the mere fact that a slot was
+// filled.
+//
+// Why class_feature needs a different shape from spell. `classify`'s
+// `Kind::ClassFeature` arm grounds a feature when the engine's own real
+// compute sweep emits an `explanation_id` for it. That sweep
+// (`class_sweep_input`) builds a *base chassis*: the class's automatic
+// features at each level, plus `canonical_seeds_for`'s defaults. A feature a
+// player must PICK out of an option pool -- a rage power, a discovery, a rogue
+// talent -- is never in that posture, so it can never emit an explanation
+// there, and lands as `unknown` with `class_feature_group_names_no_class_at_all`.
+//
+// This probe asks the question that posture cannot: if a player DOES select
+// this specific pool member, does any fact the sheet renders move?
+
+/// The corpus group prefixes that name a real player-facing option pool, the
+/// class that owns it, the engine choice slot that offers it, and the
+/// `selection_id` NAMESPACE that slot's consumer recognizes.
+///
+/// The namespace matters and its omission is a probe defect, not a detail.
+/// `choice_selection(input, "choice:cleric_domain")` is matched against ids
+/// the engine writes as `domain:good`, never as bare `good`; a probe passing
+/// the bare slug would be silently ignored by every namespaced consumer and
+/// would then report `no_consumer_delta` for pools the engine genuinely does
+/// compute per-record. An empty namespace means the consumer is open-ended
+/// (it echoes whatever raw string it is given), which
+/// `BARBARIAN_RAGE_POWER_SLOTS` documents for itself.
+///
+/// Both columns are asserted against the engine source by
+/// `every_pool_names_a_choice_set_the_engine_source_declares` and
+/// `every_namespaced_pool_uses_a_namespace_the_engine_source_writes`.
+const CLASS_FEATURE_POOLS: &[(&str, &str, &str, &str)] = &[
+    ("Rage Power", "barbarian", "choice:barbarian_rage_power", ""),
+    ("Unchained Rage Power", "barbarian", "choice:barbarian_rage_power", ""),
+    ("Discovery", "alchemist", "choice:alchemist_discovery", "discovery:"),
+    ("Grand Discovery", "alchemist", "choice:alchemist_discovery", "discovery:"),
+    ("Rogue Talent", "rogue", "choice:rogue_talent", "talent:"),
+    ("Advanced Talents", "rogue", "choice:rogue_talent", "talent:"),
+    ("Hex", "witch", "choice:witch_hex", "hex:"),
+    ("Revelation", "oracle", "choice:oracle_revelation", "revelation:"),
+    ("Mercy", "paladin", "choice:paladin_mercy", ""),
+    ("Investigator Talent", "investigator", "choice:investigator_talent", "talent:"),
+    ("Slayer Talent", "slayer", "choice:slayer_talent", "talent:"),
+    ("Judgment", "inquisitor", "choice:inquisitor_judgment", "judgment:"),
+    ("Inquisition", "inquisitor", "choice:inquisitor_domain", "domain:"),
+    ("Blessing", "warpriest", "choice:warpriest_blessing", "blessing:"),
+    ("Evolution", "summoner", "choice:summoner_eidolon_evolution", "evolution:"),
+    ("Bloodline", "sorcerer", "choice:sorcerer_bloodline", "bloodline:"),
+    ("Bloodrager Bloodline", "bloodrager", "choice:bloodrager_bloodline", "bloodline:"),
+    ("Domain", "cleric", "choice:cleric_domain", "domain:"),
+    ("Order", "cavalier", "choice:cavalier_order", "order:"),
+    ("Mystery", "oracle", "choice:oracle_mystery", "mystery:"),
+    ("Curse", "oracle", "choice:oracle_curse", "curse:"),
+    ("Spirit", "shaman", "choice:shaman_spirit", "spirit:"),
+    ("Animal Focus", "hunter", "choice:hunter_animal_focus", "animal_focus:"),
+    ("Favored Enemy", "ranger", "choice:ranger_favored_enemy", "enemy:"),
+    ("Favored Terrain", "ranger", "choice:ranger_favored_terrain", "terrain:"),
+    ("Versatile Performance", "bard", "choice:bard_versatile_performance", ""),
+    ("Arcane School", "wizard", "choice:wizard_school_specialization", "school:"),
+    ("Focused Arcane School", "wizard", "choice:wizard_school_specialization", "school:"),
+];
+
+/// Every `class_feature` corpus key in the committed inventory, deduplicated.
+/// The inventory is read rather than the PCGen corpus because the units this
+/// probe is asked about are inventory units.
+fn class_feature_keys_from_inventory(inventory_json: &str) -> Vec<String> {
+    let parsed: serde_json::Value =
+        serde_json::from_str(inventory_json).expect("work-inventory.json parses");
+    let mut keys: BTreeSet<String> = BTreeSet::new();
+    for unit in parsed["units"].as_array().into_iter().flatten() {
+        if unit["kind"].as_str() != Some("class_feature") {
+            continue;
+        }
+        if let Some(key) = unit["corpus_key"].as_str() {
+            keys.insert(key.to_string());
+        }
+    }
+    keys.into_iter().collect()
+}
+
+/// Group prefix -> every member name the corpus declares under it. The source
+/// of each key's control member.
+fn class_feature_siblings(keys: &[String]) -> BTreeMap<String, BTreeSet<String>> {
+    let mut siblings: BTreeMap<String, BTreeSet<String>> = BTreeMap::new();
+    for key in keys {
+        let mut parts = key.split(" ~ ");
+        let (Some(group), Some(member)) = (parts.next(), parts.next()) else { continue };
+        siblings.entry(group.to_string()).or_default().insert(member.to_string());
+    }
+    siblings
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+enum ClassFeatureProbeOutcome {
+    /// Selecting this specific pool member moved a fact the sheet renders,
+    /// AND a different real member of the same pool did not move it the same
+    /// way. The delta is attributable to this record.
+    Wired { moved: usize },
+    /// The record's group prefix names no option pool this engine offers as a
+    /// choice slot, so no player selection can reach it at all.
+    NoChoiceSlotOffersIt,
+    /// The pool's owning class is not modelled by this engine.
+    OwnerClassNotModelled,
+    /// The pool has only this one member in the corpus, so there is no sibling
+    /// to control against. Never promoted: without a control, a delta cannot
+    /// be told apart from "a slot got filled".
+    NoSiblingToControlAgainst,
+    /// The selection was accepted and changed nothing a consumer renders.
+    NoConsumerDelta,
+    /// A delta appeared, but a *different real member of the same pool*
+    /// produced the identical delta -- the slot counts picks, it does not
+    /// apply this record. Never promoted: this is the "attributable" half of
+    /// consumer-delta, and it is the outcome `BARBARIAN_RAGE_POWER_SLOTS`'
+    /// own "open-ended recognition (no power-list validation)" predicts.
+    ///
+    /// `shared` names the fact ids that moved identically for both members.
+    /// Carried rather than discarded because these are exactly the units a
+    /// probe WITHOUT a control would have promoted, and a reader deserves to
+    /// see the number that was declined and what it was.
+    DeltaNotAttributableToTheRecord { shared: Vec<String> },
+}
+
+/// The facts a class-feature selection is allowed to move: every explanation
+/// the real compute pipeline emits, plus the twelve rendered numbers
+/// `observable_facts` already pins. Sorted so two runs are comparable.
+/// `None` when the pipeline panicked on this posture -- a panic is not a
+/// delta, and must never be read as one.
+fn class_feature_observable(input: &CharacterInput) -> Option<Vec<(String, i16)>> {
+    let computation =
+        std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| compute_pilot_base_chassis(input)))
+            .ok()?;
+    let (explanations, numbers) = observable_facts(&computation);
+    let mut facts = explanations;
+    for (i, n) in numbers.iter().enumerate() {
+        facts.push((format!("rendered_number.{i}"), *n));
+    }
+    facts.sort();
+    Some(facts)
+}
+
+/// The whole verdict, isolated from any engine call so its three branches can
+/// be pinned directly. `observed` is the character with THIS record selected;
+/// `control` is the same character with a different real member of the same
+/// pool selected instead.
+fn classify_class_feature_delta(
+    baseline: &[(String, i16)],
+    observed: &[(String, i16)],
+    control: &[(String, i16)],
+) -> ClassFeatureProbeOutcome {
+    if observed == baseline {
+        return ClassFeatureProbeOutcome::NoConsumerDelta;
+    }
+    if observed == control {
+        let shared = observed
+            .iter()
+            .filter(|f| !baseline.contains(f))
+            .map(|(id, _)| id.clone())
+            .collect();
+        return ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord { shared };
+    }
+    let moved = observed.iter().filter(|f| !baseline.contains(f)).count();
+    ClassFeatureProbeOutcome::Wired { moved }
+}
+
+/// The control member for `corpus_key`: any OTHER real member of the same
+/// corpus group. Never a synthetic sentinel -- an invalid id the engine simply
+/// rejects would make every open-ended slot look per-record.
+fn class_feature_control_member<'a>(
+    siblings: &'a BTreeMap<String, BTreeSet<String>>,
+    group: &str,
+    member: &str,
+) -> Option<&'a str> {
+    siblings.get(group)?.iter().map(String::as_str).find(|s| *s != member)
+}
+
+fn probe_class_feature_key(
+    fixture: &CharacterInput,
+    class_books: &BTreeMap<String, &'static str>,
+    siblings: &BTreeMap<String, BTreeSet<String>>,
+    corpus_key: &str,
+) -> ClassFeatureProbeOutcome {
+    let group = corpus_key.split(" ~ ").next().unwrap_or(corpus_key);
+    let Some((_, owner, choice_set_id, namespace)) =
+        CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+    else {
+        return ClassFeatureProbeOutcome::NoChoiceSlotOffersIt;
+    };
+    if !class_books.contains_key(*owner) {
+        return ClassFeatureProbeOutcome::OwnerClassNotModelled;
+    }
+    let member = corpus_key.split(" ~ ").nth(1).unwrap_or(corpus_key);
+    let Some(control_member) = class_feature_control_member(siblings, group, member) else {
+        return ClassFeatureProbeOutcome::NoSiblingToControlAgainst;
+    };
+
+    let pick = |selection: &str| SelectedChoice {
+        choice_set_id: (*choice_set_id).to_owned(),
+        selection_id: format!("{namespace}{}", slug(selection)),
+    };
+
+    let mut verdict = ClassFeatureProbeOutcome::NoConsumerDelta;
+    for &level in SWEEP_LEVELS {
+        let mut base_input = class_sweep_input(fixture, owner, level);
+        // `canonical_seeds_for` pre-fills several of these very slots
+        // (`choice:cleric_domain -> domain:good`, `choice:witch_hex ->
+        // hex:flight`, ...). Leaving a seed in place would make the BASELINE
+        // already carry the pool's effect, so the record under test could
+        // add nothing and every such pool would report `no_consumer_delta`
+        // for the probe's own reason rather than the engine's. The slot under
+        // test is emptied first, exactly as `probe_spell_key`'s baseline is
+        // the same character with the spell NOT selected.
+        base_input.chosen.selected_choices.retain(|c| c.choice_set_id != **choice_set_id);
+        let Some(baseline) = class_feature_observable(&base_input) else { continue };
+
+        let mut with_record = base_input.clone();
+        with_record.chosen.selected_choices.push(pick(member));
+        let Some(observed) = class_feature_observable(&with_record) else { continue };
+
+        let mut with_control = base_input.clone();
+        with_control.chosen.selected_choices.push(pick(control_member));
+        let Some(control) = class_feature_observable(&with_control) else { continue };
+
+        match classify_class_feature_delta(&baseline, &observed, &control) {
+            wired @ ClassFeatureProbeOutcome::Wired { .. } => return wired,
+            // A pick-counting slot at one level is the honest answer for the
+            // whole key unless some other level genuinely applies the record.
+            not_attributable @ ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord {
+                ..
+            } => {
+                verdict = not_attributable;
+            }
+            _ => {}
+        }
+    }
+    verdict
+}
+
+/// Runs the probe across every `class_feature` corpus key and keeps only the
+/// `Wired` verdicts, each mapped to the book that models its pool's owning
+/// class. The direct analogue of `spell_effect_wired_from_outcomes`.
+fn probe_class_feature_effect_wiring(
+    fixture: &CharacterInput,
+    class_books: &BTreeMap<String, &'static str>,
+    keys: &[String],
+) -> BTreeMap<String, &'static str> {
+    let siblings = class_feature_siblings(keys);
+    let mut wired = BTreeMap::new();
+    let previous_hook = std::panic::take_hook();
+    std::panic::set_hook(Box::new(|_| {}));
+    for key in keys {
+        if !matches!(
+            probe_class_feature_key(fixture, class_books, &siblings, key),
+            ClassFeatureProbeOutcome::Wired { .. }
+        ) {
+            continue;
+        }
+        let group = key.split(" ~ ").next().unwrap_or(key);
+        let Some((_, owner, _, _)) = CLASS_FEATURE_POOLS.iter().find(|(g, _, _, _)| *g == group)
+        else {
+            continue;
+        };
+        if let Some(book) = class_books.get(*owner) {
+            wired.insert(key.clone(), *book);
+        }
+    }
+    std::panic::set_hook(previous_hook);
+    wired
+}
+
+/// The probe's ceiling, printed by `--class-feature-probe`. Grounds nothing
+/// and moves no number on any board: this is the instrument reporting on
+/// itself, exactly as `--spell-probe` does.
+fn class_feature_probe_ceiling_report(
+    outcomes: &BTreeMap<String, ClassFeatureProbeOutcome>,
+) -> String {
+    let mut totals: BTreeMap<&'static str, usize> = BTreeMap::new();
+    let mut wired_keys: Vec<&str> = Vec::new();
+    let mut declined_pools: BTreeMap<&str, usize> = BTreeMap::new();
+    let mut declined_facts: BTreeMap<String, usize> = BTreeMap::new();
+    for (key, outcome) in outcomes {
+        let label = match outcome {
+            ClassFeatureProbeOutcome::Wired { .. } => {
+                wired_keys.push(key.as_str());
+                "wired"
+            }
+            ClassFeatureProbeOutcome::NoChoiceSlotOffersIt => "no_choice_slot_offers_it",
+            ClassFeatureProbeOutcome::OwnerClassNotModelled => "owner_class_not_modelled",
+            ClassFeatureProbeOutcome::NoSiblingToControlAgainst => "no_sibling_to_control_against",
+            ClassFeatureProbeOutcome::NoConsumerDelta => "no_consumer_delta",
+            ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord { shared } => {
+                *declined_pools
+                    .entry(key.split(" ~ ").next().unwrap_or(key.as_str()))
+                    .or_default() += 1;
+                for id in shared {
+                    *declined_facts.entry(id.clone()).or_default() += 1;
+                }
+                "delta_not_attributable_to_the_record"
+            }
+        };
+        *totals.entry(label).or_default() += 1;
+    }
+    let mut out = String::new();
+    out.push_str("class_feature consumer-delta probe -- ceiling report\n");
+    out.push_str(&format!("keys examined: {}\n\n", outcomes.len()));
+    for (label, n) in &totals {
+        out.push_str(&format!("  {label:<40} {n}\n"));
+    }
+    out.push_str(&format!("\nwired keys: {}\n", wired_keys.len()));
+    for key in wired_keys.iter().take(50) {
+        out.push_str(&format!("  {key}\n"));
+    }
+    // The declined number, named. A probe without a control would have
+    // promoted every one of these.
+    out.push_str("\ndeclined as not-attributable, by pool:\n");
+    let mut pools: Vec<_> = declined_pools.iter().collect();
+    pools.sort_by(|a, b| b.1.cmp(a.1).then(a.0.cmp(b.0)));
+    for (pool, n) in pools {
+        out.push_str(&format!("  {n:>5}  {pool}\n"));
+    }
+    out.push_str("\nthe facts those selections moved identically for both members:\n");
+    let mut facts: Vec<_> = declined_facts.iter().collect();
+    facts.sort_by(|a, b| b.1.cmp(a.1).then(a.0.cmp(b.0)));
+    for (id, n) in facts.iter().take(20) {
+        out.push_str(&format!("  {n:>5}  {id}\n"));
+    }
+    out
+}
+
 fn main() {
     let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let args: Vec<String> = std::env::args().collect();
@@ -3308,6 +4048,51 @@ fn main() {
         let fixture = load_probe_fixture(&repo_root);
         let outcomes = probe_spell_effect_wiring(&fixture, &repo_root);
         print!("{}", spell_probe_ceiling_report(&outcomes));
+        return;
+    }
+
+    // The class consumer-delta probe's own ceiling report, on the same terms:
+    // reads only the engine's own tables and the shared fixture, writes
+    // nothing, classifies nothing, moves no unit.
+    if args.iter().any(|a| a == "--class-probe") {
+        let fixture = load_probe_fixture(&repo_root);
+        let mut modelled: BTreeSet<String> = BTreeSet::new();
+        for id in ClassId::ALL {
+            modelled.insert(crb_class_name(*id).to_string());
+        }
+        for id in ApgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        for id in AcgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        let outcomes = probe_class_effect_wiring(&fixture, &modelled);
+        print!("{}", class_probe_ceiling_report(&outcomes));
+        return;
+    }
+
+    // The class_feature consumer-delta probe's own ceiling report. Same
+    // contract as `--spell-probe`: writes nothing, classifies nothing, moves
+    // no unit on any board. Its key population comes from the committed
+    // inventory rather than the PCGen corpus, so it runs without a corpus
+    // checkout -- the inventory is the artifact whose `class_feature` units
+    // are the question.
+    if args.iter().any(|a| a == "--class-feature-probe") {
+        let fixture = load_probe_fixture(&repo_root);
+        let class_books = modelled_class_books();
+        let inventory = std::fs::read_to_string(repo_root.join(OUTPUT_RELATIVE_PATH))
+            .expect("docs/work-inventory.json is readable");
+        let keys = class_feature_keys_from_inventory(&inventory);
+        let siblings = class_feature_siblings(&keys);
+        let mut outcomes: BTreeMap<String, ClassFeatureProbeOutcome> = BTreeMap::new();
+        let previous_hook = std::panic::take_hook();
+        std::panic::set_hook(Box::new(|_| {}));
+        for key in &keys {
+            let outcome = probe_class_feature_key(&fixture, &class_books, &siblings, key);
+            outcomes.insert(key.clone(), outcome);
+        }
+        std::panic::set_hook(previous_hook);
+        print!("{}", class_feature_probe_ceiling_report(&outcomes));
         return;
     }
 
@@ -3507,7 +4292,30 @@ fn main() {
         .filter(|u| u.kind == Kind::Class)
         .map(|u| u.name.to_lowercase())
         .collect();
-    let facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
+    let mut facts = gather_engine_facts(&fixture, corpus_class_names, &repo_root);
+
+    // The class_feature consumer-delta probe, run over the keys the CORPUS
+    // enumeration just produced rather than over the committed inventory --
+    // generating this file from a previous copy of itself would make the
+    // observation circular. Its sibling map (which other members share a
+    // pool) comes from the same enumeration, so a key's control is always a
+    // real alternative the corpus declares.
+    {
+        let class_feature_keys: Vec<String> = enumerations
+            .values()
+            .flat_map(|e| e.units.iter())
+            .filter(|u| u.kind == Kind::ClassFeature)
+            .map(|u| u.key.clone())
+            .collect::<BTreeSet<String>>()
+            .into_iter()
+            .collect();
+        facts.class_feature_effect_wired = probe_class_feature_effect_wiring(
+            &fixture,
+            &facts.class_books.clone(),
+            &class_feature_keys,
+        );
+    }
+    let facts = facts;
 
     // --- wiring_class (GE-01) -----------------------------------------------
     // Built once, corpus-wide: the token closure index and a raw-line cache
@@ -5433,5 +6241,456 @@ mod spell_grounding_tests {
         );
         let wired = spell_effect_wired_from_outcomes(&outcomes);
         assert_eq!(wired, BTreeSet::from([("core_rulebook".to_string(), "Shield".to_string())]));
+    }
+}
+
+/// SD-30 `probe-race-and-class`: the class consumer-delta probe's own proofs.
+///
+/// Built to the same standard as [`spell_probe_tests`], and for the same
+/// reason: an instrument that has not been shown to refuse is not an
+/// instrument. Every negative below is a way this probe can say "no" to a
+/// class the membership test it replaces would have said "yes" to.
+#[cfg(test)]
+mod class_probe_tests {
+    use super::*;
+
+    fn repo_root() -> PathBuf {
+        PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+    }
+
+    fn fixture() -> CharacterInput {
+        let path = repo_root().join(FIXTURE_RELATIVE_PATH);
+        let text = std::fs::read_to_string(&path).expect("the shared pilot fixture is readable");
+        load_character_input_fixture(&text)
+            .character_input
+            .expect("the shared pilot fixture loads")
+    }
+
+    /// Exactly the classes the engine models, built the way `engine_facts`
+    /// builds `class_books`' key set.
+    fn modelled_classes() -> BTreeSet<String> {
+        let mut modelled = BTreeSet::new();
+        for id in ClassId::ALL {
+            modelled.insert(crb_class_name(*id).to_string());
+        }
+        for id in ApgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        for id in AcgClassId::ALL {
+            modelled.insert(id.name().to_string());
+        }
+        modelled
+    }
+
+    fn snapshot_for(class_name: &str, level: u8) -> Option<PilotSnapshot> {
+        let receipt =
+            build_pilot_headless_receipt(&class_probe_input(&fixture(), class_name, level));
+        PilotViewModel::from_receipt(&receipt).snapshot
+    }
+
+    // ----- Validation against answers stated independently of this engine ---
+
+    /// The exercise this program's recorded lesson demands: reproduce an
+    /// answer that is true independently of the code under test before
+    /// trusting the instrument on anything new.
+    ///
+    /// PF1's base-attack-bonus progressions are a published rule, not
+    /// something this repo decides: a full-BAB class has BAB equal to its
+    /// level, a 3/4 class has `floor(3 * level / 4)`, a 1/2 class has
+    /// `floor(level / 2)`. At level 20 that is Fighter +20, Cleric +15,
+    /// Wizard +10. If the probe's own posture did not reproduce those three
+    /// numbers, every "delta" it later reported would be measuring something
+    /// other than the class.
+    #[test]
+    fn the_probes_posture_reproduces_pf1s_published_bab_progressions() {
+        for (class_name, expected_bab) in [("fighter", 20i16), ("cleric", 15), ("wizard", 10)] {
+            let snapshot = snapshot_for(class_name, 20)
+                .unwrap_or_else(|| panic!("{class_name} at level 20 must project a snapshot"));
+            assert_eq!(
+                snapshot.base_attack_bonus, expected_bab,
+                "{class_name} level 20 must carry PF1's published BAB of +{expected_bab}"
+            );
+        }
+    }
+
+    // ----- The delta's baseline is real -----
+
+    /// The "delta" in consumer-delta. A character with no class levels at all
+    /// must not already carry the numbers a class is about to be credited
+    /// with — otherwise every delta observed later would be unattributable.
+    #[test]
+    fn the_classless_baseline_differs_from_every_modelled_class() {
+        let fixture = fixture();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        for class_name in modelled_classes() {
+            let Some(snapshot) = snapshot_for(&class_name, 20) else { continue };
+            assert_ne!(
+                baseline.as_ref(),
+                Some(&class_snapshot_numbers(&snapshot)),
+                "{class_name} at level 20 must move the rendered numbers off the classless baseline"
+            );
+        }
+    }
+
+    // ----- Positive: a real class puts an attributable magnitude on screen --
+
+    /// Fighter is modelled, reaches `Computed`, and carries explanation
+    /// records no other modelled class produces.
+    #[test]
+    fn the_probe_observes_a_real_classs_magnitude_on_the_rendered_snapshot() {
+        let fixture = fixture();
+        let modelled = modelled_classes();
+        let baseline = class_probe_baseline_numbers(&fixture);
+        let outcome = probe_class_name(&fixture, "fighter", &modelled, baseline.as_ref());
+        assert!(
+            matches!(outcome, ClassProbeOutcome::Wired { .. }),
+            "fighter must be observed wired, got {outcome:?}"
+        );
+    }
+
+    // ----- Negative 1: a class the engine does not model -------------------
+
+    /// The probe can never manufacture ingestion. A name no class enum
+    /// carries is refused outright, whatever the corpus says about it.
+    #[test]
+    fn the_probe_never_promotes_a_class_the_engine_does_not_model() {
+        let fixture = fixture();
+        let modelled = modelled_classes();
+        for absent in ["adept", "commoner", "aristocrat", "psion", "unchained_barbarian"] {
+            assert_eq!(
+                probe_class_name(&fixture, absent, &modelled, None),
+                ClassProbeOutcome::NotModelledByEngine,
+                "{absent} is modelled by no class enum and must be refused"
+            );
+        }
+    }
+
+    /// And the wired set is therefore always a subset of the modelled set.
+    #[test]
+    fn the_wired_set_never_exceeds_the_modelled_set() {
+        let modelled = modelled_classes();
+        let outcomes = probe_class_effect_wiring(&fixture(), &modelled);
+        let wired = class_effect_wired_from_outcomes(&outcomes);
+        assert!(
+            wired.is_subset(&modelled),
+            "the probe promoted a class the engine does not model: {:?}",
+            wired.difference(&modelled).collect::<Vec<_>>()
+        );
+    }
+
+    // ----- Negative 2: attribution by dot-segment, never by substring ------
+
+    /// The corpus-identifier scope collision, in its class form. A substring
+    /// test would credit Barbarian with Unchained Barbarian's magnitude and
+    /// Rogue with Unchained Rogue's.
+    #[test]
+    fn a_longer_classs_explanation_never_counts_as_a_shorter_ones() {
+        for (id, class_name) in [
+            ("class_chassis.unchained_barbarian.replaces", "barbarian"),
+            ("class_feature.pu.unchained_rogue.corpus_record.x", "rogue"),
+            ("class_spell.acg.bloodrager.spells_known.spell_level_1", "rager"),
+        ] {
+            assert!(
+                !explanation_names_class(id, class_name),
+                "{id:?} must not be credited to {class_name:?}"
+            );
+        }
+        // ...while the class that really owns the record still matches.
+        assert!(explanation_names_class(
+            "class_chassis.unchained_barbarian.replaces",
+            "unchained_barbarian"
+        ));
+        assert!(explanation_names_class(
+            "class_spell.acg.bloodrager.spells_known.spell_level_1",
+            "bloodrager"
+        ));
+    }
+
+    // ----- Negative 3: only an observed delta enters the fact set ----------
+
+    /// Every refusal variant is refused, by hand and exhaustively. A future
+    /// variant must be classified deliberately, not defaulted in.
+    #[test]
+    fn only_wired_outcomes_enter_the_class_fact_set() {
+        let outcomes = BTreeMap::from([
+            (
+                "fighter".to_string(),
+                ClassProbeOutcome::Wired { level: 1, attributed_explanations: 3 },
+            ),
+            ("adept".to_string(), ClassProbeOutcome::NotModelledByEngine),
+            ("a".to_string(), ClassProbeOutcome::PipelinePanicked),
+            ("b".to_string(), ClassProbeOutcome::NeverReachesComputed),
+            ("c".to_string(), ClassProbeOutcome::NoSnapshotProjected),
+            ("d".to_string(), ClassProbeOutcome::NoSnapshotDeltaVsClasslessBaseline),
+            ("e".to_string(), ClassProbeOutcome::NoExplanationAttributedToThisClass),
+        ]);
+        assert_eq!(
+            class_effect_wired_from_outcomes(&outcomes),
+            BTreeSet::from(["fighter".to_string()]),
+            "exactly the Wired verdict may ground a class unit"
+        );
+    }
+
+    // ----- The classifier consults the probe, not enum membership ----------
+
+    fn class_unit(book: &str, name: &str) -> CorpusUnit {
+        CorpusUnit {
+            book: book.to_string(),
+            kind: Kind::Class,
+            key: name.to_string(),
+            name: name.to_string(),
+            origin: Origin::Declared,
+            provenance: Provenance { file: "cr_classes.lst".to_string(), line: 1 },
+            magnitude_token_count: 1,
+            type_facet: None,
+            visible: true,
+        }
+    }
+
+    /// A class the probe observed reaches `grounded` on the probe's own
+    /// evidence token.
+    #[test]
+    fn a_class_the_probe_observed_reaches_grounded_on_the_probes_own_evidence() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("fighter".to_string(), "core_rulebook");
+        facts.class_effect_wired.insert("fighter".to_string());
+        let verdict =
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new());
+        assert_eq!(verdict.status, "grounded");
+        assert_eq!(
+            verdict.evidence,
+            "class_probe_observed_computed_delta_on_the_rendered_snapshot"
+        );
+    }
+
+    /// **The anti-gaming proof.** Enum membership alone no longer grounds a
+    /// class. A class the engine models but the probe did NOT observe stays
+    /// un-grounded, carrying an evidence token that says exactly that — this
+    /// is the case the replaced membership test would have called `grounded`.
+    #[test]
+    fn a_modelled_class_the_probe_did_not_observe_is_not_grounded() {
+        let mut facts = EngineFacts::default();
+        facts.class_books.insert("fighter".to_string(), "core_rulebook");
+        // deliberately NOT inserted into `class_effect_wired`
+        let verdict =
+            classify(&class_unit("core_rulebook", "Fighter"), &facts, &BTreeSet::new());
+        assert_ne!(verdict.status, "grounded", "membership alone must not ground a class");
+        assert_eq!(
+            verdict.evidence,
+            "class_modelled_but_no_observed_delta_on_the_rendered_snapshot"
+        );
+    }
+
+    /// An observation never manufactures ingestion for a class no enum names.
+    #[test]
+    fn an_observation_never_grounds_a_class_absent_from_every_class_enum() {
+        let mut facts = EngineFacts::default();
+        facts.class_effect_wired.insert("adept".to_string());
+        let verdict = classify(&class_unit("core_rulebook", "Adept"), &facts, &BTreeSet::new());
+        assert_eq!(verdict.status, "not-ingested");
+        assert_eq!(verdict.evidence, "class_absent_from_ClassId_ALL_and_book_class_id_enums");
+    }
+}
+
+#[cfg(test)]
+mod class_feature_consumer_delta_tests {
+    use super::*;
+
+    /// Every pool in [`CLASS_FEATURE_POOLS`] must name a `choice_set_id` the
+    /// engine actually recognises. A pool naming a slot no engine code reads
+    /// would make the probe report `no_consumer_delta` for a reason that is
+    /// the probe's own fault rather than the engine's -- exactly the kind of
+    /// confident-wrong number this binary exists to avoid.
+    #[test]
+    fn every_pool_names_a_choice_set_the_engine_source_declares() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let mut declared = BTreeSet::new();
+        let mut stack = vec![repo_root.join("src/rules_core")];
+        while let Some(dir) = stack.pop() {
+            for entry in std::fs::read_dir(&dir).expect("rules_core is readable").flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else if path.extension().is_some_and(|e| e == "rs") {
+                    let text = std::fs::read_to_string(&path).expect("source file is readable");
+                    let mut rest = text.as_str();
+                    while let Some(at) = rest.find("\"choice:") {
+                        rest = &rest[at + 1..];
+                        if let Some(end) = rest.find('"') {
+                            declared.insert(rest[..end].to_string());
+                        }
+                    }
+                }
+            }
+        }
+        assert!(
+            !declared.is_empty(),
+            "found no `choice:` set ids in src/rules_core -- the scan itself is broken"
+        );
+        for (group, owner, choice_set_id, _) in CLASS_FEATURE_POOLS {
+            assert!(
+                declared.contains(*choice_set_id),
+                "pool `{group}` names `{choice_set_id}`, which no file under src/rules_core declares"
+            );
+            assert!(!owner.is_empty(), "pool `{group}` names no owner class");
+        }
+    }
+
+    /// The companion guarantee to the one above, and the reason it exists: a
+    /// namespaced consumer matches `domain:good`, never bare `good`. A pool
+    /// declaring a namespace the engine never writes would have its probe
+    /// selections silently ignored, and the probe would then report
+    /// `no_consumer_delta` as though the ENGINE held nothing -- an
+    /// under-report indistinguishable from a real ceiling. Every non-empty
+    /// namespace must appear in engine source as a written selection id.
+    #[test]
+    fn every_namespaced_pool_uses_a_namespace_the_engine_source_writes() {
+        let repo_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
+        let mut source = String::new();
+        let mut stack = vec![repo_root.join("src/rules_core")];
+        while let Some(dir) = stack.pop() {
+            for entry in std::fs::read_dir(&dir).expect("rules_core is readable").flatten() {
+                let path = entry.path();
+                if path.is_dir() {
+                    stack.push(path);
+                } else if path.extension().is_some_and(|e| e == "rs") {
+                    source.push_str(&std::fs::read_to_string(&path).expect("readable"));
+                }
+            }
+        }
+        for (group, _, _, namespace) in CLASS_FEATURE_POOLS {
+            if namespace.is_empty() {
+                continue;
+            }
+            assert!(
+                source.contains(&format!("\"{namespace}")),
+                "pool `{group}` declares selection namespace `{namespace}`, which no file under \
+                 src/rules_core ever writes -- the probe's selections would be silently ignored"
+            );
+        }
+    }
+
+    /// The probe must empty the slot it is testing before measuring the
+    /// baseline, because `canonical_seeds_for` pre-fills several of these
+    /// pools. This pins the seeds that overlap the pool table, so a future
+    /// seed added to a probed slot cannot silently reintroduce the defect.
+    #[test]
+    fn canonical_seeds_really_do_occupy_probed_slots() {
+        let probed: BTreeSet<&str> =
+            CLASS_FEATURE_POOLS.iter().map(|(_, _, choice_set_id, _)| *choice_set_id).collect();
+        let mut overlapping = BTreeSet::new();
+        for (class_name, _) in modelled_class_books() {
+            for choice in canonical_seeds_for(&class_name).0 {
+                if probed.contains(choice.choice_set_id.as_str()) {
+                    overlapping.insert(choice.choice_set_id);
+                }
+            }
+        }
+        assert!(
+            !overlapping.is_empty(),
+            "no canonical seed occupies a probed slot -- if this ever becomes true the retain() \
+             in probe_class_feature_key is dead code and should be reconsidered, not deleted \
+             silently"
+        );
+    }
+
+    /// The discriminator that makes this a consumer-delta probe rather than a
+    /// "the selection was accepted" probe. A slot that merely COUNTS picks
+    /// produces the identical delta for any selection id, and must be refused.
+    #[test]
+    fn a_slot_that_only_counts_picks_is_refused_not_promoted() {
+        let baseline: Vec<(String, i16)> = Vec::new();
+        let observed = vec![("bab".to_string(), 3i16)];
+        let control = vec![("bab".to_string(), 3i16)];
+        assert_eq!(
+            classify_class_feature_delta(&baseline, &observed, &control),
+            ClassFeatureProbeOutcome::DeltaNotAttributableToTheRecord {
+                shared: vec!["bab".to_string()]
+            }
+        );
+    }
+
+    /// The promoting case: the record's own selection moves a fact, and a
+    /// different selection in the same slot does not move it the same way.
+    #[test]
+    fn a_per_record_delta_is_promoted() {
+        let baseline: Vec<(String, i16)> = Vec::new();
+        let observed = vec![("rage.superstition".to_string(), 2i16)];
+        let control: Vec<(String, i16)> = Vec::new();
+        assert!(matches!(
+            classify_class_feature_delta(&baseline, &observed, &control),
+            ClassFeatureProbeOutcome::Wired { .. }
+        ));
+    }
+
+    /// Selecting the record changed nothing a consumer renders.
+    #[test]
+    fn no_movement_at_all_is_no_consumer_delta() {
+        let baseline = vec![("bab".to_string(), 1i16)];
+        let observed = vec![("bab".to_string(), 1i16)];
+        let control = vec![("bab".to_string(), 1i16)];
+        assert!(matches!(
+            classify_class_feature_delta(&baseline, &observed, &control),
+            ClassFeatureProbeOutcome::NoConsumerDelta
+        ));
+    }
+
+    fn rage_power_siblings() -> BTreeMap<String, BTreeSet<String>> {
+        BTreeMap::from([(
+            "Rage Power".to_string(),
+            BTreeSet::from(["Superstition".to_string(), "Animal Fury".to_string()]),
+        )])
+    }
+
+    /// A group whose prefix names no engine slot is refused before any
+    /// computation happens -- no player selection can reach the record.
+    #[test]
+    fn an_unpooled_group_is_refused() {
+        let fixture = load_probe_fixture(&PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+        let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        class_books.insert("barbarian".to_string(), "core_rulebook");
+        assert_eq!(
+            probe_class_feature_key(
+                &fixture,
+                &class_books,
+                &rage_power_siblings(),
+                "Refined Education ~ Appraise"
+            ),
+            ClassFeatureProbeOutcome::NoChoiceSlotOffersIt
+        );
+    }
+
+    /// A pooled group whose owner class this engine does not model is refused
+    /// as such, and never confused with "the engine applies nothing".
+    #[test]
+    fn a_pool_of_an_unmodelled_class_is_refused_as_such() {
+        let fixture = load_probe_fixture(&PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+        let class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        assert_eq!(
+            probe_class_feature_key(
+                &fixture,
+                &class_books,
+                &rage_power_siblings(),
+                "Rage Power ~ Superstition"
+            ),
+            ClassFeatureProbeOutcome::OwnerClassNotModelled
+        );
+    }
+
+    /// A pool with exactly one corpus member has no control, and is refused
+    /// rather than promoted on an uncontrolled delta.
+    #[test]
+    fn a_pool_with_no_sibling_is_refused() {
+        let fixture = load_probe_fixture(&PathBuf::from(env!("CARGO_MANIFEST_DIR")));
+        let mut class_books: BTreeMap<String, &'static str> = BTreeMap::new();
+        class_books.insert("barbarian".to_string(), "core_rulebook");
+        let lonely = BTreeMap::from([(
+            "Rage Power".to_string(),
+            BTreeSet::from(["Superstition".to_string()]),
+        )]);
+        assert_eq!(
+            probe_class_feature_key(&fixture, &class_books, &lonely, "Rage Power ~ Superstition"),
+            ClassFeatureProbeOutcome::NoSiblingToControlAgainst
+        );
     }
 }
