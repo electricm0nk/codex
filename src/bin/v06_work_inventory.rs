@@ -2893,6 +2893,16 @@ const STATUS_VOCABULARY: &[(&str, &str)] = &[
          that resolves to a real stat block through monster_resolve.",
     ),
     (
+        "literal-verified",
+        "A `static` unit whose shipped `data/corpus` record was byte-compared, this run, against \
+         the upstream corpus literal it cites, by `corpus_literal_sweep --json-out`, and the WHOLE \
+         sweep came back CLEAN. Strictly stronger than `ingested-magnitude`/`grounded`/ \
+         `text-complete`, which it supersedes for a unit the sweep actually reached: only the \
+         producer's `static`/`derived` doneness rung (operator directive 2026-08-13) maps this to \
+         `done`. A unit the sweep did not reach, or a sweep that found any mismatch anywhere, \
+         leaves every unit at its ordinary status -- this word is never assigned on trust.",
+    ),
+    (
         "ingested-magnitude",
         "The engine holds the record WITH its real numeric fields, but this generator observes no \
          consumer delta for this kind (spells, equipment). Strictly weaker than `grounded` and \
